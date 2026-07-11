@@ -1,0 +1,806 @@
+{
+  "meta": {
+    "url": "http://localhost:3000/",
+    "generatedAt": "2026-07-10T20:32:53.409Z",
+    "tool": "govbr-ds-validator",
+    "disclaimer": "Primeira triagem para revisão humana; não substitui a avaliação de conformidade por especialista (salomon2025)."
+  },
+  "summary": {
+    "total": 29,
+    "bySeverity": {
+      "serious": 7,
+      "minor": 17,
+      "moderate": 3,
+      "critical": 2
+    },
+    "byNature": {
+      "syntactic": 25,
+      "semantic": 4
+    },
+    "byPathway": {
+      "deterministic": 25,
+      "heuristic": 1,
+      "explicit": 3
+    },
+    "bySource": {
+      "emag": 4,
+      "govbr-ds-structure": 8,
+      "govbr-ds-token": 15,
+      "axe-core": 1,
+      "wcag": 1
+    }
+  },
+  "findings": [
+    {
+      "id": "F-001",
+      "rule": {
+        "id": "emag-2.2",
+        "source": "emag",
+        "description": "Scripts and dynamic content must remain accessible. Provide alternatives when direct access is not possible.",
+        "wcag": "4.1.2"
+      },
+      "element": {
+        "locator": "#TC-B-02 > button",
+        "snippet": "<button class=\"br-button circle\" type=\"button\"><i class=\"fas fa-search\" aria-hidden=\"true\"></i></button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+        "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+        "data": {
+          "component": "button",
+          "hasIconOnly": true,
+          "ariaLabel": null
+        }
+      },
+      "severity": "serious",
+      "nature": "syntactic",
+      "mode": "interaction",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-002",
+      "rule": {
+        "id": "ds-structure-button-tag",
+        "source": "govbr-ds-structure",
+        "description": "Nos exemplos oficiais do gov.br DS, br-button é aplicado a <button>."
+      },
+      "element": {
+        "locator": "#TC-B-03 > div",
+        "snippet": "<div class=\"br-button primary\" style=\"display: inline-block; cursor: pointer;\">Confirmar</div>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "br-button aplicado a <div>",
+        "expected": "Elemento <button>",
+        "data": {
+          "component": "button",
+          "observedTag": "div",
+          "canonicalTags": [
+            "button"
+          ]
+        }
+      },
+      "severity": "serious",
+      "nature": "syntactic",
+      "mode": "interaction",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-003",
+      "rule": {
+        "id": "ds-structure-button-variant",
+        "source": "govbr-ds-structure",
+        "description": "Classes de variação de br-button devem ser as documentadas nos exemplos oficiais (active, block, circle, dark-mode, large, loading, primary, secondary, small)."
+      },
+      "element": {
+        "locator": "#TC-B-04 > button",
+        "snippet": "<button class=\"br-button primary v-token-a\" type=\"button\">Confirmar</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "Classes não canônicas em br-button: v-token-a",
+        "expected": "Variantes documentadas: active, block, circle, dark-mode, large, loading, primary, secondary, small",
+        "data": {
+          "component": "button",
+          "unknownClasses": [
+            "v-token-a"
+          ]
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-004",
+      "rule": {
+        "id": "ds-structure-button-variant",
+        "source": "govbr-ds-structure",
+        "description": "Classes de variação de br-button devem ser as documentadas nos exemplos oficiais (active, block, circle, dark-mode, large, loading, primary, secondary, small)."
+      },
+      "element": {
+        "locator": "#TC-B-05 > button",
+        "snippet": "<button class=\"br-button primary v-font-a\" type=\"button\">Acessar sistema</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "Classes não canônicas em br-button: v-font-a",
+        "expected": "Variantes documentadas: active, block, circle, dark-mode, large, loading, primary, secondary, small",
+        "data": {
+          "component": "button",
+          "unknownClasses": [
+            "v-font-a"
+          ]
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-005",
+      "rule": {
+        "id": "ds-structure-button-variant",
+        "source": "govbr-ds-structure",
+        "description": "Classes de variação de br-button devem ser as documentadas nos exemplos oficiais (active, block, circle, dark-mode, large, loading, primary, secondary, small)."
+      },
+      "element": {
+        "locator": "#TC-B-06 > button",
+        "snippet": "<button class=\"br-button danger\" type=\"button\">Excluir conta</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "Classes não canônicas em br-button: danger",
+        "expected": "Variantes documentadas: active, block, circle, dark-mode, large, loading, primary, secondary, small",
+        "data": {
+          "component": "button",
+          "unknownClasses": [
+            "danger"
+          ]
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-006",
+      "rule": {
+        "id": "ds-structure-button-variant",
+        "source": "govbr-ds-structure",
+        "description": "Classes de variação de br-button devem ser as documentadas nos exemplos oficiais (active, block, circle, dark-mode, large, loading, primary, secondary, small)."
+      },
+      "element": {
+        "locator": "#TC-B-08 > button",
+        "snippet": "<button class=\"br-button secondary v-radius-a\" type=\"button\">Cancelar</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "Classes não canônicas em br-button: v-radius-a",
+        "expected": "Variantes documentadas: active, block, circle, dark-mode, large, loading, primary, secondary, small",
+        "data": {
+          "component": "button",
+          "unknownClasses": [
+            "v-radius-a"
+          ]
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-007",
+      "rule": {
+        "id": "ds-structure-button-variant",
+        "source": "govbr-ds-structure",
+        "description": "Classes de variação de br-button devem ser as documentadas nos exemplos oficiais (active, block, circle, dark-mode, large, loading, primary, secondary, small)."
+      },
+      "element": {
+        "locator": "#TC-B-10 > button",
+        "snippet": "<button class=\"br-button primary v-focus-a\" type=\"button\">Salvar alterações</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "Classes não canônicas em br-button: v-focus-a",
+        "expected": "Variantes documentadas: active, block, circle, dark-mode, large, loading, primary, secondary, small",
+        "data": {
+          "component": "button",
+          "unknownClasses": [
+            "v-focus-a"
+          ]
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-008",
+      "rule": {
+        "id": "ds-structure-button-tag",
+        "source": "govbr-ds-structure",
+        "description": "Nos exemplos oficiais do gov.br DS, br-button é aplicado a <button>."
+      },
+      "element": {
+        "locator": "#TC-B-11 > span:nth-of-type(2)",
+        "snippet": "<span class=\"br-button primary\" role=\"button\">Confirmar</span>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "br-button aplicado a <span>",
+        "expected": "Elemento <button>",
+        "data": {
+          "component": "button",
+          "observedTag": "span",
+          "canonicalTags": [
+            "button"
+          ]
+        }
+      },
+      "severity": "serious",
+      "nature": "syntactic",
+      "mode": "interaction",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-009",
+      "rule": {
+        "id": "ds-structure-button-tag",
+        "source": "govbr-ds-structure",
+        "description": "Nos exemplos oficiais do gov.br DS, br-button é aplicado a <button>."
+      },
+      "element": {
+        "locator": "#TC-B-12 > a",
+        "snippet": "<a href=\"#\" class=\"br-button primary\">Excluir arquivo</a>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "br-button aplicado a <a>",
+        "expected": "Elemento <button>",
+        "data": {
+          "component": "button",
+          "observedTag": "a",
+          "canonicalTags": [
+            "button"
+          ]
+        }
+      },
+      "severity": "serious",
+      "nature": "syntactic",
+      "mode": "interaction",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-010",
+      "rule": {
+        "id": "ds-token-radius",
+        "source": "govbr-ds-token",
+        "description": "Cantos arredondados devem usar os tokens de superfície (--surface-rounder-sm/md/lg)."
+      },
+      "element": {
+        "locator": "#TC-B-01 > button",
+        "snippet": "<button class=\"br-button primary\" type=\"button\">Entrar</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-radius: 1680px fora da escala do DS",
+        "expected": "Um de: 0, 4px, 8px, 16px, 999em, 0px, 50%",
+        "data": {
+          "property": "border-radius",
+          "observed": "1680px"
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-011",
+      "rule": {
+        "id": "ds-token-radius",
+        "source": "govbr-ds-token",
+        "description": "Cantos arredondados devem usar os tokens de superfície (--surface-rounder-sm/md/lg)."
+      },
+      "element": {
+        "locator": "#TC-B-03 > div",
+        "snippet": "<div class=\"br-button primary\" style=\"display: inline-block; cursor: pointer;\">Confirmar</div>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-radius: 1680px fora da escala do DS",
+        "expected": "Um de: 0, 4px, 8px, 16px, 999em, 0px, 50%",
+        "data": {
+          "property": "border-radius",
+          "observed": "1680px"
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-012",
+      "rule": {
+        "id": "ds-token-color",
+        "source": "govbr-ds-token",
+        "description": "Cores devem usar valores do registro de tokens do gov.br DS (Padrão Digital de Governo); valores arbitrários quebram a identidade visual e o theming."
+      },
+      "element": {
+        "locator": "#TC-B-04 > button",
+        "snippet": "<button class=\"br-button primary v-token-a\" type=\"button\">Confirmar</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "background-color: rgb(19, 82, 180) (#1352b4) não corresponde a nenhum token do DS",
+        "expected": "Valor de token do DS; mais próximo: --blue-warm-vivid-70 (#1351b4, distância RGB 1)",
+        "data": {
+          "property": "background-color",
+          "observedHex": "#1352b4",
+          "nearestToken": "--blue-warm-vivid-70",
+          "nearestHex": "#1351b4",
+          "rgbDistance": 1
+        }
+      },
+      "severity": "moderate",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-013",
+      "rule": {
+        "id": "ds-token-color",
+        "source": "govbr-ds-token",
+        "description": "Cores devem usar valores do registro de tokens do gov.br DS (Padrão Digital de Governo); valores arbitrários quebram a identidade visual e o theming."
+      },
+      "element": {
+        "locator": "#TC-B-04 > button",
+        "snippet": "<button class=\"br-button primary v-token-a\" type=\"button\">Confirmar</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-color: rgb(19, 82, 180) (#1352b4) não corresponde a nenhum token do DS",
+        "expected": "Valor de token do DS; mais próximo: --blue-warm-vivid-70 (#1351b4, distância RGB 1)",
+        "data": {
+          "property": "border-color",
+          "observedHex": "#1352b4",
+          "nearestToken": "--blue-warm-vivid-70",
+          "nearestHex": "#1351b4",
+          "rgbDistance": 1
+        }
+      },
+      "severity": "moderate",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-014",
+      "rule": {
+        "id": "ds-token-radius",
+        "source": "govbr-ds-token",
+        "description": "Cantos arredondados devem usar os tokens de superfície (--surface-rounder-sm/md/lg)."
+      },
+      "element": {
+        "locator": "#TC-B-04 > button",
+        "snippet": "<button class=\"br-button primary v-token-a\" type=\"button\">Confirmar</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-radius: 1680px fora da escala do DS",
+        "expected": "Um de: 0, 4px, 8px, 16px, 999em, 0px, 50%",
+        "data": {
+          "property": "border-radius",
+          "observed": "1680px"
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-015",
+      "rule": {
+        "id": "ds-token-font-family",
+        "source": "govbr-ds-token",
+        "description": "A tipografia do gov.br DS usa Rawline (com Raleway como alternativa)."
+      },
+      "element": {
+        "locator": "#TC-B-05 > button",
+        "snippet": "<button class=\"br-button primary v-font-a\" type=\"button\">Acessar sistema</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "font-family: Arial, sans-serif",
+        "expected": "Família contendo Rawline/Raleway (token --font-family-base: Rawline, Raleway, sans-serif)",
+        "data": {
+          "property": "font-family",
+          "observed": "Arial, sans-serif"
+        }
+      },
+      "severity": "moderate",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-016",
+      "rule": {
+        "id": "ds-token-radius",
+        "source": "govbr-ds-token",
+        "description": "Cantos arredondados devem usar os tokens de superfície (--surface-rounder-sm/md/lg)."
+      },
+      "element": {
+        "locator": "#TC-B-05 > button",
+        "snippet": "<button class=\"br-button primary v-font-a\" type=\"button\">Acessar sistema</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-radius: 1680px fora da escala do DS",
+        "expected": "Um de: 0, 4px, 8px, 16px, 999em, 0px, 50%",
+        "data": {
+          "property": "border-radius",
+          "observed": "1680px"
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-017",
+      "rule": {
+        "id": "ds-token-radius",
+        "source": "govbr-ds-token",
+        "description": "Cantos arredondados devem usar os tokens de superfície (--surface-rounder-sm/md/lg)."
+      },
+      "element": {
+        "locator": "#TC-B-06 > button",
+        "snippet": "<button class=\"br-button danger\" type=\"button\">Excluir conta</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-radius: 1680px fora da escala do DS",
+        "expected": "Um de: 0, 4px, 8px, 16px, 999em, 0px, 50%",
+        "data": {
+          "property": "border-radius",
+          "observed": "1680px"
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-018",
+      "rule": {
+        "id": "ds-token-radius",
+        "source": "govbr-ds-token",
+        "description": "Cantos arredondados devem usar os tokens de superfície (--surface-rounder-sm/md/lg)."
+      },
+      "element": {
+        "locator": "#TC-B-07 > button",
+        "snippet": "<button class=\"br-button primary\" type=\"button\" aria-label=\"Cancelar\">Confirmar</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-radius: 1680px fora da escala do DS",
+        "expected": "Um de: 0, 4px, 8px, 16px, 999em, 0px, 50%",
+        "data": {
+          "property": "border-radius",
+          "observed": "1680px"
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-019",
+      "rule": {
+        "id": "ds-token-radius",
+        "source": "govbr-ds-token",
+        "description": "Cantos arredondados devem usar os tokens de superfície (--surface-rounder-sm/md/lg)."
+      },
+      "element": {
+        "locator": "#TC-B-08 > button",
+        "snippet": "<button class=\"br-button secondary v-radius-a\" type=\"button\">Cancelar</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-radius: 6px fora da escala do DS",
+        "expected": "Um de: 0, 4px, 8px, 16px, 999em, 0px, 50%",
+        "data": {
+          "property": "border-radius",
+          "observed": "6px"
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-020",
+      "rule": {
+        "id": "ds-token-radius",
+        "source": "govbr-ds-token",
+        "description": "Cantos arredondados devem usar os tokens de superfície (--surface-rounder-sm/md/lg)."
+      },
+      "element": {
+        "locator": "#TC-B-10 > button",
+        "snippet": "<button class=\"br-button primary v-focus-a\" type=\"button\">Salvar alterações</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-radius: 1680px fora da escala do DS",
+        "expected": "Um de: 0, 4px, 8px, 16px, 999em, 0px, 50%",
+        "data": {
+          "property": "border-radius",
+          "observed": "1680px"
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-021",
+      "rule": {
+        "id": "ds-token-radius",
+        "source": "govbr-ds-token",
+        "description": "Cantos arredondados devem usar os tokens de superfície (--surface-rounder-sm/md/lg)."
+      },
+      "element": {
+        "locator": "#TC-B-11 > span:nth-of-type(2)",
+        "snippet": "<span class=\"br-button primary\" role=\"button\">Confirmar</span>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-radius: 1680px fora da escala do DS",
+        "expected": "Um de: 0, 4px, 8px, 16px, 999em, 0px, 50%",
+        "data": {
+          "property": "border-radius",
+          "observed": "1680px"
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-022",
+      "rule": {
+        "id": "ds-token-radius",
+        "source": "govbr-ds-token",
+        "description": "Cantos arredondados devem usar os tokens de superfície (--surface-rounder-sm/md/lg)."
+      },
+      "element": {
+        "locator": "#TC-B-12 > a",
+        "snippet": "<a href=\"#\" class=\"br-button primary\">Excluir arquivo</a>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-radius: 1680px fora da escala do DS",
+        "expected": "Um de: 0, 4px, 8px, 16px, 999em, 0px, 50%",
+        "data": {
+          "property": "border-radius",
+          "observed": "1680px"
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-023",
+      "rule": {
+        "id": "ds-token-radius",
+        "source": "govbr-ds-token",
+        "description": "Cantos arredondados devem usar os tokens de superfície (--surface-rounder-sm/md/lg)."
+      },
+      "element": {
+        "locator": "#TC-B-13 > div > button:nth-of-type(1)",
+        "snippet": "<button class=\"br-button secondary\" type=\"button\">Voltar</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-radius: 1680px fora da escala do DS",
+        "expected": "Um de: 0, 4px, 8px, 16px, 999em, 0px, 50%",
+        "data": {
+          "property": "border-radius",
+          "observed": "1680px"
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-024",
+      "rule": {
+        "id": "ds-token-radius",
+        "source": "govbr-ds-token",
+        "description": "Cantos arredondados devem usar os tokens de superfície (--surface-rounder-sm/md/lg)."
+      },
+      "element": {
+        "locator": "#TC-B-13 > div > button:nth-of-type(2)",
+        "snippet": "<button class=\"br-button primary\" type=\"button\">Próxima etapa</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "border-radius: 1680px fora da escala do DS",
+        "expected": "Um de: 0, 4px, 8px, 16px, 999em, 0px, 50%",
+        "data": {
+          "property": "border-radius",
+          "observed": "1680px"
+        }
+      },
+      "severity": "minor",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-025",
+      "rule": {
+        "id": "button-name",
+        "source": "axe-core",
+        "description": "Buttons must have discernible text (e-MAG 2.2: Garantir que os objetos programáveis sejam acessíveis)",
+        "wcag": "4.1.2"
+      },
+      "element": {
+        "locator": "#TC-B-02 > .circle[type=\"button\"]",
+        "snippet": "<button class=\"br-button circle\" type=\"button\"><i class=\"fas fa-search\" aria-hidden=\"true\"></i></button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "Element does not have inner text visible to screen readers; aria-label absent or empty; no aria-labelledby, title or label",
+        "expected": "Buttons must have discernible text",
+        "data": {
+          "emagId": "2.2",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/button-name?application=axeAPI"
+        }
+      },
+      "severity": "critical",
+      "nature": "syntactic",
+      "mode": "display",
+      "pathway": "deterministic"
+    },
+    {
+      "id": "F-100",
+      "rule": {
+        "id": "wcag-2.5.3",
+        "source": "wcag",
+        "description": "Label in Name: para componentes com rótulo visível, o nome acessível deve conter o texto apresentado visualmente.",
+        "wcag": "2.5.3"
+      },
+      "element": {
+        "locator": "#TC-B-07 > button",
+        "snippet": "<button class=\"br-button primary\" type=\"button\" aria-label=\"Cancelar\">Confirmar</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "aria-label=\"Cancelar\" sobrepõe o nome acessível, mas o texto visível do botão é \"Confirmar\" — o nome acessível não contém o rótulo visível",
+        "expected": "Nome acessível contendo o texto visível (ex.: remover o aria-label contraditório ou alinhá-lo a \"Confirmar\")",
+        "data": {
+          "ariaLabel": "Cancelar",
+          "visibleText": "Confirmar"
+        }
+      },
+      "severity": "serious",
+      "nature": "semantic",
+      "mode": "interaction",
+      "pathway": "heuristic",
+      "verification": {
+        "verdict": "confirmed",
+        "verifiedBy": "live-inspection",
+        "detail": "Elemento localizado em http://localhost:3000/; evidência consistente com o DOM real."
+      },
+      "trace": "Árvore de acessibilidade (Playwright browser_snapshot) expõe o botão como \"Cancelar\" enquanto o texto renderizado é \"Confirmar\"; usuários de comando de voz que pronunciarem o rótulo visível não acionarão o controle. Contradição entre canal visual e canal programático — não detectável por comparação exata de valores."
+    },
+    {
+      "id": "F-101",
+      "rule": {
+        "id": "emag-2.1",
+        "source": "emag",
+        "description": "Disponibilizar todas as funções da página via teclado: todos os elementos interativos devem ser operáveis por teclado, sem armadilhas de foco.",
+        "wcag": "2.1.1"
+      },
+      "element": {
+        "locator": "#TC-B-03 > div",
+        "snippet": "<div class=\"br-button primary\" style=\"display: inline-block; cursor: pointer;\">Confirmar</div>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "<div> estilizado como botão sem role, sem tabindex e sem semântica interativa: a árvore de acessibilidade o expõe como 'generic' — invisível para teclado e leitores de tela",
+        "expected": "Elemento <button> nativo (ou, no mínimo, role='button' + tabindex='0' + handlers de teclado)",
+        "data": {
+          "tagName": "div",
+          "role": null,
+          "tabindex": null,
+          "a11yTreeRole": "generic"
+        }
+      },
+      "severity": "critical",
+      "nature": "semantic",
+      "mode": "interaction",
+      "pathway": "explicit",
+      "trace": "Julgamento contextual sobre a evidência de F-002: além da tag incorreta (sintático), o elemento é funcionalmente inacessível — inspect_computed_styles mostra role e tabindex nulos e o browser_snapshot o expõe como 'generic', não como botão. Regra emag-2.1 obtida via get_emag_rules(section=2)."
+    },
+    {
+      "id": "F-102",
+      "rule": {
+        "id": "emag-2.1",
+        "source": "emag",
+        "description": "Disponibilizar todas as funções da página via teclado: todos os elementos interativos devem ser operáveis por teclado, sem armadilhas de foco.",
+        "wcag": "2.1.1"
+      },
+      "element": {
+        "locator": "#TC-B-11 > span:nth-of-type(2)",
+        "snippet": "<span class=\"br-button primary\" role=\"button\">Confirmar</span>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "<span role='button'> sem tabindex: o papel interativo é anunciado, mas o elemento não entra na ordem de tabulação — inacessível por teclado",
+        "expected": "tabindex='0' acompanhando role='button' (ou elemento <button> nativo)",
+        "data": {
+          "tagName": "span",
+          "role": "button",
+          "tabindex": null
+        }
+      },
+      "severity": "serious",
+      "nature": "semantic",
+      "mode": "interaction",
+      "pathway": "explicit",
+      "trace": "O role='button' faz o elemento aparecer como botão na árvore de acessibilidade, mascarando o problema para inspeção superficial; a evidência de inspect_computed_styles (tabindex null em elemento não focável nativamente) decide. Regra emag-2.1 obtida via get_emag_rules(section=2)."
+    },
+    {
+      "id": "F-103",
+      "rule": {
+        "id": "emag-4.4",
+        "source": "emag",
+        "description": "Possibilitar que o elemento com foco seja visualmente evidente. O gov.br DS usa contorno tracejado dourado (#c2850c, offset 4px). Não usar outline: none sem substituto visível.",
+        "wcag": "2.4.7"
+      },
+      "element": {
+        "locator": "#TC-B-10 > button",
+        "snippet": "<button class=\"br-button primary v-focus-a\" type=\"button\">Salvar alterações</button>",
+        "page": "http://localhost:3000/"
+      },
+      "evidence": {
+        "observed": "No estado :focus, outline-style: none e box-shadow: none — nenhum indicador visual de foco",
+        "expected": "Indicador de foco do DS: outline dashed 4px #c2850c com offset 4px (observado nos botões conformes da mesma página)",
+        "data": {
+          "focusedOutlineStyle": "none",
+          "focusedBoxShadow": "none",
+          "expectedOutline": "rgb(194, 133, 12) dashed 4px"
+        }
+      },
+      "severity": "serious",
+      "nature": "semantic",
+      "mode": "interaction",
+      "pathway": "explicit",
+      "trace": "Comparação do estado :focus capturado por inspect_computed_styles: os botões conformes da página exibem outline dourado tracejado (rgb(194,133,12) dashed 4px); este exibe outline none + box-shadow none. Supressão de foco via CSS não é detectada pelo axe-core (que analisa a árvore de acessibilidade, não estilos computados de foco). Regra emag-4.4 obtida via get_emag_rules(section=4)."
+    }
+  ],
+  "notes": "Execução ponta-a-ponta do prompt validate_page (agente Claude via MCP + Playwright MCP browser_snapshot). Escopo efetivo: aba \"Botões\" (casos TC-B-01..13) — a aba \"Formulário\" não é endereçável por URL (estado SPA sem roteamento), logo os casos TC-F ficaram fora desta rodada; recomenda-se rotas URL-endereçáveis no app de corpus (E1). Observações sobre a camada determinística, para triagem humana: (1) a família de achados ds-token-radius com border-radius 1680px atinge inclusive os casos de referência conformes (TC-B-01, TC-B-06, TC-B-13) — 1680px é o pill do DS (100em × font-size 16.8px) computado em px; o verificador B1 precisa normalizar em→px antes das rodadas de avaliação (fonte de falsos positivos sistemáticos); (2) ds-structure-button-variant sinalizou a classe \"danger\" (TC-B-06, caso de referência), mas o @govbr-ds/core traz o exemplo oficial button-status e o token --danger — lacuna na extração de variantes da especificação. Iterações adicionais usadas: 0 de 2 (evidência da primeira coleta foi suficiente)."
+}
