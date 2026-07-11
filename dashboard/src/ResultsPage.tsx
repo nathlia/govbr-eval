@@ -483,7 +483,7 @@ export default function ResultsPage() {
                       <td style={{ ...TD, color: isReference ? "#888" : "#212529", fontStyle: isReference ? "italic" : "normal" }}>
                         {isReference
                           ? "Referência correta"
-                          : c.violations[0]?.split(" — ")[0] ?? c.description}
+                          : c.violations[0]?.description.split(" — ")[0] ?? c.description}
                       </td>
                       <td style={TD}>
                         {c.categories.map((cat) => <Badge key={cat} category={cat} />)}

@@ -1,24 +1,26 @@
 /**
  * Evaluation scorer
  *
- * Computes precision, recall, and F1 for each tool by comparing
- * actual detection results against ground-truth.
+ * Two granularities:
+ *  1. Case level — per-case boolean detection for the three-tool comparison
+ *     (axe-core, eslint-a11y, agent), as in the pilot.
+ *  2. Element × rule (E3) — agent findings matched against expected units
+ *     (case × normative rule), with P/R/F1 per violation category and
+ *     macro/micro aggregates (F1).
  *
- * Tools evaluated:
- *   - axe-core      : from results/axe-results.json   (actual run)
- *   - eslint-a11y   : from ground-truth detection field (no runtime runner)
- *   - agent         : from results/agent-results.json  (actual run)
+ * Agent findings may be structured ({ rule, description }) or legacy strings —
+ * for strings, rule ids are parsed from the normative citations in the text.
  *
  * Usage:
  *   npm run score
- *   npm run score:verbose    (show per-case breakdown)
- *   npm run score:json       (output raw JSON metrics)
+ *   npm run score:verbose    (per-case + per-unit breakdown)
+ *   npm run score:json       (machine-readable metrics)
  */
 
 import { readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import type { AgentResults, AxeResults, GroundTruth, ToolKey } from "../types";
+import type { AgentFinding, AgentResults, AxeResults, GroundTruth, RuleId, ToolKey } from "../types";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -48,14 +50,77 @@ const cases = gt.cases;
 type ActualMap = Record<string, boolean>;
 type Outcome = "TP" | "FP" | "FN" | "TN";
 
-// ── Build axe actual detection map ───────────────────────────────────────────
-// axe-results.json: { results: { buttons: { byCaseId: { "TC-B-02": [...] } } } }
+// ── Rule extraction ───────────────────────────────────────────────────────────
+
+/** Normalize a rule id: lowercase, strip spaces ("WCAG 3.3.2" → "wcag:3.3.2"). */
+function normalizeRuleId(raw: string): RuleId {
+  return raw.trim().toLowerCase().replace(/\s+/g, "").replace(/^(emag|wcag|ds)[.\-]?:?/, "$1:");
+}
+
+/** Parse normative rule ids out of a free-text finding (legacy string format). */
+function parseRulesFromText(text: string): RuleId[] {
+  const rules = new Set<RuleId>();
+  const t = text.toLowerCase();
+
+  for (const m of t.matchAll(/e-?mag[\s:]*([0-9]+\.[0-9]+)/g)) rules.add(`emag:${m[1]}`);
+  if (/wcag/.test(t)) {
+    for (const m of t.matchAll(/\b([0-9]+\.[0-9]+\.[0-9]+)\b/g)) rules.add(`wcag:${m[1]}`);
+  }
+
+  // DS-specific rule heuristics (pt-BR + en signals)
+  const dsContext = /token|paleta|ds gov|do ds|spec do/i.test(text);
+  if (dsContext && /(background|border-color|cor de fundo|cor de borda|paleta)/i.test(text)) rules.add("ds:token-color");
+  if (/(font-family|fonte|tipograf)/i.test(text) && /(rawline|raleway|token)/i.test(text)) rules.add("ds:token-font");
+  if (/(border-radius|raio)/i.test(text) && dsContext) rules.add("ds:token-radius");
+  if (/(foco|focus)/i.test(text) && /(suprimido|indicador|outline)/i.test(text)) rules.add("ds:token-focus");
+  if (/(ordem)[\s\S]{0,30}(bot(ão|ões|oes)|button)/i.test(text) || /button.order/i.test(text)) rules.add("ds:button-order");
+  if (/(apenas a tag|somente a tag|no lugar de <button>|spec do componente|estrutura do componente|component structure)/i.test(text)) rules.add("ds:component-structure");
+  if (/(label|r[óo]tulo)[\s\S]{0,20}vis[íi]vel/i.test(text)) rules.add("ds:form-label");
+
+  return [...rules];
+}
+
+function rulesOfFinding(f: AgentFinding): { rules: RuleId[]; description: string; structured: boolean } {
+  if (typeof f === "string") {
+    return { rules: parseRulesFromText(f), description: f, structured: false };
+  }
+  const declared = normalizeRuleId(f.rule);
+  // Also parse the description so aliases in the text still count
+  const parsed = parseRulesFromText(f.description);
+  return { rules: [...new Set([declared, ...parsed])], description: f.description, structured: true };
+}
+
+// ── Expected units (element × rule) ──────────────────────────────────────────
+
+interface ExpectedUnit {
+  caseId: string;
+  rules: RuleId[];       // any alias counts as a match
+  categories: string[];
+  description: string;
+}
+
+const expectedUnits: ExpectedUnit[] = [];
+for (const [caseId, c] of Object.entries(cases)) {
+  for (const v of c.violations) {
+    expectedUnits.push({ caseId, rules: v.rules.map(normalizeRuleId), categories: v.categories, description: v.description });
+  }
+}
+
+/** rule id → categories it appears with in the gabarito (used to attribute FP categories). */
+const ruleCategoryMap = new Map<RuleId, Set<string>>();
+for (const u of expectedUnits) {
+  for (const r of u.rules) {
+    if (!ruleCategoryMap.has(r)) ruleCategoryMap.set(r, new Set());
+    for (const cat of u.categories) ruleCategoryMap.get(r)!.add(cat);
+  }
+}
+
+// ── Case-level maps (three-tool comparison, as in the pilot) ─────────────────
 
 function buildAxeActual(): ActualMap | null {
   if (!axeRaw?.results) return null;
   const map: ActualMap = {};
   for (const [id, c] of Object.entries(cases)) {
-    // Default to false (no violation detected) for pages that were run
     if (axeRaw.results[c.page]) map[id] = map[id] ?? false;
   }
   for (const pageData of Object.values(axeRaw.results)) {
@@ -66,9 +131,6 @@ function buildAxeActual(): ActualMap | null {
   return map;
 }
 
-// ── Build agent actual detection map ─────────────────────────────────────────
-// agent-results.json: { verdicts: { "TC-B-02": { detected: true, ... } } }
-
 function buildAgentActual(): ActualMap | null {
   if (!agentRaw?.verdicts || agentRaw._empty) return null;
   const map: ActualMap = {};
@@ -77,12 +139,6 @@ function buildAgentActual(): ActualMap | null {
   }
   return map;
 }
-
-// ── Compute metrics for one tool ─────────────────────────────────────────────
-// ground-truth.detection[tool] values:
-//   true  → expected to detect
-//   false → expected to miss
-//   null  → reference case, skip from scoring
 
 interface CaseRow {
   id: string;
@@ -100,7 +156,7 @@ interface Metrics {
   rows: CaseRow[];
 }
 
-function computeMetrics(toolKey: ToolKey, actualMap: ActualMap | null): Metrics {
+function computeCaseMetrics(toolKey: ToolKey, actualMap: ActualMap | null): Metrics {
   const rows: CaseRow[] = [];
   let TP = 0, FP = 0, FN = 0, TN = 0, missing = 0;
 
@@ -108,7 +164,7 @@ function computeMetrics(toolKey: ToolKey, actualMap: ActualMap | null): Metrics 
     const expected = c.detection[toolKey];
     if (expected === null) continue;          // reference case, skip
 
-    const hasViolation = c.violations.length > 0;  // ground-truth truth
+    const hasViolation = c.violations.length > 0;
     const actual = actualMap?.[id];
 
     if (actual === undefined) {
@@ -126,13 +182,119 @@ function computeMetrics(toolKey: ToolKey, actualMap: ActualMap | null): Metrics 
     rows.push({ id, truth: hasViolation, actual, outcome });
   }
 
+  return { TP, FP, FN, TN, missing, ...prf(TP, FP, FN), rows };
+}
+
+function prf(TP: number, FP: number, FN: number): { precision: number | null; recall: number | null; f1: number | null } {
   const precision = TP + FP === 0 ? null : TP / (TP + FP);
   const recall    = TP + FN === 0 ? null : TP / (TP + FN);
   const f1 = precision !== null && recall !== null && (precision + recall) > 0
     ? 2 * precision * recall / (precision + recall)
     : null;
+  return { precision, recall, f1 };
+}
 
-  return { TP, FP, FN, TN, missing, precision, recall, f1, rows };
+// ── Unit-level scoring: agent findings vs expected (element × rule) ──────────
+
+interface UnitOutcome {
+  unit: ExpectedUnit;
+  matched: boolean;
+  ruleVerified: boolean;       // matched on an explicit rule id (vs case-level fallback)
+  matchedRule: RuleId | null;
+  finding: string | null;
+}
+
+interface FalseFinding {
+  caseId: string;
+  description: string;
+  rules: RuleId[];
+  categories: string[];        // attributed via ruleCategoryMap ("sem-categoria" if unknown)
+  onReferenceCase: boolean;
+}
+
+interface UnitScore {
+  outcomes: UnitOutcome[];
+  falseFindings: FalseFinding[];
+  TP: number; FN: number; FP: number;
+  ruleVerifiedTP: number;
+}
+
+function scoreUnits(): UnitScore | null {
+  if (!agentRaw?.verdicts || agentRaw._empty) return null;
+
+  const outcomes: UnitOutcome[] = [];
+  const falseFindings: FalseFinding[] = [];
+
+  for (const [caseId, c] of Object.entries(cases)) {
+    const verdict = agentRaw.verdicts[caseId];
+    const findings = (verdict?.detected ? verdict.violations_found : []).map(rulesOfFinding);
+    const used = new Set<number>();
+    const units = expectedUnits.filter(u => u.caseId === caseId);
+
+    // Pass 1: rule-verified matches
+    for (const unit of units) {
+      const idx = findings.findIndex((f, i) => !used.has(i) && f.rules.some(r => unit.rules.includes(r)));
+      if (idx >= 0) {
+        used.add(idx);
+        const rule = findings[idx].rules.find(r => unit.rules.includes(r)) ?? null;
+        outcomes.push({ unit, matched: true, ruleVerified: true, matchedRule: rule, finding: findings[idx].description });
+      }
+    }
+
+    // Pass 2: case-level fallback — an unmatched finding with no recognizable rule
+    // still counts for an unmatched unit on the same case (rule not verified).
+    for (const unit of units) {
+      if (outcomes.some(o => o.unit === unit)) continue;
+      const idx = findings.findIndex((f, i) => !used.has(i) && f.rules.length === 0);
+      if (idx >= 0) {
+        used.add(idx);
+        outcomes.push({ unit, matched: true, ruleVerified: false, matchedRule: null, finding: findings[idx].description });
+      } else {
+        outcomes.push({ unit, matched: false, ruleVerified: false, matchedRule: null, finding: null });
+      }
+    }
+
+    // Leftover findings: false positives at unit granularity
+    findings.forEach((f, i) => {
+      if (used.has(i)) return;
+      const cats = new Set<string>();
+      for (const r of f.rules) for (const cat of ruleCategoryMap.get(r) ?? []) cats.add(cat);
+      falseFindings.push({
+        caseId,
+        description: f.description,
+        rules: f.rules,
+        categories: cats.size ? [...cats] : ["sem-categoria"],
+        onReferenceCase: units.length === 0,
+      });
+    });
+  }
+
+  const TP = outcomes.filter(o => o.matched).length;
+  const FN = outcomes.filter(o => !o.matched).length;
+  const FP = falseFindings.length;
+  const ruleVerifiedTP = outcomes.filter(o => o.matched && o.ruleVerified).length;
+
+  return { outcomes, falseFindings, TP, FN, FP, ruleVerifiedTP };
+}
+
+interface CategoryMetrics {
+  category: string;
+  units: number;
+  TP: number; FN: number; FP: number;
+  precision: number | null;
+  recall: number | null;
+  f1: number | null;
+}
+
+function categoryMetrics(score: UnitScore): CategoryMetrics[] {
+  const categories = [...new Set(expectedUnits.flatMap(u => u.categories))].sort();
+  return categories.map(category => {
+    const inCat = score.outcomes.filter(o => o.unit.categories.includes(category));
+    const TP = inCat.filter(o => o.matched).length;
+    const FN = inCat.filter(o => !o.matched).length;
+    const FP = score.falseFindings.filter(f => f.categories.includes(category)).length;
+    return { category, units: inCat.length, TP, FN, FP, ...prf(TP, FP, FN) };
+  });
 }
 
 // ── Format helpers ────────────────────────────────────────────────────────────
@@ -169,8 +331,6 @@ const tools: ToolEntry[] = [
   { key: "agent",      label: "Agent",       actual: agentActual, source: agentActual && agentRaw ? `run ${agentRaw.timestamp?.slice(0, 16)} — ${agentRaw.model}` : "not run — execute /evaluate-all first" },
 ];
 
-// For eslint_a11y we use the expected values from ground-truth as the "actual"
-// (since there is no runtime eslint runner in this suite)
 const eslintExpected: ActualMap = {};
 for (const [id, c] of Object.entries(cases)) {
   if (c.detection.eslint_a11y !== null) {
@@ -180,7 +340,9 @@ for (const [id, c] of Object.entries(cases)) {
 tools[1].actual = eslintExpected;
 tools[1].note   = "(expected — not yet measured empirically)";
 
-const metrics = tools.map(t => ({ ...t, ...computeMetrics(t.key, t.actual) }));
+const metrics = tools.map(t => ({ ...t, ...computeCaseMetrics(t.key, t.actual) }));
+const unitScore = scoreUnits();
+const catMetrics = unitScore ? categoryMetrics(unitScore) : null;
 
 if (JSON_OUT) {
   const out: Record<string, unknown> = {};
@@ -188,20 +350,33 @@ if (JSON_OUT) {
     out[m.key] = { TP: m.TP, FP: m.FP, FN: m.FN, TN: m.TN,
       precision: m.precision, recall: m.recall, f1: m.f1, source: m.source };
   }
+  if (unitScore && catMetrics) {
+    const defined = catMetrics.filter(c => c.f1 !== null);
+    out.agent_units = {
+      TP: unitScore.TP, FN: unitScore.FN, FP: unitScore.FP,
+      ruleVerifiedTP: unitScore.ruleVerifiedTP,
+      ...prf(unitScore.TP, unitScore.FP, unitScore.FN),
+      perCategory: catMetrics,
+      macro: {
+        precision: defined.length ? defined.reduce((s, c) => s + (c.precision ?? 0), 0) / defined.length : null,
+        recall:    defined.length ? defined.reduce((s, c) => s + (c.recall ?? 0), 0) / defined.length : null,
+        f1:        defined.length ? defined.reduce((s, c) => s + (c.f1 ?? 0), 0) / defined.length : null,
+      },
+    };
+  }
   console.log(JSON.stringify(out, null, 2));
   process.exit(0);
 }
 
-// Count violation cases in ground-truth
 const violationCases = Object.values(cases).filter(c => c.violations.length > 0).length;
 const referenceCases = Object.values(cases).filter(c => c.violations.length === 0).length;
 const totalCases     = Object.keys(cases).length;
 
 console.log("\n=== govbr-ds Validator — Evaluation Results ===\n");
-console.log(`Ground-truth: ${totalCases} cases  (${violationCases} violations, ${referenceCases} reference)`);
+console.log(`Ground-truth: ${totalCases} cases (${violationCases} violations, ${referenceCases} reference) · ${expectedUnits.length} expected units (element × rule)`);
 console.log();
 
-// Summary table
+// Case-level summary table
 console.log(
   pad("Tool", 14) +
   pad("TP",  5) + pad("FP",  5) + pad("FN",  5) + pad("TN",  5) +
@@ -238,6 +413,64 @@ if (agentActual) {
 
 console.log();
 
+// ── Agent element × rule section (E3 + F1) ───────────────────────────────────
+
+if (unitScore && catMetrics) {
+  const u = prf(unitScore.TP, unitScore.FP, unitScore.FN);
+  console.log("=== Agent — element × rule (E3) ===\n");
+  console.log(
+    pad(`Units: ${expectedUnits.length}`, 14) +
+    pad(`TP ${unitScore.TP}`, 8) + pad(`FN ${unitScore.FN}`, 8) + pad(`FP ${unitScore.FP}`, 8) +
+    `micro  P ${pct(u.precision)}  R ${pct(u.recall)}  F1 ${pct(u.f1)}`
+  );
+  console.log(`Rule-verified matches: ${unitScore.ruleVerifiedTP} / ${unitScore.TP} TP (remainder matched at case level without a recognizable rule id)`);
+  console.log();
+
+  console.log(
+    pad("Category", 16) + pad("Units", 7) +
+    pad("TP", 5) + pad("FN", 5) + pad("FP", 5) +
+    pad("Precision", 12) + pad("Recall", 10) + "F1"
+  );
+  console.log("─".repeat(70));
+  for (const c of catMetrics) {
+    console.log(
+      pad(c.category, 16) + pad(c.units, 7) +
+      pad(c.TP, 5) + pad(c.FN, 5) + pad(c.FP, 5) +
+      pad(pct(c.precision), 12) + pad(pct(c.recall), 10) + pct(c.f1)
+    );
+  }
+  const defined = catMetrics.filter(c => c.f1 !== null);
+  if (defined.length) {
+    const mp = defined.reduce((s, c) => s + (c.precision ?? 0), 0) / defined.length;
+    const mr = defined.reduce((s, c) => s + (c.recall ?? 0), 0) / defined.length;
+    const mf = defined.reduce((s, c) => s + (c.f1 ?? 0), 0) / defined.length;
+    console.log("─".repeat(70));
+    console.log(pad("macro avg", 38) + pad(pct(mp), 12) + pad(pct(mr), 10) + pct(mf));
+  }
+  console.log("\nNote: a unit may carry multiple categories — it counts in each (columns do not sum to the total).");
+  console.log();
+
+  if (unitScore.falseFindings.length) {
+    console.log("False findings (unit granularity):");
+    for (const f of unitScore.falseFindings) {
+      console.log(`  • [${f.caseId}${f.onReferenceCase ? " — reference case" : ""}] ${f.description.slice(0, 100)}${f.description.length > 100 ? "…" : ""}`);
+      console.log(`    rules: ${f.rules.join(", ") || "(none recognized)"} · categories: ${f.categories.join(", ")}`);
+    }
+    console.log();
+  }
+
+  if (VERBOSE) {
+    console.log("Per-unit outcomes:");
+    for (const o of unitScore.outcomes) {
+      const sym = o.matched ? (o.ruleVerified ? "✓" : "≈") : "✗";
+      const via = o.matched ? (o.ruleVerified ? `via ${o.matchedRule}` : "case-level (rule not verified)") : "NOT DETECTED";
+      console.log(`  ${sym} ${pad(o.unit.caseId, 10)} [${o.unit.rules.join(", ")}] ${via}`);
+    }
+    console.log("\nLegend: ✓ = rule-verified match  ≈ = case-level fallback  ✗ = missed unit");
+    console.log();
+  }
+}
+
 // Per-case breakdown (--verbose)
 if (VERBOSE) {
   console.log("=== Per-case breakdown ===\n");
@@ -266,7 +499,6 @@ if (VERBOSE) {
     const axeSym   = axeOut   ? outcomeSymbol(axeOut.outcome)   : (c.detection.axe === null ? "—" : "?");
     const agentSym = agentOut ? outcomeSymbol(agentOut.outcome)  : (c.detection.agent === null ? "—" : "?");
 
-    // eslint: use expected
     let eslintSym = "—";
     if (c.detection.eslint_a11y !== null) {
       eslintSym = c.detection.eslint_a11y ? "✓" : "✗";

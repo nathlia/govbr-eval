@@ -14,13 +14,24 @@ Every case gets a verdict object:
 ```json
 {
   "TC-B-01": { "detected": false, "violations_found": [], "notes": "..." },
-  "TC-B-02": { "detected": true,  "violations_found": ["violation description"], "notes": "..." }
+  "TC-B-02": { "detected": true,  "violations_found": [
+    { "rule": "wcag:4.1.2", "description": "Botão icon-only sem nome acessível: ..." }
+  ], "notes": "..." }
 }
 ```
 - `detected: true`  → at least one violation found in this section
 - `detected: false` → no violations found (correct implementation or false negative)
-- `violations_found` → list of violation descriptions (empty for clean cases)
+- `violations_found` → list of finding objects, one per distinct violated rule (empty for clean cases)
 - `notes` → brief reasoning (what you observed and why you decided)
+
+Each finding's `rule` MUST use the rule id vocabulary (scoring matches on element × rule):
+- `emag:<seção>` — e-MAG 3.1 recommendation, e.g. `emag:6.5`
+- `wcag:<sc>` — WCAG success criterion, e.g. `wcag:3.3.2`
+- `ds:<regra>` — DS-specific: `ds:token-color`, `ds:token-font`, `ds:token-radius`,
+  `ds:token-focus`, `ds:token-spacing`, `ds:button-order`, `ds:component-structure`, `ds:form-label`
+
+Pick the single most specific rule per finding; still cite related norms inside `description`.
+One finding per violated rule — do not bundle two independent violations into one entry.
 
 ## Steps
 
