@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-11T02:40:12.985Z",
+  "timestamp": "2026-07-11T06:25:29.144Z",
   "tool": "axe-core via @axe-core/playwright",
   "appUrl": "http://localhost:3000",
   "results": {
@@ -16,6 +16,7 @@
           }
         ]
       },
+      "incompleteByCaseId": {},
       "raw": [
         {
           "id": "button-name",
@@ -34,16 +35,8 @@
     },
     "forms": {
       "passes": 28,
-      "violationCount": 2,
+      "violationCount": 1,
       "byCaseId": {
-        "TC-F-12": [
-          {
-            "rule": "heading-order",
-            "impact": "moderate",
-            "description": "Ensure the order of headings is semantically correct",
-            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/heading-order?application=playwright"
-          }
-        ],
         "TC-F-02": [
           {
             "rule": "label",
@@ -53,20 +46,17 @@
           }
         ]
       },
+      "incompleteByCaseId": {
+        "TC-F-11": [
+          {
+            "rule": "aria-valid-attr-value",
+            "impact": "critical",
+            "description": "Ensure all ARIA attributes have valid values",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-valid-attr-value?application=playwright"
+          }
+        ]
+      },
       "raw": [
-        {
-          "id": "heading-order",
-          "impact": "moderate",
-          "description": "Ensure the order of headings is semantically correct",
-          "nodes": [
-            {
-              "target": [
-                "#f12-section-label"
-              ],
-              "testCaseId": "TC-F-12"
-            }
-          ]
-        },
         {
           "id": "label",
           "impact": "critical",

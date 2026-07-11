@@ -2,7 +2,7 @@
   "_meta": {
     "version": "2.1",
     "ds": "gov.br Design System (Padrão Digital de Governo)",
-    "tools_baseline": ["axe-core 4.x", "eslint-plugin-jsx-a11y 6.x"],
+    "tools_baseline": ["axe-core 4.11 (measured 2026-07-11; detection.axe reflects the violations bucket of this version)", "eslint-plugin-jsx-a11y 6.x"],
     "unit_of_evaluation": "(element × rule): the element is the TC-* section; each violation entry carries the normative rule ids that count as a match (E3). A finding matches when it lands on the same case AND cites any of the listed rule aliases.",
     "rule_id_format": {
       "emag": "emag:<section> — e.g. emag:6.5 (e-MAG 3.1 recommendation)",
@@ -156,8 +156,8 @@
         }
       ],
       "categories": ["structural"],
-      "detection": { "axe": true, "eslint_a11y": true, "agent": true },
-      "notes": "Baseline case. axe catches via 'interactive-supports-focus' rule. eslint-plugin-jsx-a11y catches via the same rule statically. All tools should detect this."
+      "detection": { "axe": false, "eslint_a11y": true, "agent": true },
+      "notes": "CORRECTED 2026-07-11 (axe-capability audit): 'interactive-supports-focus' is NOT in axe-core 4.11's ruleset (verified via axe.getRules(), 104 rules) — axe passes the span on aria-command-name because it has text and nothing checks focusability. eslint-plugin-jsx-a11y still catches it statically via its own interactive-supports-focus rule."
     },
     "TC-B-12": {
       "page": "buttons",
@@ -299,8 +299,8 @@
         }
       ],
       "categories": ["structural"],
-      "detection": { "axe": true, "eslint_a11y": false, "agent": true },
-      "notes": "axe catches via 'checkboxgroup' rule — checkboxes sharing the same name must be in a group with an accessible name. eslint-a11y has no static rule for missing fieldset/legend at the group level. Adds a third axe-baseline case."
+      "detection": { "axe": false, "eslint_a11y": false, "agent": true },
+      "notes": "CORRECTED 2026-07-11 (axe-capability audit): the 'checkboxgroup' and 'fieldset' rules were removed from axe-core in 4.x — no current rule requires fieldset/legend for checkbox groups (case PASSES all applicable rules in 4.11). eslint-a11y also has no static rule for this. Now an agent-only case."
     },
     "TC-F-10": {
       "page": "forms",
@@ -327,8 +327,8 @@
         }
       ],
       "categories": ["structural"],
-      "detection": { "axe": true, "eslint_a11y": false, "agent": true },
-      "notes": "axe catches via 'aria-valid-attr-value' — validates that IDs referenced in aria-* attributes exist in the DOM. eslint-a11y cannot verify cross-component ID resolution at static analysis time. Adds a fourth axe-baseline case."
+      "detection": { "axe": false, "eslint_a11y": false, "agent": true },
+      "notes": "CORRECTED 2026-07-11 (axe-capability audit): axe-core 4.11 files this under 'incomplete' (needs review), not 'violations' — message: \"ARIA attribute element ID does not exist on the page: aria-labelledby='ghost-label-id'\" — because the placeholder provides a fallback accessible name. Standard axe usage (CI) counts violations only, so detection.axe=false; the runner records the incomplete bucket separately for transparency. eslint-a11y cannot verify cross-component ID resolution statically. Now an agent-only case."
     },
     "TC-F-12": {
       "page": "forms",
@@ -336,7 +336,7 @@
       "violations": [],
       "categories": [],
       "detection": { "axe": null, "eslint_a11y": null, "agent": null },
-      "notes": "False-positive trap. Input has no visible <label> but aria-labelledby points to an existing <h3 id='f12-section-label'>. This is valid per WCAG and e-MAG — the heading serves as the label. Agent must recognize the association is intact and not flag it."
+      "notes": "False-positive trap. Input has no visible <label> but aria-labelledby points to an existing <h2 id='f12-section-label'>. This is valid per WCAG and e-MAG — the heading serves as the label. Agent must recognize the association is intact and not flag it. (2026-07-11: heading changed h3→h2 in the corpus — the h1→h3 level skip was triggering axe's 'heading-order' on this reference case, an authoring artifact unrelated to the trap.)"
     },
     "TC-F-13": {
       "page": "forms",

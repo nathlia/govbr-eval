@@ -156,16 +156,23 @@ interface Metrics {
   rows: CaseRow[];
 }
 
-function computeCaseMetrics(toolKey: ToolKey, actualMap: ActualMap | null): Metrics {
+function computeCaseMetrics(toolKey: ToolKey, actualMap: ActualMap | null, scoreReferenceCases = false): Metrics {
   const rows: CaseRow[] = [];
   let TP = 0, FP = 0, FN = 0, TN = 0, missing = 0;
 
   for (const [id, c] of Object.entries(cases)) {
     const expected = c.detection[toolKey];
-    if (expected === null) continue;          // reference case, skip
-
     const hasViolation = c.violations.length > 0;
     const actual = actualMap?.[id];
+
+    // Reference cases (expected === null): for measured tools they still count —
+    // flagging one is a false positive. Skipped only for expected-value pseudo-tools.
+    if (expected === null) {
+      if (!scoreReferenceCases || actual === undefined) continue;
+      if (actual) { FP++; rows.push({ id, truth: false, actual, outcome: "FP" }); }
+      else        { TN++; rows.push({ id, truth: false, actual, outcome: "TN" }); }
+      continue;
+    }
 
     if (actual === undefined) {
       missing++;
@@ -340,7 +347,9 @@ for (const [id, c] of Object.entries(cases)) {
 tools[1].actual = eslintExpected;
 tools[1].note   = "(expected — not yet measured empirically)";
 
-const metrics = tools.map(t => ({ ...t, ...computeCaseMetrics(t.key, t.actual) }));
+// Measured tools (axe, agent) are scored on reference cases too; the eslint
+// pseudo-tool uses expected values, so reference cases stay out of its score.
+const metrics = tools.map(t => ({ ...t, ...computeCaseMetrics(t.key, t.actual, t.key !== "eslint_a11y") }));
 const unitScore = scoreUnits();
 const catMetrics = unitScore ? categoryMetrics(unitScore) : null;
 

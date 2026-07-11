@@ -47,6 +47,8 @@ export interface AxePageResult {
   passes: number;
   violationCount: number;
   byCaseId: Record<string, AxeViolationRef[]>;
+  /** axe "needs review" results — informational only, never counted as detections. */
+  incompleteByCaseId?: Record<string, AxeViolationRef[]>;
   raw?: unknown;
 }
 

@@ -78,27 +78,31 @@ async function runPage({ name, url, tab }: PageConfig) {
 
   const results = await new AxeBuilder({ page }).analyze();
 
-  // Enrich each violation with the test case ID
-  const enriched: EnrichedViolation[] = await Promise.all(
-    results.violations.map(async (v) => {
-      const enrichedNodes: EnrichedNode[] = await Promise.all(
-        v.nodes.map(async (n) => {
-          const caseId = await findTestCaseId(page, n.target as string | string[]);
-          return { target: n.target, testCaseId: caseId };
-        })
-      );
-      return {
-        id: v.id,
-        impact: v.impact,
-        description: v.description,
-        helpUrl: v.helpUrl,
-        nodes: enrichedNodes,
-      };
-    })
-  );
+  // Enrich each result with the test case ID
+  const enrich = (list: typeof results.violations): Promise<EnrichedViolation[]> =>
+    Promise.all(
+      list.map(async (v) => {
+        const enrichedNodes: EnrichedNode[] = await Promise.all(
+          v.nodes.map(async (n) => {
+            const caseId = await findTestCaseId(page, n.target as string | string[]);
+            return { target: n.target, testCaseId: caseId };
+          })
+        );
+        return {
+          id: v.id,
+          impact: v.impact,
+          description: v.description,
+          helpUrl: v.helpUrl,
+          nodes: enrichedNodes,
+        };
+      })
+    );
+
+  const enriched = await enrich(results.violations);
+  const incomplete = await enrich(results.incomplete);
 
   await browser.close();
-  return { page: name, url, violations: enriched, passes: results.passes.length };
+  return { page: name, url, violations: enriched, incomplete, passes: results.passes.length };
 }
 
 async function main() {
@@ -110,25 +114,31 @@ async function main() {
     console.log(`  → ${pageConfig.name}`);
     const result = await runPage(pageConfig);
 
-    // Build a flat summary keyed by test case ID
-    const byCaseId: Record<string, AxeViolationRef[]> = {};
-    for (const violation of result.violations) {
-      for (const node of violation.nodes) {
-        const id = node.testCaseId;
-        if (!id) continue;
-        if (!byCaseId[id]) byCaseId[id] = [];
-        byCaseId[id].push({
-          rule: violation.id,
-          impact: violation.impact ?? undefined,
-          description: violation.description,
-          helpUrl: violation.helpUrl,
-        });
+    // Build flat summaries keyed by test case ID
+    const toByCaseId = (list: EnrichedViolation[]): Record<string, AxeViolationRef[]> => {
+      const map: Record<string, AxeViolationRef[]> = {};
+      for (const violation of list) {
+        for (const node of violation.nodes) {
+          const id = node.testCaseId;
+          if (!id) continue;
+          if (!map[id]) map[id] = [];
+          map[id].push({
+            rule: violation.id,
+            impact: violation.impact ?? undefined,
+            description: violation.description,
+            helpUrl: violation.helpUrl,
+          });
+        }
       }
-    }
+      return map;
+    };
+    const byCaseId = toByCaseId(result.violations);
+    const incompleteByCaseId = toByCaseId(result.incomplete);
     allResults[pageConfig.name] = {
       passes: result.passes,
       violationCount: result.violations.length,
       byCaseId,
+      incompleteByCaseId,
       raw: result.violations.map((v) => ({
         id: v.id,
         impact: v.impact,
@@ -139,7 +149,8 @@ async function main() {
 
     const detected = Object.keys(byCaseId);
     console.log(`     Violations: ${result.violations.length} rules fired`);
-    console.log(`     Test cases with violations: ${detected.join(", ") || "none"}\n`);
+    console.log(`     Test cases with violations: ${detected.join(", ") || "none"}`);
+    console.log(`     Needs review (incomplete, not counted): ${Object.keys(incompleteByCaseId).join(", ") || "none"}\n`);
   }
 
   const output: AxeResults = {
