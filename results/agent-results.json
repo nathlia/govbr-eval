@@ -1,0 +1,177 @@
+{
+  "timestamp": "2026-07-11T02:30:28.000Z",
+  "model": "claude-fable-5",
+  "appUrl": "http://localhost:3000",
+  "verdicts": {
+    "TC-B-01": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Botão canônico: <button class=\"br-button primary\" type=\"button\">. Background #1351b4 (--interactive), Rawline, raio pill (1680px), foco tracejado dourado #c2850c 4px com offset. Conforme."
+    },
+    "TC-B-02": {
+      "detected": true,
+      "violations_found": [
+        "Botão icon-only sem nome acessível: sem aria-label, sem texto visível e ícone com aria-hidden=\"true\" (WCAG 4.1.2; e-MAG 3.5)"
+      ],
+      "notes": "Snapshot mostra button sem nome; outerHTML confirma <button class=\"br-button circle\"><i class=\"fas fa-search\" aria-hidden=\"true\"></i></button> sem aria-label."
+    },
+    "TC-B-03": {
+      "detected": true,
+      "violations_found": [
+        "<div class=\"br-button primary\"> usado no lugar de <button>: sem role, sem tabindex, não operável por teclado e sem indicador de foco (e-MAG 2.1; WCAG 4.1.2; spec do DS aceita apenas a tag button)"
+      ],
+      "notes": "Aparece como generic (não button) na árvore de acessibilidade; no estado :focus o outline permanece none."
+    },
+    "TC-B-04": {
+      "detected": true,
+      "violations_found": [
+        "background-color #1352b4 fora da paleta de tokens do DS — não consta no hexLookup; o token esperado para botão primário é #1351b4 (--interactive/--color-primary-default)"
+      ],
+      "notes": "rgb(19, 82, 180) → #1352b4, um off-by-one do token oficial rgb(19, 81, 180). Demais propriedades conformes."
+    },
+    "TC-B-05": {
+      "detected": true,
+      "violations_found": [
+        "font-family computada \"Arial, sans-serif\" em elemento br-button — Rawline ausente da pilha de fontes (token --font-family-base: Rawline, Raleway, sans-serif)"
+      ],
+      "notes": "Tokens de cor e raio corretos; apenas a tipografia foge do DS."
+    },
+    "TC-B-06": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Botão danger conforme: background #e52207 (--danger), Rawline, raio pill, foco dourado presente. Rótulo \"Excluir conta\" é descritivo."
+    },
+    "TC-B-07": {
+      "detected": true,
+      "violations_found": [
+        "aria-label \"Cancelar\" contradiz o texto visível \"Confirmar\" no mesmo botão — nome acessível difere do rótulo visível (WCAG 2.5.3 Label in Name)"
+      ],
+      "notes": "Normalizados (trim/lowercase), \"cancelar\" ≠ \"confirmar\". Usuário de leitor de tela ouve o oposto do que vê."
+    },
+    "TC-B-08": {
+      "detected": true,
+      "violations_found": [
+        "border-radius 6px fora da escala de raios do DS {0px, 4px, 8px, 16px, pill} (tokens --surface-rounder-sm/md/lg)"
+      ],
+      "notes": "Botão secundário com raio customizado 6px; demais propriedades conformes."
+    },
+    "TC-B-09": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Botão circle icon-only correto: aria-label=\"Pesquisar\" fornece o nome acessível e o ícone tem aria-hidden=\"true\". Tokens e foco conformes."
+    },
+    "TC-B-10": {
+      "detected": true,
+      "violations_found": [
+        "Indicador de foco suprimido: no estado :focus, outline-style é \"none\" e box-shadow é \"none\" em elemento br-button (e-MAG 4.4; WCAG 2.4.7)"
+      ],
+      "notes": "Classe v-focus-a; o foco esperado do DS é outline tracejado dourado #c2850c 4px."
+    },
+    "TC-B-11": {
+      "detected": true,
+      "violations_found": [
+        "<span role=\"button\"> usado no lugar de <button>: sem tabindex, não focável/operável por teclado, e com indicador de foco ausente (e-MAG 2.1; WCAG 4.1.2; spec do DS aceita apenas a tag button)"
+      ],
+      "notes": "role=\"button\" expõe o papel na árvore de acessibilidade, mas sem tabindex e handlers de teclado o controle é inoperável por teclado; :focus mostra outline none."
+    },
+    "TC-B-12": {
+      "detected": true,
+      "violations_found": [
+        "<a href=\"#\" class=\"br-button\"> usado como botão de ação (\"Excluir arquivo\"): ação destrutiva implementada como link — a spec do componente button do DS admite apenas a tag <button>, e link deve navegar, não executar ação (e-MAG 1.2)"
+      ],
+      "notes": "Exposto como link na árvore de acessibilidade; href=\"#\" confirma que não há destino real."
+    },
+    "TC-B-13": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Grupo de ações correto: secundário (Voltar) antes do primário (Próxima etapa), ambos <button> com tokens e foco conformes."
+    },
+    "TC-F-01": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Caso de referência: labels associados via for/id existentes, campo CPF com dica de formato visível antes do campo e ligada via aria-describedby, required + aria-required, tokens corretos (borda #888888 --input-border-color), ordem secundário→primário nos botões."
+    },
+    "TC-F-02": {
+      "detected": true,
+      "violations_found": [
+        "Associação label/campo quebrada: <label for=\"usuario\"> mas o input tem id=\"username\" — o for não corresponde a nenhum id no DOM e o campo fica sem nome acessível (e-MAG 6.2; WCAG 1.3.1, 4.1.2)"
+      ],
+      "notes": "Snapshot mostra textbox sem nome; browser_evaluate confirma forTargetExists=false."
+    },
+    "TC-F-03": {
+      "detected": true,
+      "violations_found": [
+        "Campo rotulado apenas por placeholder: nenhum <label>, aria-label ou aria-labelledby — o nome acessível \"E-mail\" vem exclusivamente do placeholder, que desaparece ao digitar (e-MAG 6.2; WCAG 3.3.2)"
+      ],
+      "notes": "browser_evaluate confirma ariaLabel=null e ariaLabelledby=null; portanto placeholder-only, não referência quebrada. Também tem aria-required=\"true\" sem o atributo required, e a borda computada #767676/raio 0px indica que o estilo do DS não foi aplicado ao input de e-mail."
+    },
+    "TC-F-04": {
+      "detected": true,
+      "violations_found": [
+        "Campo obrigatório indicado apenas visualmente: label \"Nome *\" com asterisco, mas o input não tem required nem aria-required=\"true\" (e-MAG 6.3; WCAG 3.3.2)"
+      ],
+      "notes": "Associação label/id correta; falta apenas a indicação programática de obrigatoriedade."
+    },
+    "TC-F-05": {
+      "detected": true,
+      "violations_found": [
+        "Campo CPF sem instrução de formato: nenhum hint (small/aria-describedby) antes do campo indicando o formato esperado 000.000.000-00 (e-MAG 6.5; WCAG 3.3.2)"
+      ],
+      "notes": "Sem placeholder, sem elemento de dica e sem aria-describedby — contraste direto com TC-F-01, que traz a dica corretamente."
+    },
+    "TC-F-06": {
+      "detected": true,
+      "violations_found": [
+        "Mensagem de erro não vinculada ao campo: aria-invalid=\"true\" e erro visível \"CPF inválido...\" (p#f06-error) presentes, mas o input não tem aria-describedby apontando para o erro (e-MAG 6.6; WCAG 3.3.1, 4.1.3)"
+      ],
+      "notes": "Leitores de tela não anunciam o erro ao focar o campo; a ligação programática está ausente apesar do id disponível no parágrafo de erro."
+    },
+    "TC-F-07": {
+      "detected": true,
+      "violations_found": [
+        "Ordem de botões invertida: primário (Confirmar, br-button primary) aparece ANTES do secundário (Cancelar, br-button secondary), contrariando o padrão do DS gov.br (secundário antes do primário)"
+      ],
+      "notes": "Comparar com TC-F-01 e TC-B-13, que seguem a ordem correta."
+    },
+    "TC-F-08": {
+      "detected": true,
+      "violations_found": [
+        "<select> sem label visível: nome acessível fornecido só por aria-label=\"Estado\" — usuários videntes (e usuários de ampliação/reconhecimento de voz) não veem rótulo algum (e-MAG 6.2; WCAG 3.3.2)"
+      ],
+      "notes": "Nenhum elemento <label> na seção; o DS prevê label visível para br-select."
+    },
+    "TC-F-09": {
+      "detected": true,
+      "violations_found": [
+        "Grupo de checkboxes sem nome acessível de grupo: \"Canais de notificação\" é um <p> solto — não há <fieldset>/<legend> nem role=\"group\" com aria-label (e-MAG 6.2; WCAG 1.3.1)"
+      ],
+      "notes": "Cada checkbox tem label individual (envolvimento por <label>), mas o contexto do grupo não é programaticamente associado."
+    },
+    "TC-F-10": {
+      "detected": true,
+      "violations_found": [
+        "Dois botões com o mesmo nome acessível \"Salvar\" para funções distintas (salvar Perfil público vs. salvar Configurações) — usuários de tecnologia assistiva não conseguem distingui-los fora do contexto visual (WCAG 2.4.6; e-MAG 3.5)"
+      ],
+      "notes": "Ambos br-button primary com textContent idêntico e sem aria-label diferenciador; os títulos das subseções são <p> não associados aos botões."
+    },
+    "TC-F-11": {
+      "detected": true,
+      "violations_found": [
+        "aria-labelledby quebrado: o input referencia id \"ghost-label-id\" que não existe no DOM — o nome acessível silenciosamente cai para o placeholder \"Nome completo\" (e-MAG 6.2; WCAG 1.3.1, 4.1.2)"
+      ],
+      "notes": "browser_evaluate confirma labelledbyTargetExists=false. Violação classificada como referência quebrada (não placeholder-only), conforme desambiguação do protocolo."
+    },
+    "TC-F-12": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "aria-labelledby=\"f12-section-label\" aponta para o heading visível \"Endereço de entrega\", que existe no DOM (targetExists=true) — nome acessível válido via referência a elemento visível (e-MAG 6.2 alternativa c). Endereço não é campo de formato complexo; sem exigência de hint."
+    },
+    "TC-F-13": {
+      "detected": true,
+      "violations_found": [
+        "border-color #ff6600 fora da paleta de tokens do DS em elemento br-input — não consta no hexLookup; a borda esperada para input é #888888 (--input-border-color)"
+      ],
+      "notes": "rgb(255, 102, 0) → #ff6600 (laranja arbitrário). Estrutura e label corretos; a violação é exclusivamente de token."
+    }
+  }
+}
