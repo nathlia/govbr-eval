@@ -7,15 +7,21 @@
     "node": ">=18"
   },
   "scripts": {
-    "axe": "node scripts/run-axe.js",
-    "score": "node scripts/score-results.js",
-    "score:verbose": "node scripts/score-results.js --verbose",
-    "score:json": "node scripts/score-results.js --json",
+    "axe": "tsx scripts/run-axe.ts",
+    "score": "tsx scripts/score-results.ts",
+    "score:verbose": "tsx scripts/score-results.ts --verbose",
+    "score:json": "tsx scripts/score-results.ts --json",
     "dashboard": "npm --prefix dashboard run dev",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p dashboard",
     "postinstall": "playwright install chromium"
   },
   "dependencies": {
     "@axe-core/playwright": "4.11.1",
-    "playwright": "1.59.1"
+    "playwright": "1.61.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.7",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3"
   }
 }

@@ -6,23 +6,28 @@
  *
  * Usage:
  *   1. Start the corpus app: cd ../govbr-corpus && npm run dev
- *   2. node scripts/run-axe.js
+ *   2. npm run axe
  *   3. Results written to results/axe-results.json
- *
- * Dependencies: npm install --save-dev @axe-core/playwright playwright
  */
 
-import { chromium } from "playwright";
+import { chromium, type Page } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
-import { writeFileSync, readFileSync } from "fs";
+import { writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import type { AxePageResult, AxeResults, AxeViolationRef } from "../types";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const APP_URL = process.env.APP_URL ?? "http://localhost:3000";
 
-const PAGES = [
+interface PageConfig {
+  name: string;
+  url: string;
+  tab: "buttons" | "form";
+}
+
+const PAGES: PageConfig[] = [
   { name: "buttons", url: APP_URL, tab: "buttons" },
   { name: "forms",   url: APP_URL, tab: "form"    },
 ];
@@ -30,10 +35,10 @@ const PAGES = [
 // Map an axe violation node's target selector back to its data-testid ancestor.
 // axe returns targets like ["#some-id"] or ["section[data-testid='TC-B-02'] button"]
 // We use playwright to evaluate the closest data-testid ancestor of each node.
-async function findTestCaseId(page, target) {
+async function findTestCaseId(page: Page, target: string | string[]): Promise<string | null> {
   const selector = Array.isArray(target) ? target[target.length - 1] : target;
   try {
-    return await page.evaluate((sel) => {
+    return await page.evaluate((sel: string) => {
       const el = document.querySelector(sel);
       if (!el) return null;
       const section = el.closest("[data-testid]");
@@ -44,7 +49,20 @@ async function findTestCaseId(page, target) {
   }
 }
 
-async function runPage({ name, url, tab }) {
+interface EnrichedNode {
+  target: unknown;
+  testCaseId: string | null;
+}
+
+interface EnrichedViolation {
+  id: string;
+  impact: string | null | undefined;
+  description: string;
+  helpUrl: string;
+  nodes: EnrichedNode[];
+}
+
+async function runPage({ name, url, tab }: PageConfig) {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext();
   const page = await context.newPage();
@@ -61,15 +79,21 @@ async function runPage({ name, url, tab }) {
   const results = await new AxeBuilder({ page }).analyze();
 
   // Enrich each violation with the test case ID
-  const enriched = await Promise.all(
+  const enriched: EnrichedViolation[] = await Promise.all(
     results.violations.map(async (v) => {
-      const enrichedNodes = await Promise.all(
+      const enrichedNodes: EnrichedNode[] = await Promise.all(
         v.nodes.map(async (n) => {
-          const caseId = await findTestCaseId(page, n.target);
-          return { ...n, testCaseId: caseId };
+          const caseId = await findTestCaseId(page, n.target as string | string[]);
+          return { target: n.target, testCaseId: caseId };
         })
       );
-      return { ...v, nodes: enrichedNodes };
+      return {
+        id: v.id,
+        impact: v.impact,
+        description: v.description,
+        helpUrl: v.helpUrl,
+        nodes: enrichedNodes,
+      };
     })
   );
 
@@ -80,14 +104,14 @@ async function runPage({ name, url, tab }) {
 async function main() {
   console.log("Running axe-core baseline...\n");
 
-  const allResults = {};
+  const allResults: Record<string, AxePageResult> = {};
 
   for (const pageConfig of PAGES) {
     console.log(`  → ${pageConfig.name}`);
     const result = await runPage(pageConfig);
 
     // Build a flat summary keyed by test case ID
-    const byCaseId = {};
+    const byCaseId: Record<string, AxeViolationRef[]> = {};
     for (const violation of result.violations) {
       for (const node of violation.nodes) {
         const id = node.testCaseId;
@@ -95,7 +119,7 @@ async function main() {
         if (!byCaseId[id]) byCaseId[id] = [];
         byCaseId[id].push({
           rule: violation.id,
-          impact: violation.impact,
+          impact: violation.impact ?? undefined,
           description: violation.description,
           helpUrl: violation.helpUrl,
         });
@@ -118,7 +142,7 @@ async function main() {
     console.log(`     Test cases with violations: ${detected.join(", ") || "none"}\n`);
   }
 
-  const output = {
+  const output: AxeResults = {
     timestamp: new Date().toISOString(),
     tool: "axe-core via @axe-core/playwright",
     appUrl: APP_URL,

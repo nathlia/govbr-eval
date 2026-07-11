@@ -1,9 +1,17 @@
-import { useState, useEffect, useCallback } from "react";
-import groundTruth from "../../ground-truth.json";
+import { useState, useEffect, useCallback, type CSSProperties } from "react";
+import groundTruthJson from "../../ground-truth.json";
+import type { AgentResults, AxeResults, GroundTruth, GroundTruthCase, ToolKey } from "../../types";
 
-const CORPUS_URL = import.meta.env.VITE_CORPUS_URL ?? "http://localhost:3000";
+const groundTruth = groundTruthJson as unknown as GroundTruth;
 
-const CATEGORY_LABELS = {
+const CORPUS_URL: string = import.meta.env.VITE_CORPUS_URL ?? "http://localhost:3000";
+
+type Cases = Record<string, GroundTruthCase>;
+type ActualMap = Record<string, boolean>;
+type Outcome = "TP" | "FP" | "FN" | "TN";
+type RowOutcome = Outcome | "?";
+
+const CATEGORY_LABELS: Record<string, { label: string; color: string; title: string }> = {
   structural:    { label: "Estrutural",    color: "#6c757d", title: "Detectável por ferramentas estáticas" },
   token:         { label: "Token DS",      color: "#0d6efd", title: "Requer conhecimento dos tokens do DS" },
   "ds-pattern":  { label: "Padrão DS",     color: "#6610f2", title: "Requer conhecimento das convenções do DS" },
@@ -11,7 +19,7 @@ const CATEGORY_LABELS = {
   compositional: { label: "Composicional", color: "#fd7e14", title: "Requer raciocínio entre múltiplos elementos" },
 };
 
-function Badge({ category }) {
+function Badge({ category }: { category: string }) {
   const meta = CATEGORY_LABELS[category];
   if (!meta) return null;
   return (
@@ -32,23 +40,30 @@ function Badge({ category }) {
   );
 }
 
-function DetectionCell({ value }) {
+function DetectionCell({ value }: { value: boolean | null }) {
   if (value === null) return <td style={{ textAlign: "center", color: "#aaa" }}>—</td>;
   if (value === true)  return <td style={{ textAlign: "center", background: "#d1e7dd", color: "#146c43", fontWeight: 700 }}>✓</td>;
-  if (value === false) return <td style={{ textAlign: "center", background: "#f8d7da", color: "#842029", fontWeight: 700 }}>✗</td>;
-  return <td style={{ textAlign: "center" }}>{value}</td>;
+  return <td style={{ textAlign: "center", background: "#f8d7da", color: "#842029", fontWeight: 700 }}>✗</td>;
 }
 
-function ActualCell({ value, isReference }) {
+function ActualCell({ value, isReference }: { value: boolean | undefined; isReference: boolean }) {
   if (isReference) return <td style={{ textAlign: "center", color: "#aaa" }}>—</td>;
   if (value === true)  return <td style={{ textAlign: "center", background: "#d1e7dd", color: "#146c43", fontWeight: 700 }}>✓</td>;
   if (value === false) return <td style={{ textAlign: "center", background: "#f8d7da", color: "#842029", fontWeight: 700 }}>✗</td>;
   return <td style={{ textAlign: "center", color: "#aaa", fontSize: "11px" }} title="Clique em 'Executar' para atualizar">—</td>;
 }
 
-function computeMetrics(cases, toolKey, actualMap) {
+interface Metrics {
+  TP: number; FP: number; FN: number; TN: number;
+  precision: number | null;
+  recall: number | null;
+  f1: number | null;
+  rows: { id: string; outcome: RowOutcome }[];
+}
+
+function computeMetrics(cases: Cases, toolKey: ToolKey, actualMap: ActualMap | null | undefined): Metrics {
   let TP = 0, FP = 0, FN = 0, TN = 0;
-  const rows = [];
+  const rows: { id: string; outcome: RowOutcome }[] = [];
 
   for (const [id, c] of Object.entries(cases)) {
     if (c.detection[toolKey] === null) continue; // reference case
@@ -56,8 +71,8 @@ function computeMetrics(cases, toolKey, actualMap) {
     const actual = actualMap?.[id];
     if (actual === undefined) { rows.push({ id, outcome: "?" }); continue; }
 
-    let outcome;
-    if (hasViolation && actual)    { TP++; outcome = "TP"; }
+    let outcome: Outcome;
+    if (hasViolation && actual)       { TP++; outcome = "TP"; }
     else if (!hasViolation && actual) { FP++; outcome = "FP"; }
     else if (hasViolation && !actual) { FN++; outcome = "FN"; }
     else                              { TN++; outcome = "TN"; }
@@ -71,25 +86,32 @@ function computeMetrics(cases, toolKey, actualMap) {
   return { TP, FP, FN, TN, precision, recall, f1, rows };
 }
 
-function pct(v) {
+function pct(v: number | null): string {
   return v == null ? "—" : (v * 100).toFixed(1) + "%";
 }
 
-const OUTCOME_STYLE = {
+const OUTCOME_STYLE: Record<Outcome, CSSProperties> = {
   TP: { color: "#146c43", fontWeight: 700 },
   TN: { color: "#6c757d" },
   FP: { color: "#842029", fontWeight: 700 },
   FN: { color: "#842029", fontWeight: 700 },
 };
-const OUTCOME_LABEL = { TP: "✓ TP", TN: "· TN", FP: "! FP", FN: "✗ FN" };
+const OUTCOME_LABEL: Record<Outcome, string> = { TP: "✓ TP", TN: "· TN", FP: "! FP", FN: "✗ FN" };
 
-function OutcomeCell({ outcome, isRef }) {
+function OutcomeCell({ outcome, isRef }: { outcome: RowOutcome | null; isRef: boolean }) {
   if (isRef) return <td style={{ ...TD, textAlign: "center", color: "#aaa" }}>ref</td>;
   if (!outcome || outcome === "?") return <td style={{ ...TD, textAlign: "center", color: "#aaa" }}>—</td>;
   return <td style={{ ...TD, textAlign: "center", ...OUTCOME_STYLE[outcome] }}>{OUTCOME_LABEL[outcome]}</td>;
 }
 
-function CaseRows({ cases, tools, eslintExpected }) {
+interface ToolRow {
+  key: ToolKey;
+  label: string;
+  actual: ActualMap | null;
+  source: string | null;
+}
+
+function CaseRows({ cases, tools, eslintExpected }: { cases: Cases; tools: ToolRow[]; eslintExpected: ActualMap }) {
   const axeRows    = tools[0].actual ? computeMetrics(cases, "axe",         tools[0].actual).rows : [];
   const eslintRows = computeMetrics(cases, "eslint_a11y", eslintExpected).rows;
   const agentRows  = tools[2].actual ? computeMetrics(cases, "agent",       tools[2].actual).rows : [];
@@ -113,17 +135,23 @@ function CaseRows({ cases, tools, eslintExpected }) {
   });
 }
 
-function MetricsSection({ cases, axeActual, agentActual, agentRaw, axeRaw }) {
+function MetricsSection({ cases, axeActual, agentActual, agentRaw, axeRaw }: {
+  cases: Cases;
+  axeActual: ActualMap;
+  agentActual: ActualMap;
+  agentRaw: AgentResults | null;
+  axeRaw: AxeResults | null;
+}) {
   const hasAxe   = Object.keys(axeActual).length > 0;
   const hasAgent = Object.keys(agentActual).length > 0;
 
   // eslint uses ground-truth expected values (no runtime runner)
-  const eslintExpected = {};
+  const eslintExpected: ActualMap = {};
   for (const [id, c] of Object.entries(cases)) {
     if (c.detection.eslint_a11y !== null) eslintExpected[id] = c.detection.eslint_a11y;
   }
 
-  const tools = [
+  const tools: ToolRow[] = [
     { key: "axe",         label: "axe-core",    actual: hasAxe   ? axeActual       : null, source: axeRaw   ? new Date(axeRaw.timestamp).toLocaleString("pt-BR")  : null },
     { key: "eslint_a11y", label: "eslint-a11y", actual: eslintExpected,                    source: "valores esperados (sem executor em tempo real)" },
     { key: "agent",       label: "Agente",       actual: hasAgent ? agentActual     : null, source: agentRaw ? `${new Date(agentRaw.timestamp).toLocaleString("pt-BR")} — ${agentRaw.model}` : null },
@@ -157,7 +185,7 @@ function MetricsSection({ cases, axeActual, agentActual, agentRaw, axeRaw }) {
               return (
                 <tr key={key} style={{ borderBottom: "1px solid #dee2e6" }}>
                   <td style={{ ...TD, fontWeight: 600 }}>{label}</td>
-                  {["TP","FP","FN","TN"].map(k => (
+                  {(["TP", "FP", "FN", "TN"] as const).map(k => (
                     <td key={k} style={{ ...TD, textAlign: "center", color: notRun ? "#aaa" : "#212529" }}>
                       {notRun ? "—" : m[k]}
                     </td>
@@ -216,8 +244,8 @@ function MetricsSection({ cases, axeActual, agentActual, agentRaw, axeRaw }) {
   );
 }
 
-function buildAxeActual(raw, cases) {
-  const axeActual = {};
+function buildAxeActual(raw: AxeResults | null, cases: Cases): ActualMap {
+  const axeActual: ActualMap = {};
   if (!raw?.results) return axeActual;
   for (const [id, c] of Object.entries(cases)) {
     if (raw.results[c.page]) axeActual[id] = false;
@@ -230,9 +258,9 @@ function buildAxeActual(raw, cases) {
   return axeActual;
 }
 
-function buildAgentActual(raw) {
+function buildAgentActual(raw: AgentResults | null): ActualMap {
   if (!raw?.verdicts) return {};
-  const map = {};
+  const map: ActualMap = {};
   for (const [id, v] of Object.entries(raw.verdicts)) {
     map[id] = v.detected === true;
   }
@@ -242,24 +270,24 @@ function buildAgentActual(raw) {
 export default function ResultsPage() {
   const cases = groundTruth.cases;
 
-  const [axeRaw,      setAxeRaw]      = useState(null);
+  const [axeRaw,      setAxeRaw]      = useState<AxeResults | null>(null);
   const [axeRunning,  setAxeRunning]  = useState(false);
-  const [axeError,    setAxeError]    = useState(null);
+  const [axeError,    setAxeError]    = useState<string | null>(null);
 
-  const [agentRaw,    setAgentRaw]    = useState(null);
-  const [agentTs,     setAgentTs]     = useState(null);
+  const [agentRaw,    setAgentRaw]    = useState<AgentResults | null>(null);
+  const [agentTs,     setAgentTs]     = useState<string | null>(null);
 
   const fetchAxeResults = useCallback(() => {
     fetch("/axe-results.json?t=" + Date.now())
       .then((r) => r.json())
-      .then((data) => { if (data.results) setAxeRaw(data); })
+      .then((data: AxeResults) => { if (data.results) setAxeRaw(data); })
       .catch(() => {});
   }, []);
 
   const fetchAgentResults = useCallback(() => {
     fetch("/agent-results.json?t=" + Date.now())
       .then((r) => r.json())
-      .then((data) => {
+      .then((data: AgentResults) => {
         if (data.verdicts) {
           setAgentRaw(data);
           setAgentTs(data.timestamp);
@@ -278,11 +306,11 @@ export default function ResultsPage() {
     setAxeError(null);
     try {
       const res  = await fetch("/api/run-axe", { method: "POST" });
-      const data = await res.json();
+      const data: { ok: boolean; error?: string } = await res.json();
       if (data.ok) fetchAxeResults();
       else setAxeError(data.error ?? "Unknown error");
     } catch (e) {
-      setAxeError(e.message);
+      setAxeError(e instanceof Error ? e.message : String(e));
     } finally {
       setAxeRunning(false);
     }
@@ -302,7 +330,7 @@ export default function ResultsPage() {
   // Compute actual agent score when results are loaded
   const agentTP = violationCases.filter((c) => {
     const id = Object.entries(cases).find(([, v]) => v === c)?.[0];
-    return id && agentActual[id] === true;
+    return id !== undefined && agentActual[id] === true;
   }).length;
 
   return (
@@ -385,7 +413,7 @@ export default function ResultsPage() {
 
       {/* Legend */}
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
-        {Object.entries(CATEGORY_LABELS).map(([key]) => (
+        {Object.keys(CATEGORY_LABELS).map((key) => (
           <Badge key={key} category={key} />
         ))}
         <span style={{ fontSize: "11px", color: "#888", alignSelf: "center" }}>
@@ -499,7 +527,7 @@ export default function ResultsPage() {
   );
 }
 
-const TH = {
+const TH: CSSProperties = {
   padding: "8px 12px",
   textAlign: "left",
   fontWeight: 600,
@@ -507,7 +535,7 @@ const TH = {
   whiteSpace: "nowrap",
 };
 
-const TD = {
+const TD: CSSProperties = {
   padding: "8px 12px",
   verticalAlign: "top",
 };

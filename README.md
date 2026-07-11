@@ -10,9 +10,10 @@ agent can read the expected results from the code it is shown.
 ```
 govbr-eval/
 ├── ground-truth.json        the gabarito: expected detection per case × tool, with categories
+├── types.ts                 shared data model (ground truth, result files)
 ├── scripts/
-│   ├── run-axe.js           axe-core baseline against the corpus → results/axe-results.json
-│   └── score-results.js     precision / recall / F1 per tool vs. ground truth
+│   ├── run-axe.ts           axe-core baseline against the corpus → results/axe-results.json
+│   └── score-results.ts     precision / recall / F1 per tool vs. ground truth
 ├── dashboard/               Matriz de Detecção web UI (Vite + React, port 4000)
 ├── skills/evaluate-all/     the agent measurement protocol (per-case verdicts)
 ├── results/                 axe-results.json + agent-results.json (generated)

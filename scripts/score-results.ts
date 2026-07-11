@@ -10,14 +10,15 @@
  *   - agent         : from results/agent-results.json  (actual run)
  *
  * Usage:
- *   node scripts/score-results.js
- *   node scripts/score-results.js --verbose    (show per-case breakdown)
- *   node scripts/score-results.js --json       (output raw JSON metrics)
+ *   npm run score
+ *   npm run score:verbose    (show per-case breakdown)
+ *   npm run score:json       (output raw JSON metrics)
  */
 
 import { readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import type { AgentResults, AxeResults, GroundTruth, ToolKey } from "../types";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -27,15 +28,15 @@ const JSON_OUT = process.argv.includes("--json");
 
 // ── Load files ────────────────────────────────────────────────────────────────
 
-function loadJson(relPath) {
+function loadJson<T>(relPath: string): T | null {
   const abs = join(ROOT, relPath);
   if (!existsSync(abs)) return null;
-  return JSON.parse(readFileSync(abs, "utf8"));
+  return JSON.parse(readFileSync(abs, "utf8")) as T;
 }
 
-const gt          = loadJson("ground-truth.json");
-const axeRaw      = loadJson("results/axe-results.json");
-const agentRaw    = loadJson("results/agent-results.json");
+const gt       = loadJson<GroundTruth>("ground-truth.json");
+const axeRaw   = loadJson<AxeResults>("results/axe-results.json");
+const agentRaw = loadJson<AgentResults>("results/agent-results.json");
 
 if (!gt) {
   console.error("Missing ground-truth.json");
@@ -44,20 +45,20 @@ if (!gt) {
 
 const cases = gt.cases;
 
+type ActualMap = Record<string, boolean>;
+type Outcome = "TP" | "FP" | "FN" | "TN";
+
 // ── Build axe actual detection map ───────────────────────────────────────────
 // axe-results.json: { results: { buttons: { byCaseId: { "TC-B-02": [...] } } } }
 
-function buildAxeActual() {
+function buildAxeActual(): ActualMap | null {
   if (!axeRaw?.results) return null;
-  const map = {};
+  const map: ActualMap = {};
+  for (const [id, c] of Object.entries(cases)) {
+    // Default to false (no violation detected) for pages that were run
+    if (axeRaw.results[c.page]) map[id] = map[id] ?? false;
+  }
   for (const pageData of Object.values(axeRaw.results)) {
-    for (const [id] of Object.entries(cases)) {
-      // Default to false (no violation detected) for pages that were run
-      const page = cases[id].page === "buttons" ? "buttons" : "forms";
-      if (axeRaw.results[page]) {
-        map[id] = map[id] ?? false;
-      }
-    }
     for (const [caseId, viols] of Object.entries(pageData.byCaseId ?? {})) {
       if (viols.length > 0) map[caseId] = true;
     }
@@ -68,23 +69,39 @@ function buildAxeActual() {
 // ── Build agent actual detection map ─────────────────────────────────────────
 // agent-results.json: { verdicts: { "TC-B-02": { detected: true, ... } } }
 
-function buildAgentActual() {
+function buildAgentActual(): ActualMap | null {
   if (!agentRaw?.verdicts || agentRaw._empty) return null;
-  const map = {};
+  const map: ActualMap = {};
   for (const [id, v] of Object.entries(agentRaw.verdicts)) {
     map[id] = v.detected === true;
   }
   return map;
 }
 
-// ── Compute metrics for one tool ──────────────────────────────────────────────
+// ── Compute metrics for one tool ─────────────────────────────────────────────
 // ground-truth.detection[tool] values:
 //   true  → expected to detect
 //   false → expected to miss
 //   null  → reference case, skip from scoring
 
-function computeMetrics(toolKey, actualMap) {
-  const rows = [];
+interface CaseRow {
+  id: string;
+  truth: boolean;
+  actual: boolean | "?";
+  outcome: Outcome | "missing";
+}
+
+interface Metrics {
+  TP: number; FP: number; FN: number; TN: number;
+  missing: number;
+  precision: number | null;
+  recall: number | null;
+  f1: number | null;
+  rows: CaseRow[];
+}
+
+function computeMetrics(toolKey: ToolKey, actualMap: ActualMap | null): Metrics {
+  const rows: CaseRow[] = [];
   let TP = 0, FP = 0, FN = 0, TN = 0, missing = 0;
 
   for (const [id, c] of Object.entries(cases)) {
@@ -100,8 +117,8 @@ function computeMetrics(toolKey, actualMap) {
       continue;
     }
 
-    let outcome;
-    if (hasViolation && actual)   { TP++; outcome = "TP"; }
+    let outcome: Outcome;
+    if (hasViolation && actual)       { TP++; outcome = "TP"; }
     else if (!hasViolation && actual) { FP++; outcome = "FP"; }
     else if (hasViolation && !actual) { FN++; outcome = "FN"; }
     else                              { TN++; outcome = "TN"; }
@@ -120,16 +137,16 @@ function computeMetrics(toolKey, actualMap) {
 
 // ── Format helpers ────────────────────────────────────────────────────────────
 
-function pct(v) {
+function pct(v: number | null): string {
   if (v === null) return "  —   ";
   return (v * 100).toFixed(1).padStart(5) + "%";
 }
 
-function pad(s, n) {
+function pad(s: string | number, n: number): string {
   return String(s).padEnd(n);
 }
 
-function outcomeSymbol(o) {
+function outcomeSymbol(o: CaseRow["outcome"]): string {
   return { TP: "✓", FP: "!", FN: "✗", TN: "·", missing: "?" }[o] ?? o;
 }
 
@@ -138,15 +155,23 @@ function outcomeSymbol(o) {
 const axeActual   = buildAxeActual();
 const agentActual = buildAgentActual();
 
-const tools = [
-  { key: "axe",        label: "axe-core",    actual: axeActual,   source: axeRaw   ? `run ${axeRaw.timestamp?.slice(0,16)}` : "not run" },
+interface ToolEntry {
+  key: ToolKey;
+  label: string;
+  actual: ActualMap | null;
+  source: string;
+  note?: string;
+}
+
+const tools: ToolEntry[] = [
+  { key: "axe",        label: "axe-core",    actual: axeActual,   source: axeRaw   ? `run ${axeRaw.timestamp?.slice(0, 16)}` : "not run" },
   { key: "eslint_a11y",label: "eslint-a11y", actual: null,        source: "expected values only (no runtime runner)" },
-  { key: "agent",      label: "Agent",       actual: agentActual, source: agentActual ? `run ${agentRaw.timestamp?.slice(0,16)} — ${agentRaw.model}` : "not run — execute /evaluate-all first" },
+  { key: "agent",      label: "Agent",       actual: agentActual, source: agentActual && agentRaw ? `run ${agentRaw.timestamp?.slice(0, 16)} — ${agentRaw.model}` : "not run — execute /evaluate-all first" },
 ];
 
 // For eslint_a11y we use the expected values from ground-truth as the "actual"
 // (since there is no runtime eslint runner in this suite)
-const eslintExpected = {};
+const eslintExpected: ActualMap = {};
 for (const [id, c] of Object.entries(cases)) {
   if (c.detection.eslint_a11y !== null) {
     eslintExpected[id] = c.detection.eslint_a11y === true;
@@ -158,7 +183,7 @@ tools[1].note   = "(expected — not yet measured empirically)";
 const metrics = tools.map(t => ({ ...t, ...computeMetrics(t.key, t.actual) }));
 
 if (JSON_OUT) {
-  const out = {};
+  const out: Record<string, unknown> = {};
   for (const m of metrics) {
     out[m.key] = { TP: m.TP, FP: m.FP, FN: m.FN, TN: m.TN,
       precision: m.precision, recall: m.recall, f1: m.f1, source: m.source };
@@ -218,7 +243,6 @@ if (VERBOSE) {
   console.log("=== Per-case breakdown ===\n");
 
   const axeCol   = metrics[0];
-  const eslintCol= metrics[1];
   const agentCol = metrics[2];
 
   console.log(
@@ -245,8 +269,7 @@ if (VERBOSE) {
     // eslint: use expected
     let eslintSym = "—";
     if (c.detection.eslint_a11y !== null) {
-      const exp = c.detection.eslint_a11y;
-      eslintSym = exp ? "✓" : "✗";
+      eslintSym = c.detection.eslint_a11y ? "✓" : "✗";
     }
 
     console.log(
@@ -265,8 +288,8 @@ if (VERBOSE) {
 }
 
 // Data quality warnings
-const warnings = [];
-if (!axeRaw)   warnings.push("axe-results.json not found — run '▶ Executar axe-core' in the app");
+const warnings: string[] = [];
+if (!axeRaw)   warnings.push("axe-results.json not found — run '▶ Executar axe-core' in the dashboard");
 if (!agentRaw) warnings.push("agent-results.json not found — run '/evaluate-all' first");
 if (warnings.length) {
   console.log("⚠  Warnings:");

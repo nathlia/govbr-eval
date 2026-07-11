@@ -35,7 +35,7 @@ export default defineConfig({
               res.end(JSON.stringify({ ok: true }));
             } catch (e) {
               res.statusCode = 400;
-              res.end(JSON.stringify({ ok: false, error: e.message }));
+              res.end(JSON.stringify({ ok: false, error: e instanceof Error ? e.message : String(e) }));
             }
           });
         });
@@ -51,14 +51,15 @@ export default defineConfig({
             return;
           }
 
-          const scriptPath = join(EVAL_ROOT, "scripts/run-axe.js");
-          const child = spawn("node", [scriptPath], {
+          const tsxCli = join(EVAL_ROOT, "node_modules/tsx/dist/cli.mjs");
+          const scriptPath = join(EVAL_ROOT, "scripts/run-axe.ts");
+          const child = spawn(process.execPath, [tsxCli, scriptPath], {
             env: { ...process.env, APP_URL: CORPUS_URL },
             cwd: EVAL_ROOT,
           });
 
           let stderr = "";
-          child.stderr.on("data", (d) => { stderr += d.toString(); });
+          child.stderr?.on("data", (d) => { stderr += d.toString(); });
 
           child.on("close", (code) => {
             res.setHeader("Content-Type", "application/json");
