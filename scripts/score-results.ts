@@ -17,10 +17,10 @@
  *   npm run score:json       (machine-readable metrics)
  */
 
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync, readdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import type { AgentFinding, AgentResults, AxeResults, GroundTruth, RuleId, ToolKey } from "../types";
+import type { AgentFinding, AgentResults, AxeResults, EslintResults, GroundTruth, RuleId, ToolKey } from "../types";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -36,9 +36,10 @@ function loadJson<T>(relPath: string): T | null {
   return JSON.parse(readFileSync(abs, "utf8")) as T;
 }
 
-const gt       = loadJson<GroundTruth>("ground-truth.json");
-const axeRaw   = loadJson<AxeResults>("results/axe-results.json");
-const agentRaw = loadJson<AgentResults>("results/agent-results.json");
+const gt        = loadJson<GroundTruth>("ground-truth.json");
+const axeRaw    = loadJson<AxeResults>("results/axe-results.json");
+const agentRaw  = loadJson<AgentResults>("results/agent-results.json");
+const eslintRaw = loadJson<EslintResults>("results/eslint-results.json");
 
 if (!gt) {
   console.error("Missing ground-truth.json");
@@ -131,11 +132,24 @@ function buildAxeActual(): ActualMap | null {
   return map;
 }
 
-function buildAgentActual(): ActualMap | null {
-  if (!agentRaw?.verdicts || agentRaw._empty) return null;
+function buildAgentActual(raw: AgentResults | null): ActualMap | null {
+  if (!raw?.verdicts || raw._empty) return null;
   const map: ActualMap = {};
-  for (const [id, v] of Object.entries(agentRaw.verdicts)) {
+  for (const [id, v] of Object.entries(raw.verdicts)) {
     map[id] = v.detected === true;
+  }
+  return map;
+}
+
+// ── Build eslint actual detection map (measured baseline, F2) ────────────────
+// eslint-results.json: { byCaseId: { "TC-B-11": [...] } } — files linted cover all cases.
+
+function buildEslintActual(): ActualMap | null {
+  if (!eslintRaw?.byCaseId) return null;
+  const map: ActualMap = {};
+  for (const id of Object.keys(cases)) map[id] = false;
+  for (const [caseId, findings] of Object.entries(eslintRaw.byCaseId)) {
+    if (findings.length > 0) map[caseId] = true;
   }
   return map;
 }
@@ -226,14 +240,14 @@ interface UnitScore {
   ruleVerifiedTP: number;
 }
 
-function scoreUnits(): UnitScore | null {
-  if (!agentRaw?.verdicts || agentRaw._empty) return null;
+function scoreUnits(raw: AgentResults | null): UnitScore | null {
+  if (!raw?.verdicts || raw._empty) return null;
 
   const outcomes: UnitOutcome[] = [];
   const falseFindings: FalseFinding[] = [];
 
   for (const [caseId, c] of Object.entries(cases)) {
-    const verdict = agentRaw.verdicts[caseId];
+    const verdict = raw.verdicts[caseId];
     const findings = (verdict?.detected ? verdict.violations_found : []).map(rulesOfFinding);
     const used = new Set<number>();
     const units = expectedUnits.filter(u => u.caseId === caseId);
@@ -321,8 +335,9 @@ function outcomeSymbol(o: CaseRow["outcome"]): string {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 
-const axeActual   = buildAxeActual();
-const agentActual = buildAgentActual();
+const axeActual    = buildAxeActual();
+const agentActual  = buildAgentActual(agentRaw);
+const eslintActual = buildEslintActual();
 
 interface ToolEntry {
   key: ToolKey;
@@ -338,20 +353,73 @@ const tools: ToolEntry[] = [
   { key: "agent",      label: "Agent",       actual: agentActual, source: agentActual && agentRaw ? `run ${agentRaw.timestamp?.slice(0, 16)} — ${agentRaw.model}` : "not run — execute /evaluate-all first" },
 ];
 
-const eslintExpected: ActualMap = {};
-for (const [id, c] of Object.entries(cases)) {
-  if (c.detection.eslint_a11y !== null) {
-    eslintExpected[id] = c.detection.eslint_a11y === true;
+if (eslintActual && eslintRaw) {
+  tools[1].actual = eslintActual;
+  tools[1].source = `run ${eslintRaw.timestamp?.slice(0, 16)} — ${eslintRaw.config}`;
+} else {
+  // Fallback: expected values from the gabarito (no measured run available)
+  const eslintExpected: ActualMap = {};
+  for (const [id, c] of Object.entries(cases)) {
+    if (c.detection.eslint_a11y !== null) {
+      eslintExpected[id] = c.detection.eslint_a11y === true;
+    }
   }
+  tools[1].actual = eslintExpected;
+  tools[1].note   = "(expected — not yet measured empirically)";
 }
-tools[1].actual = eslintExpected;
-tools[1].note   = "(expected — not yet measured empirically)";
 
-// Measured tools (axe, agent) are scored on reference cases too; the eslint
-// pseudo-tool uses expected values, so reference cases stay out of its score.
-const metrics = tools.map(t => ({ ...t, ...computeCaseMetrics(t.key, t.actual, t.key !== "eslint_a11y") }));
-const unitScore = scoreUnits();
+// Measured tools are scored on reference cases too (flagging one = FP); only the
+// expected-values eslint fallback keeps reference cases out of its score.
+const eslintMeasured = eslintActual !== null;
+const metrics = tools.map(t => ({ ...t, ...computeCaseMetrics(t.key, t.actual, t.key !== "eslint_a11y" || eslintMeasured) }));
+const unitScore = scoreUnits(agentRaw);
 const catMetrics = unitScore ? categoryMetrics(unitScore) : null;
+
+// ── Multi-run statistics (F3) ─────────────────────────────────────────────────
+
+interface RunSummary {
+  file: string;
+  timestamp: string;
+  model: string;
+  precision: number | null;
+  recall: number | null;
+  f1: number | null;
+  FP: number;
+  wallClockSeconds: number | null;
+  toolCalls: number | null;
+}
+
+function loadRuns(): RunSummary[] {
+  const dir = join(ROOT, "results", "runs");
+  if (!existsSync(dir)) return [];
+  const summaries: RunSummary[] = [];
+  for (const file of readdirSync(dir).filter(f => f.startsWith("agent-") && f.endsWith(".json")).sort()) {
+    try {
+      const raw = JSON.parse(readFileSync(join(dir, file), "utf8")) as AgentResults;
+      const score = scoreUnits(raw);
+      if (!score) continue;
+      summaries.push({
+        file,
+        timestamp: raw.timestamp,
+        model: raw.model,
+        ...prf(score.TP, score.FP, score.FN),
+        FP: score.FP,
+        wallClockSeconds: raw.cost?.wallClockSeconds ?? null,
+        toolCalls: raw.cost?.toolCalls ?? null,
+      });
+    } catch { /* skip unreadable run files */ }
+  }
+  return summaries;
+}
+
+function meanSd(values: number[]): { mean: number; sd: number | null } {
+  const mean = values.reduce((s, v) => s + v, 0) / values.length;
+  if (values.length < 2) return { mean, sd: null };
+  const sd = Math.sqrt(values.reduce((s, v) => s + (v - mean) ** 2, 0) / (values.length - 1));
+  return { mean, sd };
+}
+
+const runs = loadRuns();
 
 if (JSON_OUT) {
   const out: Record<string, unknown> = {};
@@ -371,6 +439,17 @@ if (JSON_OUT) {
         recall:    defined.length ? defined.reduce((s, c) => s + (c.recall ?? 0), 0) / defined.length : null,
         f1:        defined.length ? defined.reduce((s, c) => s + (c.f1 ?? 0), 0) / defined.length : null,
       },
+    };
+  }
+  if (runs.length) {
+    const f1s = runs.map(r => r.f1).filter((v): v is number => v !== null);
+    out.runs = {
+      count: runs.length,
+      runs,
+      f1: f1s.length ? meanSd(f1s) : null,
+      wallClockSeconds: runs.some(r => r.wallClockSeconds !== null)
+        ? meanSd(runs.map(r => r.wallClockSeconds).filter((v): v is number => v !== null))
+        : null,
     };
   }
   console.log(JSON.stringify(out, null, 2));
@@ -480,6 +559,40 @@ if (unitScore && catMetrics) {
   }
 }
 
+// ── Multi-run report (F3/F4) ──────────────────────────────────────────────────
+
+if (runs.length) {
+  console.log(`=== Multi-run statistics (F3) — ${runs.length} archived run(s) ===\n`);
+  console.log(
+    pad("Run", 22) + pad("Model", 22) +
+    pad("P", 9) + pad("R", 9) + pad("F1", 9) + pad("FP", 5) +
+    pad("Wall (s)", 10) + "Tool calls"
+  );
+  console.log("─".repeat(95));
+  for (const r of runs) {
+    console.log(
+      pad(r.timestamp.slice(0, 19), 22) + pad(r.model.slice(0, 20), 22) +
+      pad(pct(r.precision), 9) + pad(pct(r.recall), 9) + pad(pct(r.f1), 9) + pad(r.FP, 5) +
+      pad(r.wallClockSeconds ?? "—", 10) + (r.toolCalls ?? "—")
+    );
+  }
+
+  const f1s = runs.map(r => r.f1).filter((v): v is number => v !== null);
+  if (f1s.length >= 2) {
+    const { mean, sd } = meanSd(f1s);
+    const walls = runs.map(r => r.wallClockSeconds).filter((v): v is number => v !== null);
+    console.log("─".repeat(95));
+    console.log(`F1 (element × rule): mean ${pct(mean)} ± ${sd !== null ? pct(sd).trim() : "—"} (n=${f1s.length}, sample SD)`);
+    if (walls.length >= 2) {
+      const w = meanSd(walls);
+      console.log(`Wall-clock: mean ${w.mean.toFixed(0)}s ± ${w.sd !== null ? w.sd.toFixed(0) : "—"}s (n=${walls.length})`);
+    }
+  } else {
+    console.log("\nF3 requires 3–5 runs for mean ± SD — run /evaluate-all again to add runs.");
+  }
+  console.log();
+}
+
 // Per-case breakdown (--verbose)
 if (VERBOSE) {
   console.log("=== Per-case breakdown ===\n");
@@ -530,8 +643,9 @@ if (VERBOSE) {
 
 // Data quality warnings
 const warnings: string[] = [];
-if (!axeRaw)   warnings.push("axe-results.json not found — run '▶ Executar axe-core' in the dashboard");
-if (!agentRaw) warnings.push("agent-results.json not found — run '/evaluate-all' first");
+if (!axeRaw)    warnings.push("axe-results.json not found — run '▶ Executar axe-core' in the dashboard");
+if (!agentRaw)  warnings.push("agent-results.json not found — run '/evaluate-all' first");
+if (!eslintRaw) warnings.push("eslint-results.json not found — run 'npm run eslint' for the measured baseline");
 if (warnings.length) {
   console.log("⚠  Warnings:");
   warnings.forEach(w => console.log(`   • ${w}`));

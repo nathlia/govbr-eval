@@ -71,10 +71,41 @@ export interface AgentVerdict {
   notes?: string;
 }
 
+/** Cost accounting for one evaluation run (F4). */
+export interface AgentRunCost {
+  startedAt: string;
+  finishedAt: string;
+  wallClockSeconds: number;
+  /** Total MCP/browser tool calls made during the run (approximate is fine). */
+  toolCalls?: number;
+  /** Total tokens if the client reports them (e.g. /cost in Claude Code). */
+  tokens?: number;
+  notes?: string;
+}
+
 export interface AgentResults {
   timestamp: string;
   model: string;
   appUrl: string;
   _empty?: boolean;
+  cost?: AgentRunCost;
   verdicts: Record<string, AgentVerdict>;
+}
+
+/** Measured eslint-plugin-jsx-a11y baseline (F2). */
+export interface EslintFindingRef {
+  rule: string;
+  message: string;
+  file: string;
+  line: number;
+}
+
+export interface EslintResults {
+  timestamp: string;
+  tool: string;
+  config: string;
+  filesLinted: string[];
+  byCaseId: Record<string, EslintFindingRef[]>;
+  /** Findings that could not be attributed to a TC-* section. */
+  unattributed: EslintFindingRef[];
 }

@@ -35,7 +35,10 @@ One finding per violated rule — do not bundle two independent violations into 
 
 ## Steps
 
-### 1. Load all references in parallel
+### 1. Record the start time, then load all references in parallel
+
+First note the current ISO timestamp — it becomes `cost.startedAt`. From here on, count every
+tool call you make (references, snapshots, style inspections, evaluations).
 - `get_design_tokens` — token reference (colors, typography, radii)
 - `get_emag_rules` — full e-MAG v3.1 (focus on sections 1 and 6)
 - `get_component_spec` with `component: "button"` — canonical DS button HTML
@@ -123,8 +126,15 @@ After evaluating all cases, construct the final JSON:
 ```json
 {
   "timestamp": "<current ISO timestamp>",
-  "model": "claude-sonnet-4-6",
+  "model": "<exact model id running this evaluation>",
   "appUrl": "http://localhost:3000",
+  "cost": {
+    "startedAt": "<ISO timestamp recorded in step 1, BEFORE the first tool call>",
+    "finishedAt": "<ISO timestamp at save time>",
+    "wallClockSeconds": 0,
+    "toolCalls": 0,
+    "notes": "toolCalls = total MCP/browser tool invocations this run (count them; approximate is acceptable)"
+  },
   "verdicts": {
     "TC-B-01": { "detected": false, "violations_found": [], "notes": "..." },
     ...
@@ -132,12 +142,16 @@ After evaluating all cases, construct the final JSON:
 }
 ```
 
-Write this JSON to **both** of these files (paths relative to `govbr-eval/`):
+The `cost` block is required (F4): record the start time before loading references in step 1,
+compute `wallClockSeconds` at save time, and report how many tool calls the run used.
+
+POST the JSON to `http://localhost:4000/api/save-agent-results` if the dashboard dev server is
+running — it saves the latest results AND archives the run under `results/runs/` (required for
+F3 multi-run statistics). If the dashboard is not running, write all three files yourself
+(paths relative to `govbr-eval/`):
 - `results/agent-results.json`
 - `dashboard/public/agent-results.json`
-
-Alternatively POST it to `http://localhost:4000/api/save-agent-results` if the dashboard dev
-server is running.
+- `results/runs/agent-<timestamp with ':' and '.' replaced by '-'>.json`
 
 ### 6. Print a summary
 

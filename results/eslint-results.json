@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-07-11T06:37:45.499Z",
+  "tool": "eslint-plugin-jsx-a11y (flat recommended) via ESLint API",
+  "config": "jsx-a11y/flat/recommended",
+  "filesLinted": [
+    "ButtonPage.tsx",
+    "FormPage.tsx"
+  ],
+  "byCaseId": {
+    "TC-B-12": [
+      {
+        "rule": "jsx-a11y/anchor-is-valid",
+        "message": "The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md",
+        "file": "ButtonPage.tsx",
+        "line": 98
+      }
+    ]
+  },
+  "unattributed": []
+}

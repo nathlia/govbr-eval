@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { spawn } from "child_process";
-import { writeFileSync } from "fs";
+import { mkdirSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -30,6 +30,10 @@ export default defineConfig({
               const json = JSON.stringify(data, null, 2);
               writeFileSync(join(EVAL_ROOT, "results/agent-results.json"), json);
               writeFileSync(join(__dirname, "public/agent-results.json"), json);
+              // Archive every run for F3 (multi-run mean ± SD)
+              const stamp = String(data.timestamp ?? new Date().toISOString()).replace(/[:.]/g, "-");
+              mkdirSync(join(EVAL_ROOT, "results/runs"), { recursive: true });
+              writeFileSync(join(EVAL_ROOT, `results/runs/agent-${stamp}.json`), json);
               res.setHeader("Content-Type", "application/json");
               res.statusCode = 200;
               res.end(JSON.stringify({ ok: true }));

@@ -42,8 +42,8 @@
         }
       ],
       "categories": ["structural"],
-      "detection": { "axe": true, "eslint_a11y": true, "agent": true },
-      "notes": "Axe catches via 'button-name' rule. eslint-a11y catches statically. Baseline case."
+      "detection": { "axe": true, "eslint_a11y": false, "agent": true },
+      "notes": "Axe catches via 'button-name' rule. CORRECTED 2026-07-11 (eslint audit): jsx-a11y's recommended config has NO rule validating button accessible names — control-has-associated-label exists but ships disabled by default. Measured run: no finding."
     },
     "TC-B-03": {
       "page": "buttons",
@@ -156,8 +156,8 @@
         }
       ],
       "categories": ["structural"],
-      "detection": { "axe": false, "eslint_a11y": true, "agent": true },
-      "notes": "CORRECTED 2026-07-11 (axe-capability audit): 'interactive-supports-focus' is NOT in axe-core 4.11's ruleset (verified via axe.getRules(), 104 rules) — axe passes the span on aria-command-name because it has text and nothing checks focusability. eslint-plugin-jsx-a11y still catches it statically via its own interactive-supports-focus rule."
+      "detection": { "axe": false, "eslint_a11y": false, "agent": true },
+      "notes": "CORRECTED 2026-07-11 (axe-capability audit): 'interactive-supports-focus' is NOT in axe-core 4.11's ruleset (verified via axe.getRules(), 104 rules) — axe passes the span on aria-command-name because it has text and nothing checks focusability. CORRECTED same day (eslint audit): jsx-a11y's interactive-supports-focus only applies to elements with JSX event handlers (onClick etc.) — the corpus span has none, so the rule is inapplicable. Measured run: no finding. Now an agent-only case."
     },
     "TC-B-12": {
       "page": "buttons",
@@ -170,8 +170,8 @@
         }
       ],
       "categories": ["structural"],
-      "detection": { "axe": false, "eslint_a11y": false, "agent": true },
-      "notes": "axe does not flag anchors with accessible names and href — it considers them valid links. eslint-a11y similarly has no rule against anchor-as-action-button when href is present. Agent detects by reasoning: the text 'Excluir arquivo' is a destructive action, not navigation — <a> is semantically wrong regardless of styling."
+      "detection": { "axe": false, "eslint_a11y": true, "agent": true },
+      "notes": "axe does not flag anchors with accessible names and href — it considers them valid links. CORRECTED 2026-07-11 (eslint audit): jsx-a11y/anchor-is-valid DOES fire — href='#' is not a valid navigable address (measured run, ButtonPage line 98). Note the rule reacts to the placeholder href, not to the action-vs-navigation semantics; with a real URL it would pass while the semantic violation remained (which only the agent detects)."
     },
     "TC-B-13": {
       "page": "buttons",
@@ -201,8 +201,8 @@
         }
       ],
       "categories": ["structural"],
-      "detection": { "axe": true, "eslint_a11y": true, "agent": true },
-      "notes": "Baseline case. Caught by both tools."
+      "detection": { "axe": true, "eslint_a11y": false, "agent": true },
+      "notes": "Baseline case for axe (label rule). CORRECTED 2026-07-11 (eslint audit): jsx-a11y/label-has-associated-control passes when htmlFor is present — static analysis cannot resolve whether the referenced id exists elsewhere in the document. Measured run: no finding."
     },
     "TC-F-03": {
       "page": "forms",
@@ -215,8 +215,8 @@
         }
       ],
       "categories": ["structural", "emag-specific"],
-      "detection": { "axe": false, "eslint_a11y": true, "agent": true },
-      "notes": "Axe accepts placeholder as accessible name (ARIA accessible name computation algorithm). eslint-plugin-jsx-a11y's label-has-associated-control does NOT accept placeholder. e-MAG 6.2 explicitly prohibits placeholder-only labels."
+      "detection": { "axe": false, "eslint_a11y": false, "agent": true },
+      "notes": "Axe accepts placeholder as accessible name (ARIA accessible name computation algorithm). CORRECTED 2026-07-11 (eslint audit): label-has-associated-control only inspects <label> elements — there is none here — and no recommended jsx-a11y rule flags unlabeled inputs (control-has-associated-label is disabled by default). Measured run: no finding. e-MAG 6.2 explicitly prohibits placeholder-only labels — now an agent-only case."
     },
     "TC-F-04": {
       "page": "forms",

@@ -8,6 +8,7 @@
   },
   "scripts": {
     "axe": "tsx scripts/run-axe.ts",
+    "eslint": "tsx scripts/run-eslint.ts",
     "score": "tsx scripts/score-results.ts",
     "score:verbose": "tsx scripts/score-results.ts --verbose",
     "score:json": "tsx scripts/score-results.ts --json",
@@ -21,6 +22,9 @@
   },
   "devDependencies": {
     "@types/node": "22.19.7",
+    "@typescript-eslint/parser": "8.47.0",
+    "eslint": "9.39.2",
+    "eslint-plugin-jsx-a11y": "6.10.2",
     "tsx": "4.20.6",
     "typescript": "5.9.3"
   }
