@@ -49,6 +49,26 @@ export interface GroundTruth {
   cases: Record<string, GroundTruthCase>;
 }
 
+/**
+ * Organic wing (D-13): defects that exist in the official package's own
+ * canonical examples, rendered verbatim. Separate suite — its metrics are
+ * NEVER pooled with the injected corpus.
+ */
+export interface OrganicGroundTruthCase extends Omit<GroundTruthCase, "page"> {
+  page: "organic";
+  /** Package-relative path of the fragment rendered verbatim. */
+  fragment: string;
+  /** sha256 of the installed file, matching the KB package audit. */
+  sourceSha256: string;
+  /** Finding id in the KB's official-package-audit.json. */
+  auditFindingId: string;
+}
+
+export interface OrganicGroundTruth {
+  _meta: Record<string, unknown>;
+  cases: Record<string, OrganicGroundTruthCase>;
+}
+
 export interface AxeViolationRef {
   rule: string;
   impact?: string;

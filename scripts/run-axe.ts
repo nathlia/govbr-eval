@@ -31,6 +31,11 @@ interface PageConfig {
    * <meta> in <head>, outside any data-testid section) attribute to it.
    */
   defaultCaseId?: string;
+  /**
+   * Organic wing (D-13): fragment-selector button to click inside the tab —
+   * the tab mounts one official example fragment at a time.
+   */
+  subLabel?: string;
 }
 
 const PAGES: PageConfig[] = [
@@ -43,6 +48,13 @@ const PAGES: PageConfig[] = [
   { name: "static-refresh",  url: `${APP_URL}/static/atualizacao.html`, tabLabel: null, defaultCaseId: "TC-S-01" },
   { name: "static-layering", url: `${APP_URL}/static/confirmacao.html`, tabLabel: null, defaultCaseId: "TC-S-02" },
   { name: "static-clean",    url: `${APP_URL}/static/protocolo.html`,   tabLabel: null, defaultCaseId: "TC-S-03" },
+  // Organic wing (D-13) — scored by the separate organic suite, never pooled
+  { name: "organic-card-collapse",     url: APP_URL, tabLabel: "Orgânico", subLabel: "card-collapse.html" },
+  { name: "organic-card-disabled",     url: APP_URL, tabLabel: "Orgânico", subLabel: "card-disabled.html" },
+  { name: "organic-card-examples",     url: APP_URL, tabLabel: "Orgânico", subLabel: "card-examples.html" },
+  { name: "organic-card-scroll",       url: APP_URL, tabLabel: "Orgânico", subLabel: "card-scroll.html" },
+  { name: "organic-wizard-horizontal", url: APP_URL, tabLabel: "Orgânico", subLabel: "wizard-horizontal.html" },
+  { name: "organic-wizard-vertical",   url: APP_URL, tabLabel: "Orgânico", subLabel: "wizard-vertical.html" },
 ];
 
 // Map an axe violation node's target selector back to its data-testid ancestor.
@@ -75,7 +87,7 @@ interface EnrichedViolation {
   nodes: EnrichedNode[];
 }
 
-async function runPage({ name, url, tabLabel, defaultCaseId }: PageConfig) {
+async function runPage({ name, url, tabLabel, defaultCaseId, subLabel }: PageConfig) {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext();
   const page = await context.newPage();
@@ -89,6 +101,12 @@ async function runPage({ name, url, tabLabel, defaultCaseId }: PageConfig) {
       await tabButton.click();
       await page.waitForTimeout(300);
     }
+  }
+
+  // Organic wing: mount the requested fragment
+  if (subLabel) {
+    await page.locator("main button", { hasText: subLabel }).click();
+    await page.waitForTimeout(300);
   }
 
   const results = await new AxeBuilder({ page }).analyze();

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-12T21:40:53.173Z",
+  "timestamp": "2026-07-12T21:57:37.597Z",
   "tool": "axe-core via @axe-core/playwright",
   "appUrl": "http://localhost:3000",
   "results": {
@@ -186,6 +186,276 @@
       "violationCount": 0,
       "byCaseId": {},
       "incompleteByCaseId": {},
+      "raw": []
+    },
+    "organic-card-collapse": {
+      "passes": 30,
+      "violationCount": 1,
+      "byCaseId": {
+        "TC-O-01": [
+          {
+            "rule": "image-alt",
+            "impact": "critical",
+            "description": "Ensure <img> elements have alternative text or a role of none or presentation",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright"
+          }
+        ]
+      },
+      "incompleteByCaseId": {},
+      "raw": [
+        {
+          "id": "image-alt",
+          "impact": "critical",
+          "description": "Ensure <img> elements have alternative text or a role of none or presentation",
+          "nodes": [
+            {
+              "target": [
+                "img"
+              ],
+              "testCaseId": "TC-O-01"
+            }
+          ]
+        }
+      ]
+    },
+    "organic-card-disabled": {
+      "passes": 29,
+      "violationCount": 2,
+      "byCaseId": {
+        "TC-O-02": [
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          },
+          {
+            "rule": "image-alt",
+            "impact": "critical",
+            "description": "Ensure <img> elements have alternative text or a role of none or presentation",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright"
+          }
+        ]
+      },
+      "incompleteByCaseId": {},
+      "raw": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": [
+                ".text-weight-semi-bold"
+              ],
+              "testCaseId": "TC-O-02"
+            },
+            {
+              "target": [
+                ".ml-3 > div:nth-child(2)"
+              ],
+              "testCaseId": "TC-O-02"
+            },
+            {
+              "target": [
+                ".card-content > p"
+              ],
+              "testCaseId": "TC-O-02"
+            },
+            {
+              "target": [
+                "div:nth-child(1) > .br-button[type=\"button\"]"
+              ],
+              "testCaseId": "TC-O-02"
+            }
+          ]
+        },
+        {
+          "id": "image-alt",
+          "impact": "critical",
+          "description": "Ensure <img> elements have alternative text or a role of none or presentation",
+          "nodes": [
+            {
+              "target": [
+                "img"
+              ],
+              "testCaseId": "TC-O-02"
+            }
+          ]
+        }
+      ]
+    },
+    "organic-card-examples": {
+      "passes": 30,
+      "violationCount": 1,
+      "byCaseId": {
+        "TC-O-03": [
+          {
+            "rule": "image-alt",
+            "impact": "critical",
+            "description": "Ensure <img> elements have alternative text or a role of none or presentation",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright"
+          }
+        ]
+      },
+      "incompleteByCaseId": {},
+      "raw": [
+        {
+          "id": "image-alt",
+          "impact": "critical",
+          "description": "Ensure <img> elements have alternative text or a role of none or presentation",
+          "nodes": [
+            {
+              "target": [
+                ".content > img"
+              ],
+              "testCaseId": "TC-O-03"
+            }
+          ]
+        }
+      ]
+    },
+    "organic-card-scroll": {
+      "passes": 31,
+      "violationCount": 1,
+      "byCaseId": {
+        "TC-O-04": [
+          {
+            "rule": "image-alt",
+            "impact": "critical",
+            "description": "Ensure <img> elements have alternative text or a role of none or presentation",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright"
+          }
+        ]
+      },
+      "incompleteByCaseId": {
+        "TC-O-04": [
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          }
+        ]
+      },
+      "raw": [
+        {
+          "id": "image-alt",
+          "impact": "critical",
+          "description": "Ensure <img> elements have alternative text or a role of none or presentation",
+          "nodes": [
+            {
+              "target": [
+                "img"
+              ],
+              "testCaseId": "TC-O-04"
+            }
+          ]
+        }
+      ]
+    },
+    "organic-wizard-horizontal": {
+      "passes": 34,
+      "violationCount": 0,
+      "byCaseId": {},
+      "incompleteByCaseId": {
+        "TC-O-05": [
+          {
+            "rule": "aria-valid-attr-value",
+            "impact": "critical",
+            "description": "Ensure all ARIA attributes have valid values",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-valid-attr-value?application=playwright"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          }
+        ]
+      },
+      "raw": []
+    },
+    "organic-wizard-vertical": {
+      "passes": 34,
+      "violationCount": 0,
+      "byCaseId": {},
+      "incompleteByCaseId": {
+        "TC-O-06": [
+          {
+            "rule": "aria-valid-attr-value",
+            "impact": "critical",
+            "description": "Ensure all ARIA attributes have valid values",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-valid-attr-value?application=playwright"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          }
+        ]
+      },
       "raw": []
     }
   }

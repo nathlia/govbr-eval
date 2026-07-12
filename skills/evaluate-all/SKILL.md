@@ -95,6 +95,20 @@ Check at minimum: `<meta http-equiv>` directives in `<head>`, inline event handl
 (`onclick=`), inline `style` attributes vs. stylesheet rules, deprecated presentational
 elements, and `lang`/`<title>` correctness.
 
+### 3.3. Inspect the organic wing (Orgânico tab, D-13)
+
+The **Orgânico** tab renders official `@govbr-ds/core` example fragments verbatim, ONE at a
+time (the fragment-selector buttons at the top mount/unmount them). For EACH of the 6 fragment
+buttons (`card-collapse.html` … `wizard-vertical.html`):
+- `browser_click` the fragment button, then `browser_snapshot`
+- Evaluate the mounted fragment like any other case (its `data-testid` is `TC-O-01`…`TC-O-06`)
+- Judge these fragments against the same norms as everything else — the fact that they come
+  from the official package does NOT make them conformant (`get_component_spec` warnings and
+  `govbr://knowledge/conflicts` are relevant here)
+
+Verdicts for `TC-O-*` go into the same `verdicts` object; the scorer separates them into the
+organic suite automatically — they are never pooled with the injected-corpus metrics.
+
 ### 4. Evaluate each case
 
 Work through each `data-testid` section. For each case apply the relevant checks:

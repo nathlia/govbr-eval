@@ -20,7 +20,7 @@
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import type { AgentFinding, AgentResults, AxeResults, EslintResults, GroundTruth, RuleId, ToolKey } from "../types";
+import type { AgentFinding, AgentResults, AxeResults, EslintResults, GroundTruth, OrganicGroundTruth, RuleId, ToolKey } from "../types";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -41,6 +41,7 @@ const axeRaw    = loadJson<AxeResults>("results/axe-results.json");
 const agentRaw  = loadJson<AgentResults>("results/agent-results.json");
 const eslintRaw = loadJson<EslintResults>("results/eslint-results.json");
 const kbAliases = loadJson<{ _meta: unknown; aliases: Record<string, string[]> }>("kb-aliases.json");
+const organicGt  = loadJson<OrganicGroundTruth>("organic-ground-truth.json");
 
 if (!gt) {
   console.error("Missing ground-truth.json");
@@ -338,6 +339,76 @@ function categoryMetrics(score: UnitScore): CategoryMetrics[] {
   });
 }
 
+// ── Organic wing (D-13) — separate suite, NEVER pooled with injected metrics ──
+
+interface OrganicCaseResult {
+  caseId: string;
+  fragment: string;
+  axe: boolean | "not measured";
+  agent: boolean | "not run";
+  agentRuleVerified: boolean;
+}
+
+interface OrganicScore {
+  results: OrganicCaseResult[];
+  axe: { TP: number; FN: number; measured: boolean };
+  agent: { TP: number; FN: number; FP: number; ruleVerifiedTP: number; ran: boolean };
+}
+
+function scoreOrganic(): OrganicScore | null {
+  if (!organicGt) return null;
+  const caseIds = Object.keys(organicGt.cases);
+
+  // axe: any organic-page run that attributed violations to the case
+  const axeMap: Record<string, boolean> = {};
+  let axeMeasured = false;
+  if (axeRaw?.results) {
+    for (const [pageName, pageData] of Object.entries(axeRaw.results)) {
+      if (!pageName.startsWith("organic")) continue;
+      axeMeasured = true;
+      for (const [caseId, viols] of Object.entries(pageData.byCaseId ?? {})) {
+        if (viols.length > 0) axeMap[caseId] = true;
+      }
+    }
+  }
+
+  const agentRan = Boolean(agentRaw?.verdicts && !agentRaw._empty && caseIds.some(id => agentRaw.verdicts[id]));
+  let agentFP = 0;
+
+  const results: OrganicCaseResult[] = caseIds.map(caseId => {
+    const c = organicGt.cases[caseId];
+    const expectedRules = c.violations.flatMap(v => expandWithKbAliases(v.rules.map(normalizeRuleId)));
+    const verdict = agentRaw?.verdicts?.[caseId];
+    const findings = (verdict?.detected ? verdict.violations_found : []).map(rulesOfFinding);
+    const matched = findings.filter(f => f.rules.some(r => expectedRules.includes(r)));
+    const detected = Boolean(verdict?.detected);
+    if (detected && c.violations.length > 0) agentFP += findings.length - Math.min(matched.length, c.violations.length);
+    return {
+      caseId,
+      fragment: c.fragment,
+      axe: axeMeasured ? Boolean(axeMap[caseId]) : ("not measured" as const),
+      agent: agentRan ? detected : ("not run" as const),
+      agentRuleVerified: matched.length > 0,
+    };
+  });
+
+  return {
+    results,
+    axe: {
+      TP: results.filter(r => r.axe === true).length,
+      FN: axeMeasured ? results.filter(r => r.axe === false).length : 0,
+      measured: axeMeasured,
+    },
+    agent: {
+      TP: results.filter(r => r.agent === true).length,
+      FN: agentRan ? results.filter(r => r.agent === false).length : 0,
+      FP: agentFP,
+      ruleVerifiedTP: results.filter(r => r.agent === true && r.agentRuleVerified).length,
+      ran: agentRan,
+    },
+  };
+}
+
 // ── Format helpers ────────────────────────────────────────────────────────────
 
 function pct(v: number | null): string {
@@ -440,6 +511,7 @@ function meanSd(values: number[]): { mean: number; sd: number | null } {
 }
 
 const runs = loadRuns();
+const organicScore = scoreOrganic();
 
 if (JSON_OUT) {
   const out: Record<string, unknown> = {};
@@ -459,6 +531,15 @@ if (JSON_OUT) {
         recall:    defined.length ? defined.reduce((s, c) => s + (c.recall ?? 0), 0) / defined.length : null,
         f1:        defined.length ? defined.reduce((s, c) => s + (c.f1 ?? 0), 0) / defined.length : null,
       },
+    };
+  }
+  if (organicScore) {
+    // D-13: separate key — consumers must not merge this with the main metrics
+    out.organic = {
+      pooling: "NEVER pooled with injected-corpus metrics (D-13)",
+      cases: organicScore.results,
+      axe: organicScore.axe,
+      agent: organicScore.agent,
     };
   }
   if (runs.length) {
@@ -577,6 +658,36 @@ if (unitScore && catMetrics) {
     console.log("\nLegend: ✓ = rule-verified match  ≈ = case-level fallback  ✗ = missed unit");
     console.log();
   }
+}
+
+// ── Organic wing report (D-13) — printed separately, never pooled ─────────────
+
+if (organicScore) {
+  console.log("=== Organic wing (exploratory, D-13) — official-package defects, NEVER pooled ===\n");
+  console.log(
+    pad("Case", 10) + pad("Fragment", 42) + pad("axe", 15) + pad("Agent", 12) + "Rule-verified"
+  );
+  console.log("─".repeat(92));
+  for (const r of organicScore.results) {
+    console.log(
+      pad(r.caseId, 10) +
+      pad(r.fragment.replace("dist/components/", ""), 42) +
+      pad(String(r.axe), 15) +
+      pad(String(r.agent), 12) +
+      (r.agent === true ? (r.agentRuleVerified ? "✓" : "≈") : "—")
+    );
+  }
+  console.log("─".repeat(92));
+  const oa = organicScore.axe;
+  const og = organicScore.agent;
+  console.log(
+    `axe: ${oa.measured ? `${oa.TP}/${oa.TP + oa.FN} defects detected` : "not measured — npm run axe"} · ` +
+    `Agent: ${og.ran ? `${og.TP}/${og.TP + og.FN} detected (${og.ruleVerifiedTP} rule-verified, ${og.FP} FP)` : "not run — /evaluate-all"}`
+  );
+  console.log("These 6 defects are ORGANIC (present in @govbr-ds/core 3.7.0 itself) — the oracle-problem");
+  console.log("argument: the validator catches defects in the very artifact it learned from. TC-O-05/06");
+  console.log("share the broken-aria-labelledby mechanism with injected TC-F-11 (see organic-ground-truth _meta).");
+  console.log();
 }
 
 // ── Multi-run report (F3/F4) ──────────────────────────────────────────────────
