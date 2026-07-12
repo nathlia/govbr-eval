@@ -15,7 +15,8 @@
     "dashboard": "npm --prefix dashboard run dev",
     "typecheck": "tsc --noEmit && tsc --noEmit -p dashboard",
     "postinstall": "playwright install chromium",
-    "kb:aliases": "tsx scripts/generate-kb-aliases.ts"
+    "kb:aliases": "tsx scripts/generate-kb-aliases.ts",
+    "case-matrix": "tsx scripts/case-matrix.ts"
   },
   "dependencies": {
     "@axe-core/playwright": "4.11.1",
