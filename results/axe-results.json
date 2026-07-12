@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-11T06:54:27.491Z",
+  "timestamp": "2026-07-12T21:40:53.173Z",
   "tool": "axe-core via @axe-core/playwright",
   "appUrl": "http://localhost:3000",
   "results": {
@@ -25,7 +25,7 @@
           "nodes": [
             {
               "target": [
-                "#TC-B-02 > .circle[type=\"button\"]"
+                "#TC-B-02 > .circle.br-button[type=\"button\"]"
               ],
               "testCaseId": "TC-B-02"
             }
@@ -35,8 +35,16 @@
     },
     "forms": {
       "passes": 28,
-      "violationCount": 1,
+      "violationCount": 2,
       "byCaseId": {
+        "TC-F-14": [
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright"
+          }
+        ],
         "TC-F-02": [
           {
             "rule": "label",
@@ -58,6 +66,19 @@
       },
       "raw": [
         {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": [
+                ".v-tone-a"
+              ],
+              "testCaseId": "TC-F-14"
+            }
+          ]
+        },
+        {
           "id": "label",
           "impact": "critical",
           "description": "Ensure every form element has a label",
@@ -71,6 +92,101 @@
           ]
         }
       ]
+    },
+    "nav": {
+      "passes": 30,
+      "violationCount": 0,
+      "byCaseId": {},
+      "incompleteByCaseId": {},
+      "raw": []
+    },
+    "table": {
+      "passes": 24,
+      "violationCount": 0,
+      "byCaseId": {},
+      "incompleteByCaseId": {},
+      "raw": []
+    },
+    "list": {
+      "passes": 27,
+      "violationCount": 0,
+      "byCaseId": {},
+      "incompleteByCaseId": {},
+      "raw": []
+    },
+    "interactive": {
+      "passes": 31,
+      "violationCount": 1,
+      "byCaseId": {
+        "TC-I-01": [
+          {
+            "rule": "aria-allowed-attr",
+            "impact": "critical",
+            "description": "Ensure an element's role supports its ARIA attributes",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright"
+          }
+        ]
+      },
+      "incompleteByCaseId": {},
+      "raw": [
+        {
+          "id": "aria-allowed-attr",
+          "impact": "critical",
+          "description": "Ensure an element's role supports its ARIA attributes",
+          "nodes": [
+            {
+              "target": [
+                "#TC-I-01 > .br-accordion > div"
+              ],
+              "testCaseId": "TC-I-01"
+            }
+          ]
+        }
+      ]
+    },
+    "static-refresh": {
+      "passes": 16,
+      "violationCount": 1,
+      "byCaseId": {
+        "TC-S-01": [
+          {
+            "rule": "meta-refresh",
+            "impact": "critical",
+            "description": "Ensure <meta http-equiv=\"refresh\"> is not used for delayed refresh",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-refresh?application=playwright"
+          }
+        ]
+      },
+      "incompleteByCaseId": {},
+      "raw": [
+        {
+          "id": "meta-refresh",
+          "impact": "critical",
+          "description": "Ensure <meta http-equiv=\"refresh\"> is not used for delayed refresh",
+          "nodes": [
+            {
+              "target": [
+                "meta[http-equiv=\"refresh\"]"
+              ],
+              "testCaseId": "TC-S-01"
+            }
+          ]
+        }
+      ]
+    },
+    "static-layering": {
+      "passes": 19,
+      "violationCount": 0,
+      "byCaseId": {},
+      "incompleteByCaseId": {},
+      "raw": []
+    },
+    "static-clean": {
+      "passes": 18,
+      "violationCount": 0,
+      "byCaseId": {},
+      "incompleteByCaseId": {},
+      "raw": []
     }
   }
 }

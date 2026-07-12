@@ -24,12 +24,25 @@ const APP_URL = process.env.APP_URL ?? "http://localhost:3000";
 interface PageConfig {
   name: string;
   url: string;
-  tab: "buttons" | "form";
+  /** SPA tab label to click, or null for standalone pages (static routes, D-15). */
+  tabLabel: string | null;
+  /**
+   * Static routes carry exactly one case — document-level violations (e.g. a
+   * <meta> in <head>, outside any data-testid section) attribute to it.
+   */
+  defaultCaseId?: string;
 }
 
 const PAGES: PageConfig[] = [
-  { name: "buttons", url: APP_URL, tab: "buttons" },
-  { name: "forms",   url: APP_URL, tab: "form"    },
+  { name: "buttons",         url: APP_URL, tabLabel: "Botões" },
+  { name: "forms",           url: APP_URL, tabLabel: "Formulário" },
+  { name: "nav",             url: APP_URL, tabLabel: "Navegação" },
+  { name: "table",           url: APP_URL, tabLabel: "Tabelas" },
+  { name: "list",            url: APP_URL, tabLabel: "Listas" },
+  { name: "interactive",     url: APP_URL, tabLabel: "Interativos" },
+  { name: "static-refresh",  url: `${APP_URL}/static/atualizacao.html`, tabLabel: null, defaultCaseId: "TC-S-01" },
+  { name: "static-layering", url: `${APP_URL}/static/confirmacao.html`, tabLabel: null, defaultCaseId: "TC-S-02" },
+  { name: "static-clean",    url: `${APP_URL}/static/protocolo.html`,   tabLabel: null, defaultCaseId: "TC-S-03" },
 ];
 
 // Map an axe violation node's target selector back to its data-testid ancestor.
@@ -62,18 +75,20 @@ interface EnrichedViolation {
   nodes: EnrichedNode[];
 }
 
-async function runPage({ name, url, tab }: PageConfig) {
+async function runPage({ name, url, tabLabel, defaultCaseId }: PageConfig) {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext();
   const page = await context.newPage();
 
   await page.goto(url, { waitUntil: "networkidle" });
 
-  // Click the nav tab to activate the right page
-  const tabButton = page.locator("nav button", { hasText: tab === "buttons" ? "Botões" : "Formulário" });
-  if (await tabButton.count() > 0) {
-    await tabButton.click();
-    await page.waitForTimeout(300);
+  // Click the nav tab to activate the right page (SPA pages only)
+  if (tabLabel !== null) {
+    const tabButton = page.locator("nav button", { hasText: tabLabel });
+    if (await tabButton.count() > 0) {
+      await tabButton.click();
+      await page.waitForTimeout(300);
+    }
   }
 
   const results = await new AxeBuilder({ page }).analyze();
@@ -85,7 +100,7 @@ async function runPage({ name, url, tab }: PageConfig) {
         const enrichedNodes: EnrichedNode[] = await Promise.all(
           v.nodes.map(async (n) => {
             const caseId = await findTestCaseId(page, n.target as string | string[]);
-            return { target: n.target, testCaseId: caseId };
+            return { target: n.target, testCaseId: caseId ?? defaultCaseId ?? null };
           })
         );
         return {

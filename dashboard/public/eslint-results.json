@@ -1,10 +1,14 @@
 {
-  "timestamp": "2026-07-11T06:37:45.499Z",
+  "timestamp": "2026-07-12T21:42:07.051Z",
   "tool": "eslint-plugin-jsx-a11y (flat recommended) via ESLint API",
   "config": "jsx-a11y/flat/recommended",
   "filesLinted": [
     "ButtonPage.tsx",
-    "FormPage.tsx"
+    "FormPage.tsx",
+    "NavPage.tsx",
+    "TablePage.tsx",
+    "ListPage.tsx",
+    "InteractivePage.tsx"
   ],
   "byCaseId": {
     "TC-B-12": [
@@ -13,6 +17,56 @@
         "message": "The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md",
         "file": "ButtonPage.tsx",
         "line": 98
+      }
+    ],
+    "TC-L-07": [
+      {
+        "rule": "jsx-a11y/no-noninteractive-tabindex",
+        "message": "`tabIndex` should only be declared on interactive elements.",
+        "file": "ListPage.tsx",
+        "line": 103
+      }
+    ],
+    "TC-I-01": [
+      {
+        "rule": "jsx-a11y/click-events-have-key-events",
+        "message": "Visible, non-interactive elements with click handlers must have at least one keyboard listener.",
+        "file": "InteractivePage.tsx",
+        "line": 36
+      },
+      {
+        "rule": "jsx-a11y/no-static-element-interactions",
+        "message": "Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.",
+        "file": "InteractivePage.tsx",
+        "line": 36
+      }
+    ],
+    "TC-I-02": [
+      {
+        "rule": "jsx-a11y/click-events-have-key-events",
+        "message": "Visible, non-interactive elements with click handlers must have at least one keyboard listener.",
+        "file": "InteractivePage.tsx",
+        "line": 76
+      },
+      {
+        "rule": "jsx-a11y/no-static-element-interactions",
+        "message": "Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.",
+        "file": "InteractivePage.tsx",
+        "line": 76
+      }
+    ],
+    "TC-I-03": [
+      {
+        "rule": "jsx-a11y/click-events-have-key-events",
+        "message": "Visible, non-interactive elements with click handlers must have at least one keyboard listener.",
+        "file": "InteractivePage.tsx",
+        "line": 100
+      },
+      {
+        "rule": "jsx-a11y/interactive-supports-focus",
+        "message": "Elements with the 'tab' interactive role must be focusable.",
+        "file": "InteractivePage.tsx",
+        "line": 100
       }
     ]
   },

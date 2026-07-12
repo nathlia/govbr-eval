@@ -22,14 +22,21 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const CORPUS_SRC = process.env.CORPUS_SRC ?? join(ROOT, "..", "govbr-corpus", "src");
 
-const FILES = [join(CORPUS_SRC, "pages", "ButtonPage.tsx"), join(CORPUS_SRC, "pages", "FormPage.tsx")];
+const FILES = [
+  join(CORPUS_SRC, "pages", "ButtonPage.tsx"),
+  join(CORPUS_SRC, "pages", "FormPage.tsx"),
+  join(CORPUS_SRC, "pages", "NavPage.tsx"),
+  join(CORPUS_SRC, "pages", "TablePage.tsx"),
+  join(CORPUS_SRC, "pages", "ListPage.tsx"),
+  join(CORPUS_SRC, "pages", "InteractivePage.tsx"),
+];
 
 /** line number → TC-* section, from data-testid occurrences in the source. */
 function buildLineIndex(file: string): { line: number; caseId: string }[] {
   const lines = readFileSync(file, "utf8").split(/\r?\n/);
   const index: { line: number; caseId: string }[] = [];
   lines.forEach((text, i) => {
-    const m = text.match(/data-testid="(TC-[BF]-\d+)"/);
+    const m = text.match(/data-testid="(TC-[A-Z]-\d+)"/);
     if (m) index.push({ line: i + 1, caseId: m[1] });
   });
   return index;

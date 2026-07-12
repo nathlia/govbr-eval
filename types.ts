@@ -26,7 +26,16 @@ export interface GroundTruthViolation {
 }
 
 export interface GroundTruthCase {
-  page: "buttons" | "forms";
+  page:
+    | "buttons"
+    | "forms"
+    | "nav"
+    | "table"
+    | "list"
+    | "interactive"
+    | "static-refresh"
+    | "static-layering"
+    | "static-clean";
   description: string;
   violations: GroundTruthViolation[];
   /** Union of the violations' categories (kept for display/back-compat). */

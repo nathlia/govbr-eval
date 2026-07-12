@@ -31,7 +31,8 @@ Each finding's `rule` MUST use the rule id vocabulary (scoring matches on elemen
 - `emag:<seção>` — e-MAG 3.1 recommendation, e.g. `emag:6.5`
 - `wcag:<sc>` — WCAG success criterion, e.g. `wcag:3.3.2`
 - `ds:<regra>` — DS-specific: `ds:token-color`, `ds:token-font`, `ds:token-radius`,
-  `ds:token-focus`, `ds:token-spacing`, `ds:button-order`, `ds:component-structure`, `ds:form-label`
+  `ds:token-focus`, `ds:token-spacing`, `ds:button-order`, `ds:component-structure`, `ds:form-label`,
+  `ds:item-content`, `ds:empty-state`, `ds:truncation`, `ds:touch-target`
 
 Pick the single most specific rule per finding; still cite related norms inside `description`.
 One finding per violated rule — do not bundle two independent violations into one entry.
@@ -45,7 +46,7 @@ tool call you make (references, snapshots, style inspections, evaluations).
 - `get_ds_rules` — the KB rule store; load the relevant slices (e.g. `component: "button"`,
   `category: "accessibility"`) and note each rule's deterministic id for citation in findings
 - `get_design_tokens` — token reference (colors, typography, radii)
-- `get_emag_rules` — full e-MAG v3.1 (focus on sections 1 and 6)
+- `get_emag_rules` — full e-MAG v3.1 (all sections — the corpus now spans marcação, comportamento, conteúdo, apresentação e formulários)
 - `get_component_spec` with `component: "button"` — canonical DS button HTML (its `warnings`
   field lists known defects in the official examples — do not treat those fragments as norms)
 
@@ -71,6 +72,28 @@ Array.from(document.querySelectorAll('input, select, textarea')).map(el => ({
 ```
 
 Convert each `rgb(r,g,b)` border-color and background-color to hex and check against `hexLookup`. A value not in `hexLookup` on a DS-styled form element (`br-input`, `br-select`, etc.) is a token violation.
+
+### 3.1. Inspect the remaining SPA tabs
+
+For each of the tabs **Navegação**, **Tabelas**, **Listas**, **Interativos** (nav bar buttons):
+- `browser_click` on the tab button, then `browser_snapshot`
+- On **Listas**: also `browser_evaluate` to read computed padding of every `.br-item`
+  (`getComputedStyle(el).padding`) and the computed `max-width`/`text-overflow` of any
+  `.br-button` — spacing consistency and truncation are computed-style checks
+- On **Interativos**: this tab requires *interaction*, not just snapshots (see 4.6)
+
+### 3.2. Inspect the static routes (D-15)
+
+Three standalone pages exist outside the SPA — navigate directly and inspect the **delivered
+HTML source** (`browser_evaluate` with `document.documentElement.outerHTML` or equivalent),
+not only the rendered snapshot, because their case family is source-code-level:
+- `http://localhost:3000/static/atualizacao.html` (TC-S-01)
+- `http://localhost:3000/static/confirmacao.html` (TC-S-02)
+- `http://localhost:3000/static/protocolo.html` (TC-S-03)
+
+Check at minimum: `<meta http-equiv>` directives in `<head>`, inline event handlers
+(`onclick=`), inline `style` attributes vs. stylesheet rules, deprecated presentational
+elements, and `lang`/`<title>` correctness.
 
 ### 4. Evaluate each case
 
@@ -111,6 +134,30 @@ Work through each `data-testid` section. For each case apply the relevant checks
 | Button order | In any form/section, primary button appears BEFORE secondary button |
 | Duplicate accessible names | Two or more buttons on the page share the same accessible name but appear in different sections/contexts — users of AT cannot distinguish them (WCAG 2.4.6) |
 
+#### Navigation checks (Navegação tab, from snapshot + DOM)
+| What to check | Violation signal |
+|---------------|-----------------|
+| Skip link position | The skip link ('Ir para o conteúdo') is not the FIRST focusable element of its header block |
+| Breadcrumb current page | The last crumb (current page) is rendered as `<a>` instead of text with `aria-current="page"` |
+| Breadcrumb keyboard reachability | Any crumb link carries `tabindex="-1"` — verify by Tab traversal or attribute inspection |
+| Foreign-language passages | Block of text in another language without a `lang` attribute on its element (compare twins carefully — one may be correctly marked) |
+
+#### Table checks (Tabelas tab, from snapshot + DOM)
+| What to check | Violation signal |
+|---------------|-----------------|
+| Header cells | Data table whose header row uses `<td><strong>` instead of `<th scope>` |
+| Layout tables | `<table>` whose cells contain prose/layout content, not tabular data |
+
+#### List/Item checks (Listas tab, from snapshot + computed styles)
+| What to check | Violation signal |
+|---------------|-----------------|
+| Item content area | `br-button primary` (or navigation controls) inside a `br-item` content area — prohibited by the Item spec |
+| Spacing consistency | Sibling `br-item`s of the same list with different computed padding |
+| Spacing scale | `br-item` padding value outside the DS spacing scale (multiples of 4/8px) |
+| Empty regions | A titled results/content region rendering empty with no Empty State message |
+| Truncation | Button label clipped by `text-overflow: ellipsis` — PROHIBITED for buttons/labels/errors; note that truncating *secondary descriptions* is permitted (do not flag those) |
+| Divider focusability | `br-divider` with `tabindex="0"` (decorative separator in the focus order) |
+
 ### 4.5. Cross-element scan (run after all per-case checks)
 
 These checks require looking across multiple cases simultaneously:
@@ -124,6 +171,19 @@ const id = el.getAttribute('aria-labelledby');
 return { id, targetExists: id ? !!document.getElementById(id) : null };
 ```
 If `targetExists` is `false`, the violation is a broken `aria-labelledby`, not a placeholder-only label — update the violation description accordingly.
+
+### 4.6. Interaction protocol (Interativos tab — keyboard wing)
+
+These cases CANNOT be judged from a static snapshot; drive them:
+1. **Accordion-like widgets**: click to expand, re-snapshot, and compare `aria-expanded`
+   before/after — a static `aria-expanded` that never reflects the real state is a violation;
+   also check the header is a focusable, keyboard-actionable element (button vs div).
+2. **Modal**: activate the trigger button, then attempt keyboard-only operation —
+   `browser_press_key` Tab (does focus enter/stay in the dialog?), Escape (does it close?),
+   and check the close control is focusable. Close it with a click before moving on.
+3. **Tabs widget**: `browser_press_key` Tab to reach the tablist, arrow keys / Enter to switch —
+   if switching only works with the mouse, the widget fails keyboard operability. Check
+   `role="tab"` elements have `tabindex`.
 
 ### 5. Build and save the verdict
 
