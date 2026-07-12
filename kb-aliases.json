@@ -1,0 +1,312 @@
+{
+  "_meta": {
+    "generatedAt": "2026-07-12T21:13:52.863Z",
+    "generatedBy": "scripts/generate-kb-aliases.ts — do not edit by hand",
+    "source": "govbr-ds-validator/data/knowledge/versions/3.7.0/normalized/rules.jsonl",
+    "normativeRules": 152,
+    "rulesWithAliases": 45
+  },
+  "aliases": {
+    "govbr-3.7.0-accessibility-breadcrumb-992f162ca821": [],
+    "govbr-3.7.0-accessibility-button-efd2d9e7c3c6": [],
+    "govbr-3.7.0-accessibility-button-41d9f439e103": [],
+    "govbr-3.7.0-accessibility-card-e7fa6a659cdf": [],
+    "govbr-3.7.0-accessibility-input-6fe41e804955": [],
+    "govbr-3.7.0-accessibility-list-03813ffeeb42": [],
+    "govbr-3.7.0-accessibility-modal-64b84991229c": [],
+    "govbr-3.7.0-accessibility-modal-31c45e5f6081": [],
+    "govbr-3.7.0-accessibility-modal-65446caf1efc": [],
+    "govbr-3.7.0-accessibility-notification-2bae7736ddda": [],
+    "govbr-3.7.0-accessibility-signin-a68a86f45877": [],
+    "govbr-3.7.0-accessibility-skiplink-5aae226482e5": [],
+    "govbr-3.7.0-accessibility-tab-f1807d71dc5f": [],
+    "govbr-3.7.0-component-avatar-81c7524692f0": [],
+    "govbr-3.7.0-component-button-4d7b5f978df1": [],
+    "govbr-3.7.0-component-card-a102d36a696a": [],
+    "govbr-3.7.0-component-carousel-7b664374a2b3": [],
+    "govbr-3.7.0-component-carousel-4c92b788906b": [],
+    "govbr-3.7.0-component-checkbox-6923ae0af84f": [],
+    "govbr-3.7.0-component-input-3788829b08fe": [],
+    "govbr-3.7.0-component-list-8f67e7cc7677": [],
+    "govbr-3.7.0-component-magicbutton-d421fb28a955": [],
+    "govbr-3.7.0-component-message-088613b94e1c": [],
+    "govbr-3.7.0-component-message-188aad85588b": [],
+    "govbr-3.7.0-component-message-66b01a712e67": [],
+    "govbr-3.7.0-component-modal-091e0e012f86": [],
+    "govbr-3.7.0-component-notification-a77199b18a54": [],
+    "govbr-3.7.0-component-scrim-d5ba51dda2b0": [],
+    "govbr-3.7.0-component-signin-837c5ed4fe6a": [],
+    "govbr-3.7.0-component-signin-2752fd23bbe8": [],
+    "govbr-3.7.0-component-table-7c605ca2f85e": [],
+    "govbr-3.7.0-component-table-88941e76c77b": [],
+    "govbr-3.7.0-component-table-8b8d4b403cb9": [],
+    "govbr-3.7.0-component-tag-7d70c8be6a0c": [],
+    "govbr-3.7.0-component-tooltip-c028ba432407": [],
+    "govbr-3.7.0-component-tooltip-6cc61d2b3460": [],
+    "govbr-3.7.0-development-global-0b73051d7063": [],
+    "govbr-3.7.0-development-global-406774b1cb87": [],
+    "govbr-3.7.0-development-global-c6889731433a": [],
+    "govbr-3.7.0-foundation-global-0578aa6c2828": [],
+    "govbr-3.7.0-foundation-global-bb0c6795e3f9": [],
+    "govbr-3.7.0-foundation-global-9ef740ba1f28": [],
+    "govbr-3.7.0-foundation-global-a239799cdffd": [],
+    "govbr-3.7.0-foundation-global-21b1a2733f7b": [],
+    "govbr-3.7.0-foundation-global-1c0146e93d2e": [],
+    "govbr-3.7.0-page-global-f6e03bce515b": [],
+    "govbr-3.7.0-accessibility-global-7e6420514860": [
+      "emag:1.1",
+      "wcag:4.1.1",
+      "wcag:4.1.2"
+    ],
+    "govbr-3.7.0-accessibility-global-1cb2c878824b": [
+      "emag:1.2",
+      "wcag:1.3.1"
+    ],
+    "govbr-3.7.0-accessibility-global-3ac0aaa53900": [
+      "emag:1.3",
+      "wcag:1.3.1",
+      "wcag:2.4.10"
+    ],
+    "govbr-3.7.0-accessibility-global-79db88c7f55d": [
+      "emag:1.4",
+      "wcag:1.3.2",
+      "wcag:2.4.3"
+    ],
+    "govbr-3.7.0-accessibility-global-7d2b85f81c52": [
+      "emag:1.5",
+      "wcag:2.4.1"
+    ],
+    "govbr-3.7.0-accessibility-global-206c9fa6ae11": [
+      "emag:1.6",
+      "wcag:1.3.1"
+    ],
+    "govbr-3.7.0-accessibility-global-cf61b3eb3c71": [
+      "emag:1.7",
+      "wcag:1.3.1"
+    ],
+    "govbr-3.7.0-accessibility-global-bfba9c1f5026": [
+      "emag:1.8",
+      "wcag:3.2.3"
+    ],
+    "govbr-3.7.0-accessibility-global-5be1f553cc03": [
+      "emag:1.9",
+      "wcag:3.2.5"
+    ],
+    "govbr-3.7.0-accessibility-global-e6fd5e1247de": [
+      "emag:2.1",
+      "wcag:2.1.1",
+      "wcag:2.1.2"
+    ],
+    "govbr-3.7.0-accessibility-global-f639993e9416": [
+      "emag:2.2",
+      "wcag:2.1.1",
+      "wcag:2.1.2"
+    ],
+    "govbr-3.7.0-accessibility-global-cd5de9a6f164": [
+      "emag:2.3",
+      "wcag:3.2.5"
+    ],
+    "govbr-3.7.0-accessibility-global-d6e816588306": [
+      "emag:2.4",
+      "wcag:3.2.5"
+    ],
+    "govbr-3.7.0-accessibility-global-5d366ef29b04": [
+      "emag:2.5",
+      "wcag:2.2.1"
+    ],
+    "govbr-3.7.0-accessibility-global-8faca42c2c9a": [
+      "emag:2.6",
+      "wcag:2.3.1"
+    ],
+    "govbr-3.7.0-accessibility-global-33b13d9fa271": [
+      "emag:2.7",
+      "wcag:2.2.2"
+    ],
+    "govbr-3.7.0-accessibility-global-698e0a4783a9": [
+      "emag:3.1",
+      "wcag:3.1.1"
+    ],
+    "govbr-3.7.0-accessibility-global-1ccbc61dddbc": [
+      "emag:3.10",
+      "wcag:1.3.1"
+    ],
+    "govbr-3.7.0-accessibility-global-fb83eab75d8d": [
+      "emag:3.11",
+      "wcag:3.1.5"
+    ],
+    "govbr-3.7.0-accessibility-global-20c08f26d8e8": [
+      "emag:3.12",
+      "wcag:3.1.3",
+      "wcag:3.1.4"
+    ],
+    "govbr-3.7.0-accessibility-global-1db13803cbf8": [
+      "emag:3.2",
+      "wcag:3.1.2"
+    ],
+    "govbr-3.7.0-accessibility-global-5d5a5f21d94b": [
+      "emag:3.3",
+      "wcag:2.4.2"
+    ],
+    "govbr-3.7.0-accessibility-global-75c11ccac582": [
+      "emag:3.4",
+      "wcag:2.4.8"
+    ],
+    "govbr-3.7.0-accessibility-global-cdfbb56eebc5": [
+      "emag:3.5",
+      "wcag:2.4.4",
+      "wcag:2.4.9"
+    ],
+    "govbr-3.7.0-accessibility-global-3a3e47354c53": [
+      "emag:3.6",
+      "wcag:1.1.1"
+    ],
+    "govbr-3.7.0-accessibility-global-609e3494150c": [
+      "emag:3.7",
+      "wcag:1.1.1"
+    ],
+    "govbr-3.7.0-accessibility-global-3a57435c3b32": [
+      "emag:3.8"
+    ],
+    "govbr-3.7.0-accessibility-global-cd705eb5da2a": [
+      "emag:3.9",
+      "wcag:1.3.1"
+    ],
+    "govbr-3.7.0-accessibility-global-cb09bc0c77c0": [
+      "emag:4.1",
+      "wcag:1.4.3"
+    ],
+    "govbr-3.7.0-accessibility-global-c2f94bdc17ce": [
+      "emag:4.2",
+      "wcag:1.3.3",
+      "wcag:1.4.1"
+    ],
+    "govbr-3.7.0-accessibility-global-d9c42f188e2c": [
+      "emag:4.3",
+      "wcag:1.4.4"
+    ],
+    "govbr-3.7.0-accessibility-global-21fbcc2fe37b": [
+      "emag:4.4",
+      "wcag:2.4.7"
+    ],
+    "govbr-3.7.0-accessibility-global-6c86b93df639": [
+      "emag:5.1",
+      "wcag:1.2.1",
+      "wcag:1.2.2",
+      "wcag:1.2.6",
+      "wcag:1.2.8"
+    ],
+    "govbr-3.7.0-accessibility-global-dc45b57b8349": [
+      "emag:5.2",
+      "wcag:1.2.1",
+      "wcag:1.2.2",
+      "wcag:1.2.6"
+    ],
+    "govbr-3.7.0-accessibility-global-8f439a3c078c": [
+      "emag:5.3",
+      "wcag:1.2.3",
+      "wcag:1.2.5",
+      "wcag:1.2.7"
+    ],
+    "govbr-3.7.0-accessibility-global-56cbcba602ce": [
+      "emag:5.4",
+      "wcag:1.4.2"
+    ],
+    "govbr-3.7.0-accessibility-global-6ea7ecc60c01": [
+      "emag:5.5",
+      "wcag:2.2.2"
+    ],
+    "govbr-3.7.0-accessibility-global-dafac812b10b": [
+      "emag:6.1",
+      "wcag:1.1.1"
+    ],
+    "govbr-3.7.0-accessibility-global-b95c42b61ed3": [
+      "emag:6.2",
+      "wcag:1.3.1"
+    ],
+    "govbr-3.7.0-accessibility-global-e101928665cc": [
+      "emag:6.3",
+      "wcag:2.4.3"
+    ],
+    "govbr-3.7.0-accessibility-global-de1efebaf255": [
+      "emag:6.4",
+      "wcag:3.2.2"
+    ],
+    "govbr-3.7.0-accessibility-global-01b1806c30e9": [
+      "emag:6.5",
+      "wcag:3.3.2"
+    ],
+    "govbr-3.7.0-accessibility-global-cc837bbaf713": [
+      "emag:6.6",
+      "wcag:3.3.1"
+    ],
+    "govbr-3.7.0-accessibility-global-11ffc5c577f6": [
+      "emag:6.7",
+      "wcag:1.3.1"
+    ],
+    "govbr-3.7.0-accessibility-global-a8f7ce66b1c4": [
+      "emag:6.8",
+      "wcag:1.1.1"
+    ],
+    "govbr-3.7.0-accessibility-global-e038367bd7d6": [],
+    "govbr-3.7.0-accessibility-global-695e4379e23f": [],
+    "govbr-3.7.0-accessibility-global-1c3bd2a1c1a7": [],
+    "govbr-3.7.0-accessibility-global-41850b4791b8": [],
+    "govbr-3.7.0-accessibility-global-b5fad7ce076d": [],
+    "govbr-3.7.0-accessibility-global-cb56ad444da2": [],
+    "govbr-3.7.0-accessibility-global-2f22b7245ef9": [],
+    "govbr-3.7.0-accessibility-divider-30bbcbf3a17c": [],
+    "govbr-3.7.0-component-global-e30aab6e9a68": [],
+    "govbr-3.7.0-component-cookiebar-e564d18c805e": [],
+    "govbr-3.7.0-component-header-b6a44cb3d346": [],
+    "govbr-3.7.0-component-header-12492dba566e": [],
+    "govbr-3.7.0-component-item-0e293b295c3d": [],
+    "govbr-3.7.0-component-item-cb5d8f6d30b9": [],
+    "govbr-3.7.0-component-item-c806c8feda5a": [],
+    "govbr-3.7.0-component-item-e08476d083e4": [],
+    "govbr-3.7.0-component-item-739294d90299": [],
+    "govbr-3.7.0-component-item-a10751502b98": [],
+    "govbr-3.7.0-component-item-cb34ed616246": [],
+    "govbr-3.7.0-component-item-a6d29ea54434": [],
+    "govbr-3.7.0-component-loading-05f6aae1d1ad": [],
+    "govbr-3.7.0-component-menu-9e90f448c581": [],
+    "govbr-3.7.0-component-pagination-7b0ffe97e848": [],
+    "govbr-3.7.0-component-radio-9cf59fa5bf60": [],
+    "govbr-3.7.0-component-select-3d506ce4d7d3": [],
+    "govbr-3.7.0-component-switch-d53688105360": [],
+    "govbr-3.7.0-component-textarea-b00a40afe0f8": [],
+    "govbr-3.7.0-component-upload-985fd2775586": [],
+    "govbr-3.7.0-component-wizard-356c3bf376a5": [],
+    "govbr-3.7.0-development-global-4a614a5c88e2": [],
+    "govbr-3.7.0-development-global-a43ad8231ad0": [],
+    "govbr-3.7.0-development-global-1b31bf3ccece": [],
+    "govbr-3.7.0-development-global-137c50bea6ca": [],
+    "govbr-3.7.0-development-global-659242ecda1d": [],
+    "govbr-3.7.0-development-global-5765f1b8d2bc": [],
+    "govbr-3.7.0-development-global-8c92e4e83038": [],
+    "govbr-3.7.0-development-global-f3c19eb70e19": [],
+    "govbr-3.7.0-development-global-58a3f67d8445": [],
+    "govbr-3.7.0-development-global-9c1d24af4f37": [],
+    "govbr-3.7.0-development-global-d0dff372c137": [],
+    "govbr-3.7.0-development-global-d0e2bd4850ee": [],
+    "govbr-3.7.0-development-global-0052d80d4f92": [],
+    "govbr-3.7.0-development-global-9826b6862644": [],
+    "govbr-3.7.0-development-global-ea51f70c65fe": [],
+    "govbr-3.7.0-development-global-63b44801da86": [],
+    "govbr-3.7.0-development-global-dfebe85e65d8": [],
+    "govbr-3.7.0-development-global-067a1786b481": [],
+    "govbr-3.7.0-development-global-b491c2e2c1a0": [],
+    "govbr-3.7.0-pattern-global-eb8c1606a52e": [],
+    "govbr-3.7.0-pattern-global-03695a4aede0": [],
+    "govbr-3.7.0-pattern-global-46a1ae2f366b": [],
+    "govbr-3.7.0-pattern-global-9d9f1c9bf1ed": [],
+    "govbr-3.7.0-pattern-global-abaec84ff915": [],
+    "govbr-3.7.0-pattern-global-a633e540aa5c": [],
+    "govbr-3.7.0-pattern-global-5717506ac2e6": [],
+    "govbr-3.7.0-pattern-global-eebb093156e7": [],
+    "govbr-3.7.0-template-global-8e553b2c8bc7": [],
+    "govbr-3.7.0-template-global-3d795df32a0e": [],
+    "govbr-3.7.0-template-global-2387114907b1": [],
+    "govbr-3.7.0-template-global-19f93475dc5e": [],
+    "govbr-3.7.0-template-global-9cbfa5906031": []
+  }
+}

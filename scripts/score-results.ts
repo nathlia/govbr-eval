@@ -40,6 +40,7 @@ const gt        = loadJson<GroundTruth>("ground-truth.json");
 const axeRaw    = loadJson<AxeResults>("results/axe-results.json");
 const agentRaw  = loadJson<AgentResults>("results/agent-results.json");
 const eslintRaw = loadJson<EslintResults>("results/eslint-results.json");
+const kbAliases = loadJson<{ _meta: unknown; aliases: Record<string, string[]> }>("kb-aliases.json");
 
 if (!gt) {
   console.error("Missing ground-truth.json");
@@ -53,9 +54,26 @@ type Outcome = "TP" | "FP" | "FN" | "TN";
 
 // ── Rule extraction ───────────────────────────────────────────────────────────
 
-/** Normalize a rule id: lowercase, strip spaces ("WCAG 3.3.2" → "wcag:3.3.2"). */
+/** Normalize a rule id: lowercase, strip spaces ("WCAG 3.3.2" → "wcag:3.3.2"). KB ids pass through. */
 function normalizeRuleId(raw: string): RuleId {
-  return raw.trim().toLowerCase().replace(/\s+/g, "").replace(/^(emag|wcag|ds)[.\-]?:?/, "$1:");
+  const t = raw.trim().toLowerCase();
+  if (t.startsWith("govbr-")) return t; // KB deterministic id (first-class, Phase 3.1)
+  return t.replace(/\s+/g, "").replace(/^(emag|wcag|ds)[.\-]?:?/, "$1:");
+}
+
+/**
+ * Expand a rule set with the KB alias map (both directions of citation):
+ * a KB id contributes its emag:/wcag: aliases, so a finding citing the KB id
+ * matches a gabarito unit that lists the alias — and vice versa, because the
+ * expansion is applied to expected units AND findings alike.
+ */
+function expandWithKbAliases(rules: RuleId[]): RuleId[] {
+  if (!kbAliases) return rules;
+  const out = new Set(rules);
+  for (const r of rules) {
+    for (const alias of kbAliases.aliases[r] ?? []) out.add(alias);
+  }
+  return [...out];
 }
 
 /** Parse normative rule ids out of a free-text finding (legacy string format). */
@@ -67,6 +85,8 @@ function parseRulesFromText(text: string): RuleId[] {
   if (/wcag/.test(t)) {
     for (const m of t.matchAll(/\b([0-9]+\.[0-9]+\.[0-9]+)\b/g)) rules.add(`wcag:${m[1]}`);
   }
+  // KB deterministic ids cited inline (e.g. "govbr-3.7.0-accessibility-button-efd2d9e7c3c6")
+  for (const m of t.matchAll(/\bgovbr-[0-9]+\.[0-9]+\.[0-9]+-[a-z-]+-[a-f0-9]{12}\b/g)) rules.add(m[0]);
 
   // DS-specific rule heuristics (pt-BR + en signals)
   const dsContext = /token|paleta|ds gov|do ds|spec do/i.test(text);
@@ -83,12 +103,12 @@ function parseRulesFromText(text: string): RuleId[] {
 
 function rulesOfFinding(f: AgentFinding): { rules: RuleId[]; description: string; structured: boolean } {
   if (typeof f === "string") {
-    return { rules: parseRulesFromText(f), description: f, structured: false };
+    return { rules: expandWithKbAliases(parseRulesFromText(f)), description: f, structured: false };
   }
   const declared = normalizeRuleId(f.rule);
   // Also parse the description so aliases in the text still count
   const parsed = parseRulesFromText(f.description);
-  return { rules: [...new Set([declared, ...parsed])], description: f.description, structured: true };
+  return { rules: expandWithKbAliases([...new Set([declared, ...parsed])]), description: f.description, structured: true };
 }
 
 // ── Expected units (element × rule) ──────────────────────────────────────────
@@ -103,7 +123,7 @@ interface ExpectedUnit {
 const expectedUnits: ExpectedUnit[] = [];
 for (const [caseId, c] of Object.entries(cases)) {
   for (const v of c.violations) {
-    expectedUnits.push({ caseId, rules: v.rules.map(normalizeRuleId), categories: v.categories, description: v.description });
+    expectedUnits.push({ caseId, rules: expandWithKbAliases(v.rules.map(normalizeRuleId)), categories: v.categories, description: v.description });
   }
 }
 

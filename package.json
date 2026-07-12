@@ -14,7 +14,8 @@
     "score:json": "tsx scripts/score-results.ts --json",
     "dashboard": "npm --prefix dashboard run dev",
     "typecheck": "tsc --noEmit && tsc --noEmit -p dashboard",
-    "postinstall": "playwright install chromium"
+    "postinstall": "playwright install chromium",
+    "kb:aliases": "tsx scripts/generate-kb-aliases.ts"
   },
   "dependencies": {
     "@axe-core/playwright": "4.11.1",

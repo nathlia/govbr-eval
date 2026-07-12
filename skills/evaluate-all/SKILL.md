@@ -25,6 +25,9 @@ Every case gets a verdict object:
 - `notes` → brief reasoning (what you observed and why you decided)
 
 Each finding's `rule` MUST use the rule id vocabulary (scoring matches on element × rule):
+- `govbr-<dsVersion>-…` — **KB deterministic id, PREFERRED** when the violated rule came from the
+  oracle's `get_ds_rules` tool (e.g. `govbr-3.7.0-accessibility-button-efd2d9e7c3c6`). The scorer
+  matches KB ids by exact equality and translates them to/from the aliases below automatically.
 - `emag:<seção>` — e-MAG 3.1 recommendation, e.g. `emag:6.5`
 - `wcag:<sc>` — WCAG success criterion, e.g. `wcag:3.3.2`
 - `ds:<regra>` — DS-specific: `ds:token-color`, `ds:token-font`, `ds:token-radius`,
@@ -39,9 +42,12 @@ One finding per violated rule — do not bundle two independent violations into 
 
 First note the current ISO timestamp — it becomes `cost.startedAt`. From here on, count every
 tool call you make (references, snapshots, style inspections, evaluations).
+- `get_ds_rules` — the KB rule store; load the relevant slices (e.g. `component: "button"`,
+  `category: "accessibility"`) and note each rule's deterministic id for citation in findings
 - `get_design_tokens` — token reference (colors, typography, radii)
 - `get_emag_rules` — full e-MAG v3.1 (focus on sections 1 and 6)
-- `get_component_spec` with `component: "button"` — canonical DS button HTML
+- `get_component_spec` with `component: "button"` — canonical DS button HTML (its `warnings`
+  field lists known defects in the official examples — do not treat those fragments as norms)
 
 ### 2. Inspect buttons page
 - `browser_navigate` to `http://localhost:3000`
