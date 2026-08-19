@@ -16,7 +16,8 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p dashboard",
     "postinstall": "playwright install chromium",
     "kb:aliases": "tsx scripts/generate-kb-aliases.ts",
-    "case-matrix": "tsx scripts/case-matrix.ts"
+    "case-matrix": "tsx scripts/case-matrix.ts",
+    "lint:protocol": "tsx scripts/lint-protocol.ts"
   },
   "dependencies": {
     "@axe-core/playwright": "4.11.1",

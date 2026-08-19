@@ -1,253 +1,182 @@
 # Skill: evaluate-all
 
-Formal evaluation run — systematically tests every case served by the govbr-corpus app and produces a machine-readable JSON verdict for scoring against ground-truth.
+Protocolo de avaliação formal do corpus. Diz **onde olhar**, **como capturar evidência** e **como
+reportar** &mdash; e nada sobre o que é certo ou errado no gov.br DS.
 
-## When to use
-When you need to record the agent's actual detection results for thesis scoring. Run this after any change to the test app or DS rules.
+## A regra que governa este arquivo
 
-## Trigger
-"evaluate all" or "/evaluate-all"
+Esta é a separação exigida pelo requisito **A6** (`thesis-workspace/tcc2-requirements.md`),
+derivada de `@suh2025feeda11y` e de `@anthropic2024mcp`:
 
-## Output contract
+> O procedimento carrega **procedimento apenas**. Conhecimento de domínio &mdash; regras, tokens,
+> specs &mdash; mora no oráculo, nunca aqui.
 
-Every case gets a verdict object:
+Não é organização: é validade experimental. Se este arquivo disser ao agente qual é a fonte
+primária do DS, ou qual é a escala de espaçamento, então **ele é um segundo oráculo** e nenhum
+experimento consegue mais medir o que o oráculo MCP contribui. A comparação vira "receber a regra
+por MCP" contra "receber a mesma regra por texto", que não é a pergunta da pesquisa.
+
+A primeira versão deste protocolo violava isso desde o commit inicial (`4451f1e`): trazia a fonte
+primária, a escala de raio, a ordem dos botões e a escala de espaçamento em tabelas de "violation
+signal". O defeito só ficou visível quando a ablação foi desenhada. A versão contaminada continua
+recuperável em `c3d514a` para fins de procedência do piloto e da execução de 2026-08-19.
+
+## Ao editar
+
+Pergunte de cada frase nova: **"isto diria a um agente sem oráculo algo que ele não teria como
+saber sozinho?"** Se sim, não entra &mdash; vai para o oráculo.
+
+Proibidos neste arquivo: valores de token, nomes de fonte do DS, nomes de classe do DS, escalas
+numéricas, listas de valores permitidos, e qualquer tabela que mapeie observação → veredito.
+
+`npm run lint:protocol` verifica isso automaticamente e roda no preflight da bateria.
+
+---
+
+## Sua tarefa
+
+A aplicação em `http://localhost:3000` é uma interface construída com o Design System do gov.br.
+Algumas seções contêm defeitos de conformidade ou de acessibilidade; outras estão corretas e
+servem de referência. Você não sabe quais são quais, e a proporção não é informada.
+
+Percorra todas as seções e, para cada uma, decida se há violação e qual norma foi violada,
+**com base no que você observar na página e no que você souber sobre acessibilidade e sobre
+design systems.** Se você tiver acesso a ferramentas de consulta a normas, use-as. Se não tiver,
+julgue com o seu próprio conhecimento e diga em que norma se baseia.
+
+Julgue com o mesmo rigor as seções que parecerem corretas: sinalizar uma seção conforme é um falso
+positivo e conta contra você tanto quanto deixar passar uma violação.
+
+## Contrato de saída
+
+Idêntico ao do `evaluate-all`. Cada caso recebe um objeto de veredito:
+
 ```json
 {
   "TC-B-01": { "detected": false, "violations_found": [], "notes": "..." },
   "TC-B-02": { "detected": true,  "violations_found": [
-    { "rule": "wcag:4.1.2", "description": "Botão icon-only sem nome acessível: ..." }
+    { "rule": "wcag:4.1.2", "description": "..." }
   ], "notes": "..." }
 }
 ```
-- `detected: true`  → at least one violation found in this section
-- `detected: false` → no violations found (correct implementation or false negative)
-- `violations_found` → list of finding objects, one per distinct violated rule (empty for clean cases)
-- `notes` → brief reasoning (what you observed and why you decided)
 
-Each finding's `rule` MUST use the rule id vocabulary (scoring matches on element × rule):
-- `govbr-<dsVersion>-…` — **KB deterministic id, PREFERRED** when the violated rule came from the
-  oracle's `get_ds_rules` tool (e.g. `govbr-3.7.0-accessibility-button-efd2d9e7c3c6`). The scorer
-  matches KB ids by exact equality and translates them to/from the aliases below automatically.
-- `emag:<seção>` — e-MAG 3.1 recommendation, e.g. `emag:6.5`
-- `wcag:<sc>` — WCAG success criterion, e.g. `wcag:3.3.2`
-- `ds:<regra>` — DS-specific: `ds:token-color`, `ds:token-font`, `ds:token-radius`,
-  `ds:token-focus`, `ds:token-spacing`, `ds:button-order`, `ds:component-structure`, `ds:form-label`,
-  `ds:item-content`, `ds:empty-state`, `ds:truncation`, `ds:touch-target`
+- `detected: true` → ao menos uma violação encontrada nesta seção
+- `detected: false` → nenhuma violação encontrada
+- `violations_found` → uma entrada por regra distinta violada (vazio nos casos limpos).
+  **Uma entrada por regra** &mdash; não junte duas violações independentes numa só.
+- `notes` → raciocínio breve: o que você observou e por que decidiu assim
 
-Pick the single most specific rule per finding; still cite related norms inside `description`.
-One finding per violated rule — do not bundle two independent violations into one entry.
+O campo `rule` de cada achado deve usar o vocabulário de identificadores:
 
-## Steps
+- `govbr-<versão>-…` &mdash; identificador determinístico vindo de uma ferramenta de consulta a
+  regras, **quando você tiver acesso a uma**;
+- `emag:<seção>` &mdash; recomendação do e-MAG 3.1, e.g. `emag:6.5`; <!-- lint-protocol: ok --> versão da norma no contrato de saída, não critério de violação; idêntico nos dois braços
+- `wcag:<critério>` &mdash; critério de sucesso da WCAG, e.g. `wcag:3.3.2`;
+- `ds:<regra>` &mdash; regra específica de design system, quando nenhuma das anteriores couber.
 
-### 1. Record the start time, then load all references in parallel
+Escolha o identificador mais específico que você puder justificar. Se não conseguir atribuir um
+identificador com honestidade, descreva a violação mesmo assim e deixe claro na descrição que a
+atribuição normativa é incerta &mdash; **não invente um identificador plausível.**
 
-First note the current ISO timestamp — it becomes `cost.startedAt`. From here on, count every
-tool call you make (references, snapshots, style inspections, evaluations).
-- `get_ds_rules` — the KB rule store; load the relevant slices (e.g. `component: "button"`,
-  `category: "accessibility"`) and note each rule's deterministic id for citation in findings
-- `get_design_tokens` — token reference (colors, typography, radii)
-- `get_emag_rules` — full e-MAG v3.1 (all sections — the corpus now spans marcação, comportamento, conteúdo, apresentação e formulários)
-- `get_component_spec` with `component: "button"` — canonical DS button HTML (its `warnings`
-  field lists known defects in the official examples — do not treat those fragments as norms)
+---
 
-### 2. Inspect buttons page
-- `browser_navigate` to `http://localhost:3000`
-- `browser_snapshot` — full accessibility tree (element names, roles, ARIA attributes, label associations)
-- `inspect_computed_styles` — computed CSS for all interactive elements (background-color, font-family, border-radius, etc.)
+## Passos
 
-### 3. Inspect forms page
-- `browser_click` on the "Formulário" tab in the nav
-- `browser_snapshot` — accessibility tree for forms
-- `inspect_computed_styles` with `selector: "input, select, textarea, button, label"` — form element styles (note: this tool loads the page fresh and sees the buttons tab; use it for button token checks only)
-- `browser_evaluate` to extract computed styles for form inputs directly from the live tab state:
+### 1. Registre o horário de início
 
-```js
-Array.from(document.querySelectorAll('input, select, textarea')).map(el => ({
-  testId: el.closest('[data-testid]')?.dataset.testid,
-  tagName: el.tagName,
-  borderColor: getComputedStyle(el).borderColor,
-  backgroundColor: getComputedStyle(el).backgroundColor,
-  outline: getComputedStyle(el).outline
-}))
-```
+Anote o timestamp ISO atual: ele vira `cost.startedAt`. A partir daqui, conte todas as chamadas de
+ferramenta que você fizer.
 
-Convert each `rgb(r,g,b)` border-color and background-color to hex and check against `hexLookup`. A value not in `hexLookup` on a DS-styled form element (`br-input`, `br-select`, etc.) is a token violation.
+Se você tiver ferramentas de consulta a normas disponíveis, carregue agora as referências que
+julgar necessárias &mdash; a escolha de o quê carregar é sua e faz parte do que está sendo medido.
 
-### 3.1. Inspect the remaining SPA tabs
+### 2. Aba inicial
 
-For each of the tabs **Navegação**, **Tabelas**, **Listas**, **Interativos** (nav bar buttons):
-- `browser_click` on the tab button, then `browser_snapshot`
-- On **Listas**: also `browser_evaluate` to read computed padding of every `.br-item`
-  (`getComputedStyle(el).padding`) and the computed `max-width`/`text-overflow` of any
-  `.br-button` — spacing consistency and truncation are computed-style checks
-- On **Interativos**: this tab requires *interaction*, not just snapshots (see 4.6)
+- `browser_navigate` para `http://localhost:3000`
+- `browser_snapshot` &mdash; árvore de acessibilidade completa (nomes, papéis, atributos ARIA,
+  associações de rótulo)
+- Estilos computados dos elementos interativos, pelos meios que você tiver disponíveis
 
-### 3.2. Inspect the static routes (D-15)
+### 3. Demais abas da aplicação
 
-Three standalone pages exist outside the SPA — navigate directly and inspect the **delivered
-HTML source** (`browser_evaluate` with `document.documentElement.outerHTML` or equivalent),
-not only the rendered snapshot, because their case family is source-code-level:
+Para cada aba da barra de navegação (**Formulário**, **Navegação**, **Tabelas**, **Listas**,
+**Interativos**):
+
+- `browser_click` no botão da aba, depois `browser_snapshot`
+- Quando a decisão depender de valores de estilo, leia os estilos computados da aba **ativa** com
+  `browser_evaluate` &mdash; ferramentas que recarregam a página voltam para a aba inicial
+- A aba **Interativos** exige interação, não só leitura: veja o passo 5
+
+### 4. Rotas estáticas
+
+Três páginas independentes fora da aplicação. Navegue direto e inspecione o **HTML entregue**
+(`document.documentElement.outerHTML`), não apenas a árvore renderizada &mdash; esta família de
+casos é de nível de código-fonte:
+
 - `http://localhost:3000/static/atualizacao.html` (TC-S-01)
 - `http://localhost:3000/static/confirmacao.html` (TC-S-02)
 - `http://localhost:3000/static/protocolo.html` (TC-S-03)
 
-Check at minimum: `<meta http-equiv>` directives in `<head>`, inline event handlers
-(`onclick=`), inline `style` attributes vs. stylesheet rules, deprecated presentational
-elements, and `lang`/`<title>` correctness.
+### 5. Aba Orgânico
 
-### 3.3. Inspect the organic wing (Orgânico tab, D-13)
+A aba **Orgânico** monta fragmentos de exemplo do pacote oficial do DS, **um de cada vez** (os
+botões seletores no topo montam e desmontam). Para cada um dos 6 botões de fragmento:
 
-The **Orgânico** tab renders official `@govbr-ds/core` example fragments verbatim, ONE at a
-time (the fragment-selector buttons at the top mount/unmount them). For EACH of the 6 fragment
-buttons (`card-collapse.html` … `wizard-vertical.html`):
-- `browser_click` the fragment button, then `browser_snapshot`
-- Evaluate the mounted fragment like any other case (its `data-testid` is `TC-O-01`…`TC-O-06`)
-- Judge these fragments against the same norms as everything else — the fact that they come
-  from the official package does NOT make them conformant (`get_component_spec` warnings and
-  `govbr://knowledge/conflicts` are relevant here)
+- `browser_click` no botão, depois `browser_snapshot`
+- Avalie o fragmento montado como qualquer outro caso (o `data-testid` dele é `TC-O-01`…`TC-O-06`)
+- **O fato de virem do pacote oficial não os torna conformes.** Julgue-os pelos mesmos critérios
+  que você aplicou ao resto.
 
-Verdicts for `TC-O-*` go into the same `verdicts` object; the scorer separates them into the
-organic suite automatically — they are never pooled with the injected-corpus metrics.
+### 6. Casos que exigem interação (aba Interativos)
 
-### 4. Evaluate each case
+Snapshot não basta: componentes cujo comportamento é a questão precisam ser operados. Acione os
+controles, tente percorrer por teclado, tente sair do que abrir, e observe se o que a interface
+comunica corresponde ao que ela faz. Registre o que você tentou nas `notes`.
 
-Work through each `data-testid` section. For each case apply the relevant checks:
+### 7. Varredura entre elementos
 
-#### Structural checks (from snapshot)
-| What to check | Violation signal |
-|---------------|-----------------|
-| Element type | `<div class="br-button">` instead of `<button>` |
-| Accessible name on icon buttons | No `aria-label`, no visible text, icon has `aria-hidden` |
-| aria-label vs visible text | `aria-label` ≠ `textContent` on the same button |
-| label[for] ↔ input[id] | `for` attribute value not found as any input's `id` |
-| Input accessible name | `textbox` with no name in snapshot = broken label |
-| Checkbox/radio group without fieldset+legend | Multiple checkboxes or radios under the same section with no `group` role ancestor and no `<fieldset>`/`<legend>` — the group has no accessible name (e-MAG 6.2, WCAG 1.3.1) |
+Depois das verificações por caso, olhe a página como um todo: há relações entre elementos
+distantes que só aparecem quando você compara seções entre si. Faça essa passada antes de fechar
+os vereditos.
 
-#### Token checks (from computed styles + token reference)
-| What to check | Data source | Violation signal |
-|---------------|-------------|-----------------|
-| background-color | `computed.backgroundColor` | Value not in `hexLookup` and not `rgb(...)` of a valid token |
-| font-family | `computed.fontFamily` | Does not start with "Rawline" or include "Raleway" as first real font |
-| border-radius | `computed.borderRadius` | Value not in {0px, 4px, 8px, 16px, 500px+, 50%} |
-| focus outline | `focusedComputed.outline` + `focusedComputed.boxShadow` | Both are "none" or "0px" while the element has `br-button` class — focus indicator suppressed |
-| form input border-color | `browser_evaluate` computed borderColor | Value not in `hexLookup` on a DS-styled form element |
+### 8. Monte e salve o veredito
 
-#### e-MAG checks (from snapshot + e-MAG rules)
-| What to check | Violation signal |
-|---------------|-----------------|
-| Placeholder-only label | Input accessible name comes from placeholder, not a `<label>` |
-| Broken aria-labelledby | Input has `aria-labelledby` attribute but the referenced ID does not exist in the DOM — accessible name silently absent |
-| Required field programmatic | Label text has `*` but input has no `aria-required` and no `required` |
-| Format hint for complex fields | CPF/date/phone input with no hint element before it in DOM |
-| Error message linkage | `aria-invalid=true` + visible error `<p>` in DOM but no `aria-describedby` |
-| Visible label for selects | `<select>` has `aria-label` but no `<label>` element visible in snapshot |
-
-#### DS pattern checks (from snapshot, compositional)
-| What to check | Violation signal |
-|---------------|-----------------|
-| Button order | In any form/section, primary button appears BEFORE secondary button |
-| Duplicate accessible names | Two or more buttons on the page share the same accessible name but appear in different sections/contexts — users of AT cannot distinguish them (WCAG 2.4.6) |
-
-#### Navigation checks (Navegação tab, from snapshot + DOM)
-| What to check | Violation signal |
-|---------------|-----------------|
-| Skip link position | The skip link ('Ir para o conteúdo') is not the FIRST focusable element of its header block |
-| Breadcrumb current page | The last crumb (current page) is rendered as `<a>` instead of text with `aria-current="page"` |
-| Breadcrumb keyboard reachability | Any crumb link carries `tabindex="-1"` — verify by Tab traversal or attribute inspection |
-| Foreign-language passages | Block of text in another language without a `lang` attribute on its element (compare twins carefully — one may be correctly marked) |
-
-#### Table checks (Tabelas tab, from snapshot + DOM)
-| What to check | Violation signal |
-|---------------|-----------------|
-| Header cells | Data table whose header row uses `<td><strong>` instead of `<th scope>` |
-| Layout tables | `<table>` whose cells contain prose/layout content, not tabular data |
-
-#### List/Item checks (Listas tab, from snapshot + computed styles)
-| What to check | Violation signal |
-|---------------|-----------------|
-| Item content area | `br-button primary` (or navigation controls) inside a `br-item` content area — prohibited by the Item spec |
-| Spacing consistency | Sibling `br-item`s of the same list with different computed padding |
-| Spacing scale | `br-item` padding value outside the DS spacing scale (multiples of 4/8px) |
-| Empty regions | A titled results/content region rendering empty with no Empty State message |
-| Truncation | Button label clipped by `text-overflow: ellipsis` — PROHIBITED for buttons/labels/errors; note that truncating *secondary descriptions* is permitted (do not flag those) |
-| Divider focusability | `br-divider` with `tabindex="0"` (decorative separator in the focus order) |
-
-### 4.5. Cross-element scan (run after all per-case checks)
-
-These checks require looking across multiple cases simultaneously:
-
-1. **Duplicate button names:** Collect every button accessible name visible in the snapshot. If the same name appears more than once in different `data-testid` sections, check whether the buttons serve different functions. If so, flag every affected case.
-
-2. **Broken aria-labelledby:** For any `textbox` that has an accessible name but no visible `text:` sibling in the snapshot, use `browser_evaluate` to confirm whether the name source is a broken reference:
-```js
-const el = document.querySelector('[data-testid="TC-F-XX"] input');
-const id = el.getAttribute('aria-labelledby');
-return { id, targetExists: id ? !!document.getElementById(id) : null };
-```
-If `targetExists` is `false`, the violation is a broken `aria-labelledby`, not a placeholder-only label — update the violation description accordingly.
-
-### 4.6. Interaction protocol (Interativos tab — keyboard wing)
-
-These cases CANNOT be judged from a static snapshot; drive them:
-1. **Accordion-like widgets**: click to expand, re-snapshot, and compare `aria-expanded`
-   before/after — a static `aria-expanded` that never reflects the real state is a violation;
-   also check the header is a focusable, keyboard-actionable element (button vs div).
-2. **Modal**: activate the trigger button, then attempt keyboard-only operation —
-   `browser_press_key` Tab (does focus enter/stay in the dialog?), Escape (does it close?),
-   and check the close control is focusable. Close it with a click before moving on.
-3. **Tabs widget**: `browser_press_key` Tab to reach the tablist, arrow keys / Enter to switch —
-   if switching only works with the mouse, the widget fails keyboard operability. Check
-   `role="tab"` elements have `tabindex`.
-
-### 5. Build and save the verdict
-
-After evaluating all cases, construct the final JSON:
+Monte o JSON completo:
 
 ```json
 {
-  "timestamp": "<current ISO timestamp>",
-  "model": "<exact model id running this evaluation>",
+  "timestamp": "<ISO>",
+  "model": "<modelo>",
   "appUrl": "http://localhost:3000",
+  "config": { "arm": "<com-oraculo|sem-oraculo>", "label": "protocolo neutro" },
   "cost": {
-    "startedAt": "<ISO timestamp recorded in step 1, BEFORE the first tool call>",
-    "finishedAt": "<ISO timestamp at save time>",
+    "startedAt": "<ISO do passo 1>",
+    "finishedAt": "<ISO agora>",
     "wallClockSeconds": 0,
-    "toolCalls": 0,
-    "notes": "toolCalls = total MCP/browser tool invocations this run (count them; approximate is acceptable)"
+    "toolCalls": 0
   },
-  "verdicts": {
-    "TC-B-01": { "detected": false, "violations_found": [], "notes": "..." },
-    ...
-  }
+  "verdicts": { "TC-B-01": { "...": "..." } }
 }
 ```
 
-The `cost` block is required (F4): record the start time before loading references in step 1,
-compute `wallClockSeconds` at save time, and report how many tool calls the run used.
+O bloco `cost` é obrigatório (F4). O bloco `config` rotula a execução para o scorer, que agrupa
+por configuração e nunca agrega grupos diferentes.
 
-POST the JSON to `http://localhost:4000/api/save-agent-results` if the dashboard dev server is
-running — it saves the latest results AND archives the run under `results/runs/` (required for
-F3 multi-run statistics). If the dashboard is not running, write all three files yourself
-(paths relative to `govbr-eval/`):
-- `results/agent-results.json`
-- `dashboard/public/agent-results.json`
-- `results/runs/agent-<timestamp with ':' and '.' replaced by '-'>.json`
+Faça `POST` do JSON para `http://localhost:4000/api/save-agent-results`.
 
-### 6. Print a summary
+### 9. Imprima um resumo
 
-After saving, print a one-line summary per case:
-```
-TC-B-01  ✓ clean     (reference)
-TC-B-02  ✗ detected  Button has no accessible name
-TC-B-03  ✗ detected  <div> used instead of <button>
-...
-```
+Uma linha por caso: id, detectado ou limpo, e a violação em poucas palavras.
 
-## Notes for thesis validity
+---
 
-- **Do not read `ground-truth.json` (govbr-eval root) or open the govbr-corpus source before evaluating** — verdicts must come from what you actually observe in the app, not from prior knowledge of expected results.
-- The token check for background-color: convert the computed `rgb(r, g, b)` to hex and look it up in the token reference's `hexLookup`. A value not in `hexLookup` is a violation only if it is applied to an element that is supposed to follow DS tokens (i.e., has a `br-button` class or a DS form component class).
-- For font-family: DS requires `Rawline` as the primary font. The computed value will include fallbacks — flag only if `Rawline` is completely absent from the computed font stack AND the element uses `br-button` classes.
-- For the aria-label vs visible text check: normalize both strings (trim, lowercase) before comparing.
-- For inputs with an accessible name but no visible `text:` sibling in the snapshot: always disambiguate between (a) broken `aria-labelledby` pointing to a missing ID and (b) placeholder-only label. Use `browser_evaluate` to inspect the attribute directly — the violation description must be accurate.
-- `inspect_computed_styles` always loads the page fresh at the given URL and sees the default tab (Buttons). Use `browser_evaluate` on the live page after clicking the Formulário tab to get computed styles for form inputs.
+## Validade
+
+- **Não leia** `ground-truth.json`, `organic-ground-truth.json`, nada em `results/` ou `docs/`,
+  nem o fonte da aplicação. Os vereditos têm de vir do que você observou na página em execução.
+  O harness bloqueia esses caminhos; se algo passar, a regra continua valendo.
+- **Não leia** `skills/evaluate-all/SKILL.md`. Aquele protocolo contém normas do DS, e lê-lo
+  invalida a condição experimental que este arquivo existe para criar.
+- Se você não tiver acesso a ferramentas de consulta a normas, isso é **deliberado** e faz parte
+  da condição sendo medida. Não é um defeito de configuração a ser contornado: siga em frente e
+  julgue com o que você sabe.

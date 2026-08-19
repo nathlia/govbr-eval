@@ -12,3 +12,21 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
 
 When a new case is added to the corpus, add its entry to `ground-truth.json` in the same change
 (id, page, description, violations, categories, expected detection per tool).
+
+## Protocolos (skills/) — regra inviolável
+
+O procedimento carrega **procedimento apenas**: onde olhar, como capturar evidência, como
+reportar. Conhecimento de domínio — regras do DS, valores de token, specs de componente — mora no
+oráculo e **nunca** dentro de um `SKILL.md`.
+
+Isso é o requisito A6 (`thesis-workspace/tcc2-requirements.md`), e é validade experimental, não
+organização: um protocolo que diz qual é a fonte primária do DS vira um segundo oráculo, e aí
+nenhum experimento consegue medir o que o oráculo MCP contribui — a ablação passa a comparar
+"regra por MCP" contra "a mesma regra por texto".
+
+A primeira versão de `skills/evaluate-all/SKILL.md` violava isso desde o commit inicial e ficou
+cinco semanas assim porque nada verificava. Agora `npm run lint:protocol` verifica, e o preflight
+da bateria (`pipeline/run-battery.ps1`) recusa rodar se falhar.
+
+Ao escrever ou editar qualquer protocolo, pergunte de cada frase: **"isto diria a um agente sem
+oráculo algo que ele não teria como saber sozinho?"** Se sim, vai para o oráculo.

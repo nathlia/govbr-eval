@@ -1,0 +1,24 @@
+﻿{
+    "stamp":  "2026-08-19T10-24-04",
+    "model":  "claude-opus-5",
+    "runsPerArm":  1,
+    "arms":  [
+                 "sem"
+             ],
+    "corpusUrl":  "http://localhost:3000",
+    "execucoes":  [
+                      {
+                          "run":  1,
+                          "arm":  "sem",
+                          "armDescricao":  "agente sem oráculo (ablação)",
+                          "model":  "claude-opus-5",
+                          "mcpConfig":  "mcp-sem-oraculo.json",
+                          "archive":  null,
+                          "archiveDir":  "results/runs-ablacao",
+                          "exitCode":  0,
+                          "wallClockSeconds":  108.5,
+                          "log":  "2026-08-19T10-24-04-sem-run1.json",
+                          "startedAt":  "2026-08-19T13:24:04.7914511Z"
+                      }
+                  ]
+}

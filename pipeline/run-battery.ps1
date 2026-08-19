@@ -89,6 +89,22 @@ if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
 }
 Write-Ok "CLI claude encontrada"
 
+# A6: o protocolo carrega procedimento apenas. Se conhecimento de domínio vazar para dentro dele,
+# o protocolo vira um segundo oráculo e a ablação deixa de medir o que se propõe a medir — então
+# a bateria inteira sai inválida. Barrar aqui é mais barato que descobrir depois de gastar as
+# execuções. Ver docs/ablation-design.md e o cabeçalho de skills/evaluate-all/SKILL.md.
+Push-Location $EvalRoot
+try {
+  & npm run lint:protocol --silent
+  $lintExit = $LASTEXITCODE
+} finally {
+  Pop-Location
+}
+if ($lintExit -ne 0) {
+  throw "lint:protocol falhou — há conhecimento de domínio dentro de um protocolo. A bateria seria inválida. Corrija antes de rodar."
+}
+Write-Ok "Protocolos limpos (A6)"
+
 $validatorDist = Join-Path $TccRoot "govbr-ds-validator\dist\index.js"
 if (-not (Test-Path $validatorDist)) {
   throw "dist do oráculo não existe em $validatorDist. Rode 'npm run build' em govbr-ds-validator."
@@ -126,18 +142,36 @@ foreach ($armName in $arms) {
     $runIndex++
     Write-Step "[$runIndex/$total] braço '$armName', execução $i"
 
+    # O braço da ablação faz POST no dashboard, e o endpoint sobrescreve o veredito "atual"
+    # (results/agent-results.json + a cópia do dashboard). Sem restaurar, a tabela principal do
+    # scorer passaria a reportar a ablação como se fosse o braço com oráculo. Guarda antes.
+    $snapshots = @()
+    if ($armName -eq "sem") {
+      foreach ($rel in @("results\agent-results.json", "dashboard\public\agent-results.json")) {
+        $full = Join-Path $EvalRoot $rel
+        if (Test-Path $full) {
+          $sufixo = [guid]::NewGuid().ToString("N").Substring(0, 8)
+          $tmp = Join-Path $LogsDir ("restore-" + (Split-Path $rel -Leaf) + "-$sufixo.bak")
+          Copy-Item $full $tmp -Force
+          $snapshots += [pscustomobject]@{ path = $full; backup = $tmp }
+        }
+      }
+    }
+
     $before = @()
     if (Test-Path $RunsDir) {
       $before = Get-ChildItem $RunsDir -Filter "agent-*.json" | Select-Object -ExpandProperty Name
     }
 
-    $logFile = Join-Path $LogsDir "$Stamp-$armName-run$i.json"
+    $logFile      = Join-Path $LogsDir "$Stamp-$armName-run$i.json"
+    $prompt       = "/evaluate-all"
+    $settingsFile = Join-Path $PipelineDir "settings-run.json"
 
     $claudeArgs = @(
-      "-p", "/evaluate-all",
+      "-p", $prompt,
       "--strict-mcp-config",
       "--mcp-config", $mcpConfig,
-      "--settings", (Join-Path $PipelineDir "settings-run.json"),
+      "--settings", $settingsFile,
       "--model", $Model,
       "--output-format", "json",
       "--permission-mode", "dontAsk"
@@ -170,13 +204,22 @@ foreach ($armName in $arms) {
       $arquivo = $novo | Select-Object -First 1
       Write-Ok "veredito arquivado: $arquivo"
 
-      # o braço da ablação sai de results/runs/ para não ser agregado pelo scorer
+      # o diretório é o que rotula o braço para o scorer (D-17)
       if ($armName -eq "sem") {
         $origem  = Join-Path $RunsDir $arquivo
         $destino = Join-Path $AblacaoDir $arquivo
         Move-Item -Path $origem -Destination $destino -Force
-        Write-Ok "movido para results/runs-ablacao/ (braços nunca são agregados)"
+        Write-Ok "movido para results/runs-ablacao/ (o diretório rotula o braço)"
       }
+    }
+
+    # restaura o veredito "atual", que o POST da ablação sobrescreveu
+    foreach ($snap in $snapshots) {
+      Copy-Item $snap.backup $snap.path -Force
+      Remove-Item $snap.backup -Force
+    }
+    if ($snapshots.Count -gt 0) {
+      Write-Ok "agent-results.json restaurado (a ablação não substitui o braço principal)"
     }
 
     $manifest += [pscustomobject]@{
@@ -185,6 +228,7 @@ foreach ($armName in $arms) {
       armDescricao = $(if ($armName -eq "com") { "agente + oráculo MCP" } else { "agente sem oráculo (ablação)" })
       model        = $Model
       mcpConfig    = Split-Path $mcpConfig -Leaf
+      prompt       = $prompt
       archive      = $arquivo
       archiveDir   = $(if ($armName -eq "sem") { "results/runs-ablacao" } else { "results/runs" })
       exitCode     = $exit
