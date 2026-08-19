@@ -84,8 +84,15 @@ atribuição normativa é incerta &mdash; **não invente um identificador plaus�
 
 ### 1. Registre o horário de início
 
-Anote o timestamp ISO atual: ele vira `cost.startedAt`. A partir daqui, conte todas as chamadas de
-ferramenta que você fizer.
+Você não tem acesso a shell nesta execução &mdash; é deliberado, e vale para os dois braços. Tire
+o horário do navegador:
+
+```js
+new Date().toISOString()
+```
+
+Guarde o valor: ele vira `cost.startedAt`. A partir daqui, conte todas as chamadas de ferramenta
+que você fizer.
 
 Se você tiver ferramentas de consulta a normas disponíveis, carregue agora as referências que
 julgar necessárias &mdash; a escolha de o quê carregar é sua e faz parte do que está sendo medido.
@@ -162,7 +169,19 @@ Monte o JSON completo:
 O bloco `cost` é obrigatório (F4). O bloco `config` rotula a execução para o scorer, que agrupa
 por configuração e nunca agrega grupos diferentes.
 
-Faça `POST` do JSON para `http://localhost:4000/api/save-agent-results`.
+Para salvar, **navegue primeiro para `http://localhost:4000`** e faça o `POST` de lá, na mesma
+origem &mdash; o endpoint não envia cabeçalhos CORS, então um `fetch` a partir de
+`localhost:3000` seria barrado pelo navegador:
+
+```js
+fetch("/api/save-agent-results", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(VEREDITO)
+}).then(r => r.json())
+```
+
+Faça isso **depois** de fechar todos os vereditos: sair de `localhost:3000` descarrega a página.
 
 ### 9. Imprima um resumo
 

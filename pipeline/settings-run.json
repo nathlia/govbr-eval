@@ -1,5 +1,5 @@
 {
-  "_comment": "Permissões das execuções da bateria (D-16/D-17). O modo dontAsk nega tudo que não estiver em allow, então esta lista precisa cobrir o protocolo inteiro — inclusive o carimbo de tempo do bloco de custo (F4) e o POST do veredito. As negações de leitura são a parte metodológica: sem elas, o braço sem oráculo leria a KB do disco e a ablação não mediria nada.",
+  "_comment": "Permissões das execuções da bateria (D-16/D-17/D-18). Sem shell, de propósito: as negações abaixo são por FERRAMENTA, então Read(ground-truth.json) não impediria `cat ground-truth.json` via Bash ou PowerShell. Fechar o shell é o que torna o isolamento real em vez de nominal. O protocolo tira o carimbo de tempo e faz o POST do veredito pelo navegador (browser_evaluate), que não alcança o disco.",
 
   "permissions": {
     "allow": [
@@ -27,14 +27,15 @@
       "mcp__govbr-ds-validator__run_axe_scan",
       "mcp__govbr-ds-validator__verify_finding",
 
-      "Bash(date *)",
-      "Bash(curl *)",
-      "PowerShell(Get-Date*)",
-
       "Read(govbr-eval/skills/**)"
     ],
 
     "deny": [
+      "Bash",
+      "PowerShell",
+      "Write",
+      "Edit",
+
       "Read(govbr-eval/ground-truth.json)",
       "Read(govbr-eval/organic-ground-truth.json)",
       "Read(govbr-eval/results/**)",
