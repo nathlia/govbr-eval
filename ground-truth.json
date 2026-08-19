@@ -1002,17 +1002,31 @@
           "categories": [
             "compositional"
           ]
+        },
+        {
+          "description": "O cabeçalho do acordeão é um <div> sem role, sem tabindex e sem manipulador de teclado — não entra na ordem de tabulação e a função de expandir/recolher é inalcançável por teclado (mecanismo keyboard-interaction, distinto do contrato ARIA da primeira unidade)",
+          "rules": [
+            "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+            "emag:2.1",
+            "wcag:2.1.1",
+            "wcag:2.1.2"
+          ],
+          "categories": [
+            "compositional",
+            "emag-specific"
+          ]
         }
       ],
       "categories": [
-        "compositional"
+        "compositional",
+        "emag-specific"
       ],
       "detection": {
         "axe": true,
         "eslint_a11y": true,
         "agent": true
       },
-      "notes": "Mechanism: accessibility-tree (role/state vs behavior). eslint may fire click-events-have-key-events (measure). MEASURED 2026-07-12: axe true via aria-allowed-attr (aria-expanded on a generic div); eslint true via click-events-have-key-events + no-static-element-interactions (JSX handler visible statically)."
+      "notes": "Mechanism: accessibility-tree (role/state vs behavior). eslint may fire click-events-have-key-events (measure). MEASURED 2026-07-12: axe true via aria-allowed-attr (aria-expanded on a generic div); eslint true via click-events-have-key-events + no-static-element-interactions (JSX handler visible statically). ADDED 2026-08-19: a descrição do caso sempre anunciou dois defeitos (\"aria-expanded estático E cabeçalho não focável\"), mas só o primeiro tinha unidade. A execução de 2026-08-19 encontrou os dois e o segundo foi contado como FP por falta de unidade — mesmo padrão do TC-F-03 no piloto. As duas unidades são regras distintas da KB, com validationStrategy diferente (accessibility-tree vs keyboard-interaction). detection permanece no nível do caso, medida em 2026-07-12; não foi alterada."
     },
     "TC-I-02": {
       "page": "interactive",

@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "govbr-ds-validator": {
+      "type": "stdio",
+      "command": "C:/Users/Natty Dev/AppData/Local/nvm/v25.2.1/node.exe",
+      "args": ["F:/Dev Nath/TCC/govbr-ds-validator/dist/index.js"],
+      "env": {
+        "GOVBR_VALIDATOR_REPORTS_DIR": "F:/Dev Nath/TCC/govbr-eval/reports"
+      }
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "@playwright/mcp@0.0.70"],
+      "env": {}
+    }
+  }
+}

@@ -468,10 +468,25 @@ const catMetrics = unitScore ? categoryMetrics(unitScore) : null;
 
 // ── Multi-run statistics (F3) ─────────────────────────────────────────────────
 
+/**
+ * Archived-run summary carrying its CONFIGURATION (D-17).
+ *
+ * Runs that differ in arm, model or corpus coverage are different experiments and are never
+ * pooled into one mean ± SD — same principle as D-13 (organic × injected) and D-16 (ablation
+ * arms). Coverage is DERIVED, not declared: a run that produced verdicts for a different set of
+ * gabarito cases did not see the same corpus, so its numbers are not comparable regardless of
+ * what any metadata claims. That is what caught the pilot being averaged with a later run.
+ */
 interface RunSummary {
   file: string;
+  dir: string;
+  arm: string;
+  label: string | null;
   timestamp: string;
   model: string;
+  coveredCases: number;
+  totalCases: number;
+  configKey: string;
   precision: number | null;
   recall: number | null;
   f1: number | null;
@@ -480,27 +495,84 @@ interface RunSummary {
   toolCalls: number | null;
 }
 
+interface RunGroup {
+  key: string;
+  arm: string;
+  model: string;
+  coveredCases: number;
+  totalCases: number;
+  label: string | null;
+  runs: RunSummary[];
+}
+
+/** Directories scanned for archived runs, with the arm each implies by convention (D-16/D-17). */
+const RUN_DIRS: { dir: string; arm: string; label: string | null }[] = [
+  { dir: "runs",         arm: "com-oraculo", label: null },
+  { dir: "runs-ablacao", arm: "sem-oraculo", label: "ablação (F2)" },
+  { dir: "runs-piloto",  arm: "com-oraculo", label: "piloto" },
+];
+
 function loadRuns(): RunSummary[] {
-  const dir = join(ROOT, "results", "runs");
-  if (!existsSync(dir)) return [];
   const summaries: RunSummary[] = [];
-  for (const file of readdirSync(dir).filter(f => f.startsWith("agent-") && f.endsWith(".json")).sort()) {
-    try {
-      const raw = JSON.parse(readFileSync(join(dir, file), "utf8")) as AgentResults;
-      const score = scoreUnits(raw);
-      if (!score) continue;
-      summaries.push({
-        file,
-        timestamp: raw.timestamp,
-        model: raw.model,
-        ...prf(score.TP, score.FP, score.FN),
-        FP: score.FP,
-        wallClockSeconds: raw.cost?.wallClockSeconds ?? null,
-        toolCalls: raw.cost?.toolCalls ?? null,
-      });
-    } catch { /* skip unreadable run files */ }
+  const gabaritoCases = Object.keys(cases).length;
+
+  for (const { dir: sub, arm: dirArm, label: dirLabel } of RUN_DIRS) {
+    const dir = join(ROOT, "results", sub);
+    if (!existsSync(dir)) continue;
+    for (const file of readdirSync(dir).filter(f => f.startsWith("agent-") && f.endsWith(".json")).sort()) {
+      try {
+        const raw = JSON.parse(readFileSync(join(dir, file), "utf8")) as AgentResults;
+        const score = scoreUnits(raw);
+        if (!score) continue;
+
+        // An explicit config block wins over the directory convention.
+        const arm   = raw.config?.arm   ?? dirArm;
+        const label = raw.config?.label ?? dirLabel;
+
+        // Derived from the data: how many gabarito cases this run actually judged.
+        const coveredCases = Object.keys(raw.verdicts ?? {}).filter(id => id in cases).length;
+
+        summaries.push({
+          file,
+          dir: sub,
+          arm,
+          label,
+          timestamp: raw.timestamp,
+          model: raw.model,
+          coveredCases,
+          totalCases: gabaritoCases,
+          configKey: `${arm} | ${raw.model} | ${coveredCases}/${gabaritoCases} casos`,
+          ...prf(score.TP, score.FP, score.FN),
+          FP: score.FP,
+          wallClockSeconds: raw.cost?.wallClockSeconds ?? null,
+          toolCalls: raw.cost?.toolCalls ?? null,
+        });
+      } catch { /* skip unreadable run files */ }
+    }
   }
   return summaries;
+}
+
+/** Group by configuration. Aggregation happens INSIDE a group, never across groups. */
+function groupRuns(rs: RunSummary[]): RunGroup[] {
+  const byKey = new Map<string, RunGroup>();
+  for (const r of rs) {
+    let g = byKey.get(r.configKey);
+    if (!g) {
+      g = {
+        key: r.configKey,
+        arm: r.arm,
+        model: r.model,
+        coveredCases: r.coveredCases,
+        totalCases: r.totalCases,
+        label: r.label,
+        runs: [],
+      };
+      byKey.set(r.configKey, g);
+    }
+    g.runs.push(r);
+  }
+  return [...byKey.values()];
 }
 
 function meanSd(values: number[]): { mean: number; sd: number | null } {
@@ -543,14 +615,27 @@ if (JSON_OUT) {
     };
   }
   if (runs.length) {
-    const f1s = runs.map(r => r.f1).filter((v): v is number => v !== null);
+    // D-17: grouped by configuration; consumers must not merge groups.
     out.runs = {
+      pooling: "grouped by configuration (arm | model | corpus coverage); NEVER pooled across groups (D-17)",
       count: runs.length,
-      runs,
-      f1: f1s.length ? meanSd(f1s) : null,
-      wallClockSeconds: runs.some(r => r.wallClockSeconds !== null)
-        ? meanSd(runs.map(r => r.wallClockSeconds).filter((v): v is number => v !== null))
-        : null,
+      groups: groupRuns(runs).map(g => {
+        const gf1 = g.runs.map(r => r.f1).filter((v): v is number => v !== null);
+        const gw  = g.runs.map(r => r.wallClockSeconds).filter((v): v is number => v !== null);
+        return {
+          config: g.key,
+          arm: g.arm,
+          model: g.model,
+          label: g.label,
+          partialCoverage: g.coveredCases < g.totalCases,
+          coveredCases: g.coveredCases,
+          totalCases: g.totalCases,
+          count: g.runs.length,
+          runs: g.runs,
+          f1: gf1.length >= 2 ? meanSd(gf1) : null,
+          wallClockSeconds: gw.length >= 2 ? meanSd(gw) : null,
+        };
+      }),
     };
   }
   console.log(JSON.stringify(out, null, 2));
@@ -690,38 +775,66 @@ if (organicScore) {
   console.log();
 }
 
-// ── Multi-run report (F3/F4) ──────────────────────────────────────────────────
+// ── Multi-run report (F3/F4), grouped by configuration (D-17) ────────────────
 
 if (runs.length) {
-  console.log(`=== Multi-run statistics (F3) — ${runs.length} archived run(s) ===\n`);
-  console.log(
-    pad("Run", 22) + pad("Model", 22) +
-    pad("P", 9) + pad("R", 9) + pad("F1", 9) + pad("FP", 5) +
-    pad("Wall (s)", 10) + "Tool calls"
-  );
-  console.log("─".repeat(95));
-  for (const r of runs) {
-    console.log(
-      pad(r.timestamp.slice(0, 19), 22) + pad(r.model.slice(0, 20), 22) +
-      pad(pct(r.precision), 9) + pad(pct(r.recall), 9) + pad(pct(r.f1), 9) + pad(r.FP, 5) +
-      pad(r.wallClockSeconds ?? "—", 10) + (r.toolCalls ?? "—")
-    );
+  const groups = groupRuns(runs);
+  console.log(`=== Multi-run statistics (F3) — ${runs.length} archived run(s) in ${groups.length} configuration(s) ===\n`);
+
+  if (groups.length > 1) {
+    console.log("Configurations are reported separately and NEVER pooled: runs differing in arm,");
+    console.log("model or corpus coverage are different experiments (D-13 / D-16 / D-17).\n");
   }
 
-  const f1s = runs.map(r => r.f1).filter((v): v is number => v !== null);
-  if (f1s.length >= 2) {
-    const { mean, sd } = meanSd(f1s);
-    const walls = runs.map(r => r.wallClockSeconds).filter((v): v is number => v !== null);
-    console.log("─".repeat(95));
-    console.log(`F1 (element × rule): mean ${pct(mean)} ± ${sd !== null ? pct(sd).trim() : "—"} (n=${f1s.length}, sample SD)`);
-    if (walls.length >= 2) {
-      const w = meanSd(walls);
-      console.log(`Wall-clock: mean ${w.mean.toFixed(0)}s ± ${w.sd !== null ? w.sd.toFixed(0) : "—"}s (n=${walls.length})`);
+  for (const g of groups) {
+    const tag = g.label ? `${g.key}  [${g.label}]` : g.key;
+    console.log(`── ${tag} — ${g.runs.length} run(s)`);
+
+    if (g.coveredCases < g.totalCases) {
+      console.log(`   ⚠ cobertura parcial: julgou ${g.coveredCases} dos ${g.totalCases} casos do gabarito atual.`);
+      console.log(`     A revocação abaixo é limitada por construção — não compare com execuções de cobertura total.`);
     }
-  } else {
-    console.log("\nF3 requires 3–5 runs for mean ± SD — run /evaluate-all again to add runs.");
+
+    console.log(
+      pad("Run", 22) + pad("Model", 22) +
+      pad("P", 9) + pad("R", 9) + pad("F1", 9) + pad("FP", 5) +
+      pad("Wall (s)", 10) + "Tool calls"
+    );
+    console.log("─".repeat(95));
+    for (const r of g.runs) {
+      console.log(
+        pad(r.timestamp.slice(0, 19), 22) + pad(r.model.slice(0, 20), 22) +
+        pad(pct(r.precision), 9) + pad(pct(r.recall), 9) + pad(pct(r.f1), 9) + pad(r.FP, 5) +
+        pad(r.wallClockSeconds ?? "—", 10) + (r.toolCalls ?? "—")
+      );
+    }
+
+    const f1s = g.runs.map(r => r.f1).filter((v): v is number => v !== null);
+    if (f1s.length >= 2) {
+      const { mean, sd } = meanSd(f1s);
+      console.log("─".repeat(95));
+      console.log(`F1 (element × rule): mean ${pct(mean)} ± ${sd !== null ? pct(sd).trim() : "—"} (n=${f1s.length}, sample SD)`);
+      const walls = g.runs.map(r => r.wallClockSeconds).filter((v): v is number => v !== null);
+      if (walls.length >= 2) {
+        const w = meanSd(walls);
+        console.log(`Wall-clock: mean ${w.mean.toFixed(0)}s ± ${w.sd !== null ? w.sd.toFixed(0) : "—"}s (n=${walls.length})`);
+      }
+    } else {
+      console.log(`   F3 exige 3–5 execuções nesta MESMA configuração para média ± DP (há ${f1s.length}).`);
+    }
+    console.log();
   }
-  console.log();
+
+  const principal = groups.find(g => g.arm === "com-oraculo" && g.coveredCases === g.totalCases);
+  const ablacao   = groups.find(g => g.arm === "sem-oraculo");
+  if (principal && ablacao) {
+    console.log("Ablação (F2): os dois braços existem, mas a comparação lado a lado ainda não é");
+    console.log("emitida por este scorer — comparar médias entre braços exige que ambos tenham");
+    console.log("n ≥ 3 na mesma cobertura. Veja pipeline/README.md.\n");
+  } else if (!ablacao) {
+    console.log("Ablação (F2): nenhuma execução sem oráculo arquivada — a comparação central do");
+    console.log("trabalho ainda não existe. Rode pipeline/run-battery.ps1 -Arm sem.\n");
+  }
 }
 
 // Per-case breakdown (--verbose)

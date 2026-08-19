@@ -1,0 +1,11 @@
+{
+  "_comment": "Braço da ablação (F2): mesmo agente, mesmo corpus, mesmo navegador — sem o servidor MCP do oráculo. A simetria com mcp-com-oraculo.json é deliberada: a ÚNICA diferença entre os dois braços é a presença do govbr-ds-validator.",
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "@playwright/mcp@0.0.70"],
+      "env": {}
+    }
+  }
+}

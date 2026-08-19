@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(govbr-eval/ground-truth.json)",
+      "Read(govbr-eval/organic-ground-truth.json)",
+      "Read(govbr-eval/results/**)",
+      "Read(govbr-eval/reports/**)",
+      "Read(govbr-eval/docs/**)",
+      "Read(govbr-eval/scripts/**)",
+      "Read(govbr-eval/dashboard/**)",
+      "Read(govbr-eval/pipeline/**)",
+      "Read(govbr-corpus/src/**)",
+      "Read(govbr-corpus/public/**)",
+      "Read(govbr-ds-validator/**)",
+      "Read(ds-rules/**)",
+      "Read(thesis-workspace/**)",
+      "Read(poc-tcc1/**)"
+    ]
+  }
+}

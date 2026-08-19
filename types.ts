@@ -116,10 +116,23 @@ export interface AgentRunCost {
   notes?: string;
 }
 
+/**
+ * Configuration label for an archived run (D-17). Optional: when absent, the scorer falls back to
+ * the directory convention (results/runs = com oráculo, results/runs-ablacao = sem oráculo).
+ * Corpus coverage is never taken from here — it is derived from the verdicts themselves.
+ */
+export interface RunConfig {
+  /** "com-oraculo" (padrão) ou "sem-oraculo" (braço da ablação, F2). */
+  arm?: string;
+  /** Rótulo livre, e.g. "piloto". */
+  label?: string;
+}
+
 export interface AgentResults {
   timestamp: string;
   model: string;
   appUrl: string;
+  config?: RunConfig;
   _empty?: boolean;
   cost?: AgentRunCost;
   verdicts: Record<string, AgentVerdict>;
