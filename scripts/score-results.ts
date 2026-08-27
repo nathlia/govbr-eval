@@ -541,7 +541,12 @@ function loadRuns(): RunSummary[] {
           model: raw.model,
           coveredCases,
           totalCases: gabaritoCases,
-          configKey: `${arm} | ${raw.model} | ${coveredCases}/${gabaritoCases} casos`,
+          // O protocolo é uma dimensão de configuração como arm, modelo e cobertura: a execução
+          // de 2026-08-19 rodou sob o protocolo contaminado (D-18) e não é comparável com as que
+          // rodaram sob o protocolo neutro. Sem o rótulo na chave, as duas caíam no mesmo grupo e
+          // a média saía entre desenhos experimentais diferentes — o defeito de D-13/D-16/D-17
+          // pela quarta vez. Execução sem rótulo não é assumida comparável: vira grupo próprio.
+          configKey: `${arm} | ${raw.model} | ${coveredCases}/${gabaritoCases} casos | ${label ?? "protocolo não rotulado"}`,
           ...prf(score.TP, score.FP, score.FN),
           FP: score.FP,
           wallClockSeconds: raw.cost?.wallClockSeconds ?? null,
@@ -783,12 +788,17 @@ if (runs.length) {
 
   if (groups.length > 1) {
     console.log("Configurations are reported separately and NEVER pooled: runs differing in arm,");
-    console.log("model or corpus coverage are different experiments (D-13 / D-16 / D-17).\n");
+    console.log("model, corpus coverage or protocol are different experiments (D-13 / D-16 / D-17 / D-18).\n");
   }
 
   for (const g of groups) {
-    const tag = g.label ? `${g.key}  [${g.label}]` : g.key;
-    console.log(`── ${tag} — ${g.runs.length} run(s)`);
+    console.log(`── ${g.key} — ${g.runs.length} run(s)`);
+
+    if (!g.label) {
+      console.log(`   ⚠ execução sem rótulo de protocolo: anterior ao D-18, portanto conduzida sob o`);
+      console.log(`     protocolo que carregava normas do DS. Não é braço de experimento e não entra`);
+      console.log(`     em média com execuções de protocolo neutro.`);
+    }
 
     if (g.coveredCases < g.totalCases) {
       console.log(`   ⚠ cobertura parcial: julgou ${g.coveredCases} dos ${g.totalCases} casos do gabarito atual.`);

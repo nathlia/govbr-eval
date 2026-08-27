@@ -1,0 +1,40 @@
+﻿{
+    "stamp":  "2026-08-27T17-32-28",
+    "model":  "claude-opus-5",
+    "runsPerArm":  1,
+    "arms":  [
+                 "com",
+                 "sem"
+             ],
+    "corpusUrl":  "http://localhost:3000",
+    "execucoes":  [
+                      {
+                          "run":  1,
+                          "arm":  "com",
+                          "armDescricao":  "agente + oráculo MCP",
+                          "model":  "claude-opus-5",
+                          "mcpConfig":  "mcp-com-oraculo.json",
+                          "prompt":  "/evaluate-all",
+                          "archive":  "agent-2026-08-27T20-47-02-693Z.json",
+                          "archiveDir":  "results/runs",
+                          "exitCode":  0,
+                          "wallClockSeconds":  897.7,
+                          "log":  "2026-08-27T17-32-28-com-run1.json",
+                          "startedAt":  "2026-08-27T20:32:29.7509869Z"
+                      },
+                      {
+                          "run":  2,
+                          "arm":  "sem",
+                          "armDescricao":  "agente sem oráculo (ablação)",
+                          "model":  "claude-opus-5",
+                          "mcpConfig":  "mcp-sem-oraculo.json",
+                          "prompt":  "/evaluate-all",
+                          "archive":  "agent-2026-08-27T21-01-07-264Z.json",
+                          "archiveDir":  "results/runs-ablacao",
+                          "exitCode":  0,
+                          "wallClockSeconds":  854,
+                          "log":  "2026-08-27T17-32-28-sem-run1.json",
+                          "startedAt":  "2026-08-27T20:47:27.5755419Z"
+                      }
+                  ]
+}

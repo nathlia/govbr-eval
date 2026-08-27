@@ -49,7 +49,7 @@ positivo e conta contra você tanto quanto deixar passar uma violação.
 
 ## Contrato de saída
 
-Idêntico ao do `evaluate-all`. Cada caso recebe um objeto de veredito:
+Cada caso recebe um objeto de veredito:
 
 ```json
 {
@@ -194,8 +194,9 @@ Uma linha por caso: id, detectado ou limpo, e a violação em poucas palavras.
 - **Não leia** `ground-truth.json`, `organic-ground-truth.json`, nada em `results/` ou `docs/`,
   nem o fonte da aplicação. Os vereditos têm de vir do que você observou na página em execução.
   O harness bloqueia esses caminhos; se algo passar, a regra continua valendo.
-- **Não leia** `skills/evaluate-all/SKILL.md`. Aquele protocolo contém normas do DS, e lê-lo
-  invalida a condição experimental que este arquivo existe para criar.
+- **Não recupere versões anteriores deste protocolo** (histórico do repositório, cópias de
+  rascunho). A versão anterior ao D-18 carregava normas do DS, e lê-la devolveria por texto o
+  conhecimento que a condição experimental existe para isolar.
 - Se você não tiver acesso a ferramentas de consulta a normas, isso é **deliberado** e faz parte
   da condição sendo medida. Não é um defeito de configuração a ser contornado: siga em frente e
   julgue com o que você sabe.

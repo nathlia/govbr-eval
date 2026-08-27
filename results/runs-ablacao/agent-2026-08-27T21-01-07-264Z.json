@@ -1,0 +1,583 @@
+{
+  "timestamp": "2026-08-27T21:01:07.264Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://localhost:3000",
+  "config": {
+    "arm": "sem-oraculo",
+    "label": "protocolo neutro"
+  },
+  "cost": {
+    "startedAt": "2026-08-27T20:47:55.204Z",
+    "finishedAt": "2026-08-27T21:01:07.264Z",
+    "wallClockSeconds": 792,
+    "toolCalls": 79
+  },
+  "verdicts": {
+    "TC-B-01": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "button.br-button.primary com rótulo textual 'Entrar'. Nome acessível presente, contraste 7,33:1, altura 40px, foco visível (outline tracejado 4px). Serve de referência para os demais botões da aba."
+    },
+    "TC-B-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Botão circular contendo apenas <i> decorativo com aria-hidden=true e sem aria-label ou texto: fica exposto na árvore de acessibilidade sem nome acessível algum."
+        }
+      ],
+      "notes": "Snapshot mostra 'button' sem nome. O caso TC-B-09 é o mesmo componente com aria-label='Pesquisar', o que confirma a omissão aqui."
+    },
+    "TC-B-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.1.1",
+          "description": "<div> com cursor:pointer usado como botão: tabIndex -1, não recebe foco e não é acionável por teclado."
+        },
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Elemento genérico sem role=button; a árvore de acessibilidade não expõe papel nem nome de controle."
+        }
+      ],
+      "notes": "Verifiquei por script: el.focus() não move o foco e o elemento não aparece na varredura de elementos tabuláveis da aba."
+    },
+    "TC-B-04": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:token-de-cor",
+          "description": "Fundo rgb(19,82,180), enquanto todos os demais botões primários da página computam rgb(19,81,180). Cor aplicada por regra própria com !important em vez do valor do design system."
+        }
+      ],
+      "notes": "Diferença de um canal, invisível a olho nu, mas o valor não coincide com o do restante do sistema. Contraste segue adequado (7,26:1), então não há falha de WCAG — é desvio de token."
+    },
+    "TC-B-05": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:tipografia",
+          "description": "font-family computada Arial, sans-serif; todos os outros botões e o corpo da página computam Rawline, Raleway, sans-serif."
+        }
+      ],
+      "notes": "Sobrescrita via regra com !important. Não afeta contraste nem nome acessível; é inconsistência tipográfica com o resto do sistema."
+    },
+    "TC-B-06": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Variante 'danger' do próprio sistema: fundo rgb(229,34,7) com texto branco a 16,8px/600 dá 4,60:1, acima do mínimo de 4,5:1 para texto normal. Nome, papel, foco e altura conformes. Aparência de alerta não é, por si, violação."
+    },
+    "TC-B-07": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.5.3",
+          "description": "Texto visível 'Confirmar' e aria-label='Cancelar': o nome acessível não contém o rótulo visível e ainda descreve a ação oposta, quebrando comando por voz e leitor de tela."
+        }
+      ],
+      "notes": "Além do critério de rótulo no nome, há risco concreto de ação destrutiva invertida."
+    },
+    "TC-B-08": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:token-de-raio",
+          "description": "border-radius computado 6px; todos os demais botões da página computam raio de pílula (1680px)."
+        }
+      ],
+      "notes": "Mesma família de componente (br-button secondary) com raio fora do padrão observado em toda a interface."
+    },
+    "TC-B-09": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Botão circular com aria-label='Pesquisar' e ícone marcado aria-hidden. 40x40, contraste 7,33:1, foco visível. Referência correta do padrão que TC-B-02 viola."
+    },
+    "TC-B-10": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.4.7",
+          "description": "Regra própria zera outline e box-shadow em :focus e :focus-visible. Ao focar por script, outlineStyle computa 'none', enquanto os demais botões computam outline tracejado de 4px."
+        }
+      ],
+      "notes": "Comparei diretamente com TC-B-01 focado: 'dashed 4px rgb(194,133,12)' lá, 'none' aqui. Botão fica invisível na navegação por teclado."
+    },
+    "TC-B-11": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.1.1",
+          "description": "<span role='button'> sem tabindex: papel é anunciado, mas o elemento tem tabIndex -1 e não recebe foco, logo não há como acioná-lo pelo teclado."
+        }
+      ],
+      "notes": "Papel exposto corretamente, o que torna o problema pior: o leitor de tela anuncia um botão que o usuário de teclado não alcança."
+    },
+    "TC-B-12": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:semantica",
+          "description": "<a href='#'> com aparência de botão executando ação destrutiva ('Excluir arquivo'): é anunciado como link, não é acionável por Espaço e o href não navega para lugar algum. Atribuição normativa incerta — a mais próxima seria wcag:4.1.2, já que o papel exposto não corresponde à função do componente."
+        }
+      ],
+      "notes": "Aparência idêntica à dos botões primários da página, comportamento e semântica de link."
+    },
+    "TC-B-13": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Par 'Voltar' (secundário) e 'Próxima etapa' (primário), nesta ordem, com gap de 16px. Ambos 40px de altura, contraste 7,33:1, foco visível, nomes descritivos. É a mesma ordenação de TC-F-01, o padrão dominante da aplicação."
+    },
+    "TC-B-14": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:token-de-tamanho",
+          "description": "Botão circular forçado a 32x32 por regra própria com !important, enquanto todos os outros botões da interface computam 40px."
+        }
+      ],
+      "notes": "Passa no mínimo de 24x24 de alvo de toque, então não classifiquei como falha de WCAG AA; o desvio é de escala de tamanho do componente."
+    },
+    "TC-F-01": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Dois campos com <label for> resolvendo para ids existentes, required e aria-required coerentes, dica de formato do CPF ligada por aria-describedby (contraste 7,46:1), ações na ordem secundário/primário. Nada a apontar."
+    },
+    "TC-F-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:1.3.1",
+          "description": "<label for='usuario'> aponta para um id inexistente — o input tem id='username'. A associação não se estabelece e o campo fica sem nome acessível."
+        }
+      ],
+      "notes": "Confirmei por script que não existe elemento com id 'usuario'; o snapshot mostra 'textbox' sem nome."
+    },
+    "TC-F-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:3.3.2",
+          "description": "Campo de e-mail sem <label>: o único rótulo é o placeholder 'E-mail', que desaparece ao digitar e não constitui instrução persistente."
+        }
+      ],
+      "notes": "O nome acessível só existe por causa do fallback para placeholder — não há rótulo visível permanente."
+    },
+    "TC-F-04": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:1.3.1",
+          "description": "Rótulo 'Nome *' indica obrigatoriedade apenas por convenção visual: o input não tem required nem aria-required, e o asterisco não é explicado em lugar nenhum."
+        }
+      ],
+      "notes": "Verifiquei por script: required=false e aria-required ausente. Comparado a TC-F-01/TC-F-05, que marcam a obrigatoriedade programaticamente."
+    },
+    "TC-F-05": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Rótulo associado por for/id, required e aria-required presentes, borda no cinza padrão dos demais campos. A ausência de dica de formato não configura falha: o rótulo existe e é descritivo."
+    },
+    "TC-F-06": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:3.3.1",
+          "description": "O parágrafo de erro 'CPF inválido...' não é referenciado pelo campo: não há aria-describedby nem aria-errormessage, e o <p> não tem role. Só aria-invalid=true é exposto, sem a descrição do problema."
+        }
+      ],
+      "notes": "Confirmei por script que ambos os atributos são nulos. O texto de erro em si tem contraste 4,60:1, aceitável; o defeito é a falta de vínculo programático."
+    },
+    "TC-F-07": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:ordem-de-acoes",
+          "description": "Ações na ordem primário ('Confirmar') e depois secundário ('Cancelar'), invertida em relação a TC-F-01 e TC-B-13, que colocam o secundário à esquerda e o primário à direita. Dentro da mesma interface, o mesmo par de ações aparece em duas ordens diferentes."
+        }
+      ],
+      "notes": "Baseei o veredito na comparação entre seções da própria página — dois de três grupos usam a ordem oposta a esta. A atribuição a uma norma externa é incerta; o que é verificável é a inconsistência interna."
+    },
+    "TC-F-08": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "<select> sem <label> visível, mas com aria-label='Estado' — o nome acessível é correto e descritivo, e a opção inicial 'Selecione um estado' funciona como instrução visível. Não encontrei critério de nível A/AA descumprido; não sinalizo só por não usar elemento <label>."
+    },
+    "TC-F-09": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:1.3.1",
+          "description": "Grupo de três checkboxes cujo rótulo coletivo 'Canais de notificação' é um <p> solto: não há <fieldset>/<legend> nem role=group com aria-labelledby, então a relação entre o rótulo do grupo e as opções não é programática."
+        }
+      ],
+      "notes": "Confirmei ausência de fieldset. Os rótulos individuais estão certos (label envolvendo o input); o que falta é o agrupamento."
+    },
+    "TC-F-10": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.4.6",
+          "description": "Dois botões com o nome acessível idêntico 'Salvar' em blocos diferentes do mesmo formulário; fora de contexto não há como distinguir o que cada um grava."
+        },
+        {
+          "rule": "wcag:1.3.1",
+          "description": "Os títulos das duas seções ('Perfil público' e 'Configurações') são <p> com font-weight 600, apresentados visualmente como cabeçalhos mas sem elemento de cabeçalho que permita navegação por estrutura."
+        }
+      ],
+      "notes": "Os dois blocos são visualmente paralelos e cada um tem seu próprio 'Salvar'."
+    },
+    "TC-F-11": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "aria-labelledby='ghost-label-id' referencia um id que não existe no documento. O nome acessível só se resolve pelo fallback ao placeholder, e a associação declarada é inválida."
+        }
+      ],
+      "notes": "Confirmei por script que não há elemento com esse id. Contraste com TC-F-12, que usa a mesma técnica com referência válida."
+    },
+    "TC-F-12": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "aria-labelledby aponta para o <h2> 'Endereço de entrega', que existe e descreve o campo; o nome acessível resolvido é correto e o placeholder apenas complementa. Reaproveitar um cabeçalho de seção como rótulo é aceitável quando a referência é válida e o texto descreve o campo."
+    },
+    "TC-F-13": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:token-de-cor",
+          "description": "borderColor computada rgb(255,102,0) (laranja), fora da paleta usada pelos demais campos, que computam rgb(136,136,136). Aplicada por regra própria com !important."
+        }
+      ],
+      "notes": "Agrava-se por sugerir estado de erro num campo que não tem aria-invalid nem mensagem associada."
+    },
+    "TC-F-14": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:1.4.3",
+          "description": "Texto de apoio 'Inclua o DDD, somente números' em rgb(160,160,160) a 12px sobre fundo branco: contraste 2,61:1, abaixo do mínimo de 4,5:1 para texto normal."
+        }
+      ],
+      "notes": "Calculei o contraste no navegador. A dica equivalente em TC-F-01 usa rgb(85,85,85) e chega a 7,46:1."
+    },
+    "TC-N-01": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.4.1",
+          "description": "O link 'Ir para o conteúdo' não é o primeiro elemento focalizável do bloco: o link 'gov.br' vem antes dele na ordem de tabulação, de modo que o mecanismo de pular conteúdo não cumpre sua função."
+        }
+      ],
+      "notes": "Varredura de tabuláveis do bloco devolveu ['gov.br', 'Ir para o conteúdo']. Em TC-N-03 a ordem é a inversa. O destino #n01-conteudo existe."
+    },
+    "TC-N-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:1.3.1",
+          "description": "Último item da trilha ('Consulta de processos') é um link ativo para a própria posição e não traz aria-current='page': a posição atual do usuário não é exposta programaticamente."
+        }
+      ],
+      "notes": "TC-N-03 e TC-N-04 usam <span aria-current='page'> no último item, o que confirma o padrão esperado. Não sinalizei a ausência de <nav> porque ela é idêntica nas três trilhas."
+    },
+    "TC-N-03": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Link de pular conteúdo em primeiro na ordem de foco e com destino existente; trilha com aria-current='page' no item atual e ícones decorativos marcados aria-hidden. Nada a apontar."
+    },
+    "TC-N-04": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.1.1",
+          "description": "O link 'Serviços' da trilha tem tabindex='-1': é visível e clicável com o mouse, mas foi retirado da ordem de tabulação e não pode ser acionado por teclado."
+        }
+      ],
+      "notes": "Confirmei tabIndex -1 por script. O restante da trilha (aria-current no item atual) está correto."
+    },
+    "TC-N-05": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:3.1.2",
+          "description": "Citação inteiramente em inglês dentro de página declarada lang='pt-BR', sem atributo lang no <blockquote>: o sintetizador de voz lerá o trecho com a fonética do português."
+        }
+      ],
+      "notes": "Confirmei lang=null no blockquote e lang='pt-BR' no <html>. TC-N-06 é o mesmo caso com lang='en' declarado."
+    },
+    "TC-N-06": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Bloco em inglês com lang='en' declarado no <blockquote>, dentro de página pt-BR. É exatamente o tratamento que falta em TC-N-05."
+    },
+    "TC-T-01": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:1.3.1",
+          "description": "Tabela de dados cuja primeira linha usa <td><strong> em vez de <th scope='col'>: não há <thead> nem cabeçalhos programáticos, então as células de dados não têm com que se relacionar."
+        }
+      ],
+      "notes": "O snapshot expõe a linha de títulos como 'cell', não como 'columnheader'. Também não há caption."
+    },
+    "TC-T-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:1.3.1",
+          "description": "<table> usada para diagramar duas colunas de conteúdo editorial (cabeçalho + parágrafo em cada célula), sem cabeçalhos, caption ou role='presentation': estrutura tabular é anunciada onde não existe relação de dados."
+        }
+      ],
+      "notes": "O conteúdo das células são <h2> e <p>, não dados. O snapshot expõe table/row/cell para o que é apenas layout."
+    },
+    "TC-T-03": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "<caption>, <thead> e <th scope='col'> nas três colunas; o snapshot expõe 'columnheader' corretamente e a tabela recebe nome acessível pela caption. Referência correta de TC-T-01."
+    },
+    "TC-L-01": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Lista com role='list' e itens role='listitem' expostos corretamente no snapshot; padding uniforme de 16px nos três itens; o botão embutido tem nome textual e é focalizável. Nada a apontar."
+    },
+    "TC-L-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:espacamento",
+          "description": "O item do meio computa padding '24px 16px 4px', assimétrico e com valor inferior (4px) fora da escala, enquanto os itens vizinhos da mesma lista computam 16px uniformes."
+        }
+      ],
+      "notes": "Medi o padding computado dos três itens. O desalinhamento é visível na comparação interna da própria lista."
+    },
+    "TC-L-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:espacamento",
+          "description": "Item de lista com padding computado de 13px, valor que não pertence à escala usada em toda a aplicação (16px nas listas equivalentes de TC-L-01, TC-L-02 e TC-L-08)."
+        }
+      ],
+      "notes": "Valor arbitrário aplicado por regra própria com !important."
+    },
+    "TC-L-04": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:estado-vazio",
+          "description": "Região anunciada pelo cabeçalho 'Resultados da busca' é um contêiner com min-height de 64px e nenhum filho nem texto: não há mensagem de estado vazio nem indicação de que a busca não retornou resultados. Atribuição normativa incerta — não encontrei critério de WCAG A/AA que se aplique diretamente."
+        }
+      ],
+      "notes": "Confirmei por script: childCount 0, textContent vazio, sem aria-live. Um cabeçalho promete conteúdo que a interface não entrega nem explica."
+    },
+    "TC-L-05": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:rotulo-truncado",
+          "description": "Botão com max-width de 84px e text-overflow ellipsis: scrollWidth 152px contra clientWidth 84px, ou seja, o rótulo 'Confirmar solicitação' é cortado e o usuário vidente não consegue ler a ação que vai executar."
+        }
+      ],
+      "notes": "Medi scrollWidth e clientWidth no navegador. O nome acessível continua completo, então a divergência é entre o que se lê e o que se anuncia."
+    },
+    "TC-L-06": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:texto-truncado",
+          "description": "Descrição do item limitada a max-width de 320px com ellipsis: scrollWidth 664px contra clientWidth 320px, cortando mais da metade do texto sem qualquer meio de revelá-lo."
+        }
+      ],
+      "notes": "Medido no navegador. Perda de conteúdo sem alternativa de expansão."
+    },
+    "TC-L-07": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.4.3",
+          "description": "<hr class='br-divider'> decorativo com tabindex='0': o foco de teclado para num separador que não é operável e não anuncia nada, inserindo uma parada sem propósito na ordem de foco."
+        }
+      ],
+      "notes": "Confirmei tabIndex 0 e ausência de role. TC-L-08 usa o mesmo separador com role='presentation' e tabIndex -1."
+    },
+    "TC-L-08": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Separadores <hr> com role='presentation' e fora da ordem de foco; o snapshot expõe a lista com exatamente três listitem, sem nós estranhos. É o tratamento correto do divisor que TC-L-07 erra."
+    },
+    "TC-I-01": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.1.1",
+          "description": "Cabeçalho de sanfona é um <div> com cursor:pointer: tabIndex -1, não recebe foco e não abre por teclado. Só o clique de mouse funciona."
+        },
+        {
+          "rule": "wcag:4.1.2",
+          "description": "O <div> declara aria-expanded mas não tem role=button (o atributo não se aplica a elemento genérico) nem aria-controls; e ao clicar, o painel é inserido e o ícone gira, porém aria-expanded permanece 'false'. O estado exposto contradiz o estado real."
+        }
+      ],
+      "notes": "Acionei o cabeçalho: o painel com o texto dos documentos passou a existir no DOM e o ícone mudou de chevron-down para chevron-up, mas aria-expanded seguiu 'false'. Tentei focar por script e o foco não se moveu."
+    },
+    "TC-I-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "A caixa aberta pelo botão é um <div class='br-modal'> sem role='dialog', sem aria-modal e sem nome acessível: não é anunciada como diálogo, apenas como conteúdo genérico surgido na página."
+        },
+        {
+          "rule": "wcag:2.1.1",
+          "description": "O controle 'Fechar' é um <div> com tabIndex -1 e a caixa não contém nenhum elemento focalizável; Escape não a fecha. Uma vez aberta, não há como dispensá-la pelo teclado."
+        }
+      ],
+      "notes": "Abri a caixa: o foco permaneceu no botão que a disparou, nada foi movido para dentro. Pressionei Escape e ela continuou aberta. Tentei focar o 'Fechar' por script, sem sucesso. A caixa se sobrepõe ao restante da página e intercepta cliques em outras seções, então o usuário de teclado fica sem saída."
+    },
+    "TC-I-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.1.1",
+          "description": "As três abas são <div role='tab'> com tabIndex -1: nenhuma recebe foco, não há navegação por setas nem qualquer forma de alternar de aba pelo teclado. Só o mouse opera o componente."
+        },
+        {
+          "rule": "wcag:1.3.1",
+          "description": "Nenhuma aba tem aria-controls e o painel não tem id nem aria-labelledby: a relação entre aba e painel não é exposta programaticamente."
+        }
+      ],
+      "notes": "Cliquei em 'Endereço': aria-selected e o conteúdo do painel mudaram corretamente, então a lógica de seleção existe — o que não existe é acesso por teclado. Tentei focar a primeira aba por script e o foco permaneceu no body."
+    },
+    "TC-I-04": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "<button> real, focalizável, com aria-controls apontando para um painel existente. Acionei pelo teclado e por clique: aria-expanded alternou para 'true' e o atributo hidden do painel foi removido. Ícone e estado permanecem coerentes. É a implementação correta do que TC-I-01 erra."
+    },
+    "TC-S-01": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.2.1",
+          "description": "<meta http-equiv='refresh' content='120'> no <head>: a página se recarrega sozinha a cada 120 segundos, sem meio de desligar, ajustar ou prorrogar o limite, descartando o que o usuário estiver lendo ou preenchendo."
+        }
+      ],
+      "notes": "Lido no HTML entregue. Numa página de acompanhamento de fila, o recarregamento também descarta a posição de leitura de quem usa leitor de tela ou ampliação."
+    },
+    "TC-S-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:apresentacao-em-markup",
+          "description": "Apresentação embutida no código: <font color='#1351b4'>, elemento obsoleto de formatação, e um botão reconstruído com estilos inline (background, border-radius 20px, padding 8px 24px) em vez das classes e tokens do design system, que a página não carrega em momento nenhum."
+        },
+        {
+          "rule": "wcag:4.1.2",
+          "description": "O botão 'Ver detalhes' revela um bloco oculto via onclick que altera display, mas não tem aria-expanded nem aria-controls: a mudança de estado não é exposta."
+        }
+      ],
+      "notes": "Avaliado sobre o HTML entregue, conforme a natureza de código-fonte desta família. O <font> reproduz exatamente a cor primária do sistema, mas por marcação de apresentação."
+    },
+    "TC-S-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.3",
+          "description": "Ao copiar, a confirmação aparece substituindo o texto do próprio botão, sem região viva: não há aria-live, role='status' nem role='alert' na página, então a mensagem de sucesso não é anunciada a quem não a enxerga."
+        },
+        {
+          "rule": "wcag:2.4.6",
+          "description": "O nome acessível do controle passa permanentemente de 'Copiar número do protocolo' para 'Protocolo copiado': o botão deixa de descrever a ação que executa e não há como saber que ainda é possível copiar de novo."
+        }
+      ],
+      "notes": "Acionei o botão e reinspecionei após 4 segundos: o rótulo não volta ao original e a varredura por regiões vivas devolveu zero elementos."
+    },
+    "TC-O-01": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:1.1.1",
+          "description": "<img> do avatar sem atributo alt: a imagem entra na árvore de acessibilidade sem alternativa textual. O title='Fulano da Silva' está no <span> que a envolve e ainda contradiz o nome exibido no cartão, 'Maria Amorim'."
+        },
+        {
+          "rule": "wcag:2.4.6",
+          "description": "Botão de ações do cartão rotulado aria-label='Ícone ilustrativo': o nome descreve o ícone, não a função do controle, e não informa o que será acionado."
+        }
+      ],
+      "notes": "Confirmei hasAlt=false por script. O botão de expandir do rodapé, esse sim, está correto: aria-label descritivo, aria-controls válido e aria-expanded presente. Vir do pacote oficial não altera o veredito."
+    },
+    "TC-O-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Cartão apresentado como desabilitado (opacidade 0,45, cursor not-allowed, pointer-events:none nos botões) sem que nenhum controle tenha disabled ou aria-disabled: os quatro botões mantêm tabIndex 0 e continuam focalizáveis e acionáveis por teclado. O estado é só visual e não é exposto."
+        },
+        {
+          "rule": "wcag:1.1.1",
+          "description": "<img> do avatar sem atributo alt."
+        },
+        {
+          "rule": "wcag:2.4.6",
+          "description": "Três botões rotulados 'Ícone ilustrativo' e 'Ícone ilustrativo 3', nomes que não descrevem função; os dois primeiros são idênticos apesar de acionarem ícones diferentes (coração e compartilhar)."
+        }
+      ],
+      "notes": "Verifiquei disabled=false e tabIndex 0 em todos os botões e disparei um clique programático, que foi executado. Como os controles não estão de fato desabilitados, a opacidade de 0,45 também derruba o contraste do texto para cerca de 2,2:1 sem que valha a isenção de componentes inativos."
+    },
+    "TC-O-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:1.1.1",
+          "description": "O <img> do avatar do segundo cartão não tem atributo alt."
+        },
+        {
+          "rule": "wcag:2.4.6",
+          "description": "Botões rotulados 'Ícone ilustrativo' e 'Ícone ilustrativo 3', que descrevem o ícone e não a ação."
+        }
+      ],
+      "notes": "A primeira imagem tem alt='Imagem de exemplo' — presente, porém genérico a ponto de não descrever nada; não contei como achado separado por ser conteúdo de demonstração. O avatar do segundo cartão não tem alt nenhum."
+    },
+    "TC-O-04": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:1.1.1",
+          "description": "<img> do avatar sem atributo alt."
+        },
+        {
+          "rule": "wcag:2.4.6",
+          "description": "Botões rotulados 'Ícone ilustrativo' e 'Ícone ilustrativo 3', sem descrição da função."
+        }
+      ],
+      "notes": "A área de conteúdo rolável (scrollHeight 535px contra clientHeight 250px) tem tabindex='0', que é o tratamento correto para permitir rolagem por teclado; não sinalizei isso. Ela fica, porém, sem role de região e sem nome, então o foco para num contêiner genérico."
+    },
+    "TC-O-05": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Nenhum dos cinco elementos role='tab' tem aria-selected, então o passo atual nunca é exposto; e o estado visual está incoerente, com o atributo active aplicado simultaneamente a três passos enquanto o painel exibido continua sendo o do passo 1. O quinto passo tem aria-labelledby='info5' apontando para id inexistente, caindo o nome no title."
+        },
+        {
+          "rule": "wcag:1.3.1",
+          "description": "Os títulos dos passos são <div class='h3'>: aparência de cabeçalho sem elemento de cabeçalho — o fragmento não tem nenhum <h1>–<h6>. Os painéis também não têm aria-labelledby ligando-os ao passo correspondente."
+        }
+      ],
+      "notes": "Cliquei no passo 'Validar Dados': o painel não mudou (tab1 seguiu sendo o visível) e o atributo active passou a marcar três passos. Confirmei que aria-selected continua ausente após a interação e que não existe elemento com id 'info5'."
+    },
+    "TC-O-06": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Mesmo padrão do wizard horizontal: role='tab' sem aria-selected em nenhum passo, atributo active marcando três passos simultaneamente já no HTML entregue enquanto step='1' e o painel visível é o tab1, e aria-labelledby='info5' apontando para id que não existe."
+        },
+        {
+          "rule": "wcag:1.3.1",
+          "description": "Títulos de passo em <div class='h3'>, sem nenhum elemento de cabeçalho no fragmento, e painéis sem aria-labelledby que os ligue ao respectivo passo."
+        }
+      ],
+      "notes": "Aqui a incoerência de estado aparece sem qualquer interação minha: o fragmento já é servido com active em três passos. Isso confirma que o mesmo defeito observado em TC-O-05 não foi causado pelo meu clique."
+    }
+  }
+}
