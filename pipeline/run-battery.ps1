@@ -22,8 +22,15 @@
   única. Nunca agregue braços diferentes (mesmo princípio do D-13).
 
 .EXAMPLE
-  .\run-battery.ps1 -Runs 1 -Arm com
+  # Conferir o encanamento antes de gastar: uma aba, modelo barato, nada entra em métrica.
+  .\run-battery.ps1 -Scope smoke -Arm ambos
+
+  # Medida de verdade.
   .\run-battery.ps1 -Runs 3 -Arm ambos
+
+  # Sensibilidade a modelo: experimento declarado, bateria inteira no outro modelo.
+  # O scorer agrupa por modelo, então os dois saem lado a lado sem se misturar.
+  .\run-battery.ps1 -Runs 3 -Arm ambos -Model claude-sonnet-5
 #>
 
 [CmdletBinding()]
@@ -36,7 +43,18 @@ param(
 
   # Política de modelo (D-17): opus-5 conduz as execuções de avaliação; fable-5 fica para escrita.
   # F3 exige modelo constante dentro de uma bateria — não troque no meio.
+  # Trocar de modelo é um experimento declarado (sensibilidade a modelo): rode a bateria inteira
+  # com -Model outro-modelo. O scorer agrupa por modelo, então a comparação sai separada sozinha.
   [string]$Model = "claude-opus-5",
+
+  # full  = corpus inteiro; é o que vale como medida
+  # smoke = uma aba só, para conferir encanamento (protocolo, POST, permissões) por ~1/10 do custo.
+  #         Execução de fumaça NUNCA é medida: vai para results/runs-smoke/, fora do alcance do scorer.
+  [ValidateSet("full", "smoke")]
+  [string]$Scope = "full",
+
+  # A aba que o smoke percorre. Qualquer uma serve — o objetivo é exercitar o caminho, não medir.
+  [string]$SmokeAba = "Botões",
 
   [string]$CorpusUrl = "http://localhost:3000",
 
@@ -54,10 +72,25 @@ $EvalRoot    = Split-Path $PipelineDir -Parent
 $TccRoot     = Split-Path $EvalRoot -Parent
 $RunsDir     = Join-Path $EvalRoot "results\runs"
 $AblacaoDir  = Join-Path $EvalRoot "results\runs-ablacao"
+$SmokeDir    = Join-Path $EvalRoot "results\runs-smoke"
 $LogsDir     = Join-Path $PipelineDir "logs"
 $Stamp       = Get-Date -Format "yyyy-MM-ddTHH-mm-ss"
 
-foreach ($d in @($RunsDir, $AblacaoDir, $LogsDir)) {
+$IsSmoke = $Scope -eq "smoke"
+
+# Modelo barato por padrão no smoke: ele não mede nada, então não há razão para pagar opus para
+# descobrir que o POST funciona. Um -Model explícito continua ganhando.
+if ($IsSmoke -and -not $PSBoundParameters.ContainsKey("Model")) {
+  $Model = "claude-haiku-4-5"
+}
+
+# Baseline e pontuação são sobre a medida, e o smoke não produz medida.
+if ($IsSmoke) {
+  $SkipBaselines = $true
+  $SkipScore     = $true
+}
+
+foreach ($d in @($RunsDir, $AblacaoDir, $SmokeDir, $LogsDir)) {
   if (-not (Test-Path $d)) { New-Item -ItemType Directory -Path $d -Force | Out-Null }
 }
 
@@ -128,7 +161,12 @@ $arms = @()
 if ($Arm -eq "ambos") { $arms = @("com", "sem") } else { $arms = @($Arm) }
 
 $total = $arms.Count * $Runs
-Write-Step "Plano: $total execução(ões) — braços [$($arms -join ', ')] x $Runs, modelo $Model"
+Write-Step "Plano: $total execução(ões) — braços [$($arms -join ', ')] x $Runs, modelo $Model, escopo $Scope"
+
+if ($IsSmoke) {
+  Write-Warn2 "ESCOPO SMOKE: só a aba '$SmokeAba'. Não é medida — os vereditos vão para"
+  Write-Warn2 "results/runs-smoke/, que o scorer não lê, e baselines/pontuação estão desligados."
+}
 
 $manifest = @()
 $runIndex = 0
@@ -145,8 +183,9 @@ foreach ($armName in $arms) {
     # O braço da ablação faz POST no dashboard, e o endpoint sobrescreve o veredito "atual"
     # (results/agent-results.json + a cópia do dashboard). Sem restaurar, a tabela principal do
     # scorer passaria a reportar a ablação como se fosse o braço com oráculo. Guarda antes.
+    # O smoke também faz POST no dashboard e sobrescreveria o veredito "atual" — mesma guarda.
     $snapshots = @()
-    if ($armName -eq "sem") {
+    if ($armName -eq "sem" -or $IsSmoke) {
       foreach ($rel in @("results\agent-results.json", "dashboard\public\agent-results.json")) {
         $full = Join-Path $EvalRoot $rel
         if (Test-Path $full) {
@@ -164,8 +203,17 @@ foreach ($armName in $arms) {
     }
 
     $logFile      = Join-Path $LogsDir "$Stamp-$armName-run$i.json"
-    $prompt       = "/evaluate-all"
     $settingsFile = Join-Path $PipelineDir "settings-run.json"
+
+    # O recorte do smoke vive aqui, no disparo — não dentro do protocolo. O protocolo é o mesmo
+    # arquivo nos dois escopos, senão a execução de fumaça deixaria de exercitar o que vai rodar
+    # de verdade. A frase abaixo restringe o percurso e nada mais; não diz nada sobre o domínio.
+    $prompt = if ($IsSmoke) {
+      "/evaluate-all Percorra apenas a aba '$SmokeAba' e feche os vereditos só dos casos dela. " +
+      "Ignore as demais abas e as rotas estáticas."
+    } else {
+      "/evaluate-all"
+    }
 
     $claudeArgs = @(
       "-p", $prompt,
@@ -204,12 +252,28 @@ foreach ($armName in $arms) {
       $arquivo = $novo | Select-Object -First 1
       Write-Ok "veredito arquivado: $arquivo"
 
+      # O modelo que o scorer usa para agrupar vem do arquivo, que o próprio agente escreveu.
+      # Quem sabe qual modelo rodou é este script, que passou --model. Divergência aqui agruparia
+      # execuções sob um rótulo errado, então ela é reportada em vez de silenciada.
+      try {
+        $vereditoPath = Join-Path $RunsDir $arquivo
+        $modeloNoArquivo = (Get-Content $vereditoPath -Raw | ConvertFrom-Json).model
+        if ($modeloNoArquivo -and $modeloNoArquivo -ne $Model) {
+          Write-Warn2 "modelo divergente: o arquivo diz '$modeloNoArquivo', a execução foi com '$Model'."
+          Write-Warn2 "Corrija o campo antes de pontuar — o scorer agrupa por ele."
+        }
+      } catch {
+        Write-Warn2 "não foi possível conferir o campo 'model' do veredito arquivado."
+      }
+
       # o diretório é o que rotula o braço para o scorer (D-17)
-      if ($armName -eq "sem") {
-        $origem  = Join-Path $RunsDir $arquivo
-        $destino = Join-Path $AblacaoDir $arquivo
-        Move-Item -Path $origem -Destination $destino -Force
-        Write-Ok "movido para results/runs-ablacao/ (o diretório rotula o braço)"
+      $destinoDir = if ($IsSmoke) { $SmokeDir } elseif ($armName -eq "sem") { $AblacaoDir } else { $null }
+
+      if ($destinoDir) {
+        Move-Item -Path (Join-Path $RunsDir $arquivo) -Destination (Join-Path $destinoDir $arquivo) -Force
+        $rotulo = if ($IsSmoke) { "results/runs-smoke/ (fora do alcance do scorer)" }
+                  else { "results/runs-ablacao/ (o diretório rotula o braço)" }
+        Write-Ok "movido para $rotulo"
       }
     }
 
@@ -229,8 +293,9 @@ foreach ($armName in $arms) {
       model        = $Model
       mcpConfig    = Split-Path $mcpConfig -Leaf
       prompt       = $prompt
+      scope        = $Scope
       archive      = $arquivo
-      archiveDir   = $(if ($armName -eq "sem") { "results/runs-ablacao" } else { "results/runs" })
+      archiveDir   = $(if ($IsSmoke) { "results/runs-smoke" } elseif ($armName -eq "sem") { "results/runs-ablacao" } else { "results/runs" })
       exitCode     = $exit
       wallClockSeconds = $elapsed
       log          = Split-Path $logFile -Leaf
@@ -244,6 +309,7 @@ $manifestPath = Join-Path $LogsDir "$Stamp-bateria.json"
 [pscustomobject]@{
   stamp     = $Stamp
   model     = $Model
+  scope     = $Scope
   runsPerArm = $Runs
   arms      = $arms
   corpusUrl = $CorpusUrl
@@ -279,4 +345,5 @@ if (-not $SkipScore) {
 Write-Step "Fim"
 Write-Host "Execuções com oráculo:  $RunsDir"
 Write-Host "Execuções da ablação:   $AblacaoDir"
+if ($IsSmoke) { Write-Host "Execuções de fumaça:    $SmokeDir  (não entram em métrica)" }
 Write-Host "Logs e manifesto:       $LogsDir"

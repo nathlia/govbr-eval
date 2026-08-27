@@ -1,0 +1,107 @@
+{
+  "timestamp": "2026-08-27T22:13:09.316Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://localhost:3000",
+  "config": {
+    "arm": "com-oraculo",
+    "label": "protocolo neutro"
+  },
+  "cost": {
+    "startedAt": "2026-08-27T22:12:07.422Z",
+    "finishedAt": "2026-08-27T22:13:09.316Z",
+    "wallClockSeconds": 62,
+    "toolCalls": 9
+  },
+  "verdicts": {
+    "TC-B-01": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Button element with visible text 'Entrar'. Proper semantic element and accessible name. No violations."
+    },
+    "TC-B-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Button element with no accessible name. No visible text and no aria-label provided."
+        }
+      ],
+      "notes": "Empty button with nested generic element containing no text. Button lacks programmatic label for assistive technologies."
+    },
+    "TC-B-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Generic element styled as button (cursor:pointer) instead of semantic button element. No role attribute to expose correct semantics."
+        }
+      ],
+      "notes": "Using generic DIV/SPAN with CSS cursor pointer instead of <button> element. Violates semantic HTML requirement for interactive controls."
+    },
+    "TC-B-04": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Button element with visible text 'Confirmar'. Proper semantics and accessible name. No violations."
+    },
+    "TC-B-05": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Button element with visible text 'Acessar sistema'. Proper semantics and accessible name. No violations."
+    },
+    "TC-B-06": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Button element with visible text 'Excluir conta'. Proper semantics and accessible name. No violations."
+    },
+    "TC-B-07": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.5.3",
+          "description": "Mismatch between accessible name (aria-label='Cancelar') and visible text ('Confirmar'). Label in Name criterion requires accessible name to match or be part of visible text."
+        }
+      ],
+      "notes": "Button has aria-label='Cancelar' but visible text shows 'Confirmar'. This creates confusion for users as the announced name differs from what is displayed."
+    },
+    "TC-B-08": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Button element with visible text 'Cancelar'. Proper semantics and accessible name. No violations."
+    },
+    "TC-B-09": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Button element with icon/generic child and aria-label='Pesquisar'. Has accessible name via aria-label. Proper for icon buttons. No violations."
+    },
+    "TC-B-10": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Button element with visible text 'Salvar alterações'. Proper semantics and accessible name. No violations."
+    },
+    "TC-B-11": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Button element with visible text 'Confirmar'. Proper semantics and accessible name. No violations."
+    },
+    "TC-B-12": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Using anchor element (with href='#') for button action instead of button element. Links should navigate; actions should use button semantics."
+        }
+      ],
+      "notes": "Link element 'Excluir arquivo' with href='#' used as action button. Should use <button> element for actions, not <a> with href='#'."
+    },
+    "TC-B-13": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Two button elements 'Voltar' and 'Próxima etapa' with visible text. Proper semantics and accessible names. No violations."
+    },
+    "TC-B-14": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Button element with icon/generic child and aria-label='Filtrar resultados'. Has accessible name via aria-label. Proper for icon buttons. No violations."
+    }
+  }
+}
