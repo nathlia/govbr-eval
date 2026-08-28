@@ -1,0 +1,27 @@
+﻿{
+    "stamp":  "2026-08-27T23-36-28",
+    "model":  "claude-sonnet-5",
+    "scope":  "smoke",
+    "runsPerArm":  1,
+    "arms":  [
+                 "com"
+             ],
+    "corpusUrl":  "http://localhost:3000",
+    "execucoes":  [
+                      {
+                          "run":  1,
+                          "arm":  "com",
+                          "armDescricao":  "agente + oráculo MCP",
+                          "model":  "claude-sonnet-5",
+                          "mcpConfig":  "mcp-com-oraculo.json",
+                          "prompt":  "/evaluate-all Percorra apenas a aba \u0027Botões\u0027 e feche os vereditos só dos casos dela. Ignore as demais abas e as rotas estáticas.",
+                          "scope":  "smoke",
+                          "archive":  "agent-2026-08-28T02-40-24-240Z.json",
+                          "archiveDir":  "results/runs-smoke",
+                          "exitCode":  0,
+                          "wallClockSeconds":  244.3,
+                          "log":  "2026-08-27T23-36-28-com-run1.json",
+                          "startedAt":  "2026-08-28T02:36:28.8121111Z"
+                      }
+                  ]
+}

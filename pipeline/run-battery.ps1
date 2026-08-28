@@ -172,7 +172,7 @@ $manifest = @()
 $runIndex = 0
 
 # ---------------------------------------------------------------- execuções
-foreach ($armName in $arms) {
+:bateria foreach ($armName in $arms) {
   $mcpConfig = Join-Path $PipelineDir "mcp-$armName-oraculo.json"
   if (-not (Test-Path $mcpConfig)) { throw "Config MCP não encontrada: $mcpConfig" }
 
@@ -241,6 +241,18 @@ foreach ($armName in $arms) {
       Write-Ok "concluída em ${elapsed}s — log: $logFile"
     }
 
+    # Limite de gasto atingido: as execuções restantes falhariam em sequência, cada uma gravando
+    # um log vazio e empurrando a bateria para um estado meio-feito. Já aconteceu duas vezes
+    # (19/08 e 27/08). Parar aqui preserva o que foi arquivado até agora e deixa o motivo visível.
+    $limiteAtingido = $false
+    try {
+      $logJson = Get-Content $logFile -Raw | ConvertFrom-Json
+      if ($logJson.api_error_status -eq 429) {
+        $limiteAtingido = $true
+        $motivo = $logJson.result
+      }
+    } catch { }
+
     # identifica o arquivo arquivado por esta execução
     $after = Get-ChildItem $RunsDir -Filter "agent-*.json" | Select-Object -ExpandProperty Name
     $novo = $after | Where-Object { $before -notcontains $_ }
@@ -300,6 +312,16 @@ foreach ($armName in $arms) {
       wallClockSeconds = $elapsed
       log          = Split-Path $logFile -Leaf
       startedAt    = $started.ToUniversalTime().ToString("o")
+    }
+
+    # Abortar só depois da restauração e do manifesto: parar antes deixaria o agent-results.json
+    # sobrescrito pelo POST desta execução e a bateria sem registro do que chegou a rodar.
+    if ($limiteAtingido) {
+      Write-Warn2 "LIMITE DE GASTO ATINGIDO — bateria interrompida na execução $runIndex de $total."
+      Write-Warn2 $motivo
+      Write-Warn2 "O que já foi arquivado continua válido. Retome quando o limite liberar;"
+      Write-Warn2 "'-Scope smoke' custa ~US$ 0,15 e serve para conferir se já liberou."
+      break bateria
     }
   }
 }

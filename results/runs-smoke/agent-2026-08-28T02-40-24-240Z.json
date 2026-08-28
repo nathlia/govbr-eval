@@ -1,0 +1,161 @@
+{
+  "timestamp": "2026-08-28T02:40:24.240Z",
+  "model": "claude-sonnet-5",
+  "appUrl": "http://localhost:3000",
+  "config": {
+    "arm": "com-oraculo",
+    "label": "protocolo neutro"
+  },
+  "cost": {
+    "startedAt": "2026-08-28T02:37:01.098Z",
+    "finishedAt": "2026-08-28T02:39:50.839Z",
+    "wallClockSeconds": 170,
+    "toolCalls": 19
+  },
+  "verdicts": {
+    "TC-B-01": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "button nativo, classes br-button primary canônicas, sem desvio de token, estrutura e nome acessível corretos."
+    },
+    "TC-B-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "govbr-3.7.0-component-button-4d7b5f978df1",
+          "description": "Botão circular sem rótulo visível (exceção admitida) mas também sem nenhum mecanismo acessível alternativo: nenhum aria-label, aria-labelledby ou title no elemento; ícone interno tem aria-hidden. Nome acessível vazio."
+        }
+      ],
+      "notes": "Confirmado por axe-core (button-name, crítico, WCAG 4.1.2) e por checagem estrutural do DS. Comparar com TC-B-09, mesmo padrão de botão circular mas com aria-label presente."
+    },
+    "TC-B-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:button-tag",
+          "description": "Classe br-button aplicada a um <div>, não a um <button>. Consequência prática: o elemento não recebe foco por Tab (sem tabindex), quebrando ativação por teclado além de violar a semântica de componente esperada."
+        }
+      ],
+      "notes": "outerHTML: <div class=\"br-button primary\" style=\"display:inline-block;cursor:pointer\">Confirmar</div>. Estado :focus não mostra indicador (consistente com não ser alcançável por Tab)."
+    },
+    "TC-B-04": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:button-variant-unknown-class",
+          "description": "Classe modificadora 'v-token-a' não pertence ao conjunto de variantes documentadas de br-button."
+        },
+        {
+          "rule": "ds:button-color-token",
+          "description": "background-color e border-color computados (#1352b4) não correspondem exatamente ao token de cor do DS mais próximo (--blue-warm-vivid-70, #1351b4)."
+        }
+      ],
+      "notes": "Mesma classe custom 'v-token-a' parece ser a origem dos dois desvios."
+    },
+    "TC-B-05": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:button-variant-unknown-class",
+          "description": "Classe modificadora 'v-font-a' não pertence ao conjunto de variantes documentadas de br-button."
+        },
+        {
+          "rule": "ds:button-font-token",
+          "description": "font-family computada é 'Arial, sans-serif', não a família do DS (Rawline/Raleway)."
+        }
+      ],
+      "notes": "Texto do botão fica visualmente distinto dos demais botões da mesma página."
+    },
+    "TC-B-06": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Botão danger, cor de fundo e contraste de texto branco sobre vermelho sem achados em nenhuma checagem (estrutura, token, axe)."
+    },
+    "TC-B-07": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.5.3",
+          "description": "aria-label=\"Cancelar\" contradiz o texto visível \"Confirmar\" no mesmo botão — o nome acessível não apenas diverge como contradiz o rótulo visível, confundindo usuários de leitor de tela sobre a ação real do botão."
+        }
+      ],
+      "notes": "Verificado ao vivo no DOM: <button class=\"br-button primary\" aria-label=\"Cancelar\">Confirmar</button>."
+    },
+    "TC-B-08": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:button-variant-unknown-class",
+          "description": "Classe modificadora 'v-radius-a' não pertence ao conjunto de variantes documentadas de br-button."
+        },
+        {
+          "rule": "ds:button-radius-token",
+          "description": "border-radius computado de 6px está fora da escala de raio do DS para o componente button (0/4/8/16px ou pill)."
+        }
+      ],
+      "notes": "Botão secondary com cantos visivelmente menos arredondados que o padrão pill dos demais botões da página."
+    },
+    "TC-B-09": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Botão circular com aria-label=\"Pesquisar\" presente, ícone aria-hidden, tamanho 40x40 consistente com TC-B-02. Segue o padrão canônico do exemplo oficial button-circle."
+    },
+    "TC-B-10": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:button-variant-unknown-class",
+          "description": "Classe modificadora 'v-focus-a' não pertence ao conjunto de variantes documentadas de br-button."
+        },
+        {
+          "rule": "wcag:2.4.7",
+          "description": "No estado :focus, outline-style computado é 'none' — nenhum indicador de foco visível, diferente dos demais botões primary da mesma página (outline dashed 4px laranja ao focar)."
+        }
+      ],
+      "notes": "Comparação direta com TC-B-01/04/07 (mesmo componente, mesmo estado) mostra supressão do indicador só neste botão."
+    },
+    "TC-B-11": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:button-tag",
+          "description": "Classe br-button aplicada a um <span role=\"button\">, não a um <button> nativo."
+        },
+        {
+          "rule": "govbr-3.7.0-accessibility-button-efd2d9e7c3c6",
+          "description": "Elemento não é alcançável por navegação sequencial com Tab: tabIndex computado é -1 e não há atributo tabindex, apesar de role=\"button\" simular semântica de botão."
+        }
+      ],
+      "notes": "Confirmado via inspeção ao vivo (element.tabIndex === -1, hasAttribute('tabindex') === false). Botão funciona só por clique de mouse."
+    },
+    "TC-B-12": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:button-tag",
+          "description": "Classe br-button aplicada a um <a href=\"#\">, para uma ação (\"Excluir arquivo\") que não navega — semântica de link usada para o que deveria ser um <button>."
+        }
+      ],
+      "notes": "href=\"#\" sem navegação real reforça que a ação é imperativa, não navegacional."
+    },
+    "TC-B-13": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Par Voltar (secondary) / Próxima etapa (primary), ambos <button> nativos, ordem convencional de wizard, sem desvios de estrutura ou token."
+    },
+    "TC-B-14": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:button-variant-unknown-class",
+          "description": "Classe modificadora 'v-size-a' não pertence ao conjunto de variantes documentadas de br-button."
+        },
+        {
+          "rule": "ds:button-circle-size-token",
+          "description": "Botão circular mede 32x32px computado, contra 40x40px nos demais botões circulares da mesma página (TC-B-02, TC-B-09) — desvio do tamanho canônico do componente, embora ainda acima do mínimo de 24x24 (WCAG 2.5.8)."
+        }
+      ],
+      "notes": "aria-label=\"Filtrar resultados\" presente e correto; o problema é dimensional, não de nome acessível."
+    }
+  }
+}
