@@ -1,0 +1,566 @@
+{
+  "timestamp": "2026-08-28T03:10:10.207Z",
+  "model": "claude-sonnet-5",
+  "appUrl": "http://localhost:3000",
+  "config": {
+    "arm": "com-oraculo",
+    "label": "protocolo neutro"
+  },
+  "cost": {
+    "startedAt": "2026-08-28T02:54:43.463Z",
+    "finishedAt": "2026-08-28T03:10:10.207Z",
+    "wallClockSeconds": 927,
+    "toolCalls": 116
+  },
+  "verdicts": {
+    "TC-B-01": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Botão primary padrão, texto visível, cor/raio/foco corretos (outline dashed 4px cor de foco)."
+    },
+    "TC-B-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Botão circular apenas com ícone de busca, sem aria-label/texto acessível (axe-core button-name; cross-ref e-MAG 2.2)."
+        }
+      ],
+      "notes": "Confirmado por run_axe_scan (critical) e por check_component_structure."
+    },
+    "TC-B-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:structure-button-tag",
+          "description": "br-button aplicado a <div> em vez do <button> canônico dos exemplos oficiais."
+        },
+        {
+          "rule": "wcag:2.1.1",
+          "description": "Elemento não focalizável nem operável via teclado: tabIndex -1, sem role=button."
+        }
+      ],
+      "notes": "Confirmado via check_component_structure (deterministico) e inspeção de tabIndex ao vivo."
+    },
+    "TC-B-04": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:token-color",
+          "description": "background-color/border-color #1352b4 fora do registro de tokens do DS (mais próximo: --blue-warm-vivid-70 #1351b4, distância RGB 1)."
+        }
+      ],
+      "notes": "Confirmado por check_token_compliance (síntatico, determinístico)."
+    },
+    "TC-B-05": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:token-font-family",
+          "description": "font-family: Arial, sans-serif em vez de Rawline/Raleway (--font-family-base)."
+        }
+      ],
+      "notes": "Confirmado por check_token_compliance."
+    },
+    "TC-B-06": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Botão danger com cor exata do token --danger (#e52207); uso semântico correto para ação destrutiva."
+    },
+    "TC-B-07": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.5.3",
+          "description": "aria-label=\"Cancelar\" contradiz o texto visível \"Confirmar\" (Label in Name)."
+        }
+      ],
+      "notes": "Verificado via verify_finding (confirmed)."
+    },
+    "TC-B-08": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:token-radius",
+          "description": "border-radius: 6px fora da escala do DS (0/4/8/16/50%/pill)."
+        }
+      ],
+      "notes": "Confirmado por check_token_compliance."
+    },
+    "TC-B-09": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Botão circular ícone-apenas com aria-label=\"Pesquisar\" — contraste correto com TC-B-02."
+    },
+    "TC-B-10": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:4.4",
+          "description": "Nenhum indicador visual de foco ao navegar por teclado (outline-style: none), diferente dos demais botões primary da página."
+        }
+      ],
+      "notes": "Testado via inspeção de :focus computado; verificado por verify_finding."
+    },
+    "TC-B-11": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:structure-button-tag",
+          "description": "br-button aplicado a <span role=button> em vez do <button> canônico."
+        },
+        {
+          "rule": "wcag:2.1.1",
+          "description": "span[role=button] com tabIndex -1, inalcançável por Tab apesar do role."
+        }
+      ],
+      "notes": "Confirmado por check_component_structure e inspeção de tabIndex."
+    },
+    "TC-B-12": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:structure-button-tag",
+          "description": "br-button aplicado a <a href=\"#\"> para ação destrutiva (\"Excluir arquivo\") que não é navegação; canônico é <button>."
+        }
+      ],
+      "notes": "Confirmado por check_component_structure."
+    },
+    "TC-B-13": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Par secondary/primary (Voltar/Próxima etapa) com marcação e ordem convencionais."
+    },
+    "TC-B-14": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:structure-button-variant",
+          "description": "Classe não documentada v-size-a; botão circular mede 32×32px vs 40×40px dos demais circle da mesma página (TC-B-02, TC-B-09)."
+        }
+      ],
+      "notes": "Classe desconhecida confirmada por check_component_structure; medida de tamanho por getBoundingClientRect."
+    },
+    "TC-F-01": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Labels associados corretamente (for/id), dica de CPF ligada via aria-describedby, aria-required presente."
+    },
+    "TC-F-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:6.2",
+          "description": "label for=\"usuario\" não corresponde ao id real do input (\"username\"), quebrando a associação programática."
+        }
+      ],
+      "notes": "Inspecionado via outerHTML do formulário."
+    },
+    "TC-F-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:6.2",
+          "description": "Campo de e-mail sem label/aria-label/aria-labelledby, depende só do placeholder."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-F-04": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:6.3",
+          "description": "Indicador visual \"*\" de obrigatoriedade sem required/aria-required no input."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-F-05": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:6.5",
+          "description": "Campo CPF sem instrução de formato antes do campo, ao contrário de TC-F-01."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-F-06": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:6.6",
+          "description": "aria-invalid=true e mensagem de erro em texto, mas sem aria-describedby ligando input ao erro."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-F-07": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Label/id corretos, aria-required presente. Ordem dos botões (Confirmar antes de Cancelar) é invertida frente a TC-F-01, mas sem regra citável com confiança — registrado apenas como observação, não como violação."
+    },
+    "TC-F-08": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Select com aria-label próprio; mudança de valor não dispara ação automática (fluxo usa botão Confirmar explícito)."
+    },
+    "TC-F-09": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:6.7",
+          "description": "Checkboxes relacionados (E-mail/SMS/Push) agrupados apenas por um <p>, sem fieldset/legend."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-F-10": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:1.3",
+          "description": "Títulos de subseção (\"Perfil público\", \"Configurações\") marcados como <p> em negrito, não como heading real, ao contrário de TC-F-12."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-F-11": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "aria-labelledby=\"ghost-label-id\" aponta para um id inexistente no DOM; nome acessível fica vazio."
+        }
+      ],
+      "notes": "Contraste direto com TC-F-12, que usa o mesmo padrão corretamente."
+    },
+    "TC-F-12": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "aria-labelledby aponta para h2 existente (\"Endereço de entrega\"); técnica válida, nome acessível resolvido corretamente."
+    },
+    "TC-F-13": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:token-color",
+          "description": "border-color: #ff6600 (laranja arbitrário) fora do registro de tokens do DS, via classe não documentada v-border-a."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-F-14": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:6.5",
+          "description": "Dica de formato (\"Inclua o DDD...\") visível mas sem id/aria-describedby ligando-a ao campo."
+        },
+        {
+          "rule": "ds:token-color",
+          "description": "Cor da dica (#a0a0a0) fora da escala de cinzas do DS, via classe v-tone-a."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-N-01": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:1.5",
+          "description": "Link do logo \"gov.br\" vem antes do skip link \"Ir para o conteúdo\"; a âncora de pular deveria ser o primeiro link."
+        }
+      ],
+      "notes": "Contraste com TC-N-03, que tem a ordem correta."
+    },
+    "TC-N-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.4.8",
+          "description": "Último item do breadcrumb (página atual) é um link clicável igual aos demais, sem aria-current=page."
+        }
+      ],
+      "notes": "Atribuição normativa incerta — sem regra explícita do oráculo para este caso específico; inferência por contraste com TC-N-03/04, que marcam o item atual corretamente."
+    },
+    "TC-N-03": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Skip link primeiro, gov.br depois; último item do breadcrumb é span não-link com aria-current=page."
+    },
+    "TC-N-04": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "govbr-3.7.0-accessibility-breadcrumb-992f162ca821",
+          "description": "Link \"Serviços\" do breadcrumb tem tabindex=-1: clicável por mouse mas removido da navegação por Tab."
+        }
+      ],
+      "notes": "Match direto com regra do oráculo (KB) para o componente breadcrumb."
+    },
+    "TC-N-05": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:3.2",
+          "description": "Citação em inglês sem atributo lang."
+        }
+      ],
+      "notes": "Contraste direto com TC-N-06, mesmo padrão com lang=\"en\" correto."
+    },
+    "TC-N-06": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "blockquote com lang=\"en\" marcando corretamente a mudança de idioma."
+    },
+    "TC-T-01": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:3.10",
+          "description": "Linha de cabeçalho usa <td><strong> em vez de <th scope=col>; tabela sem caption/thead."
+        }
+      ],
+      "notes": "Contraste com TC-T-03, mesma tabela de conteúdo implementada corretamente."
+    },
+    "TC-T-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:1.6",
+          "description": "<table> usado apenas para diagramação visual de duas colunas de texto, sem dados tabulares."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-T-03": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Tabela com caption, thead>th scope=col, tbody>td — estrutura correta."
+    },
+    "TC-L-01": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "br-list/br-item com role=list/listitem corretos, botão inline operável."
+    },
+    "TC-L-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:list-item-spacing",
+          "description": "Item \"Notificações e alertas\" (classe v-space-a) com padding assimétrico 24px/16px/4px vs 16px uniforme dos irmãos."
+        }
+      ],
+      "notes": "Atribuição normativa incerta quanto ao valor exato esperado; valores individuais estão na escala do DS mas a combinação quebra consistência."
+    },
+    "TC-L-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:token-spacing",
+          "description": "Padding uniforme de 13px, fora da escala de 8px do DS e do padrão de 16px dos demais br-item."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-L-04": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:empty-state-missing-message",
+          "description": "Área de resultados de busca completamente vazia, sem título/corpo de mensagem obrigatórios do padrão Empty States do gov.br DS."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-L-05": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:button-text-truncation",
+          "description": "Texto do botão \"Confirmar solicitação\" cortado visualmente (width fixa 84px, scrollWidth 152px, ellipsis)."
+        }
+      ],
+      "notes": "Confirmado visualmente por screenshot (\"rmar solici...\"); atribuição normativa incerta, sem regra explícita do oráculo para largura mínima de botão."
+    },
+    "TC-L-06": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "ds:list-description-truncation",
+          "description": "Descrição do item cortada na mesma linha do título (white-space:nowrap + ellipsis; scrollWidth 664px vs clientWidth 320px)."
+        }
+      ],
+      "notes": "Corrigido de uma checagem inicial insuficiente (só via altura); confirmado visualmente por screenshot e por medição de largura."
+    },
+    "TC-L-07": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "govbr-3.7.0-accessibility-divider-30bbcbf3a17c",
+          "description": "hr.br-divider com tabindex=\"0\", entrando na ordem de foco sem propósito funcional."
+        }
+      ],
+      "notes": "Match direto com regra do oráculo para o componente divider; contraste com TC-L-08."
+    },
+    "TC-L-08": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "hr.br-divider com role=presentation, sem tabindex — uso correto."
+    },
+    "TC-I-01": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:2.1.1",
+          "description": "Cabeçalho do accordion é <div> com tabIndex -1, inalcançável por teclado."
+        },
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Testado por clique real: painel fica visível mas aria-expanded permanece \"false\"."
+        }
+      ],
+      "notes": "Contraste direto com TC-I-04 (mesma função, implementação correta com <button>)."
+    },
+    "TC-I-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "\"Modal\" sem role=dialog/alertdialog, sem aria-modal, sem aria-labelledby ligando ao título."
+        },
+        {
+          "rule": "govbr-3.7.0-accessibility-modal-64b84991229c",
+          "description": "Testado por interação real: Escape não fecha o modal; foco não é movido para dentro dele; \"Fechar\" é um <div> não focalizável — usuário de teclado fica preso."
+        }
+      ],
+      "notes": "Verificado ao vivo: Escape pressionado com modal aberto não o fechou; só fechou por clique de mouse em Fechar."
+    },
+    "TC-I-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "govbr-3.7.0-accessibility-tab-f1807d71dc5f",
+          "description": "As 3 abas (role=tab) têm tabIndex -1; nenhuma alcançável por Tab; troca de aba só funciona por clique de mouse."
+        }
+      ],
+      "notes": "Match direto com regra do oráculo para o componente tab."
+    },
+    "TC-I-04": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Accordion com <button aria-expanded aria-controls>; testado por clique real — estado aria-expanded atualiza corretamente para true."
+    },
+    "TC-O-01": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:3.6",
+          "description": "img do avatar sem atributo alt (fragmento oficial @govbr-ds/core card-collapse.html)."
+        },
+        {
+          "rule": "emag:3.5",
+          "description": "aria-label \"Ícone ilustrativo\" no botão de menu (três pontos) não descreve a ação."
+        }
+      ],
+      "notes": "Fragmento oficial não modificado — julgado pelos mesmos critérios dos demais casos."
+    },
+    "TC-O-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Card com classe \"disabled\" (opacity 0.45, pointer-events:none) mas botões internos sem disabled/aria-disabled; continuam tabIndex 0 e ativáveis por teclado."
+        },
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Dois botões com funções diferentes (curtir via coração; mais opções via reticências) compartilham o mesmo aria-label \"Ícone ilustrativo\"."
+        }
+      ],
+      "notes": "Testado via inspeção computada de opacity/pointer-events/tabIndex/disabled."
+    },
+    "TC-O-03": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:3.6",
+          "description": "Segundo card do fragmento repete o avatar sem alt (primeiro card, uma imagem solta, tem alt correto: \"Imagem de exemplo\")."
+        },
+        {
+          "rule": "emag:3.5",
+          "description": "Mesmo aria-label genérico \"Ícone ilustrativo\" repetido no botão de menu."
+        }
+      ],
+      "notes": "Mesmos defeitos recorrentes do pacote oficial, fragmento card-examples.html."
+    },
+    "TC-O-04": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:3.6",
+          "description": "Avatar sem alt (mesmo defeito recorrente), fragmento card-scroll.html."
+        },
+        {
+          "rule": "emag:3.5",
+          "description": "Mesmo aria-label genérico \"Ícone ilustrativo\" repetido."
+        }
+      ],
+      "notes": "card-content com tabindex=0 para a região rolável está correto (boa prática)."
+    },
+    "TC-O-05": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Nenhuma das 5 abas de progresso do wizard tem aria-selected; usam atributo não padrão \"active\"."
+        },
+        {
+          "rule": "emag:1.1",
+          "description": "Atributo alt inválido em elemento <a> (\"ir para o gov.br teste focus\"), com texto de link contendo resquício de teste."
+        }
+      ],
+      "notes": "Painéis inativos corretamente ocultos via display:none (não é violação)."
+    },
+    "TC-O-06": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Mesmo defeito do wizard horizontal: nenhuma aba de progresso tem aria-selected (wizard-vertical.html)."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-S-01": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:2.3",
+          "description": "<meta http-equiv=\"refresh\" content=\"120\"> força atualização automática periódica da página sem controle do usuário."
+        }
+      ],
+      "notes": "Inspecionado no HTML entregue (document.documentElement.outerHTML)."
+    },
+    "TC-S-02": {
+      "detected": true,
+      "violations_found": [
+        {
+          "rule": "emag:1.1",
+          "description": "Uso do elemento obsoleto <font color=...> em vez de CSS."
+        },
+        {
+          "rule": "wcag:4.1.2",
+          "description": "Botão \"Ver detalhes\" alterna visibilidade de um bloco via onclick, sem aria-expanded/aria-controls comunicando o estado."
+        }
+      ],
+      "notes": ""
+    },
+    "TC-S-03": {
+      "detected": false,
+      "violations_found": [],
+      "notes": "Botão real, operável nativamente por teclado; ao ativar, o próprio texto do botão focado muda para \"Protocolo copiado\", técnica aceitável já que o foco permanece no elemento alterado."
+    }
+  }
+}
