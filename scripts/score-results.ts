@@ -18,124 +18,31 @@
  */
 
 import { readFileSync, existsSync, readdirSync } from "fs";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
-import type { AgentFinding, AgentResults, AxeResults, EslintResults, GroundTruth, OrganicGroundTruth, RuleId, ToolKey } from "../types";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(__dirname, "..");
+import { join } from "path";
+import type { AgentResults, AxeResults, EslintResults, OrganicGroundTruth, ToolKey } from "../types";
+import { ROOT, RUN_DIRS, loadAdjudications } from "./adjudication";
+import {
+  cases, expandWithKbAliases, expectedUnits, loadJson, normalizeRuleId, rulesOfFinding,
+  scoreUnits, type FalseFinding, type UnitScore,
+} from "./units";
 
 const VERBOSE = process.argv.includes("--verbose");
 const JSON_OUT = process.argv.includes("--json");
 
 // ── Load files ────────────────────────────────────────────────────────────────
 
-function loadJson<T>(relPath: string): T | null {
-  const abs = join(ROOT, relPath);
-  if (!existsSync(abs)) return null;
-  return JSON.parse(readFileSync(abs, "utf8")) as T;
-}
-
-const gt        = loadJson<GroundTruth>("ground-truth.json");
 const axeRaw    = loadJson<AxeResults>("results/axe-results.json");
 const agentRaw  = loadJson<AgentResults>("results/agent-results.json");
 const eslintRaw = loadJson<EslintResults>("results/eslint-results.json");
-const kbAliases = loadJson<{ _meta: unknown; aliases: Record<string, string[]> }>("kb-aliases.json");
-const organicGt  = loadJson<OrganicGroundTruth>("organic-ground-truth.json");
+const organicGt = loadJson<OrganicGroundTruth>("organic-ground-truth.json");
 
-if (!gt) {
-  console.error("Missing ground-truth.json");
-  process.exit(1);
-}
-
-const cases = gt.cases;
+// Human verdicts on findings that matched no unit (D-21). Absent file = every leftover charged
+// as FP, which is the floor the scorer reported before adjudication existed.
+const adj = loadAdjudications();
 
 type ActualMap = Record<string, boolean>;
 type Outcome = "TP" | "FP" | "FN" | "TN";
 
-// ── Rule extraction ───────────────────────────────────────────────────────────
-
-/** Normalize a rule id: lowercase, strip spaces ("WCAG 3.3.2" → "wcag:3.3.2"). KB ids pass through. */
-function normalizeRuleId(raw: string): RuleId {
-  const t = raw.trim().toLowerCase();
-  if (t.startsWith("govbr-")) return t; // KB deterministic id (first-class, Phase 3.1)
-  return t.replace(/\s+/g, "").replace(/^(emag|wcag|ds)[.\-]?:?/, "$1:");
-}
-
-/**
- * Expand a rule set with the KB alias map (both directions of citation):
- * a KB id contributes its emag:/wcag: aliases, so a finding citing the KB id
- * matches a gabarito unit that lists the alias — and vice versa, because the
- * expansion is applied to expected units AND findings alike.
- */
-function expandWithKbAliases(rules: RuleId[]): RuleId[] {
-  if (!kbAliases) return rules;
-  const out = new Set(rules);
-  for (const r of rules) {
-    for (const alias of kbAliases.aliases[r] ?? []) out.add(alias);
-  }
-  return [...out];
-}
-
-/** Parse normative rule ids out of a free-text finding (legacy string format). */
-function parseRulesFromText(text: string): RuleId[] {
-  const rules = new Set<RuleId>();
-  const t = text.toLowerCase();
-
-  for (const m of t.matchAll(/e-?mag[\s:]*([0-9]+\.[0-9]+)/g)) rules.add(`emag:${m[1]}`);
-  if (/wcag/.test(t)) {
-    for (const m of t.matchAll(/\b([0-9]+\.[0-9]+\.[0-9]+)\b/g)) rules.add(`wcag:${m[1]}`);
-  }
-  // KB deterministic ids cited inline (e.g. "govbr-3.7.0-accessibility-button-efd2d9e7c3c6")
-  for (const m of t.matchAll(/\bgovbr-[0-9]+\.[0-9]+\.[0-9]+-[a-z-]+-[a-f0-9]{12}\b/g)) rules.add(m[0]);
-
-  // DS-specific rule heuristics (pt-BR + en signals)
-  const dsContext = /token|paleta|ds gov|do ds|spec do/i.test(text);
-  if (dsContext && /(background|border-color|cor de fundo|cor de borda|paleta)/i.test(text)) rules.add("ds:token-color");
-  if (/(font-family|fonte|tipograf)/i.test(text) && /(rawline|raleway|token)/i.test(text)) rules.add("ds:token-font");
-  if (/(border-radius|raio)/i.test(text) && dsContext) rules.add("ds:token-radius");
-  if (/(foco|focus)/i.test(text) && /(suprimido|indicador|outline)/i.test(text)) rules.add("ds:token-focus");
-  if (/(ordem)[\s\S]{0,30}(bot(ão|ões|oes)|button)/i.test(text) || /button.order/i.test(text)) rules.add("ds:button-order");
-  if (/(apenas a tag|somente a tag|no lugar de <button>|spec do componente|estrutura do componente|component structure)/i.test(text)) rules.add("ds:component-structure");
-  if (/(label|r[óo]tulo)[\s\S]{0,20}vis[íi]vel/i.test(text)) rules.add("ds:form-label");
-
-  return [...rules];
-}
-
-function rulesOfFinding(f: AgentFinding): { rules: RuleId[]; description: string; structured: boolean } {
-  if (typeof f === "string") {
-    return { rules: expandWithKbAliases(parseRulesFromText(f)), description: f, structured: false };
-  }
-  const declared = normalizeRuleId(f.rule);
-  // Also parse the description so aliases in the text still count
-  const parsed = parseRulesFromText(f.description);
-  return { rules: expandWithKbAliases([...new Set([declared, ...parsed])]), description: f.description, structured: true };
-}
-
-// ── Expected units (element × rule) ──────────────────────────────────────────
-
-interface ExpectedUnit {
-  caseId: string;
-  rules: RuleId[];       // any alias counts as a match
-  categories: string[];
-  description: string;
-}
-
-const expectedUnits: ExpectedUnit[] = [];
-for (const [caseId, c] of Object.entries(cases)) {
-  for (const v of c.violations) {
-    expectedUnits.push({ caseId, rules: expandWithKbAliases(v.rules.map(normalizeRuleId)), categories: v.categories, description: v.description });
-  }
-}
-
-/** rule id → categories it appears with in the gabarito (used to attribute FP categories). */
-const ruleCategoryMap = new Map<RuleId, Set<string>>();
-for (const u of expectedUnits) {
-  for (const r of u.rules) {
-    if (!ruleCategoryMap.has(r)) ruleCategoryMap.set(r, new Set());
-    for (const cat of u.categories) ruleCategoryMap.get(r)!.add(cat);
-  }
-}
 
 // ── Case-level maps (three-tool comparison, as in the pilot) ─────────────────
 
@@ -236,88 +143,6 @@ function prf(TP: number, FP: number, FN: number): { precision: number | null; re
   return { precision, recall, f1 };
 }
 
-// ── Unit-level scoring: agent findings vs expected (element × rule) ──────────
-
-interface UnitOutcome {
-  unit: ExpectedUnit;
-  matched: boolean;
-  ruleVerified: boolean;       // matched on an explicit rule id (vs case-level fallback)
-  matchedRule: RuleId | null;
-  finding: string | null;
-}
-
-interface FalseFinding {
-  caseId: string;
-  description: string;
-  rules: RuleId[];
-  categories: string[];        // attributed via ruleCategoryMap ("sem-categoria" if unknown)
-  onReferenceCase: boolean;
-}
-
-interface UnitScore {
-  outcomes: UnitOutcome[];
-  falseFindings: FalseFinding[];
-  TP: number; FN: number; FP: number;
-  ruleVerifiedTP: number;
-}
-
-function scoreUnits(raw: AgentResults | null): UnitScore | null {
-  if (!raw?.verdicts || raw._empty) return null;
-
-  const outcomes: UnitOutcome[] = [];
-  const falseFindings: FalseFinding[] = [];
-
-  for (const [caseId, c] of Object.entries(cases)) {
-    const verdict = raw.verdicts[caseId];
-    const findings = (verdict?.detected ? verdict.violations_found : []).map(rulesOfFinding);
-    const used = new Set<number>();
-    const units = expectedUnits.filter(u => u.caseId === caseId);
-
-    // Pass 1: rule-verified matches
-    for (const unit of units) {
-      const idx = findings.findIndex((f, i) => !used.has(i) && f.rules.some(r => unit.rules.includes(r)));
-      if (idx >= 0) {
-        used.add(idx);
-        const rule = findings[idx].rules.find(r => unit.rules.includes(r)) ?? null;
-        outcomes.push({ unit, matched: true, ruleVerified: true, matchedRule: rule, finding: findings[idx].description });
-      }
-    }
-
-    // Pass 2: case-level fallback — an unmatched finding with no recognizable rule
-    // still counts for an unmatched unit on the same case (rule not verified).
-    for (const unit of units) {
-      if (outcomes.some(o => o.unit === unit)) continue;
-      const idx = findings.findIndex((f, i) => !used.has(i) && f.rules.length === 0);
-      if (idx >= 0) {
-        used.add(idx);
-        outcomes.push({ unit, matched: true, ruleVerified: false, matchedRule: null, finding: findings[idx].description });
-      } else {
-        outcomes.push({ unit, matched: false, ruleVerified: false, matchedRule: null, finding: null });
-      }
-    }
-
-    // Leftover findings: false positives at unit granularity
-    findings.forEach((f, i) => {
-      if (used.has(i)) return;
-      const cats = new Set<string>();
-      for (const r of f.rules) for (const cat of ruleCategoryMap.get(r) ?? []) cats.add(cat);
-      falseFindings.push({
-        caseId,
-        description: f.description,
-        rules: f.rules,
-        categories: cats.size ? [...cats] : ["sem-categoria"],
-        onReferenceCase: units.length === 0,
-      });
-    });
-  }
-
-  const TP = outcomes.filter(o => o.matched).length;
-  const FN = outcomes.filter(o => !o.matched).length;
-  const FP = falseFindings.length;
-  const ruleVerifiedTP = outcomes.filter(o => o.matched && o.ruleVerified).length;
-
-  return { outcomes, falseFindings, TP, FN, FP, ruleVerifiedTP };
-}
 
 interface CategoryMetrics {
   category: string;
@@ -463,7 +288,7 @@ if (eslintActual && eslintRaw) {
 // expected-values eslint fallback keeps reference cases out of its score.
 const eslintMeasured = eslintActual !== null;
 const metrics = tools.map(t => ({ ...t, ...computeCaseMetrics(t.key, t.actual, t.key !== "eslint_a11y" || eslintMeasured) }));
-const unitScore = scoreUnits(agentRaw);
+const unitScore = scoreUnits(agentRaw, adj);
 const catMetrics = unitScore ? categoryMetrics(unitScore) : null;
 
 // ── Multi-run statistics (F3) ─────────────────────────────────────────────────
@@ -487,10 +312,18 @@ interface RunSummary {
   coveredCases: number;
   totalCases: number;
   configKey: string;
+  /** Floor (D-19): every finding without a matching unit charged as a false positive. */
   precision: number | null;
   recall: number | null;
   f1: number | null;
   FP: number;
+  /** After human verdicts (D-21). Provisional while `pending` > 0 — same numbers as the floor
+   *  when nothing has been judged, which is why both are always printed. */
+  precisionAdj: number | null;
+  recallAdj: number | null;
+  f1Adj: number | null;
+  FPAdj: number;
+  pending: number;
   wallClockSeconds: number | null;
   toolCalls: number | null;
 }
@@ -505,12 +338,6 @@ interface RunGroup {
   runs: RunSummary[];
 }
 
-/** Directories scanned for archived runs, with the arm each implies by convention (D-16/D-17). */
-const RUN_DIRS: { dir: string; arm: string; label: string | null }[] = [
-  { dir: "runs",         arm: "com-oraculo", label: null },
-  { dir: "runs-ablacao", arm: "sem-oraculo", label: "ablação (F2)" },
-  { dir: "runs-piloto",  arm: "com-oraculo", label: "piloto" },
-];
 
 function loadRuns(): RunSummary[] {
   const summaries: RunSummary[] = [];
@@ -522,7 +349,7 @@ function loadRuns(): RunSummary[] {
     for (const file of readdirSync(dir).filter(f => f.startsWith("agent-") && f.endsWith(".json")).sort()) {
       try {
         const raw = JSON.parse(readFileSync(join(dir, file), "utf8")) as AgentResults;
-        const score = scoreUnits(raw);
+        const score = scoreUnits(raw, adj);
         if (!score) continue;
 
         // An explicit config block wins over the directory convention.
@@ -547,8 +374,14 @@ function loadRuns(): RunSummary[] {
           // a média saía entre desenhos experimentais diferentes — o defeito de D-13/D-16/D-17
           // pela quarta vez. Execução sem rótulo não é assumida comparável: vira grupo próprio.
           configKey: `${arm} | ${raw.model} | ${coveredCases}/${gabaritoCases} casos | ${label ?? "protocolo não rotulado"}`,
-          ...prf(score.TP, score.FP, score.FN),
-          FP: score.FP,
+          ...prf(score.floor.TP, score.floor.FP, score.floor.FN),
+          FP: score.floor.FP,
+          ...(() => {
+            const a = prf(score.TP, score.FP, score.FN);
+            return { precisionAdj: a.precision, recallAdj: a.recall, f1Adj: a.f1 };
+          })(),
+          FPAdj: score.FP,
+          pending: score.pending.length,
           wallClockSeconds: raw.cost?.wallClockSeconds ?? null,
           toolCalls: raw.cost?.toolCalls ?? null,
         });
@@ -602,6 +435,17 @@ if (JSON_OUT) {
       TP: unitScore.TP, FN: unitScore.FN, FP: unitScore.FP,
       ruleVerifiedTP: unitScore.ruleVerifiedTP,
       ...prf(unitScore.TP, unitScore.FP, unitScore.FN),
+      // D-21: the floor travels with the adjudicated figure. A consumer that reads only one of
+      // the two is reading a number whose provenance it cannot state.
+      adjudication: {
+        adjudicatedTP: unitScore.adjudicatedTP,
+        unmatchedFindings: unitScore.unmatchedFindings.length,
+        pending: unitScore.pending.length,
+        gaps: unitScore.gaps.length,
+        duplicates: unitScore.duplicates.length,
+        provisional: unitScore.pending.length > 0,
+        floor: { ...unitScore.floor, ...prf(unitScore.floor.TP, unitScore.floor.FP, unitScore.floor.FN) },
+      },
       perCategory: catMetrics,
       macro: {
         precision: defined.length ? defined.reduce((s, c) => s + (c.precision ?? 0), 0) / defined.length : null,
@@ -626,6 +470,7 @@ if (JSON_OUT) {
       count: runs.length,
       groups: groupRuns(runs).map(g => {
         const gf1 = g.runs.map(r => r.f1).filter((v): v is number => v !== null);
+        const gf1Adj = g.runs.map(r => r.f1Adj).filter((v): v is number => v !== null);
         const gw  = g.runs.map(r => r.wallClockSeconds).filter((v): v is number => v !== null);
         return {
           config: g.key,
@@ -638,6 +483,8 @@ if (JSON_OUT) {
           count: g.runs.length,
           runs: g.runs,
           f1: gf1.length >= 2 ? meanSd(gf1) : null,
+          f1Adjudicated: gf1Adj.length >= 2 ? meanSd(gf1Adj) : null,
+          pending: g.runs.reduce((s, r) => s + r.pending, 0),
           wallClockSeconds: gw.length >= 2 ? meanSd(gw) : null,
         };
       }),
@@ -695,14 +542,41 @@ console.log();
 // ── Agent element × rule section (E3 + F1) ───────────────────────────────────
 
 if (unitScore && catMetrics) {
-  const u = prf(unitScore.TP, unitScore.FP, unitScore.FN);
+  const floor = prf(unitScore.floor.TP, unitScore.floor.FP, unitScore.floor.FN);
+  const u     = prf(unitScore.TP, unitScore.FP, unitScore.FN);
   console.log("=== Agent — element × rule (E3) ===\n");
+
+  // Two rows on purpose (D-21). The floor is what the run measures with no human judgement in
+  // it; the adjudicated row is what it measures once each unmatched finding has been judged.
+  // The adjudicated row never replaces the floor — a reader has to be able to see how much of
+  // the number came from the agent and how much from a decision about the gabarito.
   console.log(
     pad(`Units: ${expectedUnits.length}`, 14) +
+    pad("piso", 12) +
+    pad(`TP ${unitScore.floor.TP}`, 8) + pad(`FN ${unitScore.floor.FN}`, 8) + pad(`FP ${unitScore.floor.FP}`, 8) +
+    `micro  P ${pct(floor.precision)}  R ${pct(floor.recall)}  F1 ${pct(floor.f1)}`
+  );
+  const provisional = unitScore.pending.length > 0;
+  console.log(
+    pad("", 14) +
+    pad(provisional ? "adjudicado*" : "adjudicado", 12) +
     pad(`TP ${unitScore.TP}`, 8) + pad(`FN ${unitScore.FN}`, 8) + pad(`FP ${unitScore.FP}`, 8) +
     `micro  P ${pct(u.precision)}  R ${pct(u.recall)}  F1 ${pct(u.f1)}`
   );
   console.log(`Rule-verified matches: ${unitScore.ruleVerifiedTP} / ${unitScore.TP} TP (remainder matched at case level without a recognizable rule id)`);
+  if (unitScore.adjudicatedTP) {
+    console.log(`Adjudicated matches (vocabulário): ${unitScore.adjudicatedTP} — unidade certa sob nome que o scorer não conhece`);
+  }
+  if (provisional) {
+    console.log(`* ${unitScore.pending.length} de ${unitScore.unmatchedFindings.length} achados sem unidade ainda não julgados — seguem cobrados como FP.`);
+    console.log(`  Enquanto houver pendentes, a precisão dos dois braços é PISO, não medida (D-19). Rode 'npm run adjudicate'.`);
+  }
+  if (unitScore.gaps.length) {
+    console.log(`Lacunas de gabarito reconhecidas: ${unitScore.gaps.length} — fora do FP e fora do TP; dívida a escrever em ground-truth.json (D-06).`);
+  }
+  if (unitScore.duplicates.length) {
+    console.log(`Duplicados: ${unitScore.duplicates.length} — reformulações de achados já casados no mesmo caso.`);
+  }
   console.log();
 
   console.log(
@@ -729,10 +603,12 @@ if (unitScore && catMetrics) {
   console.log("\nNote: a unit may carry multiple categories — it counts in each (columns do not sum to the total).");
   console.log();
 
-  if (unitScore.falseFindings.length) {
-    console.log("False findings (unit granularity):");
-    for (const f of unitScore.falseFindings) {
-      console.log(`  • [${f.caseId}${f.onReferenceCase ? " — reference case" : ""}] ${f.description.slice(0, 100)}${f.description.length > 100 ? "…" : ""}`);
+  if (unitScore.unmatchedFindings.length) {
+    console.log("Findings without a matching unit (unit granularity):");
+    for (const f of unitScore.unmatchedFindings) {
+      const status = f.verdict ?? "PENDENTE";
+      console.log(`  • [${f.caseId}${f.onReferenceCase ? " — reference case" : ""}] ${status} · ${f.id}`);
+      console.log(`    ${f.description.slice(0, 100)}${f.description.length > 100 ? "…" : ""}`);
       console.log(`    rules: ${f.rules.join(", ") || "(none recognized)"} · categories: ${f.categories.join(", ")}`);
     }
     console.log();
@@ -806,24 +682,35 @@ if (runs.length) {
     }
 
     console.log(
-      pad("Run", 22) + pad("Model", 22) +
-      pad("P", 9) + pad("R", 9) + pad("F1", 9) + pad("FP", 5) +
+      pad("Run", 22) + pad("Model", 20) +
+      pad("P piso", 9) + pad("R piso", 9) + pad("F1 piso", 10) +
+      pad("F1 adj", 10) + pad("FP", 5) + pad("pend.", 7) +
       pad("Wall (s)", 10) + "Tool calls"
     );
-    console.log("─".repeat(95));
+    console.log("─".repeat(112));
     for (const r of g.runs) {
       console.log(
-        pad(r.timestamp.slice(0, 19), 22) + pad(r.model.slice(0, 20), 22) +
-        pad(pct(r.precision), 9) + pad(pct(r.recall), 9) + pad(pct(r.f1), 9) + pad(r.FP, 5) +
+        pad(r.timestamp.slice(0, 19), 22) + pad(r.model.slice(0, 18), 20) +
+        pad(pct(r.precision), 9) + pad(pct(r.recall), 9) + pad(pct(r.f1), 10) +
+        pad(pct(r.f1Adj) + (r.pending ? "*" : " "), 10) + pad(r.FP, 5) + pad(r.pending, 7) +
         pad(r.wallClockSeconds ?? "—", 10) + (r.toolCalls ?? "—")
       );
+    }
+    const groupPending = g.runs.reduce((s, r) => s + r.pending, 0);
+    if (groupPending) {
+      console.log(`   * ${groupPending} achado(s) sem unidade ainda não julgado(s) nesta configuração — F1 adj ainda é provisório (D-21).`);
     }
 
     const f1s = g.runs.map(r => r.f1).filter((v): v is number => v !== null);
     if (f1s.length >= 2) {
       const { mean, sd } = meanSd(f1s);
-      console.log("─".repeat(95));
-      console.log(`F1 (element × rule): mean ${pct(mean)} ± ${sd !== null ? pct(sd).trim() : "—"} (n=${f1s.length}, sample SD)`);
+      console.log("─".repeat(112));
+      console.log(`F1 piso (element × rule): mean ${pct(mean)} ± ${sd !== null ? pct(sd).trim() : "—"} (n=${f1s.length}, sample SD)`);
+      const f1sAdj = g.runs.map(r => r.f1Adj).filter((v): v is number => v !== null);
+      if (f1sAdj.length >= 2) {
+        const a = meanSd(f1sAdj);
+        console.log(`F1 adjudicado:            mean ${pct(a.mean)} ± ${a.sd !== null ? pct(a.sd).trim() : "—"} (n=${f1sAdj.length}, sample SD)`);
+      }
       const walls = g.runs.map(r => r.wallClockSeconds).filter((v): v is number => v !== null);
       if (walls.length >= 2) {
         const w = meanSd(walls);

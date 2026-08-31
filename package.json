@@ -17,7 +17,8 @@
     "postinstall": "playwright install chromium",
     "kb:aliases": "tsx scripts/generate-kb-aliases.ts",
     "case-matrix": "tsx scripts/case-matrix.ts",
-    "lint:protocol": "tsx scripts/lint-protocol.ts"
+    "lint:protocol": "tsx scripts/lint-protocol.ts",
+    "adjudicate": "tsx scripts/adjudicate.ts"
   },
   "dependencies": {
     "@axe-core/playwright": "4.11.1",

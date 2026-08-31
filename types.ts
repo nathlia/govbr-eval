@@ -155,3 +155,50 @@ export interface EslintResults {
   /** Findings that could not be attributed to a TC-* section. */
   unattributed: EslintFindingRef[];
 }
+
+// ── Adjudication (D-21) ───────────────────────────────────────────────────────
+
+/**
+ * What a human decided about an agent finding that matched no expected unit.
+ *
+ *   falso-positivo   the agent was wrong — charged to precision
+ *   lacuna-gabarito  a real violation the gabarito never catalogued — excluded from FP and
+ *                    tracked as owed gabarito work (the unit only exists once it is written
+ *                    into ground-truth.json WITH measured baselines, D-06)
+ *   vocabulario      the right defect under a name the scorer does not know — becomes an
+ *                    adjudicated match for the unit named in `unit`
+ *   duplicado        a restatement of another finding already matched on the same case
+ *   indeterminado    reviewed, undecidable — stays charged as FP so the floor is never
+ *                    improved by indecision
+ */
+export type AdjudicationVerdict =
+  | "falso-positivo"
+  | "lacuna-gabarito"
+  | "vocabulario"
+  | "duplicado"
+  | "indeterminado";
+
+export interface AdjudicationRecord {
+  /** Stable id: `<caseId>:<8 hex of sha256 over the normalized finding text>` (D-21). */
+  id: string;
+  caseId: string;
+  /** The finding text as archived, for a human reading this file. Never used for matching. */
+  finding: string;
+  /** Runs the finding appears in, filled by `npm run adjudicate -- --emit`. Provenance only. */
+  seenIn?: { run: string; arm: string }[];
+  /** null = stub emitted, not yet decided. Stubs are counted as pending, never applied. */
+  verdict: AdjudicationVerdict | null;
+  /** Required for `vocabulario`: the expected unit this finding actually reported. */
+  unit?: { caseId: string; rule: RuleId };
+  /** Why. Required for every decided record — a verdict without a reason is not adjudication. */
+  rationale?: string;
+  adjudicatedBy?: string;
+  adjudicatedAt?: string;
+  /** For `lacuna-gabarito`: has the unit been written into ground-truth.json yet? */
+  gabaritoStatus?: "pendente" | "incorporada";
+}
+
+export interface Adjudications {
+  _meta: Record<string, unknown>;
+  adjudications: AdjudicationRecord[];
+}

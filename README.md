@@ -10,10 +10,14 @@ agent can read the expected results from the code it is shown.
 ```
 govbr-eval/
 ├── ground-truth.json        the gabarito: expected detection per case × tool, with categories
-├── types.ts                 shared data model (ground truth, result files)
+├── adjudications.json       human verdicts on findings that matched no unit (D-21)
+├── types.ts                 shared data model (ground truth, result files, adjudication)
 ├── scripts/
 │   ├── run-axe.ts           axe-core baseline against the corpus → results/axe-results.json
 │   ├── run-eslint.ts        eslint-plugin-jsx-a11y (recommended) baseline → results/eslint-results.json
+│   ├── units.ts             element × rule matching core — shared by the scorer and adjudicate
+│   ├── adjudication.ts      run inventory, finding identity, verdict semantics
+│   ├── adjudicate.ts        adjudication workbench (status / --blind / --emit)
 │   └── score-results.ts     P/R/F1 per tool + per category + element × rule + multi-run mean ± SD
 ├── dashboard/               Matriz de Detecção web UI (Vite + React, port 4000)
 ├── skills/evaluate-all/     the agent measurement protocol (per-case verdicts)
@@ -34,6 +38,7 @@ npm --prefix dashboard install       # once
 #                           npm run eslint     (jsx-a11y over the corpus source)
 # 4. agent run:             /evaluate-all in Claude Code (writes results/agent-results.json)
 # 5. score:                 npm run score      (npm run score:verbose for per-case)
+# 6. adjudicate:            npm run adjudicate -- --blind   (judge findings with no unit)
 ```
 
 The dashboard reads `ground-truth.json` plus both result files and renders the detection matrix,
@@ -46,6 +51,10 @@ per-tool metrics, and the agent-only violation callout. Case IDs link back to th
   the running app at `http://localhost:3000`.
 - `results/` and `reports/` are generated artifacts; commit them only when snapshotting an
   experiment for the thesis.
+- A finding that matches no expected unit is charged as a false positive until a human judges it,
+  so precision is a **floor** while adjudications are pending (D-19/D-21). `npm run score` always
+  prints the floor next to the adjudicated figure — never one in place of the other. Procedure:
+  `docs/adjudicacao.md`.
 
 ## Related repositories
 

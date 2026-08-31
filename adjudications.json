@@ -1,0 +1,1206 @@
+{
+  "_meta": {
+    "purpose": "Julgamento humano de cada achado do agente que não casou com nenhuma unidade esperada do gabarito. Sem isto, precisão é piso, não medida (D-19/D-21).",
+    "regra": "D-17 — adjudicar antes de atribuir erro ao agente.",
+    "identidade": "A chave é o TEXTO do achado (`<caseId>:<8 hex de sha256>`), não a execução. O mesmo achado feito nos dois braços recebe um registro e um veredito — a cegueira de braço é estrutural, não disciplinar.",
+    "vereditos": {
+      "falso-positivo": "o agente errou — cobrado da precisão",
+      "lacuna-gabarito": "violação real que o gabarito nunca catalogou — sai do FP e vira dívida de gabarito (a unidade só existe depois de escrita em ground-truth.json COM linha de base medida, D-06)",
+      "vocabulario": "o defeito certo com nome que o scorer não conhece — vira casamento adjudicado da unidade em `unit`",
+      "duplicado": "reformulação de outro achado já casado no mesmo caso",
+      "indeterminado": "revisado e indecidível — segue cobrado como FP, para que indecisão nunca melhore o piso"
+    },
+    "procedimento": "docs/adjudicacao.md",
+    "gerar-pendentes": "npm run adjudicate -- --emit",
+    "criado": "2026-08-31",
+    "adjudicacoes": 68,
+    "atualizado": "2026-08-31",
+    "pendentes": 0,
+    "revisao": "Vereditos propostos por análise de evidência (DOM/fonte do corpus + gabarito). Aguardam revisão humana: conferir `adjudicatedBy`."
+  },
+  "adjudications": [
+    {
+      "id": "TC-B-03:1084e339",
+      "caseId": "TC-B-03",
+      "finding": "Classe br-button aplicada a <div>; a especificacao canonica do componente usa <button>.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "duplicado",
+      "rationale": "A u0 já foi casada nesta execução pelo achado de tabIndex/teclado. Este reafirma o mesmo defeito pelo lado estrutural (<div> em vez de <button>), que a própria u0 descreve.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-03:1983ab92",
+      "caseId": "TC-B-03",
+      "finding": "Elemento genérico sem role=button; a árvore de acessibilidade não expõe papel nem nome de controle.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "duplicado",
+      "rationale": "u0 já casada nesta execução; 'sem role=button' é parte do que a u0 enuncia.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-03:9d046a50",
+      "caseId": "TC-B-03",
+      "finding": "tabIndex=-1 confirmado via JS; não é alcançável nem operável pelo teclado, apenas por clique de mouse.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "duplicado",
+      "rationale": "u0 já casada nesta execução; 'tabIndex=-1, não operável por teclado' é literalmente a u0.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-03:f7120c05",
+      "caseId": "TC-B-03",
+      "finding": "br-button aplicado a <div> em vez do <button> canônico dos exemplos oficiais.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "duplicado",
+      "rationale": "Idem: u0 já casada na execução; reafirmação estrutural do mesmo defeito.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-04:569816e7",
+      "caseId": "TC-B-04",
+      "finding": "Fundo rgb(19,82,180), enquanto todos os demais botões primários da página computam rgb(19,81,180). Cor aplicada por regra própria com !important em vez do valor do design system.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:token-de-cor\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-B-04",
+        "rule": "ds:token-color"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-08:6b1c3236",
+      "caseId": "TC-B-08",
+      "finding": "border-radius computado 6px; todos os demais botões da página computam raio de pílula (1680px).",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:token-de-raio\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-B-08",
+        "rule": "ds:token-radius"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-08:d4ca16d4",
+      "caseId": "TC-B-08",
+      "finding": "border-radius computado é 6px, enquanto todos os demais botões da página (incluindo outro secondary, TC-B-13) usam a forma em pílula (border-radius: 1680px/50%). Inconsistência de forma observável por comparação direta.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:border-radius\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-B-08",
+        "rule": "ds:token-radius"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-11:bb2dec03",
+      "caseId": "TC-B-11",
+      "finding": "Classe br-button aplicada a <span>; a especificacao canonica usa <button>.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "duplicado",
+      "rationale": "u0 já casada nesta execução pelo achado de tabindex; reafirmação estrutural.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-11:fb2ae982",
+      "caseId": "TC-B-11",
+      "finding": "br-button aplicado a <span role=button> em vez do <button> canônico.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "duplicado",
+      "rationale": "Idem.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-12:57d31610",
+      "caseId": "TC-B-12",
+      "finding": "<a href=\"#\" class=\"br-button primary\">Excluir arquivo</a> sem role=button executa uma ação destrutiva não-navegacional; leitores de tela e tecnologias de controle por voz esperam que um link navegue, não que exclua algo.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0; citou wcag:4.1.2, ausente da lista de aliases da unidade.",
+      "unit": {
+        "caseId": "TC-B-12",
+        "rule": "ds:component-structure"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-12:63e2b0e0",
+      "caseId": "TC-B-12",
+      "finding": "<a href='#'> com aparência de botão executando ação destrutiva ('Excluir arquivo'): é anunciado como link, não é acionável por Espaço e o href não navega para lugar algum. Atribuição normativa incerta — a mais próxima seria wcag:4.1.2, já que o papel exposto não corresponde à função do componente.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0 (âncora com aparência de botão em ação destrutiva); citou ds:semantica + wcag:4.1.2, nenhum na lista da u0.",
+      "unit": {
+        "caseId": "TC-B-12",
+        "rule": "ds:component-structure"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-12:a4edc934",
+      "caseId": "TC-B-12",
+      "finding": "Classe br-button aplicada a <a>; a especificacao canonica usa <button>.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0: br-button numa <a> onde o canônico é <button>. Citou ds:button-tag, fora da taxonomia. A u0 saiu como FN nas quatro execuções por vocabulário, não por falta de detecção.",
+      "unit": {
+        "caseId": "TC-B-12",
+        "rule": "ds:component-structure"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-12:cfc5b32c",
+      "caseId": "TC-B-12",
+      "finding": "br-button aplicado a <a href=\"#\"> para ação destrutiva (\"Excluir arquivo\") que não é navegação; canônico é <button>.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0; citou ds:structure-button-tag, fora da taxonomia.",
+      "unit": {
+        "caseId": "TC-B-12",
+        "rule": "ds:component-structure"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-12:f7a43d35",
+      "caseId": "TC-B-12",
+      "finding": "Acao destrutiva ('Excluir arquivo') exposta como link com href='#': anunciada como link e sem destino real, o papel comunicado nao corresponde ao comportamento.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "duplicado",
+      "rationale": "Segundo enunciado do mesmo defeito na mesma execução — a u0 já é atribuída a TC-B-12:a4edc934.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-14:52dfb1ed",
+      "caseId": "TC-B-14",
+      "finding": "Dimensoes fixadas por classe nao documentada (.v-size-a: width/height/min-width/min-height 32px !important, padding 0) em vez da variante de densidade documentada do componente. O oraculo sinaliza 'v-size-a' como classe fora do conjunto canonico de variantes de br-button.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve os 32×32px da u0, atribuindo-os à classe v-size-a. Citou ds:button-variant-class, fora da taxonomia.",
+      "unit": {
+        "caseId": "TC-B-14",
+        "rule": "ds:touch-target"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-14:6d2ceec1",
+      "caseId": "TC-B-14",
+      "finding": "Botão circular forçado a 32x32 por regra própria com !important, enquanto todos os outros botões da interface computam 40px.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Mesmo defeito da u0; citou ds:token-de-tamanho, fora da taxonomia.",
+      "unit": {
+        "caseId": "TC-B-14",
+        "rule": "ds:touch-target"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-B-14:c337b0fd",
+      "caseId": "TC-B-14",
+      "finding": "Classe não documentada v-size-a; botão circular mede 32×32px vs 40×40px dos demais circle da mesma página (TC-B-02, TC-B-09).",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Mesmo defeito da u0 (32×32 contra os 40px dos irmãos); citou ds:structure-button-variant, fora da taxonomia.",
+      "unit": {
+        "caseId": "TC-B-14",
+        "rule": "ds:touch-target"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-F-04:c4210590",
+      "caseId": "TC-F-04",
+      "finding": "Rótulo 'Nome *' indica obrigatoriedade apenas por convenção visual: o input não tem required nem aria-required, e o asterisco não é explicado em lugar nenhum.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0 (obrigatoriedade só visual, sem required/aria-required); citou wcag:1.3.1, fora da lista da unidade.",
+      "unit": {
+        "caseId": "TC-F-04",
+        "rule": "emag:6.3"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-F-07:9c4ac8df",
+      "caseId": "TC-F-07",
+      "finding": "Ações na ordem primário ('Confirmar') e depois secundário ('Cancelar'), invertida em relação a TC-F-01 e TC-B-13, que colocam o secundário à esquerda e o primário à direita. Dentro da mesma interface, o mesmo par de ações aparece em duas ordens diferentes.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0; citou ds:ordem-de-acoes, fora da taxonomia.",
+      "unit": {
+        "caseId": "TC-F-07",
+        "rule": "ds:button-order"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-F-07:b2dbcd64",
+      "caseId": "TC-F-07",
+      "finding": "Acoes na ordem Confirmar (primary) / Cancelar (secondary), invertida em relacao ao TC-F-01 na mesma aplicacao, que usa Cancelar / Confirmar. Mesma funcao apresentada em posicoes trocadas entre telas do mesmo conjunto.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0 (ordem Confirmar/Cancelar invertida); citou wcag:3.2.4.",
+      "unit": {
+        "caseId": "TC-F-07",
+        "rule": "ds:button-order"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-F-10:4f68d84a",
+      "caseId": "TC-F-10",
+      "finding": "'Perfil público' e 'Configurações' são visualmente cabeçalhos de subseção (negrito, tamanho menor) mas marcados com <p>, não <h2>/<h3> — diferente de TC-F-12 que usa <h2> real para o mesmo tipo de rótulo de seção. Além disso, os dois botões de submissão têm o mesmo nome acessível 'Salvar', dificultando distinção por leitores de tela.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Mesmo defeito de heading verificado acima. ⚠ Este achado também menciona os dois 'Salvar' idênticos (a u0) na segunda frase — se preferir creditar a u0, vira vocabulario e o defeito de heading fica sem registro nesta execução.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-F-10:93880cfb",
+      "caseId": "TC-F-10",
+      "finding": "Títulos de subseção (\"Perfil público\", \"Configurações\") marcados como <p> em negrito, não como heading real, ao contrário de TC-F-12.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Mesmo defeito de heading verificado acima.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-F-10:d1d5b60c",
+      "caseId": "TC-F-10",
+      "finding": "Titulos das duas secoes ('Perfil publico', 'Configuracoes') marcados como <p> estilizado (12px, semibold) em vez de cabecalhos: a divisao do formulario nao existe na estrutura do documento.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Verificado em FormPage.tsx:164,172: 'Perfil público' e 'Configurações' são <p> com font-weight 600, não headings. Defeito real e distinto da u0 (nomes 'Salvar' duplicados). Não está no gabarito.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-F-10:ddcb5241",
+      "caseId": "TC-F-10",
+      "finding": "Os títulos das duas seções ('Perfil público' e 'Configurações') são <p> com font-weight 600, apresentados visualmente como cabeçalhos mas sem elemento de cabeçalho que permita navegação por estrutura.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Mesmo defeito de heading verificado acima.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-F-13:8a0e5d95",
+      "caseId": "TC-F-13",
+      "finding": "Borda do campo (classe v-border-a) é laranja rgb(255,102,0) sobre fundo branco; contraste calculado ≈2.94:1, abaixo do mínimo de 3:1 exigido para limites de componentes de interface (comparado com a borda cinza padrão rgb(136,136,136) do TC-F-01, que também está no limite mas é o padrão usado).",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Mesmo fato físico da u0 — a borda #ff6600 do campo — enunciado sob outra norma (contraste 2,94:1, wcag:1.4.11). ⚠ Chamada de julgamento: se preferir tratar contraste de borda como violação distinta do token, isto vira lacuna.",
+      "unit": {
+        "caseId": "TC-F-13",
+        "rule": "ds:token-color"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-F-14:21da5914",
+      "caseId": "TC-F-14",
+      "finding": "Cor da dica (#a0a0a0) fora da escala de cinzas do DS, via classe v-tone-a.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Mesmo fato físico da u0 (#a0a0a0 na dica), enunciado como token fora da escala de cinzas em vez de contraste. ⚠ Mesma chamada de julgamento do TC-F-13.",
+      "unit": {
+        "caseId": "TC-F-14",
+        "rule": "wcag:1.4.3"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-F-14:44c99f5c",
+      "caseId": "TC-F-14",
+      "finding": "Dica de formato (\"Inclua o DDD...\") visível mas sem id/aria-describedby ligando-a ao campo.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Verificado em FormPage.tsx:229-232: o <small> da dica não tem id e o input não tem aria-describedby. Defeito real, distinto da u0 (que trata só de contraste). Não está no gabarito.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-F-14:6d84e540",
+      "caseId": "TC-F-14",
+      "finding": "A dica não está associada ao campo via aria-describedby (input não tem esse atributo); é apenas um <small> solto antes do input, diferente de TC-F-01 que liga a dica corretamente.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Mesmo defeito verificado acima (dica sem associação programática ao campo); distinto da u0.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-I-02:19017e43",
+      "caseId": "TC-I-02",
+      "finding": "Ao clicar em 'Ver termos de uso', abre um painel sobreposto (scrim + conteúdo) sem role=\"dialog\"/\"alertdialog\" e sem aria-modal=\"true\"; leitores de tela não são avisados de que uma caixa de diálogo foi aberta. Além disso, o foco não se move para o diálogo (document.activeElement continua sendo o botão que o abriu).",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Mesmo defeito verificado acima (papel de diálogo ausente; a menção ao foco é acessória).",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-I-02:34c5d69c",
+      "caseId": "TC-I-02",
+      "finding": "O modal e um <div class='br-modal'> dentro de um scrim, sem role='dialog', sem aria-modal e sem nome acessivel (o <h2> 'Termos de uso' nao esta referenciado por aria-labelledby). O 'Fechar' e um <div> com cursor pointer, sem papel de botao e sem nome acessivel de controle.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Verificado em InteractivePage.tsx:71-72: <div className='br-modal'> sem role='dialog', sem aria-modal e sem aria-labelledby apontando para o <h2>. Defeito real e distinto da u0, que trata apenas de operabilidade por teclado.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-I-02:432ff215",
+      "caseId": "TC-I-02",
+      "finding": "\"Modal\" sem role=dialog/alertdialog, sem aria-modal, sem aria-labelledby ligando ao título.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Mesmo defeito de papel/nome do diálogo verificado acima.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-I-02:4d2a27d7",
+      "caseId": "TC-I-02",
+      "finding": "Testado por interação real: Escape não fecha o modal; foco não é movido para dentro dele; \"Fechar\" é um <div> não focalizável — usuário de teclado fica preso.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0 (Escape não fecha, foco não entra, 'Fechar' não focável); citou o id de KB do modal, que não consta na lista de aliases da unidade.",
+      "unit": {
+        "caseId": "TC-I-02",
+        "rule": "wcag:2.1.1"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-I-02:76306533",
+      "caseId": "TC-I-02",
+      "finding": "A caixa aberta pelo botão é um <div class='br-modal'> sem role='dialog', sem aria-modal e sem nome acessível: não é anunciada como diálogo, apenas como conteúdo genérico surgido na página.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Mesmo defeito verificado acima.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-I-02:c739c657",
+      "caseId": "TC-I-02",
+      "finding": "Ao abrir, o foco permanece no botao que disparou o modal (document.activeElement continuou sendo 'Ver termos de uso'), fora do dialogo, e o conteudo de fundo nao e tornado inerte.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "duplicado",
+      "rationale": "u0 já casada nesta execução; 'o foco permanece no botão que abriu' é parte do que a u0 enuncia.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-I-03:92f621c7",
+      "caseId": "TC-I-03",
+      "finding": "Nenhuma aba tem aria-controls e o <div role='tabpanel'> nao tem id nem aria-labelledby: a relacao entre aba e painel nao existe programaticamente, apesar dos papeis ARIA declarados.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Verificado em InteractivePage.tsx:100-116: nenhuma aba tem aria-controls e o <div role='tabpanel'> não tem id nem aria-labelledby. Defeito real e distinto da u0 (teclado). Não está no gabarito.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-I-03:b239ef63",
+      "caseId": "TC-I-03",
+      "finding": "As 3 abas (role=tab) têm tabIndex -1; nenhuma alcançável por Tab; troca de aba só funciona por clique de mouse.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0 (abas com tabIndex -1, inalcançáveis por Tab); citou o id de KB de tab, fora da lista da unidade.",
+      "unit": {
+        "caseId": "TC-I-03",
+        "rule": "wcag:2.1.1"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-I-03:f0dc2d31",
+      "caseId": "TC-I-03",
+      "finding": "Nenhuma aba tem aria-controls e o painel não tem id nem aria-labelledby: a relação entre aba e painel não é exposta programaticamente.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Mesmo defeito de relação aba↔painel verificado acima.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-I-03:f988185f",
+      "caseId": "TC-I-03",
+      "finding": "Nenhuma aba tem aria-controls, e o tabpanel não tem id/aria-labelledby; a relação programática entre cada aba e o painel correspondente não existe.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Mesmo defeito verificado acima.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-02:06ec6fdd",
+      "caseId": "TC-L-02",
+      "finding": "Item \"Notificações e alertas\" (classe v-space-a) com padding assimétrico 24px/16px/4px vs 16px uniforme dos irmãos.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:list-item-spacing\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-L-02",
+        "rule": "ds:token-spacing"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-02:86a18ab8",
+      "caseId": "TC-L-02",
+      "finding": "O item do meio computa padding '24px 16px 4px' enquanto os irmaos computam 16px uniformes: o mesmo tipo de item da mesma lista recebe espacamento vertical assimetrico, quebrando o ritmo vertical da lista.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:spacing-consistency\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-L-02",
+        "rule": "ds:token-spacing"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-02:b3840fa9",
+      "caseId": "TC-L-02",
+      "finding": "O segundo item (classe v-space-a) não tem padding:16px como os itens 1 e 3 da mesma lista; o texto fica colado às bordas, inconsistente com os irmãos diretos.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:espacamento\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-L-02",
+        "rule": "ds:token-spacing"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-02:e15de5f1",
+      "caseId": "TC-L-02",
+      "finding": "O item do meio computa padding '24px 16px 4px', assimétrico e com valor inferior (4px) fora da escala, enquanto os itens vizinhos da mesma lista computam 16px uniformes.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:espacamento\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-L-02",
+        "rule": "ds:token-spacing"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-03:5712f53d",
+      "caseId": "TC-L-03",
+      "finding": "Item único (classe v-pad-a) sem padding:16px, inconsistente com o padrão observado em TC-L-01/TC-L-02 (itens normais).",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:espacamento\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-L-03",
+        "rule": "ds:token-spacing"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-03:c039a466",
+      "caseId": "TC-L-03",
+      "finding": "Item de lista com padding computado de 13px, valor que não pertence à escala usada em toda a aplicação (16px nas listas equivalentes de TC-L-01, TC-L-02 e TC-L-08).",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:espacamento\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-L-03",
+        "rule": "ds:token-spacing"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-04:1c23811b",
+      "caseId": "TC-L-04",
+      "finding": "Região anunciada pelo cabeçalho 'Resultados da busca' é um contêiner com min-height de 64px e nenhum filho nem texto: não há mensagem de estado vazio nem indicação de que a busca não retornou resultados. Atribuição normativa incerta — não encontrei critério de WCAG A/AA que se aplique diretamente.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:estado-vazio\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-L-04",
+        "rule": "ds:empty-state"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-04:50b5f09d",
+      "caseId": "TC-L-04",
+      "finding": "Área de resultados de busca completamente vazia, sem título/corpo de mensagem obrigatórios do padrão Empty States do gov.br DS.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:empty-state-missing-message\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-L-04",
+        "rule": "ds:empty-state"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-04:65191625",
+      "caseId": "TC-L-04",
+      "finding": "Container de 'Resultados da busca' está completamente vazio (sem texto, sem aria-live, sem role=status), sem indicar se está carregando ou se não há resultados. Se o conteúdo muda dinamicamente, essa mudança de status não seria comunicada a usuários de leitor de tela.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve a região vazia da u0; enquadrou como ausência de aria-live/role=status (wcag:4.1.3). ⚠ Enquadramento normativo diferente do gabarito, mas mesmo elemento e mesmo fato.",
+      "unit": {
+        "caseId": "TC-L-04",
+        "rule": "ds:empty-state"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-05:10685151",
+      "caseId": "TC-L-05",
+      "finding": "Botão 'Confirmar solicitação' (classe v-clip-a) tem largura fixa de 84px com overflow:hidden/text-overflow:ellipsis, mas o texto precisa de 152px (scrollWidth) — o rótulo visível fica cortado para usuários videntes, embora o nome acessível completo continue exposto a leitores de tela.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:truncamento-texto\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-L-05",
+        "rule": "ds:truncation"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-05:70dea0b6",
+      "caseId": "TC-L-05",
+      "finding": "Botão com max-width de 84px e text-overflow ellipsis: scrollWidth 152px contra clientWidth 84px, ou seja, o rótulo 'Confirmar solicitação' é cortado e o usuário vidente não consegue ler a ação que vai executar.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:rotulo-truncado\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-L-05",
+        "rule": "ds:truncation"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-05:aa3cbc22",
+      "caseId": "TC-L-05",
+      "finding": "Texto do botão \"Confirmar solicitação\" cortado visualmente (width fixa 84px, scrollWidth 152px, ellipsis).",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:button-text-truncation\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-L-05",
+        "rule": "ds:truncation"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-05:cf2224b7",
+      "caseId": "TC-L-05",
+      "finding": "O rotulo do proprio botao e truncado: max-width 84px com overflow hidden e text-overflow ellipsis, contra scrollWidth 152px medido. O texto 'Confirmar solicitacao' aparece cortado, entao o rotulo visivel deixa de descrever a acao e diverge do nome acessivel completo.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0 (rótulo 'Confirmar solicitação' truncado, 84px contra scrollWidth 152px); citou wcag:2.4.6 + ds:form-label.",
+      "unit": {
+        "caseId": "TC-L-05",
+        "rule": "ds:truncation"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-06:9f9954bb",
+      "caseId": "TC-L-06",
+      "finding": "Descrição do item limitada a max-width de 320px com ellipsis: scrollWidth 664px contra clientWidth 320px, cortando mais da metade do texto sem qualquer meio de revelá-lo.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "falso-positivo",
+      "rationale": "Mesma armadilha; ver acima. Os dois braços caíram nela uma vez cada.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-06:d30e4308",
+      "caseId": "TC-L-06",
+      "finding": "Descrição do item cortada na mesma linha do título (white-space:nowrap + ellipsis; scrollWidth 664px vs clientWidth 320px).",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "falso-positivo",
+      "rationale": "TC-L-06 é a armadilha de FP declarada no gabarito: ellipsis em descrição secundária de item é permitido pelo DS, ao contrário do rótulo de botão do TC-L-05. Verificado em ListPage.tsx:90 (classe v-clip-b). A armadilha funcionou.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-L-07:e6968c8e",
+      "caseId": "TC-L-07",
+      "finding": "Elemento <hr> divisor tem tabindex=\"0\" e nenhum role, tornando-se um parada de foco vazia e sem propósito ao navegar por Tab.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0 (<hr> decorativo com tabindex='0' na ordem de foco); citou wcag:4.1.2.",
+      "unit": {
+        "caseId": "TC-L-07",
+        "rule": "wcag:2.4.3"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-N-02:04059271",
+      "caseId": "TC-N-02",
+      "finding": "O ultimo item ('Consulta de processos') e um link como os demais e nao traz aria-current='page': a pagina atual nao e distinguida no breadcrumb, nem visual nem programaticamente. A especificacao do componente lista aria-current entre seus atributos ARIA.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "Descreve exatamente a unidade do gabarito; citou \"ds:breadcrumb-current\", identificador ausente da taxonomia do scorer. Defeito de vocabulário, não de detecção.",
+      "unit": {
+        "caseId": "TC-N-02",
+        "rule": "emag:3.4"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-N-02:18721325",
+      "caseId": "TC-N-02",
+      "finding": "Último item da trilha ('Consulta de processos') é um link ativo para a própria posição e não traz aria-current='page': a posição atual do usuário não é exposta programaticamente.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0 (última crumb é link, sem aria-current='page'); citou wcag:1.3.1.",
+      "unit": {
+        "caseId": "TC-N-02",
+        "rule": "emag:3.4"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-N-02:da8b7870",
+      "caseId": "TC-N-02",
+      "finding": "No breadcrumb, o item da página atual ('Consulta de processos') é um <a> clicável igual aos outros, sem aria-current=\"page\"; não há como um leitor de tela identificar qual item representa a página corrente.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0; citou wcag:4.1.2.",
+      "unit": {
+        "caseId": "TC-N-02",
+        "rule": "emag:3.4"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-S-01:3d1d2a68",
+      "caseId": "TC-S-01",
+      "finding": "<meta http-equiv='refresh' content='120'> no <head>: a página se recarrega sozinha a cada 120 segundos, sem meio de desligar, ajustar ou prorrogar o limite, descartando o que o usuário estiver lendo ou preenchendo.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0 (<meta http-equiv='refresh' content='120'> sem controle do usuário); citou wcag:2.2.1, ausente da lista da unidade.",
+      "unit": {
+        "caseId": "TC-S-01",
+        "rule": "emag:2.3"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-S-01:48c1e9e3",
+      "caseId": "TC-S-01",
+      "finding": "<meta http-equiv=\"refresh\" content=\"120\"> recarrega a página inteira a cada 2 minutos sem nenhum controle do usuário para pausar, estender ou desativar.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "rationale": "É a u0; citou wcag:2.2.1.",
+      "unit": {
+        "caseId": "TC-S-01",
+        "rule": "emag:2.3"
+      },
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-S-02:874e0327",
+      "caseId": "TC-S-02",
+      "finding": "Apresentação embutida no código: <font color='#1351b4'>, elemento obsoleto de formatação, e um botão reconstruído com estilos inline (background, border-radius 20px, padding 8px 24px) em vez das classes e tokens do design system, que a página não carrega em momento nenhum.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "duplicado",
+      "rationale": "u0 já casada nesta execução pelo achado de aria-expanded (alias wcag:4.1.2); este é o enunciado de camadas misturadas, que é a mesma u0.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-S-02:92e66706",
+      "caseId": "TC-S-02",
+      "finding": "O botao 'Ver detalhes' revela um painel via onclick alterando display, sem aria-expanded e sem aria-controls: a mudanca de estado e a relacao com o conteudo revelado nao sao expostas.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "duplicado",
+      "rationale": "u0 já casada nesta execução pelo achado do <font> obsoleto. A u0 lista wcag:4.1.2 entre seus aliases, então o achado de aria-expanded é a mesma unidade sob outro alias — nos braços sem oráculo foi ele que casou a u0.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-S-02:f115f2d4",
+      "caseId": "TC-S-02",
+      "finding": "border-radius de 20px no botao, fora da escala de raio do DS (0/4/8/16px ou pill).",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Verificado em confirmacao.html:16: border-radius inline de 20px, fora da escala do DS. ⚠ Marginal: pode ser lido como parte da u0 ('todos os estilos em atributos style'), e aí seria duplicado. Registrado como lacuna porque o valor fora de escala é um defeito de token que a u0 não enuncia.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-S-02:f6e4227e",
+      "caseId": "TC-S-02",
+      "finding": "Botão \"Ver detalhes\" alterna visibilidade de um bloco via onclick, sem aria-expanded/aria-controls comunicando o estado.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-10-10-207Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "duplicado",
+      "rationale": "Idem: mesma unidade, alias wcag:4.1.2, já consumida na execução.",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-S-03:0885889f",
+      "caseId": "TC-S-03",
+      "finding": "Ao clicar em 'Copiar número do protocolo', o próprio texto do botão muda para 'Protocolo copiado' como única forma de feedback, sem role=\"status\"/aria-live; a confirmação de sucesso não é garantidamente anunciada a leitores de tela, já que depende de cada tecnologia assistiva reagir à mudança de nome do elemento focado.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-28T03-23-25-722Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Mesmo defeito verificado acima (troca do rótulo como única confirmação, sem região viva).",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-S-03:747035f5",
+      "caseId": "TC-S-03",
+      "finding": "O nome acessível do controle passa permanentemente de 'Copiar número do protocolo' para 'Protocolo copiado': o botão deixa de descrever a ação que executa e não há como saber que ainda é possível copiar de novo.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Mesmo defeito de nome acessível verificado acima.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-S-03:77288d91",
+      "caseId": "TC-S-03",
+      "finding": "A confirmacao da copia nao e anunciada: nao existe nenhuma regiao com aria-live, role='status' ou role='alert' na pagina (verificado por consulta ao DOM apos o clique). O feedback e exclusivamente visual.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "VERIFICADO em protocolo.html — não há aria-live, role='status' nem role='alert' em lugar nenhum da página; a confirmação da cópia é exclusivamente visual (wcag:4.1.3). Defeito real no caso de referência.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-S-03:d2154cad",
+      "caseId": "TC-S-03",
+      "finding": "Ao copiar, a confirmação aparece substituindo o texto do próprio botão, sem região viva: não há aria-live, role='status' nem role='alert' na página, então a mensagem de sucesso não é anunciada a quem não a enxerga.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T21-01-07-264Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "Mesmo defeito de mensagem de status verificado acima.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    },
+    {
+      "id": "TC-S-03:f88b4a16",
+      "caseId": "TC-S-03",
+      "finding": "Ao clicar, o script substitui o proprio textContent do botao: o rotulo passa de 'Copiar numero do protocolo' para 'Protocolo copiado'. O nome acessivel do controle vira uma mensagem de status e deixa de descrever a funcao; o botao continua clicavel mas nao ha mais como saber o que ele faz, e a mudanca e irreversivel na sessao.",
+      "seenIn": [
+        {
+          "run": "agent-2026-08-27T20-47-02-693Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "lacuna-gabarito",
+      "rationale": "VERIFICADO em protocolo.js:8 — o script substitui o textContent do próprio botão por 'Protocolo copiado', de forma irreversível na sessão. O nome acessível do controle deixa de descrever a ação. Defeito real numa página que o gabarito declara conforme: TC-S-03 NÃO é caso de referência válido como está.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "claude — proposta, aguarda revisão de NF",
+      "adjudicatedAt": "2026-08-31"
+    }
+  ]
+}

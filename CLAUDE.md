@@ -7,6 +7,10 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
 - `npm run axe` — axe-core baseline against the corpus at :3000
 - `npm run score` / `score:verbose` — P/R/F1 per tool
 - `npm run dashboard` — Matriz de Detecção at :4000 (axe ▶ button + result views)
+- `adjudications.json` — human verdicts on findings that matched no expected unit (D-21).
+  `npm run adjudicate` (`--emit` semeia stubs, `--blind` julga sem ver o braço). Um veredito sem
+  `rationale` não é aplicado. `npm run score` imprime **piso** e **adjudicado**, nunca um no lugar
+  do outro — ver `docs/adjudicacao.md`.
 - `skills/evaluate-all/SKILL.md` — protocol for measuring the agent's per-case verdicts.
   When running it, do NOT read `ground-truth.json` first; verdicts come from the live app only.
 
