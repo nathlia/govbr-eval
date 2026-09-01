@@ -1,5 +1,17 @@
 # Skill: evaluate-all
 
+> **CONGELADO — protocolo de procedência, não use em execuções novas.**
+>
+> Este é o protocolo sob o qual as quatro rodadas arquivadas da suíte `TC-*` foram produzidas
+> (D-19/D-20). Ele fica aqui inalterado porque mexer nele quebraria a procedência daqueles
+> números: uma execução nova sob texto diferente não é comparável com elas.
+>
+> Para qualquer execução nova, use `evaluate-screen` &mdash; o protocolo geral, que não carrega
+> descrição nenhuma da tela avaliada. Este arquivo enumera as abas, as rotas estáticas e os
+> fragmentos do corpus, e por isso só funciona neste corpus: é o defeito que o `evaluate-screen`
+> corrige. Repontuar a suíte `TC-*` sob o protocolo geral é uma **mudança declarada**, e as
+> execuções de antes e de depois não entram numa mesma média.
+
 Protocolo de avaliação formal do corpus. Diz **onde olhar**, **como capturar evidência** e **como
 reportar** &mdash; e nada sobre o que é certo ou errado no gov.br DS.
 
@@ -96,6 +108,16 @@ que você fizer.
 
 Se você tiver ferramentas de consulta a normas disponíveis, carregue agora as referências que
 julgar necessárias &mdash; a escolha de o quê carregar é sua e faz parte do que está sendo medido.
+
+Quando uma ferramenta devolver findings compactos, registre os ids e decida primeiro pela versão
+resumida. Busque evidência detalhada somente para os candidatos relevantes e peça o objeto completo
+apenas quando outra ferramenta exigir esse contrato. Se houver `truncated`/`nextCursor`, continue
+pelo `scanId` até fechar o escopo, sem repetir o scanner; não refaça evidência válida enquanto o
+estado não mudar.
+
+Agrupe seletores independentes no mesmo pedido quando a ferramenta aceitar `selectors`. Em leitura
+de estilos, peça apenas as `properties` necessárias à decisão. Consulte vários ids de regra juntos
+quando houver suporte a `ids`; chamadas unitárias repetidas para o mesmo estado são desperdício.
 
 ### 2. Aba inicial
 

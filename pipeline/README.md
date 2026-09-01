@@ -24,7 +24,7 @@ uma propriedade do procedimento, não uma lembrança.
 | `mcp-sem-oraculo.json` | Braço da ablação: **só** Playwright |
 | `settings-run.json` | Regras de negação de leitura — o isolamento do gabarito imposto pelo harness |
 | `run-battery.ps1` | Orquestrador |
-| `logs/` | Saída bruta de cada execução (`--output-format json`) + manifesto da bateria |
+| `logs/` | Saída bruta, manifesto, configuração MCP efetiva e telemetria NDJSON por execução |
 
 ## Uso
 
@@ -67,8 +67,9 @@ mediria nada. O protocolo antes *pedia* ao agente que não olhasse; agora o harn
 ## Como os braços são rotulados
 
 O scorer é **ciente de configuração** (D-17): ele varre `results/runs/`, `results/runs-ablacao/` e
-`results/runs-piloto/`, agrupa as execuções por `braço | modelo | cobertura do corpus` e **nunca**
-agrega grupos diferentes. Média ± DP só sai dentro de um grupo.
+`results/runs-piloto/`, agrupa por braço, modelo, cobertura, cliente, esforço de raciocínio,
+hash do protocolo e versão do validator, e **nunca** agrega grupos diferentes. Média ± DP só sai
+dentro de um grupo.
 
 O diretório é o que informa o braço, e por isso o script move os arquivos da ablação para
 `results/runs-ablacao/` ao final de cada execução — não é mais contorno, é a convenção que rotula.
@@ -78,6 +79,21 @@ Uma execução pode sobrescrever o rótulo declarando um bloco `config` no próp
 A cobertura do corpus é **derivada**, nunca declarada: o scorer conta quantos casos do gabarito
 atual a execução de fato julgou. Foi assim que o piloto apareceu como grupo separado sem precisar
 de metadado nenhum — ele julgou 26 de 52 casos, logo não é comparável.
+
+## Telemetria e enriquecimento automático
+
+O agente ainda produz o veredito, mas não é mais a fonte autoritativa para configuração e custo.
+Depois que o subprocesso termina, o runner anexa ao artefato arquivado:
+
+- cliente e versão, modelo, versão do validator e SHA-256 da Skill usada;
+- tokens de input, criação/leitura de cache e output informados pelo cliente;
+- custo monetário, turnos e tempo de parede;
+- chamadas, erros, bytes de entrada/saída e duração do MCP do validator, total e por ferramenta.
+
+O validator grava cada chamada em um sidecar `*-mcp.ndjson`. Esses dados não são incluídos nas
+respostas MCP e, portanto, não aumentam o contexto visto pelo modelo. O sidecar mede apenas o MCP
+do validator; chamadas do Playwright continuam representadas pelo campo geral `toolCalls` quando
+o agente o informa.
 
 **O que ainda falta:** a comparação lado a lado entre os braços. O scorer hoje avisa que a ablação
 não existe, mas não emite a tabela comparativa — isso exige os dois braços com n >= 3 na mesma

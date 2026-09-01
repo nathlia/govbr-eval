@@ -25,6 +25,7 @@
       "mcp__govbr-ds-validator__check_token_compliance",
       "mcp__govbr-ds-validator__check_component_structure",
       "mcp__govbr-ds-validator__run_axe_scan",
+      "mcp__govbr-ds-validator__get_finding_details",
       "mcp__govbr-ds-validator__verify_finding",
 
       "Read(govbr-eval/skills/**)"
@@ -37,6 +38,7 @@
       "Edit",
 
       "Read(govbr-eval/ground-truth.json)",
+      "Read(govbr-eval/ground-truth-fluxo.json)",
       "Read(govbr-eval/organic-ground-truth.json)",
       "Read(govbr-eval/results/**)",
       "Read(govbr-eval/reports/**)",

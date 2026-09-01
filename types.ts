@@ -104,7 +104,28 @@ export interface AgentVerdict {
   notes?: string;
 }
 
-/** Cost accounting for one evaluation run (F4). */
+export interface AgentTokenUsage {
+  input: number;
+  cacheCreationInput: number;
+  cacheReadInput: number;
+  output: number;
+}
+
+export interface McpToolTelemetrySummary {
+  calls: number;
+  errors: number;
+  requestBytes: number;
+  responseBytes: number;
+  durationMs: number;
+}
+
+export interface McpTelemetrySummary extends McpToolTelemetrySummary {
+  runId: string;
+  telemetryFile?: string;
+  byTool: Record<string, McpToolTelemetrySummary>;
+}
+
+/** Cost accounting for one evaluation run (F4). Runner-owned fields are added after the agent exits. */
 export interface AgentRunCost {
   startedAt: string;
   finishedAt: string;
@@ -113,6 +134,14 @@ export interface AgentRunCost {
   toolCalls?: number;
   /** Total tokens if the client reports them (e.g. /cost in Claude Code). */
   tokens?: number;
+  /** Provider-reported token classes; cache reads stay separate because they dominate these runs. */
+  tokenUsage?: AgentTokenUsage;
+  /** Provider-reported monetary cost for this run. */
+  totalCostUsd?: number;
+  /** Number of model turns reported by the client. */
+  turns?: number;
+  /** Validator-only MCP telemetry. Browser MCP calls are not included. */
+  mcp?: McpTelemetrySummary;
   notes?: string;
 }
 
@@ -126,6 +155,17 @@ export interface RunConfig {
   arm?: string;
   /** Rótulo livre, e.g. "piloto". */
   label?: string;
+  /** Cliente que executou o agente, separado do modelo. */
+  client?: string;
+  clientVersion?: string;
+  /** Esforço de raciocínio, quando configurável e conhecido. */
+  reasoningEffort?: string;
+  /** Identidade exata do modelo quando difere do rótulo em `model`. */
+  modelVersion?: string;
+  /** Hash do protocolo carregado nesta execução. */
+  protocolVersion?: string;
+  /** Versão do servidor MCP do oráculo. */
+  validatorVersion?: string;
 }
 
 export interface AgentResults {
@@ -201,4 +241,95 @@ export interface AdjudicationRecord {
 export interface Adjudications {
   _meta: Record<string, unknown>;
   adjudications: AdjudicationRecord[];
+}
+
+// ── Suíte de fluxo (D-23): unidades ancoradas em elemento ────────────────────
+
+/**
+ * Uma violação da página-fluxo, declarada por SELETOR e não por seção.
+ *
+ * A suíte `TC-*` ancora unidade em seção (`TC-B-08`), o que só funciona porque cada seção contém
+ * um espécime e um defeito. Numa tela de serviço de verdade as seções deixam de existir como
+ * recorte natural, e o caso decisivo do D-23 — a violação que TODAS as instâncias compartilham —
+ * é irrepresentável nesse esquema: numa seção só, "todos os botões estão errados" vale uma
+ * unidade, e o agente acerta dizendo isso uma vez. O que se quer medir é se ele ENUMERA as
+ * instâncias, e isso exige unidade por elemento.
+ */
+export interface FlowViolationSpec {
+  /** V-01, V-02 … — identidade da especificação, não da unidade (uma spec vira N unidades). */
+  id: string;
+  /** Seletor CSS resolvido na página viva. */
+  anchor: string;
+  /** Elementos a subtrair da resolução do `anchor`. */
+  except?: string;
+  /**
+   * "unico"  — deve resolver para exatamente um elemento;
+   * "todos"  — vira uma unidade por elemento resolvido (a violação compartilhada do D-23).
+   */
+  scope: "unico" | "todos";
+  /**
+   * Quantas instâncias o gabarito afirma existir. Quando declarado e a página discorda, a
+   * pontuação PARA em vez de medir — é o guarda contra editar a tela e esquecer o gabarito (D-06).
+   */
+  expectedCount?: number;
+  /** Aliases normativos: o achado casa citando QUALQUER um deles. */
+  rules: RuleId[];
+  categories: string[];
+  description: string;
+}
+
+/** Um passo de preparação da página antes da resolução de âncoras. */
+export interface FlowSetupStep {
+  action: "click" | "fill" | "wait";
+  /** Alvo de `click`/`fill`, ou seletor a aguardar em `wait`. */
+  selector?: string;
+  /** Texto de `fill`. */
+  value?: string;
+  /** Milissegundos de `wait` quando não há seletor. */
+  ms?: number;
+}
+
+export interface FlowGroundTruth {
+  _meta: {
+    /** Identificador da página-fluxo, usado como prefixo de proveniência. */
+    page: string;
+    /** Caminho relativo ao APP_URL. */
+    url: string;
+    /** Seletor a aguardar antes de resolver âncoras (a tela é uma SPA). */
+    waitFor?: string;
+    /**
+     * Interações aplicadas ANTES de resolver as âncoras, para alcançar violações que só passam a
+     * existir depois de um uso da tela (mecanismo que o D-22 apontou como ausente no corpus).
+     *
+     * A sequência tem de ser ADITIVA: pode fazer nascer elementos, nunca destruir os que o
+     * gabarito já ancora. Se um passo removesse um elemento, as duas metades do gabarito
+     * passariam a descrever estados diferentes da página e nada acusaria.
+     */
+    setup?: FlowSetupStep[];
+    [k: string]: unknown;
+  };
+  violations: FlowViolationSpec[];
+}
+
+/**
+ * Um achado do agente na suíte de fluxo. Sem id de caso: não há grade de correção para percorrer,
+ * o agente diz ONDE olhando para a página. Um seletor que resolve para k elementos é k afirmações
+ * da mesma regra — é assim que "todos os botões têm o raio errado" credita todas as instâncias de
+ * uma vez, e é também por isso que um seletor largo demais paga em precisão.
+ */
+export interface FlowFinding {
+  selector: string;
+  rule: RuleId;
+  description: string;
+}
+
+export interface FlowAgentResults {
+  timestamp: string;
+  model: string;
+  appUrl: string;
+  config?: RunConfig;
+  cost?: AgentRunCost;
+  /** O que o agente declara ter inspecionado. Proveniência apenas — não entra na pontuação. */
+  scope?: string[];
+  findings: FlowFinding[];
 }

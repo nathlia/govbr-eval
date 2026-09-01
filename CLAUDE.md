@@ -7,6 +7,11 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
 - `npm run axe` — axe-core baseline against the corpus at :3000
 - `npm run score` / `score:verbose` — P/R/F1 per tool
 - `npm run dashboard` — Matriz de Detecção at :4000 (axe ▶ button + result views)
+- `ground-truth-fluxo.json` + `npm run score:fluxo` / `npm run ancoras` — suíte de fluxo (D-23/D-25):
+  unidade é **(elemento × regra)**, ancorada por seletor resolvido na página viva, não por seção
+  `TC-*`. É o instrumento da tela realista com violação compartilhada. Suíte separada: seus números
+  nunca se somam nem se promediam com os da suíte `TC-*` nem com os da orgânica (D-13).
+  Ver `docs/ancoragem.md`.
 - `adjudications.json` — human verdicts on findings that matched no expected unit (D-21).
   `npm run adjudicate` (`--emit` semeia stubs, `--blind` julga sem ver o braço). Um veredito sem
   `rationale` não é aplicado. `npm run score` imprime **piso** e **adjudicado**, nunca um no lugar

@@ -53,6 +53,13 @@ param(
   [ValidateSet("full", "smoke")]
   [string]$Scope = "full",
 
+  # casos = suite TC-* (ground-truth.json, protocolo evaluate-all)
+  # fluxo = suite de fluxo do D-23/D-25 (ground-truth-fluxo.json, protocolo evaluate-fluxo,
+  #         unidade ancorada em elemento). As duas suites nunca compartilham diretorio de
+  #         execucoes nem entram numa mesma media (D-13).
+  [ValidateSet("casos", "fluxo")]
+  [string]$Suite = "casos",
+
   # A aba que o smoke percorre. Qualquer uma serve — o objetivo é exercitar o caminho, não medir.
   [string]$SmokeAba = "Botões",
 
@@ -70,9 +77,16 @@ $ErrorActionPreference = "Stop"
 $PipelineDir = $PSScriptRoot
 $EvalRoot    = Split-Path $PipelineDir -Parent
 $TccRoot     = Split-Path $EvalRoot -Parent
-$RunsDir     = Join-Path $EvalRoot "results\runs"
-$AblacaoDir  = Join-Path $EvalRoot "results\runs-ablacao"
-$SmokeDir    = Join-Path $EvalRoot "results\runs-smoke"
+$IsFluxo     = $Suite -eq "fluxo"
+if ($IsFluxo) {
+  $RunsDir    = Join-Path $EvalRoot "results\runs-fluxo"
+  $AblacaoDir = Join-Path $EvalRoot "results\runs-fluxo-ablacao"
+  $SmokeDir   = Join-Path $EvalRoot "results\runs-fluxo-smoke"
+} else {
+  $RunsDir    = Join-Path $EvalRoot "results\runs"
+  $AblacaoDir = Join-Path $EvalRoot "results\runs-ablacao"
+  $SmokeDir   = Join-Path $EvalRoot "results\runs-smoke"
+}
 $LogsDir     = Join-Path $PipelineDir "logs"
 $Stamp       = Get-Date -Format "yyyy-MM-ddTHH-mm-ss"
 
@@ -98,6 +112,53 @@ function Write-Step($msg)  { Write-Host "`n=== $msg ===" -ForegroundColor Cyan }
 function Write-Ok($msg)    { Write-Host "  ok  $msg" -ForegroundColor Green }
 function Write-Warn2($msg) { Write-Host "  !!  $msg" -ForegroundColor Yellow }
 
+function Set-JsonProperty($object, $name, $value) {
+  if ($object.PSObject.Properties[$name]) {
+    $object.$name = $value
+  } else {
+    $object | Add-Member -NotePropertyName $name -NotePropertyValue $value
+  }
+}
+
+function Get-McpTelemetrySummary($path, $runId) {
+  $events = @()
+  if (Test-Path $path) {
+    $events = @(Get-Content -LiteralPath $path | Where-Object { $_.Trim() } | ForEach-Object {
+      try { $_ | ConvertFrom-Json } catch { }
+    })
+  }
+
+  $byTool = [ordered]@{}
+  foreach ($event in $events) {
+    $name = [string]$event.tool
+    if (-not $byTool.Contains($name)) {
+      $byTool[$name] = [ordered]@{ calls = 0; errors = 0; requestBytes = 0; responseBytes = 0; durationMs = 0 }
+    }
+    $item = $byTool[$name]
+    $item.calls++
+    if ($event.status -eq "error") { $item.errors++ }
+    $item.requestBytes += [int64]($event.requestBytes ?? 0)
+    $item.responseBytes += [int64]($event.responseBytes ?? 0)
+    $item.durationMs += [int64]($event.durationMs ?? 0)
+  }
+
+  $rankedByTool = [ordered]@{}
+  foreach ($entry in ($byTool.GetEnumerator() | Sort-Object { $_.Value.responseBytes } -Descending)) {
+    $rankedByTool[$entry.Key] = $entry.Value
+  }
+
+  return [ordered]@{
+    runId = $runId
+    telemetryFile = if (Test-Path $path) { "pipeline/logs/$(Split-Path $path -Leaf)" } else { $null }
+    calls = $events.Count
+    errors = @($events | Where-Object { $_.status -eq "error" }).Count
+    requestBytes = [int64](($events | Measure-Object -Property requestBytes -Sum).Sum ?? 0)
+    responseBytes = [int64](($events | Measure-Object -Property responseBytes -Sum).Sum ?? 0)
+    durationMs = [int64](($events | Measure-Object -Property durationMs -Sum).Sum ?? 0)
+    byTool = $rankedByTool
+  }
+}
+
 function Test-Url($url) {
   try {
     Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 5 | Out-Null
@@ -120,7 +181,9 @@ Write-Ok "Node $nodeVersion"
 if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
   throw "CLI 'claude' não encontrada no PATH."
 }
-Write-Ok "CLI claude encontrada"
+$claudeVersion = (& claude --version 2>$null | Select-Object -First 1).Trim()
+if (-not $claudeVersion) { $claudeVersion = "unknown" }
+Write-Ok "CLI claude encontrada ($claudeVersion)"
 
 # A6: o protocolo carrega procedimento apenas. Se conhecimento de domínio vazar para dentro dele,
 # o protocolo vira um segundo oráculo e a ablação deixa de medir o que se propõe a medir — então
@@ -144,6 +207,16 @@ if (-not (Test-Path $validatorDist)) {
 }
 Write-Ok "Oráculo compilado"
 
+$validatorPackage = Get-Content (Join-Path $TccRoot "govbr-ds-validator\package.json") -Raw | ConvertFrom-Json
+$validatorVersion = [string]$validatorPackage.version
+$protocolPath = if ($IsFluxo) {
+  Join-Path $EvalRoot "skills\evaluate-screen\SKILL.md"
+} else {
+  Join-Path $EvalRoot "skills\evaluate-all\SKILL.md"
+}
+$protocolVersion = "sha256:" + (Get-FileHash -LiteralPath $protocolPath -Algorithm SHA256).Hash.ToLowerInvariant()
+Write-Ok "Protocolo $protocolVersion"
+
 if (-not (Test-Url $CorpusUrl)) {
   throw "Corpus não responde em $CorpusUrl. Rode 'npm run dev' em govbr-corpus."
 }
@@ -164,8 +237,9 @@ $total = $arms.Count * $Runs
 Write-Step "Plano: $total execução(ões) — braços [$($arms -join ', ')] x $Runs, modelo $Model, escopo $Scope"
 
 if ($IsSmoke) {
-  Write-Warn2 "ESCOPO SMOKE: só a aba '$SmokeAba'. Não é medida — os vereditos vão para"
-  Write-Warn2 "results/runs-smoke/, que o scorer não lê, e baselines/pontuação estão desligados."
+  $recorte = if ($IsFluxo) { "a tela de fluxo inteira, com modelo barato" } else { "só a aba '$SmokeAba'" }
+  Write-Warn2 "ESCOPO SMOKE: $recorte. Nao e medida — os resultados vao para"
+  Write-Warn2 "results/$(Split-Path $SmokeDir -Leaf)/, que o scorer nao le, e baselines/pontuacao estao desligados."
 }
 
 $manifest = @()
@@ -185,7 +259,7 @@ $runIndex = 0
     # scorer passaria a reportar a ablação como se fosse o braço com oráculo. Guarda antes.
     # O smoke também faz POST no dashboard e sobrescreveria o veredito "atual" — mesma guarda.
     $snapshots = @()
-    if ($armName -eq "sem" -or $IsSmoke) {
+    if ((-not $IsFluxo) -and ($armName -eq "sem" -or $IsSmoke)) {
       foreach ($rel in @("results\agent-results.json", "dashboard\public\agent-results.json")) {
         $full = Join-Path $EvalRoot $rel
         if (Test-Path $full) {
@@ -204,11 +278,31 @@ $runIndex = 0
 
     $logFile      = Join-Path $LogsDir "$Stamp-$armName-run$i.json"
     $settingsFile = Join-Path $PipelineDir "settings-run.json"
+    $runId        = "$Stamp-$armName-run$i-$([guid]::NewGuid().ToString('N').Substring(0, 8))"
+    $telemetryFile = Join-Path $LogsDir "$runId-mcp.ndjson"
+    $effectiveMcpConfig = $mcpConfig
+    if ($armName -eq "com") {
+      # Grava os identificadores explicitamente na configuração do subprocesso MCP. Não depende
+      # de o cliente preservar variáveis herdadas quando também existe um bloco `env` no JSON.
+      $runMcp = Get-Content -LiteralPath $mcpConfig -Raw | ConvertFrom-Json
+      $validatorMcp = $runMcp.mcpServers."govbr-ds-validator"
+      Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_RUN_ID" $runId
+      Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_TELEMETRY_FILE" $telemetryFile
+      $effectiveMcpConfig = Join-Path $LogsDir "$runId-mcp-config.json"
+      $runMcp | ConvertTo-Json -Depth 10 | Out-File -LiteralPath $effectiveMcpConfig -Encoding utf8
+    }
 
     # O recorte do smoke vive aqui, no disparo — não dentro do protocolo. O protocolo é o mesmo
     # arquivo nos dois escopos, senão a execução de fumaça deixaria de exercitar o que vai rodar
     # de verdade. A frase abaixo restringe o percurso e nada mais; não diz nada sobre o domínio.
-    $prompt = if ($IsSmoke) {
+    # A suite de fluxo e uma tela so: nao ha recorte de aba a fazer, entao o smoke dela difere do
+    # full apenas no modelo barato e no diretorio fora do alcance do scorer.
+    # O protocolo geral nao sabe nada sobre a tela: alvo e destino do POST chegam AQUI, na
+    # invocacao, identicos nos dois bracos. E o que permite o mesmo arquivo servir a qualquer tela.
+    $prompt = if ($IsFluxo) {
+      "/evaluate-screen Avalie a tela em $CorpusUrl/fluxo.html. " +
+      "Para salvar, navegue ate $DashboardUrl e faca POST em /api/save-flow-results a partir dali."
+    } elseif ($IsSmoke) {
       "/evaluate-all Percorra apenas a aba '$SmokeAba' e feche os vereditos só dos casos dela. " +
       "Ignore as demais abas e as rotas estáticas."
     } else {
@@ -218,7 +312,7 @@ $runIndex = 0
     $claudeArgs = @(
       "-p", $prompt,
       "--strict-mcp-config",
-      "--mcp-config", $mcpConfig,
+      "--mcp-config", $effectiveMcpConfig,
       "--settings", $settingsFile,
       "--model", $Model,
       "--output-format", "json",
@@ -226,12 +320,20 @@ $runIndex = 0
     )
 
     Push-Location $TccRoot
+    $previousValidatorRunId = $env:GOVBR_VALIDATOR_RUN_ID
+    $previousTelemetryFile = $env:GOVBR_VALIDATOR_TELEMETRY_FILE
     try {
+      $env:GOVBR_VALIDATOR_RUN_ID = $runId
+      $env:GOVBR_VALIDATOR_TELEMETRY_FILE = $telemetryFile
       $started = Get-Date
       & claude @claudeArgs | Out-File -FilePath $logFile -Encoding utf8
       $exit = $LASTEXITCODE
       $elapsed = [math]::Round(((Get-Date) - $started).TotalSeconds, 1)
     } finally {
+      if ($null -eq $previousValidatorRunId) { Remove-Item Env:GOVBR_VALIDATOR_RUN_ID -ErrorAction SilentlyContinue }
+      else { $env:GOVBR_VALIDATOR_RUN_ID = $previousValidatorRunId }
+      if ($null -eq $previousTelemetryFile) { Remove-Item Env:GOVBR_VALIDATOR_TELEMETRY_FILE -ErrorAction SilentlyContinue }
+      else { $env:GOVBR_VALIDATOR_TELEMETRY_FILE = $previousTelemetryFile }
       Pop-Location
     }
 
@@ -245,6 +347,7 @@ $runIndex = 0
     # um log vazio e empurrando a bateria para um estado meio-feito. Já aconteceu duas vezes
     # (19/08 e 27/08). Parar aqui preserva o que foi arquivado até agora e deixa o motivo visível.
     $limiteAtingido = $false
+    $logJson = $null
     try {
       $logJson = Get-Content $logFile -Raw | ConvertFrom-Json
       if ($logJson.api_error_status -eq 429) {
@@ -283,9 +386,61 @@ $runIndex = 0
 
       if ($destinoDir) {
         Move-Item -Path (Join-Path $RunsDir $arquivo) -Destination (Join-Path $destinoDir $arquivo) -Force
-        $rotulo = if ($IsSmoke) { "results/runs-smoke/ (fora do alcance do scorer)" }
-                  else { "results/runs-ablacao/ (o diretório rotula o braço)" }
+        $rotulo = "$(Split-Path $destinoDir -Leaf)/ " + $(if ($IsSmoke) { "(fora do alcance do scorer)" } else { "(o diretorio rotula o braco)" })
         Write-Ok "movido para $rotulo"
+      }
+
+      # O runner, não o agente, conhece a configuração real e recebe os contadores do cliente.
+      # Enriquece somente o artefato arquivado, depois que o processo terminou. Isso tira trabalho
+      # contábil do prompt e impede que estimativas do modelo virem dados experimentais.
+      $arquivoDir = if ($destinoDir) { $destinoDir } else { $RunsDir }
+      $arquivoPath = Join-Path $arquivoDir $arquivo
+      try {
+        $veredito = Get-Content -LiteralPath $arquivoPath -Raw | ConvertFrom-Json
+        if (-not $veredito.config) {
+          $veredito | Add-Member -NotePropertyName config -NotePropertyValue ([pscustomobject]@{})
+        }
+        Set-JsonProperty $veredito.config "arm" $(if ($armName -eq "com") { "com-oraculo" } else { "sem-oraculo" })
+        Set-JsonProperty $veredito.config "client" "claude-cli"
+        Set-JsonProperty $veredito.config "clientVersion" $claudeVersion
+        Set-JsonProperty $veredito.config "modelVersion" $Model
+        Set-JsonProperty $veredito.config "protocolVersion" $protocolVersion
+        if ($armName -eq "com") {
+          Set-JsonProperty $veredito.config "validatorVersion" $validatorVersion
+        }
+
+        $finishedAt = Get-Date
+        if (-not $veredito.cost) {
+          $veredito | Add-Member -NotePropertyName cost -NotePropertyValue ([pscustomobject]@{})
+        }
+        Set-JsonProperty $veredito.cost "startedAt" $started.ToUniversalTime().ToString("o")
+        Set-JsonProperty $veredito.cost "finishedAt" $finishedAt.ToUniversalTime().ToString("o")
+        Set-JsonProperty $veredito.cost "wallClockSeconds" $elapsed
+
+        if ($logJson) {
+          $tokenUsage = [ordered]@{
+            input = [int64]($logJson.usage.input_tokens ?? 0)
+            cacheCreationInput = [int64]($logJson.usage.cache_creation_input_tokens ?? 0)
+            cacheReadInput = [int64]($logJson.usage.cache_read_input_tokens ?? 0)
+            output = [int64]($logJson.usage.output_tokens ?? 0)
+          }
+          $totalTokens = $tokenUsage.input + $tokenUsage.cacheCreationInput + $tokenUsage.cacheReadInput + $tokenUsage.output
+          Set-JsonProperty $veredito.cost "tokens" $totalTokens
+          Set-JsonProperty $veredito.cost "tokenUsage" $tokenUsage
+          Set-JsonProperty $veredito.cost "totalCostUsd" ([double]($logJson.total_cost_usd ?? 0))
+          Set-JsonProperty $veredito.cost "turns" ([int]($logJson.num_turns ?? 0))
+        }
+
+        if ($armName -eq "com") {
+          $mcpSummary = Get-McpTelemetrySummary $telemetryFile $runId
+          Set-JsonProperty $veredito.cost "mcp" $mcpSummary
+          Write-Ok "telemetria MCP: $($mcpSummary.calls) chamadas, $($mcpSummary.responseBytes) bytes de resposta"
+        }
+
+        $veredito | ConvertTo-Json -Depth 30 | Out-File -LiteralPath $arquivoPath -Encoding utf8
+        Write-Ok "metadados de configuração e custo anexados pelo runner"
+      } catch {
+        Write-Warn2 "não foi possível enriquecer o veredito arquivado: $($_.Exception.Message)"
       }
     }
 
@@ -300,17 +455,24 @@ $runIndex = 0
 
     $manifest += [pscustomobject]@{
       run          = $runIndex
+      runId        = $runId
       arm          = $armName
       armDescricao = $(if ($armName -eq "com") { "agente + oráculo MCP" } else { "agente sem oráculo (ablação)" })
       model        = $Model
-      mcpConfig    = Split-Path $mcpConfig -Leaf
+      client       = "claude-cli"
+      clientVersion = $claudeVersion
+      protocolVersion = $protocolVersion
+      validatorVersion = $(if ($armName -eq "com") { $validatorVersion } else { $null })
+      mcpConfig    = Split-Path $effectiveMcpConfig -Leaf
       prompt       = $prompt
       scope        = $Scope
       archive      = $arquivo
-      archiveDir   = $(if ($IsSmoke) { "results/runs-smoke" } elseif ($armName -eq "sem") { "results/runs-ablacao" } else { "results/runs" })
+      suite        = $Suite
+      archiveDir   = "results/" + $(if ($IsSmoke) { Split-Path $SmokeDir -Leaf } elseif ($armName -eq "sem") { Split-Path $AblacaoDir -Leaf } else { Split-Path $RunsDir -Leaf })
       exitCode     = $exit
       wallClockSeconds = $elapsed
       log          = Split-Path $logFile -Leaf
+      mcpTelemetry = $(if (Test-Path $telemetryFile) { Split-Path $telemetryFile -Leaf } else { $null })
       startedAt    = $started.ToUniversalTime().ToString("o")
     }
 
@@ -343,22 +505,35 @@ Write-Ok $manifestPath
 
 # ---------------------------------------------------------------- baselines
 if (-not $SkipBaselines) {
-  Write-Step "Baselines determinísticos na mesma sessão (D-06)"
-  Push-Location $EvalRoot
-  try {
-    & npm run axe
-    & npm run eslint
-  } finally {
-    Pop-Location
+  if ($IsFluxo) {
+    # As linhas de base da suite TC-* nao valem para a tela de fluxo: sao outra pagina, e mistura-las
+    # e exatamente o que o D-13 proibe. O runner da suite de fluxo atribui por chave de elemento e
+    # prepara a pagina no mesmo estado que o scorer usa.
+    Write-Step "Baselines deterministicos da suite de fluxo, na mesma sessao (D-06)"
+    Push-Location $EvalRoot
+    try {
+      & npm run baselines:fluxo
+    } finally {
+      Pop-Location
+    }
+  } else {
+    Write-Step "Baselines determinísticos na mesma sessão (D-06)"
+    Push-Location $EvalRoot
+    try {
+      & npm run axe
+      & npm run eslint
+    } finally {
+      Pop-Location
+    }
   }
 }
 
 # ---------------------------------------------------------------- pontuação
 if (-not $SkipScore) {
-  Write-Step "Pontuação (apenas o braço COM oráculo — a ablação precisa de scorer ciente de braço)"
+  Write-Step "Pontuacao"
   Push-Location $EvalRoot
   try {
-    & npm run score
+    if ($IsFluxo) { & npm run score:fluxo } else { & npm run score }
   } finally {
     Pop-Location
   }

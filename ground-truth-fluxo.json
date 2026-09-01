@@ -1,0 +1,65 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "page": "Identificação no gov.br — tela de fluxo (D-23)",
+    "url": "/fluxo.html",
+    "waitFor": "#cpf",
+    "suite": "fluxo",
+    "ds": "gov.br Design System 3.7.0",
+    "unit_of_evaluation": "(elemento × regra): o elemento é a chave canônica que anchors.ts deriva da árvore da página, não um id de seção. Uma spec com scope \"todos\" vira uma unidade por elemento resolvido.",
+    "setup": [
+      { "action": "click", "selector": ".acao-continuar" },
+      { "action": "wait", "selector": ".mensagem-erro-cpf" }
+    ],
+    "setup_rationale": "Submeter com o CPF em branco faz nascer a mensagem de erro. A sequência é ADITIVA: nada que o gabarito ancora deixa de existir, então um único estado da página serve aos dois lados da resolução.",
+    "nunca_agregar_com": "ground-truth.json (suíte TC-*) e organic-ground-truth.json — instrumentos diferentes sobre páginas diferentes (D-13)",
+    "baselines": "PENDENTE: axe e eslint precisam ser MEDIDOS sobre esta página. Herdar as linhas de base da suíte TC-* seria assumir baseline (D-06)."
+  },
+  "violations": [
+    {
+      "id": "V-01",
+      "anchor": ".opcao-identificacao",
+      "scope": "todos",
+      "expectedCount": 4,
+      "rules": ["ds:token-spacing"],
+      "categories": ["token"],
+      "description": "padding computado de 13px em TODAS as quatro opções de identificação — fora da escala de espaçamento do DS (0 / 4px / 8px / 16px). Caso decisivo do D-23: como as quatro instâncias são idênticas, a comparação com os irmãos não acusa nada; só a norma externa dá veredito."
+    },
+    {
+      "id": "V-02",
+      "anchor": "#cpf",
+      "scope": "unico",
+      "expectedCount": 1,
+      "rules": ["wcag:1.3.1", "wcag:3.3.2", "emag:6.2"],
+      "categories": ["formulario", "acessibilidade"],
+      "description": "o campo de CPF tem texto de apoio visível (\"Digite seu CPF para criar ou acessar sua conta gov.br\") que não está associado ao campo por aria-describedby. Regra CONDICIONAL: só existe porque há texto de apoio — um campo sem apoio não a viola."
+    },
+    {
+      "id": "V-03",
+      "anchor": ".mensagem-erro-cpf",
+      "scope": "unico",
+      "expectedCount": 1,
+      "rules": ["wcag:4.1.3", "wcag:3.3.1", "emag:6.6"],
+      "categories": ["formulario", "acessibilidade"],
+      "description": "a mensagem de erro do CPF é inserida sem role=\"alert\" (nem aria-live) e sem associação ao campo por aria-describedby: leitor de tela não anuncia. Violação PÓS-INTERAÇÃO — não existe no DOM inicial, só depois de submeter em branco."
+    },
+    {
+      "id": "V-04",
+      "anchor": ".lista-opcoes",
+      "scope": "unico",
+      "expectedCount": 1,
+      "rules": ["wcag:1.3.1", "ds:item-content"],
+      "categories": ["estrutura", "acessibilidade"],
+      "description": "o contêiner usa a classe .br-list e os filhos usam .br-item, mas nenhum carrega role=\"list\"/role=\"listitem\" nem é <ul>/<li>: a semântica de lista existe visualmente e não na árvore de acessibilidade. Defeito de COMPOSIÇÃO — cada componente está certo isolado, o conjunto não."
+    },
+    {
+      "id": "V-05",
+      "anchor": ".link-opcao",
+      "scope": "todos",
+      "expectedCount": 4,
+      "rules": ["ds:token-focus", "wcag:2.4.7", "emag:4.4"],
+      "categories": ["token", "acessibilidade"],
+      "description": "indicador de foco suprimido (outline: none + box-shadow: none) nos QUATRO links de opção. Segunda violação compartilhada: navegando por teclado, nenhum dos irmãos contradiz o outro."
+    }
+  ]
+}

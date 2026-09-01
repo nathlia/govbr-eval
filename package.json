@@ -9,9 +9,12 @@
   "scripts": {
     "axe": "tsx scripts/run-axe.ts",
     "eslint": "tsx scripts/run-eslint.ts",
+    "baselines:fluxo": "tsx scripts/run-baselines-flow.ts",
     "score": "tsx scripts/score-results.ts",
     "score:verbose": "tsx scripts/score-results.ts --verbose",
     "score:json": "tsx scripts/score-results.ts --json",
+    "score:fluxo": "tsx scripts/score-flow.ts",
+    "ancoras": "tsx scripts/score-flow.ts --ancoras",
     "dashboard": "npm --prefix dashboard run dev",
     "typecheck": "tsc --noEmit && tsc --noEmit -p dashboard",
     "postinstall": "playwright install chromium",

@@ -46,6 +46,39 @@ export default defineConfig({
       },
     },
     {
+      // Suíte de fluxo (D-23/D-25): relatório ancorado em elemento, sem mapa de casos. Endpoint
+      // separado de propósito — as duas suítes nunca compartilham arquivo de resultado, senão um
+      // POST de uma sobrescreveria a leitura da outra (D-13).
+      name: "flow-results-saver",
+      configureServer(server) {
+        server.middlewares.use("/api/save-flow-results", (req, res) => {
+          if (req.method !== "POST") {
+            res.statusCode = 405;
+            res.end("Method Not Allowed");
+            return;
+          }
+
+          let body = "";
+          req.on("data", (chunk) => { body += chunk.toString(); });
+          req.on("end", () => {
+            try {
+              const data = JSON.parse(body);
+              const json = JSON.stringify(data, null, 2);
+              const stamp = String(data.timestamp ?? new Date().toISOString()).replace(/[:.]/g, "-");
+              mkdirSync(join(EVAL_ROOT, "results/runs-fluxo"), { recursive: true });
+              writeFileSync(join(EVAL_ROOT, `results/runs-fluxo/agent-${stamp}.json`), json);
+              res.setHeader("Content-Type", "application/json");
+              res.statusCode = 200;
+              res.end(JSON.stringify({ ok: true }));
+            } catch (e) {
+              res.statusCode = 400;
+              res.end(JSON.stringify({ ok: false, error: e instanceof Error ? e.message : String(e) }));
+            }
+          });
+        });
+      },
+    },
+    {
       name: "axe-runner",
       configureServer(server) {
         server.middlewares.use("/api/run-axe", (req, res) => {

@@ -1,0 +1,28 @@
+﻿{
+    "stamp":  "2026-08-31T16-04-30",
+    "model":  "claude-haiku-4-5",
+    "scope":  "smoke",
+    "runsPerArm":  1,
+    "arms":  [
+                 "com"
+             ],
+    "corpusUrl":  "http://localhost:3000",
+    "execucoes":  [
+                      {
+                          "run":  1,
+                          "arm":  "com",
+                          "armDescricao":  "agente + oráculo MCP",
+                          "model":  "claude-haiku-4-5",
+                          "mcpConfig":  "mcp-com-oraculo.json",
+                          "prompt":  "/evaluate-fluxo",
+                          "scope":  "smoke",
+                          "archive":  "agent-2026-08-31T19-07-17-563Z.json",
+                          "suite":  "fluxo",
+                          "archiveDir":  "results/runs-fluxo-smoke",
+                          "exitCode":  0,
+                          "wallClockSeconds":  174.3,
+                          "log":  "2026-08-31T16-04-30-com-run1.json",
+                          "startedAt":  "2026-08-31T19:04:31.1340321Z"
+                      }
+                  ]
+}

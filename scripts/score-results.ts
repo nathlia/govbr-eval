@@ -324,8 +324,16 @@ interface RunSummary {
   f1Adj: number | null;
   FPAdj: number;
   pending: number;
+  correctUnits: number;
   wallClockSeconds: number | null;
   toolCalls: number | null;
+  turns: number | null;
+  visibleTokens: number | null;
+  totalCostUsd: number | null;
+  costPerCorrectUnit: number | null;
+  tokensPerCorrectUnit: number | null;
+  correctUnitsPer100kTokens: number | null;
+  mcpResponseBytes: number | null;
 }
 
 interface RunGroup {
@@ -355,6 +363,10 @@ function loadRuns(): RunSummary[] {
         // An explicit config block wins over the directory convention.
         const arm   = raw.config?.arm   ?? dirArm;
         const label = raw.config?.label ?? dirLabel;
+        const client = raw.config?.client ?? "cliente não rotulado";
+        const protocol = raw.config?.protocolVersion ?? "protocolo não versionado";
+        const reasoning = raw.config?.reasoningEffort ?? "esforço não rotulado";
+        const validator = raw.config?.validatorVersion ?? (arm === "com-oraculo" ? "validator não versionado" : "sem validator");
 
         // Derived from the data: how many gabarito cases this run actually judged.
         const coveredCases = Object.keys(raw.verdicts ?? {}).filter(id => id in cases).length;
@@ -373,7 +385,9 @@ function loadRuns(): RunSummary[] {
           // rodaram sob o protocolo neutro. Sem o rótulo na chave, as duas caíam no mesmo grupo e
           // a média saía entre desenhos experimentais diferentes — o defeito de D-13/D-16/D-17
           // pela quarta vez. Execução sem rótulo não é assumida comparável: vira grupo próprio.
-          configKey: `${arm} | ${raw.model} | ${coveredCases}/${gabaritoCases} casos | ${label ?? "protocolo não rotulado"}`,
+          configKey:
+            `${arm} | ${raw.model} | ${coveredCases}/${gabaritoCases} casos | ` +
+            `${label ?? "sem label"} | ${client} | ${reasoning} | ${protocol} | ${validator}`,
           ...prf(score.floor.TP, score.floor.FP, score.floor.FN),
           FP: score.floor.FP,
           ...(() => {
@@ -382,8 +396,32 @@ function loadRuns(): RunSummary[] {
           })(),
           FPAdj: score.FP,
           pending: score.pending.length,
+          correctUnits: score.TP,
           wallClockSeconds: raw.cost?.wallClockSeconds ?? null,
           toolCalls: raw.cost?.toolCalls ?? null,
+          turns: raw.cost?.turns ?? null,
+          visibleTokens: raw.cost?.tokenUsage
+            ? raw.cost.tokenUsage.input + raw.cost.tokenUsage.cacheCreationInput +
+              raw.cost.tokenUsage.cacheReadInput + raw.cost.tokenUsage.output
+            : raw.cost?.tokens ?? null,
+          totalCostUsd: raw.cost?.totalCostUsd ?? null,
+          costPerCorrectUnit:
+            raw.cost?.totalCostUsd !== undefined && score.TP > 0 ? raw.cost.totalCostUsd / score.TP : null,
+          tokensPerCorrectUnit: (() => {
+            const usage = raw.cost?.tokenUsage;
+            const total = usage
+              ? usage.input + usage.cacheCreationInput + usage.cacheReadInput + usage.output
+              : raw.cost?.tokens;
+            return total !== undefined && score.TP > 0 ? total / score.TP : null;
+          })(),
+          correctUnitsPer100kTokens: (() => {
+            const usage = raw.cost?.tokenUsage;
+            const total = usage
+              ? usage.input + usage.cacheCreationInput + usage.cacheReadInput + usage.output
+              : raw.cost?.tokens;
+            return total !== undefined && total > 0 ? (score.TP * 100_000) / total : null;
+          })(),
+          mcpResponseBytes: raw.cost?.mcp?.responseBytes ?? null,
         });
       } catch { /* skip unreadable run files */ }
     }
@@ -472,6 +510,9 @@ if (JSON_OUT) {
         const gf1 = g.runs.map(r => r.f1).filter((v): v is number => v !== null);
         const gf1Adj = g.runs.map(r => r.f1Adj).filter((v): v is number => v !== null);
         const gw  = g.runs.map(r => r.wallClockSeconds).filter((v): v is number => v !== null);
+        const gt  = g.runs.map(r => r.visibleTokens).filter((v): v is number => v !== null);
+        const gc  = g.runs.map(r => r.totalCostUsd).filter((v): v is number => v !== null);
+        const gm  = g.runs.map(r => r.mcpResponseBytes).filter((v): v is number => v !== null);
         return {
           config: g.key,
           arm: g.arm,
@@ -486,6 +527,9 @@ if (JSON_OUT) {
           f1Adjudicated: gf1Adj.length >= 2 ? meanSd(gf1Adj) : null,
           pending: g.runs.reduce((s, r) => s + r.pending, 0),
           wallClockSeconds: gw.length >= 2 ? meanSd(gw) : null,
+          visibleTokens: gt.length >= 2 ? meanSd(gt) : null,
+          totalCostUsd: gc.length >= 2 ? meanSd(gc) : null,
+          mcpResponseBytes: gm.length >= 2 ? meanSd(gm) : null,
         };
       }),
     };
@@ -685,15 +729,21 @@ if (runs.length) {
       pad("Run", 22) + pad("Model", 20) +
       pad("P piso", 9) + pad("R piso", 9) + pad("F1 piso", 10) +
       pad("F1 adj", 10) + pad("FP", 5) + pad("pend.", 7) +
-      pad("Wall (s)", 10) + "Tool calls"
+      pad("Wall (s)", 10) + pad("Turns", 8) + pad("Tokens M", 10) +
+      pad("MCP KB", 10) + pad("Cost US$", 10) + pad("$/unit", 10) + "unit/100k"
     );
-    console.log("─".repeat(112));
+    console.log("─".repeat(160));
     for (const r of g.runs) {
       console.log(
         pad(r.timestamp.slice(0, 19), 22) + pad(r.model.slice(0, 18), 20) +
         pad(pct(r.precision), 9) + pad(pct(r.recall), 9) + pad(pct(r.f1), 10) +
         pad(pct(r.f1Adj) + (r.pending ? "*" : " "), 10) + pad(r.FP, 5) + pad(r.pending, 7) +
-        pad(r.wallClockSeconds ?? "—", 10) + (r.toolCalls ?? "—")
+        pad(r.wallClockSeconds ?? "—", 10) + pad(r.turns ?? "—", 8) +
+        pad(r.visibleTokens !== null ? (r.visibleTokens / 1_000_000).toFixed(2) : "—", 10) +
+        pad(r.mcpResponseBytes !== null ? (r.mcpResponseBytes / 1024).toFixed(1) : "—", 10) +
+        pad(r.totalCostUsd !== null ? r.totalCostUsd.toFixed(2) : "—", 10) +
+        pad(r.costPerCorrectUnit !== null ? r.costPerCorrectUnit.toFixed(4) : "—", 10) +
+        (r.correctUnitsPer100kTokens !== null ? r.correctUnitsPer100kTokens.toFixed(3) : "—")
       );
     }
     const groupPending = g.runs.reduce((s, r) => s + r.pending, 0);
@@ -704,7 +754,7 @@ if (runs.length) {
     const f1s = g.runs.map(r => r.f1).filter((v): v is number => v !== null);
     if (f1s.length >= 2) {
       const { mean, sd } = meanSd(f1s);
-      console.log("─".repeat(112));
+      console.log("─".repeat(160));
       console.log(`F1 piso (element × rule): mean ${pct(mean)} ± ${sd !== null ? pct(sd).trim() : "—"} (n=${f1s.length}, sample SD)`);
       const f1sAdj = g.runs.map(r => r.f1Adj).filter((v): v is number => v !== null);
       if (f1sAdj.length >= 2) {
@@ -715,6 +765,16 @@ if (runs.length) {
       if (walls.length >= 2) {
         const w = meanSd(walls);
         console.log(`Wall-clock: mean ${w.mean.toFixed(0)}s ± ${w.sd !== null ? w.sd.toFixed(0) : "—"}s (n=${walls.length})`);
+      }
+      const tokenTotals = g.runs.map(r => r.visibleTokens).filter((v): v is number => v !== null);
+      if (tokenTotals.length >= 2) {
+        const t = meanSd(tokenTotals);
+        console.log(`Tokens visíveis: mean ${(t.mean / 1_000_000).toFixed(2)}M ± ${t.sd !== null ? (t.sd / 1_000_000).toFixed(2) : "—"}M (n=${tokenTotals.length})`);
+      }
+      const costs = g.runs.map(r => r.totalCostUsd).filter((v): v is number => v !== null);
+      if (costs.length >= 2) {
+        const c = meanSd(costs);
+        console.log(`Custo: mean US$ ${c.mean.toFixed(2)} ± ${c.sd !== null ? c.sd.toFixed(2) : "—"} (n=${costs.length})`);
       }
     } else {
       console.log(`   F3 exige 3–5 execuções nesta MESMA configuração para média ± DP (há ${f1s.length}).`);

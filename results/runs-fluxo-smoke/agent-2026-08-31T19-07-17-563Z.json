@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-08-31T19:07:17.563Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "config": {
+    "arm": "com-oraculo",
+    "label": "protocolo neutro"
+  },
+  "cost": {
+    "startedAt": "2026-08-31T19:04:52.609Z",
+    "finishedAt": "2026-08-31T19:07:05.040Z",
+    "wallClockSeconds": 132.431,
+    "toolCalls": 24
+  },
+  "scope": [
+    "Accessibility tree (ARIA roles, labels, attributes)",
+    "Color contrast ratios on key elements",
+    "Focus indicators and keyboard navigation",
+    "Form input labeling and associated labels",
+    "Button labeling and accessibility",
+    "ARIA attribute consistency",
+    "Heading hierarchy and structure",
+    "Semantic HTML elements"
+  ],
+  "notes": "Tested keyboard navigation through CPF input and Continue button. Filled form with test data (12345678900). Checked focus styles on CPF input which showed visible gold border and box-shadow. Examined all buttons, links, and form elements for proper labeling. Verified aria-required attribute on CPF input conflicted with required HTML attribute (aria-required='true' but required=false).",
+  "findings": [
+    {
+      "selector": "#cpf",
+      "rule": "wcag:4.1.2",
+      "description": "The CPF input field exposes aria-required='true' but does not have the required HTML attribute set (required=false), creating a contradiction about whether the field is required. Assistive technologies receive conflicting information: the ARIA attribute indicates it is required, but the underlying HTML attribute indicates it is not. This violates WCAG 2.1 Success Criterion 4.1.2 which requires that name, role, and state be correctly exposed to assistive technologies."
+    }
+  ]
+}
