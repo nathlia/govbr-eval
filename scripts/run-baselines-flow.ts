@@ -22,9 +22,14 @@ import jsxA11y from "eslint-plugin-jsx-a11y";
 import tsParser from "@typescript-eslint/parser";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import type { FlowGroundTruth } from "../types";
 import { ROOT } from "./adjudication";
 import { preparePage, resolveOnPage } from "./anchors";
+import { normalizeRuleId } from "./units";
+
+const execFileAsync = promisify(execFile);
 
 const APP_URL = process.env.APP_URL ?? "http://localhost:3000";
 const GROUND_TRUTH = process.env.FLOW_GT ?? "ground-truth-fluxo.json";
@@ -69,6 +74,13 @@ export interface FlowBaselines {
      */
     findings: { rule: string; message: string; file: string; line: number }[];
   };
+  validator?: {
+    tool: string;
+    version: string;
+    byElementKey: Record<string, { rule: string; source: string; description: string; target: string }[]>;
+    unattributed: { rule: string; source: string; description: string; target: string }[];
+    requiredSpecs: { specId: string; detected: boolean }[];
+  };
 }
 
 async function main(): Promise<void> {
@@ -106,8 +118,7 @@ async function main(): Promise<void> {
     }
   }
 
-  const { bySelector } = await resolveOnPage(page, targets);
-  await browser.close();
+  const { bySelector } = await resolveOnPage(page, [...targets, ...gt.violations.map(spec => spec.anchor)]);
 
   const byElementKey: Record<string, AxeFindingRef[]> = {};
   const unattributed: AxeFindingRef[] = [];
@@ -116,6 +127,63 @@ async function main(): Promise<void> {
     if (!keys.length) { unattributed.push(finding); continue; }
     for (const k of keys) (byElementKey[k] ??= []).push(finding);
   }
+
+  // ── scanner determinístico do próprio validator ──────────────────────────
+  // Processo separado, sem LLM. O request inclui as âncoras do gabarito para que cada lacuna
+  // incorporada tenha uma prova executada, não uma presunção baseada no código do checker.
+  const validatorRoot = join(ROOT, "..", "govbr-ds-validator");
+  const validatorEntry = join(validatorRoot, "dist", "cli", "scan-page.js");
+  if (!existsSync(validatorEntry)) throw new Error(`Scanner compilado ausente: ${validatorEntry}. Rode npm run build no validator.`);
+  const request = {
+    url,
+    selectors: [...new Set(gt.violations.map(spec => spec.anchor))],
+    checks: ["tokens", "structure"],
+    actions: (gt._meta.setup ?? []).map(step => ({
+      action: step.action,
+      ...(step.selector ? { selector: step.selector } : {}),
+      ...(step.value !== undefined ? { value: step.value } : {}),
+      ...(step.ms !== undefined ? { ms: step.ms } : {}),
+    })),
+  };
+  const encoded = Buffer.from(JSON.stringify(request), "utf8").toString("base64");
+  const { stdout } = await execFileAsync(process.execPath, [validatorEntry, encoded], { maxBuffer: 10 * 1024 * 1024 });
+  const scan = JSON.parse(stdout) as {
+    findings: Array<{ rule: { id: string; source: string }; element: { locator: string }; evidence: { observed: string } }>;
+  };
+  const validatorTargets = scan.findings.map(finding => finding.element.locator);
+  const validatorResolution = await resolveOnPage(page, validatorTargets);
+  await browser.close();
+
+  const validatorByElementKey: Record<string, { rule: string; source: string; description: string; target: string }[]> = {};
+  const validatorUnattributed: NonNullable<FlowBaselines["validator"]>["unattributed"] = [];
+  for (const finding of scan.findings) {
+    const ref = {
+      rule: normalizeRuleId(finding.rule.id),
+      source: finding.rule.source,
+      description: finding.evidence.observed,
+      target: finding.element.locator,
+    };
+    const keys = validatorResolution.bySelector.get(finding.element.locator)?.keys ?? [];
+    if (!keys.length) validatorUnattributed.push(ref);
+    else for (const key of keys) (validatorByElementKey[key] ??= []).push(ref);
+  }
+
+  const requiredSpecs = gt.violations.filter(spec => spec.deterministicBaseline).map(spec => {
+    const anchorKeys = bySelector.get(spec.anchor)?.keys ?? [];
+    const expectedRules = new Set(spec.rules.map(normalizeRuleId));
+    const detected = anchorKeys.some(key =>
+      (validatorByElementKey[key] ?? []).some(finding => expectedRules.has(normalizeRuleId(finding.rule))),
+    );
+    return { specId: spec.id, detected };
+  });
+  const missingRequired = requiredSpecs.filter(spec => !spec.detected);
+  if (missingRequired.length) {
+    throw new Error(`Baseline determinístico não detectou: ${missingRequired.map(spec => spec.specId).join(", ")}`);
+  }
+  const validatorPackage = JSON.parse(readFileSync(join(validatorRoot, "package.json"), "utf8")) as { version: string };
+  console.log(`\ngovbr-ds-validator: ${scan.findings.length} achado(s) determinístico(s)`);
+  console.log(`  specs obrigatórias medidas: ${requiredSpecs.map(spec => `${spec.specId}=ok`).join(", ") || "nenhuma"}`);
+  if (validatorUnattributed.length) console.log(`  !! ${validatorUnattributed.length} achado(s) sem elemento resolvido`);
 
   console.log(`\naxe-core: ${axe.violations.length} regra(s) violada(s), ${nodes.length} nó(s), ${axe.passes.length} passes`);
   for (const v of axe.violations) console.log(`  ${v.id} (${v.impact}) × ${v.nodes.length}`);
@@ -164,6 +232,13 @@ async function main(): Promise<void> {
       config: "flat, recommended",
       filesLinted: FLOW_SOURCES,
       findings: eslintFindings,
+    },
+    validator: {
+      tool: "govbr-ds-validator scan_page (tokens + structure)",
+      version: validatorPackage.version,
+      byElementKey: validatorByElementKey,
+      unattributed: validatorUnattributed,
+      requiredSpecs,
     },
   };
 

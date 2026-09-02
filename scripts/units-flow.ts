@@ -26,6 +26,8 @@ export interface FlowUnit {
   rules: RuleId[];
   categories: string[];
   description: string;
+  state: string;
+  conditional: boolean;
 }
 
 /** Todo seletor do gabarito que a página desmente. Enquanto houver um, não se mede nada. */
@@ -80,7 +82,15 @@ export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution): FlowUnitsB
         defects.push({ specId: spec.id, problem: `elemento resolvido sem referência: ${key}` });
         continue;
       }
-      units.push({ specId: spec.id, element, rules, categories: spec.categories, description: spec.description });
+      units.push({
+        specId: spec.id,
+        element,
+        rules,
+        categories: spec.categories,
+        description: spec.description,
+        state: spec.state ?? "sempre",
+        conditional: spec.conditional ?? false,
+      });
     }
   }
 

@@ -21,6 +21,7 @@
       "anchor": ".opcao-identificacao",
       "scope": "todos",
       "expectedCount": 4,
+      "state": "sempre",
       "rules": ["ds:token-spacing"],
       "categories": ["token"],
       "description": "padding computado de 13px em TODAS as quatro opções de identificação — fora da escala de espaçamento do DS (0 / 4px / 8px / 16px). Caso decisivo do D-23: como as quatro instâncias são idênticas, a comparação com os irmãos não acusa nada; só a norma externa dá veredito."
@@ -30,24 +31,38 @@
       "anchor": "#cpf",
       "scope": "unico",
       "expectedCount": 1,
+      "state": "sempre",
       "rules": ["wcag:1.3.1", "wcag:3.3.2", "emag:6.2"],
       "categories": ["formulario", "acessibilidade"],
       "description": "o campo de CPF tem texto de apoio visível (\"Digite seu CPF para criar ou acessar sua conta gov.br\") que não está associado ao campo por aria-describedby. Regra CONDICIONAL: só existe porque há texto de apoio — um campo sem apoio não a viola."
     },
     {
-      "id": "V-03",
+      "id": "V-03a",
+      "anchor": "#cpf",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": ["wcag:3.3.1"],
+      "categories": ["formulario", "acessibilidade"],
+      "description": "o campo de CPF não identifica programaticamente o estado de erro (sem aria-invalid e sem associação estável por aria-describedby). Esta unidade existe em todo estado e ancora no controle que o usuário opera."
+    },
+    {
+      "id": "V-03b",
       "anchor": ".mensagem-erro-cpf",
       "scope": "unico",
       "expectedCount": 1,
-      "rules": ["wcag:4.1.3", "wcag:3.3.1", "emag:6.6"],
+      "state": "apos-submit-vazio",
+      "conditional": true,
+      "rules": ["wcag:4.1.3", "emag:6.6"],
       "categories": ["formulario", "acessibilidade"],
-      "description": "a mensagem de erro do CPF é inserida sem role=\"alert\" (nem aria-live) e sem associação ao campo por aria-describedby: leitor de tela não anuncia. Violação PÓS-INTERAÇÃO — não existe no DOM inicial, só depois de submeter em branco."
+      "description": "a mensagem de erro do CPF é inserida sem role=\"alert\" nem aria-live: leitor de tela não anuncia. Unidade CONDICIONAL — só existe depois de submeter o campo vazio, estado produzido pelo setup do gabarito."
     },
     {
       "id": "V-04",
       "anchor": ".lista-opcoes",
       "scope": "unico",
       "expectedCount": 1,
+      "state": "sempre",
       "rules": ["wcag:1.3.1", "ds:item-content"],
       "categories": ["estrutura", "acessibilidade"],
       "description": "o contêiner usa a classe .br-list e os filhos usam .br-item, mas nenhum carrega role=\"list\"/role=\"listitem\" nem é <ul>/<li>: a semântica de lista existe visualmente e não na árvore de acessibilidade. Defeito de COMPOSIÇÃO — cada componente está certo isolado, o conjunto não."
@@ -57,9 +72,55 @@
       "anchor": ".link-opcao",
       "scope": "todos",
       "expectedCount": 4,
+      "state": "sempre",
       "rules": ["ds:token-focus", "wcag:2.4.7", "emag:4.4"],
       "categories": ["token", "acessibilidade"],
       "description": "indicador de foco suprimido (outline: none + box-shadow: none) nos QUATRO links de opção. Segunda violação compartilhada: navegando por teclado, nenhum dos irmãos contradiz o outro."
+    },
+    {
+      "id": "V-06",
+      "anchor": ".lista-opcoes",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "deterministicBaseline": true,
+      "rules": ["ds:token-color"],
+      "categories": ["token"],
+      "description": "a borda da lista usa #dee2e6, valor autoral em fluxo.css que não corresponde a token do gov.br DS. Lacuna encontrada na primeira medida e incorporada conforme D-28."
+    },
+    {
+      "id": "V-07",
+      "anchor": ".selo-conta",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "deterministicBaseline": true,
+      "rules": ["ds:token-font-size"],
+      "categories": ["token"],
+      "description": "o selo usa font-size: 11px, valor autoral fora da escala tipográfica do gov.br DS. Lacuna encontrada na primeira medida e incorporada conforme D-28."
+    },
+    {
+      "id": "V-08",
+      "anchor": "input#cpf.br-input",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "deterministicBaseline": true,
+      "rules": ["ds:structure-input-tag"],
+      "categories": ["estrutura"],
+      "description": "a classe raiz .br-input aparece indevidamente no próprio <input>, além do contêiner <div class=\"br-input\"> canônico. Lacuna encontrada na primeira medida e incorporada conforme D-28."
+    },
+    {
+      "id": "V-09",
+      "anchor": ".mensagem-erro-cpf",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "apos-submit-vazio",
+      "conditional": true,
+      "deterministicBaseline": true,
+      "rules": ["ds:token-color"],
+      "categories": ["token"],
+      "description": "a mensagem de erro usa color: #e60000, valor autoral fora do registro de tokens do gov.br DS. Lacuna descoberta pela medição determinística da Phase 10 no estado condicional, não pela bateria original."
     }
   ]
 }

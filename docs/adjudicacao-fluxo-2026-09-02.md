@@ -89,3 +89,22 @@ escolheu — e ele não pode ser informado do estado, senão vira mapa de corre�
    antes da bateria primária.
 4. Uma questão de norma (`<hr>` contra `<span>`) que não se resolve por adjudicação e vai para a
    Discussão.
+
+---
+
+## Encaminhamento implementado na Phase 10
+
+- V-03 foi separada: `#cpf · wcag:3.3.1` é uma unidade permanente; o anúncio da mensagem é outra
+  unidade, explicitamente condicional ao estado pós-submit vazio.
+- As três lacunas autorais viraram V-06, V-07 e V-08 e só são aceitas porque o baseline executado
+  do validator as detecta por regra exata.
+- A re-medição determinística do estado condicional revelou uma quarta lacuna, que a bateria
+  original não havia reportado: `.mensagem-erro-cpf { color: #e60000 }`. Ela virou V-09, também
+  condicionada ao estado e protegida pelo mesmo baseline obrigatório.
+- `margin:auto` resolvido e propriedade sem declaração autoral deixam de produzir finding.
+- `<hr class="br-divider">` permanece evidência de divergência com o exemplo canônico, mas não é
+  finding pontuável: a semântica nativa correta do HTML prevalece. O caso entra na Discussão como
+  limite de tratar implementação oficial como norma, não em `adjudications.json`.
+- `npm run adjudicate` agora inclui `runs-fluxo*` no mesmo modo cego. Após as correções de gabarito
+  e do verificador, as antigas sete sobras se reduzem mecanicamente às alegações ainda não
+  absorvidas; o histórico acima não é reescrito.

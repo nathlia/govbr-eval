@@ -163,6 +163,12 @@ export interface RunConfig {
   clientVersion?: string;
   /** Esforço de raciocínio, quando configurável e conhecido. */
   reasoningEffort?: string;
+  /** Superfície causal exposta pelo servidor: normas, scanners, evidência ou pacote combinado. */
+  oracleProfile?: "none" | "normative" | "deterministic" | "evidence" | "combined";
+  /** Rótulo escrito pelo agente quando diverge do modelo configurado pelo runner. */
+  agentReportedModel?: string;
+  /** Convenção do contador de turnos; clientes diferentes não compartilham a mesma unidade. */
+  turnMetric?: string;
   /** Identidade exata do modelo quando difere do rótulo em `model`. */
   modelVersion?: string;
   /** Hash do protocolo carregado nesta execução. */
@@ -275,6 +281,12 @@ export interface FlowViolationSpec {
    * pontuação PARA em vez de medir — é o guarda contra editar a tela e esquecer o gabarito (D-06).
    */
   expectedCount?: number;
+  /** Estado observável em que a unidade deve ser alcançada (ex.: `sempre`, `apos-submit-vazio`). */
+  state?: string;
+  /** A unidade só existe no estado declarado; nunca é presumida no primeiro paint. */
+  conditional?: boolean;
+  /** O baseline deve provar que o scanner determinístico detecta esta spec antes de medir. */
+  deterministicBaseline?: boolean;
   /** Aliases normativos: o achado casa citando QUALQUER um deles. */
   rules: RuleId[];
   categories: string[];

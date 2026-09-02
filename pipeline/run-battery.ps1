@@ -53,6 +53,16 @@ param(
   # com -Model outro-modelo. O scorer agrupa por modelo, então a comparação sai separada sozinha.
   [string]$Model = "",
 
+  # Controlado nos dois clientes. Turnos continuam sendo contadores nativos de cada fornecedor e
+  # nunca são comparados entre clientes; o esforço, porém, deixa de ficar implícito.
+  [ValidateSet("low", "medium", "high", "xhigh", "max")]
+  [string]$ReasoningEffort = "high",
+
+  # D-28/Phase 10.6: a superfície do oráculo é uma dimensão experimental, não um pacote opaco.
+  # combined mantém compatibilidade; as outras opções isolam a contribuição causal.
+  [ValidateSet("combined", "normative", "deterministic", "evidence")]
+  [string]$OracleProfile = "combined",
+
   # full  = corpus inteiro; é o que vale como medida
   # smoke = uma aba só, para conferir encanamento (protocolo, POST, permissões) por ~1/10 do custo.
   #         Execução de fumaça NUNCA é medida: vai para results/runs-smoke/, fora do alcance do scorer.
@@ -161,7 +171,7 @@ function Get-CodexMcpConfigArgs($mcpConfig) {
     "browser_navigate", "browser_snapshot", "browser_click", "browser_type", "browser_press_key",
     "browser_evaluate", "browser_take_screenshot", "browser_console_messages", "browser_tab_list", "browser_tab_select"
   )
-  $validatorTools = @(
+  $combinedValidatorTools = @(
     "get_ds_rules", "get_design_tokens", "get_emag_rules", "get_page_rules", "get_component_spec",
     "scan_page", "get_finding_details", "verify_finding"
   )
@@ -178,7 +188,17 @@ function Get-CodexMcpConfigArgs($mcpConfig) {
       })
       $args += @("-c", "$prefix.env={$($pairs -join ',')}")
     }
-    $enabledTools = if ($name -eq "playwright") { $playwrightTools } else { $validatorTools }
+    $enabledTools = if ($name -eq "playwright") {
+      $playwrightTools
+    } else {
+      $profile = [string]($server.env.GOVBR_VALIDATOR_TOOL_PROFILE ?? "evaluation")
+      switch ($profile) {
+        "normative" { @("get_ds_rules", "get_design_tokens", "get_emag_rules", "get_page_rules", "get_component_spec") }
+        "deterministic" { @("scan_page", "get_finding_details") }
+        "evidence" { @("inspect_computed_styles") }
+        default { $combinedValidatorTools }
+      }
+    }
     $args += @("-c", "$prefix.enabled_tools=$(ConvertTo-TomlArray $enabledTools)")
     $args += @("-c", "$prefix.required=true")
     $args += @("-c", "$prefix.startup_timeout_sec=30")
@@ -362,7 +382,7 @@ $arms = @()
 if ($Arm -eq "ambos") { $arms = @("com", "sem") } else { $arms = @($Arm) }
 
 $total = $arms.Count * $Runs
-Write-Step "Plano: $total execução(ões) — cliente $clientName, braços [$($arms -join ', ')] x $Runs, modelo $Model, escopo $Scope"
+Write-Step "Plano: $total execução(ões) — cliente $clientName, braços [$($arms -join ', ')] x $Runs, modelo $Model, esforço $ReasoningEffort, oráculo $OracleProfile, escopo $Scope"
 
 if ($IsSmoke) {
   $recorte = if ($IsFluxo) { "a tela de fluxo inteira, com modelo barato" } else { "só a aba '$SmokeAba'" }
@@ -424,6 +444,8 @@ $runIndex = 0
       $validatorMcp = $runMcp.mcpServers."govbr-ds-validator"
       Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_RUN_ID" $runId
       Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_TELEMETRY_FILE" $telemetryFile
+      $validatorToolProfile = if ($OracleProfile -eq "combined") { "evaluation" } else { $OracleProfile }
+      Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_TOOL_PROFILE" $validatorToolProfile
       $effectiveMcpConfig = Join-Path $LogsDir "$runId-mcp-config.json"
       $runMcp | ConvertTo-Json -Depth 10 | Out-File -LiteralPath $effectiveMcpConfig -Encoding utf8
     }
@@ -460,6 +482,7 @@ $runIndex = 0
       "--mcp-config", $effectiveMcpConfig,
       "--settings", $settingsFile,
       "--model", $Model,
+      "--effort", $ReasoningEffort,
       "--output-format", "json",
       "--permission-mode", "dontAsk"
     )
@@ -473,6 +496,7 @@ $runIndex = 0
         "exec", "--ephemeral", "--json", "--ignore-user-config", "--ignore-rules",
         "--skip-git-repo-check", "--sandbox", "read-only", "--color", "never",
         "-C", $isolatedRoot, "-m", $Model,
+        "-c", "model_reasoning_effort=`"$ReasoningEffort`"",
         "-c", 'approval_policy="never"',
         "-c", 'features.shell_tool=false',
         "-c", 'agents.enabled=false',
@@ -547,7 +571,7 @@ $runIndex = 0
         $modeloNoArquivo = (Get-Content $vereditoPath -Raw | ConvertFrom-Json).model
         if ($modeloNoArquivo -and $modeloNoArquivo -ne $Model) {
           Write-Warn2 "modelo divergente: o arquivo diz '$modeloNoArquivo', a execução foi com '$Model'."
-          Write-Warn2 "Corrija o campo antes de pontuar — o scorer agrupa por ele."
+          Write-Warn2 "O runner normalizará o campo e preservará o rótulo do agente em config.agentReportedModel."
         }
       } catch {
         Write-Warn2 "não foi possível conferir o campo 'model' do veredito arquivado."
@@ -572,10 +596,18 @@ $runIndex = 0
         if (-not $veredito.config) {
           $veredito | Add-Member -NotePropertyName config -NotePropertyValue ([pscustomobject]@{})
         }
+        $modeloDeclarado = [string]$veredito.model
+        if ($modeloDeclarado -and $modeloDeclarado -ne $Model) {
+          Set-JsonProperty $veredito.config "agentReportedModel" $modeloDeclarado
+        }
+        Set-JsonProperty $veredito "model" $Model
         Set-JsonProperty $veredito.config "arm" $(if ($armName -eq "com") { "com-oraculo" } else { "sem-oraculo" })
         Set-JsonProperty $veredito.config "client" $clientName
         Set-JsonProperty $veredito.config "clientVersion" $clientVersion
         Set-JsonProperty $veredito.config "modelVersion" $Model
+        Set-JsonProperty $veredito.config "reasoningEffort" $ReasoningEffort
+        Set-JsonProperty $veredito.config "oracleProfile" $(if ($armName -eq "com") { $OracleProfile } else { "none" })
+        Set-JsonProperty $veredito.config "turnMetric" "$clientName-native (não comparável entre clientes)"
         Set-JsonProperty $veredito.config "protocolVersion" $protocolVersion
         if ($armName -eq "com") {
           Set-JsonProperty $veredito.config "validatorVersion" $validatorVersion
@@ -639,6 +671,8 @@ $runIndex = 0
       arm          = $armName
       armDescricao = $(if ($armName -eq "com") { "agente + oráculo MCP" } else { "agente sem oráculo (ablação)" })
       model        = $Model
+      reasoningEffort = $ReasoningEffort
+      oracleProfile = $(if ($armName -eq "com") { $OracleProfile } else { "none" })
       client       = $clientName
       clientVersion = $clientVersion
       protocolVersion = $protocolVersion
@@ -674,6 +708,8 @@ $manifestPath = Join-Path $LogsDir "$Stamp-bateria.json"
 [pscustomobject]@{
   stamp     = $Stamp
   model     = $Model
+  reasoningEffort = $ReasoningEffort
+  oracleProfile = $OracleProfile
   client    = $clientName
   clientVersion = $clientVersion
   scope     = $Scope

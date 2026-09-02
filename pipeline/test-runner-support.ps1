@@ -14,13 +14,24 @@ $definitions = $ast.FindAll({
 foreach ($definition in $definitions) { Invoke-Expression $definition.Extent.Text }
 if ($definitions.Count -ne $wanted.Count) { throw "Expected support functions were not found." }
 
+$runnerText = Get-Content -LiteralPath $runner -Raw
+foreach ($contract in @(
+  'Set-JsonProperty $veredito "model" $Model',
+  'Set-JsonProperty $veredito.config "agentReportedModel" $modeloDeclarado',
+  'Set-JsonProperty $veredito.config "reasoningEffort" $ReasoningEffort',
+  'model_reasoning_effort=',
+  '"--effort", $ReasoningEffort'
+)) {
+  if (-not $runnerText.Contains($contract)) { throw "Missing runner metadata contract: $contract" }
+}
+
 $config = [pscustomobject]@{
   mcpServers = [pscustomobject]@{
     playwright = [pscustomobject]@{ command = "cmd"; args = @("/c", "npx", "pkg"); env = [pscustomobject]@{} }
     "govbr-ds-validator" = [pscustomobject]@{
       command = "C:/node.exe"
       args = @("C:/validator.js")
-      env = [pscustomobject]@{ GOVBR_VALIDATOR_RUN_ID = "run-1" }
+      env = [pscustomobject]@{ GOVBR_VALIDATOR_RUN_ID = "run-1"; GOVBR_VALIDATOR_TOOL_PROFILE = "normative" }
     }
   }
 }
@@ -29,7 +40,8 @@ $joined = $configArgs -join "`n"
 foreach ($expected in @(
   'mcp_servers.playwright.command="cmd"',
   'mcp_servers.playwright.enabled_tools=',
-  'mcp_servers.govbr-ds-validator.env={GOVBR_VALIDATOR_RUN_ID="run-1"}',
+  'mcp_servers.govbr-ds-validator.env={GOVBR_VALIDATOR_RUN_ID="run-1",GOVBR_VALIDATOR_TOOL_PROFILE="normative"}',
+  'mcp_servers.govbr-ds-validator.enabled_tools=["get_ds_rules","get_design_tokens","get_emag_rules","get_page_rules","get_component_spec"]',
   'mcp_servers.govbr-ds-validator.required=true'
 )) {
   if (-not $joined.Contains($expected)) { throw "Missing Codex config: $expected" }

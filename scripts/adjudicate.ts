@@ -163,7 +163,9 @@ if (EMIT) {
 
   // Stale records: a verdict about a claim that appears in no archived run. Kept (a run may be
   // re-archived) but flagged, never silently deleted.
-  const stale = [...byId.keys()].filter(id => !claims.has(id));
+  const stale = [...byId.entries()]
+    .filter(([id, record]) => !claims.has(id) && !record.caseId.startsWith("E-"))
+    .map(([id]) => id);
 
   const out: Adjudications = {
     _meta: {
@@ -201,7 +203,10 @@ for (const r of adj.records) {
     const exists = expectedUnits.some(u => u.caseId === r.unit!.caseId && u.rules.includes(rule));
     if (!exists) defects.push(`${r.id}: unidade alvo ${r.unit.caseId} / ${r.unit.rule} não existe no gabarito`);
   }
-  if (!claims.has(r.id)) defects.push(`${r.id}: nenhum achado arquivado corresponde a este registro (obsoleto?)`);
+  // Registros E-* pertencem à suíte de fluxo e são auditados por adjudicate-flow.ts.
+  if (!claims.has(r.id) && !r.caseId.startsWith("E-")) {
+    defects.push(`${r.id}: nenhum achado arquivado corresponde a este registro (obsoleto?)`);
+  }
 }
 if (defects.length) {
   console.log(`\n⚠ ${defects.length} registro(s) não aplicável(is) — seguem cobrados como FP:`);

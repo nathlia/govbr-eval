@@ -387,7 +387,7 @@ function loadRuns(): RunSummary[] {
           // pela quarta vez. Execução sem rótulo não é assumida comparável: vira grupo próprio.
           configKey:
             `${arm} | ${raw.model} | ${coveredCases}/${gabaritoCases} casos | ` +
-            `${label ?? "sem label"} | ${client} | ${reasoning} | ${protocol} | ${validator}`,
+            `${label ?? "sem label"} | ${client} | ${reasoning} | ${raw.config?.oracleProfile ?? (arm === "sem-oraculo" ? "none" : "perfil não rotulado")} | ${protocol} | ${validator}`,
           ...prf(score.floor.TP, score.floor.FP, score.floor.FN),
           FP: score.floor.FP,
           ...(() => {

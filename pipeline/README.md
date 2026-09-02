@@ -47,7 +47,9 @@ cd "F:\Dev Nath\TCC\govbr-eval\pipeline"
 ```
 
 Parâmetros: `-Runs` (1–10) · `-Arm` (`com` | `sem` | `ambos`) · `-Provider` (`claude` | `codex`) ·
-`-Model` · `-CorpusUrl` · `-DashboardUrl` · `-SkipBaselines` · `-SkipScore` · `-PreflightOnly`.
+`-Model` · `-ReasoningEffort` (`low`–`max`) · `-OracleProfile` (`normative` | `deterministic` |
+`evidence` | `combined`) · `-CorpusUrl` · `-DashboardUrl` · `-SkipBaselines` · `-SkipScore` ·
+`-PreflightOnly`.
 
 No provider `codex`, o runner localiza primeiro o comando no `PATH` e depois o executável incluído
 no app desktop. Ele exige um login válido, desativa shell, busca web, regras e configuração pessoal,
@@ -72,17 +74,19 @@ As duas últimas são as que sustentam a ablação: se o agente **sem** oráculo
 conhecimento direto do disco, ele teria o conhecimento do oráculo por outro caminho e a ablação
 mediria nada. O protocolo antes *pedia* ao agente que não olhasse; agora o harness **impede**.
 
-No braço com oráculo, `GOVBR_VALIDATOR_TOOL_PROFILE=evaluation` expõe somente oito ferramentas. As
-varreduras isoladas, inspeção de estilos, listagem e persistência continuam disponíveis no perfil
-`full`, mas na bateria são substituídas por `scan_page`, ledger, consultas focadas e pelo endpoint
-do dashboard. O inventário e a migração estão em `docs/mcp-tool-profiles.md`.
+No braço com oráculo, `-OracleProfile` seleciona uma superfície causal: `normative` expõe somente
+fundamentação externa, `deterministic` somente scanner + ledger, `evidence` somente inspeção bruta,
+e `combined` preserva o pacote compacto anterior. O runner injeta o perfil na configuração MCP,
+grava-o em `RunConfig.oracleProfile` e o scorer o inclui na chave de agrupamento. Assim, execuções
+com normas, scanner ou pacote combinado nunca são somadas por acidente. O perfil `full` continua
+reservado ao desenvolvimento fora da bateria.
 
 ## Como os braços são rotulados
 
 O scorer é **ciente de configuração** (D-17): ele varre `results/runs/`, `results/runs-ablacao/` e
 `results/runs-piloto/`, agrupa por braço, modelo, cobertura, cliente, esforço de raciocínio,
-hash do protocolo e versão do validator, e **nunca** agrega grupos diferentes. Média ± DP só sai
-dentro de um grupo.
+perfil causal do oráculo, hash do protocolo e versão do validator, e **nunca** agrega grupos
+diferentes. Média ± DP só sai dentro de um grupo.
 
 O diretório é o que informa o braço, e por isso o script move os arquivos da ablação para
 `results/runs-ablacao/` ao final de cada execução — não é mais contorno, é a convenção que rotula.
@@ -98,7 +102,8 @@ de metadado nenhum — ele julgou 26 de 52 casos, logo não é comparável.
 O agente ainda produz o veredito, mas não é mais a fonte autoritativa para configuração e custo.
 Depois que o subprocesso termina, o runner anexa ao artefato arquivado:
 
-- cliente e versão, modelo, versão do validator e SHA-256 do protocolo comum + especialização;
+- cliente e versão, modelo efetivo, esforço, perfil causal do oráculo, versão do validator e
+  SHA-256 do protocolo comum + especialização;
 - tokens de input, criação/leitura de cache, raciocínio e output informados pelo cliente;
 - custo monetário, turnos e tempo de parede;
 - chamadas, erros, bytes de entrada/saída e duração do MCP do validator, total e por ferramenta.
@@ -111,6 +116,12 @@ pelo cliente.
 Claude registra o custo monetário informado pelo próprio cliente. Login ChatGPT no Codex fornece
 tokens e chamadas, mas não um valor monetário por execução; por isso o runner não fabrica
 `totalCostUsd` para essas rodadas.
+
+O modelo efetivo vem do argumento do runner, não do texto produzido pelo agente. Se o agente
+escrever outro rótulo, o runner normaliza `model` e preserva o original em
+`config.agentReportedModel`. `reasoningEffort` é passado explicitamente aos dois clientes. O campo
+`turns` permanece um contador nativo do fornecedor e é rotulado como tal: não é unidade comparável
+entre Codex e Claude Code.
 
 **O que ainda falta:** a comparação lado a lado entre os braços. O scorer hoje avisa que a ablação
 não existe, mas não emite a tabela comparativa — isso exige os dois braços com n >= 3 na mesma

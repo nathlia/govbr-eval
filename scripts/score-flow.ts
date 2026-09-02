@@ -21,6 +21,7 @@ import {
   buildFlowUnits, scoreFlow, selectorsOfGroundTruth, selectorsOfRuns,
   type FlowScore, type FlowUnit,
 } from "./units-flow";
+import { normalizeRuleId } from "./units";
 
 const APP_URL = process.env.APP_URL ?? "http://localhost:3000";
 const GROUND_TRUTH = process.env.FLOW_GT ?? "ground-truth-fluxo.json";
@@ -65,8 +66,9 @@ function printAnchors(gt: FlowGroundTruth, res: Resolution, units: FlowUnit[]): 
   for (const spec of gt.violations) {
     const keys = resolveWithExcept(res, spec.anchor, spec.except);
     const declared = spec.expectedCount != null ? ` (declarado: ${spec.expectedCount})` : "";
+    const state = `${spec.state ?? "sempre"}${spec.conditional ? " (condicional)" : ""}`;
     console.log(`  ${spec.id}  ${spec.anchor}${spec.except ? `  except ${spec.except}` : ""}`);
-    console.log(`     scope ${spec.scope} → ${keys.length} elemento(s)${declared} · regras: ${spec.rules.join(", ")}`);
+    console.log(`     scope ${spec.scope} → ${keys.length} elemento(s)${declared} · estado: ${state} · regras: ${spec.rules.join(", ")}`);
     for (const k of keys.slice(0, verbose ? keys.length : 4)) {
       const el = res.byKey.get(k);
       console.log(`       ${el?.id}  ${el?.label}`);
@@ -110,6 +112,14 @@ function printBaselines(units: FlowUnit[]): void {
   if (TP === 0) {
     console.log(`  → nenhuma das ${units.length} unidades é alcançada pelas ferramentas genéricas.`);
   }
+  if (b.validator) {
+    const validatorTP = units.filter(unit =>
+      (b.validator!.byElementKey[unit.element.key] ?? [])
+        .some(finding => unit.rules.includes(normalizeRuleId(finding.rule))),
+    ).length;
+    console.log(`  validator    ${validatorTP}/${units.length} unidades detectadas por regra exata`);
+    console.log(`               baseline obrigatório: ${b.validator.requiredSpecs.map(spec => `${spec.specId}=${spec.detected ? "ok" : "FALHA"}`).join(", ")}`);
+  }
 }
 
 function printRun(run: LoadedRun, s: FlowScore): void {
@@ -138,6 +148,20 @@ function printRun(run: LoadedRun, s: FlowScore): void {
     `${(run.data.cost?.totalCostUsd !== undefined ? run.data.cost.totalCostUsd.toFixed(2) : "—").padStart(8)} ` +
     `${(costPerUnit !== undefined ? costPerUnit.toFixed(4) : "—").padStart(8)} ` +
     `${(unitsPer100k !== undefined ? unitsPer100k.toFixed(3) : "—").padStart(9)}`,
+  );
+  const byState = new Map<string, { hit: number; total: number; conditional: boolean }>();
+  for (const outcome of s.outcomes) {
+    const state = outcome.unit.state;
+    const item = byState.get(state) ?? { hit: 0, total: 0, conditional: false };
+    item.total++;
+    if (outcome.matched) item.hit++;
+    item.conditional ||= outcome.unit.conditional;
+    byState.set(state, item);
+  }
+  console.log(
+    "   alcance por estado: " + [...byState.entries()]
+      .map(([state, item]) => `${state}${item.conditional ? " [condicional]" : ""} ${item.hit}/${item.total}`)
+      .join(" · "),
   );
   if (verbose) {
     for (const o of s.outcomes.filter(o => !o.matched)) {
@@ -202,6 +226,7 @@ async function main(): Promise<void> {
     const key =
       `${r.arm} | ${r.data.model ?? "—"} | ${c?.client ?? "cliente não rotulado"} | ` +
       `${c?.reasoningEffort ?? "esforço não rotulado"} | ` +
+      `${c?.oracleProfile ?? (r.arm === "sem-oraculo" ? "none" : "perfil não rotulado")} | ` +
       `${c?.protocolVersion ?? "protocolo não versionado"} | ` +
       `${c?.validatorVersion ?? (r.arm === "com-oraculo" ? "validator não versionado" : "sem validator")}`;
     if (!groups.has(key)) groups.set(key, []);
@@ -220,6 +245,9 @@ async function main(): Promise<void> {
     console.log("─".repeat(166));
     for (const r of rs) printRun(r, scoreFlow(r.data, units, res, adj));
     if (rs.length < 3) console.log("   F3 exige 3–5 execuções nesta MESMA configuração para média ± DP.");
+    if (new Set(rs.map(r => r.data.config?.client)).size > 1) {
+      console.log("   turns é contador nativo do cliente e não é comparável entre fornecedores.");
+    }
   }
   console.log("");
 }

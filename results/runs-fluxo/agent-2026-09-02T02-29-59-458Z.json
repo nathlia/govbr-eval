@@ -1,6 +1,6 @@
 {
   "timestamp": "2026-09-02T02:29:59.458Z",
-  "model": "gpt-5",
+  "model": "gpt-5.6-luna",
   "appUrl": "http://localhost:3000/fluxo.html",
   "scope": [
     "tela inteira"
@@ -73,6 +73,10 @@
     "client": "codex-cli",
     "clientVersion": "codex-cli 0.152.0",
     "modelVersion": "gpt-5.6-luna",
+    "agentReportedModel": "gpt-5",
+    "reasoningEffort": "uncontrolled-legacy",
+    "oracleProfile": "combined",
+    "turnMetric": "codex-cli-native (não comparável entre clientes)",
     "protocolVersion": "sha256:7e127b3942403c7169579f3b41d4cda75c346fa8f530de4ac6eee7348ec39a38",
     "validatorVersion": "2.0.0"
   },
