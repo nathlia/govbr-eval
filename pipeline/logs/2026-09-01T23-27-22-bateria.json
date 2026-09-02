@@ -1,0 +1,61 @@
+{
+  "stamp": "2026-09-01T23-27-22",
+  "model": "gpt-5.6-luna",
+  "client": "codex-cli",
+  "clientVersion": "codex-cli 0.152.0",
+  "scope": "full",
+  "runsPerArm": 1,
+  "arms": [
+    "com",
+    "sem"
+  ],
+  "corpusUrl": "http://localhost:3000",
+  "execucoes": [
+    {
+      "run": 1,
+      "runId": "2026-09-01T23-27-22-com-run1-69e18008",
+      "arm": "com",
+      "armDescricao": "agente + oráculo MCP",
+      "model": "gpt-5.6-luna",
+      "client": "codex-cli",
+      "clientVersion": "codex-cli 0.152.0",
+      "protocolVersion": "sha256:7e127b3942403c7169579f3b41d4cda75c346fa8f530de4ac6eee7348ec39a38",
+      "validatorVersion": "2.0.0",
+      "mcpConfig": "2026-09-01T23-27-22-com-run1-69e18008-mcp-config.json",
+      "prompt": "Avalie a tela em http://localhost:3000/fluxo.html. Para salvar, navegue ate http://localhost:4000 e faca POST em /api/save-flow-results a partir dali.",
+      "scope": "full",
+      "archive": "agent-2026-09-02T02-29-59-458Z.json",
+      "suite": "fluxo",
+      "archiveDir": "results/runs-fluxo",
+      "exitCode": 0,
+      "wallClockSeconds": 162.2,
+      "log": "2026-09-01T23-27-22-com-run1.jsonl",
+      "stderrLog": "2026-09-01T23-27-22-com-run1.stderr.log",
+      "mcpTelemetry": "2026-09-01T23-27-22-com-run1-69e18008-mcp.ndjson",
+      "startedAt": "2026-09-02T02:27:24.4074623Z"
+    },
+    {
+      "run": 2,
+      "runId": "2026-09-01T23-27-22-sem-run1-3b622c44",
+      "arm": "sem",
+      "armDescricao": "agente sem oráculo (ablação)",
+      "model": "gpt-5.6-luna",
+      "client": "codex-cli",
+      "clientVersion": "codex-cli 0.152.0",
+      "protocolVersion": "sha256:7e127b3942403c7169579f3b41d4cda75c346fa8f530de4ac6eee7348ec39a38",
+      "validatorVersion": null,
+      "mcpConfig": "mcp-sem-oraculo.json",
+      "prompt": "Avalie a tela em http://localhost:3000/fluxo.html. Para salvar, navegue ate http://localhost:4000 e faca POST em /api/save-flow-results a partir dali.",
+      "scope": "full",
+      "archive": "agent-2026-09-02T02-32-15-515Z.json",
+      "suite": "fluxo",
+      "archiveDir": "results/runs-fluxo-ablacao",
+      "exitCode": 0,
+      "wallClockSeconds": 135.8,
+      "log": "2026-09-01T23-27-22-sem-run1.jsonl",
+      "stderrLog": "2026-09-01T23-27-22-sem-run1.stderr.log",
+      "mcpTelemetry": null,
+      "startedAt": "2026-09-02T02:30:06.8774031Z"
+    }
+  ]
+}

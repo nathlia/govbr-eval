@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-09-02T02:32:15.515Z",
+  "model": "GPT-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "tela inteira observável em /fluxo.html"
+  ],
+  "notes": "Inspeção por snapshot de acessibilidade, DOM/estilos relevantes e interações. Tentado CPF inválido (123) e CPF válido (52998224725), envio pelo botão Continuar, foco/ordem de tabulação via DOM, Alto Contraste e VLibras. Não houve mensagem de erro, aria-invalid, aria-describedby, mudança de foco ou transição após os envios; Alto Contraste e VLibras não expuseram estado adicional observável. Console registrou apenas 404 de favicon.ico. Oráculo e scan_page não estavam disponíveis; não foram inventados identificadores.",
+  "findings": [
+    {
+      "selector": "#cpf",
+      "rule": "wcag:3.3.1",
+      "description": "Após enviar um CPF inválido (123), a interface não identifica o erro ao usuário: não apresenta mensagem visível, não marca o campo como aria-invalid e não fornece aria-describedby para uma mensagem de erro. O mesmo comportamento foi observado após a tentativa com CPF válido, sem qualquer transição; a evidência do caso inválido é a ausência de mudança de estado do campo e do conteúdo acessível após o envio."
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "codex-cli",
+    "clientVersion": "codex-cli 0.152.0",
+    "modelVersion": "gpt-5.6-luna",
+    "protocolVersion": "sha256:7e127b3942403c7169579f3b41d4cda75c346fa8f530de4ac6eee7348ec39a38"
+  },
+  "cost": {
+    "startedAt": "2026-09-02T02:30:06.8774031Z",
+    "finishedAt": "2026-09-02T02:32:22.7253652Z",
+    "wallClockSeconds": 135.8,
+    "tokens": 902194,
+    "tokenUsage": {
+      "input": 57385,
+      "cacheCreationInput": 0,
+      "cacheReadInput": 840960,
+      "output": 3849
+    },
+    "turns": 1,
+    "toolCalls": 32,
+    "reasoningOutputTokens": 1045
+  }
+}

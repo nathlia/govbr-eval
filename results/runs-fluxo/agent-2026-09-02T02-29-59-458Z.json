@@ -1,0 +1,130 @@
+{
+  "timestamp": "2026-09-02T02:29:59.458Z",
+  "model": "gpt-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "tela inteira"
+  ],
+  "notes": "Snapshot de acessibilidade e DOM observável realizados no estado inicial. Interações: acionado Alto Contraste e verificada a mudança de estado; navegação por Tab; submetido CPF vazio, que exibiu “Informe um CPF para continuar”; preenchido CPF inválido curto (123) e submetido. O scanner gov.br executou uma varredura por estado inalterado: S-page-001 (fingerprint sha256:5e712e4a770e67887a4b1ae2f6148589fb50abe071acad28807286263cce8b37) e S-page-002 após contraste (fingerprint sha256:fd8e4b1ff5f928f21b91feaff33ec13ce8ff390de5d7d64b28583926da5827b9), com 10 achados inalterados. Axe: 36 passes; estado pós-contraste teve 1 incomplete. Não foram criados achados para classes extras: o oráculo explicitamente informou que não há norma para isso. Console registrou erros durante a execução, sem evidência suficiente para atribuição normativa.",
+  "findings": [
+    {
+      "id": "F-001",
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2)",
+      "rule": "ds-token-color",
+      "description": "A borda observada usa #dee2e6, valor que não corresponde a token registrado do gov.br DS; o oráculo indica como mais próximo --gray-cool-10 (#dfe1e2)."
+    },
+    {
+      "id": "F-002",
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)",
+      "rule": "ds-token-spacing",
+      "description": "O padding observado é 13px, fora da escala de espaçamento do DS (múltiplos de 4px)."
+    },
+    {
+      "id": "F-003",
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > span",
+      "rule": "ds-token-font-size",
+      "description": "O tamanho de fonte observado é 11px, fora da escala tipográfica do DS retornada pelo oráculo."
+    },
+    {
+      "id": "F-004",
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > span",
+      "rule": "ds-token-spacing",
+      "description": "A margem observada inclui 143.641px, fora da escala de espaçamento do DS."
+    },
+    {
+      "id": "F-005",
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)",
+      "rule": "ds-token-spacing",
+      "description": "O padding observado é 13px, fora da escala de espaçamento do DS."
+    },
+    {
+      "id": "F-006",
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)",
+      "rule": "ds-token-spacing",
+      "description": "O padding observado é 13px, fora da escala de espaçamento do DS."
+    },
+    {
+      "id": "F-007",
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)",
+      "rule": "ds-token-spacing",
+      "description": "O padding observado é 13px, fora da escala de espaçamento do DS."
+    },
+    {
+      "id": "F-008",
+      "selector": "#root > main > section:nth-of-type(2) > hr",
+      "rule": "ds-token-color",
+      "description": "A cor observada é #808080, valor que não corresponde a token registrado do gov.br DS; o oráculo indica como mais próximo --gray-40 (#888888)."
+    },
+    {
+      "id": "F-009",
+      "selector": "#root > main > section:nth-of-type(2) > hr",
+      "rule": "ds-structure-divider-tag",
+      "description": "O componente br-divider foi aplicado a um elemento <hr>, enquanto a regra retornada exige <span>."
+    },
+    {
+      "id": "F-010",
+      "selector": "#cpf",
+      "rule": "ds-structure-input-tag",
+      "description": "A classe br-input foi aplicada diretamente ao elemento <input>, enquanto a regra retornada exige aplicação em <div>."
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "codex-cli",
+    "clientVersion": "codex-cli 0.152.0",
+    "modelVersion": "gpt-5.6-luna",
+    "protocolVersion": "sha256:7e127b3942403c7169579f3b41d4cda75c346fa8f530de4ac6eee7348ec39a38",
+    "validatorVersion": "2.0.0"
+  },
+  "cost": {
+    "startedAt": "2026-09-02T02:27:24.4074623Z",
+    "finishedAt": "2026-09-02T02:30:06.7666861Z",
+    "wallClockSeconds": 162.2,
+    "tokens": 874832,
+    "tokenUsage": {
+      "input": 74877,
+      "cacheCreationInput": 0,
+      "cacheReadInput": 795392,
+      "output": 4563
+    },
+    "turns": 1,
+    "toolCalls": 38,
+    "reasoningOutputTokens": 1462,
+    "mcp": {
+      "runId": "2026-09-01T23-27-22-com-run1-69e18008",
+      "telemetryFile": "pipeline/logs/2026-09-01T23-27-22-com-run1-69e18008-mcp.ndjson",
+      "calls": 6,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 488,
+      "responseBytes": 96996,
+      "durationMs": 6140,
+      "byTool": {
+        "scan_page": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 278,
+          "responseBytes": 59151,
+          "durationMs": 6139
+        },
+        "get_page_rules": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 84,
+          "responseBytes": 30475,
+          "durationMs": 1
+        },
+        "get_finding_details": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 126,
+          "responseBytes": 7370,
+          "durationMs": 0
+        }
+      }
+    }
+  }
+}
