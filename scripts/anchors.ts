@@ -63,20 +63,56 @@ interface InPageResult {
  *
  * A chave canônica é a cadeia `tag:nth-of-type(n)` da raiz até o elemento; o índice só aparece
  * quando há irmãos de mesma tag, para a chave não ficar mais longa do que precisa.
+ *
+ * SHADOW DOM. `document.querySelectorAll` para em cada fronteira de shadow root, e os componentes
+ * do gov.br (`@govbr-ds/webcomponents`, usados pelas telas reais) renderizam tudo dentro de um
+ * shadow root ABERTO. Sem atravessar: o gabarito não consegue ancorar nada dentro de um componente,
+ * e todo achado que o agente reportar lá dentro vira falso positivo por incapacidade do
+ * instrumento — o erro mais caro possível, porque é silencioso e sistemático contra o braço que
+ * enxerga melhor.
+ *
+ * A travessia aparece na chave: `pnip-root>br-header >>> header>div>button`. O separador é o mesmo
+ * que o oráculo usa nos seus locators, e isso é deliberado — o agente muitas vezes reporta o
+ * locator que recebeu, e um formato que o scorer não resolvesse transformaria a citação correta
+ * em achado sem unidade. Os dois lados escrevem seletor como quiserem, e ambos continuam sendo
+ * reduzidos ao MESMO elemento.
  */
 const RESOLVE_IN_PAGE = `(selectors) => {
+  const SHADOW = " >>> ";
+
+  const rootOf = (el) => el.getRootNode();
+  const isShadowRoot = (root) => !!(root && root.host);
+
+  const segOf = (el) => {
+    const tag = el.tagName.toLowerCase();
+    const parent = el.parentElement;
+    const container = parent ? parent : (isShadowRoot(rootOf(el)) ? rootOf(el) : null);
+    const sameTag = container
+      ? Array.from(container.children).filter(c => c.tagName === el.tagName)
+      : [el];
+    return sameTag.length > 1 ? tag + ":nth-of-type(" + (sameTag.indexOf(el) + 1) + ")" : tag;
+  };
+
   const keyOf = (start) => {
-    const parts = [];
+    const trees = [];
+    let parts = [];
     let el = start;
     while (el && el.nodeType === 1 && el !== document.documentElement) {
-      const tag = el.tagName.toLowerCase();
+      parts.unshift(segOf(el));
       const parent = el.parentElement;
-      if (!parent) { parts.unshift(tag); break; }
-      const sameTag = Array.from(parent.children).filter(c => c.tagName === el.tagName);
-      parts.unshift(sameTag.length > 1 ? tag + ":nth-of-type(" + (sameTag.indexOf(el) + 1) + ")" : tag);
-      el = parent;
+      if (parent) { el = parent; continue; }
+      const root = rootOf(el);
+      if (isShadowRoot(root)) {
+        // Fim de uma árvore de shadow: fecha o trecho e continua a partir do host.
+        trees.unshift(parts.join(">"));
+        parts = [];
+        el = root.host;
+        continue;
+      }
+      break;
     }
-    return parts.join(">");
+    trees.unshift(parts.join(">"));
+    return trees.filter(Boolean).join(SHADOW);
   };
 
   const labelOf = (el) => {
@@ -84,12 +120,39 @@ const RESOLVE_IN_PAGE = `(selectors) => {
     const domId = el.id ? "#" + el.id : "";
     const text = (el.getAttribute("aria-label") || el.innerText || el.getAttribute("placeholder") || "")
       .replace(/\\s+/g, " ").trim().slice(0, 48);
-    return "<" + tag + domId + ">" + (text ? ' "' + text + '"' : "");
+    const sombra = isShadowRoot(rootOf(el)) ? " [shadow]" : "";
+    return "<" + tag + domId + ">" + (text ? ' "' + text + '"' : "") + sombra;
+  };
+
+  // Um seletor pode nomear um caminho por shadow roots (\`host >>> interno\`) ou não dizer nada
+  // sobre eles — neste caso a busca desce por toda shadow root aberta, para que \`.br-button\`
+  // encontre também as instâncias dentro dos componentes.
+  const queryAll = (selector) => {
+    if (selector.indexOf(">>>") !== -1) {
+      const hops = selector.split(">>>").map(s => s.trim()).filter(Boolean);
+      let roots = [document];
+      let found = [];
+      for (let i = 0; i < hops.length; i++) {
+        found = [];
+        for (const r of roots) found.push.apply(found, Array.from(r.querySelectorAll(hops[i])));
+        if (i < hops.length - 1) roots = found.map(e => e.shadowRoot).filter(Boolean);
+      }
+      return found;
+    }
+    const out = [];
+    const visit = (root) => {
+      out.push.apply(out, Array.from(root.querySelectorAll(selector)));
+      for (const el of Array.from(root.querySelectorAll("*"))) {
+        if (el.shadowRoot) visit(el.shadowRoot);
+      }
+    };
+    visit(document);
+    return out;
   };
 
   return selectors.map(selector => {
     try {
-      const nodes = Array.from(document.querySelectorAll(selector));
+      const nodes = queryAll(selector);
       return { selector, ok: true, error: null, items: nodes.map(n => ({ key: keyOf(n), label: labelOf(n) })) };
     } catch (e) {
       return { selector, ok: false, error: String((e && e.message) || e), items: [] };
