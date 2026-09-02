@@ -19,10 +19,16 @@ foreach ($contract in @(
   'Set-JsonProperty $veredito "model" $Model',
   'Set-JsonProperty $veredito.config "agentReportedModel" $modeloDeclarado',
   'Set-JsonProperty $veredito.config "reasoningEffort" $ReasoningEffort',
+  'Set-JsonProperty $veredito.config "instrumentVersion" $InstrumentVersion',
   'model_reasoning_effort=',
   '"--effort", $ReasoningEffort'
 )) {
   if (-not $runnerText.Contains($contract)) { throw "Missing runner metadata contract: $contract" }
+}
+
+$settings = Get-Content -LiteralPath (Join-Path $PSScriptRoot "settings-run.json") -Raw | ConvertFrom-Json
+if ($settings.permissions.allow -notcontains "mcp__playwright__browser_resize") {
+  throw "The scored-run permission set must allow browser_resize when the protocol measures reflow."
 }
 
 $config = [pscustomobject]@{
@@ -40,6 +46,7 @@ $joined = $configArgs -join "`n"
 foreach ($expected in @(
   'mcp_servers.playwright.command="cmd"',
   'mcp_servers.playwright.enabled_tools=',
+  'browser_resize',
   'mcp_servers.govbr-ds-validator.env={GOVBR_VALIDATOR_RUN_ID="run-1",GOVBR_VALIDATOR_TOOL_PROFILE="normative"}',
   'mcp_servers.govbr-ds-validator.enabled_tools=["get_ds_rules","get_design_tokens","get_emag_rules","get_page_rules","get_component_spec"]',
   'mcp_servers.govbr-ds-validator.required=true'

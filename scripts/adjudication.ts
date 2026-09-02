@@ -80,6 +80,8 @@ export function loadAdjudications(root = ROOT): AdjudicationIndex {
 export function recordDefect(r: AdjudicationRecord): string | null {
   if (r.verdict === null) return null;
   if (!r.rationale?.trim()) return "sem justificativa (`rationale` vazio)";
-  if (r.verdict === "vocabulario" && !r.unit?.rule) return "verdict `vocabulario` sem `unit` alvo";
+  if ((r.verdict === "vocabulario" || r.verdict === "deteccao-correta") && !r.unit?.rule) {
+    return `verdict \`${r.verdict}\` sem \`unit\` alvo`;
+  }
   return null;
 }

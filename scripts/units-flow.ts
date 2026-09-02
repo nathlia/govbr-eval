@@ -105,8 +105,11 @@ export interface FlowOutcome {
   /** Casou por citação explícita de regra (vs. fallback por elemento). */
   ruleVerified: boolean;
   adjudicated: boolean;
+  adjudicationVerdict: "vocabulario" | "deteccao-correta" | null;
   matchedRule: RuleId | null;
   finding: string | null;
+  /** Whether the unit was the finding's primary subject or an explicit relational participant. */
+  anchorMode: "exact" | "related" | "adjudicated" | null;
 }
 
 export interface FlowLeftover {
@@ -138,12 +141,35 @@ export interface FlowScore {
   unresolvedCount: number;
 }
 
+export interface FlowFamilySummary {
+  detected: number;
+  complete: number;
+  total: number;
+}
+
+/** Cluster-aware companion to element-level scoring: each V-spec has weight one. */
+export function summarizeFlowFamilies(outcomes: FlowOutcome[]): FlowFamilySummary {
+  const bySpec = new Map<string, { hit: number; total: number }>();
+  for (const outcome of outcomes) {
+    const item = bySpec.get(outcome.unit.specId) ?? { hit: 0, total: 0 };
+    item.total++;
+    if (outcome.matched) item.hit++;
+    bySpec.set(outcome.unit.specId, item);
+  }
+  return {
+    detected: [...bySpec.values()].filter(item => item.hit > 0).length,
+    complete: [...bySpec.values()].filter(item => item.hit === item.total).length,
+    total: bySpec.size,
+  };
+}
+
 /** Um achado já resolvido: uma afirmação por elemento que o seletor alcança. */
 interface Candidate {
   key: string | null;          // null = seletor não resolvido
   elementId: string;
   elementLabel: string;
   selector: string;
+  relatedKeys: Set<string>;
   rules: RuleId[];
   description: string;
   used: boolean;
@@ -155,6 +181,12 @@ function candidatesOf(findings: FlowFinding[], res: Resolution): Candidate[] {
     const { rules, description } = rulesOfFinding({ rule: f.rule, description: f.description });
     const resolved = res.bySelector.get(f.selector);
     const keys = resolved?.ok ? resolved.keys : [];
+    const relatedKeys = new Set(
+      (f.relatedSelectors ?? []).flatMap(selector => {
+        const relation = res.bySelector.get(selector);
+        return relation?.ok ? relation.keys : [];
+      }),
+    );
 
     if (keys.length === 0) {
       out.push({
@@ -163,7 +195,7 @@ function candidatesOf(findings: FlowFinding[], res: Resolution): Candidate[] {
         elementLabel: resolved?.ok
           ? "(seletor sem correspondência na página)"
           : `(seletor inválido: ${resolved?.error ?? "?"})`,
-        selector: f.selector, rules, description, used: false,
+        selector: f.selector, relatedKeys, rules, description, used: false,
       });
       continue;
     }
@@ -172,7 +204,7 @@ function candidatesOf(findings: FlowFinding[], res: Resolution): Candidate[] {
     // pagar em precisão, elemento por elemento.
     for (const key of keys) {
       const el = res.byKey.get(key)!;
-      out.push({ key, elementId: el.id, elementLabel: el.label, selector: f.selector, rules, description, used: false });
+      out.push({ key, elementId: el.id, elementLabel: el.label, selector: f.selector, relatedKeys, rules, description, used: false });
     }
   }
   return out;
@@ -194,7 +226,27 @@ export function scoreFlow(
       c.used = true;
       outcomes.push({
         unit, matched: true, ruleVerified: true, adjudicated: false,
+        adjudicationVerdict: null,
         matchedRule: c.rules.find(r => unit.rules.includes(r)) ?? null, finding: c.description,
+        anchorMode: "exact",
+      });
+    }
+  }
+
+  // Passo 1b — mesma regra, participante relacional declarado explicitamente pelo agente.
+  // `relatedSelectors` não cria candidatos nem multiplica crédito: apenas permite que uma
+  // afirmação sobre a relação alcance a unidade ancorada em outro participante observado.
+  for (const unit of units) {
+    if (outcomes.some(o => o.unit === unit)) continue;
+    const c = candidates.find(c => !c.used && c.relatedKeys.has(unit.element.key)
+      && c.rules.some(r => unit.rules.includes(r)));
+    if (c) {
+      c.used = true;
+      outcomes.push({
+        unit, matched: true, ruleVerified: true, adjudicated: false,
+        adjudicationVerdict: null,
+        matchedRule: c.rules.find(r => unit.rules.includes(r)) ?? null,
+        finding: c.description, anchorMode: "related",
       });
     }
   }
@@ -205,9 +257,15 @@ export function scoreFlow(
     const c = candidates.find(c => !c.used && c.key === unit.element.key && c.rules.length === 0);
     if (c) {
       c.used = true;
-      outcomes.push({ unit, matched: true, ruleVerified: false, adjudicated: false, matchedRule: null, finding: c.description });
+      outcomes.push({ unit, matched: true, ruleVerified: false, adjudicated: false, adjudicationVerdict: null, matchedRule: null, finding: c.description, anchorMode: "exact" });
     } else {
-      outcomes.push({ unit, matched: false, ruleVerified: false, adjudicated: false, matchedRule: null, finding: null });
+      const related = candidates.find(c => !c.used && c.relatedKeys.has(unit.element.key) && c.rules.length === 0);
+      if (related) {
+        related.used = true;
+        outcomes.push({ unit, matched: true, ruleVerified: false, adjudicated: false, adjudicationVerdict: null, matchedRule: null, finding: related.description, anchorMode: "related" });
+      } else {
+        outcomes.push({ unit, matched: false, ruleVerified: false, adjudicated: false, adjudicationVerdict: null, matchedRule: null, finding: null, anchorMode: null });
+      }
     }
   }
 
@@ -255,13 +313,20 @@ export function scoreFlow(
     if (!decided) { pending.push(lf); falseFindings.push(lf); continue; }
 
     switch (decided.verdict) {
-      case "vocabulario": {
+      case "vocabulario":
+      case "deteccao-correta": {
         // `unit.caseId` carrega o id do elemento (E-xxxxxx) nesta suíte.
         const target = decided.unit
           ? outcomes.find(o => !o.matched && o.unit.element.id === decided.unit!.caseId
               && o.unit.rules.includes(normalizeRuleId(decided.unit!.rule)))
           : undefined;
-        if (target) { target.matched = true; target.adjudicated = true; target.finding = lf.description; }
+        if (target) {
+          target.matched = true;
+          target.adjudicated = true;
+          target.adjudicationVerdict = decided.verdict;
+          target.finding = lf.description;
+          target.anchorMode = "adjudicated";
+        }
         else falseFindings.push(lf);
         break;
       }
@@ -285,7 +350,7 @@ export function scoreFlow(
 
 /** Seletores citados pelos achados de um conjunto de execuções. */
 export function selectorsOfRuns(runs: FlowAgentResults[]): string[] {
-  return runs.flatMap(r => (r.findings ?? []).map(f => f.selector));
+  return runs.flatMap(r => (r.findings ?? []).flatMap(f => [f.selector, ...(f.relatedSelectors ?? [])]));
 }
 
 export type { FlowViolationSpec };

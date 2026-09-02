@@ -82,7 +82,7 @@ const adj = loadAdjudications();
 
 // ── --case=TC-B-03: the dossier for one case ─────────────────────────────────
 //
-// The three verdicts that are not `falso-positivo` all turn on the same two questions: does the
+// The unit-targeting verdicts turn on the same two questions: does the
 // gabarito already carry a unit for this defect, and did the run in question already match it
 // with another finding? Answering those from the raw JSON by hand is how a reviewer ends up
 // marking `vocabulario` for a unit that was already matched — which the scorer then refuses to
@@ -198,7 +198,7 @@ const defects: string[] = [];
 for (const r of adj.records) {
   const d = recordDefect(r);
   if (d) defects.push(`${r.id}: ${d}`);
-  if (r.verdict === "vocabulario" && r.unit) {
+  if ((r.verdict === "vocabulario" || r.verdict === "deteccao-correta") && r.unit) {
     const rule = normalizeRuleId(r.unit.rule);
     const exists = expectedUnits.some(u => u.caseId === r.unit!.caseId && u.rules.includes(rule));
     if (!exists) defects.push(`${r.id}: unidade alvo ${r.unit.caseId} / ${r.unit.rule} não existe no gabarito`);

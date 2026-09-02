@@ -96,6 +96,13 @@ $PipelineDir = $PSScriptRoot
 $EvalRoot    = Split-Path $PipelineDir -Parent
 $TccRoot     = Split-Path $EvalRoot -Parent
 $IsFluxo     = $Suite -eq "fluxo"
+$InstrumentVersion = if ($IsFluxo) {
+  $flowGt = Get-Content -LiteralPath (Join-Path $EvalRoot "ground-truth-fluxo.json") -Raw | ConvertFrom-Json
+  "fluxo-$($flowGt._meta.version)"
+} else {
+  $caseGt = Get-Content -LiteralPath (Join-Path $EvalRoot "ground-truth.json") -Raw | ConvertFrom-Json
+  "casos-$($caseGt._meta.version ?? 'legado')"
+}
 if ($IsFluxo) {
   $RunsDir    = Join-Path $EvalRoot "results\runs-fluxo"
   $AblacaoDir = Join-Path $EvalRoot "results\runs-fluxo-ablacao"
@@ -169,7 +176,8 @@ function Get-CodexMcpConfigArgs($mcpConfig) {
   $args = @()
   $playwrightTools = @(
     "browser_navigate", "browser_snapshot", "browser_click", "browser_type", "browser_press_key",
-    "browser_evaluate", "browser_take_screenshot", "browser_console_messages", "browser_tab_list", "browser_tab_select"
+    "browser_evaluate", "browser_take_screenshot", "browser_resize", "browser_console_messages",
+    "browser_tab_list", "browser_tab_select"
   )
   $combinedValidatorTools = @(
     "get_ds_rules", "get_design_tokens", "get_emag_rules", "get_page_rules", "get_component_spec",
@@ -609,6 +617,7 @@ $runIndex = 0
         Set-JsonProperty $veredito.config "oracleProfile" $(if ($armName -eq "com") { $OracleProfile } else { "none" })
         Set-JsonProperty $veredito.config "turnMetric" "$clientName-native (não comparável entre clientes)"
         Set-JsonProperty $veredito.config "protocolVersion" $protocolVersion
+        Set-JsonProperty $veredito.config "instrumentVersion" $InstrumentVersion
         if ($armName -eq "com") {
           Set-JsonProperty $veredito.config "validatorVersion" $validatorVersion
         }
@@ -676,6 +685,7 @@ $runIndex = 0
       client       = $clientName
       clientVersion = $clientVersion
       protocolVersion = $protocolVersion
+      instrumentVersion = $InstrumentVersion
       validatorVersion = $(if ($armName -eq "com") { $validatorVersion } else { $null })
       mcpConfig    = Split-Path $effectiveMcpConfig -Leaf
       prompt       = $invocation

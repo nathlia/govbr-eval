@@ -19,6 +19,7 @@ import { resolveSelectors, resolveWithExcept, type Resolution } from "./anchors"
 import { ROOT, loadAdjudications } from "./adjudication";
 import {
   buildFlowUnits, scoreFlow, selectorsOfGroundTruth, selectorsOfRuns,
+  summarizeFlowFamilies,
   type FlowScore, type FlowUnit,
 } from "./units-flow";
 import { normalizeRuleId } from "./units";
@@ -34,6 +35,7 @@ const RUN_DIRS: { dir: string; arm: string }[] = [
 
 const onlyAnchors = process.argv.includes("--ancoras");
 const verbose = process.argv.includes("--verbose");
+const includeIncompatible = process.argv.includes("--include-incompatible");
 
 function pct(n: number): string {
   return Number.isFinite(n) ? `${(n * 100).toFixed(1)}%` : "—";
@@ -163,6 +165,17 @@ function printRun(run: LoadedRun, s: FlowScore): void {
       .map(([state, item]) => `${state}${item.conditional ? " [condicional]" : ""} ${item.hit}/${item.total}`)
       .join(" · "),
   );
+  const families = summarizeFlowFamilies(s.outcomes);
+  const grounding = s.TP > 0 ? s.ruleVerifiedTP / s.TP : NaN;
+  const related = s.outcomes.filter(outcome => outcome.anchorMode === "related").length;
+  const detectedWithoutGrounding = s.outcomes.filter(
+    outcome => outcome.matched && outcome.adjudicationVerdict === "deteccao-correta",
+  ).length;
+  console.log(
+    `   famílias: ${families.detected}/${families.total} detectadas · ${families.complete}/${families.total} completas` +
+    ` · grounding explícito ${pct(grounding)} · detecção sem grounding ${detectedWithoutGrounding}` +
+    ` · âncora relacional ${related}`,
+  );
   if (verbose) {
     for (const o of s.outcomes.filter(o => !o.matched)) {
       console.log(`     FN  ${o.unit.element.id} ${o.unit.element.label} — ${o.unit.specId} (${o.unit.rules[0]})`);
@@ -180,6 +193,7 @@ async function main(): Promise<void> {
     process.exit(1);
   }
   const gt = JSON.parse(readFileSync(gtPath, "utf8")) as FlowGroundTruth;
+  const instrumentVersion = String(gt._meta.version ?? "não versionado");
 
   if (!gt.violations?.length) {
     console.log(`\n${GROUND_TRUTH} não declara nenhuma violação ainda.`);
@@ -187,8 +201,22 @@ async function main(): Promise<void> {
     return;
   }
 
-  const runs = loadRuns();
+  const archivedRuns = loadRuns();
   const url = new URL(gt._meta.url, APP_URL).toString();
+  const expectedInstrument = `fluxo-${instrumentVersion}`;
+  const incompatibleRuns = archivedRuns.filter(run => run.data.config?.instrumentVersion !== expectedInstrument);
+  const runs = includeIncompatible
+    ? archivedRuns
+    : archivedRuns.filter(run => run.data.config?.instrumentVersion === expectedInstrument);
+
+  if (incompatibleRuns.length) {
+    console.log(`\n⚠ ${incompatibleRuns.length} execução(ões) arquivada(s) não pertencem a ${expectedInstrument}` +
+      (includeIncompatible ? " (incluídas apenas por --include-incompatible)." : " e não serão pontuadas."));
+    for (const run of incompatibleRuns) {
+      console.log(`   ${run.dir}/${run.file}: ${run.data.config?.instrumentVersion ?? "legado/não rotulado"}`);
+    }
+    console.log("   Use --include-incompatible somente para diagnóstico histórico; nunca agregue esses números à medida atual.");
+  }
 
   // Um único carregamento para os dois lados: gabarito e achados resolvidos contra a MESMA
   // árvore. Resolver em cargas diferentes admitiria que a página mudasse no meio.
@@ -210,12 +238,13 @@ async function main(): Promise<void> {
   if (onlyAnchors) { printAnchors(gt, res, units); return; }
 
   console.log(`\nSuíte de fluxo — ${gt._meta.page} · ${url}`);
+  console.log(`Instrumento: fluxo-${instrumentVersion}`);
   console.log(`${units.length} unidade(s) de avaliação (elemento × regra) a partir de ${gt.violations.length} spec(s).`);
 
   printBaselines(units);
 
   if (!runs.length) {
-    console.log(`\nNenhuma execução arquivada em results/${RUN_DIRS.map(r => r.dir).join(", results/")}.\n`);
+    console.log(`\nNenhuma execução compatível com ${expectedInstrument} arquivada em results/${RUN_DIRS.map(r => r.dir).join(", results/")}.\n`);
     return;
   }
 
@@ -227,6 +256,7 @@ async function main(): Promise<void> {
       `${r.arm} | ${r.data.model ?? "—"} | ${c?.client ?? "cliente não rotulado"} | ` +
       `${c?.reasoningEffort ?? "esforço não rotulado"} | ` +
       `${c?.oracleProfile ?? (r.arm === "sem-oraculo" ? "none" : "perfil não rotulado")} | ` +
+      `${c?.instrumentVersion ?? "instrumento legado/não rotulado"} | ` +
       `${c?.protocolVersion ?? "protocolo não versionado"} | ` +
       `${c?.validatorVersion ?? (r.arm === "com-oraculo" ? "validator não versionado" : "sem validator")}`;
     if (!groups.has(key)) groups.set(key, []);

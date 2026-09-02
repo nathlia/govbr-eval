@@ -16,12 +16,15 @@ avalie a tela inteira.
 Produza um achado por regra e conjunto exato de elementos:
 
 ```json
-{"selector":"#alvo","rule":"wcag:4.1.2","description":"observação e justificativa"}
+{"selector":"#alvo","relatedSelectors":["#participante"],"rule":"wcag:4.1.2","description":"observação e justificativa"}
 ```
 
 O seletor será executado com `document.querySelectorAll`: ele precisa resolver na página e alcançar
 somente os elementos afirmados. Um seletor que alcança vários elementos representa a mesma afirmação
-para cada um. Confira todos antes de salvar.
+para cada um. Confira todos antes de salvar. Para um defeito que depende de uma relação entre
+elementos, mantenha em `selector` o sujeito principal da afirmação e liste somente os demais
+participantes efetivamente inspecionados em `relatedSelectors`. Não use um ancestral largo como
+substituto para o elemento observado.
 
 O relatório tem este contrato compacto:
 
@@ -29,7 +32,9 @@ O relatório tem este contrato compacto:
 {"timestamp":"ISO","model":"modelo","appUrl":"URL","scope":["escopo observado"],"notes":"interações e limitações","findings":[]}
 ```
 
-Use um id determinístico retornado pelo oráculo quando disponível. Caso contrário, use `emag:<seção>`,
+Use o id exato de uma regra ou restrição retornada pelo oráculo quando disponível. Uma regra ampla
+não justifica uma exigência estrutural mais específica: se a restrição não tiver id próprio,
+declare a atribuição incerta em vez de emprestar outro id. Caso contrário, use `emag:<seção>`,
 `wcag:<critério>` ou `ds:<regra>` apenas quando conseguir justificar a atribuição. Não fabrique um id
 plausível.
 

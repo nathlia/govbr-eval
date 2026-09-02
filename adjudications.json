@@ -14,11 +14,102 @@
     "gerar-pendentes": "npm run adjudicate -- --emit",
     "criado": "2026-08-31",
     "adjudicacoes": 68,
-    "atualizado": "2026-08-31",
-    "pendentes": 0,
+    "atualizado": "2026-09-02",
+    "pendentes": 7,
     "revisao": "Vereditos propostos por análise de evidência (DOM/fonte do corpus + gabarito). Aguardam revisão humana: conferir `adjudicatedBy`."
   },
   "adjudications": [
+    {
+      "id": "E-21e71a:58b429ed",
+      "caseId": "E-21e71a",
+      "finding": "A mensagem de erro do formulário é inserida dinamicamente no DOM, sem recarregar a página, e não é anunciada: no momento em que aparece não existe nenhuma região viva na tela (nenhum [aria-live], [role=alert] ou [role=status] em todo o documento) e o foco permanece no botão 'Continuar', sem ser movido para o campo nem para a mensagem. A mudança de estado — a submissão foi recusada — fica disponível só para quem enxerga a tela.",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-02T04-02-09-639Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": null,
+      "rationale": ""
+    },
+    {
+      "id": "E-230d83:608409ec",
+      "caseId": "E-230d83",
+      "finding": "A pagina nao oferece ancora de salto para o conteudo. O primeiro elemento focavel apos a abertura de body e o link da marca (a.marca-govbr, destino /fluxo) e nao existe nenhum link interno apontando para <main> ou para outra regiao; verificado por varredura dos focaveis e por tabulacao real. A evidencia esperada da regra - 'o primeiro link focavel leva ao conteudo principal' - nao se cumpre.",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-02T03-57-16-330Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": null,
+      "rationale": ""
+    },
+    {
+      "id": "E-230d83:fcfe1f8d",
+      "caseId": "E-230d83",
+      "finding": "Falta a Area de Rodape do Template Base: document.querySelector('footer') retorna null e os unicos landmarks da pagina sao HEADER e MAIN. O Template Base define a Area de Rodape como obrigatoria (item 5 do detalhamento) e o Padrao Minimo lista 'Rodape' entre os itens de aderencia minima para web responsivo. Atribuicao declaradamente aproximada: este e o id normativo mais proximo disponivel no oraculo, ja que a obrigatoriedade do rodape vem da diretriz de estrutura de pagina, que nao expoe id proprio.",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-02T03-57-16-330Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": null,
+      "rationale": ""
+    },
+    {
+      "id": "E-7a5432:8f093a39",
+      "caseId": "E-7a5432",
+      "finding": "A classe raiz do componente Input esta aplicada ao proprio <input>. A especificacao declara rootClass 'br-input' com tags ['div'], e os cinco exemplos canonicos usam <div class='br-input'> com <label for> e um <input> sem a classe raiz. Aqui o wrapper <div class='br-input campo-cpf-fluxo'> e o <input id='cpf' class='br-input'> carregam a mesma classe raiz, duplicando o componente. Atribuicao de id incerta: nao ha regra normativa especifica sobre posicionamento da classe raiz, entao usei a regra geral de adocao dos padroes de interface.",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-02T03-57-16-330Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": null,
+      "rationale": ""
+    },
+    {
+      "id": "E-8135f3:8ec3f06b",
+      "caseId": "E-8135f3",
+      "finding": "A margem observada inclui 143.641px, fora da escala de espaçamento do DS.",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-02T02-29-59-458Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": null,
+      "rationale": ""
+    },
+    {
+      "id": "E-e5a2f7:0ac53e84",
+      "caseId": "E-e5a2f7",
+      "finding": "A cor observada é #808080, valor que não corresponde a token registrado do gov.br DS; o oráculo indica como mais próximo --gray-40 (#888888).",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-02T02-29-59-458Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": null,
+      "rationale": ""
+    },
+    {
+      "id": "E-e5a2f7:f38936df",
+      "caseId": "E-e5a2f7",
+      "finding": "O componente br-divider foi aplicado a um elemento <hr>, enquanto a regra retornada exige <span>.",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-02T02-29-59-458Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": null,
+      "rationale": ""
+    },
     {
       "id": "TC-B-03:1084e339",
       "caseId": "TC-B-03",

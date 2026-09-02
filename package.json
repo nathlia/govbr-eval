@@ -24,6 +24,7 @@
     "lint:protocol": "tsx scripts/lint-protocol.ts",
     "lint:skills": "tsx scripts/lint-skill-contracts.ts",
     "test:pipeline": "pwsh -NoProfile -File pipeline/test-runner-support.ps1",
+    "test:flow": "tsx scripts/test-flow-units.ts",
     "adjudicate": "tsx scripts/adjudicate-all.ts"
   },
   "dependencies": {

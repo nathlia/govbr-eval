@@ -175,6 +175,8 @@ export interface RunConfig {
   protocolVersion?: string;
   /** Versão do servidor MCP do oráculo. */
   validatorVersion?: string;
+  /** Versão do instrumento/gabarito aplicada quando o artefato foi produzido. */
+  instrumentVersion?: string;
 }
 
 export interface AgentResults {
@@ -216,6 +218,8 @@ export interface EslintResults {
  *                    into ground-truth.json WITH measured baselines, D-06)
  *   vocabulario      the right defect under a name the scorer does not know — becomes an
  *                    adjudicated match for the unit named in `unit`
+ *   deteccao-correta the finding describes the target unit, but its citation or anchoring was
+ *                    not mechanically valid — detection is credited; grounding is not
  *   duplicado        a restatement of another finding already matched on the same case
  *   indeterminado    reviewed, undecidable — stays charged as FP so the floor is never
  *                    improved by indecision
@@ -224,6 +228,7 @@ export type AdjudicationVerdict =
   | "falso-positivo"
   | "lacuna-gabarito"
   | "vocabulario"
+  | "deteccao-correta"
   | "duplicado"
   | "indeterminado";
 
@@ -237,7 +242,7 @@ export interface AdjudicationRecord {
   seenIn?: { run: string; arm: string }[];
   /** null = stub emitted, not yet decided. Stubs are counted as pending, never applied. */
   verdict: AdjudicationVerdict | null;
-  /** Required for `vocabulario`: the expected unit this finding actually reported. */
+  /** Required for `vocabulario` and `deteccao-correta`: the expected unit actually reported. */
   unit?: { caseId: string; rule: RuleId };
   /** Why. Required for every decided record — a verdict without a reason is not adjudication. */
   rationale?: string;
@@ -334,6 +339,11 @@ export interface FlowGroundTruth {
  */
 export interface FlowFinding {
   selector: string;
+  /**
+   * Outros participantes necessários para sustentar um defeito relacional. Eles fornecem
+   * contexto de ancoragem, mas não multiplicam o achado em novas afirmações.
+   */
+  relatedSelectors?: string[];
   rule: RuleId;
   description: string;
 }

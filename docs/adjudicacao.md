@@ -21,6 +21,7 @@ Regra do D-17: **adjudicar antes de atribuir erro ao agente.**
 | `falso-positivo` | o agente errou | cobrado da precisão (FP) |
 | `lacuna-gabarito` | violação real que o gabarito nunca catalogou | sai do FP, entra na dívida de gabarito |
 | `vocabulario` | o defeito certo com nome que o scorer não conhece | vira casamento adjudicado da unidade em `unit` |
+| `deteccao-correta` | conteúdo correto, mas citação ou âncora não foi mecanicamente válida | credita detecção na unidade, sem aumentar `ruleVerifiedTP` |
 | `duplicado` | reformulação de outro achado já casado no mesmo caso | sai do FP |
 | `indeterminado` | revisado e indecidível | **segue cobrado como FP** |
 
@@ -44,7 +45,7 @@ não sobre o instrumento.
    `npm run adjudicate` o lista como registro defeituoso. Um veredito sem razão é uma afirmação,
    não uma adjudicação, e é exatamente o que um leitor cético da banca vai querer inspecionar.
 
-   Para `vocabulario`, preencha também `unit`: `{ "caseId": "...", "rule": "..." }` — a unidade
+   Para `vocabulario` ou `deteccao-correta`, preencha também `unit`: `{ "caseId": "...", "rule": "..." }` — a unidade
    que o achado de fato reportou. Se ela não existir no gabarito, ou já estiver casada por outro
    achado, o registro não é aplicável e o achado continua cobrado.
 

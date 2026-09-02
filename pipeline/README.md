@@ -88,6 +88,10 @@ O scorer é **ciente de configuração** (D-17): ele varre `results/runs/`, `res
 perfil causal do oráculo, hash do protocolo e versão do validator, e **nunca** agrega grupos
 diferentes. Média ± DP só sai dentro de um grupo.
 
+Na suíte de fluxo, o runner também grava `config.instrumentVersion` a partir do gabarito. O scorer
+recusa por padrão qualquer execução de outra versão ou sem rótulo; `--include-incompatible` existe
+somente para diagnóstico histórico e nunca autoriza agregação com a medida atual.
+
 O diretório é o que informa o braço, e por isso o script move os arquivos da ablação para
 `results/runs-ablacao/` ao final de cada execução — não é mais contorno, é a convenção que rotula.
 Uma execução pode sobrescrever o rótulo declarando um bloco `config` no próprio JSON
@@ -103,7 +107,7 @@ O agente ainda produz o veredito, mas não é mais a fonte autoritativa para con
 Depois que o subprocesso termina, o runner anexa ao artefato arquivado:
 
 - cliente e versão, modelo efetivo, esforço, perfil causal do oráculo, versão do validator e
-  SHA-256 do protocolo comum + especialização;
+  SHA-256 do protocolo comum + especialização e versão do instrumento;
 - tokens de input, criação/leitura de cache, raciocínio e output informados pelo cliente;
 - custo monetário, turnos e tempo de parede;
 - chamadas, erros, bytes de entrada/saída e duração do MCP do validator, total e por ferramenta.

@@ -236,7 +236,8 @@ export function scoreUnits(raw: AgentResults | null, adj?: AdjudicationIndex): U
     if (!decided) { pending.push(lf); falseFindings.push(lf); continue; }
 
     switch (decided.verdict) {
-      case "vocabulario": {
+      case "vocabulario":
+      case "deteccao-correta": {
         const target = decided.unit
           ? outcomes.find(o => !o.matched && o.unit.caseId === decided.unit!.caseId
               && o.unit.rules.includes(normalizeRuleId(decided.unit!.rule)))
