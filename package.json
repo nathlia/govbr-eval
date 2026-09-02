@@ -9,6 +9,7 @@
   "scripts": {
     "axe": "tsx scripts/run-axe.ts",
     "eslint": "tsx scripts/run-eslint.ts",
+    "snapshot:real": "tsx scripts/snapshot-real.ts",
     "baselines:fluxo": "tsx scripts/run-baselines-flow.ts",
     "score": "tsx scripts/score-results.ts",
     "score:verbose": "tsx scripts/score-results.ts --verbose",
