@@ -120,6 +120,12 @@ Agrupe seletores independentes no mesmo pedido quando a ferramenta aceitar `sele
 de estilos, peça apenas as `properties` necessárias à decisão. Consulte vários ids de regra juntos
 quando houver suporte a `ids`; chamadas unitárias repetidas para o mesmo estado são desperdício.
 
+Se houver uma varredura determinística agregada, use uma por estado em vez de chamar cada scanner
+separadamente. Registre o fingerprint e o `scanId`. Para examinar um estado interativo, reproduza
+nele as ações suportadas pela própria varredura: navegadores de servidores MCP diferentes não
+compartilham estado. Passe o `scanId` anterior em `compareToScanId` para receber somente a mudança
+de estado e de findings. `cacheHit` só vale para fingerprint, ações e escopo idênticos.
+
 ### 2. Leitura
 
 Para cada URL que a invocação nomear:

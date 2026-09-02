@@ -132,11 +132,12 @@ function Get-McpTelemetrySummary($path, $runId) {
   foreach ($event in $events) {
     $name = [string]$event.tool
     if (-not $byTool.Contains($name)) {
-      $byTool[$name] = [ordered]@{ calls = 0; errors = 0; requestBytes = 0; responseBytes = 0; durationMs = 0 }
+      $byTool[$name] = [ordered]@{ calls = 0; errors = 0; cacheHits = 0; requestBytes = 0; responseBytes = 0; durationMs = 0 }
     }
     $item = $byTool[$name]
     $item.calls++
     if ($event.status -eq "error") { $item.errors++ }
+    if ($event.cacheHit -eq $true) { $item.cacheHits++ }
     $item.requestBytes += [int64]($event.requestBytes ?? 0)
     $item.responseBytes += [int64]($event.responseBytes ?? 0)
     $item.durationMs += [int64]($event.durationMs ?? 0)
@@ -152,6 +153,7 @@ function Get-McpTelemetrySummary($path, $runId) {
     telemetryFile = if (Test-Path $path) { "pipeline/logs/$(Split-Path $path -Leaf)" } else { $null }
     calls = $events.Count
     errors = @($events | Where-Object { $_.status -eq "error" }).Count
+    cacheHits = @($events | Where-Object { $_.cacheHit -eq $true }).Count
     requestBytes = [int64](($events | Measure-Object -Property requestBytes -Sum).Sum ?? 0)
     responseBytes = [int64](($events | Measure-Object -Property responseBytes -Sum).Sum ?? 0)
     durationMs = [int64](($events | Measure-Object -Property durationMs -Sum).Sum ?? 0)

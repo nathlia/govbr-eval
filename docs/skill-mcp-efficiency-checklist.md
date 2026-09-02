@@ -30,7 +30,7 @@ Registrar antes de começar um baseline representativo:
 - [x] Criar um `runId` propagado do harness para todas as chamadas MCP.
 - [x] Registrar por chamada: ferramenta, início, duração, status e tamanho da resposta em bytes.
 - [ ] Registrar quantidade de seletores, elementos, regras e findings processados.
-- [ ] Registrar `cacheHit`, fingerprint da página/estado e motivo de invalidação.
+- [x] Registrar `cacheHit`, fingerprint da página/estado e motivo de invalidação.
 - [ ] Registrar paginação, truncamento e nível de detalhe solicitado.
 - [x] Não incluir os logs de telemetria na resposta enviada ao modelo.
 - [x] Produzir resumo por execução e ranking das ferramentas por bytes e latência acumulados.
@@ -91,31 +91,31 @@ precisam de julgamento semântico.
 
 ### Scanner determinístico
 
-- [ ] Criar uma operação de varredura em lote, por exemplo `scan_page`.
-- [ ] Receber URL ou sessão, escopos e checks solicitados.
-- [ ] Enumerar elementos, executar checks e deduplicar resultados no servidor.
-- [ ] Devolver cobertura agregada e somente os candidatos suspeitos.
-- [ ] Preservar evidências completas internamente para recuperação por `findingId`.
-- [ ] Separar claramente resultado determinístico de julgamento feito pelo modelo.
+- [x] Criar uma operação de varredura em lote, por exemplo `scan_page`.
+- [x] Receber URL ou sessão, escopos e checks solicitados. (URL + escopos concluídos; sessão persistente continua opcional.)
+- [x] Enumerar elementos, executar checks e deduplicar resultados no servidor.
+- [x] Devolver cobertura agregada e somente os candidatos suspeitos.
+- [x] Preservar evidências completas internamente para recuperação por `findingId`.
+- [x] Separar claramente resultado determinístico de julgamento feito pelo modelo.
 
 **Aceite:** uma varredura estática básica exige uma chamada de descoberta e, no máximo, uma chamada
 de detalhes para os candidatos encontrados.
 
 ### Estado e sessão do navegador
 
-- [ ] Introduzir `sessionId` ou `stateId` para não reabrir/recarregar a página sem necessidade.
-- [ ] Calcular fingerprint com URL, DOM relevante, viewport e estado de interação.
-- [ ] Reutilizar scans somente quando o fingerprint for idêntico.
-- [ ] Após interação, devolver um diff do estado anterior em vez de um snapshot completo.
-- [ ] Invalidar cache quando DOM, foco, viewport, rota ou estado acessível relevante mudar.
-- [ ] Isolar sessões por execução para impedir vazamento entre modelos ou braços.
+- [ ] Introduzir `sessionId` ou `stateId` para não reabrir/recarregar a página sem necessidade. (`scanId` identifica o ledger, mas a página ainda é recarregada para verificar o fingerprint.)
+- [x] Calcular fingerprint com URL, DOM relevante, viewport e estado de interação.
+- [x] Reutilizar scans somente quando o fingerprint for idêntico.
+- [x] Após interação, devolver um diff do estado anterior em vez de um snapshot completo.
+- [x] Invalidar cache quando DOM, foco, viewport, rota ou estado acessível relevante mudar.
+- [x] Isolar sessões por execução para impedir vazamento entre modelos ou braços.
 
 ### Orçamento operacional
 
-- [ ] Definir uma varredura compacta por estado de página.
-- [ ] Proibir repetição da mesma consulta quando o estado não mudou.
+- [x] Definir uma varredura compacta por estado de página.
+- [x] Proibir repetição da mesma consulta quando o estado não mudou.
 - [ ] Buscar regras detalhadas apenas quando a versão breve não resolve aplicabilidade.
-- [ ] Agrupar seletores, regras e finding IDs em chamadas em lote.
+- [x] Agrupar seletores, regras e finding IDs em chamadas em lote.
 - [ ] Definir limite de investigações detalhadas antes de exigir justificativa do agente.
 - [ ] Encerrar quando todos os candidatos estiverem aceitos, rejeitados ou marcados como incertos.
 
@@ -140,10 +140,10 @@ Metas iniciais, a validar pelos testes:
 ### Fluxo decisório sugerido
 
 - [ ] Descobrir estados e regiões interativas.
-- [ ] Executar uma varredura compacta por estado.
-- [ ] Investigar apenas findings candidatos.
+- [x] Executar uma varredura compacta por estado.
+- [x] Investigar apenas findings candidatos.
 - [ ] Consultar detalhes da regra somente quando houver dúvida de aplicabilidade.
-- [ ] Manter um ledger de evidências e nunca buscar novamente evidência já válida.
+- [x] Manter um ledger de evidências e nunca buscar novamente evidência já válida.
 - [ ] Produzir o relatório diretamente do ledger.
 - [ ] Marcar incerteza explicitamente em vez de abrir loops indefinidos de inspeção.
 
@@ -247,9 +247,9 @@ schemas expostos.
 
 ### PR 4 — Scanner e sessão
 
-- [ ] `scan_page` determinístico.
-- [ ] Ledger de evidências.
-- [ ] Fingerprint, cache seguro e diffs de estado.
+- [x] `scan_page` determinístico.
+- [x] Ledger de evidências.
+- [x] Fingerprint, cache seguro e diffs de estado.
 
 ### PR 5 — Skills e ferramentas
 

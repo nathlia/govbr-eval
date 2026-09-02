@@ -114,6 +114,7 @@ export interface AgentTokenUsage {
 export interface McpToolTelemetrySummary {
   calls: number;
   errors: number;
+  cacheHits: number;
   requestBytes: number;
   responseBytes: number;
   durationMs: number;
