@@ -1,0 +1,51 @@
+{
+  "timestamp": "2026-09-02T04:02:09.639Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "Tela inteira de fluxo.html: cabeçalho (marca, Alto Contraste, VLibras), painel institucional, cartão de identificação (formulário de CPF, lista de outras opções, links de ajuda e termo).",
+    "Dois estados observados: estado inicial e estado pós-submissão com campo vazio (mensagem de erro visível)."
+  ],
+  "notes": "Interações: navegação por Tab a partir do conteúdo (input CPF -> Continuar -> links de opção), verificação de :focus-visible e de estilos computados em foco para todos os elementos interativos; submissão do formulário com o campo vazio (surgiu a mensagem 'Informe um CPF para continuar.'); digitação de '123' e nova submissão (a mensagem some, sem navegação nem qualquer retorno observável); clique em 'Alto Contraste' e em 'VLibras' (nenhuma mudança de DOM, de classe, de estado ARIA ou de estilo — controles inertes nesta tela); cálculo de contraste de todos os blocos de texto e controles contra o plano de fundo efetivo (menor valor encontrado: 4.59 na tag 'SUA CONTA SERÁ PRATA', acima do mínimo); conferência de ids duplicados, referências ARIA, nomes acessíveis, ordem de cabeçalhos, landmarks e tabindex positivo — todos sem problema. Limitações: nenhuma ferramenta de oráculo (scan_page ou consulta de regras) estava disponível nesta sessão; a avaliação foi feita sem oráculo e os identificadores abaixo são atribuição própria, restrita a critérios WCAG que consigo justificar — nenhum id do DS foi atribuído. Limitação: o redimensionamento de viewport foi negado pelo ambiente, então refluxo em 320px (WCAG 1.4.10) e o comportamento responsivo não puderam ser verificados. Limitação: os botões 'Alto Contraste' e 'VLibras' não produzem efeito algum; não é possível distinguir 'não implementado nesta tela de demonstração' de defeito, então nenhum achado foi registrado para eles. Limitação: a submissão com valor preenchido não produz retorno observável, então não houve estado de sucesso/carregamento para avaliar. Candidatos considerados e rejeitados com evidência: contraste de todo o texto (menor 4.59, passa); tamanho de alvo dos links de opção (altura 20px, mas deslocamento entre alvos adjacentes > 24px, exceção de espaçamento aplica); uso de cor nos links de opção (não estão embutidos em bloco de texto); ausência de link de atalho (há landmarks header/main e pouquíssimos links antes do conteúdo); autocomplete no campo CPF (não há token padrão para CPF); lang=pt-BR presente; todos os ícones com aria-hidden e texto adjacente.",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "rule": "wcag:2.4.7",
+      "description": "Os quatro links de 'Outras opções de identificação' (banco, QR code, certificado digital, certificado em nuvem) não têm nenhum indicador visual de foco. Com foco real de teclado o elemento casa com :focus-visible, mas o estilo computado permanece outline-style:none, box-shadow:none, sem mudança de cor, fundo ou sublinhado; a única diferença em relação a um irmão sem foco é outline-offset:4px, que nada desenha com outline-style:none. O contêiner .opcao-identificacao também não mostra indicador de :focus-within. Todos os demais elementos focáveis da tela (marca, Alto Contraste, VLibras, Continuar, link de ajuda, link do termo) recebem outline tracejado de 4px em rgb(194,133,12), e o campo CPF recebe box-shadow equivalente — o que confirma que a ausência é específica desses quatro links. Verificado por Tab real e por captura de tela com o primeiro link focado."
+    },
+    {
+      "selector": "#cpf",
+      "rule": "wcag:1.3.1",
+      "description": "Após submeter o formulário vazio, a mensagem 'Informe um CPF para continuar.' é inserida como <p class=\"mensagem-erro-cpf\"> imediatamente abaixo do campo. A relação entre a mensagem e o campo é transmitida apenas visualmente, por proximidade: o input não recebe aria-describedby nem aria-errormessage apontando para a mensagem, e não recebe aria-invalid, de modo que nem a associação nem o estado de invalidez ficam programaticamente determináveis. Quem usa leitor de tela e navega até o campo ouve apenas o rótulo 'CPF' e a condição de obrigatório (aria-required=true), sem qualquer indicação de que há um erro nem de qual é."
+    },
+    {
+      "selector": ".formulario-cpf",
+      "rule": "wcag:4.1.3",
+      "description": "A mensagem de erro do formulário é inserida dinamicamente no DOM, sem recarregar a página, e não é anunciada: no momento em que aparece não existe nenhuma região viva na tela (nenhum [aria-live], [role=alert] ou [role=status] em todo o documento) e o foco permanece no botão 'Continuar', sem ser movido para o campo nem para a mensagem. A mudança de estado — a submissão foi recusada — fica disponível só para quem enxerga a tela."
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.258 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:7e127b3942403c7169579f3b41d4cda75c346fa8f530de4ac6eee7348ec39a38"
+  },
+  "cost": {
+    "startedAt": "2026-09-02T03:57:35.7803473Z",
+    "finishedAt": "2026-09-02T04:02:25.8014154Z",
+    "wallClockSeconds": 290.0,
+    "tokens": 1658641,
+    "tokenUsage": {
+      "input": 70,
+      "cacheCreationInput": 107427,
+      "cacheReadInput": 1532613,
+      "output": 18531
+    },
+    "totalCostUsd": 2.1554314999999997,
+    "turns": 40
+  }
+}

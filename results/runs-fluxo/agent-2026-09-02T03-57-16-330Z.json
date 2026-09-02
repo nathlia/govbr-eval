@@ -1,0 +1,100 @@
+{
+  "timestamp": "2026-09-02T03:57:16.33Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "tela inteira: header (marca, Alto Contraste, VLibras), main > section.painel-institucional, main > section.cartao-identificacao (formulário de CPF, lista de outras opções, divisor, links de ajuda e termo)",
+    "estado inicial",
+    "estado após envio do formulário vazio",
+    "estado após envio com CPF preenchido"
+  ],
+  "notes": "Escopo: tela inteira de http://localhost:3000/fluxo.html, viewport 2021x797, nos estados inicial, pos-envio-vazio e pos-envio-preenchido. Interacoes: tabulacao real (Tab) a partir de .acao-continuar percorrendo os links de opcoes, com :focus-visible confirmado por el.matches(':focus-visible'); foco programatico nos 11 focaveis para comparar estilos de foco; envio do formulario vazio pelo botao Continuar; preenchimento com '12345678900' e reenvio; reenvios com '123', 'abcdefghijk' e '000.000.000-00'; clique em 'Alto Contraste'. Observacoes registradas sem atribuicao de regra: (a) a validacao so verifica campo nao-vazio - '123', letras e '000.000.000-00' passam apesar de inputmode=numeric, e o envio com valor preenchido nao produz navegacao, mensagem nem confirmacao alguma; (b) os botoes 'Alto Contraste' e 'VLibras' nao alteram classe, atributo nem estado ao serem acionados e nao expoem estado de alternancia; (c) o campo tem aria-required=true sem required e sem indicacao visual de obrigatoriedade; (d) a section institucional e rotulada por um <p> de 24px, maior que o h1 de 20px - deixei como incerto e nao converti em achado. Verificados e rejeitados: contraste de texto (menor razao medida 4.59:1 em .selo-conta 11px sobre rgb(22,136,33); demais entre 7.33:1 e 12.63:1); tamanho de alvo dos .link-opcao (20.3px de altura, mas centros verticais separados por 46.9-50.8px, atendendo a excecao de espacamento); hr.br-divider com role=presentation, corretamente fora da arvore de acessibilidade e da ordem de foco; hierarquia h1->h2->h2 com h1 unico; lang=pt-BR; title descritivo; label associado a #cpf por for/id; icones <i> com aria-hidden=true; ausencia de sobreposicao ou rolagem horizontal no viewport testado. Limitacoes: browser_resize foi negado por permissao, entao reflow em 320px e zoom de 200% (Rec 4.3 e uso em dispositivos moveis) nao foram verificados; esta configuracao do oraculo nao expoe scan_page nem verificador heuristico, entao toda a evidencia veio de snapshot de acessibilidade, DOM e estilos computados; o unico erro de console e 404 de /favicon.ico, sem relacao com o escopo.",
+  "findings": [
+    {
+      "selector": "body",
+      "rule": "govbr-3.7.0-accessibility-global-7d2b85f81c52",
+      "description": "A pagina nao oferece ancora de salto para o conteudo. O primeiro elemento focavel apos a abertura de body e o link da marca (a.marca-govbr, destino /fluxo) e nao existe nenhum link interno apontando para <main> ou para outra regiao; verificado por varredura dos focaveis e por tabulacao real. A evidencia esperada da regra - 'o primeiro link focavel leva ao conteudo principal' - nao se cumpre."
+    },
+    {
+      "selector": ".link-opcao",
+      "rule": "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+      "description": "Os quatro links de 'Outras opcoes de identificacao' nao tem indicacao visual de foco. Com Tab real o elemento casa :focus-visible, mas outline-style permanece 'none', box-shadow 'none', text-decoration-line 'none', cor rgb(19,81,180) e background transparente - identicos ao estado sem foco. Os demais focaveis da tela recebem outline dashed 4px rgb(194,133,12) ou anel de box-shadow no #cpf, o que confirma que a supressao e especifica desses links e nao um efeito da captura."
+    },
+    {
+      "selector": "#cpf",
+      "rule": "govbr-3.7.0-accessibility-global-cc837bbaf713",
+      "description": "O erro de preenchimento nao e associado ao campo. Ao enviar o formulario vazio, e inserido <p class='mensagem-erro-cpf'>Informe um CPF para continuar.</p> como irmao do wrapper .br-input, sem id; o input nao recebe aria-describedby nem aria-invalid; nao existe elemento com role=alert ou aria-live na pagina, de modo que a mensagem nao e anunciada; e o foco permanece no botao (document.activeElement = button.acao-continuar). Falha as evidencias esperadas 'erros associados aos campos' e 'o foco retorna ao resumo ou campo com erro'."
+    },
+    {
+      "selector": "body",
+      "rule": "govbr-3.7.0-template-global-19f93475dc5e",
+      "description": "Falta a Area de Rodape do Template Base: document.querySelector('footer') retorna null e os unicos landmarks da pagina sao HEADER e MAIN. O Template Base define a Area de Rodape como obrigatoria (item 5 do detalhamento) e o Padrao Minimo lista 'Rodape' entre os itens de aderencia minima para web responsivo. Atribuicao declaradamente aproximada: este e o id normativo mais proximo disponivel no oraculo, ja que a obrigatoriedade do rodape vem da diretriz de estrutura de pagina, que nao expoe id proprio."
+    },
+    {
+      "selector": "input.br-input",
+      "rule": "govbr-3.7.0-page-global-f6e03bce515b",
+      "description": "A classe raiz do componente Input esta aplicada ao proprio <input>. A especificacao declara rootClass 'br-input' com tags ['div'], e os cinco exemplos canonicos usam <div class='br-input'> com <label for> e um <input> sem a classe raiz. Aqui o wrapper <div class='br-input campo-cpf-fluxo'> e o <input id='cpf' class='br-input'> carregam a mesma classe raiz, duplicando o componente. Atribuicao de id incerta: nao ha regra normativa especifica sobre posicionamento da classe raiz, entao usei a regra geral de adocao dos padroes de interface."
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.258 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "normative",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:7e127b3942403c7169579f3b41d4cda75c346fa8f530de4ac6eee7348ec39a38",
+    "validatorVersion": "2.0.0"
+  },
+  "cost": {
+    "startedAt": "2026-09-02T03:50:23.6711311Z",
+    "finishedAt": "2026-09-02T03:57:35.6690146Z",
+    "wallClockSeconds": 431.9,
+    "tokens": 2710784,
+    "tokenUsage": {
+      "input": 80,
+      "cacheCreationInput": 99563,
+      "cacheReadInput": 2583009,
+      "output": 28132
+    },
+    "totalCostUsd": 2.8668632499999998,
+    "turns": 51,
+    "mcp": {
+      "runId": "2026-09-02T00-50-22-com-run1-59b5fade",
+      "telemetryFile": "pipeline/logs/2026-09-02T00-50-22-com-run1-59b5fade-mcp.ndjson",
+      "calls": 19,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 841,
+      "responseBytes": 68913,
+      "durationMs": 4,
+      "byTool": {
+        "get_ds_rules": {
+          "calls": 12,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 650,
+          "responseBytes": 37873,
+          "durationMs": 2
+        },
+        "get_component_spec": {
+          "calls": 4,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 129,
+          "responseBytes": 18292,
+          "durationMs": 1
+        },
+        "get_page_rules": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 62,
+          "responseBytes": 12748,
+          "durationMs": 1
+        }
+      }
+    }
+  }
+}
