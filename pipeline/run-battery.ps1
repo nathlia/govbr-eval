@@ -8,9 +8,9 @@
     com  = agente + oráculo MCP (govbr-ds-validator) + Playwright
     sem  = agente + Playwright, SEM o oráculo  <- braço da ablação
 
-  Cada execução é um subprocesso `claude -p` novo: contexto próprio, nenhuma memória da anterior
-  nem de quem disparou o script. É isso que satisfaz o isolamento do gabarito (D-01/D-02) sem
-  depender de a pessoa lembrar de abrir uma sessão limpa.
+  Cada execução é um subprocesso novo de Claude Code ou `codex exec --ephemeral`: contexto próprio,
+  nenhuma memória da anterior nem de quem disparou o script. É isso que satisfaz o isolamento do
+  gabarito (D-01/D-02) sem depender de a pessoa lembrar de abrir uma sessão limpa.
 
   As duas configurações MCP são deliberadamente simétricas: a única diferença entre elas é a
   presença do servidor do oráculo. Tudo o mais — modelo, protocolo, navegador, permissões de
@@ -31,6 +31,9 @@
   # Sensibilidade a modelo: experimento declarado, bateria inteira no outro modelo.
   # O scorer agrupa por modelo, então os dois saem lado a lado sem se misturar.
   .\run-battery.ps1 -Runs 3 -Arm ambos -Model claude-sonnet-5
+
+  # Mesmo protocolo com o cliente Codex e um modelo OpenAI econômico.
+  .\run-battery.ps1 -Provider codex -Model gpt-5.6-luna -Scope smoke -Suite fluxo -Arm ambos
 #>
 
 [CmdletBinding()]
@@ -41,11 +44,14 @@ param(
   [ValidateSet("com", "sem", "ambos")]
   [string]$Arm = "com",
 
+  [ValidateSet("claude", "codex")]
+  [string]$Provider = "claude",
+
   # Política de modelo (D-17): opus-5 conduz as execuções de avaliação; fable-5 fica para escrita.
   # F3 exige modelo constante dentro de uma bateria — não troque no meio.
   # Trocar de modelo é um experimento declarado (sensibilidade a modelo): rode a bateria inteira
   # com -Model outro-modelo. O scorer agrupa por modelo, então a comparação sai separada sozinha.
-  [string]$Model = "claude-opus-5",
+  [string]$Model = "",
 
   # full  = corpus inteiro; é o que vale como medida
   # smoke = uma aba só, para conferir encanamento (protocolo, POST, permissões) por ~1/10 do custo.
@@ -69,7 +75,9 @@ param(
 
   [switch]$SkipBaselines,
 
-  [switch]$SkipScore
+  [switch]$SkipScore,
+
+  [switch]$PreflightOnly
 )
 
 $ErrorActionPreference = "Stop"
@@ -92,10 +100,14 @@ $Stamp       = Get-Date -Format "yyyy-MM-ddTHH-mm-ss"
 
 $IsSmoke = $Scope -eq "smoke"
 
+if (-not $Model) {
+  $Model = if ($Provider -eq "codex") { "gpt-5.6-luna" } else { "claude-opus-5" }
+}
+
 # Modelo barato por padrão no smoke: ele não mede nada, então não há razão para pagar opus para
 # descobrir que o POST funciona. Um -Model explícito continua ganhando.
 if ($IsSmoke -and -not $PSBoundParameters.ContainsKey("Model")) {
-  $Model = "claude-haiku-4-5"
+  $Model = if ($Provider -eq "codex") { "gpt-5.6-luna" } else { "claude-haiku-4-5" }
 }
 
 # Baseline e pontuação são sobre a medida, e o smoke não produz medida.
@@ -117,6 +129,91 @@ function Set-JsonProperty($object, $name, $value) {
     $object.$name = $value
   } else {
     $object | Add-Member -NotePropertyName $name -NotePropertyValue $value
+  }
+}
+
+function Find-CodexExecutable {
+  $command = Get-Command codex -ErrorAction SilentlyContinue
+  if ($command) { return $command.Source }
+
+  $bundledRoot = Join-Path $env:LOCALAPPDATA "OpenAI\Codex\bin"
+  if (-not (Test-Path $bundledRoot)) { return $null }
+  return Get-ChildItem $bundledRoot -Recurse -Filter codex.exe -ErrorAction SilentlyContinue |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1 -ExpandProperty FullName
+}
+
+function ConvertTo-TomlString([string]$value) {
+  return '"' + $value.Replace('\', '\\').Replace('"', '\"') + '"'
+}
+
+function ConvertTo-TomlArray($values) {
+  $items = @()
+  foreach ($value in @($values)) {
+    $items += ConvertTo-TomlString ([string]$value)
+  }
+  return '[' + ($items -join ',') + ']'
+}
+
+function Get-CodexMcpConfigArgs($mcpConfig) {
+  $args = @()
+  $playwrightTools = @(
+    "browser_navigate", "browser_snapshot", "browser_click", "browser_type", "browser_press_key",
+    "browser_evaluate", "browser_take_screenshot", "browser_console_messages", "browser_tab_list", "browser_tab_select"
+  )
+  $validatorTools = @(
+    "get_ds_rules", "get_design_tokens", "get_emag_rules", "get_page_rules", "get_component_spec",
+    "scan_page", "get_finding_details", "verify_finding"
+  )
+
+  foreach ($property in $mcpConfig.mcpServers.PSObject.Properties) {
+    $name = $property.Name
+    $server = $property.Value
+    $prefix = "mcp_servers.$name"
+    $args += @("-c", "$prefix.command=$(ConvertTo-TomlString ([string]$server.command))")
+    if ($server.args) { $args += @("-c", "$prefix.args=$(ConvertTo-TomlArray @($server.args))") }
+    if ($server.env) {
+      $pairs = @($server.env.PSObject.Properties | ForEach-Object {
+        $_.Name + '=' + (ConvertTo-TomlString ([string]$_.Value))
+      })
+      $args += @("-c", "$prefix.env={$($pairs -join ',')}")
+    }
+    $enabledTools = if ($name -eq "playwright") { $playwrightTools } else { $validatorTools }
+    $args += @("-c", "$prefix.enabled_tools=$(ConvertTo-TomlArray $enabledTools)")
+    $args += @("-c", "$prefix.required=true")
+    $args += @("-c", "$prefix.startup_timeout_sec=30")
+    $args += @("-c", "$prefix.tool_timeout_sec=120")
+    $args += @("-c", "$prefix.default_tools_approval_mode=`"approve`"")
+  }
+  return $args
+}
+
+function Get-CodexLogSummary($path) {
+  $events = @(Get-Content -LiteralPath $path | Where-Object { $_.Trim() } | ForEach-Object {
+    try { $_ | ConvertFrom-Json } catch { }
+  })
+  $turns = @($events | Where-Object { $_.type -eq "turn.completed" })
+  $lastTurn = $turns | Select-Object -Last 1
+  $failed = $events | Where-Object { $_.type -in @("turn.failed", "error") } | Select-Object -Last 1
+  $items = @($events | Where-Object { $_.type -eq "item.completed" })
+  $mcpCalls = @($items | Where-Object { $_.item.type -eq "mcp_tool_call" }).Count
+  $usage = $lastTurn.usage
+  $cached = [int64]($usage.cached_input_tokens ?? 0)
+  $input = [int64]($usage.input_tokens ?? 0)
+
+  return [pscustomobject]@{
+    usage = [pscustomobject]@{
+      input_tokens = [math]::Max(0, $input - $cached)
+      cache_creation_input_tokens = 0
+      cache_read_input_tokens = $cached
+      output_tokens = [int64]($usage.output_tokens ?? 0)
+      reasoning_output_tokens = [int64]($usage.reasoning_output_tokens ?? 0)
+    }
+    num_turns = $turns.Count
+    tool_calls = $mcpCalls
+    total_cost_usd = $null
+    api_error_status = if (([string]$failed.message) -match '429|rate.?limit|usage.?limit') { 429 } else { $null }
+    result = [string]($failed.message ?? "")
   }
 }
 
@@ -180,12 +277,27 @@ if ($nodeMajor -lt 20) {
 }
 Write-Ok "Node $nodeVersion"
 
-if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
-  throw "CLI 'claude' não encontrada no PATH."
+$clientName = "$Provider-cli"
+$clientExecutable = $null
+$clientVersion = "unknown"
+if ($Provider -eq "claude") {
+  $claudeCommand = Get-Command claude -ErrorAction SilentlyContinue
+  if (-not $claudeCommand) { throw "CLI 'claude' não encontrada no PATH." }
+  $clientExecutable = $claudeCommand.Source
+  $clientVersion = (& $clientExecutable --version 2>$null | Select-Object -First 1).Trim()
+} else {
+  $clientExecutable = Find-CodexExecutable
+  if (-not $clientExecutable) {
+    throw "Codex CLI não encontrada no PATH nem no pacote do app desktop."
+  }
+  $clientVersion = (& $clientExecutable --version 2>$null | Select-Object -First 1).Trim()
+  $loginStatus = (& $clientExecutable login status 2>&1 | Out-String).Trim()
+  if ($LASTEXITCODE -ne 0) {
+    throw "Codex CLI não autenticada. Rode '& '$clientExecutable' login --device-auth' no seu PowerShell. Status: $loginStatus"
+  }
 }
-$claudeVersion = (& claude --version 2>$null | Select-Object -First 1).Trim()
-if (-not $claudeVersion) { $claudeVersion = "unknown" }
-Write-Ok "CLI claude encontrada ($claudeVersion)"
+if (-not $clientVersion) { $clientVersion = "unknown" }
+Write-Ok "Cliente $clientName encontrado ($clientVersion)"
 
 # A6: o protocolo carrega procedimento apenas. Se conhecimento de domínio vazar para dentro dele,
 # o protocolo vira um segundo oráculo e a ablação deixa de medir o que se propõe a medir — então
@@ -195,6 +307,10 @@ Push-Location $EvalRoot
 try {
   & npm run lint:protocol --silent
   $lintExit = $LASTEXITCODE
+  if ($lintExit -eq 0) {
+    & npm run lint:skills --silent
+    $lintExit = $LASTEXITCODE
+  }
 } finally {
   Pop-Location
 }
@@ -216,7 +332,17 @@ $protocolPath = if ($IsFluxo) {
 } else {
   Join-Path $EvalRoot "skills\evaluate-all\SKILL.md"
 }
-$protocolVersion = "sha256:" + (Get-FileHash -LiteralPath $protocolPath -Algorithm SHA256).Hash.ToLowerInvariant()
+$sharedProtocolPath = Join-Path $EvalRoot "skills\_shared\evaluation-protocol.md"
+$protocolText = (Get-Content -LiteralPath $sharedProtocolPath -Raw) + "`n--- specialization ---`n" +
+  (Get-Content -LiteralPath $protocolPath -Raw)
+$protocolHasher = [System.Security.Cryptography.SHA256]::Create()
+try {
+  $protocolBytes = [System.Text.Encoding]::UTF8.GetBytes($protocolText)
+  $protocolHash = [System.BitConverter]::ToString($protocolHasher.ComputeHash($protocolBytes)).Replace("-", "").ToLowerInvariant()
+} finally {
+  $protocolHasher.Dispose()
+}
+$protocolVersion = "sha256:" + $protocolHash
 Write-Ok "Protocolo $protocolVersion"
 
 if (-not (Test-Url $CorpusUrl)) {
@@ -236,12 +362,18 @@ $arms = @()
 if ($Arm -eq "ambos") { $arms = @("com", "sem") } else { $arms = @($Arm) }
 
 $total = $arms.Count * $Runs
-Write-Step "Plano: $total execução(ões) — braços [$($arms -join ', ')] x $Runs, modelo $Model, escopo $Scope"
+Write-Step "Plano: $total execução(ões) — cliente $clientName, braços [$($arms -join ', ')] x $Runs, modelo $Model, escopo $Scope"
 
 if ($IsSmoke) {
   $recorte = if ($IsFluxo) { "a tela de fluxo inteira, com modelo barato" } else { "só a aba '$SmokeAba'" }
   Write-Warn2 "ESCOPO SMOKE: $recorte. Nao e medida — os resultados vao para"
   Write-Warn2 "results/$(Split-Path $SmokeDir -Leaf)/, que o scorer nao le, e baselines/pontuacao estao desligados."
+}
+
+if ($PreflightOnly) {
+  Write-Step "Preflight concluido"
+  Write-Ok "Nenhum modelo foi chamado."
+  return
 }
 
 $manifest = @()
@@ -278,21 +410,24 @@ $runIndex = 0
       $before = Get-ChildItem $RunsDir -Filter "agent-*.json" | Select-Object -ExpandProperty Name
     }
 
-    $logFile      = Join-Path $LogsDir "$Stamp-$armName-run$i.json"
+    $logExtension = if ($Provider -eq "codex") { "jsonl" } else { "json" }
+    $logFile      = Join-Path $LogsDir "$Stamp-$armName-run$i.$logExtension"
+    $stderrFile   = Join-Path $LogsDir "$Stamp-$armName-run$i.stderr.log"
     $settingsFile = Join-Path $PipelineDir "settings-run.json"
     $runId        = "$Stamp-$armName-run$i-$([guid]::NewGuid().ToString('N').Substring(0, 8))"
     $telemetryFile = Join-Path $LogsDir "$runId-mcp.ndjson"
+    $runMcp = Get-Content -LiteralPath $mcpConfig -Raw | ConvertFrom-Json
     $effectiveMcpConfig = $mcpConfig
     if ($armName -eq "com") {
       # Grava os identificadores explicitamente na configuração do subprocesso MCP. Não depende
       # de o cliente preservar variáveis herdadas quando também existe um bloco `env` no JSON.
-      $runMcp = Get-Content -LiteralPath $mcpConfig -Raw | ConvertFrom-Json
       $validatorMcp = $runMcp.mcpServers."govbr-ds-validator"
       Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_RUN_ID" $runId
       Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_TELEMETRY_FILE" $telemetryFile
       $effectiveMcpConfig = Join-Path $LogsDir "$runId-mcp-config.json"
       $runMcp | ConvertTo-Json -Depth 10 | Out-File -LiteralPath $effectiveMcpConfig -Encoding utf8
     }
+    $codexMcpArgs = if ($Provider -eq "codex") { @(Get-CodexMcpConfigArgs $runMcp) } else { @() }
 
     # O recorte do smoke vive aqui, no disparo — não dentro do protocolo. O protocolo é o mesmo
     # arquivo nos dois escopos, senão a execução de fumaça deixaria de exercitar o que vai rodar
@@ -301,14 +436,22 @@ $runIndex = 0
     # full apenas no modelo barato e no diretorio fora do alcance do scorer.
     # O protocolo geral nao sabe nada sobre a tela: alvo e destino do POST chegam AQUI, na
     # invocacao, identicos nos dois bracos. E o que permite o mesmo arquivo servir a qualquer tela.
-    $prompt = if ($IsFluxo) {
-      "/evaluate-screen Avalie a tela em $CorpusUrl/fluxo.html. " +
+    $invocation = if ($IsFluxo) {
+      "Avalie a tela em $CorpusUrl/fluxo.html. " +
       "Para salvar, navegue ate $DashboardUrl e faca POST em /api/save-flow-results a partir dali."
     } elseif ($IsSmoke) {
-      "/evaluate-all Percorra apenas a aba '$SmokeAba' e feche os vereditos só dos casos dela. " +
+      "Percorra apenas a aba '$SmokeAba' e feche os vereditos só dos casos dela. " +
       "Ignore as demais abas e as rotas estáticas."
     } else {
-      "/evaluate-all"
+      "Avalie o corpus completo em $CorpusUrl e salve no endpoint definido pelo protocolo."
+    }
+
+    $prompt = if ($Provider -eq "codex") {
+      $protocolText + "`n`n--- INVOCACAO DESTA EXECUCAO ---`n" + $invocation
+    } elseif ($IsFluxo) {
+      "/evaluate-screen $invocation"
+    } else {
+      "/evaluate-all $invocation"
     }
 
     $claudeArgs = @(
@@ -321,14 +464,30 @@ $runIndex = 0
       "--permission-mode", "dontAsk"
     )
 
-    Push-Location $TccRoot
+    $isolatedRoot = $null
+    $clientArgs = $claudeArgs
+    if ($Provider -eq "codex") {
+      $isolatedRoot = Join-Path ([System.IO.Path]::GetTempPath()) "govbr-eval-$runId"
+      New-Item -ItemType Directory -Path $isolatedRoot -Force | Out-Null
+      $clientArgs = @(
+        "exec", "--ephemeral", "--json", "--ignore-user-config", "--ignore-rules",
+        "--skip-git-repo-check", "--sandbox", "read-only", "--color", "never",
+        "-C", $isolatedRoot, "-m", $Model,
+        "-c", 'approval_policy="never"',
+        "-c", 'features.shell_tool=false',
+        "-c", 'agents.enabled=false',
+        "-c", 'web_search="disabled"'
+      ) + $codexMcpArgs + @($prompt)
+    }
+
+    Push-Location $(if ($Provider -eq "codex") { $isolatedRoot } else { $TccRoot })
     $previousValidatorRunId = $env:GOVBR_VALIDATOR_RUN_ID
     $previousTelemetryFile = $env:GOVBR_VALIDATOR_TELEMETRY_FILE
     try {
       $env:GOVBR_VALIDATOR_RUN_ID = $runId
       $env:GOVBR_VALIDATOR_TELEMETRY_FILE = $telemetryFile
       $started = Get-Date
-      & claude @claudeArgs | Out-File -FilePath $logFile -Encoding utf8
+      & $clientExecutable @clientArgs 2> $stderrFile | Out-File -FilePath $logFile -Encoding utf8
       $exit = $LASTEXITCODE
       $elapsed = [math]::Round(((Get-Date) - $started).TotalSeconds, 1)
     } finally {
@@ -337,10 +496,17 @@ $runIndex = 0
       if ($null -eq $previousTelemetryFile) { Remove-Item Env:GOVBR_VALIDATOR_TELEMETRY_FILE -ErrorAction SilentlyContinue }
       else { $env:GOVBR_VALIDATOR_TELEMETRY_FILE = $previousTelemetryFile }
       Pop-Location
+      if ($isolatedRoot) {
+        $resolvedTemp = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
+        $resolvedIsolated = [System.IO.Path]::GetFullPath($isolatedRoot)
+        if ($resolvedIsolated.StartsWith($resolvedTemp, [System.StringComparison]::OrdinalIgnoreCase)) {
+          Remove-Item -LiteralPath $resolvedIsolated -Recurse -Force -ErrorAction SilentlyContinue
+        }
+      }
     }
 
     if ($exit -ne 0) {
-      Write-Warn2 "claude saiu com código $exit. Log: $logFile"
+      Write-Warn2 "$clientName saiu com código $exit. Log: $logFile"
     } else {
       Write-Ok "concluída em ${elapsed}s — log: $logFile"
     }
@@ -351,7 +517,11 @@ $runIndex = 0
     $limiteAtingido = $false
     $logJson = $null
     try {
-      $logJson = Get-Content $logFile -Raw | ConvertFrom-Json
+      $logJson = if ($Provider -eq "codex") {
+        Get-CodexLogSummary $logFile
+      } else {
+        Get-Content $logFile -Raw | ConvertFrom-Json
+      }
       if ($logJson.api_error_status -eq 429) {
         $limiteAtingido = $true
         $motivo = $logJson.result
@@ -403,8 +573,8 @@ $runIndex = 0
           $veredito | Add-Member -NotePropertyName config -NotePropertyValue ([pscustomobject]@{})
         }
         Set-JsonProperty $veredito.config "arm" $(if ($armName -eq "com") { "com-oraculo" } else { "sem-oraculo" })
-        Set-JsonProperty $veredito.config "client" "claude-cli"
-        Set-JsonProperty $veredito.config "clientVersion" $claudeVersion
+        Set-JsonProperty $veredito.config "client" $clientName
+        Set-JsonProperty $veredito.config "clientVersion" $clientVersion
         Set-JsonProperty $veredito.config "modelVersion" $Model
         Set-JsonProperty $veredito.config "protocolVersion" $protocolVersion
         if ($armName -eq "com") {
@@ -429,8 +599,16 @@ $runIndex = 0
           $totalTokens = $tokenUsage.input + $tokenUsage.cacheCreationInput + $tokenUsage.cacheReadInput + $tokenUsage.output
           Set-JsonProperty $veredito.cost "tokens" $totalTokens
           Set-JsonProperty $veredito.cost "tokenUsage" $tokenUsage
-          Set-JsonProperty $veredito.cost "totalCostUsd" ([double]($logJson.total_cost_usd ?? 0))
+          if ($null -ne $logJson.total_cost_usd) {
+            Set-JsonProperty $veredito.cost "totalCostUsd" ([double]$logJson.total_cost_usd)
+          }
           Set-JsonProperty $veredito.cost "turns" ([int]($logJson.num_turns ?? 0))
+          if ($null -ne $logJson.tool_calls) {
+            Set-JsonProperty $veredito.cost "toolCalls" ([int]$logJson.tool_calls)
+          }
+          if ($null -ne $logJson.usage.reasoning_output_tokens) {
+            Set-JsonProperty $veredito.cost "reasoningOutputTokens" ([int64]$logJson.usage.reasoning_output_tokens)
+          }
         }
 
         if ($armName -eq "com") {
@@ -461,12 +639,12 @@ $runIndex = 0
       arm          = $armName
       armDescricao = $(if ($armName -eq "com") { "agente + oráculo MCP" } else { "agente sem oráculo (ablação)" })
       model        = $Model
-      client       = "claude-cli"
-      clientVersion = $claudeVersion
+      client       = $clientName
+      clientVersion = $clientVersion
       protocolVersion = $protocolVersion
       validatorVersion = $(if ($armName -eq "com") { $validatorVersion } else { $null })
       mcpConfig    = Split-Path $effectiveMcpConfig -Leaf
-      prompt       = $prompt
+      prompt       = $invocation
       scope        = $Scope
       archive      = $arquivo
       suite        = $Suite
@@ -474,6 +652,7 @@ $runIndex = 0
       exitCode     = $exit
       wallClockSeconds = $elapsed
       log          = Split-Path $logFile -Leaf
+      stderrLog    = Split-Path $stderrFile -Leaf
       mcpTelemetry = $(if (Test-Path $telemetryFile) { Split-Path $telemetryFile -Leaf } else { $null })
       startedAt    = $started.ToUniversalTime().ToString("o")
     }
@@ -495,6 +674,8 @@ $manifestPath = Join-Path $LogsDir "$Stamp-bateria.json"
 [pscustomobject]@{
   stamp     = $Stamp
   model     = $Model
+  client    = $clientName
+  clientVersion = $clientVersion
   scope     = $Scope
   runsPerArm = $Runs
   arms      = $arms

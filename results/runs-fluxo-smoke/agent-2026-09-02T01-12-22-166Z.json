@@ -1,0 +1,175 @@
+{
+  "model": "gpt-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "tela inteira em execução"
+  ],
+  "notes": "Snapshots de acessibilidade e DOM/estilos observáveis coletados. Interações: clique em Alto Contraste; preenchimento do CPF com 123 e envio por Enter/clique; navegação por Tab pelos controles. O estado de contraste alterou o fingerprint do scanner, mas não exibiu aria-pressed nem classe de estado observável. O formulário não produziu mensagem de validação nem aria-invalid para 123. scan inicial S-page-001; estado contrastado S-page-002, fingerprint alterado e 21 achados inalterados. Axe: 36 passes, 0 incomplete no estado inicial; 1 incomplete no estado contrastado. Console: 404 de favicon.ico. Regras do DS foram retornadas com ids exatos pelo oráculo; não houve regras adicionais disponíveis para os ids sintéticos.",
+  "timestamp": "2026-09-02T01:12:22.166Z",
+  "findings": [
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2)",
+      "rule": "ds-token-color",
+      "description": "border-color rgb(222,226,230) (#dee2e6) não corresponde a token do DS; esperado valor de token, mais próximo --gray-cool-10 (#dfe1e2)."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)",
+      "rule": "ds-token-spacing",
+      "description": "padding 13px está fora da escala de espaçamento; esperado múltiplo de 4px."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > span",
+      "rule": "ds-token-font-size",
+      "description": "font-size 11px está fora da escala tipográfica do DS; esperado um valor da escala."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > span",
+      "rule": "ds-token-spacing",
+      "description": "margin-left 143.641px está fora da escala de espaçamento; esperado múltiplo de 4px."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)",
+      "rule": "ds-token-spacing",
+      "description": "padding 13px está fora da escala de espaçamento; esperado múltiplo de 4px."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)",
+      "rule": "ds-token-spacing",
+      "description": "padding 13px está fora da escala de espaçamento; esperado múltiplo de 4px."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)",
+      "rule": "ds-token-spacing",
+      "description": "padding 13px está fora da escala de espaçamento; esperado múltiplo de 4px."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > hr",
+      "rule": "ds-token-color",
+      "description": "color rgb(128,128,128) (#808080) não corresponde a token do DS; esperado valor de token, mais próximo --gray-40 (#888888)."
+    },
+    {
+      "selector": "#root > header > div > button:nth-of-type(1)",
+      "rule": "ds-structure-button-variant",
+      "description": "br-button usa classe não canônica recurso-contraste; esperado variante documentada."
+    },
+    {
+      "selector": "#root > header > div > button:nth-of-type(2)",
+      "rule": "ds-structure-button-variant",
+      "description": "br-button usa classe não canônica recurso-libras; esperado variante documentada."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > form > button",
+      "rule": "ds-structure-button-variant",
+      "description": "br-button usa classe não canônica acao-continuar; esperado variante documentada."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > hr",
+      "rule": "ds-structure-divider-tag",
+      "description": "br-divider foi aplicado a <hr>; nos exemplos oficiais, esperado <span>."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > hr",
+      "rule": "ds-structure-divider-variant",
+      "description": "br-divider usa classe não canônica divisor-rodape; esperado variante documentada."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > form > div",
+      "rule": "ds-structure-input-variant",
+      "description": "br-input usa classe não canônica campo-cpf-fluxo; esperado variante documentada."
+    },
+    {
+      "selector": "#cpf",
+      "rule": "ds-structure-input-tag",
+      "description": "br-input foi aplicado a <input>; nos exemplos oficiais, esperado <div>."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)",
+      "rule": "ds-structure-item-variant",
+      "description": "br-item usa classe não canônica opcao-identificacao; esperado variante documentada."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)",
+      "rule": "ds-structure-item-variant",
+      "description": "br-item usa classe não canônica opcao-identificacao; esperado variante documentada."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)",
+      "rule": "ds-structure-item-variant",
+      "description": "br-item usa classe não canônica opcao-identificacao; esperado variante documentada."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)",
+      "rule": "ds-structure-item-variant",
+      "description": "br-item usa classe não canônica opcao-identificacao; esperado variante documentada."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2)",
+      "rule": "ds-structure-list-variant",
+      "description": "br-list usa classe não canônica lista-opcoes; esperado variante documentada."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > span",
+      "rule": "ds-structure-tag-variant",
+      "description": "br-tag usa classe não canônica selo-conta; esperado variante documentada."
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "codex-cli",
+    "clientVersion": "codex-cli 0.152.0",
+    "modelVersion": "gpt-5.6-luna",
+    "protocolVersion": "sha256:7e127b3942403c7169579f3b41d4cda75c346fa8f530de4ac6eee7348ec39a38",
+    "validatorVersion": "2.0.0"
+  },
+  "cost": {
+    "startedAt": "2026-09-02T01:10:10.0792147Z",
+    "finishedAt": "2026-09-02T01:12:44.2119577Z",
+    "wallClockSeconds": 154.0,
+    "tokens": 531673,
+    "tokenUsage": {
+      "input": 61780,
+      "cacheCreationInput": 0,
+      "cacheReadInput": 464640,
+      "output": 5253
+    },
+    "turns": 1,
+    "toolCalls": 45,
+    "reasoningOutputTokens": 904,
+    "mcp": {
+      "runId": "2026-09-01T22-10-08-com-run1-bf57e1fc",
+      "telemetryFile": "pipeline/logs/2026-09-01T22-10-08-com-run1-bf57e1fc-mcp.ndjson",
+      "calls": 4,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 937,
+      "responseBytes": 49205,
+      "durationMs": 5035,
+      "byTool": {
+        "scan_page": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 404,
+          "responseBytes": 26535,
+          "durationMs": 5035
+        },
+        "get_finding_details": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 214,
+          "responseBytes": 22243,
+          "durationMs": 0
+        },
+        "get_ds_rules": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 319,
+          "responseBytes": 427,
+          "durationMs": 0
+        }
+      }
+    }
+  }
+}

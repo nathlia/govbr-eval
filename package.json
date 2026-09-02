@@ -22,6 +22,8 @@
     "kb:aliases": "tsx scripts/generate-kb-aliases.ts",
     "case-matrix": "tsx scripts/case-matrix.ts",
     "lint:protocol": "tsx scripts/lint-protocol.ts",
+    "lint:skills": "tsx scripts/lint-skill-contracts.ts",
+    "test:pipeline": "pwsh -NoProfile -File pipeline/test-runner-support.ps1",
     "adjudicate": "tsx scripts/adjudicate.ts"
   },
   "dependencies": {

@@ -12,9 +12,9 @@ A bateria formal são 3–5 execuções **vezes** duas configurações. Feito à
   não-determinismo que o F3 quer justamente isolar);
 - dependente de lembrar de abrir uma sessão limpa a cada vez, sob pena de contaminar o resultado.
 
-Cada execução aqui é um subprocesso `claude -p` novo: contexto próprio, nenhuma memória da
-execução anterior nem de quem disparou o script. O isolamento do gabarito (D-01/D-02) passa a ser
-uma propriedade do procedimento, não uma lembrança.
+Cada execução aqui é um subprocesso novo de Claude Code ou `codex exec --ephemeral`: contexto
+próprio, nenhuma memória da execução anterior nem de quem disparou o script. O isolamento do
+gabarito (D-01/D-02) passa a ser uma propriedade do procedimento, não uma lembrança.
 
 ## Arquivos
 
@@ -41,10 +41,18 @@ cd "F:\Dev Nath\TCC\govbr-eval"; npm run dashboard
 cd "F:\Dev Nath\TCC\govbr-eval\pipeline"
 .\run-battery.ps1 -Runs 1 -Arm com          # uma execução, para conferir o encanamento
 .\run-battery.ps1 -Runs 3 -Arm ambos        # bateria completa: 3 com + 3 sem
+
+# OpenAI pelo Codex incluído no app desktop; gpt-5.6-luna é o padrão econômico desse provider
+.\run-battery.ps1 -Provider codex -Scope smoke -Suite fluxo -Arm ambos
 ```
 
-Parâmetros: `-Runs` (1–10) · `-Arm` (`com` | `sem` | `ambos`) · `-Model` · `-CorpusUrl` ·
-`-DashboardUrl` · `-SkipBaselines` · `-SkipScore`.
+Parâmetros: `-Runs` (1–10) · `-Arm` (`com` | `sem` | `ambos`) · `-Provider` (`claude` | `codex`) ·
+`-Model` · `-CorpusUrl` · `-DashboardUrl` · `-SkipBaselines` · `-SkipScore` · `-PreflightOnly`.
+
+No provider `codex`, o runner localiza primeiro o comando no `PATH` e depois o executável incluído
+no app desktop. Ele exige um login válido, desativa shell, busca web, regras e configuração pessoal,
+injeta o protocolo no prompt e usa um diretório temporário vazio como raiz. Assim o modelo recebe
+somente o protocolo, a invocação e os MCPs desta condição — não o repositório.
 
 O script recusa a partida se o Node for < 20, se o oráculo não estiver compilado ou se o corpus
 não responder — falhas que hoje só aparecem no meio da execução.
@@ -63,6 +71,11 @@ a leitura de `ground-truth.json`, de `results/`, `docs/`, `reports/`, do fonte d
 As duas últimas são as que sustentam a ablação: se o agente **sem** oráculo pudesse ler a base de
 conhecimento direto do disco, ele teria o conhecimento do oráculo por outro caminho e a ablação
 mediria nada. O protocolo antes *pedia* ao agente que não olhasse; agora o harness **impede**.
+
+No braço com oráculo, `GOVBR_VALIDATOR_TOOL_PROFILE=evaluation` expõe somente oito ferramentas. As
+varreduras isoladas, inspeção de estilos, listagem e persistência continuam disponíveis no perfil
+`full`, mas na bateria são substituídas por `scan_page`, ledger, consultas focadas e pelo endpoint
+do dashboard. O inventário e a migração estão em `docs/mcp-tool-profiles.md`.
 
 ## Como os braços são rotulados
 
@@ -85,15 +98,19 @@ de metadado nenhum — ele julgou 26 de 52 casos, logo não é comparável.
 O agente ainda produz o veredito, mas não é mais a fonte autoritativa para configuração e custo.
 Depois que o subprocesso termina, o runner anexa ao artefato arquivado:
 
-- cliente e versão, modelo, versão do validator e SHA-256 da Skill usada;
-- tokens de input, criação/leitura de cache e output informados pelo cliente;
+- cliente e versão, modelo, versão do validator e SHA-256 do protocolo comum + especialização;
+- tokens de input, criação/leitura de cache, raciocínio e output informados pelo cliente;
 - custo monetário, turnos e tempo de parede;
 - chamadas, erros, bytes de entrada/saída e duração do MCP do validator, total e por ferramenta.
 
 O validator grava cada chamada em um sidecar `*-mcp.ndjson`. Esses dados não são incluídos nas
 respostas MCP e, portanto, não aumentam o contexto visto pelo modelo. O sidecar mede apenas o MCP
-do validator; chamadas do Playwright continuam representadas pelo campo geral `toolCalls` quando
-o agente o informa.
+do validator; chamadas do Playwright continuam representadas pelo campo geral `toolCalls` informado
+pelo cliente.
+
+Claude registra o custo monetário informado pelo próprio cliente. Login ChatGPT no Codex fornece
+tokens e chamadas, mas não um valor monetário por execução; por isso o runner não fabrica
+`totalCostUsd` para essas rodadas.
 
 **O que ainda falta:** a comparação lado a lado entre os braços. O scorer hoje avisa que a ablação
 não existe, mas não emite a tabela comparativa — isso exige os dois braços com n >= 3 na mesma

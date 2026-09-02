@@ -133,7 +133,7 @@ export interface AgentRunCost {
   wallClockSeconds: number;
   /** Total MCP/browser tool calls made during the run (approximate is fine). */
   toolCalls?: number;
-  /** Total tokens if the client reports them (e.g. /cost in Claude Code). */
+  /** Total tokens if the client reports them. */
   tokens?: number;
   /** Provider-reported token classes; cache reads stay separate because they dominate these runs. */
   tokenUsage?: AgentTokenUsage;
@@ -141,6 +141,8 @@ export interface AgentRunCost {
   totalCostUsd?: number;
   /** Number of model turns reported by the client. */
   turns?: number;
+  /** Reasoning-output subset reported by OpenAI clients, when available. */
+  reasoningOutputTokens?: number;
   /** Validator-only MCP telemetry. Browser MCP calls are not included. */
   mcp?: McpTelemetrySummary;
   notes?: string;

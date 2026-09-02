@@ -114,45 +114,45 @@ de detalhes para os candidatos encontrados.
 
 - [x] Definir uma varredura compacta por estado de página.
 - [x] Proibir repetição da mesma consulta quando o estado não mudou.
-- [ ] Buscar regras detalhadas apenas quando a versão breve não resolve aplicabilidade.
+- [x] Buscar regras detalhadas apenas quando a versão breve não resolve aplicabilidade.
 - [x] Agrupar seletores, regras e finding IDs em chamadas em lote.
-- [ ] Definir limite de investigações detalhadas antes de exigir justificativa do agente.
-- [ ] Encerrar quando todos os candidatos estiverem aceitos, rejeitados ou marcados como incertos.
+- [x] Definir limite de investigações detalhadas antes de exigir justificativa do agente.
+- [x] Encerrar quando todos os candidatos estiverem aceitos, rejeitados ou marcados como incertos.
 
 ## Fase 3 — Refatoração das Skills
 
 ### Estrutura
 
-- [ ] Definir uma única fonte canônica para o protocolo comum.
-- [ ] Transformar `evaluate-all` em uma especialização fina do protocolo, não uma duplicação.
-- [ ] Remover histórico de decisões e justificativas repetidas das instruções carregadas pelo agente.
-- [ ] Manter na Skill apenas objetivo, restrições, algoritmo, orçamento, saída e condições de parada.
-- [ ] Mover material explicativo não operacional para documentação humana.
-- [ ] Remover exemplos longos de JSON; manter um schema compacto e válido.
-- [ ] Colocar metadados dinâmicos da execução depois do prefixo estável.
+- [x] Definir uma única fonte canônica para o protocolo comum.
+- [x] Transformar `evaluate-all` em uma especialização fina do protocolo, não uma duplicação.
+- [x] Remover histórico de decisões e justificativas repetidas das instruções carregadas pelo agente.
+- [x] Manter na Skill apenas objetivo, restrições, algoritmo, orçamento, saída e condições de parada.
+- [x] Mover material explicativo não operacional para documentação humana.
+- [x] Remover exemplos longos de JSON; manter um schema compacto e válido.
+- [x] Colocar metadados dinâmicos da execução depois do prefixo estável.
 
 Metas iniciais, a validar pelos testes:
 
-- [ ] `evaluate-screen/SKILL.md` com aproximadamente 600–800 palavras.
-- [ ] `evaluate-all/SKILL.md` com aproximadamente 250–400 palavras além do protocolo compartilhado.
-- [ ] Cada instrução normativa aparece uma única vez.
+- [x] `evaluate-screen/SKILL.md` com aproximadamente 600–800 palavras.
+- [x] `evaluate-all/SKILL.md` com aproximadamente 250–400 palavras além do protocolo compartilhado.
+- [x] Cada instrução normativa aparece uma única vez.
 
 ### Fluxo decisório sugerido
 
-- [ ] Descobrir estados e regiões interativas.
+- [x] Descobrir estados e regiões interativas.
 - [x] Executar uma varredura compacta por estado.
 - [x] Investigar apenas findings candidatos.
-- [ ] Consultar detalhes da regra somente quando houver dúvida de aplicabilidade.
+- [x] Consultar detalhes da regra somente quando houver dúvida de aplicabilidade.
 - [x] Manter um ledger de evidências e nunca buscar novamente evidência já válida.
-- [ ] Produzir o relatório diretamente do ledger.
-- [ ] Marcar incerteza explicitamente em vez de abrir loops indefinidos de inspeção.
+- [x] Produzir o relatório diretamente do ledger.
+- [x] Marcar incerteza explicitamente em vez de abrir loops indefinidos de inspeção.
 
 ### Testes das Skills
 
 - [ ] Criar casos mínimos para ativação correta da Skill.
 - [ ] Testar que a Skill não ativa em tarefas fora do escopo.
-- [ ] Testar aderência ao schema de saída.
-- [ ] Testar respeito aos limites de chamadas e às condições de parada.
+- [x] Testar aderência ao schema de saída.
+- [x] Testar respeito aos limites de chamadas e às condições de parada.
 - [ ] Testar que ausência do oráculo não leva à invenção de IDs de regra.
 - [ ] Testar interação, foco, composição, regra condicional e estado alterado.
 - [ ] Adicionar exemplos negativos somente para falhas observadas e recorrentes.
@@ -162,14 +162,14 @@ correção das evidências.
 
 ## Fase 4 — Superfície e roteamento das ferramentas
 
-- [ ] Inventariar sobreposição entre todas as ferramentas registradas no servidor.
-- [ ] Reduzir descrições para uma ou duas frases: o que retorna, quando usar e quando não usar.
-- [ ] Remover instruções de workflow das descrições quando já estiverem na Skill.
-- [ ] Considerar uma superfície mínima: busca de regras, busca detalhada, scan, detalhes de findings,
+- [x] Inventariar sobreposição entre todas as ferramentas registradas no servidor.
+- [x] Reduzir descrições para uma ou duas frases: o que retorna, quando usar e quando não usar.
+- [x] Remover instruções de workflow das descrições quando já estiverem na Skill.
+- [x] Considerar uma superfície mínima: busca de regras, busca detalhada, scan, detalhes de findings,
       verificação e salvamento.
 - [ ] Usar carregamento dinâmico/tool search se o cliente suportar.
-- [ ] Caso contrário, criar perfis explícitos do MCP ou limitar ferramentas permitidas no harness.
-- [ ] Garantir que ferramentas removidas tenham migração ou alias temporário quando necessário.
+- [x] Caso contrário, criar perfis explícitos do MCP ou limitar ferramentas permitidas no harness.
+- [x] Garantir que ferramentas removidas tenham migração ou alias temporário quando necessário.
 
 **Aceite:** o modelo recebe somente ferramentas relevantes e os testes de contrato cobrem todos os
 schemas expostos.
@@ -178,7 +178,7 @@ schemas expostos.
 
 - [ ] Manter instruções, schemas e descrições estáveis e byte-identical entre execuções comparáveis.
 - [ ] Colocar URL, run ID, seed, timestamp e braço experimental no final do prompt dinâmico.
-- [ ] Remover timestamps e changelogs das Skills carregadas em runtime.
+- [x] Remover timestamps e changelogs das Skills carregadas em runtime.
 - [ ] Cachear consultas da base de conhecimento por versão da KB e argumentos normalizados.
 - [ ] Cachear evidência somente por fingerprint completo da página/estado.
 - [ ] Medir cache hit rate e ganho real; não considerar cache como substituto para respostas menores.
@@ -216,7 +216,7 @@ schemas expostos.
 
 ## Guardrails da ablação
 
-- [ ] A Skill permanece neutra e não contém regras substantivas do gov.br DS.
+- [x] A Skill permanece neutra e não contém regras substantivas do gov.br DS.
 - [ ] O servidor não recebe IDs dos casos, gabarito ou localização conhecida das violações.
 - [ ] Os braços comparáveis têm o mesmo protocolo e orçamento.
 - [ ] Diferenças intencionais de ferramentas são declaradas como parte do tratamento experimental.
@@ -253,9 +253,9 @@ schemas expostos.
 
 ### PR 5 — Skills e ferramentas
 
-- [ ] Protocolo canônico e Skills enxutas.
-- [ ] Descrições curtas e superfície reduzida.
-- [ ] Testes de ativação, aderência e orçamento.
+- [x] Protocolo canônico e Skills enxutas.
+- [x] Descrições curtas e superfície reduzida.
+- [ ] Testes de ativação, aderência e orçamento. *(aderência/orçamento cobertos estaticamente; ativação e comportamento ainda exigem smoke com modelo)*
 
 ### PR 6 — Bateria comparativa
 

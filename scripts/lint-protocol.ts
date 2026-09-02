@@ -93,7 +93,10 @@ function collectSkillFiles(dir: string): string[] {
   for (const entry of readdirSync(dir)) {
     const full = join(dir, entry);
     if (statSync(full).isDirectory()) out.push(...collectSkillFiles(full));
-    else if (entry.toUpperCase() === "SKILL.MD") out.push(full);
+    else if (
+      entry.toUpperCase() === "SKILL.MD" ||
+      (dir.toLowerCase().endsWith("_shared") && entry.toLowerCase().endsWith(".md"))
+    ) out.push(full);
   }
   return out;
 }

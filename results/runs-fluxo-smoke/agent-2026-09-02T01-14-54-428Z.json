@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-09-02T01:14:54.428Z",
+  "model": "GPT-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "tela inteira",
+    "estado inicial",
+    "estado após envio vazio do formulário CPF",
+    "navegação por teclado",
+    "ativação de Alto Contraste"
+  ],
+  "notes": "Inspecionados snapshot de acessibilidade, DOM/texto/estilos relevantes e console. Interações: envio vazio pelo botão Continuar, envio por Enter com valor 123, navegação por Tab por todos os controles e ativação do botão Alto Contraste. O formulário permaneceu na mesma URL; o envio vazio inseriu a mensagem visual 'Informe um CPF para continuar.'. Não há oráculo nem scan_page disponível. Limitação: console registrou 404 para /favicon.ico; não foi possível validar comportamento de serviços externos dos links alternativos.",
+  "findings": [
+    {
+      "selector": ".mensagem-erro-cpf",
+      "rule": "wcag:4.1.3",
+      "description": "Após o envio do formulário CPF vazio, a mensagem de erro é inserida dinamicamente como um parágrafo simples (<p class=\"mensagem-erro-cpf\">Informe um CPF para continuar.</p>), sem role de status/alerta nem aria-live. Como resultado, a mudança de estado não é anunciada de forma programática a usuários de tecnologias assistivas. Referência normativa: WCAG 2.2, 4.1.3 Status Messages."
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "codex-cli",
+    "clientVersion": "codex-cli 0.152.0",
+    "modelVersion": "gpt-5.6-luna",
+    "protocolVersion": "sha256:7e127b3942403c7169579f3b41d4cda75c346fa8f530de4ac6eee7348ec39a38"
+  },
+  "cost": {
+    "startedAt": "2026-09-02T01:12:44.3394847Z",
+    "finishedAt": "2026-09-02T01:15:00.5092030Z",
+    "wallClockSeconds": 136.1,
+    "tokens": 719345,
+    "tokenUsage": {
+      "input": 62065,
+      "cacheCreationInput": 0,
+      "cacheReadInput": 654080,
+      "output": 3200
+    },
+    "turns": 1,
+    "toolCalls": 52,
+    "reasoningOutputTokens": 1096
+  }
+}
