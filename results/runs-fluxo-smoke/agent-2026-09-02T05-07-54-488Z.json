@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-09-02T05:07:54.488Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "página de autenticação gov.br - fluxo de login"
+  ],
+  "notes": "Avaliação completa: interações com CPF input (preenchimento não testado por limitação de permissão), navegação por teclado (11 elementos focáveis encontrados), teste de contraste visual em viewport. Sem limite de profundidade alcançado, escopo percorrido integralmente.",
+  "findings": [
+    {
+      "selector": "span.br-tag.selo-conta",
+      "relatedSelectors": [
+        "a.link-opcao"
+      ],
+      "rule": "wcag:1.3.1",
+      "description": "Badge 'SUA CONTA SERÁ PRATA' não possui aria-hidden nem está semanticamente associado ao link 'Login com seu banco'. Elemento irmão (sibling) do link causa ambiguidade na relação: screen readers lerão o badge como elemento separado, potencialmente confundindo usuários sobre qual opção se aplica. Badge deve ser aria-hidden se decorativo, ou incluído como parte da label da opção."
+    },
+    {
+      "selector": "input#cpf",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "description": "Discrepância entre aria-required='true' (ARIA) e required='false' (HTML): o campo é marcado como obrigatório via ARIA mas não via atributo nativo. Cria inconsistência entre APIs de assistência — screen readers podem reportar valores diferentes. Recomendação: usar HTML required='true' em vez de/além de aria-required, ou remover aria-required se opcional."
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.258 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:7ce551a68930e4d63b4666abb6917207cd55afb54e96db5c20c24b08445be5c2",
+    "instrumentVersion": "fluxo-1.1.0",
+    "validatorVersion": "2.1.0"
+  },
+  "cost": {
+    "startedAt": "2026-09-02T05:05:37.6278920Z",
+    "finishedAt": "2026-09-02T05:08:05.1776137Z",
+    "wallClockSeconds": 147.5,
+    "tokens": 1325214,
+    "tokenUsage": {
+      "input": 280,
+      "cacheCreationInput": 38368,
+      "cacheReadInput": 1276753,
+      "output": 9813
+    },
+    "totalCostUsd": 0.2537563,
+    "turns": 31,
+    "mcp": {
+      "runId": "2026-09-02T02-05-36-com-run1-85126244",
+      "telemetryFile": null,
+      "calls": 0,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 0,
+      "responseBytes": 0,
+      "durationMs": 0,
+      "byTool": {}
+    }
+  }
+}
