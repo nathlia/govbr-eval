@@ -13,7 +13,7 @@
     ],
     "setup_rationale": "Submeter com o CPF em branco faz nascer a mensagem de erro. A sequência é ADITIVA: nada que o gabarito ancora deixa de existir, então um único estado da página serve aos dois lados da resolução.",
     "nunca_agregar_com": "ground-truth.json (suíte TC-*) e organic-ground-truth.json — instrumentos diferentes sobre páginas diferentes (D-13)",
-    "baselines": "PENDENTE: axe e eslint precisam ser MEDIDOS sobre esta página. Herdar as linhas de base da suíte TC-* seria assumir baseline (D-06)."
+    "baselines": "MEDIDAS em results/baselines-fluxo.json (2026-09-02, validator 2.1.0): axe-core 0 violações / 36 passes, eslint-plugin-jsx-a11y 0 achados no fonte da tela, validator 8/16 unidades por regra exata. Herdar as linhas de base da suíte TC-* seria assumir baseline (D-06); remedir com `npm run baselines:fluxo` sempre que uma unidade entrar no gabarito."
   },
   "violations": [
     {

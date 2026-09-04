@@ -94,8 +94,25 @@
           "arm": "com-oraculo"
         }
       ],
-      "verdict": null,
-      "rationale": ""
+      "verdict": "composto",
+      "rationale": "A alegação afirma dois defeitos que não se resolvem com a mesma correção: associar o texto de apoio não o faz dizer o formato, e escrever o formato não o associa ao campo.",
+      "components": [
+        {
+          "verdict": "vocabulario",
+          "unit": {
+            "caseId": "E-7a5432",
+            "rule": "wcag:3.3.2"
+          },
+          "rationale": "O achado descreve o texto de apoio que não cumpre seu papel para o campo e aponta a ausência de aria-describedby — a unidade V-02. Citou emag:6.5, identificador que o gabarito não carrega para essa unidade."
+        },
+        {
+          "verdict": "lacuna-gabarito",
+          "gabaritoStatus": "pendente",
+          "rationale": "A ausência de instrução de formato é violação real que o gabarito nunca catalogou: nenhuma spec menciona formato e emag:6.5 não está no conjunto de regras. Falha do gabarito, não do agente."
+        }
+      ],
+      "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
+      "adjudicatedAt": "2026-09-04"
     },
     {
       "id": "E-7a5432:8ebd00f3",
