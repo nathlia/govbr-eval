@@ -25,7 +25,8 @@
     "lint:skills": "tsx scripts/lint-skill-contracts.ts",
     "test:pipeline": "pwsh -NoProfile -File pipeline/test-runner-support.ps1",
     "test:flow": "tsx scripts/test-flow-units.ts",
-    "adjudicate": "tsx scripts/adjudicate-all.ts"
+    "adjudicate": "tsx scripts/adjudicate-all.ts",
+    "pacote:revisao": "tsx scripts/gerar-pacote-revisao.ts"
   },
   "dependencies": {
     "@axe-core/playwright": "4.11.1",

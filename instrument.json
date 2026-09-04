@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "proposito": "Versão do INSTRUMENTO de medida, separada da versão do GABARITO (D-31). Fonte única lida pelo scorer (scripts/instrument.ts) e pelo runner (pipeline/run-battery.ps1) — derivar a versão em dois lugares foi o que produziu a conflação que o D-31 corrige.",
+    "instrumento_vs_gabarito": "O instrumento é o CONTRATO: semântica do scorer, ancoragem, vocabulário de veredito, perfil de ferramentas e permissões do cliente. O gabarito é o DADO de referência: quais unidades existem na página. Uma execução é incompatível quando foi coletada sob outro contrato — nunca só porque o gabarito ganhou ou perdeu uma unidade.",
+    "quando_incrementar": "Incremente a versão do instrumento quando uma execução já arquivada deixar de ser comparável: mudança na semântica de casamento, na ancoragem, no que o cliente tem permissão de fazer, ou no perfil de ferramentas exposto. NÃO incremente por correção de gabarito (isso é `_meta.version` em ground-truth-fluxo.json) nem por acréscimo retrocompatível ao vocabulário de veredito, desde que a regressão reproduza os números anteriores.",
+    "historico": {
+      "fluxo-1.0": "primeira medida de fluxo (D-28)",
+      "fluxo-1.1.0": "D-29: ids citáveis de constraints, relatedSelectors, cobertura por família, deteccao-correta, versionamento, resize autorizado",
+      "nao_incrementado_no_D-30": "o veredito `composto` é acréscimo retrocompatível: os quatro braços TC-* e a execução de fluxo reproduziram exatamente os números anteriores, então execuções arquivadas seguem comparáveis"
+    }
+  },
+  "fluxo": "fluxo-1.1.0"
+}

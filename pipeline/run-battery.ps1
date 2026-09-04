@@ -96,9 +96,12 @@ $PipelineDir = $PSScriptRoot
 $EvalRoot    = Split-Path $PipelineDir -Parent
 $TccRoot     = Split-Path $EvalRoot -Parent
 $IsFluxo     = $Suite -eq "fluxo"
+# D-31: a versão do instrumento vem de instrument.json, a mesma fonte que o scorer lê. Derivá-la
+# do gabarito fazia uma correção de gabarito renomear o instrumento e órfãs execuções coletadas
+# sob um contrato que não mudou.
 $InstrumentVersion = if ($IsFluxo) {
-  $flowGt = Get-Content -LiteralPath (Join-Path $EvalRoot "ground-truth-fluxo.json") -Raw | ConvertFrom-Json
-  "fluxo-$($flowGt._meta.version)"
+  $instrument = Get-Content -LiteralPath (Join-Path $EvalRoot "instrument.json") -Raw | ConvertFrom-Json
+  $instrument.fluxo
 } else {
   $caseGt = Get-Content -LiteralPath (Join-Path $EvalRoot "ground-truth.json") -Raw | ConvertFrom-Json
   "casos-$($caseGt._meta.version ?? 'legado')"

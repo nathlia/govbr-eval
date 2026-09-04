@@ -23,6 +23,7 @@ import {
   type FlowScore, type FlowUnit,
 } from "./units-flow";
 import { normalizeRuleId } from "./units";
+import { FLOW_INSTRUMENT_VERSION } from "./instrument";
 
 const APP_URL = process.env.APP_URL ?? "http://localhost:3000";
 const GROUND_TRUTH = process.env.FLOW_GT ?? "ground-truth-fluxo.json";
@@ -193,7 +194,10 @@ async function main(): Promise<void> {
     process.exit(1);
   }
   const gt = JSON.parse(readFileSync(gtPath, "utf8")) as FlowGroundTruth;
-  const instrumentVersion = String(gt._meta.version ?? "não versionado");
+  // Duas dimensões, dois campos (D-31). O gate de compatibilidade é o CONTRATO sob o qual a
+  // execução foi coletada; a versão do gabarito diz contra qual conjunto de unidades ela foi
+  // pontuada. Corrigir o gabarito muda o número, não invalida a execução.
+  const gabaritoVersion = String(gt._meta.version ?? "não versionado");
 
   if (!gt.violations?.length) {
     console.log(`\n${GROUND_TRUTH} não declara nenhuma violação ainda.`);
@@ -203,7 +207,7 @@ async function main(): Promise<void> {
 
   const archivedRuns = loadRuns();
   const url = new URL(gt._meta.url, APP_URL).toString();
-  const expectedInstrument = `fluxo-${instrumentVersion}`;
+  const expectedInstrument = FLOW_INSTRUMENT_VERSION;
   const incompatibleRuns = archivedRuns.filter(run => run.data.config?.instrumentVersion !== expectedInstrument);
   const runs = includeIncompatible
     ? archivedRuns
@@ -238,7 +242,10 @@ async function main(): Promise<void> {
   if (onlyAnchors) { printAnchors(gt, res, units); return; }
 
   console.log(`\nSuíte de fluxo — ${gt._meta.page} · ${url}`);
-  console.log(`Instrumento: fluxo-${instrumentVersion}`);
+  console.log(`Instrumento: ${FLOW_INSTRUMENT_VERSION}  ·  gabarito: ${gabaritoVersion}`);
+  console.log("Os dois versionam coisas diferentes: o instrumento é o contrato de coleta e");
+  console.log("pontuação, o gabarito é o conjunto de unidades. Números de gabaritos diferentes");
+  console.log("não se comparam entre si, ainda que o instrumento seja o mesmo (D-31).");
   console.log(`${units.length} unidade(s) de avaliação (elemento × regra) a partir de ${gt.violations.length} spec(s).`);
 
   printBaselines(units);
@@ -256,7 +263,7 @@ async function main(): Promise<void> {
       `${r.arm} | ${r.data.model ?? "—"} | ${c?.client ?? "cliente não rotulado"} | ` +
       `${c?.reasoningEffort ?? "esforço não rotulado"} | ` +
       `${c?.oracleProfile ?? (r.arm === "sem-oraculo" ? "none" : "perfil não rotulado")} | ` +
-      `${c?.instrumentVersion ?? "instrumento legado/não rotulado"} | ` +
+      `${c?.instrumentVersion ?? "instrumento legado/não rotulado"} | gabarito ${gabaritoVersion} | ` +
       `${c?.protocolVersion ?? "protocolo não versionado"} | ` +
       `${c?.validatorVersion ?? (r.arm === "com-oraculo" ? "validator não versionado" : "sem validator")}`;
     if (!groups.has(key)) groups.set(key, []);

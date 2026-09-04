@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-02T06:21:53.721Z",
+  "timestamp": "2026-09-04T09:05:33.195Z",
   "appUrl": "http://localhost:3000/fluxo.html",
   "state": "após setup do gabarito",
   "axe": {
@@ -22,20 +22,28 @@
     "tool": "govbr-ds-validator scan_page (tokens + structure)",
     "version": "2.1.0",
     "byElementKey": {
+      "body>div>main>section:nth-of-type(1)": [
+        {
+          "rule": "ds:token-color",
+          "source": "govbr-ds-token",
+          "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+          "target": "#root > main > section:nth-of-type(1)"
+        }
+      ],
+      "body>div>main>section:nth-of-type(2)": [
+        {
+          "rule": "ds:token-color",
+          "source": "govbr-ds-token",
+          "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+          "target": "#root > main > section:nth-of-type(2)"
+        }
+      ],
       "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)": [
         {
           "rule": "ds:token-color",
           "source": "govbr-ds-token",
           "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
           "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2)"
-        }
-      ],
-      "body>div>main>section:nth-of-type(2)>form>p": [
-        {
-          "rule": "ds:token-color",
-          "source": "govbr-ds-token",
-          "description": "color: rgb(230, 0, 0) (#e60000) não corresponde a nenhum token do DS",
-          "target": "#root > main > section:nth-of-type(2) > form > p"
         }
       ],
       "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)": [
@@ -68,6 +76,14 @@
           "source": "govbr-ds-token",
           "description": "padding: 13px (fora da escala: 13px)",
           "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)"
+        }
+      ],
+      "body>div>main>section:nth-of-type(2)>form>p": [
+        {
+          "rule": "ds:token-color",
+          "source": "govbr-ds-token",
+          "description": "color: rgb(230, 0, 0) (#e60000) não corresponde a nenhum token do DS",
+          "target": "#root > main > section:nth-of-type(2) > form > p"
         }
       ],
       "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>span": [

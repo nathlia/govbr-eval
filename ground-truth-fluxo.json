@@ -1,6 +1,7 @@
 {
   "_meta": {
-    "version": "1.1.0",
+    "version": "1.2.0",
+    "version_note": "1.2.0 (2026-09-04, D-31): V-06 passa de `unico` para `todos` com 8 elementos. Números publicados antes desta versão foram medidos contra o gabarito 1.1.0, com 16 unidades, e não se comparam diretamente com os de agora.",
     "page": "Identificação no gov.br — tela de fluxo (D-23)",
     "url": "/fluxo.html",
     "waitFor": "#cpf",
@@ -79,14 +80,14 @@
     },
     {
       "id": "V-06",
-      "anchor": ".lista-opcoes",
-      "scope": "unico",
-      "expectedCount": 1,
+      "anchor": ".barra-superior, .painel-institucional, .cartao-identificacao, .lista-opcoes, .opcao-identificacao",
+      "scope": "todos",
+      "expectedCount": 8,
       "state": "sempre",
       "deterministicBaseline": true,
       "rules": ["ds:token-color"],
       "categories": ["token"],
-      "description": "a borda da lista usa #dee2e6, valor autoral em fluxo.css que não corresponde a token do gov.br DS. Lacuna encontrada na primeira medida e incorporada conforme D-28."
+      "description": "a variável autoral `--tela-borda: #dee2e6` em fluxo.css não corresponde a token do gov.br DS (o mais próximo é --gray-cool-10, #dfe1e2) e pinta a borda de OITO elementos: barra superior, painel institucional, cartão de identificação, lista de opções e as quatro opções. Terceira violação compartilhada da tela, ao lado de V-01 e V-05 — a maior das três. Escopo corrigido de `unico` para `todos` em 2026-09-04 (D-31): o defeito sempre foi compartilhado, e catalogar só `.lista-opcoes` cobrava como falso positivo a enumeração correta dos irmãos."
     },
     {
       "id": "V-07",
