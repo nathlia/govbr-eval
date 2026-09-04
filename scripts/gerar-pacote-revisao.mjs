@@ -81,8 +81,15 @@ L.push("| `vocabulario` | é a unidade abaixo, com nome que o scorer não conhec
 L.push("| `deteccao-correta` | conteúdo certo, citação ou âncora inválida | credita detecção, não `ruleVerifiedTP` (**exige `unit`**) |");
 L.push("| `duplicado` | reformulação de outro achado já casado no mesmo elemento | sai do FP |");
 L.push("| `indeterminado` | revisado e indecidível | **segue cobrado como FP** |");
+L.push("| `composto` | a alegação afirma **mais de um defeito** | decidido por parte em `components` |");
 L.push("");
 L.push("`indeterminado` é assimétrico de propósito: a indecisão nunca melhora o número.");
+L.push("");
+L.push("**O teste do defeito composto:** *consertar um defeito consertaria o outro?* Se não, são");
+L.push("duas unidades e o veredito é `composto`, com um componente por defeito — cada um com seu");
+L.push("`verdict`, sua `rationale` e sua `unit` quando for `vocabulario`/`deteccao-correta`. A");
+L.push("alegação é cobrada uma única vez se qualquer parte resolver em cobrança. Ver");
+L.push("`docs/adjudicacao.md`.");
 L.push("");
 L.push("## Carimbo de identidade — obrigatório");
 L.push("");
@@ -150,6 +157,9 @@ claims.forEach((c, i) => {
   L.push("```json");
   L.push(`{ "id": "${c.id}", "verdict": "", "rationale": "" }`);
   L.push("```");
+  L.push("");
+  L.push("<sub>Se a alegação afirmar dois defeitos que não se resolvem com a mesma correção, use");
+  L.push('`"verdict": "composto"` com um `components[]` por defeito.</sub>');
   L.push("");
   L.push("---");
   L.push("");

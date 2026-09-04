@@ -10,7 +10,7 @@
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import type { AgentFinding, AgentResults, GroundTruth, RuleId } from "../types";
-import { ROOT, findingId, type AdjudicationIndex } from "./adjudication";
+import { ROOT, applyRecord, findingId, type AdjudicationIndex } from "./adjudication";
 
 export function loadJson<T>(relPath: string): T | null {
   const abs = join(ROOT, relPath);
@@ -235,28 +235,22 @@ export function scoreUnits(raw: AgentResults | null, adj?: AdjudicationIndex): U
 
     if (!decided) { pending.push(lf); falseFindings.push(lf); continue; }
 
-    switch (decided.verdict) {
-      case "vocabulario":
-      case "deteccao-correta": {
-        const target = decided.unit
-          ? outcomes.find(o => !o.matched && o.unit.caseId === decided.unit!.caseId
-              && o.unit.rules.includes(normalizeRuleId(decided.unit!.rule)))
-          : undefined;
-        if (target) {
-          target.matched = true;
-          target.adjudicated = true;
-          target.finding = lf.description;
-        } else {
-          // The named unit does not exist or was already matched: the record cannot be applied,
-          // so the finding stays charged. Reported as a defect by `npm run adjudicate`.
-          falseFindings.push(lf);
-        }
-        break;
-      }
-      case "lacuna-gabarito": gaps.push(lf); break;
-      case "duplicado":       duplicates.push(lf); break;
-      default:                falseFindings.push(lf); break; // falso-positivo | indeterminado
-    }
+    // Verdict semantics live in adjudication.ts so the two suites cannot drift apart (D-30).
+    // A `composto` record applies one effect per component; a simple one applies exactly one,
+    // which is why this reproduces pre-D-30 numbers unchanged.
+    const applied = applyRecord(decided, (unit, _verdict, finding) => {
+      const target = outcomes.find(o => !o.matched && o.unit.caseId === unit.caseId
+        && o.unit.rules.includes(normalizeRuleId(unit.rule)));
+      if (!target) return false; // unit absent or already matched — reported as a defect
+      target.matched = true;
+      target.adjudicated = true;
+      target.finding = finding;
+      return true;
+    }, lf.description);
+
+    for (let i = 0; i < applied.gaps; i++) gaps.push(lf);
+    for (let i = 0; i < applied.duplicates; i++) duplicates.push(lf);
+    if (applied.charged) falseFindings.push(lf);
   }
 
   return {

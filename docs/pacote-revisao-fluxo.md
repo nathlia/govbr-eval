@@ -31,8 +31,15 @@ Quando houver o par `com`/`sem` (11.10), o procedimento cego volta a valer e é 
 | `deteccao-correta` | conteúdo certo, citação ou âncora inválida | credita detecção, não `ruleVerifiedTP` (**exige `unit`**) |
 | `duplicado` | reformulação de outro achado já casado no mesmo elemento | sai do FP |
 | `indeterminado` | revisado e indecidível | **segue cobrado como FP** |
+| `composto` | a alegação afirma **mais de um defeito** | decidido por parte em `components` |
 
 `indeterminado` é assimétrico de propósito: a indecisão nunca melhora o número.
+
+**O teste do defeito composto:** *consertar um defeito consertaria o outro?* Se não, são
+duas unidades e o veredito é `composto`, com um componente por defeito — cada um com seu
+`verdict`, sua `rationale` e sua `unit` quando for `vocabulario`/`deteccao-correta`. A
+alegação é cobrada uma única vez se qualquer parte resolver em cobrança. Ver
+`docs/adjudicacao.md`.
 
 ## Carimbo de identidade — obrigatório
 
@@ -96,6 +103,9 @@ descreve uma dessas, o veredito é `duplicado`, não `vocabulario`.
 { "id": "E-7a5432:0918f5ad", "verdict": "", "rationale": "" }
 ```
 
+<sub>Se a alegação afirmar dois defeitos que não se resolvem com a mesma correção, use
+`"verdict": "composto"` com um `components[]` por defeito.</sub>
+
 ---
 
 ### 2. `E-728b24:3b7021a4`
@@ -116,6 +126,9 @@ descreve uma dessas, o veredito é `duplicado`, não `vocabulario`.
 { "id": "E-728b24:3b7021a4", "verdict": "", "rationale": "" }
 ```
 
+<sub>Se a alegação afirmar dois defeitos que não se resolvem com a mesma correção, use
+`"verdict": "composto"` com um `components[]` por defeito.</sub>
+
 ---
 
 ### 3. `E-ee9ba1:74ed1b06`
@@ -132,6 +145,9 @@ página, é `lacuna-gabarito`; se não for, `falso-positivo`.
 ```json
 { "id": "E-ee9ba1:74ed1b06", "verdict": "", "rationale": "" }
 ```
+
+<sub>Se a alegação afirmar dois defeitos que não se resolvem com a mesma correção, use
+`"verdict": "composto"` com um `components[]` por defeito.</sub>
 
 ---
 
@@ -153,6 +169,9 @@ página, é `lacuna-gabarito`; se não for, `falso-positivo`.
 { "id": "E-033846:82351c81", "verdict": "", "rationale": "" }
 ```
 
+<sub>Se a alegação afirmar dois defeitos que não se resolvem com a mesma correção, use
+`"verdict": "composto"` com um `components[]` por defeito.</sub>
+
 ---
 
 ### 5. `E-7a5432:8ebd00f3`
@@ -172,6 +191,9 @@ página, é `lacuna-gabarito`; se não for, `falso-positivo`.
 ```json
 { "id": "E-7a5432:8ebd00f3", "verdict": "", "rationale": "" }
 ```
+
+<sub>Se a alegação afirmar dois defeitos que não se resolvem com a mesma correção, use
+`"verdict": "composto"` com um `components[]` por defeito.</sub>
 
 ---
 
@@ -193,6 +215,9 @@ página, é `lacuna-gabarito`; se não for, `falso-positivo`.
 { "id": "E-7a5432:df14769a", "verdict": "", "rationale": "" }
 ```
 
+<sub>Se a alegação afirmar dois defeitos que não se resolvem com a mesma correção, use
+`"verdict": "composto"` com um `components[]` por defeito.</sub>
+
 ---
 
 ### 7. `E-ee9ba1:fce4c972`
@@ -208,6 +233,9 @@ página, é `lacuna-gabarito`; se não for, `falso-positivo`.
 ```json
 { "id": "E-ee9ba1:fce4c972", "verdict": "", "rationale": "" }
 ```
+
+<sub>Se a alegação afirmar dois defeitos que não se resolvem com a mesma correção, use
+`"verdict": "composto"` com um `components[]` por defeito.</sub>
 
 ---
 

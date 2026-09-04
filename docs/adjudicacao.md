@@ -24,10 +24,54 @@ Regra do D-17: **adjudicar antes de atribuir erro ao agente.**
 | `deteccao-correta` | conteúdo correto, mas citação ou âncora não foi mecanicamente válida | credita detecção na unidade, sem aumentar `ruleVerifiedTP` |
 | `duplicado` | reformulação de outro achado já casado no mesmo caso | sai do FP |
 | `indeterminado` | revisado e indecidível | **segue cobrado como FP** |
+| `composto` | a alegação afirma **mais de um defeito**, e as partes não compartilham veredito | decidido por parte em `components` (D-30) |
 
 `indeterminado` existe para que a indecisão nunca melhore o número. Se não dá para decidir, o
 achado continua contra o agente — a assimetria é deliberada: o custo da dúvida recai sobre a tese,
 não sobre o instrumento.
+
+## Alegações compostas (`composto`, D-30)
+
+Um achado pode afirmar dois defeitos de uma vez: metade descreve uma unidade que o gabarito já
+cataloga, metade descreve uma violação que ele nunca teve. Antes do D-30 era preciso escolher, e
+as duas escolhas mentiam em direções opostas — `vocabulario` creditava a unidade e **apagava a
+lacuna**; `lacuna-gabarito` registrava a lacuna e **descartava o crédito**, mantendo o achado
+cobrado como FP.
+
+O veredito `composto` decide **parte por parte**. Cada componente carrega seu próprio `verdict`,
+sua própria `rationale` e, quando for `vocabulario` ou `deteccao-correta`, sua própria `unit`:
+
+```json
+{
+  "id": "E-7a5432:0918f5ad",
+  "verdict": "composto",
+  "rationale": "A alegação afirma dois defeitos que não se resolvem com a mesma correção.",
+  "components": [
+    { "verdict": "vocabulario", "unit": { "caseId": "E-7a5432", "rule": "wcag:3.3.2" },
+      "rationale": "..." },
+    { "verdict": "lacuna-gabarito", "gabaritoStatus": "pendente",
+      "rationale": "..." }
+  ]
+}
+```
+
+Três regras que a implementação impõe:
+
+1. **Mínimo de dois componentes.** Um só componente é registro simples usando rótulo composto, e
+   `npm run adjudicate` o reporta como defeituoso.
+2. **`composto` não aninha,** e `components` não é aceito com nenhum outro veredito.
+3. **A cobrança é por alegação, não por parte.** Se qualquer componente resolver em cobrança —
+   `falso-positivo`, `indeterminado`, ou um `vocabulario` cuja unidade não existe ou já foi casada
+   — a alegação é cobrada **uma vez**. Uma alegação que contém afirmação falsa não é detecção
+   limpa, mesmo que outra parte dela esteja certa; e cobrar por componente inflaria o FP de um
+   achado só porque quem o escreveu foi prolixo.
+
+**O teste para decidir se é composta:** *consertar um defeito consertaria o outro?* Se a resposta
+é não, são duas unidades e o veredito é `composto`. Se é sim, é um defeito só e basta um dos
+vereditos simples.
+
+O equilíbrio de descoberta lê as lacunas dos **efeitos**, não do veredito de topo: uma lacuna
+dentro de um `composto` conta no viés de pooling como qualquer outra.
 
 ## O procedimento
 

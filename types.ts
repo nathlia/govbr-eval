@@ -223,6 +223,8 @@ export interface EslintResults {
  *   duplicado        a restatement of another finding already matched on the same case
  *   indeterminado    reviewed, undecidable — stays charged as FP so the floor is never
  *                    improved by indecision
+ *   composto         the claim asserts MORE THAN ONE defect, and the parts do not share a
+ *                    verdict — decided per part in `components` (D-30)
  */
 export type AdjudicationVerdict =
   | "falso-positivo"
@@ -230,7 +232,29 @@ export type AdjudicationVerdict =
   | "vocabulario"
   | "deteccao-correta"
   | "duplicado"
-  | "indeterminado";
+  | "indeterminado"
+  | "composto";
+
+/** A verdict a component of a compound claim can carry — `composto` never nests (D-30). */
+export type ComponentVerdict = Exclude<AdjudicationVerdict, "composto">;
+
+/**
+ * One defect asserted inside a compound claim (D-30).
+ *
+ * The vocabulary before D-30 assumed one claim carried one defect, so a finding that named both
+ * a catalogued unit and an uncatalogued violation had no truthful verdict: `vocabulario` hid the
+ * gap, `lacuna-gabarito` discarded the credit, and the two errors biased the number in opposite
+ * directions. Splitting the record is what lets both halves be recorded as what they are.
+ */
+export interface AdjudicationComponent {
+  verdict: ComponentVerdict;
+  /** Required for `vocabulario` and `deteccao-correta`, exactly as on a simple record. */
+  unit?: { caseId: string; rule: RuleId };
+  /** Why THIS part got THIS verdict. Required — same rule as a simple record. */
+  rationale: string;
+  /** For `lacuna-gabarito` components: has the unit been written into the gabarito yet? */
+  gabaritoStatus?: "pendente" | "incorporada";
+}
 
 export interface AdjudicationRecord {
   /** Stable id: `<caseId>:<8 hex of sha256 over the normalized finding text>` (D-21). */
@@ -244,6 +268,11 @@ export interface AdjudicationRecord {
   verdict: AdjudicationVerdict | null;
   /** Required for `vocabulario` and `deteccao-correta`: the expected unit actually reported. */
   unit?: { caseId: string; rule: RuleId };
+  /**
+   * Required for `composto`, forbidden otherwise: the defects this claim asserts, judged one by
+   * one (D-30). At least two — a single component is a simple record wearing a compound label.
+   */
+  components?: AdjudicationComponent[];
   /** Why. Required for every decided record — a verdict without a reason is not adjudication. */
   rationale?: string;
   adjudicatedBy?: string;

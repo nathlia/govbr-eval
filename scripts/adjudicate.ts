@@ -23,7 +23,7 @@ import { existsSync, readFileSync, readdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import type { AdjudicationRecord, Adjudications, AgentResults } from "../types";
 import {
-  ADJUDICATIONS_FILE, ROOT, RUN_DIRS, loadAdjudications, recordDefect,
+  ADJUDICATIONS_FILE, ROOT, RUN_DIRS, effectsOf, loadAdjudications, recordDefect,
 } from "./adjudication";
 import { cases, expectedUnits, normalizeRuleId, scoreUnits } from "./units";
 
@@ -237,7 +237,14 @@ for (const [verdict, list] of [...byVerdict.entries()].sort()) {
   console.log(`  ${verdict.padEnd(16)} ${String(list.length).padStart(3)}  (${both} presente(s) nos dois braços)`);
 }
 
-const gaps = byVerdict.get("lacuna-gabarito") ?? [];
+// Derivada dos EFEITOS, não do veredito de topo: um registro `composto` carrega a lacuna em um
+// componente (D-30), e filtrar por `verdict === "lacuna-gabarito"` a tornaria invisível
+// justamente para a checagem de viés — a mesma dimensão conhecida por um lugar do código e não
+// por outro que o log vem registrando desde o D-13.
+const gaps = [...claims.values()].filter(c => {
+  const r = adj.byId.get(c.id);
+  return r ? effectsOf(r).some(e => e.kind === "gap") : false;
+});
 if (gaps.length) {
   const onlyCom = gaps.filter(c => armsOf(c).join() === "com-oraculo").length;
   const onlySem = gaps.filter(c => armsOf(c).join() === "sem-oraculo").length;
@@ -245,7 +252,13 @@ if (gaps.length) {
   console.log(`  só no braço com oráculo: ${onlyCom}  ·  só no braço sem: ${onlySem}  ·  nos dois: ${gaps.length - onlyCom - onlySem}`);
   console.log("  Cada lacuna incorporada ao gabarito vira unidade nova para TODAS as execuções —");
   console.log("  inclusive as que não a encontraram. Assimetria grande aqui é achado a relatar, não a corrigir.");
-  const pendentes = gaps.filter(c => adj.byId.get(c.id)?.gabaritoStatus !== "incorporada");
+  const pendentes = gaps.filter(c => {
+    const r = adj.byId.get(c.id)!;
+    // Num registro composto o status de incorporação é por componente de lacuna.
+    return r.verdict === "composto"
+      ? (r.components ?? []).some(k => k.verdict === "lacuna-gabarito" && k.gabaritoStatus !== "incorporada")
+      : r.gabaritoStatus !== "incorporada";
+  });
   console.log(`  Dívida de gabarito: ${pendentes.length} lacuna(s) ainda não escrita(s) em ground-truth.json (D-06: com linha de base medida).`);
 }
 

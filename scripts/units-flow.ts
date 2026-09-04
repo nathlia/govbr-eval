@@ -18,7 +18,7 @@ import type {
 import type { ElementRef, Resolution } from "./anchors";
 import { elementId, resolveWithExcept } from "./anchors";
 import { expandWithKbAliases, normalizeRuleId, rulesOfFinding } from "./units";
-import { findingId, type AdjudicationIndex } from "./adjudication";
+import { applyRecord, findingId, type AdjudicationIndex } from "./adjudication";
 
 export interface FlowUnit {
   specId: string;
@@ -312,28 +312,23 @@ export function scoreFlow(
     lf.verdict = decided?.verdict ?? null;
     if (!decided) { pending.push(lf); falseFindings.push(lf); continue; }
 
-    switch (decided.verdict) {
-      case "vocabulario":
-      case "deteccao-correta": {
-        // `unit.caseId` carrega o id do elemento (E-xxxxxx) nesta suíte.
-        const target = decided.unit
-          ? outcomes.find(o => !o.matched && o.unit.element.id === decided.unit!.caseId
-              && o.unit.rules.includes(normalizeRuleId(decided.unit!.rule)))
-          : undefined;
-        if (target) {
-          target.matched = true;
-          target.adjudicated = true;
-          target.adjudicationVerdict = decided.verdict;
-          target.finding = lf.description;
-          target.anchorMode = "adjudicated";
-        }
-        else falseFindings.push(lf);
-        break;
-      }
-      case "lacuna-gabarito": gaps.push(lf); break;
-      case "duplicado":       duplicates.push(lf); break;
-      default:                falseFindings.push(lf); break;
-    }
+    // Mesma semântica da suíte TC-*, do mesmo módulo, de propósito (D-30).
+    const applied = applyRecord(decided, (unit, verdict, finding) => {
+      // `unit.caseId` carrega o id do elemento (E-xxxxxx) nesta suíte.
+      const target = outcomes.find(o => !o.matched && o.unit.element.id === unit.caseId
+        && o.unit.rules.includes(normalizeRuleId(unit.rule)));
+      if (!target) return false;
+      target.matched = true;
+      target.adjudicated = true;
+      target.adjudicationVerdict = verdict;
+      target.finding = finding;
+      target.anchorMode = "adjudicated";
+      return true;
+    }, lf.description);
+
+    for (let i = 0; i < applied.gaps; i++) gaps.push(lf);
+    for (let i = 0; i < applied.duplicates; i++) duplicates.push(lf);
+    if (applied.charged) falseFindings.push(lf);
   }
 
   return {

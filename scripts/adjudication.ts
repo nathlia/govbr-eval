@@ -20,7 +20,9 @@ import { createHash } from "crypto";
 import { existsSync, readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import type { AdjudicationRecord, Adjudications, AgentFinding } from "../types";
+import type {
+  AdjudicationRecord, Adjudications, AgentFinding, ComponentVerdict, RuleId,
+} from "../types";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export const ROOT = join(__dirname, "..");
@@ -83,5 +85,95 @@ export function recordDefect(r: AdjudicationRecord): string | null {
   if ((r.verdict === "vocabulario" || r.verdict === "deteccao-correta") && !r.unit?.rule) {
     return `verdict \`${r.verdict}\` sem \`unit\` alvo`;
   }
+  if (r.verdict === "composto") {
+    const cs = r.components ?? [];
+    if (cs.length < 2) return "verdict `composto` com menos de 2 `components`";
+    for (const [i, c] of cs.entries()) {
+      const at = `componente ${i + 1}`;
+      if (!c.rationale?.trim()) return `${at}: sem justificativa`;
+      if ((c.verdict === "vocabulario" || c.verdict === "deteccao-correta") && !c.unit?.rule) {
+        return `${at}: verdict \`${c.verdict}\` sem \`unit\` alvo`;
+      }
+      if ((c.verdict as string) === "composto") return `${at}: \`composto\` não aninha`;
+    }
+  } else if (r.components?.length) {
+    return `\`components\` só é aceito com verdict \`composto\` (veio com \`${r.verdict}\`)`;
+  }
   return null;
+}
+
+/**
+ * What one decided record does to the score, as a list of independent effects (D-30).
+ *
+ * A simple record yields exactly one effect, so behaviour before D-30 is unchanged. A `composto`
+ * record yields one per component, which is the whole point: a claim that names a catalogued unit
+ * AND an uncatalogued violation credits the first and registers the second, instead of having to
+ * pick one and misreport the other.
+ *
+ * Both suites call this. The recurring defect in this codebase is a dimension one script knows
+ * and another does not (D-13/16/17/18/19/21); `composto` implemented twice would be the seventh.
+ */
+export type VerdictEffect =
+  | { kind: "credit"; verdict: "vocabulario" | "deteccao-correta"; unit: { caseId: string; rule: RuleId }; rationale: string }
+  | { kind: "gap"; rationale: string }
+  | { kind: "duplicate"; rationale: string }
+  | { kind: "charge"; rationale: string };
+
+export function effectsOf(r: AdjudicationRecord): VerdictEffect[] {
+  const one = (v: ComponentVerdict, unit: { caseId: string; rule: RuleId } | undefined, why: string): VerdictEffect => {
+    switch (v) {
+      case "vocabulario":
+      case "deteccao-correta":
+        return unit?.rule
+          ? { kind: "credit", verdict: v, unit, rationale: why }
+          : { kind: "charge", rationale: why };
+      case "lacuna-gabarito": return { kind: "gap", rationale: why };
+      case "duplicado":       return { kind: "duplicate", rationale: why };
+      default:                return { kind: "charge", rationale: why }; // falso-positivo | indeterminado
+    }
+  };
+
+  if (r.verdict === "composto") {
+    return (r.components ?? []).map(c => one(c.verdict, c.unit, c.rationale));
+  }
+  return r.verdict === null ? [] : [one(r.verdict, r.unit, r.rationale ?? "")];
+}
+
+/**
+ * Applies the effects of one record against a scorer's unit table.
+ *
+ * `tryCredit` returns false when the named unit does not exist or was already matched — the
+ * component is then unapplicable and falls back to a charge, exactly as a simple record does
+ * today.
+ *
+ * The claim is charged as a false positive **once**, if any part of it resolved to a charge.
+ * A claim containing a false assertion is not a clean detection even when another part of it was
+ * right, and D-21's asymmetry stands: the cost of a wrong part falls on the thesis, not on the
+ * instrument. Charging once rather than per component keeps FP a count of claims, not of parts.
+ */
+export interface AppliedRecord {
+  credited: number;
+  gaps: number;
+  duplicates: number;
+  charged: boolean;
+}
+
+export function applyRecord(
+  r: AdjudicationRecord,
+  tryCredit: (unit: { caseId: string; rule: RuleId }, verdict: "vocabulario" | "deteccao-correta", finding: string) => boolean,
+  finding: string,
+): AppliedRecord {
+  const out: AppliedRecord = { credited: 0, gaps: 0, duplicates: 0, charged: false };
+  for (const e of effectsOf(r)) {
+    switch (e.kind) {
+      case "credit":
+        if (tryCredit(e.unit, e.verdict, finding)) out.credited++;
+        else out.charged = true;
+        break;
+      case "gap":       out.gaps++; break;
+      case "duplicate": out.duplicates++; break;
+      case "charge":    out.charged = true; break;
+    }
+  }
+  return out;
 }

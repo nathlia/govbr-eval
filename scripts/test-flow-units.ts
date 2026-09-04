@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
-import type { FlowAgentResults, FlowGroundTruth } from "../types";
+import type { AdjudicationRecord, FlowAgentResults, FlowGroundTruth } from "../types";
 import type { ElementRef, Resolution, ResolvedSelector } from "./anchors";
 import { buildFlowUnits, scoreFlow, summarizeFlowFamilies } from "./units-flow";
-import { findingId, type AdjudicationIndex } from "./adjudication";
+import { findingId, recordDefect, type AdjudicationIndex } from "./adjudication";
 
 const refs: Record<string, ElementRef> = {
   form: { key: "body>form", id: "E-form", label: "<form>" },
@@ -104,4 +104,70 @@ assert.equal(adjudicatedOutcome?.matched, true);
 assert.equal(adjudicatedOutcome?.adjudicationVerdict, "deteccao-correta");
 assert.equal(adjudicatedOutcome?.ruleVerified, false, "correct detection must not fabricate grounding");
 
-console.log("test:flow - relational anchors and family summaries ok");
+// ── D-30: uma alegação composta credita a unidade E registra a lacuna ────────
+//
+// O caso que forçou o veredito: um achado que descreve a unidade catalogada e, na mesma frase,
+// uma violação que o gabarito nunca teve. Antes do D-30 era preciso escolher — `vocabulario`
+// escondia a lacuna, `lacuna-gabarito` descartava o crédito — e os dois erros enviesavam o
+// número em direções opostas.
+const compound = {
+  selector: ".message",
+  rule: "emag:6.5",
+  description: "Describes the dynamic status AND a missing format instruction the gabarito lacks.",
+};
+const compoundId = findingId(refs.message.id, { rule: compound.rule, description: compound.description });
+const compoundRecord: AdjudicationRecord = {
+  id: compoundId,
+  caseId: refs.message.id,
+  finding: `${compound.rule} — ${compound.description}`,
+  verdict: "composto",
+  rationale: "Fixture: two defects in one claim.",
+  components: [
+    {
+      verdict: "vocabulario",
+      unit: { caseId: refs.message.id, rule: "wcag:4.1.3" },
+      rationale: "A primeira metade é a unidade V-rel sob outro nome.",
+    },
+    {
+      verdict: "lacuna-gabarito",
+      rationale: "A segunda metade é violação real que o gabarito não cataloga.",
+      gabaritoStatus: "pendente",
+    },
+  ],
+};
+const compoundIndex: AdjudicationIndex = {
+  present: true, pending: [], records: [compoundRecord],
+  byId: new Map([[compoundId, compoundRecord]]),
+};
+const compoundScore = scoreFlow({
+  timestamp: run.timestamp, model: run.model, appUrl: run.appUrl, findings: [compound],
+}, built.units, resolution, compoundIndex);
+
+assert.equal(compoundScore.outcomes.find(o => o.unit.specId === "V-rel")?.matched, true,
+  "a metade `vocabulario` credita a unidade nomeada");
+assert.equal(compoundScore.gaps.length, 1, "a metade `lacuna-gabarito` entra na dívida");
+assert.equal(compoundScore.FP, 0, "nenhuma metade resolveu em cobrança");
+assert.equal(compoundScore.floor.FP, 1, "o piso ignora adjudicação e cobra a alegação (D-21)");
+
+// Uma metade falsa cobra a alegação UMA vez, sem anular o crédito da outra.
+const mixed: AdjudicationRecord = {
+  ...compoundRecord,
+  components: [compoundRecord.components![0], { verdict: "falso-positivo", rationale: "Fixture: metade falsa." }],
+};
+const mixedScore = scoreFlow({
+  timestamp: run.timestamp, model: run.model, appUrl: run.appUrl, findings: [compound],
+}, built.units, resolution,
+  { present: true, pending: [], records: [mixed], byId: new Map([[compoundId, mixed]]) });
+assert.equal(mixedScore.outcomes.find(o => o.unit.specId === "V-rel")?.matched, true);
+assert.equal(mixedScore.FP, 1, "uma alegação com parte falsa é cobrada uma vez, não por componente");
+
+// Registros compostos malformados são defeitos, não vereditos silenciosos.
+assert.match(recordDefect({ ...compoundRecord, components: [compoundRecord.components![0]] }) ?? "",
+  /menos de 2/);
+assert.match(recordDefect({ ...compoundRecord, verdict: "duplicado" }) ?? "", /só é aceito com verdict/);
+assert.match(recordDefect({
+  ...compoundRecord,
+  components: [compoundRecord.components![0], { verdict: "vocabulario", rationale: "sem unit" }],
+}) ?? "", /sem `unit` alvo/);
+
+console.log("test:flow - relational anchors, family summaries and compound verdicts ok");
