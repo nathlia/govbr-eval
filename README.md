@@ -78,7 +78,7 @@ npm run lint:protocol · npm run lint:skills · npm run test:flow · npm run typ
 |---|---|---|---|
 | `TC-*` injected | case, and (element × rule) | `ground-truth.json` (52 cases) | `npm run score` |
 | Organic | case | `organic-ground-truth.json` (6) | `npm run score` (separate block) |
-| Flow | **(element × rule)**, anchored live | `ground-truth-fluxo.json` (10 specs → 23 units) | `npm run score:fluxo` |
+| Flow | **(element × rule)**, anchored live | `ground-truth-fluxo.json` 1.3.0 (9 specs → 22 units) | `npm run score:fluxo` |
 | Real | — | none: adjudication is the instrument | — |
 
 Different instruments over different pages. Their numbers are **never summed or averaged** with
