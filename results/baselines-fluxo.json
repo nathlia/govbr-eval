@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-04T09:05:33.195Z",
+  "timestamp": "2026-09-09T11:47:00.611Z",
   "appUrl": "http://localhost:3000/fluxo.html",
   "state": "após setup do gabarito",
   "axe": {
@@ -20,7 +20,7 @@
   },
   "validator": {
     "tool": "govbr-ds-validator scan_page (tokens + structure)",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "byElementKey": {
       "body>div>main>section:nth-of-type(1)": [
         {
@@ -86,14 +86,6 @@
           "target": "#root > main > section:nth-of-type(2) > form > p"
         }
       ],
-      "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>span": [
-        {
-          "rule": "ds:token-font-size",
-          "source": "govbr-ds-token",
-          "description": "font-size: 11px fora da escala do DS",
-          "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > span"
-        }
-      ],
       "body>div>main>section:nth-of-type(2)>form>div>input": [
         {
           "rule": "ds:structure-input-tag",
@@ -107,10 +99,6 @@
     "requiredSpecs": [
       {
         "specId": "V-06",
-        "detected": true
-      },
-      {
-        "specId": "V-07",
         "detected": true
       },
       {

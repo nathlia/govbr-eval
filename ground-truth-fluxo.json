@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "version": "1.2.0",
-    "version_note": "1.2.0 (2026-09-04, D-31): V-06 passa de `unico` para `todos` com 8 elementos. Números publicados antes desta versão foram medidos contra o gabarito 1.1.0, com 16 unidades, e não se comparam diretamente com os de agora.",
+    "version": "1.3.0",
+    "version_note": "1.3.0 (2026-09-09, D-32): V-07 sai do gabarito. A escala tipográfica deixou de sustentar achado no oráculo — a única regra da KB sobre tamanho de fonte é informativa, e afirmar violação binária sobre 0,66px fazia o veredito depender de onde se corta a tolerância, não da norma. O desvio continua sendo reportado como observação; deixa de ser cobrado. Duas outras unidades de `ds:token-font-size` que a auditoria do 13.5 encontrou (dois h2 em 16px) NÃO entraram, pela mesma razão. 22 unidades a partir de 9 specs. 1.2.0 (2026-09-04, D-31): V-06 passa de `unico` para `todos` com 8 elementos. Números publicados antes daquela versão foram medidos contra o gabarito 1.1.0, com 16 unidades, e não se comparam diretamente com os de agora.",
     "page": "Identificação no gov.br — tela de fluxo (D-23)",
     "url": "/fluxo.html",
     "waitFor": "#cpf",
@@ -9,12 +9,18 @@
     "ds": "gov.br Design System 3.7.0",
     "unit_of_evaluation": "(elemento × regra): o elemento é a chave canônica que anchors.ts deriva da árvore da página, não um id de seção. Uma spec com scope \"todos\" vira uma unidade por elemento resolvido.",
     "setup": [
-      { "action": "click", "selector": ".acao-continuar" },
-      { "action": "wait", "selector": ".mensagem-erro-cpf" }
+      {
+        "action": "click",
+        "selector": ".acao-continuar"
+      },
+      {
+        "action": "wait",
+        "selector": ".mensagem-erro-cpf"
+      }
     ],
     "setup_rationale": "Submeter com o CPF em branco faz nascer a mensagem de erro. A sequência é ADITIVA: nada que o gabarito ancora deixa de existir, então um único estado da página serve aos dois lados da resolução.",
     "nunca_agregar_com": "ground-truth.json (suíte TC-*) e organic-ground-truth.json — instrumentos diferentes sobre páginas diferentes (D-13)",
-    "baselines": "MEDIDAS em results/baselines-fluxo.json (2026-09-04, validator 2.1.0, gabarito 1.2.0): axe-core 0 violações / 36 passes, eslint-plugin-jsx-a11y 0 achados no fonte da tela, validator 10/23 unidades por regra exata. Herdar as linhas de base da suíte TC-* seria assumir baseline (D-06); remedir com `npm run baselines:fluxo` sempre que uma unidade entrar no gabarito — foi o que a subida de 8/16 para 10/23 registrou quando V-06 passou a `scope: todos`."
+    "baselines": "MEDIDAS em results/baselines-fluxo.json — REMEDIR com `npm run baselines:fluxo` a cada mudança de gabarito; herdar linha de base é assumi-la (D-06). O histórico da própria tela mostra por quê: 8/16 no gabarito 1.1.0, 10/23 no 1.2.0 quando V-06 virou `scope: todos`, e agora o 1.3.0 remove uma unidade que o validator detectava (V-07)."
   },
   "violations": [
     {
@@ -23,8 +29,12 @@
       "scope": "todos",
       "expectedCount": 4,
       "state": "sempre",
-      "rules": ["ds:token-spacing"],
-      "categories": ["token"],
+      "rules": [
+        "ds:token-spacing"
+      ],
+      "categories": [
+        "token"
+      ],
       "description": "padding computado de 13px em TODAS as quatro opções de identificação — fora da escala de espaçamento do DS (0 / 4px / 8px / 16px). Caso decisivo do D-23: como as quatro instâncias são idênticas, a comparação com os irmãos não acusa nada; só a norma externa dá veredito."
     },
     {
@@ -33,8 +43,15 @@
       "scope": "unico",
       "expectedCount": 1,
       "state": "sempre",
-      "rules": ["wcag:1.3.1", "wcag:3.3.2", "emag:6.2"],
-      "categories": ["formulario", "acessibilidade"],
+      "rules": [
+        "wcag:1.3.1",
+        "wcag:3.3.2",
+        "emag:6.2"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
       "description": "o campo de CPF tem texto de apoio visível (\"Digite seu CPF para criar ou acessar sua conta gov.br\") que não está associado ao campo por aria-describedby. Regra CONDICIONAL: só existe porque há texto de apoio — um campo sem apoio não a viola."
     },
     {
@@ -43,8 +60,13 @@
       "scope": "unico",
       "expectedCount": 1,
       "state": "sempre",
-      "rules": ["wcag:3.3.1"],
-      "categories": ["formulario", "acessibilidade"],
+      "rules": [
+        "wcag:3.3.1"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
       "description": "o campo de CPF não identifica programaticamente o estado de erro (sem aria-invalid e sem associação estável por aria-describedby). Esta unidade existe em todo estado e ancora no controle que o usuário opera."
     },
     {
@@ -54,8 +76,14 @@
       "expectedCount": 1,
       "state": "apos-submit-vazio",
       "conditional": true,
-      "rules": ["wcag:4.1.3", "emag:6.6"],
-      "categories": ["formulario", "acessibilidade"],
+      "rules": [
+        "wcag:4.1.3",
+        "emag:6.6"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
       "description": "a mensagem de erro do CPF é inserida sem role=\"alert\" nem aria-live: leitor de tela não anuncia. Unidade CONDICIONAL — só existe depois de submeter o campo vazio, estado produzido pelo setup do gabarito."
     },
     {
@@ -64,8 +92,14 @@
       "scope": "unico",
       "expectedCount": 1,
       "state": "sempre",
-      "rules": ["wcag:1.3.1", "ds:item-content"],
-      "categories": ["estrutura", "acessibilidade"],
+      "rules": [
+        "wcag:1.3.1",
+        "ds:item-content"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
       "description": "o contêiner usa a classe .br-list e os filhos usam .br-item, mas nenhum carrega role=\"list\"/role=\"listitem\" nem é <ul>/<li>: a semântica de lista existe visualmente e não na árvore de acessibilidade. Defeito de COMPOSIÇÃO — cada componente está certo isolado, o conjunto não."
     },
     {
@@ -74,8 +108,15 @@
       "scope": "todos",
       "expectedCount": 4,
       "state": "sempre",
-      "rules": ["ds:token-focus", "wcag:2.4.7", "emag:4.4"],
-      "categories": ["token", "acessibilidade"],
+      "rules": [
+        "ds:token-focus",
+        "wcag:2.4.7",
+        "emag:4.4"
+      ],
+      "categories": [
+        "token",
+        "acessibilidade"
+      ],
       "description": "indicador de foco suprimido (outline: none + box-shadow: none) nos QUATRO links de opção. Segunda violação compartilhada: navegando por teclado, nenhum dos irmãos contradiz o outro."
     },
     {
@@ -85,20 +126,13 @@
       "expectedCount": 8,
       "state": "sempre",
       "deterministicBaseline": true,
-      "rules": ["ds:token-color"],
-      "categories": ["token"],
+      "rules": [
+        "ds:token-color"
+      ],
+      "categories": [
+        "token"
+      ],
       "description": "a variável autoral `--tela-borda: #dee2e6` em fluxo.css não corresponde a token do gov.br DS (o mais próximo é --gray-cool-10, #dfe1e2) e pinta a borda de OITO elementos: barra superior, painel institucional, cartão de identificação, lista de opções e as quatro opções. Terceira violação compartilhada da tela, ao lado de V-01 e V-05 — a maior das três. Escopo corrigido de `unico` para `todos` em 2026-09-04 (D-31): o defeito sempre foi compartilhado, e catalogar só `.lista-opcoes` cobrava como falso positivo a enumeração correta dos irmãos."
-    },
-    {
-      "id": "V-07",
-      "anchor": ".selo-conta",
-      "scope": "unico",
-      "expectedCount": 1,
-      "state": "sempre",
-      "deterministicBaseline": true,
-      "rules": ["ds:token-font-size"],
-      "categories": ["token"],
-      "description": "o selo usa font-size: 11px, valor autoral fora da escala tipográfica do gov.br DS. Lacuna encontrada na primeira medida e incorporada conforme D-28."
     },
     {
       "id": "V-08",
@@ -107,8 +141,12 @@
       "expectedCount": 1,
       "state": "sempre",
       "deterministicBaseline": true,
-      "rules": ["ds:structure-input-tag"],
-      "categories": ["estrutura"],
+      "rules": [
+        "ds:structure-input-tag"
+      ],
+      "categories": [
+        "estrutura"
+      ],
       "description": "a classe raiz .br-input aparece indevidamente no próprio <input>, além do contêiner <div class=\"br-input\"> canônico. Lacuna encontrada na primeira medida e incorporada conforme D-28."
     },
     {
@@ -119,8 +157,12 @@
       "state": "apos-submit-vazio",
       "conditional": true,
       "deterministicBaseline": true,
-      "rules": ["ds:token-color"],
-      "categories": ["token"],
+      "rules": [
+        "ds:token-color"
+      ],
+      "categories": [
+        "token"
+      ],
       "description": "a mensagem de erro usa color: #e60000, valor autoral fora do registro de tokens do gov.br DS. Lacuna descoberta pela medição determinística da Phase 10 no estado condicional, não pela bateria original."
     }
   ]
