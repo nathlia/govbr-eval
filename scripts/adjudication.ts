@@ -111,7 +111,9 @@ export function recordDefect(r: AdjudicationRecord): string | null {
  * pick one and misreport the other.
  *
  * Both suites call this. The recurring defect in this codebase is a dimension one script knows
- * and another does not (D-13/16/17/18/19/21); `composto` implemented twice would be the seventh.
+ * and another does not, tracked since D-13; `composto` implemented twice would have been the
+ * eighth occurrence. The running count lives in tcc2-decisions-log.md — enumerating the decision
+ * ids here is what let this comment drift out of step with it.
  */
 export type VerdictEffect =
   | { kind: "credit"; verdict: "vocabulario" | "deteccao-correta"; unit: { caseId: string; rule: RuleId }; rationale: string }
