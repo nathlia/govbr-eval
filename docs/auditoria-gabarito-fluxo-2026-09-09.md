@@ -80,17 +80,35 @@ São duas unidades reais, pela mesma regra que já sustenta a V-07, encontradas 
 determinística — a mesma origem das lacunas pagas no D-28. Hoje um agente que as reporte leva
 **2 falsos positivos**.
 
-### Nota de tolerância, que a próxima revisora precisa saber
+### A tolerância de 0,5px não é arbitrária — é arredondamento para pixel inteiro
 
-A escala do DS não é redonda: base 14px, depois 16,8 · 20,16 · 24,192px. A página usa 20px
-(`.titulo-identificacao`) e 24px (`.titulo-institucional`, `.marca-govbr`), que **também** estão
-fora da escala exata — e não são acusados, porque o verificador aceita desvio de até 0,5px
-(`tokenCompliance.ts:75`, `Math.abs(s - px) < 0.5`). 20 e 24 caem dentro (0,16 e 0,192); 16 e 11
-caem fora (0,8 e 0,662).
+Primeira leitura desta auditoria tratou os 0,5px como constante escolhida a esmo. Não é. A escala
+do DS é modular e não redonda, e o corte cai exatamente onde o valor deixa de ser um passo da escala
+transcrito para pixel cheio:
 
-Isso é decisão deliberada do instrumento, não descuido — mas **não está declarada no gabarito**, e
-uma revisora que recalcule à mão contra a escala publicada contaria cinco violações onde o
-instrumento conta três. A tolerância precisa estar escrita onde os vereditos são formados.
+| na página | passo | distância | % | esse passo, arredondado | classificação |
+|---|---|---|---|---|---|
+| 20px | 20,16 | 0,160 | 0,79% | **20** | conforme — é o passo arredondado |
+| 24px | 24,192 | 0,192 | 0,79% | **24** | conforme |
+| 11px | 11,662 | 0,662 | 5,68% | 12 | acusado |
+| 16px | 16,8 | 0,800 | 4,76% | 17 | acusado |
+
+A escala inteira arredondada é `8, 10, 12, 14, 17, 20, 24, 29, 35`: 20 e 24 estão nela, 16 e 11 não.
+Quem transcreve 20,16 para o CSS escreve 20px; quem escreveu 16px não arredondou 16,8 (isso daria
+17), escolheu outro valor. O limiar é defensável, e subi-lo para admitir o 16px (precisaria de
+>0,8) admitiria o 11px junto — a V-07 cairia de qualquer modo, só que por um limiar escolhido
+depois de ver os resultados.
+
+### O que isso não resolve, e foi o que decidiu o caso
+
+A coerência do corte não responde à pergunta anterior: **isso deveria ser afirmado por um
+verificador determinístico?** A única regra da KB sobre tamanho de fonte é a de fonte-base de 16px,
+e é **informativa**. O achado se sustentava esticando a regra geral de consumo de token até cobrir
+diferença sub-pixel, e aí o veredito passa a depender de onde se corta a tolerância em vez da norma.
+
+**Resolvido pelo D-32:** `ds:token-font-size` saiu do canal de Findings e virou observação, pelo
+mecanismo do D-27. Consequência para esta auditoria: as duas unidades de 16px **não** entram, e a
+V-07 sai. O gabarito foi para 1.3.0 com 22 unidades; linhas de base remedidas em validator 9/22.
 
 ---
 
@@ -137,10 +155,13 @@ do verificador quando houver razão para mexer nele.
 
 | # | achado | efeito hoje | onde se paga |
 |---|---|---|---|
-| 1 | V-04 ancora só no contêiner; o defeito é relacional sobre 5 nós | leitura correta → **0 TP, 4 FP** | 13.5 + instrumento |
-| 2 | duas unidades `ds:token-font-size` (16px) fora do gabarito | quem reporta → **2 FP** | 12.8 |
-| 3 | tolerância de 0,5px não declarada | revisora conta 5 onde o instrumento conta 3 | 12.7 (pacote de revisão) |
+| 1 | V-04 ancora só no contêiner; o defeito é relacional sobre 5 nós | leitura correta → **0 TP, 4 FP** | **em aberto** — 13.5 + instrumento |
+| 2 | duas unidades `ds:token-font-size` (16px) fora do gabarito | — | **fechado pelo D-32**: a regra saiu do canal de achados; as duas não entram e V-07 sai |
+| 3 | tolerância de 0,5px não declarada | — | **prejudicado**: sem a regra, não há limiar a declarar |
 
 Seis das sete specs `unico` estão corretas. O erro do V-06 não se repetiu na forma em que apareceu
 — nenhuma outra spec conta uma instância onde a página tem N do mesmo defeito independente —, mas
 a V-04 tem o mesmo sintoma por outra causa, e é a mais grave das três, porque zera o crédito.
+
+**Estado após o D-32:** achados 2 e 3 fechados; o achado 1 (V-04) segue aberto e é o que resta do
+item 13.5. Gabarito em 1.3.0, 22 unidades a partir de 9 specs, validator 9/22.
