@@ -23,7 +23,7 @@ import { existsSync, readFileSync, readdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import type { AdjudicationRecord, Adjudications, AgentResults } from "../types";
 import {
-  ADJUDICATIONS_FILE, ROOT, RUN_DIRS, effectsOf, loadAdjudications, recordDefect,
+  ADJUDICATIONS_FILE, ROOT, RUN_DIRS, effectsOf, isRetired, loadAdjudications, recordDefect,
 } from "./adjudication";
 import { cases, expectedUnits, normalizeRuleId, scoreUnits } from "./units";
 
@@ -172,7 +172,8 @@ if (EMIT) {
       ...parsed._meta,
       atualizado: new Date().toISOString().slice(0, 10),
       adjudicacoes: [...byId.values()].filter(r => r.verdict !== null).length,
-      pendentes: [...byId.values()].filter(r => r.verdict === null).length,
+      pendentes: [...byId.values()].filter(r => r.verdict === null && !isRetired(r)).length,
+      aposentados: [...byId.values()].filter(isRetired).length,
     },
     adjudications: [...byId.values()].sort((a, b) => a.id.localeCompare(b.id)),
   };

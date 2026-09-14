@@ -57,21 +57,39 @@ export function findingId(caseId: string, f: AgentFinding): string {
 export interface AdjudicationIndex {
   byId: Map<string, AdjudicationRecord>;
   records: AdjudicationRecord[];
-  /** Records whose verdict is still null — counted, never applied. */
+  /** Records whose verdict is still null — counted, never applied. Aposentados ficam DE FORA. */
   pending: AdjudicationRecord[];
+  /**
+   * Registros aposentados: deixaram de ser sobra e não são mais julgáveis, mas seguem no arquivo
+   * com o motivo declarado. Separados aqui para que a contagem de pendentes tenha um único dono —
+   * se cada script filtrasse por conta própria, seria mais uma dimensão conhecida por uma parte do
+   * código e não pela outra, o defeito que o log acompanha desde o D-13.
+   */
+  retired: AdjudicationRecord[];
   present: boolean;
+}
+
+/** Aposentado é quem declara `retirada`; um `verdict` junto é defeito, não aposentadoria. */
+export function isRetired(r: AdjudicationRecord): boolean {
+  return Boolean(r.retirada);
 }
 
 export function loadAdjudications(root = ROOT): AdjudicationIndex {
   const abs = join(root, ADJUDICATIONS_FILE);
   if (!existsSync(abs)) {
-    return { byId: new Map(), records: [], pending: [], present: false };
+    return { byId: new Map(), records: [], pending: [], retired: [], present: false };
   }
   const parsed = JSON.parse(readFileSync(abs, "utf8")) as Adjudications;
   const records = parsed.adjudications ?? [];
   const byId = new Map<string, AdjudicationRecord>();
   for (const r of records) byId.set(r.id, r);
-  return { byId, records, pending: records.filter(r => r.verdict === null), present: true };
+  return {
+    byId,
+    records,
+    pending: records.filter(r => r.verdict === null && !isRetired(r)),
+    retired: records.filter(isRetired),
+    present: true,
+  };
 }
 
 /**
@@ -80,6 +98,13 @@ export function loadAdjudications(root = ROOT): AdjudicationIndex {
  * all — both are reported as defects rather than silently changing the numbers.
  */
 export function recordDefect(r: AdjudicationRecord): string | null {
+  // Aposentadoria e veredito são mutuamente exclusivos: um registro aposentado não foi julgado.
+  if (isRetired(r)) {
+    if (r.verdict !== null) return "registro aposentado não pode carregar `verdict`";
+    if (!r.retirada?.porque?.trim()) return "`retirada` sem `porque`";
+    if (!r.retirada?.em?.trim()) return "`retirada` sem `em`";
+    return null;
+  }
   if (r.verdict === null) return null;
   if (!r.rationale?.trim()) return "sem justificativa (`rationale` vazio)";
   if ((r.verdict === "vocabulario" || r.verdict === "deteccao-correta") && !r.unit?.rule) {

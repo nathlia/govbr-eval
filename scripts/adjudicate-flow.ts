@@ -6,7 +6,7 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { AdjudicationRecord, Adjudications, FlowAgentResults, FlowGroundTruth } from "../types";
-import { ADJUDICATIONS_FILE, ROOT, loadAdjudications, recordDefect } from "./adjudication";
+import { ADJUDICATIONS_FILE, ROOT, isRetired, loadAdjudications, recordDefect } from "./adjudication";
 import { resolveSelectors } from "./anchors";
 import {
   buildFlowUnits, scoreFlow, selectorsOfGroundTruth, selectorsOfRuns,
@@ -91,7 +91,13 @@ async function main(): Promise<void> {
     const record = adj.byId.get(claim.id);
     return record && record.verdict !== null && !recordDefect(record);
   });
-  const pending = [...claims.values()].filter(claim => !decided.includes(claim));
+  // Aposentados saem dos pendentes: a alegação segue arquivada, mas deixou de ser julgável sob o
+  // instrumento e o gabarito vigentes. Sair daqui NÃO a tira da cobrança — o scorer lê `verdict`,
+  // que continua nulo, então uma aposentadoria indevida sobre sobra viva seguiria cobrada como FP.
+  const retiredIds = new Set(adj.retired.map(record => record.id));
+  const pending = [...claims.values()]
+    .filter(claim => !decided.includes(claim) && !retiredIds.has(claim.id));
+  const retiredClaims = [...claims.values()].filter(claim => retiredIds.has(claim.id));
 
   if (EMIT) {
     const parsed = adj.present
@@ -121,7 +127,8 @@ async function main(): Promise<void> {
         ...parsed._meta,
         atualizado: new Date().toISOString().slice(0, 10),
         adjudicacoes: [...byId.values()].filter(r => r.verdict !== null).length,
-        pendentes: [...byId.values()].filter(r => r.verdict === null).length,
+        pendentes: [...byId.values()].filter(r => r.verdict === null && !isRetired(r)).length,
+        aposentados: [...byId.values()].filter(isRetired).length,
       },
       adjudications: [...byId.values()].sort((a, b) => a.id.localeCompare(b.id)),
     };
@@ -137,12 +144,23 @@ async function main(): Promise<void> {
   const recordDefects = flowRecords.flatMap(record => {
     const defect = recordDefect(record);
     if (defect) return [`${record.id}: ${defect}`];
+    if (isRetired(record)) return [];
     if (!claims.has(record.id)) return [`${record.id}: nenhum achado de fluxo arquivado corresponde ao registro`];
     return [];
   });
   if (recordDefects.length) {
     console.log(`\n!! ${recordDefects.length} registro(s) de fluxo não aplicável(is):`);
     for (const defect of recordDefects) console.log(`   - ${defect}`);
+  }
+
+  if (adj.retired.length) {
+    console.log(`
+── Aposentados (${adj.retired.length}) — arquivados, fora da contagem de pendentes`);
+    for (const record of [...adj.retired].sort((a, b) => a.id.localeCompare(b.id))) {
+      const vivo = retiredClaims.some(claim => claim.id === record.id) ? "" : " · sem achado arquivado";
+      console.log(`  ${record.id} — ${record.retirada?.porque ?? "(sem motivo!)"}${vivo}`);
+      if (record.retirada?.decisao) console.log(`    ${record.retirada.decisao}`);
+    }
   }
 
   if (!pending.length) return;

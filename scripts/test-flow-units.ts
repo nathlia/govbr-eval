@@ -94,6 +94,7 @@ const adjudicationId = findingId(refs.message.id, {
 const adjudication: AdjudicationIndex = {
   present: true,
   pending: [],
+  retired: [],
   records: [{
     id: adjudicationId,
     caseId: refs.message.id,
@@ -148,7 +149,7 @@ const compoundRecord: AdjudicationRecord = {
   ],
 };
 const compoundIndex: AdjudicationIndex = {
-  present: true, pending: [], records: [compoundRecord],
+  present: true, pending: [], retired: [], records: [compoundRecord],
   byId: new Map([[compoundId, compoundRecord]]),
 };
 const compoundScore = scoreFlow({
@@ -169,7 +170,7 @@ const mixed: AdjudicationRecord = {
 const mixedScore = scoreFlow({
   timestamp: run.timestamp, model: run.model, appUrl: run.appUrl, findings: [compound],
 }, built.units, resolution,
-  { present: true, pending: [], records: [mixed], byId: new Map([[compoundId, mixed]]) });
+  { present: true, pending: [], retired: [], records: [mixed], byId: new Map([[compoundId, mixed]]) });
 assert.equal(mixedScore.outcomes.find(o => o.unit.specId === "V-rel")?.matched, true);
 assert.equal(mixedScore.FP, 1, "uma alegação com parte falsa é cobrada uma vez, não por componente");
 

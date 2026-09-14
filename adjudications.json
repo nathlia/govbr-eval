@@ -13,10 +13,12 @@
     "procedimento": "docs/adjudicacao.md",
     "gerar-pendentes": "npm run adjudicate -- --emit",
     "criado": "2026-08-31",
-    "adjudicacoes": 68,
-    "atualizado": "2026-09-04",
-    "pendentes": 14,
-    "revisao": "Vereditos propostos por análise de evidência (DOM/fonte do corpus + gabarito). Aguardam revisão humana: conferir `adjudicatedBy`."
+    "adjudicacoes": 69,
+    "atualizado": "2026-09-14",
+    "pendentes": 5,
+    "revisao": "Vereditos propostos por análise de evidência (DOM/fonte do corpus + gabarito). Aguardam revisão humana: conferir `adjudicatedBy`.",
+    "aposentados": 10,
+    "aposentadoria": "Registro que deixou de ser sobra sob o instrumento e o gabarito vigentes: sai da contagem de pendentes, nunca do arquivo, e carrega o motivo. Não é veredito — ninguém julgou. Reversível: se a execução voltar a ser pontuável ou o gabarito recuar, basta remover `retirada`."
   },
   "adjudications": [
     {
@@ -30,7 +32,12 @@
         }
       ],
       "verdict": null,
-      "rationale": ""
+      "rationale": "",
+      "retirada": {
+        "em": "2026-09-14",
+        "porque": "a alegação deixou de ser sobra: o gabarito passou a casá-la. A V-06 foi de `unico` para `todos` com as 8 instâncias medidas na página viva, e a borda #dee2e6 que este registro descreve virou unidade casada em vez de achado sem unidade. Não houve julgamento — o que mudou foi o gabarito, não o mérito.",
+        "decisao": "D-31 (gabarito 1.2.0)"
+      }
     },
     {
       "id": "E-21e71a:58b429ed",
@@ -43,7 +50,12 @@
         }
       ],
       "verdict": null,
-      "rationale": ""
+      "rationale": "",
+      "retirada": {
+        "em": "2026-09-14",
+        "porque": "a execução de origem não é pontuável sob `fluxo-1.1.0` — legado/não rotulada, recusada pelo scorer (D-29). A alegação nunca pode entrar em número algum sem que a execução volte a ser pontuável, então mantê-la como pendente cobrava um julgamento que não teria onde ser aplicado. Origem: agent-2026-09-02T04-02-09-639Z.json",
+        "decisao": "D-29 (recusa de re-score de execução incompatível)"
+      }
     },
     {
       "id": "E-230d83:608409ec",
@@ -56,7 +68,12 @@
         }
       ],
       "verdict": null,
-      "rationale": ""
+      "rationale": "",
+      "retirada": {
+        "em": "2026-09-14",
+        "porque": "a execução de origem não é pontuável sob `fluxo-1.1.0` — legado/não rotulada, recusada pelo scorer (D-29). A alegação nunca pode entrar em número algum sem que a execução volte a ser pontuável, então mantê-la como pendente cobrava um julgamento que não teria onde ser aplicado. Origem: agent-2026-09-02T03-57-16-330Z.json",
+        "decisao": "D-29 (recusa de re-score de execução incompatível)"
+      }
     },
     {
       "id": "E-230d83:fcfe1f8d",
@@ -69,7 +86,12 @@
         }
       ],
       "verdict": null,
-      "rationale": ""
+      "rationale": "",
+      "retirada": {
+        "em": "2026-09-14",
+        "porque": "a execução de origem não é pontuável sob `fluxo-1.1.0` — legado/não rotulada, recusada pelo scorer (D-29). A alegação nunca pode entrar em número algum sem que a execução volte a ser pontuável, então mantê-la como pendente cobrava um julgamento que não teria onde ser aplicado. Origem: agent-2026-09-02T03-57-16-330Z.json",
+        "decisao": "D-29 (recusa de re-score de execução incompatível)"
+      }
     },
     {
       "id": "E-728b24:3b7021a4",
@@ -82,7 +104,12 @@
         }
       ],
       "verdict": null,
-      "rationale": ""
+      "rationale": "",
+      "retirada": {
+        "em": "2026-09-14",
+        "porque": "a alegação deixou de ser sobra: o gabarito passou a casá-la. A V-06 foi de `unico` para `todos` com as 8 instâncias medidas na página viva, e a borda #dee2e6 que este registro descreve virou unidade casada em vez de achado sem unidade. Não houve julgamento — o que mudou foi o gabarito, não o mérito.",
+        "decisao": "D-31 (gabarito 1.2.0)"
+      }
     },
     {
       "id": "E-7a5432:0918f5ad",
@@ -138,7 +165,12 @@
         }
       ],
       "verdict": null,
-      "rationale": ""
+      "rationale": "",
+      "retirada": {
+        "em": "2026-09-14",
+        "porque": "a execução de origem não é pontuável sob `fluxo-1.1.0` — legado/não rotulada, recusada pelo scorer (D-29). A alegação nunca pode entrar em número algum sem que a execução volte a ser pontuável, então mantê-la como pendente cobrava um julgamento que não teria onde ser aplicado. Origem: agent-2026-09-02T03-57-16-330Z.json",
+        "decisao": "D-29 (recusa de re-score de execução incompatível)"
+      }
     },
     {
       "id": "E-7a5432:df14769a",
@@ -154,12 +186,48 @@
       "rationale": ""
     },
     {
+      "id": "E-8135f3:7d5c14bd",
+      "caseId": "E-8135f3",
+      "finding": "O tamanho de fonte observado é 11px, fora da escala tipográfica do DS retornada pelo oráculo.",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-02T02-29-59-458Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": null,
+      "rationale": "",
+      "retirada": {
+        "em": "2026-09-14",
+        "porque": "a execução de origem não é pontuável sob `fluxo-1.1.0` — legado/não rotulada, recusada pelo scorer (D-29). A alegação nunca pode entrar em número algum sem que a execução volte a ser pontuável, então mantê-la como pendente cobrava um julgamento que não teria onde ser aplicado. Origem: agent-2026-09-02T02-29-59-458Z.json",
+        "decisao": "D-29 (recusa de re-score de execução incompatível)"
+      }
+    },
+    {
       "id": "E-8135f3:8ec3f06b",
       "caseId": "E-8135f3",
       "finding": "A margem observada inclui 143.641px, fora da escala de espaçamento do DS.",
       "seenIn": [
         {
           "run": "agent-2026-09-02T02-29-59-458Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": null,
+      "rationale": "",
+      "retirada": {
+        "em": "2026-09-14",
+        "porque": "a execução de origem não é pontuável sob `fluxo-1.1.0` — legado/não rotulada, recusada pelo scorer (D-29). A alegação nunca pode entrar em número algum sem que a execução volte a ser pontuável, então mantê-la como pendente cobrava um julgamento que não teria onde ser aplicado. Origem: agent-2026-09-02T02-29-59-458Z.json",
+        "decisao": "D-29 (recusa de re-score de execução incompatível)"
+      }
+    },
+    {
+      "id": "E-8135f3:e032d658",
+      "caseId": "E-8135f3",
+      "finding": "O selo 'SUA CONTA SERÁ PRATA' usa font-size 11px, fora da escala tipográfica do DS (valores vizinhos na escala: 11.662px e 9.716px). O contraste do selo foi conferido à parte e passa (branco sobre #168821, 4.59:1), então a falha é só de token.",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-02T06-21-31-820Z.json",
           "arm": "com-oraculo"
         }
       ],
@@ -177,7 +245,12 @@
         }
       ],
       "verdict": null,
-      "rationale": ""
+      "rationale": "",
+      "retirada": {
+        "em": "2026-09-14",
+        "porque": "a execução de origem não é pontuável sob `fluxo-1.1.0` — legado/não rotulada, recusada pelo scorer (D-29). A alegação nunca pode entrar em número algum sem que a execução volte a ser pontuável, então mantê-la como pendente cobrava um julgamento que não teria onde ser aplicado. Origem: agent-2026-09-02T02-29-59-458Z.json",
+        "decisao": "D-29 (recusa de re-score de execução incompatível)"
+      }
     },
     {
       "id": "E-e5a2f7:f38936df",
@@ -190,7 +263,12 @@
         }
       ],
       "verdict": null,
-      "rationale": ""
+      "rationale": "",
+      "retirada": {
+        "em": "2026-09-14",
+        "porque": "a execução de origem não é pontuável sob `fluxo-1.1.0` — legado/não rotulada, recusada pelo scorer (D-29). A alegação nunca pode entrar em número algum sem que a execução volte a ser pontuável, então mantê-la como pendente cobrava um julgamento que não teria onde ser aplicado. Origem: agent-2026-09-02T02-29-59-458Z.json",
+        "decisao": "D-29 (recusa de re-score de execução incompatível)"
+      }
     },
     {
       "id": "E-ee9ba1:74ed1b06",

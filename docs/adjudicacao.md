@@ -126,6 +126,27 @@ Declarar a exposição é o que torna o veredito legível para a banca: um julga
    `npm run eslint` para preencher a detecção medida das linhas de base — nunca por intuição.
    Feito isso, marque `gabaritoStatus: "incorporada"`.
 
+## Aposentadoria de registro (`retirada`)
+
+Nem todo registro pendente ainda é julgável. Uma alegação pode deixar de ser **sobra** por dois
+caminhos, e nenhum dos dois é um veredito sobre ela:
+
+| o que aconteceu | exemplo |
+|---|---|
+| a execução de origem saiu do instrumento vigente | as 4 execuções legado/não rotuladas que o scorer recusa sob `fluxo-1.1.0` (D-29) |
+| o gabarito passou a casar a alegação | as bordas `#dee2e6`, absorvidas quando a V-06 foi a `todos` (D-31) |
+
+Nesses casos o registro ganha `retirada: { em, porque, decisao }`, **sai da contagem de
+pendentes e nunca do arquivo**. Aposentadoria não é julgamento: um registro aposentado não
+carrega `verdict`, e `recordDefect` recusa a combinação. É reversível por construção — se a
+execução voltar a ser pontuável ou o gabarito recuar, remover `retirada` devolve o registro à
+fila.
+
+O que impede a aposentadoria de virar um jeito de melhorar a precisão: o scorer não lê `retirada`.
+Ele lê `verdict`, que num registro aposentado continua nulo — então uma sobra viva indevidamente
+aposentada **seguiria cobrada como falso positivo**. A aposentadoria muda o que se pede a um
+humano, não o que se cobra de uma execução.
+
 ## O viés que isto pode introduzir
 
 Uma lacuna descoberta olhando só os achados de um braço aumenta o gabarito **na direção do que

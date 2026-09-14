@@ -284,6 +284,16 @@ export interface AdjudicationRecord {
    * conhecida. Ver `docs/adjudicacao.md § Quem pode julgar`.
    */
   exposicao?: string;
+  /**
+   * Registro aposentado: a alegação existiu, mas deixou de ser sobra sob o instrumento e o
+   * gabarito vigentes, e por isso não é mais julgável nem contada como pendente. NUNCA é apagada
+   * — a aposentadoria é reversível em princípio, e o motivo viaja com ela. Um registro aposentado
+   * não carrega `verdict`: ninguém o julgou, e fingir que sim inventaria uma adjudicação.
+   *
+   * `porque` diz o que o deslocou (a execução saiu do instrumento; o gabarito passou a casar a
+   * alegação); `decisao` cita a entrada do log que produziu o deslocamento, quando houver.
+   */
+  retirada?: { em: string; porque: string; decisao?: string };
   /** For `lacuna-gabarito`: has the unit been written into ground-truth.json yet? */
   gabaritoStatus?: "pendente" | "incorporada";
 }
