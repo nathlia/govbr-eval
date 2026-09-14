@@ -24,9 +24,9 @@ import { existsSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import type { FlowGroundTruth } from "../types";
+import type { FlowGroundTruth, FlowViewport } from "../types";
 import { ROOT } from "./adjudication";
-import { preparePage, resolveOnPage } from "./anchors";
+import { VIEWPORT_PADRAO, preparePage, resolveOnPage } from "./anchors";
 import { normalizeRuleId } from "./units";
 
 const execFileAsync = promisify(execFile);
@@ -51,6 +51,16 @@ export interface FlowBaselines {
   timestamp: string;
   appUrl: string;
   state: string;
+  /**
+   * Janela da passada principal e de cada passada extra (D-35). Uma unidade que só se manifesta em
+   * viewport móvel não pode ser cobrada do axe medido a 1280 — ele não teria como vê-la. As
+   * detecções de uma passada extra são atribuídas SOMENTE às specs que declaram aquele viewport,
+   * para que uma passada não credite a ferramenta por unidades que não estava medindo.
+   */
+  viewports?: {
+    padrao: FlowViewport;
+    extras: { viewport: FlowViewport; specs: string[]; violationCount: number; passes: number }[];
+  };
   axe: {
     tool: string;
     violationCount: number;
@@ -98,7 +108,8 @@ async function main(): Promise<void> {
 
   // ── axe ────────────────────────────────────────────────────────────────────
   const browser = await chromium.launch();
-  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const viewportPadrao = gt._meta.viewport ?? VIEWPORT_PADRAO;
+  const context = await browser.newContext({ viewport: viewportPadrao });
   const page = await context.newPage();
   await preparePage(page, url, { waitFor: gt._meta.waitFor, setup: gt._meta.setup });
 
@@ -152,6 +163,65 @@ async function main(): Promise<void> {
   };
   const validatorTargets = scan.findings.map(finding => finding.element.locator);
   const validatorResolution = await resolveOnPage(page, validatorTargets);
+
+  // ── passadas extras, uma por viewport declarado (D-35) ────────────────────
+  // Uma spec que declara `viewport` descreve defeito que só existe naquela janela. Medi-lo na
+  // passada padrão cobraria do axe algo que ele não tinha como ver; medir TUDO na janela extra
+  // creditaria a ferramenta por unidades que ela não estava medindo. Por isso a atribuição é
+  // restrita às âncoras das specs daquele viewport.
+  const extras: NonNullable<FlowBaselines["viewports"]>["extras"] = [];
+  const porViewport = new Map<string, { viewport: FlowViewport; specs: typeof gt.violations }>();
+  for (const spec of gt.violations) {
+    if (!spec.viewport) continue;
+    if (spec.viewport.width === viewportPadrao.width && spec.viewport.height === viewportPadrao.height) continue;
+    const chave = `${spec.viewport.width}x${spec.viewport.height}`;
+    const grupo = porViewport.get(chave) ?? { viewport: spec.viewport, specs: [] };
+    grupo.specs.push(spec);
+    porViewport.set(chave, grupo);
+  }
+
+  for (const [chave, grupo] of porViewport) {
+    const ctxExtra = await browser.newContext({ viewport: grupo.viewport });
+    const pageExtra = await ctxExtra.newPage();
+    await preparePage(pageExtra, url, { waitFor: gt._meta.waitFor, setup: gt._meta.setup });
+    const axeExtra = await new AxeBuilder({ page: pageExtra }).analyze();
+
+    const alvosExtra: string[] = [];
+    const nosExtra: AxeFindingRef[] = [];
+    for (const v of axeExtra.violations) {
+      for (const n of v.nodes) {
+        const target = n.target.flat().join(" ");
+        alvosExtra.push(target);
+        nosExtra.push({ rule: v.id, impact: v.impact ?? null, description: v.help ?? v.description, target });
+      }
+    }
+    const ancorasDoGrupo = grupo.specs.map(spec => spec.anchor);
+    const { bySelector: porSeletorExtra } = await resolveOnPage(pageExtra, [...alvosExtra, ...ancorasDoGrupo]);
+
+    const chavesDoGrupo = new Set(ancorasDoGrupo.flatMap(sel => porSeletorExtra.get(sel)?.keys ?? []));
+    for (const finding of nosExtra) {
+      const keys = porSeletorExtra.get(finding.target)?.keys ?? [];
+      for (const k of keys) {
+        if (!chavesDoGrupo.has(k)) continue;   // fora do escopo desta passada, por desenho
+        (byElementKey[k] ??= []).push(finding);
+      }
+    }
+
+    console.log(`
+axe-core @ ${chave} (passada extra, specs ${grupo.specs.map(s => s.id).join(", ")}): ` +
+      `${axeExtra.violations.length} regra(s), ${axeExtra.passes.length} passes`);
+    for (const v of axeExtra.violations) console.log(`  ${v.id} (${v.impact}) × ${v.nodes.length}`);
+    if (!axeExtra.violations.length) console.log("  nenhuma violação");
+
+    extras.push({
+      viewport: grupo.viewport,
+      specs: grupo.specs.map(spec => spec.id),
+      violationCount: axeExtra.violations.length,
+      passes: axeExtra.passes.length,
+    });
+    await ctxExtra.close();
+  }
+
   await browser.close();
 
   const validatorByElementKey: Record<string, { rule: string; source: string; description: string; target: string }[]> = {};
@@ -219,6 +289,7 @@ async function main(): Promise<void> {
     timestamp: new Date().toISOString(),
     appUrl: url,
     state: temSetup ? "após setup do gabarito" : "primeiro paint",
+    viewports: { padrao: viewportPadrao, extras },
     axe: {
       tool: "axe-core via @axe-core/playwright",
       violationCount: axe.violations.length,

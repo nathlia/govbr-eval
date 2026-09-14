@@ -346,6 +346,19 @@ export interface FlowViolationSpec {
    * `expectedCount` (D-06).
    */
   participantCount?: number;
+  /**
+   * Viewport em que a violação se manifesta, quando não é a padrão da suíte (D-35).
+   *
+   * É propriedade de ONDE O DEFEITO APARECE, não da identidade do elemento: a âncora segue sendo
+   * resolvida no viewport padrão, porque o elemento é o mesmo objeto da árvore nos dois tamanhos.
+   * Quem obedece a este campo é a MEDIÇÃO — a linha de base roda uma passada por viewport
+   * declarado, senão cobraria do axe um defeito que ele não tinha como ver.
+   *
+   * Se algum dia uma spec ancorar em elemento que só EXISTE no viewport declarado, a âncora não
+   * resolve e o guarda de `expectedCount` para a pontuação em vez de medir (D-06) — falha ruidosa,
+   * que é o comportamento desejado até o resolvedor também passar a respeitar o campo.
+   */
+  viewport?: FlowViewport;
   /** Estado observável em que a unidade deve ser alcançada (ex.: `sempre`, `apos-submit-vazio`). */
   state?: string;
   /** A unidade só existe no estado declarado; nunca é presumida no primeiro paint. */
@@ -369,6 +382,12 @@ export interface FlowSetupStep {
   ms?: number;
 }
 
+/** Tamanho de janela em que uma unidade é medida. */
+export interface FlowViewport {
+  width: number;
+  height: number;
+}
+
 export interface FlowGroundTruth {
   _meta: {
     /** Identificador da página-fluxo, usado como prefixo de proveniência. */
@@ -386,6 +405,15 @@ export interface FlowGroundTruth {
      * passariam a descrever estados diferentes da página e nada acusaria.
      */
     setup?: FlowSetupStep[];
+    /**
+     * Viewport padrão da suíte, em que toda spec que não declara `viewport` é medida.
+     *
+     * Estava implícito e DIVERGENTE: o runner de linha de base abria 1280×900 e o resolvedor de
+     * âncoras usava o padrão do Playwright (1280×720). Para as unidades de hoje a altura não muda
+     * nada, mas era mais uma dimensão que uma parte do código conhecia e a outra não — o defeito
+     * que o log acompanha desde o D-13. Declarado aqui, os dois leem o mesmo número.
+     */
+    viewport?: FlowViewport;
     [k: string]: unknown;
   };
   violations: FlowViolationSpec[];

@@ -1,7 +1,26 @@
 {
-  "timestamp": "2026-09-09T15:11:28.195Z",
+  "timestamp": "2026-09-14T17:32:50.289Z",
   "appUrl": "http://localhost:3000/fluxo.html",
   "state": "após setup do gabarito",
+  "viewports": {
+    "padrao": {
+      "width": 1280,
+      "height": 900
+    },
+    "extras": [
+      {
+        "viewport": {
+          "width": 320,
+          "height": 720
+        },
+        "specs": [
+          "V-12"
+        ],
+        "violationCount": 0,
+        "passes": 36
+      }
+    ]
+  },
   "axe": {
     "tool": "axe-core via @axe-core/playwright",
     "violationCount": 0,
@@ -20,7 +39,7 @@
   },
   "validator": {
     "tool": "govbr-ds-validator scan_page (tokens + structure)",
-    "version": "2.2.0",
+    "version": "2.3.0",
     "byElementKey": {
       "body>div>main>section:nth-of-type(1)": [
         {

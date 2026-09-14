@@ -16,7 +16,10 @@
 
 import { chromium, type Page } from "playwright";
 import { createHash } from "crypto";
-import type { FlowSetupStep } from "../types";
+import type { FlowSetupStep, FlowViewport } from "../types";
+
+/** Janela usada quando o gabarito não declara `_meta.viewport` (D-35). */
+export const VIEWPORT_PADRAO: FlowViewport = { width: 1280, height: 900 };
 
 /** Identidade curta e estável de um elemento, usada como prefixo de id de achado. */
 export function elementId(key: string): string {
@@ -170,11 +173,14 @@ const RESOLVE_IN_PAGE = `(selectors) => {
 export async function resolveSelectors(
   url: string,
   selectors: string[],
-  opts: { waitFor?: string; setup?: FlowSetupStep[] } = {},
+  opts: { waitFor?: string; setup?: FlowSetupStep[]; viewport?: FlowViewport } = {},
 ): Promise<Resolution> {
   const browser = await chromium.launch();
   try {
-    const context = await browser.newContext();
+    // Sem `viewport` explícito o Playwright abria 1280×720 aqui enquanto o runner de linha de base
+    // abria 1280×900: mesma suíte, duas janelas, ninguém avisado (D-35). O gabarito agora declara o
+    // padrão e os dois leem o mesmo número; VIEWPORT_PADRAO é só o piso se o gabarito calar.
+    const context = await browser.newContext({ viewport: opts.viewport ?? VIEWPORT_PADRAO });
     const page = await context.newPage();
     await preparePage(page, url, opts);
     const { bySelector, byKey } = await resolveOnPage(page, selectors);

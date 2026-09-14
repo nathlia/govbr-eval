@@ -50,6 +50,18 @@ function loadRuns(): LoadedRun[] {
   return runs;
 }
 
+/**
+ * Toda dívida de gabarito deste registro já foi escrita no gabarito? Vale para o registro simples e
+ * para o `composto`, onde a dívida vive nos componentes (D-30) — filtrar só pelo veredito de topo
+ * tornaria a lacuna de um composto invisível, que é o erro que o D-30 já corrigiu no scorer.
+ */
+function foiIncorporada(record: AdjudicationRecord): boolean {
+  const lacunas = record.verdict === "composto"
+    ? (record.components ?? []).filter(c => c.verdict === "lacuna-gabarito")
+    : record.verdict === "lacuna-gabarito" ? [record] : [];
+  return lacunas.length > 0 && lacunas.every(l => l.gabaritoStatus === "incorporada");
+}
+
 function armsOf(claim: Claim): string[] {
   return [...new Set(claim.seenIn.map(s => s.arm))].sort();
 }
@@ -145,6 +157,10 @@ async function main(): Promise<void> {
     const defect = recordDefect(record);
     if (defect) return [`${record.id}: ${defect}`];
     if (isRetired(record)) return [];
+    // Uma `lacuna-gabarito` já INCORPORADA deixa de ter alegação correspondente por sucesso, não por
+    // defeito: a alegação virou unidade do gabarito, então não é mais achado sem unidade. Sem esta
+    // linha, pagar a dívida fazia o workbench acusar exatamente as dívidas que acabaram de ser pagas.
+    if (foiIncorporada(record)) return [];
     if (!claims.has(record.id)) return [`${record.id}: nenhum achado de fluxo arquivado corresponde ao registro`];
     return [];
   });

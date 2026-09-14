@@ -134,8 +134,8 @@
         },
         {
           "verdict": "lacuna-gabarito",
-          "gabaritoStatus": "pendente",
-          "rationale": "A ausência de instrução de formato é violação real que o gabarito nunca catalogou: nenhuma spec menciona formato e emag:6.5 não está no conjunto de regras. Falha do gabarito, não do agente."
+          "gabaritoStatus": "incorporada",
+          "rationale": "A ausência de instrução de formato é violação real que o gabarito nunca catalogou: nenhuma spec menciona formato e emag:6.5 não está no conjunto de regras. Falha do gabarito, não do agente. Incorporada ao gabarito 1.5.0 como V-11 em 2026-09-14 (D-35): a unidade (#cpf × emag:6.5) cobre as duas manifestações da recomendação — instrução de formato ausente e obrigatoriedade sem marca visual —, e por isso esta dívida e a de E-7a5432:df14769a se pagam com uma spec só."
         }
       ],
       "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
@@ -203,8 +203,8 @@
         }
       ],
       "verdict": "lacuna-gabarito",
-      "rationale": "É outro defeito. O campo obrigatório sem indicação visual não é a V-02: a V-02 é o texto de apoio que não está associado ao campo por aria-describedby. As duas compartilham o critério wcag:3.3.2, e só por isso caem na mesma unidade (elemento × regra) — mas a correção de uma não é a correção da outra, e o gabarito nunca catalogou esta. Verdadeira na página: aria-required=\"true\" presente, e o texto visível inteiro do formulário é \"CPF Continuar\", sem asterisco com legenda e sem a palavra obrigatório.",
-      "gabaritoStatus": "pendente",
+      "rationale": "É outro defeito. O campo obrigatório sem indicação visual não é a V-02: a V-02 é o texto de apoio que não está associado ao campo por aria-describedby. As duas compartilham o critério wcag:3.3.2, e só por isso caem na mesma unidade (elemento × regra) — mas a correção de uma não é a correção da outra, e o gabarito nunca catalogou esta. Verdadeira na página: aria-required=\"true\" presente, e o texto visível inteiro do formulário é \"CPF Continuar\", sem asterisco com legenda e sem a palavra obrigatório. Incorporada ao gabarito 1.5.0 como V-11 em 2026-09-14 (D-35), com linha de base remedida.",
+      "gabaritoStatus": "incorporada",
       "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
       "adjudicatedAt": "2026-09-14"
     },
@@ -307,8 +307,8 @@
         }
       ],
       "verdict": "lacuna-gabarito",
-      "rationale": "Verdadeira na página e nunca catalogada. As duas verificações do e-MAG 1.5 falham: nenhum dos 7 links aponta para fragmento (todos href=\"/fluxo\"), o <main> não tem id que sirva de destino (os únicos ids são root, titulo-institucional, titulo-identificacao e cpf), e o primeiro focável é a marca gov.br, não um link de salto. A .barra-recursos traz só Alto Contraste e VLibras. Nenhuma spec do gabarito ancora neste elemento — falha do gabarito, não do agente.",
-      "gabaritoStatus": "pendente",
+      "rationale": "Verdadeira na página e nunca catalogada. As duas verificações do e-MAG 1.5 falham: nenhum dos 7 links aponta para fragmento (todos href=\"/fluxo\"), o <main> não tem id que sirva de destino (os únicos ids são root, titulo-institucional, titulo-identificacao e cpf), e o primeiro focável é a marca gov.br, não um link de salto. A .barra-recursos traz só Alto Contraste e VLibras. Nenhuma spec do gabarito ancora neste elemento — falha do gabarito, não do agente. Incorporada ao gabarito 1.5.0 como V-10 em 2026-09-14 (D-35), com linha de base remedida.",
+      "gabaritoStatus": "incorporada",
       "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
       "adjudicatedAt": "2026-09-14"
     },
@@ -323,8 +323,8 @@
         }
       ],
       "verdict": "lacuna-gabarito",
-      "rationale": "Verdadeira na página e nunca catalogada. A 320px a .barra-recursos não quebra linha (flex-wrap: nowrap): termina em x=447 contra clientWidth 305, leva o scrollWidth do documento a 447 e deixa o botão VLibras inteiramente fora da viewport (left=305, right=447), alcançável só por rolagem horizontal da página. Foi o único bloco a estourar a borda direita. A regra citada é normativa de força `required` (severidade serious, estratégia responsive-viewport) e exige que o componente permaneça utilizável em viewport móvel. Nenhuma spec do gabarito ancora neste elemento — falha do gabarito, não do agente.",
-      "gabaritoStatus": "pendente",
+      "rationale": "Verdadeira na página e nunca catalogada. A 320px a .barra-recursos não quebra linha (flex-wrap: nowrap): termina em x=447 contra clientWidth 305, leva o scrollWidth do documento a 447 e deixa o botão VLibras inteiramente fora da viewport (left=305, right=447), alcançável só por rolagem horizontal da página. Foi o único bloco a estourar a borda direita. A regra citada é normativa de força `required` (severidade serious, estratégia responsive-viewport) e exige que o componente permaneça utilizável em viewport móvel. Nenhuma spec do gabarito ancora neste elemento — falha do gabarito, não do agente. Incorporada ao gabarito 1.5.0 como V-12 em 2026-09-14 (D-35), com linha de base remedida.",
+      "gabaritoStatus": "incorporada",
       "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
       "adjudicatedAt": "2026-09-14"
     },
