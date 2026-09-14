@@ -1,0 +1,139 @@
+{
+  "timestamp": "2026-09-14T20:39:34.657Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "tela inteira: barra superior (marca, Alto Contraste, VLibras)",
+    "painel institucional",
+    "cartão de identificação: formulário CPF (estados inicial, erro vazio, CPF '123'), lista de outras opções, links de ajuda e termo"
+  ],
+  "notes": "Interações: snapshot e DOM inicial; scan_page completo (S-page-001); envio vazio por clique em Continuar (mensagem 'Informe um CPF para continuar.' surge) com scan comparado (S-page-002, só fingerprint mudou) e scan de tokens escopado a textos/seções/mensagem (S-page-003); preenchimento '123' + Enter (mensagem some, nada acontece, sem feedback); navegação por Tab do campo ao botão (foco visível, outline tracejado) e ao primeiro link de opção (sem indicador); clique em Alto Contraste (nenhuma mudança observável, sem aria-pressed). axe: 36 passes, 0 violações. Rejeitados: contraste da tag PRATA (branco/#168821 ≈4,6:1), <hr> br-divider com role=presentation, classes utilitárias extras e tamanhos de fonte 11px/16px (oráculo sem norma). Incertos, não reportados: ausência de instrução de formato do CPF antes do campo (eMAG 6.5); CPF inválido '123' aceito sem mensagem (não se sabe se há validação automática, 3.3.1 só se aplica a erro detectado); botão Alto Contraste sem efeito visível; border #dee2e6 está a distância RGB 4,24 de --gray-cool-10. Limitações: .mensagem-erro-cpf só existe após enviar o formulário vazio; VLibras não acionado; links de opção apontam para /fluxo e não foram seguidos; console só com 404 de favicon; viewport padrão, sem teste responsivo.",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [],
+      "rule": "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+      "description": "Os 4 links de 'Outras opções de identificação' não têm indicador de foco: com :focus-visible via Tab, outline none e box-shadow none, sem alteração de cor/fundo/sublinhado nem :focus-within no item; a regra de autor '.link-opcao:focus, .link-opcao:focus-visible { outline:none; box-shadow:none }' anula o foco do DS (WCAG 2.4.7). Verificado ao vivo pelo oráculo."
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "govbr-3.7.0-accessibility-global-cc837bbaf713",
+      "description": "Ao enviar vazio, a mensagem 'Informe um CPF para continuar.' é inserida como <p> sem id, fora do wrapper br-input, e não é associada ao campo: #cpf não recebe aria-invalid nem aria-describedby, a mensagem não tem role=alert/aria-live, o foco fica no botão e o campo não recebe estado danger (eMAG 6.6 / WCAG 3.3.1, 4.1.3). Seletor relacionado existe somente no estado de erro."
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [],
+      "rule": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+      "description": "Mensagem de erro (estado após envio vazio) usa color rgb(230,0,0) #e60000, declarada literalmente, que não é token do DS; o mais próximo é --red-vivid-50 #e52207 (scan S-page-003, F-014)."
+    },
+    {
+      "selector": ".painel-institucional, .cartao-identificacao, .lista-opcoes",
+      "relatedSelectors": [],
+      "rule": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+      "description": "Painel institucional, cartão de identificação e lista de opções usam borda 1px solid var(--tela-borda) = #dee2e6, cor fora da paleta de tokens do DS (mais próximo --gray-cool-10 #dfe1e2) (F-001, F-013, F-015)."
+    },
+    {
+      "selector": ".lista-opcoes > .opcao-identificacao",
+      "relatedSelectors": [],
+      "rule": "govbr-3.7.0-development-global-137c50bea6ca",
+      "description": "Os 4 br-item da lista de opções usam padding 13px (var(--item-padding) = 13px), fora da escala de espaçamento do DS (múltiplos de 4px, base 8px) (F-002 a F-005)."
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".campo-cpf-fluxo"
+      ],
+      "rule": "govbr-3.7.0-component-global-e30aab6e9a68",
+      "description": "A classe de componente br-input é aplicada também ao próprio <input>, além do wrapper <div class='br-input'>; na anatomia do DS br-input identifica o contêiner <div>, não o campo (F-006)."
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.270 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:7ce551a68930e4d63b4666abb6917207cd55afb54e96db5c20c24b08445be5c2",
+    "instrumentVersion": "fluxo-1.2.0",
+    "validatorVersion": "2.3.0"
+  },
+  "cost": {
+    "startedAt": "2026-09-14T20:35:46.7074421Z",
+    "finishedAt": "2026-09-14T20:39:52.6831744Z",
+    "wallClockSeconds": 245.9,
+    "tokens": 1069909,
+    "tokenUsage": {
+      "input": 482,
+      "cacheCreationInput": 86631,
+      "cacheReadInput": 966883,
+      "output": 15913
+    },
+    "totalCostUsd": 1.7526195000000002,
+    "turns": 36,
+    "mcp": {
+      "runId": "2026-09-14T17-35-45-com-run1-a6ee0a4d",
+      "telemetryFile": "pipeline/logs/2026-09-14T17-35-45-com-run1-a6ee0a4d-mcp.ndjson",
+      "calls": 15,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 3420,
+      "responseBytes": 109594,
+      "durationMs": 8116,
+      "byTool": {
+        "scan_page": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 635,
+          "responseBytes": 67737,
+          "durationMs": 7226
+        },
+        "get_page_rules": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 28,
+          "responseBytes": 16814,
+          "durationMs": 1
+        },
+        "get_finding_details": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 151,
+          "responseBytes": 11281,
+          "durationMs": 1
+        },
+        "get_ds_rules": {
+          "calls": 5,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 377,
+          "responseBytes": 9863,
+          "durationMs": 0
+        },
+        "get_emag_rules": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 13,
+          "responseBytes": 3400,
+          "durationMs": 0
+        },
+        "verify_finding": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 2216,
+          "responseBytes": 499,
+          "durationMs": 888
+        }
+      }
+    }
+  }
+}

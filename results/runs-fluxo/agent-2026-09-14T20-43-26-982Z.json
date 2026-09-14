@@ -1,0 +1,151 @@
+{
+  "timestamp": "2026-09-14T20:43:26.982Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "tela inteira: barra superior (marca gov.br, Alto Contraste, VLibras)",
+    "painel institucional",
+    "cartão de identificação: formulário CPF, lista de outras opções, links de ajuda e termo",
+    "estado de erro após envio vazio",
+    "estado após envio de CPF inválido (123) via Enter"
+  ],
+  "notes": "Interações: snapshot da árvore de acessibilidade; leitura de DOM e estilos computados; clique em Continuar com campo vazio (surge p.mensagem-erro-cpf, foco fica no botão, sem aria-invalid/aria-describedby/live region); Tab a partir de Continuar até a.link-opcao (:focus-visible sem outline, box-shadow, sublinhado ou fundo); inspeção das regras CSS :focus/:focus-visible de todos os links, botões e input (só .link-opcao anula o indicador); digitação de '123' + Enter (mensagem de erro some e nenhuma validação/feedback aparece; como o destino é estático, a ausência de erro de formato ficou incerta e não foi reportada). scan_page: S-page-001 (inicial), S-page-002 (erro, comparado ao inicial: mesmos 6 achados), S-page-003 (tokens em mensagem/campo/títulos). axe-core 4.12.1 sem violações nos dois estados. Rejeitados por falta de norma (observações do oráculo): classes extras em componentes, br-divider em <hr>, font-size 11px da br-tag e 16px dos h2. Incerto, não reportado: ausência de instrução de formato do CPF (e-MAG 6.5 / govbr-3.7.0-accessibility-global-01b1806c30e9), só há placeholder. Não testado: comportamento real de Alto Contraste/VLibras e responsividade. Seletor .mensagem-erro-cpf só resolve no estado de erro (após enviar vazio). Erro de console: 404 em favicon.ico.",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [],
+      "rule": "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+      "description": "Com foco por teclado (:focus-visible), os links das opções de identificação ficam sem indicador: outline-style none, box-shadow none, sem sublinhado nem mudança de fundo. As regras .link-opcao:focus e .link-opcao:focus-visible anulam o outline do DS. Testado com Tab; verify_finding confirmou."
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "govbr-3.7.0-accessibility-global-cc837bbaf713",
+      "description": "Ao enviar o CPF vazio aparece o texto 'Informe um CPF para continuar.', mas ele não fica associado ao campo: #cpf não recebe aria-describedby nem aria-invalid, a mensagem não tem role=alert/aria-live e o foco continua no botão Continuar. e-MAG 6.6 / WCAG 3.3.1. verify_finding confirmou."
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".campo-cpf-fluxo"
+      ],
+      "rule": "ds-structure-input-tag",
+      "description": "A classe raiz br-input está aplicada ao próprio <input>, além da div wrapper. A restrição do componente input exige br-input em <div>. Achado determinístico do oráculo (F-006)."
+    },
+    {
+      "selector": ".lista-opcoes",
+      "relatedSelectors": [],
+      "rule": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+      "description": "A borda da lista de opções usa #dee2e6 (via var(--tela-borda)), que não é cor da paleta do DS; o token mais próximo é --gray-cool-10 (#dfe1e2). Achado determinístico (F-001)."
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [],
+      "rule": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+      "description": "No estado de erro (após enviar vazio), o texto da mensagem usa color #e60000, fora da paleta do DS (o token de perigo não foi usado). Achado determinístico (F-013)."
+    },
+    {
+      "selector": ".opcao-identificacao",
+      "relatedSelectors": [
+        ".lista-opcoes"
+      ],
+      "rule": "govbr-3.7.0-component-item-a10751502b98",
+      "description": "Os quatro br-item da lista usam padding de 13px, fora da escala de espaçamento do DS (múltiplos de 4px). A regra do Item exige padding computado na escala oficial. Achados determinísticos F-002 a F-005 (ds-token-spacing)."
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.270 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:7ce551a68930e4d63b4666abb6917207cd55afb54e96db5c20c24b08445be5c2",
+    "instrumentVersion": "fluxo-1.2.0",
+    "validatorVersion": "2.3.0"
+  },
+  "cost": {
+    "startedAt": "2026-09-14T20:39:52.7884808Z",
+    "finishedAt": "2026-09-14T20:43:48.1804426Z",
+    "wallClockSeconds": 235.4,
+    "tokens": 1018694,
+    "tokenUsage": {
+      "input": 450,
+      "cacheCreationInput": 89549,
+      "cacheReadInput": 913586,
+      "output": 15109
+    },
+    "totalCostUsd": 1.7348910000000002,
+    "turns": 36,
+    "mcp": {
+      "runId": "2026-09-14T17-35-45-com-run2-84614659",
+      "telemetryFile": "pipeline/logs/2026-09-14T17-35-45-com-run2-84614659-mcp.ndjson",
+      "calls": 19,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 2694,
+      "responseBytes": 112025,
+      "durationMs": 4419,
+      "byTool": {
+        "scan_page": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 415,
+          "responseBytes": 66193,
+          "durationMs": 4411
+        },
+        "get_page_rules": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 28,
+          "responseBytes": 16814,
+          "durationMs": 1
+        },
+        "get_ds_rules": {
+          "calls": 9,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 434,
+          "responseBytes": 15189,
+          "durationMs": 5
+        },
+        "get_component_spec": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 40,
+          "responseBytes": 5762,
+          "durationMs": 1
+        },
+        "get_finding_details": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 49,
+          "responseBytes": 4125,
+          "durationMs": 1
+        },
+        "get_emag_rules": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 13,
+          "responseBytes": 3400,
+          "durationMs": 0
+        },
+        "verify_finding": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 1715,
+          "responseBytes": 542,
+          "durationMs": 0
+        }
+      }
+    }
+  }
+}

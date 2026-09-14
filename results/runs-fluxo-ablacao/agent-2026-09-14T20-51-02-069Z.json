@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-09-14T20:51:02.069Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "tela inteira: barra superior (marca, Alto Contraste, VLibras)",
+    "painel institucional",
+    "cartão de identificação: formulário CPF, estado de erro com CPF vazio, envio com CPF '123'",
+    "lista de outras opções de identificação",
+    "links de ajuda e termo de uso"
+  ],
+  "notes": "Sem oráculo nem scan_page; ids WCAG atribuídos manualmente. Interações: snapshot da árvore de acessibilidade e leitura de DOM/estilos/regras CSS; clique em Continuar com CPF vazio (mensagem 'Informe um CPF para continuar.' aparece, foco fica no botão, sem aria-invalid/aria-describedby/live region); Enter no campo vazio (mesmo resultado, foco no campo); envio de '123' (mensagem some, nenhuma validação nem navegação — não reportado, pois nenhum erro é detectado); clique em Alto Contraste e VLibras (nenhuma mudança observável de DOM/estilo além de hover; registrado como incerto e não reportado, pois o contraste padrão já atende ao 1.4.3); Tab a partir de Continuar até 'Login com seu banco' (:focus-visible verdadeiro, outline none e box-shadow none, sem indicador visual, confirmado por screenshot). Contrastes verificados e aprovados: selo branco sobre #168821 (~4.6:1), texto #555, links #1351b4, borda do campo #888 (~3.5:1), mensagem de erro #e60000 (~4.8:1). Alvos dos links de opção têm 20px de altura, mas passam no 2.5.8 pela exceção de espaçamento. Frase institucional em <p> com 24px, usada como rótulo da região: rejeitada como cabeçalho visual obrigatório (atribuição incerta). O seletor .mensagem-erro-cpf só existe após enviar com CPF vazio; verificado nesse estado. Console: 404 de favicon.ico.",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [],
+      "rule": "wcag:2.4.7",
+      "description": "Os 4 links de outras opções de identificação têm a regra CSS '.link-opcao:focus, .link-opcao:focus-visible { outline: none; box-shadow: none }', que anula o foco padrão do design system. Com o teclado (Tab a partir de Continuar), o link recebe :focus-visible sem outline, sombra, fundo ou sublinhado: não há indicador de foco visível."
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [
+        "#cpf"
+      ],
+      "rule": "wcag:4.1.3",
+      "description": "Ao enviar com CPF vazio, aparece o parágrafo 'Informe um CPF para continuar.' sem role=alert/status nem aria-live, e o foco não é movido até ele (fica no botão ou no campo). Leitores de tela não anunciam a mensagem."
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "wcag:1.3.1",
+      "description": "No estado de erro, o campo CPF não recebe aria-invalid nem aria-describedby/aria-errormessage apontando para a mensagem 'Informe um CPF para continuar.'. A relação campo–erro fica só visual, não programática."
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.270 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:7ce551a68930e4d63b4666abb6917207cd55afb54e96db5c20c24b08445be5c2",
+    "instrumentVersion": "fluxo-1.2.0"
+  },
+  "cost": {
+    "startedAt": "2026-09-14T20:47:39.7595989Z",
+    "finishedAt": "2026-09-14T20:51:20.1522785Z",
+    "wallClockSeconds": 220.4,
+    "tokens": 749609,
+    "tokenUsage": {
+      "input": 546,
+      "cacheCreationInput": 48189,
+      "cacheReadInput": 687310,
+      "output": 13564
+    },
+    "totalCostUsd": 1.170008,
+    "turns": 26
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "timestamp": "2026-09-14T20:47:20.209Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "tela inteira: barra superior (marca, Alto Contraste, VLibras)",
+    "painel institucional",
+    "cartão de identificação: formulário CPF (estados inicial, erro de envio vazio, envio com '123')",
+    "lista de outras opções de identificação",
+    "links de ajuda e termo"
+  ],
+  "notes": "Interações: snapshot da árvore de acessibilidade; inspeção de DOM, estilos computados e folhas de estilo da aplicação; scan_page S-page-001 (estado inicial, axe+structure+tokens), S-page-002 (após envio vazio, axe+structure, compareTo S-page-001), S-page-003/004 (tokens no formulário e em .mensagem-erro-cpf/#cpf no estado de erro), S-page-005 (tokens de cor em painéis, barra e itens). Envio vazio pelo botão Continuar: surge p.mensagem-erro-cpf ('Informe um CPF para continuar.'), sem aria-invalid, sem aria-describedby, sem região viva e o foco permanece no botão. Envio de '123' via Enter: a mensagem some e nada mais acontece (formato de CPF não validado; sem regra normativa específica, ficou como incerto e não foi reportado). Tab a partir do botão levou ao link 'Login com seu banco', que tem :focus-visible e nenhuma indicação visual (a regra .link-opcao:focus remove outline e box-shadow). Clique em 'Alto Contraste': sem mudança observável (classes e fundo inalterados, nenhum aria-pressed); sem regra específica, ficou como incerto. Observações do oráculo não promovidas a achado: classes utilitárias extras, hr.br-divider (semântica nativa preservada, role=presentation), font-size 11px na tag (sem norma). A cor #dee2e6 também aparece em border-bottom de .barra-superior e .opcao-identificacao, mas o oráculo não a sinalizou nesses elementos (S-page-005); ficou como incerto e não foi reportado. Limitações: o seletor .mensagem-erro-cpf só existe depois do envio vazio; axe sem violações (36 passes); console só tem 404 de favicon.ico.",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [],
+      "rule": "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+      "description": "Os 4 links de 'Outras opções de identificação' ficam sem nenhum indicador de foco visível ao receber foco pelo teclado (:focus-visible = true; outline-style none, box-shadow none, sem mudança de cor, fundo ou sublinhado). A regra do autor '.link-opcao:focus, .link-opcao:focus-visible { outline: none; box-shadow: none; }' anula o foco (eMAG 4.4 / WCAG 2.4.7)."
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "govbr-3.7.0-accessibility-global-cc837bbaf713",
+      "description": "No envio vazio aparece o texto 'Informe um CPF para continuar.' em um <p> solto, mas o campo não recebe aria-invalid nem aria-describedby apontando para a mensagem. A mensagem não está em região viva (role=alert/aria-live) e o foco fica no botão. Por isso o erro não é associado ao campo nem anunciado (eMAG 6.6; WCAG 3.3.1/4.1.3)."
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".campo-cpf-fluxo"
+      ],
+      "rule": "govbr-3.7.0-component-global-e30aab6e9a68",
+      "description": "A classe raiz br-input está aplicada ao próprio <input>, além do wrapper <div class='br-input'>. Na anatomia do componente Input, br-input vai só no <div> (restrição ds-structure-input-tag)."
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [],
+      "rule": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+      "description": "A mensagem de erro (visível após envio vazio) usa color #e60000, que não é token da paleta do DS. O mais próximo é --red-vivid-50 #e52207 (F-008)."
+    },
+    {
+      "selector": ".lista-opcoes",
+      "relatedSelectors": [],
+      "rule": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+      "description": "Borda da lista de opções em #dee2e6 (var(--tela-borda)), fora da paleta do DS. O mais próximo é --gray-cool-10 #dfe1e2 (F-001)."
+    },
+    {
+      "selector": ".painel-institucional, .cartao-identificacao",
+      "relatedSelectors": [],
+      "rule": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+      "description": "Bordas do painel institucional e do cartão de identificação em #dee2e6 (var(--tela-borda)), fora da paleta do DS. O mais próximo é --gray-cool-10 (F-009, F-010)."
+    },
+    {
+      "selector": ".opcao-identificacao",
+      "relatedSelectors": [],
+      "rule": "govbr-3.7.0-development-global-137c50bea6ca",
+      "description": "Os itens da lista de opções usam padding de 13px, fora da escala de espaçamento do DS (múltiplos de 4px, base 8px), em vez de um token de espaçamento (F-002 a F-005)."
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.270 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:7ce551a68930e4d63b4666abb6917207cd55afb54e96db5c20c24b08445be5c2",
+    "instrumentVersion": "fluxo-1.2.0",
+    "validatorVersion": "2.3.0"
+  },
+  "cost": {
+    "startedAt": "2026-09-14T20:43:48.1919474Z",
+    "finishedAt": "2026-09-14T20:47:39.7387617Z",
+    "wallClockSeconds": 231.5,
+    "tokens": 1135532,
+    "tokenUsage": {
+      "input": 482,
+      "cacheCreationInput": 89193,
+      "cacheReadInput": 1031580,
+      "output": 14277
+    },
+    "totalCostUsd": 1.7696830000000001,
+    "turns": 34,
+    "mcp": {
+      "runId": "2026-09-14T17-35-45-com-run3-576b0482",
+      "telemetryFile": "pipeline/logs/2026-09-14T17-35-45-com-run3-576b0482-mcp.ndjson",
+      "calls": 12,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 1128,
+      "responseBytes": 96004,
+      "durationMs": 7286,
+      "byTool": {
+        "scan_page": {
+          "calls": 5,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 833,
+          "responseBytes": 64397,
+          "durationMs": 7282
+        },
+        "get_page_rules": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 28,
+          "responseBytes": 16814,
+          "durationMs": 1
+        },
+        "get_ds_rules": {
+          "calls": 4,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 197,
+          "responseBytes": 8602,
+          "durationMs": 2
+        },
+        "get_finding_details": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 49,
+          "responseBytes": 4125,
+          "durationMs": 0
+        },
+        "get_component_spec": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 21,
+          "responseBytes": 2066,
+          "durationMs": 1
+        }
+      }
+    }
+  }
+}

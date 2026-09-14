@@ -1,0 +1,74 @@
+{
+  "timestamp": "2026-09-14T20:55:01.319Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "tela inteira: barra superior (marca, Alto Contraste, VLibras), painel institucional, cartão de identificação (formulário CPF, outras opções, ajuda, termo)"
+  ],
+  "notes": "Sem oráculo/scan_page: avaliação manual via árvore de acessibilidade, DOM e estilos computados. Interações: Tab e foco por teclado em todos os controles (comparação de outline/box-shadow/fundo/sublinhado com e sem :focus-visible, incluindo item pai e pseudo-elementos); envio vazio (clique em Continuar) -> surge p.mensagem-erro-cpf, foco permanece no botão, sem live region nem aria-invalid/aria-describedby; envio de '123' com Enter -> mensagem some e nada acontece (sem validação de formato observável; incerto, não reportado); clique em Alto Contraste -> nenhuma mudança observável (sem classes, cores ou aria-pressed; possível controle não funcional de protótipo, sem id normativo justificável, não reportado); clique em VLibras -> nenhum widget/diálogo aparece (não reportado); viewport 320x800 -> rolagem horizontal (scrollWidth 447 vs 305) com botão VLibras fora da tela. Contraste de textos calculado: todos >= 4.5:1 (tag PRATA 4.59:1 a 11px; erro rgb(230,0,0) ~4.8:1). Rejeitados: nome acessível da marca contém texto visível (2.5.3 ok); alvos de 20px de altura nos links de opção com espaçamento suficiente (2.5.8 ok); títulos h1/h2 coerentes; lang pt-BR e title presentes. Incerto: ausência de link de salto (eMAG 1.5) com main presente e só 3 controles no cabeçalho, não reportado. Seletores conferidos com querySelectorAll; p.mensagem-erro-cpf só existe após envio vazio. Console: 404 de favicon.ico apenas.",
+  "findings": [
+    {
+      "selector": "a.link-opcao",
+      "relatedSelectors": [],
+      "rule": "wcag:2.4.7",
+      "description": "Os 4 links de 'Outras opções de identificação' não mostram indicador de foco: com :focus-visible via teclado, outline-style permanece none, sem box-shadow, fundo, sublinhado ou mudança no .br-item pai ou pseudo-elementos. Os demais controles têm outline tracejado de 4px."
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        "p.mensagem-erro-cpf"
+      ],
+      "rule": "wcag:1.3.1",
+      "description": "Após envio vazio, a mensagem 'Informe um CPF para continuar.' aparece só visualmente: o input não recebe aria-invalid nem aria-describedby, e a borda do campo não muda (rgb(136,136,136)). A relação erro–campo não é determinável por programa."
+    },
+    {
+      "selector": "p.mensagem-erro-cpf",
+      "relatedSelectors": [
+        "#cpf"
+      ],
+      "rule": "wcag:4.1.3",
+      "description": "A mensagem de erro inserida após clicar em Continuar não tem role=alert/status nem aria-live, e o foco fica no botão. Leitores de tela não a anunciam. Só existe no estado de erro (após envio com CPF vazio)."
+    },
+    {
+      "selector": ".recurso-libras",
+      "relatedSelectors": [
+        ".barra-recursos"
+      ],
+      "rule": "wcag:1.4.10",
+      "description": "Com viewport de 320px CSS, a .barra-recursos não quebra linha (vai de 93 a 447px) e força rolagem horizontal (scrollWidth 447 > 305). O botão VLibras fica totalmente fora da área visível (x 305–447)."
+    },
+    {
+      "selector": ".lista-opcoes",
+      "relatedSelectors": [
+        ".opcao-identificacao"
+      ],
+      "rule": "wcag:1.3.1",
+      "description": "As 4 opções de identificação são apresentadas visualmente como lista (componente br-list/br-item), mas são divs sem role=list/listitem nem ul/li, então a estrutura e a quantidade de itens não são expostas. Atribuição com confiança moderada: agrupamento percebido como lista sem semântica."
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.270 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:7ce551a68930e4d63b4666abb6917207cd55afb54e96db5c20c24b08445be5c2",
+    "instrumentVersion": "fluxo-1.2.0"
+  },
+  "cost": {
+    "startedAt": "2026-09-14T20:51:20.1576864Z",
+    "finishedAt": "2026-09-14T20:55:22.4395114Z",
+    "wallClockSeconds": 242.3,
+    "tokens": 847383,
+    "tokenUsage": {
+      "input": 546,
+      "cacheCreationInput": 55380,
+      "cacheReadInput": 775962,
+      "output": 15495
+    },
+    "totalCostUsd": 1.3345139999999998,
+    "turns": 27
+  }
+}
