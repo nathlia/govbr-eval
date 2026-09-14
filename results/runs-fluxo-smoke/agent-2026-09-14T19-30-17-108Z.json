@@ -1,0 +1,87 @@
+{
+  "timestamp": "2026-09-14T19:30:17.108Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "Page-wide conformance and accessibility assessment"
+  ],
+  "notes": "Initial page load and focus interaction on input#cpf. Accessibility scan with axe-core 4.12.1 shows 36 passes, 0 incomplete. No WCAG violations detected. Token and structure compliance checks identify 6 issues: 1 serious (structural), 1 moderate (design token), 4 minor (spacing tokens).",
+  "findings": [
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [],
+      "rule": "ds-structure-input-tag",
+      "description": "br-input component applied to <input> element; official examples use <div> wrapper. This affects component structure semantics and styling expectations."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2)",
+      "relatedSelectors": [],
+      "rule": "ds-token-color",
+      "description": "border-color rgb(222, 226, 230) / #dee2e6 does not match any design system token. Closest match: --gray-cool-10 (#dfe1e2, RGB distance 4.24). Breaks theming and visual identity consistency."
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)",
+      "relatedSelectors": [
+        "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)",
+        "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)",
+        "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)"
+      ],
+      "rule": "ds-token-spacing",
+      "description": "padding 13px falls outside design system scale (multiples of 4px). Same issue affects 4 br-item.opcao-identificacao elements. Expected values: 8px, 12px, 16px, 20px, etc."
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.270 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:7ce551a68930e4d63b4666abb6917207cd55afb54e96db5c20c24b08445be5c2",
+    "instrumentVersion": "fluxo-1.2.0",
+    "validatorVersion": "2.3.0"
+  },
+  "cost": {
+    "startedAt": "2026-09-14T19:28:57.9038313Z",
+    "finishedAt": "2026-09-14T19:30:26.5350405Z",
+    "wallClockSeconds": 88.6,
+    "tokens": 503796,
+    "tokenUsage": {
+      "input": 120,
+      "cacheCreationInput": 39647,
+      "cacheReadInput": 457597,
+      "output": 6432
+    },
+    "totalCostUsd": 0.15996170000000007,
+    "turns": 18,
+    "mcp": {
+      "runId": "2026-09-14T16-28-56-com-run1-e0956b10",
+      "telemetryFile": "pipeline/logs/2026-09-14T16-28-56-com-run1-e0956b10-mcp.ndjson",
+      "calls": 4,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 429,
+      "responseBytes": 65988,
+      "durationMs": 6493,
+      "byTool": {
+        "scan_page": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 352,
+          "responseBytes": 61506,
+          "durationMs": 6493
+        },
+        "get_finding_details": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 77,
+          "responseBytes": 4482,
+          "durationMs": 0
+        }
+      }
+    }
+  }
+}

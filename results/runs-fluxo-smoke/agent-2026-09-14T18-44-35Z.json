@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-09-14T18:44:35Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "http://localhost:3000/fluxo.html"
+  ],
+  "notes": "Avaliação de fluxo de login gov.br. Interações: preenchimento de campo CPF com 11 dígitos, clique em botão Continuar (sem mudança de estado visual). Navegação por link 'Login com seu banco' testada (saiu do escopo). Varredura determinística retornou 6 findings candidatos (F-001 a F-006): 1 moderate, 4 minor, 1 serious. Verificação de norma: todos rejeitados porque as regras não declaram norma nomeada (D-27). Escopo avaliado sem validação de resultado final de login ou mensagens de erro. Limitações: aplicação é simulador de fluxo; nenhuma validação de CPF; links navegam para fora ou retornam à mesma página.",
+  "findings": [],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.270 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:7ce551a68930e4d63b4666abb6917207cd55afb54e96db5c20c24b08445be5c2",
+    "instrumentVersion": "fluxo-1.1.0",
+    "validatorVersion": "2.3.0"
+  },
+  "cost": {
+    "startedAt": "2026-09-14T18:43:20.4694742Z",
+    "finishedAt": "2026-09-14T18:44:56.8336237Z",
+    "wallClockSeconds": 96.3,
+    "tokens": 840575,
+    "tokenUsage": {
+      "input": 178,
+      "cacheCreationInput": 55942,
+      "cacheReadInput": 777824,
+      "output": 6631
+    },
+    "totalCostUsd": 0.22299940000000001,
+    "turns": 21,
+    "mcp": {
+      "runId": "2026-09-14T15-43-19-com-run1-951e9899",
+      "telemetryFile": "pipeline/logs/2026-09-14T15-43-19-com-run1-951e9899-mcp.ndjson",
+      "calls": 4,
+      "errors": 0,
+      "cacheHits": 1,
+      "requestBytes": 1181,
+      "responseBytes": 60520,
+      "durationMs": 4955,
+      "byTool": {
+        "scan_page": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 1,
+          "requestBytes": 251,
+          "responseBytes": 59892,
+          "durationMs": 4955
+        },
+        "verify_finding": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 930,
+          "responseBytes": 628,
+          "durationMs": 0
+        }
+      }
+    }
+  }
+}

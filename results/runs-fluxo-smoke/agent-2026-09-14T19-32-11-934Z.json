@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-09-14T19:32:11.934Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://localhost:3000/fluxo.html",
+  "scope": [
+    "http://localhost:3000/fluxo.html"
+  ],
+  "notes": "Tested initial state with empty CPF field (validation error), then filled CPF field to test state changes. Examined form structure, label associations, error handling, keyboard navigation, icon accessibility, and heading hierarchy. Interacted with form submission to trigger validation.",
+  "findings": [
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        "p.mensagem-erro-cpf"
+      ],
+      "rule": "wcag:3.3.1",
+      "description": "Error message not programmatically associated with input field. Input lacks aria-describedby pointing to error message. Error message lacks role='alert' to announce it to screen readers."
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "description": "Input field does not update aria-invalid state when validation fails. When form is submitted without CPF, aria-invalid should be set to 'true' but remains null."
+    },
+    {
+      "selector": "p.mensagem-erro-cpf",
+      "relatedSelectors": [],
+      "rule": "wcag:3.3.4",
+      "description": "Error message persists on screen even after user enters valid input (tested with CPF value 12345678900). Error should be cleared or updated when user corrects the input."
+    },
+    {
+      "selector": "button.recurso-contraste",
+      "relatedSelectors": [
+        "button.recurso-libras"
+      ],
+      "rule": "wcag:4.1.2",
+      "description": "Toggle buttons for accessibility features lack aria-pressed attribute. These buttons change state but do not advertise their pressed/unpressed state to assistive technologies."
+    },
+    {
+      "selector": "section.painel-institucional",
+      "relatedSelectors": [],
+      "rule": "wcag:1.3.1",
+      "description": "Section labeled via aria-labelledby='titulo-institucional' which references an h1 element in a different section. Breaks semantic association between section and its label."
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.270 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:7ce551a68930e4d63b4666abb6917207cd55afb54e96db5c20c24b08445be5c2",
+    "instrumentVersion": "fluxo-1.2.0"
+  },
+  "cost": {
+    "startedAt": "2026-09-14T19:30:26.6104608Z",
+    "finishedAt": "2026-09-14T19:32:33.3653528Z",
+    "wallClockSeconds": 126.7,
+    "tokens": 630946,
+    "tokenUsage": {
+      "input": 180,
+      "cacheCreationInput": 29497,
+      "cacheReadInput": 592271,
+      "output": 8998
+    },
+    "totalCostUsd": 0.16602909999999999,
+    "turns": 22
+  }
+}
