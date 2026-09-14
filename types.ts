@@ -285,6 +285,24 @@ export interface AdjudicationRecord {
    */
   exposicao?: string;
   /**
+   * Ajuda que pode ter moldado o veredito, declarada mesmo sem proposta formal — ex.: definições
+   * explicadas, leitura confirmada, razão redigida a partir das palavras de quem julgou. Não muda a
+   * pontuação. Ausente junto com `proposta` = sem ajuda. Ver `docs/adjudicacao.md § O que o
+   * assistente pode fazer`.
+   */
+  apoio?: string;
+  /**
+   * O que o assistente propôs, gravado separado da decisão: só o rótulo dentro do crédito
+   * (`vocabulario`/`deteccao-correta`) e a unidade — a classe de efeito é sempre de quem julga.
+   * Quando `proposta.verdict` difere de `verdict`, a troca fica visível.
+   */
+  proposta?: {
+    por: "assistente";
+    verdict: "vocabulario" | "deteccao-correta";
+    unit?: { caseId: string; rule: RuleId };
+    em: string;
+  };
+  /**
    * Registro aposentado: a alegação existiu, mas deixou de ser sobra sob o instrumento e o
    * gabarito vigentes, e por isso não é mais julgável nem contada como pendente. NUNCA é apagada
    * — a aposentadoria é reversível em princípio, e o motivo viaja com ela. Um registro aposentado

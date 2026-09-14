@@ -91,11 +91,51 @@ como se fosse custaria a única revisora disponível. A regra prática:
 | situação | quem julga |
 |---|---|
 | alegação sobre elemento **sem spec** e fora das decisões discutidas | a autora, como revisora independente |
-| alegação sobre spec que ela **discutiu** (V-04, V-06, V-07) | outra pessoa; ou o veredito é dela com `exposicao` declarada no registro |
+| alegação sobre spec que ela **discutiu** (V-04, V-06, V-07, V-12) | a autora, com `exposicao` declarada no registro |
 | alegação sobre a tela ou o gabarito **como um todo** | nunca o assistente que os redigiu |
 
-Declarar a exposição é o que torna o veredito legível para a banca: um julgamento marcado
-"exposta a esta spec" vale mais que um julgamento silencioso de origem incerta.
+Não há outra pessoa disponível para revisar (registrado em 14/09), então a coluna "outra pessoa"
+deixou de existir: toda alegação sobre spec discutida é julgada pela autora com a exposição
+declarada. Declarar a exposição é o que torna o veredito legível para a banca: um julgamento
+marcado "exposta a esta spec" vale mais que um julgamento silencioso de origem incerta.
+
+### O que o assistente pode fazer — e o que não pode
+
+O assistente redigiu a tela e o gabarito e **conhece o braço** de cada alegação. Isso não o
+impede de ajudar; impede que ele decida o que move número. A divisão segue o **efeito** do
+veredito, porque é o efeito que muda a métrica:
+
+| etapa | quem | registro |
+|---|---|---|
+| **1. Pacote de evidência** — texto da alegação, medida na página viva, spec relacionada, texto da regra citada, por que o scorer não casou, tabela de vereditos. Neutro: sem braço, sem execução, sem recomendação. | assistente | — |
+| **2. Classe de efeito** — cobrar (`falso-positivo`, `indeterminado`), dívida (`lacuna-gabarito`), crédito (`vocabulario`/`deteccao-correta`), `duplicado` ou `composto`. | **só a autora**, depois de ler o pacote | `verdict`, `rationale` |
+| **3. Rótulo dentro do crédito e `unit`** — `vocabulario` ou `deteccao-correta`, e qual unidade. Não muda número no scorer de fluxo (os dois creditam sem `ruleVerifiedTP`). | assistente **propõe**, autora aprova ou troca | `proposta` |
+| **4. Redação da razão** a partir das palavras da autora | assistente pode redigir; autora confere | `apoio` |
+
+Três regras que fazem a divisão valer alguma coisa:
+
+1. **A autora lê a evidência antes de ver qualquer proposta.** Aprovar o que se viu primeiro é
+   ancoragem, não revisão.
+2. **A proposta fica gravada separada da decisão.** `proposta` guarda o que o assistente sugeriu;
+   `verdict` guarda o que a autora decidiu. Quando diferem, a diferença fica visível — e a taxa
+   de concordância vira dado relatável, não impressão.
+3. **Toda ajuda que possa ter moldado o veredito é declarada em `apoio`**, mesmo quando não houve
+   proposta formal (ex.: o assistente explicou as definições, ou confirmou uma leitura que a autora
+   já tinha nomeado). Um registro sem `apoio` e sem `proposta` afirma que não houve ajuda.
+
+```json
+{
+  "verdict": "vocabulario",
+  "unit": { "caseId": "E-890b25", "rule": "ds:token-spacing" },
+  "rationale": "…",
+  "proposta": { "por": "assistente", "verdict": "vocabulario", "unit": { "caseId": "E-890b25", "rule": "ds:token-spacing" }, "em": "2026-09-14" },
+  "apoio": "razão redigida pelo assistente a partir das palavras da autora",
+  "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito"
+}
+```
+
+O que o assistente **nunca** faz: escolher a classe de efeito, sugerir qual braço "deveria" ter
+acertado, ou redigir uma razão que a autora não tenha dado.
 
 ## O procedimento
 
