@@ -13,7 +13,7 @@
     "procedimento": "docs/adjudicacao.md",
     "gerar-pendentes": "npm run adjudicate -- --emit",
     "criado": "2026-08-31",
-    "adjudicacoes": 74,
+    "adjudicacoes": 79,
     "atualizado": "2026-09-14",
     "pendentes": 0,
     "revisao": "Vereditos propostos por análise de evidência (DOM/fonte do corpus + gabarito). Aguardam revisão humana: conferir `adjudicatedBy`.",
@@ -38,6 +38,26 @@
         "porque": "a alegação deixou de ser sobra: o gabarito passou a casá-la. A V-06 foi de `unico` para `todos` com as 8 instâncias medidas na página viva, e a borda #dee2e6 que este registro descreve virou unidade casada em vez de achado sem unidade. Não houve julgamento — o que mudou foi o gabarito, não o mérito.",
         "decisao": "D-31 (gabarito 1.2.0)"
       }
+    },
+    {
+      "id": "E-1f3d26:82bc4980",
+      "caseId": "E-1f3d26",
+      "finding": "Os quatro br-item da lista usam padding de 13px, fora da escala de espaçamento do DS (múltiplos de 4px). A regra do Item exige padding computado na escala oficial. Achados determinísticos F-002 a F-005 (ds-token-spacing).",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-14T20-43-26-982Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "unit": {
+        "caseId": "E-1f3d26",
+        "rule": "ds:token-spacing"
+      },
+      "rationale": "Descreve exatamente a unidade da V-01 neste elemento — padding computado de 13px, fora da escala oficial —, conferido na página. Citou govbr-3.7.0-component-item-a10751502b98 (padding do Item conforme os fundamentos de espaçamento), norma real e pertinente que o gabarito não liga a ds:token-spacing. Corrigir o padding da V-01 corrige a alegação: defeito de vocabulário, não de detecção nem unidade nova.",
+      "apoio": "leitura das definições de veredito explicada pelo assistente, sem indicação de braço",
+      "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
+      "adjudicatedAt": "2026-09-14"
     },
     {
       "id": "E-21e71a:58b429ed",
@@ -261,6 +281,66 @@
       "adjudicatedAt": "2026-09-14"
     },
     {
+      "id": "E-890b25:6b77148c",
+      "caseId": "E-890b25",
+      "finding": "Os quatro br-item da lista usam padding de 13px, fora da escala de espaçamento do DS (múltiplos de 4px). A regra do Item exige padding computado na escala oficial. Achados determinísticos F-002 a F-005 (ds-token-spacing).",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-14T20-43-26-982Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "unit": {
+        "caseId": "E-890b25",
+        "rule": "ds:token-spacing"
+      },
+      "rationale": "Descreve exatamente a unidade da V-01 neste elemento — padding computado de 13px, fora da escala oficial —, conferido na página. Citou govbr-3.7.0-component-item-a10751502b98 (padding do Item conforme os fundamentos de espaçamento), norma real e pertinente que o gabarito não liga a ds:token-spacing. Corrigir o padding da V-01 corrige a alegação: defeito de vocabulário, não de detecção nem unidade nova.",
+      "apoio": "leitura das definições de veredito explicada pelo assistente, sem indicação de braço",
+      "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
+      "adjudicatedAt": "2026-09-14"
+    },
+    {
+      "id": "E-8ce143:6147c110",
+      "caseId": "E-8ce143",
+      "finding": "Com viewport de 320px CSS, a .barra-recursos não quebra linha (vai de 93 a 447px) e força rolagem horizontal (scrollWidth 447 > 305). O botão VLibras fica totalmente fora da área visível (x 305–447).",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-14T20-55-01-319Z.json",
+          "arm": "sem-oraculo"
+        }
+      ],
+      "verdict": "deteccao-correta",
+      "unit": {
+        "caseId": "E-ee9ba1",
+        "rule": "govbr-3.7.0-accessibility-global-1c3bd2a1c1a7"
+      },
+      "rationale": "Descreve o defeito que a V-12 cataloga — a barra de recursos não quebra linha a 320px e deixa o VLibras fora da viewport —, ancorado no botão e citando wcag:1.4.10 em vez da barra e da regra de uso em dispositivos móveis. Corrigir a quebra da barra corrige o transbordamento do botão: é um defeito só, não uma unidade nova.",
+      "exposicao": "V-12 (D-35)",
+      "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
+      "adjudicatedAt": "2026-09-14"
+    },
+    {
+      "id": "E-c871f1:7cb2e4ae",
+      "caseId": "E-c871f1",
+      "finding": "Os quatro br-item da lista usam padding de 13px, fora da escala de espaçamento do DS (múltiplos de 4px). A regra do Item exige padding computado na escala oficial. Achados determinísticos F-002 a F-005 (ds-token-spacing).",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-14T20-43-26-982Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "unit": {
+        "caseId": "E-c871f1",
+        "rule": "ds:token-spacing"
+      },
+      "rationale": "Descreve exatamente a unidade da V-01 neste elemento — padding computado de 13px, fora da escala oficial —, conferido na página. Citou govbr-3.7.0-component-item-a10751502b98 (padding do Item conforme os fundamentos de espaçamento), norma real e pertinente que o gabarito não liga a ds:token-spacing. Corrigir o padding da V-01 corrige a alegação: defeito de vocabulário, não de detecção nem unidade nova.",
+      "apoio": "leitura das definições de veredito explicada pelo assistente, sem indicação de braço",
+      "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
+      "adjudicatedAt": "2026-09-14"
+    },
+    {
       "id": "E-e5a2f7:0ac53e84",
       "caseId": "E-e5a2f7",
       "finding": "A cor observada é #808080, valor que não corresponde a token registrado do gov.br DS; o oráculo indica como mais próximo --gray-40 (#888888).",
@@ -295,6 +375,26 @@
         "porque": "a execução de origem não é pontuável sob `fluxo-1.1.0` — legado/não rotulada, recusada pelo scorer (D-29). A alegação nunca pode entrar em número algum sem que a execução volte a ser pontuável, então mantê-la como pendente cobrava um julgamento que não teria onde ser aplicado. Origem: agent-2026-09-02T02-29-59-458Z.json",
         "decisao": "D-29 (recusa de re-score de execução incompatível)"
       }
+    },
+    {
+      "id": "E-e79d86:6c47259f",
+      "caseId": "E-e79d86",
+      "finding": "Os quatro br-item da lista usam padding de 13px, fora da escala de espaçamento do DS (múltiplos de 4px). A regra do Item exige padding computado na escala oficial. Achados determinísticos F-002 a F-005 (ds-token-spacing).",
+      "seenIn": [
+        {
+          "run": "agent-2026-09-14T20-43-26-982Z.json",
+          "arm": "com-oraculo"
+        }
+      ],
+      "verdict": "vocabulario",
+      "unit": {
+        "caseId": "E-e79d86",
+        "rule": "ds:token-spacing"
+      },
+      "rationale": "Descreve exatamente a unidade da V-01 neste elemento — padding computado de 13px, fora da escala oficial —, conferido na página. Citou govbr-3.7.0-component-item-a10751502b98 (padding do Item conforme os fundamentos de espaçamento), norma real e pertinente que o gabarito não liga a ds:token-spacing. Corrigir o padding da V-01 corrige a alegação: defeito de vocabulário, não de detecção nem unidade nova.",
+      "apoio": "leitura das definições de veredito explicada pelo assistente, sem indicação de braço",
+      "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
+      "adjudicatedAt": "2026-09-14"
     },
     {
       "id": "E-ee9ba1:74ed1b06",
