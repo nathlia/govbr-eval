@@ -479,16 +479,25 @@ $runIndex = 0
       "Avalie o corpus completo em $CorpusUrl e salve no endpoint definido pelo protocolo."
     }
 
-    $prompt = if ($Provider -eq "codex") {
-      $protocolText + "`n`n--- INVOCACAO DESTA EXECUCAO ---`n" + $invocation
-    } elseif ($IsFluxo) {
-      "/evaluate-screen $invocation"
-    } else {
-      "/evaluate-all $invocation"
-    }
+    # D-36: os dois clientes recebem o protocolo do mesmo jeito — o texto no prompt, idêntico ao que
+    # entra no hash. O Claude Code lia /evaluate-screen partindo de F:\Dev Nath\TCC e, com isso,
+    # herdava a raiz do TCC: arquivos gravados ali por execuções anteriores (inclusive do outro
+    # braço), additionalDirectories das configurações do usuário e WebSearch/WebFetch liberados no
+    # settings.local.json do projeto.
+    $prompt = $protocolText + "`n`n--- INVOCACAO DESTA EXECUCAO ---`n" + $invocation
 
+    # Raiz descartável por execução, nos dois clientes. O Playwright MCP grava snapshots e arquivos
+    # de browser_evaluate no diretório de trabalho, então nada que uma execução escreve alcança a
+    # seguinte nem o outro braço.
+    $isolatedRoot = Join-Path ([System.IO.Path]::GetTempPath()) "govbr-eval-$runId"
+    New-Item -ItemType Directory -Path $isolatedRoot -Force | Out-Null
+
+    # --restricted ignora settings de usuário, projeto e local (só --settings vale), confina as
+    # ferramentas de arquivo ao diretório de trabalho e remove shell e WebFetch. A transcrição da
+    # sessão continua gravada: é a única trilha das chamadas de ferramenta (ex.: browser_resize).
     $claudeArgs = @(
       "-p", $prompt,
+      "--restricted",
       "--strict-mcp-config",
       "--mcp-config", $effectiveMcpConfig,
       "--settings", $settingsFile,
@@ -498,11 +507,8 @@ $runIndex = 0
       "--permission-mode", "dontAsk"
     )
 
-    $isolatedRoot = $null
     $clientArgs = $claudeArgs
     if ($Provider -eq "codex") {
-      $isolatedRoot = Join-Path ([System.IO.Path]::GetTempPath()) "govbr-eval-$runId"
-      New-Item -ItemType Directory -Path $isolatedRoot -Force | Out-Null
       $clientArgs = @(
         "exec", "--ephemeral", "--json", "--ignore-user-config", "--ignore-rules",
         "--skip-git-repo-check", "--sandbox", "read-only", "--color", "never",
@@ -515,7 +521,7 @@ $runIndex = 0
       ) + $codexMcpArgs + @($prompt)
     }
 
-    Push-Location $(if ($Provider -eq "codex") { $isolatedRoot } else { $TccRoot })
+    Push-Location $isolatedRoot
     $previousValidatorRunId = $env:GOVBR_VALIDATOR_RUN_ID
     $previousTelemetryFile = $env:GOVBR_VALIDATOR_TELEMETRY_FILE
     try {

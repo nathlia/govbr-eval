@@ -52,9 +52,20 @@ Parâmetros: `-Runs` (1–10) · `-Arm` (`com` | `sem` | `ambos`) · `-Provider`
 `-PreflightOnly`.
 
 No provider `codex`, o runner localiza primeiro o comando no `PATH` e depois o executável incluído
-no app desktop. Ele exige um login válido, desativa shell, busca web, regras e configuração pessoal,
-injeta o protocolo no prompt e usa um diretório temporário vazio como raiz. Assim o modelo recebe
-somente o protocolo, a invocação e os MCPs desta condição — não o repositório.
+no app desktop. Ele exige um login válido e desativa shell, busca web, regras e configuração pessoal.
+
+**Nos dois providers** (D-36), o runner injeta o protocolo no prompt e usa um diretório temporário
+vazio, descartado ao final, como raiz de cada execução. No `claude`, a execução roda com
+`--restricted`: as configurações de usuário, projeto e local são ignoradas (só `settings-run.json`
+vale), as ferramentas de arquivo ficam confinadas à raiz temporária, e shell e WebFetch saem.
+Assim o modelo recebe somente o protocolo, a invocação e os MCPs desta condição — não o
+repositório, nem o que uma execução anterior gravou em disco.
+
+Até o `fluxo-1.1.0` o `claude` partia de `F:\Dev Nath\TCC`. Ali o Playwright MCP deixava os
+arquivos de cada execução (`final-findings.json`, snapshots em `.playwright-mcp/`), legíveis pela
+seguinte e pelo outro braço; e o cliente herdava WebSearch/WebFetch do `settings.local.json` do
+projeto e o TCC inteiro pelo `additionalDirectories` do usuário. O smoke pareado de 14/09 mostrou
+os arquivos; uma sonda confirmou que a configuração nova nega cada um desses caminhos.
 
 O script recusa a partida se o Node for < 20, se o oráculo não estiver compilado ou se o corpus
 não responder — falhas que hoje só aparecem no meio da execução.

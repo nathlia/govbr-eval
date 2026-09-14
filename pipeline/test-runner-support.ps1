@@ -21,14 +21,33 @@ foreach ($contract in @(
   'Set-JsonProperty $veredito.config "reasoningEffort" $ReasoningEffort',
   'Set-JsonProperty $veredito.config "instrumentVersion" $InstrumentVersion',
   'model_reasoning_effort=',
-  '"--effort", $ReasoningEffort'
+  '"--effort", $ReasoningEffort',
+  # D-36: isolamento da execução — raiz descartável, modo restrito, protocolo no prompt.
+  '"--restricted"',
+  'Push-Location $isolatedRoot',
+  '$prompt = $protocolText + '
 )) {
   if (-not $runnerText.Contains($contract)) { throw "Missing runner metadata contract: $contract" }
+}
+if ($runnerText.Contains('$TccRoot })')) {
+  throw "A run must never start from the TCC root (D-36): files from earlier runs are readable there."
 }
 
 $settings = Get-Content -LiteralPath (Join-Path $PSScriptRoot "settings-run.json") -Raw | ConvertFrom-Json
 if ($settings.permissions.allow -notcontains "mcp__playwright__browser_resize") {
   throw "The scored-run permission set must allow browser_resize when the protocol measures reflow."
+}
+foreach ($denied in @(
+  "WebSearch", "WebFetch", "Bash", "PowerShell", "Read(//f/Dev Nath/TCC/**)",
+  # Nome nu retira a ferramenta do contexto: o Claude vê a mesma superfície Playwright que o Codex.
+  "mcp__playwright__browser_run_code", "mcp__playwright__browser_fill_form"
+)) {
+  if ($settings.permissions.deny -notcontains $denied) { throw "The scored-run permission set must deny $denied (D-36)." }
+}
+foreach ($rule in @($settings.permissions.allow) + @($settings.permissions.deny)) {
+  if ($rule -match '^Read\((?!//|~/)') {
+    throw "Relative Read rule '$rule' anchors at the temporary run root and protects nothing (D-36)."
+  }
 }
 
 $config = [pscustomobject]@{
