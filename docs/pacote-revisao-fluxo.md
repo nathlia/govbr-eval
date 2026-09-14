@@ -5,7 +5,7 @@
 
 - **instrumento:** `fluxo-1.1.0` · **gabarito:** `1.4.0`
 - **execução:** agent-2026-09-02T06-21-31-820Z.json · claude-opus-5
-- **unidades:** 22 a partir de 9 specs · **sobras pendentes:** 5
+- **unidades:** 22 a partir de 9 specs · **sobras pendentes:** 0
 
 **Quem julga.** A tela e o gabarito foram redigidos pelo ASSISTENTE, sob direção da
 autora — é o assistente que a regra do 11.9 desqualifica, não ela. A autora nunca
@@ -46,8 +46,8 @@ Carimbe também `adjudicatedBy` e `adjudicatedAt` em cada registro julgado, e
 |---|---|---|---|---|
 | **V-01** | `.opcao-identificacao` ×4 | `ds:token-spacing` | sempre | sim |
 | **V-02** | `#cpf` ×1 | `wcag:1.3.1` · `wcag:3.3.2` · `emag:6.2` | sempre | sim |
-| **V-03a** | `#cpf` ×1 | `wcag:3.3.1` | sempre | **não** |
-| **V-03b** | `.mensagem-erro-cpf` ×1 | `wcag:4.1.3` · `emag:6.6` | apos-submit-vazio (cond.) | **não** |
+| **V-03a** | `#cpf` ×1 | `wcag:3.3.1` | sempre | sim |
+| **V-03b** | `.mensagem-erro-cpf` ×1 | `wcag:4.1.3` · `emag:6.6` | apos-submit-vazio (cond.) | sim |
 | **V-04** | `.lista-opcoes, .lista-opcoes > .br-item` ×1 | `wcag:1.3.1` · `ds:item-content` | sempre | **não** |
 | **V-05** | `.link-opcao` ×4 | `ds:token-focus` · `wcag:2.4.7` · `emag:4.4` | sempre | sim |
 | **V-06** | `.barra-superior, .painel-institucional, .cartao-identificacao, .lista-opcoes, .opcao-identificacao` ×8 | `ds:token-color` | sempre | sim |
@@ -56,95 +56,7 @@ Carimbe também `adjudicatedBy` e `adjudicatedAt` em cada registro julgado, e
 
 ---
 
-## As 5 alegações pendentes
-
-### 1. `E-ee9ba1:74ed1b06`
-
-- **elemento:** `.barra-recursos` — <div> "Alto Contraste VLibras"
-- **regras citadas:** `emag:1.5`
-
-> Não há âncora para pular direto ao conteúdo principal. A barra de acessibilidade traz apenas 'Alto Contraste' e 'VLibras'; a regra determina que a barra contenha os links de salto e que o primeiro leve ao conteúdo principal. Nenhum dos sete links da página aponta para um fragmento — todos têm href='/fluxo' — e o <main> não tem id que sirva de destino. Confirmado também pela tabulação: o primeiro ponto de parada é a marca gov.br, e percorrer a página exige passar por todos os controles do cabeçalho.
-
-**Nenhuma spec do gabarito ancora neste elemento.** Se a alegação for verdadeira na
-página, é `lacuna-gabarito`; se não for, `falso-positivo`.
-
-```json
-{ "id": "E-ee9ba1:74ed1b06", "verdict": "", "rationale": "" }
-```
-
----
-
-### 2. `E-7a5432:8ebd00f3`
-
-- **elemento:** `#cpf` — <input#cpf> "Digite seu CPF"
-- **regras citadas:** `emag:6.6`
-
-> No estado de erro a mensagem não é identificada programaticamente. Ao submeter o formulário vazio surge <p class="mensagem-erro-cpf">Informe um CPF para continuar.</p>, mas o campo não recebe aria-invalid='true' nem aria-describedby, o parágrafo não tem id que permitisse a associação, e não existe nenhum aria-live, role='alert' ou role='status' no documento inteiro. O foco permanece no botão Continuar. A regra exige texto no DOM (atendido), ligação por aria-describedby (ausente) e aria-invalid no campo (ausente), então quem usa leitor de tela não é informado do erro nem do campo que o causou. Verificado pelo oráculo (verify_finding: confirmed).
-
-**Specs ancoradas neste elemento** — candidatas a `unit`:
-
-- **V-02** `#cpf` · `wcag:1.3.1` · `wcag:3.3.2` · `emag:6.2` · **já casada** → se for esta, `duplicado`
-  - o campo de CPF tem texto de apoio visível ("Digite seu CPF para criar ou acessar sua conta gov.br") que não está associado ao campo por aria-describedby. Regra CONDICIONAL: só existe porque há texto de apoio — um campo s
-- **V-03a** `#cpf` · `wcag:3.3.1` · não casada → `vocabulario` ou `deteccao-correta` cabem
-  - o campo de CPF não identifica programaticamente o estado de erro (sem aria-invalid e sem associação estável por aria-describedby). Esta unidade existe em todo estado e ancora no controle que o usuário opera.
-
-```json
-{ "id": "E-7a5432:8ebd00f3", "verdict": "", "rationale": "" }
-```
-
----
-
-### 3. `E-7a5432:df14769a`
-
-- **elemento:** `#cpf` — <input#cpf> "Digite seu CPF"
-- **regras citadas:** `emag:6.3`
-
-> Campo obrigatório sinalizado só programaticamente. O input traz aria-required='true', mas não há nenhuma indicação visual de obrigatoriedade: o texto inteiro do formulário é 'CPF' e 'Continuar', sem asterisco com legenda e sem a palavra 'obrigatório'. A regra exige as duas formas de indicação simultaneamente; aqui falta a visual, de modo que quem vê a tela não sabe que o campo é exigido antes de tentar submeter e receber o erro.
-
-**Specs ancoradas neste elemento** — candidatas a `unit`:
-
-- **V-02** `#cpf` · `wcag:1.3.1` · `wcag:3.3.2` · `emag:6.2` · **já casada** → se for esta, `duplicado`
-  - o campo de CPF tem texto de apoio visível ("Digite seu CPF para criar ou acessar sua conta gov.br") que não está associado ao campo por aria-describedby. Regra CONDICIONAL: só existe porque há texto de apoio — um campo s
-- **V-03a** `#cpf` · `wcag:3.3.1` · não casada → `vocabulario` ou `deteccao-correta` cabem
-  - o campo de CPF não identifica programaticamente o estado de erro (sem aria-invalid e sem associação estável por aria-describedby). Esta unidade existe em todo estado e ancora no controle que o usuário opera.
-
-```json
-{ "id": "E-7a5432:df14769a", "verdict": "", "rationale": "" }
-```
-
----
-
-### 4. `E-8135f3:e032d658`
-
-- **elemento:** `.selo-conta` — <span> "SUA CONTA SERÁ PRATA"
-- **regras citadas:** `ds:token-font-size`
-
-> O selo 'SUA CONTA SERÁ PRATA' usa font-size 11px, fora da escala tipográfica do DS (valores vizinhos na escala: 11.662px e 9.716px). O contraste do selo foi conferido à parte e passa (branco sobre #168821, 4.59:1), então a falha é só de token.
-
-**Nenhuma spec do gabarito ancora neste elemento.** Se a alegação for verdadeira na
-página, é `lacuna-gabarito`; se não for, `falso-positivo`.
-
-```json
-{ "id": "E-8135f3:e032d658", "verdict": "", "rationale": "" }
-```
-
----
-
-### 5. `E-ee9ba1:fce4c972`
-
-- **elemento:** `.barra-recursos` — <div> "Alto Contraste VLibras"
-- **regras citadas:** `govbr-3.7.0-accessibility-global-1c3bd2a1c1a7`
-
-> A barra de recursos deixa de ser utilizável em viewport móvel. A 320px de largura ela não quebra linha: seu retângulo termina em x=447 enquanto o clientWidth é 305, o documento passa a ter scrollWidth 447 e o botão VLibras fica fora da viewport, alcançável só com rolagem horizontal da página inteira. Foi o único bloco a ultrapassar a borda direita na medição de todos os elementos, e a captura de tela em 320x720 confirma o corte. Verificado pelo oráculo com reinspeção ao vivo (verify_finding: confirmed).
-
-**Nenhuma spec do gabarito ancora neste elemento.** Se a alegação for verdadeira na
-página, é `lacuna-gabarito`; se não for, `falso-positivo`.
-
-```json
-{ "id": "E-ee9ba1:fce4c972", "verdict": "", "rationale": "" }
-```
-
----
+## As 0 alegações pendentes
 
 ## Depois de julgar
 

@@ -13,9 +13,9 @@
     "procedimento": "docs/adjudicacao.md",
     "gerar-pendentes": "npm run adjudicate -- --emit",
     "criado": "2026-08-31",
-    "adjudicacoes": 69,
+    "adjudicacoes": 74,
     "atualizado": "2026-09-14",
-    "pendentes": 5,
+    "pendentes": 0,
     "revisao": "Vereditos propostos por análise de evidência (DOM/fonte do corpus + gabarito). Aguardam revisão humana: conferir `adjudicatedBy`.",
     "aposentados": 10,
     "aposentadoria": "Registro que deixou de ser sobra sob o instrumento e o gabarito vigentes: sai da contagem de pendentes, nunca do arquivo, e carrega o motivo. Não é veredito — ninguém julgou. Reversível: se a execução voltar a ser pontuável ou o gabarito recuar, basta remover `retirada`."
@@ -151,8 +151,28 @@
           "arm": "com-oraculo"
         }
       ],
-      "verdict": null,
-      "rationale": ""
+      "verdict": "composto",
+      "rationale": "A alegação afirma dois defeitos que não se resolvem com a mesma correção: pôr aria-invalid e aria-describedby no #cpf não faz a mensagem ser anunciada, e pôr role=\"alert\" na mensagem não faz o campo reportar-se inválido. Duas correções, duas unidades — e ambas estavam sem casar nesta execução.",
+      "components": [
+        {
+          "verdict": "vocabulario",
+          "unit": {
+            "caseId": "E-7a5432",
+            "rule": "wcag:3.3.1"
+          },
+          "rationale": "O campo não identifica programaticamente o estado de erro (sem aria-invalid, sem aria-describedby, e o <p> sequer tem id que permitisse a associação) — é a V-03a, no mesmo elemento que a alegação ancora. Citou emag:6.6, que mapeia para wcag:3.3.1 mas não é o identificador que o gabarito carrega nessa unidade."
+        },
+        {
+          "verdict": "deteccao-correta",
+          "unit": {
+            "caseId": "E-46cec4",
+            "rule": "emag:6.6"
+          },
+          "rationale": "A ausência de aria-live/role=alert/role=status em todo o documento é a V-03b, e emag:6.6 É um dos identificadores dessa unidade — a citação está certa. O que não está é a âncora: a V-03b ancora na .mensagem-erro-cpf e a alegação ancorou no #cpf. Credita detecção, não ruleVerifiedTP."
+        }
+      ],
+      "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
+      "adjudicatedAt": "2026-09-14"
     },
     {
       "id": "E-7a5432:8f093a39",
@@ -182,8 +202,11 @@
           "arm": "com-oraculo"
         }
       ],
-      "verdict": null,
-      "rationale": ""
+      "verdict": "lacuna-gabarito",
+      "rationale": "É outro defeito. O campo obrigatório sem indicação visual não é a V-02: a V-02 é o texto de apoio que não está associado ao campo por aria-describedby. As duas compartilham o critério wcag:3.3.2, e só por isso caem na mesma unidade (elemento × regra) — mas a correção de uma não é a correção da outra, e o gabarito nunca catalogou esta. Verdadeira na página: aria-required=\"true\" presente, e o texto visível inteiro do formulário é \"CPF Continuar\", sem asterisco com legenda e sem a palavra obrigatório.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
+      "adjudicatedAt": "2026-09-14"
     },
     {
       "id": "E-8135f3:7d5c14bd",
@@ -231,8 +254,11 @@
           "arm": "com-oraculo"
         }
       ],
-      "verdict": null,
-      "rationale": ""
+      "verdict": "falso-positivo",
+      "rationale": "A medição está certa — o selo computa 11px, entre os passos 9,716 e 11,662 da escala — mas a norma não sustenta afirmação binária sobre isso: a única regra da KB sobre tamanho de fonte é informativa, e foi por isso que o D-32 tirou ds:token-font-size do canal de achados (validator 2.2.0) e a V-07 do gabarito (1.3.0). A alegação existe porque o oráculo de 2.1.0, sob o qual esta execução foi coletada, ainda a afirmava. Fica cobrada, e a ressalva de número de transição do D-32 viaja com o resultado: a medida limpa é a execução nova sob 2.2.0, onde o desvio aparece como observação e esta alegação não existe.",
+      "exposicao": "V-07 (D-32)",
+      "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
+      "adjudicatedAt": "2026-09-14"
     },
     {
       "id": "E-e5a2f7:0ac53e84",
@@ -280,8 +306,11 @@
           "arm": "com-oraculo"
         }
       ],
-      "verdict": null,
-      "rationale": ""
+      "verdict": "lacuna-gabarito",
+      "rationale": "Verdadeira na página e nunca catalogada. As duas verificações do e-MAG 1.5 falham: nenhum dos 7 links aponta para fragmento (todos href=\"/fluxo\"), o <main> não tem id que sirva de destino (os únicos ids são root, titulo-institucional, titulo-identificacao e cpf), e o primeiro focável é a marca gov.br, não um link de salto. A .barra-recursos traz só Alto Contraste e VLibras. Nenhuma spec do gabarito ancora neste elemento — falha do gabarito, não do agente.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
+      "adjudicatedAt": "2026-09-14"
     },
     {
       "id": "E-ee9ba1:fce4c972",
@@ -293,8 +322,11 @@
           "arm": "com-oraculo"
         }
       ],
-      "verdict": null,
-      "rationale": ""
+      "verdict": "lacuna-gabarito",
+      "rationale": "Verdadeira na página e nunca catalogada. A 320px a .barra-recursos não quebra linha (flex-wrap: nowrap): termina em x=447 contra clientWidth 305, leva o scrollWidth do documento a 447 e deixa o botão VLibras inteiramente fora da viewport (left=305, right=447), alcançável só por rolagem horizontal da página. Foi o único bloco a estourar a borda direita. A regra citada é normativa de força `required` (severidade serious, estratégia responsive-viewport) e exige que o componente permaneça utilizável em viewport móvel. Nenhuma spec do gabarito ancora neste elemento — falha do gabarito, não do agente.",
+      "gabaritoStatus": "pendente",
+      "adjudicatedBy": "NF — autora do trabalho; não autora da tela nem do gabarito",
+      "adjudicatedAt": "2026-09-14"
     },
     {
       "id": "TC-B-03:1084e339",
