@@ -155,7 +155,7 @@ do verificador quando houver razão para mexer nele.
 
 | # | achado | efeito hoje | onde se paga |
 |---|---|---|---|
-| 1 | V-04 ancora só no contêiner; o defeito é relacional sobre 5 nós | leitura correta → **0 TP, 4 FP** | **em aberto** — 13.5 + instrumento |
+| 1 | V-04 ancora só no contêiner; o defeito é relacional sobre 5 nós | leitura correta → **0 TP, 4 FP** | **fechado pelo D-33**: scope `composicao` — 5 participantes, 1 unidade, irmãos absorvidos |
 | 2 | duas unidades `ds:token-font-size` (16px) fora do gabarito | — | **fechado pelo D-32**: a regra saiu do canal de achados; as duas não entram e V-07 sai |
 | 3 | tolerância de 0,5px não declarada | — | **prejudicado**: sem a regra, não há limiar a declarar |
 
@@ -163,5 +163,13 @@ Seis das sete specs `unico` estão corretas. O erro do V-06 não se repetiu na f
 — nenhuma outra spec conta uma instância onde a página tem N do mesmo defeito independente —, mas
 a V-04 tem o mesmo sintoma por outra causa, e é a mais grave das três, porque zera o crédito.
 
-**Estado após o D-32:** achados 2 e 3 fechados; o achado 1 (V-04) segue aberto e é o que resta do
-item 13.5. Gabarito em 1.3.0, 22 unidades a partir de 9 specs, validator 9/22.
+**Estado após o D-33 (09/09):** os três achados estão fechados e o item 13.5 encerra. O achado 1
+levou ao terceiro escopo do gabarito, `composicao`: a âncora da V-04 nomeia os cinco participantes,
+a spec segue valendo uma unidade, e qualquer participante ancora o casamento — a recomendação desta
+auditoria, implementada como estava escrita. Gabarito em **1.4.0**, **22 unidades** a partir de 9
+specs (contagem inalterada), validator 9/22, axe 0/22, eslint 0, todas remedidas e não herdadas.
+
+> **Nota sobre o AC do 13.5.** O critério pedia que cada spec `unico` fosse "justificadamente
+> local, ou virasse `todos` com contagem medida". A auditoria mostrou que faltava uma terceira
+> saída: um defeito pode ser compartilhado por N elementos e ainda assim valer **uma** unidade,
+> quando um único conserto o repara. `todos` teria consertado o casamento premiando a enumeração.

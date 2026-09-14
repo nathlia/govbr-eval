@@ -68,7 +68,11 @@ function printAnchors(gt: FlowGroundTruth, res: Resolution, units: FlowUnit[]): 
   console.log(`\nÂncoras do gabarito resolvidas contra ${res.url}\n`);
   for (const spec of gt.violations) {
     const keys = resolveWithExcept(res, spec.anchor, spec.except);
-    const declared = spec.expectedCount != null ? ` (declarado: ${spec.expectedCount})` : "";
+    // Em `composicao` o número de elementos NÃO é o número de unidades (D-33): imprimir os dois
+    // separados é o ponto — foi a conflação dos dois que a spec corrige.
+    const declared = spec.scope === "composicao"
+      ? ` (declarado: ${spec.participantCount ?? "?"} participante(s) → 1 unidade)`
+      : spec.expectedCount != null ? ` (declarado: ${spec.expectedCount})` : "";
     const state = `${spec.state ?? "sempre"}${spec.conditional ? " (condicional)" : ""}`;
     console.log(`  ${spec.id}  ${spec.anchor}${spec.except ? `  except ${spec.except}` : ""}`);
     console.log(`     scope ${spec.scope} → ${keys.length} elemento(s)${declared} · estado: ${state} · regras: ${spec.rules.join(", ")}`);
@@ -175,7 +179,8 @@ function printRun(run: LoadedRun, s: FlowScore): void {
   console.log(
     `   famílias: ${families.detected}/${families.total} detectadas · ${families.complete}/${families.total} completas` +
     ` · grounding explícito ${pct(grounding)} · detecção sem grounding ${detectedWithoutGrounding}` +
-    ` · âncora relacional ${related}`,
+    ` · âncora relacional ${related}` +
+    (s.absorbed.length ? ` · irmãos absorvidos ${s.absorbed.length} (D-33)` : ""),
   );
   if (verbose) {
     for (const o of s.outcomes.filter(o => !o.matched)) {
@@ -183,6 +188,10 @@ function printRun(run: LoadedRun, s: FlowScore): void {
     }
     for (const l of s.leftovers) {
       console.log(`     ${l.verdict ?? "sobra"}  ${l.elementId} ${l.selector} — ${l.description.slice(0, 90)}`);
+    }
+    // Nem crédito nem cobrança — mas visível, para que "absorvido" nunca vire "desaparecido".
+    for (const a of s.absorbed) {
+      console.log(`     absorvido  ${a.elementId} ${a.selector} — ${a.description.slice(0, 90)}`);
     }
   }
 }

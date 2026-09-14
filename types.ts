@@ -277,6 +277,13 @@ export interface AdjudicationRecord {
   rationale?: string;
   adjudicatedBy?: string;
   adjudicatedAt?: string;
+  /**
+   * Exposição declarada de quem julgou (D-33): a spec do gabarito que essa pessoa já tinha
+   * discutido antes de julgar — ex.: `"V-07 (D-32)"`. Não invalida o veredito e não muda a
+   * pontuação; torna legível para a banca de onde vem o julgamento. Ausente = sem exposição
+   * conhecida. Ver `docs/adjudicacao.md § Quem pode julgar`.
+   */
+  exposicao?: string;
   /** For `lacuna-gabarito`: has the unit been written into ground-truth.json yet? */
   gabaritoStatus?: "pendente" | "incorporada";
 }
@@ -306,15 +313,29 @@ export interface FlowViolationSpec {
   /** Elementos a subtrair da resolução do `anchor`. */
   except?: string;
   /**
-   * "unico"  — deve resolver para exatamente um elemento;
-   * "todos"  — vira uma unidade por elemento resolvido (a violação compartilhada do D-23).
+   * "unico"      — deve resolver para exatamente um elemento;
+   * "todos"      — vira uma unidade por elemento resolvido (a violação compartilhada do D-23);
+   * "composicao" — o `anchor` resolve para TODOS os participantes do defeito, e a spec vale UMA
+   *                unidade (D-33). É a ponta do gabarito do que o D-29 resolveu na ponta do
+   *                achado: aqui o número de elementos resolvidos deixa de ser o número de
+   *                unidades. Use quando o defeito é propriedade do conjunto e um único conserto
+   *                o repara — a semântica de lista ausente do V-04 —, nunca quando cada elemento
+   *                carrega o defeito por si (aí é `todos`, e a enumeração é o que se cobra).
    */
-  scope: "unico" | "todos";
+  scope: "unico" | "todos" | "composicao";
   /**
-   * Quantas instâncias o gabarito afirma existir. Quando declarado e a página discorda, a
-   * pontuação PARA em vez de medir — é o guarda contra editar a tela e esquecer o gabarito (D-06).
+   * Quantas UNIDADES a spec vale. Em `unico`/`todos` é também o número de elementos resolvidos, e
+   * quando a página discorda a pontuação PARA em vez de medir — é o guarda contra editar a tela e
+   * esquecer o gabarito (D-06). Em `composicao` vale sempre 1, e quem responde pela contagem de
+   * elementos é `participantCount`.
    */
   expectedCount?: number;
+  /**
+   * Só em `composicao`: quantos elementos o gabarito afirma participarem do defeito. Medido na
+   * página viva, nunca deduzido; se a página discordar, a pontuação para pelo mesmo motivo que
+   * `expectedCount` (D-06).
+   */
+  participantCount?: number;
   /** Estado observável em que a unidade deve ser alcançada (ex.: `sempre`, `apos-submit-vazio`). */
   state?: string;
   /** A unidade só existe no estado declarado; nunca é presumida no primeiro paint. */

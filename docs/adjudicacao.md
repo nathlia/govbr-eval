@@ -73,6 +73,30 @@ vereditos simples.
 O equilíbrio de descoberta lê as lacunas dos **efeitos**, não do veredito de topo: uma lacuna
 dentro de um `composto` conta no viés de pooling como qualquer outra.
 
+## Quem pode julgar
+
+O princípio é que **quem escreveu a tela ou o gabarito não escreve o veredito sobre eles** — quem
+sabe onde o defeito foi plantado não está julgando a alegação, está conferindo um gabarito que já
+tem na cabeça.
+
+Só que o princípio estava sendo lido ao contrário, e vale escrever quem é quem. A tela
+`/fluxo.html` e o `ground-truth-fluxo.json` **foram redigidos pelo assistente**, sob direção da
+autora. A autora **não enumerou os defeitos injetados** e não tem a lista: pela regra, a parte
+desqualificada é o assistente, não ela.
+
+O que ela tem é **exposição pontual**, spec a spec, pelas decisões que discutiu — V-06 (D-31),
+V-07 e os dois `<h2>` de 16px (D-32), V-04 (D-33). Exposição não é contaminação geral, e tratá-la
+como se fosse custaria a única revisora disponível. A regra prática:
+
+| situação | quem julga |
+|---|---|
+| alegação sobre elemento **sem spec** e fora das decisões discutidas | a autora, como revisora independente |
+| alegação sobre spec que ela **discutiu** (V-04, V-06, V-07) | outra pessoa; ou o veredito é dela com `exposicao` declarada no registro |
+| alegação sobre a tela ou o gabarito **como um todo** | nunca o assistente que os redigiu |
+
+Declarar a exposição é o que torna o veredito legível para a banca: um julgamento marcado
+"exposta a esta spec" vale mais que um julgamento silencioso de origem incerta.
+
 ## O procedimento
 
 1. **Semeie os stubs.** `npm run adjudicate -- --emit` escreve um registro com `verdict: null`

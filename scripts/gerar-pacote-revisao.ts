@@ -78,6 +78,14 @@ async function main(): Promise<void> {
   L.push(`- **execução:** ${run.file} · ${run.data.model ?? "—"}`);
   L.push(`- **unidades:** ${units.length} a partir de ${gt.violations.length} specs · **sobras pendentes:** ${pendentes.length}`);
   L.push("");
+  L.push("**Quem julga.** A tela e o gabarito foram redigidos pelo ASSISTENTE, sob direção da");
+  L.push("autora — é o assistente que a regra do 11.9 desqualifica, não ela. A autora nunca");
+  L.push("enumerou os defeitos injetados; o que ela tem é exposição pontual às specs que discutiu");
+  L.push("nas decisões (V-04 no D-33, V-06 no D-31, V-07 no D-32). Alegação sobre elemento sem spec");
+  L.push("e fora dessas: ela julga como revisora independente. Alegação que toque uma spec exposta:");
+  L.push("outra pessoa julga, ou o registro carrega `exposicao` declarada. Ver");
+  L.push("`docs/adjudicacao.md § Quem pode julgar`.");
+  L.push("");
   L.push("**Sobre cegueira.** `--blind` esconde o braço, e esta medida tem um único braço: não há");
   L.push("braço a esconder, e dizê-lo é mais honesto que encenar o procedimento. A ordem abaixo é o");
   L.push("hash do achado, o que ao menos evita ordenar por conveniência. Quando existir o par");
@@ -100,7 +108,8 @@ async function main(): Promise<void> {
   L.push("cobrada uma única vez se qualquer parte resolver em cobrança. Ver `docs/adjudicacao.md`.");
   L.push("");
   L.push("Um veredito sem `rationale` não é aplicado: o scorer o ignora e segue cobrando o FP.");
-  L.push("Carimbe também `adjudicatedBy` e `adjudicatedAt` em cada registro julgado.");
+  L.push("Carimbe também `adjudicatedBy` e `adjudicatedAt` em cada registro julgado, e");
+  L.push("`exposicao` quando quem julga já tinha discutido aquela spec (ex.: `\"V-07 (D-32)\"`).");
   L.push("");
   L.push("## Referência — as specs do gabarito");
   L.push("");

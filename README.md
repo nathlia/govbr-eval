@@ -78,7 +78,7 @@ npm run lint:protocol · npm run lint:skills · npm run test:flow · npm run typ
 |---|---|---|---|
 | `TC-*` injected | case, and (element × rule) | `ground-truth.json` (52 cases) | `npm run score` |
 | Organic | case | `organic-ground-truth.json` (6) | `npm run score` (separate block) |
-| Flow | **(element × rule)**, anchored live | `ground-truth-fluxo.json` 1.3.0 (9 specs → 22 units) | `npm run score:fluxo` |
+| Flow | **(element × rule)**, anchored live | `ground-truth-fluxo.json` 1.4.0 (9 specs → 22 units) | `npm run score:fluxo` |
 | Real | — | none: adjudication is the instrument | — |
 
 Different instruments over different pages. Their numbers are **never summed or averaged** with
@@ -128,8 +128,14 @@ Procedure: `docs/adjudicacao.md`. The package a human adjudicator receives:
   gabarito means re-running the baselines for that suite.
 - `results/` and `reports/` are generated artifacts; commit them only when snapshotting an
   experiment for the thesis.
-- **The author of a screen or gabarito does not write the verdicts on it** — adjudication of the
-  flow suite goes to an independent reviewer (11.9).
+- **Whoever authored a screen or gabarito does not write the verdicts on it** (11.9). Naming the
+  party matters, because the rule was being read backwards: `/fluxo.html` and
+  `ground-truth-fluxo.json` were **drafted by the assistant**, under the author's direction. The
+  author never enumerated the injected defects and holds no list of them, so she is not the party
+  the rule disqualifies. What she has is **per-spec exposure**, from the decisions she argued:
+  V-06 (D-31), V-07 and the two 16px `<h2>` (D-32), V-04 (D-33). Where exposure exists, her
+  verdict is stamped with it or goes to someone else; where it does not, she reviews as
+  independently as any outside reader. See `docs/adjudicacao.md § Quem pode julgar`.
 - A protocol carries **procedure only**. Domain knowledge — DS rules, token values, component
   specs — lives in the oracle and never inside a `SKILL.md`. This is requirement A6, it is
   validity and not tidiness, and `npm run lint:protocol` enforces it in the battery preflight.

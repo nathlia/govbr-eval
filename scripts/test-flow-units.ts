@@ -11,7 +11,14 @@ const refs: Record<string, ElementRef> = {
   link2: { key: "body>a:nth-of-type(2)", id: "E-link2", label: "<a> two" },
   link3: { key: "body>a:nth-of-type(3)", id: "E-link3", label: "<a> three" },
   link4: { key: "body>a:nth-of-type(4)", id: "E-link4", label: "<a> four" },
+  list: { key: "body>div", id: "E-list", label: "<div> .br-list" },
+  item1: { key: "body>div>div:nth-of-type(1)", id: "E-item1", label: "<div> .br-item one" },
+  item2: { key: "body>div>div:nth-of-type(2)", id: "E-item2", label: "<div> .br-item two" },
+  item3: { key: "body>div>div:nth-of-type(3)", id: "E-item3", label: "<div> .br-item three" },
+  item4: { key: "body>div>div:nth-of-type(4)", id: "E-item4", label: "<div> .br-item four" },
 };
+
+const itemKeys = [refs.item1.key, refs.item2.key, refs.item3.key, refs.item4.key];
 
 function selector(selector: string, keys: string[]): ResolvedSelector {
   return { selector, ok: true, error: null, keys };
@@ -24,6 +31,11 @@ const resolution: Resolution = {
     [".form", selector(".form", [refs.form.key])],
     [".message", selector(".message", [refs.message.key])],
     [".links", selector(".links", [refs.link1.key, refs.link2.key, refs.link3.key, refs.link4.key])],
+    [".lista, .lista > .item", selector(".lista, .lista > .item", [refs.list.key, ...itemKeys])],
+    [".lista", selector(".lista", [refs.list.key])],
+    [".item", selector(".item", itemKeys)],
+    ...itemKeys.map((key, i): [string, ResolvedSelector] =>
+      [`.item:nth-of-type(${i + 1})`, selector(`.item:nth-of-type(${i + 1})`, [key])]),
   ]),
 };
 
@@ -170,4 +182,79 @@ assert.match(recordDefect({
   components: [compoundRecord.components![0], { verdict: "vocabulario", rationale: "sem unit" }],
 }) ?? "", /sem `unit` alvo/);
 
-console.log("test:flow - relational anchors, family summaries and compound verdicts ok");
+// ── D-33: `composicao` — N participantes, UMA unidade ───────────────────────
+//
+// O caso que forçou o scope: a semântica de lista ausente. A spec ancorava só no contêiner, mas o
+// defeito é do conjunto, e a leitura CORRETA (dizer que os itens não têm papel) não casava em
+// nenhum dos três passos — 0 TP e 4 FP. Passar a spec para `todos` consertaria o casamento e
+// criaria outro erro: quatro créditos para quem enumera, um para quem diz a mesma coisa uma vez.
+const gtComp: FlowGroundTruth = {
+  _meta: { page: "fixture", url: "/fluxo.html" },
+  violations: [{
+    id: "V-comp", anchor: ".lista, .lista > .item", scope: "composicao",
+    expectedCount: 1, participantCount: 5,
+    rules: ["wcag:1.3.1"], categories: ["estrutura"], description: "list semantics",
+  }],
+};
+const comp = buildFlowUnits(gtComp, resolution);
+assert.deepEqual(comp.defects, []);
+assert.equal(comp.units.length, 1, "cinco participantes valem UMA unidade");
+assert.equal(comp.units[0].participants.length, 5);
+assert.equal(comp.units[0].element.id, "E-list", "o primeiro participante resolvido dá id à unidade");
+
+const scoreAt = (findings: { selector: string; rule: string; description: string }[]) =>
+  scoreFlow({ timestamp: run.timestamp, model: run.model, appUrl: run.appUrl, findings },
+    comp.units, resolution);
+
+// Ancorar no contêiner casa, como antes do D-33.
+const atContainer = scoreAt([{ selector: ".lista", rule: "wcag:1.3.1", description: "list has no role" }]);
+assert.equal(atContainer.TP, 1);
+assert.equal(atContainer.FP, 0);
+
+// Ancorar num FILHO casa — este é exatamente o caso que devolvia 0 TP.
+const atChild = scoreAt([{ selector: ".item:nth-of-type(1)", rule: "wcag:1.3.1", description: "item has no listitem role" }]);
+assert.equal(atChild.TP, 1, "qualquer participante ancora a unidade");
+assert.equal(atChild.FP, 0, "a leitura correta deixa de ser cobrada como falso positivo");
+
+// Enumerar os quatro filhos: crédito UM, cobrança ZERO, três absorvidos e contados.
+const atAll = scoreAt(itemKeys.map((_, i) => ({
+  selector: `.item:nth-of-type(${i + 1})`, rule: "wcag:1.3.1", description: `item ${i + 1} has no role`,
+})));
+assert.equal(atAll.TP, 1, "prolixidade não multiplica crédito (D-30)");
+assert.equal(atAll.FP, 0, "e também não é punida");
+assert.equal(atAll.absorbed.length, 3, "os irmãos ficam contados, nunca silenciosos");
+assert.deepEqual(summarizeFlowFamilies(atAll.outcomes), { detected: 1, complete: 1, total: 1 });
+
+// Um seletor que alcança os quatro filhos de uma vez: mesma leitura, mesmo resultado.
+const atBroad = scoreAt([{ selector: ".item", rule: "wcag:1.3.1", description: "no item carries listitem" }]);
+assert.equal(atBroad.TP, 1);
+assert.equal(atBroad.FP, 0);
+assert.equal(atBroad.absorbed.length, 3);
+
+// Absorção exige a MESMA norma: outra regra sobre um participante segue sendo alegação própria.
+const otherRule = scoreAt([
+  { selector: ".lista", rule: "wcag:1.3.1", description: "list has no role" },
+  { selector: ".item:nth-of-type(1)", rule: "ds:token-color", description: "border colour is off-token" },
+]);
+assert.equal(otherRule.TP, 1);
+assert.equal(otherRule.FP, 1, "norma diferente no mesmo elemento não é a mesma alegação");
+
+// Guardas do gabarito (D-06): a página é quem responde pela contagem.
+const wrongCount = buildFlowUnits(
+  { ...gtComp, violations: [{ ...gtComp.violations[0], participantCount: 4 }] }, resolution);
+assert.equal(wrongCount.units.length, 0);
+assert.match(wrongCount.defects[0].problem, /declara 4 participante\(s\); a página tem 5/);
+
+const wrongExpected = buildFlowUnits(
+  { ...gtComp, violations: [{ ...gtComp.violations[0], expectedCount: 5 }] }, resolution);
+assert.equal(wrongExpected.units.length, 0);
+assert.match(wrongExpected.defects[0].problem, /vale uma unidade/);
+
+// `participantCount` fora de `composicao` é defeito, não campo ignorado — o log já conta doze
+// ocorrências de uma dimensão que uma parte do código conhece e a outra não.
+const misplaced = buildFlowUnits(
+  { ...gtComp, violations: [{ ...gtComp.violations[0], scope: "todos", participantCount: 5 }] }, resolution);
+assert.equal(misplaced.units.length, 0);
+assert.match(misplaced.defects[0].problem, /só existe em scope "composicao"/);
+
+console.log("test:flow - relational anchors, family summaries, compound verdicts and composition units ok");

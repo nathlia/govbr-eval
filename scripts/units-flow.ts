@@ -22,7 +22,17 @@ import { applyRecord, findingId, type AdjudicationIndex } from "./adjudication";
 
 export interface FlowUnit {
   specId: string;
+  /**
+   * Participante PRIMÁRIO da unidade: quem lhe dá id e rótulo. Em `unico`/`todos` é o único
+   * elemento; em `composicao` é o primeiro participante resolvido (o contêiner, na ordem do DOM).
+   */
   element: ElementRef;
+  /**
+   * Chaves canônicas que podem ancorar o casamento desta unidade. Em `unico`/`todos` contém
+   * apenas `element.key` — por isso o comportamento dessas specs não muda. Em `composicao`
+   * contém todos os participantes: qualquer um serve de âncora, e o crédito é UM (D-33).
+   */
+  participants: string[];
   rules: RuleId[];
   categories: string[];
   description: string;
@@ -70,12 +80,49 @@ export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution): FlowUnitsB
       defects.push({ specId: spec.id, problem: `scope "unico", mas a âncora resolve para ${keys.length} elementos` });
       continue;
     }
+
+    const rules = expandWithKbAliases(spec.rules.map(normalizeRuleId));
+
+    // `composicao` (D-33): o defeito é propriedade do conjunto, então a âncora resolve para os N
+    // participantes e a spec vale UMA unidade. É o que separa "quantos elementos participam" de
+    // "quanto isso vale" — as duas coisas estavam amarradas porque o número de chaves ERA o
+    // número de unidades.
+    if (spec.scope === "composicao") {
+      if (spec.expectedCount != null && spec.expectedCount !== 1) {
+        defects.push({ specId: spec.id, problem: `scope "composicao" vale uma unidade; o gabarito declara expectedCount ${spec.expectedCount}` });
+        continue;
+      }
+      if (spec.participantCount != null && keys.length !== spec.participantCount) {
+        defects.push({ specId: spec.id, problem: `gabarito declara ${spec.participantCount} participante(s); a página tem ${keys.length}` });
+        continue;
+      }
+      const primary = res.byKey.get(keys[0]);
+      if (!primary) {
+        defects.push({ specId: spec.id, problem: `elemento resolvido sem referência: ${keys[0]}` });
+        continue;
+      }
+      units.push({
+        specId: spec.id,
+        element: primary,
+        participants: [...keys],
+        rules,
+        categories: spec.categories,
+        description: spec.description,
+        state: spec.state ?? "sempre",
+        conditional: spec.conditional ?? false,
+      });
+      continue;
+    }
+
+    if (spec.participantCount != null) {
+      defects.push({ specId: spec.id, problem: `participantCount só existe em scope "composicao"; spec é "${spec.scope}"` });
+      continue;
+    }
     if (spec.expectedCount != null && keys.length !== spec.expectedCount) {
       defects.push({ specId: spec.id, problem: `gabarito declara ${spec.expectedCount} instância(s); a página tem ${keys.length}` });
       continue;
     }
 
-    const rules = expandWithKbAliases(spec.rules.map(normalizeRuleId));
     for (const key of keys) {
       const element = res.byKey.get(key);
       if (!element) {
@@ -85,6 +132,7 @@ export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution): FlowUnitsB
       units.push({
         specId: spec.id,
         element,
+        participants: [element.key],
         rules,
         categories: spec.categories,
         description: spec.description,
@@ -132,6 +180,8 @@ export interface FlowScore {
   gaps: FlowLeftover[];
   duplicates: FlowLeftover[];
   pending: FlowLeftover[];
+  /** Irmãos de uma unidade de composição já casada: nem crédito nem cobrança (D-33). */
+  absorbed: FlowLeftover[];
   TP: number; FN: number; FP: number;
   ruleVerifiedTP: number;
   adjudicatedTP: number;
@@ -210,6 +260,16 @@ function candidatesOf(findings: FlowFinding[], res: Resolution): Candidate[] {
   return out;
 }
 
+/** Um achado ancora numa unidade quando cai sobre QUALQUER participante dela (D-33). */
+function onUnit(c: Candidate, unit: FlowUnit): boolean {
+  return c.key !== null && unit.participants.includes(c.key);
+}
+
+/** O mesmo, pela via relacional que o D-29 abriu do lado do achado. */
+function relatedToUnit(c: Candidate, unit: FlowUnit): boolean {
+  return unit.participants.some(key => c.relatedKeys.has(key));
+}
+
 export function scoreFlow(
   run: FlowAgentResults,
   units: FlowUnit[],
@@ -221,7 +281,7 @@ export function scoreFlow(
 
   // Passo 1 — casamento verificado por regra, no mesmo elemento.
   for (const unit of units) {
-    const c = candidates.find(c => !c.used && c.key === unit.element.key && c.rules.some(r => unit.rules.includes(r)));
+    const c = candidates.find(c => !c.used && onUnit(c, unit) && c.rules.some(r => unit.rules.includes(r)));
     if (c) {
       c.used = true;
       outcomes.push({
@@ -238,7 +298,7 @@ export function scoreFlow(
   // afirmação sobre a relação alcance a unidade ancorada em outro participante observado.
   for (const unit of units) {
     if (outcomes.some(o => o.unit === unit)) continue;
-    const c = candidates.find(c => !c.used && c.relatedKeys.has(unit.element.key)
+    const c = candidates.find(c => !c.used && relatedToUnit(c, unit)
       && c.rules.some(r => unit.rules.includes(r)));
     if (c) {
       c.used = true;
@@ -254,18 +314,34 @@ export function scoreFlow(
   // Passo 2 — fallback por elemento: achado sobre o elemento certo, sem norma reconhecível.
   for (const unit of units) {
     if (outcomes.some(o => o.unit === unit)) continue;
-    const c = candidates.find(c => !c.used && c.key === unit.element.key && c.rules.length === 0);
+    const c = candidates.find(c => !c.used && onUnit(c, unit) && c.rules.length === 0);
     if (c) {
       c.used = true;
       outcomes.push({ unit, matched: true, ruleVerified: false, adjudicated: false, adjudicationVerdict: null, matchedRule: null, finding: c.description, anchorMode: "exact" });
     } else {
-      const related = candidates.find(c => !c.used && c.relatedKeys.has(unit.element.key) && c.rules.length === 0);
+      const related = candidates.find(c => !c.used && relatedToUnit(c, unit) && c.rules.length === 0);
       if (related) {
         related.used = true;
         outcomes.push({ unit, matched: true, ruleVerified: false, adjudicated: false, adjudicationVerdict: null, matchedRule: null, finding: related.description, anchorMode: "related" });
       } else {
         outcomes.push({ unit, matched: false, ruleVerified: false, adjudicated: false, adjudicationVerdict: null, matchedRule: null, finding: null, anchorMode: null });
       }
+    }
+  }
+
+  // Passo 2b — absorção de irmãos numa unidade de composição (D-33).
+  // Casada a unidade, uma segunda alegação sobre OUTRO participante do mesmo defeito, citando a
+  // mesma norma, é a mesma alegação dita de novo: não credita (o conserto é um só) e não é cobrada
+  // (a leitura está certa). Cobrá-la puniria enumerar; creditá-la premiaria prolixidade, que é o
+  // que o D-30 recusou ao fixar cobrança por alegação. Fica CONTADA e visível, nunca silenciosa.
+  const absorbedCandidates: Candidate[] = [];
+  for (const outcome of outcomes) {
+    if (!outcome.matched || outcome.unit.participants.length < 2) continue;
+    for (const c of candidates) {
+      if (c.used || !onUnit(c, outcome.unit)) continue;
+      if (!c.rules.some(r => outcome.unit.rules.includes(r))) continue;
+      c.used = true;
+      absorbedCandidates.push(c);
     }
   }
 
@@ -278,7 +354,7 @@ export function scoreFlow(
     }
   }
 
-  const leftovers: FlowLeftover[] = candidates.filter(c => !c.used).map(c => {
+  const asLeftover = (c: Candidate): FlowLeftover => {
     const cats = new Set<string>();
     for (const r of c.rules) for (const cat of ruleCategories.get(r) ?? []) cats.add(cat);
     return {
@@ -292,7 +368,10 @@ export function scoreFlow(
       categories: cats.size ? [...cats] : ["sem-categoria"],
       verdict: null,
     };
-  });
+  };
+
+  const leftovers: FlowLeftover[] = candidates.filter(c => !c.used).map(asLeftover);
+  const absorbed: FlowLeftover[] = absorbedCandidates.map(asLeftover);
 
   const floor = {
     TP: outcomes.filter(o => o.matched).length,
@@ -332,7 +411,7 @@ export function scoreFlow(
   }
 
   return {
-    outcomes, leftovers, falseFindings, gaps, duplicates, pending,
+    outcomes, leftovers, falseFindings, gaps, duplicates, pending, absorbed,
     TP: outcomes.filter(o => o.matched).length,
     FN: outcomes.filter(o => !o.matched).length,
     FP: falseFindings.length,

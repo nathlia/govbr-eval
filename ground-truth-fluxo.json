@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "version": "1.3.0",
-    "version_note": "1.3.0 (2026-09-09, D-32): V-07 sai do gabarito. A escala tipográfica deixou de sustentar achado no oráculo — a única regra da KB sobre tamanho de fonte é informativa, e afirmar violação binária sobre 0,66px fazia o veredito depender de onde se corta a tolerância, não da norma. O desvio continua sendo reportado como observação; deixa de ser cobrado. Duas outras unidades de `ds:token-font-size` que a auditoria do 13.5 encontrou (dois h2 em 16px) NÃO entraram, pela mesma razão. 22 unidades a partir de 9 specs. 1.2.0 (2026-09-04, D-31): V-06 passa de `unico` para `todos` com 8 elementos. Números publicados antes daquela versão foram medidos contra o gabarito 1.1.0, com 16 unidades, e não se comparam diretamente com os de agora.",
+    "version": "1.4.0",
+    "version_note": "1.4.0 (2026-09-09, D-33): V-04 passa de `unico` para `composicao`. A âncora nomeia os CINCO participantes do defeito (contêiner + quatro `.br-item`) e a spec segue valendo UMA unidade: 22 unidades a partir de 9 specs, exatamente como em 1.3.0. Antes, a spec ancorava só no contêiner e a leitura correta — dizer que os itens não carregam papel de item de lista — não casava em passo nenhum, devolvendo 0 TP e cobrando falso positivo. Mesma espécie de correção que o D-31 fez na V-06, e por isso a versão que anda é a do GABARITO: o scope novo é inerte para toda spec que não o declara, e a execução arquivada reproduziu os números de 1.3.0 sem uma casa decimal de diferença. 1.3.0 (2026-09-09, D-32): V-07 sai do gabarito. A escala tipográfica deixou de sustentar achado no oráculo — a única regra da KB sobre tamanho de fonte é informativa, e afirmar violação binária sobre 0,66px fazia o veredito depender de onde se corta a tolerância, não da norma. O desvio continua sendo reportado como observação; deixa de ser cobrado. Duas outras unidades de `ds:token-font-size` que a auditoria do 13.5 encontrou (dois h2 em 16px) NÃO entraram, pela mesma razão. 22 unidades a partir de 9 specs. 1.2.0 (2026-09-04, D-31): V-06 passa de `unico` para `todos` com 8 elementos. Números publicados antes daquela versão foram medidos contra o gabarito 1.1.0, com 16 unidades, e não se comparam diretamente com os de agora.",
     "page": "Identificação no gov.br — tela de fluxo (D-23)",
     "url": "/fluxo.html",
     "waitFor": "#cpf",
@@ -88,9 +88,10 @@
     },
     {
       "id": "V-04",
-      "anchor": ".lista-opcoes",
-      "scope": "unico",
+      "anchor": ".lista-opcoes, .lista-opcoes > .br-item",
+      "scope": "composicao",
       "expectedCount": 1,
+      "participantCount": 5,
       "state": "sempre",
       "rules": [
         "wcag:1.3.1",
@@ -100,7 +101,7 @@
         "estrutura",
         "acessibilidade"
       ],
-      "description": "o contêiner usa a classe .br-list e os filhos usam .br-item, mas nenhum carrega role=\"list\"/role=\"listitem\" nem é <ul>/<li>: a semântica de lista existe visualmente e não na árvore de acessibilidade. Defeito de COMPOSIÇÃO — cada componente está certo isolado, o conjunto não."
+      "description": "o contêiner usa a classe .br-list e os filhos usam .br-item, mas nenhum carrega role=\"list\"/role=\"listitem\" nem é <ul>/<li>: a semântica de lista existe visualmente e não na árvore de acessibilidade. Defeito de COMPOSIÇÃO — cada componente está certo isolado, o conjunto não. Escopo corrigido de `unico` para `composicao` em 2026-09-09 (D-33): a âncora passa a nomear os CINCO participantes (o contêiner e os quatro `.br-item`), e a spec segue valendo UMA unidade. Ancorando só no contêiner, a leitura correta — dizer que os itens não têm papel de item de lista — não casava em nenhum passo e era cobrada como falso positivo. `todos` não serve aqui: a semântica de lista é propriedade do conjunto e um único conserto a repara, então quatro créditos premiariam enumerar."
     },
     {
       "id": "V-05",
