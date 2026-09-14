@@ -17,7 +17,7 @@ import type {
 } from "../types";
 import type { ElementRef, Resolution } from "./anchors";
 import { elementId, resolveWithExcept } from "./anchors";
-import { expandWithKbAliases, normalizeRuleId, rulesOfFinding } from "./units";
+import { expandSpecRules, normalizeRuleId, rulesOfFinding } from "./units";
 import { applyRecord, findingId, type AdjudicationIndex } from "./adjudication";
 
 export interface FlowUnit {
@@ -81,7 +81,8 @@ export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution): FlowUnitsB
       continue;
     }
 
-    const rules = expandWithKbAliases(spec.rules.map(normalizeRuleId));
+    // Ponte do verificador (D-37) + aliases da KB, só do lado esperado — o mesmo que a suíte TC-*.
+    const rules = expandSpecRules(spec.rules);
 
     // `composicao` (D-33): o defeito é propriedade do conjunto, então a âncora resolve para os N
     // participantes e a spec vale UMA unidade. É o que separa "quantos elementos participam" de

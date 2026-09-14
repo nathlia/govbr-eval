@@ -258,4 +258,55 @@ const misplaced = buildFlowUnits(
 assert.equal(misplaced.units.length, 0);
 assert.match(misplaced.defects[0].problem, /só existe em scope "composicao"/);
 
-console.log("test:flow - relational anchors, family summaries, compound verdicts and composition units ok");
+// ── D-37: a ponte do verificador que o D-27 decidiu ─────────────────────────
+//
+// O caso que a forçou: na bateria de 14/09 o braço com oráculo citou a norma que o próprio
+// verificador declara (`…21b1a2733f7b` para cor fora da paleta, `…137c50bea6ca` para espaçamento,
+// `…e30aab6e9a68` para a tag do componente), e as specs ancoradas em `ds:token-*`/`ds:structure-*`
+// não casavam: 15 alegações sobre elementos do gabarito cobradas como falso positivo.
+const PALETA = "govbr-3.7.0-foundation-global-21b1a2733f7b";
+const TOKENS_EM_GERAL = "govbr-3.7.0-development-global-137c50bea6ca";
+const ANATOMIA = "govbr-3.7.0-component-global-e30aab6e9a68";
+
+const gtBridge: FlowGroundTruth = {
+  _meta: { page: "fixture", url: "/fluxo.html" },
+  violations: [
+    { id: "V-spacing", anchor: ".item", scope: "todos", expectedCount: 4, rules: ["ds:token-spacing"], categories: ["tokens"], description: "padding" },
+    { id: "V-color", anchor: ".item", scope: "todos", expectedCount: 4, rules: ["ds:token-color"], categories: ["tokens"], description: "border" },
+    { id: "V-tag", anchor: ".form", scope: "unico", expectedCount: 1, rules: ["ds:structure-input-tag"], categories: ["estrutura"], description: "tag" },
+  ],
+};
+const bridge = buildFlowUnits(gtBridge, resolution);
+assert.deepEqual(bridge.defects, []);
+const scoreBridge = (findings: { selector: string; rule: string; description: string }[]) =>
+  scoreFlow({ timestamp: run.timestamp, model: run.model, appUrl: run.appUrl, findings }, bridge.units, resolution);
+const hits = (s: ReturnType<typeof scoreBridge>, specId: string) =>
+  s.outcomes.filter(o => o.unit.specId === specId && o.matched).length;
+
+// A norma declarada pelo verificador casa a spec ancorada no id do verificador.
+const palette = scoreBridge([{ selector: ".item", rule: PALETA, description: "border colour off the palette" }]);
+assert.equal(hits(palette, "V-color"), 4, "a regra da paleta é a norma de ds:token-color");
+assert.equal(hits(palette, "V-spacing"), 0);
+assert.equal(palette.FP, 0);
+assert.ok(palette.outcomes.filter(o => o.matched).every(o => o.ruleVerified), "casamento pela ponte é verificado por regra");
+
+const spacing = scoreBridge([{ selector: ".item", rule: TOKENS_EM_GERAL, description: "padding 13px off the scale" }]);
+assert.equal(hits(spacing, "V-spacing"), 4, "espaçamento só declara a regra geral, então ela é a sua ponte");
+
+const tag = scoreBridge([{ selector: ".form", rule: ANATOMIA, description: "br-input on the <input> itself" }]);
+assert.equal(hits(tag, "V-tag"), 1, "o padrão ds:structure-*-tag alcança o componente nomeado");
+
+// Específica antes de geral: a regra geral NÃO é ponte de cor, que tem regra própria.
+const genericForColor = scoreBridge([{ selector: ".item:nth-of-type(1)", rule: TOKENS_EM_GERAL, description: "border colour off-token" }]);
+assert.equal(hits(genericForColor, "V-color"), 0, "a regra geral não credita cor");
+
+// Direção única: a alegação nunca é alargada pela ponte.
+const radius = scoreBridge([{ selector: ".item:nth-of-type(1)", rule: "ds:token-radius", description: "radius off-token" }]);
+assert.equal(hits(radius, "V-spacing"), 0, "raio não alcança espaçamento pela regra geral compartilhada");
+assert.equal(radius.FP, 1);
+
+// O id do próprio verificador segue casando como antes.
+const scannerId = scoreBridge([{ selector: ".form", rule: "ds-structure-input-tag", description: "br-input on input" }]);
+assert.equal(hits(scannerId, "V-tag"), 1);
+
+console.log("test:flow - relational anchors, family summaries, compound verdicts, composition units and checker bridge ok");

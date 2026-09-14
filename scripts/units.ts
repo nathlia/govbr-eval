@@ -89,6 +89,41 @@ export function rulesOfFinding(f: AgentFinding): { rules: RuleId[]; description:
 
 // ── Expected units (element × rule) ──────────────────────────────────────────
 
+/**
+ * D-37 — a ponte de vocabulário que o D-27 decidiu e não chegou a existir.
+ *
+ * Cada verificador do oráculo declara a norma que implementa (`grounding.ts`), e o gabarito ancora
+ * algumas specs no id do verificador (`ds:token-color`). Sem esta ponte, a alegação que cita a norma
+ * que o próprio verificador declara nunca casava, e o braço COM oráculo pagava por seguir o oráculo.
+ *
+ * Aplicada SÓ ao lado esperado. Uma spec ancorada no id do verificador aceita também a norma dele;
+ * uma alegação nunca é alargada — senão `ds:token-radius` alcançaria uma unidade de espaçamento pela
+ * regra geral de tokens que as duas verificações compartilham. O mapa é gerado
+ * (`npm run checker:aliases`), nunca editado à mão.
+ */
+interface CheckerAliasFile {
+  _meta: unknown;
+  checks: { kind: string; matches: string; aliases: string[] }[];
+}
+const checkerAliases = loadJson<CheckerAliasFile>("checker-aliases.json");
+const checkerMatchers = (checkerAliases?.checks ?? []).map(check => ({
+  test: new RegExp(`^${check.matches.split("*").map(part => part.replace(/[.+?^${}()|[\]\\-]/g, "\\$&")).join("[a-z0-9-]+")}$`),
+  aliases: check.aliases,
+}));
+
+export function expandWithCheckerGrounding(rules: RuleId[]): RuleId[] {
+  const out = new Set(rules);
+  for (const r of rules) {
+    for (const m of checkerMatchers) if (m.test.test(r)) for (const alias of m.aliases) out.add(alias);
+  }
+  return [...out];
+}
+
+/** Regras de uma unidade ESPERADA: ponte do verificador (D-37), depois aliases da KB. */
+export function expandSpecRules(rules: string[]): RuleId[] {
+  return expandWithKbAliases(expandWithCheckerGrounding(rules.map(normalizeRuleId)));
+}
+
 export interface ExpectedUnit {
   caseId: string;
   rules: RuleId[];       // any alias counts as a match
@@ -99,7 +134,7 @@ export interface ExpectedUnit {
 export const expectedUnits: ExpectedUnit[] = [];
 for (const [caseId, c] of Object.entries(cases)) {
   for (const v of c.violations) {
-    expectedUnits.push({ caseId, rules: expandWithKbAliases(v.rules.map(normalizeRuleId)), categories: v.categories, description: v.description });
+    expectedUnits.push({ caseId, rules: expandSpecRules(v.rules), categories: v.categories, description: v.description });
   }
 }
 

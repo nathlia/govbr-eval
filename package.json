@@ -20,6 +20,7 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p dashboard",
     "postinstall": "playwright install chromium",
     "kb:aliases": "tsx scripts/generate-kb-aliases.ts",
+    "checker:aliases": "tsx scripts/generate-checker-aliases.ts",
     "case-matrix": "tsx scripts/case-matrix.ts",
     "lint:protocol": "tsx scripts/lint-protocol.ts",
     "lint:skills": "tsx scripts/lint-skill-contracts.ts",

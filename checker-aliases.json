@@ -1,0 +1,67 @@
+{
+  "_meta": {
+    "generatedAt": "2026-09-14T22:01:06.514Z",
+    "generatedBy": "scripts/generate-checker-aliases.ts — do not edit by hand",
+    "source": "govbr-ds-validator/src/checkers/grounding.ts (CHECK_GROUNDING, D-27)",
+    "direction": "expected unit only: a spec anchored on `matches` also accepts `aliases`; claims are never widened",
+    "specificBeforeGeneric": "an id declared by more than one check is used only by checks with no specific id",
+    "checksWithoutNorm": [
+      "structure-unknown-classes",
+      "token-font-size"
+    ],
+    "checksReportingNormDirectly": [
+      "structure-accessible-name"
+    ]
+  },
+  "checks": [
+    {
+      "kind": "token-color",
+      "matches": "ds:token-color",
+      "aliases": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "generic": [
+        "govbr-3.7.0-development-global-137c50bea6ca"
+      ],
+      "basis": "'Interfaces governamentais devem usar as cores predefinidas do Design System' (required) — uma cor fora do registro de tokens é exatamente o que essa regra proíbe."
+    },
+    {
+      "kind": "token-font-family",
+      "matches": "ds:token-font-family",
+      "aliases": [
+        "govbr-3.7.0-development-global-406774b1cb87"
+      ],
+      "generic": [
+        "govbr-3.7.0-development-global-137c50bea6ca"
+      ],
+      "basis": "'Utilize Rawline como fonte oficial do Governo Federal' (required)."
+    },
+    {
+      "kind": "token-radius",
+      "matches": "ds:token-radius",
+      "aliases": [
+        "govbr-3.7.0-development-global-137c50bea6ca"
+      ],
+      "generic": [],
+      "basis": "A base de conhecimento não tem regra específica sobre raio de borda; o que sustenta a verificação é a obrigação de consumir os tokens oficiais corretamente (required)."
+    },
+    {
+      "kind": "token-spacing",
+      "matches": "ds:token-spacing",
+      "aliases": [
+        "govbr-3.7.0-development-global-137c50bea6ca"
+      ],
+      "generic": [],
+      "basis": "A regra de fundação sobre espaçamento fala da Grid (40 px entre colunas), não da escala de espaçamento dos componentes; o que sustenta a verificação é o consumo correto de tokens."
+    },
+    {
+      "kind": "structure-tag",
+      "matches": "ds:structure-*-tag",
+      "aliases": [
+        "govbr-3.7.0-component-global-e30aab6e9a68"
+      ],
+      "generic": [],
+      "basis": "'A anatomia implementada do componente deve corresponder à diretriz oficial de Design' (required) — a tag raiz é anatomia."
+    }
+  ]
+}
