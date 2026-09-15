@@ -50,6 +50,33 @@ foreach ($rule in @($settings.permissions.allow) + @($settings.permissions.deny)
   }
 }
 
+# v02, fatia 1 (D-40): a execução só alcança a tela congelada e o coletor, pelo proxy da superfície.
+foreach ($contract in @(
+  '& npm run test:isolation',
+  '/control/arm',
+  '/control/disarm',
+  '$env:APP_URL = $surface.origins.site',
+  '--app-url $($surface.origins.site)',
+  'Stop-Surface'
+)) {
+  if (-not $runnerText.Contains($contract)) { throw "Missing measurement-surface contract: $contract" }
+}
+if ($runnerText -cmatch '\$DashboardUrl|api/save-flow-results') {
+  throw "A measured run must not save through the dashboard (D-40)."
+}
+$armConfigs = foreach ($file in @("mcp-com-oraculo.json", "mcp-sem-oraculo.json")) {
+  (Get-Content -LiteralPath (Join-Path $PSScriptRoot $file) -Raw | ConvertFrom-Json).mcpServers
+}
+if (($armConfigs[0].playwright | ConvertTo-Json -Compress -Depth 5) -ne ($armConfigs[1].playwright | ConvertTo-Json -Compress -Depth 5)) {
+  throw "Both arms must receive the identical Playwright MCP block (D-16/D-40)."
+}
+if (($armConfigs[0].playwright.args -join " ") -notmatch '--proxy-server http://127\.0\.0\.1:4102') {
+  throw "Playwright MCP must go through the measurement-surface proxy (D-40)."
+}
+if ($armConfigs[0]."govbr-ds-validator".env.GOVBR_VALIDATOR_PROXY_SERVER -ne "http://127.0.0.1:4102") {
+  throw "The oracle's browser must go through the same proxy (D-40)."
+}
+
 $config = [pscustomobject]@{
   mcpServers = [pscustomobject]@{
     playwright = [pscustomobject]@{ command = "cmd"; args = @("/c", "npx", "pkg"); env = [pscustomobject]@{} }

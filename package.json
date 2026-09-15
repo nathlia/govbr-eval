@@ -30,13 +30,15 @@
     "test:semantic": "tsx scripts/test-semantic-flow.ts",
     "flow:review": "tsx scripts/semantic-flow-cli.ts",
     "adjudicate": "tsx scripts/adjudicate-all.ts",
-    "pacote:revisao": "tsx scripts/gerar-pacote-revisao.ts"
+    "pacote:revisao": "tsx scripts/gerar-pacote-revisao.ts",
+    "test:isolation": "tsx scripts/test-isolation.ts"
   },
   "dependencies": {
     "@axe-core/playwright": "4.11.1",
     "playwright": "1.61.1"
   },
   "devDependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
     "@types/node": "22.19.7",
     "@typescript-eslint/parser": "8.47.0",
     "eslint": "9.39.2",

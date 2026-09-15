@@ -6,7 +6,11 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
   never copy it into `govbr-corpus` or `govbr-ds-validator`.
 - `npm run axe` — axe-core baseline against the corpus at :3000
 - `npm run score` / `score:verbose` — P/R/F1 per tool
-- `npm run dashboard` — Matriz de Detecção at :4000 (axe ▶ button + result views)
+- `npm run dashboard` — Matriz de Detecção at :4000 (axe ▶ button + result views). **v01 only:** it
+  is no longer part of a measured run. It serves the whole repo via `/@fs`, answer keys included.
+- `npm run test:isolation` — v02 measurement surface (D-40): frozen flow page + result collector +
+  egress proxy (`scripts/measurement-surface.ts`), checked through the same MCP configs the runs use.
+  The battery preflight refuses to start if it fails. Ports 3100/4100/4101/4102 must be free.
 - `ground-truth-fluxo.json` + `npm run ancoras` — suíte de fluxo (D-23/D-25): ancorada por seletor
   resolvido na página viva, não por seção `TC-*`. É o instrumento da tela realista com violação
   compartilhada. Suíte separada: seus números nunca se somam nem se promediam com os da suíte `TC-*`

@@ -6,13 +6,15 @@
       "args": ["F:/Dev Nath/TCC/govbr-ds-validator/dist/index.js"],
       "env": {
         "GOVBR_VALIDATOR_REPORTS_DIR": "F:/Dev Nath/TCC/govbr-eval/reports",
-        "GOVBR_VALIDATOR_TOOL_PROFILE": "evaluation"
+        "GOVBR_VALIDATOR_TOOL_PROFILE": "evaluation",
+        "GOVBR_VALIDATOR_PROXY_SERVER": "http://127.0.0.1:4102",
+        "GOVBR_VALIDATOR_ALLOWED_ORIGINS": "http://127.0.0.1:3100"
       }
     },
     "playwright": {
       "type": "stdio",
       "command": "cmd",
-      "args": ["/c", "npx", "@playwright/mcp@0.0.70"],
+      "args": ["/c", "npx", "@playwright/mcp@0.0.70", "--proxy-server", "http://127.0.0.1:4102", "--isolated", "--block-service-workers"],
       "env": {}
     }
   }

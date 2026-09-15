@@ -29,27 +29,48 @@ gabarito (D-01/D-02) passa a ser uma propriedade do procedimento, não uma lembr
 ## Uso
 
 ```powershell
-nvm use 25.2.1                      # o corpus e os scripts precisam de Node 20+
-
-# terminal 1
-cd "F:\Dev Nath\TCC\govbr-corpus"; npm run dev
-
-# terminal 2
-cd "F:\Dev Nath\TCC\govbr-eval"; npm run dashboard
-
-# terminal 3
 cd "F:\Dev Nath\TCC\govbr-eval\pipeline"
-.\run-battery.ps1 -Runs 1 -Arm com          # uma execução, para conferir o encanamento
-.\run-battery.ps1 -Runs 3 -Arm ambos        # bateria completa: 3 com + 3 sem
+.\run-battery.ps1 -Suite fluxo -PreflightOnly            # build, isolamento e superfície; nenhum modelo
+.\run-battery.ps1 -Suite fluxo -Scope smoke -Arm ambos   # encanamento, fora do scorer
+.\run-battery.ps1 -Suite fluxo -Runs 3 -Arm ambos        # bateria: 3 com + 3 sem
 
 # OpenAI pelo Codex incluído no app desktop; gpt-5.6-luna é o padrão econômico desse provider
 .\run-battery.ps1 -Provider codex -Scope smoke -Suite fluxo -Arm ambos
 ```
 
+Nenhum servidor precisa estar de pé: o runner compila o corpus e sobe a própria superfície de
+medida. O painel não participa da medida (ver abaixo).
+
 Parâmetros: `-Runs` (1–10) · `-Arm` (`com` | `sem` | `ambos`) · `-Provider` (`claude` | `codex`) ·
 `-Model` · `-ReasoningEffort` (`low`–`max`) · `-OracleProfile` (`normative` | `deterministic` |
-`evidence` | `combined`) · `-CorpusUrl` · `-DashboardUrl` · `-SkipBaselines` · `-SkipScore` ·
-`-PreflightOnly`.
+`evidence` | `combined`) · `-SkipBaselines` · `-SkipScore` · `-PreflightOnly`.
+
+## Superfície de medida (v02, D-40)
+
+Até o v01 o agente salvava o relatório navegando até o painel (`:4000`), e o painel servia a raiz
+inteira do `govbr-eval` por `/@fs` — gabaritos e resultados inclusive. O prompt dizia para não
+olhar; nada impedia. Agora cada bateria sobe `scripts/measurement-surface.ts`:
+
+| Servidor | Porta | Alcançável pela execução | Papel |
+|---|---|---|---|
+| site | 3100 | sim | a tela congelada: só os arquivos do fechamento de `fluxo.html` no build de produção, conferidos por sha256; o resto é 404 |
+| coletor | 4100 | sim | `POST /api/submit` da execução armada; reenvio idêntico devolve o mesmo recibo, relatório diferente é recusado e arquivado |
+| controle | 4101 | não | o runner arma e desarma cada execução; o nome do arquivo sai do `runId`, nunca do texto do agente |
+| proxy | 4102 | — | todo pedido do navegador passa por ele, loopback incluído; só site e coletor seguem, HTTPS é negado |
+
+Os dois braços recebem o mesmo Playwright MCP com `--proxy-server`, `--isolated` e
+`--block-service-workers`; o oráculo recebe `GOVBR_VALIDATOR_PROXY_SERVER` e
+`GOVBR_VALIDATOR_ALLOWED_ORIGINS`, porque o navegador dele abre a URL que o agente escolher.
+
+O preflight roda `npm run test:isolation` antes de qualquer chamada de modelo: sobe a superfície,
+liga o painel como alvo real, confere de fora da política que o gabarito responde nele e, pela
+mesma configuração MCP das execuções, tenta alcançá-lo por navegação, `fetch`, frame, worker,
+redirecionamento e pelo `scan_page` do oráculo. Falhou, a bateria não parte. O resultado fica em
+`logs/<stamp>-isolamento.json`; a superfície da bateria, com o site congelado, a caixa de entrada e
+o log do proxy, em `logs/<stamp>-superficie/`. O manifesto guarda, por execução, o recibo do
+coletor e o que o proxy negou enquanto ela esteve armada.
+
+A suíte TC-* ainda salva pelo painel e por isso não roda no v02.
 
 No provider `codex`, o runner localiza primeiro o comando no `PATH` e depois o executável incluído
 no app desktop. Ele exige um login válido e desativa shell, busca web, regras e configuração pessoal.

@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
   Bateria formal de avaliação (F3/F4) + ablação (F2) para o TCC 2.
 
@@ -78,10 +78,6 @@ param(
 
   # A aba que o smoke percorre. Qualquer uma serve — o objetivo é exercitar o caminho, não medir.
   [string]$SmokeAba = "Botões",
-
-  [string]$CorpusUrl = "http://localhost:3000",
-
-  [string]$DashboardUrl = "http://localhost:4000",
 
   [switch]$SkipBaselines,
 
@@ -376,17 +372,38 @@ try {
 $protocolVersion = "sha256:" + $protocolHash
 Write-Ok "Protocolo $protocolVersion"
 
-if (-not (Test-Url $CorpusUrl)) {
-  throw "Corpus não responde em $CorpusUrl. Rode 'npm run dev' em govbr-corpus."
+# v02, fatia 1 (D-40): a execução não alcança mais o painel. O navegador do agente e o do oráculo
+# passam por um proxy que só encaminha a tela congelada e o coletor desta bateria. A suíte TC-*
+# ainda salva pelo painel (v01) e não tem superfície isolada, então não roda.
+if (-not $IsFluxo) {
+  throw "A suíte TC-* ainda depende do painel para salvar (v01) e não tem superfície isolada. Só -Suite fluxo roda no v02."
 }
-Write-Ok "Corpus no ar em $CorpusUrl"
 
-$dashboardUp = Test-Url $DashboardUrl
-if ($dashboardUp) {
-  Write-Ok "Dashboard no ar em $DashboardUrl (arquivamento automático)"
-} else {
-  Write-Warn2 "Dashboard fora do ar. O agente terá que escrever os arquivos por conta própria; o arquivamento em results/runs/ pode falhar. Recomendado: 'npm run dashboard' em govbr-eval."
+$CorpusRoot = Join-Path $TccRoot "govbr-corpus"
+Push-Location $CorpusRoot
+try {
+  & npm run build --silent
+  $corpusBuildExit = $LASTEXITCODE
+} finally {
+  Pop-Location
 }
+if ($corpusBuildExit -ne 0) { throw "O build de produção do corpus falhou." }
+Write-Ok "Corpus compilado para produção (dist/)"
+
+# O teste de isolamento roda antes de qualquer chamada de modelo, pela mesma configuração MCP que as
+# execuções recebem e contra o painel vivo como alvo do vazamento. Falhou, a bateria não parte.
+$isolationResult = Join-Path $LogsDir "$Stamp-isolamento.json"
+Push-Location $EvalRoot
+try {
+  & npm run test:isolation --silent -- --out $isolationResult
+  $isolationExit = $LASTEXITCODE
+} finally {
+  Pop-Location
+}
+if ($isolationExit -ne 0) {
+  throw "test:isolation falhou: a superfície de medida deixa passar algo. Resultado: $isolationResult"
+}
+Write-Ok "Isolamento verificado ($(Split-Path $isolationResult -Leaf))"
 
 # ---------------------------------------------------------------- plano
 $arms = @()
@@ -401,11 +418,59 @@ if ($IsSmoke) {
   Write-Warn2 "results/$(Split-Path $SmokeDir -Leaf)/, que o scorer nao le, e baselines/pontuacao estao desligados."
 }
 
+
+
+# ---------------------------------------------------------------- superfície de medida
+# No preflight a superfície sobe numa pasta temporária: exercita o mesmo caminho sem deixar cópia
+# do site em logs/ para uma bateria que não aconteceu.
+$SurfaceDir = if ($PreflightOnly) {
+  Join-Path ([System.IO.Path]::GetTempPath()) "govbr-eval-$Stamp-superficie"
+} else {
+  Join-Path $LogsDir "$Stamp-superficie"
+}
+$surfaceLog = Join-Path $LogsDir "_$Stamp-superficie.log"
+$surfaceProcess = Start-Process -FilePath "cmd" -PassThru -WindowStyle Hidden -WorkingDirectory $EvalRoot `
+  -RedirectStandardOutput $surfaceLog -RedirectStandardError (Join-Path $LogsDir "_$Stamp-superficie.err.log") `
+  -ArgumentList "/c", "npx tsx scripts/measurement-surface.ts serve --corpus-dist `"$(Join-Path $CorpusRoot 'dist')`" --entry fluxo.html --out `"$SurfaceDir`""
+
+function Stop-Surface {
+  try { Invoke-RestMethod -Method Post -Uri "$($surface.control)/control/shutdown" -TimeoutSec 5 | Out-Null } catch { }
+  if ($surfaceProcess -and -not $surfaceProcess.HasExited) {
+    & taskkill /pid $surfaceProcess.Id /T /F 2>$null | Out-Null
+  }
+}
+
+$surface = $null
+for ($wait = 0; $wait -lt 120; $wait++) {
+  if (Test-Path (Join-Path $SurfaceDir "surface.json")) {
+    $surface = Get-Content -LiteralPath (Join-Path $SurfaceDir "surface.json") -Raw | ConvertFrom-Json
+    break
+  }
+  if ($surfaceProcess.HasExited) { break }
+  Start-Sleep -Milliseconds 500
+}
+if (-not $surface) {
+  Stop-Surface
+  throw "A superfície de medida não subiu. Log: $surfaceLog"
+}
+Write-Ok "Superfície $($surface.version): tela $($surface.entryUrl), coletor $($surface.origins.collector), proxy $($surface.proxyServer)"
+
 if ($PreflightOnly) {
+  try {
+    Invoke-RestMethod -Method Post -Uri "$($surface.control)/control/arm" -ContentType "application/json" `
+      -Body (@{ runId = "$Stamp-preflight" } | ConvertTo-Json -Compress) | Out-Null
+    $probe = Invoke-RestMethod -Method Post -Uri "$($surface.control)/control/disarm"
+    if ($probe.runId -ne "$Stamp-preflight" -or $probe.receipt) { throw "O coletor não armou e desarmou como esperado." }
+    Write-Ok "Coletor armou e desarmou uma execução de teste, sem relatório"
+  } finally {
+    Stop-Surface
+  }
   Write-Step "Preflight concluido"
   Write-Ok "Nenhum modelo foi chamado."
   return
 }
+
+try {
 
 $manifest = @()
 $runIndex = 0
@@ -436,10 +501,6 @@ $runIndex = 0
       }
     }
 
-    $before = @()
-    if (Test-Path $RunsDir) {
-      $before = Get-ChildItem $RunsDir -Filter "agent-*.json" | Select-Object -ExpandProperty Name
-    }
 
     $logExtension = if ($Provider -eq "codex") { "jsonl" } else { "json" }
     $logFile      = Join-Path $LogsDir "$Stamp-$armName-run$i.$logExtension"
@@ -470,13 +531,13 @@ $runIndex = 0
     # O protocolo geral nao sabe nada sobre a tela: alvo e destino do POST chegam AQUI, na
     # invocacao, identicos nos dois bracos. E o que permite o mesmo arquivo servir a qualquer tela.
     $invocation = if ($IsFluxo) {
-      "Avalie a tela em $CorpusUrl/fluxo.html. " +
-      "Para salvar, navegue ate $DashboardUrl e faca POST em /api/save-flow-results a partir dali."
+      "Avalie a tela em $($surface.entryUrl). " +
+      "Para salvar, navegue ate $($surface.origins.collector) e faca POST em /api/submit a partir dali."
     } elseif ($IsSmoke) {
       "Percorra apenas a aba '$SmokeAba' e feche os vereditos só dos casos dela. " +
       "Ignore as demais abas e as rotas estáticas."
     } else {
-      "Avalie o corpus completo em $CorpusUrl e salve no endpoint definido pelo protocolo."
+      throw "A suíte TC-* não roda no v02."
     }
 
     # D-36: os dois clientes recebem o protocolo do mesmo jeito — o texto no prompt, idêntico ao que
@@ -520,6 +581,11 @@ $runIndex = 0
         "-c", 'web_search="disabled"'
       ) + $codexMcpArgs + @($prompt)
     }
+
+    # O coletor só aceita relatório da execução armada, e o nome do arquivo sai do runId do runner,
+    # nunca do texto do agente.
+    Invoke-RestMethod -Method Post -Uri "$($surface.control)/control/arm" -ContentType "application/json" `
+      -Body (@{ runId = $runId } | ConvertTo-Json -Compress) | Out-Null
 
     Push-Location $isolatedRoot
     $previousValidatorRunId = $env:GOVBR_VALIDATOR_RUN_ID
@@ -569,16 +635,20 @@ $runIndex = 0
       }
     } catch { }
 
-    # identifica o arquivo arquivado por esta execução
-    $after = Get-ChildItem $RunsDir -Filter "agent-*.json" | Select-Object -ExpandProperty Name
-    $novo = $after | Where-Object { $before -notcontains $_ }
+    # O coletor diz o que chegou para esta execução: recibo, recusas e o que o proxy negou enquanto
+    # ela esteve armada.
+    $submission = Invoke-RestMethod -Method Post -Uri "$($surface.control)/control/disarm"
+    if ($submission.egress.denied -gt 0) {
+      Write-Ok "o proxy negou $($submission.egress.denied) pedido(s) durante a execução (no manifesto)"
+    }
 
-    if (-not $novo) {
-      Write-Warn2 "Nenhum arquivo novo em results/runs/. O agente pode não ter salvado o veredito — confira o log."
+    if (-not $submission.receipt) {
+      Write-Warn2 "O coletor não recebeu relatório desta execução ($(@($submission.rejected).Count) recusado(s)). Confira o log."
       $arquivo = $null
     } else {
-      $arquivo = $novo | Select-Object -First 1
-      Write-Ok "veredito arquivado: $arquivo"
+      $arquivo = "agent-$runId.json"
+      Copy-Item -LiteralPath (Join-Path $SurfaceDir "inbox\$($submission.receipt.file)") -Destination (Join-Path $RunsDir $arquivo)
+      Write-Ok "veredito arquivado: $arquivo (sha256 $($submission.receipt.sha256.Substring(0, 12)))"
 
       # O modelo que o scorer usa para agrupar vem do arquivo, que o próprio agente escreveu.
       # Quem sabe qual modelo rodou é este script, que passou --model. Divergência aqui agruparia
@@ -627,6 +697,8 @@ $runIndex = 0
         Set-JsonProperty $veredito.config "turnMetric" "$clientName-native (não comparável entre clientes)"
         Set-JsonProperty $veredito.config "protocolVersion" $protocolVersion
         Set-JsonProperty $veredito.config "instrumentVersion" $InstrumentVersion
+        Set-JsonProperty $veredito.config "surfaceVersion" $surface.version
+        Set-JsonProperty $veredito.config "siteManifestSha256" $surface.siteManifestSha256
         if ($armName -eq "com") {
           Set-JsonProperty $veredito.config "validatorVersion" $validatorVersion
         }
@@ -707,6 +779,8 @@ $runIndex = 0
       log          = Split-Path $logFile -Leaf
       stderrLog    = Split-Path $stderrFile -Leaf
       mcpTelemetry = $(if (Test-Path $telemetryFile) { Split-Path $telemetryFile -Leaf } else { $null })
+      submission   = [pscustomobject]@{ receipt = $submission.receipt; rejected = @($submission.rejected) }
+      egress       = $submission.egress
       startedAt    = $started.ToUniversalTime().ToString("o")
     }
 
@@ -734,9 +808,14 @@ $manifestPath = Join-Path $LogsDir "$Stamp-bateria.json"
   scope     = $Scope
   runsPerArm = $Runs
   arms      = $arms
-  corpusUrl = $CorpusUrl
+  corpusUrl = $surface.origins.site
+  surface   = [pscustomobject]@{
+    dir = "pipeline/logs/$(Split-Path $SurfaceDir -Leaf)"
+    isolationTest = Split-Path $isolationResult -Leaf
+    description = $surface
+  }
   execucoes = $manifest
-} | ConvertTo-Json -Depth 6 | Out-File -FilePath $manifestPath -Encoding utf8
+} | ConvertTo-Json -Depth 10 | Out-File -FilePath $manifestPath -Encoding utf8
 
 Write-Step "Manifesto da bateria"
 Write-Ok $manifestPath
@@ -749,9 +828,14 @@ if (-not $SkipBaselines) {
     # prepara a pagina no mesmo estado que o scorer usa.
     Write-Step "Baselines deterministicos da suite de fluxo, na mesma sessao (D-06)"
     Push-Location $EvalRoot
+    $previousAppUrl = $env:APP_URL
     try {
+      # A linha de base mede os mesmos bytes que as execuções viram: a tela congelada.
+      $env:APP_URL = $surface.origins.site
       & npm run baselines:fluxo
+      if ($LASTEXITCODE -ne 0) { throw "baselines:fluxo falhou; artefatos da bateria foram preservados." }
     } finally {
+      $env:APP_URL = $previousAppUrl
       Pop-Location
     }
   } else {
@@ -775,7 +859,7 @@ if (-not $SkipScore) {
       # Citation overlap no longer produces a final detection score. Close the manifest-selected
       # review package first; author decisions and offline scoring happen against that package.
       $semanticReviewDir = Join-Path $EvalRoot "results\semantic-review\$Stamp"
-      & npm run flow:review -- prepare --battery $manifestPath --out $semanticReviewDir --app-url $CorpusUrl
+      & npm run flow:review -- prepare --battery $manifestPath --out $semanticReviewDir --app-url $($surface.origins.site)
       if ($LASTEXITCODE -ne 0) { throw "Falha ao preparar o pacote de revisao semantica; artefatos da bateria foram preservados." }
       Write-Ok "Pacote de revisao: $semanticReviewDir (sem metricas finais antes da revisao)"
     } else {
@@ -785,6 +869,10 @@ if (-not $SkipScore) {
   } finally {
     Pop-Location
   }
+}
+
+} finally {
+  Stop-Surface
 }
 
 Write-Step "Fim"
