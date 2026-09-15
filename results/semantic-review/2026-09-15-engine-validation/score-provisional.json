@@ -1,0 +1,1261 @@
+{
+  "version": "flow-semantic-1.0.0",
+  "packageHash": "ff895b3966d6f85db74a96c44bad59bf56222af38a784e131e0a52c74a98ae06",
+  "reviewHash": "a7f21f3b637bff3101cb8bf9639a6e331c404f18467668bdb3adf60a7be3b917",
+  "scores": [
+    {
+      "runId": "results/runs-fluxo-ablacao/agent-2026-09-14T20-51-02-069Z.json",
+      "status": "provisional",
+      "matched": [],
+      "missedUnitIds": [
+        "U-0214a63cac8b37f735b733c8ff64ccb9aa5d8ac4f74d7304e796dc17f235a647",
+        "U-067f7b63fee64feef4dcf116feaf3226179d467059a00df6c7a3a2f13c03d20b",
+        "U-0a06d6c2666c52e5b5faea905342062b43505697aca1d40aaf8d21105dbf8b65",
+        "U-1c25a48359f21fea164b43964c588421584197d8a77c437668337f0a2cbba0b4",
+        "U-24f8649c86edd48cb272f7ea700ca52ea9ce91dd03a1fc067ddee5e082af509d",
+        "U-27d684611e863628a335eede61b151de50a847894eab9921d65b6232ce920497",
+        "U-3579ee7d239a19f7e82beedaa64a9c9aedb2f1b311838eaa937491ea1f9affee",
+        "U-44a6cf4b97acc8d192caf1310fb836c7cc2b3f24bde161dfb0f3597b9eb1626d",
+        "U-50a41c9954db67f6251c43958960c5b7cc0691ec75ecb0d6f9b86d01b54d79cc",
+        "U-50fd8967dbacd5176153b60bcd6b57309791845aa022e043c169a53c0fb7be63",
+        "U-5479553fe575f98d640713f178fb5e5b97b26268192a2196454c2ab7fefdb056",
+        "U-5555042d00b79260ac17371de7d6a0b6489358b03ac7fb0338af47a517402a23",
+        "U-5f4f47b27a6359de42a9205e19df4f43d7766ecb37e47c05cac3c5b267124450",
+        "U-6dd43a541fcfe205e97a759af59c9678d07c611e5bc2791c1f6e8ece7486992c",
+        "U-6eca513e1c652d02d6c85982c332e4e1dff7d28373af26c2a88e4a148ce06dd3",
+        "U-7cc34f81b7938fc55f42db552b8c9ea3a3197fbc3f1f929564a0e3fc301bdb83",
+        "U-81b4c283e2666b5e474bfc31a3177c003b3fa07709e29bb72061625bd4d248f2",
+        "U-93cf9ff921e72050a03775c9189d805dedf420d2bb09d2193709fd283a7987ab",
+        "U-9ef8bc6f8cecdfcbc1d2095a7c3dbbba3aeb77219b849989a4de003d9c761b17",
+        "U-a00d0cad9861911853c5c3160f83aa5ad2e65f099316f3fc42df41421bf45f63",
+        "U-c0bb76ed1336638ddf8b824bde0c1214cbcfa404ae5bae82ffac1092dc9af1a9",
+        "U-c50c7666c9c5e25a9382f0ced7d83c4ca0b65320af653f610ff71c6bb9ee8af8",
+        "U-c5fb8f58afcde46663afbb8e11484560277483a2b6d0917a0679a7795d83360d",
+        "U-cfd5477878c854c2d4e0935ac91d731ed6b16c81bcfd8f253b1eacce6d27460b",
+        "U-e2b58d0f444bf269c882df48b680db18d6fddafac77ded398a7e08665eddc1c9"
+      ],
+      "pendingCardIds": [
+        "C-07db2b02bdde2bd26725a617d219a826a8e68ba6db94d892b1dea40175e95632",
+        "C-73ea876b59056fcd163a71e8498d8a4358ffa13be1158bd2839cb71b8f8b0236",
+        "C-d0e67798d5c80f7e93a113e73a825068360bc9367a5415e3567b9f747acf6f1d"
+      ],
+      "assertions": [
+        {
+          "instanceId": "2879d6c6802b3d41fad3491f087ce5c7eef816203f6b2152488e165324d5a12b",
+          "cardId": "C-d0e67798d5c80f7e93a113e73a825068360bc9367a5415e3567b9f747acf6f1d",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "4408859e5e7e8b5c947cb8ea441c8a9d38b592a6e1e40d357678e767811d5c64",
+          "cardId": "C-d0e67798d5c80f7e93a113e73a825068360bc9367a5415e3567b9f747acf6f1d",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "a0544f54c4487fbe7877993240158082499ed94bdbbd92f34f5f7d913c5f2aa6",
+          "cardId": "C-d0e67798d5c80f7e93a113e73a825068360bc9367a5415e3567b9f747acf6f1d",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "b1b3c43534129bd3318c5f15971c5c8522098e343e9cbcaf86e938e5b73c65f6",
+          "cardId": "C-07db2b02bdde2bd26725a617d219a826a8e68ba6db94d892b1dea40175e95632",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>p",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "c574e78e6bbcf54eb849532a2ae91ae94b3502d418a6a7fa17f2d9c53c6e212d",
+          "cardId": "C-73ea876b59056fcd163a71e8498d8a4358ffa13be1158bd2839cb71b8f8b0236",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>div>input",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "fb5ddbffee048f3c2cc16cf4ff3b877e2cdf9268f851ed7385f8673e2e9f42d1",
+          "cardId": "C-d0e67798d5c80f7e93a113e73a825068360bc9367a5415e3567b9f747acf6f1d",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        }
+      ],
+      "counts": {
+        "referenceUnits": 25,
+        "detectedUnits": 0,
+        "novelAssertions": 0,
+        "falseAssertions": 0,
+        "unresolvedAssertions": 6,
+        "redundantReferenceAssertions": 0
+      },
+      "metrics": {
+        "confirmedReferenceRecall": 0,
+        "referenceRecall": null,
+        "referencePrecision": null,
+        "referenceF1": null,
+        "assertionPrecision": null,
+        "citationSupport": null
+      },
+      "families": [
+        {
+          "specId": "V-01",
+          "detected": 0,
+          "total": 4
+        },
+        {
+          "specId": "V-02",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-03a",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-03b",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-04",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-05",
+          "detected": 0,
+          "total": 4
+        },
+        {
+          "specId": "V-06",
+          "detected": 0,
+          "total": 8
+        },
+        {
+          "specId": "V-08",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-09",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-10",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-11",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-12",
+          "detected": 0,
+          "total": 1
+        }
+      ]
+    },
+    {
+      "runId": "results/runs-fluxo-ablacao/agent-2026-09-14T20-55-01-319Z.json",
+      "status": "provisional",
+      "matched": [],
+      "missedUnitIds": [
+        "U-0214a63cac8b37f735b733c8ff64ccb9aa5d8ac4f74d7304e796dc17f235a647",
+        "U-067f7b63fee64feef4dcf116feaf3226179d467059a00df6c7a3a2f13c03d20b",
+        "U-0a06d6c2666c52e5b5faea905342062b43505697aca1d40aaf8d21105dbf8b65",
+        "U-1c25a48359f21fea164b43964c588421584197d8a77c437668337f0a2cbba0b4",
+        "U-24f8649c86edd48cb272f7ea700ca52ea9ce91dd03a1fc067ddee5e082af509d",
+        "U-27d684611e863628a335eede61b151de50a847894eab9921d65b6232ce920497",
+        "U-3579ee7d239a19f7e82beedaa64a9c9aedb2f1b311838eaa937491ea1f9affee",
+        "U-44a6cf4b97acc8d192caf1310fb836c7cc2b3f24bde161dfb0f3597b9eb1626d",
+        "U-50a41c9954db67f6251c43958960c5b7cc0691ec75ecb0d6f9b86d01b54d79cc",
+        "U-50fd8967dbacd5176153b60bcd6b57309791845aa022e043c169a53c0fb7be63",
+        "U-5479553fe575f98d640713f178fb5e5b97b26268192a2196454c2ab7fefdb056",
+        "U-5555042d00b79260ac17371de7d6a0b6489358b03ac7fb0338af47a517402a23",
+        "U-5f4f47b27a6359de42a9205e19df4f43d7766ecb37e47c05cac3c5b267124450",
+        "U-6dd43a541fcfe205e97a759af59c9678d07c611e5bc2791c1f6e8ece7486992c",
+        "U-6eca513e1c652d02d6c85982c332e4e1dff7d28373af26c2a88e4a148ce06dd3",
+        "U-7cc34f81b7938fc55f42db552b8c9ea3a3197fbc3f1f929564a0e3fc301bdb83",
+        "U-81b4c283e2666b5e474bfc31a3177c003b3fa07709e29bb72061625bd4d248f2",
+        "U-93cf9ff921e72050a03775c9189d805dedf420d2bb09d2193709fd283a7987ab",
+        "U-9ef8bc6f8cecdfcbc1d2095a7c3dbbba3aeb77219b849989a4de003d9c761b17",
+        "U-a00d0cad9861911853c5c3160f83aa5ad2e65f099316f3fc42df41421bf45f63",
+        "U-c0bb76ed1336638ddf8b824bde0c1214cbcfa404ae5bae82ffac1092dc9af1a9",
+        "U-c50c7666c9c5e25a9382f0ced7d83c4ca0b65320af653f610ff71c6bb9ee8af8",
+        "U-c5fb8f58afcde46663afbb8e11484560277483a2b6d0917a0679a7795d83360d",
+        "U-cfd5477878c854c2d4e0935ac91d731ed6b16c81bcfd8f253b1eacce6d27460b",
+        "U-e2b58d0f444bf269c882df48b680db18d6fddafac77ded398a7e08665eddc1c9"
+      ],
+      "pendingCardIds": [
+        "C-10f0afbb8f096d687d90b78c2714cb914f87e6a4abe5590a7d7382a33ce83b1a",
+        "C-479bbd5b8306a9decf137dbb8e5a5d4f8a4c1aacd8cd394e3354c6d5ded0d9f3",
+        "C-685b241ee66e280a5f69ef706fae18c5c71f700d70af0e6bb3c676e54ce405d2",
+        "C-d3022f1d0b178182deac41d065869e05f78ec3c87e5035efb9b722f4fa502819",
+        "C-ed677907fd8e805204c05462df87ba16ba2b1fa7238560994852e4ecdd63eafc"
+      ],
+      "assertions": [
+        {
+          "instanceId": "19979c62fc2800c36497b2559970f3563b2af910a275efce69654fef40e31349",
+          "cardId": "C-10f0afbb8f096d687d90b78c2714cb914f87e6a4abe5590a7d7382a33ce83b1a",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "4e4300d2b8b16b9496c5142d23f046726ca34e5a79d1bb3c0616d86b89afb9ec",
+          "cardId": "C-d3022f1d0b178182deac41d065869e05f78ec3c87e5035efb9b722f4fa502819",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "5eba425a76eb941ff31f372cd463c664a272366c4ebfd7c8c25ae98514d4da26",
+          "cardId": "C-ed677907fd8e805204c05462df87ba16ba2b1fa7238560994852e4ecdd63eafc",
+          "atomId": null,
+          "subjectId": "body>div>header>div>button:nth-of-type(2)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "7112fbb212b76a651617126d7847e5f2cc264fd5cf0fed6ee0bbeef36b178cd1",
+          "cardId": "C-685b241ee66e280a5f69ef706fae18c5c71f700d70af0e6bb3c676e54ce405d2",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>div>input",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "877c73458348f9d287b17993ef08448fadd6cbbef916abc86ffaa08433f0faf1",
+          "cardId": "C-10f0afbb8f096d687d90b78c2714cb914f87e6a4abe5590a7d7382a33ce83b1a",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "8b40ed49c0afb78e049f8810301693fa145fadc799f714633b84cd0dd3eea018",
+          "cardId": "C-479bbd5b8306a9decf137dbb8e5a5d4f8a4c1aacd8cd394e3354c6d5ded0d9f3",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>p",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "a9fcac50bbec5cc1bc10c1829e2317520ad6537f470e7f3838d4359fc26b2676",
+          "cardId": "C-10f0afbb8f096d687d90b78c2714cb914f87e6a4abe5590a7d7382a33ce83b1a",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "d6e31b656f831f696a1c661a9feb3d978f5dcfc0735f1edde8e7d6e5b157c6da",
+          "cardId": "C-10f0afbb8f096d687d90b78c2714cb914f87e6a4abe5590a7d7382a33ce83b1a",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        }
+      ],
+      "counts": {
+        "referenceUnits": 25,
+        "detectedUnits": 0,
+        "novelAssertions": 0,
+        "falseAssertions": 0,
+        "unresolvedAssertions": 8,
+        "redundantReferenceAssertions": 0
+      },
+      "metrics": {
+        "confirmedReferenceRecall": 0,
+        "referenceRecall": null,
+        "referencePrecision": null,
+        "referenceF1": null,
+        "assertionPrecision": null,
+        "citationSupport": null
+      },
+      "families": [
+        {
+          "specId": "V-01",
+          "detected": 0,
+          "total": 4
+        },
+        {
+          "specId": "V-02",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-03a",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-03b",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-04",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-05",
+          "detected": 0,
+          "total": 4
+        },
+        {
+          "specId": "V-06",
+          "detected": 0,
+          "total": 8
+        },
+        {
+          "specId": "V-08",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-09",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-10",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-11",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-12",
+          "detected": 0,
+          "total": 1
+        }
+      ]
+    },
+    {
+      "runId": "results/runs-fluxo-ablacao/agent-2026-09-14T20-58-21-628Z.json",
+      "status": "provisional",
+      "matched": [],
+      "missedUnitIds": [
+        "U-0214a63cac8b37f735b733c8ff64ccb9aa5d8ac4f74d7304e796dc17f235a647",
+        "U-067f7b63fee64feef4dcf116feaf3226179d467059a00df6c7a3a2f13c03d20b",
+        "U-0a06d6c2666c52e5b5faea905342062b43505697aca1d40aaf8d21105dbf8b65",
+        "U-1c25a48359f21fea164b43964c588421584197d8a77c437668337f0a2cbba0b4",
+        "U-24f8649c86edd48cb272f7ea700ca52ea9ce91dd03a1fc067ddee5e082af509d",
+        "U-27d684611e863628a335eede61b151de50a847894eab9921d65b6232ce920497",
+        "U-3579ee7d239a19f7e82beedaa64a9c9aedb2f1b311838eaa937491ea1f9affee",
+        "U-44a6cf4b97acc8d192caf1310fb836c7cc2b3f24bde161dfb0f3597b9eb1626d",
+        "U-50a41c9954db67f6251c43958960c5b7cc0691ec75ecb0d6f9b86d01b54d79cc",
+        "U-50fd8967dbacd5176153b60bcd6b57309791845aa022e043c169a53c0fb7be63",
+        "U-5479553fe575f98d640713f178fb5e5b97b26268192a2196454c2ab7fefdb056",
+        "U-5555042d00b79260ac17371de7d6a0b6489358b03ac7fb0338af47a517402a23",
+        "U-5f4f47b27a6359de42a9205e19df4f43d7766ecb37e47c05cac3c5b267124450",
+        "U-6dd43a541fcfe205e97a759af59c9678d07c611e5bc2791c1f6e8ece7486992c",
+        "U-6eca513e1c652d02d6c85982c332e4e1dff7d28373af26c2a88e4a148ce06dd3",
+        "U-7cc34f81b7938fc55f42db552b8c9ea3a3197fbc3f1f929564a0e3fc301bdb83",
+        "U-81b4c283e2666b5e474bfc31a3177c003b3fa07709e29bb72061625bd4d248f2",
+        "U-93cf9ff921e72050a03775c9189d805dedf420d2bb09d2193709fd283a7987ab",
+        "U-9ef8bc6f8cecdfcbc1d2095a7c3dbbba3aeb77219b849989a4de003d9c761b17",
+        "U-a00d0cad9861911853c5c3160f83aa5ad2e65f099316f3fc42df41421bf45f63",
+        "U-c0bb76ed1336638ddf8b824bde0c1214cbcfa404ae5bae82ffac1092dc9af1a9",
+        "U-c50c7666c9c5e25a9382f0ced7d83c4ca0b65320af653f610ff71c6bb9ee8af8",
+        "U-c5fb8f58afcde46663afbb8e11484560277483a2b6d0917a0679a7795d83360d",
+        "U-cfd5477878c854c2d4e0935ac91d731ed6b16c81bcfd8f253b1eacce6d27460b",
+        "U-e2b58d0f444bf269c882df48b680db18d6fddafac77ded398a7e08665eddc1c9"
+      ],
+      "pendingCardIds": [
+        "C-1cd09e96cdf43b074fa8990bf48408f9dc575279014e8feb85b86c55f3535551",
+        "C-5e5ff9aee6837c751abad0211fb3c598fa2c4bd464de108484481cb375b60c83",
+        "C-8a42a0a67a20ade12a1cbdde1bcfb575081ff03e29aacbef65d473c2288a42a0"
+      ],
+      "assertions": [
+        {
+          "instanceId": "084d54df382f5fb4475de090d3baea8b38fbd51f501c8917575eca455e956491",
+          "cardId": "C-8a42a0a67a20ade12a1cbdde1bcfb575081ff03e29aacbef65d473c2288a42a0",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>div>input",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "0fd156b67e2eaa2031dd6b0702dac8841f6ef37261631af3cc23570b29136a9c",
+          "cardId": "C-1cd09e96cdf43b074fa8990bf48408f9dc575279014e8feb85b86c55f3535551",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "4bbdfe199b050a42478c220c4ed765d12425216911f113b23a89993609ddc610",
+          "cardId": "C-1cd09e96cdf43b074fa8990bf48408f9dc575279014e8feb85b86c55f3535551",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "4e536bd6c46c204a91634412f7f4e23c5ab671aaf23c6a1b439407f6d570e9e5",
+          "cardId": "C-5e5ff9aee6837c751abad0211fb3c598fa2c4bd464de108484481cb375b60c83",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>p",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "690b63e516bf282d61aa6eda843a9e6b258383399001e0dc7c9b284b9ef50778",
+          "cardId": "C-1cd09e96cdf43b074fa8990bf48408f9dc575279014e8feb85b86c55f3535551",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "ea924e07ee1102d2bfcc88984fd0e43fbb8ade5e1b2ebe7a4fd0580fed5d6b0d",
+          "cardId": "C-1cd09e96cdf43b074fa8990bf48408f9dc575279014e8feb85b86c55f3535551",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        }
+      ],
+      "counts": {
+        "referenceUnits": 25,
+        "detectedUnits": 0,
+        "novelAssertions": 0,
+        "falseAssertions": 0,
+        "unresolvedAssertions": 6,
+        "redundantReferenceAssertions": 0
+      },
+      "metrics": {
+        "confirmedReferenceRecall": 0,
+        "referenceRecall": null,
+        "referencePrecision": null,
+        "referenceF1": null,
+        "assertionPrecision": null,
+        "citationSupport": null
+      },
+      "families": [
+        {
+          "specId": "V-01",
+          "detected": 0,
+          "total": 4
+        },
+        {
+          "specId": "V-02",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-03a",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-03b",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-04",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-05",
+          "detected": 0,
+          "total": 4
+        },
+        {
+          "specId": "V-06",
+          "detected": 0,
+          "total": 8
+        },
+        {
+          "specId": "V-08",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-09",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-10",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-11",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-12",
+          "detected": 0,
+          "total": 1
+        }
+      ]
+    },
+    {
+      "runId": "results/runs-fluxo/agent-2026-09-14T20-39-34-657Z.json",
+      "status": "provisional",
+      "matched": [],
+      "missedUnitIds": [
+        "U-0214a63cac8b37f735b733c8ff64ccb9aa5d8ac4f74d7304e796dc17f235a647",
+        "U-067f7b63fee64feef4dcf116feaf3226179d467059a00df6c7a3a2f13c03d20b",
+        "U-0a06d6c2666c52e5b5faea905342062b43505697aca1d40aaf8d21105dbf8b65",
+        "U-1c25a48359f21fea164b43964c588421584197d8a77c437668337f0a2cbba0b4",
+        "U-24f8649c86edd48cb272f7ea700ca52ea9ce91dd03a1fc067ddee5e082af509d",
+        "U-27d684611e863628a335eede61b151de50a847894eab9921d65b6232ce920497",
+        "U-3579ee7d239a19f7e82beedaa64a9c9aedb2f1b311838eaa937491ea1f9affee",
+        "U-44a6cf4b97acc8d192caf1310fb836c7cc2b3f24bde161dfb0f3597b9eb1626d",
+        "U-50a41c9954db67f6251c43958960c5b7cc0691ec75ecb0d6f9b86d01b54d79cc",
+        "U-50fd8967dbacd5176153b60bcd6b57309791845aa022e043c169a53c0fb7be63",
+        "U-5479553fe575f98d640713f178fb5e5b97b26268192a2196454c2ab7fefdb056",
+        "U-5555042d00b79260ac17371de7d6a0b6489358b03ac7fb0338af47a517402a23",
+        "U-5f4f47b27a6359de42a9205e19df4f43d7766ecb37e47c05cac3c5b267124450",
+        "U-6dd43a541fcfe205e97a759af59c9678d07c611e5bc2791c1f6e8ece7486992c",
+        "U-6eca513e1c652d02d6c85982c332e4e1dff7d28373af26c2a88e4a148ce06dd3",
+        "U-7cc34f81b7938fc55f42db552b8c9ea3a3197fbc3f1f929564a0e3fc301bdb83",
+        "U-81b4c283e2666b5e474bfc31a3177c003b3fa07709e29bb72061625bd4d248f2",
+        "U-93cf9ff921e72050a03775c9189d805dedf420d2bb09d2193709fd283a7987ab",
+        "U-9ef8bc6f8cecdfcbc1d2095a7c3dbbba3aeb77219b849989a4de003d9c761b17",
+        "U-a00d0cad9861911853c5c3160f83aa5ad2e65f099316f3fc42df41421bf45f63",
+        "U-c0bb76ed1336638ddf8b824bde0c1214cbcfa404ae5bae82ffac1092dc9af1a9",
+        "U-c50c7666c9c5e25a9382f0ced7d83c4ca0b65320af653f610ff71c6bb9ee8af8",
+        "U-c5fb8f58afcde46663afbb8e11484560277483a2b6d0917a0679a7795d83360d",
+        "U-cfd5477878c854c2d4e0935ac91d731ed6b16c81bcfd8f253b1eacce6d27460b",
+        "U-e2b58d0f444bf269c882df48b680db18d6fddafac77ded398a7e08665eddc1c9"
+      ],
+      "pendingCardIds": [
+        "C-3c0f08fe347008bc9e9df8118bc940de2972557623320dda41f681f82c6f4d73",
+        "C-57befc97f596d22b95fb8d7a65f83d259d27fde334e269e164cf2fdc8131d4c0",
+        "C-74cffa7a4715026fc34e7270313cd33e313079a4afc243f066f037b42e49a6c1",
+        "C-add7c64f663007a7ee9ffd2d806b9b246a85845b3f01787ea0dbfbbaa80de92b",
+        "C-c3eac196b04b161e9202137333f8273e5df7b2a7054a17d4f67137bfc3e13117",
+        "C-dc1b53c1bfa6e55f10b00e1244252027da7f73f50f2e0ce8c74e848315571a7f"
+      ],
+      "assertions": [
+        {
+          "instanceId": "293b4bd6e9812625c976fa77ea178fc9856f394cdf0f807358e54c84741fcc5c",
+          "cardId": "C-add7c64f663007a7ee9ffd2d806b9b246a85845b3f01787ea0dbfbbaa80de92b",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "2c8b508b24e9b384e45c431ae17fc504d9939a7a839786a8f7869b935366ee5b",
+          "cardId": "C-3c0f08fe347008bc9e9df8118bc940de2972557623320dda41f681f82c6f4d73",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "3c15d3a13c6a6f20f39a1ecea64f0fb1791519c8769245f46d19b61cb470eb92",
+          "cardId": "C-3c0f08fe347008bc9e9df8118bc940de2972557623320dda41f681f82c6f4d73",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "57f9c9834801c7b9fc3c4f1942e4aed58c58252e70b22c2cacf8b145db361286",
+          "cardId": "C-74cffa7a4715026fc34e7270313cd33e313079a4afc243f066f037b42e49a6c1",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>div>input",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "5d053fe9a20dafc6ca8e7f7bdd9af85bed273689c0944e3e6a9700346d7f7f23",
+          "cardId": "C-57befc97f596d22b95fb8d7a65f83d259d27fde334e269e164cf2fdc8131d4c0",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>p",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "696fb40c91b043e145b1359b4f0674c2913a38aef697d1909b76fd6344345579",
+          "cardId": "C-3c0f08fe347008bc9e9df8118bc940de2972557623320dda41f681f82c6f4d73",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "8653ad733702f980d8df3a764d32a2793f04db770e9b3f5526db0fdf32d59a22",
+          "cardId": "C-c3eac196b04b161e9202137333f8273e5df7b2a7054a17d4f67137bfc3e13117",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "96f8fd8bce317f9a3326f1417014257bb99ac1d9aff89951f9b5f1ec856c4372",
+          "cardId": "C-add7c64f663007a7ee9ffd2d806b9b246a85845b3f01787ea0dbfbbaa80de92b",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "9c797b7373be65ccf8a746a010648182dcd0767c70c92cadbfdaab578ff1fac1",
+          "cardId": "C-c3eac196b04b161e9202137333f8273e5df7b2a7054a17d4f67137bfc3e13117",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "b93c833257a7e9fa838088fb61caa96fe1fc70782b193e24d1b9f4f402b0fdbf",
+          "cardId": "C-add7c64f663007a7ee9ffd2d806b9b246a85845b3f01787ea0dbfbbaa80de92b",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "cb16c9d7938114486627a66ee6b66eae8f23e0f8358918a3e939e6e7dfbf557a",
+          "cardId": "C-3c0f08fe347008bc9e9df8118bc940de2972557623320dda41f681f82c6f4d73",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "de99df631b7286e3605f6421fd77aa54f379e06ea27c2c7791c920b88383a29a",
+          "cardId": "C-dc1b53c1bfa6e55f10b00e1244252027da7f73f50f2e0ce8c74e848315571a7f",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>div>input",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "e646c2d24972cee21c98ba0d3539882740d7c8f9783bb4a82567e0ed53c75939",
+          "cardId": "C-c3eac196b04b161e9202137333f8273e5df7b2a7054a17d4f67137bfc3e13117",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(1)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "ecd50cd7df066d2ce626e29d2431f1c1e5462b24beee340b4751f7d8c8579d00",
+          "cardId": "C-add7c64f663007a7ee9ffd2d806b9b246a85845b3f01787ea0dbfbbaa80de92b",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        }
+      ],
+      "counts": {
+        "referenceUnits": 25,
+        "detectedUnits": 0,
+        "novelAssertions": 0,
+        "falseAssertions": 0,
+        "unresolvedAssertions": 14,
+        "redundantReferenceAssertions": 0
+      },
+      "metrics": {
+        "confirmedReferenceRecall": 0,
+        "referenceRecall": null,
+        "referencePrecision": null,
+        "referenceF1": null,
+        "assertionPrecision": null,
+        "citationSupport": null
+      },
+      "families": [
+        {
+          "specId": "V-01",
+          "detected": 0,
+          "total": 4
+        },
+        {
+          "specId": "V-02",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-03a",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-03b",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-04",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-05",
+          "detected": 0,
+          "total": 4
+        },
+        {
+          "specId": "V-06",
+          "detected": 0,
+          "total": 8
+        },
+        {
+          "specId": "V-08",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-09",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-10",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-11",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-12",
+          "detected": 0,
+          "total": 1
+        }
+      ]
+    },
+    {
+      "runId": "results/runs-fluxo/agent-2026-09-14T20-43-26-982Z.json",
+      "status": "provisional",
+      "matched": [],
+      "missedUnitIds": [
+        "U-0214a63cac8b37f735b733c8ff64ccb9aa5d8ac4f74d7304e796dc17f235a647",
+        "U-067f7b63fee64feef4dcf116feaf3226179d467059a00df6c7a3a2f13c03d20b",
+        "U-0a06d6c2666c52e5b5faea905342062b43505697aca1d40aaf8d21105dbf8b65",
+        "U-1c25a48359f21fea164b43964c588421584197d8a77c437668337f0a2cbba0b4",
+        "U-24f8649c86edd48cb272f7ea700ca52ea9ce91dd03a1fc067ddee5e082af509d",
+        "U-27d684611e863628a335eede61b151de50a847894eab9921d65b6232ce920497",
+        "U-3579ee7d239a19f7e82beedaa64a9c9aedb2f1b311838eaa937491ea1f9affee",
+        "U-44a6cf4b97acc8d192caf1310fb836c7cc2b3f24bde161dfb0f3597b9eb1626d",
+        "U-50a41c9954db67f6251c43958960c5b7cc0691ec75ecb0d6f9b86d01b54d79cc",
+        "U-50fd8967dbacd5176153b60bcd6b57309791845aa022e043c169a53c0fb7be63",
+        "U-5479553fe575f98d640713f178fb5e5b97b26268192a2196454c2ab7fefdb056",
+        "U-5555042d00b79260ac17371de7d6a0b6489358b03ac7fb0338af47a517402a23",
+        "U-5f4f47b27a6359de42a9205e19df4f43d7766ecb37e47c05cac3c5b267124450",
+        "U-6dd43a541fcfe205e97a759af59c9678d07c611e5bc2791c1f6e8ece7486992c",
+        "U-6eca513e1c652d02d6c85982c332e4e1dff7d28373af26c2a88e4a148ce06dd3",
+        "U-7cc34f81b7938fc55f42db552b8c9ea3a3197fbc3f1f929564a0e3fc301bdb83",
+        "U-81b4c283e2666b5e474bfc31a3177c003b3fa07709e29bb72061625bd4d248f2",
+        "U-93cf9ff921e72050a03775c9189d805dedf420d2bb09d2193709fd283a7987ab",
+        "U-9ef8bc6f8cecdfcbc1d2095a7c3dbbba3aeb77219b849989a4de003d9c761b17",
+        "U-a00d0cad9861911853c5c3160f83aa5ad2e65f099316f3fc42df41421bf45f63",
+        "U-c0bb76ed1336638ddf8b824bde0c1214cbcfa404ae5bae82ffac1092dc9af1a9",
+        "U-c50c7666c9c5e25a9382f0ced7d83c4ca0b65320af653f610ff71c6bb9ee8af8",
+        "U-c5fb8f58afcde46663afbb8e11484560277483a2b6d0917a0679a7795d83360d",
+        "U-cfd5477878c854c2d4e0935ac91d731ed6b16c81bcfd8f253b1eacce6d27460b",
+        "U-e2b58d0f444bf269c882df48b680db18d6fddafac77ded398a7e08665eddc1c9"
+      ],
+      "pendingCardIds": [
+        "C-7deb174ed54e9f80c3be18599adee28d7fd48c264b146a42187c0692bfbd977b",
+        "C-82c6d43b2e5390b136e87644ca8d26e33662e1ae3993e705afd9821d63794101",
+        "C-ab2154ab0806dff8b30a263d5538ddbc84af7a5e2119530f0b140be8b441f692",
+        "C-c0c9b0fa25249b7d625f113086e7884690fc038fd9ca9920fe9704fce1be2044",
+        "C-c628004939273fe9f680b98d1c1b5473d748234e9334a2341702bd4b6bd51376",
+        "C-e0e11e7df22bb15167cab2a5e974d8b3357b0c84f0cac316117741b999d485b8"
+      ],
+      "assertions": [
+        {
+          "instanceId": "17925edc9f7e15ece9a2ac0afa853bc269924b5974d577a680d48453942f61fc",
+          "cardId": "C-c0c9b0fa25249b7d625f113086e7884690fc038fd9ca9920fe9704fce1be2044",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "1bd39c02ad7e26d8c7b036ae0d77871f43683cb8b7e93bd988af8c208e863d75",
+          "cardId": "C-c628004939273fe9f680b98d1c1b5473d748234e9334a2341702bd4b6bd51376",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>div>input",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "8a6d5d1b7b14094040c0c0f2e4ae47e66ba85d6e913c38ab72625c1b1dc5273b",
+          "cardId": "C-e0e11e7df22bb15167cab2a5e974d8b3357b0c84f0cac316117741b999d485b8",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "9d5ac02be903efe4bac97e521bc5c8ab4af1215408f9ee2f38d48d345cef6ee3",
+          "cardId": "C-ab2154ab0806dff8b30a263d5538ddbc84af7a5e2119530f0b140be8b441f692",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "a863924876f0ab3d447abcbae6c2016a5137eb69ca867290dae8b32dc3e2db9d",
+          "cardId": "C-7deb174ed54e9f80c3be18599adee28d7fd48c264b146a42187c0692bfbd977b",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>p",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "af69e3756108b8d5c93a23ee42c94490a6a70ecabc8dc715604aaa3db6928caf",
+          "cardId": "C-e0e11e7df22bb15167cab2a5e974d8b3357b0c84f0cac316117741b999d485b8",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "cf1dde0610be105dcab8177fca0ae39d949960b42295ea7e563ef59b72b031a8",
+          "cardId": "C-ab2154ab0806dff8b30a263d5538ddbc84af7a5e2119530f0b140be8b441f692",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "cf6148571324effc6ae39ff0a609c4a73b363e020b70de0d779c0d2782fb0bbb",
+          "cardId": "C-e0e11e7df22bb15167cab2a5e974d8b3357b0c84f0cac316117741b999d485b8",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "d4aab4ba03c9fe87d4c3a4467272b5fc99c828fa02c4a3270a529f323733982d",
+          "cardId": "C-82c6d43b2e5390b136e87644ca8d26e33662e1ae3993e705afd9821d63794101",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>div>input",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "eb50914ec74c5c930684268763940cf9eeddaee9024f5cbaa55436edbd43c2d3",
+          "cardId": "C-ab2154ab0806dff8b30a263d5538ddbc84af7a5e2119530f0b140be8b441f692",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "f33fe0ef267e135f918b7cf28397c9e10e7b26115177cd05546ede7a8bec5472",
+          "cardId": "C-ab2154ab0806dff8b30a263d5538ddbc84af7a5e2119530f0b140be8b441f692",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "f3c5dbe30336e516496b9b5cdd0036f23dd260c8680c0535e6544b55765a5771",
+          "cardId": "C-e0e11e7df22bb15167cab2a5e974d8b3357b0c84f0cac316117741b999d485b8",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        }
+      ],
+      "counts": {
+        "referenceUnits": 25,
+        "detectedUnits": 0,
+        "novelAssertions": 0,
+        "falseAssertions": 0,
+        "unresolvedAssertions": 12,
+        "redundantReferenceAssertions": 0
+      },
+      "metrics": {
+        "confirmedReferenceRecall": 0,
+        "referenceRecall": null,
+        "referencePrecision": null,
+        "referenceF1": null,
+        "assertionPrecision": null,
+        "citationSupport": null
+      },
+      "families": [
+        {
+          "specId": "V-01",
+          "detected": 0,
+          "total": 4
+        },
+        {
+          "specId": "V-02",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-03a",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-03b",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-04",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-05",
+          "detected": 0,
+          "total": 4
+        },
+        {
+          "specId": "V-06",
+          "detected": 0,
+          "total": 8
+        },
+        {
+          "specId": "V-08",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-09",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-10",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-11",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-12",
+          "detected": 0,
+          "total": 1
+        }
+      ]
+    },
+    {
+      "runId": "results/runs-fluxo/agent-2026-09-14T20-47-20-209Z.json",
+      "status": "provisional",
+      "matched": [],
+      "missedUnitIds": [
+        "U-0214a63cac8b37f735b733c8ff64ccb9aa5d8ac4f74d7304e796dc17f235a647",
+        "U-067f7b63fee64feef4dcf116feaf3226179d467059a00df6c7a3a2f13c03d20b",
+        "U-0a06d6c2666c52e5b5faea905342062b43505697aca1d40aaf8d21105dbf8b65",
+        "U-1c25a48359f21fea164b43964c588421584197d8a77c437668337f0a2cbba0b4",
+        "U-24f8649c86edd48cb272f7ea700ca52ea9ce91dd03a1fc067ddee5e082af509d",
+        "U-27d684611e863628a335eede61b151de50a847894eab9921d65b6232ce920497",
+        "U-3579ee7d239a19f7e82beedaa64a9c9aedb2f1b311838eaa937491ea1f9affee",
+        "U-44a6cf4b97acc8d192caf1310fb836c7cc2b3f24bde161dfb0f3597b9eb1626d",
+        "U-50a41c9954db67f6251c43958960c5b7cc0691ec75ecb0d6f9b86d01b54d79cc",
+        "U-50fd8967dbacd5176153b60bcd6b57309791845aa022e043c169a53c0fb7be63",
+        "U-5479553fe575f98d640713f178fb5e5b97b26268192a2196454c2ab7fefdb056",
+        "U-5555042d00b79260ac17371de7d6a0b6489358b03ac7fb0338af47a517402a23",
+        "U-5f4f47b27a6359de42a9205e19df4f43d7766ecb37e47c05cac3c5b267124450",
+        "U-6dd43a541fcfe205e97a759af59c9678d07c611e5bc2791c1f6e8ece7486992c",
+        "U-6eca513e1c652d02d6c85982c332e4e1dff7d28373af26c2a88e4a148ce06dd3",
+        "U-7cc34f81b7938fc55f42db552b8c9ea3a3197fbc3f1f929564a0e3fc301bdb83",
+        "U-81b4c283e2666b5e474bfc31a3177c003b3fa07709e29bb72061625bd4d248f2",
+        "U-93cf9ff921e72050a03775c9189d805dedf420d2bb09d2193709fd283a7987ab",
+        "U-9ef8bc6f8cecdfcbc1d2095a7c3dbbba3aeb77219b849989a4de003d9c761b17",
+        "U-a00d0cad9861911853c5c3160f83aa5ad2e65f099316f3fc42df41421bf45f63",
+        "U-c0bb76ed1336638ddf8b824bde0c1214cbcfa404ae5bae82ffac1092dc9af1a9",
+        "U-c50c7666c9c5e25a9382f0ced7d83c4ca0b65320af653f610ff71c6bb9ee8af8",
+        "U-c5fb8f58afcde46663afbb8e11484560277483a2b6d0917a0679a7795d83360d",
+        "U-cfd5477878c854c2d4e0935ac91d731ed6b16c81bcfd8f253b1eacce6d27460b",
+        "U-e2b58d0f444bf269c882df48b680db18d6fddafac77ded398a7e08665eddc1c9"
+      ],
+      "pendingCardIds": [
+        "C-748805a7ef383c6103750091c527b22adbc7ed81d993eea48582b79828192928",
+        "C-74f71d3afb2423cd492a38fda6fc5ec3f6bab3d8aee24316ed23a94df4375201",
+        "C-77e1795ae21bc58633937dee9424aa55f30cbed567378fb94ec8cf45cf876233",
+        "C-7c45568a6a79b093af3893e02ff826dc3854a85e8078965057f74186918179f7",
+        "C-b4b5d30943ca6e0818b975a7b6d23942885fef0e07c6cfb96bf99859753cbbad",
+        "C-c90307ebbcd6907c7e492684a3c1445e0bffc4afb2c613d55b126d21d6d1d4c3",
+        "C-f638eb9f5c320aa45d975d4f423ed770569d75f5020ac2cb00441193ab2f9927"
+      ],
+      "assertions": [
+        {
+          "instanceId": "0e1af2ee6d521a5d65ea48427670fb27f95a038987d36be3cbf308cc8e9637c9",
+          "cardId": "C-7c45568a6a79b093af3893e02ff826dc3854a85e8078965057f74186918179f7",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "4b125b0eaf241ec1fa73059e410bf899a66370bb28421b61b2ad0d4555da0b56",
+          "cardId": "C-7c45568a6a79b093af3893e02ff826dc3854a85e8078965057f74186918179f7",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "69c65033416dea77df2458d472a4160a2ee4aecbea37e68d09abd4b09cffaa1e",
+          "cardId": "C-c90307ebbcd6907c7e492684a3c1445e0bffc4afb2c613d55b126d21d6d1d4c3",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "71a87bab0b14ce2993daf31d1e733b52ba51a2bf69dc131ee6e87b4cabc23a9a",
+          "cardId": "C-74f71d3afb2423cd492a38fda6fc5ec3f6bab3d8aee24316ed23a94df4375201",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>div>input",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "72efc3451ff3ee216198dc40c1a57c66965d1203d2aa23959d0a501787dda882",
+          "cardId": "C-c90307ebbcd6907c7e492684a3c1445e0bffc4afb2c613d55b126d21d6d1d4c3",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "9338d680a5fdf70aba969864b1e4738aa3b65ec8ddbe24753e3eab2bd74ed12f",
+          "cardId": "C-c90307ebbcd6907c7e492684a3c1445e0bffc4afb2c613d55b126d21d6d1d4c3",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "9508f765c83beadea47963435887edfc2cd87a54972ff22118804cdfd8d6e9c6",
+          "cardId": "C-7c45568a6a79b093af3893e02ff826dc3854a85e8078965057f74186918179f7",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "a21bf9a91daf4a230a1382bc7ab0e452d9c1fc7518c30c29c7f7e89bcf4de64c",
+          "cardId": "C-77e1795ae21bc58633937dee9424aa55f30cbed567378fb94ec8cf45cf876233",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>div>input",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "a618835c76bb1a17df4ca2a1fbb99218a6ca9edb2533ed4d2f4eb0bcc25eaeaa",
+          "cardId": "C-b4b5d30943ca6e0818b975a7b6d23942885fef0e07c6cfb96bf99859753cbbad",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "b73882c9604d64bf96246b7ee5e9b8f3eea0afc16cf9c2c8f8c2598d88dd4feb",
+          "cardId": "C-7c45568a6a79b093af3893e02ff826dc3854a85e8078965057f74186918179f7",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "ba4e2a0723a1b414df2009dac21b64c8456749467825608117a8359fd0c7971c",
+          "cardId": "C-f638eb9f5c320aa45d975d4f423ed770569d75f5020ac2cb00441193ab2f9927",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "badda1d84f95d6790739511727a7a2b796f9aefbe1a0c3451cb9278e5a007ce6",
+          "cardId": "C-748805a7ef383c6103750091c527b22adbc7ed81d993eea48582b79828192928",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>form>p",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "dd451e8d82535bf1d1f02fb8ce90c0ff74a69744711085e5a643200763adb08c",
+          "cardId": "C-f638eb9f5c320aa45d975d4f423ed770569d75f5020ac2cb00441193ab2f9927",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(1)",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        },
+        {
+          "instanceId": "e730b79988b19c1756ec593119692f13f72d7aa5ae6393afc88fa26681f1ce3a",
+          "cardId": "C-c90307ebbcd6907c7e492684a3c1445e0bffc4afb2c613d55b126d21d6d1d4c3",
+          "atomId": null,
+          "subjectId": "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+          "verdict": "pending",
+          "eligibleUnitIds": [],
+          "matchedUnitId": null
+        }
+      ],
+      "counts": {
+        "referenceUnits": 25,
+        "detectedUnits": 0,
+        "novelAssertions": 0,
+        "falseAssertions": 0,
+        "unresolvedAssertions": 14,
+        "redundantReferenceAssertions": 0
+      },
+      "metrics": {
+        "confirmedReferenceRecall": 0,
+        "referenceRecall": null,
+        "referencePrecision": null,
+        "referenceF1": null,
+        "assertionPrecision": null,
+        "citationSupport": null
+      },
+      "families": [
+        {
+          "specId": "V-01",
+          "detected": 0,
+          "total": 4
+        },
+        {
+          "specId": "V-02",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-03a",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-03b",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-04",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-05",
+          "detected": 0,
+          "total": 4
+        },
+        {
+          "specId": "V-06",
+          "detected": 0,
+          "total": 8
+        },
+        {
+          "specId": "V-08",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-09",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-10",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-11",
+          "detected": 0,
+          "total": 1
+        },
+        {
+          "specId": "V-12",
+          "detected": 0,
+          "total": 1
+        }
+      ]
+    }
+  ]
+}
