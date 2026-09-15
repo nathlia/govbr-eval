@@ -1,5 +1,14 @@
 # govbr-eval
 
+## Current flow scoring
+
+Flow detection now uses a manifest-scoped semantic review package. The battery prepares it;
+`npm run score:fluxo -- --package ... --reviews ... --out ... --require-complete` scores it offline.
+See [semantic-scoring.md](docs/semantic-scoring.md) for the complete workflow, metrics, and limits.
+The old citation-only scorer remains `npm run score:fluxo:legacy` for historical reproduction.
+Existing raw runs and adjudications are unchanged. The workflow descriptions below predate this
+transition where they describe automatic flow F1 from selector/rule overlap.
+
 Evaluation harness of the thesis *"Um Framework de Validação de Interfaces Baseado em Agentes de
 IA e Protocolo MCP"* (UFSM). **The answer key lives here** — deliberately outside both the system
 under test (`govbr-corpus`) and the artifact being evaluated (`govbr-ds-validator`), so no tool or

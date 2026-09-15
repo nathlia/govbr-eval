@@ -771,7 +771,17 @@ if (-not $SkipScore) {
   Write-Step "Pontuacao"
   Push-Location $EvalRoot
   try {
-    if ($IsFluxo) { & npm run score:fluxo } else { & npm run score }
+    if ($IsFluxo) {
+      # Citation overlap no longer produces a final detection score. Close the manifest-selected
+      # review package first; author decisions and offline scoring happen against that package.
+      $semanticReviewDir = Join-Path $EvalRoot "results\semantic-review\$Stamp"
+      & npm run flow:review -- prepare --battery $manifestPath --out $semanticReviewDir --app-url $CorpusUrl
+      if ($LASTEXITCODE -ne 0) { throw "Falha ao preparar o pacote de revisao semantica; artefatos da bateria foram preservados." }
+      Write-Ok "Pacote de revisao: $semanticReviewDir (sem metricas finais antes da revisao)"
+    } else {
+      & npm run score
+      if ($LASTEXITCODE -ne 0) { throw "Falha na pontuacao; artefatos da bateria foram preservados." }
+    }
   } finally {
     Pop-Location
   }

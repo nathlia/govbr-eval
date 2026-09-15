@@ -14,7 +14,8 @@
     "score": "tsx scripts/score-results.ts",
     "score:verbose": "tsx scripts/score-results.ts --verbose",
     "score:json": "tsx scripts/score-results.ts --json",
-    "score:fluxo": "tsx scripts/score-flow.ts",
+    "score:fluxo": "tsx scripts/semantic-flow-cli.ts score",
+    "score:fluxo:legacy": "tsx scripts/score-flow.ts",
     "ancoras": "tsx scripts/score-flow.ts --ancoras",
     "dashboard": "npm --prefix dashboard run dev",
     "typecheck": "tsc --noEmit && tsc --noEmit -p dashboard",
@@ -26,6 +27,8 @@
     "lint:skills": "tsx scripts/lint-skill-contracts.ts",
     "test:pipeline": "pwsh -NoProfile -File pipeline/test-runner-support.ps1",
     "test:flow": "tsx scripts/test-flow-units.ts",
+    "test:semantic": "tsx scripts/test-semantic-flow.ts",
+    "flow:review": "tsx scripts/semantic-flow-cli.ts",
     "adjudicate": "tsx scripts/adjudicate-all.ts",
     "pacote:revisao": "tsx scripts/gerar-pacote-revisao.ts"
   },

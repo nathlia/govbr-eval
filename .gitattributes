@@ -1,0 +1,9 @@
+# O pacote de revisão semântica guarda o sha256 do código que o pontua e dos próprios artefatos
+# (D-39). Com core.autocrlf=true, um checkout no Windows troca LF por CRLF, o hash muda e o scorer
+# recusa o pacote como "Scorer/aliases changed". Os arquivos do hash ficam em LF; o pacote, byte a byte.
+scripts/*.ts text eol=lf
+types.ts text eol=lf
+instrument.json text eol=lf
+checker-aliases.json text eol=lf
+kb-aliases.json text eol=lf
+results/semantic-review/** -text

@@ -17,9 +17,13 @@ import { ROOT } from "./adjudication";
 interface InstrumentFile {
   _meta: Record<string, unknown>;
   fluxo: string;
+  scoring: { fluxo: string; legacy: string; note: string };
 }
 
 const file = JSON.parse(readFileSync(join(ROOT, "instrument.json"), "utf8")) as InstrumentFile;
 
 /** Contrato de medida da suíte de fluxo, ex.: `fluxo-1.1.0`. Gate de compatibilidade. */
 export const FLOW_INSTRUMENT_VERSION = file.fluxo;
+
+/** Scoring semantics can change without pretending an archived collection was rerun. */
+export const FLOW_SCORING_VERSION = file.scoring.fluxo;

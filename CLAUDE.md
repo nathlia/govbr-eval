@@ -7,11 +7,18 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
 - `npm run axe` — axe-core baseline against the corpus at :3000
 - `npm run score` / `score:verbose` — P/R/F1 per tool
 - `npm run dashboard` — Matriz de Detecção at :4000 (axe ▶ button + result views)
-- `ground-truth-fluxo.json` + `npm run score:fluxo` / `npm run ancoras` — suíte de fluxo (D-23/D-25):
-  unidade é **(elemento × regra)**, ancorada por seletor resolvido na página viva, não por seção
-  `TC-*`. É o instrumento da tela realista com violação compartilhada. Suíte separada: seus números
-  nunca se somam nem se promediam com os da suíte `TC-*` nem com os da orgânica (D-13).
-  Ver `docs/ancoragem.md`.
+- `ground-truth-fluxo.json` + `npm run ancoras` — suíte de fluxo (D-23/D-25): ancorada por seletor
+  resolvido na página viva, não por seção `TC-*`. É o instrumento da tela realista com violação
+  compartilhada. Suíte separada: seus números nunca se somam nem se promediam com os da suíte `TC-*`
+  nem com os da orgânica (D-13). Ver `docs/ancoragem.md`.
+  - **v02 (D-39):** `npm run flow:review -- prepare` monta o pacote de revisão da bateria, a autora
+    decide em `reviews.json`, e `npm run score:fluxo` pontua o pacote offline
+    (`flow-semantic-1.0.0`). Seletor e regra só geram candidatos: nenhuma alegação vira crédito sem
+    decisão. Ver `docs/semantic-scoring.md`.
+  - **v01:** `npm run score:fluxo:legacy` — casamento por (elemento × regra), só para reproduzir os
+    números até o D-38. Números v01 e v02 nunca formam uma série.
+  - `instrument.json`, `types.ts`, `checker-aliases.json`, `kb-aliases.json` e os scripts de
+    casamento entram no hash do engine: mudar qualquer um invalida pacotes já preparados.
 - `adjudications.json` — human verdicts on findings that matched no expected unit (D-21).
   `npm run adjudicate` (`--emit` semeia stubs, `--blind` julga sem ver o braço). Um veredito sem
   `rationale` não é aplicado. `npm run score` imprime **piso** e **adjudicado**, nunca um no lugar

@@ -13,5 +13,10 @@
       "nao_incrementado_no_D-37": "A ponte de vocabulário do verificador (checker-aliases.json, gerado de govbr-ds-validator/src/checkers/grounding.ts) entrou no casamento: uma spec ancorada no id do verificador (ds:token-color, ds:token-spacing, ds:structure-*-tag…) aceita também a norma que esse verificador declara. É a metade do D-27 que não tinha sido construída. NÃO incrementa, pelo precedente do D-33: o contrato de COLETA não mudou, e a regressão confirma em vez de presumir — o braço sem oráculo da bateria de 14/09, as execuções arquivadas de fluxo (inclusive as incompatíveis, com --include-incompatible) e toda a suíte TC-* reproduzem exatamente os números anteriores; na TC-* muda só a lista de regras impressa por unidade. Mudam duas execuções do braço com oráculo de 14/09 (20:39 e 20:47), cujas alegações citavam a norma declarada pelo próprio verificador. Duas regras vieram da tabela de grounding, não de execução: específica antes de geral (a regra geral de tokens só é ponte de quem não tem regra própria) e direção única (só o lado esperado é alargado). Nenhuma alegação da bateria cita a regra geral para cor nem um id ds:*, então nenhuma das duas regras moveu número nesta bateria. RESSALVA: o casamento ficou estritamente mais permissivo para specs ancoradas em id de verificador; e a spec ds:token-font do gabarito TC-* não é o id que o verificador reporta (ds:token-font-family), logo não recebe ponte."
     }
   },
-  "fluxo": "fluxo-1.2.0"
+  "fluxo": "fluxo-1.2.0",
+  "scoring": {
+    "fluxo": "flow-semantic-1.0.0",
+    "legacy": "citation-matching-D37",
+    "note": "Collection remains fluxo-1.2.0. Semantic review, atomic assertion accounting and order-invariant assignment are a separate scoring contract. Historical citation scores remain available only through score:fluxo:legacy. Raw runs and previous adjudications are unchanged."
+  }
 }

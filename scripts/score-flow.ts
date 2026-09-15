@@ -197,6 +197,10 @@ function printRun(run: LoadedRun, s: FlowScore): void {
 }
 
 async function main(): Promise<void> {
+  if (!onlyAnchors) {
+    console.log("LEGACY citation scorer: selector/rule matches are not semantic verification.");
+    console.log("For reviewed detection use npm run flow:review -- prepare/score (flow-semantic-1.0.0). Historical numbers below are unchanged.");
+  }
   const gtPath = join(ROOT, GROUND_TRUTH);
   if (!existsSync(gtPath)) {
     console.error(`Falta ${GROUND_TRUTH}. A suíte de fluxo do D-23 ainda não tem gabarito.`);
