@@ -18,6 +18,7 @@ import type {
 import type { ElementRef, Resolution } from "./anchors";
 import { elementId, resolveWithExcept } from "./anchors";
 import { expandSpecRules, normalizeRuleId, rulesOfFinding } from "./units";
+import { normalizeFinding } from "./flow-contract";
 import { applyRecord, findingId, type AdjudicationIndex } from "./adjudication";
 
 export interface FlowUnit {
@@ -228,8 +229,11 @@ interface Candidate {
 
 function candidatesOf(findings: FlowFinding[], res: Resolution): Candidate[] {
   const out: Candidate[] = [];
-  for (const f of findings) {
-    const { rules, description } = rulesOfFinding({ rule: f.rule, description: f.description });
+  for (const raw of findings) {
+    // O casamento legado lê regra e texto. Um achado do contrato novo chega normalizado (observado e
+    // esperado no texto, regra incerta como vazia); o legado passa idêntico, e os números não mudam.
+    const f = normalizeFinding(raw);
+    const { rules, description } = rulesOfFinding({ rule: f.rule ?? "", description: f.description });
     const resolved = res.bySelector.get(f.selector);
     const keys = resolved?.ok ? resolved.keys : [];
     const relatedKeys = new Set(
@@ -425,7 +429,10 @@ export function scoreFlow(
 
 /** Seletores citados pelos achados de um conjunto de execuções. */
 export function selectorsOfRuns(runs: FlowAgentResults[]): string[] {
-  return runs.flatMap(r => (r.findings ?? []).flatMap(f => [f.selector, ...(f.relatedSelectors ?? [])]));
+  return runs.flatMap(r => (r.findings ?? []).flatMap(raw => {
+    const f = normalizeFinding(raw);
+    return [f.selector, ...f.relatedSelectors].filter(Boolean);
+  }));
 }
 
 export type { FlowViolationSpec };

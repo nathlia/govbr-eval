@@ -25,14 +25,20 @@ import { execFileSync } from "node:child_process";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { REFUSED_SUBMISSION, validateFlowReport } from "./flow-contract";
+import type { FlowCollectorRecord } from "../types";
 
-export const SURFACE_VERSION = "surface-1.0.0";
+// 1.1.0: o coletor exige o contrato do achado de fluxo-1.3.0 (scripts/flow-contract.ts).
+// 1.2.0: sem relatório aceito, o desarme arquiva a última recusa como relatório da execução,
+//        sinalizado e sem satisfazer o contrato (recusa-arquivada).
+export const SURFACE_VERSION = "surface-1.2.0";
 export const HOST = "127.0.0.1";
 export const DEFAULT_PORTS = { site: 3100, collector: 4100, control: 4101, proxy: 4102 } as const;
 export type SurfacePorts = { site: number; collector: number; control: number; proxy: number };
 
 const MAX_BODY_BYTES = 2 * 1024 * 1024;
-const RUNNER_OWNED_FIELDS = ["config", "cost"];
+/** Campos que o runner e o coletor escrevem; vindos do agente, são descartados e registrados. */
+const RUNNER_OWNED_FIELDS = ["config", "cost", "collector"];
 
 const sha256 = (data: string | Buffer): string => createHash("sha256").update(data).digest("hex");
 
@@ -266,58 +272,39 @@ export function summarizeEgress(events: EgressEvent[]): { requests: number; allo
 
 export interface SubmissionReceipt {
   runId: string;
+  /**
+   * aceito: relatório no contrato. recusa-arquivada: nada foi aceito e a última recusa virou o
+   * relatório da execução — sinalizado, nunca como se tivesse passado no contrato.
+   */
+  status: "aceito" | typeof REFUSED_SUBMISSION;
   sha256: string;
   acceptedAt: string;
   file: string;
   droppedFields: string[];
+  /** Somente em recusa-arquivada: o motivo da última recusa e o arquivo promovido de `rejected/`. */
+  reason?: string;
+  rejectedFile?: string;
 }
 
-export function validateFlowReport(value: unknown): string[] {
-  const errors: string[] = [];
-  if (!value || typeof value !== "object" || Array.isArray(value)) return ["o corpo precisa ser um objeto JSON"];
-  const report = value as Record<string, unknown>;
-  for (const field of ["timestamp", "model", "appUrl"]) {
-    if (typeof report[field] !== "string" || !(report[field] as string).trim()) errors.push(`${field}: texto obrigatório`);
-  }
-  if (report.scope !== undefined && (!Array.isArray(report.scope) || report.scope.some((s) => typeof s !== "string"))) {
-    errors.push("scope: lista de textos");
-  }
-  if (report.notes !== undefined && typeof report.notes !== "string") errors.push("notes: texto");
-  if (!Array.isArray(report.findings)) {
-    errors.push("findings: lista obrigatória");
-    return errors;
-  }
-  report.findings.forEach((finding, index) => {
-    const at = `findings[${index}]`;
-    if (!finding || typeof finding !== "object" || Array.isArray(finding)) {
-      errors.push(`${at}: objeto`);
-      return;
-    }
-    const f = finding as Record<string, unknown>;
-    for (const field of ["selector", "rule", "description"]) {
-      if (typeof f[field] !== "string" || !(f[field] as string).trim()) errors.push(`${at}.${field}: texto obrigatório`);
-    }
-    if (f.relatedSelectors !== undefined &&
-      (!Array.isArray(f.relatedSelectors) || f.relatedSelectors.some((s) => typeof s !== "string"))) {
-      errors.push(`${at}.relatedSelectors: lista de textos`);
-    }
-  });
-  return errors;
-}
-
+/** O contrato mora em flow-contract.ts: coletor e pacote de revisão leem a mesma definição. */
+export { validateFlowReport };
+interface Refusal { file: string; reason: string; body: string; at: string }
 interface ArmedRun {
   runId: string;
   armedAt: string;
   egressFrom: number;
   receipt: SubmissionReceipt | null;
   rejected: string[];
+  lastRefusal: Refusal | null;
 }
 
 export class Collector {
   private armed: ArmedRun | null = null;
   private rejectedCount = 0;
 
-  constructor(private readonly inboxDir: string, private readonly rejectedDir: string, private readonly egress: EgressEvent[]) {
+  /** `entryUrl` é a tela que a superfície serve: preenche `appUrl` num relatório promovido sem ele. */
+  constructor(private readonly inboxDir: string, private readonly rejectedDir: string, private readonly egress: EgressEvent[],
+    private readonly entryUrl: string | null = null) {
     mkdirSync(inboxDir, { recursive: true });
     mkdirSync(rejectedDir, { recursive: true });
   }
@@ -326,7 +313,7 @@ export class Collector {
     if (!/^[A-Za-z0-9._-]{1,120}$/.test(runId)) throw new Error("runId inválido");
     if (this.armed) throw new Error(`Execução ${this.armed.runId} ainda armada`);
     if (existsSync(join(this.inboxDir, `${runId}.json`))) throw new Error(`runId ${runId} já recebeu relatório`);
-    this.armed = { runId, armedAt: new Date().toISOString(), egressFrom: this.egress.length, receipt: null, rejected: [] };
+    this.armed = { runId, armedAt: new Date().toISOString(), egressFrom: this.egress.length, receipt: null, rejected: [], lastRefusal: null };
     return this.armed;
   }
 
@@ -334,19 +321,66 @@ export class Collector {
     if (!this.armed) throw new Error("Nenhuma execução armada");
     const run = this.armed;
     this.armed = null;
+    // O relatório aceito vence: recusas anteriores a ele ficam só em rejected/.
+    const receipt = run.receipt ?? (run.lastRefusal ? this.promote(run.runId, run.lastRefusal) : null);
     return {
       runId: run.runId,
       armedAt: run.armedAt,
-      receipt: run.receipt,
+      receipt,
       rejected: run.rejected,
       egress: summarizeEgress(this.egress.slice(run.egressFrom)),
     };
   }
 
+  /**
+   * Nenhum relatório aceito e ao menos uma recusa: a última tentativa vira o relatório da execução.
+   * O corpo fica byte a byte em `collector.rawBody` e em `<runId>.raw.txt`; os campos de topo que o
+   * coletor preenche com o que ele mesmo sabe ficam listados em `collector.filled`.
+   */
+  private promote(runId: string, refusal: Refusal): SubmissionReceipt {
+    let parsed: unknown = null;
+    try {
+      parsed = JSON.parse(refusal.body);
+    } catch {
+      parsed = null;
+    }
+    const parseable = Boolean(parsed && typeof parsed === "object" && !Array.isArray(parsed) &&
+      Array.isArray((parsed as Record<string, unknown>).findings));
+    const report: Record<string, unknown> = parseable ? { ...(parsed as Record<string, unknown>) } : { findings: [] };
+    const droppedFields = RUNNER_OWNED_FIELDS.filter((field) => field in report);
+    for (const field of droppedFields) delete report[field];
+    const filled: string[] = parseable ? [] : ["findings"];
+    const fill = (field: string, value: string | null): void => {
+      if (value === null || (typeof report[field] === "string" && (report[field] as string).trim())) return;
+      report[field] = value;
+      filled.push(field);
+    };
+    fill("timestamp", refusal.at);
+    fill("appUrl", this.entryUrl);
+    const promotedAt = new Date().toISOString();
+    const collector: FlowCollectorRecord = {
+      status: REFUSED_SUBMISSION, reason: refusal.reason, rejectedFile: refusal.file, refusedAt: refusal.at,
+      promotedAt, parseable, filled, rawBody: refusal.body, satisfiesContract: false,
+    };
+    report.collector = collector;
+    const canonical = JSON.stringify(report, null, 2) + "\n";
+    const file = `${runId}.json`;
+    writeFileSync(join(this.inboxDir, file), canonical, { flag: "wx" });
+    writeFileSync(join(this.inboxDir, `${runId}.raw.txt`), refusal.body, { flag: "wx" });
+    return {
+      runId, status: REFUSED_SUBMISSION, sha256: sha256(canonical), acceptedAt: promotedAt, file, droppedFields,
+      reason: refusal.reason, rejectedFile: refusal.file,
+    };
+  }
+
   private archiveRejected(reason: string, body: string): string {
+    const at = new Date().toISOString();
     const name = `${this.armed?.runId ?? "sem-execucao"}-${String(++this.rejectedCount).padStart(3, "0")}.json`;
-    writeFileSync(join(this.rejectedDir, name), JSON.stringify({ reason, receivedAt: new Date().toISOString(), body }, null, 2) + "\n");
-    this.armed?.rejected.push(name);
+    writeFileSync(join(this.rejectedDir, name), JSON.stringify({ reason, receivedAt: at, body }, null, 2) + "\n");
+    if (this.armed) {
+      this.armed.rejected.push(name);
+      this.armed.lastRefusal = { file: name, reason, body, at };
+    }
     return name;
   }
 
@@ -382,7 +416,7 @@ export class Collector {
     const file = `${run.runId}.json`;
     writeFileSync(join(this.inboxDir, file), canonical, { flag: "wx" });
     writeFileSync(join(this.inboxDir, `${run.runId}.raw.txt`), body, { flag: "wx" });
-    run.receipt = { runId: run.runId, sha256: hash, acceptedAt: new Date().toISOString(), file, droppedFields };
+    run.receipt = { runId: run.runId, status: "aceito", sha256: hash, acceptedAt: new Date().toISOString(), file, droppedFields };
     return { status: 200, response: { ok: true, receipt: run.receipt } };
   }
 }
@@ -507,7 +541,8 @@ export async function startSurface(options: {
   const collectorHost = `${HOST}:${ports.collector}`;
   const egressLog = join(options.outDir, "egress.ndjson");
   const proxy = createEgressProxy([siteHost, collectorHost], egressLog);
-  const collector = new Collector(join(options.outDir, "inbox"), join(options.outDir, "rejected"), proxy.events);
+  const collector = new Collector(join(options.outDir, "inbox"), join(options.outDir, "rejected"), proxy.events,
+    `http://${siteHost}${site.manifest.entry}`);
 
   const description: SurfaceDescription = {
     version: SURFACE_VERSION,

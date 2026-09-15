@@ -6,9 +6,51 @@
 seletor/regra continua em `score:fluxo:legacy` para reprodução histórica, com aviso explícito.
 Não alteramos execuções arquivadas, gabaritos, protocolos de coleta ou `adjudications.json`.
 
-O contrato de coleta segue `fluxo-1.2.0`; a versão de pontuação mora em `instrument.json.scoring.fluxo`.
+O contrato de coleta é `fluxo-1.3.0`; a versão de pontuação mora em `instrument.json.scoring.fluxo`.
 Essa separação é intencional: reaplicar um scorer não significa que uma execução antiga foi coletada
-sob permissões, evidências ou estados novos.
+sob permissões, evidências ou estados novos. Execuções de `fluxo-1.2.0` continuam empacotáveis,
+rotuladas como legado (ver abaixo), e o `score:fluxo:legacy` segue preso a `scoring.legacyCollection`.
+
+## Contrato do achado e evidência da execução (fluxo-1.3.0)
+
+Cada achado separa o que foi constatado do que deveria valer e diz em que estado e com que evidência:
+
+```json
+{"selector":"#alvo","relatedSelectors":["#participante"],"rule":null,"observed":"…","expected":"…","state":{"viewport":{"width":1280,"height":900},"steps":["…"]},"evidence":[".playwright-mcp/page-….yml"]}
+```
+
+- `rule` é `null` quando o agente declara a atribuição incerta; `description` deixa de ser obrigatório.
+- `state` são a janela e as interações desde o carregamento, nas palavras do agente — nunca um id de
+  estado do gabarito.
+- `evidence` são caminhos ou identificadores devolvidos pelas ferramentas. O coletor recusa relatório
+  fora do contrato (400, com a lista de erros) e arquiva o corpo recusado como veio; o agente pode
+  corrigir e reenviar. Se a execução termina sem nenhum relatório aceito, o desarme arquiva a
+  **última** recusa como relatório dela (`recusa-arquivada`, surface-1.2.0): o corpo segue byte a byte
+  em `collector.rawBody`, o runner avisa e grava `submission.status`/`promotedFrom` no manifesto e
+  `submissionStatus`/`refusedSubmission` em `config`, e os achados entram no pacote como `recusado`,
+  nunca como `achado-2`. Corpo que não é JSON, sem lista `findings` ou com a lista vazia vira um único
+  cartão `malformado` com o texto recusado. Recusa anterior a um relatório aceito fica só em `rejected/`.
+- O runner copia a raiz temporária da execução para `pipeline/logs/<runId>-evidencia/`, com
+  `evidence-index.json` (caminho, bytes, sha256), e grava `evidence` no manifesto e `evidenceDir` /
+  `evidenceIndexSha256` em `config`.
+- Na preparação, cada referência é resolvida contra essa cópia: `encontrado` (exatamente um arquivo,
+  com caminho e sha256), `ausente`, `ambiguo`, `identificador` (sem arquivo) ou `sem-arquivo` (a
+  execução não preservou evidência). O sha256 entra na identidade do cartão, então bytes diferentes
+  nunca reutilizam uma decisão.
+
+Cada cartão carrega o rótulo de contrato do achado, e nenhum é promovido a outro:
+
+| `contract` | Origem | No cartão |
+|---|---|---|
+| `achado-2` | `fluxo-1.3.0` | observado, esperado, janela e interações, evidência resolvida |
+| `achado-1-legado` | até `fluxo-1.2.0` | texto único, sem estado nem evidência da execução; nunca conta como `achado-2` |
+| `recusado` | relatório recusado pelo coletor e arquivado na última tentativa (`recusa-arquivada`) | motivo da recusa em `contrato-incompleto: …`; nunca conta como `achado-2`, mesmo que o achado sozinho esteja completo |
+| `malformado` | qualquer | preservado como veio, com o JSON bruto; a revisão decide pelo texto |
+
+`flags` não mudam a pontuação; orientam a leitura: `regra-incerta`, `varias-regras` (indício de
+alegação composta — decomponha em átomos; o software não divide), `sem-evidencia`,
+`contrato-incompleto: …`, `legado-sem-estado-nem-evidencia` e `malformado`. Um pacote não mistura
+contratos de coleta.
 
 ## Garantias e limites
 
@@ -150,9 +192,12 @@ independente para cada estado não aditivo nem prova que o agente visitou cada v
 
 Não dê crédito a uma observação só porque a reconstrução mostra o defeito. Leia a afirmação e suas
 limitações e, quando necessário, a transcrição original; use `unresolved` se a evidência faltar.
-Captura de estado/evidência por execução e isolamento de rede continuam sendo itens separados do checklist.
+Desde `fluxo-1.3.0` a evidência gravada durante a execução fica preservada e aparece no cartão (ver
+acima); para execuções legadas a reconstrução continua sendo o único apoio visual. O isolamento de rede
+é a superfície de medida (D-40).
 
-O fingerprint do engine inclui código de matching, resolvedor, tipos, instrumento e aliases.
+O fingerprint do engine (`SCORER_FILES` em `semantic-flow.ts`) inclui código de matching, resolvedor,
+contrato do achado (`flow-contract.ts`), tipos, instrumento e aliases.
 Código/aliases diferentes impedem pontuar silenciosamente um pacote antigo. O hash é controle de
 consistência, não assinatura contra adulteração maliciosa.
 
@@ -164,10 +209,14 @@ falha e preserva os artefatos. Uma análise parcial exige manifesto explicitamen
 
 ```powershell
 npm run test:semantic
+npm run test:contract
 npm run test:flow
 npm run typecheck
 npm run test:pipeline
 ```
+
+`test:contract` cobre o coletor, o rótulo legado, a resolução de evidência e os cartões; a cópia da
+evidência pelo runner está em `test:pipeline`.
 
 O teste semântico cobre a reprodução da descrição falsa, permutações, compostos, composições,
 referências relacionais, novos defeitos, reuso/invalidação e CLI offline. O matcher é confrontado

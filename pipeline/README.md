@@ -54,7 +54,7 @@ olhar; nada impedia. Agora cada bateria sobe `scripts/measurement-surface.ts`:
 | Servidor | Porta | Alcançável pela execução | Papel |
 |---|---|---|---|
 | site | 3100 | sim | a tela congelada: só os arquivos do fechamento de `fluxo.html` no build de produção, conferidos por sha256; o resto é 404 |
-| coletor | 4100 | sim | `POST /api/submit` da execução armada; reenvio idêntico devolve o mesmo recibo, relatório diferente é recusado e arquivado |
+| coletor | 4100 | sim | `POST /api/submit` da execução armada; reenvio idêntico devolve o mesmo recibo, relatório diferente é recusado e arquivado; sem relatório aceito, o desarme arquiva a última recusa como relatório da execução (`recusa-arquivada`) |
 | controle | 4101 | não | o runner arma e desarma cada execução; o nome do arquivo sai do `runId`, nunca do texto do agente |
 | proxy | 4102 | — | todo pedido do navegador passa por ele, loopback incluído; só site e coletor seguem, HTTPS é negado |
 
@@ -71,6 +71,24 @@ o log do proxy, em `logs/<stamp>-superficie/`. O manifesto guarda, por execuçã
 coletor e o que o proxy negou enquanto ela esteve armada.
 
 A suíte TC-* ainda salva pelo painel e por isso não roda no v02.
+
+## Evidência da execução (fluxo-1.3.0)
+
+O Playwright MCP grava snapshots e capturas na raiz temporária da execução, e é a eles que o campo
+`evidence` de cada achado se refere. Antes de apagar essa raiz, o runner copia tudo para
+`logs/<runId>-evidencia/` com `evidence-index.json` (caminho, bytes e sha256 de cada arquivo). O passo
+é o mesmo nos dois braços; nenhuma configuração muda entre eles. O manifesto guarda `evidence` (pasta,
+arquivos, bytes e sha256 do índice) e o artefato da execução guarda `config.evidenceDir` e
+`config.evidenceIndexSha256`. O pacote de revisão resolve as referências contra essa cópia.
+
+O coletor (`surface-1.2.0`) exige o contrato do achado de `fluxo-1.3.0` — `observed`, `expected`,
+`rule` (ou `null`), `state` e `evidence` —, responde 400 com a lista de erros e arquiva como veio todo
+corpo recusado. Uma execução que termina sem relatório aceito não some: o desarme arquiva a
+**última** recusa como relatório dela, com `receipt.status = "recusa-arquivada"`, o motivo e o arquivo
+promovido. O runner imprime o aviso, grava no manifesto `submission.status` e
+`submission.promotedFrom` e, no artefato, `config.submissionStatus` e `config.refusedSubmission`; o
+corpo recusado segue byte a byte em `collector.rawBody`. O pacote de revisão rotula esses achados
+`recusado` (ou `malformado`), nunca `achado-2`.
 
 No provider `codex`, o runner localiza primeiro o comando no `PATH` e depois o executável incluído
 no app desktop. Ele exige um login válido e desativa shell, busca web, regras e configuração pessoal.

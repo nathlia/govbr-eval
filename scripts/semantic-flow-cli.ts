@@ -6,8 +6,10 @@ import type { FlowAgentResults, FlowGroundTruth } from "../types";
 import { ROOT } from "./adjudication";
 import { preparePage, resolveOnPage, VIEWPORT_PADRAO } from "./anchors";
 import { buildFlowUnits, selectorsOfGroundTruth, selectorsOfRuns } from "./units-flow";
+import type { EvidenceIndex } from "./flow-contract";
+import { renderReview } from "./semantic-flow-render";
 import {
-  digest, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, validatePackage,
+  SCORER_FILES, digest, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, validatePackage,
   type SemanticPackage, type SemanticReviews,
 } from "./semantic-flow";
 
@@ -28,10 +30,7 @@ function write(path: string, data: unknown): void {
   writeFileSync(path, JSON.stringify(data, null, 2) + "\n", { encoding: "utf8", flag: "wx" });
 }
 function scorerHash(): string {
-  return digest(["scripts/semantic-flow.ts", "scripts/semantic-flow-cli.ts", "scripts/units-flow.ts",
-    "scripts/units.ts", "scripts/anchors.ts", "scripts/instrument.ts", "instrument.json",
-    "types.ts", "checker-aliases.json", "kb-aliases.json"]
-    .map(path => [path, readFileSync(join(ROOT, path), "utf8")]));
+  return digest(SCORER_FILES.map(path => [path, readFileSync(join(ROOT, path), "utf8")]));
 }
 function loadPackage(path: string): SemanticPackage {
   const pkg = read<SemanticPackage>(path);
@@ -39,39 +38,23 @@ function loadPackage(path: string): SemanticPackage {
   if (pkg.context.scorerHash !== scorerHash()) throw new Error("Scorer/aliases changed. Use the pinned code or prepare a new package; do not relabel old scores.");
   return pkg;
 }
-function render(pkg: SemanticPackage, reviews: SemanticReviews): string {
-  const result = scoreSemanticPackage(pkg, reviews);
-  const pending = new Set(result.scores.flatMap(s => s.pendingCardIds));
-  const decisions = new Map(reviews.decisions.map(d => [d.cardId, d]));
-  const lines = ["# Revisão semântica — pacote fechado", "",
-    `Versão: ${pkg.version} · ${pkg.cards.length} cartões únicos · ${pending.size} pendentes`, "",
-    "Este pacote inclui todas as alegações selecionadas, inclusive as que casariam por regra.",
-    "Candidatos são sugestões de âncora, não vereditos. Você continua sendo a adjudicadora.",
-    "Edite reviews.json; depois gere uma NOVA saída com score. Não edite package.json.", "",
-    "As capturas scene-* são reconstruções no momento de preparar o pacote, não prova de que o agente observou o mesmo estado.",
-    "Confira também reportedEvidence, inclusive as limitações declaradas. Use unresolved quando não houver suporte.", "",
-    "Um átomo = um defeito. subjects identifica cada elemento alegado; unitIds contém somente alternativas semanticamente aceitas.",
-    "Cada átomo/elemento vale no máximo uma detecção. Divida alegações compostas; contabilize também as partes falsas.", ""];
-  for (const c of pkg.cards) {
-    const d = decisions.get(c.id);
-    lines.push(`## ${c.id}`, "", `Estado: ${pending.has(c.id) ? "pendente" : "concluído"}`, "",
-      c.description.replace(/^#/gm, "\\#"), "", `Regra declarada: ${c.rule}`, "",
-      "### Sujeitos", "", ...c.subjects.map(s => `- ${JSON.stringify(s.id)} — ${s.label}`), "",
-      "### Unidades candidatas (não são crédito)", "");
-    for (const id of c.candidateUnitIds) {
-      const u = pkg.units.find(u => u.id === id)!;
-      lines.push(`- ${id} — ${u.specId} · ${u.state} · ${u.element.label}: ${u.description}`);
-    }
-    if (!c.candidateUnitIds.length) lines.push("Nenhuma âncora candidata; um achado novo correto continua sendo possível.");
-    lines.push("", "### Evidência declarada", "", "````json", JSON.stringify(c.reportedEvidence, null, 2), "````", "",
-      "### Decisão", "", "````json", JSON.stringify(d, null, 2), "````", "");
-  }
-  return lines.join("\n");
-}
 
 interface Battery {
   execucoes: { archive: string | null; archiveDir: string; exitCode: number; suite: string; arm: string;
-    instrumentVersion?: string; protocolVersion?: string }[];
+    instrumentVersion?: string; protocolVersion?: string; evidence?: { dir?: string | null } | null }[];
+}
+
+/** The run's preserved execution evidence (fluxo-1.3.0). Legacy runs have none and stay without. */
+function loadEvidence(entry: Battery["execucoes"][number]): EvidenceIndex | null {
+  const dir = entry.evidence?.dir?.replaceAll("\\", "/");
+  if (!dir) return null;
+  const indexPath = resolve(ROOT, dir, "evidence-index.json");
+  const rel = relative(ROOT, indexPath);
+  if (rel.startsWith("..") || isAbsolute(rel)) throw new Error("Evidence directory must be inside govbr-eval");
+  if (!existsSync(indexPath)) throw new Error(`Manifest declares evidence without an index: ${dir}`);
+  const index = read<{ files?: EvidenceIndex["files"] }>(indexPath);
+  if (!Array.isArray(index.files)) throw new Error(`Invalid evidence index: ${dir}`);
+  return { dir, files: index.files };
 }
 
 async function prepare(): Promise<void> {
@@ -93,8 +76,13 @@ async function prepare(): Promise<void> {
     if (data.config?.instrumentVersion !== entry.instrumentVersion || data.config?.protocolVersion !== entry.protocolVersion) {
       throw new Error(`Manifest/archive configuration mismatch: ${path}`);
     }
-    return { id: relative(ROOT, path).replaceAll("\\", "/"), data };
+    return { id: relative(ROOT, path).replaceAll("\\", "/"), data, evidence: loadEvidence(entry) };
   });
+  // One collection contract per package: a legacy run next to a current one would read as if both
+  // had been asked the same thing.
+  if (new Set(runs.map(r => r.data.config?.instrumentVersion ?? null)).size > 1) {
+    throw new Error("Battery mixes collection contracts; prepare one package per contract");
+  }
   const gt = read<FlowGroundTruth>(join(ROOT, "ground-truth-fluxo.json"));
   const url = new URL(gt._meta.url, option("app-url", false) ?? "http://localhost:3000").toString();
   for (const run of runs) if (new URL(run.data.appUrl).pathname !== new URL(url).pathname) throw new Error("Run page differs from reference page");
@@ -134,7 +122,7 @@ async function prepare(): Promise<void> {
       writeFileSync(join(out, `scene-${i}.html`), s.html, { flag: "wx" });
       writeFileSync(join(out, `scene-${i}.png`), s.image, { flag: "wx" });
     });
-    writeFileSync(join(out, "review.md"), render(pkg, reviews), { flag: "wx" });
+    writeFileSync(join(out, "review.md"), renderReview(pkg, reviews), { flag: "wx" });
     console.log(`Prepared ${runs.length} runs, ${pkg.cards.length} unique cards, ${units.length} reference units in ${out}`);
     console.log("No verdicts invented; no legacy decisions or raw runs changed.");
   } finally { await browser.close(); }
@@ -149,7 +137,7 @@ async function main(): Promise<void> {
   const reviews = read<SemanticReviews>(resolve(option("reviews")!));
   const out = resolve(option("out")!);
   const result = scoreSemanticPackage(pkg, reviews);
-  if (command === "render") writeFileSync(out, render(pkg, reviews), { flag: "wx" });
+  if (command === "render") writeFileSync(out, renderReview(pkg, reviews), { flag: "wx" });
   else {
     write(out, result);
     for (const s of result.scores) console.log(`${s.runId}: ${s.status}, ${s.counts.detectedUnits}/${s.counts.referenceUnits} confirmed units, ${s.pendingCardIds.length} unresolved cards`);

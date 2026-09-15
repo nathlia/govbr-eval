@@ -13,10 +13,11 @@ avalie a tela inteira.
 
 ## Resultado
 
-Produza um achado por regra e conjunto exato de elementos:
+Produza um achado por defeito corrigível de forma independente: se corrigir uma parte não corrige a
+outra, são dois achados. O mesmo defeito não se repete sob outra regra.
 
 ```json
-{"selector":"#alvo","relatedSelectors":["#participante"],"rule":"wcag:4.1.2","description":"observação e justificativa"}
+{"selector":"#alvo","relatedSelectors":["#participante"],"rule":"wcag:4.1.2","observed":"constatação","expected":"condição","state":{"viewport":{"width":0,"height":0},"steps":["interação"]},"evidence":["referência"]}
 ```
 
 O seletor será executado com `document.querySelectorAll`: ele precisa resolver na página e alcançar
@@ -26,6 +27,11 @@ elementos, mantenha em `selector` o sujeito principal da afirmação e liste som
 participantes efetivamente inspecionados em `relatedSelectors`. Não use um ancestral largo como
 substituto para o elemento observado.
 
+`observed` é o valor, texto, atributo ou comportamento constatado; `expected`, a condição que deveria
+valer. `state` traz a largura e a altura reais da janela, em pixels, e as interações desde o
+carregamento, em ordem. `evidence` lista caminhos ou identificadores devolvidos pelas ferramentas que
+sustentam a observação de cada elemento.
+
 O relatório tem este contrato compacto:
 
 ```json
@@ -33,10 +39,9 @@ O relatório tem este contrato compacto:
 ```
 
 Use o id exato de uma regra ou restrição retornada pelo oráculo quando disponível. Uma regra ampla
-não justifica uma exigência estrutural mais específica: se a restrição não tiver id próprio,
-declare a atribuição incerta em vez de emprestar outro id. Caso contrário, use `emag:<seção>`,
-`wcag:<critério>` ou `ds:<regra>` apenas quando conseguir justificar a atribuição. Não fabrique um id
-plausível.
+não justifica uma exigência estrutural mais específica: não empreste o id de outra restrição. Fora
+disso, use `emag:<seção>`, `wcag:<critério>` ou `ds:<regra>` apenas quando conseguir justificar a
+atribuição; senão, `"rule": null`. Não fabrique um id plausível.
 
 Para salvar, finalize os achados antes de sair da aplicação. Navegue para a origem indicada na
 invocação e faça `POST` no caminho indicado, com `Content-Type: application/json` e o relatório como

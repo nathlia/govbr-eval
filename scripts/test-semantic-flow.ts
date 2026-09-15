@@ -7,7 +7,7 @@ import type { FlowAgentResults } from "../types";
 import type { Resolution } from "./anchors";
 import type { FlowUnit } from "./units-flow";
 import {
-  digest, maximumMatching, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, validatePackage,
+  SCORER_FILES, digest, maximumMatching, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, validatePackage,
   type SemanticDecision, type SemanticPackage, type SemanticReviews, type ReviewAtom,
 } from "./semantic-flow";
 
@@ -25,7 +25,7 @@ const units: FlowUnit[] = ["A", "B"].map(specId => ({ specId, element, participa
   rules: [specId === "A" ? "wcag:1.3.1" : "wcag:3.3.1"], categories: ["form"],
   description: specId === "A" ? "Help text association" : "Error identification", state: "submitted", conditional: true }));
 const finding = (description: string, selector = "#cpf", rule = "wcag:1.3.1") => ({ selector, rule, description });
-function run(findings = [finding("Help text is not associated")]): FlowAgentResults {
+function run(findings: FlowAgentResults["findings"] = [finding("Help text is not associated")]): FlowAgentResults {
   return { model: "fixture", timestamp: "fixed", appUrl: resolution.url, findings };
 }
 function prepare(findings = run().findings, us = units): SemanticPackage {
@@ -232,10 +232,7 @@ test("duplicate report entries do not multiply claims", () => {
 test("offline CLI produces provisional JSON, refuses overwrite, rejects stale engine", () => {
   const root = join(import.meta.dirname, "..");
   const pkg = prepare();
-  pkg.context.scorerHash = digest(["scripts/semantic-flow.ts", "scripts/semantic-flow-cli.ts", "scripts/units-flow.ts",
-    "scripts/units.ts", "scripts/anchors.ts", "scripts/instrument.ts", "instrument.json",
-    "types.ts", "checker-aliases.json", "kb-aliases.json"]
-    .map(path => [path, readFileSync(join(root, path), "utf8")]));
+  pkg.context.scorerHash = digest(SCORER_FILES.map(path => [path, readFileSync(join(root, path), "utf8")]));
   // Re-prepare rather than re-signing a package with altered context.
   const current = prepareSemanticPackage(pkg.context, units, resolution, [{ id: "r1", data: run() }]);
   const dir = mkdtempSync(join(tmpdir(), "semantic-flow-test-"));

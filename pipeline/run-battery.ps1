@@ -294,6 +294,37 @@ function Test-Url($url) {
   }
 }
 
+function Save-RunEvidence([string]$Source, [string]$Destination, [string]$RelativeTo, [string]$RunId) {
+  # fluxo-1.3.0: o Playwright MCP grava snapshots e capturas na raiz descartável da execução, e é a
+  # eles que `evidence` se refere. Copiar tudo antes da limpeza, com índice sha256, faz a referência
+  # sobreviver sem nenhuma configuração diferente entre os braços.
+  New-Item -ItemType Directory -Force -Path $Destination | Out-Null
+  $sourceFull = [System.IO.Path]::GetFullPath($Source).TrimEnd('\', '/')
+  $files = @()
+  if (Test-Path -LiteralPath $sourceFull) {
+    foreach ($file in Get-ChildItem -LiteralPath $sourceFull -Recurse -File -Force) {
+      $rel = $file.FullName.Substring($sourceFull.Length + 1).Replace('\', '/')
+      $target = Join-Path $Destination $rel
+      New-Item -ItemType Directory -Force -Path (Split-Path $target -Parent) | Out-Null
+      Copy-Item -LiteralPath $file.FullName -Destination $target
+      $files += [ordered]@{
+        path = $rel
+        bytes = $file.Length
+        sha256 = (Get-FileHash -LiteralPath $target -Algorithm SHA256).Hash.ToLowerInvariant()
+      }
+    }
+  }
+  $index = Join-Path $Destination "evidence-index.json"
+  [ordered]@{ runId = $RunId; source = "raiz temporária da execução, copiada antes da limpeza"; files = @($files) } |
+    ConvertTo-Json -Depth 5 | Out-File -LiteralPath $index -Encoding utf8
+  return [pscustomobject]@{
+    dir = [System.IO.Path]::GetRelativePath($RelativeTo, $Destination).Replace('\', '/')
+    files = $files.Count
+    bytes = [int64](($files | ForEach-Object { $_.bytes } | Measure-Object -Sum).Sum ?? 0)
+    indexSha256 = (Get-FileHash -LiteralPath $index -Algorithm SHA256).Hash.ToLowerInvariant()
+  }
+}
+
 # ---------------------------------------------------------------- preflight
 Write-Step "Verificações preliminares"
 
@@ -508,6 +539,7 @@ $runIndex = 0
     $settingsFile = Join-Path $PipelineDir "settings-run.json"
     $runId        = "$Stamp-$armName-run$i-$([guid]::NewGuid().ToString('N').Substring(0, 8))"
     $telemetryFile = Join-Path $LogsDir "$runId-mcp.ndjson"
+    $evidenceSummary = $null
     $runMcp = Get-Content -LiteralPath $mcpConfig -Raw | ConvertFrom-Json
     $effectiveMcpConfig = $mcpConfig
     if ($armName -eq "com") {
@@ -604,6 +636,13 @@ $runIndex = 0
       else { $env:GOVBR_VALIDATOR_TELEMETRY_FILE = $previousTelemetryFile }
       Pop-Location
       if ($isolatedRoot) {
+        try {
+          $evidenceSummary = Save-RunEvidence -Source $isolatedRoot -Destination (Join-Path $LogsDir "$runId-evidencia") -RelativeTo $EvalRoot -RunId $runId
+        } catch {
+          Write-Warn2 "não foi possível preservar a evidência da execução: $($_.Exception.Message)"
+        }
+      }
+      if ($isolatedRoot) {
         $resolvedTemp = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
         $resolvedIsolated = [System.IO.Path]::GetFullPath($isolatedRoot)
         if ($resolvedIsolated.StartsWith($resolvedTemp, [System.StringComparison]::OrdinalIgnoreCase)) {
@@ -642,13 +681,24 @@ $runIndex = 0
       Write-Ok "o proxy negou $($submission.egress.denied) pedido(s) durante a execução (no manifesto)"
     }
 
+    # surface-1.2.0: sem relatório aceito, a última recusa vira o relatório da execução. Nunca em
+    # silêncio e nunca como se tivesse passado no contrato: aviso aqui, status no manifesto e em config.
+    $refusedPromoted = [bool]($submission.receipt -and $submission.receipt.status -eq "recusa-arquivada")
     if (-not $submission.receipt) {
-      Write-Warn2 "O coletor não recebeu relatório desta execução ($(@($submission.rejected).Count) recusado(s)). Confira o log."
+      Write-Warn2 "O coletor não recebeu relatório desta execução. Confira o log."
       $arquivo = $null
     } else {
       $arquivo = "agent-$runId.json"
       Copy-Item -LiteralPath (Join-Path $SurfaceDir "inbox\$($submission.receipt.file)") -Destination (Join-Path $RunsDir $arquivo)
-      Write-Ok "veredito arquivado: $arquivo (sha256 $($submission.receipt.sha256.Substring(0, 12)))"
+      if ($refusedPromoted) {
+        $motivoRecusa = [string]$submission.receipt.reason
+        if ($motivoRecusa.Length -gt 300) { $motivoRecusa = $motivoRecusa.Substring(0, 300) + "…" }
+        Write-Warn2 "NENHUM relatório desta execução passou no contrato $InstrumentVersion ($(@($submission.rejected).Count) recusa(s))."
+        Write-Warn2 "A última recusa ($($submission.receipt.rejectedFile)) foi arquivada como relatório da execução, sinalizada para revisão e sem satisfazer o contrato: $arquivo"
+        Write-Warn2 "Motivo: $motivoRecusa"
+      } else {
+        Write-Ok "veredito arquivado: $arquivo (sha256 $($submission.receipt.sha256.Substring(0, 12)))"
+      }
 
       # O modelo que o scorer usa para agrupar vem do arquivo, que o próprio agente escreveu.
       # Quem sabe qual modelo rodou é este script, que passou --model. Divergência aqui agruparia
@@ -699,6 +749,17 @@ $runIndex = 0
         Set-JsonProperty $veredito.config "instrumentVersion" $InstrumentVersion
         Set-JsonProperty $veredito.config "surfaceVersion" $surface.version
         Set-JsonProperty $veredito.config "siteManifestSha256" $surface.siteManifestSha256
+        Set-JsonProperty $veredito.config "submissionStatus" $submission.receipt.status
+        if ($refusedPromoted) {
+          Set-JsonProperty $veredito.config "refusedSubmission" ([pscustomobject]@{
+            rejectedFile = $submission.receipt.rejectedFile
+            reason = $submission.receipt.reason
+          })
+        }
+        if ($evidenceSummary) {
+          Set-JsonProperty $veredito.config "evidenceDir" $evidenceSummary.dir
+          Set-JsonProperty $veredito.config "evidenceIndexSha256" $evidenceSummary.indexSha256
+        }
         if ($armName -eq "com") {
           Set-JsonProperty $veredito.config "validatorVersion" $validatorVersion
         }
@@ -779,8 +840,14 @@ $runIndex = 0
       log          = Split-Path $logFile -Leaf
       stderrLog    = Split-Path $stderrFile -Leaf
       mcpTelemetry = $(if (Test-Path $telemetryFile) { Split-Path $telemetryFile -Leaf } else { $null })
-      submission   = [pscustomobject]@{ receipt = $submission.receipt; rejected = @($submission.rejected) }
+      submission   = [pscustomobject]@{
+        status = $(if (-not $submission.receipt) { "sem-relatorio" } else { $submission.receipt.status })
+        receipt = $submission.receipt
+        rejected = @($submission.rejected)
+        promotedFrom = $(if ($refusedPromoted) { $submission.receipt.rejectedFile } else { $null })
+      }
       egress       = $submission.egress
+      evidence     = $evidenceSummary
       startedAt    = $started.ToUniversalTime().ToString("o")
     }
 

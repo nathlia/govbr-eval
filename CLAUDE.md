@@ -21,7 +21,11 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
     decisão. Ver `docs/semantic-scoring.md`.
   - **v01:** `npm run score:fluxo:legacy` — casamento por (elemento × regra), só para reproduzir os
     números até o D-38. Números v01 e v02 nunca formam uma série.
-  - `instrument.json`, `types.ts`, `checker-aliases.json`, `kb-aliases.json` e os scripts de
+  - **fluxo-1.3.0 (fatia 2):** achado = `observed` + `expected` + `rule` (ou `null`) + `state` +
+    `evidence` (`scripts/flow-contract.ts`, `npm run test:contract`). Execuções até 1.2.0 entram no
+    pacote como `achado-1-legado`, nunca como o contrato novo; a evidência de cada execução fica em
+    `pipeline/logs/<runId>-evidencia/`.
+  - `instrument.json`, `types.ts`, `checker-aliases.json`, `kb-aliases.json`, o contrato do achado e os scripts de
     casamento entram no hash do engine: mudar qualquer um invalida pacotes já preparados.
 - `adjudications.json` — human verdicts on findings that matched no expected unit (D-21).
   `npm run adjudicate` (`--emit` semeia stubs, `--blind` julga sem ver o braço). Um veredito sem

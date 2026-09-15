@@ -7,3 +7,5 @@ instrument.json text eol=lf
 checker-aliases.json text eol=lf
 kb-aliases.json text eol=lf
 results/semantic-review/** -text
+# fluxo-1.3.0: a evidência preservada de cada execução é conferida pelo sha256 do índice.
+pipeline/logs/*-evidencia/** -text

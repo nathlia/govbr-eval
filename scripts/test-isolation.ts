@@ -250,18 +250,40 @@ async function main(): Promise<void> {
     const control = `http://${HOST}:${DEFAULT_PORTS.control}`;
     await fetch(`${control}/control/arm`, { method: "POST", body: JSON.stringify({ runId }) });
     await navigate(playwright, `${collectorOrigin}/`);
-    const report = { timestamp: new Date().toISOString(), model: "teste", appUrl: entryUrl, scope: ["teste"], findings: [{ selector: "#cpf", rule: "wcag:3.3.2", description: "teste de encanamento" }] };
+    const report = { timestamp: new Date().toISOString(), model: "teste", appUrl: entryUrl, scope: ["teste"], findings: [{
+      selector: "#cpf", rule: null, observed: "teste de encanamento", expected: "o relatório chega ao coletor",
+      state: { viewport: { width: 1280, height: 720 }, steps: [] }, evidence: [] }] };
     const post = (body: unknown): string => `async () => { const r = await fetch('/api/submit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: ${JSON.stringify(JSON.stringify(body))} }); return r.status + ' ' + (await r.text()); }`;
     const first = await evaluate(playwright, post(report));
     const again = await evaluate(playwright, post(report));
     const different = await evaluate(playwright, post({ ...report, findings: [] }));
+    const legacyShape = await evaluate(playwright, post({ ...report, findings: [{ selector: "#cpf", rule: "wcag:3.3.2", description: "contrato antigo" }] }));
     check("o coletor aceita o relatório da execução armada", first.startsWith("200") && first.includes('"receipt"'), first.slice(0, 120));
     check("reenvio idêntico devolve o mesmo recibo", again.startsWith("200") && again.includes('"duplicate":true'), again.slice(0, 120));
     check("relatório diferente não sobrescreve o aceito", different.startsWith("409"), different.slice(0, 120));
+    check("relatório no contrato antigo é recusado com erro acionável", legacyShape.startsWith("400") && legacyShape.includes("observed"), legacyShape.slice(0, 120));
     const disarmed = await (await fetch(`${control}/control/disarm`, { method: "POST" })).json() as { receipt: unknown; rejected: string[] };
-    check("o desarme devolve recibo e recusa arquivada", Boolean(disarmed.receipt) && disarmed.rejected.length === 1);
+    check("o desarme devolve recibo e as duas recusas arquivadas", Boolean(disarmed.receipt) && disarmed.rejected.length === 2);
     const unarmed = await evaluate(playwright, post(report));
     check("sem execução armada, nada é aceito", unarmed.startsWith("409"), unarmed.slice(0, 80));
+
+    // Execução que só envia relatório fora do contrato: o desarme arquiva a última recusa como o
+    // relatório dela, sinalizado e sem satisfazer o contrato.
+    const refusedRun = `isolation-recusa-${Date.now()}`;
+    await fetch(`${control}/control/arm`, { method: "POST", body: JSON.stringify({ runId: refusedRun }) });
+    const onlyLegacy = await evaluate(playwright, post({ ...report, findings: [{ selector: "#cpf", rule: "wcag:3.3.2", description: "contrato antigo" }] }));
+    const promotedOutcome = await (await fetch(`${control}/control/disarm`, { method: "POST" })).json() as {
+      receipt: { status?: string; rejectedFile?: string; file?: string } | null; rejected: string[] };
+    const promotedRecord = promotedOutcome.receipt?.file
+      ? JSON.parse(readFileSync(join(work, "surface", "inbox", promotedOutcome.receipt.file), "utf8")) as {
+        collector?: { status?: string; satisfiesContract?: boolean }; findings?: unknown[] }
+      : null;
+    check("sem relatório aceito, a última recusa vira o relatório da execução, sinalizada",
+      onlyLegacy.startsWith("400") && promotedOutcome.receipt?.status === "recusa-arquivada" &&
+      promotedOutcome.receipt.rejectedFile === promotedOutcome.rejected.at(-1) &&
+      promotedRecord?.collector?.status === "recusa-arquivada" && promotedRecord.collector.satisfiesContract === false &&
+      promotedRecord.findings?.length === 1,
+      JSON.stringify(promotedOutcome.receipt).slice(0, 160));
 
     // ── Oráculo: o navegador dele obedece à mesma política.
     const validatorDist = com["govbr-ds-validator"].args?.[0] ?? "";

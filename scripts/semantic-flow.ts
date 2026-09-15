@@ -4,12 +4,21 @@
  * Input packages are immutable; author decisions are separate, context-bound data.
  */
 import { createHash } from "node:crypto";
-import type { FlowAgentResults } from "../types";
+import type { FlowAgentResults, FlowFindingState } from "../types";
 import type { Resolution } from "./anchors";
 import type { FlowUnit } from "./units-flow";
 import { FLOW_SCORING_VERSION } from "./instrument";
+import {
+  normalizeFinding, resolveEvidence, reviewableFindings,
+  type EvidenceIndex, type FindingContract, type ResolvedEvidence,
+} from "./flow-contract";
 
 export const SEMANTIC_SCORING_VERSION = FLOW_SCORING_VERSION;
+
+/** Code, vocabulary and contract that decide what a package means; a different fingerprint refuses it. */
+export const SCORER_FILES = ["scripts/semantic-flow.ts", "scripts/semantic-flow-cli.ts", "scripts/flow-contract.ts",
+  "scripts/units-flow.ts", "scripts/units.ts", "scripts/anchors.ts", "scripts/instrument.ts", "instrument.json",
+  "types.ts", "checker-aliases.json", "kb-aliases.json"];
 
 /** Stable across object insertion order; array order is retained deliberately. */
 export function canonical(value: unknown): string {
@@ -32,8 +41,18 @@ export interface SemanticUnit extends FlowUnit { id: string }
 export interface ReviewCard {
   id: string;
   selector: string;
-  rule: string;
+  /** Null: the agent declared the attribution uncertain (achado-2). */
+  rule: string | null;
+  /** Legacy text; observed + expected for achado-2; raw JSON for a malformed finding. */
   description: string;
+  /** Never promoted: a legacy finding stays legacy inside a current package. */
+  contract: FindingContract;
+  observed: string | null;
+  expected: string | null;
+  state: FlowFindingState | null;
+  /** Reported references resolved against the run's preserved evidence archive. */
+  evidence: ResolvedEvidence[];
+  flags: string[];
   /** Null key is an unresolved selector, not a real element. */
   subjects: { id: string; key: string | null; label: string }[];
   relatedKeys: string[];
@@ -45,6 +64,8 @@ export interface SemanticRun {
   id: string;
   sourceHash: string;
   model: string;
+  /** Collection contract the run was gathered under (config.instrumentVersion). */
+  collection: string | null;
   config: unknown;
   cost: unknown;
   cardIds: string[];
@@ -85,41 +106,47 @@ export interface SemanticReviews {
 export function prepareSemanticPackage(
   context: SemanticPackage["context"],
   units: FlowUnit[], res: Resolution,
-  runs: { id: string; data: FlowAgentResults }[],
+  runs: { id: string; data: FlowAgentResults; evidence?: EvidenceIndex | null }[],
 ): SemanticPackage {
   const semanticUnits = units.map(u => ({ ...u, participants: unique(u.participants), rules: unique(u.rules),
     id: `U-${digest([u.specId, u.element.key, u.state])}` })).sort((a, b) => compare(a.id, b.id));
   requireThat(new Set(semanticUnits.map(u => u.id)).size === units.length, "Duplicate reference unit identity");
   const cardMap = new Map<string, ReviewCard>();
-  const semanticRuns = runs.map(({ id, data }) => {
+  const semanticRuns = runs.map(({ id, data, evidence }) => {
     requireThat(Array.isArray(data.findings), `Missing findings: ${id}`);
-    const cardIds = data.findings.map(f => {
-      requireThat(typeof f.selector === "string" && typeof f.rule === "string"
-        && typeof f.description === "string" && f.description.trim(), `Invalid finding: ${id}`);
+    const cardIds = reviewableFindings(data).map(({ raw, refusal }) => {
+      // A malformed finding becomes a flagged card: never an exception that drops the run, never a
+      // split inferred here. Contract labels are data; nothing upgrades a legacy claim. A report the
+      // collector refused and archived yields `recusado`/`malformado` cards, never `achado-2`.
+      const f = normalizeFinding(raw, refusal);
       const resolved = res.bySelector.get(f.selector);
       const keys = resolved?.ok ? unique(resolved.keys) : [];
       const subjects: ReviewCard["subjects"] = keys.length ? keys.map(key => ({
         id: key, key, label: res.byKey.get(key)?.label ?? key,
       })) : [{ id: `unresolved:${f.selector}`, key: null, label: "Seletor não resolvido" }];
-      const relatedKeys = unique((f.relatedSelectors ?? []).flatMap(s => {
+      const relatedKeys = unique(f.relatedSelectors.flatMap(s => {
         const r = res.bySelector.get(s);
         return r?.ok ? r.keys : [];
       }));
       // Include full finding and run-supplied evidence/limitations. No fuzzy, case-folded,
       // rule-only or cross-state reuse. Grouped subjects remain individually accountable.
       const reportedEvidence = {
-        finding: f, scope: data.scope ?? [],
+        finding: raw, scope: data.scope ?? [],
         notes: (data as FlowAgentResults & { notes?: string }).notes ?? null,
+        ...(data.collector ? { submission: { status: data.collector.status, reason: data.collector.reason,
+          rejectedFile: data.collector.rejectedFile, parseable: data.collector.parseable, filled: data.collector.filled } } : {}),
       };
       const candidateUnitIds = semanticUnits.filter(u => u.participants.some(k =>
         keys.includes(k) || relatedKeys.includes(k))).map(u => u.id);
-      const body = { selector: f.selector, rule: f.rule, description: f.description,
+      const body = { selector: f.selector, rule: f.rule, description: f.description, contract: f.contract,
+        observed: f.observed, expected: f.expected, state: f.state,
+        evidence: resolveEvidence(f.evidence, evidence ?? null), flags: f.flags,
         subjects, relatedKeys, candidateUnitIds, reportedEvidence };
       const cardId = `C-${digest({ context, body, units: semanticUnits })}`;
       cardMap.set(cardId, { id: cardId, ...body });
       return cardId;
     });
-    return { id, sourceHash: digest(data), model: data.model,
+    return { id, sourceHash: digest(data), model: data.model, collection: data.config?.instrumentVersion ?? null,
       config: data.config ?? null, cost: data.cost ?? null, cardIds: unique(cardIds) };
   }).sort((a, b) => compare(a.id, b.id));
   requireThat(new Set(semanticRuns.map(r => r.id)).size === runs.length, "Duplicate run id");

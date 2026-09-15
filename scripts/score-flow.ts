@@ -23,7 +23,7 @@ import {
   type FlowScore, type FlowUnit,
 } from "./units-flow";
 import { normalizeRuleId } from "./units";
-import { FLOW_INSTRUMENT_VERSION } from "./instrument";
+import { FLOW_LEGACY_COLLECTION_VERSION } from "./instrument";
 
 const APP_URL = process.env.APP_URL ?? "http://localhost:3000";
 const GROUND_TRUTH = process.env.FLOW_GT ?? "ground-truth-fluxo.json";
@@ -220,7 +220,8 @@ async function main(): Promise<void> {
 
   const archivedRuns = loadRuns();
   const url = new URL(gt._meta.url, APP_URL).toString();
-  const expectedInstrument = FLOW_INSTRUMENT_VERSION;
+  // O scorer legado só pontua a coleta para a qual foi escrito; fluxo-1.3.0 vai ao pacote semântico.
+  const expectedInstrument = FLOW_LEGACY_COLLECTION_VERSION;
   const incompatibleRuns = archivedRuns.filter(run => run.data.config?.instrumentVersion !== expectedInstrument);
   const runs = includeIncompatible
     ? archivedRuns
@@ -255,7 +256,7 @@ async function main(): Promise<void> {
   if (onlyAnchors) { printAnchors(gt, res, units); return; }
 
   console.log(`\nSuíte de fluxo — ${gt._meta.page} · ${url}`);
-  console.log(`Instrumento: ${FLOW_INSTRUMENT_VERSION}  ·  gabarito: ${gabaritoVersion}`);
+  console.log(`Instrumento: ${FLOW_LEGACY_COLLECTION_VERSION} (coleta legada)  ·  gabarito: ${gabaritoVersion}`);
   console.log("Os dois versionam coisas diferentes: o instrumento é o contrato de coleta e");
   console.log("pontuação, o gabarito é o conjunto de unidades. Números de gabaritos diferentes");
   console.log("não se comparam entre si, ainda que o instrumento seja o mesmo (D-31).");

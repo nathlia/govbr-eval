@@ -27,6 +27,12 @@ requireText("evaluate-screen", screen, [
   '"selector"',
   '"findings"',
   "document.querySelectorAll",
+  // fluxo-1.3.0: o contrato do achado separa observação, expectativa, estado e evidência.
+  '"observed"',
+  '"expected"',
+  '"state"',
+  '"evidence"',
+  '"rule": null',
 ]);
 requireText("evaluate-all", all, [
   "name: evaluate-all",

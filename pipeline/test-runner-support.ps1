@@ -6,7 +6,7 @@ $errors = $null
 $ast = [System.Management.Automation.Language.Parser]::ParseFile($runner, [ref]$tokens, [ref]$errors)
 if ($errors.Count) { throw "run-battery.ps1 has syntax errors." }
 
-$wanted = @("ConvertTo-TomlString", "ConvertTo-TomlArray", "Get-CodexMcpConfigArgs", "Get-CodexLogSummary")
+$wanted = @("ConvertTo-TomlString", "ConvertTo-TomlArray", "Get-CodexMcpConfigArgs", "Get-CodexLogSummary", "Save-RunEvidence")
 $definitions = $ast.FindAll({
   param($node)
   $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $wanted -contains $node.Name
@@ -25,7 +25,11 @@ foreach ($contract in @(
   # D-36: isolamento da execução — raiz descartável, modo restrito, protocolo no prompt.
   '"--restricted"',
   'Push-Location $isolatedRoot',
-  '$prompt = $protocolText + '
+  '$prompt = $protocolText + ',
+  # fluxo-1.3.0: a evidência da raiz descartável é copiada antes da limpeza e registrada.
+  '$evidenceSummary = Save-RunEvidence',
+  '"evidenceDir" $evidenceSummary.dir',
+  'evidence     = $evidenceSummary'
 )) {
   if (-not $runnerText.Contains($contract)) { throw "Missing runner metadata contract: $contract" }
 }
@@ -115,4 +119,38 @@ try {
   Remove-Item -LiteralPath $fixture -Force -ErrorAction SilentlyContinue
 }
 
-Write-Host "test:pipeline - Codex support ok"
+# fluxo-1.3.0: o que a execução gravou na raiz descartável sobrevive à limpeza, com índice sha256.
+$evidenceRoot = Join-Path ([System.IO.Path]::GetTempPath()) "govbr-evidence-test-$([guid]::NewGuid().ToString('N'))"
+try {
+  $source = Join-Path $evidenceRoot "raiz"
+  New-Item -ItemType Directory -Force -Path (Join-Path $source ".playwright-mcp") | Out-Null
+  [System.IO.File]::WriteAllText((Join-Path $source ".playwright-mcp/page-1.yml"), "- button Continuar")
+  [System.IO.File]::WriteAllBytes((Join-Path $source "shot.png"), [byte[]](1, 2, 3))
+  $summary = Save-RunEvidence -Source $source -Destination (Join-Path $evidenceRoot "logs/run-1-evidencia") -RelativeTo $evidenceRoot -RunId "run-1"
+  if ($summary.files -ne 2 -or $summary.bytes -le 0) { throw "Evidence copy must keep every file the run wrote." }
+  if ($summary.dir -ne "logs/run-1-evidencia") { throw "Evidence dir must be relative to the eval root: $($summary.dir)" }
+  $index = Get-Content -LiteralPath (Join-Path $evidenceRoot "logs/run-1-evidencia/evidence-index.json") -Raw | ConvertFrom-Json
+  $page = @($index.files) | Where-Object { $_.path -eq ".playwright-mcp/page-1.yml" }
+  $expectedHash = (Get-FileHash -LiteralPath (Join-Path $source ".playwright-mcp/page-1.yml") -Algorithm SHA256).Hash.ToLowerInvariant()
+  if (-not $page -or $page.sha256 -ne $expectedHash) { throw "Evidence index must carry the sha256 of each preserved file." }
+  if (-not (Test-Path (Join-Path $evidenceRoot "logs/run-1-evidencia/shot.png"))) { throw "Screenshots must be preserved." }
+  $empty = Save-RunEvidence -Source (Join-Path $evidenceRoot "vazia") -Destination (Join-Path $evidenceRoot "logs/run-2-evidencia") -RelativeTo $evidenceRoot -RunId "run-2"
+  if ($empty.files -ne 0 -or -not (Test-Path (Join-Path $evidenceRoot "logs/run-2-evidencia/evidence-index.json"))) {
+    throw "A run without evidence still gets an explicit, empty index."
+  }
+} finally {
+  if (Test-Path -LiteralPath $evidenceRoot) { Remove-Item -LiteralPath $evidenceRoot -Recurse -Force }
+}
+
+# surface-1.2.0: sem relatório aceito, a última recusa vira o relatório da execução — nunca em silêncio.
+foreach ($contract in @(
+  '$submission.receipt.status -eq "recusa-arquivada"',
+  'Set-JsonProperty $veredito.config "submissionStatus" $submission.receipt.status',
+  'Set-JsonProperty $veredito.config "refusedSubmission"',
+  'promotedFrom = ',
+  'Write-Warn2 "NENHUM relatório desta execução passou no contrato'
+)) {
+  if (-not $runnerText.Contains($contract)) { throw "Missing refused-report contract: $contract" }
+}
+
+Write-Host "test:pipeline - Codex support ok; evidence preservation ok; refused-report contract ok"

@@ -17,7 +17,7 @@ import { ROOT } from "./adjudication";
 interface InstrumentFile {
   _meta: Record<string, unknown>;
   fluxo: string;
-  scoring: { fluxo: string; legacy: string; note: string };
+  scoring: { fluxo: string; legacy: string; legacyCollection: string; note: string };
 }
 
 const file = JSON.parse(readFileSync(join(ROOT, "instrument.json"), "utf8")) as InstrumentFile;
@@ -27,3 +27,6 @@ export const FLOW_INSTRUMENT_VERSION = file.fluxo;
 
 /** Scoring semantics can change without pretending an archived collection was rerun. */
 export const FLOW_SCORING_VERSION = file.scoring.fluxo;
+
+/** Coleta que o scorer legado de citação sabe pontuar; ela não sobe junto com a coleta vigente. */
+export const FLOW_LEGACY_COLLECTION_VERSION = file.scoring.legacyCollection;

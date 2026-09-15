@@ -177,6 +177,18 @@ export interface RunConfig {
   validatorVersion?: string;
   /** Versão do instrumento/gabarito aplicada quando o artefato foi produzido. */
   instrumentVersion?: string;
+  /** Superfície de medida da coleta (D-40). */
+  surfaceVersion?: string;
+  /** sha256 do manifesto do site congelado servido à execução (D-40). */
+  siteManifestSha256?: string;
+  /** fluxo-1.3.0: pasta, relativa ao govbr-eval, com a evidência preservada da execução. */
+  evidenceDir?: string;
+  /** fluxo-1.3.0: sha256 do índice dessa evidência. */
+  evidenceIndexSha256?: string;
+  /** surface-1.2.0: `aceito`, ou `recusa-arquivada` quando nada passou no contrato e a última recusa virou o relatório. */
+  submissionStatus?: "aceito" | "recusa-arquivada";
+  /** surface-1.2.0: somente em recusa-arquivada — o arquivo promovido de `rejected/` e o motivo da recusa. */
+  refusedSubmission?: { rejectedFile: string; reason: string };
 }
 
 export interface AgentResults {
@@ -450,8 +462,49 @@ export interface FlowFinding {
    * contexto de ancoragem, mas não multiplicam o achado em novas afirmações.
    */
   relatedSelectors?: string[];
-  rule: RuleId;
-  description: string;
+  /** Norma citada. `null` quando o agente declara a atribuição incerta (fluxo-1.3.0). */
+  rule: RuleId | null;
+  /** Até fluxo-1.2.0, observação e justificativa num texto só. No contrato novo é opcional. */
+  description?: string;
+  /** fluxo-1.3.0: o que a inspeção mostrou — valor, texto, atributo ou comportamento. */
+  observed?: string;
+  /** fluxo-1.3.0: a condição que deveria valer. */
+  expected?: string;
+  /** fluxo-1.3.0: janela e interações que produziram o estado observado. */
+  state?: FlowFindingState;
+  /** fluxo-1.3.0: caminhos ou identificadores devolvidos pelas ferramentas. */
+  evidence?: string[];
+}
+
+/**
+ * Estado em que um achado foi observado, nas palavras do agente: a janela e as interações desde o
+ * carregamento. Nunca um id de estado do gabarito — o agente não conhece nenhum.
+ */
+export interface FlowFindingState {
+  viewport: FlowViewport;
+  steps: string[];
+}
+
+/**
+ * Registro que o coletor grava num relatório promovido (surface-1.2.0): a execução nunca teve
+ * relatório aceito, e a última tentativa recusada virou o relatório dela. Nunca satisfaz o contrato
+ * de coleta; o pacote de revisão rotula seus achados como `recusado` ou `malformado`.
+ */
+export interface FlowCollectorRecord {
+  status: "recusa-arquivada";
+  /** Motivo da última recusa, como o coletor respondeu ao agente. */
+  reason: string;
+  /** Arquivo em `rejected/` que foi promovido. */
+  rejectedFile: string;
+  refusedAt: string;
+  promotedAt: string;
+  /** Objeto JSON com lista `findings`: os achados seguem à revisão, sinalizados. */
+  parseable: boolean;
+  /** Campos de topo preenchidos com o que o próprio coletor sabe (`findings`, `timestamp`, `appUrl`). */
+  filled: string[];
+  /** O corpo recusado, byte a byte. */
+  rawBody: string;
+  satisfiesContract: false;
 }
 
 export interface FlowAgentResults {
@@ -463,4 +516,6 @@ export interface FlowAgentResults {
   /** O que o agente declara ter inspecionado. Proveniência apenas — não entra na pontuação. */
   scope?: string[];
   findings: FlowFinding[];
+  /** Somente em relatório promovido pelo coletor; campo do coletor, descartado se o agente o enviar. */
+  collector?: FlowCollectorRecord;
 }
