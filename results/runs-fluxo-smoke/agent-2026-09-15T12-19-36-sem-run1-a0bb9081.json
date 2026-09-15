@@ -1,0 +1,59 @@
+{
+  "timestamp": "2026-09-15T15:24:04.852Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "página inteira"
+  ],
+  "notes": "Avaliação da página de login gov.br. Testados: estrutura de formulário, elementos interativos, hierarquia de headings, acessibilidade de seções, contraste de cores. Todos os controles de acessibilidade (Alto Contraste, VLibras) estão presentes e acessíveis.",
+  "findings": [
+    {
+      "selector": "input#cpf",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "description": "O elemento input carece de atributo name, impedindo que seu valor seja enviado com o formulário. Recomendação: adicionar name=\"cpf\" para garantir a submissão correta dos dados."
+    },
+    {
+      "selector": "input#cpf",
+      "relatedSelectors": [],
+      "rule": "wcag:3.3.2",
+      "description": "O elemento input possui aria-required=\"true\" mas falta o atributo HTML required. Recomendação: adicionar atributo required para garantir validação semântica e consistência entre ARIA e HTML."
+    },
+    {
+      "selector": "section.painel-institucional",
+      "relatedSelectors": [
+        "#titulo-institucional"
+      ],
+      "rule": "wcag:1.3.1",
+      "description": "A seção usa aria-labelledby apontando para um elemento paragraph (#titulo-institucional) em vez de um elemento heading. Recomendação: usar um elemento heading para melhor semântica."
+    }
+  ],
+  "config": {
+    "agentReportedModel": "haiku",
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.272 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:7ce551a68930e4d63b4666abb6917207cd55afb54e96db5c20c24b08445be5c2",
+    "instrumentVersion": "fluxo-1.2.0",
+    "surfaceVersion": "surface-1.0.0",
+    "siteManifestSha256": "291af07cd06dbb09a975dab028974f02c534154e7f77b7e542a85990509738c7"
+  },
+  "cost": {
+    "startedAt": "2026-09-15T15:21:58.8985908Z",
+    "finishedAt": "2026-09-15T15:24:13.3302605Z",
+    "wallClockSeconds": 134.4,
+    "tokens": 657324,
+    "tokenUsage": {
+      "input": 196,
+      "cacheCreationInput": 27556,
+      "cacheReadInput": 619473,
+      "output": 10099
+    },
+    "totalCostUsd": 0.17038630000000002,
+    "turns": 25
+  }
+}

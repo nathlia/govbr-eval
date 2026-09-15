@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-09-15T15:24:04.852Z",
+  "model": "haiku",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "página inteira"
+  ],
+  "notes": "Avaliação da página de login gov.br. Testados: estrutura de formulário, elementos interativos, hierarquia de headings, acessibilidade de seções, contraste de cores. Todos os controles de acessibilidade (Alto Contraste, VLibras) estão presentes e acessíveis.",
+  "findings": [
+    {
+      "selector": "input#cpf",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "description": "O elemento input carece de atributo name, impedindo que seu valor seja enviado com o formulário. Recomendação: adicionar name=\"cpf\" para garantir a submissão correta dos dados."
+    },
+    {
+      "selector": "input#cpf",
+      "relatedSelectors": [],
+      "rule": "wcag:3.3.2",
+      "description": "O elemento input possui aria-required=\"true\" mas falta o atributo HTML required. Recomendação: adicionar atributo required para garantir validação semântica e consistência entre ARIA e HTML."
+    },
+    {
+      "selector": "section.painel-institucional",
+      "relatedSelectors": [
+        "#titulo-institucional"
+      ],
+      "rule": "wcag:1.3.1",
+      "description": "A seção usa aria-labelledby apontando para um elemento paragraph (#titulo-institucional) em vez de um elemento heading. Recomendação: usar um elemento heading para melhor semântica."
+    }
+  ]
+}
