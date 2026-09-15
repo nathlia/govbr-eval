@@ -1,0 +1,83 @@
+[
+  {
+    "type": "input",
+    "selector": "input[type=\"text\"]",
+    "id": "cpf",
+    "placeholder": "Digite seu CPF",
+    "value": "",
+    "ariaLabel": null,
+    "ariaDescribedBy": null,
+    "name": ""
+  },
+  {
+    "type": "button",
+    "text": "Alto Contraste",
+    "ariaLabel": null,
+    "ariaDescribedBy": null,
+    "disabled": false,
+    "className": "br-button recurso-contraste"
+  },
+  {
+    "type": "button",
+    "text": "VLibras",
+    "ariaLabel": null,
+    "ariaDescribedBy": null,
+    "disabled": false,
+    "className": "br-button recurso-libras"
+  },
+  {
+    "type": "button",
+    "text": "Continuar",
+    "ariaLabel": null,
+    "ariaDescribedBy": null,
+    "disabled": false,
+    "className": "br-button primary acao-continuar"
+  },
+  {
+    "type": "link",
+    "text": "gov.br",
+    "href": "http://127.0.0.1:3100/fluxo",
+    "ariaLabel": "gov.br — página inicial"
+  },
+  {
+    "type": "link",
+    "text": "Login com seu banco",
+    "href": "http://127.0.0.1:3100/fluxo",
+    "ariaLabel": null
+  },
+  {
+    "type": "link",
+    "text": "Login com QR code",
+    "href": "http://127.0.0.1:3100/fluxo",
+    "ariaLabel": null
+  },
+  {
+    "type": "link",
+    "text": "Seu certificado digital",
+    "href": "http://127.0.0.1:3100/fluxo",
+    "ariaLabel": null
+  },
+  {
+    "type": "link",
+    "text": "Seu certificado digital em nuvem",
+    "href": "http://127.0.0.1:3100/fluxo",
+    "ariaLabel": null
+  },
+  {
+    "type": "link",
+    "text": "Está com dúvidas e precisa de ajuda?",
+    "href": "http://127.0.0.1:3100/fluxo",
+    "ariaLabel": null
+  },
+  {
+    "type": "link",
+    "text": "Termo de Uso e Aviso de Privacidade",
+    "href": "http://127.0.0.1:3100/fluxo",
+    "ariaLabel": null
+  },
+  {
+    "type": "label",
+    "text": "CPF",
+    "htmlFor": "cpf"
+  }
+]

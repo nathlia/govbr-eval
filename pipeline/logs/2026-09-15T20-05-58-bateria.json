@@ -1,0 +1,167 @@
+{
+  "stamp": "2026-09-15T20-05-58",
+  "model": "claude-haiku-4-5",
+  "reasoningEffort": "high",
+  "oracleProfile": "combined",
+  "client": "claude-cli",
+  "clientVersion": "2.1.272 (Claude Code)",
+  "scope": "smoke",
+  "runsPerArm": 1,
+  "arms": [
+    "com",
+    "sem"
+  ],
+  "corpusUrl": "http://127.0.0.1:3100",
+  "surface": {
+    "dir": "pipeline/logs/2026-09-15T20-05-58-superficie",
+    "isolationTest": "2026-09-15T20-05-58-isolamento.json",
+    "description": {
+      "version": "surface-1.2.0",
+      "startedAt": "2026-09-15T23:07:02.036Z",
+      "pid": 18744,
+      "entryUrl": "http://127.0.0.1:3100/fluxo.html",
+      "origins": {
+        "site": "http://127.0.0.1:3100",
+        "collector": "http://127.0.0.1:4100"
+      },
+      "proxyServer": "http://127.0.0.1:4102",
+      "control": "http://127.0.0.1:4101",
+      "allowedHosts": [
+        "127.0.0.1:3100",
+        "127.0.0.1:4100"
+      ],
+      "siteManifest": "site-manifest.json",
+      "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+      "corpusCommit": "4767b4146d1f46244e506a0991028164f7903ef7",
+      "corpusDirty": false,
+      "egressLog": "egress.ndjson",
+      "policy": {
+        "boundary": "proxy HTTP de encaminhamento; o navegador do Playwright MCP e o do oráculo apontam para ele (--proxy-server / GOVBR_VALIDATOR_PROXY_SERVER), e o Playwright encaminha o loopback",
+        "allowed": "somente as origens do site congelado e do coletor, por host:porta exato, só HTTP",
+        "https": "negado (CONNECT 403)",
+        "site": "somente os arquivos do manifesto; sem índice, sem fallback, sem /@fs",
+        "collector": "POST /api/submit da execução armada; relatório diferente do aceito é recusado e arquivado"
+      }
+    }
+  },
+  "execucoes": [
+    {
+      "run": 1,
+      "runId": "2026-09-15T20-05-58-com-run1-0956edca",
+      "arm": "com",
+      "armDescricao": "agente + oráculo MCP",
+      "model": "claude-haiku-4-5",
+      "reasoningEffort": "high",
+      "oracleProfile": "combined",
+      "client": "claude-cli",
+      "clientVersion": "2.1.272 (Claude Code)",
+      "protocolVersion": "sha256:69e101abbde1fc7978b04992291b1d701402a19d94e37831f6728b52a044622d",
+      "instrumentVersion": "fluxo-1.3.0",
+      "validatorVersion": "2.5.0",
+      "mcpConfig": "2026-09-15T20-05-58-com-run1-0956edca-mcp-config.json",
+      "prompt": "Avalie a tela em http://127.0.0.1:3100/fluxo.html. Para salvar, navegue ate http://127.0.0.1:4100 e faca POST em /api/submit a partir dali.",
+      "scope": "smoke",
+      "archive": "agent-2026-09-15T20-05-58-com-run1-0956edca.json",
+      "suite": "fluxo",
+      "archiveDir": "results/runs-fluxo-smoke",
+      "exitCode": 0,
+      "wallClockSeconds": 88.6,
+      "log": "2026-09-15T20-05-58-com-run1.json",
+      "stderrLog": "2026-09-15T20-05-58-com-run1.stderr.log",
+      "mcpTelemetry": "2026-09-15T20-05-58-com-run1-0956edca-mcp.ndjson",
+      "submission": {
+        "status": "aceito",
+        "receipt": {
+          "runId": "2026-09-15T20-05-58-com-run1-0956edca",
+          "status": "aceito",
+          "sha256": "b5d776baf38edd5825fc6b8eaba4feaa0daa941dacb0b048ca213fa8e4c0463e",
+          "acceptedAt": "2026-09-15T23:08:14.464Z",
+          "file": "2026-09-15T20-05-58-com-run1-0956edca.json",
+          "droppedFields": []
+        },
+        "rejected": [],
+        "promotedFrom": null
+      },
+      "egress": {
+        "requests": 52,
+        "allowed": 28,
+        "denied": 24,
+        "deniedTargets": [
+          "accounts.google.com:443",
+          "android.clients.google.com:443",
+          "content-autofill.googleapis.com:443",
+          "http://clients2.google.com/time/1/current",
+          "update.googleapis.com:443",
+          "www.google.com:443",
+          "www.gstatic.com:443"
+        ]
+      },
+      "evidence": {
+        "dir": "pipeline/logs/2026-09-15T20-05-58-com-run1-0956edca-evidencia",
+        "files": 7,
+        "bytes": 131364,
+        "indexSha256": "f8758d675ade7c78fa2314088cf5eb0bfc9e3b4be6237460e31ef1a58d13ee39"
+      },
+      "startedAt": "2026-09-15T23:07:02.6559715Z"
+    },
+    {
+      "run": 2,
+      "runId": "2026-09-15T20-05-58-sem-run1-ebc23663",
+      "arm": "sem",
+      "armDescricao": "agente sem oráculo (ablação)",
+      "model": "claude-haiku-4-5",
+      "reasoningEffort": "high",
+      "oracleProfile": "none",
+      "client": "claude-cli",
+      "clientVersion": "2.1.272 (Claude Code)",
+      "protocolVersion": "sha256:69e101abbde1fc7978b04992291b1d701402a19d94e37831f6728b52a044622d",
+      "instrumentVersion": "fluxo-1.3.0",
+      "validatorVersion": null,
+      "mcpConfig": "mcp-sem-oraculo.json",
+      "prompt": "Avalie a tela em http://127.0.0.1:3100/fluxo.html. Para salvar, navegue ate http://127.0.0.1:4100 e faca POST em /api/submit a partir dali.",
+      "scope": "smoke",
+      "archive": "agent-2026-09-15T20-05-58-sem-run1-ebc23663.json",
+      "suite": "fluxo",
+      "archiveDir": "results/runs-fluxo-smoke",
+      "exitCode": 0,
+      "wallClockSeconds": 225.7,
+      "log": "2026-09-15T20-05-58-sem-run1.json",
+      "stderrLog": "2026-09-15T20-05-58-sem-run1.stderr.log",
+      "mcpTelemetry": null,
+      "submission": {
+        "status": "aceito",
+        "receipt": {
+          "runId": "2026-09-15T20-05-58-sem-run1-ebc23663",
+          "status": "aceito",
+          "sha256": "4ae60c2e5ae37939b69f03f05f8514001e5eacdb8234882d3890e6e9bc1a3c7b",
+          "acceptedAt": "2026-09-15T23:12:02.82Z",
+          "file": "2026-09-15T20-05-58-sem-run1-ebc23663.json",
+          "droppedFields": []
+        },
+        "rejected": [],
+        "promotedFrom": null
+      },
+      "egress": {
+        "requests": 49,
+        "allowed": 16,
+        "denied": 33,
+        "deniedTargets": [
+          "accounts.google.com:443",
+          "android.clients.google.com:443",
+          "content-autofill.googleapis.com:443",
+          "http://clients2.google.com/time/1/current",
+          "update.googleapis.com:443",
+          "www.google.com:443",
+          "www.gstatic.com:443"
+        ]
+      },
+      "evidence": {
+        "dir": "pipeline/logs/2026-09-15T20-05-58-sem-run1-ebc23663-evidencia",
+        "files": 16,
+        "bytes": 389282,
+        "indexSha256": "895e1af480b585a823ddc936d60bf4c645c3311e1355eb645cbddf8f0ccf35d7"
+      },
+      "startedAt": "2026-09-15T23:08:31.6079977Z"
+    }
+  ]
+}

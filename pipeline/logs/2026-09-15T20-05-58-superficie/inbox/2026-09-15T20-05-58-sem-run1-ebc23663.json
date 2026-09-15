@@ -1,0 +1,81 @@
+{
+  "timestamp": "2026-09-15T23:12:02.817Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "fluxo.html - login screen"
+  ],
+  "notes": "Navegação por teclado funcional. Estrutura semântica adequada com header, main, e landmarks. Formulário com validação client-side.",
+  "findings": [
+    {
+      "selector": "input#cpf",
+      "relatedSelectors": [
+        "label[for='cpf']"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "O input tem aria-required='true' mas não possui o atributo HTML required",
+      "expected": "Inputs com aria-required='true' devem também ter o atributo required do HTML para garantir consistência entre HTMLIntegration e ARIA",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "navegação para http://127.0.0.1:3100/fluxo.html"
+        ]
+      },
+      "evidence": [
+        "aria-required='true' presente",
+        "required attribute ausente"
+      ]
+    },
+    {
+      "selector": ".painel-institucional",
+      "relatedSelectors": [
+        "#titulo-institucional"
+      ],
+      "rule": "wcag:1.3.1",
+      "observed": "Elemento com aria-labelledby='titulo-institucional' referencia um elemento <p> em vez de um heading (h1-h6)",
+      "expected": "aria-labelledby deve referenciar elementos semanticamente apropriados como headings, labels, ou elementos com role de heading",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "navegação para http://127.0.0.1:3100/fluxo.html",
+          "inspecção estrutura DOM"
+        ]
+      },
+      "evidence": [
+        "aria-labelledby='titulo-institucional'",
+        "elemento #titulo-institucional é um <p>",
+        "não é um heading ou elemento apropriado"
+      ]
+    },
+    {
+      "selector": "input#cpf",
+      "relatedSelectors": [
+        "label[for='cpf']"
+      ],
+      "rule": null,
+      "observed": "Não há indicador visual (asterisco, ícone ou texto) indicando que o campo CPF é obrigatório",
+      "expected": "Campos obrigatórios devem ter um indicador visual claro para usuários que não podem ou não preferem usar leitores de tela",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "navegação para http://127.0.0.1:3100/fluxo.html",
+          "inspeção label e campo"
+        ]
+      },
+      "evidence": [
+        "aria-required='true' presente no input",
+        "nenhum asterisco ou marcação visual no label",
+        "nenhuma documentação de campos obrigatórios na página"
+      ]
+    }
+  ]
+}
