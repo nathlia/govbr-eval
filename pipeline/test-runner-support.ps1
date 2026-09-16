@@ -6,7 +6,7 @@ $errors = $null
 $ast = [System.Management.Automation.Language.Parser]::ParseFile($runner, [ref]$tokens, [ref]$errors)
 if ($errors.Count) { throw "run-battery.ps1 has syntax errors." }
 
-$wanted = @("ConvertTo-TomlString", "ConvertTo-TomlArray", "Get-CodexMcpConfigArgs", "Get-CodexLogSummary", "Save-RunEvidence")
+$wanted = @("ConvertTo-TomlString", "ConvertTo-TomlArray", "Get-CodexMcpConfigArgs", "Get-CodexLogSummary", "Save-RunEvidence", "Complete-RunEvidence")
 $definitions = $ast.FindAll({
   param($node)
   $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $wanted -contains $node.Name
@@ -138,6 +138,23 @@ try {
   if ($empty.files -ne 0 -or -not (Test-Path (Join-Path $evidenceRoot "logs/run-2-evidencia/evidence-index.json"))) {
     throw "A run without evidence still gets an explicit, empty index."
   }
+  # A failure after the first copied file must keep the entire source for recovery.
+  $failedSource = Join-Path $evidenceRoot "failure-source"
+  $failedDestination = Join-Path $evidenceRoot "logs/failure"
+  New-Item -ItemType Directory -Force -Path $failedSource,$failedDestination | Out-Null
+  [System.IO.File]::WriteAllText((Join-Path $failedSource "a.txt"), "copied before failure")
+  New-Item -ItemType Directory -Force -Path (Join-Path $failedSource "nested") | Out-Null
+  [System.IO.File]::WriteAllText((Join-Path $failedSource "nested/b.txt"), "must survive")
+  [System.IO.File]::WriteAllText((Join-Path $failedDestination "nested"), "blocks the second destination directory")
+  $failed = Complete-RunEvidence -Source $failedSource -Destination $failedDestination -RelativeTo $evidenceRoot -RunId "failed"
+  if ($failed.status -ne "failed" -or -not $failed.error -or -not $failed.recoverySource) { throw "Failure needs structured recovery metadata." }
+  if (-not (Test-Path (Join-Path $failedDestination "a.txt"))) { throw "Fixture must fail after a partial copy." }
+  if (-not (Test-Path (Join-Path $failedSource "nested/b.txt"))) { throw "Never delete source evidence after a partial copy failure." }
+  $successSource = Join-Path $evidenceRoot "success-source"
+  New-Item -ItemType Directory -Force -Path $successSource | Out-Null
+  [System.IO.File]::WriteAllText((Join-Path $successSource "ok.txt"), "preserve then clean")
+  $preserved = Complete-RunEvidence -Source $successSource -Destination (Join-Path $evidenceRoot "logs/success") -RelativeTo $evidenceRoot -RunId "success"
+  if ($preserved.status -ne "preserved" -or (Test-Path $successSource)) { throw "Successful verified copy should clean its temporary source." }
 } finally {
   if (Test-Path -LiteralPath $evidenceRoot) { Remove-Item -LiteralPath $evidenceRoot -Recurse -Force }
 }

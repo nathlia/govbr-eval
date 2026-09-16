@@ -306,11 +306,16 @@ function Save-RunEvidence([string]$Source, [string]$Destination, [string]$Relati
       $rel = $file.FullName.Substring($sourceFull.Length + 1).Replace('\', '/')
       $target = Join-Path $Destination $rel
       New-Item -ItemType Directory -Force -Path (Split-Path $target -Parent) | Out-Null
+      $sourceHash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash
       Copy-Item -LiteralPath $file.FullName -Destination $target
+      $targetHash = (Get-FileHash -LiteralPath $target -Algorithm SHA256).Hash
+      if ($sourceHash -ne $targetHash -or (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash -ne $sourceHash) {
+        throw "Evidência mudou durante a cópia: $rel"
+      }
       $files += [ordered]@{
         path = $rel
         bytes = $file.Length
-        sha256 = (Get-FileHash -LiteralPath $target -Algorithm SHA256).Hash.ToLowerInvariant()
+        sha256 = $targetHash.ToLowerInvariant()
       }
     }
   }
@@ -318,11 +323,30 @@ function Save-RunEvidence([string]$Source, [string]$Destination, [string]$Relati
   [ordered]@{ runId = $RunId; source = "raiz temporária da execução, copiada antes da limpeza"; files = @($files) } |
     ConvertTo-Json -Depth 5 | Out-File -LiteralPath $index -Encoding utf8
   return [pscustomobject]@{
+    status = "preserved"
     dir = [System.IO.Path]::GetRelativePath($RelativeTo, $Destination).Replace('\', '/')
     files = $files.Count
     bytes = [int64](($files | ForEach-Object { $_.bytes } | Measure-Object -Sum).Sum ?? 0)
     indexSha256 = (Get-FileHash -LiteralPath $index -Algorithm SHA256).Hash.ToLowerInvariant()
   }
+}
+
+function Complete-RunEvidence([string]$Source, [string]$Destination, [string]$RelativeTo, [string]$RunId) {
+  try {
+    if (-not (Test-Path -LiteralPath $Source -PathType Container)) { throw "Raiz da evidência ausente: $Source" }
+    $evidenceSummary = Save-RunEvidence -Source $Source -Destination $Destination -RelativeTo $RelativeTo -RunId $RunId
+  } catch {
+    # Retain the source for recovery, and let the caller write the manifest before aborting.
+    return [pscustomobject]@{ status = "failed"; error = $_.Exception.Message
+      recoverySource = [System.IO.Path]::GetFullPath($Source)
+      dir = [System.IO.Path]::GetRelativePath($RelativeTo, $Destination).Replace('\', '/') }
+  }
+  $resolvedTemp = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath()).TrimEnd('\', '/') + [System.IO.Path]::DirectorySeparatorChar
+  $resolvedSource = [System.IO.Path]::GetFullPath($Source)
+  if ($resolvedSource.StartsWith($resolvedTemp, [System.StringComparison]::OrdinalIgnoreCase)) {
+    Remove-Item -LiteralPath $resolvedSource -Recurse -Force -ErrorAction SilentlyContinue
+  }
+  return $evidenceSummary
 }
 
 # ---------------------------------------------------------------- preflight
@@ -636,17 +660,9 @@ $runIndex = 0
       else { $env:GOVBR_VALIDATOR_TELEMETRY_FILE = $previousTelemetryFile }
       Pop-Location
       if ($isolatedRoot) {
-        try {
-          $evidenceSummary = Save-RunEvidence -Source $isolatedRoot -Destination (Join-Path $LogsDir "$runId-evidencia") -RelativeTo $EvalRoot -RunId $runId
-        } catch {
-          Write-Warn2 "não foi possível preservar a evidência da execução: $($_.Exception.Message)"
-        }
-      }
-      if ($isolatedRoot) {
-        $resolvedTemp = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
-        $resolvedIsolated = [System.IO.Path]::GetFullPath($isolatedRoot)
-        if ($resolvedIsolated.StartsWith($resolvedTemp, [System.StringComparison]::OrdinalIgnoreCase)) {
-          Remove-Item -LiteralPath $resolvedIsolated -Recurse -Force -ErrorAction SilentlyContinue
+        $evidenceSummary = Complete-RunEvidence -Source $isolatedRoot -Destination (Join-Path $LogsDir "$runId-evidencia") -RelativeTo $EvalRoot -RunId $runId
+        if ($evidenceSummary.status -eq "failed") {
+          Write-Warn2 "Falha ao preservar evidência. Origem retida: $($evidenceSummary.recoverySource). $($evidenceSummary.error)"
         }
       }
     }
@@ -756,7 +772,7 @@ $runIndex = 0
             reason = $submission.receipt.reason
           })
         }
-        if ($evidenceSummary) {
+        if ($evidenceSummary -and $evidenceSummary.status -eq "preserved") {
           Set-JsonProperty $veredito.config "evidenceDir" $evidenceSummary.dir
           Set-JsonProperty $veredito.config "evidenceIndexSha256" $evidenceSummary.indexSha256
         }
@@ -848,11 +864,13 @@ $runIndex = 0
       }
       egress       = $submission.egress
       evidence     = $evidenceSummary
+      collectionStatus = $(if ($evidenceSummary -and $evidenceSummary.status -eq "failed") { "evidence-failed" } else { "collected" })
       startedAt    = $started.ToUniversalTime().ToString("o")
     }
 
     # Abortar só depois da restauração e do manifesto: parar antes deixaria o agent-results.json
     # sobrescrito pelo POST desta execução e a bateria sem registro do que chegou a rodar.
+    if ($evidenceSummary -and $evidenceSummary.status -eq "failed") { break bateria }
     if ($limiteAtingido) {
       Write-Warn2 "LIMITE DE GASTO ATINGIDO — bateria interrompida na execução $runIndex de $total."
       Write-Warn2 $motivo
@@ -886,6 +904,10 @@ $manifestPath = Join-Path $LogsDir "$Stamp-bateria.json"
 
 Write-Step "Manifesto da bateria"
 Write-Ok $manifestPath
+
+if (@($manifest | Where-Object { $_.collectionStatus -eq "evidence-failed" }).Count -gt 0) {
+  throw "Bateria interrompida por falha na preservação da evidência. Manifesto: $manifestPath. A origem foi retida para recuperação."
+}
 
 # ---------------------------------------------------------------- baselines
 if (-not $SkipBaselines) {

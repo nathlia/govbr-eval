@@ -17,6 +17,7 @@ export const SEMANTIC_SCORING_VERSION = FLOW_SCORING_VERSION;
 
 /** Code, vocabulary and contract that decide what a package means; a different fingerprint refuses it. */
 export const SCORER_FILES = ["scripts/semantic-flow.ts", "scripts/semantic-flow-cli.ts", "scripts/flow-contract.ts",
+  "scripts/evidence-integrity.ts",
   "scripts/units-flow.ts", "scripts/units.ts", "scripts/anchors.ts", "scripts/instrument.ts", "instrument.json",
   "types.ts", "checker-aliases.json", "kb-aliases.json"];
 
@@ -52,6 +53,8 @@ export interface ReviewCard {
   state: FlowFindingState | null;
   /** Reported references resolved against the run's preserved evidence archive. */
   evidence: ResolvedEvidence[];
+  /** Unknown/opaque evidence cannot transfer approval to another execution. */
+  binding: { collection: string | null; build: string | null; protocol: string | null; runScope: string | null };
   flags: string[];
   /** Null key is an unresolved selector, not a real element. */
   subjects: { id: string; key: string | null; label: string }[];
@@ -69,6 +72,7 @@ export interface SemanticRun {
   config: unknown;
   cost: unknown;
   cardIds: string[];
+  evidenceIndex: EvidenceIndex | null;
 }
 export interface SemanticPackage {
   version: typeof SEMANTIC_SCORING_VERSION;
@@ -87,6 +91,8 @@ export interface ReviewAtom {
   /** Semantically approved alternatives. One instance can earn at most one unit. */
   unitIds: string[];
   citation: "supported" | "unsupported" | "uncertain";
+  /** Explicit reviewer equivalence, never inferred from similar text or rule aliases. */
+  duplicateOf?: { cardId: string; atomId: string };
 }
 export interface SemanticDecision {
   cardId: string;
@@ -138,16 +144,26 @@ export function prepareSemanticPackage(
       };
       const candidateUnitIds = semanticUnits.filter(u => u.participants.some(k =>
         keys.includes(k) || relatedKeys.includes(k))).map(u => u.id);
+      const resolvedEvidence = resolveEvidence(f.evidence, evidence ?? null);
+      const build = data.config?.siteManifestSha256 ?? null;
+      const reusable = Boolean(build && /^[a-f0-9]{64}$/.test(build) && evidence?.integrity && f.state &&
+        data.config?.instrumentVersion && data.config?.protocolVersion &&
+        f.contract === "achado-2" && resolvedEvidence.length &&
+        resolvedEvidence.every(e => e.status === "encontrado" && e.sha256));
+      const binding = { collection: data.config?.instrumentVersion ?? null, build,
+        protocol: data.config?.protocolVersion ?? null,
+        runScope: reusable ? null : digest({ id, timestamp: data.timestamp, page: data.appUrl,
+          evidence: evidence ?? null, indexHash: data.config?.evidenceIndexSha256 ?? null }) };
       const body = { selector: f.selector, rule: f.rule, description: f.description, contract: f.contract,
         observed: f.observed, expected: f.expected, state: f.state,
-        evidence: resolveEvidence(f.evidence, evidence ?? null), flags: f.flags,
+        evidence: resolvedEvidence, binding, flags: f.flags,
         subjects, relatedKeys, candidateUnitIds, reportedEvidence };
       const cardId = `C-${digest({ context, body, units: semanticUnits })}`;
       cardMap.set(cardId, { id: cardId, ...body });
       return cardId;
     });
     return { id, sourceHash: digest(data), model: data.model, collection: data.config?.instrumentVersion ?? null,
-      config: data.config ?? null, cost: data.cost ?? null, cardIds: unique(cardIds) };
+      config: data.config ?? null, cost: data.cost ?? null, cardIds: unique(cardIds), evidenceIndex: evidence ?? null };
   }).sort((a, b) => compare(a.id, b.id));
   requireThat(new Set(semanticRuns.map(r => r.id)).size === runs.length, "Duplicate run id");
   const body: Omit<SemanticPackage, "packageHash"> = { version: SEMANTIC_SCORING_VERSION, context, units: semanticUnits,
@@ -209,6 +225,8 @@ function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<stri
     requireThat(a.id.trim() && a.text.trim() && a.subjects.length > 0, `Incomplete atom: ${card.id}`);
     requireThat(["reference", "novel", "false", "unresolved"].includes(a.verdict), `Invalid verdict: ${a.id}`);
     requireThat(["supported", "unsupported", "uncertain"].includes(a.citation), `Invalid citation: ${a.id}`);
+    if (a.duplicateOf !== undefined) requireThat(a.duplicateOf && typeof a.duplicateOf.cardId === "string" &&
+      typeof a.duplicateOf.atomId === "string" && a.verdict !== "unresolved", `Invalid duplicate link: ${a.id}`);
     requireThat(unique(a.subjects).length === a.subjects.length, `Repeated subject: ${a.id}`);
     requireThat(unique(a.unitIds).length === a.unitIds.length, `Repeated unit: ${a.id}`);
     requireThat(a.verdict === "reference" ? a.unitIds.length > 0 : a.unitIds.length === 0,
@@ -256,10 +274,11 @@ export interface SemanticRunScore {
   missedUnitIds: string[];
   pendingCardIds: string[];
   assertions: { instanceId: string; cardId: string; atomId: string | null; subjectId: string;
-    verdict: ReviewAtom["verdict"] | "pending" | "redundant-reference";
+    verdict: ReviewAtom["verdict"] | "pending" | "redundant-reference" | "duplicate";
+    duplicateOf?: string;
     eligibleUnitIds: string[]; matchedUnitId: string | null }[];
   counts: { referenceUnits: number; detectedUnits: number; novelAssertions: number; falseAssertions: number;
-    unresolvedAssertions: number; redundantReferenceAssertions: number };
+    unresolvedAssertions: number; redundantReferenceAssertions: number; duplicateAssertions: number };
   /** Reference F1 excludes correct novel discoveries; full-report precision is separate. */
   metrics: { confirmedReferenceRecall: number | null; referenceRecall: number | null;
     referencePrecision: number | null; referenceF1: number | null;
@@ -283,11 +302,31 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
     decisions.set(d.cardId, d);
   }
   const scores = pkg.runs.map(run => {
+    // Resolve duplicate chains inside EACH run. A decision from another run cannot erase a claim.
+    const canonicalAtom = (cardId: string, atom: ReviewAtom, seen = new Set<string>()): { cardId: string; atom: ReviewAtom } => {
+      const key = canonical([cardId, atom.id]);
+      requireThat(!seen.has(key), `Cyclic duplicate link: ${cardId}/${atom.id}`);
+      seen.add(key);
+      if (!atom.duplicateOf) return { cardId, atom };
+      const targetCard = cards.get(atom.duplicateOf.cardId);
+      const targetDecision = decisions.get(atom.duplicateOf.cardId);
+      const target = targetDecision?.atoms.find(a => a.id === atom.duplicateOf!.atomId);
+      requireThat(run.cardIds.includes(atom.duplicateOf.cardId) && targetCard && target && targetDecision?.status === "reviewed",
+        `Duplicate target is not reviewed in this run: ${key}`);
+      const sourceCard = cards.get(cardId)!;
+      requireThat(atom.verdict === target.verdict && canonical(unique(atom.unitIds)) === canonical(unique(target.unitIds)) &&
+        atom.subjects.every(s => target.subjects.includes(s)) &&
+        canonical(sourceCard.state) === canonical(targetCard.state) &&
+        canonical(sourceCard.relatedKeys) === canonical(targetCard.relatedKeys) &&
+        sourceCard.binding.build === targetCard.binding.build,
+        `Incompatible duplicate target (truth/subjects/state/units): ${key}`);
+      return canonicalAtom(atom.duplicateOf.cardId, target, seen);
+    };
     const edges = new Map<string, string[]>();
     const sources = new Map<string, { cardId: string; atomId: string; citation: string }>();
     const pendingCardIds: string[] = [];
     const assertions: SemanticRunScore["assertions"] = [];
-    let novel = 0, incorrect = 0, unresolved = 0, citationKnown = 0, citationSupported = 0;
+    let novel = 0, incorrect = 0, unresolved = 0, citationKnown = 0, citationSupported = 0, duplicates = 0;
     for (const id of unique(run.cardIds)) {
       const card = cards.get(id)!;
       const decision = decisions.get(id);
@@ -300,12 +339,17 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
         continue;
       }
       for (const atom of [...decision.atoms].sort((a, b) => compare(a.id, b.id))) {
+        const original = canonicalAtom(id, atom);
         for (const subjectId of unique(atom.subjects)) {
           const instanceId = digest([id, atom.id, subjectId]);
           const assertion: SemanticRunScore["assertions"][number] = { instanceId, cardId: id,
             atomId: atom.id, subjectId, verdict: atom.verdict, eligibleUnitIds: [], matchedUnitId: null };
           assertions.push(assertion);
-          if (atom.verdict === "reference") {
+          if (atom.duplicateOf) {
+            assertion.verdict = "duplicate";
+            assertion.duplicateOf = digest([original.cardId, original.atom.id, subjectId]);
+            duplicates++;
+          } else if (atom.verdict === "reference") {
             const subject = card.subjects.find(s => s.id === subjectId)!;
             edges.set(instanceId, atom.unitIds.filter(uid => anchored(subject, card, units.get(uid)!)));
             assertion.eligibleUnitIds = unique(edges.get(instanceId)!);
@@ -345,7 +389,7 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
       assertions: assertions.sort((a, b) => compare(a.instanceId, b.instanceId)),
       counts: { referenceUnits: pkg.units.length, detectedUnits: matched.length,
         novelAssertions: novel, falseAssertions: incorrect, unresolvedAssertions: unresolved,
-        redundantReferenceAssertions: edges.size - matched.length },
+        redundantReferenceAssertions: edges.size - matched.length, duplicateAssertions: duplicates },
       metrics: { confirmedReferenceRecall: referenceRecall, referenceRecall: complete ? referenceRecall : null,
         referencePrecision: complete && referencePrecisionDenominator ? matched.length / referencePrecisionDenominator : null,
         referenceF1: complete && f1Denominator ? 2 * matched.length / f1Denominator : null,

@@ -1,4 +1,4 @@
-# Pontuação semântica e revisão finita — flow-semantic-1.0.0
+# Pontuação semântica e revisão finita — flow-semantic-1.1.0
 
 ## O que mudou
 
@@ -10,6 +10,11 @@ O contrato de coleta é `fluxo-1.3.0`; a versão de pontuação mora em `instrum
 Essa separação é intencional: reaplicar um scorer não significa que uma execução antiga foi coletada
 sob permissões, evidências ou estados novos. Execuções de `fluxo-1.2.0` continuam empacotáveis,
 rotuladas como legado (ver abaixo), e o `score:fluxo:legacy` segue preso a `scoring.legacyCollection`.
+
+**1.1.0 (correções R2/R3/R5 de 15/09):** restringe reuso sem evidência verificável, confere a
+integridade dos arquivos na preparação e na pontuação, e adiciona duplicatas declaradas pela
+adjudicadora. A política é `aceitacao-semantica-1.1.0`. Pacotes/decisões 1.0.0 não são migrados nem
+reescritos: para reproduzi-los, use o código original; uma análise corrigida exige um pacote novo.
 
 ## Contrato do achado e evidência da execução (fluxo-1.3.0)
 
@@ -33,10 +38,20 @@ Cada achado separa o que foi constatado do que deveria valer e diz em que estado
 - O runner copia a raiz temporária da execução para `pipeline/logs/<runId>-evidencia/`, com
   `evidence-index.json` (caminho, bytes, sha256), e grava `evidence` no manifesto e `evidenceDir` /
   `evidenceIndexSha256` em `config`.
+- A cópia confere os bytes de origem/destino. Se falhar, mantém a origem temporária para recuperação,
+  grava `evidence.status: "failed"` e `collectionStatus: "evidence-failed"` no manifesto e interrompe
+  a bateria antes de baselines/pontuação, mesmo com o cliente encerrando com código zero.
 - Na preparação, cada referência é resolvida contra essa cópia: `encontrado` (exatamente um arquivo,
   com caminho e sha256), `ausente`, `ambiguo`, `identificador` (sem arquivo) ou `sem-arquivo` (a
-  execução não preservou evidência). O sha256 entra na identidade do cartão, então bytes diferentes
-  nunca reutilizam uma decisão.
+  execução não preservou evidência). A preparação confere o SHA-256 do índice contra o manifesto e
+  a configuração arquivada, quando presente, e confere tamanho/hash de cada arquivo. `score` e
+  `render` repetem a verificação antes de produzir uma saída. Arquivo ausente/alterado, índice
+  alterado e caminho fora da pasta de evidências abortam a operação. Guarde a pasta de evidência
+  junto dos artefatos: a pontuação é offline, mas não dispensa esses arquivos.
+- Identificadores opacos (`S-001`), referência vazia/ausente/ambígua, ausência de estado ou de build
+  original verificável restringem o cartão à execução de origem. Mesmo texto e mesmo nome de scan
+  em outra execução não provam equivalência. O cartão mostra essa restrição; a revisão humana da
+  instância continua possível, mas a aprovação não é transferida automaticamente a outra execução.
 
 Cada cartão carrega o rótulo de contrato do achado, e nenhum é promovido a outro:
 
@@ -117,11 +132,22 @@ O software consegue verificar a cobertura de sujeitos, mas não descobrir uma cl
 | `unitIds` | Alternativas semanticamente aceitas, apenas para `reference`; nos demais, `[]` |
 | `subjects` | Um ou mais IDs do próprio cartão; o mesmo átomo é afirmado sobre cada sujeito listado |
 | `citation` | `supported`, `unsupported` ou `uncertain`, independentemente da detecção |
+| `duplicateOf` | Opcional: `{ "cardId": "C-...", "atomId": "..." }` no átomo repetido, após conferir equivalência |
 
 **Dois defeitos = dois átomos.** Não coloque duas unidades em `unitIds` esperando dois TPs de um
 mesmo átomo/sujeito. Essa lista representa alternativas do mesmo defeito. Para uma relação, a âncora
 pode usar um participante explicitamente informado em `relatedSelectors`; um sujeito não resolvido
 não pode emprestar um relacionado para obter crédito.
+
+**Uma afirmação repetida com outra citação:** mantenha os cartões e as citações, mas vincule o
+átomo repetido ao átomo original usando `duplicateOf`. A revisora declara essa equivalência, sem
+agrupamento automático de paráfrases. O destino deve estar revisado e presente no mesmo run,
+com mesmo veredito, estado, build, participantes relacionados e alternativas de unidade; deve
+cobrir cada sujeito da duplicata. Ciclos, destinos ausentes/pendentes ou incompatíveis são erros.
+Não se pode usar uma duplicata para esconder evidência insuficiente (`unresolved`). O resultado
+mantém a instância com `verdict: "duplicate"` e o ID da instância canônica; `duplicateAssertions`
+conta as repetições separadamente. Sem esse vínculo, duas afirmações de cartões distintos
+continuam distintas. Para agrupamentos parcialmente duplicados, divida os sujeitos em átomos.
 
 Depois, sem precisar do corpus:
 
@@ -146,19 +172,27 @@ IDs são SHA-256, não agrupamento por norma. Uma observação negada, outro val
 cena ou da política não herda o veredito. Um achado adicional não invalida cartões idênticos só por
 aumentar o número de seletores. Parafraseamentos não são agrupados automaticamente.
 
+Reuso entre execuções também exige referências de arquivos verificadas, estado declarado e hash
+do build original. Sem isso, o ID inclui a execução e sua identidade de evidência. Arquivos em
+localizações diferentes podem continuar exigindo revisão separada, mesmo quando seus bytes são
+iguais: o reuso é deliberadamente conservador. Uma duplicata cujo alvo não esteja no novo pacote
+ou no mesmo run é recusada; não se transfere silenciosamente o seu efeito contábil.
+
 O reuso é conservador: captura/HTML alterados podem pedir nova revisão. Não promete reduzir toda
 paráfrase a um cartão. Uma futura interface pode propor grupos, desde que a autora confirme sua
 equivalência e a decisão continue ligada à evidência de cada sujeito.
 
 ## Contabilidade publicada
 
-Após decomposição e deduplicação exata por cartão no mesmo run:
+Após decomposição, deduplicação exata por cartão e vínculos `duplicateOf` revisados no mesmo run:
 
 - **D:** unidades de referência detectadas pelo emparelhamento máximo.
 - **G:** número fixo de unidades no pacote; **FN = G − D**.
 - **F:** instâncias de afirmações julgadas falsas (átomo × sujeito).
 - **N:** instâncias de afirmações novas corretas, fora da referência.
 - **R:** afirmações de referência redundantes: corretas, mas a unidade já recebeu crédito.
+- Duplicatas declaradas não aumentam **D**, **F** ou **N**. A incidência/correção de cada citação
+  permanece separada, inclusive em duplicatas.
 
 O scorer publica:
 
@@ -210,6 +244,7 @@ falha e preserva os artefatos. Uma análise parcial exige manifesto explicitamen
 ```powershell
 npm run test:semantic
 npm run test:contract
+npm run test:evidence
 npm run test:flow
 npm run typecheck
 npm run test:pipeline

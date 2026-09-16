@@ -158,15 +158,94 @@ test("reviewed but insufficient evidence remains provisional", () => {
   assert.equal(s.status, "provisional");
   assert.equal(s.metrics.referenceRecall, null);
 });
-test("exact pooling reduces work without merging different observations", () => {
+test("unbacked claims stay scoped to their execution", () => {
   const data = run();
   const pkg = prepareSemanticPackage(context, units, resolution, [{ id: "r1", data }, { id: "r2", data }]);
-  assert.equal(pkg.cards.length, 1);
+  assert.equal(pkg.cards.length, 2);
   assert.equal(pkg.runs.length, 2);
   const changed = prepare([finding("Help text IS associated")]);
   assert.notEqual(changed.cards[0].id, pkg.cards[0].id);
   const negative = prepare([finding("Help text is NOT associated")]);
   assert.notEqual(changed.cards[0].id, negative.cards[0].id);
+});
+
+test("opaque evidence and changed original builds cannot inherit another run's review", () => {
+  const currentFinding = { selector: "#cpf", rule: null, observed: "Help missing", expected: "Help associated",
+    state: { viewport: { width: 1280, height: 720 }, steps: [] }, evidence: ["S-001"] };
+  const data = { ...run(), findings: [currentFinding], config: { siteManifestSha256: "a".repeat(64) } };
+  const first = prepareSemanticPackage(context, units, resolution, [{ id: "r1", data }]);
+  const approved = reviews(first, [decision(first.cards[0].id, [atom(first, ["A"])])]);
+  for (const changed of [
+    { id: "r2", data },
+    { id: "r1", data: { ...data, config: { siteManifestSha256: "b".repeat(64) } } },
+    { id: "r1", data, evidence: { dir: "changed", files: [{ path: "snapshot.yml", bytes: 1, sha256: "c".repeat(64) }] } },
+  ]) {
+    const next = prepareSemanticPackage(context, units, resolution, [changed]);
+    const result = scoreSemanticPackage(next, scopeReviews(next, approved)).scores[0];
+    assert.equal(result.status, "provisional");
+    assert.equal(result.counts.detectedUnits, 0);
+  }
+});
+
+test("verified exact file evidence and original build support cross-run reuse", () => {
+  const data = { ...run(), config: { siteManifestSha256: "a".repeat(64), instrumentVersion: "fluxo-1.3.0", protocolVersion: "fixture-protocol" }, findings: [{
+    selector: "#cpf", rule: null, observed: "Help missing", expected: "Help associated",
+    state: { viewport: { width: 1280, height: 720 }, steps: [] }, evidence: ["snapshot.yml"],
+  }] };
+  const evidence = { dir: "shared-immutable-evidence", files: [{ path: "snapshot.yml", bytes: 1, sha256: "b".repeat(64) }],
+    integrity: { indexSha256: "c".repeat(64) } };
+  const pkg = prepareSemanticPackage(context, units, resolution, [{ id: "r1", data, evidence }, { id: "r2", data, evidence }]);
+  assert.equal(pkg.cards.length, 1);
+  const approved = reviews(pkg, [decision(pkg.cards[0].id, [atom(pkg, ["A"])])]);
+  assert.ok(scoreSemanticPackage(pkg, approved).scores.every(s => s.counts.detectedUnits === 1));
+  const changed = prepareSemanticPackage(context, units, resolution, [{ id: "r2", data,
+    evidence: { ...evidence, files: [{ ...evidence.files[0], sha256: "d".repeat(64) }] } }]);
+  assert.equal(scopeReviews(changed, approved).decisions[0].status, "pending");
+});
+
+test("reviewer-linked citation aliases count false and novel assertions once, with provenance", () => {
+  for (const verdict of ["false", "novel", "reference"] as const) {
+    const pkg = prepare([finding("Same observation", "#cpf", "wcag:1.3.1"), finding("Same observation", "#cpf", "emag:1.3")]);
+    const primary = atom(pkg, verdict === "reference" ? ["A"] : [], { verdict, citation: "supported" });
+    const duplicate = { ...primary, citation: "unsupported" as const,
+      duplicateOf: { cardId: pkg.cards[0].id, atomId: primary.id } };
+    const ds = reviews(pkg, [decision(pkg.cards[0].id, [primary]), decision(pkg.cards[1].id, [duplicate])]);
+    const result = scoreSemanticPackage(pkg, ds).scores[0];
+    assert.equal(result.counts.duplicateAssertions, 1);
+    assert.equal(result.counts.falseAssertions, verdict === "false" ? 1 : 0);
+    assert.equal(result.counts.novelAssertions, verdict === "novel" ? 1 : 0);
+    assert.equal(result.counts.detectedUnits, verdict === "reference" ? 1 : 0);
+    assert.equal(result.metrics.citationSupport, 0.5, "citations remain separately accountable");
+    assert.ok(result.assertions.find(a => a.verdict === "duplicate")?.duplicateOf);
+    assert.deepEqual(scoreSemanticPackage(pkg, { ...ds, decisions: [...ds.decisions].reverse() }).scores[0], result);
+  }
+});
+
+test("duplicate links reject cycles, missing targets, different verdicts, states, and subjects", () => {
+  const pkg = prepare([finding("First"), finding("Second")]);
+  const make = () => reviews(pkg, pkg.cards.map(c => decision(c.id, [atom(pkg, [], { verdict: "false" })])));
+  const ds = make();
+  ds.decisions[1].atoms[0].duplicateOf = { cardId: pkg.cards[0].id, atomId: "atom" };
+  for (const mutate of [
+    (d: SemanticReviews) => { d.decisions[1].atoms[0].duplicateOf!.atomId = "missing"; },
+    (d: SemanticReviews) => { d.decisions[0].atoms[0].verdict = "novel"; },
+    (d: SemanticReviews) => { d.decisions[0].atoms[0].duplicateOf = { cardId: pkg.cards[1].id, atomId: "atom" }; },
+  ]) {
+    const bad = structuredClone(ds); mutate(bad);
+    assert.throws(() => scoreSemanticPackage(pkg, bad), /Duplicate target|Incompatible duplicate|Cyclic duplicate/);
+  }
+  // Same statement at different declared states may not be erased by a duplicate link.
+  const stateful = [320, 1280].map(width => ({ selector: "#cpf", rule: null, observed: "Same", expected: "Other",
+    state: { viewport: { width, height: 720 }, steps: [] }, evidence: [] }));
+  const differentStates = prepare(stateful);
+  const stateDs = reviews(differentStates, differentStates.cards.map(c => decision(c.id, [atom(differentStates, [], { verdict: "false" })])));
+  stateDs.decisions[1].atoms[0].duplicateOf = { cardId: differentStates.cards[0].id, atomId: "atom" };
+  assert.throws(() => scoreSemanticPackage(differentStates, stateDs), /Incompatible duplicate/);
+  const differentSubjects = prepare([finding("First", "#cpf"), finding("Second", "#button")]);
+  const subjectDs = reviews(differentSubjects, differentSubjects.cards.map(c => decision(c.id,
+    [atom(differentSubjects, [], { verdict: "false", subjects: c.subjects.map(s => s.id) })])));
+  subjectDs.decisions[1].atoms[0].duplicateOf = { cardId: differentSubjects.cards[0].id, atomId: "atom" };
+  assert.throws(() => scoreSemanticPackage(differentSubjects, subjectDs), /Incompatible duplicate/);
 });
 test("reuse requires exact context and evidence, not a matching rule", () => {
   const pkg = prepare();

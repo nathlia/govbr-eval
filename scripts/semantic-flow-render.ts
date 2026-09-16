@@ -29,6 +29,9 @@ function claim(c: ReviewCard): string[] {
     lines.push(escapeHeadings(c.description), "");
   }
   lines.push(`Regra declarada: ${c.rule === null ? "nenhuma (atribuição incerta)" : c.rule}`, "");
+  lines.push(c.binding.runScope
+    ? "Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções."
+    : "Reuso: condicionado à mesma evidência verificada, estado declarado e build original.", "");
   if (c.flags.length) lines.push(`Sinalizações: ${c.flags.join(" · ")}`, "");
   return lines;
 }
@@ -46,7 +49,8 @@ export function renderReview(pkg: SemanticPackage, reviews: SemanticReviews): st
     "As capturas scene-* são reconstruções no momento de preparar o pacote, não prova de que o agente observou o mesmo estado.",
     "Confira também reportedEvidence, inclusive as limitações declaradas. Use unresolved quando não houver suporte.", "",
     "Um átomo = um defeito. subjects identifica cada elemento alegado; unitIds contém somente alternativas semanticamente aceitas.",
-    "Cada átomo/elemento vale no máximo uma detecção. Divida alegações compostas; contabilize também as partes falsas.", ""];
+    "Cada átomo/elemento vale no máximo uma detecção. Divida alegações compostas; contabilize também as partes falsas.",
+    'Duplicatas revisadas: no átomo repetido, acrescente duplicateOf: { "cardId": "C-...", "atomId": "..." }. A citação continua avaliada separadamente.', ""];
   for (const c of pkg.cards) {
     const d = decisions.get(c.id);
     lines.push(`## ${c.id}`, "", `Estado: ${pending.has(c.id) ? "pendente" : "concluído"}`, "", ...claim(c),

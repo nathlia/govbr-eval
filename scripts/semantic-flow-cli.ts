@@ -6,7 +6,7 @@ import type { FlowAgentResults, FlowGroundTruth } from "../types";
 import { ROOT } from "./adjudication";
 import { preparePage, resolveOnPage, VIEWPORT_PADRAO } from "./anchors";
 import { buildFlowUnits, selectorsOfGroundTruth, selectorsOfRuns } from "./units-flow";
-import type { EvidenceIndex } from "./flow-contract";
+import { loadVerifiedEvidence, verifyArchivedEvidence, type EvidenceDeclaration } from "./evidence-integrity";
 import { renderReview } from "./semantic-flow-render";
 import {
   SCORER_FILES, digest, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, validatePackage,
@@ -36,25 +36,13 @@ function loadPackage(path: string): SemanticPackage {
   const pkg = read<SemanticPackage>(path);
   validatePackage(pkg);
   if (pkg.context.scorerHash !== scorerHash()) throw new Error("Scorer/aliases changed. Use the pinned code or prepare a new package; do not relabel old scores.");
+  for (const run of pkg.runs) if (run.evidenceIndex) verifyArchivedEvidence(ROOT, run.evidenceIndex);
   return pkg;
 }
 
 interface Battery {
   execucoes: { archive: string | null; archiveDir: string; exitCode: number; suite: string; arm: string;
-    instrumentVersion?: string; protocolVersion?: string; evidence?: { dir?: string | null } | null }[];
-}
-
-/** The run's preserved execution evidence (fluxo-1.3.0). Legacy runs have none and stay without. */
-function loadEvidence(entry: Battery["execucoes"][number]): EvidenceIndex | null {
-  const dir = entry.evidence?.dir?.replaceAll("\\", "/");
-  if (!dir) return null;
-  const indexPath = resolve(ROOT, dir, "evidence-index.json");
-  const rel = relative(ROOT, indexPath);
-  if (rel.startsWith("..") || isAbsolute(rel)) throw new Error("Evidence directory must be inside govbr-eval");
-  if (!existsSync(indexPath)) throw new Error(`Manifest declares evidence without an index: ${dir}`);
-  const index = read<{ files?: EvidenceIndex["files"] }>(indexPath);
-  if (!Array.isArray(index.files)) throw new Error(`Invalid evidence index: ${dir}`);
-  return { dir, files: index.files };
+    instrumentVersion?: string; protocolVersion?: string; evidence?: EvidenceDeclaration | null }[];
 }
 
 async function prepare(): Promise<void> {
@@ -76,7 +64,8 @@ async function prepare(): Promise<void> {
     if (data.config?.instrumentVersion !== entry.instrumentVersion || data.config?.protocolVersion !== entry.protocolVersion) {
       throw new Error(`Manifest/archive configuration mismatch: ${path}`);
     }
-    return { id: relative(ROOT, path).replaceAll("\\", "/"), data, evidence: loadEvidence(entry) };
+    return { id: relative(ROOT, path).replaceAll("\\", "/"), data,
+      evidence: loadVerifiedEvidence(ROOT, entry.evidence, data.config) };
   });
   // One collection contract per package: a legacy run next to a current one would read as if both
   // had been asked the same thing.

@@ -41,7 +41,12 @@ export interface NormalizedFinding {
 
 export interface EvidenceFile { path: string; bytes: number; sha256: string }
 /** Índice que o runner grava ao preservar a raiz temporária de uma execução. */
-export interface EvidenceIndex { dir: string; files: EvidenceFile[] }
+export interface EvidenceIndex {
+  dir: string;
+  files: EvidenceFile[];
+  /** Set only by the filesystem boundary after verifying index and file bytes. */
+  integrity?: { indexSha256: string };
+}
 export interface ResolvedEvidence {
   ref: string;
   status: "encontrado" | "ausente" | "ambiguo" | "identificador" | "sem-arquivo";
