@@ -17,10 +17,21 @@ import { ROOT } from "./adjudication";
 interface InstrumentFile {
   _meta: Record<string, unknown>;
   fluxo: string;
-  scoring: { fluxo: string; legacy: string; legacyCollection: string; note: string };
+  scoring: {
+    fluxo: string;
+    legacy: string;
+    legacyCollection: string;
+    note: string;
+    provenance: { acceptancePolicy: string; nota: string };
+  };
+  reference: { file: string; nota: string };
 }
 
 const file = JSON.parse(readFileSync(join(ROOT, "instrument.json"), "utf8")) as InstrumentFile;
+// Sem valor padrão: uma política ou referência ausente é erro de configuração, não "a de sempre".
+if (!file.scoring.provenance?.acceptancePolicy || !file.reference?.file) {
+  throw new Error("instrument.json precisa declarar scoring.provenance.acceptancePolicy e reference.file");
+}
 
 /** Contrato de medida da suíte de fluxo, ex.: `fluxo-1.1.0`. Gate de compatibilidade. */
 export const FLOW_INSTRUMENT_VERSION = file.fluxo;
@@ -30,3 +41,12 @@ export const FLOW_SCORING_VERSION = file.scoring.fluxo;
 
 /** Coleta que o scorer legado de citação sabe pontuar; ela não sobe junto com a coleta vigente. */
 export const FLOW_LEGACY_COLLECTION_VERSION = file.scoring.legacyCollection;
+
+/**
+ * Política de aceitação semântica (fatia 6). Versionada à parte do engine: o engine pode ser o
+ * mesmo código e ainda assim creditar coisas diferentes se a política de aceitação mudar.
+ */
+export const FLOW_ACCEPTANCE_POLICY_VERSION = file.scoring.provenance.acceptancePolicy;
+
+/** Arquivo do gabarito vigente. A VERSÃO mora nele (`_meta.version`), nunca aqui (D-31). */
+export const FLOW_REFERENCE_FILE = file.reference.file;

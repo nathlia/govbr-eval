@@ -87,34 +87,60 @@ function printAnchors(gt: FlowGroundTruth, res: Resolution, units: FlowUnit[]): 
 }
 
 /**
- * Linha de base determinística contra as MESMAS unidades (D-06).
+ * Linha de base determinística contra as MESMAS unidades (D-06) — só para reproduzir v01.
  *
  * Deliberadamente generoso com o axe: uma unidade conta como detectada se o axe reportou qualquer
- * coisa naquele elemento, sem exigir que a norma citada bata. Um número generoso que ainda assim
- * é baixo diz mais do que um número apertado que se possa acusar de injusto.
+ * coisa naquele elemento, sem exigir que a norma citada bata. A comparação v02 (fatia 6) não passa
+ * por aqui: ela usa a linha de base DA BATERIA, conferida contra o manifesto de coleta, dentro do
+ * pacote semântico. Este caminho lê o arquivo avulso de desenvolvimento e diz isso ao imprimir.
  */
+interface LegacyBaselineShape {
+  timestamp: string;
+  state: string | { setup: unknown[] };
+  scope?: string;
+  status?: string;
+  axe: { byElementKey: Record<string, unknown[]>; unattributed: unknown[]; passes: number };
+  eslint: { findings: unknown[] } | null;
+  validator?: { byElementKey: Record<string, { rule: string }[]>; requiredSpecs?: { specId: string; detected: boolean }[] } | null;
+  coverageCheck?: { specId: string; pass: string; detected: boolean }[];
+}
+
+function readLegacyBaseline(path: string): LegacyBaselineShape | null {
+  const raw = JSON.parse(readFileSync(path, "utf8")) as FlowBaselines | LegacyBaselineShape;
+  if (!("baselineVersion" in raw)) return raw as LegacyBaselineShape;
+  if (raw.status !== "complete" || !raw.legacy) return null;
+  return { timestamp: raw.timestamp, state: raw.state, scope: raw.scope, status: raw.status, axe: raw.legacy.axe,
+    eslint: raw.eslint, validator: raw.legacy.validator, coverageCheck: raw.coverageCheck };
+}
+
 function printBaselines(units: FlowUnit[]): void {
   const path = join(ROOT, "results/baselines-fluxo.json");
   if (!existsSync(path)) {
-    console.log("\n!! Linhas de base não medidas — rode `npm run baselines:fluxo`.");
+    console.log("\n!! Linhas de base não medidas — rode `npm run baselines:fluxo:dev`.");
     console.log("   Sem elas nenhuma afirmação comparativa sobre esta tela se sustenta (D-06).");
     return;
   }
-  const b = JSON.parse(readFileSync(path, "utf8")) as FlowBaselines;
+  const b = readLegacyBaseline(path);
+  if (!b) {
+    console.log("\n!! results/baselines-fluxo.json registra uma linha de base que falhou; nada a comparar.");
+    return;
+  }
 
   const comAxe = new Set(Object.keys(b.axe.byElementKey));
   const TP = units.filter(u => comAxe.has(u.element.key)).length;
   const chavesDeUnidade = new Set(units.map(u => u.element.key));
   const foraDoGabarito = [...comAxe].filter(k => !chavesDeUnidade.has(k)).length;
 
-  console.log(`\nLinhas de base (medidas em ${b.timestamp.slice(0, 16)} · estado: ${b.state})`);
+  const estado = typeof b.state === "string" ? b.state : `setup de ${b.state.setup.length} passo(s)`;
+  console.log(`\nLinhas de base AVULSAS (${b.scope ?? "dev-global, formato anterior"}; medidas em ${b.timestamp.slice(0, 16)} · estado: ${estado})`);
+  console.log("  não conferidas contra nenhuma bateria: diagnóstico de desenvolvimento, nunca número de resultado");
   console.log(
     `  axe-core     ${TP}/${units.length} unidades detectadas · ${b.axe.passes} passes` +
     (foraDoGabarito ? ` · ${foraDoGabarito} elemento(s) sinalizado(s) fora do gabarito` : "") +
     (b.axe.unattributed.length ? ` · ${b.axe.unattributed.length} nó(s) sem elemento resolvido` : ""),
   );
   console.log("               crédito generoso: qualquer achado no elemento conta, sem exigir a norma");
-  console.log(`  eslint-a11y  ${b.eslint.findings.length} achado(s) no fonte da tela — NÃO atribuídos a elemento,`);
+  console.log(`  eslint-a11y  ${b.eslint?.findings.length ?? 0} achado(s) no fonte da tela — NÃO atribuídos a elemento,`);
   console.log("               portanto não comparáveis unidade a unidade; leia como contagem declarada");
   if (TP === 0) {
     console.log(`  → nenhuma das ${units.length} unidades é alcançada pelas ferramentas genéricas.`);
@@ -124,8 +150,9 @@ function printBaselines(units: FlowUnit[]): void {
       (b.validator!.byElementKey[unit.element.key] ?? [])
         .some(finding => unit.rules.includes(normalizeRuleId(finding.rule))),
     ).length;
-    console.log(`  validator    ${validatorTP}/${units.length} unidades detectadas por regra exata`);
-    console.log(`               baseline obrigatório: ${b.validator.requiredSpecs.map(spec => `${spec.specId}=${spec.detected ? "ok" : "FALHA"}`).join(", ")}`);
+    const checks = b.coverageCheck?.map(c => ({ specId: c.specId, detected: c.detected })) ?? b.validator.requiredSpecs ?? [];
+    console.log(`  validator    ${validatorTP}/${units.length} unidades por regra exata — varredura GUIADA pelas âncoras (diagnóstico)`);
+    console.log(`               baseline obrigatório: ${checks.map(spec => `${spec.specId}=${spec.detected ? "ok" : "FALHA"}`).join(", ")}`);
   }
 }
 

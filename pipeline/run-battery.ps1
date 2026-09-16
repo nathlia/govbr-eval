@@ -79,6 +79,12 @@ param(
   # A aba que o smoke percorre. Qualquer uma serve — o objetivo é exercitar o caminho, não medir.
   [string]$SmokeAba = "Botões",
 
+  # Fatia 6: a agenda é congelada antes da coleta. `alternado` troca a ordem dos braços a cada
+  # repetição (com,sem / sem,com / ...), para que nenhum braço rode sempre primeiro; `sequencial`
+  # reproduz a ordem antiga (todos os "com", depois todos os "sem") e fica registrado como tal.
+  [ValidateSet("alternado", "sequencial")]
+  [string]$Schedule = "alternado",
+
   [switch]$SkipBaselines,
 
   [switch]$SkipScore,
@@ -285,6 +291,45 @@ function Get-McpTelemetrySummary($path, $runId) {
   }
 }
 
+function Write-NewJson([string]$Path, $Value, [int]$Depth = 20) {
+  # Artefato de bateria nunca é sobrescrito: CreateNew falha se o arquivo já existir.
+  $json = ($Value | ConvertTo-Json -Depth $Depth) + "`n"
+  $stream = [System.IO.File]::Open($Path, [System.IO.FileMode]::CreateNew, [System.IO.FileAccess]::Write)
+  try {
+    $bytes = (New-Object System.Text.UTF8Encoding($false)).GetBytes($json)
+    $stream.Write($bytes, 0, $bytes.Length)
+  } finally {
+    $stream.Dispose()
+  }
+}
+
+function Get-Sha256([string]$Path) {
+  return (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
+}
+
+function New-BatterySlots([string[]]$Arms, [int]$Repetitions, [string]$Order) {
+  # Agenda determinística: sem sorteio, logo sem semente. Blocos por repetição.
+  $slots = @()
+  $slotNumber = 0
+  if ($Order -eq "sequencial") {
+    foreach ($armName in $Arms) {
+      for ($rep = 1; $rep -le $Repetitions; $rep++) {
+        $slotNumber++
+        $slots += [pscustomobject]@{ slot = $slotNumber; arm = $armName; repetition = $rep; block = $rep }
+      }
+    }
+    return $slots
+  }
+  for ($rep = 1; $rep -le $Repetitions; $rep++) {
+    $blockArms = if ($Arms.Count -gt 1 -and ($rep % 2) -eq 0) { @($Arms[1], $Arms[0]) } else { $Arms }
+    foreach ($armName in $blockArms) {
+      $slotNumber++
+      $slots += [pscustomobject]@{ slot = $slotNumber; arm = $armName; repetition = $rep; block = $rep }
+    }
+  }
+  return $slots
+}
+
 function Test-Url($url) {
   try {
     Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 5 | Out-Null
@@ -401,11 +446,20 @@ if ($lintExit -ne 0) {
 }
 Write-Ok "Protocolos limpos (A6)"
 
-$validatorDist = Join-Path $TccRoot "govbr-ds-validator\dist\index.js"
-if (-not (Test-Path $validatorDist)) {
-  throw "dist do oráculo não existe em $validatorDist. Rode 'npm run build' em govbr-ds-validator."
+# Fatia 6: o oráculo é compilado AQUI, a partir da fonte, e o manifesto de coleta hasheia o dist/ e
+# o data/ que resultaram. `dist existe` continuava verdadeiro depois de um build com outro código.
+Push-Location (Join-Path $TccRoot "govbr-ds-validator")
+try {
+  & npm run build --silent
+  $oracleBuildExit = $LASTEXITCODE
+} finally {
+  Pop-Location
 }
-Write-Ok "Oráculo compilado"
+$validatorDist = Join-Path $TccRoot "govbr-ds-validator\dist\index.js"
+if ($oracleBuildExit -ne 0 -or -not (Test-Path $validatorDist)) {
+  throw "O build do oráculo falhou (govbr-ds-validator, npm run build)."
+}
+Write-Ok "Oráculo compilado no preflight"
 
 $validatorPackage = Get-Content (Join-Path $TccRoot "govbr-ds-validator\package.json") -Raw | ConvertFrom-Json
 $validatorVersion = [string]$validatorPackage.version
@@ -465,7 +519,42 @@ $arms = @()
 if ($Arm -eq "ambos") { $arms = @("com", "sem") } else { $arms = @($Arm) }
 
 $total = $arms.Count * $Runs
+$planSlots = @(New-BatterySlots -Arms $arms -Repetitions $Runs -Order $Schedule)
 Write-Step "Plano: $total execução(ões) — cliente $clientName, braços [$($arms -join ', ')] x $Runs, modelo $Model, esforço $ReasoningEffort, oráculo $OracleProfile, escopo $Scope"
+Write-Ok "Agenda $Schedule`: $(($planSlots | ForEach-Object { "$($_.arm)$($_.repetition)" }) -join ' ')"
+
+# O plano é gravado antes de qualquer execução e entra no manifesto pelo hash. No preflight vai para
+# uma pasta temporária, como a superfície.
+$PreflightTemp = Join-Path ([System.IO.Path]::GetTempPath()) "govbr-eval-$Stamp-preflight"
+if ($PreflightOnly) { New-Item -ItemType Directory -Force -Path $PreflightTemp | Out-Null }
+$PlanPath = if ($PreflightOnly) { Join-Path $PreflightTemp "plano.json" } else { Join-Path $LogsDir "$Stamp-plano.json" }
+$JournalPath = Join-Path $LogsDir "$Stamp-diario.ndjson"
+function Write-Journal([string]$Event, $Data = $null) {
+  if ($PreflightOnly) { return }
+  $line = [ordered]@{ at = (Get-Date).ToUniversalTime().ToString("o"); event = $Event; data = $Data } | ConvertTo-Json -Depth 10 -Compress
+  Add-Content -LiteralPath $JournalPath -Value $line -Encoding utf8
+}
+Write-NewJson -Path $PlanPath -Value ([ordered]@{
+  planVersion = "plano-bateria-1.0.0"
+  stamp = $Stamp
+  schedule = $Schedule
+  seed = $null
+  attemptBudget = $planSlots.Count
+  retryPolicy = "nenhuma: cada slot tem uma tentativa; falha fica registrada e não é repetida nesta bateria"
+  failurePolicy = "limite de gasto, falha de evidência ou identidade alterada interrompem a bateria; slots restantes ficam registrados como nao-tentada; qualquer slot sem relatório aceito impede a preparação do pacote sem um manifesto de análise explícito"
+  arms = @($arms)
+  runsPerArm = $Runs
+  model = $Model
+  reasoningEffort = $ReasoningEffort
+  oracleProfile = $OracleProfile
+  provider = $Provider
+  scope = $Scope
+  suite = $Suite
+  slots = @($planSlots)
+})
+$PlanSha = Get-Sha256 $PlanPath
+Write-Ok "Plano congelado: $(Split-Path $PlanPath -Leaf) (sha256 $($PlanSha.Substring(0, 12)))"
+Write-Journal "plano-congelado" ([ordered]@{ path = $PlanPath; sha256 = $PlanSha })
 
 if ($IsSmoke) {
   $recorte = if ($IsFluxo) { "a tela de fluxo inteira, com modelo barato" } else { "só a aba '$SmokeAba'" }
@@ -510,6 +599,50 @@ if (-not $surface) {
 }
 Write-Ok "Superfície $($surface.version): tela $($surface.entryUrl), coletor $($surface.origins.collector), proxy $($surface.proxyServer)"
 
+# ---------------------------------------------------------------- manifesto de coleta (fatia 6)
+# Gravado antes da primeira execução. Incompleto, não é gravado e a bateria não parte. Fora do
+# preflight, arquiva o oráculo compilado e o gabarito ao lado dele.
+$SiteManifestPath = Join-Path $SurfaceDir "site-manifest.json"
+$CollectionDir = if ($PreflightOnly) { Join-Path $PreflightTemp "coleta" } else { Join-Path $LogsDir "$Stamp-coleta" }
+$manifestArgs = @(
+  "tsx", "scripts/collection-manifest.ts", "build",
+  "--out-dir", $CollectionDir,
+  "--site-manifest", $SiteManifestPath,
+  "--surface", (Join-Path $SurfaceDir "surface.json"),
+  "--plan", $PlanPath,
+  "--client", $clientName,
+  "--client-version", $clientVersion,
+  "--oracle-built"
+)
+if ($PreflightOnly) { $manifestArgs += "--no-archive" }
+Push-Location $EvalRoot
+try {
+  & npx @manifestArgs
+  $manifestExit = $LASTEXITCODE
+} finally {
+  Pop-Location
+}
+if ($manifestExit -ne 0) {
+  Stop-Surface
+  throw "Manifesto de coleta recusado (ver motivo acima). Nenhum modelo foi chamado."
+}
+$CollectionManifestPath = Join-Path $CollectionDir "manifesto.json"
+$CollectionManifestSha = Get-Sha256 $CollectionManifestPath
+$CollectionManifestRel = [System.IO.Path]::GetRelativePath($EvalRoot, $CollectionManifestPath).Replace('\', '/')
+Write-Ok "Manifesto de coleta: $CollectionManifestRel (sha256 $($CollectionManifestSha.Substring(0, 12)))"
+Write-Journal "manifesto-gravado" ([ordered]@{ path = $CollectionManifestRel; sha256 = $CollectionManifestSha })
+
+function Test-CollectionIdentity {
+  Push-Location $EvalRoot
+  try {
+    # Saída para o console, nunca para o retorno da função.
+    & npx tsx scripts/collection-manifest.ts verify --manifest $CollectionManifestPath | Out-Host
+    return ($LASTEXITCODE -eq 0)
+  } finally {
+    Pop-Location
+  }
+}
+
 if ($PreflightOnly) {
   try {
     Invoke-RestMethod -Method Post -Uri "$($surface.control)/control/arm" -ContentType "application/json" `
@@ -521,369 +654,420 @@ if ($PreflightOnly) {
     Stop-Surface
   }
   Write-Step "Preflight concluido"
+  Write-Ok "Manifesto de coleta completo (temporário, sem arquivamento): $CollectionManifestPath"
   Write-Ok "Nenhum modelo foi chamado."
   return
 }
 
+$stages = [ordered]@{ coleta = "em-andamento"; linhaDeBase = "pendente"; preparacao = "pendente" }
+$batteryError = $null
+$manifestPath = Join-Path $LogsDir "$Stamp-bateria.json"
+$BaselinePath = Join-Path $LogsDir "$Stamp-linha-de-base.json"
+$semanticReviewDir = Join-Path $EvalRoot "results\semantic-review\$Stamp"
+
 try {
 
 $manifest = @()
-$runIndex = 0
+$stopReason = $null
 
 # ---------------------------------------------------------------- execuções
-:bateria foreach ($armName in $arms) {
+# A agenda é a do plano congelado; nada aqui escolhe ordem.
+:bateria foreach ($slot in $planSlots) {
+  $armName = $slot.arm
+  $i = $slot.repetition
+  $runIndex = $slot.slot
   $mcpConfig = Join-Path $PipelineDir "mcp-$armName-oraculo.json"
   if (-not (Test-Path $mcpConfig)) { throw "Config MCP não encontrada: $mcpConfig" }
 
-  for ($i = 1; $i -le $Runs; $i++) {
-    $runIndex++
-    Write-Step "[$runIndex/$total] braço '$armName', execução $i"
+  Write-Step "[$runIndex/$total] braço '$armName', repetição $i (bloco $($slot.block))"
+  Write-Journal "execucao-inicio" ([ordered]@{ slot = $runIndex; arm = $armName; repetition = $i })
 
-    # O braço da ablação faz POST no dashboard, e o endpoint sobrescreve o veredito "atual"
-    # (results/agent-results.json + a cópia do dashboard). Sem restaurar, a tabela principal do
-    # scorer passaria a reportar a ablação como se fosse o braço com oráculo. Guarda antes.
-    # O smoke também faz POST no dashboard e sobrescreveria o veredito "atual" — mesma guarda.
-    $snapshots = @()
-    if ((-not $IsFluxo) -and ($armName -eq "sem" -or $IsSmoke)) {
-      foreach ($rel in @("results\agent-results.json", "dashboard\public\agent-results.json")) {
-        $full = Join-Path $EvalRoot $rel
-        if (Test-Path $full) {
-          $sufixo = [guid]::NewGuid().ToString("N").Substring(0, 8)
-          $tmp = Join-Path $LogsDir ("restore-" + (Split-Path $rel -Leaf) + "-$sufixo.bak")
-          Copy-Item $full $tmp -Force
-          $snapshots += [pscustomobject]@{ path = $full; backup = $tmp }
-        }
+  # O braço da ablação faz POST no dashboard, e o endpoint sobrescreve o veredito "atual"
+  # (results/agent-results.json + a cópia do dashboard). Sem restaurar, a tabela principal do
+  # scorer passaria a reportar a ablação como se fosse o braço com oráculo. Guarda antes.
+  # O smoke também faz POST no dashboard e sobrescreveria o veredito "atual" — mesma guarda.
+  $snapshots = @()
+  if ((-not $IsFluxo) -and ($armName -eq "sem" -or $IsSmoke)) {
+    foreach ($rel in @("results\agent-results.json", "dashboard\public\agent-results.json")) {
+      $full = Join-Path $EvalRoot $rel
+      if (Test-Path $full) {
+        $sufixo = [guid]::NewGuid().ToString("N").Substring(0, 8)
+        $tmp = Join-Path $LogsDir ("restore-" + (Split-Path $rel -Leaf) + "-$sufixo.bak")
+        Copy-Item $full $tmp -Force
+        $snapshots += [pscustomobject]@{ path = $full; backup = $tmp }
       }
     }
+  }
 
 
-    $logExtension = if ($Provider -eq "codex") { "jsonl" } else { "json" }
-    $logFile      = Join-Path $LogsDir "$Stamp-$armName-run$i.$logExtension"
-    $stderrFile   = Join-Path $LogsDir "$Stamp-$armName-run$i.stderr.log"
-    $settingsFile = Join-Path $PipelineDir "settings-run.json"
-    $runId        = "$Stamp-$armName-run$i-$([guid]::NewGuid().ToString('N').Substring(0, 8))"
-    $telemetryFile = Join-Path $LogsDir "$runId-mcp.ndjson"
-    $evidenceSummary = $null
-    $runMcp = Get-Content -LiteralPath $mcpConfig -Raw | ConvertFrom-Json
-    $effectiveMcpConfig = $mcpConfig
-    if ($armName -eq "com") {
-      # Grava os identificadores explicitamente na configuração do subprocesso MCP. Não depende
-      # de o cliente preservar variáveis herdadas quando também existe um bloco `env` no JSON.
-      $validatorMcp = $runMcp.mcpServers."govbr-ds-validator"
-      Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_RUN_ID" $runId
-      Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_TELEMETRY_FILE" $telemetryFile
-      $validatorToolProfile = if ($OracleProfile -eq "combined") { "evaluation" } else { $OracleProfile }
-      Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_TOOL_PROFILE" $validatorToolProfile
-      $effectiveMcpConfig = Join-Path $LogsDir "$runId-mcp-config.json"
-      $runMcp | ConvertTo-Json -Depth 10 | Out-File -LiteralPath $effectiveMcpConfig -Encoding utf8
+  $logExtension = if ($Provider -eq "codex") { "jsonl" } else { "json" }
+  $logFile      = Join-Path $LogsDir "$Stamp-$armName-run$i.$logExtension"
+  $stderrFile   = Join-Path $LogsDir "$Stamp-$armName-run$i.stderr.log"
+  $settingsFile = Join-Path $PipelineDir "settings-run.json"
+  $runId        = "$Stamp-$armName-run$i-$([guid]::NewGuid().ToString('N').Substring(0, 8))"
+  $telemetryFile = Join-Path $LogsDir "$runId-mcp.ndjson"
+  $evidenceSummary = $null
+  $runMcp = Get-Content -LiteralPath $mcpConfig -Raw | ConvertFrom-Json
+  $effectiveMcpConfig = $mcpConfig
+  if ($armName -eq "com") {
+    # Grava os identificadores explicitamente na configuração do subprocesso MCP. Não depende
+    # de o cliente preservar variáveis herdadas quando também existe um bloco `env` no JSON.
+    $validatorMcp = $runMcp.mcpServers."govbr-ds-validator"
+    Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_RUN_ID" $runId
+    Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_TELEMETRY_FILE" $telemetryFile
+    $validatorToolProfile = if ($OracleProfile -eq "combined") { "evaluation" } else { $OracleProfile }
+    Set-JsonProperty $validatorMcp.env "GOVBR_VALIDATOR_TOOL_PROFILE" $validatorToolProfile
+    $effectiveMcpConfig = Join-Path $LogsDir "$runId-mcp-config.json"
+    $runMcp | ConvertTo-Json -Depth 10 | Out-File -LiteralPath $effectiveMcpConfig -Encoding utf8
+  }
+  $codexMcpArgs = if ($Provider -eq "codex") { @(Get-CodexMcpConfigArgs $runMcp) } else { @() }
+
+  # O recorte do smoke vive aqui, no disparo — não dentro do protocolo. O protocolo é o mesmo
+  # arquivo nos dois escopos, senão a execução de fumaça deixaria de exercitar o que vai rodar
+  # de verdade. A frase abaixo restringe o percurso e nada mais; não diz nada sobre o domínio.
+  # A suite de fluxo e uma tela so: nao ha recorte de aba a fazer, entao o smoke dela difere do
+  # full apenas no modelo barato e no diretorio fora do alcance do scorer.
+  # O protocolo geral nao sabe nada sobre a tela: alvo e destino do POST chegam AQUI, na
+  # invocacao, identicos nos dois bracos. E o que permite o mesmo arquivo servir a qualquer tela.
+  $invocation = if ($IsFluxo) {
+    "Avalie a tela em $($surface.entryUrl). " +
+    "Para salvar, navegue ate $($surface.origins.collector) e faca POST em /api/submit a partir dali."
+  } elseif ($IsSmoke) {
+    "Percorra apenas a aba '$SmokeAba' e feche os vereditos só dos casos dela. " +
+    "Ignore as demais abas e as rotas estáticas."
+  } else {
+    throw "A suíte TC-* não roda no v02."
+  }
+
+  # D-36: os dois clientes recebem o protocolo do mesmo jeito — o texto no prompt, idêntico ao que
+  # entra no hash. O Claude Code lia /evaluate-screen partindo de F:\Dev Nath\TCC e, com isso,
+  # herdava a raiz do TCC: arquivos gravados ali por execuções anteriores (inclusive do outro
+  # braço), additionalDirectories das configurações do usuário e WebSearch/WebFetch liberados no
+  # settings.local.json do projeto.
+  $prompt = $protocolText + "`n`n--- INVOCACAO DESTA EXECUCAO ---`n" + $invocation
+
+  # Raiz descartável por execução, nos dois clientes. O Playwright MCP grava snapshots e arquivos
+  # de browser_evaluate no diretório de trabalho, então nada que uma execução escreve alcança a
+  # seguinte nem o outro braço.
+  $isolatedRoot = Join-Path ([System.IO.Path]::GetTempPath()) "govbr-eval-$runId"
+  New-Item -ItemType Directory -Path $isolatedRoot -Force | Out-Null
+
+  # --restricted ignora settings de usuário, projeto e local (só --settings vale), confina as
+  # ferramentas de arquivo ao diretório de trabalho e remove shell e WebFetch. A transcrição da
+  # sessão continua gravada: é a única trilha das chamadas de ferramenta (ex.: browser_resize).
+  $claudeArgs = @(
+    "-p", $prompt,
+    "--restricted",
+    "--strict-mcp-config",
+    "--mcp-config", $effectiveMcpConfig,
+    "--settings", $settingsFile,
+    "--model", $Model,
+    "--effort", $ReasoningEffort,
+    "--output-format", "json",
+    "--permission-mode", "dontAsk"
+  )
+
+  $clientArgs = $claudeArgs
+  if ($Provider -eq "codex") {
+    $clientArgs = @(
+      "exec", "--ephemeral", "--json", "--ignore-user-config", "--ignore-rules",
+      "--skip-git-repo-check", "--sandbox", "read-only", "--color", "never",
+      "-C", $isolatedRoot, "-m", $Model,
+      "-c", "model_reasoning_effort=`"$ReasoningEffort`"",
+      "-c", 'approval_policy="never"',
+      "-c", 'features.shell_tool=false',
+      "-c", 'agents.enabled=false',
+      "-c", 'web_search="disabled"'
+    ) + $codexMcpArgs + @($prompt)
+  }
+
+  # O coletor só aceita relatório da execução armada, e o nome do arquivo sai do runId do runner,
+  # nunca do texto do agente.
+  Invoke-RestMethod -Method Post -Uri "$($surface.control)/control/arm" -ContentType "application/json" `
+    -Body (@{ runId = $runId } | ConvertTo-Json -Compress) | Out-Null
+
+  Push-Location $isolatedRoot
+  $previousValidatorRunId = $env:GOVBR_VALIDATOR_RUN_ID
+  $previousTelemetryFile = $env:GOVBR_VALIDATOR_TELEMETRY_FILE
+  try {
+    $env:GOVBR_VALIDATOR_RUN_ID = $runId
+    $env:GOVBR_VALIDATOR_TELEMETRY_FILE = $telemetryFile
+    $started = Get-Date
+    & $clientExecutable @clientArgs 2> $stderrFile | Out-File -FilePath $logFile -Encoding utf8
+    $exit = $LASTEXITCODE
+    $elapsed = [math]::Round(((Get-Date) - $started).TotalSeconds, 1)
+  } finally {
+    if ($null -eq $previousValidatorRunId) { Remove-Item Env:GOVBR_VALIDATOR_RUN_ID -ErrorAction SilentlyContinue }
+    else { $env:GOVBR_VALIDATOR_RUN_ID = $previousValidatorRunId }
+    if ($null -eq $previousTelemetryFile) { Remove-Item Env:GOVBR_VALIDATOR_TELEMETRY_FILE -ErrorAction SilentlyContinue }
+    else { $env:GOVBR_VALIDATOR_TELEMETRY_FILE = $previousTelemetryFile }
+    Pop-Location
+    if ($isolatedRoot) {
+      $evidenceSummary = Complete-RunEvidence -Source $isolatedRoot -Destination (Join-Path $LogsDir "$runId-evidencia") -RelativeTo $EvalRoot -RunId $runId
+      if ($evidenceSummary.status -eq "failed") {
+        Write-Warn2 "Falha ao preservar evidência. Origem retida: $($evidenceSummary.recoverySource). $($evidenceSummary.error)"
+      }
     }
-    $codexMcpArgs = if ($Provider -eq "codex") { @(Get-CodexMcpConfigArgs $runMcp) } else { @() }
+  }
 
-    # O recorte do smoke vive aqui, no disparo — não dentro do protocolo. O protocolo é o mesmo
-    # arquivo nos dois escopos, senão a execução de fumaça deixaria de exercitar o que vai rodar
-    # de verdade. A frase abaixo restringe o percurso e nada mais; não diz nada sobre o domínio.
-    # A suite de fluxo e uma tela so: nao ha recorte de aba a fazer, entao o smoke dela difere do
-    # full apenas no modelo barato e no diretorio fora do alcance do scorer.
-    # O protocolo geral nao sabe nada sobre a tela: alvo e destino do POST chegam AQUI, na
-    # invocacao, identicos nos dois bracos. E o que permite o mesmo arquivo servir a qualquer tela.
-    $invocation = if ($IsFluxo) {
-      "Avalie a tela em $($surface.entryUrl). " +
-      "Para salvar, navegue ate $($surface.origins.collector) e faca POST em /api/submit a partir dali."
-    } elseif ($IsSmoke) {
-      "Percorra apenas a aba '$SmokeAba' e feche os vereditos só dos casos dela. " +
-      "Ignore as demais abas e as rotas estáticas."
+  if ($exit -ne 0) {
+    Write-Warn2 "$clientName saiu com código $exit. Log: $logFile"
+  } else {
+    Write-Ok "concluída em ${elapsed}s — log: $logFile"
+  }
+
+  # Limite de gasto atingido: as execuções restantes falhariam em sequência, cada uma gravando
+  # um log vazio e empurrando a bateria para um estado meio-feito. Já aconteceu duas vezes
+  # (19/08 e 27/08). Parar aqui preserva o que foi arquivado até agora e deixa o motivo visível.
+  $limiteAtingido = $false
+  $logJson = $null
+  try {
+    $logJson = if ($Provider -eq "codex") {
+      Get-CodexLogSummary $logFile
     } else {
-      throw "A suíte TC-* não roda no v02."
+      Get-Content $logFile -Raw | ConvertFrom-Json
+    }
+    if ($logJson.api_error_status -eq 429) {
+      $limiteAtingido = $true
+      $motivo = $logJson.result
+    }
+  } catch { }
+
+  # O coletor diz o que chegou para esta execução: recibo, recusas e o que o proxy negou enquanto
+  # ela esteve armada.
+  $submission = Invoke-RestMethod -Method Post -Uri "$($surface.control)/control/disarm"
+  if ($submission.egress.denied -gt 0) {
+    Write-Ok "o proxy negou $($submission.egress.denied) pedido(s) durante a execução (no manifesto)"
+  }
+
+  # surface-1.2.0: sem relatório aceito, a última recusa vira o relatório da execução. Nunca em
+  # silêncio e nunca como se tivesse passado no contrato: aviso aqui, status no manifesto e em config.
+  $refusedPromoted = [bool]($submission.receipt -and $submission.receipt.status -eq "recusa-arquivada")
+  if (-not $submission.receipt) {
+    Write-Warn2 "O coletor não recebeu relatório desta execução. Confira o log."
+    $arquivo = $null
+  } else {
+    $arquivo = "agent-$runId.json"
+    Copy-Item -LiteralPath (Join-Path $SurfaceDir "inbox\$($submission.receipt.file)") -Destination (Join-Path $RunsDir $arquivo)
+    if ($refusedPromoted) {
+      $motivoRecusa = [string]$submission.receipt.reason
+      if ($motivoRecusa.Length -gt 300) { $motivoRecusa = $motivoRecusa.Substring(0, 300) + "…" }
+      Write-Warn2 "NENHUM relatório desta execução passou no contrato $InstrumentVersion ($(@($submission.rejected).Count) recusa(s))."
+      Write-Warn2 "A última recusa ($($submission.receipt.rejectedFile)) foi arquivada como relatório da execução, sinalizada para revisão e sem satisfazer o contrato: $arquivo"
+      Write-Warn2 "Motivo: $motivoRecusa"
+    } else {
+      Write-Ok "veredito arquivado: $arquivo (sha256 $($submission.receipt.sha256.Substring(0, 12)))"
     }
 
-    # D-36: os dois clientes recebem o protocolo do mesmo jeito — o texto no prompt, idêntico ao que
-    # entra no hash. O Claude Code lia /evaluate-screen partindo de F:\Dev Nath\TCC e, com isso,
-    # herdava a raiz do TCC: arquivos gravados ali por execuções anteriores (inclusive do outro
-    # braço), additionalDirectories das configurações do usuário e WebSearch/WebFetch liberados no
-    # settings.local.json do projeto.
-    $prompt = $protocolText + "`n`n--- INVOCACAO DESTA EXECUCAO ---`n" + $invocation
-
-    # Raiz descartável por execução, nos dois clientes. O Playwright MCP grava snapshots e arquivos
-    # de browser_evaluate no diretório de trabalho, então nada que uma execução escreve alcança a
-    # seguinte nem o outro braço.
-    $isolatedRoot = Join-Path ([System.IO.Path]::GetTempPath()) "govbr-eval-$runId"
-    New-Item -ItemType Directory -Path $isolatedRoot -Force | Out-Null
-
-    # --restricted ignora settings de usuário, projeto e local (só --settings vale), confina as
-    # ferramentas de arquivo ao diretório de trabalho e remove shell e WebFetch. A transcrição da
-    # sessão continua gravada: é a única trilha das chamadas de ferramenta (ex.: browser_resize).
-    $claudeArgs = @(
-      "-p", $prompt,
-      "--restricted",
-      "--strict-mcp-config",
-      "--mcp-config", $effectiveMcpConfig,
-      "--settings", $settingsFile,
-      "--model", $Model,
-      "--effort", $ReasoningEffort,
-      "--output-format", "json",
-      "--permission-mode", "dontAsk"
-    )
-
-    $clientArgs = $claudeArgs
-    if ($Provider -eq "codex") {
-      $clientArgs = @(
-        "exec", "--ephemeral", "--json", "--ignore-user-config", "--ignore-rules",
-        "--skip-git-repo-check", "--sandbox", "read-only", "--color", "never",
-        "-C", $isolatedRoot, "-m", $Model,
-        "-c", "model_reasoning_effort=`"$ReasoningEffort`"",
-        "-c", 'approval_policy="never"',
-        "-c", 'features.shell_tool=false',
-        "-c", 'agents.enabled=false',
-        "-c", 'web_search="disabled"'
-      ) + $codexMcpArgs + @($prompt)
-    }
-
-    # O coletor só aceita relatório da execução armada, e o nome do arquivo sai do runId do runner,
-    # nunca do texto do agente.
-    Invoke-RestMethod -Method Post -Uri "$($surface.control)/control/arm" -ContentType "application/json" `
-      -Body (@{ runId = $runId } | ConvertTo-Json -Compress) | Out-Null
-
-    Push-Location $isolatedRoot
-    $previousValidatorRunId = $env:GOVBR_VALIDATOR_RUN_ID
-    $previousTelemetryFile = $env:GOVBR_VALIDATOR_TELEMETRY_FILE
+    # O modelo que o scorer usa para agrupar vem do arquivo, que o próprio agente escreveu.
+    # Quem sabe qual modelo rodou é este script, que passou --model. Divergência aqui agruparia
+    # execuções sob um rótulo errado, então ela é reportada em vez de silenciada.
     try {
-      $env:GOVBR_VALIDATOR_RUN_ID = $runId
-      $env:GOVBR_VALIDATOR_TELEMETRY_FILE = $telemetryFile
-      $started = Get-Date
-      & $clientExecutable @clientArgs 2> $stderrFile | Out-File -FilePath $logFile -Encoding utf8
-      $exit = $LASTEXITCODE
-      $elapsed = [math]::Round(((Get-Date) - $started).TotalSeconds, 1)
-    } finally {
-      if ($null -eq $previousValidatorRunId) { Remove-Item Env:GOVBR_VALIDATOR_RUN_ID -ErrorAction SilentlyContinue }
-      else { $env:GOVBR_VALIDATOR_RUN_ID = $previousValidatorRunId }
-      if ($null -eq $previousTelemetryFile) { Remove-Item Env:GOVBR_VALIDATOR_TELEMETRY_FILE -ErrorAction SilentlyContinue }
-      else { $env:GOVBR_VALIDATOR_TELEMETRY_FILE = $previousTelemetryFile }
-      Pop-Location
-      if ($isolatedRoot) {
-        $evidenceSummary = Complete-RunEvidence -Source $isolatedRoot -Destination (Join-Path $LogsDir "$runId-evidencia") -RelativeTo $EvalRoot -RunId $runId
-        if ($evidenceSummary.status -eq "failed") {
-          Write-Warn2 "Falha ao preservar evidência. Origem retida: $($evidenceSummary.recoverySource). $($evidenceSummary.error)"
-        }
+      $vereditoPath = Join-Path $RunsDir $arquivo
+      $modeloNoArquivo = (Get-Content $vereditoPath -Raw | ConvertFrom-Json).model
+      if ($modeloNoArquivo -and $modeloNoArquivo -ne $Model) {
+        Write-Warn2 "modelo divergente: o arquivo diz '$modeloNoArquivo', a execução foi com '$Model'."
+        Write-Warn2 "O runner normalizará o campo e preservará o rótulo do agente em config.agentReportedModel."
       }
+    } catch {
+      Write-Warn2 "não foi possível conferir o campo 'model' do veredito arquivado."
     }
 
-    if ($exit -ne 0) {
-      Write-Warn2 "$clientName saiu com código $exit. Log: $logFile"
-    } else {
-      Write-Ok "concluída em ${elapsed}s — log: $logFile"
+    # o diretório é o que rotula o braço para o scorer (D-17)
+    $destinoDir = if ($IsSmoke) { $SmokeDir } elseif ($armName -eq "sem") { $AblacaoDir } else { $null }
+
+    if ($destinoDir) {
+      Move-Item -Path (Join-Path $RunsDir $arquivo) -Destination (Join-Path $destinoDir $arquivo) -Force
+      $rotulo = "$(Split-Path $destinoDir -Leaf)/ " + $(if ($IsSmoke) { "(fora do alcance do scorer)" } else { "(o diretorio rotula o braco)" })
+      Write-Ok "movido para $rotulo"
     }
 
-    # Limite de gasto atingido: as execuções restantes falhariam em sequência, cada uma gravando
-    # um log vazio e empurrando a bateria para um estado meio-feito. Já aconteceu duas vezes
-    # (19/08 e 27/08). Parar aqui preserva o que foi arquivado até agora e deixa o motivo visível.
-    $limiteAtingido = $false
-    $logJson = $null
+    # O runner, não o agente, conhece a configuração real e recebe os contadores do cliente.
+    # Enriquece somente o artefato arquivado, depois que o processo terminou. Isso tira trabalho
+    # contábil do prompt e impede que estimativas do modelo virem dados experimentais.
+    $arquivoDir = if ($destinoDir) { $destinoDir } else { $RunsDir }
+    $arquivoPath = Join-Path $arquivoDir $arquivo
     try {
-      $logJson = if ($Provider -eq "codex") {
-        Get-CodexLogSummary $logFile
-      } else {
-        Get-Content $logFile -Raw | ConvertFrom-Json
+      $veredito = Get-Content -LiteralPath $arquivoPath -Raw | ConvertFrom-Json
+      if (-not $veredito.config) {
+        $veredito | Add-Member -NotePropertyName config -NotePropertyValue ([pscustomobject]@{})
       }
-      if ($logJson.api_error_status -eq 429) {
-        $limiteAtingido = $true
-        $motivo = $logJson.result
+      $modeloDeclarado = [string]$veredito.model
+      if ($modeloDeclarado -and $modeloDeclarado -ne $Model) {
+        Set-JsonProperty $veredito.config "agentReportedModel" $modeloDeclarado
       }
-    } catch { }
-
-    # O coletor diz o que chegou para esta execução: recibo, recusas e o que o proxy negou enquanto
-    # ela esteve armada.
-    $submission = Invoke-RestMethod -Method Post -Uri "$($surface.control)/control/disarm"
-    if ($submission.egress.denied -gt 0) {
-      Write-Ok "o proxy negou $($submission.egress.denied) pedido(s) durante a execução (no manifesto)"
-    }
-
-    # surface-1.2.0: sem relatório aceito, a última recusa vira o relatório da execução. Nunca em
-    # silêncio e nunca como se tivesse passado no contrato: aviso aqui, status no manifesto e em config.
-    $refusedPromoted = [bool]($submission.receipt -and $submission.receipt.status -eq "recusa-arquivada")
-    if (-not $submission.receipt) {
-      Write-Warn2 "O coletor não recebeu relatório desta execução. Confira o log."
-      $arquivo = $null
-    } else {
-      $arquivo = "agent-$runId.json"
-      Copy-Item -LiteralPath (Join-Path $SurfaceDir "inbox\$($submission.receipt.file)") -Destination (Join-Path $RunsDir $arquivo)
+      Set-JsonProperty $veredito "model" $Model
+      Set-JsonProperty $veredito.config "arm" $(if ($armName -eq "com") { "com-oraculo" } else { "sem-oraculo" })
+      Set-JsonProperty $veredito.config "client" $clientName
+      Set-JsonProperty $veredito.config "clientVersion" $clientVersion
+      Set-JsonProperty $veredito.config "modelVersion" $Model
+      Set-JsonProperty $veredito.config "reasoningEffort" $ReasoningEffort
+      Set-JsonProperty $veredito.config "oracleProfile" $(if ($armName -eq "com") { $OracleProfile } else { "none" })
+      Set-JsonProperty $veredito.config "turnMetric" "$clientName-native (não comparável entre clientes)"
+      Set-JsonProperty $veredito.config "protocolVersion" $protocolVersion
+      Set-JsonProperty $veredito.config "instrumentVersion" $InstrumentVersion
+      Set-JsonProperty $veredito.config "surfaceVersion" $surface.version
+      Set-JsonProperty $veredito.config "siteManifestSha256" $surface.siteManifestSha256
+      Set-JsonProperty $veredito.config "submissionStatus" $submission.receipt.status
+      Set-JsonProperty $veredito.config "collectionManifestSha256" $CollectionManifestSha
+      Set-JsonProperty $veredito.config "schedule" ([pscustomobject]@{ slot = $runIndex; block = $slot.block; repetition = $i; order = $Schedule })
       if ($refusedPromoted) {
-        $motivoRecusa = [string]$submission.receipt.reason
-        if ($motivoRecusa.Length -gt 300) { $motivoRecusa = $motivoRecusa.Substring(0, 300) + "…" }
-        Write-Warn2 "NENHUM relatório desta execução passou no contrato $InstrumentVersion ($(@($submission.rejected).Count) recusa(s))."
-        Write-Warn2 "A última recusa ($($submission.receipt.rejectedFile)) foi arquivada como relatório da execução, sinalizada para revisão e sem satisfazer o contrato: $arquivo"
-        Write-Warn2 "Motivo: $motivoRecusa"
-      } else {
-        Write-Ok "veredito arquivado: $arquivo (sha256 $($submission.receipt.sha256.Substring(0, 12)))"
+        Set-JsonProperty $veredito.config "refusedSubmission" ([pscustomobject]@{
+          rejectedFile = $submission.receipt.rejectedFile
+          reason = $submission.receipt.reason
+        })
+      }
+      if ($evidenceSummary -and $evidenceSummary.status -eq "preserved") {
+        Set-JsonProperty $veredito.config "evidenceDir" $evidenceSummary.dir
+        Set-JsonProperty $veredito.config "evidenceIndexSha256" $evidenceSummary.indexSha256
+      }
+      if ($armName -eq "com") {
+        Set-JsonProperty $veredito.config "validatorVersion" $validatorVersion
       }
 
-      # O modelo que o scorer usa para agrupar vem do arquivo, que o próprio agente escreveu.
-      # Quem sabe qual modelo rodou é este script, que passou --model. Divergência aqui agruparia
-      # execuções sob um rótulo errado, então ela é reportada em vez de silenciada.
-      try {
-        $vereditoPath = Join-Path $RunsDir $arquivo
-        $modeloNoArquivo = (Get-Content $vereditoPath -Raw | ConvertFrom-Json).model
-        if ($modeloNoArquivo -and $modeloNoArquivo -ne $Model) {
-          Write-Warn2 "modelo divergente: o arquivo diz '$modeloNoArquivo', a execução foi com '$Model'."
-          Write-Warn2 "O runner normalizará o campo e preservará o rótulo do agente em config.agentReportedModel."
+      $finishedAt = Get-Date
+      if (-not $veredito.cost) {
+        $veredito | Add-Member -NotePropertyName cost -NotePropertyValue ([pscustomobject]@{})
+      }
+      Set-JsonProperty $veredito.cost "startedAt" $started.ToUniversalTime().ToString("o")
+      Set-JsonProperty $veredito.cost "finishedAt" $finishedAt.ToUniversalTime().ToString("o")
+      Set-JsonProperty $veredito.cost "wallClockSeconds" $elapsed
+
+      if ($logJson) {
+        $tokenUsage = [ordered]@{
+          input = [int64]($logJson.usage.input_tokens ?? 0)
+          cacheCreationInput = [int64]($logJson.usage.cache_creation_input_tokens ?? 0)
+          cacheReadInput = [int64]($logJson.usage.cache_read_input_tokens ?? 0)
+          output = [int64]($logJson.usage.output_tokens ?? 0)
         }
-      } catch {
-        Write-Warn2 "não foi possível conferir o campo 'model' do veredito arquivado."
+        $totalTokens = $tokenUsage.input + $tokenUsage.cacheCreationInput + $tokenUsage.cacheReadInput + $tokenUsage.output
+        Set-JsonProperty $veredito.cost "tokens" $totalTokens
+        Set-JsonProperty $veredito.cost "tokenUsage" $tokenUsage
+        if ($null -ne $logJson.total_cost_usd) {
+          Set-JsonProperty $veredito.cost "totalCostUsd" ([double]$logJson.total_cost_usd)
+        }
+        Set-JsonProperty $veredito.cost "turns" ([int]($logJson.num_turns ?? 0))
+        if ($null -ne $logJson.tool_calls) {
+          Set-JsonProperty $veredito.cost "toolCalls" ([int]$logJson.tool_calls)
+        }
+        if ($null -ne $logJson.usage.reasoning_output_tokens) {
+          Set-JsonProperty $veredito.cost "reasoningOutputTokens" ([int64]$logJson.usage.reasoning_output_tokens)
+        }
       }
 
-      # o diretório é o que rotula o braço para o scorer (D-17)
-      $destinoDir = if ($IsSmoke) { $SmokeDir } elseif ($armName -eq "sem") { $AblacaoDir } else { $null }
-
-      if ($destinoDir) {
-        Move-Item -Path (Join-Path $RunsDir $arquivo) -Destination (Join-Path $destinoDir $arquivo) -Force
-        $rotulo = "$(Split-Path $destinoDir -Leaf)/ " + $(if ($IsSmoke) { "(fora do alcance do scorer)" } else { "(o diretorio rotula o braco)" })
-        Write-Ok "movido para $rotulo"
+      if ($armName -eq "com") {
+        $mcpSummary = Get-McpTelemetrySummary $telemetryFile $runId
+        Set-JsonProperty $veredito.cost "mcp" $mcpSummary
+        Write-Ok "telemetria MCP: $($mcpSummary.calls) chamadas, $($mcpSummary.responseBytes) bytes de resposta"
       }
 
-      # O runner, não o agente, conhece a configuração real e recebe os contadores do cliente.
-      # Enriquece somente o artefato arquivado, depois que o processo terminou. Isso tira trabalho
-      # contábil do prompt e impede que estimativas do modelo virem dados experimentais.
-      $arquivoDir = if ($destinoDir) { $destinoDir } else { $RunsDir }
-      $arquivoPath = Join-Path $arquivoDir $arquivo
-      try {
-        $veredito = Get-Content -LiteralPath $arquivoPath -Raw | ConvertFrom-Json
-        if (-not $veredito.config) {
-          $veredito | Add-Member -NotePropertyName config -NotePropertyValue ([pscustomobject]@{})
-        }
-        $modeloDeclarado = [string]$veredito.model
-        if ($modeloDeclarado -and $modeloDeclarado -ne $Model) {
-          Set-JsonProperty $veredito.config "agentReportedModel" $modeloDeclarado
-        }
-        Set-JsonProperty $veredito "model" $Model
-        Set-JsonProperty $veredito.config "arm" $(if ($armName -eq "com") { "com-oraculo" } else { "sem-oraculo" })
-        Set-JsonProperty $veredito.config "client" $clientName
-        Set-JsonProperty $veredito.config "clientVersion" $clientVersion
-        Set-JsonProperty $veredito.config "modelVersion" $Model
-        Set-JsonProperty $veredito.config "reasoningEffort" $ReasoningEffort
-        Set-JsonProperty $veredito.config "oracleProfile" $(if ($armName -eq "com") { $OracleProfile } else { "none" })
-        Set-JsonProperty $veredito.config "turnMetric" "$clientName-native (não comparável entre clientes)"
-        Set-JsonProperty $veredito.config "protocolVersion" $protocolVersion
-        Set-JsonProperty $veredito.config "instrumentVersion" $InstrumentVersion
-        Set-JsonProperty $veredito.config "surfaceVersion" $surface.version
-        Set-JsonProperty $veredito.config "siteManifestSha256" $surface.siteManifestSha256
-        Set-JsonProperty $veredito.config "submissionStatus" $submission.receipt.status
-        if ($refusedPromoted) {
-          Set-JsonProperty $veredito.config "refusedSubmission" ([pscustomobject]@{
-            rejectedFile = $submission.receipt.rejectedFile
-            reason = $submission.receipt.reason
-          })
-        }
-        if ($evidenceSummary -and $evidenceSummary.status -eq "preserved") {
-          Set-JsonProperty $veredito.config "evidenceDir" $evidenceSummary.dir
-          Set-JsonProperty $veredito.config "evidenceIndexSha256" $evidenceSummary.indexSha256
-        }
-        if ($armName -eq "com") {
-          Set-JsonProperty $veredito.config "validatorVersion" $validatorVersion
-        }
-
-        $finishedAt = Get-Date
-        if (-not $veredito.cost) {
-          $veredito | Add-Member -NotePropertyName cost -NotePropertyValue ([pscustomobject]@{})
-        }
-        Set-JsonProperty $veredito.cost "startedAt" $started.ToUniversalTime().ToString("o")
-        Set-JsonProperty $veredito.cost "finishedAt" $finishedAt.ToUniversalTime().ToString("o")
-        Set-JsonProperty $veredito.cost "wallClockSeconds" $elapsed
-
-        if ($logJson) {
-          $tokenUsage = [ordered]@{
-            input = [int64]($logJson.usage.input_tokens ?? 0)
-            cacheCreationInput = [int64]($logJson.usage.cache_creation_input_tokens ?? 0)
-            cacheReadInput = [int64]($logJson.usage.cache_read_input_tokens ?? 0)
-            output = [int64]($logJson.usage.output_tokens ?? 0)
-          }
-          $totalTokens = $tokenUsage.input + $tokenUsage.cacheCreationInput + $tokenUsage.cacheReadInput + $tokenUsage.output
-          Set-JsonProperty $veredito.cost "tokens" $totalTokens
-          Set-JsonProperty $veredito.cost "tokenUsage" $tokenUsage
-          if ($null -ne $logJson.total_cost_usd) {
-            Set-JsonProperty $veredito.cost "totalCostUsd" ([double]$logJson.total_cost_usd)
-          }
-          Set-JsonProperty $veredito.cost "turns" ([int]($logJson.num_turns ?? 0))
-          if ($null -ne $logJson.tool_calls) {
-            Set-JsonProperty $veredito.cost "toolCalls" ([int]$logJson.tool_calls)
-          }
-          if ($null -ne $logJson.usage.reasoning_output_tokens) {
-            Set-JsonProperty $veredito.cost "reasoningOutputTokens" ([int64]$logJson.usage.reasoning_output_tokens)
-          }
-        }
-
-        if ($armName -eq "com") {
-          $mcpSummary = Get-McpTelemetrySummary $telemetryFile $runId
-          Set-JsonProperty $veredito.cost "mcp" $mcpSummary
-          Write-Ok "telemetria MCP: $($mcpSummary.calls) chamadas, $($mcpSummary.responseBytes) bytes de resposta"
-        }
-
-        $veredito | ConvertTo-Json -Depth 30 | Out-File -LiteralPath $arquivoPath -Encoding utf8
-        Write-Ok "metadados de configuração e custo anexados pelo runner"
-      } catch {
-        Write-Warn2 "não foi possível enriquecer o veredito arquivado: $($_.Exception.Message)"
-      }
+      $veredito | ConvertTo-Json -Depth 30 | Out-File -LiteralPath $arquivoPath -Encoding utf8
+      Write-Ok "metadados de configuração e custo anexados pelo runner"
+    } catch {
+      Write-Warn2 "não foi possível enriquecer o veredito arquivado: $($_.Exception.Message)"
     }
+  }
 
-    # restaura o veredito "atual", que o POST da ablação sobrescreveu
-    foreach ($snap in $snapshots) {
-      Copy-Item $snap.backup $snap.path -Force
-      Remove-Item $snap.backup -Force
-    }
-    if ($snapshots.Count -gt 0) {
-      Write-Ok "agent-results.json restaurado (a ablação não substitui o braço principal)"
-    }
+  # restaura o veredito "atual", que o POST da ablação sobrescreveu
+  foreach ($snap in $snapshots) {
+    Copy-Item $snap.backup $snap.path -Force
+    Remove-Item $snap.backup -Force
+  }
+  if ($snapshots.Count -gt 0) {
+    Write-Ok "agent-results.json restaurado (a ablação não substitui o braço principal)"
+  }
 
-    $manifest += [pscustomobject]@{
-      run          = $runIndex
-      runId        = $runId
-      arm          = $armName
-      armDescricao = $(if ($armName -eq "com") { "agente + oráculo MCP" } else { "agente sem oráculo (ablação)" })
-      model        = $Model
-      reasoningEffort = $ReasoningEffort
-      oracleProfile = $(if ($armName -eq "com") { $OracleProfile } else { "none" })
-      client       = $clientName
-      clientVersion = $clientVersion
-      protocolVersion = $protocolVersion
-      instrumentVersion = $InstrumentVersion
-      validatorVersion = $(if ($armName -eq "com") { $validatorVersion } else { $null })
-      mcpConfig    = Split-Path $effectiveMcpConfig -Leaf
-      prompt       = $invocation
-      scope        = $Scope
-      archive      = $arquivo
-      suite        = $Suite
-      archiveDir   = "results/" + $(if ($IsSmoke) { Split-Path $SmokeDir -Leaf } elseif ($armName -eq "sem") { Split-Path $AblacaoDir -Leaf } else { Split-Path $RunsDir -Leaf })
-      exitCode     = $exit
-      wallClockSeconds = $elapsed
-      log          = Split-Path $logFile -Leaf
-      stderrLog    = Split-Path $stderrFile -Leaf
-      mcpTelemetry = $(if (Test-Path $telemetryFile) { Split-Path $telemetryFile -Leaf } else { $null })
-      submission   = [pscustomobject]@{
-        status = $(if (-not $submission.receipt) { "sem-relatorio" } else { $submission.receipt.status })
-        receipt = $submission.receipt
-        rejected = @($submission.rejected)
-        promotedFrom = $(if ($refusedPromoted) { $submission.receipt.rejectedFile } else { $null })
-      }
-      egress       = $submission.egress
-      evidence     = $evidenceSummary
-      collectionStatus = $(if ($evidenceSummary -and $evidenceSummary.status -eq "failed") { "evidence-failed" } else { "collected" })
-      startedAt    = $started.ToUniversalTime().ToString("o")
-    }
+  # Fatia 6: o oráculo instalado e as cópias arquivadas continuam sendo os do manifesto? Um build no
+  # meio da bateria compromete esta execução, que fica marcada, e interrompe as seguintes.
+  $identityIntact = Test-CollectionIdentity
+  if ($identityIntact) { Write-Ok "identidade da coleta conferida" }
+  else { Write-Warn2 "IDENTIDADE DA COLETA ALTERADA durante esta execução." }
+  $collectionStatus = if ($evidenceSummary -and $evidenceSummary.status -eq "failed") { "evidence-failed" }
+    elseif (-not $identityIntact) { "identity-changed" }
+    else { "collected" }
 
-    # Abortar só depois da restauração e do manifesto: parar antes deixaria o agent-results.json
-    # sobrescrito pelo POST desta execução e a bateria sem registro do que chegou a rodar.
-    if ($evidenceSummary -and $evidenceSummary.status -eq "failed") { break bateria }
-    if ($limiteAtingido) {
-      Write-Warn2 "LIMITE DE GASTO ATINGIDO — bateria interrompida na execução $runIndex de $total."
-      Write-Warn2 $motivo
-      Write-Warn2 "O que já foi arquivado continua válido. Retome quando o limite liberar;"
-      Write-Warn2 "'-Scope smoke' custa ~US$ 0,15 e serve para conferir se já liberou."
-      break bateria
+  $manifest += [pscustomobject]@{
+    run          = $runIndex
+    slot         = $runIndex
+    repetition   = $i
+    block        = $slot.block
+    runId        = $runId
+    arm          = $armName
+    armDescricao = $(if ($armName -eq "com") { "agente + oráculo MCP" } else { "agente sem oráculo (ablação)" })
+    model        = $Model
+    reasoningEffort = $ReasoningEffort
+    oracleProfile = $(if ($armName -eq "com") { $OracleProfile } else { "none" })
+    client       = $clientName
+    clientVersion = $clientVersion
+    protocolVersion = $protocolVersion
+    instrumentVersion = $InstrumentVersion
+    validatorVersion = $(if ($armName -eq "com") { $validatorVersion } else { $null })
+    mcpConfig    = Split-Path $effectiveMcpConfig -Leaf
+    prompt       = $invocation
+    scope        = $Scope
+    archive      = $arquivo
+    suite        = $Suite
+    archiveDir   = "results/" + $(if ($IsSmoke) { Split-Path $SmokeDir -Leaf } elseif ($armName -eq "sem") { Split-Path $AblacaoDir -Leaf } else { Split-Path $RunsDir -Leaf })
+    exitCode     = $exit
+    wallClockSeconds = $elapsed
+    log          = Split-Path $logFile -Leaf
+    stderrLog    = Split-Path $stderrFile -Leaf
+    mcpTelemetry = $(if (Test-Path $telemetryFile) { Split-Path $telemetryFile -Leaf } else { $null })
+    submission   = [pscustomobject]@{
+      status = $(if (-not $submission.receipt) { "sem-relatorio" } else { $submission.receipt.status })
+      receipt = $submission.receipt
+      rejected = @($submission.rejected)
+      promotedFrom = $(if ($refusedPromoted) { $submission.receipt.rejectedFile } else { $null })
     }
+    egress       = $submission.egress
+    evidence     = $evidenceSummary
+    collectionStatus = $collectionStatus
+    collectionManifestSha256 = $CollectionManifestSha
+    startedAt    = $started.ToUniversalTime().ToString("o")
+  }
+  Write-Journal "execucao-fim" ([ordered]@{ slot = $runIndex; runId = $runId; exitCode = $exit; collectionStatus = $collectionStatus; archive = $arquivo })
+
+  # Abortar só depois da restauração e do manifesto: parar antes deixaria o agent-results.json
+  # sobrescrito pelo POST desta execução e a bateria sem registro do que chegou a rodar.
+  if ($collectionStatus -eq "evidence-failed") { $stopReason = "falha na preservação da evidência (slot $runIndex)"; break bateria }
+  if ($collectionStatus -eq "identity-changed") { $stopReason = "identidade da coleta alterada (slot $runIndex)"; break bateria }
+  if ($limiteAtingido) {
+    $stopReason = "limite de gasto atingido (slot $runIndex)"
+    Write-Warn2 "LIMITE DE GASTO ATINGIDO — bateria interrompida na execução $runIndex de $total."
+    Write-Warn2 $motivo
+    Write-Warn2 "O que já foi arquivado continua válido. Retome quando o limite liberar;"
+    Write-Warn2 "'-Scope smoke' custa ~US$ 0,15 e serve para conferir se já liberou."
+    break bateria
   }
 }
 
+# ---------------------------------------------------------------- slots não tentados
+# Todo slot do plano aparece no manifesto. O que não rodou fica como `nao-tentada`, com o motivo,
+# em vez de sumir: a preparação recusa bateria incompleta sem um manifesto de análise explícito.
+$attemptedSlots = @($manifest | ForEach-Object { $_.slot })
+foreach ($planned in $planSlots) {
+  if ($attemptedSlots -contains $planned.slot) { continue }
+  $manifest += [pscustomobject]@{
+    run = $planned.slot
+    slot = $planned.slot
+    repetition = $planned.repetition
+    block = $planned.block
+    arm = $planned.arm
+    suite = $Suite
+    scope = $Scope
+    archive = $null
+    archiveDir = "results/" + $(if ($IsSmoke) { Split-Path $SmokeDir -Leaf } elseif ($planned.arm -eq "sem") { Split-Path $AblacaoDir -Leaf } else { Split-Path $RunsDir -Leaf })
+    exitCode = $null
+    collectionStatus = "nao-tentada"
+    collectionManifestSha256 = $CollectionManifestSha
+    motivo = $stopReason
+  }
+  Write-Journal "nao-tentada" ([ordered]@{ slot = $planned.slot; arm = $planned.arm; repetition = $planned.repetition; motivo = $stopReason })
+}
+$manifest = @($manifest | Sort-Object slot)
+
 # ---------------------------------------------------------------- manifesto
-$manifestPath = Join-Path $LogsDir "$Stamp-bateria.json"
-[pscustomobject]@{
+Write-NewJson -Path $manifestPath -Depth 12 -Value ([pscustomobject]@{
   stamp     = $Stamp
   model     = $Model
   reasoningEffort = $ReasoningEffort
@@ -893,6 +1077,10 @@ $manifestPath = Join-Path $LogsDir "$Stamp-bateria.json"
   scope     = $Scope
   runsPerArm = $Runs
   arms      = $arms
+  schedule  = $Schedule
+  plan      = [pscustomobject]@{ path = [System.IO.Path]::GetRelativePath($EvalRoot, $PlanPath).Replace('\', '/'); sha256 = $PlanSha }
+  collectionManifest = [pscustomobject]@{ path = $CollectionManifestRel; sha256 = $CollectionManifestSha }
+  stopReason = $stopReason
   corpusUrl = $surface.origins.site
   surface   = [pscustomobject]@{
     dir = "pipeline/logs/$(Split-Path $SurfaceDir -Leaf)"
@@ -900,7 +1088,9 @@ $manifestPath = Join-Path $LogsDir "$Stamp-bateria.json"
     description = $surface
   }
   execucoes = $manifest
-} | ConvertTo-Json -Depth 10 | Out-File -FilePath $manifestPath -Encoding utf8
+})
+$stages.coleta = if ($stopReason) { "interrompida" } else { "concluida" }
+Write-Journal "coleta-fim" ([ordered]@{ status = $stages.coleta; motivo = $stopReason; manifest = $manifestPath })
 
 Write-Step "Manifesto da bateria"
 Write-Ok $manifestPath
@@ -908,63 +1098,101 @@ Write-Ok $manifestPath
 if (@($manifest | Where-Object { $_.collectionStatus -eq "evidence-failed" }).Count -gt 0) {
   throw "Bateria interrompida por falha na preservação da evidência. Manifesto: $manifestPath. A origem foi retida para recuperação."
 }
-
-# ---------------------------------------------------------------- baselines
-if (-not $SkipBaselines) {
-  if ($IsFluxo) {
-    # As linhas de base da suite TC-* nao valem para a tela de fluxo: sao outra pagina, e mistura-las
-    # e exatamente o que o D-13 proibe. O runner da suite de fluxo atribui por chave de elemento e
-    # prepara a pagina no mesmo estado que o scorer usa.
-    Write-Step "Baselines deterministicos da suite de fluxo, na mesma sessao (D-06)"
-    Push-Location $EvalRoot
-    $previousAppUrl = $env:APP_URL
-    try {
-      # A linha de base mede os mesmos bytes que as execuções viram: a tela congelada.
-      $env:APP_URL = $surface.origins.site
-      & npm run baselines:fluxo
-      if ($LASTEXITCODE -ne 0) { throw "baselines:fluxo falhou; artefatos da bateria foram preservados." }
-    } finally {
-      $env:APP_URL = $previousAppUrl
-      Pop-Location
-    }
-  } else {
-    Write-Step "Baselines determinísticos na mesma sessão (D-06)"
-    Push-Location $EvalRoot
-    try {
-      & npm run axe
-      & npm run eslint
-    } finally {
-      Pop-Location
-    }
-  }
+if (@($manifest | Where-Object { $_.collectionStatus -eq "identity-changed" }).Count -gt 0) {
+  throw "Bateria interrompida: a identidade instalada do oráculo mudou durante a coleta. Manifesto: $manifestPath."
 }
 
-# ---------------------------------------------------------------- pontuação
-if (-not $SkipScore) {
-  Write-Step "Pontuacao"
+# ---------------------------------------------------------------- linha de base da bateria
+if ($SkipBaselines) {
+  $stages.linhaDeBase = if ($IsSmoke) { "nao-aplicavel (smoke)" } else { "ausencia-declarada (-SkipBaselines)" }
+} else {
+  # Mede os mesmos bytes que as execuções viram — a tela congelada, conferida arquivo a arquivo — sob
+  # a identidade do manifesto de coleta, e grava sob o carimbo desta bateria, sem sobrescrever.
+  Write-Step "Linha de base determinística da bateria (D-06, fatia 6)"
+  $stages.linhaDeBase = "em-andamento"
+  Write-Journal "estagio-inicio" ([ordered]@{ stage = "linha-de-base"; out = $BaselinePath })
+  Push-Location $EvalRoot
+  $previousAppUrl = $env:APP_URL
+  try {
+    $env:APP_URL = $surface.origins.site
+    & npm run baselines:fluxo -- --out $BaselinePath --collection-manifest $CollectionManifestPath --site-manifest $SiteManifestPath
+    $baselineExit = $LASTEXITCODE
+  } finally {
+    $env:APP_URL = $previousAppUrl
+    Pop-Location
+  }
+  $stages.linhaDeBase = if ($baselineExit -eq 0) { "concluida" } else { "falhou" }
+  Write-Journal "estagio-fim" ([ordered]@{ stage = "linha-de-base"; status = $stages.linhaDeBase; exitCode = $baselineExit
+    file = $(if (Test-Path $BaselinePath) { Split-Path $BaselinePath -Leaf } else { $null })
+    sha256 = $(if (Test-Path $BaselinePath) { Get-Sha256 $BaselinePath } else { $null }) })
+  if ($baselineExit -ne 0) { throw "baselines:fluxo falhou; o parcial ficou em $BaselinePath (status failed) e os artefatos da bateria foram preservados." }
+  Write-Ok "Linha de base: $(Split-Path $BaselinePath -Leaf)"
+}
+
+# ---------------------------------------------------------------- pacote de revisão
+if ($stopReason -and -not $SkipScore) {
+  # Coleta interrompida: o pacote exigiria escolher execuções, e isso só com manifesto de análise.
+  $stages.preparacao = "bloqueada (coleta interrompida)"
+  Write-Warn2 "Pacote de revisão não preparado: a coleta foi interrompida ($stopReason)."
+} elseif ($SkipScore) {
+  $stages.preparacao = if ($IsSmoke) { "nao-aplicavel (smoke)" } else { "ausencia-declarada (-SkipScore)" }
+} else {
+  # A sobreposição de citação não produz mais número final. O pacote consome o manifesto e a linha
+  # de base exatos, serve ele mesmo o site congelado e usa o gabarito arquivado pela coleta.
+  Write-Step "Pacote de revisao semantica"
+  $stages.preparacao = "em-andamento"
+  Write-Journal "estagio-inicio" ([ordered]@{ stage = "preparacao"; out = $semanticReviewDir })
+  $prepareArgs = @("run", "flow:review", "--", "prepare", "--battery", $manifestPath, "--out", $semanticReviewDir,
+    "--collection-manifest", $CollectionManifestPath, "--site-dir", $SurfaceDir)
+  if ($SkipBaselines) {
+    $prepareArgs += @("--no-baseline", "-SkipBaselines declarado na invocacao do runner")
+  } else {
+    $prepareArgs += @("--baseline", $BaselinePath)
+  }
   Push-Location $EvalRoot
   try {
-    if ($IsFluxo) {
-      # Citation overlap no longer produces a final detection score. Close the manifest-selected
-      # review package first; author decisions and offline scoring happen against that package.
-      $semanticReviewDir = Join-Path $EvalRoot "results\semantic-review\$Stamp"
-      & npm run flow:review -- prepare --battery $manifestPath --out $semanticReviewDir --app-url $($surface.origins.site)
-      if ($LASTEXITCODE -ne 0) { throw "Falha ao preparar o pacote de revisao semantica; artefatos da bateria foram preservados." }
-      Write-Ok "Pacote de revisao: $semanticReviewDir (sem metricas finais antes da revisao)"
-    } else {
-      & npm run score
-      if ($LASTEXITCODE -ne 0) { throw "Falha na pontuacao; artefatos da bateria foram preservados." }
-    }
+    & npm @prepareArgs
+    $prepareExit = $LASTEXITCODE
   } finally {
     Pop-Location
   }
+  $stages.preparacao = if ($prepareExit -eq 0) { "concluida" } else { "falhou" }
+  Write-Journal "estagio-fim" ([ordered]@{ stage = "preparacao"; status = $stages.preparacao; exitCode = $prepareExit })
+  if ($prepareExit -ne 0) { throw "Falha ao preparar o pacote de revisao semantica; artefatos da bateria foram preservados." }
+  Write-Ok "Pacote de revisao: $semanticReviewDir (sem metricas finais antes da revisao)"
 }
 
+} catch {
+  $batteryError = $_.Exception.Message
+  throw
 } finally {
   Stop-Surface
+  # Desfecho da bateria, sucesso ou falha: estágios, erro e ponteiros. Gravado uma vez, no fim.
+  foreach ($key in @($stages.Keys)) {
+    if ($stages[$key] -eq "em-andamento") { $stages[$key] = "falhou" }
+    elseif ($batteryError -and $stages[$key] -eq "pendente") { $stages[$key] = "nao-executado" }
+  }
+  $outcome = [ordered]@{
+    stamp = $Stamp
+    status = $(if ($batteryError) { "falhou" } elseif ($stopReason) { "interrompida" } else { "concluida" })
+    error = $batteryError
+    stopReason = $stopReason
+    stages = $stages
+    plan = [ordered]@{ path = $PlanPath; sha256 = $PlanSha }
+    collectionManifest = [ordered]@{ path = $CollectionManifestRel; sha256 = $CollectionManifestSha }
+    battery = $(if (Test-Path $manifestPath) { [ordered]@{ path = $manifestPath; sha256 = (Get-Sha256 $manifestPath) } } else { $null })
+    baseline = $(if (Test-Path $BaselinePath) { [ordered]@{ path = $BaselinePath; sha256 = (Get-Sha256 $BaselinePath) } } else { $null })
+    reviewPackage = $(if (Test-Path $semanticReviewDir) { $semanticReviewDir } else { $null })
+    journal = $JournalPath
+  }
+  Write-NewJson -Path (Join-Path $LogsDir "$Stamp-desfecho.json") -Value $outcome
+  Write-Journal "desfecho" ([ordered]@{ status = $outcome.status })
 }
 
 Write-Step "Fim"
+if ($stopReason) {
+  Write-Warn2 "Bateria INTERROMPIDA ($stopReason): slots restantes registrados como nao-tentada; o pacote não pode ser preparado sem manifesto de análise explícito."
+}
 Write-Host "Execuções com oráculo:  $RunsDir"
 Write-Host "Execuções da ablação:   $AblacaoDir"
 if ($IsSmoke) { Write-Host "Execuções de fumaça:    $SmokeDir  (não entram em métrica)" }

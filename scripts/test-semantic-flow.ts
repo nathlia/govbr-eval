@@ -8,7 +8,7 @@ import type { Resolution } from "./anchors";
 import type { FlowUnit } from "./units-flow";
 import {
   SCORER_FILES, digest, maximumMatching, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, validatePackage,
-  type SemanticDecision, type SemanticPackage, type SemanticReviews, type ReviewAtom,
+  type SemanticDecision, type SemanticPackage, type SemanticReviews, type ReviewAtom, type PrepareRun, type SceneResolution,
 } from "./semantic-flow";
 
 const context = { referenceHash: "reference-v1", sceneHash: "scene-v1", scorerHash: "scorer-v1" };
@@ -308,6 +308,99 @@ test("duplicate report entries do not multiply claims", () => {
 
 // Real CLI smoke: scoring is offline, outputs are append-only, and incomplete reviews
 // have an actionable process status. Fixtures use the current engine fingerprint.
+// ── fatia 6: cenas do plano de estados e linhas de base revisadas ─────────────
+const wide = { width: 1280, height: 900 };
+const narrow = { width: 320, height: 720 };
+const scenes = (): SceneResolution[] => [
+  { id: "1280x900", viewport: wide, specIds: ["A"], resolution },
+  { id: "320x720", viewport: narrow, specIds: ["B"], resolution },
+];
+const sceneUnits = [{ ...units[0], scene: "1280x900" }, { ...units[1], scene: "320x720" }];
+const atState = (description: string, viewport: { width: number; height: number }, selector = "#cpf") => ({
+  selector, rule: null, observed: description, expected: "Should hold", state: { viewport, steps: [] }, evidence: [],
+});
+function prepareScenes(findings: unknown[], extra: PrepareRun[] = []): SemanticPackage {
+  return prepareSemanticPackage(context, sceneUnits, scenes(),
+    [{ id: "r1", data: run(findings as FlowAgentResults["findings"]) }, ...extra]);
+}
+test("a claim earns only units of its own scene, even on the same element key", () => {
+  const pkg = prepareScenes([atState("Wide claim", { width: 1280, height: 720 })]);
+  const card = pkg.cards[0];
+  assert.equal(card.scene, "1280x900");
+  assert.ok(card.flags.some(f => f.startsWith("altura-diferente")));
+  assert.deepEqual(card.candidateUnitIds, pkg.units.filter(u => u.scene === "1280x900").map(u => u.id));
+  const unitB = pkg.units.find(u => u.specId === "B")!;
+  assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [decision(card.id,
+    [{ ...atom(pkg, []), unitIds: [unitB.id] }])])), /Unanchored/);
+  const narrowPkg = prepareScenes([atState("Narrow claim", narrow)]);
+  const ok = reviews(narrowPkg, [decision(narrowPkg.cards[0].id, [atom(narrowPkg, ["B"])])]);
+  assert.equal(scoreSemanticPackage(narrowPkg, ok).scores[0].counts.detectedUnits, 1);
+});
+test("a window outside the plan is readable but cannot anchor any unit", () => {
+  const pkg = prepareScenes([atState("Tablet claim", { width: 768, height: 1024 })]);
+  const card = pkg.cards[0];
+  assert.equal(card.scene, "fora-do-plano:768x1024");
+  assert.equal(card.subjects[0].key, element.key);
+  assert.deepEqual(card.candidateUnitIds, []);
+  assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [decision(card.id, [atom(pkg, ["A"])])])), /Unanchored/);
+  const novel = scoreSemanticPackage(pkg, reviews(pkg, [decision(card.id, [atom(pkg, [], { verdict: "novel" })])]));
+  assert.equal(novel.scores[0].counts.novelAssertions, 1);
+});
+test("a claim without a declared window is placed in the default scene and flagged", () => {
+  const pkg = prepareScenes([finding("Legacy claim")]);
+  assert.equal(pkg.cards[0].scene, "1280x900");
+  assert.ok(pkg.cards[0].flags.some(f => f.startsWith("sem-janela-declarada")));
+  assert.throws(() => prepareSemanticPackage(context, [{ ...units[0], scene: "999x1" }], scenes(), []), /undeclared scene/);
+});
+const build = "f".repeat(64);
+const baselineRun = (id: string, findings: unknown[]): PrepareRun => ({ id, kind: "linha-de-base", tool: id,
+  data: { model: id, timestamp: "fixed", appUrl: resolution.url, findings: findings as FlowAgentResults["findings"],
+    config: { instrumentVersion: "fluxo-1.3.0", protocolVersion: `baseline:${id}`, siteManifestSha256: build } as FlowAgentResults["config"] } });
+const det = (observed: string, scene: string, viewport: { width: number; height: number }, selector = "#cpf") =>
+  ({ selector, rule: "ds:token-color", observed, expected: null, scene, viewport, steps: ["setup"] });
+test("baseline claims are reviewed cards in their pass scene, reusable only on the same build", () => {
+  const pkg = prepareScenes([], [baselineRun("validator", [det("Color off", "320x720", narrow)])]);
+  const card = pkg.cards.find(c => c.origin === "linha-de-base")!;
+  assert.equal(card.contract, "deterministico");
+  assert.equal(card.scene, "320x720");
+  assert.equal(card.binding.runScope, null);
+  assert.equal(pkg.runs.find(r => r.id === "validator")!.kind, "linha-de-base");
+  assert.throws(() => prepareScenes([], [baselineRun("validator", [det("x", "777x1", narrow)])]), /outside the planned scenes/);
+  const unpinned = baselineRun("validator", [det("Color off", "320x720", narrow)]);
+  (unpinned.data.config as { siteManifestSha256: string | null }).siteManifestSha256 = null;
+  assert.notEqual(prepareScenes([], [unpinned]).cards[0].binding.runScope, null);
+});
+test("comparison splits units into both / agent only / baseline only / neither from the same reviewed output", () => {
+  const pkg = prepareScenes([atState("Agent sees A", wide)], [
+    baselineRun("validator", [det("Tool sees B", "320x720", narrow), det("Tool noise", "1280x900", wide, "#button")]),
+    baselineRun("axe", []),
+  ]);
+  const agentCard = pkg.cards.find(c => c.origin === "agente")!;
+  const toolB = pkg.cards.find(c => c.origin === "linha-de-base" && c.scene === "320x720")!;
+  const noise = pkg.cards.find(c => c.origin === "linha-de-base" && c.scene === "1280x900")!;
+  const pendingResult = scoreSemanticPackage(pkg, scopeReviews(pkg));
+  assert.ok(pendingResult.comparisons.every(c => c.status === "provisional"));
+  const ds = reviews(pkg, [
+    decision(agentCard.id, [atom(pkg, ["A"])]),
+    decision(toolB.id, [atom(pkg, ["B"])]),
+    decision(noise.id, [atom(pkg, [], { subjects: [other.key], verdict: "false", citation: "unsupported" })]),
+  ]);
+  const result = scoreSemanticPackage(pkg, ds);
+  const unitA = pkg.units.find(u => u.specId === "A")!.id;
+  const unitB = pkg.units.find(u => u.specId === "B")!.id;
+  const vsValidator = result.comparisons.find(c => c.baseline === "validator")!;
+  assert.equal(vsValidator.status, "complete");
+  assert.deepEqual(vsValidator.units, { both: [], agentOnly: [unitA], baselineOnly: [unitB], neither: [] });
+  assert.deepEqual(vsValidator.baselineClaims, { novel: 0, false: 1, unresolved: 0 });
+  const vsAxe = result.comparisons.find(c => c.baseline === "axe")!;
+  assert.deepEqual(vsAxe.counts, { referenceUnits: 2, both: 0, agentOnly: 1, baselineOnly: 0, neither: 1 });
+  const union = result.comparisons.find(c => c.baseline === "uniao-deterministica")!;
+  assert.deepEqual(union.units.baselineOnly, [unitB]);
+  assert.equal(union.baselineClaims.false, 1);
+  // Baselines are scored like any run, and never appear as an agent row.
+  assert.equal(result.scores.find(s => s.runId === "validator")!.counts.detectedUnits, 1);
+  assert.equal(result.comparisons.length, 3);
+});
 test("offline CLI produces provisional JSON, refuses overwrite, rejects stale engine", () => {
   const root = join(import.meta.dirname, "..");
   const pkg = prepare();

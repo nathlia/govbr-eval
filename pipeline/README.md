@@ -43,7 +43,40 @@ medida. O painel não participa da medida (ver abaixo).
 
 Parâmetros: `-Runs` (1–10) · `-Arm` (`com` | `sem` | `ambos`) · `-Provider` (`claude` | `codex`) ·
 `-Model` · `-ReasoningEffort` (`low`–`max`) · `-OracleProfile` (`normative` | `deterministic` |
-`evidence` | `combined`) · `-SkipBaselines` · `-SkipScore` · `-PreflightOnly`.
+`evidence` | `combined`) · `-Schedule` (`alternado` | `sequencial`) · `-SkipBaselines` · `-SkipScore` ·
+`-PreflightOnly`.
+
+## Identidade congelada, agenda e linha de base (fatia 6)
+
+Antes da primeira execução o runner:
+
+1. compila o **oráculo** e o corpus a partir da fonte;
+2. grava o **plano** (`logs/<stamp>-plano.json`): slots em ordem, agenda (`alternado` por padrão:
+   `com1 sem1 · sem2 com2 · com3 sem3`), orçamento de tentativas = número de slots, sem retry, sem
+   semente (não há sorteio);
+3. grava o **manifesto de coleta** (`logs/<stamp>-coleta/manifesto.json`, `scripts/collection-manifest.ts`)
+   com a identidade efetiva — hash do `dist/` e do `data/` do oráculo, do manifesto do site congelado,
+   do gabarito e do plano de estados —, commit/árvore suja/lock dos três repos, versões de cliente,
+   Playwright e navegadores, a descrição da superfície e o hash do plano. Faltou um campo, nada é
+   gravado e a bateria não parte. Ao lado ficam as cópias do oráculo compilado (`oraculo/`) e do
+   gabarito (`referencia/`).
+
+Durante a coleta, cada execução é conferida contra o manifesto (`collection-manifest.ts verify`): um
+build do oráculo no meio da bateria marca a execução `identity-changed` e interrompe as seguintes. Cada
+execução leva `collectionManifestSha256` no manifesto da bateria e em `config`. Uma interrupção (limite
+de gasto, evidência, identidade) deixa os slots restantes como `nao-tentada`, com o motivo.
+
+Depois da coleta:
+
+- **Linha de base da bateria** → `logs/<stamp>-linha-de-base.json`, nunca sobrescrita, medida contra a
+  tela congelada (bytes servidos conferidos) e sob o manifesto: uma passada por janela do plano, com
+  axe, validator **não guiado** (o comparável) e **guiado** (diagnóstico), achados brutos, resolução,
+  janela, estado e tempos. Falha grava o parcial com `status: failed` e a bateria falha.
+- **Pacote de revisão** → `results/semantic-review/<stamp>/`, preparado com o manifesto, a linha de base
+  e o site congelado exatos. Não é preparado se a coleta foi interrompida.
+- `logs/<stamp>-diario.ndjson`: diário só de acréscimo (plano, manifesto, início/fim de cada execução,
+  slots não tentados, estágios). `logs/<stamp>-desfecho.json`: estado final de cada estágio e o erro,
+  gravado em sucesso **e** em falha. Mensagem final de sucesso só depois de todos os estágios exigidos.
 
 ## Superfície de medida (v02, D-40)
 
@@ -106,8 +139,9 @@ seguinte e pelo outro braço; e o cliente herdava WebSearch/WebFetch do `setting
 projeto e o TCC inteiro pelo `additionalDirectories` do usuário. O smoke pareado de 14/09 mostrou
 os arquivos; uma sonda confirmou que a configuração nova nega cada um desses caminhos.
 
-O script recusa a partida se o Node for < 20, se o oráculo não estiver compilado ou se o corpus
-não responder — falhas que hoje só aparecem no meio da execução.
+O script recusa a partida se o Node for < 20, se o build do oráculo ou do corpus falhar, se o
+isolamento falhar ou se o manifesto de coleta ficar incompleto — falhas que antes só apareciam no
+meio da execução.
 
 ## Duas decisões embutidas que importam para a metodologia
 

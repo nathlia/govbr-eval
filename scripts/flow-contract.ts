@@ -14,14 +14,19 @@
  *                    como relatório dela (surface-1.2.0): revisável, nunca contado como achado-2;
  *   malformado       o que não cabe em nenhum dos outros: preservado como veio e sinalizado para
  *                    revisão, nunca descartado nem dividido por inferência.
+ * E um quinto, que não vem de agente:
+ *   deterministico   achado de uma linha de base (fatia 6), com a janela do plano de estados e o
+ *                    texto que a ferramenta devolveu. Revisado com a mesma contabilidade semântica.
  */
 import type { FlowCollectorRecord, FlowFindingState } from "../types";
 
 export const FINDING_CONTRACT = "achado-2" as const;
 export const LEGACY_FINDING_CONTRACT = "achado-1-legado" as const;
 export const REFUSED_FINDING_CONTRACT = "recusado" as const;
+export const DETERMINISTIC_FINDING_CONTRACT = "deterministico" as const;
 export type FindingContract =
-  | typeof FINDING_CONTRACT | typeof LEGACY_FINDING_CONTRACT | typeof REFUSED_FINDING_CONTRACT | "malformado";
+  | typeof FINDING_CONTRACT | typeof LEGACY_FINDING_CONTRACT | typeof REFUSED_FINDING_CONTRACT | "malformado"
+  | typeof DETERMINISTIC_FINDING_CONTRACT;
 /** Situação do relatório de uma execução que nunca teve relatório aceito pelo coletor. */
 export const REFUSED_SUBMISSION = "recusa-arquivada" as const;
 

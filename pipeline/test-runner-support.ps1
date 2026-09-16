@@ -6,7 +6,8 @@ $errors = $null
 $ast = [System.Management.Automation.Language.Parser]::ParseFile($runner, [ref]$tokens, [ref]$errors)
 if ($errors.Count) { throw "run-battery.ps1 has syntax errors." }
 
-$wanted = @("ConvertTo-TomlString", "ConvertTo-TomlArray", "Get-CodexMcpConfigArgs", "Get-CodexLogSummary", "Save-RunEvidence", "Complete-RunEvidence")
+$wanted = @("ConvertTo-TomlString", "ConvertTo-TomlArray", "Get-CodexMcpConfigArgs", "Get-CodexLogSummary", "Save-RunEvidence", "Complete-RunEvidence",
+  "Write-NewJson", "Get-Sha256", "New-BatterySlots")
 $definitions = $ast.FindAll({
   param($node)
   $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $wanted -contains $node.Name
@@ -60,7 +61,6 @@ foreach ($contract in @(
   '/control/arm',
   '/control/disarm',
   '$env:APP_URL = $surface.origins.site',
-  '--app-url $($surface.origins.site)',
   'Stop-Surface'
 )) {
   if (-not $runnerText.Contains($contract)) { throw "Missing measurement-surface contract: $contract" }
@@ -170,4 +170,47 @@ foreach ($contract in @(
   if (-not $runnerText.Contains($contract)) { throw "Missing refused-report contract: $contract" }
 }
 
-Write-Host "test:pipeline - Codex support ok; evidence preservation ok; refused-report contract ok"
+# Fatia 6: identidade da coleta, agenda congelada, linha de base e pacote presos à bateria.
+foreach ($contract in @(
+  'Push-Location (Join-Path $TccRoot "govbr-ds-validator")',
+  '"scripts/collection-manifest.ts", "build"',
+  '"--oracle-built"',
+  '$identityIntact = Test-CollectionIdentity',
+  'Set-JsonProperty $veredito.config "collectionManifestSha256" $CollectionManifestSha',
+  'collectionManifestSha256 = $CollectionManifestSha',
+  ':bateria foreach ($slot in $planSlots)',
+  'collectionStatus = "nao-tentada"',
+  '--out $BaselinePath --collection-manifest $CollectionManifestPath --site-manifest $SiteManifestPath',
+  '"--collection-manifest", $CollectionManifestPath, "--site-dir", $SurfaceDir',
+  'Write-NewJson -Path (Join-Path $LogsDir "$Stamp-desfecho.json")'
+)) {
+  if (-not $runnerText.Contains($contract)) { throw "Missing slice-6 contract: $contract" }
+}
+if ($runnerText.Contains('--app-url')) { throw "Preparation must serve the frozen site itself, never a URL (slice 6)." }
+if ($runnerText -match '(?m)npm run baselines:fluxo\s*$') { throw "The battery baseline must be written under the battery stamp (slice 6)." }
+
+$alternated = @(New-BatterySlots -Arms @("com", "sem") -Repetitions 3 -Order "alternado")
+if ((($alternated | ForEach-Object { "$($_.arm)$($_.repetition)" }) -join " ") -ne "com1 sem1 sem2 com2 com3 sem3") {
+  throw "Alternating schedule must swap arm order in every other block."
+}
+if ((@($alternated | ForEach-Object { $_.slot }) -join ",") -ne "1,2,3,4,5,6") { throw "Slots must be numbered in execution order." }
+$sequential = @(New-BatterySlots -Arms @("com", "sem") -Repetitions 2 -Order "sequencial")
+if ((($sequential | ForEach-Object { "$($_.arm)$($_.repetition)" }) -join " ") -ne "com1 com2 sem1 sem2") {
+  throw "Sequential schedule must reproduce the previous order."
+}
+$single = @(New-BatterySlots -Arms @("sem") -Repetitions 2 -Order "alternado")
+if ($single.Count -ne 2 -or ($single | Where-Object { $_.arm -ne "sem" })) { throw "Single-arm schedule keeps its arm." }
+
+$newJson = Join-Path ([System.IO.Path]::GetTempPath()) "new-json-$([guid]::NewGuid().ToString('N')).json"
+try {
+  Write-NewJson -Path $newJson -Value ([ordered]@{ a = 1 })
+  $refused = $false
+  try { Write-NewJson -Path $newJson -Value ([ordered]@{ a = 2 }) } catch { $refused = $true }
+  if (-not $refused) { throw "Battery artifacts must never be overwritten." }
+  if ((Get-Content -LiteralPath $newJson -Raw | ConvertFrom-Json).a -ne 1) { throw "A refused write must leave the original intact." }
+  if ([System.IO.File]::ReadAllBytes($newJson)[0] -eq 0xEF) { throw "Battery JSON is written without BOM." }
+} finally {
+  Remove-Item -LiteralPath $newJson -Force -ErrorAction SilentlyContinue
+}
+
+Write-Host "test:pipeline - Codex support ok; evidence preservation ok; refused-report contract ok; slice-6 plan/manifest contract ok"

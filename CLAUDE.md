@@ -17,8 +17,14 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
   nem com os da orgânica (D-13). Ver `docs/ancoragem.md`.
   - **v02 (D-39):** `npm run flow:review -- prepare` monta o pacote de revisão da bateria, a autora
     decide em `reviews.json`, e `npm run score:fluxo` pontua o pacote offline
-    (`flow-semantic-1.0.0`). Seletor e regra só geram candidatos: nenhuma alegação vira crédito sem
+    (`flow-semantic-1.2.0`). Seletor e regra só geram candidatos: nenhuma alegação vira crédito sem
     decisão. Ver `docs/semantic-scoring.md`.
+  - **fatia 6:** a bateria grava plano + manifesto de coleta (`scripts/collection-manifest.ts`) antes
+    da primeira execução e a linha de base sob o próprio carimbo; o pacote só é preparado com esse
+    manifesto, essa linha de base e o site congelado (`--collection-manifest --site-dir --baseline`),
+    com uma cena por janela do plano. `npm run baselines:fluxo:dev` é o arquivo avulso
+    (`results/baselines-fluxo.json`), nunca confrontável com bateria. Testes: `test:manifest`,
+    `test:fatia6` (navegador real, sem modelo), `test:pipeline`.
   - **v01:** `npm run score:fluxo:legacy` — casamento por (elemento × regra), só para reproduzir os
     números até o D-38. Números v01 e v02 nunca formam uma série.
   - **fluxo-1.3.0 (fatia 2):** achado = `observed` + `expected` + `rule` (ou `null`) + `state` +

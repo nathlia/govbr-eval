@@ -21,11 +21,11 @@
 import { createServer, request as httpRequest, type IncomingMessage, type Server, type ServerResponse } from "node:http";
 import type { Socket } from "node:net";
 import { createHash } from "node:crypto";
-import { execFileSync } from "node:child_process";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { REFUSED_SUBMISSION, validateFlowReport } from "./flow-contract";
+import { gitState } from "./collection-manifest";
 import type { FlowCollectorRecord } from "../types";
 
 // 1.1.0: o coletor exige o contrato do achado de fluxo-1.3.0 (scripts/flow-contract.ts).
@@ -107,16 +107,6 @@ export function assetClosure(distDir: string, entry: string): string[] {
   return [...included].sort();
 }
 
-function gitState(repo: string): { commit: string | null; dirty: boolean | null } {
-  try {
-    const commit = execFileSync("git", ["-C", repo, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();
-    const status = execFileSync("git", ["-C", repo, "status", "--porcelain"], { encoding: "utf8" }).trim();
-    return { commit, dirty: status.length > 0 };
-  } catch {
-    return { commit: null, dirty: null };
-  }
-}
-
 export function freezeSite(distDir: string, entry: string, outDir: string, corpusRoot = dirname(resolve(distDir))): SiteManifest {
   const files: Record<string, string> = {};
   for (const rel of assetClosure(distDir, entry)) {
@@ -156,6 +146,23 @@ export function loadSite(outDir: string): LoadedSite {
     files.set(path, { body, type: CONTENT_TYPES[extname(path)] ?? "application/octet-stream" });
   }
   return { manifest, manifestSha256: sha256(manifestText), files };
+}
+
+/**
+ * Confere que `origin` serve exatamente os bytes do site congelado (fatia 6). Quem mede ou prepara
+ * contra uma URL precisa provar que a URL é aquela página, não confiar que a porta certa está de pé.
+ */
+export async function verifyServedSite(origin: string, siteManifestPath: string): Promise<{ manifestSha256: string; entry: string }> {
+  const manifestText = readFileSync(siteManifestPath);
+  const manifest = JSON.parse(manifestText.toString("utf8")) as SiteManifest;
+  for (const [path, expected] of Object.entries(manifest.files)) {
+    const response = await fetch(new URL(path, origin));
+    if (!response.ok) throw new Error(`${origin} não serve ${path} (${response.status})`);
+    if (sha256(Buffer.from(await response.arrayBuffer())) !== expected) {
+      throw new Error(`${origin} serve outro ${path} que o site congelado`);
+    }
+  }
+  return { manifestSha256: sha256(manifestText), entry: manifest.entry };
 }
 
 function requestPath(url: string | undefined): string | null {

@@ -1,45 +1,60 @@
 /**
- * Linhas de base determinísticas da suíte de fluxo (D-06/D-23/D-25).
+ * Linhas de base determinísticas da suíte de fluxo (D-06/D-23/D-25; fatia 6 do v02).
  *
  * A suíte `TC-*` atribui achado do axe a caso pelo `data-testid` da seção que o contém. A tela de
  * fluxo não tem seções, então esse runner não serve aqui — e herdar os números dele seria pior do
  * que não ter nenhum: seriam medidas de OUTRA página apresentadas ao lado de execuções desta.
  *
- * Este runner atribui cada nó violado pelo axe à mesma CHAVE CANÔNICA de elemento que o scorer
- * usa, resolvendo os seletores que o próprio axe devolve. E prepara a página com a mesma sequência
- * de `setup` do gabarito: medir no primeiro paint enquanto o scorer resolve depois da interação
- * faria as duas metades falarem de árvores diferentes.
+ * Uma PASSADA por janela do plano de estados (a padrão e cada janela extra que uma spec declara),
+ * todas depois da mesma sequência de `setup` do gabarito. Em cada passada:
+ *   axe          — página inteira;
+ *   validator    — duas varreduras, nunca confundidas. A NÃO GUIADA varre a página inteira sob
+ *                  política fixa, sem seletor nenhum do gabarito: é a que pode ser posta ao lado do
+ *                  agente, que também não sabia onde olhar. A GUIADA recebe as âncoras das specs
+ *                  daquela janela: é diagnóstico de cobertura (prova que cada lacuna incorporada tem
+ *                  medida executada) e nunca entra na comparação.
+ * Achados brutos, resolução de seletores, estado, janela e duração de cada varredura ficam no
+ * arquivo. ESLint mede o FONTE, não o DOM, e fica à parte.
  *
  * Uso:
- *   1. suba o corpus: cd ../govbr-corpus && npm run dev
- *   2. npm run baselines:fluxo
+ *   bateria: npm run baselines:fluxo -- --out NOVO_ARQ --collection-manifest ARQ --site-manifest ARQ
+ *            (APP_URL = origem que serve o site congelado; os bytes servidos são conferidos)
+ *   avulso:  npm run baselines:fluxo -- --dev-global   (results/baselines-fluxo.json, não confrontável)
  */
 
-import { chromium } from "playwright";
+import { chromium, type Page } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 import { ESLint } from "eslint";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import tsParser from "@typescript-eslint/parser";
 import { existsSync, readFileSync, writeFileSync } from "fs";
-import { dirname, join } from "path";
+import { dirname, join, resolve } from "path";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import type { FlowGroundTruth, FlowViewport } from "../types";
+import { fileURLToPath } from "node:url";
+import type { FlowGroundTruth, FlowSetupStep, FlowViewport } from "../types";
 import { ROOT } from "./adjudication";
-import { VIEWPORT_PADRAO, preparePage, resolveOnPage } from "./anchors";
+import { preparePage, resolveOnPage } from "./anchors";
 import { normalizeRuleId } from "./units";
+import { FLOW_INSTRUMENT_VERSION } from "./instrument";
+import {
+  VALIDATOR_ROOT, compareIdentities, gitState, oracleIdentity, readCollectionManifest, sha256, sha256File,
+  statePlanOf, statePlanSha256, type ExecutableIdentity,
+} from "./collection-manifest";
+import { verifyServedSite } from "./measurement-surface";
 
 const execFileAsync = promisify(execFile);
 
-const APP_URL = process.env.APP_URL ?? "http://localhost:3000";
-const GROUND_TRUTH = process.env.FLOW_GT ?? "ground-truth-fluxo.json";
-const CORPUS_SRC = process.env.CORPUS_SRC ?? join(ROOT, "..", "govbr-corpus", "src");
-const OUT = "results/baselines-fluxo.json";
+export const BASELINE_VERSION = "linha-de-base-fluxo-2.0.0";
+/** Política da varredura comparável. Fixa e independente da tela. */
+export const UNGUIDED_POLICY = "pagina-inteira: checks tokens+structure, seletor padrão do validator, " +
+  "todos os componentes e verificações de token, janela e setup do plano de estados, sem seletor do gabarito";
+export const GUIDED_POLICY = "diagnostico: âncoras das specs da janela; não comparável ao agente";
 
-/** Página-fonte da tela de fluxo. eslint-plugin-jsx-a11y é um linter de código, não de DOM. */
-const FLOW_SOURCES = [join(CORPUS_SRC, "pages", "LoginPage.tsx")];
+/** `bateria`: escrita sob o carimbo de uma bateria e confrontável com ela. `dev-global`: avulsa. */
+export type FlowBaselineScope = "bateria" | "dev-global";
 
-interface AxeFindingRef {
+export interface AxeFindingRef {
   rule: string;
   impact: string | null;
   description: string;
@@ -47,274 +62,330 @@ interface AxeFindingRef {
   target: string;
 }
 
+export interface ValidatorFindingRef {
+  id: string | null;
+  rule: string;
+  source: string;
+  description: string;
+  expected: string | null;
+  target: string;
+}
+
+export interface ValidatorScanRecord {
+  mode: "nao-guiada" | "guiada";
+  policy: string;
+  request: { selectors: string[] | null; checks: string[]; viewport: FlowViewport; actions: number };
+  stateFingerprint: string | null;
+  coverage: unknown;
+  findings: ValidatorFindingRef[];
+  seconds: number;
+}
+
+export interface BaselinePass {
+  /** `LARGURAxALTURA`: a cena do plano de estados. */
+  id: string;
+  viewport: FlowViewport;
+  /** Specs que esta janela existe para medir (a padrão mede as que não declaram janela). */
+  specs: string[];
+  startedAt: string;
+  seconds: number;
+  axe: { violations: number; passes: number; incomplete: string[]; findings: AxeFindingRef[]; seconds: number };
+  validator: { unguided: ValidatorScanRecord; guided: ValidatorScanRecord | null };
+  /** Resolução de todo seletor desta passada, na mesma página e no mesmo estado. */
+  resolution: { bySelector: Record<string, { ok: boolean; error: string | null; keys: string[] }>; labels: Record<string, string> };
+}
+
 export interface FlowBaselines {
+  baselineVersion: typeof BASELINE_VERSION;
+  /** `failed`: nada aqui é comparável; as passadas concluídas ficam para diagnóstico. */
+  status: "complete" | "failed";
+  error: string | null;
+  scope: FlowBaselineScope;
   timestamp: string;
   appUrl: string;
-  state: string;
-  /**
-   * Janela da passada principal e de cada passada extra (D-35). Uma unidade que só se manifesta em
-   * viewport móvel não pode ser cobrada do axe medido a 1280 — ele não teria como vê-la. As
-   * detecções de uma passada extra são atribuídas SOMENTE às specs que declaram aquele viewport,
-   * para que uma passada não credite a ferramenta por unidades que não estava medindo.
-   */
-  viewports?: {
-    padrao: FlowViewport;
-    extras: { viewport: FlowViewport; specs: string[]; violationCount: number; passes: number }[];
+  state: { setup: FlowSetupStep[]; waitFor: string | null };
+  provenance: {
+    collectionManifest: { path: string; sha256: string } | null;
+    /** Identidade MEDIDA aqui (bytes servidos, compilado usado, gabarito lido), não copiada do manifesto. */
+    identity: ExecutableIdentity;
+    corpus: { commit: string | null; dirty: boolean | null };
+    validatorVersion: string | null;
+    tools: { axe: string | null; playwright: string | null };
   };
-  axe: {
-    tool: string;
-    violationCount: number;
-    passes: number;
-    /** chave canônica de elemento → achados do axe naquele elemento. */
-    byElementKey: Record<string, AxeFindingRef[]>;
-    /** Nós cujo seletor o resolvedor não alcançou — reportados, nunca descartados em silêncio. */
-    unattributed: AxeFindingRef[];
-    /** "needs review" do axe: informativo, nunca contado como detecção. */
-    incomplete: string[];
-  };
+  passes: BaselinePass[];
+  /** Diagnóstico de cobertura: a guiada detectou cada spec `deterministicBaseline`? */
+  coverageCheck: { specId: string; pass: string; detected: boolean }[];
   eslint: {
     tool: string;
     config: string;
-    filesLinted: string[];
+    /** Fonte da tela, lido do corpus vivo: não é o build congelado. */
+    files: { path: string; sha256: string | null }[];
     /**
      * Achados do linter, SEM atribuição a elemento. Um linter de código aponta arquivo e linha;
      * a unidade desta suíte é um elemento do DOM, e não existe mapa honesto entre os dois sem
-     * marcar o corpus — o que o D-02 proíbe. Fica como contagem declarada, e é assim que tem de
-     * ser lida.
+     * marcar o corpus — o que o D-02 proíbe. Fica como contagem declarada.
      */
     findings: { rule: string; message: string; file: string; line: number }[];
-  };
-  validator?: {
-    tool: string;
-    version: string;
-    byElementKey: Record<string, { rule: string; source: string; description: string; target: string }[]>;
-    unattributed: { rule: string; source: string; description: string; target: string }[];
-    requiredSpecs: { specId: string; detected: boolean }[];
-  };
+    seconds: number;
+  } | null;
+  /**
+   * Custo de execução. Zero de API não é zero de custo: a passada determinística consome relógio e
+   * máquina, e comparar "de graça" com o agente sem dizer isso é meia verdade.
+   */
+  cost: { wallClockSeconds: number; apiUsd: 0; platform: string; passes: { id: string; seconds: number }[] };
+  /** Resumo legado (D-35/D-38) para `score:fluxo:legacy`; a comparação v02 lê `passes`. */
+  legacy: {
+    axe: { byElementKey: Record<string, AxeFindingRef[]>; unattributed: AxeFindingRef[]; passes: number };
+    validator: { byElementKey: Record<string, ValidatorFindingRef[]>; mode: "guiada" } | null;
+  } | null;
 }
 
-async function main(): Promise<void> {
-  const gtPath = join(ROOT, GROUND_TRUTH);
-  if (!existsSync(gtPath)) {
-    console.error(`Falta ${GROUND_TRUTH}.`);
-    process.exit(1);
-  }
-  const gt = JSON.parse(readFileSync(gtPath, "utf8")) as FlowGroundTruth;
-  const url = new URL(gt._meta.url, APP_URL).toString();
-  const temSetup = (gt._meta.setup ?? []).length > 0;
+const argv = process.argv.slice(2);
+const argValue = (name: string): string | undefined => {
+  const index = argv.indexOf(name);
+  if (index < 0) return undefined;
+  const value = argv[index + 1];
+  if (!value || value.startsWith("--")) throw new Error(`Falta valor para ${name}`);
+  return value;
+};
+const seconds = (started: number): number => Number(((Date.now() - started) / 1000).toFixed(1));
+const sceneId = (v: FlowViewport): string => `${v.width}x${v.height}`;
 
-  console.log(`\nLinhas de base da suíte de fluxo — ${url}`);
-  console.log(temSetup ? "Estado: após a sequência de setup do gabarito." : "Estado: primeiro paint.");
+async function main(): Promise<number> {
+  const devGlobal = argv.includes("--dev-global");
+  const outArg = argValue("--out");
+  const manifestArg = argValue("--collection-manifest");
+  const siteManifestArg = argValue("--site-manifest");
+  if (devGlobal === Boolean(outArg)) throw new Error("Use --out (linha de base de bateria) OU --dev-global (arquivo avulso).");
+  if (outArg && (!manifestArg || !siteManifestArg)) throw new Error("Linha de base de bateria exige --collection-manifest e --site-manifest.");
+  const out = resolve(ROOT, outArg ?? "results/baselines-fluxo.json");
+  if (outArg && existsSync(out)) throw new Error(`${out} já existe: linha de base de bateria nunca é sobrescrita.`);
 
-  // ── axe ────────────────────────────────────────────────────────────────────
-  const browser = await chromium.launch();
-  const viewportPadrao = gt._meta.viewport ?? VIEWPORT_PADRAO;
-  const context = await browser.newContext({ viewport: viewportPadrao });
-  const page = await context.newPage();
-  await preparePage(page, url, { waitFor: gt._meta.waitFor, setup: gt._meta.setup });
+  const appOrigin = process.env.APP_URL ?? "http://localhost:3000";
+  const collection = manifestArg ? readCollectionManifest(resolve(manifestArg)) : null;
+  // Na bateria, o gabarito é a cópia arquivada pela coleta, não o arquivo vivo.
+  const gtPath = collection?.manifest.archive
+    ? join(ROOT, collection.manifest.archive.reference.path)
+    : join(ROOT, process.env.FLOW_GT ?? "ground-truth-fluxo.json");
+  if (collection && !collection.manifest.archive) throw new Error("O manifesto de coleta não arquivou o gabarito.");
+  const gtBytes = readFileSync(gtPath);
+  const gt = JSON.parse(gtBytes.toString("utf8")) as FlowGroundTruth;
+  const statePlan = statePlanOf(gt);
+  const url = new URL(gt._meta.url, appOrigin).toString();
+  const corpusSrc = process.env.CORPUS_SRC ?? join(ROOT, "..", "govbr-corpus", "src");
+  const flowSources = [join(corpusSrc, "pages", "LoginPage.tsx")];
 
-  const axe = await new AxeBuilder({ page }).analyze();
-
-  // Cada nó violado carrega os seletores que o axe escolheu. Resolvê-los pelo mesmo caminho do
-  // scorer é o que torna a comparação com as unidades do gabarito possível.
-  const targets: string[] = [];
-  const nodes: { finding: AxeFindingRef }[] = [];
-  for (const v of axe.violations) {
-    for (const n of v.nodes) {
-      const target = n.target.flat().join(" ");
-      targets.push(target);
-      nodes.push({
-        finding: { rule: v.id, impact: v.impact ?? null, description: v.help ?? v.description, target },
-      });
-    }
-  }
-
-  const { bySelector } = await resolveOnPage(page, [...targets, ...gt.violations.map(spec => spec.anchor)]);
-
-  const byElementKey: Record<string, AxeFindingRef[]> = {};
-  const unattributed: AxeFindingRef[] = [];
-  for (const { finding } of nodes) {
-    const keys = bySelector.get(finding.target)?.keys ?? [];
-    if (!keys.length) { unattributed.push(finding); continue; }
-    for (const k of keys) (byElementKey[k] ??= []).push(finding);
-  }
-
-  // ── scanner determinístico do próprio validator ──────────────────────────
-  // Processo separado, sem LLM. O request inclui as âncoras do gabarito para que cada lacuna
-  // incorporada tenha uma prova executada, não uma presunção baseada no código do checker.
-  const validatorRoot = join(ROOT, "..", "govbr-ds-validator");
-  const validatorEntry = join(validatorRoot, "dist", "cli", "scan-page.js");
+  const validatorEntry = join(VALIDATOR_ROOT, "dist", "cli", "scan-page.js");
   if (!existsSync(validatorEntry)) throw new Error(`Scanner compilado ausente: ${validatorEntry}. Rode npm run build no validator.`);
-  const request = {
-    url,
-    selectors: [...new Set(gt.violations.map(spec => spec.anchor))],
-    checks: ["tokens", "structure"],
-    actions: (gt._meta.setup ?? []).map(step => ({
+  const oracleAtStart = oracleIdentity();
+  const served = siteManifestArg ? await verifyServedSite(appOrigin, resolve(siteManifestArg)) : null;
+  const identity: ExecutableIdentity = {
+    collection: FLOW_INSTRUMENT_VERSION,
+    referenceSha256: sha256(gtBytes),
+    siteManifestSha256: served?.manifestSha256 ?? null,
+    oracleDistSha256: oracleAtStart.distSha256,
+    oracleDataSha256: oracleAtStart.dataSha256,
+    statePlanSha256: statePlanSha256(statePlan),
+  };
+  const corpus = gitState(join(ROOT, "..", "govbr-corpus"));
+  const started = Date.now();
+  const record: FlowBaselines = {
+    baselineVersion: BASELINE_VERSION,
+    status: "failed",
+    error: null,
+    scope: devGlobal ? "dev-global" : "bateria",
+    timestamp: new Date().toISOString(),
+    appUrl: url,
+    state: { setup: gt._meta.setup ?? [], waitFor: gt._meta.waitFor ?? null },
+    provenance: {
+      collectionManifest: collection ? { path: resolve(manifestArg!).replace(/\\/g, "/"), sha256: collection.sha256 } : null,
+      identity,
+      corpus: { commit: corpus.commit, dirty: corpus.dirty },
+      validatorVersion: oracleAtStart.version,
+      tools: {
+        axe: (JSON.parse(readFileSync(join(ROOT, "node_modules", "axe-core", "package.json"), "utf8")) as { version: string }).version,
+        playwright: (JSON.parse(readFileSync(join(ROOT, "node_modules", "playwright", "package.json"), "utf8")) as { version: string }).version,
+      },
+    },
+    passes: [],
+    coverageCheck: [],
+    eslint: null,
+    cost: { wallClockSeconds: 0, apiUsd: 0, platform: `${process.platform} ${process.arch}`, passes: [] },
+    legacy: null,
+  };
+
+  const save = (): void => {
+    record.cost.wallClockSeconds = seconds(started);
+    record.cost.passes = record.passes.map(p => ({ id: p.id, seconds: p.seconds }));
+    writeFileSync(out, JSON.stringify(record, null, 2) + "\n", devGlobal ? {} : { flag: "wx" });
+  };
+
+  try {
+    if (collection) {
+      const mismatches = compareIdentities(collection.manifest.identity, identity);
+      if (mismatches.length) throw new Error(`A linha de base mediria outra coleta: ${mismatches.join("; ")}`);
+    }
+    console.log(`\nLinhas de base da suíte de fluxo — ${url}`);
+    console.log(`Plano: ${[statePlan.padrao, ...statePlan.extras.map(e => e.viewport)].map(sceneId).join(", ")} · setup de ${record.state.setup.length} passo(s)`);
+
+    const setupActions = record.state.setup.map(step => ({
       action: step.action,
       ...(step.selector ? { selector: step.selector } : {}),
       ...(step.value !== undefined ? { value: step.value } : {}),
       ...(step.ms !== undefined ? { ms: step.ms } : {}),
-    })),
-  };
-  const encoded = Buffer.from(JSON.stringify(request), "utf8").toString("base64");
-  const { stdout } = await execFileAsync(process.execPath, [validatorEntry, encoded], { maxBuffer: 10 * 1024 * 1024 });
-  const scan = JSON.parse(stdout) as {
-    findings: Array<{ rule: { id: string; source: string }; element: { locator: string }; evidence: { observed: string } }>;
-  };
-  const validatorTargets = scan.findings.map(finding => finding.element.locator);
-  const validatorResolution = await resolveOnPage(page, validatorTargets);
+    }));
 
-  // ── passadas extras, uma por viewport declarado (D-35) ────────────────────
-  // Uma spec que declara `viewport` descreve defeito que só existe naquela janela. Medi-lo na
-  // passada padrão cobraria do axe algo que ele não tinha como ver; medir TUDO na janela extra
-  // creditaria a ferramenta por unidades que ela não estava medindo. Por isso a atribuição é
-  // restrita às âncoras das specs daquele viewport.
-  const extras: NonNullable<FlowBaselines["viewports"]>["extras"] = [];
-  const porViewport = new Map<string, { viewport: FlowViewport; specs: typeof gt.violations }>();
-  for (const spec of gt.violations) {
-    if (!spec.viewport) continue;
-    if (spec.viewport.width === viewportPadrao.width && spec.viewport.height === viewportPadrao.height) continue;
-    const chave = `${spec.viewport.width}x${spec.viewport.height}`;
-    const grupo = porViewport.get(chave) ?? { viewport: spec.viewport, specs: [] };
-    grupo.specs.push(spec);
-    porViewport.set(chave, grupo);
-  }
-
-  for (const [chave, grupo] of porViewport) {
-    const ctxExtra = await browser.newContext({ viewport: grupo.viewport });
-    const pageExtra = await ctxExtra.newPage();
-    await preparePage(pageExtra, url, { waitFor: gt._meta.waitFor, setup: gt._meta.setup });
-    const axeExtra = await new AxeBuilder({ page: pageExtra }).analyze();
-
-    const alvosExtra: string[] = [];
-    const nosExtra: AxeFindingRef[] = [];
-    for (const v of axeExtra.violations) {
-      for (const n of v.nodes) {
-        const target = n.target.flat().join(" ");
-        alvosExtra.push(target);
-        nosExtra.push({ rule: v.id, impact: v.impact ?? null, description: v.help ?? v.description, target });
-      }
-    }
-    const ancorasDoGrupo = grupo.specs.map(spec => spec.anchor);
-    const { bySelector: porSeletorExtra } = await resolveOnPage(pageExtra, [...alvosExtra, ...ancorasDoGrupo]);
-
-    const chavesDoGrupo = new Set(ancorasDoGrupo.flatMap(sel => porSeletorExtra.get(sel)?.keys ?? []));
-    for (const finding of nosExtra) {
-      const keys = porSeletorExtra.get(finding.target)?.keys ?? [];
-      for (const k of keys) {
-        if (!chavesDoGrupo.has(k)) continue;   // fora do escopo desta passada, por desenho
-        (byElementKey[k] ??= []).push(finding);
-      }
+    async function scan(mode: "nao-guiada" | "guiada", viewport: FlowViewport, anchors: string[]): Promise<ValidatorScanRecord> {
+      const selectors = mode === "guiada" ? [...new Set(anchors)] : null;
+      const checks = ["tokens", "structure"];
+      const request = { url, checks, actions: setupActions, viewport, ...(selectors ? { selectors } : {}) };
+      const t = Date.now();
+      const { stdout } = await execFileAsync(process.execPath,
+        [validatorEntry, Buffer.from(JSON.stringify(request), "utf8").toString("base64")], { maxBuffer: 32 * 1024 * 1024 });
+      const result = JSON.parse(stdout) as {
+        stateFingerprint?: string; coverage?: unknown;
+        findings: Array<{ id?: string; rule: { id: string; source: string }; element: { locator: string }; evidence: { observed: string; expected?: string } }>;
+      };
+      return {
+        mode, policy: mode === "guiada" ? GUIDED_POLICY : UNGUIDED_POLICY,
+        request: { selectors, checks, viewport, actions: setupActions.length },
+        stateFingerprint: result.stateFingerprint ?? null,
+        coverage: result.coverage ?? null,
+        findings: result.findings.map(f => ({
+          id: f.id ?? null, rule: normalizeRuleId(f.rule.id), source: f.rule.source,
+          description: f.evidence.observed, expected: f.evidence.expected ?? null, target: f.element.locator,
+        })),
+        seconds: seconds(t),
+      };
     }
 
-    console.log(`
-axe-core @ ${chave} (passada extra, specs ${grupo.specs.map(s => s.id).join(", ")}): ` +
-      `${axeExtra.violations.length} regra(s), ${axeExtra.passes.length} passes`);
-    for (const v of axeExtra.violations) console.log(`  ${v.id} (${v.impact}) × ${v.nodes.length}`);
-    if (!axeExtra.violations.length) console.log("  nenhuma violação");
+    const scenes = [
+      { viewport: statePlan.padrao, specs: gt.violations.filter(v => !v.viewport ||
+        (v.viewport.width === statePlan.padrao.width && v.viewport.height === statePlan.padrao.height)) },
+      ...statePlan.extras.map(e => ({ viewport: e.viewport, specs: gt.violations.filter(v => e.specs.includes(v.id)) })),
+    ];
 
-    extras.push({
-      viewport: grupo.viewport,
-      specs: grupo.specs.map(spec => spec.id),
-      violationCount: axeExtra.violations.length,
-      passes: axeExtra.passes.length,
-    });
-    await ctxExtra.close();
-  }
+    const browser = await chromium.launch();
+    try {
+      for (const scene of scenes) {
+        const passStarted = Date.now();
+        const context = await browser.newContext({ viewport: scene.viewport });
+        const page: Page = await context.newPage();
+        await preparePage(page, url, { waitFor: gt._meta.waitFor, setup: gt._meta.setup });
+        const axeStarted = Date.now();
+        const axe = await new AxeBuilder({ page }).analyze();
+        const axeSeconds = seconds(axeStarted);
+        const axeFindings: AxeFindingRef[] = axe.violations.flatMap(v => v.nodes.map(n => ({
+          rule: v.id, impact: v.impact ?? null, description: v.help ?? v.description, target: n.target.flat().join(" "),
+        })));
+        const anchors = scene.specs.map(spec => spec.anchor);
+        const unguided = await scan("nao-guiada", scene.viewport, []);
+        const guided = anchors.length ? await scan("guiada", scene.viewport, anchors) : null;
+        const selectors = [...axeFindings.map(f => f.target), ...unguided.findings.map(f => f.target),
+          ...(guided?.findings.map(f => f.target) ?? []), ...anchors, ...scene.specs.flatMap(s => s.except ? [s.except] : [])];
+        const resolved = await resolveOnPage(page, selectors);
+        await context.close();
+        const pass: BaselinePass = {
+          id: sceneId(scene.viewport), viewport: scene.viewport, specs: scene.specs.map(s => s.id),
+          startedAt: new Date(passStarted).toISOString(), seconds: seconds(passStarted),
+          axe: { violations: axe.violations.length, passes: axe.passes.length, incomplete: axe.incomplete.map(i => i.id),
+            findings: axeFindings, seconds: axeSeconds },
+          validator: { unguided, guided },
+          resolution: {
+            bySelector: Object.fromEntries([...resolved.bySelector].map(([s, r]) => [s, { ok: r.ok, error: r.error, keys: r.keys }])),
+            labels: Object.fromEntries([...resolved.byKey].map(([k, e]) => [k, e.label])),
+          },
+        };
+        record.passes.push(pass);
+        console.log(`\n[${pass.id}] axe ${axe.violations.length} regra(s)/${axeFindings.length} nó(s) · ` +
+          `validator não guiada ${unguided.findings.length} (${unguided.seconds}s) · guiada ${guided?.findings.length ?? "—"} · ${pass.seconds}s`);
+      }
+    } finally {
+      await browser.close();
+    }
 
-  await browser.close();
+    // Diagnóstico de cobertura: cada spec marcada deve ter sido medida pela guiada da sua janela.
+    for (const pass of record.passes) {
+      for (const specId of pass.specs) {
+        const spec = gt.violations.find(v => v.id === specId)!;
+        if (!spec.deterministicBaseline) continue;
+        const keys = new Set(pass.resolution.bySelector[spec.anchor]?.keys ?? []);
+        const rules = new Set(spec.rules.map(normalizeRuleId));
+        const detected = (pass.validator.guided?.findings ?? []).some(f =>
+          rules.has(f.rule) && (pass.resolution.bySelector[f.target]?.keys ?? []).some(k => keys.has(k)));
+        record.coverageCheck.push({ specId, pass: pass.id, detected });
+      }
+    }
 
-  const validatorByElementKey: Record<string, { rule: string; source: string; description: string; target: string }[]> = {};
-  const validatorUnattributed: NonNullable<FlowBaselines["validator"]>["unattributed"] = [];
-  for (const finding of scan.findings) {
-    const ref = {
-      rule: normalizeRuleId(finding.rule.id),
-      source: finding.rule.source,
-      description: finding.evidence.observed,
-      target: finding.element.locator,
-    };
-    const keys = validatorResolution.bySelector.get(finding.element.locator)?.keys ?? [];
-    if (!keys.length) validatorUnattributed.push(ref);
-    else for (const key of keys) (validatorByElementKey[key] ??= []).push(ref);
-  }
-
-  const requiredSpecs = gt.violations.filter(spec => spec.deterministicBaseline).map(spec => {
-    const anchorKeys = bySelector.get(spec.anchor)?.keys ?? [];
-    const expectedRules = new Set(spec.rules.map(normalizeRuleId));
-    const detected = anchorKeys.some(key =>
-      (validatorByElementKey[key] ?? []).some(finding => expectedRules.has(normalizeRuleId(finding.rule))),
-    );
-    return { specId: spec.id, detected };
-  });
-  const missingRequired = requiredSpecs.filter(spec => !spec.detected);
-  if (missingRequired.length) {
-    throw new Error(`Baseline determinístico não detectou: ${missingRequired.map(spec => spec.specId).join(", ")}`);
-  }
-  const validatorPackage = JSON.parse(readFileSync(join(validatorRoot, "package.json"), "utf8")) as { version: string };
-  console.log(`\ngovbr-ds-validator: ${scan.findings.length} achado(s) determinístico(s)`);
-  console.log(`  specs obrigatórias medidas: ${requiredSpecs.map(spec => `${spec.specId}=ok`).join(", ") || "nenhuma"}`);
-  if (validatorUnattributed.length) console.log(`  !! ${validatorUnattributed.length} achado(s) sem elemento resolvido`);
-
-  console.log(`\naxe-core: ${axe.violations.length} regra(s) violada(s), ${nodes.length} nó(s), ${axe.passes.length} passes`);
-  for (const v of axe.violations) console.log(`  ${v.id} (${v.impact}) × ${v.nodes.length}`);
-  if (!axe.violations.length) console.log("  nenhuma violação");
-  if (unattributed.length) console.log(`  !! ${unattributed.length} nó(s) sem elemento resolvido`);
-  console.log(`  needs review (não contado): ${axe.incomplete.map(i => i.id).join(", ") || "nenhum"}`);
-
-  // ── eslint-plugin-jsx-a11y ────────────────────────────────────────────────
-  const eslint = new ESLint({
-    // O fonte do corpus mora fora do govbr-eval; sem isto o ESLint 9 o ignora
-    // ("File ignored because outside of base path").
-    cwd: dirname(CORPUS_SRC),
-    overrideConfigFile: true,
-    overrideConfig: [
-      {
+    const eslintStarted = Date.now();
+    const eslint = new ESLint({
+      // O fonte do corpus mora fora do govbr-eval; sem isto o ESLint 9 o ignora.
+      cwd: dirname(corpusSrc),
+      overrideConfigFile: true,
+      overrideConfig: [{
         files: ["**/*.tsx"],
         languageOptions: { parser: tsParser, parserOptions: { ecmaFeatures: { jsx: true } } },
         plugins: { "jsx-a11y": jsxA11y },
         rules: jsxA11y.flatConfigs.recommended.rules,
-      },
-    ],
-  });
-  const lintResults = await eslint.lintFiles(FLOW_SOURCES);
-  const eslintFindings = lintResults.flatMap(r =>
-    r.messages.map(m => ({ rule: m.ruleId ?? "?", message: m.message, file: r.filePath, line: m.line })),
-  );
-  console.log(`\neslint-plugin-jsx-a11y: ${eslintFindings.length} achado(s) sobre ${FLOW_SOURCES.length} arquivo(s)`);
-  for (const f of eslintFindings) console.log(`  ${f.rule} — ${f.message} (linha ${f.line})`);
-  if (!eslintFindings.length) console.log("  nenhum achado");
-  console.log("  (achados do linter não são atribuídos a elemento — ver o comentário do tipo)");
-
-  const out: FlowBaselines = {
-    timestamp: new Date().toISOString(),
-    appUrl: url,
-    state: temSetup ? "após setup do gabarito" : "primeiro paint",
-    viewports: { padrao: viewportPadrao, extras },
-    axe: {
-      tool: "axe-core via @axe-core/playwright",
-      violationCount: axe.violations.length,
-      passes: axe.passes.length,
-      byElementKey,
-      unattributed,
-      incomplete: axe.incomplete.map(i => i.id),
-    },
-    eslint: {
+      }],
+    });
+    const lintResults = await eslint.lintFiles(flowSources);
+    record.eslint = {
       tool: "eslint-plugin-jsx-a11y (recommended)",
       config: "flat, recommended",
-      filesLinted: FLOW_SOURCES,
-      findings: eslintFindings,
-    },
-    validator: {
-      tool: "govbr-ds-validator scan_page (tokens + structure)",
-      version: validatorPackage.version,
-      byElementKey: validatorByElementKey,
-      unattributed: validatorUnattributed,
-      requiredSpecs,
-    },
-  };
+      files: flowSources.map(path => ({ path: path.replace(/\\/g, "/"), sha256: sha256File(path) })),
+      findings: lintResults.flatMap(r => r.messages.map(m => ({ rule: m.ruleId ?? "?", message: m.message, file: r.filePath, line: m.line }))),
+      seconds: seconds(eslintStarted),
+    };
+    console.log(`\neslint-plugin-jsx-a11y: ${record.eslint.findings.length} achado(s) no fonte (não atribuídos a elemento)`);
 
-  writeFileSync(join(ROOT, OUT), JSON.stringify(out, null, 2));
-  console.log(`\nEscrito em ${OUT}\n`);
+    record.legacy = legacySummary(record, gt);
+
+    const oracleAtEnd = oracleIdentity();
+    if (oracleAtEnd.distSha256 !== oracleAtStart.distSha256 || oracleAtEnd.dataSha256 !== oracleAtStart.dataSha256) {
+      throw new Error("O oráculo compilado mudou durante a linha de base.");
+    }
+    const missing = record.coverageCheck.filter(c => !c.detected);
+    if (missing.length) throw new Error(`Diagnóstico guiado não detectou: ${missing.map(c => `${c.specId}@${c.pass}`).join(", ")}`);
+    record.status = "complete";
+    save();
+    console.log(`\nEscrito em ${out} (${record.scope}, ${record.cost.wallClockSeconds}s, US$ 0 de API)\n`);
+    return 0;
+  } catch (error) {
+    record.error = error instanceof Error ? error.message : String(error);
+    save();
+    console.error(`Linha de base FALHOU: ${record.error}\nParcial preservado em ${out} (status failed, ${record.passes.length} passada(s)).`);
+    return 1;
+  }
 }
 
-main().catch(err => { console.error(err); process.exit(1); });
+/** Mesmo recorte do D-35: uma passada extra só atribui às âncoras das specs da sua janela. */
+function legacySummary(record: FlowBaselines, gt: FlowGroundTruth): FlowBaselines["legacy"] {
+  const axeByKey: Record<string, AxeFindingRef[]> = {};
+  const unattributed: AxeFindingRef[] = [];
+  const validatorByKey: Record<string, ValidatorFindingRef[]> = {};
+  record.passes.forEach((pass, index) => {
+    const allowed = index === 0 ? null : new Set(pass.specs.flatMap(id => {
+      const spec = gt.violations.find(v => v.id === id)!;
+      return pass.resolution.bySelector[spec.anchor]?.keys ?? [];
+    }));
+    for (const f of pass.axe.findings) {
+      const keys = (pass.resolution.bySelector[f.target]?.keys ?? []).filter(k => !allowed || allowed.has(k));
+      if (!keys.length && !allowed) unattributed.push(f);
+      for (const k of keys) (axeByKey[k] ??= []).push(f);
+    }
+    for (const f of pass.validator.guided?.findings ?? []) {
+      for (const k of (pass.resolution.bySelector[f.target]?.keys ?? []).filter(k => !allowed || allowed.has(k))) {
+        (validatorByKey[k] ??= []).push(f);
+      }
+    }
+  });
+  return {
+    axe: { byElementKey: axeByKey, unattributed, passes: record.passes[0]?.axe.passes ?? 0 },
+    validator: record.passes.some(p => p.validator.guided) ? { byElementKey: validatorByKey, mode: "guiada" } : null,
+  };
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().then(code => { process.exitCode = code; }, err => { console.error(err instanceof Error ? err.message : err); process.exitCode = 1; });
+}

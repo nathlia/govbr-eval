@@ -1,4 +1,4 @@
-# Pontuação semântica e revisão finita — flow-semantic-1.1.0
+# Pontuação semântica e revisão finita — flow-semantic-1.2.0
 
 ## O que mudou
 
@@ -15,6 +15,14 @@ rotuladas como legado (ver abaixo), e o `score:fluxo:legacy` segue preso a `scor
 integridade dos arquivos na preparação e na pontuação, e adiciona duplicatas declaradas pela
 adjudicadora. A política é `aceitacao-semantica-1.1.0`. Pacotes/decisões 1.0.0 não são migrados nem
 reescritos: para reproduzi-los, use o código original; uma análise corrigida exige um pacote novo.
+
+**1.2.0 (fatia 6, 16/09):** o pacote passa a ter **cenas** — uma por janela do plano de estados do
+gabarito, todas depois do mesmo `setup` — e unidades e cartões são resolvidos na sua cena. Crédito
+nunca atravessa cena, mesmo quando a chave do elemento é a mesma. As **linhas de base da bateria**
+entram como execuções revisadas com a mesma contabilidade (contrato `deterministico`), e a
+pontuação publica a comparação agente × linha de base por unidade. A preparação só aceita o
+manifesto de coleta, a linha de base e o site congelado exatos da bateria. Política
+`aceitacao-semantica-1.2.0`. Nenhum pacote 1.1.0 tinha decisão registrada.
 
 ## Contrato do achado e evidência da execução (fluxo-1.3.0)
 
@@ -61,6 +69,7 @@ Cada cartão carrega o rótulo de contrato do achado, e nenhum é promovido a ou
 | `achado-1-legado` | até `fluxo-1.2.0` | texto único, sem estado nem evidência da execução; nunca conta como `achado-2` |
 | `recusado` | relatório recusado pelo coletor e arquivado na última tentativa (`recusa-arquivada`) | motivo da recusa em `contrato-incompleto: …`; nunca conta como `achado-2`, mesmo que o achado sozinho esteja completo |
 | `malformado` | qualquer | preservado como veio, com o JSON bruto; a revisão decide pelo texto |
+| `deterministico` | linha de base da bateria (fatia 6) | texto da ferramenta, regra e cena da passada; revisado como qualquer cartão |
 
 `flags` não mudam a pontuação; orientam a leitura: `regra-incerta`, `varias-regras` (indício de
 alegação composta — decomponha em átomos; o software não divide), `sem-evidencia`,
@@ -87,18 +96,36 @@ automaticamente a verdade de um veredito humano, nem que uma referência textual
 
 ## Uso
 
-Execute em `govbr-eval`, com Node compatível com o projeto. Na preparação, o corpus deve estar acessível.
+Execute em `govbr-eval`, com Node compatível com o projeto. O runner já prepara o pacote ao fim da
+bateria; à mão, para uma bateria com manifesto de coleta (fatia 6):
 
 ```powershell
-npm run flow:review -- prepare --battery pipeline/logs/2026-09-14T17-35-45-bateria.json --out results/semantic-review/minha-bateria
+npm run flow:review -- prepare --battery pipeline/logs/STAMP-bateria.json --out results/semantic-review/minha-bateria `
+  --collection-manifest pipeline/logs/STAMP-coleta/manifesto.json --site-dir pipeline/logs/STAMP-superficie `
+  --baseline pipeline/logs/STAMP-linha-de-base.json
 ```
+
+- A preparação **serve ela mesma** o site congelado de `--site-dir` (bytes conferidos contra o
+  manifesto do site, que precisa ser o da coleta) e usa o **gabarito arquivado** pela coleta. Nenhum
+  servidor precisa estar de pé; `--app-url` não existe nesse modo.
+- A bateria precisa citar o manifesto pelo hash, cada execução também (`collectionManifestSha256`
+  no manifesto da bateria e em `config`), e o manifesto da bateria precisa contabilizar todos os
+  slots do plano. Slot `nao-tentada`, falho ou sem relatório impede a preparação.
+- A linha de base precisa ser `linha-de-base-fluxo-2.0.0`, `status: complete`, `scope: bateria`,
+  escrita sob este manifesto, com identidade medida igual à da coleta e uma passada por janela do
+  plano. Sem linha de base, declare `--no-baseline "motivo"` (ausência planejada, registrada).
+- `--reference OUTRO.json` prepara uma **análise nova**, rotulada `nova-analise-com-outra-referencia`,
+  mantendo o hash da referência coletada.
+- Bateria anterior à fatia 6 (sem manifesto): `--legacy-reconstruction [--app-url URL]`, rotulada
+  `reconstrucao-sem-manifesto`, sem linha de base. Recusado se a bateria tiver manifesto.
 
 O diretório precisa ser novo. É gerado:
 
-- `package.json`: alegações, unidades, referências a execuções e hashes; **não editar**.
+- `package.json`: alegações, cenas, unidades, execuções (agente e linha de base), proveniência e hashes; **não editar**.
 - `reviews.json`: decisões editáveis da autora, inicialmente pendentes.
-- `review.md`: cartões com alegação, sujeitos, unidades candidatas e evidência declarada; sem coluna de braço/score.
-- `reference.json`, `source-battery.json`, `capture.json`, `scene-*.html`, `scene-*.png`: proveniência e reconstrução.
+- `review.md`: cartões com origem, cena, alegação, sujeitos, unidades candidatas e evidência declarada; sem coluna de braço/score.
+- `reference.json` (os bytes do gabarito usado), `collection-manifest.json`, `baseline.json`, `source-battery.json`,
+  `capture.json` e, por cena, `resolution-*.json`, `scene-*.html`, `scene-*.png`: proveniência e reconstrução.
 
 Leia o cartão e preencha a decisão em `reviews.json`. Exemplo estrutural (substitua os IDs pelos do cartão):
 
@@ -217,12 +244,41 @@ braços ou clientes: os resultados são por execução e a configuração é pre
 `novel` não aumenta G e não é FP. Isso permite concluir a bateria sem incorporar cada descoberta
 ao gabarito e coletar tudo novamente. Registre a descoberta para uma próxima versão, se pertinente.
 
+## Linhas de base e comparação (fatia 6)
+
+Cada passada da linha de base da bateria vira cartões de duas execuções do pacote:
+
+- `linha-de-base/validator-nao-guiada`: varredura de página inteira do validator, política fixa, sem
+  seletor do gabarito — a comparável ao agente;
+- `linha-de-base/axe`: axe-core, página inteira.
+
+A varredura **guiada** (âncoras do gabarito) fica só como diagnóstico em
+`provenance.baseline.guidedDiagnostic`; ESLint fica em `provenance.baseline.eslint`, sem atribuição a
+elemento. O custo da linha de base (relógio por passada, US$ 0 de API) fica em `provenance.baseline.cost`.
+Um cartão determinístico só é reaproveitável entre baterias com o mesmo build congelado
+(`binding.build`), a mesma cena e o mesmo texto da ferramenta.
+
+`score` publica, além dos `scores` de cada execução, `comparisons`: cada execução do agente contra
+cada linha de base e contra a `uniao-deterministica`, com as unidades em `both`, `agentOnly`,
+`baselineOnly` e `neither`, e as alegações novas/falsas/pendentes de cada lado, separadas da
+detecção. `status` só é `complete` quando as duas execuções estão completas; antes disso a divisão
+lista apenas detecções confirmadas.
+
 ## Proveniência e estados: limite importante
 
 As capturas são **reconstruções para revisão**, não evidência capturada na execução original. O
-preparador reproduz `_meta.setup`, resolve as âncoras no viewport principal e captura também os
-viewports declarados no gabarito. Isso atende ao corpus aditivo atual; ainda não implementa resolução
-independente para cada estado não aditivo nem prova que o agente visitou cada viewport.
+preparador abre uma página nova **por janela do plano**, reproduz `_meta.setup` em cada uma e, nela,
+resolve todos os seletores (gabarito, agente, linha de base), constrói as unidades das specs daquela
+janela e captura HTML e imagem. O mapa de cada cena fica em `resolution-*.json`, e seu hash em
+`scenes[].resolutionHash`.
+
+Um cartão do agente vai para a cena de **mesma largura** que `state.viewport` (altura diferente é
+sinalizada: `altura-diferente`). Largura fora do plano vira cena `fora-do-plano:LxA`: os sujeitos são
+lidos na cena padrão, mas o cartão não ancora unidade nenhuma (só `novel`, `false` ou `unresolved`).
+Cartão sem janela (legado) vai para a cena padrão, com `sem-janela-declarada`. As interações de
+`state.steps` são texto do agente e não são casadas automaticamente com o `setup`: o plano atual tem
+um único estado de interação, e é a autora quem confere se a observação descreve esse estado. Nada
+disso prova que o agente visitou cada janela.
 
 Não dê crédito a uma observação só porque a reconstrução mostra o defeito. Leia a afirmação e suas
 limitações e, quando necessário, a transcrição original; use `unresolved` se a evidência faltar.
@@ -243,6 +299,8 @@ falha e preserva os artefatos. Uma análise parcial exige manifesto explicitamen
 
 ```powershell
 npm run test:semantic
+npm run test:manifest
+npm run test:fatia6      # navegador + oráculo compilado + build do corpus; nenhum modelo
 npm run test:contract
 npm run test:evidence
 npm run test:flow

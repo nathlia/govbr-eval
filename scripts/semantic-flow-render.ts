@@ -6,6 +6,7 @@ const CONTRACT: Record<ReviewCard["contract"], string> = {
   "achado-1-legado": "achado-1 (legado, até fluxo-1.2.0) — sem estado nem evidência da execução; não satisfaz o contrato atual",
   recusado: "recusado — o coletor recusou todo relatório desta execução e a última tentativa foi arquivada como relatório dela; não satisfaz o contrato atual (motivo em Sinalizações)",
   malformado: "malformado — preservado como veio; decida pelo texto bruto em Evidência declarada",
+  deterministico: "determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente",
 };
 const EVIDENCE: Record<ReviewCard["evidence"][number]["status"], string> = {
   encontrado: "",
@@ -17,8 +18,9 @@ const EVIDENCE: Record<ReviewCard["evidence"][number]["status"], string> = {
 const escapeHeadings = (text: string): string => text.replace(/^#/gm, "\\#");
 
 function claim(c: ReviewCard): string[] {
-  const lines = [`Contrato: ${CONTRACT[c.contract]}`, ""];
-  if (c.contract === "achado-2" || (c.contract === "recusado" && (c.observed !== null || c.expected !== null))) {
+  const lines = [`Contrato: ${CONTRACT[c.contract]}`, "",
+    `Origem: ${c.origin === "agente" ? "execução do agente" : "linha de base determinística"} · cena ${c.scene}`, ""];
+  if (c.contract === "achado-2" || c.contract === "deterministico" || (c.contract === "recusado" && (c.observed !== null || c.expected !== null))) {
     lines.push(`Observado: ${escapeHeadings(c.observed ?? "(ausente)")}`, "",
       `Esperado: ${escapeHeadings(c.expected ?? "(ausente)")}`, "",
       c.state
@@ -48,6 +50,8 @@ export function renderReview(pkg: SemanticPackage, reviews: SemanticReviews): st
     "Evidência da execução (achado-2) aponta para a cópia preservada do que as ferramentas gravaram durante a execução; confira-a antes das reconstruções.",
     "As capturas scene-* são reconstruções no momento de preparar o pacote, não prova de que o agente observou o mesmo estado.",
     "Confira também reportedEvidence, inclusive as limitações declaradas. Use unresolved quando não houver suporte.", "",
+    "Cartões de linha de base (origem determinística) são revisados como os do agente: é o que permite dizer o que o agente acrescenta ou perde em relação à ferramenta.",
+    "Cena = janela do plano de estados. Uma unidade só pode ser creditada por cartão da mesma cena.", "",
     "Um átomo = um defeito. subjects identifica cada elemento alegado; unitIds contém somente alternativas semanticamente aceitas.",
     "Cada átomo/elemento vale no máximo uma detecção. Divida alegações compostas; contabilize também as partes falsas.",
     'Duplicatas revisadas: no átomo repetido, acrescente duplicateOf: { "cardId": "C-...", "atomId": "..." }. A citação continua avaliada separadamente.', ""];
@@ -58,7 +62,7 @@ export function renderReview(pkg: SemanticPackage, reviews: SemanticReviews): st
       "### Unidades candidatas (não são crédito)", "");
     for (const id of c.candidateUnitIds) {
       const u = pkg.units.find(u => u.id === id)!;
-      lines.push(`- ${id} — ${u.specId} · ${u.state} · ${u.element.label}: ${u.description}`);
+      lines.push(`- ${id} — ${u.specId} · ${u.state} · cena ${u.scene} · ${u.element.label}: ${u.description}`);
     }
     if (!c.candidateUnitIds.length) lines.push("Nenhuma âncora candidata; um achado novo correto continua sendo possível.");
     if (c.contract === "achado-2" || (c.contract === "recusado" && c.evidence.length > 0)) {
