@@ -1,0 +1,76 @@
+{
+  "timestamp": "2026-09-16T23:59:30.755Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "Tela de login gov.br - formulário de CPF e opções de identificação"
+  ],
+  "notes": "Avaliação realizada em 1251x1278px. Teste incluiu: submissão vazia do formulário (gerou mensagem de erro), preenchimento de CPF, navegação por teclado (Tab/Shift+Tab), inspeção de atributos ARIA, cores e contrastes. Um erro em console foi detectado mas não investigado em detalhe.",
+  "findings": [
+    {
+      "selector": "input#cpf",
+      "relatedSelectors": [
+        "p.mensagem-erro-cpf"
+      ],
+      "rule": "wcag:3.3.1",
+      "short_summary": "Erro de validação não associado semanticamente ao input",
+      "summary": "Mensagem de erro de validação não está associada ao campo de entrada de CPF através de atributos ARIA.",
+      "observed": "Ao submeter o formulário vazio, a mensagem de erro 'Informe um CPF para continuar.' aparece em vermelho, porém o input#cpf não possui aria-invalid='true' e não possui aria-describedby apontando para o id da mensagem de erro. A mensagem de erro (p.mensagem-erro-cpf) não possui id, role, ou aria-live.",
+      "expected": "O input deve ter aria-invalid='true' quando em estado de erro. A mensagem de erro deve ter um id único e estar associada ao input via aria-describedby. A mensagem também deveria ter role='alert' ou aria-live='polite' para notificar usuários de leitores de tela.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar página",
+          "submeter formulário vazio",
+          "verificar atributos ARIA do input e mensagem de erro"
+        ]
+      },
+      "evidence": [
+        "input#cpf não possui aria-invalid",
+        "input#cpf não possui aria-describedby",
+        "p.mensagem-erro-cpf não possui atributos id, role ou aria-live"
+      ]
+    }
+  ],
+  "config": {
+    "agentReportedModel": "Haiku 4.5",
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.273 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:69e101abbde1fc7978b04992291b1d701402a19d94e37831f6728b52a044622d",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "5a5c24e620dd2872e67f92d8ad25ece9586b1bce4e0200963113da56e7650e6d",
+    "schedule": {
+      "slot": 2,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-16T20-54-16-sem-run1-bf488082-evidencia",
+    "evidenceIndexSha256": "1b52a7ade290ddff4f8e34a7d7eaf8975b420c4f4d14a25c1509e0f5ba785fae"
+  },
+  "cost": {
+    "startedAt": "2026-09-16T23:56:30.5182114Z",
+    "finishedAt": "2026-09-16T23:59:46.0565210Z",
+    "wallClockSeconds": 195.4,
+    "tokens": 1097006,
+    "tokenUsage": {
+      "input": 236,
+      "cacheCreationInput": 46572,
+      "cacheReadInput": 1036481,
+      "output": 13717
+    },
+    "totalCostUsd": 0.2684111,
+    "turns": 54
+  }
+}

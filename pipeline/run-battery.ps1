@@ -582,6 +582,9 @@ function Stop-Surface {
   if ($surfaceProcess -and -not $surfaceProcess.HasExited) {
     & taskkill /pid $surfaceProcess.Id /T /F 2>$null | Out-Null
   }
+  # O shutdown costuma encerrar o processo antes do taskkill, que então sai com 128 ("não
+  # encontrado"). Esse código não pode vazar como código de saída de uma bateria concluída.
+  $global:LASTEXITCODE = 0
 }
 
 $surface = $null

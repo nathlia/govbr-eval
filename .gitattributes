@@ -8,4 +8,8 @@ checker-aliases.json text eol=lf
 kb-aliases.json text eol=lf
 results/semantic-review/** -text
 # fluxo-1.3.0: a evidência preservada de cada execução é conferida pelo sha256 do índice.
-pipeline/logs/*-evidencia/** -text
+# Fatia 6 (D-43): a identidade da medida é o hash do que rodou — plano, manifesto de coleta,
+# oráculo compilado, gabarito arquivado, site congelado e linha de base são conferidos por sha256
+# depois da execução. Um checkout no Windows que trocasse LF por CRLF mudaria os bytes e a
+# conferência falharia sobre artefatos que ninguém editou. Nada sob logs/ é fonte: é arquivo morto.
+pipeline/logs/** -text
