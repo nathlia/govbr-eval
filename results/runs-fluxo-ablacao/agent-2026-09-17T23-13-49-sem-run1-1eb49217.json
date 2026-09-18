@@ -1,0 +1,94 @@
+{
+  "timestamp": "2026-09-18T02:18:37.44Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "Landing page - CPF login form and accessibility controls"
+  ],
+  "notes": "Tested form submission with invalid CPF (12345678901), no accessible error message or aria-invalid. Tab navigation works. Accessibility buttons have visual state change but lack aria-pressed attribute to communicate state to AT. Console shows 1 error throughout session.",
+  "findings": [
+    {
+      "selector": "button:nth-of-type(1)",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Button 'Alto Contraste' has icon with aria-hidden='true' and visible text 'Alto Contraste', changes visual appearance when clicked (becomes active state), but lacks aria-pressed attribute to indicate toggle state to assistive technologies",
+      "expected": "Button should have aria-pressed='true' or 'false' to communicate its current state (active/inactive) in accordance with WCAG 4.1.2 Name, Role, Value",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "clicked button 'Alto Contraste'",
+          "visual state changed to active",
+          "aria-pressed attribute not present"
+        ]
+      },
+      "evidence": [
+        "Button element found with textContent 'Alto Contraste'",
+        "Icon element: <i class=\"fas fa-adjust\" aria-hidden=\"true\"></i>",
+        "getAttribute('aria-pressed') returns null"
+      ]
+    },
+    {
+      "selector": "button:nth-of-type(2)",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Button 'VLibras' has icon with aria-hidden='true' and visible text 'VLibras', has visual indicator when clicked (VLibras widget appears), but lacks aria-pressed attribute to indicate toggle state to assistive technologies",
+      "expected": "Button should have aria-pressed='true' or 'false' to communicate its current state to assistive technologies in accordance with WCAG 4.1.2",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "clicked button 'VLibras'",
+          "VLibras widget loaded visually",
+          "aria-pressed attribute not present"
+        ]
+      },
+      "evidence": [
+        "Button element found with textContent 'VLibras'",
+        "Icon element: <i class=\"fas fa-sign-language\" aria-hidden=\"true\"></i>",
+        "getAttribute('aria-pressed') returns null"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.275 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:69e101abbde1fc7978b04992291b1d701402a19d94e37831f6728b52a044622d",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "60806ea140bddd7382596be25c856e7ac9eed735daee443268e85cd574c987bc",
+    "schedule": {
+      "slot": 2,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-17T23-13-49-sem-run1-1eb49217-evidencia",
+    "evidenceIndexSha256": "6887a19ebfd1915986c8f4b582115449b002f36eab96139042e9d9e8ef2d2903"
+  },
+  "cost": {
+    "startedAt": "2026-09-18T02:16:25.8940412Z",
+    "finishedAt": "2026-09-18T02:18:51.4093734Z",
+    "wallClockSeconds": 145.3,
+    "tokens": 620288,
+    "tokenUsage": {
+      "input": 156,
+      "cacheCreationInput": 38824,
+      "cacheReadInput": 570181,
+      "output": 11127
+    },
+    "totalCostUsd": 0.19249610000000003,
+    "turns": 31
+  }
+}

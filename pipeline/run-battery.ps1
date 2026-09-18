@@ -985,8 +985,15 @@ $stopReason = $null
   $identityIntact = Test-CollectionIdentity
   if ($identityIntact) { Write-Ok "identidade da coleta conferida" }
   else { Write-Warn2 "IDENTIDADE DA COLETA ALTERADA durante esta execução." }
+  # "collected" tem de querer dizer que existe artefato. O ensaio de 17/09 produziu uma execução com
+  # exitCode 0, identidade conferida e NENHUM relatório no coletor — o agente concluiu que a tela
+  # estava conforme e saiu sem fazer o POST —, e mesmo assim ela entrou no manifesto como
+  # "collected". A preparação depois recusou a bateria inteira com uma mensagem genérica, longe da
+  # causa. Sem artefato o status é "sem-relatorio", e a bateria para no slot em que isso acontece:
+  # continuar gastando nos slots seguintes produziria uma bateria que não vira pacote de todo jeito.
   $collectionStatus = if ($evidenceSummary -and $evidenceSummary.status -eq "failed") { "evidence-failed" }
     elseif (-not $identityIntact) { "identity-changed" }
+    elseif (-not $arquivo) { "sem-relatorio" }
     else { "collected" }
 
   $manifest += [pscustomobject]@{
@@ -1034,6 +1041,10 @@ $stopReason = $null
   # sobrescrito pelo POST desta execução e a bateria sem registro do que chegou a rodar.
   if ($collectionStatus -eq "evidence-failed") { $stopReason = "falha na preservação da evidência (slot $runIndex)"; break bateria }
   if ($collectionStatus -eq "identity-changed") { $stopReason = "identidade da coleta alterada (slot $runIndex)"; break bateria }
+  if ($collectionStatus -eq "sem-relatorio") {
+    $stopReason = "o coletor não recebeu relatório da execução do slot $runIndex; os slots restantes não foram gastos"
+    break bateria
+  }
   if ($limiteAtingido) {
     $stopReason = "limite de gasto atingido (slot $runIndex)"
     Write-Warn2 "LIMITE DE GASTO ATINGIDO — bateria interrompida na execução $runIndex de $total."

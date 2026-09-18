@@ -1,0 +1,12 @@
+{"at":"2026-09-18T02:15:01.2028208Z","event":"plano-congelado","data":{"path":"F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-13-49-plano.json","sha256":"53d6914aa58feb3b33e5289b6a647b324fbc4e043bdccb3e0cedcede944a4064"}}
+{"at":"2026-09-18T02:15:05.3811592Z","event":"manifesto-gravado","data":{"path":"pipeline/logs/2026-09-17T23-13-49-coleta/manifesto.json","sha256":"60806ea140bddd7382596be25c856e7ac9eed735daee443268e85cd574c987bc"}}
+{"at":"2026-09-18T02:15:05.3836597Z","event":"execucao-inicio","data":{"slot":1,"arm":"com","repetition":1}}
+{"at":"2026-09-18T02:16:25.8667247Z","event":"execucao-fim","data":{"slot":1,"runId":"2026-09-17T23-13-49-com-run1-ec0f5dc5","exitCode":0,"collectionStatus":"collected","archive":null}}
+{"at":"2026-09-18T02:16:25.8822417Z","event":"execucao-inicio","data":{"slot":2,"arm":"sem","repetition":1}}
+{"at":"2026-09-18T02:18:52.7894194Z","event":"execucao-fim","data":{"slot":2,"runId":"2026-09-17T23-13-49-sem-run1-1eb49217","exitCode":0,"collectionStatus":"collected","archive":"agent-2026-09-17T23-13-49-sem-run1-1eb49217.json"}}
+{"at":"2026-09-18T02:18:52.8061794Z","event":"coleta-fim","data":{"status":"concluida","motivo":null,"manifest":"F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-13-49-bateria.json"}}
+{"at":"2026-09-18T02:18:52.8348432Z","event":"estagio-inicio","data":{"stage":"linha-de-base","out":"F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-13-49-linha-de-base.json"}}
+{"at":"2026-09-18T02:19:02.9408614Z","event":"estagio-fim","data":{"stage":"linha-de-base","status":"concluida","exitCode":0,"file":"2026-09-17T23-13-49-linha-de-base.json","sha256":"621aed10426e2c6281a556457a8d4338afac257e03af76d3938270e9c182c7d7"}}
+{"at":"2026-09-18T02:19:02.9425710Z","event":"estagio-inicio","data":{"stage":"preparacao","out":"F:\\Dev Nath\\TCC\\govbr-eval\\results\\semantic-review\\2026-09-17T23-13-49"}}
+{"at":"2026-09-18T02:19:04.9742127Z","event":"estagio-fim","data":{"stage":"preparacao","status":"falhou","exitCode":1}}
+{"at":"2026-09-18T02:19:05.1254188Z","event":"desfecho","data":{"status":"falhou"}}

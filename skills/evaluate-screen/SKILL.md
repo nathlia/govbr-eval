@@ -43,7 +43,7 @@ não justifica uma exigência estrutural mais específica: não empreste o id de
 disso, use `emag:<seção>`, `wcag:<critério>` ou `ds:<regra>` apenas quando conseguir justificar a
 atribuição; senão, `"rule": null`. Não fabrique um id plausível.
 
-Para salvar, finalize os achados antes de sair da aplicação. Navegue para a origem indicada na
-invocação e faça `POST` no caminho indicado, com `Content-Type: application/json` e o relatório como
-corpo. Depois imprima uma linha por achado com seletor, regra e resumo. Se não houver achados, diga
-explicitamente que o escopo inspecionado ficou limpo e ainda registre interações e limitações.
+Navegue para a origem indicada na invocação e faça `POST` no caminho indicado, com
+`Content-Type: application/json` e o relatório como corpo, sempre com interações e limitações. Depois imprima uma linha por achado com seletor, regra e
+resumo. **O `POST` é o último passo, inclusive sem achados:** aí o corpo leva `"findings": []` e o
+escopo limpo é o resultado. Terminar sem enviar é execução perdida.

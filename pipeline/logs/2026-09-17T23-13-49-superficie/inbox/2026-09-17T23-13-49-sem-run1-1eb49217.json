@@ -1,0 +1,57 @@
+{
+  "timestamp": "2026-09-18T02:18:37.440Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "Landing page - CPF login form and accessibility controls"
+  ],
+  "notes": "Tested form submission with invalid CPF (12345678901), no accessible error message or aria-invalid. Tab navigation works. Accessibility buttons have visual state change but lack aria-pressed attribute to communicate state to AT. Console shows 1 error throughout session.",
+  "findings": [
+    {
+      "selector": "button:nth-of-type(1)",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Button 'Alto Contraste' has icon with aria-hidden='true' and visible text 'Alto Contraste', changes visual appearance when clicked (becomes active state), but lacks aria-pressed attribute to indicate toggle state to assistive technologies",
+      "expected": "Button should have aria-pressed='true' or 'false' to communicate its current state (active/inactive) in accordance with WCAG 4.1.2 Name, Role, Value",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "clicked button 'Alto Contraste'",
+          "visual state changed to active",
+          "aria-pressed attribute not present"
+        ]
+      },
+      "evidence": [
+        "Button element found with textContent 'Alto Contraste'",
+        "Icon element: <i class=\"fas fa-adjust\" aria-hidden=\"true\"></i>",
+        "getAttribute('aria-pressed') returns null"
+      ]
+    },
+    {
+      "selector": "button:nth-of-type(2)",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Button 'VLibras' has icon with aria-hidden='true' and visible text 'VLibras', has visual indicator when clicked (VLibras widget appears), but lacks aria-pressed attribute to indicate toggle state to assistive technologies",
+      "expected": "Button should have aria-pressed='true' or 'false' to communicate its current state to assistive technologies in accordance with WCAG 4.1.2",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "clicked button 'VLibras'",
+          "VLibras widget loaded visually",
+          "aria-pressed attribute not present"
+        ]
+      },
+      "evidence": [
+        "Button element found with textContent 'VLibras'",
+        "Icon element: <i class=\"fas fa-sign-language\" aria-hidden=\"true\"></i>",
+        "getAttribute('aria-pressed') returns null"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "stamp": "2026-09-17T23-13-49",
+  "status": "falhou",
+  "error": "Falha ao preparar o pacote de revisao semantica; artefatos da bateria foram preservados.",
+  "stopReason": null,
+  "stages": {
+    "coleta": "concluida",
+    "linhaDeBase": "concluida",
+    "preparacao": "falhou"
+  },
+  "plan": {
+    "path": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-13-49-plano.json",
+    "sha256": "53d6914aa58feb3b33e5289b6a647b324fbc4e043bdccb3e0cedcede944a4064"
+  },
+  "collectionManifest": {
+    "path": "pipeline/logs/2026-09-17T23-13-49-coleta/manifesto.json",
+    "sha256": "60806ea140bddd7382596be25c856e7ac9eed735daee443268e85cd574c987bc"
+  },
+  "battery": {
+    "path": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-13-49-bateria.json",
+    "sha256": "7f0b608c323a98ec552ce35957c7f9a07f749b70ccc02ef780a9f15d86731146"
+  },
+  "baseline": {
+    "path": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-13-49-linha-de-base.json",
+    "sha256": "621aed10426e2c6281a556457a8d4338afac257e03af76d3938270e9c182c7d7"
+  },
+  "reviewPackage": null,
+  "journal": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-13-49-diario.ndjson"
+}

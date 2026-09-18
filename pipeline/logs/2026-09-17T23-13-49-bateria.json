@@ -1,0 +1,182 @@
+{
+  "stamp": "2026-09-17T23-13-49",
+  "model": "claude-haiku-4-5",
+  "reasoningEffort": "high",
+  "oracleProfile": "combined",
+  "client": "claude-cli",
+  "clientVersion": "2.1.275 (Claude Code)",
+  "scope": "full",
+  "runsPerArm": 1,
+  "arms": [
+    "com",
+    "sem"
+  ],
+  "schedule": "alternado",
+  "plan": {
+    "path": "pipeline/logs/2026-09-17T23-13-49-plano.json",
+    "sha256": "53d6914aa58feb3b33e5289b6a647b324fbc4e043bdccb3e0cedcede944a4064"
+  },
+  "collectionManifest": {
+    "path": "pipeline/logs/2026-09-17T23-13-49-coleta/manifesto.json",
+    "sha256": "60806ea140bddd7382596be25c856e7ac9eed735daee443268e85cd574c987bc"
+  },
+  "stopReason": null,
+  "corpusUrl": "http://127.0.0.1:3100",
+  "surface": {
+    "dir": "pipeline/logs/2026-09-17T23-13-49-superficie",
+    "isolationTest": "2026-09-17T23-13-49-isolamento.json",
+    "description": {
+      "version": "surface-1.2.0",
+      "startedAt": "2026-09-18T02:15:02.559Z",
+      "pid": 19080,
+      "entryUrl": "http://127.0.0.1:3100/fluxo.html",
+      "origins": {
+        "site": "http://127.0.0.1:3100",
+        "collector": "http://127.0.0.1:4100"
+      },
+      "proxyServer": "http://127.0.0.1:4102",
+      "control": "http://127.0.0.1:4101",
+      "allowedHosts": [
+        "127.0.0.1:3100",
+        "127.0.0.1:4100"
+      ],
+      "siteManifest": "site-manifest.json",
+      "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+      "corpusCommit": "4767b4146d1f46244e506a0991028164f7903ef7",
+      "corpusDirty": false,
+      "egressLog": "egress.ndjson",
+      "policy": {
+        "boundary": "proxy HTTP de encaminhamento; o navegador do Playwright MCP e o do oráculo apontam para ele (--proxy-server / GOVBR_VALIDATOR_PROXY_SERVER), e o Playwright encaminha o loopback",
+        "allowed": "somente as origens do site congelado e do coletor, por host:porta exato, só HTTP",
+        "https": "negado (CONNECT 403)",
+        "site": "somente os arquivos do manifesto; sem índice, sem fallback, sem /@fs",
+        "collector": "POST /api/submit da execução armada; relatório diferente do aceito é recusado e arquivado"
+      }
+    }
+  },
+  "execucoes": [
+    {
+      "run": 1,
+      "slot": 1,
+      "repetition": 1,
+      "block": 1,
+      "runId": "2026-09-17T23-13-49-com-run1-ec0f5dc5",
+      "arm": "com",
+      "armDescricao": "agente + oráculo MCP",
+      "model": "claude-haiku-4-5",
+      "reasoningEffort": "high",
+      "oracleProfile": "combined",
+      "client": "claude-cli",
+      "clientVersion": "2.1.275 (Claude Code)",
+      "protocolVersion": "sha256:69e101abbde1fc7978b04992291b1d701402a19d94e37831f6728b52a044622d",
+      "instrumentVersion": "fluxo-1.3.0",
+      "validatorVersion": "2.5.2",
+      "mcpConfig": "2026-09-17T23-13-49-com-run1-ec0f5dc5-mcp-config.json",
+      "prompt": "Avalie a tela em http://127.0.0.1:3100/fluxo.html. Para salvar, navegue ate http://127.0.0.1:4100 e faca POST em /api/submit a partir dali.",
+      "scope": "full",
+      "archive": null,
+      "suite": "fluxo",
+      "archiveDir": "results/runs-fluxo",
+      "exitCode": 0,
+      "wallClockSeconds": 78.9,
+      "log": "2026-09-17T23-13-49-com-run1.json",
+      "stderrLog": "2026-09-17T23-13-49-com-run1.stderr.log",
+      "mcpTelemetry": "2026-09-17T23-13-49-com-run1-ec0f5dc5-mcp.ndjson",
+      "submission": {
+        "status": "sem-relatorio",
+        "receipt": null,
+        "rejected": [],
+        "promotedFrom": null
+      },
+      "egress": {
+        "requests": 51,
+        "allowed": 27,
+        "denied": 24,
+        "deniedTargets": [
+          "accounts.google.com:443",
+          "android.clients.google.com:443",
+          "content-autofill.googleapis.com:443",
+          "http://clients2.google.com/time/1/current",
+          "update.googleapis.com:443",
+          "www.google.com:443",
+          "www.gstatic.com:443"
+        ]
+      },
+      "evidence": {
+        "status": "preserved",
+        "dir": "pipeline/logs/2026-09-17T23-13-49-com-run1-ec0f5dc5-evidencia",
+        "files": 6,
+        "bytes": 67788,
+        "indexSha256": "e610c0cf3743a8e66ffca2e15f701c710c43e9f640cd970780d563923fb24c89"
+      },
+      "collectionStatus": "collected",
+      "collectionManifestSha256": "60806ea140bddd7382596be25c856e7ac9eed735daee443268e85cd574c987bc",
+      "startedAt": "2026-09-18T02:15:05.5105994Z"
+    },
+    {
+      "run": 2,
+      "slot": 2,
+      "repetition": 1,
+      "block": 1,
+      "runId": "2026-09-17T23-13-49-sem-run1-1eb49217",
+      "arm": "sem",
+      "armDescricao": "agente sem oráculo (ablação)",
+      "model": "claude-haiku-4-5",
+      "reasoningEffort": "high",
+      "oracleProfile": "none",
+      "client": "claude-cli",
+      "clientVersion": "2.1.275 (Claude Code)",
+      "protocolVersion": "sha256:69e101abbde1fc7978b04992291b1d701402a19d94e37831f6728b52a044622d",
+      "instrumentVersion": "fluxo-1.3.0",
+      "validatorVersion": null,
+      "mcpConfig": "mcp-sem-oraculo.json",
+      "prompt": "Avalie a tela em http://127.0.0.1:3100/fluxo.html. Para salvar, navegue ate http://127.0.0.1:4100 e faca POST em /api/submit a partir dali.",
+      "scope": "full",
+      "archive": "agent-2026-09-17T23-13-49-sem-run1-1eb49217.json",
+      "suite": "fluxo",
+      "archiveDir": "results/runs-fluxo-ablacao",
+      "exitCode": 0,
+      "wallClockSeconds": 145.3,
+      "log": "2026-09-17T23-13-49-sem-run1.json",
+      "stderrLog": "2026-09-17T23-13-49-sem-run1.stderr.log",
+      "mcpTelemetry": null,
+      "submission": {
+        "status": "aceito",
+        "receipt": {
+          "runId": "2026-09-17T23-13-49-sem-run1-1eb49217",
+          "status": "aceito",
+          "sha256": "4f270c6769e970352226d93f74bc36ce77f85ebd635a6e92c56529f58a7701a5",
+          "acceptedAt": "2026-09-18T02:18:37.444Z",
+          "file": "2026-09-17T23-13-49-sem-run1-1eb49217.json",
+          "droppedFields": []
+        },
+        "rejected": [],
+        "promotedFrom": null
+      },
+      "egress": {
+        "requests": 40,
+        "allowed": 10,
+        "denied": 30,
+        "deniedTargets": [
+          "accounts.google.com:443",
+          "android.clients.google.com:443",
+          "content-autofill.googleapis.com:443",
+          "http://clients2.google.com/time/1/current",
+          "update.googleapis.com:443",
+          "www.google.com:443",
+          "www.gstatic.com:443"
+        ]
+      },
+      "evidence": {
+        "status": "preserved",
+        "dir": "pipeline/logs/2026-09-17T23-13-49-sem-run1-1eb49217-evidencia",
+        "files": 15,
+        "bytes": 386664,
+        "indexSha256": "6887a19ebfd1915986c8f4b582115449b002f36eab96139042e9d9e8ef2d2903"
+      },
+      "collectionStatus": "collected",
+      "collectionManifestSha256": "60806ea140bddd7382596be25c856e7ac9eed735daee443268e85cd574c987bc",
+      "startedAt": "2026-09-18T02:16:25.8940412Z"
+    }
+  ]
+}

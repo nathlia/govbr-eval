@@ -103,13 +103,26 @@ function loadBaseline(path: string, collection: { manifest: CollectionManifest; 
 
 function selectBatteryRuns(battery: Battery, collectionSha: string | null) {
   return battery.execucoes.map(entry => {
-    if (entry.suite !== "fluxo" || entry.exitCode !== 0 || !entry.archive || (entry.collectionStatus && entry.collectionStatus !== "collected")) {
-      throw new Error("Battery contains failed/missing/unattempted/non-flow runs. Do not silently select successful attempts; prepare an explicitly documented analysis manifest first.");
+    // A mensagem nomeia o slot e a causa. A versão anterior dizia "failed/missing/unattempted" sem
+    // dizer qual nem por quê, e num pacote de seis execuções isso manda procurar no escuro — foi o
+    // que o ensaio de 17/09 fez perder tempo, com a causa real (nenhum relatório no coletor) a
+    // três arquivos de distância.
+    const motivo = entry.suite !== "fluxo" ? `suíte "${entry.suite}", não "fluxo"`
+      : entry.exitCode !== 0 ? `código de saída ${entry.exitCode}`
+      : entry.collectionStatus === "sem-relatorio" ? "o coletor não recebeu relatório desta execução"
+      : entry.collectionStatus === "nao-tentada" ? "slot não tentado"
+      : entry.collectionStatus && entry.collectionStatus !== "collected" ? `estado de coleta "${entry.collectionStatus}"`
+      : !entry.archive ? "sem arquivo arquivado" : null;
+    if (motivo) {
+      throw new Error(`Slot ${entry.slot ?? "?"} (${entry.arm}) não entra no pacote: ${motivo}. ` +
+        "Não selecione em silêncio as tentativas bem-sucedidas; prepare antes um manifesto de análise explicitamente documentado.");
     }
     if (collectionSha && entry.collectionManifestSha256 !== collectionSha) throw new Error("Run was not collected under this collection manifest");
     const expectedDir = entry.arm === "com" ? "results/runs-fluxo" : entry.arm === "sem" ? "results/runs-fluxo-ablacao" : null;
     if (entry.archiveDir.replaceAll("\\", "/") !== expectedDir) throw new Error("Archive arm/directory mismatch");
-    const path = resolve(ROOT, entry.archiveDir, entry.archive);
+    const archive = entry.archive;
+    if (!archive) throw new Error(`Slot ${entry.slot ?? "?"} (${entry.arm}) não entra no pacote: sem arquivo arquivado`);
+    const path = resolve(ROOT, entry.archiveDir, archive);
     const rel = relative(join(ROOT, entry.archiveDir), path);
     if (rel.startsWith("..") || isAbsolute(rel) || rel.includes("/") || rel.includes("\\")) throw new Error("Archive must be a file in its declared run directory");
     const data = read<FlowAgentResults>(path);
