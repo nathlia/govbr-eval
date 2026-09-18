@@ -18,6 +18,7 @@ import { join, resolve } from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { ROOT } from "./adjudication";
+import { statePlanOf } from "./collection-manifest";
 import { DEFAULT_PORTS, HOST, createEgressProxy, startSurface, type EgressEvent, type RunningSurface } from "./measurement-surface";
 
 interface McpServerConfig { command: string; args?: string[]; env?: Record<string, string> }
@@ -192,8 +193,23 @@ async function main(): Promise<void> {
     await evaluate(playwright, "() => { document.querySelector('.acao-continuar').click(); return 'ok'; }");
     const errorShown = await evaluate(playwright, "() => new Promise(r => setTimeout(() => r(String(!!document.querySelector('.mensagem-erro-cpf'))), 500))");
     check("o estado do setup do gabarito é alcançável", errorShown === "true");
-    await playwright.callTool({ name: "browser_resize", arguments: { width: 320, height: 720 } });
-    await new Promise((r) => setTimeout(r, 500));
+
+    // ── A janela é uma dimensão do experimento (D-46). O scorer só ancora uma alegação na cena de
+    // mesma LARGURA, e o protocolo manda relatar a janela real: se o navegador medido não abre na
+    // janela padrão do plano, o braço mede 0 por construção. Conferir os argumentos não basta — a
+    // janela é MEDIDA aqui, contra o mesmo plano de estados que o manifesto e o scorer leem.
+    const statePlan = statePlanOf(JSON.parse(readFileSync(join(ROOT, "ground-truth-fluxo.json"), "utf8")));
+    const windowSize = "() => window.innerWidth + 'x' + window.innerHeight";
+    const opened = await evaluate(playwright, windowSize);
+    check("o navegador medido abre na janela padrão do plano", opened === `${statePlan.padrao.width}x${statePlan.padrao.height}`,
+      `medido ${opened}, plano ${statePlan.padrao.width}x${statePlan.padrao.height}`);
+    for (const extra of statePlan.extras.length ? statePlan.extras : [{ viewport: { width: 320, height: 720 } }]) {
+      await playwright.callTool({ name: "browser_resize", arguments: extra.viewport });
+      await new Promise((r) => setTimeout(r, 500));
+      const resized = await evaluate(playwright, windowSize);
+      check(`a janela ${extra.viewport.width}x${extra.viewport.height} do plano é alcançável pelo agente`,
+        resized === `${extra.viewport.width}x${extra.viewport.height}`, `medido ${resized}`);
+    }
     const loadEvents = eventsSince(surface.egress, from);
     const missing = loadEvents.filter((e) => e.target.startsWith(siteOrigin) && e.status !== 200 && !e.target.endsWith("/favicon.ico"));
     check("nenhum arquivo da tela falta no site congelado", missing.length === 0, missing.map((e) => `${e.target} ${e.status}`).join(", "));

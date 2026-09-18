@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-09-18T15:53:15.374Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "Full page evaluation",
+    "Form accessibility",
+    "Navigation and keyboard support",
+    "Color contrast",
+    "Heading hierarchy",
+    "ARIA attributes",
+    "Link accessibility"
+  ],
+  "notes": "Comprehensive evaluation of the gov.br login interface. Tested: form field labeling, button accessibility, keyboard navigation via Tab key, heading hierarchy (H1-H2 structure is correct), color contrast ratios (links: 6.90:1 WCAG AA compliant), icon usage with aria-hidden attributes, tab order functionality. No form validation errors or dynamic content changes tested. The interface shows proper semantic HTML structure with good accessibility practices.",
+  "findings": [],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.276 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "0c44e0caa5c481133548166aeadc387731ae21192737f5227900bc07612633ff",
+    "schedule": {
+      "slot": 2,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-18T12-48-16-sem-run1-20ea17ea-evidencia",
+    "evidenceIndexSha256": "5c8ef6b58f6d7fff0285c578192047283d695f9a306d187703849134dfb3516a"
+  },
+  "cost": {
+    "startedAt": "2026-09-18T15:51:11.5389595Z",
+    "finishedAt": "2026-09-18T15:53:28.4807286Z",
+    "wallClockSeconds": 136.9,
+    "tokens": 716325,
+    "tokenUsage": {
+      "input": 180,
+      "cacheCreationInput": 35278,
+      "cacheReadInput": 670596,
+      "output": 10271
+    },
+    "totalCostUsd": 0.1918341,
+    "turns": 28
+  }
+}
