@@ -1,0 +1,126 @@
+{
+  "timestamp": "2026-09-18T21:08:15.753Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "tela inteira de identificacao gov.br: cabecalho (marca, Alto Contraste, VLibras), painel institucional e cartao de identificacao (formulario de CPF, outras opcoes de identificacao, ajuda e termo de uso)",
+    "estados observados: inicial (1280x900), erro de CPF vazio (1280x900), viewport estreita 320x800"
+  ],
+  "notes": "Oraculo indisponivel nesta execucao: nao houve scan_page nem consulta de regras/tokens; as regras citadas sao atribuicoes proprias justificadas por WCAG 2.1/2.2 e a evidencia vem de snapshots de acessibilidade, CSSOM, estilos computados, MutationObserver e captura de tela. Interacoes realizadas: carregamento da tela; snapshot da arvore de acessibilidade; tabulacao completa a partir do inicio do documento (11 Tabs) registrando o elemento focado e outline/box-shadow computados; foco programatico comparativo em .link-opcao e .link-ajuda; clique em Continuar com o campo CPF vazio (erro exibido); preenchimento com '123' e submissao; preenchimento com '52998224725' (CPF valido) e submissao; clique em Alto Contraste; clique em VLibras; redimensionamento para 320x800 com captura de tela e medicao de scrollWidth/clientWidth; retorno a 1280x900 e nova reproducao do estado de erro com MutationObserver ativo. Limitacoes e itens deixados como incertos: (a) a tela e estatica - submeter CPF valido ou invalido ('123') nao produz navegacao, mensagem nem qualquer mutacao no DOM, e os botoes Alto Contraste e VLibras nao alteram nada (nenhuma mutacao registrada), portanto a ausencia de validacao de formato do CPF e a inercia desses controles nao foram reportadas como defeitos, por nao ser possivel distinguir falha de conformidade de funcionalidade nao implementada no prototipo; (b) a lista de opcoes usa div.br-list/div.br-item sem role=list/listitem - possivel perda de semantica de lista (WCAG 1.3.1), mantido como incerto por nao haver evidencia de que o componente exija esses papeis e por os links permanecerem alcancaveis e descritos; (c) contrastes medidos passam (texto #555 e #333 sobre branco, #1351B4 sobre branco 7.1:1, branco sobre #1688 21 4.6:1 no selo, mensagem de erro #E60000 sobre branco 4.8:1), sem achado de contraste; (d) unico erro de console e 404 de /favicon.ico, sem relacao com acessibilidade.",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [
+        ".link-ajuda"
+      ],
+      "rule": "wcag:2.4.7",
+      "observed": "Ao receber foco por teclado (6o ao 9o Tab a partir do inicio do documento), os quatro links de 'Outras opcoes de identificacao' ficam com outline-style: none e box-shadow: none, por causa da regra '.link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }' da folha /assets/fluxo-BKj2uGAR.css; nenhuma outra propriedade (cor, fundo, sublinhado) muda no foco.",
+      "expected": "Cada um dos links deve apresentar indicador de foco visivel quando focado pelo teclado, como o 'dashed 4px rgb(194, 133, 12)' que os demais links e botoes da mesma tela (.link-ajuda, .link-termo, .marca-govbr, .acao-continuar) recebem do design system.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "pressionar Tab a partir do inicio do documento ate focar 'Login com seu banco' (6o Tab) e seguir ate 'Seu certificado digital em nuvem' (9o Tab)"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-18T21-03-14-454Z.yml",
+        "CSSOM /assets/fluxo-BKj2uGAR.css: .link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }",
+        "focusin log: .link-opcao -> outline 'none 2.66667px rgb(19, 81, 180)', box-shadow 'none'; .link-ajuda -> outline 'dashed 4px rgb(194, 133, 12)'"
+      ]
+    },
+    {
+      "selector": ".barra-recursos",
+      "relatedSelectors": [
+        ".barra-superior",
+        ".recurso-libras"
+      ],
+      "rule": "wcag:1.4.10",
+      "observed": "Com a janela em 320x800, document.documentElement.scrollWidth = 447 contra clientWidth = 305, e .barra-recursos (flex sem flex-wrap) junto com o botao .recurso-libras terminam em x = 447; a captura mostra barra de rolagem horizontal no documento e o rotulo 'VLibras' fora da area visivel.",
+      "expected": "A 320 CSS px de largura o conteudo deve caber sem exigir rolagem horizontal do documento: a barra de recursos deve quebrar linha ou reorganizar seus controles.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 800
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "redimensionar a janela para 320x800"
+        ]
+      },
+      "evidence": [
+        "estado-320.png",
+        "medicao em pagina: {scrollW:447, clientW:305, hScroll:true, overflow:['DIV.barra-recursos right=447','BUTTON.br-button recurso-libras right=447']}"
+      ]
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [
+        "#cpf"
+      ],
+      "rule": "wcag:1.3.1",
+      "observed": "A mensagem de erro e inserida como '<p class=\"mensagem-erro-cpf\">Informe um CPF para continuar.</p>', sem atributo id, e o campo #cpf permanece sem aria-describedby (valor null), de modo que nenhuma relacao programatica liga a mensagem ao campo que ela descreve.",
+      "expected": "A mensagem deve ter id e ser referenciada por aria-describedby em #cpf (ou equivalente), para que a descricao do erro seja determinavel programaticamente e anunciada ao usuario que foca o campo.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "clicar no botao 'Continuar' com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-18T21-06-21-720Z.yml",
+        "DOM do formulario apos submissao vazia: <p class=\"mensagem-erro-cpf\"> sem id; #cpf.getAttribute('aria-describedby') === null"
+      ]
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "rule": "wcag:4.1.3",
+      "observed": "Apos o clique em 'Continuar' com o campo vazio, o MutationObserver registra apenas a insercao de '+P.mensagem-erro-cpf'; o paragrafo nao tem role=\"alert\" nem aria-live (a pagina inteira tem 0 elementos com [aria-live], [role=alert] ou [role=status]) e o foco permanece no botao .acao-continuar, sem mudanca de contexto ou de foco.",
+      "expected": "A mensagem de status de erro, exibida sem receber foco, deve ser anunciada por tecnologia assistiva - por exemplo com role=\"alert\"/aria-live em uma regiao presente no DOM - ou o foco deve ser movido para o campo em erro.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "clicar no botao 'Continuar' com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-18T21-06-21-720Z.yml",
+        "MutationObserver: ['+P.mensagem-erro-cpf']; querySelectorAll('[aria-live],[role=alert],[role=status]').length === 0; document.activeElement.className === 'br-button primary acao-continuar'"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "Com o erro visivel apos submissao vazia, o campo continua com os atributos id, class, inputmode, placeholder, aria-required e type, sem aria-invalid (getAttribute('aria-invalid') === null) e sem nenhuma alteracao de atributo registrada pelo MutationObserver; a borda permanece rgb(136, 136, 136), igual ao estado valido.",
+      "expected": "Enquanto o valor estiver rejeitado, o estado invalido do campo deve ser exposto programaticamente, com aria-invalid=\"true\" (removido quando o erro deixar de existir).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "clicar no botao 'Continuar' com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-18T21-06-21-720Z.yml",
+        "atributos de #cpf apos erro: ['id=cpf','class=br-input','inputmode=numeric','placeholder=Digite seu CPF','aria-required=true','type=text','value='] ; aria-invalid === null ; borderColor 'rgb(136, 136, 136)'"
+      ]
+    }
+  ]
+}

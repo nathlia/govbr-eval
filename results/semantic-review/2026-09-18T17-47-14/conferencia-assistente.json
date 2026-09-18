@@ -1,0 +1,206 @@
+{
+ "skip": {
+  "hashLinks": 0,
+  "skiplink": 0,
+  "mainId": "",
+  "links": [
+   "/fluxo",
+   "/fluxo",
+   "/fluxo",
+   "/fluxo",
+   "/fluxo",
+   "/fluxo",
+   "/fluxo"
+  ]
+ },
+ "firstFocus": "<a href=\"/fluxo\" class=\"marca-govbr\" aria-label=\"gov.br — página inicial\"><span aria-hidde",
+ "cpf": {
+  "attrs": [
+   "id=cpf",
+   "class=br-input",
+   "inputmode=numeric",
+   "placeholder=Digite seu CPF",
+   "aria-required=true",
+   "type=text",
+   "value="
+  ],
+  "small": 0,
+  "describedby": 0,
+  "formText": "CPF Continuar",
+  "helper": [],
+  "inputHasClass": true,
+  "wrapper": "br-input campo-cpf-fluxo"
+ },
+ "focus": [
+  {
+   "el": "button.br-button recurso-contraste",
+   "text": "Alto Contraste",
+   "fv": true,
+   "outline": "dashed 4px rgb(194, 133, 12)",
+   "shadow": "none"
+  },
+  {
+   "el": "button.br-button recurso-libras",
+   "text": "VLibras",
+   "fv": true,
+   "outline": "dashed 4px rgb(194, 133, 12)",
+   "shadow": "none"
+  },
+  {
+   "el": "input.br-input",
+   "text": "",
+   "fv": true,
+   "outline": "none 3px rgb(51, 51, 51)",
+   "shadow": "rgb(194, 133, 12) 0px 0px 0px 2px"
+  },
+  {
+   "el": "button.br-button primary acao-continuar",
+   "text": "Continuar",
+   "fv": true,
+   "outline": "dashed 4px rgb(194, 133, 12)",
+   "shadow": "none"
+  },
+  {
+   "el": "a.link-opcao",
+   "text": "Login com seu banco",
+   "fv": true,
+   "outline": "none 3px rgb(19, 81, 180)",
+   "shadow": "none"
+  },
+  {
+   "el": "a.link-opcao",
+   "text": "Login com QR code",
+   "fv": true,
+   "outline": "none 3px rgb(19, 81, 180)",
+   "shadow": "none"
+  },
+  {
+   "el": "a.link-opcao",
+   "text": "Seu certificado digital",
+   "fv": true,
+   "outline": "none 3px rgb(19, 81, 180)",
+   "shadow": "none"
+  },
+  {
+   "el": "a.link-opcao",
+   "text": "Seu certificado digital em n",
+   "fv": true,
+   "outline": "none 3px rgb(19, 81, 180)",
+   "shadow": "none"
+  },
+  {
+   "el": "a.link-ajuda",
+   "text": "Está com dúvidas e precisa d",
+   "fv": true,
+   "outline": "dashed 4px rgb(194, 133, 12)",
+   "shadow": "none"
+  },
+  {
+   "el": "a.link-termo",
+   "text": "Termo de Uso e Aviso de Priv",
+   "fv": true,
+   "outline": "dashed 4px rgb(194, 133, 12)",
+   "shadow": "none"
+  },
+  {
+   "el": "body.",
+   "text": "gov.brAlto ContrasteVLibrasU",
+   "fv": false,
+   "outline": "none 3px rgb(51, 51, 51)",
+   "shadow": "none"
+  },
+  {
+   "el": "a.marca-govbr",
+   "text": "gov.br",
+   "fv": true,
+   "outline": "dashed 4px rgb(194, 133, 12)",
+   "shadow": "none"
+  }
+ ],
+ "focusRule": [
+  ".link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }"
+ ],
+ "list": {
+  "tag": "DIV",
+  "role": null,
+  "items": [
+   "DIV:null",
+   "DIV:null",
+   "DIV:null",
+   "DIV:null"
+  ]
+ },
+ "padding": [
+  "13px",
+  "13px",
+  "13px",
+  "13px"
+ ],
+ "borders": [
+  "header.barra-superior",
+  "section.painel-institucional",
+  "section.cartao-identificacao",
+  "div.br-list lista-opcoes",
+  "div.br-item opcao-identificacao",
+  "div.br-item opcao-identificacao",
+  "div.br-item opcao-identificacao",
+  "div.br-item opcao-identificacao"
+ ],
+ "submit123": {
+  "erro": null,
+  "url": "/fluxo.html"
+ },
+ "vazio": {
+  "msg": "<p class=\"mensagem-erro-cpf\">Informe um CPF para continuar.</p>",
+  "color": "rgb(230, 0, 0)",
+  "invalid": null,
+  "describedby": null,
+  "live": 0,
+  "active": "br-button primary acao-continuar",
+  "inputBorder": "1px solid rgb(136, 136, 136)"
+ },
+ "inerte:Alto Contraste": true,
+ "inerte:VLibras": true,
+ "w320x720": {
+  "scrollWidth": 447,
+  "clientWidth": 320,
+  "barra": [
+   93,
+   447
+  ],
+  "libras": [
+   305,
+   447
+  ],
+  "wrap": "nowrap",
+  "padding": [
+   "13px",
+   "13px",
+   "13px",
+   "13px"
+  ],
+  "listBorder": "rgb(222, 226, 230)",
+  "inputClass": "br-input"
+ },
+ "w320x800": {
+  "scrollWidth": 447,
+  "clientWidth": 320,
+  "barra": [
+   93,
+   447
+  ],
+  "libras": [
+   305,
+   447
+  ],
+  "wrap": "nowrap",
+  "padding": [
+   "13px",
+   "13px",
+   "13px",
+   "13px"
+  ],
+  "listBorder": "rgb(222, 226, 230)",
+  "inputClass": "br-input"
+ }
+}

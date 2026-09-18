@@ -1,0 +1,64 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - link "gov.br — página inicial" [ref=e4] [cursor=pointer]:
+      - /url: /fluxo
+      - text: gov
+      - strong [ref=e5]: .br
+    - generic [ref=e6]:
+      - button "Alto Contraste" [ref=e7] [cursor=pointer]:
+        - generic [ref=e8]: 
+        - text: Alto Contraste
+      - button "VLibras" [active] [ref=e9] [cursor=pointer]:
+        - generic [ref=e10]: 
+        - text: VLibras
+  - main [ref=e11]:
+    - region "Uma conta gov.br garante a identificação de cada cidadão que acessa os serviços digitais públicos." [ref=e12]:
+      - paragraph [ref=e13]:
+        - text: Uma
+        - strong [ref=e14]: conta gov.br
+        - text: garante a identificação de cada cidadão que acessa os serviços digitais públicos.
+      - paragraph [ref=e15]: Com uma única conta você acessa os serviços de todos os órgãos participantes, sem precisar de um cadastro novo a cada solicitação.
+    - region "Identifique-se no gov.br com:" [ref=e16]:
+      - heading "Identifique-se no gov.br com:" [level=1] [ref=e17]
+      - generic [ref=e18]:
+        - generic [ref=e19]: 
+        - heading "Número do CPF" [level=2] [ref=e20]
+      - paragraph [ref=e21]:
+        - text: Digite seu CPF para
+        - strong [ref=e22]: criar
+        - text: ou
+        - strong [ref=e23]: acessar
+        - text: sua conta gov.br
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - text: CPF
+          - textbox "CPF" [ref=e26]:
+            - /placeholder: Digite seu CPF
+            - text: "111"
+        - button "Continuar" [ref=e27] [cursor=pointer]
+      - heading "Outras opções de identificação:" [level=2] [ref=e28]
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]: 
+          - link "Login com seu banco" [ref=e32] [cursor=pointer]:
+            - /url: /fluxo
+          - generic [ref=e33]: SUA CONTA SERÁ PRATA
+        - generic [ref=e34]:
+          - generic [ref=e35]: 
+          - link "Login com QR code" [ref=e36] [cursor=pointer]:
+            - /url: /fluxo
+        - generic [ref=e37]:
+          - generic [ref=e38]: 
+          - link "Seu certificado digital" [ref=e39] [cursor=pointer]:
+            - /url: /fluxo
+        - generic [ref=e40]:
+          - generic [ref=e41]: 
+          - link "Seu certificado digital em nuvem" [ref=e42] [cursor=pointer]:
+            - /url: /fluxo
+      - paragraph [ref=e43]:
+        - generic [ref=e44]: 
+        - link "Está com dúvidas e precisa de ajuda?" [ref=e45] [cursor=pointer]:
+          - /url: /fluxo
+      - paragraph [ref=e46]:
+        - link "Termo de Uso e Aviso de Privacidade" [ref=e47] [cursor=pointer]:
+          - /url: /fluxo

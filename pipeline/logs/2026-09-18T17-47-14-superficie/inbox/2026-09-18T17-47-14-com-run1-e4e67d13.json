@@ -1,0 +1,198 @@
+{
+  "timestamp": "2026-09-18T20:55:21.376Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "tela inteira de fluxo.html: header .barra-superior (marca gov.br, Alto Contraste, VLibras), main .area-identificacao, section .painel-institucional, section .cartao-identificacao (form CPF, lista de outras opcoes de identificacao, links de ajuda e termo)",
+    "estados observados: carga inicial (1280x900); apos submeter o formulario vazio (mensagem de erro visivel); apos submeter com CPF preenchido (erro limpo); viewport reduzida a 320x800"
+  ],
+  "notes": "Interacoes realizadas: snapshot da arvore de acessibilidade na carga; clique em Continuar com o campo vazio (surge <p class='mensagem-erro-cpf'>); preenchimento de '111.444.777-35' e novo envio (erro some, nenhuma etapa seguinte aparece); preenchimento de '123' e novo envio (aceito sem erro - a validacao so verifica campo nao vazio; registrado como observacao de comportamento, nao como achado, por nao haver norma no oraculo que o sustente); navegacao por Tab do inicio ate .link-opcao com leitura do computed style em :focus-visible; foco programatico em #cpf, .acao-continuar, .recurso-contraste, .marca-govbr, .link-termo; clique em 'Alto Contraste' (nenhuma mudanca de tema, classe, atributo ou cor - controle inerte; por nao alterar estado nao ha estado a expor, entao nao gerou achado de aria-pressed); redimensionamento para 320x800 com medicao de scrollWidth/clientWidth e bounding boxes, e screenshot; retorno a 1280x900. Varreduras do oraculo: S-page-001 (carga, fingerprint sha256:417014ea...) e S-page-002 (apos clique em Continuar, fingerprint sha256:bbbb343c...), ambas com axe/structure/tokens; axe-core 4.12.1 nao retornou violacoes em nenhum dos dois estados (36 passes, 0 incomplete). Limitacoes: (a) os quatro achados e-MAG foram submetidos a verify_finding (V-001..V-004) e voltaram 'unverifiable' com ruleExists=pass e applicability=pass, porque o oraculo nao implementa predicado mecanico para regras e-MAG - a violacao esta sustentada por evidencia direta de DOM, CSSOM, computed style e geometria coletada ao vivo, nao por veredito do oraculo; (b) o achado de 320px foi verificado com live=false porque verify_finding nao reproduz viewport, logo evidenceConsistent ficou 'unknown'; (c) as observacoes 'structure-unknown-classes' e 'token-font-size-off-scale' devolvidas pelo scanner foram explicitamente rejeitadas pelo proprio oraculo como sem norma, e nao viraram achados; (d) a cor #dee2e6 vem da custom property --tela-borda no :root e alcanca tambem .barra-superior e .opcao-identificacao, mas o achado foi mantido em .lista-opcoes, unico elemento que o scanner de tokens inspecionou e reportou; (e) os botoes Alto Contraste e VLibras e todos os links apontam para /fluxo ou nao fazem nada, entao nao ha estados alem dos listados para percorrer; (f) o console registra um 404 de /favicon.ico, sem relacao com as regioes avaliadas.",
+  "findings": [
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "emag:6.6",
+      "observed": "Ao enviar o formulario vazio surge <p class=\"mensagem-erro-cpf\">Informe um CPF para continuar.</p>, mas #cpf permanece com aria-invalid=null e aria-describedby=null, e o paragrafo nao tem id, role=\"alert\" nem aria-live (document.querySelectorAll('[role=alert],[aria-live],[role=status]') retorna 0 elementos). O foco continua no botao .acao-continuar, de modo que o erro nao e associado nem anunciado a tecnologia assistiva.",
+      "expected": "#cpf com aria-invalid=\"true\" e aria-describedby apontando para o id da mensagem de erro, e a mensagem exposta em regiao ao vivo (role=\"alert\"/aria-live) ou com o foco movido para o campo invalido, conforme e-MAG 6.6 (a)(b)(c).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "clicar no botao Continuar com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        "S-page-002 (stateFingerprint sha256:bbbb343cb51382b02b7bd8990b702a9d578a9673150d20d1d54a3478a086fef4)",
+        "V-001 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, violation=no-predicate)",
+        "emag-6.6 via get_emag_rules(section=6)",
+        ".playwright-mcp/page-2026-09-18T20-49-00-731Z.yml"
+      ]
+    },
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [],
+      "rule": "emag:4.4",
+      "observed": "A folha de estilo da pagina declara '.link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }', que vence em especificidade a regra do DS 'a.focus-visible, a:focus-visible { outline-color: var(--focus); ... }'. Com foco real de teclado no primeiro item (e.matches(':focus-visible') === true), o computed style traz outline-style: none, box-shadow: none, border-width: 0px, text-decoration-line: none e cor inalterada rgb(19,81,180): nenhum indicador visivel. Os quatro links da lista sao atingidos pela mesma regra.",
+      "expected": "Indicador de foco visivel em cada .link-opcao, como o outline tracejado de 4px em var(--focus) #c2850c com offset que a propria pagina aplica a a.marca-govbr sob :focus-visible.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "pressionar Tab 6 vezes ate o link 'Login com seu banco'",
+          "ler getComputedStyle(document.activeElement)"
+        ]
+      },
+      "evidence": [
+        "S-page-001 (stateFingerprint sha256:417014ead4438cfd441e066b03fd07517be3898024c9a3e1a5b093f0518e7d82)",
+        "V-002 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, violation=no-predicate, elements=4)",
+        "emag-4.4 via get_emag_rules(section=4)"
+      ]
+    },
+    {
+      "selector": ".barra-recursos",
+      "relatedSelectors": [
+        ".recurso-libras"
+      ],
+      "rule": "emag:4.3",
+      "observed": "Com a janela em 320x800, .barra-recursos tem flex-wrap: nowrap e largura 353.4px dentro de .barra-superior, que mede 304.7px. O botao VLibras fica com left 305.1px e right 446.7px, inteiramente fora da viewport, e document.documentElement.scrollWidth = 447 contra clientWidth = 305, produzindo barra de rolagem horizontal em toda a pagina (confirmado no screenshot).",
+      "expected": "Sem rolagem horizontal a 320px de largura e sem perda de funcionalidade: a barra de recursos deve quebrar linha, encolher ou colapsar para caber na largura disponivel.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 800
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "redimensionar a janela para 320x800",
+          "medir scrollWidth/clientWidth e os bounding boxes de .barra-recursos e .recurso-libras"
+        ]
+      },
+      "evidence": [
+        "fluxo-320.png",
+        "V-003 (ruleExists=pass, applicability=pass, violation=no-predicate, live=false)",
+        "emag-4.3 via get_emag_rules(section=4)"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".apoio-metodo"
+      ],
+      "rule": "emag:6.5",
+      "observed": "O campo de CPF nao traz instrucao de formato em lugar nenhum: o rotulo e apenas 'CPF', o texto de apoio anterior e 'Digite seu CPF para criar ou acessar sua conta gov.br' e a unica pista de preenchimento e o placeholder 'Digite seu CPF', que desaparece ao digitar. Nao ha <small>, hint nem aria-describedby, e o campo aceita tanto '111.444.777-35' quanto '123' sem esclarecer quantidade de digitos ou uso de pontuacao.",
+      "expected": "Instrucao de formato visivel antes do campo (por exemplo 'Digite os 11 digitos, somente numeros'), ligada ao campo por aria-describedby, e nao apenas como placeholder, conforme e-MAG 6.5 para entradas complexas como CPF.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "inspecionar atributos e texto de apoio de #cpf",
+          "digitar '111.444.777-35' e enviar",
+          "digitar '123' e enviar"
+        ]
+      },
+      "evidence": [
+        "S-page-001 (stateFingerprint sha256:417014ead4438cfd441e066b03fd07517be3898024c9a3e1a5b093f0518e7d82)",
+        "emag-6.5 via get_emag_rules(section=6)",
+        ".playwright-mcp/page-2026-09-18T20-48-26-776Z.yml"
+      ]
+    },
+    {
+      "selector": ".barra-superior",
+      "relatedSelectors": [
+        ".area-identificacao"
+      ],
+      "rule": "emag:1.5",
+      "observed": "A pagina nao oferece nenhuma ancora de salto: document.querySelectorAll('.br-skiplink, a[href^=\"#\"]') retorna 0 elementos, e a ordem de tabulacao comeca em a.marca-govbr, seguida dos botoes Alto Contraste e VLibras da barra de recursos, antes de qualquer conteudo de main.",
+      "expected": "Link de salto para o conteudo principal como primeiro elemento focalizavel da barra de acessibilidade, apontando para o bloco main .area-identificacao.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "listar a ordem de tabulacao dos elementos focalizaveis",
+          "pressionar Tab a partir do inicio do documento"
+        ]
+      },
+      "evidence": [
+        "S-page-001 (stateFingerprint sha256:417014ead4438cfd441e066b03fd07517be3898024c9a3e1a5b093f0518e7d82)",
+        "V-004 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, violation=no-predicate)",
+        "emag-1.5 via get_emag_rules(section=1)"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".campo-cpf-fluxo"
+      ],
+      "rule": "ds-structure-input-tag",
+      "observed": "A classe br-input esta aplicada ao proprio <input id=\"cpf\" class=\"br-input\">, alem de ja estar no contêiner <div class=\"br-input campo-cpf-fluxo\"> que envolve o rotulo e o campo.",
+      "expected": "br-input aplicado somente ao <div> que envolve label e input, conforme a anatomia do componente input no gov.br DS; o <input> nao deve carregar a classe do componente.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html"
+        ]
+      },
+      "evidence": [
+        "F-006 / F-012 (ds-structure-input-tag, severity serious, confidence 1, pathway deterministic)",
+        "S-page-001 (stateFingerprint sha256:417014ead4438cfd441e066b03fd07517be3898024c9a3e1a5b093f0518e7d82)"
+      ]
+    },
+    {
+      "selector": ".lista-opcoes",
+      "relatedSelectors": [],
+      "rule": "ds-token-color",
+      "observed": "border-color computado rgb(222, 226, 230) (#dee2e6), vindo da custom property --tela-borda declarada em :root, nao corresponde a nenhum token de cor do gov.br DS; o token mais proximo e --gray-cool-10 (#dfe1e2), a distancia RGB 4.24.",
+      "expected": "Valor de cor proveniente do registro de tokens do gov.br DS.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html"
+        ]
+      },
+      "evidence": [
+        "F-001 / F-007 (ds-token-color, severity moderate, confidence 1, pathway deterministic)",
+        "S-page-001 (stateFingerprint sha256:417014ead4438cfd441e066b03fd07517be3898024c9a3e1a5b093f0518e7d82)"
+      ]
+    },
+    {
+      "selector": ".lista-opcoes .opcao-identificacao",
+      "relatedSelectors": [],
+      "rule": "ds-token-spacing",
+      "observed": "padding computado de 13px nos quatro itens da lista de opcoes, vindo da regra '.opcao-identificacao { ... padding: 13px; ... }', fora da escala de espacamento do DS.",
+      "expected": "Espacamento em multiplos de 4px da escala do gov.br DS (por exemplo 12px ou 16px).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html"
+        ]
+      },
+      "evidence": [
+        "F-002..F-005 / F-008..F-011 (ds-token-spacing, severity minor, confidence 1, pathway deterministic)",
+        "S-page-001 (stateFingerprint sha256:417014ead4438cfd441e066b03fd07517be3898024c9a3e1a5b093f0518e7d82)"
+      ]
+    }
+  ]
+}

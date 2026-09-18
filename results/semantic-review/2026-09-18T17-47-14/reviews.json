@@ -1,0 +1,1490 @@
+{
+  "version": "flow-semantic-1.4.0",
+  "decisions": [
+    {
+      "cardId": "C-07f597873ef8996021c386640593c3e45a915930c49b0717855be76dcf798b30",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "A afirmação é verdadeira também a 320px (medido: mesma classe/cor/padding nessa largura), mas a referência 1.6.0 só cataloga esta unidade na cena 1280x900 e o crédito não cruza cenas. Correta e fora da referência NESTA cena — é o mesmo defeito já catalogado a 1280, não uma descoberta nova.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "padding: 13px (fora da escala: 13px)",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-084f1c2be4c5e395df2e6a3de3ebd718e7e70553cddd54454e87fb4d2b6856f3",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "A afirmação é verdadeira (medido: 0 âncoras de salto, primeiro foco na marca) e descreve o defeito da V-10. Mas o seletor do cartão resolve no <header>, e a V-10 ancora na barra de acessibilidade dentro dele; sem sujeito nem relacionado participante, o scorer não aceita crédito de gabarito aqui. Registrada como correta e fora do alcance da âncora — limitação de granularidade do instrumento, não defeito novo.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "base normativa (get_ds_rules / get_emag_rules)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A pagina nao oferece nenhuma ancora de salto: document.querySelectorAll('.br-skiplink, a[href^=\"#\"]') retorna 0 elementos, e a ordem de tabulacao comeca em a.marca-govbr, seguida dos botoes Alto Contraste e VLibras da barra de recursos, antes de qualquer conteudo de main.",
+          "subjects": [
+            "body>div>header"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-10dc2de4a4616ffc9183389028f9fb5d59b27f1ab5277878c6fd4bf0717581fa",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: padding computado 13px nas quatro .opcao-identificacao, fora da escala do DS. É a V-01 em cada elemento nomeado.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "padding computado de 13px nos quatro itens da lista de opcoes, vindo da regra '.opcao-identificacao { ... padding: 13px; ... }', fora da escala de espacamento do DS.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)"
+          ],
+          "unitIds": [
+            "U-0ceb07ddb653f8cb9fc078690580f877f9c920af1c696626700c5f784dc97c60",
+            "U-18e34f11569ef33ae87295505711425b5f2b7db9de61c35c6f792699b68fdb2c",
+            "U-6a72109ec02bee7fc2f8ce1a1858c714569ac0c943be26bfdf46a273ad4c98d0",
+            "U-ad7de00f96c7c421d72917b032b505a62f2aa89f3cd335725acf24230e2b3351"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-15e68865066cd8e54436548c058ff5e2b4724360250d90f15d56c6a091b93b23",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Duas afirmações independentes no mesmo cartão, ambas medidas. Medido no estado após envio vazio: #cpf segue com aria-invalid=null e aria-describedby=null, e a mensagem não tem id. É a V-03a: o campo não identifica programaticamente o erro nem se associa à mensagem. Medido no estado após envio vazio: <p class='mensagem-erro-cpf'> sem role nem aria-live, 0 regiões vivas na página, foco permanece no botão Continuar. É a V-03b.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "base normativa (get_ds_rules / get_emag_rules)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O campo não tem aria-invalid nem aria-describedby no estado de erro.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-2b97350dd48bdc2e2123c5b7e989f27a09014984d7868d467a4895a12e4dea2d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        },
+        {
+          "id": "a2",
+          "text": "A mensagem de erro não tem role='alert' nem aria-live e o foco não se move: não é anunciada.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-aaf11a1a916804159b833f3f7a09d0fb84dba5eea673182a8eb76b227587013a"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-1661c698d3378b38581bf59e38246f7a7ac9b21f374db8e607a50ce4cec375e3",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido no estado após envio vazio: #cpf segue com aria-invalid=null e aria-describedby=null, e a mensagem não tem id. É a V-03a: o campo não identifica programaticamente o erro nem se associa à mensagem. A WCAG 4.1.2 cobre o estado programaticamente determinável.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Apos submeter o formulario vazio, a tela entra em estado de erro e exibe 'Informe um CPF para continuar.', mas o campo continua sem qualquer marcacao programatica de invalidez: getAttribute('aria-invalid') e null e a borda computada permanece '0.666667px solid rgb(136, 136, 136)', identica a do estado valido. Na arvore de acessibilidade o campo segue anunciado apenas como textbox 'CPF', sem estado invalido. O mesmo ocorre submetendo por clique em Continuar e por Enter dentro do campo.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-2b97350dd48bdc2e2123c5b7e989f27a09014984d7868d467a4895a12e4dea2d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-18d90404c461259b5aed7fe7dae145247ba8b6311f5f0bf0893e88b7309647a6",
+      "status": "reviewed",
+      "reviewer": "Nathalia",
+      "rationale": "O observado descreve o mesmo defeito da V-06 neste elemento e estado.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A classe br-input está aplicada ao próprio <input>, além de estar no <div class=\"br-input campo-cpf-fluxo\"> que envolve rótulo e campo; a raiz do componente br-input passa a existir duas vezes na mesma anatomia.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-e0f1ff4add37d6520b5be9c512f51335f4dee5a2b3061d548444fb10e1b6f2df"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-1b0d5d6890c6e3aa5b10357bac95a49dd8d2487cdd5aeebd01ccc010b5e5d03c",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: borda pintada em rgb(222,226,230) nos oito elementos da V-06, incluindo os sujeitos deste cartão; o valor não é token do DS. Mesmo defeito, mesmos elementos.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "border-color computado rgb(222, 226, 230) (#dee2e6), com border 0.666667px solid, nao corresponde a nenhum token de cor do gov.br DS.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)"
+          ],
+          "unitIds": [
+            "U-0a51328ca40e840ea532a43e8ed968dab775783238f2a112d4e28f4bcc3d997e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-1f7c5cf86e952e7651041fa325a5b76508930554540aa8a29eb0c6b074e06125",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: 0 elementos a[href^='#'] e 0 .br-skiplink, <main> sem id, e o primeiro foco por Tab é a.marca-govbr. É a V-10, ancorada na barra de acessibilidade.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A barra de acessibilidade do cabeçalho traz apenas os botões 'Alto Contraste' e 'VLibras'. Não há nenhum link de atalho: document.querySelectorAll('a[href^=\"#\"]') devolve 0 elementos, o primeiro item da ordem de tabulação é a marca gov.br e o <main class=\"area-identificacao\"> não possui id que sirva de destino.",
+          "subjects": [
+            "body>div>header>div"
+          ],
+          "unitIds": [
+            "U-0a80b239f1ed8212724b644c0f4e86085bccfb2d09e50741ac440a272df14daf"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-209e581c99f2c1ded15dfc6adce51afe2f4d9be1f21403f910f50807af180bbb",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: 0 elementos a[href^='#'] e 0 .br-skiplink, <main> sem id, e o primeiro foco por Tab é a.marca-govbr. É a V-10, ancorada na barra de acessibilidade. O id citado é a Recomendação 1.5 na base normativa.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "base normativa (get_ds_rules / get_emag_rules)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A barra de acessibilidade do cabecalho contem apenas os botoes Alto Contraste e VLibras. document.querySelectorAll('a[href^=\"#\"], .br-skiplink') retorna 0 elementos, e o primeiro focavel do documento e <a href=\"/fluxo\" class=\"marca-govbr\">, um link de marca, nao um salto para o conteudo.",
+          "subjects": [
+            "body>div>header>div"
+          ],
+          "unitIds": [
+            "U-0a80b239f1ed8212724b644c0f4e86085bccfb2d09e50741ac440a272df14daf"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-22adcdd41efdeb1906715ca992fafa919b8fa796cffc3515355682ee0914ed73",
+      "status": "reviewed",
+      "reviewer": "Nathalia",
+      "rationale": "Conferi na cena: o defeito existe no elemento; nenhuma unidade do gabarito cobre isso.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O botao 'VLibras' nao produz nenhum efeito ao ser acionado: outerHTML do documento identico antes e depois do clique, nenhum widget VLibras injetado (seletor '[vw],[vw-access-button],div[vw]' nao encontra nada) e body continua com 1 filho.",
+          "subjects": [
+            "body>div>header>div>button:nth-of-type(2)"
+          ],
+          "unitIds": [],
+          "citation": "uncertain",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-2de54dec46f98bd0cd9c58b0c190b55c70d588e547d4936e49224554f1894826",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido a 320px de largura: .barra-recursos com flex-wrap nowrap de x=93 a x=447, scrollWidth do documento 447, botão VLibras de 305 a 447, fora da viewport. É a V-12; a altura diferente da cena não muda o layout, que segue a largura.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com a janela em 320x800, .barra-recursos tem flex-wrap: nowrap e largura 353.4px dentro de .barra-superior, que mede 304.7px. O botao VLibras fica com left 305.1px e right 446.7px, inteiramente fora da viewport, e document.documentElement.scrollWidth = 447 contra clientWidth = 305, produzindo barra de rolagem horizontal em toda a pagina (confirmado no screenshot).",
+          "subjects": [
+            "body>div>header>div"
+          ],
+          "unitIds": [
+            "U-8fbb6d761cd306096c1f8605d410f5deacae4ace5bfc306b01f9cde53ec21a25"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-3093602c18447cab904649a9f7d7ef133cc1bf5578c10aae837125729542474e",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido a 320px de largura: .barra-recursos com flex-wrap nowrap de x=93 a x=447, scrollWidth do documento 447, botão VLibras de 305 a 447, fora da viewport. É a V-12; a altura diferente da cena não muda o layout, que segue a largura.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com a janela em 320x640, a barra de recursos (display:flex, flex-wrap:nowrap, gap 16px) ocupa de x=93 a x=447 enquanto o documento tem clientWidth 305; document.documentElement.scrollWidth é 447 contra clientWidth 305 e o botão 'VLibras' começa em x=305, inteiramente fora da área visível, obrigando a rolagem horizontal. O mesmo ocorre em 360x720 (scrollWidth 447 contra clientWidth 345).",
+          "subjects": [
+            "body>div>header>div"
+          ],
+          "unitIds": [
+            "U-8fbb6d761cd306096c1f8605d410f5deacae4ace5bfc306b01f9cde53ec21a25"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-323513c449beb5a8b088589ce0d46fcc141d36964019c9522d37a8e077205e0d",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido a 320px de largura: .barra-recursos com flex-wrap nowrap de x=93 a x=447, scrollWidth do documento 447, botão VLibras de 305 a 447, fora da viewport. É a V-12; a altura diferente da cena não muda o layout, que segue a largura.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com viewport de 320px de largura, .barra-recursos tem display flex com flex-wrap 'nowrap' e largura de 353px dentro de um header de 320px; a borda direita chega a 447px contra clientWidth de 305px, e documentElement.scrollWidth passa a 447px, exigindo rolagem horizontal da página inteira (o botão 'VLibras' fica fora da área visível).",
+          "subjects": [
+            "body>div>header>div"
+          ],
+          "unitIds": [
+            "U-8fbb6d761cd306096c1f8605d410f5deacae4ace5bfc306b01f9cde53ec21a25"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-34894a6a7809b577a6711078c7435254e345ddc8d5b3fde6d0ad4d01e6bb18c6",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido a 320px de largura: .barra-recursos com flex-wrap nowrap de x=93 a x=447, scrollWidth do documento 447, botão VLibras de 305 a 447, fora da viewport. É a V-12; a altura diferente da cena não muda o layout, que segue a largura.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com a janela em 320x800 (clientWidth 305 CSS px), .barra-recursos tem display:flex e flex-wrap:nowrap sem nenhuma media query, ocupando 353.4px de largura (left 93.3, right 446.7). Isso faz document.scrollWidth valer 447 contra clientWidth 305, gerando barra de rolagem horizontal do documento inteiro, e deixa o botao .recurso-libras ('VLibras') integralmente fora da viewport (left 305.1, right 446.7). Nenhum outro elemento da tela transborda; o conteudo de <main> empilha corretamente.",
+          "subjects": [
+            "body>div>header>div"
+          ],
+          "unitIds": [
+            "U-8fbb6d761cd306096c1f8605d410f5deacae4ace5bfc306b01f9cde53ec21a25"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-361de6ba82dc5cd0ea89600ffdbb9b81da0443e20b125dc9d4a39c2eb428403c",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "A afirmação é verdadeira também a 320px (medido: mesma classe/cor/padding nessa largura), mas a referência 1.6.0 só cataloga esta unidade na cena 1280x900 e o crédito não cruza cenas. Correta e fora da referência NESTA cena — é o mesmo defeito já catalogado a 1280, não uma descoberta nova.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "padding: 13px (fora da escala: 13px)",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-366a5c42c5bd1a67e52d21ac0b96422e4d78e46e2afbaf41b4e1ca83be311e90",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: padding computado 13px nas quatro .opcao-identificacao, fora da escala do DS. É a V-01 em cada elemento nomeado.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "padding: 13px (fora da escala: 13px)",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)"
+          ],
+          "unitIds": [
+            "U-18e34f11569ef33ae87295505711425b5f2b7db9de61c35c6f792699b68fdb2c"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-3a4b2c0e5747a756a67eaf14cdc104e0d88e806ce72140c6707ba1bf23679327",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: padding computado 13px nas quatro .opcao-identificacao, fora da escala do DS. É a V-01 em cada elemento nomeado.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "padding: 13px (fora da escala: 13px)",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)"
+          ],
+          "unitIds": [
+            "U-0ceb07ddb653f8cb9fc078690580f877f9c920af1c696626700c5f784dc97c60"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-4191886ce8e3e083645c877075abefe79f7a0e6b68f4391e2d63b300d52a6906",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: nenhum <small>, nenhum [aria-describedby], texto do formulário é só 'CPF Continuar' e a única pista é o placeholder; enviar '123' não gera erro nem avanço. É a manifestação (b) da V-11 (sem instrução de formato) no campo de CPF. O id citado é a Recomendação 6.5 na base normativa.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "base normativa (get_ds_rules / get_emag_rules)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O campo de CPF nao traz instrucao de formato. O rotulo e apenas 'CPF', o texto de apoio anterior diz 'Digite seu CPF para criar ou acessar sua conta gov.br' e a unica pista de preenchimento e o placeholder 'Digite seu CPF', que nao informa formato e desaparece ao digitar. Nao ha nenhum <small>, elemento de dica ou [aria-describedby] na pagina (contagem 0). Na pratica a tela aceita '123' sem qualquer critica.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-bd00752ba8ab900e2aef1f068b33649568c487d6d6f679e3574f4f014485bbde"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-4715af037e7886bbda13c257c48bb9e31bd62ac727c021d197459ec7f3eab6f1",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido no estado após envio vazio: #cpf segue com aria-invalid=null e aria-describedby=null, e a mensagem não tem id. É a V-03a: o campo não identifica programaticamente o erro nem se associa à mensagem.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A mensagem de erro e inserida como '<p class=\"mensagem-erro-cpf\">Informe um CPF para continuar.</p>', sem atributo id, e o campo #cpf permanece sem aria-describedby (valor null), de modo que nenhuma relacao programatica liga a mensagem ao campo que ela descreve.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>p"
+          ],
+          "unitIds": [
+            "U-2b97350dd48bdc2e2123c5b7e989f27a09014984d7868d467a4895a12e4dea2d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-4b4116515c2c9ff8362c501df497c40e15a90fb4bd7db45d2ccf00e75c7e8ff2",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: nenhum <small>, nenhum [aria-describedby], texto do formulário é só 'CPF Continuar' e a única pista é o placeholder; enviar '123' não gera erro nem avanço. É a manifestação (b) da V-11 (sem instrução de formato) no campo de CPF.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "base normativa (get_ds_rules / get_emag_rules)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O campo de CPF tem apenas o rótulo 'CPF' e o placeholder 'Digite seu CPF'; não há texto de apoio, <small> ou elemento ligado por aria-describedby indicando o formato esperado (11 dígitos, com ou sem pontuação). Enviar '123' também não gera erro nem avanço, de modo que o formato exigido não é revelado nem pela validação.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-bd00752ba8ab900e2aef1f068b33649568c487d6d6f679e3574f4f014485bbde"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-4ccf679c8c9f814f84ee2e7668e8fc7ef55e1232fe7eb952f6bb43604b968cf0",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: a folha da tela declara .link-opcao:focus/:focus-visible { box-shadow:none; outline:none }; com foco real de teclado (:focus-visible verdadeiro) os quatro links ficam com outline-style none e box-shadow none, enquanto os demais focáveis recebem dashed 4px rgb(194,133,12). É a V-05 nos quatro links.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Os 4 links de outras opcoes de identificacao nao apresentam nenhuma alteracao visual ao receberem foco de teclado. Apos 6 Tab a partir da carga, document.activeElement e o link 'Login com seu banco' com :focus-visible verdadeiro, e outline permanece 'rgb(19, 81, 180) none 2.66667px' e box-shadow 'none' - estilo computado identico ao do estado sem foco (comparacao de outline, outlineWidth, outlineStyle, outlineColor, boxShadow, backgroundColor, color, textDecorationLine, border, filter, transform e opacity nao acusou nenhuma diferenca, e o retangulo do elemento nao muda). A folha da propria tela traz '.link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }'. Uma varredura de todos os a[href], button e input da pagina mostrou que esses 4 links sao os unicos focaveis sem mudanca de estilo no foco: todos os demais recebem outline 4px dashed rgb(194,133,12) (ou box-shadow equivalente, no caso de #cpf).",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a"
+          ],
+          "unitIds": [
+            "U-6f500b010496782197294e0284a8a83c4744f7cfa0108cfb2c093eb3b4075d84",
+            "U-8f4eeb852c5f6370a3955186bb22d852a930b5051882665a546baeebd8374f5f",
+            "U-95f7a2df7fb9482cf1c476a27b6e4764440a9c08db3d897dce68a4b7261a6c84",
+            "U-9b33cf49af16046d2de9e4fb977300e60b3a30b07697b1b08c08a47372ad6d9d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-4d92522266be9eaa4336cb3c8a88757cb829470f781866d33b680c87069c138a",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido no estado após envio vazio: <p class='mensagem-erro-cpf'> sem role nem aria-live, 0 regiões vivas na página, foco permanece no botão Continuar. É a V-03b.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Apos o clique em 'Continuar' com o campo vazio, o MutationObserver registra apenas a insercao de '+P.mensagem-erro-cpf'; o paragrafo nao tem role=\"alert\" nem aria-live (a pagina inteira tem 0 elementos com [aria-live], [role=alert] ou [role=status]) e o foco permanece no botao .acao-continuar, sem mudanca de contexto ou de foco.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>p"
+          ],
+          "unitIds": [
+            "U-aaf11a1a916804159b833f3f7a09d0fb84dba5eea673182a8eb76b227587013a"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-5023c3e77b0a8886f8846f44df2a9dc4a0130da2444985e0427eef153fcb7004",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: padding computado 13px nas quatro .opcao-identificacao, fora da escala do DS. É a V-01 em cada elemento nomeado.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "padding: 13px (fora da escala: 13px)",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)"
+          ],
+          "unitIds": [
+            "U-ad7de00f96c7c421d72917b032b505a62f2aa89f3cd335725acf24230e2b3351"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-56b05a047418b3853f8786ebffadf932a07f32bf6d770ffe1ef54ccc460692c5",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: a folha da tela declara .link-opcao:focus/:focus-visible { box-shadow:none; outline:none }; com foco real de teclado (:focus-visible verdadeiro) os quatro links ficam com outline-style none e box-shadow none, enquanto os demais focáveis recebem dashed 4px rgb(194,133,12). É a V-05 nos quatro links.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Ao receber foco por teclado (6o ao 9o Tab a partir do inicio do documento), os quatro links de 'Outras opcoes de identificacao' ficam com outline-style: none e box-shadow: none, por causa da regra '.link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }' da folha /assets/fluxo-BKj2uGAR.css; nenhuma outra propriedade (cor, fundo, sublinhado) muda no foco.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a"
+          ],
+          "unitIds": [
+            "U-6f500b010496782197294e0284a8a83c4744f7cfa0108cfb2c093eb3b4075d84",
+            "U-8f4eeb852c5f6370a3955186bb22d852a930b5051882665a546baeebd8374f5f",
+            "U-95f7a2df7fb9482cf1c476a27b6e4764440a9c08db3d897dce68a4b7261a6c84",
+            "U-9b33cf49af16046d2de9e4fb977300e60b3a30b07697b1b08c08a47372ad6d9d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-6391746de406fc0c467bbe454a4d99ac7dcabf11526c2ea3a384ab70ad374446",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "A afirmação é verdadeira também a 320px (medido: mesma classe/cor/padding nessa largura), mas a referência 1.6.0 só cataloga esta unidade na cena 1280x900 e o crédito não cruza cenas. Correta e fora da referência NESTA cena — é o mesmo defeito já catalogado a 1280, não uma descoberta nova.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "padding: 13px (fora da escala: 13px)",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-690388d34e47db6af4614e63afc0c510a8f316629b3910f98d9912a96ca54996",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: borda pintada em rgb(222,226,230) nos oito elementos da V-06, incluindo os sujeitos deste cartão; o valor não é token do DS. Mesmo defeito, mesmos elementos.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "border-color computado rgb(222, 226, 230) (#dee2e6) nos três elementos, vindo da variável --tela-borda declarada em :root no CSS da tela; o valor não consta do registro de tokens do DS.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(1)",
+            "body>div>main>section:nth-of-type(2)",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)"
+          ],
+          "unitIds": [
+            "U-0a51328ca40e840ea532a43e8ed968dab775783238f2a112d4e28f4bcc3d997e",
+            "U-493a4235788645600a690fb4fa55c227e2b65125d54527e82ab9467945ce4557",
+            "U-d6920a39349d56f3b6ed7006e648c72e86f2931d89edb1d0e19bbc8abfa36cce"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-6b481b3d0d7c441567524a255bbdd1891e4c387a4918297205262838de5483db",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: a folha da tela declara .link-opcao:focus/:focus-visible { box-shadow:none; outline:none }; com foco real de teclado (:focus-visible verdadeiro) os quatro links ficam com outline-style none e box-shadow none, enquanto os demais focáveis recebem dashed 4px rgb(194,133,12). É a V-05 nos quatro links.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O CSS da tela aplica '.link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }'. Com o link 'Login com seu banco' focado por Tab (element.matches(':focus-visible') === true), o estilo computado permanece outline-style 'none' e box-shadow 'none', idêntico ao estado não focado — nenhum dos quatro links da lista de opções mostra indicador de foco.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a"
+          ],
+          "unitIds": [
+            "U-6f500b010496782197294e0284a8a83c4744f7cfa0108cfb2c093eb3b4075d84",
+            "U-8f4eeb852c5f6370a3955186bb22d852a930b5051882665a546baeebd8374f5f",
+            "U-95f7a2df7fb9482cf1c476a27b6e4764440a9c08db3d897dce68a4b7261a6c84",
+            "U-9b33cf49af16046d2de9e4fb977300e60b3a30b07697b1b08c08a47372ad6d9d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-6c22473cc1c077b4c6ba3b749c47fc4a2c7d90b70d4dc740bf47e1c33a1c3a37",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: nenhum <small>, nenhum [aria-describedby], texto do formulário é só 'CPF Continuar' e a única pista é o placeholder; enviar '123' não gera erro nem avanço. É a manifestação (b) da V-11 (sem instrução de formato) no campo de CPF.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "base normativa (get_ds_rules / get_emag_rules)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O campo de CPF nao traz instrucao de formato em lugar nenhum: o rotulo e apenas 'CPF', o texto de apoio anterior e 'Digite seu CPF para criar ou acessar sua conta gov.br' e a unica pista de preenchimento e o placeholder 'Digite seu CPF', que desaparece ao digitar. Nao ha <small>, hint nem aria-describedby, e o campo aceita tanto '111.444.777-35' quanto '123' sem esclarecer quantidade de digitos ou uso de pontuacao.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-bd00752ba8ab900e2aef1f068b33649568c487d6d6f679e3574f4f014485bbde"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-6d5f559b8461061a8dd17eb2d00e2f18486cccc10c02ea404aced025d814f1d2",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido a 320px de largura: .barra-recursos com flex-wrap nowrap de x=93 a x=447, scrollWidth do documento 447, botão VLibras de 305 a 447, fora da viewport. É a V-12; a altura diferente da cena não muda o layout, que segue a largura.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com a janela em 320x800 (clientWidth 305px) a pagina passa a ter rolagem horizontal: documentElement.scrollWidth = 447 contra clientWidth = 305. A barra .barra-recursos nao quebra linha e mantem 353px de largura, comecando em x=93 e terminando em x=447; o botao .recurso-libras fica inteiramente fora da viewport (left=305, right=447) e so e alcancavel rolando na horizontal.",
+          "subjects": [
+            "body>div>header>div"
+          ],
+          "unitIds": [
+            "U-8fbb6d761cd306096c1f8605d410f5deacae4ace5bfc306b01f9cde53ec21a25"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-6fe9cf6687597753fbfa6444b301ea04e3982a5601dff71b698d660aeed73182",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "A afirmação é verdadeira também a 320px (medido: mesma classe/cor/padding nessa largura), mas a referência 1.6.0 só cataloga esta unidade na cena 1280x900 e o crédito não cruza cenas. Correta e fora da referência NESTA cena — é o mesmo defeito já catalogado a 1280, não uma descoberta nova.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "br-input aplicado a <input>",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-7353781751f263d2c50da23cab6a0031b3485599d1583f58a46c225cfdafe1e4",
+      "status": "reviewed",
+      "reviewer": "Nathalia",
+      "rationale": "O observado descreve o mesmo defeito da V-08 neste elemento e estado.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A classe br-input esta aplicada ao proprio <input id=\"cpf\" class=\"br-input\">, alem de ja estar no contêiner <div class=\"br-input campo-cpf-fluxo\"> que envolve o rotulo e o campo.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-e0f1ff4add37d6520b5be9c512f51335f4dee5a2b3061d548444fb10e1b6f2df"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-79e11ff1a7c19f1849b08bd55faa773a62fcc4d8385a27626acb1a3ac85c3844",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Duas afirmações independentes no mesmo cartão, ambas medidas. Medido no estado após envio vazio: #cpf segue com aria-invalid=null e aria-describedby=null, e a mensagem não tem id. É a V-03a: o campo não identifica programaticamente o erro nem se associa à mensagem. Medido no estado após envio vazio: <p class='mensagem-erro-cpf'> sem role nem aria-live, 0 regiões vivas na página, foco permanece no botão Continuar. É a V-03b.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "base normativa (get_ds_rules / get_emag_rules)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "#cpf permanece com aria-invalid=null e aria-describedby=null no estado de erro.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-2b97350dd48bdc2e2123c5b7e989f27a09014984d7868d467a4895a12e4dea2d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        },
+        {
+          "id": "a2",
+          "text": "O parágrafo de erro não tem role='alert' nem aria-live e o foco continua no botão: não é anunciado.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-aaf11a1a916804159b833f3f7a09d0fb84dba5eea673182a8eb76b227587013a"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-7a7542dd4dd4423c9c305d942e80ce409ad0ff595dd265fb2cb67f1dbb0c1916",
+      "status": "reviewed",
+      "reviewer": "Nathalia",
+      "rationale": "Conferi na cena: o defeito existe no elemento; nenhuma unidade do gabarito cobre isso.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O botao 'Alto Contraste' da barra de acessibilidade nao produz nenhum efeito ao ser acionado: comparando documentElement.outerHTML antes e depois do clique nao ha diferenca alguma; html e body continuam sem classe ou atributo de tema (html so tem lang=pt-BR, body nao tem atributos), o background computado de body permanece rgb(248,248,248) e o proprio botao nao expoe estado (sem aria-pressed).",
+          "subjects": [
+            "body>div>header>div>button:nth-of-type(1)"
+          ],
+          "unitIds": [],
+          "citation": "uncertain",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-7dc67b7c15464c7c92e6414712d72405e0479800565bf721a0e6dc6a6261fb0f",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "A afirmação é verdadeira também a 320px (medido: mesma classe/cor/padding nessa largura), mas a referência 1.6.0 só cataloga esta unidade na cena 1280x900 e o crédito não cruza cenas. Correta e fora da referência NESTA cena — é o mesmo defeito já catalogado a 1280, não uma descoberta nova.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "padding: 13px (fora da escala: 13px)",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-7e07a27cb6ce5686f2427637d8d34a8882aff9234d3c55abe1250449e6ab00f1",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: padding computado 13px nas quatro .opcao-identificacao, fora da escala do DS. É a V-01 em cada elemento nomeado.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Os 4 itens da lista de opcoes tem padding computado de 13px, valor fora da escala de espacamento do DS. Verificado item a item: ['13px','13px','13px','13px'].",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)"
+          ],
+          "unitIds": [
+            "U-0ceb07ddb653f8cb9fc078690580f877f9c920af1c696626700c5f784dc97c60",
+            "U-18e34f11569ef33ae87295505711425b5f2b7db9de61c35c6f792699b68fdb2c",
+            "U-6a72109ec02bee7fc2f8ce1a1858c714569ac0c943be26bfdf46a273ad4c98d0",
+            "U-ad7de00f96c7c421d72917b032b505a62f2aa89f3cd335725acf24230e2b3351"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-7fb26903b4b489cd66272f053966ec43f393102f16f02acd729bd233bb5bfbbe",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: o próprio <input id=cpf> carrega class=br-input e está dentro de <div class='br-input campo-cpf-fluxo'>. É o defeito da V-08 no mesmo elemento; o resto do texto é consequência, não outra alegação.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "br-input aplicado a <input>",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-e0f1ff4add37d6520b5be9c512f51335f4dee5a2b3061d548444fb10e1b6f2df"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-88c9378dd7a2f48aaeb391737dc0b2a9158bb37094b20a40dad6a22463aefaef",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: a folha da tela declara .link-opcao:focus/:focus-visible { box-shadow:none; outline:none }; com foco real de teclado (:focus-visible verdadeiro) os quatro links ficam com outline-style none e box-shadow none, enquanto os demais focáveis recebem dashed 4px rgb(194,133,12). É a V-05 nos quatro links.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A folha de estilo da pagina declara '.link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }', que vence em especificidade a regra do DS 'a.focus-visible, a:focus-visible { outline-color: var(--focus); ... }'. Com foco real de teclado no primeiro item (e.matches(':focus-visible') === true), o computed style traz outline-style: none, box-shadow: none, border-width: 0px, text-decoration-line: none e cor inalterada rgb(19,81,180): nenhum indicador visivel. Os quatro links da lista sao atingidos pela mesma regra.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a"
+          ],
+          "unitIds": [
+            "U-6f500b010496782197294e0284a8a83c4744f7cfa0108cfb2c093eb3b4075d84",
+            "U-8f4eeb852c5f6370a3955186bb22d852a930b5051882665a546baeebd8374f5f",
+            "U-95f7a2df7fb9482cf1c476a27b6e4764440a9c08db3d897dce68a4b7261a6c84",
+            "U-9b33cf49af16046d2de9e4fb977300e60b3a30b07697b1b08c08a47372ad6d9d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-954f7ac26724be614236bdf30fc3eb9e8e15990907b31dda85c2fd7ca93332a6",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: a folha da tela declara .link-opcao:focus/:focus-visible { box-shadow:none; outline:none }; com foco real de teclado (:focus-visible verdadeiro) os quatro links ficam com outline-style none e box-shadow none, enquanto os demais focáveis recebem dashed 4px rgb(194,133,12). É a V-05 nos quatro links. O id citado é a Recomendação 4.4 na base normativa.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "base normativa (get_ds_rules / get_emag_rules)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A folha de estilo declara .link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }. Com o navegador em modalidade de teclado, os 4 links casam :focus-visible e apresentam outline-style: none, box-shadow: none, text-decoration-line: none, background-color: rgba(0,0,0,0) e color inalterado (rgb(19,81,180)): nao ha nenhuma diferenca visual entre o estado focado e o nao focado.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a"
+          ],
+          "unitIds": [
+            "U-6f500b010496782197294e0284a8a83c4744f7cfa0108cfb2c093eb3b4075d84",
+            "U-8f4eeb852c5f6370a3955186bb22d852a930b5051882665a546baeebd8374f5f",
+            "U-95f7a2df7fb9482cf1c476a27b6e4764440a9c08db3d897dce68a4b7261a6c84",
+            "U-9b33cf49af16046d2de9e4fb977300e60b3a30b07697b1b08c08a47372ad6d9d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-a40a7e985f121b4b7381fc93d95c580928491de72e886a0cb34e450a8b0e2507",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido no estado após envio vazio: #cpf segue com aria-invalid=null e aria-describedby=null, e a mensagem não tem id. É a V-03a: o campo não identifica programaticamente o erro nem se associa à mensagem. A e-MAG 6.6 item (c) exige aria-invalid no campo.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "base normativa (get_ds_rules / get_emag_rules)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "No estado de erro, com a mensagem 'Informe um CPF para continuar.' visivel, o input nao tem aria-invalid: a lista completa de atributos e id=cpf, class=br-input, inputmode=numeric, placeholder=Digite seu CPF, aria-required=true, type=text, value=.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-2b97350dd48bdc2e2123c5b7e989f27a09014984d7868d467a4895a12e4dea2d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-a5d9b763ace76b4c2bc14f12d6640f1dae736fdabc95b6cb9026bf01fe2ba087",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido no estado após envio vazio: #cpf segue com aria-invalid=null e aria-describedby=null, e a mensagem não tem id. É a V-03a: o campo não identifica programaticamente o erro nem se associa à mensagem. O id citado é a Recomendação 6.6 (associar o erro ao campo).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "base normativa (get_ds_rules / get_emag_rules)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Ao submeter o formulario vazio o DOM recebe <p class=\"mensagem-erro-cpf\">Informe um CPF para continuar.</p> como irmao do wrapper .br-input, mas o campo nao ganha aria-describedby (getAttribute retorna null) e a mensagem nao tem id. Os atributos do input permanecem id, class, inputmode, placeholder, aria-required, type, value. Nao existe nenhum [aria-describedby] na pagina.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-2b97350dd48bdc2e2123c5b7e989f27a09014984d7868d467a4895a12e4dea2d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-aa6b023ec3817ad14c73dd492cb907e235da2c74cc36dbbc22489b6cfdbedb93",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "A afirmação é verdadeira (medido: 0 âncoras de salto, primeiro foco na marca) e descreve o defeito da V-10. Mas o seletor do cartão resolve no <header>, e a V-10 ancora na barra de acessibilidade dentro dele; sem sujeito nem relacionado participante, o scorer não aceita crédito de gabarito aqui. Registrada como correta e fora do alcance da âncora — limitação de granularidade do instrumento, não defeito novo.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "base normativa (get_ds_rules / get_emag_rules)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Não existe nenhuma âncora de salto na página (0 elementos a[href^='#']) e o primeiro elemento focável por teclado é o link da marca .marca-govbr; para alcançar o conteúdo principal o usuário de teclado atravessa obrigatoriamente os 3 controles do cabeçalho (marca, 'Alto Contraste' e 'VLibras'), repetidos em todas as telas do fluxo.",
+          "subjects": [
+            "body>div>header"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-ba4c6d45665531afc60bc1b972911aba8c2354d16719392c48f0b8b65dcef322",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido a 320px de largura: .barra-recursos com flex-wrap nowrap de x=93 a x=447, scrollWidth do documento 447, botão VLibras de 305 a 447, fora da viewport. É a V-12; a altura diferente da cena não muda o layout, que segue a largura.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com a janela em 320x800, document.documentElement.scrollWidth = 447 contra clientWidth = 305, e .barra-recursos (flex sem flex-wrap) junto com o botao .recurso-libras terminam em x = 447; a captura mostra barra de rolagem horizontal no documento e o rotulo 'VLibras' fora da area visivel.",
+          "subjects": [
+            "body>div>header>div"
+          ],
+          "unitIds": [
+            "U-8fbb6d761cd306096c1f8605d410f5deacae4ace5bfc306b01f9cde53ec21a25"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-be711830cd4a3f2c5216793a079e5285d8fdf2394b8d7b2e4d5762c05579f877",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: padding computado 13px nas quatro .opcao-identificacao, fora da escala do DS. É a V-01 em cada elemento nomeado.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "padding: 13px (fora da escala: 13px)",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)"
+          ],
+          "unitIds": [
+            "U-6a72109ec02bee7fc2f8ce1a1858c714569ac0c943be26bfdf46a273ad4c98d0"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-d55b43e2052fdf5078382ec9f3b59ab526827d52ecd04836f8f220fe3804484a",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: padding computado 13px nas quatro .opcao-identificacao, fora da escala do DS. É a V-01 em cada elemento nomeado.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "padding computado de 13px nos quatro itens da lista de opções, declarado como '.opcao-identificacao { … padding: 13px; … }' no CSS da tela; 13px está fora da escala de espaçamento do DS.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)"
+          ],
+          "unitIds": [
+            "U-0ceb07ddb653f8cb9fc078690580f877f9c920af1c696626700c5f784dc97c60",
+            "U-18e34f11569ef33ae87295505711425b5f2b7db9de61c35c6f792699b68fdb2c",
+            "U-6a72109ec02bee7fc2f8ce1a1858c714569ac0c943be26bfdf46a273ad4c98d0",
+            "U-ad7de00f96c7c421d72917b032b505a62f2aa89f3cd335725acf24230e2b3351"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-d7364f0430a1e6de41089925f7c98123e460b4e14ceeb0af7a36c9482afaa854",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido no estado após envio vazio: #cpf segue com aria-invalid=null e aria-describedby=null, e a mensagem não tem id. É a V-03a: o campo não identifica programaticamente o erro nem se associa à mensagem. A WCAG 4.1.2 cobre o estado programaticamente determinável.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com o erro visivel apos submissao vazia, o campo continua com os atributos id, class, inputmode, placeholder, aria-required e type, sem aria-invalid (getAttribute('aria-invalid') === null) e sem nenhuma alteracao de atributo registrada pelo MutationObserver; a borda permanece rgb(136, 136, 136), igual ao estado valido.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-2b97350dd48bdc2e2123c5b7e989f27a09014984d7868d467a4895a12e4dea2d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-d7e25381d5da848007a21e7c0292a4086e30f1edec00595bc3e235dd9c5103c8",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "A afirmação é verdadeira também a 320px (medido: mesma classe/cor/padding nessa largura), mas a referência 1.6.0 só cataloga esta unidade na cena 1280x900 e o crédito não cruza cenas. Correta e fora da referência NESTA cena — é o mesmo defeito já catalogado a 1280, não uma descoberta nova.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-dc74a1adb13d8226ee994bba1d4625b440b09669baa768d7061a88324d6faadc",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido no estado após envio vazio: color computado rgb(230,0,0) na mensagem de erro, valor fora do registro de tokens. É a V-09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "color computado rgb(230, 0, 0) (#e60000) no texto da mensagem de erro, declarado em '.mensagem-erro-cpf { color: rgb(230, 0, 0); … }'; o valor não consta do registro de tokens do DS.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>p"
+          ],
+          "unitIds": [
+            "U-a4f7d16a2d1b297b25bf5689c2e6ef03b192e709f19bcbefced872bf901d7177"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-de9912bcbba63ea4e0c68546efddf8d44ee7dd3804fbb0360c08af3de040f6c6",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido no estado após envio vazio: #cpf segue com aria-invalid=null e aria-describedby=null, e a mensagem não tem id. É a V-03a: o campo não identifica programaticamente o erro nem se associa à mensagem.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Após envio com o campo vazio surge <p class=\"mensagem-erro-cpf\">Informe um CPF para continuar.</p>, mas o input mantém apenas os atributos id, class, inputmode, placeholder, aria-required, type e value: não há aria-describedby nem aria-errormessage apontando para a mensagem, e a mensagem não tem id.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-2b97350dd48bdc2e2123c5b7e989f27a09014984d7868d467a4895a12e4dea2d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-e1bbee4846f791022556aef95ff09a4a6fcf1c2dbf40a4c243e30691cd1e6ed4",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: borda pintada em rgb(222,226,230) nos oito elementos da V-06, incluindo os sujeitos deste cartão; o valor não é token do DS. Mesmo defeito, mesmos elementos.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "border-color computado rgb(222, 226, 230) (#dee2e6), vindo da custom property --tela-borda declarada em :root, nao corresponde a nenhum token de cor do gov.br DS; o token mais proximo e --gray-cool-10 (#dfe1e2), a distancia RGB 4.24.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)"
+          ],
+          "unitIds": [
+            "U-0a51328ca40e840ea532a43e8ed968dab775783238f2a112d4e28f4bcc3d997e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-e61ae05729fec621c6f4aaac0d483adf65faa247a17a69779f9dd0e00d85aa7e",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: borda pintada em rgb(222,226,230) nos oito elementos da V-06, incluindo os sujeitos deste cartão; o valor não é token do DS. Mesmo defeito, mesmos elementos.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)"
+          ],
+          "unitIds": [
+            "U-0a51328ca40e840ea532a43e8ed968dab775783238f2a112d4e28f4bcc3d997e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-e8d4f80f27a3b0392400450c6e995f4035f6cad057416d3f5e9b80d644a79655",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Duas afirmações independentes no mesmo cartão, ambas medidas. Medido no estado após envio vazio: <p class='mensagem-erro-cpf'> sem role nem aria-live, 0 regiões vivas na página, foco permanece no botão Continuar. É a V-03b. Medido no estado após envio vazio: #cpf segue com aria-invalid=null e aria-describedby=null, e a mensagem não tem id. É a V-03a: o campo não identifica programaticamente o erro nem se associa à mensagem. A WCAG 3.3.1 cobre a identificação do erro; o anúncio por região viva é 4.1.3, por isso a citação fica incerta nesse átomo.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A mensagem é inserida sem role e sem aria-live, e o foco não se move: o erro não é anunciado ao surgir.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>p"
+          ],
+          "unitIds": [
+            "U-aaf11a1a916804159b833f3f7a09d0fb84dba5eea673182a8eb76b227587013a"
+          ],
+          "citation": "uncertain",
+          "decisao": "defeito-do-gabarito"
+        },
+        {
+          "id": "a2",
+          "text": "O campo não referencia a mensagem: aria-describedby e aria-errormessage nulos, mensagem sem id.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>p"
+          ],
+          "unitIds": [
+            "U-2b97350dd48bdc2e2123c5b7e989f27a09014984d7868d467a4895a12e4dea2d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-f19de467cf6e71bf3fef63d34fdab93ce8e2a992833131a1b9b61c3cc511cc7b",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: o próprio <input id=cpf> carrega class=br-input e está dentro de <div class='br-input campo-cpf-fluxo'>. É o defeito da V-08 no mesmo elemento; o resto do texto é consequência, não outra alegação.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A classe br-input esta aplicada ao proprio <input id=\"cpf\">, alem de ja estar no wrapper <div class=\"br-input campo-cpf-fluxo\"> que contem o label e o campo. Isso duplica o componente e faz o elemento interno herdar regras de container do DS (por exemplo .br-input input:focus, que aplica box-shadow em vez do outline dourado padrao).",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>div>input"
+          ],
+          "unitIds": [
+            "U-e0f1ff4add37d6520b5be9c512f51335f4dee5a2b3061d548444fb10e1b6f2df"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-f6415bcd9b2e43d07aeaf915a2150a47f4b12fbcf4d589d99fdb7560941184ea",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido: a folha da tela declara .link-opcao:focus/:focus-visible { box-shadow:none; outline:none }; com foco real de teclado (:focus-visible verdadeiro) os quatro links ficam com outline-style none e box-shadow none, enquanto os demais focáveis recebem dashed 4px rgb(194,133,12). É a V-05 nos quatro links.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Os 4 links de outras opções de identificação recebem foco de teclado (confirmado por Tab e por :focus-visible verdadeiro) com outline-style 'none' (outline computado 'rgb(19, 81, 180) none 2.66667px'), box-shadow 'none', text-decoration 'none' e background inalterado: nenhum indicador visual de foco. Os demais focáveis da tela recebem outline tracejado de 4px rgb(194, 133, 12) com offset de 4px.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+            "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a"
+          ],
+          "unitIds": [
+            "U-6f500b010496782197294e0284a8a83c4744f7cfa0108cfb2c093eb3b4075d84",
+            "U-8f4eeb852c5f6370a3955186bb22d852a930b5051882665a546baeebd8374f5f",
+            "U-95f7a2df7fb9482cf1c476a27b6e4764440a9c08db3d897dce68a4b7261a6c84",
+            "U-9b33cf49af16046d2de9e4fb977300e60b3a30b07697b1b08c08a47372ad6d9d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-fb64273c2e3a4f41d6727260590b4030051947bbe8e817fd49c6870700a5fe03",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-47)",
+      "rationale": "Medido no estado após envio vazio: <p class='mensagem-erro-cpf'> sem role nem aria-live, 0 regiões vivas na página, foco permanece no botão Continuar. É a V-03b.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A mensagem de erro é inserida no DOM sem role='alert', sem role='status' e sem aria-live (a página inteira tem 0 elementos com essas marcações), e o foco permanece no botão 'Continuar' (document.activeElement continua sendo .acao-continuar após o envio): a mudança não é anunciada por tecnologia assistiva.",
+          "subjects": [
+            "body>div>main>section:nth-of-type(2)>form>p"
+          ],
+          "unitIds": [
+            "U-aaf11a1a916804159b833f3f7a09d0fb84dba5eea673182a8eb76b227587013a"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "test": "isolation",
+  "surfaceVersion": "surface-1.2.0",
+  "at": "2026-09-18T20:48:11.495Z",
+  "corpusDist": "F:\\Dev Nath\\TCC\\govbr-corpus\\dist",
+  "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+  "playwrightArgs": [
+    "/c",
+    "npx",
+    "@playwright/mcp@0.0.70",
+    "--viewport-size",
+    "1280x900",
+    "--proxy-server",
+    "http://127.0.0.1:4102",
+    "--isolated",
+    "--block-service-workers"
+  ],
+  "validatorEgressEnv": {
+    "GOVBR_VALIDATOR_PROXY_SERVER": "http://127.0.0.1:4102",
+    "GOVBR_VALIDATOR_ALLOWED_ORIGINS": "http://127.0.0.1:3100"
+  },
+  "passed": true,
+  "checks": [
+    {
+      "name": "braços recebem o mesmo Playwright MCP",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Playwright MCP aponta para o proxy da superfície",
+      "passed": true,
+      "detail": "/c npx @playwright/mcp@0.0.70 --viewport-size 1280x900 --proxy-server http://127.0.0.1:4102 --isolated --block-service-workers"
+    },
+    {
+      "name": "Playwright MCP com perfil em memória",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "oráculo aponta para o mesmo proxy",
+      "passed": true,
+      "detail": "http://127.0.0.1:4102"
+    },
+    {
+      "name": "oráculo só abre o site congelado",
+      "passed": true,
+      "detail": "http://127.0.0.1:3100"
+    },
+    {
+      "name": "controle: o painel serve o gabarito a quem está fora da política",
+      "passed": true,
+      "detail": "http://localhost:4000/@fs/F:/Dev%20Nath/TCC/govbr-eval/ground-truth-fluxo.json"
+    },
+    {
+      "name": "navegação bloqueada: http://localhost:4000/",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "navegação bloqueada: http://localhost:4000/@fs/F:/Dev%20Nath/TCC/govbr-eval/ground-truth-fluxo.json",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "navegação bloqueada: http://127.0.0.1:4000/@fs/F:/Dev%20Nath/TCC/govbr-eval/ground-truth-fluxo.json",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "navegação bloqueada: http://[::1]:4000/@fs/F:/Dev%20Nath/TCC/govbr-eval/ground-truth-fluxo.json",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "navegação bloqueada: http://localhost:4000/@fs/F:/Dev%20Nath/TCC/govbr-eval/ground-truth.json",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "navegação bloqueada: http://localhost:4000/@fs/F:/Dev%20Nath/TCC/govbr-eval/results/agent-results.json",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "navegação bloqueada: http://localhost:4000/@fs/F:/Dev%20Nath/TCC/govbr-eval/adjudications.json",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "navegação bloqueada: http://localhost:4000/agent-results.json",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "navegação bloqueada: http://localhost:3000/",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "navegação bloqueada: http://localhost:3000/fluxo.html",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "navegação bloqueada: http://127.0.0.1:4101/control/status",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "navegação bloqueada: http://127.0.0.1:4102/",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "navegação bloqueada: http://localhost:3100/fluxo.html",
+      "passed": true,
+      "detail": "Bloqueado pela politica de rede desta execucao."
+    },
+    {
+      "name": "rota irmã indisponível: /",
+      "passed": true,
+      "detail": "404"
+    },
+    {
+      "name": "rota irmã indisponível: /index.html",
+      "passed": true,
+      "detail": "404"
+    },
+    {
+      "name": "rota irmã indisponível: /real/pnip-login.html",
+      "passed": true,
+      "detail": "404"
+    },
+    {
+      "name": "rota irmã indisponível: /static/protocolo.html",
+      "passed": true,
+      "detail": "404"
+    },
+    {
+      "name": "rota irmã indisponível: /src/fluxo.tsx",
+      "passed": true,
+      "detail": "404"
+    },
+    {
+      "name": "rota irmã indisponível: /@fs/F:/Dev%20Nath/TCC/govbr-eval/ground-truth-fluxo.json",
+      "passed": true,
+      "detail": "404"
+    },
+    {
+      "name": "rota irmã indisponível: /assets/main-DfE8FiQJ.js",
+      "passed": true,
+      "detail": "404"
+    },
+    {
+      "name": "a tela congelada carrega",
+      "passed": true,
+      "detail": "gov.br\nAlto Contraste\nVLibras\n\nUma conta gov.br garante a identificação de cada "
+    },
+    {
+      "name": "o estado do setup do gabarito é alcançável",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "o navegador medido abre na janela padrão do plano",
+      "passed": true,
+      "detail": "medido 1280x900, plano 1280x900"
+    },
+    {
+      "name": "a janela 320x720 do plano é alcançável pelo agente",
+      "passed": true,
+      "detail": "medido 320x720"
+    },
+    {
+      "name": "nenhum arquivo da tela falta no site congelado",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "a tela não pede recurso fora da política",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fetch da página não alcança o painel nem o controle",
+      "passed": true,
+      "detail": "erro | erro | erro"
+    },
+    {
+      "name": "frame e worker da página passam pelo proxy e são negados",
+      "passed": true,
+      "detail": "http://localhost:4000/@fs/F:/Dev%20Nath/TCC/govbr-eval/ground-truth-fluxo.json, http://127.0.0.1:4000/@fs/F:/Dev%20Nath/TCC/govbr-eval/ground-truth-fluxo.json, http://127.0.0.1:4101/control/status, http://localhost:4000/@fs/F:/Dev%20Nath/TCC/govbr-eval/ground-truth.json, http://localhost:4000/@fs/F:/Dev%20Nath/TCC/govbr-eval/adjudications.json, www.google.com:443"
+    },
+    {
+      "name": "documentação externa bloqueada: https://www.gov.br/ds/",
+      "passed": true,
+      "detail": "### Error Error: browserBackend.callTool: net::ERR_TUNNEL_CONNECTION_FAILED at https://www.gov.br/ds/ Call log: \u001b[2m - navigating to \"https://www.gov.br/ds/\", waiting until \"domcontentloaded\"\u001b[22m "
+    },
+    {
+      "name": "documentação externa bloqueada: https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/",
+      "passed": true,
+      "detail": "### Error Error: browserBackend.callTool: net::ERR_TUNNEL_CONNECTION_FAILED at https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/ Call log: \u001b[2m - navigating to \"https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/\", waiting u"
+    },
+    {
+      "name": "documentação externa bloqueada: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css",
+      "passed": true,
+      "detail": "### Error Error: browserBackend.callTool: net::ERR_TUNNEL_CONNECTION_FAILED at https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css Call log: \u001b[2m - navigating to \"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6"
+    },
+    {
+      "name": "redirecionamento para fora da política é negado no salto",
+      "passed": true,
+      "detail": "http://localhost:4000/@fs/F:/Dev%20Nath/TCC/govbr-eval/ground-truth-fluxo.json → 403"
+    },
+    {
+      "name": "o coletor aceita o relatório da execução armada",
+      "passed": true,
+      "detail": "200 {\"ok\":true,\"receipt\":{\"runId\":\"isolation-1789764476348\",\"status\":\"aceito\",\"sha256\":\"0377742732619f9461de7cf525d2086d"
+    },
+    {
+      "name": "reenvio idêntico devolve o mesmo recibo",
+      "passed": true,
+      "detail": "200 {\"ok\":true,\"duplicate\":true,\"receipt\":{\"runId\":\"isolation-1789764476348\",\"status\":\"aceito\",\"sha256\":\"0377742732619f9"
+    },
+    {
+      "name": "relatório diferente não sobrescreve o aceito",
+      "passed": true,
+      "detail": "409 {\"ok\":false,\"error\":\"esta execução já tem um relatório aceito e diferente\"}"
+    },
+    {
+      "name": "relatório no contrato antigo é recusado com erro acionável",
+      "passed": true,
+      "detail": "400 {\"ok\":false,\"errors\":[\"findings[0].observed: texto obrigatório\",\"findings[0].expected: texto obrigatório\",\"findings["
+    },
+    {
+      "name": "o desarme devolve recibo e as duas recusas arquivadas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sem execução armada, nada é aceito",
+      "passed": true,
+      "detail": "409 {\"ok\":false,\"error\":\"nenhuma execução armada neste receptor\"}"
+    },
+    {
+      "name": "sem relatório aceito, a última recusa vira o relatório da execução, sinalizada",
+      "passed": true,
+      "detail": "{\"runId\":\"isolation-recusa-1789764487613\",\"status\":\"recusa-arquivada\",\"sha256\":\"1695f0fb2dc1649ea8d4aadfc91665f906e2e991060144061d73cac68e86a5fd\",\"acceptedAt\":\""
+    },
+    {
+      "name": "scan_page recusa o painel",
+      "passed": true,
+      "detail": "Origem fora da política de navegação desta execução: http://localhost:4000. Permitidas: http://127.0.0.1:3100"
+    },
+    {
+      "name": "scan_page funciona na tela congelada",
+      "passed": true,
+      "detail": "{\n  \"url\": \"http://127.0.0.1:3100/fluxo.html\",\n  \"scanId\": \"S-page-001\",\n  \"stateFingerprint\": \"sha256:417014ead4438cfd4"
+    }
+  ]
+}

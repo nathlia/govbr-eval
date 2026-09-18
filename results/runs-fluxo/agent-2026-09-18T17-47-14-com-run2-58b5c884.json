@@ -1,0 +1,312 @@
+{
+  "timestamp": "2026-09-18T21:17:49.654Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "tela inteira de identificação gov.br: barra superior (marca e barra de acessibilidade), painel institucional, cartão de identificação com formulário de CPF, lista de outras opções de identificação e rodapé do cartão",
+    "estados: carga inicial, estado de erro após submeter o formulário vazio, e viewport reduzido a 320x640"
+  ],
+  "notes": "Ferramentas: playwright (navigate, snapshot, evaluate, click, type, press_key, resize, screenshot, console_messages) e oráculo govbr-ds-validator (scan_page, get_ds_rules, get_emag_rules, get_page_rules, get_design_tokens, get_finding_details, verify_finding). Interações executadas: carregar a página e tirar snapshot da árvore de acessibilidade; submeter o formulário com o campo CPF vazio (surge a mensagem 'Informe um CPF para continuar.'); digitar '123' e submeter (a mensagem some, nada avança); digitar '11144477735' e pressionar Enter (nada avança — a tela não tem etapa seguinte, apesar do nome fluxo.html); percorrer toda a ordem de tabulação com Tab a partir do início do documento, medindo outline/box-shadow computados em cada controle focado; focar programaticamente cada controle para comparar com o estado não focado; clicar em 'Alto Contraste'; redimensionar para 360x720 e 320x640 e medir scrollWidth/clientWidth e as caixas dos elementos. Varreduras: S-page-001 (estado inicial, fingerprint sha256:417014ea…), S-page-002 (estado de erro, fingerprint sha256:bbbb343c…, compareToScanId=S-page-001, sem findings novos) e S-page-003 (mesmo estado de erro, escopo ampliado a body/header/main/section/p/h1/h2/label/hr/i, só tokens, compareToScanId=S-page-002). axe-core 4.12.1 rodou nos dois estados com 36 passes, 0 violações e 0 incompletos; nenhum problema de contraste foi encontrado (a tag branca sobre #168821 fica em ~4,6:1). Candidatos rejeitados: font-family 'Font Awesome 6 Free' nos <i> (F-013..F-020) — Font Awesome é a biblioteca de ícones do próprio DS, não desvio tipográfico; classes fora do vocabulário canônico, font-size 11px/16px fora da escala e br-divider em <hr> — o próprio oráculo registrou os três como observações sem norma; 404 de /favicon.ico no console — não é defeito de conformidade da interface. Candidato incerto, não reportado: os botões 'Alto Contraste' e 'VLibras' não produzem nenhuma mudança de DOM, classe, estilo ou atributo ao serem clicados e não expõem aria-pressed; não consegui sustentar em norma se são controles de alternância quebrados ou apenas não implementados nesta tela estática. Limitações: os achados semânticos (wcag:2.4.7, wcag:1.4.10, emag:1.5, emag:6.5, emag:6.6) foram submetidos a verify_finding com live=true e voltaram 'unverifiable' por 'no-predicate' — em todos, ruleExists e applicability passaram e a evidência foi julgada consistente, e a constatação se apoia na medição direta registrada em evidence; os quatro achados de token/estrutura voltaram 'confirmed' por predicado em todos os elementos do localizador. O fluxo não avança além da etapa de CPF com nenhuma entrada testada, então etapas posteriores (senha, cadastro) não puderam ser avaliadas.",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "rule": "wcag:2.4.7",
+      "observed": "O CSS da tela aplica '.link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }'. Com o link 'Login com seu banco' focado por Tab (element.matches(':focus-visible') === true), o estilo computado permanece outline-style 'none' e box-shadow 'none', idêntico ao estado não focado — nenhum dos quatro links da lista de opções mostra indicador de foco.",
+      "expected": "Indicador de foco visível quando o controle recebe foco por teclado, como o anel 'dashed 4px rgb(194, 133, 12)' que os demais controles da mesma tela (marca gov.br, botões br-button, link de ajuda e link do termo) exibem.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "pressionar Tab seis vezes, até o foco chegar ao link 'Login com seu banco'"
+        ]
+      },
+      "evidence": [
+        "V-001 — verify_finding wcag 2.4.7 live=true: ruleExists pass, applicability pass, evidenceConsistent pass, violation no-predicate, localizador resolveu 4 elementos",
+        "foco-link-opcao.png — captura com o link focado e sem qualquer indicação visual",
+        "getComputedStyle do activeElement: outline 'none 2.66667px rgb(19, 81, 180)', boxShadow 'none', matches(':focus-visible') true"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "emag:6.6",
+      "observed": "Após submeter o formulário com o campo vazio, aparece <p class=\"mensagem-erro-cpf\">Informe um CPF para continuar.</p>, mas o campo mantém apenas id, class, inputmode, placeholder, aria-required e type — sem aria-invalid e sem aria-describedby. A mensagem não tem id, role='alert' nem aria-live (document.querySelectorAll('[role=\"alert\"],[aria-live],[role=\"status\"]') devolve 0 elementos) e o foco permanece no botão 'Continuar'.",
+      "expected": "Campo com aria-invalid='true' e aria-describedby apontando para a mensagem de erro, de modo que o erro seja identificado e anunciado por tecnologia assistiva.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "clicar em 'Continuar' com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        "V-002 — verify_finding emag-6.6 live=true com actions [click .acao-continuar] e stateFingerprint sha256:bbbb343cb51382b02b7bd8990b702a9d578a9673150d20d1d54a3478a086fef4: ruleExists pass, applicability pass, evidenceConsistent pass, violation no-predicate",
+        "S-page-002 — varredura do estado de erro, fingerprint sha256:bbbb343cb51382b02b7bd8990b702a9d578a9673150d20d1d54a3478a086fef4",
+        "Leitura direta dos atributos do #cpf no estado de erro: aria-describedby null, aria-invalid null"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "rule": "emag:6.5",
+      "observed": "O campo de CPF tem apenas o rótulo 'CPF' e o placeholder 'Digite seu CPF'; não há texto de apoio, <small> ou elemento ligado por aria-describedby indicando o formato esperado (11 dígitos, com ou sem pontuação). Enviar '123' também não gera erro nem avanço, de modo que o formato exigido não é revelado nem pela validação.",
+      "expected": "Instrução de formato visível antes do campo e associada a ele por aria-describedby, conforme exigido para entradas complexas como CPF.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "digitar '123' no campo CPF e clicar em 'Continuar'",
+          "digitar '11144477735' no campo CPF e pressionar Enter"
+        ]
+      },
+      "evidence": [
+        "V-003 — verify_finding emag-6.5 live=true: ruleExists pass, applicability pass, evidenceConsistent pass, violation no-predicate",
+        "DOM do formulário: <div class=\"br-input campo-cpf-fluxo\"><label for=\"cpf\">CPF</label><input id=\"cpf\" … placeholder=\"Digite seu CPF\" aria-required=\"true\"></div>, sem irmão de instrução"
+      ]
+    },
+    {
+      "selector": ".barra-recursos",
+      "relatedSelectors": [
+        ".recurso-libras"
+      ],
+      "rule": "wcag:1.4.10",
+      "observed": "Com a janela em 320x640, a barra de recursos (display:flex, flex-wrap:nowrap, gap 16px) ocupa de x=93 a x=447 enquanto o documento tem clientWidth 305; document.documentElement.scrollWidth é 447 contra clientWidth 305 e o botão 'VLibras' começa em x=305, inteiramente fora da área visível, obrigando a rolagem horizontal. O mesmo ocorre em 360x720 (scrollWidth 447 contra clientWidth 345).",
+      "expected": "Conteúdo apresentável sem rolagem horizontal em largura equivalente a 320px CSS, com a barra de recursos quebrando linha ou reduzindo os botões.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "redimensionar a janela para 360x720",
+          "redimensionar a janela para 320x640"
+        ]
+      },
+      "evidence": [
+        "V-010 — verify_finding wcag 1.4.10: ruleExists pass, applicability pass, violation no-predicate",
+        "overflow-320.png — captura com barra de rolagem horizontal e o botão VLibras cortado",
+        "Medição no navegador: scrollWidth 447, clientWidth 305, getBoundingClientRect de .barra-recursos {left:93, right:447} e de .recurso-libras {left:305, right:447}"
+      ]
+    },
+    {
+      "selector": ".barra-recursos",
+      "relatedSelectors": [
+        "main"
+      ],
+      "rule": "emag:1.5",
+      "observed": "A barra de acessibilidade do cabeçalho traz apenas os botões 'Alto Contraste' e 'VLibras'. Não há nenhum link de atalho: document.querySelectorAll('a[href^=\"#\"]') devolve 0 elementos, o primeiro item da ordem de tabulação é a marca gov.br e o <main class=\"area-identificacao\"> não possui id que sirva de destino.",
+      "expected": "Link de atalho para o conteúdo principal (por exemplo 'Ir para o conteúdo') como primeiro item da barra de acessibilidade, apontando para o <main>.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "percorrer a ordem de tabulação com Tab a partir do início do documento"
+        ]
+      },
+      "evidence": [
+        "V-004 — verify_finding emag-1.5 live=true: ruleExists pass, applicability pass, evidenceConsistent pass, violation no-predicate",
+        "Primeiro Tab após a carga leva ao <a class=\"marca-govbr\">; nenhuma âncora interna existe no documento"
+      ]
+    },
+    {
+      "selector": ".painel-institucional, .cartao-identificacao, .lista-opcoes",
+      "rule": "ds-token-color",
+      "observed": "border-color computado rgb(222, 226, 230) (#dee2e6) nos três elementos, vindo da variável --tela-borda declarada em :root no CSS da tela; o valor não consta do registro de tokens do DS.",
+      "expected": "Cor pertencente ao registro de tokens do gov.br DS; o token mais próximo é --gray-cool-10 (#dfe1e2), a uma distância RGB de 4,24.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html"
+        ]
+      },
+      "evidence": [
+        "F-001 (scan S-page-001) e F-022/F-023 (scan S-page-003) — ds-token-color, severidade moderate, confiança 1",
+        "V-006 — verify_finding ds-token-color live=true: verdict confirmed, predicado token-color, violação recalculada em 3 de 3 elementos"
+      ]
+    },
+    {
+      "selector": ".opcao-identificacao",
+      "rule": "ds-token-spacing",
+      "observed": "padding computado de 13px nos quatro itens da lista de opções, declarado como '.opcao-identificacao { … padding: 13px; … }' no CSS da tela; 13px está fora da escala de espaçamento do DS.",
+      "expected": "Espaçamento na escala do DS (múltiplos de 4px, base 8px).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html"
+        ]
+      },
+      "evidence": [
+        "F-002, F-003, F-004 e F-005 (scan S-page-001) — ds-token-spacing, severidade minor, confiança 1",
+        "V-007 — verify_finding ds-token-spacing live=true: verdict confirmed, predicado token-spacing, violação recalculada em 4 de 4 elementos"
+      ]
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "rule": "ds-token-color",
+      "observed": "color computado rgb(230, 0, 0) (#e60000) no texto da mensagem de erro, declarado em '.mensagem-erro-cpf { color: rgb(230, 0, 0); … }'; o valor não consta do registro de tokens do DS.",
+      "expected": "Cor pertencente ao registro de tokens do gov.br DS; o token mais próximo é --red-vivid-50 (#e52207), a uma distância RGB de 34,73.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "clicar em 'Continuar' com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        "F-021 (scan S-page-003, estado de erro) — ds-token-color, severidade moderate, confiança 1",
+        "V-008 — verify_finding ds-token-color live=true com actions [click .acao-continuar] e stateFingerprint sha256:bbbb343c…: verdict confirmed, predicado token-color, 1 de 1 elemento"
+      ]
+    },
+    {
+      "selector": "input#cpf.br-input",
+      "relatedSelectors": [
+        ".campo-cpf-fluxo"
+      ],
+      "rule": "ds-structure-input-tag",
+      "observed": "A classe br-input está aplicada ao próprio <input>, além de estar no <div class=\"br-input campo-cpf-fluxo\"> que envolve rótulo e campo; a raiz do componente br-input passa a existir duas vezes na mesma anatomia.",
+      "expected": "br-input apenas no <div> contêiner do componente, com o <input> nativo dentro dele.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html"
+        ]
+      },
+      "evidence": [
+        "F-006 (scan S-page-001) e F-012 (scan S-page-002) — ds-structure-input-tag, severidade serious, confiança 1",
+        "V-009 — verify_finding ds-structure-input-tag live=true: verdict confirmed, predicado structure-tag, 1 de 1 elemento"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.277 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "04e70fa0658116c8754820130fc963f82f5c2dbd4b836898e98a190b0ea225e9",
+    "schedule": {
+      "slot": 4,
+      "block": 2,
+      "repetition": 2,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-18T17-47-14-com-run2-58b5c884-evidencia",
+    "evidenceIndexSha256": "1ed45492d64d25572eb83650ba0c71feef28f729fe0bfd20ef09799ae1b8ea95",
+    "validatorVersion": "2.5.2"
+  },
+  "cost": {
+    "startedAt": "2026-09-18T21:08:40.8686754Z",
+    "finishedAt": "2026-09-18T21:18:07.9295025Z",
+    "wallClockSeconds": 566.9,
+    "tokens": 5569256,
+    "tokenUsage": {
+      "input": 116,
+      "cacheCreationInput": 143659,
+      "cacheReadInput": 5386338,
+      "output": 39143
+    },
+    "totalCostUsd": 5.1089139999999995,
+    "turns": 71,
+    "mcp": {
+      "runId": "2026-09-18T17-47-14-com-run2-58b5c884",
+      "telemetryFile": "pipeline/logs/2026-09-18T17-47-14-com-run2-58b5c884-mcp.ndjson",
+      "calls": 25,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 10676,
+      "responseBytes": 140078,
+      "durationMs": 11211,
+      "byTool": {
+        "scan_page": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 499,
+          "responseBytes": 88213,
+          "durationMs": 4526
+        },
+        "get_page_rules": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 28,
+          "responseBytes": 16814,
+          "durationMs": 1
+        },
+        "get_emag_rules": {
+          "calls": 4,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 52,
+          "responseBytes": 12094,
+          "durationMs": 1
+        },
+        "verify_finding": {
+          "calls": 10,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 9666,
+          "responseBytes": 11777,
+          "durationMs": 6682
+        },
+        "get_finding_details": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 127,
+          "responseBytes": 6679,
+          "durationMs": 1
+        },
+        "get_ds_rules": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 286,
+          "responseBytes": 4448,
+          "durationMs": 0
+        },
+        "get_design_tokens": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 18,
+          "responseBytes": 53,
+          "durationMs": 0
+        }
+      }
+    }
+  }
+}

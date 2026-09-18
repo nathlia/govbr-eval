@@ -1,0 +1,115 @@
+{
+  "timestamp": "2026-09-18T21:32:27.371Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "tela inteira de fluxo.html: barra superior (marca, Alto Contraste, VLibras), painel institucional, cartao de identificacao (titulo, cabecalho do metodo CPF, formulario CPF, estado de erro do formulario, lista de outras opcoes de identificacao, selo da conta, links de ajuda e termo)"
+  ],
+  "notes": "Ferramentas disponiveis nesta execucao: apenas navegador (Playwright MCP). Nao havia oraculo de regras nem scan_page, portanto nenhuma varredura heuristica foi executada e nenhum achado pode ser verificado por ferramenta de verificacao; as atribuicoes de regra abaixo sao normativas WCAG 2.2 justificadas na propria observacao, sem ids de design system (nenhum id de ds foi inventado). Interacoes realizadas: carga em 1280x900; snapshot da arvore de acessibilidade; dump do DOM com atributos; calculo de contraste de todos os nos de texto e das bordas de componentes (todos aprovados: menor valor 4.59 no selo .selo-conta e 4.81 na mensagem de erro; borda do input 3.54 e outline de foco 3.16 contra branco, ambos acima de 3:1); submissao do formulario vazio por clique em Continuar e por Enter no campo CPF (mesma mensagem 'Informe um CPF para continuar.', foco permanece no botao ou no campo, sem live region); digitacao de '111' e nova submissao; cliques em 'Alto Contraste' e 'VLibras'; travessia real por Tab pelos 11 focaveis em ordem de DOM, sem armadilha de teclado, comparando estilos computados antes/depois do foco em cada um; redimensionamento para 320x800 e retorno a 1280x900; teste de espacamento de texto 1.4.12 (line-height 1.5, letter-spacing .12em, word-spacing .16em, margin 2em) sem recorte nem sobreposicao. Console limpo exceto 404 de /favicon.ico. Itens deixados explicitamente como INCERTOS, sem achado, por nao haver referencia normativa que eu consiga justificar sem o oraculo: (1) os botoes .recurso-contraste e .recurso-libras nao alteram classe, atributo nem estilo algum ao serem clicados (o realce azul observado e apenas :hover) - controles inertes nesta build, mas nao consigo decidir se e defeito da tela ou limite do mock; (2) submeter '111' limpa a mensagem de erro e nao produz navegacao, mensagem de sucesso ou qualquer outro estado - beco sem saida, sem comportamento esperado conhecido; (3) .lista-opcoes/.br-item usam div com classes de lista do design system mas sem semantica de lista (nenhum role=list); (4) ausencia de link de pular para o conteudo - so ha 3 focaveis antes de <main> e uma unica pagina, entao nao afirmo 2.4.1; (5) o selo .selo-conta ('SUA CONTA SERA PRATA') nao esta programaticamente vinculado ao link 'Login com seu banco', apenas adjacente no DOM. Limitacao de cobertura: nao foi possivel avaliar estados posteriores do fluxo (nenhuma submissao avanca de tela) nem o modo de alto contraste (o botao nao o ativa).",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [
+        ".link-ajuda",
+        ".acao-continuar"
+      ],
+      "rule": "wcag:2.4.7",
+      "observed": "Os 4 links de outras opcoes de identificacao nao apresentam nenhuma alteracao visual ao receberem foco de teclado. Apos 6 Tab a partir da carga, document.activeElement e o link 'Login com seu banco' com :focus-visible verdadeiro, e outline permanece 'rgb(19, 81, 180) none 2.66667px' e box-shadow 'none' - estilo computado identico ao do estado sem foco (comparacao de outline, outlineWidth, outlineStyle, outlineColor, boxShadow, backgroundColor, color, textDecorationLine, border, filter, transform e opacity nao acusou nenhuma diferenca, e o retangulo do elemento nao muda). A folha da propria tela traz '.link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }'. Uma varredura de todos os a[href], button e input da pagina mostrou que esses 4 links sao os unicos focaveis sem mudanca de estilo no foco: todos os demais recebem outline 4px dashed rgb(194,133,12) (ou box-shadow equivalente, no caso de #cpf).",
+      "expected": "Todo elemento operavel por teclado deve ter um indicador de foco visivel, como o outline 4px dashed rgb(194,133,12) ja aplicado aos demais focaveis da tela.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "pressionar Tab 6 vezes ate o link 'Login com seu banco'"
+        ]
+      },
+      "evidence": [
+        "foco-link-opcao-invisivel.png",
+        "regra CSS '.link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }' em /assets/fluxo-BKj2uGAR.css",
+        "getComputedStyle antes/depois de focus() nos 4 .link-opcao: nenhuma propriedade alterada",
+        "document.activeElement apos 6 Tab: A.link-opcao 'Login com seu banco', matches(':focus-visible') === true"
+      ]
+    },
+    {
+      "selector": ".barra-recursos",
+      "relatedSelectors": [
+        ".recurso-libras",
+        ".barra-superior"
+      ],
+      "rule": "wcag:1.4.10",
+      "observed": "Com a janela em 320x800 (clientWidth 305 CSS px), .barra-recursos tem display:flex e flex-wrap:nowrap sem nenhuma media query, ocupando 353.4px de largura (left 93.3, right 446.7). Isso faz document.scrollWidth valer 447 contra clientWidth 305, gerando barra de rolagem horizontal do documento inteiro, e deixa o botao .recurso-libras ('VLibras') integralmente fora da viewport (left 305.1, right 446.7). Nenhum outro elemento da tela transborda; o conteudo de <main> empilha corretamente.",
+      "expected": "Em 320 CSS px de largura o conteudo deve ser apresentado sem exigir rolagem horizontal, com os controles da barra superior quebrando linha ou colapsando em vez de estourarem a viewport.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 800
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "redimensionar a janela para 320x800"
+        ]
+      },
+      "evidence": [
+        "reflow-320.png",
+        "document.documentElement: clientWidth 305, scrollWidth 447",
+        "getBoundingClientRect de .recurso-libras: {left: 305.1, right: 446.7, width: 141.6}",
+        "regra CSS '.barra-recursos { align-items: center; gap: 16px; display: flex; }' em /assets/fluxo-BKj2uGAR.css, sem regra correspondente em @media"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "Apos submeter o formulario vazio, a tela entra em estado de erro e exibe 'Informe um CPF para continuar.', mas o campo continua sem qualquer marcacao programatica de invalidez: getAttribute('aria-invalid') e null e a borda computada permanece '0.666667px solid rgb(136, 136, 136)', identica a do estado valido. Na arvore de acessibilidade o campo segue anunciado apenas como textbox 'CPF', sem estado invalido. O mesmo ocorre submetendo por clique em Continuar e por Enter dentro do campo.",
+      "expected": "Enquanto o campo estiver em erro, seu estado de invalidez deve ser programaticamente determinavel, por exemplo com aria-invalid=\"true\" em #cpf, removido quando o valor voltar a ser aceito.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "deixar o campo CPF vazio",
+          "acionar o botao Continuar (e, em repeticao independente, pressionar Enter com o foco em #cpf)"
+        ]
+      },
+      "evidence": [
+        "#cpf.getAttribute('aria-invalid') === null no estado de erro",
+        "outerHTML do form no estado de erro: <input id=\"cpf\" class=\"br-input\" inputmode=\"numeric\" placeholder=\"Digite seu CPF\" aria-required=\"true\" type=\"text\" value=\"\">",
+        "getComputedStyle(#cpf).border === '0.666667px solid rgb(136, 136, 136)' antes e depois do erro",
+        "snapshot de acessibilidade do estado de erro: textbox \"CPF\" [ref=e26] sem estado invalid"
+      ]
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [
+        "#cpf"
+      ],
+      "rule": "wcag:3.3.1",
+      "observed": "A mensagem de erro e inserida como <p class=\"mensagem-erro-cpf\">Informe um CPF para continuar.</p>, sem id, sem role e sem aria-live, e o campo nao a referencia: #cpf.getAttribute('aria-describedby') e null e aria-errormessage tambem e null. A pagina inteira nao possui nenhum elemento com aria-live, role=alert ou role=status (document.querySelectorAll('[aria-live],[role=alert],[role=status]').length === 0), e o foco nao se move para a mensagem: permanece no botao Continuar quando o envio e por clique, e em #cpf quando e por Enter. Assim o texto do erro nao e anunciado ao surgir nem exposto ao usuario posicionado no campo.",
+      "expected": "A mensagem de erro deve estar programaticamente ligada ao campo que a originou e ser exposta a tecnologia assistiva, por exemplo dando um id ao paragrafo e referenciando-o em aria-describedby (ou aria-errormessage) de #cpf, e/ou anunciando-o via role=\"alert\".",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "deixar o campo CPF vazio",
+          "acionar o botao Continuar (e, em repeticao independente, pressionar Enter com o foco em #cpf)"
+        ]
+      },
+      "evidence": [
+        "outerHTML do estado de erro: <p class=\"mensagem-erro-cpf\">Informe um CPF para continuar.</p> - unico atributo e class",
+        "#cpf.getAttribute('aria-describedby') === null e getAttribute('aria-errormessage') === null",
+        "document.querySelectorAll('[aria-live],[role=alert],[role=status]').length === 0",
+        "document.activeElement apos submissao por clique: button.br-button.primary.acao-continuar; apos submissao por Enter: input.br-input#cpf"
+      ]
+    }
+  ]
+}

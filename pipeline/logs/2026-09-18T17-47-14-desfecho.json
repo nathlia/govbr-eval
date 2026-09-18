@@ -1,0 +1,29 @@
+{
+  "stamp": "2026-09-18T17-47-14",
+  "status": "concluida",
+  "error": null,
+  "stopReason": null,
+  "stages": {
+    "coleta": "concluida",
+    "linhaDeBase": "concluida",
+    "preparacao": "concluida"
+  },
+  "plan": {
+    "path": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-18T17-47-14-plano.json",
+    "sha256": "c8be5d54aca934691518177d809e537e1911a0f9f368b1d8d47674f756ea438e"
+  },
+  "collectionManifest": {
+    "path": "pipeline/logs/2026-09-18T17-47-14-coleta/manifesto.json",
+    "sha256": "04e70fa0658116c8754820130fc963f82f5c2dbd4b836898e98a190b0ea225e9"
+  },
+  "battery": {
+    "path": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-18T17-47-14-bateria.json",
+    "sha256": "e3a72b8d7c47ce5638725855e3415430b70b7ff4e7ee056c080e029d9515c967"
+  },
+  "baseline": {
+    "path": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-18T17-47-14-linha-de-base.json",
+    "sha256": "43c728c82bf326c7ef92939459053086586e281e85b2aa765592924af9032e67"
+  },
+  "reviewPackage": "F:\\Dev Nath\\TCC\\govbr-eval\\results\\semantic-review\\2026-09-18T17-47-14",
+  "journal": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-18T17-47-14-diario.ndjson"
+}
