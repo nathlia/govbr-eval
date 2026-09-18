@@ -66,6 +66,23 @@ build do oráculo no meio da bateria marca a execução `identity-changed` e int
 execução leva `collectionManifestSha256` no manifesto da bateria e em `config`. Uma interrupção (limite
 de gasto, evidência, identidade) deixa os slots restantes como `nao-tentada`, com o motivo.
 
+### Janela de uso da assinatura (medido em 18/09)
+
+As execuções da bateria e a sessão interativa da autora gastam a MESMA janela. Duas baterias
+pararam no slot 4 por limite — 17/09 23:35 e 18/09 12:54, esta última às 13:03 com 429
+`session limit`, três execuções pagas arquivadas e US$ 3,97 sem série nenhuma. A janela que
+estourou levou US$ 6,37 da bateria completa das 09:15, US$ 0,33 do smoke pareado das 12:48 e
+US$ 3,97 da bateria interrompida, mais o uso interativo.
+
+Escopo full, suíte fluxo, opus-5 `high`: a bateria de 6 slots custa ~US$ 6,4 e leva ~13 min de
+parede. O braço com oráculo sai por US$ 1,35–1,73 e o sem por US$ 0,72–0,97, com 0,5 a 1,16 milhão
+de tokens de leitura de cache por execução. Cabe UMA bateria por janela; a bateria mais a repetição
+dela não cabe.
+
+Enquanto a coleta correr pela assinatura: abrir a janela com a bateria e ficar fora do Claude
+interativo durante os ~13 min. Não há consulta de saldo da janela por linha de comando — o que
+existe é o `-Scope smoke` (~US$ 0,15 por braço) para conferir se o limite já liberou.
+
 Depois da coleta:
 
 - **Linha de base da bateria** → `logs/<stamp>-linha-de-base.json`, nunca sobrescrita, medida contra a

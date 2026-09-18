@@ -68,6 +68,19 @@ foreach ($contract in @(
 if ($runnerText -cmatch '\$DashboardUrl|api/save-flow-results') {
   throw "A measured run must not save through the dashboard (D-40)."
 }
+# O 429 é causa, não sintoma: a execução morta pelo limite também não entrega relatório, e o teste
+# de `sem-relatorio` posto antes gravava falha do coletor no lugar do limite — foi o que aconteceu
+# nas paradas de 17/09 e 18/09. O desfecho e o diário são a única memória do motivo.
+$posLimite = $runnerText.IndexOf('if ($limiteAtingido) {')
+$posSemRelatorio = $runnerText.IndexOf('if ($collectionStatus -eq "sem-relatorio") {')
+if ($posLimite -lt 0 -or $posSemRelatorio -lt 0) { throw "Missing stop-reason branches for spend limit / missing report." }
+if ($posLimite -gt $posSemRelatorio) {
+  throw "The spend-limit branch must be tested before 'sem-relatorio', or a 429 is recorded as a collector failure."
+}
+if (-not $runnerText.Contains('apiErrorStatus = $apiErrorStatus')) {
+  throw "The battery manifest and journal must record the client's api_error_status per slot."
+}
+
 $armConfigs = foreach ($file in @("mcp-com-oraculo.json", "mcp-sem-oraculo.json")) {
   (Get-Content -LiteralPath (Join-Path $PSScriptRoot $file) -Raw | ConvertFrom-Json).mcpServers
 }

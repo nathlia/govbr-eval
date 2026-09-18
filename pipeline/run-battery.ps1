@@ -827,6 +827,7 @@ $stopReason = $null
   # um log vazio e empurrando a bateria para um estado meio-feito. Já aconteceu duas vezes
   # (19/08 e 27/08). Parar aqui preserva o que foi arquivado até agora e deixa o motivo visível.
   $limiteAtingido = $false
+  $apiErrorStatus = $null
   $logJson = $null
   try {
     $logJson = if ($Provider -eq "codex") {
@@ -834,6 +835,7 @@ $stopReason = $null
     } else {
       Get-Content $logFile -Raw | ConvertFrom-Json
     }
+    $apiErrorStatus = $logJson.api_error_status
     if ($logJson.api_error_status -eq 429) {
       $limiteAtingido = $true
       $motivo = $logJson.result
@@ -1023,6 +1025,7 @@ $stopReason = $null
     suite        = $Suite
     archiveDir   = "results/" + $(if ($IsSmoke) { Split-Path $SmokeDir -Leaf } elseif ($armName -eq "sem") { Split-Path $AblacaoDir -Leaf } else { Split-Path $RunsDir -Leaf })
     exitCode     = $exit
+    apiErrorStatus = $apiErrorStatus
     wallClockSeconds = $elapsed
     log          = Split-Path $logFile -Leaf
     stderrLog    = Split-Path $stderrFile -Leaf
@@ -1039,22 +1042,28 @@ $stopReason = $null
     collectionManifestSha256 = $CollectionManifestSha
     startedAt    = $started.ToUniversalTime().ToString("o")
   }
-  Write-Journal "execucao-fim" ([ordered]@{ slot = $runIndex; runId = $runId; exitCode = $exit; collectionStatus = $collectionStatus; archive = $arquivo })
+  Write-Journal "execucao-fim" ([ordered]@{ slot = $runIndex; runId = $runId; exitCode = $exit; apiErrorStatus = $apiErrorStatus; collectionStatus = $collectionStatus; archive = $arquivo })
 
   # Abortar só depois da restauração e do manifesto: parar antes deixaria o agent-results.json
   # sobrescrito pelo POST desta execução e a bateria sem registro do que chegou a rodar.
   if ($collectionStatus -eq "evidence-failed") { $stopReason = "falha na preservação da evidência (slot $runIndex)"; break bateria }
   if ($collectionStatus -eq "identity-changed") { $stopReason = "identidade da coleta alterada (slot $runIndex)"; break bateria }
-  if ($collectionStatus -eq "sem-relatorio") {
-    $stopReason = "o coletor não recebeu relatório da execução do slot $runIndex; os slots restantes não foram gastos"
-    break bateria
-  }
+  # O limite é testado ANTES de `sem-relatorio`: a execução morta pelo 429 também não entrega
+  # relatório, e o teste de baixo vencia. Foi assim que as paradas de 17/09 e 18/09 ficaram
+  # gravadas como falha do coletor, que não tinha culpa nenhuma — e o desfecho e o diário são a
+  # única memória do motivo meses depois.
   if ($limiteAtingido) {
-    $stopReason = "limite de gasto atingido (slot $runIndex)"
+    $semRelatorio = $collectionStatus -eq "sem-relatorio"
+    $stopReason = "limite de gasto atingido (slot $runIndex)" + $(if ($semRelatorio) { "; a execução morreu antes de entregar relatório" } else { "" }) + "; os slots restantes não foram gastos"
     Write-Warn2 "LIMITE DE GASTO ATINGIDO — bateria interrompida na execução $runIndex de $total."
     Write-Warn2 $motivo
+    if ($semRelatorio) { Write-Warn2 "A execução não entregou relatório: é consequência do limite, não falha do coletor." }
     Write-Warn2 "O que já foi arquivado continua válido. Retome quando o limite liberar;"
     Write-Warn2 "'-Scope smoke' custa ~US$ 0,15 e serve para conferir se já liberou."
+    break bateria
+  }
+  if ($collectionStatus -eq "sem-relatorio") {
+    $stopReason = "o coletor não recebeu relatório da execução do slot $runIndex; os slots restantes não foram gastos"
     break bateria
   }
 }
