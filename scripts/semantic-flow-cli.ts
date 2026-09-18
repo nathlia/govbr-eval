@@ -107,10 +107,12 @@ function selectBatteryRuns(battery: Battery, collectionSha: string | null) {
     // dizer qual nem por quê, e num pacote de seis execuções isso manda procurar no escuro — foi o
     // que o ensaio de 17/09 fez perder tempo, com a causa real (nenhum relatório no coletor) a
     // três arquivos de distância.
+    // `nao-tentada` vem antes do código de saída: o runner grava o slot não tentado com
+    // `exitCode: null`, e "código de saída null" esconderia a causa que a mensagem existe para dizer.
     const motivo = entry.suite !== "fluxo" ? `suíte "${entry.suite}", não "fluxo"`
+      : entry.collectionStatus === "nao-tentada" ? "slot não tentado"
       : entry.exitCode !== 0 ? `código de saída ${entry.exitCode}`
       : entry.collectionStatus === "sem-relatorio" ? "o coletor não recebeu relatório desta execução"
-      : entry.collectionStatus === "nao-tentada" ? "slot não tentado"
       : entry.collectionStatus && entry.collectionStatus !== "collected" ? `estado de coleta "${entry.collectionStatus}"`
       : !entry.archive ? "sem arquivo arquivado" : null;
     if (motivo) {

@@ -367,7 +367,7 @@ async function main(): Promise<void> {
       // unattempted slot
       const partial = join(work, "bateria-parcial.json");
       writeJson(partial, { ...battery, execucoes: [{ ...entry, archive: null, exitCode: null, collectionStatus: "nao-tentada" }] });
-      await refuse("unattempted", prepareArgs(join(work, "p9"), ["--baseline", baselinePath], partial), /unattempted/);
+      await refuse("unattempted", prepareArgs(join(work, "p9"), ["--baseline", baselinePath], partial), /Slot 1 \(\w+\) não entra no pacote: slot não tentado/);
       // incomplete accounting against the plan
       const extra = join(work, "bateria-a-mais.json");
       writeJson(extra, { ...battery, execucoes: [entry, { ...entry, slot: 2 }] });
