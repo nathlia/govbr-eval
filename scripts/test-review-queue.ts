@@ -19,9 +19,10 @@ import { checkPlanConformity } from "./collection-manifest";
 import {
   armLeaks, historicalPending, normalizeReviews, prepareSemanticPackage, reviewEffort, reviewQueue,
   scopeReviews, scoreSemanticPackage,
-  type RawReviews, type SemanticPackage, type SemanticReviews,
+  type PrepareRun, type RawReviews, type SemanticPackage, type SemanticReviews,
 } from "./semantic-flow";
 import { renderReview } from "./semantic-flow-render";
+import { buildReport, renderReport } from "./report-flow";
 
 let tests = 0;
 function test(name: string, fn: () => void): void { fn(); tests++; console.log(`ok ${name}`); }
@@ -193,6 +194,59 @@ test("o mesmo slot rodado duas vezes é recusado, mesmo com a contagem certa", (
     /was planned for arm/);
   assert.throws(() => checkPlanConformity([{ arm: "com" }, { slot: 2, arm: "sem" }], plano), /without a slot/);
   checkPlanConformity([{ slot: 2, arm: "sem" }, { slot: 1, arm: "com" }], plano); // ordem não importa
+});
+
+// ── Relatório: uma pontuação, nenhuma fórmula paralela ───────────────────────
+
+function pacoteDeDoisBracos(): SemanticPackage {
+  const execucao = (id: string, arm: string, custo: number, segundos: number, turnos: number): PrepareRun => ({
+    id, kind: "agente",
+    data: { model: "fixture", timestamp: "fixed", appUrl: resolution.url, findings: [achado],
+      config: { arm, instrumentVersion: "fluxo-1.3.0" } as FlowAgentResults["config"],
+      cost: { totalCostUsd: custo, wallClockSeconds: segundos, turns: turnos } as unknown as FlowAgentResults["cost"] },
+  });
+  return prepareSemanticPackage({ referenceHash: "r", sceneHash: "s", scorerHash: "h" }, units, resolution,
+    [execucao("results/runs-fluxo/a.json", "com-oraculo", 1.5, 200, 30),
+     execucao("results/runs-fluxo-ablacao/b.json", "sem-oraculo", 1.0, 150, 20)],
+    { reviewBudget: "2 sessões de 45 min" });
+}
+
+test("o relatório diz PROVISÓRIO enquanto houver cartão sem decisão", () => {
+  const pkg = pacoteDeDoisBracos();
+  const md = renderReport(pkg, buildReport(pkg, scopeReviews(pkg)));
+  assert.match(md, /PROVISÓRIO/);
+  assert.match(md, /Bateria aberta/);
+  assert.ok(!md.includes("Bateria fechada"));
+});
+
+test("o relatório separa braços, cita custo por execução e nunca recalcula métrica", () => {
+  const pkg = pacoteDeDoisBracos();
+  const decisoes: RawReviews = { version: pkg.version, decisions: pkg.cards.map(c => ({
+    cardId: c.id, status: "reviewed" as const, reviewer: "autora", rationale: "conferido",
+    complete: true, evidenceRefs: ["DOM"],
+    atoms: [{ id: "a", text: "defeito do gabarito", subjects: [element.key], decisao: "defeito-do-gabarito" as const,
+      unitIds: [pkg.units[0].id], citation: "supported" as const }],
+  })) };
+  const d = buildReport(pkg, decisoes);
+  const md = renderReport(pkg, d);
+
+  assert.deepEqual(d.bracos, ["com-oraculo", "sem-oraculo"]);
+  const com = d.porBraco.find(b => b.arm === "com-oraculo")!;
+  assert.equal(com.execucoes, 1);
+  assert.equal(com.custoUsd, 1.5);
+  // A métrica vem do scorer, não de conta refeita aqui.
+  assert.equal(com.revocacao.media, d.result.scores.find(s => s.runId.includes("runs-fluxo/"))!.metrics.referenceRecall);
+  assert.match(md, /Bateria fechada/);
+  assert.match(md, /US\$ 1\.5000/);
+  assert.match(md, /Esforço de avaliação — não é custo de operação/);
+  assert.match(md, /2 sessões de 45 min/);
+  assert.match(md, /Nenhum teste/);
+});
+
+test("desvio-padrão é amostral e some quando há uma observação só", () => {
+  const pkg = pacoteDeDoisBracos();
+  const d = buildReport(pkg, scopeReviews(pkg));
+  for (const b of d.porBraco) assert.equal(b.revocacao.desvio, null, "uma execução por braço: não há dispersão a relatar");
 });
 
 console.log(`${tests} review-queue tests passed.`);

@@ -39,7 +39,8 @@
     "test:contract": "tsx scripts/test-flow-contract.ts",
     "test:evidence": "tsx scripts/test-evidence-integrity.ts",
     "test:states": "tsx scripts/test-flow-states.ts",
-    "test:fila": "tsx scripts/test-review-queue.ts"
+    "test:fila": "tsx scripts/test-review-queue.ts",
+    "relatorio:fluxo": "tsx scripts/report-flow.ts"
   },
   "dependencies": {
     "@axe-core/playwright": "4.11.1",
