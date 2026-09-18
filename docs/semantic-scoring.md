@@ -1,4 +1,73 @@
-# Pontuação semântica e revisão finita — flow-semantic-1.3.0
+# Pontuação semântica e revisão finita — flow-semantic-1.4.0
+
+## As três filas, e qual delas fecha a bateria (fatia 5)
+
+| Fila | O que é | O que ela cobra |
+|---|---|---|
+| **Ativa** | cartões desta bateria sem decisão | **Só ela fecha a bateria.** Enquanto houver um, as métricas são provisórias |
+| Histórica | pendências que vieram no `--reuse` e não são cartão desta bateria | Nada desta bateria. Fica contada para não sumir em silêncio |
+| Próxima referência | afirmações `defeito-novo-correto` | Entram na PRÓXIMA versão do gabarito; não mexem no denominador desta |
+
+A fila global não ressuscita: `scopeReviews` devolve exatamente os cartões do pacote preparado. O
+que mudou é que descartar deixou de ser silencioso — `historicalPending` conta o que ficou de fora,
+e `review.md` mostra as três lado a lado. É a diferença entre uma fila pequena e uma fila que parece
+pequena.
+
+## O que a autora escreve
+
+Ela escreve `decisao`, não a categoria contábil:
+
+| `decisao` | Quer dizer | Vira |
+|---|---|---|
+| `defeito-do-gabarito` | acertou um defeito catalogado (nomeie `unitIds`) | `reference` |
+| `defeito-novo-correto` | está certa, mas fora do gabarito | `novel` |
+| `incorreta` | a alegação está errada | `false` |
+| `duplicada` | mesma afirmação de outro átomo (aponte `duplicateOf`) | o veredito do átomo apontado, copiado |
+| `evidencia-insuficiente` | não dá para decidir com o que está aqui | `unresolved` |
+
+`reference`/`novel`/`false`/`unresolved` são o nome do EFEITO no denominador, não o nome do que ela
+viu; exigir que ela os digitasse era pedir que memorizasse contabilidade para revisar. O mapeamento
+é mecânico e falha fechado: palavra desconhecida, ausência de decisão, desacordo entre `decisao` e
+`verdict`, ciclo de duplicata ou `duplicada` sem alvo param a pontuação. O `verdict` interno
+continua aceito — o vocabulário simples é uma via, não um muro.
+
+## Cegueira: o que dá para esconder, e o que não dá
+
+O agente narra as próprias ferramentas. Nos artefatos já arquivados há `"Sem oráculo nem scan_page;
+ids WCAG atribuídos manualmente"` de um lado e `"o oráculo indica como mais próximo --gray-cool-10"`
+do outro — texto DELE, que a revisão precisa poder ler, e que entrega o braço.
+
+`npm run flow:review -- prepare ... --cego` (ou `render --cego`) retém esse texto: `reportedEvidence`
+inteiro e, nos cartões legados, a `description` bruta. Continua à vista tudo que sustenta a decisão —
+observado, esperado, estado, sujeitos, unidades candidatas, predicado medido, evidência preservada
+com sha256. **A retenção é declarada em cada cartão**, porque esconder sem dizer que esconde é pior:
+a revisora precisa saber que existe texto que não está vendo e poder pedi-lo depois de decidir.
+
+`armLeaks` publica quantos cartões contêm termos que nomeiam o braço — o grau de cegueira vira
+número, não promessa. Duas coisas a cegueira **não** alcança, e ficam ditas: `package.json` guarda
+`runs[].config.arm` e o caminho do arquivo da execução (`results/runs-fluxo` vs
+`runs-fluxo-ablacao`). Não abra esse arquivo enquanto decide.
+
+## Esforço e orçamento
+
+`esforco-revisao.json` traz o que dá para contar — cartões, sujeitos, cartões sem evidência
+verificada (custam mais: obrigam a voltar à transcrição) e cartões com unidade candidata — e uma
+estimativa em minutos. **A taxa que produz a estimativa é declarada, não medida:** nenhuma sessão de
+revisão foi cronometrada até aqui, e o objeto diz isso de si mesmo. Quando houver uma sessão
+cronometrada, a taxa é substituída e o número vira medida (D-06).
+
+`--orcamento-revisao "2 sessões de 45 min"` grava o orçamento no pacote ANTES da revisão. Esgotá-lo
+não é permissão para derrubar alegação difícil ou demorada: o não resolvido continua visível e as
+métricas, provisórias.
+
+## A bateria entregue é a planejada
+
+A fatia 6 já conferia a contagem de slots. Contagem não distingue "as duas execuções planejadas" de
+"o slot 1 rodado duas vezes, ficando com a melhor". A preparação agora confere slot a slot contra o
+plano congelado do manifesto de coleta: mesmo slot duas vezes, slot fora do plano, execução sem slot
+ou braço diferente do planejado param a preparação. É a regra "não se roda o agente de novo para
+trocar uma saída difícil, falha ou de pontuação baixa" deixando de ser norma escrita.
+
 
 ## O que mudou
 

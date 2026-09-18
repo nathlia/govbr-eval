@@ -14,11 +14,12 @@ import {
 import { loadVerifiedEvidence, verifyArchivedEvidence, type EvidenceDeclaration } from "./evidence-integrity";
 import { renderReview } from "./semantic-flow-render";
 import {
-  SCORER_FILES, digest, prepareSemanticPackage, resolutionDigest, sceneIdOf, scopeReviews, scoreSemanticPackage,
-  validatePackage, type PrepareRun, type SceneResolution, type SemanticPackage, type SemanticReviews,
+  SCORER_FILES, armLeaks, digest, historicalPending, normalizeReviews, prepareSemanticPackage, resolutionDigest,
+  reviewEffort, reviewQueue, sceneIdOf, scopeReviews, scoreSemanticPackage, validatePackage,
+  type PrepareRun, type RawReviews, type SceneResolution, type SemanticPackage, type SemanticReviews,
 } from "./semantic-flow";
 import {
-  analysisIdentity, compareIdentities, readCollectionManifest, sha256, statePlanOf, statePlanSha256,
+  analysisIdentity, checkPlanConformity, compareIdentities, readCollectionManifest, sha256, statePlanOf, statePlanSha256,
   type CollectionManifest, type StatePlan,
 } from "./collection-manifest";
 import { BASELINE_VERSION, type FlowBaselines } from "./run-baselines-flow";
@@ -61,6 +62,7 @@ interface Battery {
   collectionManifest?: { path: string; sha256: string };
   execucoes: BatteryEntry[];
 }
+
 
 /** Baseline claims become runs of the package: same cards, same review, same matching. */
 function baselineRuns(baseline: FlowBaselines, build: string, steps: string[]): PrepareRun[] {
@@ -138,8 +140,7 @@ async function prepare(): Promise<void> {
   const collection = manifestArg ? readCollectionManifest(resolve(manifestArg)) : null;
   if (collection) {
     if (battery.collectionManifest?.sha256 !== collection.sha256) throw new Error("Battery does not reference this collection manifest");
-    const planned = collection.manifest.plan!.slots.length;
-    if (battery.execucoes.length !== planned) throw new Error(`Battery accounts for ${battery.execucoes.length} of ${planned} planned slots`);
+    checkPlanConformity(battery.execucoes, collection.manifest.plan!.slots);
   }
   const runs = selectBatteryRuns(battery, collection?.sha256 ?? null);
   // One collection contract per package: a legacy run next to a current one would read as if both
@@ -281,10 +282,16 @@ async function prepare(): Promise<void> {
       analysis: analysisIdentity(),
       sourceBattery: { path: relative(ROOT, batteryPath).replaceAll("\\", "/"), sha256: sha256(readFileSync(batteryPath)) },
     };
-    const pkg = prepareSemanticPackage({ referenceHash: digest(gt), sceneHash, scorerHash: scorerHash() },
-      units, scenes, allRuns, { provenance, stateOrder: statesOfGroundTruth(gt)?.map(s => s.id) ?? [] });
     const reuse = option("reuse", false);
-    const reviews = scopeReviews(pkg, reuse ? read<SemanticReviews>(resolve(reuse)) : undefined);
+    const anterior = reuse ? normalizeReviews(read<RawReviews>(resolve(reuse))) : undefined;
+    const orcamento = option("orcamento-revisao", false) ?? undefined;
+    const montar = (carriedOverPending: string[]): SemanticPackage => prepareSemanticPackage(
+      { referenceHash: digest(gt), sceneHash, scorerHash: scorerHash() }, units, scenes, allRuns,
+      { provenance, stateOrder: statesOfGroundTruth(gt)?.map(s => s.id) ?? [], carriedOverPending, reviewBudget: orcamento });
+    // A fila histórica precisa dos cartões desta bateria para saber o que NÃO é dela, e o pacote
+    // precisa da fila para publicá-la. Uma montagem preliminar resolve o ciclo, com os mesmos insumos.
+    const pkg = montar(historicalPending(montar([]), anterior));
+    const reviews = scopeReviews(pkg, anterior);
     // Validate reused decisions BEFORE writing anything.
     scoreSemanticPackage(pkg, reviews);
     mkdirSync(out, { recursive: true });
@@ -305,10 +312,23 @@ async function prepare(): Promise<void> {
       writeFileSync(join(out, `scene-${i}.html`), s.html, { flag: "wx" });
       writeFileSync(join(out, `scene-${i}.png`), s.image, { flag: "wx" });
     });
-    writeFileSync(join(out, "review.md"), renderReview(pkg, reviews), { flag: "wx" });
+    writeFileSync(join(out, "review.md"), renderReview(pkg, reviews, { cego: args.includes("--cego") }), { flag: "wx" });
+    const esforco = reviewEffort(pkg);
+    write(join(out, "esforco-revisao.json"), esforco);
     const agentRuns = runs.length;
     console.log(`Prepared ${agentRuns} agent run(s)${baseline ? " + 2 baseline runs" : ""}, ${pkg.cards.length} unique cards, ` +
       `${units.length} reference units in ${scenes.length} scene(s) → ${out}`);
+    console.log(`Esforço de revisão: ${esforco.cartoes} cartões · ${esforco.sujeitos} sujeitos · ` +
+      `${esforco.semEvidenciaVerificada} sem evidência verificada · ${esforco.comCandidatos} com candidata · ` +
+      `estimativa ${esforco.estimativaMinutos} min (${esforco.taxa})`);
+    console.log(esforco.orcamentoDeclarado
+      ? `Orçamento declarado: ${esforco.orcamentoDeclarado}. Esgotá-lo deixa o não resolvido visível e as métricas provisórias; não derruba alegação.`
+      : "Sem orçamento declarado (--orcamento-revisao). Declare antes de começar, não depois de ver os cartões.");
+    const vazamentos = armLeaks(pkg);
+    if (vazamentos.length) {
+      console.log(`ATENÇÃO — ${vazamentos.length} cartão(ões) com texto que revela o braço. Decida em review.md gerado com --cego,`);
+      console.log(`e não abra package.json durante a decisão: ele guarda config.arm e o caminho do arquivo da execução.`);
+    }
     console.log(`Provenance: ${provenance.kind}${baseline ? "" : ` · no baseline (${provenance.baseline && "absent" in provenance.baseline ? provenance.baseline.absent : ""})`}`);
     console.log("No verdicts invented; no legacy decisions or raw runs changed.");
   } finally {
@@ -323,16 +343,20 @@ async function main(): Promise<void> {
     throw new Error("Usage: semantic-flow-cli.ts prepare --battery FILE --out NEW_DIR --collection-manifest FILE --site-dir DIR\n" +
       "         (--baseline FILE | --no-baseline REASON) [--reference FILE] [--reuse REVIEWS]\n" +
       "       semantic-flow-cli.ts prepare --battery FILE --out NEW_DIR --legacy-reconstruction [--app-url URL] [--reuse REVIEWS]\n" +
-      "       score|render --package FILE --reviews FILE --out NEW_FILE [--require-complete]");
+      "       score|render --package FILE --reviews FILE --out NEW_FILE [--require-complete] [--cego]");
   }
   const pkg = loadPackage(resolve(option("package")!));
-  const reviews = read<SemanticReviews>(resolve(option("reviews")!));
+  // `decisao` (vocabulário da autora) vira `verdict` (categoria contábil) aqui, uma vez, na entrada.
+  const reviews = normalizeReviews(read<RawReviews>(resolve(option("reviews")!)));
   const out = resolve(option("out")!);
   const result = scoreSemanticPackage(pkg, reviews);
-  if (command === "render") writeFileSync(out, renderReview(pkg, reviews), { flag: "wx" });
+  const fila = reviewQueue(pkg, reviews);
+  if (command === "render") writeFileSync(out, renderReview(pkg, reviews, { cego: args.includes("--cego") }), { flag: "wx" });
   else {
-    write(out, { ...result, provenance: pkg.provenance });
+    write(out, { ...result, fila, provenance: pkg.provenance });
     for (const s of result.scores) console.log(`${s.runId}: ${s.status}, ${s.counts.detectedUnits}/${s.counts.referenceUnits} confirmed units, ${s.pendingCardIds.length} unresolved cards`);
+    console.log(`fila ativa (fecha a bateria) ${fila.ativa.cartoes} · histórica de outras baterias ${fila.historica.cartoes} · ` +
+      `descobertas para a próxima referência ${fila.proximaVersao.afirmacoes}`);
     for (const c of result.comparisons) {
       console.log(`${c.agentRunId} × ${c.baseline}: ${c.status} · ambos ${c.counts.both} · só agente ${c.counts.agentOnly} · ` +
         `só linha de base ${c.counts.baselineOnly} · nenhum ${c.counts.neither}`);

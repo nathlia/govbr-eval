@@ -113,6 +113,38 @@ export interface StatePlan {
 }
 
 /** Plano de estados declarado pelo gabarito: o que a coleta e as linhas de base se propõem a observar. */
+/**
+ * A bateria entregue tem de ser a bateria PLANEJADA, slot a slot (fatia 5).
+ *
+ * A regra que isto encarna: não se roda o agente de novo para trocar uma saída difícil, falha ou de
+ * pontuação baixa. A fatia 6 já conferia a CONTAGEM de slots, e contagem não distingue "as duas
+ * execuções planejadas" de "o slot 1 rodado duas vezes, ficando com a melhor". Os slots planejados
+ * vêm do manifesto de coleta, cuja identidade já foi conferida — nunca de um segundo arquivo, para
+ * que não haja duas fontes da mesma verdade.
+ */
+export function checkPlanConformity(
+  execucoes: { slot?: number; arm: string }[],
+  slots: { slot: number; arm: string }[],
+): void {
+  if (execucoes.length !== slots.length) {
+    throw new Error(`Battery accounts for ${execucoes.length} of ${slots.length} planned slots`);
+  }
+  const entregues = execucoes.map(e => e.slot);
+  if (entregues.some(s => s === undefined)) {
+    throw new Error("Battery run without a slot: cannot be checked against the frozen plan");
+  }
+  if (new Set(entregues).size !== entregues.length) {
+    throw new Error("The same plan slot was collected more than once. Do not rerun an agent to replace an output; follow the frozen retry policy.");
+  }
+  for (const e of execucoes) {
+    const planejado = slots.find(s => s.slot === e.slot);
+    if (!planejado) throw new Error(`Run outside the frozen plan (slot ${e.slot}): the plan is frozen before collection`);
+    if (planejado.arm !== e.arm) {
+      throw new Error(`Slot ${e.slot} was planned for arm "${planejado.arm}" and collected as "${e.arm}"`);
+    }
+  }
+}
+
 export function statePlanOf(gt: {
   _meta: { url: string; viewport?: { width: number; height: number }; setup?: unknown[]; waitFor?: string };
   violations: { id: string; viewport?: { width: number; height: number } }[];

@@ -19,6 +19,14 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
     decide em `reviews.json`, e `npm run score:fluxo` pontua o pacote offline
     (`flow-semantic-1.3.0`). Seletor e regra só geram candidatos: nenhuma alegação vira crédito sem
     decisão. Ver `docs/semantic-scoring.md`.
+  - **fatia 5:** a fila é finita e declarada. `review.md` publica TRÊS filas — ativa desta bateria (a
+    única que a fecha), histórica de outras, e descobertas para a próxima referência. A autora escreve
+    `decisao` (`defeito-do-gabarito` · `defeito-novo-correto` · `incorreta` · `duplicada` ·
+    `evidencia-insuficiente`) e a contabilidade é derivada. `--cego` retém o texto livre em que o
+    agente narra as próprias ferramentas e declara a retenção; `armLeaks` diz quantos cartões o
+    denunciam. `--orcamento-revisao` grava o orçamento antes da revisão, e `esforco-revisao.json` traz
+    a estimativa com a taxa declarada como não medida. A bateria é conferida slot a slot contra o
+    plano congelado. Testes: `test:fila`.
   - **fatia 3:** o estado deixa de ser rótulo. `_meta.states` nomeia as paradas do `setup`, as
     âncoras são resolvidas em CADA uma, e a unidade carrega os estados medidos. Aditividade da
     sequência, `state: "sempre"` e `conditional` passam a ser cobrados contra a página — falhar

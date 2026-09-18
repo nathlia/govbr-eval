@@ -111,6 +111,17 @@ export interface SemanticPackage {
   units: SemanticUnit[];
   cards: ReviewCard[];
   runs: SemanticRun[];
+  /**
+   * O que a fila desta bateria herdou, e o que ela declaradamente NÃO cobra (fatia 5).
+   *
+   * `carriedOverPending` são decisões que vieram no arquivo de reuso, continuavam pendentes e não
+   * pertencem a esta bateria. Elas não entram na fila ativa — é isso que impede a fila global de
+   * ressuscitar — mas some-las em silêncio seria fingir que não existem. Ficam contadas à parte.
+   *
+   * `reviewBudget` é o orçamento de trabalho declarado ANTES da revisão. Esgotá-lo nunca derruba
+   * alegação: deixa o não resolvido visível e as métricas provisórias.
+   */
+  queue: { carriedOverPending: string[]; reviewBudget: string | null };
   packageHash: string;
 }
 export interface ReviewAtom {
@@ -124,6 +135,8 @@ export interface ReviewAtom {
   citation: "supported" | "unsupported" | "uncertain";
   /** Explicit reviewer equivalence, never inferred from similar text or rule aliases. */
   duplicateOf?: { cardId: string; atomId: string };
+  /** O que a autora escreveu, preservado ao lado do veredito contábil que dele resultou. */
+  decisao?: DecisaoSimples;
 }
 export interface SemanticDecision {
   cardId: string;
@@ -148,6 +161,75 @@ export interface SemanticDecision {
 export interface SemanticReviews {
   version: typeof SEMANTIC_SCORING_VERSION;
   decisions: SemanticDecision[];
+}
+
+/**
+ * O vocabulário que a autora escreve (fatia 5).
+ *
+ * Antes ela digitava a categoria contábil — `reference`, `novel`, `false`, `unresolved` — que é o
+ * nome do EFEITO no denominador, não o nome do que ela viu. Memorizar contabilidade para revisar é
+ * exatamente o que o plano pede para não exigir. Aqui ela diz o que viu; o mapeamento é mecânico e
+ * fica registrado no próprio átomo.
+ *
+ * `duplicada` não é veredito: é a mesma afirmação já decidida noutro cartão. O veredito vem do
+ * átomo apontado por `duplicateOf`, copiado por esta normalização — nunca adivinhado.
+ */
+export const DECISOES = {
+  "defeito-do-gabarito": "reference",
+  "defeito-novo-correto": "novel",
+  "incorreta": "false",
+  "evidencia-insuficiente": "unresolved",
+  "duplicada": null,
+} as const;
+export type DecisaoSimples = keyof typeof DECISOES;
+
+/** Um átomo como ele chega do `reviews.json`: com `decisao`, com `verdict`, ou com os dois. */
+export interface RawReviewAtom extends Omit<ReviewAtom, "verdict"> {
+  decisao?: DecisaoSimples;
+  verdict?: ReviewAtom["verdict"];
+}
+export interface RawReviews {
+  version: typeof SEMANTIC_SCORING_VERSION;
+  decisions: (Omit<SemanticDecision, "atoms"> & { atoms: RawReviewAtom[] })[];
+}
+
+/**
+ * Resolve `decisao` em `verdict`. Falha fechado: vocabulário desconhecido, ausência dos dois, ou
+ * desacordo entre eles param a pontuação em vez de escolher um.
+ */
+export function normalizeReviews(raw: RawReviews | SemanticReviews): SemanticReviews {
+  const porAtomo = new Map<string, RawReviewAtom>();
+  const chaveDe = (cardId: string, atomId: string): string => JSON.stringify([cardId, atomId]);
+  for (const d of raw.decisions) for (const a of d.atoms as RawReviewAtom[]) porAtomo.set(chaveDe(d.cardId, a.id), a);
+
+  const resolve = (a: RawReviewAtom, trilha: string[]): ReviewAtom["verdict"] => {
+    if (a.decisao !== undefined) {
+      requireThat(a.decisao in DECISOES, `Decisão desconhecida "${a.decisao}" em ${a.id}; use: ${Object.keys(DECISOES).join(", ")}`);
+      const mapeado = DECISOES[a.decisao];
+      if (mapeado !== null) {
+        requireThat(a.verdict === undefined || a.verdict === mapeado,
+          `Decisão "${a.decisao}" e verdict "${a.verdict}" discordam em ${a.id}`);
+        return mapeado;
+      }
+      // duplicada: o veredito é o do átomo original, copiado e nunca inferido.
+      requireThat(a.duplicateOf, `Decisão "duplicada" exige duplicateOf em ${a.id}`);
+      const chave = chaveDe(a.duplicateOf!.cardId, a.duplicateOf!.atomId);
+      requireThat(!trilha.includes(chave), `Ciclo de duplicata em ${a.id}`);
+      const alvo = porAtomo.get(chave);
+      requireThat(alvo, `duplicateOf aponta para átomo inexistente em ${a.id}`);
+      return resolve(alvo!, [...trilha, chave]);
+    }
+    requireThat(a.verdict, `Átomo sem decisao nem verdict: ${a.id}`);
+    return a.verdict!;
+  };
+
+  return structuredClone({
+    version: raw.version,
+    decisions: raw.decisions.map(d => ({ ...d, atoms: (d.atoms as RawReviewAtom[]).map(a => {
+      const verdict = d.status === "pending" ? undefined : resolve(a, [chaveDe(d.cardId, a.id)]);
+      return { ...a, ...(verdict ? { verdict } : {}) } as ReviewAtom;
+    }) })),
+  });
 }
 
 export interface SceneResolution { id: string; viewport: FlowViewport; specIds: string[]; resolution: Resolution }
@@ -194,7 +276,7 @@ export function prepareSemanticPackage(
   context: SemanticPackage["context"],
   units: (FlowUnit & { scene?: string })[], res: Resolution | SceneResolution[],
   runs: PrepareRun[],
-  options: { provenance?: unknown; stateOrder?: string[] } = {},
+  options: { provenance?: unknown; stateOrder?: string[]; carriedOverPending?: string[]; reviewBudget?: string } = {},
 ): SemanticPackage {
   // Ordem declarada dos estados, do primeiro paint em diante. Vem de fora porque é o gabarito que a
   // declara: deduzi-la das unidades erraria justamente nas que só existem depois de uma interação.
@@ -279,7 +361,9 @@ export function prepareSemanticPackage(
   requireThat(new Set(semanticRuns.map(r => r.id)).size === runs.length, "Duplicate run id");
   const body: Omit<SemanticPackage, "packageHash"> = { version: SEMANTIC_SCORING_VERSION, context,
     provenance: options.provenance ?? null, scenes: semanticScenes, units: semanticUnits,
-    cards: [...cardMap.values()].sort((a, b) => compare(a.id, b.id)), runs: semanticRuns };
+    cards: [...cardMap.values()].sort((a, b) => compare(a.id, b.id)), runs: semanticRuns,
+    queue: { carriedOverPending: unique(options.carriedOverPending ?? []).sort(compare),
+      reviewBudget: options.reviewBudget ?? null } };
   return structuredClone({ ...body, packageHash: digest(body) });
 }
 
@@ -332,6 +416,112 @@ export function validatePackage(pkg: SemanticPackage): void {
 
 export function pendingDecision(cardId: string): SemanticDecision {
   return { cardId, status: "pending", reviewer: "", rationale: "", complete: false, evidenceRefs: [], atoms: [] };
+}
+
+/**
+ * Decisões que vieram no arquivo de reuso, continuavam PENDENTES e não são cartão desta bateria.
+ *
+ * `scopeReviews` as descarta, e é assim que a fila global não ressuscita. Mas descartar em silêncio
+ * faria a fila parecer menor do que a dívida real do projeto. Aqui elas são contadas — à parte, sem
+ * cobrar nada desta bateria (a regra do 5: só a fila ativa fecha a bateria).
+ */
+export function historicalPending(pkg: SemanticPackage, old?: SemanticReviews): string[] {
+  if (!old) return [];
+  const desta = new Set(pkg.cards.map(c => c.id));
+  return old.decisions.filter(d => d.status === "pending" && !desta.has(d.cardId)).map(d => d.cardId).sort(compare);
+}
+
+/**
+ * As três filas, lado a lado (fatia 5).
+ *
+ * Só `ativa` fecha a bateria. `historica` é dívida declarada de outras baterias, e `proximaVersao`
+ * são descobertas corretas fora da referência congelada: elas entram na PRÓXIMA versão do gabarito
+ * e não mexem no denominador desta — é a regra que impede o laço sem fim de reabrir o corpus a cada
+ * defeito novo encontrado.
+ */
+export interface ReviewQueue {
+  ativa: { cartoes: number; cardIds: string[] };
+  historica: { cartoes: number; cardIds: string[] };
+  proximaVersao: { afirmacoes: number; cardIds: string[] };
+  fechaABateria: "ativa";
+}
+
+export function reviewQueue(pkg: SemanticPackage, reviews: SemanticReviews): ReviewQueue {
+  const byCard = new Map(reviews.decisions.map(d => [d.cardId, d]));
+  const ativa = pkg.cards.filter(c => (byCard.get(c.id)?.status ?? "pending") === "pending").map(c => c.id);
+  const novos = reviews.decisions.filter(d => d.status === "reviewed" && d.atoms.some(a => a.verdict === "novel"));
+  return {
+    ativa: { cartoes: ativa.length, cardIds: ativa },
+    historica: { cartoes: pkg.queue.carriedOverPending.length, cardIds: [...pkg.queue.carriedOverPending] },
+    proximaVersao: { afirmacoes: novos.reduce((n, d) => n + d.atoms.filter(a => a.verdict === "novel").length, 0),
+      cardIds: novos.map(d => d.cardId).sort(compare) },
+    fechaABateria: "ativa",
+  };
+}
+
+/**
+ * Quanto trabalho a fila representa, e quanto dele é declarado em vez de medido (fatia 5).
+ *
+ * Os quatro primeiros campos são CONTAGENS — cartões, sujeitos, cartões sem evidência verificada
+ * (que custam mais porque obrigam a voltar à transcrição) e cartões com unidade candidata. A
+ * estimativa em minutos é o único número derivado, e a taxa que a produz é DECLARADA, nunca
+ * medida: ninguém cronometrou ainda uma sessão de revisão deste instrumento. Fica dito no próprio
+ * objeto para que o número não seja lido como medida — quando houver uma sessão cronometrada, a
+ * taxa é substituída por ela e isto vira medida de verdade (D-06).
+ */
+export const TAXA_REVISAO = {
+  minutosPorCartao: 3,
+  minutosExtraSemEvidencia: 3,
+  procedencia: "DECLARADA, não medida: nenhuma sessão de revisão foi cronometrada até aqui",
+} as const;
+
+export interface ReviewEffort {
+  cartoes: number;
+  sujeitos: number;
+  semEvidenciaVerificada: number;
+  comCandidatos: number;
+  estimativaMinutos: number;
+  taxa: string;
+  orcamentoDeclarado: string | null;
+}
+
+export function reviewEffort(pkg: SemanticPackage): ReviewEffort {
+  const semEvidencia = pkg.cards.filter(c => !c.evidence.some(e => e.status === "encontrado"));
+  const estimativa = pkg.cards.length * TAXA_REVISAO.minutosPorCartao
+    + semEvidencia.length * TAXA_REVISAO.minutosExtraSemEvidencia;
+  return {
+    cartoes: pkg.cards.length,
+    sujeitos: pkg.cards.reduce((n, c) => n + c.subjects.length, 0),
+    semEvidenciaVerificada: semEvidencia.length,
+    comCandidatos: pkg.cards.filter(c => c.candidateUnitIds.length > 0).length,
+    estimativaMinutos: estimativa,
+    taxa: `${TAXA_REVISAO.minutosPorCartao} min/cartão +${TAXA_REVISAO.minutosExtraSemEvidencia} sem evidência — ${TAXA_REVISAO.procedencia}`,
+    orcamentoDeclarado: pkg.queue.reviewBudget,
+  };
+}
+
+/**
+ * Termos que denunciam o braço no texto livre de um cartão.
+ *
+ * O agente narra as próprias ferramentas — "Sem oráculo nem scan_page", "o oráculo indica como mais
+ * próximo --gray-cool-10" —, e esse texto é dele, não do instrumento: não dá para proibi-lo sem
+ * perder a limitação declarada que a revisão precisa ler. O que dá é DIZER onde ele está. A
+ * renderização cega retém esse texto; esta função conta o que foi retido, para que o grau de cegueira
+ * do pacote seja um número publicado e não uma promessa.
+ */
+const TERMOS_DO_BRACO = [
+  "oráculo", "oraculo", "scan_page", "get_ds_rules", "get_component_spec", "verify_finding",
+  "get_design_tokens", "check_token_compliance", "mcp", "com-oraculo", "sem-oraculo", "validator",
+];
+
+export function armLeaks(pkg: SemanticPackage): { cardId: string; termos: string[] }[] {
+  const out: { cardId: string; termos: string[] }[] = [];
+  for (const c of pkg.cards) {
+    const texto = canonical({ d: c.description, r: c.reportedEvidence, o: c.observed, e: c.expected }).toLowerCase();
+    const termos = TERMOS_DO_BRACO.filter(t => texto.includes(t));
+    if (termos.length) out.push({ cardId: c.id, termos });
+  }
+  return out;
 }
 
 /** Reuses only content/context-addressed cards. Other batteries never create work here. */

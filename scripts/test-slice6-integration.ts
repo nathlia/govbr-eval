@@ -372,6 +372,15 @@ async function main(): Promise<void> {
       const extra = join(work, "bateria-a-mais.json");
       writeJson(extra, { ...battery, execucoes: [entry, { ...entry, slot: 2 }] });
       await refuse("slot accounting", prepareArgs(join(work, "p10"), ["--baseline", baselinePath], extra), /accounts for 2 of 1 planned slots/);
+      // fatia 5: um slot que o plano não tem é execução fora do plano congelado
+      const foraDoPlano = join(work, "bateria-fora-do-plano.json");
+      writeJson(foraDoPlano, { ...battery, execucoes: [{ ...entry, slot: 9 }] });
+      await refuse("slot fora do plano", prepareArgs(join(work, "p14"), ["--baseline", baselinePath], foraDoPlano),
+        /outside the frozen plan/);
+      const bracoTrocado = join(work, "bateria-braco-trocado.json");
+      writeJson(bracoTrocado, { ...battery, execucoes: [{ ...entry, arm: entry.arm === "sem" ? "com" : "sem" }] });
+      await refuse("braço diferente do planejado", prepareArgs(join(work, "p15"), ["--baseline", baselinePath], bracoTrocado),
+        /was planned for arm|Archive arm\/directory mismatch/);
       // archived reference tampering
       const archivedRef = join(ROOT, manifest.archive!.reference.path);
       const original = readFileSync(archivedRef);
