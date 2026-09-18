@@ -1,0 +1,29 @@
+{
+  "stamp": "2026-09-17T23-35-57",
+  "status": "interrompida",
+  "error": null,
+  "stopReason": "o coletor não recebeu relatório da execução do slot 4; os slots restantes não foram gastos",
+  "stages": {
+    "coleta": "interrompida",
+    "linhaDeBase": "concluida",
+    "preparacao": "bloqueada (coleta interrompida)"
+  },
+  "plan": {
+    "path": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-35-57-plano.json",
+    "sha256": "af0f439b15122fa5f6b65ede949d8fa43b83bb7e0e12d9e6f8d72e7bedf1e20d"
+  },
+  "collectionManifest": {
+    "path": "pipeline/logs/2026-09-17T23-35-57-coleta/manifesto.json",
+    "sha256": "fad5beb23a19910c3d6e7f54b0d1733c0c7869a4edad92133778ae38a1d63e09"
+  },
+  "battery": {
+    "path": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-35-57-bateria.json",
+    "sha256": "e48fc3f446b1b5d6ae11bbc084d5380869b9f45aff57463e4abfa5f40064c55f"
+  },
+  "baseline": {
+    "path": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-35-57-linha-de-base.json",
+    "sha256": "de0e01256abeec68abedaea4bd1be58a5b8486d340631557ff26b20330fc5193"
+  },
+  "reviewPackage": null,
+  "journal": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-35-57-diario.ndjson"
+}

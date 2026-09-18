@@ -1,0 +1,16 @@
+{"at":"2026-09-18T02:37:24.6734677Z","event":"plano-congelado","data":{"path":"F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-35-57-plano.json","sha256":"af0f439b15122fa5f6b65ede949d8fa43b83bb7e0e12d9e6f8d72e7bedf1e20d"}}
+{"at":"2026-09-18T02:37:30.1392792Z","event":"manifesto-gravado","data":{"path":"pipeline/logs/2026-09-17T23-35-57-coleta/manifesto.json","sha256":"fad5beb23a19910c3d6e7f54b0d1733c0c7869a4edad92133778ae38a1d63e09"}}
+{"at":"2026-09-18T02:37:30.1420917Z","event":"execucao-inicio","data":{"slot":1,"arm":"com","repetition":1}}
+{"at":"2026-09-18T02:39:51.8768925Z","event":"execucao-fim","data":{"slot":1,"runId":"2026-09-17T23-35-57-com-run1-25290bc4","exitCode":0,"collectionStatus":"collected","archive":"agent-2026-09-17T23-35-57-com-run1-25290bc4.json"}}
+{"at":"2026-09-18T02:39:51.8888900Z","event":"execucao-inicio","data":{"slot":2,"arm":"sem","repetition":1}}
+{"at":"2026-09-18T02:41:42.6665960Z","event":"execucao-fim","data":{"slot":2,"runId":"2026-09-17T23-35-57-sem-run1-177ec248","exitCode":0,"collectionStatus":"collected","archive":"agent-2026-09-17T23-35-57-sem-run1-177ec248.json"}}
+{"at":"2026-09-18T02:41:42.6676097Z","event":"execucao-inicio","data":{"slot":3,"arm":"sem","repetition":2}}
+{"at":"2026-09-18T02:43:09.8014516Z","event":"execucao-fim","data":{"slot":3,"runId":"2026-09-17T23-35-57-sem-run2-3f385316","exitCode":0,"collectionStatus":"collected","archive":"agent-2026-09-17T23-35-57-sem-run2-3f385316.json"}}
+{"at":"2026-09-18T02:43:09.8023847Z","event":"execucao-inicio","data":{"slot":4,"arm":"com","repetition":2}}
+{"at":"2026-09-18T02:43:14.6839993Z","event":"execucao-fim","data":{"slot":4,"runId":"2026-09-17T23-35-57-com-run2-411fba0a","exitCode":1,"collectionStatus":"sem-relatorio","archive":null}}
+{"at":"2026-09-18T02:43:14.6863819Z","event":"nao-tentada","data":{"slot":5,"arm":"com","repetition":3,"motivo":"o coletor não recebeu relatório da execução do slot 4; os slots restantes não foram gastos"}}
+{"at":"2026-09-18T02:43:14.6923030Z","event":"nao-tentada","data":{"slot":6,"arm":"sem","repetition":3,"motivo":"o coletor não recebeu relatório da execução do slot 4; os slots restantes não foram gastos"}}
+{"at":"2026-09-18T02:43:14.7049330Z","event":"coleta-fim","data":{"status":"interrompida","motivo":"o coletor não recebeu relatório da execução do slot 4; os slots restantes não foram gastos","manifest":"F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-35-57-bateria.json"}}
+{"at":"2026-09-18T02:43:14.7318370Z","event":"estagio-inicio","data":{"stage":"linha-de-base","out":"F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-35-57-linha-de-base.json"}}
+{"at":"2026-09-18T02:43:39.2186992Z","event":"estagio-fim","data":{"stage":"linha-de-base","status":"concluida","exitCode":0,"file":"2026-09-17T23-35-57-linha-de-base.json","sha256":"de0e01256abeec68abedaea4bd1be58a5b8486d340631557ff26b20330fc5193"}}
+{"at":"2026-09-18T02:43:39.3641272Z","event":"desfecho","data":{"status":"interrompida"}}

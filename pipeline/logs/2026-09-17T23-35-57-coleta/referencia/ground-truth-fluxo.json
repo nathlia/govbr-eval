@@ -1,0 +1,294 @@
+{
+  "_meta": {
+    "version": "1.6.0",
+    "version_note": "1.6.0 (2026-09-17, fatia 3): entra `_meta.states`, que nomeia as paradas da sequência de setup (`inicial`, `apos-submit-vazio`) e transforma o campo `state` de cada spec, até aqui um rótulo que nenhum código lia, em algo que a página responde. Nenhuma spec, âncora, regra ou contagem muda: seguem 12 specs e 25 unidades, e por isso quem anda é a versão do GABARITO e não a do instrumento — mesmo precedente do D-31, do D-33 e do campo `viewport` em 1.5.0. O que muda é o que passa a ser COBRADO: a aditividade da sequência (elemento ancorado que desapareça num estado posterior para a construção), specs \"sempre\" ausentes em algum estado, e specs `conditional` (V-03b, V-09) que já existissem no primeiro paint. 1.5.0 (2026-09-14, D-35): a dívida da adjudicação de 11.9/12.7 é paga. Entram V-10 (âncora de salto ausente, e-MAG 1.5), V-11 (obrigatoriedade sem marca visual, e-MAG 6.5) e V-12 (barra inutilizável a 320px, regra normativa `required`). 9 specs -> 12, 22 unidades -> 25. A V-11 ancora em emag:6.5 e NÃO em wcag:3.3.2, que já é unidade da V-02 — e não em emag:6.3, identificador que a alegação original citou porque o oráculo servia a 6.3 com a descrição da 6.5 até o validator 2.3.0 (D-14). A V-12 estreia o campo `viewport`: o defeito só existe a 320px, e a linha de base roda uma passada por viewport declarado em vez de cobrar do axe o que ele não teria como ver. O campo é INERTE para as 11 specs que não o declaram, e por isso quem anda é a versão do GABARITO, não a do instrumento — mesmo precedente do D-31 e do D-33. 1.4.0 (2026-09-09, D-33): V-04 passa de `unico` para `composicao`. A âncora nomeia os CINCO participantes do defeito (contêiner + quatro `.br-item`) e a spec segue valendo UMA unidade: 22 unidades a partir de 9 specs, exatamente como em 1.3.0. Antes, a spec ancorava só no contêiner e a leitura correta — dizer que os itens não carregam papel de item de lista — não casava em passo nenhum, devolvendo 0 TP e cobrando falso positivo. Mesma espécie de correção que o D-31 fez na V-06, e por isso a versão que anda é a do GABARITO: o scope novo é inerte para toda spec que não o declara, e a execução arquivada reproduziu os números de 1.3.0 sem uma casa decimal de diferença. 1.3.0 (2026-09-09, D-32): V-07 sai do gabarito. A escala tipográfica deixou de sustentar achado no oráculo — a única regra da KB sobre tamanho de fonte é informativa, e afirmar violação binária sobre 0,66px fazia o veredito depender de onde se corta a tolerância, não da norma. O desvio continua sendo reportado como observação; deixa de ser cobrado. Duas outras unidades de `ds:token-font-size` que a auditoria do 13.5 encontrou (dois h2 em 16px) NÃO entraram, pela mesma razão. 22 unidades a partir de 9 specs. 1.2.0 (2026-09-04, D-31): V-06 passa de `unico` para `todos` com 8 elementos. Números publicados antes daquela versão foram medidos contra o gabarito 1.1.0, com 16 unidades, e não se comparam diretamente com os de agora.",
+    "page": "Identificação no gov.br — tela de fluxo (D-23)",
+    "url": "/fluxo.html",
+    "waitFor": "#cpf",
+    "suite": "fluxo",
+    "ds": "gov.br Design System 3.7.0",
+    "unit_of_evaluation": "(elemento × regra): o elemento é a chave canônica que anchors.ts deriva da árvore da página, não um id de seção. Uma spec com scope \"todos\" vira uma unidade por elemento resolvido.",
+    "setup": [
+      {
+        "action": "click",
+        "selector": ".acao-continuar"
+      },
+      {
+        "action": "wait",
+        "selector": ".mensagem-erro-cpf"
+      }
+    ],
+    "setup_rationale": "Submeter com o CPF em branco faz nascer a mensagem de erro. A sequência é ADITIVA: nada que o gabarito ancora deixa de existir, então um único estado da página serve aos dois lados da resolução. Isto DEIXOU DE SER PREMISSA: `_meta.states` declara as paradas, a preparação resolve as âncoras em cada uma, e a construção para se um elemento ancorado desaparecer, se uma spec \"sempre\" faltar em algum estado, ou se uma spec `conditional` já existir antes do estado que declara (D-06).",
+    "nunca_agregar_com": "ground-truth.json (suíte TC-*) e organic-ground-truth.json — instrumentos diferentes sobre páginas diferentes (D-13)",
+    "baselines": "MEDIDAS em results/baselines-fluxo.json — REMEDIR com `npm run baselines:fluxo` a cada mudança de gabarito; herdar linha de base é assumi-la (D-06). O histórico da própria tela mostra por quê: 8/16 no gabarito 1.1.0, 10/23 no 1.2.0 quando V-06 virou `scope: todos`, e agora o 1.3.0 remove uma unidade que o validator detectava (V-07).",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "states": [
+      {
+        "id": "inicial",
+        "afterStep": 0,
+        "note": "primeiro paint, depois do waitFor e antes de qualquer interação"
+      },
+      {
+        "id": "apos-submit-vazio",
+        "afterStep": 2,
+        "note": "depois do submit com o CPF em branco; a mensagem de erro nasce aqui"
+      }
+    ]
+  },
+  "violations": [
+    {
+      "id": "V-01",
+      "anchor": ".opcao-identificacao",
+      "scope": "todos",
+      "expectedCount": 4,
+      "state": "sempre",
+      "rules": [
+        "ds:token-spacing"
+      ],
+      "categories": [
+        "token"
+      ],
+      "description": "padding computado de 13px em TODAS as quatro opções de identificação — fora da escala de espaçamento do DS (0 / 4px / 8px / 16px). Caso decisivo do D-23: como as quatro instâncias são idênticas, a comparação com os irmãos não acusa nada; só a norma externa dá veredito.",
+      "acceptance": {
+        "kind": "estilo-computado",
+        "properties": [
+          "padding-top",
+          "padding-right",
+          "padding-bottom",
+          "padding-left"
+        ],
+        "allowed": [
+          "0px",
+          "4px",
+          "8px",
+          "16px"
+        ],
+        "quantifier": "alguma"
+      }
+    },
+    {
+      "id": "V-02",
+      "anchor": "#cpf",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "wcag:1.3.1",
+        "wcag:3.3.2",
+        "emag:6.2"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "description": "o campo de CPF tem texto de apoio visível (\"Digite seu CPF para criar ou acessar sua conta gov.br\") que não está associado ao campo por aria-describedby. Regra CONDICIONAL: só existe porque há texto de apoio — um campo sem apoio não a viola.",
+      "acceptance": {
+        "kind": "atributos-ausentes",
+        "attributes": [
+          "aria-describedby"
+        ]
+      }
+    },
+    {
+      "id": "V-03a",
+      "anchor": "#cpf",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "wcag:3.3.1"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "description": "o campo de CPF não identifica programaticamente o estado de erro (sem aria-invalid e sem associação estável por aria-describedby). Esta unidade existe em todo estado e ancora no controle que o usuário opera.",
+      "acceptance": {
+        "kind": "atributos-ausentes",
+        "attributes": [
+          "aria-invalid",
+          "aria-describedby"
+        ]
+      }
+    },
+    {
+      "id": "V-03b",
+      "anchor": ".mensagem-erro-cpf",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "apos-submit-vazio",
+      "conditional": true,
+      "rules": [
+        "wcag:4.1.3",
+        "emag:6.6"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "description": "a mensagem de erro do CPF é inserida sem role=\"alert\" nem aria-live: leitor de tela não anuncia. Unidade CONDICIONAL — só existe depois de submeter o campo vazio, estado produzido pelo setup do gabarito.",
+      "acceptance": {
+        "kind": "atributos-ausentes",
+        "attributes": [
+          "role",
+          "aria-live"
+        ]
+      }
+    },
+    {
+      "id": "V-04",
+      "anchor": ".lista-opcoes, .lista-opcoes > .br-item",
+      "scope": "composicao",
+      "expectedCount": 1,
+      "participantCount": 5,
+      "state": "sempre",
+      "rules": [
+        "wcag:1.3.1",
+        "ds:item-content"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "description": "o contêiner usa a classe .br-list e os filhos usam .br-item, mas nenhum carrega role=\"list\"/role=\"listitem\" nem é <ul>/<li>: a semântica de lista existe visualmente e não na árvore de acessibilidade. Defeito de COMPOSIÇÃO — cada componente está certo isolado, o conjunto não. Escopo corrigido de `unico` para `composicao` em 2026-09-09 (D-33): a âncora passa a nomear os CINCO participantes (o contêiner e os quatro `.br-item`), e a spec segue valendo UMA unidade. Ancorando só no contêiner, a leitura correta — dizer que os itens não têm papel de item de lista — não casava em nenhum passo e era cobrada como falso positivo. `todos` não serve aqui: a semântica de lista é propriedade do conjunto e um único conserto a repara, então quatro créditos premiariam enumerar."
+    },
+    {
+      "id": "V-05",
+      "anchor": ".link-opcao",
+      "scope": "todos",
+      "expectedCount": 4,
+      "state": "sempre",
+      "rules": [
+        "ds:token-focus",
+        "wcag:2.4.7",
+        "emag:4.4"
+      ],
+      "categories": [
+        "token",
+        "acessibilidade"
+      ],
+      "description": "indicador de foco suprimido (outline: none + box-shadow: none) nos QUATRO links de opção. Segunda violação compartilhada: navegando por teclado, nenhum dos irmãos contradiz o outro."
+    },
+    {
+      "id": "V-06",
+      "anchor": ".barra-superior, .painel-institucional, .cartao-identificacao, .lista-opcoes, .opcao-identificacao",
+      "scope": "todos",
+      "expectedCount": 8,
+      "state": "sempre",
+      "deterministicBaseline": true,
+      "rules": [
+        "ds:token-color"
+      ],
+      "categories": [
+        "token"
+      ],
+      "description": "a variável autoral `--tela-borda: #dee2e6` em fluxo.css não corresponde a token do gov.br DS (o mais próximo é --gray-cool-10, #dfe1e2) e pinta a borda de OITO elementos: barra superior, painel institucional, cartão de identificação, lista de opções e as quatro opções. Terceira violação compartilhada da tela, ao lado de V-01 e V-05 — a maior das três. Escopo corrigido de `unico` para `todos` em 2026-09-04 (D-31): o defeito sempre foi compartilhado, e catalogar só `.lista-opcoes` cobrava como falso positivo a enumeração correta dos irmãos.",
+      "acceptance": {
+        "kind": "cor-de-borda-pintada",
+        "forbidden": [
+          "rgb(222, 226, 230)"
+        ],
+        "note": "--tela-borda: #dee2e6 em fluxo.css; o token mais próximo do DS é --gray-cool-10 (#dfe1e2). Só bordas PINTADAS contam: os lados de largura 0px herdam a cor do texto e não aparecem na tela."
+      }
+    },
+    {
+      "id": "V-08",
+      "anchor": "input#cpf.br-input",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "deterministicBaseline": true,
+      "rules": [
+        "ds:structure-input-tag"
+      ],
+      "categories": [
+        "estrutura"
+      ],
+      "description": "a classe raiz .br-input aparece indevidamente no próprio <input>, além do contêiner <div class=\"br-input\"> canônico. Lacuna encontrada na primeira medida e incorporada conforme D-28.",
+      "acceptance": {
+        "kind": "classe-no-elemento",
+        "classe": "br-input",
+        "tag": "input"
+      }
+    },
+    {
+      "id": "V-09",
+      "anchor": ".mensagem-erro-cpf",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "apos-submit-vazio",
+      "conditional": true,
+      "deterministicBaseline": true,
+      "rules": [
+        "ds:token-color"
+      ],
+      "categories": [
+        "token"
+      ],
+      "description": "a mensagem de erro usa color: #e60000, valor autoral fora do registro de tokens do gov.br DS. Lacuna descoberta pela medição determinística da Phase 10 no estado condicional, não pela bateria original.",
+      "acceptance": {
+        "kind": "estilo-computado",
+        "properties": [
+          "color"
+        ],
+        "forbidden": [
+          "rgb(230, 0, 0)"
+        ],
+        "note": "color: #e60000 em fluxo.css, valor autoral fora do registro de tokens do gov.br DS."
+      }
+    },
+    {
+      "id": "V-10",
+      "anchor": ".barra-recursos",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "emag:1.5",
+        "wcag:2.4.1"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "a barra de acessibilidade não traz âncora de salto para o conteúdo principal: dos 7 links da página nenhum aponta para fragmento (todos href=\"/fluxo\"), o <main> não tem id que sirva de destino, e o primeiro ponto de tabulação é a marca gov.br. As duas verificações da recomendação 1.5 falham. Lacuna incorporada em 2026-09-14 (D-35) a partir da adjudicação de E-ee9ba1:74ed1b06."
+    },
+    {
+      "id": "V-11",
+      "anchor": "#cpf",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "emag:6.5"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "description": "o campo de CPF não cumpre a recomendação e-MAG 6.5 (instruções para entrada de dados), e falha por DUAS manifestações, ambas medidas na página: (a) obrigatoriedade sinalizada só programaticamente — traz aria-required=\"true\" e o texto visível do formulário é apenas \"CPF Continuar\", sem asterisco com legenda e sem a palavra obrigatório; (b) nenhuma instrução de formato — o único apoio é o placeholder \"Digite seu CPF\", não há <small> nem elemento de dica, aria-describedby é nulo, e em lugar nenhum se diz quantos dígitos ou se leva pontuação. A UNIDADE É UMA SÓ porque a unidade é (elemento × regra) e as duas manifestações são da mesma recomendação no mesmo campo; quem alega qualquer uma das duas casa aqui. NÃO é a V-02, que é o texto de apoio visível (\"Digite seu CPF para criar ou acessar sua conta gov.br\") não associado por aria-describedby: aquela ancora em wcag:3.3.2, e é por isso que esta ancora na regra e-MAG, para não colidir. A regra é a 6.5, NÃO a 6.3: até o validator 2.3.0 o oráculo servia a 6.3 com esta descrição, e foi por isso que a alegação original citou 6.3 (D-14). Lacuna incorporada em 2026-09-14 (D-35), pagando DUAS dívidas de adjudicação: E-7a5432:df14769a (obrigatoriedade) e o componente `lacuna-gabarito` de E-7a5432:0918f5ad (instrução de formato, pendente desde 2026-09-04)."
+    },
+    {
+      "id": "V-12",
+      "anchor": ".barra-recursos",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "viewport": {
+        "width": 320,
+        "height": 720
+      },
+      "rules": [
+        "govbr-3.7.0-accessibility-global-1c3bd2a1c1a7"
+      ],
+      "categories": [
+        "responsivo",
+        "acessibilidade"
+      ],
+      "description": "a barra de recursos deixa de ser utilizável em viewport móvel. A 320px ela não quebra linha (flex-wrap: nowrap): termina em x=447 contra clientWidth 305, leva o scrollWidth do documento a 447 e deixa o botão VLibras inteiramente fora da viewport (left=305, right=447), alcançável só por rolagem horizontal da página. Foi o único bloco a estourar a borda direita. Regra normativa de força `required`. Declara `viewport` porque o defeito NÃO existe na janela padrão da suíte — medi-lo a 1280 cobraria do axe algo que ele não teria como ver. Mesma âncora da V-10, regra diferente, logo unidade diferente. Lacuna incorporada em 2026-09-14 (D-35) a partir da adjudicação de E-ee9ba1:fce4c972."
+    }
+  ]
+}

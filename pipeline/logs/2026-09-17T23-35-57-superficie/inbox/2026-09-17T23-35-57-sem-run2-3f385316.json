@@ -1,0 +1,101 @@
+{
+  "timestamp": "2026-09-18T02:42:58.502Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "tela inteira: barra superior, painel institucional, cartão de identificação (formulário CPF, outras opções, links de ajuda/termo)"
+  ],
+  "notes": "Oráculo/scan_page indisponíveis; avaliação manual via Playwright (snapshot de acessibilidade, DOM, estilos computados, contraste calculado para todo texto, foco por Tab e por programação em todos os controles, envio do formulário vazio e com '123', clique em Alto Contraste, viewport 320x640). Contrastes de texto todos >= 4.5:1. Envio com '123' não exibiu erro nem navegou (sem validação visível; não reportado como defeito de acessibilidade). Botões Alto Contraste/VLibras não produziram mudança observável (possível mock; registrado como incerto, não reportado). Console: apenas 404 do favicon. Ids de regra são critérios WCAG 2.x atribuídos manualmente.",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [],
+      "rule": "wcag:2.4.7",
+      "observed": "Com foco por teclado (:focus-visible verdadeiro) os 4 links de 'Outras opções de identificação' têm outline-style none e box-shadow none (regra CSS '.link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }'); o item pai também não muda de estilo.",
+      "expected": "Todo componente operável por teclado deve ter indicador de foco visível, como os demais controles da página (outline tracejado de 4px).",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar a página",
+          "clicar no campo CPF",
+          "Tab",
+          "Tab (foco em 'Login com seu banco')"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: getComputedStyle(document.activeElement) outline 'none', boxShadow 'none'",
+        "cssRules: .link-opcao:focus, .link-opcao:focus-visible"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "wcag:1.3.1",
+      "observed": "Após envio vazio aparece <p class='mensagem-erro-cpf'>Informe um CPF para continuar.</p> sem id; o input #cpf continua sem aria-invalid e sem aria-describedby/aria-errormessage apontando para a mensagem.",
+      "expected": "O campo em erro deve ser marcado como inválido e associado programaticamente à mensagem de erro.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "clicar em 'Continuar' com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: form.outerHTML após envio"
+      ]
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [
+        "#cpf"
+      ],
+      "rule": "wcag:4.1.3",
+      "observed": "A mensagem de erro é inserida dinamicamente sem role='alert'/aria-live e sem mover o foco (foco permanece no botão Continuar); nenhum elemento [role=alert] ou [aria-live] existe na página.",
+      "expected": "Mensagem de status/erro inserida dinamicamente deve ser anunciada por tecnologia assistiva sem receber foco (região viva) ou o foco deve ser levado ao campo/mensagem.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "clicar em 'Continuar' com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: querySelectorAll('[role=alert],[aria-live]') => []",
+        "document.activeElement = button.acao-continuar"
+      ]
+    },
+    {
+      "selector": ".barra-recursos",
+      "relatedSelectors": [
+        ".recurso-libras"
+      ],
+      "rule": "wcag:1.4.10",
+      "observed": "Em viewport de 320px a barra de recursos (display:flex, flex-wrap:nowrap) mede 353px e termina em x=447; o botão VLibras fica fora da tela e o documento ganha rolagem horizontal (scrollWidth 447 > 320).",
+      "expected": "Em 320 CSS px o conteúdo deve refluir sem rolagem em duas dimensões e sem perda de conteúdo.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "steps": [
+          "carregar a página",
+          "redimensionar para 320x640"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: scrollWidth 447, innerWidth 320, .barra-recursos rect right 446.7"
+      ]
+    }
+  ]
+}
