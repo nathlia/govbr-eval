@@ -27,7 +27,7 @@ import { basename, dirname, join, resolve } from "node:path";
 import { ROOT } from "./adjudication";
 import { verifyArchivedEvidence } from "./evidence-integrity";
 import {
-  DECISOES, SCORER_FILES, digest, normalizeReviews, reviewEffort, reviewQueue, scoreSemanticPackage, validatePackage,
+  DECISOES, SCORER_FILES, canonical, digest, normalizeReviews, reviewEffort, reviewQueue, scoreSemanticPackage, validatePackage,
   type RawReviews, type ReviewCard, type SemanticPackage, type SemanticUnit,
 } from "./semantic-flow";
 
@@ -70,9 +70,14 @@ const capture = existsSync(join(pkgDir, "capture.json"))
   : { scenes: [] };
 const sceneImage = new Map(capture.scenes.map(s => [s.id, s.image]));
 
-/** Arquivos que a bancada aceita servir: só os caminhos que os próprios cartões declaram. */
-const servableEvidence = new Set<string>();
-for (const card of pkg.cards) for (const e of card.evidence) if (e.path) servableEvidence.add(resolve(ROOT, e.path));
+/**
+ * Arquivos que a bancada aceita servir: só os caminhos que os próprios cartões declaram, e sempre
+ * por um identificador opaco. O caminho da evidência contém o id da execução (`…-com-run1-…`), e um
+ * link com o caminho na URL denunciava o braço a quem passasse o mouse sobre ele.
+ */
+const servableEvidence = new Map<string, string>();
+const evidenceToken = (path: string): string => digest(["evidencia", resolve(ROOT, path)]).slice(0, 16);
+for (const card of pkg.cards) for (const e of card.evidence) if (e.path) servableEvidence.set(evidenceToken(e.path), resolve(ROOT, e.path));
 
 const units = new Map(pkg.units.map(u => [u.id, u]));
 
@@ -80,6 +85,23 @@ const units = new Map(pkg.units.map(u => [u.id, u]));
 const ordered = [...pkg.cards].sort((a, b) =>
   a.scene.localeCompare(b.scene) || (a.rule ?? "~").localeCompare(b.rule ?? "~") ||
   (a.subjects[0]?.key ?? "").localeCompare(b.subjects[0]?.key ?? "") || a.id.localeCompare(b.id));
+
+/**
+ * `duplicada` só vale onde o scorer a aceita: alvo na MESMA execução, cobrindo os mesmos sujeitos,
+ * no mesmo estado, com os mesmos relacionados e o mesmo build. A bancada oferecia como duplicata
+ * qualquer cartão parecido, inclusive os de outra execução, e o scorer recusava na hora de gravar.
+ * A mesma alegação em três execuções são três cartões — cada execução responde pelo que disse —, e
+ * para isso a bancada copia a decisão anterior da autora, que ela confere e salva.
+ */
+const runsOfCard = new Map<string, string[]>();
+for (const run of pkg.runs) for (const id of run.cardIds) runsOfCard.set(id, [...(runsOfCard.get(id) ?? []), run.id]);
+function duplicataElegivel(c: ReviewCard, alvo: ReviewCard): boolean {
+  const runs = runsOfCard.get(c.id) ?? [], runsAlvo = runsOfCard.get(alvo.id) ?? [];
+  return alvo.id !== c.id && runs.length > 0 && runs.every(r => runsAlvo.includes(r)) &&
+    c.subjects.every(s => alvo.subjects.some(t => t.id === s.id)) &&
+    canonical(c.state) === canonical(alvo.state) && canonical(c.relatedKeys) === canonical(alvo.relatedKeys) &&
+    c.binding.build === alvo.binding.build;
+}
 
 function unitView(u: SemanticUnit) {
   return {
@@ -104,9 +126,10 @@ function cardView(c: ReviewCard) {
     state: c.state, subjects: c.subjects, relatedKeys: c.relatedKeys,
     reuso: c.binding.runScope ? "restrito à execução de origem" : "condicionado à mesma evidência verificada",
     candidatas: c.candidateUnitIds.map(id => unitView(units.get(id)!)),
+    duplicataDe: pkg.cards.filter(alvo => duplicataElegivel(c, alvo)).map(alvo => alvo.id),
     evidencia: c.evidence.map(e => ({
       ref: e.ref, status: e.status, arquivo: e.path ? basename(e.path) : null,
-      url: e.path ? `/evidencia?arquivo=${encodeURIComponent(resolve(ROOT, e.path))}` : null,
+      url: e.path ? `/evidencia?ref=${evidenceToken(e.path)}` : null,
       sha256: e.sha256?.slice(0, 12) ?? null,
     })),
     imagem: sceneImage.get(c.scene) ? `/cena/${sceneImage.get(c.scene)}` : null,
@@ -192,8 +215,8 @@ img{max-width:100%;border:1px solid var(--line);border-radius:6px}
 .err{color:#b3261e;white-space:pre-wrap}
 .ok{color:#1a7f37}
 .lista{max-height:240px;overflow:auto;border:1px solid var(--line);border-radius:7px}
-.lista div{padding:5px 9px;cursor:pointer;border-bottom:1px solid var(--line);font-size:13px}
-.lista div:hover{background:var(--bg)}
+.lista div{padding:5px 9px;border-bottom:1px solid var(--line);font-size:13px}
+.lista button{padding:2px 8px;font-size:12px}
 .lista div.done{color:var(--mut)}
 </style></head><body>
 <header>
@@ -247,7 +270,11 @@ function pinta(){
     <div class="kv"><b>Evidência da execução</b>\${c.evidencia.length ? c.evidencia.map(e=>\`<pre>\${esc(e.ref)} → \${e.url?\`<a href="\${e.url}" target="_blank">\${esc(e.arquivo)}</a> (sha \${e.sha256})\`:esc(e.status)}</pre>\`).join("") : '<div class="mut">nenhuma referência declarada</div>'}</div>
     <div class="kv"><b>Retido na cegueira</b><div class="mut">\${esc(c.retido)}</div></div>
     \${c.imagem?\`<div class="kv"><b>Reconstrução da cena (não é evidência da execução)</b><img src="\${c.imagem}"></div>\`:""}\`;
-  similares = S.cards.filter(o=>o.id!==c.id && dec(o.id)?.status==="reviewed" && (o.rule===c.rule || o.subjects[0]?.key===c.subjects[0]?.key));
+  similares = S.cards.filter(o=>o.id!==c.id && dec(o.id)?.status==="reviewed" &&
+    (o.rule===c.rule || o.subjects[0]?.key===c.subjects[0]?.key || c.duplicataDe.includes(o.id)));
+  // O mais parecido primeiro: é ele que a tecla "c" copia. Ordem é apresentação, não decisão.
+  const proximidade = o => (o.rule===c.rule?2:0) + (o.subjects[0]?.key===c.subjects[0]?.key?1:0) + (o.expected===c.expected?1:0);
+  similares.sort((a,b)=>proximidade(b)-proximidade(a));
   pintaDecisao(d);
   abre();
 }
@@ -266,8 +293,12 @@ function pintaDecisao(d){
     <div class="kv"><b>Justificativa (obrigatória)</b><textarea id="just" rows="2"></textarea></div>
     <div class="kv"><b>O que você consultou</b><input id="ev" value="cartão; reconstrução da cena"></div>
     <div class="row"><button id="salvar">salvar e seguir (Enter)</button><span id="msg" class="err"></span></div>
-    <div class="kv"><b>Já decididos parecidos (para marcar duplicada)</b>
-      <div class="lista">\${similares.length?similares.map(o=>\`<div data-dup="\${o.id}">\${o.scene} · \${esc(o.rule??"—")} · \${esc((o.observed??"").slice(0,80))}</div>\`).join(""):'<div class="done">nenhum ainda</div>'}</div></div>\`;
+    <div class="kv"><b>Já decididos parecidos</b>
+      <div class="mut">Tecla <b>c</b> copia a do primeiro da lista. "copiar decisão" preenche o formulário com o que você decidiu lá — confira e salve. A mesma alegação em outra execução é outro cartão, e se decide assim. "é duplicata deste" só aparece quando o outro cartão é da MESMA execução, com os mesmos elementos e o mesmo estado.</div>
+      <div class="lista">\${similares.length?similares.map(o=>{ const a = dec(o.id).atoms[0]; return \`<div>
+        <b>\${esc(a.decisao)}</b> · \${o.scene} · \${esc(o.rule??"—")} · \${esc((o.observed??"").slice(0,80))}
+        <span class="row">\${a.decisao!=="duplicada"?\`<button data-copy="\${o.id}">copiar decisão</button>\`:""}
+        \${c.duplicataDe.includes(o.id)?\`<button data-dup="\${o.id}">é duplicata deste</button>\`:""}</span></div>\`; }).join(""):'<div class="done">nenhum ainda</div>'}</div></div>\`;
   $("#botoes").onclick = e => { const v = e.target.dataset.v; if(!v) return;
     escolha = v; [...$("#botoes").children].forEach(b=>b.classList.toggle("sel", b.dataset.v===v)); extra(); };
   $("#cit").onclick = e => { const v = e.target.dataset.c; if(!v) return; citacao = v;
@@ -275,6 +306,33 @@ function pintaDecisao(d){
   $("#salvar").onclick = salvar;
   document.querySelectorAll("[data-dup]").forEach(el=>el.onclick=()=>{ dup = el.dataset.dup; escolha="duplicada";
     [...$("#botoes").children].forEach(b=>b.classList.toggle("sel", b.dataset.v==="duplicada")); extra(); });
+  document.querySelectorAll("[data-copy]").forEach(el=>el.onclick=()=>copia(el.dataset.copy));
+}
+
+// Copia a decisão que a autora já tomou noutro cartão. Nada é gravado: o formulário fica preenchido
+// e ela confere antes de salvar. Só entram unidades que também são candidatas DESTE cartão.
+function copia(id){
+  const o = dec(id), a = o.atoms[0], c = card();
+  escolha = a.decisao; dup = null;
+  [...$("#botoes").children].forEach(b=>b.classList.toggle("sel", b.dataset.v===escolha));
+  extra();
+  // A unidade é elemento × defeito: o mesmo defeito noutro elemento é OUTRA unidade, da mesma spec.
+  // A cópia leva a spec e o estado, e marca a candidata deste cartão que os tem — se houver uma só.
+  const origem = S.cards.find(x=>x.id===id);
+  unidades = new Set((a.unitIds||[]).flatMap(u=>{
+    if(c.candidatas.some(k=>k.id===u)) return [u];
+    const de = origem.candidatas.find(k=>k.id===u);
+    const iguais = de ? c.candidatas.filter(k=>k.specId===de.specId && k.state===de.state) : [];
+    return iguais.length===1 ? [iguais[0].id] : [];
+  }));
+  [...$("#extra").querySelectorAll("[data-u]")].forEach(b=>b.classList.toggle("sel", unidades.has(b.dataset.u)));
+  citacao = a.citation || "uncertain";
+  [...$("#cit").children].forEach(b=>b.classList.toggle("sel", b.dataset.c===citacao));
+  $("#just").value = o.rationale || "";
+  $("#ev").value = (o.evidenceRefs||[]).join("; ");
+  $("#msg").textContent = escolha==="defeito-do-gabarito" && !unidades.size
+    ? "decisão copiada, mas nenhuma candidata daqui é da mesma spec: escolha a unidade deste cartão"
+    : "copiada de: \\"" + (origem.observed||"").slice(0,70) + "…\\" — confira ESTE cartão e salve (Enter)";
 }
 
 function extra(){
@@ -314,6 +372,7 @@ document.addEventListener("keydown", e=>{
   if(e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT"){ if(e.key==="Enter" && e.ctrlKey) salvar(); return; }
   const m = {g:"defeito-do-gabarito",n:"defeito-novo-correto",i:"incorreta",d:"duplicada",e:"evidencia-insuficiente"}[e.key];
   if(m){ escolha=m; [...$("#botoes").children].forEach(b=>b.classList.toggle("sel", b.dataset.v===m)); extra(); }
+  if(e.key === "c"){ const o = similares.find(x=>dec(x.id).atoms[0].decisao!=="duplicada"); if(o) copia(o.id); }
   if(e.key === "Enter") salvar();
   if(e.key === "ArrowLeft") $("#ant").click();
   if(e.key === "ArrowRight") $("#prox").click();
@@ -338,8 +397,8 @@ const server = createServer((req, res) => {
     return send(200, file.endsWith(".png") ? "image/png" : "text/html; charset=utf-8", readFileSync(file));
   }
   if (req.method === "GET" && url.pathname === "/evidencia") {
-    const file = resolve(url.searchParams.get("arquivo") ?? "");
-    if (!servableEvidence.has(file) || !existsSync(file)) return json(403, { error: "fora da evidência declarada" });
+    const file = servableEvidence.get(url.searchParams.get("ref") ?? "");
+    if (!file || !existsSync(file)) return json(403, { error: "fora da evidência declarada" });
     return send(200, file.endsWith(".png") ? "image/png" : "text/plain; charset=utf-8", readFileSync(file));
   }
 
@@ -360,22 +419,45 @@ const server = createServer((req, res) => {
       const decision = reviews.decisions.find(d => d.cardId === card.id);
       if (!decision) return json(400, { error: "cartão fora deste pacote" });
 
+      // Duplicata: o scorer copia o veredito do alvo, mas exige as MESMAS unidades nos dois átomos.
+      // Elas vêm do átomo apontado, nunca de uma escolha nova feita aqui.
+      let unidadesDoAlvo: string[] = [];
+      if (payload.decisao === "duplicada") {
+        const alvo = pkg.cards.find(c => c.id === String(payload.duplicadaDe));
+        const decisaoDoAlvo = reviews.decisions.find(d => d.cardId === alvo?.id);
+        if (!alvo || !duplicataElegivel(card, alvo)) {
+          return json(200, { ok: false, error: "duplicada só vale dentro da mesma execução, com os mesmos elementos e o mesmo estado. " +
+            "Para a mesma alegação vinda de outra execução, use \"copiar decisão\"." });
+        }
+        if (decisaoDoAlvo?.status !== "reviewed") return json(200, { ok: false, error: "o cartão apontado ainda não foi decidido" });
+        unidadesDoAlvo = [...(decisaoDoAlvo.atoms[0]?.unitIds ?? [])];
+      }
+
       // Um átomo por cartão é o andaime, não uma decisão: dividir uma alegação composta em vários
       // átomos continua sendo trabalho da autora, e por ora ela o faz editando `reviews.json`.
       const atom = {
         id: "a1",
         text: card.observed ?? card.description,
         subjects: card.subjects.map(s => s.id),
-        unitIds: payload.decisao === "defeito-do-gabarito" ? [...payload.unitIds] : [],
+        unitIds: payload.decisao === "defeito-do-gabarito" ? [...payload.unitIds] : unidadesDoAlvo,
         citation: payload.citacao as "supported" | "unsupported" | "uncertain",
         decisao: payload.decisao as keyof typeof DECISOES,
         ...(payload.decisao === "duplicada" ? { duplicateOf: { cardId: String(payload.duplicadaDe), atomId: "a1" } } : {}),
       };
+      // Alegação composta: o scorer credita UMA unidade por (átomo × sujeito), então duas afirmações
+      // num mesmo cartão só valem duas unidades como dois átomos. `atomos` chega pronto de quem
+      // decide — a bancada não divide nada por conta própria — e passa pelo mesmo scorer ao gravar.
+      const compostos = (payload as unknown as { atomos?: { texto: string; decisao: keyof typeof DECISOES; unitIds?: string[]; citacao: string }[] }).atomos;
+      const atoms = !compostos?.length ? [atom] : compostos.map((a, n) => ({
+        id: `a${n + 1}`, text: a.texto, subjects: card.subjects.map(s => s.id),
+        unitIds: a.decisao === "defeito-do-gabarito" ? [...(a.unitIds ?? [])] : [],
+        citation: a.citacao as "supported" | "unsupported" | "uncertain", decisao: a.decisao,
+      }));
       const next: RawReviews = {
         ...reviews,
         decisions: reviews.decisions.map(d => d.cardId !== card.id ? d : {
           ...d, status: "reviewed" as const, reviewer, rationale: String(payload.rationale),
-          complete: true, evidenceRefs: [...payload.evidenceRefs], atoms: [atom],
+          complete: true, evidenceRefs: [...payload.evidenceRefs], atoms,
         }),
       };
       try {
