@@ -1,0 +1,216 @@
+{
+  "manifestVersion": "manifesto-coleta-1.0.0",
+  "generatedAt": "2026-09-18T12:16:20.523Z",
+  "collection": {
+    "version": "fluxo-1.3.0"
+  },
+  "identity": {
+    "collection": "fluxo-1.3.0",
+    "referenceSha256": "6debda737dd0f713be8508fba59ad52e99dc0392cd672e251c6eeecb7275a5c8",
+    "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "oracleDistSha256": "11f68a1d3697196ef4c89bbc359624d583e279967270f01725163999da008574",
+    "oracleDataSha256": "0b3739e2a697fed137ffdaa8b8e45e6469c866b840c8a4764683547ee7785d3c",
+    "statePlanSha256": "8ce8e00c08e7ac1ba8d899dc8549be9a1ead98b90f7338e7a7526a8498565a2c"
+  },
+  "reference": {
+    "version": "1.6.0",
+    "sha256": "6debda737dd0f713be8508fba59ad52e99dc0392cd672e251c6eeecb7275a5c8",
+    "file": "ground-truth-fluxo.json",
+    "units": 25,
+    "specs": 12
+  },
+  "statePlan": {
+    "padrao": {
+      "width": 1280,
+      "height": 900
+    },
+    "extras": [
+      {
+        "viewport": {
+          "width": 320,
+          "height": 720
+        },
+        "specs": [
+          "V-12"
+        ]
+      }
+    ],
+    "setup": [
+      {
+        "action": "click",
+        "selector": ".acao-continuar"
+      },
+      {
+        "action": "wait",
+        "selector": ".mensagem-erro-cpf"
+      }
+    ],
+    "waitFor": "#cpf",
+    "url": "/fluxo.html"
+  },
+  "oracle": {
+    "version": "2.5.2",
+    "distSha256": "11f68a1d3697196ef4c89bbc359624d583e279967270f01725163999da008574",
+    "distFiles": 75,
+    "sourceSha256": "9ca373c0ee780c4a120faf77df0e40b1615fc6ddd9a75c8c4ed58400d13ae841",
+    "dataSha256": "0b3739e2a697fed137ffdaa8b8e45e6469c866b840c8a4764683547ee7785d3c",
+    "knowledgeSha256": "2ec65b1d271dd82a8ee5915e3e5ac2add9639055a757a7c2dddb72ba92620b36",
+    "dataFiles": {
+      "component-specs.json": "8aa0aa93ba31f96e5580cf1f2da1e33a0ccc3823f38578ad484f994a135a8ecb",
+      "ds-page-rules.json": "18992388ac106b723db7f9d9fe8520c9b75c402593c681babc44ccad5a5b3a74",
+      "emag.json": "95fb81b8e2068bc0d5bd768e04a2d7de9dcd1ea94d4e15de0eac72bb6a9e5a6f",
+      "tokens.json": "8a8919034c3781957ab6316d8f8081cc85cdf08cfe3115bd431b9e2c5a37d864",
+      "wcag-2.2.json": "b748c73543bafa1cc7cdeaab7ecaf3b3874e8c8492f27381bc5b32e3cee2ee9e"
+    },
+    "builtInPreflight": true
+  },
+  "site": {
+    "manifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "corpusCommit": "4767b4146d1f46244e506a0991028164f7903ef7",
+    "corpusDirty": false
+  },
+  "surface": {
+    "version": "surface-1.2.0",
+    "startedAt": "2026-09-18T12:16:19.125Z",
+    "pid": 26356,
+    "entryUrl": "http://127.0.0.1:3100/fluxo.html",
+    "origins": {
+      "site": "http://127.0.0.1:3100",
+      "collector": "http://127.0.0.1:4100"
+    },
+    "proxyServer": "http://127.0.0.1:4102",
+    "control": "http://127.0.0.1:4101",
+    "allowedHosts": [
+      "127.0.0.1:3100",
+      "127.0.0.1:4100"
+    ],
+    "siteManifest": "site-manifest.json",
+    "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "corpusCommit": "4767b4146d1f46244e506a0991028164f7903ef7",
+    "corpusDirty": false,
+    "egressLog": "egress.ndjson",
+    "policy": {
+      "boundary": "proxy HTTP de encaminhamento; o navegador do Playwright MCP e o do oráculo apontam para ele (--proxy-server / GOVBR_VALIDATOR_PROXY_SERVER), e o Playwright encaminha o loopback",
+      "allowed": "somente as origens do site congelado e do coletor, por host:porta exato, só HTTP",
+      "https": "negado (CONNECT 403)",
+      "site": "somente os arquivos do manifesto; sem índice, sem fallback, sem /@fs",
+      "collector": "POST /api/submit da execução armada; relatório diferente do aceito é recusado e arquivado"
+    }
+  },
+  "surfaceSha256": "8ed5f5d737a7f6249386a1c6a4cc2b654e29a2efd7d3e2ad0b679c1fb7479dac",
+  "plan": {
+    "planVersion": "plano-bateria-1.0.0",
+    "stamp": "2026-09-18T09-15-22",
+    "schedule": "alternado",
+    "seed": null,
+    "attemptBudget": 6,
+    "retryPolicy": "nenhuma: cada slot tem uma tentativa; falha fica registrada e não é repetida nesta bateria",
+    "failurePolicy": "limite de gasto, falha de evidência ou identidade alterada interrompem a bateria; slots restantes ficam registrados como nao-tentada; qualquer slot sem relatório aceito impede a preparação do pacote sem um manifesto de análise explícito",
+    "arms": [
+      "com",
+      "sem"
+    ],
+    "runsPerArm": 3,
+    "model": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "provider": "claude",
+    "scope": "full",
+    "suite": "fluxo",
+    "slots": [
+      {
+        "slot": 1,
+        "arm": "com",
+        "repetition": 1,
+        "block": 1
+      },
+      {
+        "slot": 2,
+        "arm": "sem",
+        "repetition": 1,
+        "block": 1
+      },
+      {
+        "slot": 3,
+        "arm": "sem",
+        "repetition": 2,
+        "block": 2
+      },
+      {
+        "slot": 4,
+        "arm": "com",
+        "repetition": 2,
+        "block": 2
+      },
+      {
+        "slot": 5,
+        "arm": "com",
+        "repetition": 3,
+        "block": 3
+      },
+      {
+        "slot": 6,
+        "arm": "sem",
+        "repetition": 3,
+        "block": 3
+      }
+    ]
+  },
+  "planSha256": "548260b3640fd235323a444a18e76cb1a7a8ef2e02d6e17c4a116da306de1abc",
+  "analysisAtCollection": {
+    "scoringVersion": "flow-semantic-1.4.0",
+    "acceptancePolicy": "aceitacao-semantica-1.4.0",
+    "scorerSha256": "3270502e0d8dce3f53b2514d7386b01fa4463715ec7067ee82377c976ba33090",
+    "checkerAliasesSha256": "29c747aefb433c9457d97aaf321185515bb3805880dbc785af02b77dd0f0c0cd",
+    "kbAliasesSha256": "e3d79270490f7f18ad0bcd3c9655526d8b15a1f2016c0f7753af581ce01dc656"
+  },
+  "repos": {
+    "govbr-eval": {
+      "commit": "bf1e3411f4f7678307c47f74110aa7a48993d2ac",
+      "dirty": true,
+      "lockSha256": "6bd9ec253e1d31412cf1e136d7d1ab2530f127ca130882e2e9d69fb58c7d83b6"
+    },
+    "govbr-ds-validator": {
+      "commit": "e6877d098d504612b26298848cb451f9aeb830f5",
+      "dirty": false,
+      "lockSha256": "d36976dfda846c2870112f49082f47bf30295592e6a086fdc37ef97b4b805f19"
+    },
+    "govbr-corpus": {
+      "commit": "4767b4146d1f46244e506a0991028164f7903ef7",
+      "dirty": false,
+      "lockSha256": "b1e04ed3b7e27cd64521e5e691afce4bd41b3852271e15bd0a4bf1e33748894f"
+    }
+  },
+  "runtime": {
+    "node": "v25.2.1",
+    "platform": "win32 x64",
+    "client": {
+      "name": "claude-cli",
+      "version": "2.1.276 (Claude Code)"
+    },
+    "playwright": {
+      "eval": "1.61.1",
+      "validator": "1.61.1",
+      "mcp": "0.0.70"
+    },
+    "browsers": {
+      "eval": "149.0.7827.55",
+      "validator": "149.0.7827.55"
+    },
+    "notMeasured": [
+      "navegador do Playwright MCP: resolvido pelo npx dentro de cada execução; fica a versão fixada do pacote"
+    ]
+  },
+  "archive": {
+    "dir": "pipeline/logs/2026-09-18T09-15-22-coleta",
+    "oracle": {
+      "dir": "pipeline/logs/2026-09-18T09-15-22-coleta/oraculo",
+      "distSha256": "11f68a1d3697196ef4c89bbc359624d583e279967270f01725163999da008574",
+      "dataSha256": "0b3739e2a697fed137ffdaa8b8e45e6469c866b840c8a4764683547ee7785d3c"
+    },
+    "reference": {
+      "path": "pipeline/logs/2026-09-18T09-15-22-coleta/referencia/ground-truth-fluxo.json",
+      "sha256": "6debda737dd0f713be8508fba59ad52e99dc0392cd672e251c6eeecb7275a5c8"
+    }
+  }
+}

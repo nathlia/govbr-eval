@@ -1,0 +1,138 @@
+{
+  "timestamp": "2026-09-18T12:29:42.779Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "tela inteira: barra superior (marca, Alto Contraste, VLibras)",
+    "painel institucional",
+    "cartão de identificação: formulário CPF, outras opções, ajuda e termo"
+  ],
+  "notes": "Sem oráculo nem scan_page; avaliação manual via Playwright (snapshot de acessibilidade, DOM, estilos computados). Interações: Tab por todos os 11 focáveis registrando outline/box-shadow; envio com CPF vazio (mensagem 'Informe um CPF para continuar.' aparece sem aria-live/role=alert, sem aria-invalid/aria-describedby, foco permanece no botão); envio com '123' e com '52998224725' (mensagem de erro some, sem outra resposta visível — comportamento pós-envio não avaliável, incerto); clique em Alto Contraste (nenhuma mudança observável de classe/estilo; registrado como incerto, não reportado); viewport 320x640 para reflow. Contraste de todos os textos ≥4,5:1 (menor: selo 'SUA CONTA SERÁ PRATA' 4,59:1; erro rgb(230,0,0) ≈4,8:1). Alvos .link-opcao têm 20px de altura mas espaçamento ≥24px entre itens (exceção de 2.5.8). Console: apenas 404 de favicon.ico. VLibras não testado além do DOM.",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [],
+      "rule": "wcag:2.4.7",
+      "observed": "Ao receber foco por teclado (:focus-visible verdadeiro), outline-style permanece 'none', box-shadow 'none', sem mudança de fundo, sublinhado ou cor no link nem no .br-item pai; demais controles exibem outline tracejado 4px rgb(194,133,12).",
+      "expected": "Indicador de foco visível ao focar cada link de opção de identificação por teclado.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar a página",
+          "pressionar Tab 6 a 9 vezes até os links 'Login com seu banco', 'Login com QR code', 'Seu certificado digital', 'Seu certificado digital em nuvem'"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate focusin log: A.link-opcao outlineStyle none, boxShadow none",
+        "browser_evaluate estilos antes/depois de focus() idênticos"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "wcag:3.3.1",
+      "observed": "Após envio vazio, o input #cpf não recebe aria-invalid nem aria-describedby apontando para p.mensagem-erro-cpf (que não tem id); a borda do campo não muda (rgb(136,136,136)).",
+      "expected": "Campo em erro identificado programaticamente (aria-invalid='true') e associado à mensagem de erro via aria-describedby.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar a página",
+          "clicar em 'Continuar' com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate form.outerHTML após envio vazio"
+      ]
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [
+        "#cpf"
+      ],
+      "rule": "wcag:4.1.3",
+      "observed": "Mensagem 'Informe um CPF para continuar.' é inserida como <p> sem role=alert/status nem aria-live, e o foco permanece no botão Continuar; não há região viva na página.",
+      "expected": "Mensagem de erro anunciada a tecnologias assistivas sem exigir foco (role='alert' ou região aria-live) ou foco movido para o campo em erro.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar a página",
+          "clicar em 'Continuar' com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: querySelectorAll('[role=alert],[aria-live]') vazio; activeElement = button.acao-continuar"
+      ]
+    },
+    {
+      "selector": ".barra-recursos",
+      "relatedSelectors": [
+        ".recurso-libras",
+        ".barra-superior"
+      ],
+      "rule": "wcag:1.4.10",
+      "observed": "Em viewport de 320px, .barra-recursos (flex, nowrap) tem 353px de largura e termina em x=447; o botão VLibras fica em x 305–447, gerando rolagem horizontal (scrollWidth 447 > 320).",
+      "expected": "Conteúdo se reorganiza em 320px de largura sem rolagem horizontal nem corte dos botões da barra.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "steps": [
+          "carregar a página",
+          "redimensionar a janela para 320x640"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: scrollWidth 447, getBoundingClientRect .barra-recursos right 446.7, .recurso-libras right 446.7"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.276 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "dc0bdd9a67ade80b7ffeec732752d118163be20ee72eaa366c841f5f9ad3a268",
+    "schedule": {
+      "slot": 6,
+      "block": 3,
+      "repetition": 3,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-18T09-15-22-sem-run3-5cbc0f17-evidencia",
+    "evidenceIndexSha256": "70b1b84f53e214508c7c4d792e778bc98b6168a5cd30fe33a568568227727098"
+  },
+  "cost": {
+    "startedAt": "2026-09-18T12:27:38.1924788Z",
+    "finishedAt": "2026-09-18T12:29:54.6772495Z",
+    "wallClockSeconds": 136.4,
+    "tokens": 601926,
+    "tokenUsage": {
+      "input": 40,
+      "cacheCreationInput": 32958,
+      "cacheReadInput": 560198,
+      "output": 8730
+    },
+    "totalCostUsd": 0.830929,
+    "turns": 41
+  }
+}

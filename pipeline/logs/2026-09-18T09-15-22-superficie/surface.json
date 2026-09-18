@@ -1,0 +1,28 @@
+{
+  "version": "surface-1.2.0",
+  "startedAt": "2026-09-18T12:16:19.125Z",
+  "pid": 26356,
+  "entryUrl": "http://127.0.0.1:3100/fluxo.html",
+  "origins": {
+    "site": "http://127.0.0.1:3100",
+    "collector": "http://127.0.0.1:4100"
+  },
+  "proxyServer": "http://127.0.0.1:4102",
+  "control": "http://127.0.0.1:4101",
+  "allowedHosts": [
+    "127.0.0.1:3100",
+    "127.0.0.1:4100"
+  ],
+  "siteManifest": "site-manifest.json",
+  "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+  "corpusCommit": "4767b4146d1f46244e506a0991028164f7903ef7",
+  "corpusDirty": false,
+  "egressLog": "egress.ndjson",
+  "policy": {
+    "boundary": "proxy HTTP de encaminhamento; o navegador do Playwright MCP e o do oráculo apontam para ele (--proxy-server / GOVBR_VALIDATOR_PROXY_SERVER), e o Playwright encaminha o loopback",
+    "allowed": "somente as origens do site congelado e do coletor, por host:porta exato, só HTTP",
+    "https": "negado (CONNECT 403)",
+    "site": "somente os arquivos do manifesto; sem índice, sem fallback, sem /@fs",
+    "collector": "POST /api/submit da execução armada; relatório diferente do aceito é recusado e arquivado"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "timestamp": "2026-09-18T12:20:37.311Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "tela inteira: barra superior (marca, Alto Contraste, VLibras)",
+    "painel institucional",
+    "cartão de identificação: formulário CPF, outras opções, ajuda, termo de uso"
+  ],
+  "notes": "Oráculo/scan_page indisponíveis; avaliação manual com Playwright (snapshot de acessibilidade, DOM, estilos computados). Interações: Tab e foco programático em todos os controles (comparação de estilos com/sem foco); envio do formulário vazio (clique em Continuar), com '123' (Enter) e com '52998224725' (Enter); clique em Alto Contraste; redimensionamento para 320x640. Contraste de texto verificado (todos >= 4,5:1, incl. selo verde 4,59:1 e erro vermelho 4,81:1); rótulos, landmarks, headings e lang=pt-BR adequados. Incertos, não reportados: botão Alto Contraste não produz mudança observável (pode ser stub do protótipo); CPF '123' é aceito sem mensagem de erro e, nessa tentativa, o foco ficou no body (não reproduzido com CPF válido); ausência de link de salto para o conteúdo (eMAG 1.5) em página curta. Console: apenas 404 do favicon.",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [],
+      "rule": "wcag:2.4.7",
+      "observed": "Ao receber foco por teclado, os 4 links 'Login com seu banco', 'Login com QR code', 'Seu certificado digital' e 'Seu certificado digital em nuvem' ficam com outline-style none, box-shadow none e sem mudança de cor, fundo, sublinhado ou no item pai; os demais controles exibem outline tracejado 4px rgb(194,133,12).",
+      "expected": "Todo componente operável por teclado deve ter indicador de foco visível.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar a página",
+          "Tab até os links de outras opções de identificação"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: getComputedStyle(.link-opcao) antes/depois de focus() idênticos",
+        "browser_evaluate: :focus-visible=true com outline none"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "wcag:1.3.1",
+      "observed": "Após enviar vazio surge <p class='mensagem-erro-cpf'>Informe um CPF para continuar.</p>, mas o input #cpf não tem aria-describedby nem aria-invalid; a relação campo–erro é apenas visual.",
+      "expected": "O campo inválido deve ser marcado (aria-invalid='true') e associado programaticamente à mensagem de erro (aria-describedby).",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar a página",
+          "clicar em Continuar com CPF vazio"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: form.outerHTML após envio vazio",
+        "aria-invalid=null, aria-describedby=null"
+      ]
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [
+        ".acao-continuar"
+      ],
+      "rule": "wcag:4.1.3",
+      "observed": "A mensagem de erro é inserida no DOM sem role=alert/aria-live e o foco permanece no botão Continuar; não há região viva na página, logo a mensagem não é anunciada.",
+      "expected": "Mensagem de erro inserida dinamicamente deve ser anunciada por tecnologia assistiva sem mover o foco (role='alert' ou aria-live) ou o foco deve ser levado ao campo com erro.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar a página",
+          "clicar em Continuar com CPF vazio"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: querySelectorAll('[role=alert],[aria-live]') vazio",
+        "activeElement = button.acao-continuar"
+      ]
+    },
+    {
+      "selector": ".barra-recursos",
+      "relatedSelectors": [
+        ".recurso-libras"
+      ],
+      "rule": "wcag:1.4.10",
+      "observed": "Em viewport de 320x640 px, a barra de recursos (Alto Contraste, VLibras) se estende até x=447 px; documentElement.scrollWidth=447 > 320, gerando rolagem horizontal e cortando o botão VLibras.",
+      "expected": "Com 320 px CSS de largura o conteúdo deve refluir sem rolagem horizontal.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "steps": [
+          "carregar a página",
+          "redimensionar janela para 320x640"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: scrollWidth 447, elementos fora da viewport DIV.barra-recursos:447, BUTTON.recurso-libras:447"
+      ]
+    }
+  ]
+}

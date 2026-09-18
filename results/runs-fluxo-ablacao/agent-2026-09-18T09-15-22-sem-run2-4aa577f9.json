@@ -1,0 +1,130 @@
+{
+  "timestamp": "2026-09-18T12:22:34.628Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "tela inteira: barra superior, painel institucional, cartão de identificação (formulário CPF, outras opções, ajuda, termo)"
+  ],
+  "notes": "Oráculo/scan_page indisponíveis; avaliação manual via Playwright (snapshot de acessibilidade, DOM, estilos computados). Interações: envio do formulário vazio (mensagem de erro aparece), envio com '123' (mensagem some, nenhuma validação/feedback — registrado como incerto, não reportado), foco programático e Tab real em todos os controles, clique em Alto Contraste (sem efeito observável no DOM/estilos — incerto, possivelmente simulado), redimensionamento para 320x640. Contraste de textos verificado (todos >= 4.5:1). Ausência de links de salto (eMAG 1.5) e placeholder com mesma cor do valor digitado considerados incertos e não reportados. Console: apenas 404 de favicon.ico.",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [],
+      "rule": "wcag:2.4.7",
+      "observed": "Ao receber foco por teclado (:focus-visible verdadeiro após Tab a partir de 'Continuar'), os links das outras opções ficam com outline-style none, box-shadow none e nenhuma mudança de cor, sublinhado, fundo ou no item pai.",
+      "expected": "Todo componente focalizável por teclado deve ter indicador de foco visível, como os demais controles da página (outline tracejado 4px).",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "focar botão Continuar",
+          "pressionar Tab"
+        ]
+      },
+      "evidence": [
+        "getComputedStyle(.link-opcao:focus) outlineStyle=none boxShadow=none; estilos idênticos antes/depois do foco"
+      ]
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [
+        "#cpf"
+      ],
+      "rule": "wcag:3.3.1",
+      "observed": "Após enviar o formulário vazio surge <p class=\"mensagem-erro-cpf\">Informe um CPF para continuar.</p> sem id; #cpf não recebe aria-invalid nem aria-describedby/aria-errormessage apontando para a mensagem.",
+      "expected": "O campo em erro deve ser identificado programaticamente e a descrição do erro associada a ele (aria-invalid=true e aria-describedby para a mensagem).",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "clicar em Continuar com CPF vazio"
+        ]
+      },
+      "evidence": [
+        "outerHTML do form após envio vazio"
+      ]
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.3",
+      "observed": "A mensagem de erro é inserida dinamicamente sem role=alert/status nem aria-live, e o foco permanece no botão Continuar; leitores de tela não anunciam o erro.",
+      "expected": "Mensagem de status/erro inserida dinamicamente deve ser anunciada por tecnologia assistiva (região viva ou role=alert) sem exigir mudança de foco.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "clicar em Continuar com CPF vazio"
+        ]
+      },
+      "evidence": [
+        "outerHTML do form após envio vazio; document.activeElement = button.acao-continuar"
+      ]
+    },
+    {
+      "selector": ".barra-recursos",
+      "relatedSelectors": [
+        ".recurso-contraste",
+        ".recurso-libras"
+      ],
+      "rule": "wcag:1.4.10",
+      "observed": "Em 320 px de largura a barra de recursos (flex-wrap: nowrap, botões white-space: nowrap) ocupa de x=93 a x=447; o botão VLibras fica fora da tela e a página ganha rolagem horizontal (scrollWidth 447 > 320).",
+      "expected": "Conteúdo deve refluir em 320 px CSS sem rolagem horizontal nem perda de conteúdo.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "steps": [
+          "redimensionar janela para 320x640"
+        ]
+      },
+      "evidence": [
+        "document.documentElement.scrollWidth=447; getBoundingClientRect .recurso-libras right=447"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.276 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "dc0bdd9a67ade80b7ffeec732752d118163be20ee72eaa366c841f5f9ad3a268",
+    "schedule": {
+      "slot": 3,
+      "block": 2,
+      "repetition": 2,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-18T09-15-22-sem-run2-4aa577f9-evidencia",
+    "evidenceIndexSha256": "d64685c0af03f7ab4d70f38a31d7657ffa99b7578d56f7f1399dd4c3f2b44425"
+  },
+  "cost": {
+    "startedAt": "2026-09-18T12:20:50.7033625Z",
+    "finishedAt": "2026-09-18T12:22:46.2256002Z",
+    "wallClockSeconds": 115.5,
+    "tokens": 547713,
+    "tokenUsage": {
+      "input": 40,
+      "cacheCreationInput": 27875,
+      "cacheReadInput": 512408,
+      "output": 7390
+    },
+    "totalCostUsd": 0.722704,
+    "turns": 25
+  }
+}

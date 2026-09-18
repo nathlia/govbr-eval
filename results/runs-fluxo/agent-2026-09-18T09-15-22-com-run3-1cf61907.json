@@ -1,0 +1,217 @@
+{
+  "timestamp": "2026-09-18T12:27:23.341Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "tela inteira: cabeçalho (marca, Alto Contraste, VLibras), painel institucional, cartão de identificação (formulário CPF, lista de outras opções, links de ajuda e termo)"
+  ],
+  "notes": "Estados: inicial (scan S-page-001) e após envio vazio do formulário (scan S-page-002, compareToScanId). Interações: snapshot da árvore de acessibilidade; clique em Continuar com CPF vazio (aparece p.mensagem-erro-cpf, foco permanece no botão); CPF '123' + Enter (nenhuma mensagem, nenhuma navegação — comportamento de validação incompleto, registrado como incerto e não reportado); clique em Alto Contraste (nenhuma mudança observável — incerto, não reportado); foco por teclado em todos os links/botões/campo comparando estilos antes/depois. Observações do oráculo não convertidas em achado: font-size 11px no br-tag (sem norma), classes utilitárias extras, br-divider em <hr>. Contraste de texto (tag branca/verde ~4.6:1, erro #e60000 ~4.8:1) passou; axe sem violações nos dois estados. Erro de console presente no carregamento, não investigado. Achados de token vêm do checker determinístico do oráculo.",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [
+        ".opcao-identificacao"
+      ],
+      "rule": "wcag:2.4.7",
+      "observed": "Ao receber foco por teclado (:focus-visible), outline:none e box-shadow:none (regra .link-opcao:focus, .link-opcao:focus-visible); nenhum estilo do link ou do item pai muda",
+      "expected": "Indicador de foco visível em todo componente operável por teclado, como os demais links da página (outline tracejado 4px)",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar página",
+          "Tab/foco em cada link .link-opcao"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: estilos computados antes/depois do foco",
+        "CSSOM: .link-opcao:focus, .link-opcao:focus-visible { box-shadow: none; outline: none; }"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "wcag:1.3.1",
+      "observed": "Após envio vazio aparece <p class=\"mensagem-erro-cpf\">Informe um CPF para continuar.</p> fora do .br-input, sem id; o input não tem aria-describedby nem aria-invalid",
+      "expected": "Mensagem de erro associada programaticamente ao campo (aria-describedby) e campo marcado como inválido (aria-invalid), como o feedback do componente br-input",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar página",
+          "clicar em Continuar com CPF vazio"
+        ]
+      },
+      "evidence": [
+        "S-page-002",
+        "browser_evaluate: outerHTML do form após envio"
+      ]
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [
+        "button[type=submit]"
+      ],
+      "rule": "wcag:4.1.3",
+      "observed": "A mensagem de erro é inserida sem role=alert/aria-live e o foco permanece no botão Continuar; nenhuma região viva existe na página",
+      "expected": "Mensagem de status/erro anunciada a tecnologias assistivas sem receber foco (role=alert ou aria-live)",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar página",
+          "clicar em Continuar com CPF vazio"
+        ]
+      },
+      "evidence": [
+        "S-page-002",
+        "browser_evaluate: activeElement=button; nenhum [aria-live],[role=alert],[role=status]"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".campo-cpf-fluxo"
+      ],
+      "rule": "ds-structure-input-tag",
+      "observed": "Classe br-input aplicada ao próprio <input> (além do wrapper div.br-input)",
+      "expected": "br-input aplicado somente ao <div> contêiner",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar página"
+        ]
+      },
+      "evidence": [
+        "S-page-001/F-006",
+        "get_component_spec input: constraint ds-structure-input-tag"
+      ]
+    },
+    {
+      "selector": ".opcao-identificacao",
+      "relatedSelectors": [],
+      "rule": "ds-token-spacing",
+      "observed": "padding: 13px nos quatro itens de opção",
+      "expected": "Espaçamento da escala do DS (múltiplos de 4px, ex. --spacing-scale-2x 16px / 12px)",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar página"
+        ]
+      },
+      "evidence": [
+        "S-page-001/F-002",
+        "F-003",
+        "F-004",
+        "F-005"
+      ]
+    },
+    {
+      "selector": ".lista-opcoes",
+      "relatedSelectors": [],
+      "rule": "ds-token-color",
+      "observed": "border-color rgb(222,226,230) #dee2e6 (variável local --tela-borda), não pertence ao registro de tokens",
+      "expected": "Cor de token do DS (mais próxima: --gray-cool-10 #dfe1e2)",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar página"
+        ]
+      },
+      "evidence": [
+        "S-page-001/F-001"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.276 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "dc0bdd9a67ade80b7ffeec732752d118163be20ee72eaa366c841f5f9ad3a268",
+    "schedule": {
+      "slot": 5,
+      "block": 3,
+      "repetition": 3,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-18T09-15-22-com-run3-1cf61907-evidencia",
+    "evidenceIndexSha256": "c05bdc0c57c878c124db72323e46daacf22d63a9ddb3ad0327ea61cbe6bc335f",
+    "validatorVersion": "2.5.2"
+  },
+  "cost": {
+    "startedAt": "2026-09-18T12:25:31.4876091Z",
+    "finishedAt": "2026-09-18T12:27:36.8883403Z",
+    "wallClockSeconds": 125.3,
+    "tokens": 970545,
+    "tokenUsage": {
+      "input": 38,
+      "cacheCreationInput": 58791,
+      "cacheReadInput": 903041,
+      "output": 8675
+    },
+    "totalCostUsd": 1.2592955000000003,
+    "turns": 23,
+    "mcp": {
+      "runId": "2026-09-18T09-15-22-com-run3-1cf61907",
+      "telemetryFile": "pipeline/logs/2026-09-18T09-15-22-com-run3-1cf61907-mcp.ndjson",
+      "calls": 4,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 289,
+      "responseBytes": 60363,
+      "durationMs": 2508,
+      "byTool": {
+        "scan_page": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 235,
+          "responseBytes": 55837,
+          "durationMs": 2507
+        },
+        "get_finding_details": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 33,
+          "responseBytes": 2460,
+          "durationMs": 0
+        },
+        "get_component_spec": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 21,
+          "responseBytes": 2066,
+          "durationMs": 1
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "timestamp": "2026-09-18T12:25:16.99Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "tela inteira: barra superior (marca, Alto Contraste, VLibras), painel institucional, cartão de identificação (formulário CPF, outras opções, links de ajuda e termo)"
+  ],
+  "notes": "Interações: snapshot da árvore de acessibilidade; envio do formulário vazio (mensagem 'Informe um CPF para continuar.' aparece como <p> solto, sem aria-describedby/aria-invalid, sem live region, foco permanece no botão, borda do campo continua cinza); envio com '123' (mensagem some, nenhuma validação nem feedback, página não muda — registrado como incerto, pode ser comportamento simulado); navegação por Tab em todos os controles (os 4 links .link-opcao ficam sem outline/indicador de foco; demais controles têm outline tracejado); clique em 'Alto Contraste' não alterou nada visível (incerto, não reportado). Varreduras: S-page-001 (estado inicial, 6 findings) e S-page-002 (estado de erro, escopo form, 0 findings axe). F-006 (br-input em <input>) rejeitado pelo verify_finding (V-002, sem norma). Cor da mensagem de erro confirmada via V-001. Observações de classes não canônicas e font-size 11px da tag não são achados (sem norma). Único erro de console: 404 de favicon.ico. Contraste da tag (branco sobre #168821, ~4.6:1) e da mensagem (#e60000 sobre branco, ~4.8:1) passam. Ausência de skip link não reportada (incerto).",
+  "findings": [
+    {
+      "selector": ".link-opcao",
+      "relatedSelectors": [],
+      "rule": "wcag:2.4.7",
+      "observed": "Com foco de teclado (:focus-visible verdadeiro após Tab), os links têm outline-style none, sem box-shadow, sublinhado, mudança de cor ou de fundo no item",
+      "expected": "Indicador de foco visível ao navegar por teclado, como nos demais controles (outline tracejado)",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar a página",
+          "focar #cpf",
+          "Tab",
+          "Tab (foco em 'Login com seu banco')"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: computed style do activeElement a.link-opcao em :focus-visible"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        ".mensagem-erro-cpf"
+      ],
+      "rule": "govbr-3.7.0-accessibility-global-cc837bbaf713",
+      "observed": "Após envio vazio, o campo não tem aria-invalid nem aria-describedby apontando para a mensagem 'Informe um CPF para continuar.' (<p> sem id); a borda do campo continua cinza",
+      "expected": "Erro associado programaticamente ao campo (aria-describedby para a mensagem e aria-invalid='true')",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "clicar em 'Continuar' com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: ariaInvalid=null, describedby=null",
+        "scan S-page-002"
+      ]
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [
+        "#cpf"
+      ],
+      "rule": "wcag:4.1.3",
+      "observed": "Mensagem de erro inserida como <p class='mensagem-erro-cpf'> sem role=alert/status nem aria-live; foco permanece no botão Continuar",
+      "expected": "Mensagem de status/erro anunciada a tecnologias assistivas sem receber foco (role='alert' ou região aria-live)",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "clicar em 'Continuar' com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: nenhum [role=alert],[aria-live] no documento após o envio"
+      ]
+    },
+    {
+      "selector": ".mensagem-erro-cpf",
+      "relatedSelectors": [],
+      "rule": "ds-token-color",
+      "observed": "color: #e60000 (rgb(230,0,0))",
+      "expected": "Cor de um token registrado do gov.br DS (ex.: token de feedback danger)",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html",
+          "clicar em 'Continuar' com o campo CPF vazio"
+        ]
+      },
+      "evidence": [
+        "verify_finding V-001 (confirmed)"
+      ]
+    },
+    {
+      "selector": ".lista-opcoes",
+      "relatedSelectors": [
+        ".opcao-identificacao"
+      ],
+      "rule": null,
+      "observed": "div.br-list com div.br-item filhos, sem role='list'/'listitem' nem ul/li; a árvore de acessibilidade expõe apenas 'generic'",
+      "expected": "Conjunto de opções exposto como lista (ul/li ou role list/listitem), conforme relação estrutural visual (WCAG 1.3.1 — atribuição não confirmada pelo oráculo)",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html"
+        ]
+      },
+      "evidence": [
+        "browser_snapshot: generic ref=e29 com filhos generic"
+      ]
+    },
+    {
+      "selector": ".lista-opcoes",
+      "relatedSelectors": [],
+      "rule": "ds-token-color",
+      "observed": "border-color: #dee2e6 (rgb(222,226,230))",
+      "expected": "Token de cor do DS; mais próximo --gray-cool-10 (#dfe1e2)",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html"
+        ]
+      },
+      "evidence": [
+        "scan S-page-001 F-001"
+      ]
+    },
+    {
+      "selector": ".opcao-identificacao",
+      "relatedSelectors": [],
+      "rule": "ds-token-spacing",
+      "observed": "padding: 13px nos 4 itens",
+      "expected": "Espaçamento da escala do DS (múltiplos de 4px)",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/fluxo.html"
+        ]
+      },
+      "evidence": [
+        "scan S-page-001 F-002",
+        "F-003",
+        "F-004",
+        "F-005"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.276 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "dc0bdd9a67ade80b7ffeec732752d118163be20ee72eaa366c841f5f9ad3a268",
+    "schedule": {
+      "slot": 4,
+      "block": 2,
+      "repetition": 2,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-18T09-15-22-com-run2-bc5e0f37-evidencia",
+    "evidenceIndexSha256": "5d0672b2b8a06fb9ba24abfbffcce76061ffbd16e57eb82f0489fcff89d4a228",
+    "validatorVersion": "2.5.2"
+  },
+  "cost": {
+    "startedAt": "2026-09-18T12:22:47.5594048Z",
+    "finishedAt": "2026-09-18T12:25:30.1842898Z",
+    "wallClockSeconds": 162.5,
+    "tokens": 1101056,
+    "tokenUsage": {
+      "input": 48,
+      "cacheCreationInput": 54383,
+      "cacheReadInput": 1035306,
+      "output": 11319
+    },
+    "totalCostUsd": 1.3474579999999998,
+    "turns": 34,
+    "mcp": {
+      "runId": "2026-09-18T09-15-22-com-run2-bc5e0f37",
+      "telemetryFile": "pipeline/logs/2026-09-18T09-15-22-com-run2-bc5e0f37-mcp.ndjson",
+      "calls": 8,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 1437,
+      "responseBytes": 41573,
+      "durationMs": 3426,
+      "byTool": {
+        "scan_page": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 227,
+          "responseBytes": 32366,
+          "durationMs": 2383
+        },
+        "get_ds_rules": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 79,
+          "responseBytes": 4494,
+          "durationMs": 1
+        },
+        "get_finding_details": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 33,
+          "responseBytes": 2460,
+          "durationMs": 0
+        },
+        "verify_finding": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 1098,
+          "responseBytes": 2253,
+          "durationMs": 1042
+        }
+      }
+    }
+  }
+}
