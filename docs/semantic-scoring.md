@@ -1,4 +1,4 @@
-# Pontuação semântica e revisão finita — flow-semantic-1.2.0
+# Pontuação semântica e revisão finita — flow-semantic-1.3.0
 
 ## O que mudou
 
@@ -264,6 +264,99 @@ cada linha de base e contra a `uniao-deterministica`, com as unidades em `both`,
 detecção. `status` só é `complete` quando as duas execuções estão completas; antes disso a divisão
 lista apenas detecções confirmadas.
 
+## A unidade de detecção (fatia 3)
+
+A unidade é **(elemento ou composição declarada) × (predicado de defeito atômico), no estado
+aplicável**, com as citações normativas anexas. Isto esclarece — não substitui — o vocabulário
+"elemento × regra" que o gabarito usa desde o D-23, e a mudança está em cada uma das três partes:
+
+- **Elemento ou composição declarada.** `unico`/`todos` ancoram num elemento; `composicao` (D-33)
+  ancora num conjunto nomeado que vale uma unidade. Já era assim; fica escrito.
+- **Predicado de defeito atômico.** Um identificador normativo largo (uma WCAG genérica, uma
+  recomendação e-MAG inteira) **não é** um predicado de defeito único: o mesmo `wcag:1.3.1` cobre
+  defeitos diferentes no mesmo elemento. O que individualiza a unidade é o defeito que a spec
+  descreve — é por isso que V-02 e V-11 coexistem no mesmo `#cpf`, ancoradas em regras distintas
+  justamente para não colidir.
+- **No estado aplicável.** Deixou de ser rótulo. `_meta.states` nomeia as paradas da sequência de
+  `setup`, as âncoras são resolvidas em cada uma, e a unidade carrega os estados em que foi MEDIDA.
+
+Três promessas do gabarito passaram a ser cobradas contra a página (D-06). Qualquer uma delas
+falhando **para a preparação** em vez de medir:
+
+| Promessa | Onde vivia | O que se cobra agora |
+|---|---|---|
+| A sequência de setup é aditiva | comentário em `_meta.setup_rationale` | elemento ancorado que resolve num estado tem de resolver em todos os posteriores |
+| `state: "sempre"` | rótulo | a unidade existe em todos os estados medidos |
+| `conditional: true` | documentação do campo | a unidade **não** existe antes do estado que declara |
+
+A visibilidade passou a ser medida junto da chave canônica. A chave é estrutural: oculto e visível
+produzem a mesma. Agora cada sujeito chega ao cartão dizendo se está oculto e por quê
+(`nao-renderizado`, `aria-hidden`, atributo `hidden`). Não é veredito — há defeito legítimo em
+elemento oculto, e há defeito que só existe porque o elemento está oculto.
+
+## Predicados de aceitação: o que a máquina verifica, e o que ela nunca decide
+
+A tela `/fluxo.html` e o `ground-truth-fluxo.json` foram redigidos pelo **assistente**, e a regra de
+independência (`adjudicacao.md § Quem pode julgar`) desqualifica quem escreveu a tela ou o gabarito
+de julgar sobre eles. Até aqui o gabarito era inteiramente autoria: afirmava "padding de 13px, fora
+da escala do DS" e nada conferia isso contra a página.
+
+Um predicado declarado em `acceptance` torna a afirmação **reexecutável**. A preparação mede a
+condição na página congelada, no estado a que a spec pertence, e para se o que o gabarito afirma não
+estiver lá. Consertar a tela faz o predicado deixar de sustentar: o gabarito não sobrevive em
+silêncio à correção do defeito que cataloga.
+
+**O que um predicado não faz.** Não credita. Sustentar prova que o **defeito existe na página**; não
+prova que a alegação do agente **afirma aquele defeito**. Verificar que o defeito está lá é
+insuficiente — a ponte entre o texto da alegação e o defeito é decisão semântica da autora (D-39), e
+continua sendo. Também não é o oráculo: nada em `acceptance-predicates.ts` importa do
+`govbr-ds-validator` nem lê a KB, porque reaproveitar os verificadores do avaliado faria o avaliador
+confirmar o avaliado (D-41).
+
+### Desfechos
+
+| Desfecho | Significado |
+|---|---|
+| `sustenta` | a condição foi medida, participante a participante, no estado declarado |
+| `refuta` | a página desmente a spec: a preparação para |
+| `nao-implementado` | a spec não declara predicado, ou declara espécie que este avaliador não implementa. **Não é aceitação nem recusa**: é ausência de máquina, e a alegação segue para a fila |
+| `nao-replicavel` | a medida não pôde ser feita, ou discordou de si mesma entre estados |
+
+`nao-implementado` **nunca** recai em "casou por elemento, logo está certo". A aceitação automática —
+que hoje nada emite, porque toda alegação de bateria v02 passa pela revisora — só é válida onde um
+predicado implementado sustenta **e é da mesma espécie** que a decisão nomeia. A regra é código
+(`validateDecision`), não intenção.
+
+### Espécies implementadas
+
+`estilo-computado` · `atributos-ausentes` · `classe-no-elemento` · `cor-de-borda-pintada`.
+
+`allowed` enuncia a **norma** e é a forma preferida: sustenta quando o medido cai fora dela.
+`forbidden` nomeia o **valor autoral** que o gabarito acusa, e existe porque o registro completo de
+tokens do DS mora no oráculo — trazê-lo para cá seria reconstruir o avaliado dentro do avaliador.
+Todo `forbidden` carrega `note` dizendo de onde o valor veio.
+
+### As specs, e o contraexemplo de cada uma
+
+O contraexemplo é a alegação **parecida que não estabelece o defeito** — o que a revisora precisa
+distinguir.
+
+| Spec | Predicado | O que estabelece o defeito | Alegação parecida que NÃO estabelece |
+|---|---|---|---|
+| V-01 | `estilo-computado` — padding fora de {0, 4px, 8px, 16px} | algum lado do padding computado fora da escala (medido: 13px nos quatro lados) | "o espaçamento parece apertado", ou apontar `margin` em vez de `padding`: a escala é sobre o valor medido, não sobre a impressão |
+| V-02 | `atributos-ausentes` — `aria-describedby` | há texto de apoio visível e o campo não o referencia | dizer que falta `<label>`: o rótulo existe, e a regra é condicional ao apoio existir |
+| V-03a | `atributos-ausentes` — `aria-invalid`, `aria-describedby` | o campo não identifica o estado de erro programaticamente | apontar a mensagem de erro: é a V-03b, outro elemento e outro estado |
+| V-03b | `atributos-ausentes` — `role`, `aria-live` | a mensagem nasce sem região viva que a anuncie | dizer que a mensagem "não tem contraste": outro defeito no mesmo elemento, e é a V-09 |
+| V-06 | `cor-de-borda-pintada` — `rgb(222, 226, 230)` | alguma borda **pintada** (largura > 0) na cor autoral | citar um lado de largura 0: herda a cor do texto e não aparece na tela — a cor sozinha não é o defeito |
+| V-08 | `classe-no-elemento` — `.br-input` em `<input>` | a classe raiz aparece no próprio controle, além do contêiner | dizer que o contêiner `<div class="br-input">` está errado: ele é o canônico |
+| V-09 | `estilo-computado` — `color` = `rgb(230, 0, 0)` | a cor do texto é valor autoral fora do registro de tokens | alegar contraste insuficiente: é outra pergunta, e o predicado não a responde |
+
+**Sem predicado: V-04, V-05, V-10, V-11, V-12.** Foco suprimido exige focar o elemento; âncora de
+salto e instruções de entrada são leitura de conteúdo; a barra a 320px é geometria de layout; a
+semântica de lista é propriedade do conjunto. Nenhuma é impossível — nenhuma é pequena e
+transparente o bastante para entrar sem reconstruir o avaliado dentro do avaliador. Ficam
+`nao-implementado`, e a revisora decide como sempre decidiu.
+
 ## Proveniência e estados: limite importante
 
 As capturas são **reconstruções para revisão**, não evidência capturada na execução original. O
@@ -276,8 +369,11 @@ Um cartão do agente vai para a cena de **mesma largura** que `state.viewport` (
 sinalizada: `altura-diferente`). Largura fora do plano vira cena `fora-do-plano:LxA`: os sujeitos são
 lidos na cena padrão, mas o cartão não ancora unidade nenhuma (só `novel`, `false` ou `unresolved`).
 Cartão sem janela (legado) vai para a cena padrão, com `sem-janela-declarada`. As interações de
-`state.steps` são texto do agente e não são casadas automaticamente com o `setup`: o plano atual tem
-um único estado de interação, e é a autora quem confere se a observação descreve esse estado. Nada
+`state.steps` continuam sendo texto do agente e **não** são casadas automaticamente com o `setup`:
+casar texto livre com um estado nomeado seria a inferência semântica que o D-39 proíbe. O que existe
+agora é sinal — quando as unidades candidatas do cartão só existem depois de uma interação e a
+alegação não declara passo nenhum, o cartão recebe `estado-nao-declarado` dizendo em que estados
+aquelas unidades foram medidas. É a autora quem confere se a observação descreve esse estado. Nada
 disso prova que o agente visitou cada janela.
 
 Não dê crédito a uma observação só porque a reconstrução mostra o defeito. Leia a afirmação e suas

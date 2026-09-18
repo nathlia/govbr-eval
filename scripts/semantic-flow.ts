@@ -7,6 +7,7 @@ import { createHash } from "node:crypto";
 import type { FlowAgentResults, FlowFindingState, FlowViewport } from "../types";
 import type { Resolution } from "./anchors";
 import type { FlowUnit } from "./units-flow";
+import { NAO_IMPLEMENTADO, type PredicateResult } from "./acceptance-predicates";
 import { FLOW_SCORING_VERSION } from "./instrument";
 import {
   DETERMINISTIC_FINDING_CONTRACT, normalizeFinding, resolveEvidence, reviewableFindings,
@@ -17,7 +18,7 @@ export const SEMANTIC_SCORING_VERSION = FLOW_SCORING_VERSION;
 
 /** Code, vocabulary and contract that decide what a package means; a different fingerprint refuses it. */
 export const SCORER_FILES = ["scripts/semantic-flow.ts", "scripts/semantic-flow-cli.ts", "scripts/flow-contract.ts",
-  "scripts/evidence-integrity.ts",
+  "scripts/evidence-integrity.ts", "scripts/acceptance-predicates.ts",
   "scripts/units-flow.ts", "scripts/units.ts", "scripts/anchors.ts", "scripts/instrument.ts", "instrument.json",
   "types.ts", "checker-aliases.json", "kb-aliases.json"];
 
@@ -50,7 +51,7 @@ export interface SemanticScene {
   specIds: string[];
   resolutionHash: string;
 }
-export interface SemanticUnit extends FlowUnit { id: string; scene: string }
+export interface SemanticUnit extends FlowUnit { id: string; scene: string; acceptance: PredicateResult }
 /** Where the claims of a run come from. Baseline runs are deterministic tools, reviewed the same way. */
 export type RunKind = "agente" | "linha-de-base";
 export interface ReviewCard {
@@ -73,8 +74,12 @@ export interface ReviewCard {
   /** Unknown/opaque evidence cannot transfer approval to another execution. */
   binding: { collection: string | null; build: string | null; protocol: string | null; runScope: string | null };
   flags: string[];
-  /** Null key is an unresolved selector, not a real element. */
-  subjects: { id: string; key: string | null; label: string }[];
+  /**
+   * Null key is an unresolved selector, not a real element. `hidden` carries why the element is
+   * not visible, measured with the key: the canonical key alone cannot tell them apart, and a
+   * claim about something nobody can see should reach review saying so.
+   */
+  subjects: { id: string; key: string | null; label: string; hidden: string | null }[];
   relatedKeys: string[];
   /** Hints only. Broad normative aliases do not establish defect identity. */
   candidateUnitIds: string[];
@@ -129,6 +134,16 @@ export interface SemanticDecision {
   complete: boolean;
   evidenceRefs: string[];
   atoms: ReviewAtom[];
+  /**
+   * Decisão produzida SEM a autora, pelo caminho automático (fatia 3).
+   *
+   * Hoje nada a emite: toda alegação de uma bateria v02 passa pela revisora (D-39). O campo existe
+   * para que a regra que autoriza esse caminho seja código, e não intenção — se algum dia houver
+   * aceitação automática, ela só vale onde um predicado IMPLEMENTADO sustenta na página, com
+   * evidência reexecutável. Predicado ausente ou não implementado deixa a alegação SEM RESOLVER;
+   * em nenhuma hipótese ela recai em "casou por elemento, logo está certa".
+   */
+  automatic?: { predicate: string };
 }
 export interface SemanticReviews {
   version: typeof SEMANTIC_SCORING_VERSION;
@@ -179,8 +194,11 @@ export function prepareSemanticPackage(
   context: SemanticPackage["context"],
   units: (FlowUnit & { scene?: string })[], res: Resolution | SceneResolution[],
   runs: PrepareRun[],
-  options: { provenance?: unknown } = {},
+  options: { provenance?: unknown; stateOrder?: string[] } = {},
 ): SemanticPackage {
+  // Ordem declarada dos estados, do primeiro paint em diante. Vem de fora porque é o gabarito que a
+  // declara: deduzi-la das unidades erraria justamente nas que só existem depois de uma interação.
+  const stateOrder = options.stateOrder ?? [];
   const scenes: SceneResolution[] = Array.isArray(res) ? res
     : [{ id: sceneIdOf(DEFAULT_VIEWPORT), viewport: DEFAULT_VIEWPORT, specIds: unique(units.map(u => u.specId)), resolution: res }];
   requireThat(scenes.length > 0 && new Set(scenes.map(s => s.id)).size === scenes.length, "Scenes must be unique and nonempty");
@@ -189,7 +207,10 @@ export function prepareSemanticPackage(
   const semanticUnits = units.map(u => {
     const scene = u.scene ?? scenes[0].id;
     requireThat(scenes.some(s => s.id === scene), `Unit in an undeclared scene: ${u.specId}@${scene}`);
+    // `acceptance` é sempre explícito no pacote: sem predicado medido o registro diz
+    // `nao-implementado`, e nunca fica um campo ausente que se leia como "passou".
     return { ...u, scene, participants: unique(u.participants), rules: unique(u.rules),
+      acceptance: u.acceptance ?? NAO_IMPLEMENTADO,
       id: `U-${digest([u.specId, u.element.key, u.state, scene])}` };
   }).sort((a, b) => compare(a.id, b.id));
   requireThat(new Set(semanticUnits.map(u => u.id)).size === units.length, "Duplicate reference unit identity");
@@ -206,8 +227,8 @@ export function prepareSemanticPackage(
       const resolved = sceneRes.bySelector.get(f.selector);
       const keys = resolved?.ok ? unique(resolved.keys) : [];
       const subjects: ReviewCard["subjects"] = keys.length ? keys.map(key => ({
-        id: key, key, label: sceneRes.byKey.get(key)?.label ?? key,
-      })) : [{ id: `unresolved:${f.selector}`, key: null, label: "Seletor não resolvido" }];
+        id: key, key, label: sceneRes.byKey.get(key)?.label ?? key, hidden: sceneRes.byKey.get(key)?.hidden ?? null,
+      })) : [{ id: `unresolved:${f.selector}`, key: null, label: "Seletor não resolvido", hidden: null }];
       const relatedKeys = unique(f.relatedSelectors.flatMap(s => {
         const r = sceneRes.bySelector.get(s);
         return r?.ok ? r.keys : [];
@@ -220,8 +241,19 @@ export function prepareSemanticPackage(
         ...(data.collector ? { submission: { status: data.collector.status, reason: data.collector.reason,
           rejectedFile: data.collector.rejectedFile, parseable: data.collector.parseable, filled: data.collector.filled } } : {}),
       };
-      const candidateUnitIds = semanticUnits.filter(u => u.scene === placed.scene && u.participants.some(k =>
-        keys.includes(k) || relatedKeys.includes(k))).map(u => u.id);
+      const candidates = semanticUnits.filter(u => u.scene === placed.scene && u.participants.some(k =>
+        keys.includes(k) || relatedKeys.includes(k)));
+      const candidateUnitIds = candidates.map(u => u.id);
+      // Estado declarado × estado medido (fatia 3). A unidade que só existe depois de uma interação
+      // foi MEDIDA assim; uma alegação que não declara passo nenhum pode estar falando de outra
+      // tela. O cartão diz isso à revisora e ela decide — o texto de `steps` é livre, e casá-lo com
+      // um estado nomeado seria inferência semântica, que é exatamente o que o D-39 proíbe.
+      const exigemInteracao = stateOrder.length === 0 ? []
+        : candidates.filter(u => u.states.length > 0 && !u.states.includes(stateOrder[0]));
+      const estadoFlags = exigemInteracao.length > 0 && kind === "agente" && !(f.state?.steps ?? []).length
+        ? [`estado-nao-declarado: ${unique(exigemInteracao.map(u => u.specId)).join(", ")} só existe(m) em ` +
+           `${unique(exigemInteracao.flatMap(u => u.states)).join(", ")}, e a alegação não declara passo nenhum`]
+        : [];
       const resolvedEvidence = resolveEvidence(f.evidence, evidence ?? null);
       const build = data.config?.siteManifestSha256 ?? null;
       const pinned = Boolean(build && /^[a-f0-9]{64}$/.test(build) && data.config?.instrumentVersion && data.config?.protocolVersion);
@@ -235,7 +267,7 @@ export function prepareSemanticPackage(
           evidence: evidence ?? null, indexHash: data.config?.evidenceIndexSha256 ?? null }) };
       const body = { origin: kind, scene: placed.scene, selector: f.selector, rule: f.rule, description: f.description,
         contract: f.contract, observed: f.observed, expected: f.expected, state: f.state,
-        evidence: resolvedEvidence, binding, flags: [...f.flags, ...placed.flags],
+        evidence: resolvedEvidence, binding, flags: [...f.flags, ...placed.flags, ...estadoFlags],
         subjects, relatedKeys, candidateUnitIds, reportedEvidence };
       const cardId = `C-${digest({ context, body, units: semanticUnits })}`;
       cardMap.set(cardId, { id: cardId, ...body });
@@ -358,6 +390,21 @@ function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<stri
     }
   }
   requireThat(card.subjects.every(s => covered.has(s.id)), `Review omitted a subject: ${card.id}`);
+
+  // O caminho automático só existe onde a máquina de fato verificou alguma coisa. Um predicado que
+  // este avaliador não implementa não vira crédito nem recusa: a alegação fica sem resolver, e a
+  // revisora decide. É a única leitura compatível com o D-39 — coincidência de seletor e norma gera
+  // candidato, nunca crédito — e impede que "não sei verificar" se disfarce de "verifiquei".
+  if (d.automatic !== undefined) {
+    requireThat(d.automatic && typeof d.automatic.predicate === "string" && d.automatic.predicate.trim(),
+      `Automatic decision without a named predicate: ${card.id}`);
+    for (const a of d.atoms) {
+      requireThat(a.verdict !== "reference" || a.unitIds.every(id => {
+        const u = units.get(id)!;
+        return u.acceptance.outcome === "sustenta" && u.acceptance.kind === d.automatic!.predicate;
+      }), `Automatic credit without a sustaining implemented predicate, claim stays unresolved: ${a.id}`);
+    }
+  }
 }
 
 /** Maximum-cardinality bipartite assignment with stable iteration/tie-breaking. */

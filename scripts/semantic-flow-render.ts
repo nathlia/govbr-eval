@@ -58,11 +58,20 @@ export function renderReview(pkg: SemanticPackage, reviews: SemanticReviews): st
   for (const c of pkg.cards) {
     const d = decisions.get(c.id);
     lines.push(`## ${c.id}`, "", `Estado: ${pending.has(c.id) ? "pendente" : "concluído"}`, "", ...claim(c),
-      "### Sujeitos", "", ...c.subjects.map(s => `- ${JSON.stringify(s.id)} — ${s.label}`), "",
+      "### Sujeitos", "",
+      ...c.subjects.map(s => `- ${JSON.stringify(s.id)} — ${s.label}${s.hidden ? ` · **oculto**: ${s.hidden}` : ""}`), "",
       "### Unidades candidatas (não são crédito)", "");
     for (const id of c.candidateUnitIds) {
       const u = pkg.units.find(u => u.id === id)!;
       lines.push(`- ${id} — ${u.specId} · ${u.state} · cena ${u.scene} · ${u.element.label}: ${u.description}`);
+      // O estado MEDIDO e o predicado MEDIDO são fatos sobre a página, e é por isto que eles
+      // existem: chegar a quem decide. Nenhum dos dois é veredito sobre a alegação.
+      lines.push(`  - estados em que a unidade existe: ${u.states.length ? u.states.join(", ") : "não medido"}`);
+      lines.push(`  - predicado de aceitação: ${u.acceptance.outcome === "nao-implementado"
+        ? "não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua"
+        : `${u.acceptance.kind} ${u.acceptance.outcome} em ${u.acceptance.states.join(", ")} — ${u.acceptance.expected}. ` +
+          `Medido: ${u.acceptance.measured.map(m => m.reason).join(" | ")}`}`);
+      lines.push("  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.");
     }
     if (!c.candidateUnitIds.length) lines.push("Nenhuma âncora candidata; um achado novo correto continua sendo possível.");
     if (c.contract === "achado-2" || (c.contract === "recusado" && c.evidence.length > 0)) {

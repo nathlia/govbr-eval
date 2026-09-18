@@ -6,14 +6,15 @@ import { spawnSync } from "node:child_process";
 import type { FlowAgentResults } from "../types";
 import type { Resolution } from "./anchors";
 import type { FlowUnit } from "./units-flow";
+import type { PredicateResult } from "./acceptance-predicates";
 import {
   SCORER_FILES, digest, maximumMatching, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, validatePackage,
   type SemanticDecision, type SemanticPackage, type SemanticReviews, type ReviewAtom, type PrepareRun, type SceneResolution,
 } from "./semantic-flow";
 
 const context = { referenceHash: "reference-v1", sceneHash: "scene-v1", scorerHash: "scorer-v1" };
-const element = { key: "body>input", id: "E-input", label: "CPF" };
-const other = { key: "body>button", id: "E-button", label: "Button" };
+const element = { key: "body>input", id: "E-input", label: "CPF", hidden: null };
+const other = { key: "body>button", id: "E-button", label: "Button", hidden: null };
 const resolution: Resolution = { url: "http://fixture/fluxo.html",
   byKey: new Map([[element.key, element], [other.key, other]]),
   bySelector: new Map([
@@ -23,7 +24,8 @@ const resolution: Resolution = { url: "http://fixture/fluxo.html",
   ]) };
 const units: FlowUnit[] = ["A", "B"].map(specId => ({ specId, element, participants: [element.key],
   rules: [specId === "A" ? "wcag:1.3.1" : "wcag:3.3.1"], categories: ["form"],
-  description: specId === "A" ? "Help text association" : "Error identification", state: "submitted", conditional: true }));
+  description: specId === "A" ? "Help text association" : "Error identification", state: "submitted",
+  states: ["submitted"], conditional: true }));
 const finding = (description: string, selector = "#cpf", rule = "wcag:1.3.1") => ({ selector, rule, description });
 function run(findings: FlowAgentResults["findings"] = [finding("Help text is not associated")]): FlowAgentResults {
   return { model: "fixture", timestamp: "fixed", appUrl: resolution.url, findings };
@@ -435,4 +437,72 @@ test("offline CLI produces provisional JSON, refuses overwrite, rejects stale en
     rmSync(dir, { recursive: true, force: true });
   }
 });
+// ── Fatia 3: predicado de aceitação e estado declarado ───────────────────────
+
+/** Uma medida que sustenta, como a preparação a gravaria a partir da página. */
+const sustenta = (kind: string): PredicateResult => ({
+  kind, outcome: "sustenta", expected: "condição declarada", states: ["submitted"],
+  measured: [{ key: element.key, values: { "aria-describedby": null }, sustains: true, reason: "ausente" }],
+  reason: "1 participante medido",
+});
+
+test("predicado não implementado deixa a alegação sem resolver, e nunca credita por elemento", () => {
+  const pkg = prepare();
+  assert.equal(pkg.units[0].acceptance.outcome, "nao-implementado",
+    "sem predicado declarado o pacote diz isso explicitamente, e não omite o campo");
+
+  // Sem decisão, seletor e regra coincidem e mesmo assim nada é creditado: é o D-39 em vigor.
+  const semRevisao = scoreSemanticPackage(pkg, scopeReviews(pkg)).scores[0];
+  assert.equal(semRevisao.counts.detectedUnits, 0);
+  assert.equal(semRevisao.status, "provisional");
+  assert.equal(semRevisao.metrics.referenceRecall, null);
+
+  // E o caminho automático é recusado justamente por não haver predicado que sustente.
+  const auto: SemanticDecision = { ...decision(pkg.cards[0].id, [atom(pkg, ["A"])]),
+    automatic: { predicate: "atributos-ausentes" } };
+  assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [auto])),
+    /Automatic credit without a sustaining implemented predicate/);
+
+  // A autora, essa sim, decide — e o mesmo cartão vira crédito pela via de sempre.
+  const daAutora = scoreSemanticPackage(pkg, reviews(pkg, [decision(pkg.cards[0].id, [atom(pkg, ["A"])])])).scores[0];
+  assert.equal(daAutora.counts.detectedUnits, 1);
+});
+
+test("o caminho automático só vale onde um predicado IMPLEMENTADO sustenta, e da mesma espécie", () => {
+  const comPredicado = units.map(u => ({ ...u, acceptance: sustenta("atributos-ausentes") }));
+  const pkg = prepare(run().findings, comPredicado);
+  assert.equal(pkg.units[0].acceptance.outcome, "sustenta");
+
+  const certo: SemanticDecision = { ...decision(pkg.cards[0].id, [atom(pkg, ["A"])]),
+    automatic: { predicate: "atributos-ausentes" } };
+  assert.equal(scoreSemanticPackage(pkg, reviews(pkg, [certo])).scores[0].counts.detectedUnits, 1);
+
+  // Espécie diferente da medida não serve: o que autoriza é o predicado que de fato rodou.
+  const outraEspecie: SemanticDecision = { ...certo, automatic: { predicate: "estilo-computado" } };
+  assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [outraEspecie])),
+    /Automatic credit without a sustaining implemented predicate/);
+  const semNome: SemanticDecision = { ...certo, automatic: { predicate: "  " } };
+  assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [semNome])), /without a named predicate/);
+});
+
+test("alegação sem passo declarado sobre unidade que só existe após interação é SINALIZADA, não inferida", () => {
+  const comEstado = (findings: FlowAgentResults["findings"]): SemanticPackage =>
+    prepareSemanticPackage(context, units, resolution, [{ id: "r1", data: run(findings) }],
+      { stateOrder: ["inicial", "submitted"] });
+
+  // As unidades da fixture só existem em "submitted"; a alegação não declara passo nenhum.
+  const mudo = comEstado([finding("Help text is not associated")]);
+  assert.ok(mudo.cards[0].flags.some(f => f.startsWith("estado-nao-declarado")), mudo.cards[0].flags.join(" | "));
+  assert.match(mudo.cards[0].flags.join(" "), /só existe\(m\) em submitted/);
+
+  // Declarando passos, o sinal some — e o texto dos passos nunca é interpretado para casar estado.
+  const comPassos = comEstado([{ ...finding("Help text is not associated"), observed: "o", expected: "e",
+    state: { viewport: { width: 1280, height: 900 }, steps: ["submeter com o campo em branco"] }, evidence: ["x"] }]);
+  assert.ok(!comPassos.cards[0].flags.some(f => f.startsWith("estado-nao-declarado")));
+
+  // O sinal é para a revisora ler: por si só não tira nem dá crédito.
+  const s = scoreSemanticPackage(mudo, reviews(mudo, [decision(mudo.cards[0].id, [atom(mudo, ["A"])])])).scores[0];
+  assert.equal(s.counts.detectedUnits, 1);
+});
+
 console.log(`${tests} semantic scoring tests passed (including exhaustive 512-graph matching verification).`);

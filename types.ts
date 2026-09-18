@@ -395,10 +395,42 @@ export interface FlowViolationSpec {
   conditional?: boolean;
   /** O baseline deve provar que o scanner determinístico detecta esta spec antes de medir. */
   deterministicBaseline?: boolean;
+  /**
+   * Condição MECÂNICA sob a qual o defeito desta spec existe na página (fatia 3).
+   *
+   * Declarar isto tira a spec do território da pura autoria: a preparação mede a condição na
+   * página congelada, no estado declarado, e PARA se o que o gabarito afirma não estiver lá. É a
+   * resposta possível ao fato de que a tela e o gabarito foram redigidos pelo assistente, que a
+   * regra de independência desqualifica para julgar sobre eles.
+   *
+   * O que o predicado NÃO faz: creditar. Sustentar prova que o defeito existe, nunca que a
+   * alegação do agente afirma esse defeito — essa ponte é decisão semântica da autora (D-39).
+   * Spec sem `acceptance` fica `nao-implementado`, e isso jamais vira aceitação por elemento.
+   */
+  acceptance?: FlowAcceptancePredicate;
   /** Aliases normativos: o achado casa citando QUALQUER um deles. */
   rules: RuleId[];
   categories: string[];
   description: string;
+}
+
+/**
+ * Predicado de aceitação declarado por uma spec. A semântica de cada espécie, e por que este
+ * avaliador não reaproveita os verificadores do oráculo, estão em `scripts/acceptance-predicates.ts`.
+ */
+export interface FlowAcceptancePredicate {
+  kind: string;
+  properties?: string[];
+  attributes?: string[];
+  /** Conjunto admissível pela NORMA: sustenta quando o medido cai fora. Forma preferida. */
+  allowed?: string[];
+  /** Valor autoral que o gabarito acusa: sustenta quando o medido cai dentro. Exige `note`. */
+  forbidden?: string[];
+  quantifier?: "alguma" | "todas";
+  classe?: string;
+  tag?: string;
+  /** De onde vem o valor esperado. Obrigatório com `forbidden`. */
+  note?: string;
 }
 
 /** Um passo de preparação da página antes da resolução de âncoras. */
@@ -435,6 +467,19 @@ export interface FlowGroundTruth {
      * passariam a descrever estados diferentes da página e nada acusaria.
      */
     setup?: FlowSetupStep[];
+    /**
+     * Paradas nomeadas dentro de `setup`, em que as âncoras são resolvidas.
+     *
+     * É o que transforma o campo `state` de cada spec, até aqui um rótulo que nenhum código lia,
+     * em algo que a página responde: resolvendo em cada parada dá para dizer em QUE estados cada
+     * elemento existe, conferir a aditividade prometida em `setup_rationale` e cobrar o
+     * `conditional` de quem declara nascer depois de uma interação.
+     *
+     * `afterStep` é um índice na sequência de `setup` — nunca uma segunda cópia dela, para que o
+     * gabarito e o resolvedor não possam discordar sobre o que um estado quer dizer. O primeiro
+     * estado declarado deve ser o primeiro paint (`afterStep: 0`).
+     */
+    states?: { id: string; afterStep: number; note?: string }[];
     /**
      * Viewport padrão da suíte, em que toda spec que não declara `viewport` é medida.
      *

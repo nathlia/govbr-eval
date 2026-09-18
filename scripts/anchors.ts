@@ -33,6 +33,14 @@ export interface ElementRef {
   id: string;
   /** Rótulo legível para quem for adjudicar: tag, id do DOM e texto/nome acessível. */
   label: string;
+  /**
+   * Por que o elemento não é visível, ou `null` quando é. Medido na página junto da chave.
+   *
+   * Não é veredito: um defeito em elemento oculto pode ser legítimo, e há defeito que só existe
+   * porque o elemento está oculto. É o fato chegando à revisão — antes, oculto e visível produziam
+   * a mesma chave e nada os distinguia.
+   */
+  hidden: string | null;
 }
 
 export interface ResolvedSelector {
@@ -49,11 +57,30 @@ export interface Resolution {
   byKey: Map<string, ElementRef>;
 }
 
+/**
+ * Parada nomeada dentro da sequência de `setup`, em que as âncoras são resolvidas.
+ *
+ * `afterStep` é quantos passos de `setup` já correram quando o estado é alcançado — 0 é o primeiro
+ * paint. É índice na sequência, e não uma segunda cópia dela, para que gabarito e resolvedor nunca
+ * possam discordar sobre o que "apos-submit-vazio" quer dizer.
+ */
+export interface StateCheckpoint {
+  id: string;
+  afterStep: number;
+}
+
+export interface StateResolutions {
+  url: string;
+  /** Ordem declarada, do primeiro paint ao estado mais avançado. */
+  order: string[];
+  byState: Map<string, Resolution>;
+}
+
 interface InPageResult {
   selector: string;
   ok: boolean;
   error: string | null;
-  items: { key: string; label: string }[];
+  items: { key: string; label: string; hidden: string | null }[];
 }
 
 /**
@@ -80,7 +107,7 @@ interface InPageResult {
  * em achado sem unidade. Os dois lados escrevem seletor como quiserem, e ambos continuam sendo
  * reduzidos ao MESMO elemento.
  */
-const RESOLVE_IN_PAGE = `(selectors) => {
+export const IN_PAGE_PRELUDE = `
   const SHADOW = " >>> ";
 
   const rootOf = (el) => el.getRootNode();
@@ -127,6 +154,21 @@ const RESOLVE_IN_PAGE = `(selectors) => {
     return "<" + tag + domId + ">" + (text ? ' "' + text + '"' : "") + sombra;
   };
 
+  // Por que a visibilidade é medida junto da chave: a chave canônica é estrutural, e um elemento
+  // escondido do usuário e da árvore de acessibilidade produz exatamente a mesma chave de um
+  // visível. Sem isto, uma unidade do gabarito ancorada em elemento oculto, ou uma alegação sobre
+  // ele, chegariam à revisão indistinguíveis de qualquer outra. Não é veredito — há defeito
+  // legítimo em elemento oculto —, é o fato ficando visível para quem decide.
+  const hiddenOf = (el) => {
+    const reasons = [];
+    if (typeof el.checkVisibility === "function" && !el.checkVisibility({ checkVisibilityCSS: true })) {
+      reasons.push("nao-renderizado");
+    }
+    if (el.closest && el.closest("[aria-hidden='true']")) reasons.push("aria-hidden");
+    if (el.hasAttribute("hidden")) reasons.push("atributo hidden");
+    return reasons.length ? reasons.join(", ") : null;
+  };
+
   // Um seletor pode nomear um caminho por shadow roots (\`host >>> interno\`) ou não dizer nada
   // sobre eles — neste caso a busca desce por toda shadow root aberta, para que \`.br-button\`
   // encontre também as instâncias dentro dos componentes.
@@ -152,11 +194,23 @@ const RESOLVE_IN_PAGE = `(selectors) => {
     visit(document);
     return out;
   };
+`;
 
+/**
+ * Resolve seletores e devolve chave canônica + rótulo de cada elemento.
+ *
+ * Monta-se sobre `IN_PAGE_PRELUDE` para que exista UMA definição de "que elemento é este" na
+ * página. Os predicados de aceitação usam o mesmo prelúdio: duas implementações da chave canônica
+ * divergiriam, e o log já acompanha nove ocorrências desse mesmo defeito estrutural — uma dimensão
+ * que uma parte do código conhece e a outra não.
+ */
+const RESOLVE_IN_PAGE = `(selectors) => {
+${IN_PAGE_PRELUDE}
   return selectors.map(selector => {
     try {
       const nodes = queryAll(selector);
-      return { selector, ok: true, error: null, items: nodes.map(n => ({ key: keyOf(n), label: labelOf(n) })) };
+      return { selector, ok: true, error: null,
+        items: nodes.map(n => ({ key: keyOf(n), label: labelOf(n), hidden: hiddenOf(n) })) };
     } catch (e) {
       return { selector, ok: false, error: String((e && e.message) || e), items: [] };
     }
@@ -202,13 +256,27 @@ export async function preparePage(
   url: string,
   opts: { waitFor?: string; setup?: FlowSetupStep[] } = {},
 ): Promise<void> {
-  await page.goto(url, { waitUntil: "networkidle" });
-  if (opts.waitFor) await page.waitForSelector(opts.waitFor, { timeout: 10_000 });
+  await openPage(page, url, opts);
 
   // Leva a página ao estado que o gabarito descreve. Sem isto, uma violação que só nasce
   // depois de um uso da tela — submeter em branco, abrir um passo — seria inancorável, e o
   // corpus ficaria restrito aos defeitos visíveis no primeiro paint.
-  for (const step of opts.setup ?? []) {
+  await runSetupSteps(page, opts.setup ?? []);
+}
+
+/** Abre a página e espera o que o gabarito manda esperar. Nenhum passo de `setup` corre aqui. */
+export async function openPage(
+  page: Page,
+  url: string,
+  opts: { waitFor?: string } = {},
+): Promise<void> {
+  await page.goto(url, { waitUntil: "networkidle" });
+  if (opts.waitFor) await page.waitForSelector(opts.waitFor, { timeout: 10_000 });
+}
+
+/** Aplica uma FATIA da sequência de `setup`. Separado para que os estados sejam alcançados em ordem. */
+export async function runSetupSteps(page: Page, steps: FlowSetupStep[]): Promise<void> {
+  for (const step of steps) {
     if (step.action === "click" && step.selector) await page.click(step.selector);
     else if (step.action === "fill" && step.selector) await page.fill(step.selector, step.value ?? "");
     else if (step.action === "wait") {
@@ -216,6 +284,92 @@ export async function preparePage(
       else await page.waitForTimeout(step.ms ?? 250);
     }
   }
+}
+
+/**
+ * Resolve os mesmos seletores em CADA estado declarado da página, no mesmo carregamento.
+ *
+ * Por que isto existe: até aqui o gabarito resolvia tudo num estado só — o do fim do `setup` — e
+ * o campo `state` de cada spec era um rótulo que nenhum código lia. A afirmação de que a sequência
+ * é aditiva ("nada que o gabarito ancora deixa de existir") vivia num comentário, e o campo
+ * `conditional` ("a unidade só existe no estado declarado; nunca é presumida no primeiro paint")
+ * não era conferido contra a página. Os dois viraram medida: resolver em cada parada permite dizer
+ * em QUE estados cada elemento existe, e é a página que responde (D-06).
+ *
+ * Um único carregamento, avançando o `setup` entre as paradas, pelo mesmo motivo que
+ * `resolveSelectors` carrega uma vez: recarregar entre estados admitiria que a página mudasse no
+ * meio, e a comparação entre estados passaria a ser entre duas árvores diferentes.
+ */
+export async function resolveAcrossStates(
+  url: string,
+  selectors: string[],
+  opts: {
+    waitFor?: string;
+    setup?: FlowSetupStep[];
+    viewport?: FlowViewport;
+    states: StateCheckpoint[];
+  },
+): Promise<StateResolutions> {
+  const browser = await chromium.launch();
+  try {
+    const context = await browser.newContext({ viewport: opts.viewport ?? VIEWPORT_PADRAO });
+    const page = await context.newPage();
+    await openPage(page, url, opts);
+    return await resolveStatesOnPage(page, url, selectors, opts);
+  } finally {
+    await browser.close();
+  }
+}
+
+/**
+ * O mesmo, numa página JÁ aberta — é por aqui que a preparação do pacote mede os estados sem abrir
+ * uma segunda janela, na mesma página de que saem as capturas e as unidades da cena.
+ */
+export async function resolveStatesOnPage(
+  page: Page,
+  url: string,
+  selectors: string[],
+  opts: {
+    setup?: FlowSetupStep[];
+    states: StateCheckpoint[];
+    /**
+     * Chamado com a página JÁ no estado, logo depois da resolução. É por aqui que os predicados de
+     * aceitação são medidos no estado a que pertencem — depois da varredura a página está no último
+     * estado, e medir tudo lá seria medir um estado e cobrar outro.
+     */
+    onState?: (state: string, resolution: Resolution, page: Page) => Promise<void>;
+  },
+): Promise<StateResolutions> {
+  const setup = opts.setup ?? [];
+  const states = [...opts.states].sort((a, b) => a.afterStep - b.afterStep);
+  if (states.length === 0) throw new Error("estados: nenhum estado declarado");
+
+  const seen = new Set<string>();
+  for (const st of states) {
+    if (seen.has(st.id)) throw new Error(`estado declarado duas vezes: ${st.id}`);
+    seen.add(st.id);
+    if (!Number.isInteger(st.afterStep) || st.afterStep < 0 || st.afterStep > setup.length) {
+      throw new Error(`estado ${st.id}: afterStep ${st.afterStep} fora da sequência de setup (0..${setup.length})`);
+    }
+  }
+  // O último estado tem de ser o fim da sequência: é nele que as unidades são construídas, e uma
+  // parada que ficasse no meio do `setup` mediria a tela num estado que o gabarito não descreve.
+  const ultimo = states[states.length - 1];
+  if (ultimo.afterStep !== setup.length) {
+    throw new Error(`último estado (${ultimo.id}) para em ${ultimo.afterStep} de ${setup.length} passos de setup`);
+  }
+
+  const byState = new Map<string, Resolution>();
+  let applied = 0;
+  for (const st of states) {
+    await runSetupSteps(page, setup.slice(applied, st.afterStep));
+    applied = st.afterStep;
+    const { bySelector, byKey } = await resolveOnPage(page, selectors);
+    const resolution: Resolution = { url, bySelector, byKey };
+    byState.set(st.id, resolution);
+    if (opts.onState) await opts.onState(st.id, resolution, page);
+  }
+  return { url, order: states.map(s => s.id), byState };
 }
 
 /**
@@ -237,7 +391,7 @@ export async function resolveOnPage(
   for (const r of raw) {
     bySelector.set(r.selector, { selector: r.selector, ok: r.ok, error: r.error, keys: r.items.map(i => i.key) });
     for (const i of r.items) {
-      if (!byKey.has(i.key)) byKey.set(i.key, { key: i.key, id: elementId(i.key), label: i.label });
+      if (!byKey.has(i.key)) byKey.set(i.key, { key: i.key, id: elementId(i.key), label: i.label, hidden: i.hidden });
     }
   }
   return { bySelector, byKey };

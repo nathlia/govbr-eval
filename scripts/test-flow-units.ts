@@ -5,17 +5,17 @@ import { buildFlowUnits, scoreFlow, summarizeFlowFamilies } from "./units-flow";
 import { findingId, recordDefect, type AdjudicationIndex } from "./adjudication";
 
 const refs: Record<string, ElementRef> = {
-  form: { key: "body>form", id: "E-form", label: "<form>" },
-  message: { key: "body>form>p", id: "E-message", label: "<p> error" },
-  link1: { key: "body>a:nth-of-type(1)", id: "E-link1", label: "<a> one" },
-  link2: { key: "body>a:nth-of-type(2)", id: "E-link2", label: "<a> two" },
-  link3: { key: "body>a:nth-of-type(3)", id: "E-link3", label: "<a> three" },
-  link4: { key: "body>a:nth-of-type(4)", id: "E-link4", label: "<a> four" },
-  list: { key: "body>div", id: "E-list", label: "<div> .br-list" },
-  item1: { key: "body>div>div:nth-of-type(1)", id: "E-item1", label: "<div> .br-item one" },
-  item2: { key: "body>div>div:nth-of-type(2)", id: "E-item2", label: "<div> .br-item two" },
-  item3: { key: "body>div>div:nth-of-type(3)", id: "E-item3", label: "<div> .br-item three" },
-  item4: { key: "body>div>div:nth-of-type(4)", id: "E-item4", label: "<div> .br-item four" },
+  form: { key: "body>form", id: "E-form", label: "<form>", hidden: null },
+  message: { key: "body>form>p", id: "E-message", label: "<p> error", hidden: null },
+  link1: { key: "body>a:nth-of-type(1)", id: "E-link1", label: "<a> one", hidden: null },
+  link2: { key: "body>a:nth-of-type(2)", id: "E-link2", label: "<a> two", hidden: null },
+  link3: { key: "body>a:nth-of-type(3)", id: "E-link3", label: "<a> three", hidden: null },
+  link4: { key: "body>a:nth-of-type(4)", id: "E-link4", label: "<a> four", hidden: null },
+  list: { key: "body>div", id: "E-list", label: "<div> .br-list", hidden: null },
+  item1: { key: "body>div>div:nth-of-type(1)", id: "E-item1", label: "<div> .br-item one", hidden: null },
+  item2: { key: "body>div>div:nth-of-type(2)", id: "E-item2", label: "<div> .br-item two", hidden: null },
+  item3: { key: "body>div>div:nth-of-type(3)", id: "E-item3", label: "<div> .br-item three", hidden: null },
+  item4: { key: "body>div>div:nth-of-type(4)", id: "E-item4", label: "<div> .br-item four", hidden: null },
 };
 
 const itemKeys = [refs.item1.key, refs.item2.key, refs.item3.key, refs.item4.key];

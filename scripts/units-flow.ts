@@ -15,7 +15,8 @@
 import type {
   FlowAgentResults, FlowFinding, FlowGroundTruth, FlowViolationSpec, RuleId,
 } from "../types";
-import type { ElementRef, Resolution } from "./anchors";
+import type { ElementRef, Resolution, StateCheckpoint, StateResolutions } from "./anchors";
+import type { PredicateResult } from "./acceptance-predicates";
 import { elementId, resolveWithExcept } from "./anchors";
 import { expandSpecRules, normalizeRuleId, rulesOfFinding } from "./units";
 import { normalizeFinding } from "./flow-contract";
@@ -37,8 +38,32 @@ export interface FlowUnit {
   rules: RuleId[];
   categories: string[];
   description: string;
+  /** Estado DECLARADO pelo gabarito: `sempre`, ou o id de um estado de `_meta.states`. */
   state: string;
+  /**
+   * Estados em que o elemento desta unidade de fato resolve, MEDIDOS na página (D-06).
+   *
+   * Vazio quando a medição não correu — o que mantém as chamadas antigas funcionando sem que a
+   * ausência de medida seja lida como "não existe em estado nenhum".
+   */
+  states: string[];
+  /**
+   * Resultado do predicado de aceitação da spec, medido na página (fatia 3). Ausente quando a
+   * medição não correu; `nao-implementado` quando a spec não declara predicado. Nunca creditar a
+   * partir daqui: sustentar prova que o DEFEITO existe, não que a alegação o afirma (D-39).
+   */
+  acceptance?: PredicateResult;
   conditional: boolean;
+}
+
+/** O estado declarado que quer dizer "em todos os estados", e não o id de um estado. */
+export const ESTADO_SEMPRE = "sempre";
+
+/** Em que estados cada chave canônica resolve. É a página que responde, nunca o gabarito. */
+export interface StatePresence {
+  /** Ordem declarada, do primeiro paint ao estado mais avançado. */
+  order: string[];
+  statesOfKey: Map<string, string[]>;
 }
 
 /** Todo seletor do gabarito que a página desmente. Enquanto houver um, não se mede nada. */
@@ -53,6 +78,19 @@ export interface FlowUnitsBuild {
 }
 
 /** Seletores que precisam ser resolvidos: âncoras do gabarito e seus `except`. */
+/**
+ * Paradas de estado declaradas pelo gabarito, ou `null` quando ele não declara nenhuma.
+ *
+ * `null` e não um padrão: sem `_meta.states` a resolução volta a ser a de antes, num estado só, e
+ * nada de estado é cobrado. Assim um gabarito que ainda não declarou estados não passa a falhar —
+ * e, principalmente, a ausência de medida não se disfarça de medida (D-06).
+ */
+export function statesOfGroundTruth(gt: FlowGroundTruth): StateCheckpoint[] | null {
+  const declared = gt._meta.states;
+  if (!declared || declared.length === 0) return null;
+  return declared.map(s => ({ id: s.id, afterStep: s.afterStep }));
+}
+
 export function selectorsOfGroundTruth(gt: FlowGroundTruth): string[] {
   const out: string[] = [];
   for (const v of gt.violations) {
@@ -62,7 +100,115 @@ export function selectorsOfGroundTruth(gt: FlowGroundTruth): string[] {
   return out;
 }
 
-export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution): FlowUnitsBuild {
+/**
+ * Mede em que estados cada elemento ancorado existe, e cobra a ADITIVIDADE da sequência de setup.
+ *
+ * O gabarito afirma, em `_meta.setup_rationale`, que a sequência só faz nascer elementos e nunca
+ * destrói os que ele ancora — é essa afirmação que autoriza resolver tudo num estado só. A
+ * afirmação era um comentário. Aqui vira medida: se um elemento ancorado num estado deixa de
+ * resolver num estado posterior, a premissa é falsa para esta página, as duas metades do gabarito
+ * passam a descrever árvores diferentes, e a construção PARA em vez de medir (D-06).
+ *
+ * O contrário não se cobra: elemento que nasce no meio do caminho é exatamente o que o `setup`
+ * existe para alcançar — a mensagem de erro que ancora o V-03b e o V-09.
+ */
+export function measureStatePresence(res: StateResolutions): { presence: StatePresence; defects: GabaritoDefect[] } {
+  const defects: GabaritoDefect[] = [];
+  const statesOfKey = new Map<string, string[]>();
+
+  for (const state of res.order) {
+    const resolution = res.byState.get(state);
+    if (!resolution) {
+      defects.push({ specId: "_meta.states", problem: `estado declarado sem resolução: ${state}` });
+      continue;
+    }
+    for (const key of resolution.byKey.keys()) {
+      const states = statesOfKey.get(key) ?? [];
+      states.push(state);
+      statesOfKey.set(key, states);
+    }
+  }
+
+  for (const [key, states] of statesOfKey) {
+    const desde = res.order.indexOf(states[0]);
+    const faltando = res.order.slice(desde).filter(e => !states.includes(e));
+    if (faltando.length > 0) {
+      defects.push({
+        specId: "_meta.setup",
+        problem: `sequência de setup NÃO é aditiva: ${key} resolve em ${states.join(", ")} e desaparece em ${faltando.join(", ")}`,
+      });
+    }
+  }
+
+  return { presence: { order: res.order, statesOfKey }, defects };
+}
+
+/**
+ * Confere o estado DECLARADO por uma spec contra o estado MEDIDO dos seus participantes.
+ *
+ * `state: "sempre"` promete que a unidade é alcançável desde o primeiro paint; `conditional: true`
+ * promete o oposto — que ela não existe antes do estado declarado, e por isso nunca é presumida
+ * lá. Nenhuma das duas promessas era conferida: o campo era um rótulo que entrava no id da
+ * unidade e não era lido por código nenhum.
+ */
+function stateDefectsOf(
+  spec: FlowViolationSpec,
+  keys: string[],
+  presence: StatePresence,
+): GabaritoDefect[] {
+  const defects: GabaritoDefect[] = [];
+  const declarado = spec.state ?? ESTADO_SEMPRE;
+  const conditional = spec.conditional ?? false;
+
+  if (declarado === ESTADO_SEMPRE) {
+    if (conditional) {
+      defects.push({ specId: spec.id, problem: `conditional: true com state "${ESTADO_SEMPRE}": a unidade não pode ser condicional e existir sempre` });
+      return defects;
+    }
+    for (const key of keys) {
+      const states = presence.statesOfKey.get(key) ?? [];
+      const faltando = presence.order.filter(e => !states.includes(e));
+      if (faltando.length > 0) {
+        defects.push({ specId: spec.id, problem: `state "${ESTADO_SEMPRE}", mas ${key} não existe em: ${faltando.join(", ")}` });
+      }
+    }
+    return defects;
+  }
+
+  const alvo = presence.order.indexOf(declarado);
+  if (alvo < 0) {
+    defects.push({ specId: spec.id, problem: `state "${declarado}" não está declarado em _meta.states (${presence.order.join(", ")})` });
+    return defects;
+  }
+
+  for (const key of keys) {
+    const states = presence.statesOfKey.get(key) ?? [];
+    if (!states.includes(declarado)) {
+      defects.push({ specId: spec.id, problem: `state "${declarado}", mas ${key} não existe nesse estado` });
+      continue;
+    }
+    if (!conditional) continue;
+    const antes = presence.order.slice(0, alvo).filter(e => states.includes(e));
+    if (antes.length > 0) {
+      defects.push({ specId: spec.id, problem: `conditional: true, mas ${key} já existe antes de "${declarado}": ${antes.join(", ")}` });
+    }
+  }
+  return defects;
+}
+
+/**
+ * Estados em que a unidade INTEIRA é alcançável: a interseção dos estados dos participantes.
+ *
+ * Em `composicao` isto importa — o defeito é propriedade do conjunto, e o conjunto só existe onde
+ * todos os participantes existem. Sem medição devolve vazio: ausência de medida não é ausência de
+ * estado.
+ */
+function statesOf(keys: string[], presence?: StatePresence): string[] {
+  if (!presence) return [];
+  return presence.order.filter(state => keys.every(k => (presence.statesOfKey.get(k) ?? []).includes(state)));
+}
+
+export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution, presence?: StatePresence): FlowUnitsBuild {
   const units: FlowUnit[] = [];
   const defects: GabaritoDefect[] = [];
 
@@ -103,6 +249,10 @@ export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution): FlowUnitsB
         defects.push({ specId: spec.id, problem: `elemento resolvido sem referência: ${keys[0]}` });
         continue;
       }
+      if (presence) {
+        const doEstado = stateDefectsOf(spec, keys, presence);
+        if (doEstado.length > 0) { defects.push(...doEstado); continue; }
+      }
       units.push({
         specId: spec.id,
         element: primary,
@@ -110,7 +260,8 @@ export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution): FlowUnitsB
         rules,
         categories: spec.categories,
         description: spec.description,
-        state: spec.state ?? "sempre",
+        state: spec.state ?? ESTADO_SEMPRE,
+        states: statesOf(keys, presence),
         conditional: spec.conditional ?? false,
       });
       continue;
@@ -123,6 +274,11 @@ export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution): FlowUnitsB
     if (spec.expectedCount != null && keys.length !== spec.expectedCount) {
       defects.push({ specId: spec.id, problem: `gabarito declara ${spec.expectedCount} instância(s); a página tem ${keys.length}` });
       continue;
+    }
+
+    if (presence) {
+      const doEstado = stateDefectsOf(spec, keys, presence);
+      if (doEstado.length > 0) { defects.push(...doEstado); continue; }
     }
 
     for (const key of keys) {
@@ -138,7 +294,8 @@ export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution): FlowUnitsB
         rules,
         categories: spec.categories,
         description: spec.description,
-        state: spec.state ?? "sempre",
+        state: spec.state ?? ESTADO_SEMPRE,
+        states: statesOf([element.key], presence),
         conditional: spec.conditional ?? false,
       });
     }

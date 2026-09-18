@@ -17,8 +17,15 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
   nem com os da orgânica (D-13). Ver `docs/ancoragem.md`.
   - **v02 (D-39):** `npm run flow:review -- prepare` monta o pacote de revisão da bateria, a autora
     decide em `reviews.json`, e `npm run score:fluxo` pontua o pacote offline
-    (`flow-semantic-1.2.0`). Seletor e regra só geram candidatos: nenhuma alegação vira crédito sem
+    (`flow-semantic-1.3.0`). Seletor e regra só geram candidatos: nenhuma alegação vira crédito sem
     decisão. Ver `docs/semantic-scoring.md`.
+  - **fatia 3:** o estado deixa de ser rótulo. `_meta.states` nomeia as paradas do `setup`, as
+    âncoras são resolvidas em CADA uma, e a unidade carrega os estados medidos. Aditividade da
+    sequência, `state: "sempre"` e `conditional` passam a ser cobrados contra a página — falhar
+    para a preparação. Uma spec pode declarar `acceptance`: um predicado pequeno e transparente
+    (`scripts/acceptance-predicates.ts`, nada importado do oráculo) medido na página congelada, que
+    **sustenta** a spec mas nunca credita a alegação. Sem predicado, `nao-implementado` — que não é
+    aceitação nem recusa, e jamais vira correção por elemento. Testes: `test:states`.
   - **fatia 6:** a bateria grava plano + manifesto de coleta (`scripts/collection-manifest.ts`) antes
     da primeira execução e a linha de base sob o próprio carimbo; o pacote só é preparado com esse
     manifesto, essa linha de base e o site congelado (`--collection-manifest --site-dir --baseline`),

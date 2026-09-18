@@ -27,12 +27,13 @@ const current = (overrides: Record<string, unknown> = {}): Record<string, unknow
 const legacy = { selector: "#cpf", rule: "wcag:1.3.1", description: "Help text is not associated" };
 const report = (findings: unknown[]) => ({ timestamp: "t", model: "m", appUrl: "http://127.0.0.1:3100/fluxo.html", findings });
 
-const element = { key: "body>input", id: "E-input", label: "CPF" };
+const element = { key: "body>input", id: "E-input", label: "CPF", hidden: null };
 const resolution: Resolution = { url: "http://fixture/fluxo.html",
   byKey: new Map([[element.key, element]]),
   bySelector: new Map([["#cpf", { selector: "#cpf", ok: true, error: null, keys: [element.key] }]]) };
 const units: FlowUnit[] = [{ specId: "A", element, participants: [element.key], rules: ["wcag:1.3.1"],
-  categories: ["form"], description: "Help text association", state: "sempre", conditional: false }];
+  categories: ["form"], description: "Help text association", state: "sempre",
+  states: ["inicial", "submitted"], conditional: false }];
 const context = { referenceHash: "r", sceneHash: "s", scorerHash: "h" };
 const index: EvidenceIndex = { dir: "pipeline/logs/run-1-evidencia", files: [
   { path: ".playwright-mcp/page-1.yml", bytes: 10, sha256: "a".repeat(64) },

@@ -1,133 +1,991 @@
 {
-  "timestamp": "2026-09-14T20:58:47.709Z",
+  "baselineVersion": "linha-de-base-fluxo-2.0.0",
+  "status": "complete",
+  "error": null,
+  "scope": "dev-global",
+  "timestamp": "2026-09-18T00:49:38.444Z",
   "appUrl": "http://localhost:3000/fluxo.html",
-  "state": "após setup do gabarito",
-  "viewports": {
-    "padrao": {
-      "width": 1280,
-      "height": 900
-    },
-    "extras": [
+  "state": {
+    "setup": [
       {
-        "viewport": {
-          "width": 320,
-          "height": 720
-        },
-        "specs": [
-          "V-12"
-        ],
-        "violationCount": 0,
-        "passes": 36
+        "action": "click",
+        "selector": ".acao-continuar"
+      },
+      {
+        "action": "wait",
+        "selector": ".mensagem-erro-cpf"
       }
-    ]
+    ],
+    "waitFor": "#cpf"
   },
-  "axe": {
-    "tool": "axe-core via @axe-core/playwright",
-    "violationCount": 0,
-    "passes": 36,
-    "byElementKey": {},
-    "unattributed": [],
-    "incomplete": []
+  "provenance": {
+    "collectionManifest": null,
+    "identity": {
+      "collection": "fluxo-1.3.0",
+      "referenceSha256": "6debda737dd0f713be8508fba59ad52e99dc0392cd672e251c6eeecb7275a5c8",
+      "siteManifestSha256": null,
+      "oracleDistSha256": "11f68a1d3697196ef4c89bbc359624d583e279967270f01725163999da008574",
+      "oracleDataSha256": "0b3739e2a697fed137ffdaa8b8e45e6469c866b840c8a4764683547ee7785d3c",
+      "statePlanSha256": "8ce8e00c08e7ac1ba8d899dc8549be9a1ead98b90f7338e7a7526a8498565a2c"
+    },
+    "corpus": {
+      "commit": "4767b4146d1f46244e506a0991028164f7903ef7",
+      "dirty": false
+    },
+    "validatorVersion": "2.5.2",
+    "tools": {
+      "axe": "4.11.4",
+      "playwright": "1.61.1"
+    }
   },
+  "passes": [
+    {
+      "id": "1280x900",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "specs": [
+        "V-01",
+        "V-02",
+        "V-03a",
+        "V-03b",
+        "V-04",
+        "V-05",
+        "V-06",
+        "V-08",
+        "V-09",
+        "V-10",
+        "V-11"
+      ],
+      "startedAt": "2026-09-18T00:49:38.515Z",
+      "seconds": 4.2,
+      "axe": {
+        "violations": 0,
+        "passes": 36,
+        "incomplete": [],
+        "findings": [],
+        "seconds": 0.4
+      },
+      "validator": {
+        "unguided": {
+          "mode": "nao-guiada",
+          "policy": "pagina-inteira: checks tokens+structure, seletor padrão do validator, todos os componentes e verificações de token, janela e setup do plano de estados, sem seletor do gabarito",
+          "request": {
+            "selectors": null,
+            "checks": [
+              "tokens",
+              "structure"
+            ],
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "actions": 2
+          },
+          "stateFingerprint": "sha256:11d24d9ef1b3f62e6a83592909801de372ab02a763fb769d471788fd9fcd8ae7",
+          "coverage": {
+            "checks": [
+              "structure",
+              "tokens"
+            ],
+            "selectors": [],
+            "evidenceSelectors": [
+              "button, a, input, select, textarea, [role='button'], [role='link'], [role='checkbox'], [role='radio'], [class*='br-']"
+            ],
+            "axeScope": null,
+            "elementsInspected": 19,
+            "componentsRequested": [
+              "accordion",
+              "avatar",
+              "breadcrumb",
+              "button",
+              "card",
+              "carousel",
+              "checkbox",
+              "cookiebar",
+              "datetimepicker",
+              "divider",
+              "footer",
+              "header",
+              "input",
+              "item",
+              "list",
+              "loading",
+              "magicbutton",
+              "menu",
+              "message",
+              "modal",
+              "notification",
+              "pagination",
+              "radio",
+              "scrim",
+              "select",
+              "signin",
+              "skiplink",
+              "step",
+              "switch",
+              "tab",
+              "table",
+              "tag",
+              "textarea",
+              "tooltip",
+              "upload",
+              "wizard"
+            ],
+            "componentsFound": [
+              "button",
+              "input",
+              "list",
+              "item",
+              "tag",
+              "divider"
+            ],
+            "actionsApplied": [
+              {
+                "action": "click",
+                "selector": ".acao-continuar"
+              },
+              {
+                "action": "wait",
+                "selector": ".mensagem-erro-cpf"
+              }
+            ]
+          },
+          "findings": [
+            {
+              "id": "F-001",
+              "rule": "ds:token-color",
+              "source": "govbr-ds-token",
+              "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+              "expected": "Valor de token do DS; mais próximo: --gray-cool-10 (#dfe1e2, distância RGB 4.24)",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2)"
+            },
+            {
+              "id": "F-002",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 13px (fora da escala: 13px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)"
+            },
+            {
+              "id": "F-003",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 13px (fora da escala: 13px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)"
+            },
+            {
+              "id": "F-004",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 13px (fora da escala: 13px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)"
+            },
+            {
+              "id": "F-005",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 13px (fora da escala: 13px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)"
+            },
+            {
+              "id": "F-006",
+              "rule": "ds:structure-input-tag",
+              "source": "govbr-ds-structure",
+              "description": "br-input aplicado a <input>",
+              "expected": "Elemento <div>",
+              "target": "#cpf"
+            }
+          ],
+          "seconds": 1.5
+        },
+        "guided": {
+          "mode": "guiada",
+          "policy": "diagnostico: âncoras das specs da janela; não comparável ao agente",
+          "request": {
+            "selectors": [
+              ".opcao-identificacao",
+              "#cpf",
+              ".mensagem-erro-cpf",
+              ".lista-opcoes, .lista-opcoes > .br-item",
+              ".link-opcao",
+              ".barra-superior, .painel-institucional, .cartao-identificacao, .lista-opcoes, .opcao-identificacao",
+              "input#cpf.br-input",
+              ".barra-recursos"
+            ],
+            "checks": [
+              "tokens",
+              "structure"
+            ],
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "actions": 2
+          },
+          "stateFingerprint": "sha256:11d24d9ef1b3f62e6a83592909801de372ab02a763fb769d471788fd9fcd8ae7",
+          "coverage": {
+            "checks": [
+              "structure",
+              "tokens"
+            ],
+            "selectors": [
+              "#cpf",
+              ".barra-recursos",
+              ".barra-superior, .painel-institucional, .cartao-identificacao, .lista-opcoes, .opcao-identificacao",
+              ".link-opcao",
+              ".lista-opcoes, .lista-opcoes > .br-item",
+              ".mensagem-erro-cpf",
+              ".opcao-identificacao",
+              "input#cpf.br-input"
+            ],
+            "evidenceSelectors": [
+              "#cpf",
+              ".barra-recursos",
+              ".barra-superior, .painel-institucional, .cartao-identificacao, .lista-opcoes, .opcao-identificacao",
+              ".link-opcao",
+              ".lista-opcoes, .lista-opcoes > .br-item",
+              ".mensagem-erro-cpf",
+              ".opcao-identificacao",
+              "input#cpf.br-input"
+            ],
+            "axeScope": null,
+            "elementsInspected": 15,
+            "componentsRequested": [
+              "accordion",
+              "avatar",
+              "breadcrumb",
+              "button",
+              "card",
+              "carousel",
+              "checkbox",
+              "cookiebar",
+              "datetimepicker",
+              "divider",
+              "footer",
+              "header",
+              "input",
+              "item",
+              "list",
+              "loading",
+              "magicbutton",
+              "menu",
+              "message",
+              "modal",
+              "notification",
+              "pagination",
+              "radio",
+              "scrim",
+              "select",
+              "signin",
+              "skiplink",
+              "step",
+              "switch",
+              "tab",
+              "table",
+              "tag",
+              "textarea",
+              "tooltip",
+              "upload",
+              "wizard"
+            ],
+            "componentsFound": [
+              "input",
+              "list",
+              "item"
+            ],
+            "actionsApplied": [
+              {
+                "action": "click",
+                "selector": ".acao-continuar"
+              },
+              {
+                "action": "wait",
+                "selector": ".mensagem-erro-cpf"
+              }
+            ]
+          },
+          "findings": [
+            {
+              "id": "F-001",
+              "rule": "ds:token-color",
+              "source": "govbr-ds-token",
+              "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+              "expected": "Valor de token do DS; mais próximo: --gray-cool-10 (#dfe1e2, distância RGB 4.24)",
+              "target": "#root > main > section:nth-of-type(1)"
+            },
+            {
+              "id": "F-002",
+              "rule": "ds:token-color",
+              "source": "govbr-ds-token",
+              "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+              "expected": "Valor de token do DS; mais próximo: --gray-cool-10 (#dfe1e2, distância RGB 4.24)",
+              "target": "#root > main > section:nth-of-type(2)"
+            },
+            {
+              "id": "F-003",
+              "rule": "ds:token-color",
+              "source": "govbr-ds-token",
+              "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+              "expected": "Valor de token do DS; mais próximo: --gray-cool-10 (#dfe1e2, distância RGB 4.24)",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2)"
+            },
+            {
+              "id": "F-004",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 13px (fora da escala: 13px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)"
+            },
+            {
+              "id": "F-005",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 13px (fora da escala: 13px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)"
+            },
+            {
+              "id": "F-006",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 13px (fora da escala: 13px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)"
+            },
+            {
+              "id": "F-007",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 13px (fora da escala: 13px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)"
+            },
+            {
+              "id": "F-008",
+              "rule": "ds:token-color",
+              "source": "govbr-ds-token",
+              "description": "color: rgb(230, 0, 0) (#e60000) não corresponde a nenhum token do DS",
+              "expected": "Valor de token do DS; mais próximo: --red-vivid-50 (#e52207, distância RGB 34.73)",
+              "target": "#root > main > section:nth-of-type(2) > form > p"
+            },
+            {
+              "id": "F-009",
+              "rule": "ds:structure-input-tag",
+              "source": "govbr-ds-structure",
+              "description": "br-input aplicado a <input>",
+              "expected": "Elemento <div>",
+              "target": "#cpf"
+            }
+          ],
+          "seconds": 1.4
+        }
+      },
+      "resolution": {
+        "bySelector": {
+          "#root > main > section:nth-of-type(2) > div:nth-of-type(2)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)"
+            ]
+          },
+          "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)"
+            ]
+          },
+          "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)"
+            ]
+          },
+          "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)"
+            ]
+          },
+          "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)"
+            ]
+          },
+          "#cpf": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>form>div>input"
+            ]
+          },
+          "#root > main > section:nth-of-type(1)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(1)"
+            ]
+          },
+          "#root > main > section:nth-of-type(2)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)"
+            ]
+          },
+          "#root > main > section:nth-of-type(2) > form > p": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>form>p"
+            ]
+          },
+          ".opcao-identificacao": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)"
+            ]
+          },
+          ".mensagem-erro-cpf": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>form>p"
+            ]
+          },
+          ".lista-opcoes, .lista-opcoes > .br-item": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)"
+            ]
+          },
+          ".link-opcao": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a"
+            ]
+          },
+          ".barra-superior, .painel-institucional, .cartao-identificacao, .lista-opcoes, .opcao-identificacao": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>header",
+              "body>div>main>section:nth-of-type(1)",
+              "body>div>main>section:nth-of-type(2)",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)",
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)"
+            ]
+          },
+          "input#cpf.br-input": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>form>div>input"
+            ]
+          },
+          ".barra-recursos": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>header>div"
+            ]
+          }
+        },
+        "labels": {
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)": "<div> \"Login com seu banco SUA CONTA SERÁ PRATA Login c\"",
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)": "<div> \"Login com seu banco SUA CONTA SERÁ PRATA\"",
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)": "<div> \"Login com QR code\"",
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)": "<div> \"Seu certificado digital\"",
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)": "<div> \"Seu certificado digital em nuvem\"",
+          "body>div>main>section:nth-of-type(2)>form>div>input": "<input#cpf> \"Digite seu CPF\"",
+          "body>div>main>section:nth-of-type(1)": "<section> \"Uma conta gov.br garante a identificação de cada\"",
+          "body>div>main>section:nth-of-type(2)": "<section> \"Identifique-se no gov.br com: Número do CPF Digi\"",
+          "body>div>main>section:nth-of-type(2)>form>p": "<p> \"Informe um CPF para continuar.\"",
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)>a": "<a> \"Login com seu banco\"",
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)>a": "<a> \"Login com QR code\"",
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)>a": "<a> \"Seu certificado digital\"",
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)>a": "<a> \"Seu certificado digital em nuvem\"",
+          "body>div>header": "<header> \"gov.br Alto Contraste VLibras\"",
+          "body>div>header>div": "<div> \"Alto Contraste VLibras\""
+        }
+      }
+    },
+    {
+      "id": "320x720",
+      "viewport": {
+        "width": 320,
+        "height": 720
+      },
+      "specs": [
+        "V-12"
+      ],
+      "startedAt": "2026-09-18T00:49:42.709Z",
+      "seconds": 3.9,
+      "axe": {
+        "violations": 0,
+        "passes": 36,
+        "incomplete": [],
+        "findings": [],
+        "seconds": 0.4
+      },
+      "validator": {
+        "unguided": {
+          "mode": "nao-guiada",
+          "policy": "pagina-inteira: checks tokens+structure, seletor padrão do validator, todos os componentes e verificações de token, janela e setup do plano de estados, sem seletor do gabarito",
+          "request": {
+            "selectors": null,
+            "checks": [
+              "tokens",
+              "structure"
+            ],
+            "viewport": {
+              "width": 320,
+              "height": 720
+            },
+            "actions": 2
+          },
+          "stateFingerprint": "sha256:03e69af7b269218d1d0ee02c7f552665614632ff8c0a58424c4d0823e0a3b281",
+          "coverage": {
+            "checks": [
+              "structure",
+              "tokens"
+            ],
+            "selectors": [],
+            "evidenceSelectors": [
+              "button, a, input, select, textarea, [role='button'], [role='link'], [role='checkbox'], [role='radio'], [class*='br-']"
+            ],
+            "axeScope": null,
+            "elementsInspected": 19,
+            "componentsRequested": [
+              "accordion",
+              "avatar",
+              "breadcrumb",
+              "button",
+              "card",
+              "carousel",
+              "checkbox",
+              "cookiebar",
+              "datetimepicker",
+              "divider",
+              "footer",
+              "header",
+              "input",
+              "item",
+              "list",
+              "loading",
+              "magicbutton",
+              "menu",
+              "message",
+              "modal",
+              "notification",
+              "pagination",
+              "radio",
+              "scrim",
+              "select",
+              "signin",
+              "skiplink",
+              "step",
+              "switch",
+              "tab",
+              "table",
+              "tag",
+              "textarea",
+              "tooltip",
+              "upload",
+              "wizard"
+            ],
+            "componentsFound": [
+              "button",
+              "input",
+              "list",
+              "item",
+              "tag",
+              "divider"
+            ],
+            "actionsApplied": [
+              {
+                "action": "click",
+                "selector": ".acao-continuar"
+              },
+              {
+                "action": "wait",
+                "selector": ".mensagem-erro-cpf"
+              }
+            ]
+          },
+          "findings": [
+            {
+              "id": "F-001",
+              "rule": "ds:token-color",
+              "source": "govbr-ds-token",
+              "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+              "expected": "Valor de token do DS; mais próximo: --gray-cool-10 (#dfe1e2, distância RGB 4.24)",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2)"
+            },
+            {
+              "id": "F-002",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 13px (fora da escala: 13px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)"
+            },
+            {
+              "id": "F-003",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 13px (fora da escala: 13px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)"
+            },
+            {
+              "id": "F-004",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 13px (fora da escala: 13px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)"
+            },
+            {
+              "id": "F-005",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 13px (fora da escala: 13px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)"
+            },
+            {
+              "id": "F-006",
+              "rule": "ds:structure-input-tag",
+              "source": "govbr-ds-structure",
+              "description": "br-input aplicado a <input>",
+              "expected": "Elemento <div>",
+              "target": "#cpf"
+            }
+          ],
+          "seconds": 1.4
+        },
+        "guided": {
+          "mode": "guiada",
+          "policy": "diagnostico: âncoras das specs da janela; não comparável ao agente",
+          "request": {
+            "selectors": [
+              ".barra-recursos"
+            ],
+            "checks": [
+              "tokens",
+              "structure"
+            ],
+            "viewport": {
+              "width": 320,
+              "height": 720
+            },
+            "actions": 2
+          },
+          "stateFingerprint": "sha256:03e69af7b269218d1d0ee02c7f552665614632ff8c0a58424c4d0823e0a3b281",
+          "coverage": {
+            "checks": [
+              "structure",
+              "tokens"
+            ],
+            "selectors": [
+              ".barra-recursos"
+            ],
+            "evidenceSelectors": [
+              ".barra-recursos"
+            ],
+            "axeScope": null,
+            "elementsInspected": 1,
+            "componentsRequested": [
+              "accordion",
+              "avatar",
+              "breadcrumb",
+              "button",
+              "card",
+              "carousel",
+              "checkbox",
+              "cookiebar",
+              "datetimepicker",
+              "divider",
+              "footer",
+              "header",
+              "input",
+              "item",
+              "list",
+              "loading",
+              "magicbutton",
+              "menu",
+              "message",
+              "modal",
+              "notification",
+              "pagination",
+              "radio",
+              "scrim",
+              "select",
+              "signin",
+              "skiplink",
+              "step",
+              "switch",
+              "tab",
+              "table",
+              "tag",
+              "textarea",
+              "tooltip",
+              "upload",
+              "wizard"
+            ],
+            "componentsFound": [],
+            "actionsApplied": [
+              {
+                "action": "click",
+                "selector": ".acao-continuar"
+              },
+              {
+                "action": "wait",
+                "selector": ".mensagem-erro-cpf"
+              }
+            ]
+          },
+          "findings": [],
+          "seconds": 1.4
+        }
+      },
+      "resolution": {
+        "bySelector": {
+          "#root > main > section:nth-of-type(2) > div:nth-of-type(2)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)"
+            ]
+          },
+          "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)"
+            ]
+          },
+          "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)"
+            ]
+          },
+          "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)"
+            ]
+          },
+          "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)"
+            ]
+          },
+          "#cpf": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>main>section:nth-of-type(2)>form>div>input"
+            ]
+          },
+          ".barra-recursos": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div>header>div"
+            ]
+          }
+        },
+        "labels": {
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)": "<div> \"Login com seu banco SUA CONTA SERÁ PRATA Login c\"",
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)": "<div> \"Login com seu banco SUA CONTA SERÁ PRATA\"",
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)": "<div> \"Login com QR code\"",
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)": "<div> \"Seu certificado digital\"",
+          "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)": "<div> \"Seu certificado digital em nuvem\"",
+          "body>div>main>section:nth-of-type(2)>form>div>input": "<input#cpf> \"Digite seu CPF\"",
+          "body>div>header>div": "<div> \"Alto Contraste VLibras\""
+        }
+      }
+    }
+  ],
+  "coverageCheck": [
+    {
+      "specId": "V-06",
+      "pass": "1280x900",
+      "detected": true
+    },
+    {
+      "specId": "V-08",
+      "pass": "1280x900",
+      "detected": true
+    },
+    {
+      "specId": "V-09",
+      "pass": "1280x900",
+      "detected": true
+    }
+  ],
   "eslint": {
     "tool": "eslint-plugin-jsx-a11y (recommended)",
     "config": "flat, recommended",
-    "filesLinted": [
-      "F:\\Dev Nath\\TCC\\govbr-corpus\\src\\pages\\LoginPage.tsx"
+    "files": [
+      {
+        "path": "F:/Dev Nath/TCC/govbr-corpus/src/pages/LoginPage.tsx",
+        "sha256": "bcc6f6403938d98f90e15f79967f815c8bc391697a1092335ca0495c78f6e006"
+      }
     ],
-    "findings": []
+    "findings": [],
+    "seconds": 0.1
   },
-  "validator": {
-    "tool": "govbr-ds-validator scan_page (tokens + structure)",
-    "version": "2.3.0",
-    "byElementKey": {
-      "body>div>main>section:nth-of-type(1)": [
-        {
-          "rule": "ds:token-color",
-          "source": "govbr-ds-token",
-          "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
-          "target": "#root > main > section:nth-of-type(1)"
-        }
-      ],
-      "body>div>main>section:nth-of-type(2)": [
-        {
-          "rule": "ds:token-color",
-          "source": "govbr-ds-token",
-          "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
-          "target": "#root > main > section:nth-of-type(2)"
-        }
-      ],
-      "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)": [
-        {
-          "rule": "ds:token-color",
-          "source": "govbr-ds-token",
-          "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
-          "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2)"
-        }
-      ],
-      "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)": [
-        {
-          "rule": "ds:token-spacing",
-          "source": "govbr-ds-token",
-          "description": "padding: 13px (fora da escala: 13px)",
-          "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)"
-        }
-      ],
-      "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)": [
-        {
-          "rule": "ds:token-spacing",
-          "source": "govbr-ds-token",
-          "description": "padding: 13px (fora da escala: 13px)",
-          "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)"
-        }
-      ],
-      "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)": [
-        {
-          "rule": "ds:token-spacing",
-          "source": "govbr-ds-token",
-          "description": "padding: 13px (fora da escala: 13px)",
-          "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)"
-        }
-      ],
-      "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)": [
-        {
-          "rule": "ds:token-spacing",
-          "source": "govbr-ds-token",
-          "description": "padding: 13px (fora da escala: 13px)",
-          "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)"
-        }
-      ],
-      "body>div>main>section:nth-of-type(2)>form>p": [
-        {
-          "rule": "ds:token-color",
-          "source": "govbr-ds-token",
-          "description": "color: rgb(230, 0, 0) (#e60000) não corresponde a nenhum token do DS",
-          "target": "#root > main > section:nth-of-type(2) > form > p"
-        }
-      ],
-      "body>div>main>section:nth-of-type(2)>form>div>input": [
-        {
-          "rule": "ds:structure-input-tag",
-          "source": "govbr-ds-structure",
-          "description": "br-input aplicado a <input>",
-          "target": "#cpf"
-        }
-      ]
-    },
-    "unattributed": [],
-    "requiredSpecs": [
+  "cost": {
+    "wallClockSeconds": 8.3,
+    "apiUsd": 0,
+    "platform": "win32 x64",
+    "passes": [
       {
-        "specId": "V-06",
-        "detected": true
+        "id": "1280x900",
+        "seconds": 4.2
       },
       {
-        "specId": "V-08",
-        "detected": true
-      },
-      {
-        "specId": "V-09",
-        "detected": true
+        "id": "320x720",
+        "seconds": 3.9
       }
     ]
+  },
+  "legacy": {
+    "axe": {
+      "byElementKey": {},
+      "unattributed": [],
+      "passes": 36
+    },
+    "validator": {
+      "byElementKey": {
+        "body>div>main>section:nth-of-type(1)": [
+          {
+            "id": "F-001",
+            "rule": "ds:token-color",
+            "source": "govbr-ds-token",
+            "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+            "expected": "Valor de token do DS; mais próximo: --gray-cool-10 (#dfe1e2, distância RGB 4.24)",
+            "target": "#root > main > section:nth-of-type(1)"
+          }
+        ],
+        "body>div>main>section:nth-of-type(2)": [
+          {
+            "id": "F-002",
+            "rule": "ds:token-color",
+            "source": "govbr-ds-token",
+            "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+            "expected": "Valor de token do DS; mais próximo: --gray-cool-10 (#dfe1e2, distância RGB 4.24)",
+            "target": "#root > main > section:nth-of-type(2)"
+          }
+        ],
+        "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)": [
+          {
+            "id": "F-003",
+            "rule": "ds:token-color",
+            "source": "govbr-ds-token",
+            "description": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+            "expected": "Valor de token do DS; mais próximo: --gray-cool-10 (#dfe1e2, distância RGB 4.24)",
+            "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2)"
+          }
+        ],
+        "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(1)": [
+          {
+            "id": "F-004",
+            "rule": "ds:token-spacing",
+            "source": "govbr-ds-token",
+            "description": "padding: 13px (fora da escala: 13px)",
+            "expected": "Múltiplos de 4px",
+            "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)"
+          }
+        ],
+        "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(2)": [
+          {
+            "id": "F-005",
+            "rule": "ds:token-spacing",
+            "source": "govbr-ds-token",
+            "description": "padding: 13px (fora da escala: 13px)",
+            "expected": "Múltiplos de 4px",
+            "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)"
+          }
+        ],
+        "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(3)": [
+          {
+            "id": "F-006",
+            "rule": "ds:token-spacing",
+            "source": "govbr-ds-token",
+            "description": "padding: 13px (fora da escala: 13px)",
+            "expected": "Múltiplos de 4px",
+            "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)"
+          }
+        ],
+        "body>div>main>section:nth-of-type(2)>div:nth-of-type(2)>div:nth-of-type(4)": [
+          {
+            "id": "F-007",
+            "rule": "ds:token-spacing",
+            "source": "govbr-ds-token",
+            "description": "padding: 13px (fora da escala: 13px)",
+            "expected": "Múltiplos de 4px",
+            "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)"
+          }
+        ],
+        "body>div>main>section:nth-of-type(2)>form>p": [
+          {
+            "id": "F-008",
+            "rule": "ds:token-color",
+            "source": "govbr-ds-token",
+            "description": "color: rgb(230, 0, 0) (#e60000) não corresponde a nenhum token do DS",
+            "expected": "Valor de token do DS; mais próximo: --red-vivid-50 (#e52207, distância RGB 34.73)",
+            "target": "#root > main > section:nth-of-type(2) > form > p"
+          }
+        ],
+        "body>div>main>section:nth-of-type(2)>form>div>input": [
+          {
+            "id": "F-009",
+            "rule": "ds:structure-input-tag",
+            "source": "govbr-ds-structure",
+            "description": "br-input aplicado a <input>",
+            "expected": "Elemento <div>",
+            "target": "#cpf"
+          }
+        ]
+      },
+      "mode": "guiada"
+    }
   }
 }

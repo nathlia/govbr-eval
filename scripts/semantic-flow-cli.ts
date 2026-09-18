@@ -5,8 +5,12 @@ import { resolve, join, relative, isAbsolute } from "node:path";
 import { chromium } from "playwright";
 import type { FlowAgentResults, FlowGroundTruth } from "../types";
 import { ROOT } from "./adjudication";
-import { preparePage, resolveOnPage, type Resolution } from "./anchors";
-import { buildFlowUnits, selectorsOfGroundTruth, selectorsOfRuns, type FlowUnit } from "./units-flow";
+import { openPage, preparePage, resolveOnPage, resolveStatesOnPage, resolveWithExcept, type Resolution } from "./anchors";
+import { combinePredicate, measurePredicate, type PredicateResult } from "./acceptance-predicates";
+import {
+  buildFlowUnits, measureStatePresence, selectorsOfGroundTruth, selectorsOfRuns,
+  statesOfGroundTruth, type FlowUnit,
+} from "./units-flow";
 import { loadVerifiedEvidence, verifyArchivedEvidence, type EvidenceDeclaration } from "./evidence-integrity";
 import { renderReview } from "./semantic-flow-render";
 import {
@@ -202,11 +206,53 @@ async function prepare(): Promise<void> {
     for (const p of planned) {
       const context = await browser.newContext({ viewport: p.viewport });
       const page = await context.newPage();
-      await preparePage(page, url, { waitFor: gt._meta.waitFor, setup: gt._meta.setup });
-      const resolution: Resolution = { url, ...await resolveOnPage(page, selectors) };
       const id = sceneIdOf(p.viewport);
-      const built = buildFlowUnits({ ...gt, violations: gt.violations.filter(v => p.specIds.includes(v.id)) }, resolution);
+      // Estados declarados: resolve em cada parada do `setup`, no MESMO carregamento, para medir em
+      // que estados cada elemento existe. Sem `_meta.states` a preparação volta ao estado único de
+      // antes — ausência de medida não vira medida.
+      const checkpoints = statesOfGroundTruth(gt);
+      let resolution: Resolution;
+      let presence: ReturnType<typeof measureStatePresence>["presence"] | undefined;
+      const aceitacao = new Map<string, PredicateResult[]>();
+      if (checkpoints) {
+        await openPage(page, url, { waitFor: gt._meta.waitFor });
+        const across = await resolveStatesOnPage(page, url, selectors, {
+          setup: gt._meta.setup, states: checkpoints,
+          // Cada predicado é medido NO estado a que a spec pertence. Depois da varredura a página
+          // está no último estado, e medir tudo lá mediria um estado cobrando outro.
+          onState: async (state, res, pg) => {
+            for (const spec of gt.violations) {
+              if (!spec.acceptance || !p.specIds.includes(spec.id)) continue;
+              const keys = resolveWithExcept(res, spec.anchor, spec.except);
+              if (keys.length === 0) continue; // ainda não existe neste estado; a presença já cobra isso
+              const medido = await measurePredicate(pg, spec.anchor, keys, spec.acceptance, state);
+              aceitacao.set(spec.id, [...(aceitacao.get(spec.id) ?? []), medido]);
+            }
+          },
+        });
+        const medida = measureStatePresence(across);
+        if (medida.defects.length) throw new Error(JSON.stringify({ scene: id, defects: medida.defects }));
+        presence = medida.presence;
+        resolution = across.byState.get(across.order[across.order.length - 1])!;
+      } else {
+        await preparePage(page, url, { waitFor: gt._meta.waitFor, setup: gt._meta.setup });
+        resolution = { url, ...await resolveOnPage(page, selectors) };
+      }
+      const built = buildFlowUnits({ ...gt, violations: gt.violations.filter(v => p.specIds.includes(v.id)) }, resolution, presence);
       if (built.defects.length) throw new Error(JSON.stringify({ scene: id, defects: built.defects }));
+
+      // O predicado declarado tem de SUSTENTAR na página. Quando não sustenta, o gabarito está
+      // catalogando um defeito que a tela não tem — consertaram a tela, ou a spec sempre esteve
+      // errada — e a preparação para em vez de medir contra uma referência desmentida (D-06).
+      const desmentidas = built.units
+        .map(u => ({ u, r: combinePredicate(aceitacao.get(u.specId) ?? []) }))
+        .filter(({ r }) => r.outcome === "refuta" || r.outcome === "nao-replicavel");
+      if (desmentidas.length) {
+        throw new Error(JSON.stringify({ scene: id, defects: desmentidas.map(({ u, r }) => ({
+          specId: u.specId, problem: `predicado de aceitação ${r.outcome}: ${r.reason}`,
+        })) }));
+      }
+      for (const u of built.units) u.acceptance = combinePredicate(aceitacao.get(u.specId) ?? []);
       units.push(...built.units.map(u => ({ ...u, scene: id })));
       scenes.push({ id, viewport: p.viewport, specIds: p.specIds, resolution,
         html: await page.content(), image: await page.screenshot({ fullPage: true }) });
@@ -236,7 +282,7 @@ async function prepare(): Promise<void> {
       sourceBattery: { path: relative(ROOT, batteryPath).replaceAll("\\", "/"), sha256: sha256(readFileSync(batteryPath)) },
     };
     const pkg = prepareSemanticPackage({ referenceHash: digest(gt), sceneHash, scorerHash: scorerHash() },
-      units, scenes, allRuns, { provenance });
+      units, scenes, allRuns, { provenance, stateOrder: statesOfGroundTruth(gt)?.map(s => s.id) ?? [] });
     const reuse = option("reuse", false);
     const reviews = scopeReviews(pkg, reuse ? read<SemanticReviews>(resolve(reuse)) : undefined);
     // Validate reused decisions BEFORE writing anything.

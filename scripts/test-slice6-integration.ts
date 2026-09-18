@@ -246,6 +246,35 @@ async function main(): Promise<void> {
         assert.ok(existsSync(join(pkgDir, file)), file);
       }
       assert.equal(sha256File(join(pkgDir, "reference.json")), manifest.identity.referenceSha256);
+
+      // Fatia 3: o estado de cada unidade é MEDIDO na página, não herdado do rótulo da spec. Se a
+      // sequência de setup deixasse de ser aditiva, ou se uma spec condicional passasse a existir
+      // no primeiro paint, a preparação teria parado antes de chegar aqui.
+      assert.ok(pkg.units.every(u => u.states.length > 0), "toda unidade traz os estados em que foi medida");
+      const condicionais = pkg.units.filter(u => u.conditional);
+      assert.ok(condicionais.length > 0, "o gabarito tem specs condicionais (V-03b, V-09)");
+      for (const u of condicionais) {
+        assert.deepEqual(u.states, ["apos-submit-vazio"], `${u.specId} só existe depois do submit`);
+      }
+      for (const u of pkg.units.filter(u => !u.conditional)) {
+        assert.ok(u.states.includes("inicial"), `${u.specId} declara "sempre" e é alcançável no primeiro paint`);
+      }
+
+      // Fatia 3: o predicado de aceitação declarado foi MEDIDO na página congelada. As specs que
+      // declaram um sustentam-no — se a tela fosse consertada, a preparação teria parado — e as que
+      // não declaram ficam `nao-implementado`, que não é aceitação nem recusa.
+      const comPredicado = ["V-01", "V-02", "V-03a", "V-03b", "V-06", "V-08", "V-09"];
+      for (const u of pkg.units) {
+        const esperado = comPredicado.includes(u.specId) ? "sustenta" : "nao-implementado";
+        assert.equal(u.acceptance.outcome, esperado, `${u.specId}: ${u.acceptance.reason}`);
+        if (esperado === "sustenta") {
+          assert.ok(u.acceptance.measured.length > 0, `${u.specId} traz o que foi medido`);
+          assert.ok(u.acceptance.measured.every(m => m.sustains), `${u.specId}: todo participante sustenta`);
+          assert.ok(u.acceptance.states.length > 0, `${u.specId} diz em que estado mediu`);
+        }
+      }
+      const semPredicado = pkg.units.filter(u => u.acceptance.outcome === "nao-implementado");
+      assert.ok(semPredicado.length > 0, "há specs sem predicado — e elas seguem para a revisão como antes");
     });
 
     await test("reviewed package produces the agent × baseline comparison offline", async () => {
