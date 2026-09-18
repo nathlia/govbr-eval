@@ -1,0 +1,72 @@
+{
+  "timestamp": "2026-09-18T02:27:24.830Z",
+  "model": "evaluation-protocol",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "CPF input field and form validation",
+    "Alto Contraste toggle button"
+  ],
+  "notes": "Evaluation conducted following canonical evaluation protocol. Tested form validation, keyboard navigation, focus management, accessibility tree, and ARIA attributes. Keyboard navigation working properly. Main landmark present with single H1. Language attribute correctly set to pt-BR.",
+  "findings": [
+    {
+      "selector": "input#cpf",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Error message 'Informe um CPF para continuar.' is displayed but the input field is not programmatically marked as invalid. The input lacks aria-invalid, aria-describedby, and the error message lacks aria-live.",
+      "expected": "When validation fails, the input should have aria-invalid=\"true\" and aria-describedby pointing to the error message id. Error message should have aria-live=\"polite\" to notify screen reader users.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "clicked Continue button without entering CPF"
+        ]
+      },
+      "evidence": [
+        "Error message element has className 'mensagem-erro-cpf' but lacks id and aria-live",
+        "Input element has id 'cpf' but lacks aria-invalid and aria-describedby attributes"
+      ]
+    },
+    {
+      "selector": "button.recurso-contraste",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "The 'Alto Contraste' toggle button changes visual state when clicked but does not expose this state change via aria-pressed attribute.",
+      "expected": "Toggle buttons should have aria-pressed=\"true\" or aria-pressed=\"false\" to indicate their state to screen reader users.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "Clicked Alto Contraste button, visual appearance changed to highlighted state"
+        ]
+      },
+      "evidence": [
+        "Button has textContent 'Alto Contraste', className 'br-button recurso-contraste'",
+        "Visual state changes when clicked but no aria-pressed attribute present"
+      ]
+    },
+    {
+      "selector": "input#cpf",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "The CPF input field has aria-required=\"true\" but the HTML required attribute is false. This creates an inconsistency in how assistive technologies interpret the field's requirements.",
+      "expected": "Either the aria-required attribute should match the HTML required attribute, or if the field is required via JavaScript validation, both should be consistently set.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "Inspected CPF input attributes"
+        ]
+      },
+      "evidence": [
+        "Input element has aria-required='true' but required attribute is false",
+        "Form validation shows the field is required when attempting to submit empty"
+      ]
+    }
+  ]
+}

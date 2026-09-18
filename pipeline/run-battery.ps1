@@ -85,6 +85,10 @@ param(
   [ValidateSet("alternado", "sequencial")]
   [string]$Schedule = "alternado",
 
+  # Orçamento de trabalho da revisão, declarado ANTES da coleta e gravado no pacote (fatia 5).
+  # Depois de ver os cartões já não é orçamento; é o tamanho da fila com outro nome.
+  [string]$OrcamentoRevisao = "",
+
   [switch]$SkipBaselines,
 
   [switch]$SkipScore,
@@ -1163,6 +1167,7 @@ if ($stopReason -and -not $SkipScore) {
   } else {
     $prepareArgs += @("--baseline", $BaselinePath)
   }
+  if ($OrcamentoRevisao) { $prepareArgs += @("--orcamento-revisao", $OrcamentoRevisao) }
   Push-Location $EvalRoot
   try {
     & npm @prepareArgs

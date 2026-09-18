@@ -1,0 +1,180 @@
+{
+  "timestamp": "2026-09-18T02:25:13.552Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "http://127.0.0.1:3100/fluxo.html"
+  ],
+  "notes": "Varredura completa da página com tokens, estrutura e axe. Página carregada sem erros funcionais. Nenhuma interação realizada.",
+  "findings": [
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2)",
+      "relatedSelectors": [],
+      "rule": "ds-token-color",
+      "observed": "border-color: rgb(222, 226, 230) (#dee2e6) não corresponde a nenhum token do DS",
+      "expected": "Valor de token do DS; mais próximo: --gray-cool-10 (#dfe1e2, distância RGB 4.24)",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "steps": []
+      },
+      "evidence": [
+        "F-001"
+      ]
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)",
+      "relatedSelectors": [],
+      "rule": "ds-token-spacing",
+      "observed": "padding: 13px (fora da escala: 13px)",
+      "expected": "Múltiplos de 4px",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "steps": []
+      },
+      "evidence": [
+        "F-002"
+      ]
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)",
+      "relatedSelectors": [],
+      "rule": "ds-token-spacing",
+      "observed": "padding: 13px (fora da escala: 13px)",
+      "expected": "Múltiplos de 4px",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "steps": []
+      },
+      "evidence": [
+        "F-003"
+      ]
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)",
+      "relatedSelectors": [],
+      "rule": "ds-token-spacing",
+      "observed": "padding: 13px (fora da escala: 13px)",
+      "expected": "Múltiplos de 4px",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "steps": []
+      },
+      "evidence": [
+        "F-004"
+      ]
+    },
+    {
+      "selector": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)",
+      "relatedSelectors": [],
+      "rule": "ds-token-spacing",
+      "observed": "padding: 13px (fora da escala: 13px)",
+      "expected": "Múltiplos de 4px",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "steps": []
+      },
+      "evidence": [
+        "F-005"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [],
+      "rule": "ds-structure-input-tag",
+      "observed": "br-input aplicado a <input>",
+      "expected": "Elemento <div>",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "steps": []
+      },
+      "evidence": [
+        "F-006"
+      ]
+    }
+  ],
+  "config": {
+    "agentReportedModel": "govbr-ds-validator",
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.275 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "5d96b77c25a3968fef4e84ad9ca225bb240768b1998f8d5337bb27eb9584caa7",
+    "schedule": {
+      "slot": 1,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-17T23-23-31-com-run1-016a81eb-evidencia",
+    "evidenceIndexSha256": "5e57e817d98631eb3deb5643bdcf2cc34c8e10d22962c36fff1532e2721a9de1",
+    "validatorVersion": "2.5.2"
+  },
+  "cost": {
+    "startedAt": "2026-09-18T02:24:32.9839727Z",
+    "finishedAt": "2026-09-18T02:25:24.0111209Z",
+    "wallClockSeconds": 50.9,
+    "tokens": 228104,
+    "tokenUsage": {
+      "input": 68,
+      "cacheCreationInput": 28057,
+      "cacheReadInput": 195648,
+      "output": 4331
+    },
+    "totalCostUsd": 0.1002018,
+    "turns": 9,
+    "mcp": {
+      "runId": "2026-09-17T23-23-31-com-run1-016a81eb",
+      "telemetryFile": "pipeline/logs/2026-09-17T23-23-31-com-run1-016a81eb-mcp.ndjson",
+      "calls": 2,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 164,
+      "responseBytes": 35875,
+      "durationMs": 1167,
+      "byTool": {
+        "scan_page": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 110,
+          "responseBytes": 29774,
+          "durationMs": 1167
+        },
+        "get_finding_details": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 54,
+          "responseBytes": 6101,
+          "durationMs": 0
+        }
+      }
+    }
+  }
+}

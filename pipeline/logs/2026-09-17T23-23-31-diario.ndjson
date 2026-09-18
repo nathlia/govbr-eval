@@ -1,0 +1,12 @@
+{"at":"2026-09-18T02:24:28.2731674Z","event":"plano-congelado","data":{"path":"F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-23-31-plano.json","sha256":"3a4d8f460504de781f1ad2c13d14467a8b8f476aa38cfac208c6f6f81b6b73eb"}}
+{"at":"2026-09-18T02:24:32.8503438Z","event":"manifesto-gravado","data":{"path":"pipeline/logs/2026-09-17T23-23-31-coleta/manifesto.json","sha256":"5d96b77c25a3968fef4e84ad9ca225bb240768b1998f8d5337bb27eb9584caa7"}}
+{"at":"2026-09-18T02:24:32.8533162Z","event":"execucao-inicio","data":{"slot":1,"arm":"com","repetition":1}}
+{"at":"2026-09-18T02:25:25.4784878Z","event":"execucao-fim","data":{"slot":1,"runId":"2026-09-17T23-23-31-com-run1-016a81eb","exitCode":0,"collectionStatus":"collected","archive":"agent-2026-09-17T23-23-31-com-run1-016a81eb.json"}}
+{"at":"2026-09-18T02:25:25.4936444Z","event":"execucao-inicio","data":{"slot":2,"arm":"sem","repetition":1}}
+{"at":"2026-09-18T02:27:40.4366460Z","event":"execucao-fim","data":{"slot":2,"runId":"2026-09-17T23-23-31-sem-run1-31a3d7e8","exitCode":0,"collectionStatus":"collected","archive":"agent-2026-09-17T23-23-31-sem-run1-31a3d7e8.json"}}
+{"at":"2026-09-18T02:27:40.4582463Z","event":"coleta-fim","data":{"status":"concluida","motivo":null,"manifest":"F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-23-31-bateria.json"}}
+{"at":"2026-09-18T02:27:40.4706219Z","event":"estagio-inicio","data":{"stage":"linha-de-base","out":"F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-17T23-23-31-linha-de-base.json"}}
+{"at":"2026-09-18T02:27:50.5369961Z","event":"estagio-fim","data":{"stage":"linha-de-base","status":"concluida","exitCode":0,"file":"2026-09-17T23-23-31-linha-de-base.json","sha256":"fb29a3dddc825750259d84e0e822133e693d9515456b02686e578b758e8c5446"}}
+{"at":"2026-09-18T02:27:50.5389589Z","event":"estagio-inicio","data":{"stage":"preparacao","out":"F:\\Dev Nath\\TCC\\govbr-eval\\results\\semantic-review\\2026-09-17T23-23-31"}}
+{"at":"2026-09-18T02:27:54.4041080Z","event":"estagio-fim","data":{"stage":"preparacao","status":"concluida","exitCode":0}}
+{"at":"2026-09-18T02:27:54.5577518Z","event":"desfecho","data":{"status":"concluida"}}

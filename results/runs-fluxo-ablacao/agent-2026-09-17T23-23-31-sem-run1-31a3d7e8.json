@@ -1,0 +1,110 @@
+{
+  "timestamp": "2026-09-18T02:27:24.83Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/fluxo.html",
+  "scope": [
+    "CPF input field and form validation",
+    "Alto Contraste toggle button"
+  ],
+  "notes": "Evaluation conducted following canonical evaluation protocol. Tested form validation, keyboard navigation, focus management, accessibility tree, and ARIA attributes. Keyboard navigation working properly. Main landmark present with single H1. Language attribute correctly set to pt-BR.",
+  "findings": [
+    {
+      "selector": "input#cpf",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Error message 'Informe um CPF para continuar.' is displayed but the input field is not programmatically marked as invalid. The input lacks aria-invalid, aria-describedby, and the error message lacks aria-live.",
+      "expected": "When validation fails, the input should have aria-invalid=\"true\" and aria-describedby pointing to the error message id. Error message should have aria-live=\"polite\" to notify screen reader users.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "clicked Continue button without entering CPF"
+        ]
+      },
+      "evidence": [
+        "Error message element has className 'mensagem-erro-cpf' but lacks id and aria-live",
+        "Input element has id 'cpf' but lacks aria-invalid and aria-describedby attributes"
+      ]
+    },
+    {
+      "selector": "button.recurso-contraste",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "The 'Alto Contraste' toggle button changes visual state when clicked but does not expose this state change via aria-pressed attribute.",
+      "expected": "Toggle buttons should have aria-pressed=\"true\" or aria-pressed=\"false\" to indicate their state to screen reader users.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "Clicked Alto Contraste button, visual appearance changed to highlighted state"
+        ]
+      },
+      "evidence": [
+        "Button has textContent 'Alto Contraste', className 'br-button recurso-contraste'",
+        "Visual state changes when clicked but no aria-pressed attribute present"
+      ]
+    },
+    {
+      "selector": "input#cpf",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "The CPF input field has aria-required=\"true\" but the HTML required attribute is false. This creates an inconsistency in how assistive technologies interpret the field's requirements.",
+      "expected": "Either the aria-required attribute should match the HTML required attribute, or if the field is required via JavaScript validation, both should be consistently set.",
+      "state": {
+        "viewport": {
+          "width": 1251,
+          "height": 1278
+        },
+        "steps": [
+          "Inspected CPF input attributes"
+        ]
+      },
+      "evidence": [
+        "Input element has aria-required='true' but required attribute is false",
+        "Form validation shows the field is required when attempting to submit empty"
+      ]
+    }
+  ],
+  "config": {
+    "agentReportedModel": "evaluation-protocol",
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.275 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cdc85e1ead5f18ad54d80f3a492aa210277fa9b7b8890ad8ae2b2235a3fc1e96",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "5d96b77c25a3968fef4e84ad9ca225bb240768b1998f8d5337bb27eb9584caa7",
+    "schedule": {
+      "slot": 2,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-17T23-23-31-sem-run1-31a3d7e8-evidencia",
+    "evidenceIndexSha256": "a28c2146fb45f8cf3a369e4f7f3690a344c222f1b56ef2034d047a591214f3bb"
+  },
+  "cost": {
+    "startedAt": "2026-09-18T02:25:25.5060794Z",
+    "finishedAt": "2026-09-18T02:27:39.0313404Z",
+    "wallClockSeconds": 133.4,
+    "tokens": 908458,
+    "tokenUsage": {
+      "input": 220,
+      "cacheCreationInput": 41860,
+      "cacheReadInput": 855497,
+      "output": 10881
+    },
+    "totalCostUsd": 0.22594070000000005,
+    "turns": 35
+  }
+}
