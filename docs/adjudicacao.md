@@ -99,7 +99,32 @@ deixou de existir: toda alegação sobre spec discutida é julgada pela autora c
 declarada. Declarar a exposição é o que torna o veredito legível para a banca: um julgamento
 marcado "exposta a esta spec" vale mais que um julgamento silencioso de origem incerta.
 
-### O que o assistente pode fazer — e o que não pode
+### A partir de 18/09 (D-48): o assistente decide, e avisa a autora quando o veredito importa
+
+A regra acima foi proposta pelo próprio assistente e a autora a aceitou sem tê-la pedido. Na bateria
+`2026-09-18T17-47-14` ela se mostrou cara e pouco informativa: 46 de 54 cartões apontavam para um
+elemento com unidade candidata e a pergunta era mecânica — *a página tem, neste elemento, o defeito
+descrito?* —, respondida por medição. A autora decidiu (D-47, D-48) que **o assistente adjudica por
+padrão**, desde que: decida pela vista cega da bancada; **meça de novo** cada alegação na tela
+congelada, sem modelo e sem o oráculo, e deixe a medição no pacote; assine as decisões como
+assistente; e registre a bateria no log de decisões.
+
+O assistente **para e chama a autora** — lista os cartões no log, com o que mediu e a dúvida — quando
+o veredito deixa de ser mecânico:
+
+| sinal | por que importa |
+|---|---|
+| o veredito seria `incorreta`, ou a medição **não confirma** a alegação | é o único veredito que derruba precisão; um erro aqui acusa o agente do que ele não fez |
+| a alegação é verdadeira mas **a âncora não casa** (unidade certa, elemento vizinho) | o crédito se perde por granularidade do gabarito, não por erro do agente |
+| `defeito-novo-correto` que é descoberta **de fato** | entra na próxima referência: muda o instrumento |
+| unidade **sem predicado implementado** e texto que só casa em parte com a descrição da spec | não há medida de máquina sustentando o casamento |
+| alegação **composta** que precisa ser dividida | a divisão decide quantas unidades o cartão pode creditar |
+| o conjunto dos vereditos duvidosos poderia **inverter a ordem dos braços** ou mudar a cobertura de uma família | aí a dúvida deixa de ser detalhe e vira resultado |
+
+Fora desses casos o assistente decide e segue. A autora pode auditar qualquer decisão depois: o
+pacote não muda, e uma `reviews.json` nova gera outra pontuação com outro `reviewHash`.
+
+### O que o assistente pode fazer — e o que não pode (regra até 18/09, mantida como histórico)
 
 O assistente redigiu a tela e o gabarito e **conhece o braço** de cada alegação. Isso não o
 impede de ajudar; impede que ele decida o que move número. A divisão segue o **efeito** do
