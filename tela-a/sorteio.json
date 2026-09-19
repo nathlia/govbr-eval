@@ -1,0 +1,165 @@
+{
+  "_meta": {
+    "procedimento": "docs/tela-a-procedimento-sorteio.md",
+    "semente": "d6ed93fd095b93e9a45a3145fafac702494fe822",
+    "ensaio": false,
+    "sha256": {
+      "docs/tela-a-procedimento-sorteio.md": "d8bbda55db29bbe1f12ba400335b6c110983bf832c3e900ecc8f96f6c9d1f59c",
+      "tela-a/inventario.json": "fded5382ec87a8df5bcfbf40ca6a8344851bfc21dacb83d6283c4ff15892cf8b",
+      "tela-a/elegibilidade-passo2.json": "580843b53c35643a21671f05305a0197217348218e536b6f94961d024b90dc46",
+      "tela-a/elegibilidade.json": "2e83e86abba90e242e8265d02fd079cd0d3ae2bffe9b0fb85b09bd9fbee527ba",
+      "tela-a/parametros.json": "f923248a54d51f77dc8d2d86a8138b398520e0a9a6eae20436575b8d34bc3ebe",
+      "scripts/tela-a-elegibilidade.ts": "5ef30089724d8fdf157bab1e1b517ed46f6a08c78f0e783a30641b3f6da4ae02",
+      "scripts/draw-tela-a.ts": "caab07805ca2db1582f78b99f7caa3132ffc867f37e8d954d0e22ee51bdc02f4"
+    }
+  },
+  "cotasEfetivas": {
+    "K": 2,
+    "T": 2,
+    "E": 4,
+    "C": 0,
+    "S": 4
+  },
+  "deficitNaoAlocado": 0,
+  "ordemPorEstrato": {
+    "K": [
+      "govbr-3.7.0-accessibility-global-5be1f553cc03",
+      "govbr-3.7.0-accessibility-global-79db88c7f55d",
+      "govbr-3.7.0-accessibility-modal-64b84991229c",
+      "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+      "govbr-3.7.0-accessibility-global-41850b4791b8"
+    ],
+    "T": [
+      "govbr-3.7.0-foundation-global-21b1a2733f7b",
+      "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+      "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+      "govbr-3.7.0-development-global-406774b1cb87"
+    ],
+    "E": [
+      "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+      "govbr-3.7.0-accessibility-global-1cb2c878824b",
+      "govbr-3.7.0-accessibility-global-1ccbc61dddbc",
+      "govbr-3.7.0-accessibility-global-cf61b3eb3c71",
+      "govbr-3.7.0-accessibility-global-cc837bbaf713",
+      "govbr-3.7.0-accessibility-global-01b1806c30e9",
+      "govbr-3.7.0-accessibility-global-dafac812b10b",
+      "govbr-3.7.0-accessibility-global-c2f94bdc17ce",
+      "govbr-3.7.0-accessibility-global-11ffc5c577f6",
+      "govbr-3.7.0-accessibility-global-de1efebaf255"
+    ],
+    "C": [],
+    "S": [
+      "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+      "govbr-3.7.0-component-upload-985fd2775586",
+      "govbr-3.7.0-component-message-66b01a712e67",
+      "govbr-3.7.0-accessibility-global-e038367bd7d6"
+    ]
+  },
+  "specs": [
+    {
+      "regra": "govbr-3.7.0-accessibility-global-5be1f553cc03",
+      "estrato": "K",
+      "instancia": "mod-descartar",
+      "variante": "fecha-sem-devolver",
+      "compartilhadaCom": []
+    },
+    {
+      "regra": "govbr-3.7.0-accessibility-global-79db88c7f55d",
+      "estrato": "K",
+      "instancia": "upl-documentos",
+      "variante": "tabindex-positivo",
+      "compartilhadaCom": []
+    },
+    {
+      "regra": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+      "estrato": "T",
+      "instancia": "mod-descartar",
+      "variante": "cor-fora-da-paleta",
+      "compartilhadaCom": []
+    },
+    {
+      "regra": "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+      "estrato": "T",
+      "instancia": "sel-servico",
+      "variante": "outline-none",
+      "compartilhadaCom": [
+        "sel-unidade"
+      ]
+    },
+    {
+      "regra": "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+      "estrato": "E",
+      "instancia": "tab-anteriores",
+      "variante": "caption-removido",
+      "compartilhadaCom": []
+    },
+    {
+      "regra": "govbr-3.7.0-accessibility-global-1cb2c878824b",
+      "estrato": "E",
+      "instancia": "msg-retorno",
+      "variante": "nativo-para-div",
+      "compartilhadaCom": []
+    },
+    {
+      "regra": "govbr-3.7.0-accessibility-global-cf61b3eb3c71",
+      "estrato": "E",
+      "instancia": "pag-anteriores",
+      "variante": "links-fora-de-lista",
+      "compartilhadaCom": []
+    },
+    {
+      "regra": "govbr-3.7.0-accessibility-global-cc837bbaf713",
+      "estrato": "E",
+      "instancia": "sel-servico",
+      "variante": "erro-sem-associacao",
+      "compartilhadaCom": [
+        "sel-unidade"
+      ]
+    },
+    {
+      "regra": "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+      "estrato": "S",
+      "instancia": "rad-forma",
+      "variante": "label-sem-for",
+      "compartilhadaCom": []
+    },
+    {
+      "regra": "govbr-3.7.0-component-upload-985fd2775586",
+      "estrato": "S",
+      "instancia": "upl-documentos",
+      "variante": "apoio-sem-arraste",
+      "compartilhadaCom": []
+    },
+    {
+      "regra": "govbr-3.7.0-component-message-66b01a712e67",
+      "estrato": "S",
+      "instancia": "msg-retorno",
+      "variante": "icone-e-fechar-trocados",
+      "compartilhadaCom": []
+    },
+    {
+      "regra": "govbr-3.7.0-accessibility-global-e038367bd7d6",
+      "estrato": "S",
+      "instancia": "pag-anteriores",
+      "variante": "aria-removido",
+      "compartilhadaCom": []
+    }
+  ],
+  "compartilhadas": 2,
+  "chamarizes": [
+    "inp-cpf",
+    "btn-modal-manter",
+    "btn-enviar",
+    "btn-cancelar",
+    "skp-conteudo",
+    "chk-declaracao",
+    "txa-descricao",
+    "inp-nome"
+  ],
+  "descartes": [
+    {
+      "regra": "govbr-3.7.0-accessibility-global-1ccbc61dddbc",
+      "motivo": "sem-instancia-livre"
+    }
+  ]
+}
