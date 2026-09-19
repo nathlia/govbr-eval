@@ -1,0 +1,2340 @@
+{
+  "_meta": {
+    "procedimento": "docs/tela-a-procedimento-sorteio.md",
+    "kbRules": "govbr-ds-validator/data/knowledge/versions/3.7.0/normalized/rules.jsonl",
+    "kbRulesSha256": "5cac5fee9a6871bed9283d8c9714a2480adb50225aaa0d304f0ec337b80a2c56",
+    "total": 186,
+    "passo1Aceitas": 63,
+    "passo2Pendentes": 0,
+    "elegiveis": 23,
+    "elegiveisPorEstrato": {
+      "K": 5,
+      "S": 4,
+      "T": 4,
+      "E": 10
+    }
+  },
+  "regras": [
+    {
+      "id": "govbr-3.7.0-accessibility-breadcrumb-992f162ca821",
+      "component": "breadcrumb",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "scaffold",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-button-efd2d9e7c3c6",
+      "component": "button",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-button-41d9f439e103",
+      "component": "button",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-card-e7fa6a659cdf",
+      "component": "card",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-input-6fe41e804955",
+      "component": "input",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "scaffold",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-list-03813ffeeb42",
+      "component": "list",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-modal-64b84991229c",
+      "component": "modal",
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Tab or Shift+Tab escapes the open modal or skips a control. Measure: full Tab and Shift+Tab cycles stay inside the modal and visit every control.",
+      "instancias": [
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "tab-escapa",
+          "descricao": "Tab from the last modal control leaves the modal."
+        },
+        {
+          "id": "tab-pula-controle",
+          "descricao": "One modal control gets tabindex=-1."
+        }
+      ],
+      "stratum": "K"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-modal-31c45e5f6081",
+      "component": "modal",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-modal-65446caf1efc",
+      "component": "modal",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-notification-2bae7736ddda",
+      "component": "notification",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-signin-a68a86f45877",
+      "component": "signin",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-skiplink-5aae226482e5",
+      "component": "skiplink",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "scaffold",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-tab-f1807d71dc5f",
+      "component": "tab",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-avatar-81c7524692f0",
+      "component": "avatar",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-button-4d7b5f978df1",
+      "component": "button",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "scaffold",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-card-a102d36a696a",
+      "component": "card",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-carousel-7b664374a2b3",
+      "component": "carousel",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-carousel-4c92b788906b",
+      "component": "carousel",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-checkbox-6923ae0af84f",
+      "component": "checkbox",
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "sem-medicao",
+      "justificativa": "Whether a choice is single or multiple is the form's intent, not an observable.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "S"
+    },
+    {
+      "id": "govbr-3.7.0-component-input-3788829b08fe",
+      "component": "input",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "scaffold",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-list-8f67e7cc7677",
+      "component": "list",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-magicbutton-d421fb28a955",
+      "component": "magicbutton",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-message-088613b94e1c",
+      "component": "message",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-message-188aad85588b",
+      "component": "message",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-message-66b01a712e67",
+      "component": "message",
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Icon and close button change places. Measure: bounding boxes of icon, content and close button.",
+      "instancias": [
+        "msg-retorno"
+      ],
+      "variantes": [
+        {
+          "id": "icone-e-fechar-trocados",
+          "descricao": "Close button on the left, semantic icon on the right."
+        }
+      ],
+      "stratum": "S"
+    },
+    {
+      "id": "govbr-3.7.0-component-modal-091e0e012f86",
+      "component": "modal",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-notification-a77199b18a54",
+      "component": "notification",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-scrim-d5ba51dda2b0",
+      "component": "scrim",
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No search or accessibility area for the scrim to block.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "S"
+    },
+    {
+      "id": "govbr-3.7.0-component-signin-837c5ed4fe6a",
+      "component": "signin",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-signin-2752fd23bbe8",
+      "component": "signin",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-table-7c605ca2f85e",
+      "component": "table",
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "A table of previous requests with zero columns is not a single local deviation; it removes the host of three other rules.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "S"
+    },
+    {
+      "id": "govbr-3.7.0-component-table-88941e76c77b",
+      "component": "table",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-table-8b8d4b403cb9",
+      "component": "table",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-tag-7d70c8be6a0c",
+      "component": "tag",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-tooltip-c028ba432407",
+      "component": "tooltip",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-tooltip-6cc61d2b3460",
+      "component": "tooltip",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-0b73051d7063",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-406774b1cb87",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "font-family override on the instance. Measure: computed font-family starts with Rawline.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos",
+        "tab-anteriores",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "fonte-generica",
+          "descricao": "font-family: Arial, sans-serif on the instance."
+        }
+      ],
+      "stratum": "T"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-c6889731433a",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-foundation-global-0578aa6c2828",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "Grid gutter is page layout; no host instance.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "T"
+    },
+    {
+      "id": "govbr-3.7.0-foundation-global-bb0c6795e3f9",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-foundation-global-9ef740ba1f28",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-foundation-global-a239799cdffd",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Off-palette colour on the instance. Measure: computed colour against the colour custom properties the page itself declares on :root.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos",
+        "tab-anteriores",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "cor-fora-da-paleta",
+          "descricao": "The instance's main colour with the green channel raised by 16."
+        }
+      ],
+      "stratum": "T"
+    },
+    {
+      "id": "govbr-3.7.0-foundation-global-1c0146e93d2e",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No conforming baseline: the canonical circle button is --button-medium = 40 px (core.css), so every icon button already misses 48 px.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "T"
+    },
+    {
+      "id": "govbr-3.7.0-page-global-f6e03bce515b",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "sem-medicao",
+      "justificativa": "Catch-all adherence to the whole standard; no single observable.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "C"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-7e6420514860",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-1cb2c878824b",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "A native control replaced by div role=button with tabindex and key handlers (keyboard stays intact). Measure: tagName of the control.",
+      "instancias": [
+        "upl-documentos",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "nativo-para-div",
+          "descricao": "The native control becomes div role=button tabindex=0 with Enter/Space handlers."
+        }
+      ],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-3ac0aaa53900",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "Page-level heading outline; no host instance.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-79db88c7f55d",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Positive tabindex pulls a field out of the logical sequence. Measure: Tab sequence of instance ids against DOM order.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos"
+      ],
+      "variantes": [
+        {
+          "id": "tabindex-positivo",
+          "descricao": "The field gets tabindex=1."
+        }
+      ],
+      "stratum": "K"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-7d2b85f81c52",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "Page-level skip links; the skip link that satisfies it is scaffold, outside the draw.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-206c9fa6ae11",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "A layout table would be a new element, not a deviation on an inventory instance.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cf61b3eb3c71",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Canonical page links sit in ul>li; flatten to bare adjacent anchors. Measure: parent of each a.page is li.",
+      "instancias": [
+        "pag-anteriores"
+      ],
+      "variantes": [
+        {
+          "id": "links-fora-de-lista",
+          "descricao": "Page links become bare adjacent anchors, without ul/li."
+        }
+      ],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-bfba9c1f5026",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "Page-level regions; no host instance.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-5be1f553cc03",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Modal opens without receiving focus, or closes without returning it. Measure: activeElement after opening and after closing.",
+      "instancias": [
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "abre-sem-foco",
+          "descricao": "Opening the modal leaves focus on the trigger."
+        },
+        {
+          "id": "fecha-sem-devolver",
+          "descricao": "Closing the modal drops focus on body."
+        }
+      ],
+      "stratum": "K"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Restricted to the clause 41850b4791b8 does not cover: focus cannot leave the control. Measure: Tab from inside moves activeElement outside. The modal is excluded, containment there is correct.",
+      "instancias": [
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos"
+      ],
+      "variantes": [
+        {
+          "id": "foco-preso",
+          "descricao": "Tab and Shift+Tab are cancelled while the control has focus."
+        }
+      ],
+      "stratum": "K"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-f639993e9416",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "duplicada:govbr-3.7.0-accessibility-global-41850b4791b8",
+      "justificativa": "Keyboard operability of dynamic content; its drag-alternative clause cannot be violated on the upload without also violating 41850b4791b8.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "K"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cd5de9a6f164",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-d6e816588306",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-5d366ef29b04",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No time-limited task.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-8faca42c2c9a",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-33b13d9fa271",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No moving content.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "K"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-698e0a4783a9",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "Page-level (html lang); no host instance.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-1ccbc61dddbc",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Header cells as td, or th without scope. Measure: thead cell tagName and scope.",
+      "instancias": [
+        "tab-anteriores"
+      ],
+      "variantes": [
+        {
+          "id": "th-para-td",
+          "descricao": "Header cells are td."
+        },
+        {
+          "id": "th-sem-scope",
+          "descricao": "Header cells stay th but lose scope."
+        }
+      ],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-fb83eab75d8d",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "sem-medicao",
+      "justificativa": "Readability is a reading, not an observable.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-20c08f26d8e8",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "sem-medicao",
+      "justificativa": "Which terms count as uncommon is a reading, not an observable.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-1db13803cbf8",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "The screen has no foreign-language passage; adding one to host a defect would design the screen around the rule.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-5d5a5f21d94b",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "Page-level (document title); no host instance.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-75c11ccac582",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "Page-level orientation mechanism; the breadcrumb that satisfies it is scaffold, outside the draw.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cdfbb56eebc5",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No content link in the inventory; pagination links carry aria-labels governed by other rules.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-3a3e47354c53",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No informative image in the inventory.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-609e3494150c",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No image map.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-3a57435c3b32",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Canonical table example carries a caption; remove it. Measure: caption element inside the table.",
+      "instancias": [
+        "tab-anteriores"
+      ],
+      "variantes": [
+        {
+          "id": "caption-removido",
+          "descricao": "The caption element is removed; the visible title bar stays."
+        }
+      ],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Text colour under 4.5:1 on its background. Measure: computed colours and the WCAG ratio formula.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos",
+        "tab-anteriores",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "contraste-baixo",
+          "descricao": "Main text of the instance takes the darkest DS gray token still under 4.5:1 on its background."
+        }
+      ],
+      "stratum": "T"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-c2f94bdc17ce",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Status column conveyed by colour alone. Measure: status cell has non-empty text or accessible name. Error-state manifestations are left to cc837bbaf713.",
+      "instancias": [
+        "tab-anteriores"
+      ],
+      "variantes": [
+        {
+          "id": "situacao-so-por-cor",
+          "descricao": "The status cell keeps only the coloured marker, with no text or accessible name."
+        }
+      ],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-d9c42f188e2c",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Focus indicator suppressed on one control. Measure: focus it, read computed outline.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "outline-none",
+          "descricao": "outline: none on :focus and :focus-visible of the control."
+        }
+      ],
+      "stratum": "T"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-6c86b93df639",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No video.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-dc45b57b8349",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No audio.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-8f439a3c078c",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No video.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-56cbcba602ce",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No sound.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "K"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-6ea7ecc60c01",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No automatic animation.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "K"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-dafac812b10b",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Icon-only buttons are the DS form of image buttons; drop the aria-label. Measure: accessible name of icon-only buttons in the instance.",
+      "instancias": [
+        "dat-preferencial",
+        "upl-documentos",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "icone-sem-nome",
+          "descricao": "The first icon-only button of the instance, in document order, loses its aria-label."
+        }
+      ],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "duplicada:govbr-3.7.0-accessibility-global-b5fad7ce076d",
+      "justificativa": "Same element and observable as the programmatic-label rule (field without an associated label); lower id stays.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-e101928665cc",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "duplicada:govbr-3.7.0-accessibility-global-79db88c7f55d",
+      "justificativa": "Same observable: focus order of the form fields and positive tabindex.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "K"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-de1efebaf255",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Changing the field submits the form. Measure: set a value, assert the screen is still in S0.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-declaracao"
+      ],
+      "variantes": [
+        {
+          "id": "change-envia",
+          "descricao": "A change event on the field submits the form."
+        }
+      ],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-01b1806c30e9",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Fields with a non-evident format carry a hint; remove it. Measure: hint element present inside the component and referenced by the field.",
+      "instancias": [
+        "dat-preferencial",
+        "upl-documentos"
+      ],
+      "variantes": [
+        {
+          "id": "hint-removido",
+          "descricao": "The format hint is removed from the field."
+        }
+      ],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cc837bbaf713",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "In S1 an invalid field shows no textual error tied to it. Measure: after empty submit, feedback text exists in the component and is referenced by aria-describedby.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao"
+      ],
+      "variantes": [
+        {
+          "id": "erro-sem-texto",
+          "descricao": "In S1 the field turns invalid with no feedback text."
+        },
+        {
+          "id": "erro-sem-associacao",
+          "descricao": "The feedback text is shown but not referenced by the field."
+        }
+      ],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-11ffc5c577f6",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Option groups sit in fieldset+legend; swap for div+p. Measure: closest fieldset and its legend.",
+      "instancias": [
+        "rad-forma",
+        "chk-recursos"
+      ],
+      "variantes": [
+        {
+          "id": "grupo-sem-fieldset",
+          "descricao": "fieldset+legend become div+p; the visible text stays."
+        }
+      ],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-a8f7ce66b1c4",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No CAPTCHA and no place for one in the inventory.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "E"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-e038367bd7d6",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Custom widget loses its role or state attribute (dialog/aria-modal, alert, aria-expanded, aria-current). Measure: attribute on the instance root or trigger.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "aria-removido",
+          "descricao": "The first ARIA role or state attribute, in document order, on the instance root or trigger is removed."
+        }
+      ],
+      "stratum": "S"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-695e4379e23f",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-1c3bd2a1c1a7",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-41850b4791b8",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "A control taken out of the tab sequence or made click-only. Measure: Tab reaches it and Enter/Space operates it.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "fora-do-tab",
+          "descricao": "The control gets tabindex=-1."
+        },
+        {
+          "id": "so-clique",
+          "descricao": "The control answers click only; Enter and Space do nothing."
+        }
+      ],
+      "stratum": "K"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Field without a programmatic label. Measure: label[for] resolves to the field and the accessible name is non-empty.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos"
+      ],
+      "variantes": [
+        {
+          "id": "label-sem-for",
+          "descricao": "The label loses for; the visible text stays."
+        },
+        {
+          "id": "label-ausente",
+          "descricao": "The label element becomes a span."
+        }
+      ],
+      "stratum": "S"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cb56ad444da2",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "duplicada:govbr-3.7.0-accessibility-global-79db88c7f55d",
+      "justificativa": "Same observable: reading and focus order diverge from the DOM sequence.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "S"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-2f22b7245ef9",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "duplicada:govbr-3.7.0-accessibility-global-1cb2c878824b",
+      "justificativa": "Same observable: a native element replaced by div/span.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "S"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-divider-30bbcbf3a17c",
+      "component": "divider",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-global-e30aab6e9a68",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "sem-medicao",
+      "justificativa": "Catch-all anatomy conformance; measuring it means re-implementing the oracle's structure check.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "S"
+    },
+    {
+      "id": "govbr-3.7.0-component-accordion-bf7c66e06aa4",
+      "component": "accordion",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-avatar-20abe86bec8c",
+      "component": "avatar",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-breadcrumb-0dd1577ef844",
+      "component": "breadcrumb",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-button-b0ad831c0cdd",
+      "component": "button",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-card-d68fc3f602d1",
+      "component": "card",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-carousel-a5852928b851",
+      "component": "carousel",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-checkbox-4b6f893a4a30",
+      "component": "checkbox",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-cookiebar-7f95941b1616",
+      "component": "cookiebar",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-cookiebar-e564d18c805e",
+      "component": "cookiebar",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-datetimepicker-59f978a67b46",
+      "component": "datetimepicker",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-divider-abb2a883ef61",
+      "component": "divider",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-footer-22176120b991",
+      "component": "footer",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-header-b6a44cb3d346",
+      "component": "header",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-header-523d98904576",
+      "component": "header",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-header-12492dba566e",
+      "component": "header",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-input-4c07cef5a791",
+      "component": "input",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-item-0e293b295c3d",
+      "component": "item",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-item-460df90778c1",
+      "component": "item",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-item-cb5d8f6d30b9",
+      "component": "item",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-item-c806c8feda5a",
+      "component": "item",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-item-e08476d083e4",
+      "component": "item",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-item-739294d90299",
+      "component": "item",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-item-a10751502b98",
+      "component": "item",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-item-cb34ed616246",
+      "component": "item",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-item-a6d29ea54434",
+      "component": "item",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-list-a0a88e11b600",
+      "component": "list",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-loading-55f44d018251",
+      "component": "loading",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-loading-05f6aae1d1ad",
+      "component": "loading",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-menu-d15988e5d19b",
+      "component": "menu",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-menu-9e90f448c581",
+      "component": "menu",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-message-770d2a04a8b1",
+      "component": "message",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-modal-c9493346e1ad",
+      "component": "modal",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-notification-47dfbe60f602",
+      "component": "notification",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-pagination-524ef55890db",
+      "component": "pagination",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-pagination-7b0ffe97e848",
+      "component": "pagination",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-radio-9cf59fa5bf60",
+      "component": "radio",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-radio-ec08304a645c",
+      "component": "radio",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-scrim-78bf4890482e",
+      "component": "scrim",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-select-3587924c3600",
+      "component": "select",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-select-3d506ce4d7d3",
+      "component": "select",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-skiplink-3e4560a2ead2",
+      "component": "skiplink",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-step-05a4b8044384",
+      "component": "step",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-switch-3dbccb666b4f",
+      "component": "switch",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-switch-d53688105360",
+      "component": "switch",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-tab-bc811e53068f",
+      "component": "tab",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-table-41e9a89fb4e1",
+      "component": "table",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-tag-fa30aea78fa4",
+      "component": "tag",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-textarea-b00a40afe0f8",
+      "component": "textarea",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-textarea-cf60e234f8de",
+      "component": "textarea",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-tooltip-1657eb316f64",
+      "component": "tooltip",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-upload-f4726f3ce44a",
+      "component": "upload",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-upload-985fd2775586",
+      "component": "upload",
+      "pass1": "aceita",
+      "pass2": "aceita",
+      "reason": null,
+      "justificativa": "Support text no longer announces drag-and-drop. Measure: upload support text mentions dragging.",
+      "instancias": [
+        "upl-documentos"
+      ],
+      "variantes": [
+        {
+          "id": "apoio-sem-arraste",
+          "descricao": "The support text no longer mentions dragging."
+        }
+      ],
+      "stratum": "S"
+    },
+    {
+      "id": "govbr-3.7.0-component-wizard-356c3bf376a5",
+      "component": "wizard",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "component",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-component-wizard-170b92a67c4b",
+      "component": "wizard",
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-4a614a5c88e2",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-a43ad8231ad0",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-1b31bf3ccece",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-137c50bea6ca",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-659242ecda1d",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-5765f1b8d2bc",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-8c92e4e83038",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-f3c19eb70e19",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-58a3f67d8445",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-9c1d24af4f37",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-d0dff372c137",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-d0e2bd4850ee",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-0052d80d4f92",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-9826b6862644",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-ea51f70c65fe",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-63b44801da86",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-dfebe85e65d8",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-067a1786b481",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-development-global-b491c2e2c1a0",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-eb8c1606a52e",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No empty state on the screen.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "C"
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-03695a4aede0",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No region of the screen has absent data; the table has 5 rows.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "C"
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-46a1ae2f366b",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-9d9f1c9bf1ed",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-abaec84ff915",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No onboarding on the screen.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "C"
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-a633e540aa5c",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "About the home page; this is an inner form screen.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "C"
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-5717506ac2e6",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "Product-level help section; no host instance in the inventory.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "C"
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-eebb093156e7",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "nao-manifesta",
+      "justificativa": "No collapse on the screen.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "C"
+    },
+    {
+      "id": "govbr-3.7.0-template-global-8e553b2c8bc7",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-template-global-3d795df32a0e",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-template-global-2387114907b1",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "force",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    },
+    {
+      "id": "govbr-3.7.0-template-global-19f93475dc5e",
+      "component": null,
+      "pass1": "aceita",
+      "pass2": "rejeitada",
+      "reason": "sem-medicao",
+      "justificativa": "Use of the base template as a starting point is not observable on a built page.",
+      "instancias": [],
+      "variantes": [],
+      "stratum": "C"
+    },
+    {
+      "id": "govbr-3.7.0-template-global-9cbfa5906031",
+      "component": null,
+      "pass1": "rejeitada",
+      "pass2": null,
+      "reason": "strategy",
+      "justificativa": null,
+      "instancias": [],
+      "variantes": [],
+      "stratum": null
+    }
+  ]
+}

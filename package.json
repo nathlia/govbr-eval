@@ -27,6 +27,8 @@
     "kb:aliases": "tsx scripts/generate-kb-aliases.ts",
     "checker:aliases": "tsx scripts/generate-checker-aliases.ts",
     "case-matrix": "tsx scripts/case-matrix.ts",
+    "tela-a:elegibilidade": "tsx scripts/tela-a-elegibilidade.ts",
+    "tela-a:sorteio": "tsx scripts/draw-tela-a.ts",
     "lint:protocol": "tsx scripts/lint-protocol.ts",
     "lint:skills": "tsx scripts/lint-skill-contracts.ts",
     "test:pipeline": "pwsh -NoProfile -File pipeline/test-runner-support.ps1",

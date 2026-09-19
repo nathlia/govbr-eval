@@ -1,0 +1,663 @@
+{
+  "_meta": {
+    "procedimento": "docs/tela-a-procedimento-sorteio.md",
+    "criterios": "E5-E7",
+    "julgadoEm": "2026-09-18",
+    "julgadoPor": "assistente (D-48)"
+  },
+  "regras": {
+    "govbr-3.7.0-page-global-f6e03bce515b": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Catch-all adherence to the whole standard; no single observable.",
+      "instancias": []
+    },
+    "govbr-3.7.0-pattern-global-03695a4aede0": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No region of the screen has absent data; the table has 5 rows.",
+      "instancias": []
+    },
+    "govbr-3.7.0-pattern-global-5717506ac2e6": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "Product-level help section; no host instance in the inventory.",
+      "instancias": []
+    },
+    "govbr-3.7.0-pattern-global-a633e540aa5c": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "About the home page; this is an inner form screen.",
+      "instancias": []
+    },
+    "govbr-3.7.0-pattern-global-abaec84ff915": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No onboarding on the screen.",
+      "instancias": []
+    },
+    "govbr-3.7.0-pattern-global-eb8c1606a52e": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No empty state on the screen.",
+      "instancias": []
+    },
+    "govbr-3.7.0-pattern-global-eebb093156e7": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No collapse on the screen.",
+      "instancias": []
+    },
+    "govbr-3.7.0-template-global-19f93475dc5e": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Use of the base template as a starting point is not observable on a built page.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-01b1806c30e9": {
+      "aceita": true,
+      "justificativa": "Fields with a non-evident format carry a hint; remove it. Measure: hint element present inside the component and referenced by the field.",
+      "instancias": [
+        "dat-preferencial",
+        "upl-documentos"
+      ],
+      "variantes": [
+        {
+          "id": "hint-removido",
+          "descricao": "The format hint is removed from the field."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-11ffc5c577f6": {
+      "aceita": true,
+      "justificativa": "Option groups sit in fieldset+legend; swap for div+p. Measure: closest fieldset and its legend.",
+      "instancias": [
+        "rad-forma",
+        "chk-recursos"
+      ],
+      "variantes": [
+        {
+          "id": "grupo-sem-fieldset",
+          "descricao": "fieldset+legend become div+p; the visible text stays."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-1cb2c878824b": {
+      "aceita": true,
+      "justificativa": "A native control replaced by div role=button with tabindex and key handlers (keyboard stays intact). Measure: tagName of the control.",
+      "instancias": [
+        "upl-documentos",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "nativo-para-div",
+          "descricao": "The native control becomes div role=button tabindex=0 with Enter/Space handlers."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-1ccbc61dddbc": {
+      "aceita": true,
+      "justificativa": "Header cells as td, or th without scope. Measure: thead cell tagName and scope.",
+      "instancias": [
+        "tab-anteriores"
+      ],
+      "variantes": [
+        {
+          "id": "th-para-td",
+          "descricao": "Header cells are td."
+        },
+        {
+          "id": "th-sem-scope",
+          "descricao": "Header cells stay th but lose scope."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-1db13803cbf8": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "The screen has no foreign-language passage; adding one to host a defect would design the screen around the rule.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-206c9fa6ae11": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "A layout table would be a new element, not a deviation on an inventory instance.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-20c08f26d8e8": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Which terms count as uncommon is a reading, not an observable.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-3a3e47354c53": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No informative image in the inventory.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-3ac0aaa53900": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "Page-level heading outline; no host instance.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-5d366ef29b04": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No time-limited task.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-5d5a5f21d94b": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "Page-level (document title); no host instance.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-609e3494150c": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No image map.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-698e0a4783a9": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "Page-level (html lang); no host instance.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-6c86b93df639": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No video.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-75c11ccac582": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "Page-level orientation mechanism; the breadcrumb that satisfies it is scaffold, outside the draw.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-7d2b85f81c52": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "Page-level skip links; the skip link that satisfies it is scaffold, outside the draw.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-8f439a3c078c": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No video.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-a8f7ce66b1c4": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No CAPTCHA and no place for one in the inventory.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-b95c42b61ed3": {
+      "aceita": false,
+      "motivo": "duplicada:govbr-3.7.0-accessibility-global-b5fad7ce076d",
+      "justificativa": "Same element and observable as the programmatic-label rule (field without an associated label); lower id stays.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-bfba9c1f5026": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "Page-level regions; no host instance.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-c2f94bdc17ce": {
+      "aceita": true,
+      "justificativa": "Status column conveyed by colour alone. Measure: status cell has non-empty text or accessible name. Error-state manifestations are left to cc837bbaf713.",
+      "instancias": [
+        "tab-anteriores"
+      ],
+      "variantes": [
+        {
+          "id": "situacao-so-por-cor",
+          "descricao": "The status cell keeps only the coloured marker, with no text or accessible name."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-cc837bbaf713": {
+      "aceita": true,
+      "justificativa": "In S1 an invalid field shows no textual error tied to it. Measure: after empty submit, feedback text exists in the component and is referenced by aria-describedby.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao"
+      ],
+      "variantes": [
+        {
+          "id": "erro-sem-texto",
+          "descricao": "In S1 the field turns invalid with no feedback text."
+        },
+        {
+          "id": "erro-sem-associacao",
+          "descricao": "The feedback text is shown but not referenced by the field."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-cd705eb5da2a": {
+      "aceita": true,
+      "justificativa": "Canonical table example carries a caption; remove it. Measure: caption element inside the table.",
+      "instancias": [
+        "tab-anteriores"
+      ],
+      "variantes": [
+        {
+          "id": "caption-removido",
+          "descricao": "The caption element is removed; the visible title bar stays."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-cdfbb56eebc5": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No content link in the inventory; pagination links carry aria-labels governed by other rules.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-cf61b3eb3c71": {
+      "aceita": true,
+      "justificativa": "Canonical page links sit in ul>li; flatten to bare adjacent anchors. Measure: parent of each a.page is li.",
+      "instancias": [
+        "pag-anteriores"
+      ],
+      "variantes": [
+        {
+          "id": "links-fora-de-lista",
+          "descricao": "Page links become bare adjacent anchors, without ul/li."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-dafac812b10b": {
+      "aceita": true,
+      "justificativa": "Icon-only buttons are the DS form of image buttons; drop the aria-label. Measure: accessible name of icon-only buttons in the instance.",
+      "instancias": [
+        "dat-preferencial",
+        "upl-documentos",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "icone-sem-nome",
+          "descricao": "The first icon-only button of the instance, in document order, loses its aria-label."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-dc45b57b8349": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No audio.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-de1efebaf255": {
+      "aceita": true,
+      "justificativa": "Changing the field submits the form. Measure: set a value, assert the screen is still in S0.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-declaracao"
+      ],
+      "variantes": [
+        {
+          "id": "change-envia",
+          "descricao": "A change event on the field submits the form."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-fb83eab75d8d": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Readability is a reading, not an observable.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-33b13d9fa271": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No moving content.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-41850b4791b8": {
+      "aceita": true,
+      "justificativa": "A control taken out of the tab sequence or made click-only. Measure: Tab reaches it and Enter/Space operates it.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "fora-do-tab",
+          "descricao": "The control gets tabindex=-1."
+        },
+        {
+          "id": "so-clique",
+          "descricao": "The control answers click only; Enter and Space do nothing."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-56cbcba602ce": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No sound.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-5be1f553cc03": {
+      "aceita": true,
+      "justificativa": "Modal opens without receiving focus, or closes without returning it. Measure: activeElement after opening and after closing.",
+      "instancias": [
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "abre-sem-foco",
+          "descricao": "Opening the modal leaves focus on the trigger."
+        },
+        {
+          "id": "fecha-sem-devolver",
+          "descricao": "Closing the modal drops focus on body."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-6ea7ecc60c01": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No automatic animation.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-79db88c7f55d": {
+      "aceita": true,
+      "justificativa": "Positive tabindex pulls a field out of the logical sequence. Measure: Tab sequence of instance ids against DOM order.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos"
+      ],
+      "variantes": [
+        {
+          "id": "tabindex-positivo",
+          "descricao": "The field gets tabindex=1."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-e101928665cc": {
+      "aceita": false,
+      "motivo": "duplicada:govbr-3.7.0-accessibility-global-79db88c7f55d",
+      "justificativa": "Same observable: focus order of the form fields and positive tabindex.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-e6fd5e1247de": {
+      "aceita": true,
+      "justificativa": "Restricted to the clause 41850b4791b8 does not cover: focus cannot leave the control. Measure: Tab from inside moves activeElement outside. The modal is excluded, containment there is correct.",
+      "instancias": [
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos"
+      ],
+      "variantes": [
+        {
+          "id": "foco-preso",
+          "descricao": "Tab and Shift+Tab are cancelled while the control has focus."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-f639993e9416": {
+      "aceita": false,
+      "motivo": "duplicada:govbr-3.7.0-accessibility-global-41850b4791b8",
+      "justificativa": "Keyboard operability of dynamic content; its drag-alternative clause cannot be violated on the upload without also violating 41850b4791b8.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-modal-64b84991229c": {
+      "aceita": true,
+      "justificativa": "Tab or Shift+Tab escapes the open modal or skips a control. Measure: full Tab and Shift+Tab cycles stay inside the modal and visit every control.",
+      "instancias": [
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "tab-escapa",
+          "descricao": "Tab from the last modal control leaves the modal."
+        },
+        {
+          "id": "tab-pula-controle",
+          "descricao": "One modal control gets tabindex=-1."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-2f22b7245ef9": {
+      "aceita": false,
+      "motivo": "duplicada:govbr-3.7.0-accessibility-global-1cb2c878824b",
+      "justificativa": "Same observable: a native element replaced by div/span.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-b5fad7ce076d": {
+      "aceita": true,
+      "justificativa": "Field without a programmatic label. Measure: label[for] resolves to the field and the accessible name is non-empty.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos"
+      ],
+      "variantes": [
+        {
+          "id": "label-sem-for",
+          "descricao": "The label loses for; the visible text stays."
+        },
+        {
+          "id": "label-ausente",
+          "descricao": "The label element becomes a span."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-cb56ad444da2": {
+      "aceita": false,
+      "motivo": "duplicada:govbr-3.7.0-accessibility-global-79db88c7f55d",
+      "justificativa": "Same observable: reading and focus order diverge from the DOM sequence.",
+      "instancias": []
+    },
+    "govbr-3.7.0-accessibility-global-e038367bd7d6": {
+      "aceita": true,
+      "justificativa": "Custom widget loses its role or state attribute (dialog/aria-modal, alert, aria-expanded, aria-current). Measure: attribute on the instance root or trigger.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "aria-removido",
+          "descricao": "The first ARIA role or state attribute, in document order, on the instance root or trigger is removed."
+        }
+      ]
+    },
+    "govbr-3.7.0-component-checkbox-6923ae0af84f": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Whether a choice is single or multiple is the form's intent, not an observable.",
+      "instancias": []
+    },
+    "govbr-3.7.0-component-global-e30aab6e9a68": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Catch-all anatomy conformance; measuring it means re-implementing the oracle's structure check.",
+      "instancias": []
+    },
+    "govbr-3.7.0-component-message-66b01a712e67": {
+      "aceita": true,
+      "justificativa": "Icon and close button change places. Measure: bounding boxes of icon, content and close button.",
+      "instancias": [
+        "msg-retorno"
+      ],
+      "variantes": [
+        {
+          "id": "icone-e-fechar-trocados",
+          "descricao": "Close button on the left, semantic icon on the right."
+        }
+      ]
+    },
+    "govbr-3.7.0-component-scrim-d5ba51dda2b0": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No search or accessibility area for the scrim to block.",
+      "instancias": []
+    },
+    "govbr-3.7.0-component-table-7c605ca2f85e": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "A table of previous requests with zero columns is not a single local deviation; it removes the host of three other rules.",
+      "instancias": []
+    },
+    "govbr-3.7.0-component-upload-985fd2775586": {
+      "aceita": true,
+      "justificativa": "Support text no longer announces drag-and-drop. Measure: upload support text mentions dragging.",
+      "instancias": [
+        "upl-documentos"
+      ],
+      "variantes": [
+        {
+          "id": "apoio-sem-arraste",
+          "descricao": "The support text no longer mentions dragging."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-21fbcc2fe37b": {
+      "aceita": true,
+      "justificativa": "Focus indicator suppressed on one control. Measure: focus it, read computed outline.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "outline-none",
+          "descricao": "outline: none on :focus and :focus-visible of the control."
+        }
+      ]
+    },
+    "govbr-3.7.0-accessibility-global-cb09bc0c77c0": {
+      "aceita": true,
+      "justificativa": "Text colour under 4.5:1 on its background. Measure: computed colours and the WCAG ratio formula.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos",
+        "tab-anteriores",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "contraste-baixo",
+          "descricao": "Main text of the instance takes the darkest DS gray token still under 4.5:1 on its background."
+        }
+      ]
+    },
+    "govbr-3.7.0-development-global-406774b1cb87": {
+      "aceita": true,
+      "justificativa": "font-family override on the instance. Measure: computed font-family starts with Rawline.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos",
+        "tab-anteriores",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "fonte-generica",
+          "descricao": "font-family: Arial, sans-serif on the instance."
+        }
+      ]
+    },
+    "govbr-3.7.0-foundation-global-0578aa6c2828": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "Grid gutter is page layout; no host instance.",
+      "instancias": []
+    },
+    "govbr-3.7.0-foundation-global-1c0146e93d2e": {
+      "aceita": false,
+      "motivo": "nao-manifesta",
+      "justificativa": "No conforming baseline: the canonical circle button is --button-medium = 40 px (core.css), so every icon button already misses 48 px.",
+      "instancias": []
+    },
+    "govbr-3.7.0-foundation-global-21b1a2733f7b": {
+      "aceita": true,
+      "justificativa": "Off-palette colour on the instance. Measure: computed colour against the colour custom properties the page itself declares on :root.",
+      "instancias": [
+        "sel-servico",
+        "sel-unidade",
+        "rad-forma",
+        "chk-recursos",
+        "chk-declaracao",
+        "dat-preferencial",
+        "txa-descricao",
+        "upl-documentos",
+        "tab-anteriores",
+        "pag-anteriores",
+        "msg-retorno",
+        "mod-descartar"
+      ],
+      "variantes": [
+        {
+          "id": "cor-fora-da-paleta",
+          "descricao": "The instance's main colour with the green channel raised by 16."
+        }
+      ]
+    }
+  }
+}

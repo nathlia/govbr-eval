@@ -1,0 +1,248 @@
+{
+  "_meta": {
+    "tela": "solicitacao",
+    "titulo": "Solicitar serviço",
+    "entrada": "solicitacao.html",
+    "referencia": "ground-truth-solicitacao.json",
+    "procedimento": "docs/tela-a-procedimento-sorteio.md",
+    "fixadoEm": "2026-09-18",
+    "nota": "Fixed from the service-form pattern before any rule content was read (D-49, plan step 1)."
+  },
+  "estados": [
+    {
+      "id": "S0",
+      "descricao": "carga inicial"
+    },
+    {
+      "id": "S1",
+      "descricao": "Enviar com o formulário vazio",
+      "gatilho": "btn-enviar"
+    },
+    {
+      "id": "S2",
+      "descricao": "Cancelar abre o modal de confirmação",
+      "gatilho": "btn-cancelar"
+    }
+  ],
+  "sorteaveis": [
+    {
+      "componente": "select",
+      "instancias": [
+        {
+          "id": "sel-servico",
+          "rotulo": "Tipo de serviço",
+          "estados": [
+            "S0",
+            "S1"
+          ]
+        },
+        {
+          "id": "sel-unidade",
+          "rotulo": "Unidade de atendimento",
+          "estados": [
+            "S0",
+            "S1"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "radio",
+      "instancias": [
+        {
+          "id": "rad-forma",
+          "rotulo": "Forma de atendimento",
+          "opcoes": [
+            "rad-forma-1",
+            "rad-forma-2",
+            "rad-forma-3"
+          ],
+          "estados": [
+            "S0",
+            "S1"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "checkbox",
+      "instancias": [
+        {
+          "id": "chk-recursos",
+          "rotulo": "Recursos de acessibilidade",
+          "opcoes": [
+            "chk-recursos-1",
+            "chk-recursos-2"
+          ],
+          "estados": [
+            "S0",
+            "S1"
+          ]
+        },
+        {
+          "id": "chk-declaracao",
+          "rotulo": "Declaro que as informações são verdadeiras",
+          "estados": [
+            "S0",
+            "S1"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "datetimepicker",
+      "instancias": [
+        {
+          "id": "dat-preferencial",
+          "rotulo": "Data preferencial",
+          "estados": [
+            "S0",
+            "S1"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "textarea",
+      "instancias": [
+        {
+          "id": "txa-descricao",
+          "rotulo": "Descrição da solicitação",
+          "estados": [
+            "S0",
+            "S1"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "upload",
+      "instancias": [
+        {
+          "id": "upl-documentos",
+          "rotulo": "Documentos comprobatórios",
+          "estados": [
+            "S0",
+            "S1"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "table",
+      "instancias": [
+        {
+          "id": "tab-anteriores",
+          "rotulo": "Solicitações anteriores",
+          "linhas": 5,
+          "colunas": 4,
+          "estados": [
+            "S0"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "pagination",
+      "instancias": [
+        {
+          "id": "pag-anteriores",
+          "rotulo": "Paginação de solicitações anteriores",
+          "estados": [
+            "S0"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "message",
+      "instancias": [
+        {
+          "id": "msg-retorno",
+          "rotulo": "Retorno do envio",
+          "estados": [
+            "S1"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "modal",
+      "instancias": [
+        {
+          "id": "mod-descartar",
+          "rotulo": "Descartar solicitação?",
+          "estados": [
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "scrim",
+      "instancias": [
+        {
+          "id": "mod-descartar",
+          "rotulo": "Fundo do modal",
+          "estados": [
+            "S2"
+          ]
+        }
+      ]
+    }
+  ],
+  "andaime": [
+    {
+      "componente": "input",
+      "instancias": [
+        {
+          "id": "inp-nome",
+          "rotulo": "Nome completo"
+        },
+        {
+          "id": "inp-cpf",
+          "rotulo": "CPF"
+        }
+      ]
+    },
+    {
+      "componente": "button",
+      "instancias": [
+        {
+          "id": "btn-enviar",
+          "rotulo": "Enviar"
+        },
+        {
+          "id": "btn-cancelar",
+          "rotulo": "Cancelar"
+        },
+        {
+          "id": "btn-modal-manter",
+          "rotulo": "Continuar preenchendo"
+        },
+        {
+          "id": "btn-modal-descartar",
+          "rotulo": "Descartar"
+        }
+      ]
+    },
+    {
+      "componente": "skiplink",
+      "instancias": [
+        {
+          "id": "skp-conteudo",
+          "rotulo": "Ir para o conteúdo"
+        }
+      ]
+    },
+    {
+      "componente": "breadcrumb",
+      "instancias": [
+        {
+          "id": "brd-trilha",
+          "rotulo": "Início › Serviços › Solicitar serviço"
+        }
+      ]
+    }
+  ]
+}
