@@ -48,6 +48,21 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
     `pipeline/logs/<runId>-evidencia/`.
   - `instrument.json`, `types.ts`, `checker-aliases.json`, `kb-aliases.json`, o contrato do achado e os scripts de
     casamento entram no hash do engine: mudar qualquer um invalida pacotes já preparados.
+- **Telas do instrumento de fluxo (`telas.json`, fatia 8 / D-49).** O contrato de coleta e de
+  pontuação é um só (`instrument.json`); o que muda de uma tela para outra — página servida,
+  referência, fonte que o ESLint lê, pastas de execução e de revisão — está em `telas.json`, lido por
+  `scripts/telas.ts`. Tudo que dependia de "fluxo" escrito no código agora recebe `--tela` (padrão
+  `fluxo`): `test:isolation`, `baselines:fluxo`, `collection-manifest.ts build`, e `run-battery.ps1
+  -Suite fluxo -Tela <nome>`. A suíte gravada no plano e em cada execução é o NOME DA TELA, e a
+  preparação do pacote recusa bateria que misture telas. Números de telas diferentes nunca se somam
+  nem formam série.
+  - `npm run conferir:referencia -- --tela <nome>` (com `APP_URL` apontando para o `dist/` servido)
+    — mede estados, aditividade, contagens e predicados da referência contra a página, sem modelo:
+    é a conferência da preparação do pacote, feita ANTES de pagar a bateria.
+  - **Tela A (`solicitacao`)**: `ground-truth-solicitacao.json` (12 specs, 14 unidades, 3 estados).
+    As specs vieram de SORTEIO — procedimento em `docs/tela-a-procedimento-sorteio.md`, tudo o mais
+    em `tela-a/` (inventário, elegibilidade, sorteio, registro da construção, conferência sem
+    modelo). Não edite specs à mão: a referência só muda por descarte previsto no procedimento.
 - `adjudications.json` — human verdicts on findings that matched no expected unit (D-21).
   `npm run adjudicate` (`--emit` semeia stubs, `--blind` julga sem ver o braço). Um veredito sem
   `rationale` não é aplicado. `npm run score` imprime **piso** e **adjudicado**, nunca um no lugar

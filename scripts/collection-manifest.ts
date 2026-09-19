@@ -19,7 +19,7 @@
  *
  * CLI, para o runner em PowerShell:
  *   tsx scripts/collection-manifest.ts build --out-dir NOVO_DIR --site-manifest ARQ --surface ARQ
- *       --plan ARQ --client NOME --client-version VER [--oracle-built] [--no-archive]
+ *       --plan ARQ --client NOME --client-version VER [--tela NOME] [--oracle-built] [--no-archive]
  *   tsx scripts/collection-manifest.ts verify --manifest ARQ
  */
 import { createHash } from "node:crypto";
@@ -30,6 +30,7 @@ import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { ROOT } from "./adjudication";
 import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION, FLOW_ACCEPTANCE_POLICY_VERSION, FLOW_REFERENCE_FILE } from "./instrument";
+import { telaFromArgs } from "./telas";
 import { SCORER_FILES, digest } from "./semantic-flow";
 import { VIEWPORT_PADRAO } from "./anchors";
 
@@ -560,11 +561,16 @@ async function main(): Promise<void> {
   }
   if (command !== "build") {
     throw new Error("Uso: collection-manifest.ts build --out-dir NOVO_DIR --site-manifest ARQ --surface ARQ --plan ARQ " +
-      "--client NOME --client-version VER [--oracle-built] [--no-archive]\n       collection-manifest.ts verify --manifest ARQ");
+      "--client NOME --client-version VER [--tela NOME] [--oracle-built] [--no-archive]\n       collection-manifest.ts verify --manifest ARQ");
   }
   const outDir = resolve(required(args, "--out-dir"));
   if (existsSync(outDir)) throw new Error(`${outDir} já existe: o manifesto de cada bateria é novo.`);
+  // A referência é a da tela medida. Sem isto o manifesto arquivaria e hashearia o gabarito da
+  // tela de fluxo para qualquer bateria, e a conferência de identidade aceitaria a troca.
+  const tela = telaFromArgs(args);
+  const referencePath = join(ROOT, tela.reference);
   const manifest = await buildCollectionManifest({
+    referencePath,
     siteManifestPath: resolve(required(args, "--site-manifest")),
     surfacePath: resolve(required(args, "--surface")),
     planPath: resolve(required(args, "--plan")),
@@ -574,7 +580,8 @@ async function main(): Promise<void> {
   const problems = manifestProblems(manifest);
   if (problems.length) throw new Error(`Manifesto de coleta incompleto; nada foi gravado: ${problems.join("; ")}`);
   mkdirSync(outDir, { recursive: true });
-  if (!args.includes("--no-archive")) manifest.archive = archiveCollection(manifest, outDir);
+  if (manifest.plan && manifest.plan.suite !== tela.nome) throw new Error(`O plano é da suíte "${manifest.plan.suite}" e a tela pedida é "${tela.nome}".`);
+  if (!args.includes("--no-archive")) manifest.archive = archiveCollection(manifest, outDir, referencePath);
   const path = join(outDir, "manifesto.json");
   writeFileSync(path, JSON.stringify(manifest, null, 2) + "\n", { flag: "wx" });
   console.log(`Manifesto de coleta: ${path}`);

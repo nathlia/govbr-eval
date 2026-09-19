@@ -19,12 +19,16 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { ROOT } from "./adjudication";
 import { statePlanOf } from "./collection-manifest";
+import { TELAS, telaFromArgs } from "./telas";
 import { DEFAULT_PORTS, HOST, createEgressProxy, startSurface, type EgressEvent, type RunningSurface } from "./measurement-surface";
 
 interface McpServerConfig { command: string; args?: string[]; env?: Record<string, string> }
 interface Check { name: string; passed: boolean; detail: string }
 
 const args = process.argv.slice(2);
+// A tela conferida: a mesma que a bateria vai medir (`--tela`), para que o preflight prove o
+// isolamento da página que será servida e não o de outra.
+const tela = telaFromArgs(args);
 const argValue = (name: string): string | undefined => (args.includes(name) ? args[args.indexOf(name) + 1] : undefined);
 const corpusDist = resolve(ROOT, argValue("--corpus-dist") ?? "../govbr-corpus/dist");
 const outFile = argValue("--out");
@@ -110,7 +114,7 @@ function eventsSince(events: EgressEvent[], from: number): EgressEvent[] {
 }
 
 async function main(): Promise<void> {
-  if (!existsSync(join(corpusDist, "fluxo.html"))) throw new Error(`Build do corpus ausente em ${corpusDist}. Rode 'npm run build' em govbr-corpus.`);
+  if (!existsSync(join(corpusDist, tela.entry))) throw new Error(`Build do corpus ausente em ${corpusDist}. Rode 'npm run build' em govbr-corpus.`);
 
   // ── Configuração: a mesma que o runner entrega aos dois braços.
   const com = readMcp("mcp-com-oraculo.json");
@@ -133,11 +137,11 @@ async function main(): Promise<void> {
   let surface: RunningSurface | null = null;
 
   try {
-    surface = await startSurface({ corpusDist, entry: "fluxo.html", outDir: join(work, "surface") });
+    surface = await startSurface({ corpusDist, entry: tela.entry, outDir: join(work, "surface") });
     const entryUrl = surface.description.entryUrl;
 
     // ── O alvo do vazamento tem de estar vivo, conferido de FORA da política.
-    const gabaritoProbe = fsUrl("localhost:4000", "ground-truth-fluxo.json");
+    const gabaritoProbe = fsUrl("localhost:4000", tela.reference);
     if (!(await httpText(gabaritoProbe))) {
       const dashboard = spawn("npm --prefix dashboard run dev -- --port 4000 --strictPort", { cwd: ROOT, shell: true, stdio: "ignore" });
       children.push(dashboard);
@@ -156,17 +160,17 @@ async function main(): Promise<void> {
     const blockedHttp = [
       "http://localhost:4000/",
       gabaritoProbe,
-      fsUrl("127.0.0.1:4000", "ground-truth-fluxo.json"),
-      fsUrl("[::1]:4000", "ground-truth-fluxo.json"),
+      fsUrl("127.0.0.1:4000", tela.reference),
+      fsUrl("[::1]:4000", tela.reference),
       fsUrl("localhost:4000", "ground-truth.json"),
       fsUrl("localhost:4000", "results/agent-results.json"),
       fsUrl("localhost:4000", "adjudications.json"),
       "http://localhost:4000/agent-results.json",
       "http://localhost:3000/",
-      "http://localhost:3000/fluxo.html",
+      `http://localhost:3000/${tela.entry}`,
       `http://${HOST}:${DEFAULT_PORTS.control}/control/status`,
       `http://${HOST}:${DEFAULT_PORTS.proxy}/`,
-      `http://localhost:${DEFAULT_PORTS.site}/fluxo.html`,
+      `http://localhost:${DEFAULT_PORTS.site}/${tela.entry}`,
     ];
     for (const url of blockedHttp) {
       const from = surface.egress.length;
@@ -179,8 +183,12 @@ async function main(): Promise<void> {
 
     // ── Negativos: rotas irmãs na origem permitida.
     const mainBundle = readdirSync(join(corpusDist, "assets")).find((f) => /^main-.*\.js$/.test(f));
-    const siblings = ["/", "/index.html", "/real/pnip-login.html", "/static/protocolo.html", "/src/fluxo.tsx",
-      `/@fs/${encodeURI(join(ROOT, "ground-truth-fluxo.json").replace(/\\/g, "/"))}`, ...(mainBundle ? [`/assets/${mainBundle}`] : [])];
+    // As OUTRAS telas do instrumento também são rotas irmãs: uma bateria sobre uma tela não pode
+    // alcançar a página, o fonte nem o gabarito de outra.
+    const outras = Object.values(TELAS).filter(t => t.nome !== tela.nome);
+    const siblings = ["/", "/index.html", "/real/pnip-login.html", "/static/protocolo.html", tela.isolamento.fonte,
+      ...outras.flatMap(t => [`/${t.entry}`, t.isolamento.fonte, `/@fs/${encodeURI(join(ROOT, t.reference).replace(/\\/g, "/"))}`]),
+      `/@fs/${encodeURI(join(ROOT, tela.reference).replace(/\\/g, "/"))}`, ...(mainBundle ? [`/assets/${mainBundle}`] : [])];
     for (const path of siblings) {
       const result = await navigate(playwright, `${siteOrigin}${path}`);
       check(`rota irmã indisponível: ${path}`, result.body.trim() === "404", result.error ?? result.body.slice(0, 60));
@@ -189,16 +197,16 @@ async function main(): Promise<void> {
     // ── Positivo: a tela congelada carrega inteira, sem recurso externo.
     let from = surface.egress.length;
     const page = await navigate(playwright, entryUrl);
-    check("a tela congelada carrega", page.body.includes("CPF"), page.error ?? page.body.slice(0, 80));
-    await evaluate(playwright, "() => { document.querySelector('.acao-continuar').click(); return 'ok'; }");
-    const errorShown = await evaluate(playwright, "() => new Promise(r => setTimeout(() => r(String(!!document.querySelector('.mensagem-erro-cpf'))), 500))");
+    check("a tela congelada carrega", page.body.includes(tela.isolamento.texto), page.error ?? page.body.slice(0, 80));
+    await evaluate(playwright, `() => { document.querySelector(${JSON.stringify(tela.isolamento.clicar)}).click(); return 'ok'; }`);
+    const errorShown = await evaluate(playwright, `() => new Promise(r => setTimeout(() => r(String(!!document.querySelector(${JSON.stringify(tela.isolamento.esperar)}))), 500))`);
     check("o estado do setup do gabarito é alcançável", errorShown === "true");
 
     // ── A janela é uma dimensão do experimento (D-46). O scorer só ancora uma alegação na cena de
     // mesma LARGURA, e o protocolo manda relatar a janela real: se o navegador medido não abre na
     // janela padrão do plano, o braço mede 0 por construção. Conferir os argumentos não basta — a
     // janela é MEDIDA aqui, contra o mesmo plano de estados que o manifesto e o scorer leem.
-    const statePlan = statePlanOf(JSON.parse(readFileSync(join(ROOT, "ground-truth-fluxo.json"), "utf8")));
+    const statePlan = statePlanOf(JSON.parse(readFileSync(join(ROOT, tela.reference), "utf8")));
     const windowSize = "() => window.innerWidth + 'x' + window.innerHeight";
     const opened = await evaluate(playwright, windowSize);
     check("o navegador medido abre na janela padrão do plano", opened === `${statePlan.padrao.width}x${statePlan.padrao.height}`,
@@ -220,7 +228,7 @@ async function main(): Promise<void> {
     from = surface.egress.length;
     const inPage = await evaluate(playwright, `async () => {
       const out = [];
-      for (const target of ${JSON.stringify([gabaritoProbe, fsUrl("127.0.0.1:4000", "ground-truth-fluxo.json"), `http://${HOST}:${DEFAULT_PORTS.control}/control/status`])}) {
+      for (const target of ${JSON.stringify([gabaritoProbe, fsUrl("127.0.0.1:4000", tela.reference), `http://${HOST}:${DEFAULT_PORTS.control}/control/status`])}) {
         try { const r = await fetch(target); out.push(r.status + ':' + (await r.text()).slice(0, 80)); } catch (e) { out.push('erro'); }
       }
       const frame = document.createElement('iframe'); frame.src = ${JSON.stringify(fsUrl("localhost:4000", "ground-truth.json"))}; document.body.appendChild(frame);
@@ -256,7 +264,7 @@ async function main(): Promise<void> {
     const redirectClient = await connect(com.playwright, work, redirectArgs);
     clients.push(redirectClient);
     const redirected = await navigate(redirectClient, `http://${redirectorHost}/go`);
-    const followed = testProxy.events.find((e) => e.target.includes("ground-truth-fluxo.json"));
+    const followed = testProxy.events.find((e) => e.target.includes(tela.reference));
     check("redirecionamento para fora da política é negado no salto",
       Boolean(followed && !followed.allowed) && !redirected.body.includes('"violations"'),
       followed ? `${followed.target} → ${followed.status}` : "o salto não passou pelo proxy");
@@ -267,13 +275,13 @@ async function main(): Promise<void> {
     await fetch(`${control}/control/arm`, { method: "POST", body: JSON.stringify({ runId }) });
     await navigate(playwright, `${collectorOrigin}/`);
     const report = { timestamp: new Date().toISOString(), model: "teste", appUrl: entryUrl, scope: ["teste"], findings: [{
-      selector: "#cpf", rule: null, observed: "teste de encanamento", expected: "o relatório chega ao coletor",
+      selector: tela.isolamento.alvo, rule: null, observed: "teste de encanamento", expected: "o relatório chega ao coletor",
       state: { viewport: { width: 1280, height: 720 }, steps: [] }, evidence: [] }] };
     const post = (body: unknown): string => `async () => { const r = await fetch('/api/submit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: ${JSON.stringify(JSON.stringify(body))} }); return r.status + ' ' + (await r.text()); }`;
     const first = await evaluate(playwright, post(report));
     const again = await evaluate(playwright, post(report));
     const different = await evaluate(playwright, post({ ...report, findings: [] }));
-    const legacyShape = await evaluate(playwright, post({ ...report, findings: [{ selector: "#cpf", rule: "wcag:3.3.2", description: "contrato antigo" }] }));
+    const legacyShape = await evaluate(playwright, post({ ...report, findings: [{ selector: tela.isolamento.alvo, rule: "wcag:3.3.2", description: "contrato antigo" }] }));
     check("o coletor aceita o relatório da execução armada", first.startsWith("200") && first.includes('"receipt"'), first.slice(0, 120));
     check("reenvio idêntico devolve o mesmo recibo", again.startsWith("200") && again.includes('"duplicate":true'), again.slice(0, 120));
     check("relatório diferente não sobrescreve o aceito", different.startsWith("409"), different.slice(0, 120));
@@ -287,7 +295,7 @@ async function main(): Promise<void> {
     // relatório dela, sinalizado e sem satisfazer o contrato.
     const refusedRun = `isolation-recusa-${Date.now()}`;
     await fetch(`${control}/control/arm`, { method: "POST", body: JSON.stringify({ runId: refusedRun }) });
-    const onlyLegacy = await evaluate(playwright, post({ ...report, findings: [{ selector: "#cpf", rule: "wcag:3.3.2", description: "contrato antigo" }] }));
+    const onlyLegacy = await evaluate(playwright, post({ ...report, findings: [{ selector: tela.isolamento.alvo, rule: "wcag:3.3.2", description: "contrato antigo" }] }));
     const promotedOutcome = await (await fetch(`${control}/control/disarm`, { method: "POST" })).json() as {
       receipt: { status?: string; rejectedFile?: string; file?: string } | null; rejected: string[] };
     const promotedRecord = promotedOutcome.receipt?.file

@@ -1,0 +1,187 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "version_note": "1.0.0 (2026-09-18, fatia 8 / D-49): primeira referência da tela A. As 12 specs NÃO foram escolhidas: saíram do sorteio em tela-a/sorteio.json (semente d6ed93fd095b93e9a45a3145fafac702494fe822, o commit que congelou o procedimento em docs/tela-a-procedimento-sorteio.md). Regra, hospedeiro, variante e quais são compartilhadas vêm de lá; o que a construção ainda precisou decidir está em tela-a/construcao.md. 12 specs, 14 unidades (A-04 e A-08 valem duas: os dois selects). Congelada ANTES de qualquer execução de modelo sobre a tela e antes de anotar quais regras o oráculo verifica.",
+    "page": "Solicitar serviço — tela A da fatia 8 (D-49)",
+    "url": "/solicitacao.html",
+    "waitFor": ".linhas-anteriores tr",
+    "suite": "solicitacao",
+    "ds": "gov.br Design System 3.7.0",
+    "unit_of_evaluation": "(elemento × defeito), no estado aplicável — a mesma unidade da tela de fluxo. Uma spec com scope \"todos\" vira uma unidade por elemento resolvido; \"composicao\" vale uma unidade com vários participantes.",
+    "setup": [
+      { "action": "click", "selector": ".acao-enviar" },
+      { "action": "wait", "selector": ".mensagem-retorno" },
+      { "action": "click", "selector": ".acao-cancelar" },
+      { "action": "wait", "selector": ".dialogo-descarte" }
+    ],
+    "setup_rationale": "Enviar com o formulário vazio faz nascer a mensagem de retorno e os textos de erro; Cancelar abre o diálogo de descarte POR CIMA desse estado. A sequência é aditiva: a mensagem continua na árvore com o diálogo aberto, e nada que a referência ancora deixa de existir. A preparação mede isso em cada parada (D-06).",
+    "nunca_agregar_com": "ground-truth-fluxo.json, ground-truth.json (suíte TC-*), organic-ground-truth.json e a futura tela B — instrumentos diferentes sobre páginas diferentes (D-13, D-49). Os números desta tela não formam série com os da tela de fluxo.",
+    "baselines": "MEDIDAS sob o carimbo de cada bateria; nenhuma expectativa de detecção por ferramenta é declarada aqui (D-06).",
+    "viewport": { "width": 1280, "height": 900 },
+    "states": [
+      { "id": "inicial", "afterStep": 0, "note": "primeiro paint, depois do waitFor e antes de qualquer interação (S0 do procedimento)" },
+      { "id": "apos-envio-vazio", "afterStep": 2, "note": "depois de Enviar com o formulário em branco: mensagem de retorno e textos de erro (S1)" },
+      { "id": "dialogo-aberto", "afterStep": 4, "note": "depois de Cancelar: diálogo de descarte aberto sobre o estado anterior (S2)" }
+    ],
+    "chamarizes": {
+      "note": "Instâncias conformes sorteadas como chamariz (tela-a/sorteio.json). Não são unidades e não entram em denominador algum: existem para que um alarme falso tenha onde aparecer, e uma alegação sobre elas é adjudicada como qualquer outra fora da referência (D-48).",
+      "selectors": ["#cpf", "#nome", ".acao-enviar", ".acao-cancelar", ".acao-manter", ".atalho-conteudo", "#declaracao", "#descricao"]
+    },
+    "fundo": "Condições que ninguém injetou e que vêm da marcação oficial ou do core.js (tela-a/construcao.md): botão do upload focável com aria-hidden, anel de foco padrão do navegador em radio e checkbox, skiplink com role=menubar, Rawline não empacotada. Não são unidades; alegação correta sobre elas entra como descoberta."
+  },
+  "violations": [
+    {
+      "id": "A-01",
+      "anchor": ".dialogo-descarte",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "dialogo-aberto",
+      "conditional": true,
+      "rules": ["govbr-3.7.0-accessibility-global-5be1f553cc03", "emag:1.9", "wcag:3.2.5"],
+      "categories": ["acessibilidade", "navegacao"],
+      "description": "Estrato K · variante fecha-sem-devolver. Ao fechar o diálogo de descarte (X, Continuar preenchendo ou Esc) o foco não volta ao botão Cancelar que o abriu: cai em <body>. Abrir o diálogo leva o foco para dentro dele, como deve. Sem predicado na referência — o observável exige fechar o diálogo e ler document.activeElement; está medido em tela-a/conferir-construcao.mjs."
+    },
+    {
+      "id": "A-02",
+      "anchor": ".campo-documentos .upload-button",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": ["govbr-3.7.0-accessibility-global-79db88c7f55d", "emag:1.4", "wcag:1.3.2", "wcag:2.4.3", "govbr-3.7.0-accessibility-global-e101928665cc", "emag:6.3", "govbr-3.7.0-accessibility-global-cb56ad444da2"],
+      "categories": ["acessibilidade", "navegacao", "formulario"],
+      "description": "Estrato K · variante tabindex-positivo. O botão do upload tem tabindex=1: o primeiro Tab da página cai nele, antes do atalho para o conteúdo e de todos os campos que o precedem no formulário. Sem predicado na referência (as espécies existentes medem ausência de atributo, não valor); medido em tela-a/conferir-construcao.mjs."
+    },
+    {
+      "id": "A-03",
+      "anchor": ".dialogo-descarte",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "dialogo-aberto",
+      "conditional": true,
+      "rules": ["govbr-3.7.0-foundation-global-21b1a2733f7b"],
+      "categories": ["token"],
+      "description": "Estrato T · variante cor-fora-da-paleta. O texto do diálogo usa #334333 — a cor de texto do DS (#333333) com o canal verde acrescido de 16 —, valor que não corresponde a token algum.",
+      "acceptance": {
+        "kind": "estilo-computado",
+        "properties": ["color"],
+        "forbidden": ["rgb(51, 67, 51)"],
+        "note": ".dialogo-descarte { color: #334333 } em solicitacao.css; o texto do restante da tela computa rgb(51, 51, 51)."
+      }
+    },
+    {
+      "id": "A-04",
+      "anchor": "#servico, #unidade",
+      "scope": "todos",
+      "expectedCount": 2,
+      "state": "sempre",
+      "rules": ["govbr-3.7.0-accessibility-global-21fbcc2fe37b", "emag:4.4", "wcag:2.4.7"],
+      "categories": ["token", "acessibilidade"],
+      "description": "Estrato T · variante outline-none · COMPARTILHADA pelos dois selects. O campo de texto do select não mostra indicador de foco: a borda e o box-shadow com que o DS desenha o foco dos campos foram suprimidos (e o outline segue none). Nome, CPF, data e descrição mostram o indicador. Sem predicado na referência — o observável exige focar o elemento; medido em tela-a/conferir-construcao.mjs."
+    },
+    {
+      "id": "A-05",
+      "anchor": ".tabela-anteriores, .tabela-anteriores table",
+      "scope": "composicao",
+      "expectedCount": 1,
+      "participantCount": 2,
+      "state": "sempre",
+      "rules": ["govbr-3.7.0-accessibility-global-cd705eb5da2a", "emag:3.9", "wcag:1.3.1"],
+      "categories": ["estrutura", "acessibilidade"],
+      "description": "Estrato E · variante caption-removido. A tabela de solicitações anteriores não tem <caption>; o título visível é um div da barra superior do componente, fora do <table>. Sem predicado na referência (nenhuma espécie mede ausência de elemento filho); medido em tela-a/conferir-construcao.mjs."
+    },
+    {
+      "id": "A-06",
+      "anchor": ".mensagem-retorno .close [role=button]",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "apos-envio-vazio",
+      "conditional": true,
+      "rules": ["govbr-3.7.0-accessibility-global-1cb2c878824b", "emag:1.2", "wcag:1.3.1", "govbr-3.7.0-accessibility-global-2f22b7245ef9"],
+      "categories": ["estrutura", "acessibilidade"],
+      "description": "Estrato E · variante nativo-para-div. O botão Fechar da mensagem de retorno é um <div role=\"button\" tabindex=\"0\"> com tratadores de Enter e Espaço, no lugar do <button> nativo do exemplo oficial. Continua operável por teclado e nomeado — o defeito é só o elemento.",
+      "acceptance": {
+        "kind": "classe-no-elemento",
+        "classe": "br-button",
+        "tag": "div"
+      }
+    },
+    {
+      "id": "A-07",
+      "anchor": ".paginacao-anteriores, .paginacao-anteriores a.page",
+      "scope": "composicao",
+      "expectedCount": 1,
+      "participantCount": 4,
+      "state": "sempre",
+      "rules": ["govbr-3.7.0-accessibility-global-cf61b3eb3c71", "emag:1.7", "wcag:1.3.1"],
+      "categories": ["estrutura", "navegacao"],
+      "description": "Estrato E · variante links-fora-de-lista. Os links de página são âncoras adjacentes soltas dentro do <nav>, sem o <ul>/<li> do exemplo oficial: nada além de espaço os separa. Sem predicado na referência (nenhuma espécie mede o elemento pai); medido em tela-a/conferir-construcao.mjs."
+    },
+    {
+      "id": "A-08",
+      "anchor": "#servico, #unidade",
+      "scope": "todos",
+      "expectedCount": 2,
+      "state": "apos-envio-vazio",
+      "rules": ["govbr-3.7.0-accessibility-global-cc837bbaf713", "emag:6.6", "wcag:3.3.1"],
+      "categories": ["formulario", "acessibilidade"],
+      "description": "Estrato E · variante erro-sem-associacao · COMPARTILHADA pelos dois selects. Depois do envio vazio o texto de erro aparece sob o select, mas o campo não o referencia: não há aria-describedby. Os outros seis campos obrigatórios referenciam o próprio texto de erro. A unidade existe só neste estado, embora o campo exista desde o primeiro paint — por isso não é `conditional`.",
+      "acceptance": {
+        "kind": "atributos-ausentes",
+        "attributes": ["aria-describedby"]
+      }
+    },
+    {
+      "id": "A-09",
+      "anchor": "#forma-presencial, .grupo-forma .br-radio:first-of-type label",
+      "scope": "composicao",
+      "expectedCount": 1,
+      "participantCount": 2,
+      "state": "sempre",
+      "rules": ["govbr-3.7.0-accessibility-global-b5fad7ce076d", "govbr-3.7.0-accessibility-global-b95c42b61ed3", "emag:6.2", "wcag:1.3.1"],
+      "categories": ["formulario", "acessibilidade"],
+      "description": "Estrato S · variante label-sem-for, na primeira opção do grupo (convenção registrada em tela-a/construcao.md). O <label> de \"Presencial\" não tem for: o radio fica sem nome acessível e clicar no texto não o marca. As outras duas opções estão associadas.",
+      "acceptance": {
+        "kind": "atributos-ausentes",
+        "attributes": ["for", "aria-label", "aria-labelledby"]
+      }
+    },
+    {
+      "id": "A-10",
+      "anchor": ".campo-documentos .br-upload, #documentos-apoio",
+      "scope": "composicao",
+      "expectedCount": 1,
+      "participantCount": 2,
+      "state": "sempre",
+      "rules": ["govbr-3.7.0-component-upload-985fd2775586"],
+      "categories": ["estrutura"],
+      "description": "Estrato S · variante apoio-sem-arraste. O upload aceita arrastar e soltar (comportamento do core.js), mas o texto de apoio informa só formato e tamanho — não diz que o arquivo pode ser arrastado. Sem predicado na referência (nenhuma espécie mede texto); medido em tela-a/conferir-construcao.mjs."
+    },
+    {
+      "id": "A-11",
+      "anchor": ".mensagem-retorno, .mensagem-retorno .close, .mensagem-retorno .icon",
+      "scope": "composicao",
+      "expectedCount": 1,
+      "participantCount": 3,
+      "state": "apos-envio-vazio",
+      "conditional": true,
+      "rules": ["govbr-3.7.0-component-message-66b01a712e67"],
+      "categories": ["estrutura"],
+      "description": "Estrato S · variante icone-e-fechar-trocados. Na mensagem de retorno o botão Fechar está à esquerda e o ícone semântico à direita — o inverso da anatomia do componente. Sem predicado na referência (nenhuma espécie mede posição); medido em tela-a/conferir-construcao.mjs."
+    },
+    {
+      "id": "A-12",
+      "anchor": ".paginacao-anteriores, .paginacao-anteriores a.page",
+      "scope": "composicao",
+      "expectedCount": 1,
+      "participantCount": 4,
+      "state": "sempre",
+      "rules": ["govbr-3.7.0-accessibility-global-e038367bd7d6"],
+      "categories": ["acessibilidade", "navegacao"],
+      "description": "Estrato S · variante aria-removido. A página ativa da paginação é marcada só pela classe `active`: nenhum link carrega aria-current=\"page\", o estado que o próprio DS escreve em tempo de execução. A trilha de navegação da mesma tela marca a página atual com aria-current.",
+      "acceptance": {
+        "kind": "atributos-ausentes",
+        "attributes": ["aria-current"]
+      }
+    }
+  ]
+}

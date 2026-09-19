@@ -42,6 +42,7 @@ import {
   statePlanOf, statePlanSha256, type ExecutableIdentity,
 } from "./collection-manifest";
 import { verifyServedSite } from "./measurement-surface";
+import { telaFromArgs } from "./telas";
 
 const execFileAsync = promisify(execFile);
 
@@ -158,7 +159,10 @@ async function main(): Promise<number> {
   const siteManifestArg = argValue("--site-manifest");
   if (devGlobal === Boolean(outArg)) throw new Error("Use --out (linha de base de bateria) OU --dev-global (arquivo avulso).");
   if (outArg && (!manifestArg || !siteManifestArg)) throw new Error("Linha de base de bateria exige --collection-manifest e --site-manifest.");
-  const out = resolve(ROOT, outArg ?? "results/baselines-fluxo.json");
+  // A tela decide o arquivo avulso e o fonte que o ESLint lê: com uma pasta e um fonte fixos, a
+  // linha de base de uma segunda tela sobrescreveria a da primeira e o ESLint leria a página errada.
+  const tela = telaFromArgs(argv);
+  const out = resolve(ROOT, outArg ?? `results/baselines-${tela.nome}.json`);
   if (outArg && existsSync(out)) throw new Error(`${out} já existe: linha de base de bateria nunca é sobrescrita.`);
 
   const appOrigin = process.env.APP_URL ?? "http://localhost:3000";
@@ -166,14 +170,14 @@ async function main(): Promise<number> {
   // Na bateria, o gabarito é a cópia arquivada pela coleta, não o arquivo vivo.
   const gtPath = collection?.manifest.archive
     ? join(ROOT, collection.manifest.archive.reference.path)
-    : join(ROOT, process.env.FLOW_GT ?? "ground-truth-fluxo.json");
+    : join(ROOT, process.env.FLOW_GT ?? tela.reference);
   if (collection && !collection.manifest.archive) throw new Error("O manifesto de coleta não arquivou o gabarito.");
   const gtBytes = readFileSync(gtPath);
   const gt = JSON.parse(gtBytes.toString("utf8")) as FlowGroundTruth;
   const statePlan = statePlanOf(gt);
   const url = new URL(gt._meta.url, appOrigin).toString();
   const corpusSrc = process.env.CORPUS_SRC ?? join(ROOT, "..", "govbr-corpus", "src");
-  const flowSources = [join(corpusSrc, "pages", "LoginPage.tsx")];
+  const flowSources = tela.sources.map(source => join(corpusSrc, "..", source));
 
   const validatorEntry = join(VALIDATOR_ROOT, "dist", "cli", "scan-page.js");
   if (!existsSync(validatorEntry)) throw new Error(`Scanner compilado ausente: ${validatorEntry}. Rode npm run build no validator.`);

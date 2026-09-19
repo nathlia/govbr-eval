@@ -33,6 +33,7 @@ cd "F:\Dev Nath\TCC\govbr-eval\pipeline"
 .\run-battery.ps1 -Suite fluxo -PreflightOnly            # build, isolamento e superfície; nenhum modelo
 .\run-battery.ps1 -Suite fluxo -Scope smoke -Arm ambos   # encanamento, fora do scorer
 .\run-battery.ps1 -Suite fluxo -Runs 3 -Arm ambos        # bateria: 3 com + 3 sem
+.\run-battery.ps1 -Suite fluxo -Tela solicitacao -Runs 3 -Arm ambos   # a mesma bateria sobre a tela A (telas.json)
 
 # OpenAI pelo Codex incluído no app desktop; gpt-5.6-luna é o padrão econômico desse provider
 .\run-battery.ps1 -Provider codex -Scope smoke -Suite fluxo -Arm ambos

@@ -27,6 +27,7 @@ import { fileURLToPath } from "node:url";
 import { REFUSED_SUBMISSION, validateFlowReport } from "./flow-contract";
 import { gitState } from "./collection-manifest";
 import type { FlowCollectorRecord } from "../types";
+import { TELA_PADRAO, telaOf } from "./telas";
 
 // 1.1.0: o coletor exige o contrato do achado de fluxo-1.3.0 (scripts/flow-contract.ts).
 // 1.2.0: sem relatório aceito, o desarme arquiva a última recusa como relatório da execução,
@@ -606,7 +607,7 @@ function argValue(args: string[], name: string): string | undefined {
 async function main(): Promise<void> {
   const [command, ...args] = process.argv.slice(2);
   const corpusDist = argValue(args, "--corpus-dist");
-  const entry = argValue(args, "--entry") ?? "fluxo.html";
+  const entry = argValue(args, "--entry") ?? telaOf(TELA_PADRAO).entry;
   const outDir = argValue(args, "--out");
   if (command !== "serve" || !corpusDist || !outDir) {
     console.error("Uso: measurement-surface.ts serve --corpus-dist DIR --entry fluxo.html --out NOVO_DIR");

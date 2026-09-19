@@ -76,6 +76,11 @@ param(
   [ValidateSet("casos", "fluxo")]
   [string]$Suite = "casos",
 
+  # Qual TELA o instrumento de fluxo mede (telas.json): a pagina servida, a referencia, o fonte que
+  # o ESLint le e as pastas de execucao e de revisao saem de la. So vale com -Suite fluxo. Telas
+  # diferentes nunca compartilham pasta nem entram numa mesma media (D-13, D-49).
+  [string]$Tela = "fluxo",
+
   # A aba que o smoke percorre. Qualquer uma serve — o objetivo é exercitar o caminho, não medir.
   [string]$SmokeAba = "Botões",
 
@@ -112,15 +117,23 @@ $InstrumentVersion = if ($IsFluxo) {
   $caseGt = Get-Content -LiteralPath (Join-Path $EvalRoot "ground-truth.json") -Raw | ConvertFrom-Json
   "casos-$($caseGt._meta.version ?? 'legado')"
 }
+if ((-not $IsFluxo) -and $Tela -ne "fluxo") { throw "-Tela so vale com -Suite fluxo." }
+$TelaConfig = $null
 if ($IsFluxo) {
-  $RunsDir    = Join-Path $EvalRoot "results\runs-fluxo"
-  $AblacaoDir = Join-Path $EvalRoot "results\runs-fluxo-ablacao"
-  $SmokeDir   = Join-Path $EvalRoot "results\runs-fluxo-smoke"
+  $telas = Get-Content -LiteralPath (Join-Path $EvalRoot "telas.json") -Raw | ConvertFrom-Json
+  $TelaConfig = $telas.$Tela
+  if ($Tela -eq "_meta" -or -not $TelaConfig) { throw "Tela desconhecida: '$Tela'. Declare-a em telas.json." }
+  $RunsDir    = Join-Path $EvalRoot $TelaConfig.runs.com
+  $AblacaoDir = Join-Path $EvalRoot $TelaConfig.runs.sem
+  $SmokeDir   = Join-Path $EvalRoot $TelaConfig.runs.smoke
 } else {
   $RunsDir    = Join-Path $EvalRoot "results\runs"
   $AblacaoDir = Join-Path $EvalRoot "results\runs-ablacao"
   $SmokeDir   = Join-Path $EvalRoot "results\runs-smoke"
 }
+# O que o plano e cada execucao gravam como suite e o NOME DA TELA: e por ele que a preparacao do
+# pacote escolhe a pasta de execucoes e recusa misturar telas.
+$SuiteLabel  = if ($IsFluxo) { $Tela } else { $Suite }
 $LogsDir     = Join-Path $PipelineDir "logs"
 $Stamp       = Get-Date -Format "yyyy-MM-ddTHH-mm-ss"
 
@@ -508,7 +521,7 @@ Write-Ok "Corpus compilado para produção (dist/)"
 $isolationResult = Join-Path $LogsDir "$Stamp-isolamento.json"
 Push-Location $EvalRoot
 try {
-  & npm run test:isolation --silent -- --out $isolationResult
+  & npm run test:isolation --silent -- --out $isolationResult --tela $Tela
   $isolationExit = $LASTEXITCODE
 } finally {
   Pop-Location
@@ -553,7 +566,7 @@ Write-NewJson -Path $PlanPath -Value ([ordered]@{
   oracleProfile = $OracleProfile
   provider = $Provider
   scope = $Scope
-  suite = $Suite
+  suite = $SuiteLabel
   slots = @($planSlots)
 })
 $PlanSha = Get-Sha256 $PlanPath
@@ -561,7 +574,7 @@ Write-Ok "Plano congelado: $(Split-Path $PlanPath -Leaf) (sha256 $($PlanSha.Subs
 Write-Journal "plano-congelado" ([ordered]@{ path = $PlanPath; sha256 = $PlanSha })
 
 if ($IsSmoke) {
-  $recorte = if ($IsFluxo) { "a tela de fluxo inteira, com modelo barato" } else { "só a aba '$SmokeAba'" }
+  $recorte = if ($IsFluxo) { "a tela '$Tela' inteira, com modelo barato" } else { "só a aba '$SmokeAba'" }
   Write-Warn2 "ESCOPO SMOKE: $recorte. Nao e medida — os resultados vao para"
   Write-Warn2 "results/$(Split-Path $SmokeDir -Leaf)/, que o scorer nao le, e baselines/pontuacao estao desligados."
 }
@@ -579,7 +592,7 @@ $SurfaceDir = if ($PreflightOnly) {
 $surfaceLog = Join-Path $LogsDir "_$Stamp-superficie.log"
 $surfaceProcess = Start-Process -FilePath "cmd" -PassThru -WindowStyle Hidden -WorkingDirectory $EvalRoot `
   -RedirectStandardOutput $surfaceLog -RedirectStandardError (Join-Path $LogsDir "_$Stamp-superficie.err.log") `
-  -ArgumentList "/c", "npx tsx scripts/measurement-surface.ts serve --corpus-dist `"$(Join-Path $CorpusRoot 'dist')`" --entry fluxo.html --out `"$SurfaceDir`""
+  -ArgumentList "/c", "npx tsx scripts/measurement-surface.ts serve --corpus-dist `"$(Join-Path $CorpusRoot 'dist')`" --entry $($TelaConfig.entry) --out `"$SurfaceDir`""
 
 function Stop-Surface {
   try { Invoke-RestMethod -Method Post -Uri "$($surface.control)/control/shutdown" -TimeoutSec 5 | Out-Null } catch { }
@@ -619,6 +632,7 @@ $manifestArgs = @(
   "--plan", $PlanPath,
   "--client", $clientName,
   "--client-version", $clientVersion,
+  "--tela", $Tela,
   "--oracle-built"
 )
 if ($PreflightOnly) { $manifestArgs += "--no-archive" }
@@ -670,7 +684,7 @@ $stages = [ordered]@{ coleta = "em-andamento"; linhaDeBase = "pendente"; prepara
 $batteryError = $null
 $manifestPath = Join-Path $LogsDir "$Stamp-bateria.json"
 $BaselinePath = Join-Path $LogsDir "$Stamp-linha-de-base.json"
-$semanticReviewDir = Join-Path $EvalRoot "results\semantic-review\$Stamp"
+$semanticReviewDir = Join-Path (Join-Path $EvalRoot $TelaConfig.review) $Stamp
 
 try {
 
@@ -1022,7 +1036,7 @@ $stopReason = $null
     prompt       = $invocation
     scope        = $Scope
     archive      = $arquivo
-    suite        = $Suite
+    suite        = $SuiteLabel
     archiveDir   = "results/" + $(if ($IsSmoke) { Split-Path $SmokeDir -Leaf } elseif ($armName -eq "sem") { Split-Path $AblacaoDir -Leaf } else { Split-Path $RunsDir -Leaf })
     exitCode     = $exit
     apiErrorStatus = $apiErrorStatus
@@ -1080,7 +1094,7 @@ foreach ($planned in $planSlots) {
     repetition = $planned.repetition
     block = $planned.block
     arm = $planned.arm
-    suite = $Suite
+    suite = $SuiteLabel
     scope = $Scope
     archive = $null
     archiveDir = "results/" + $(if ($IsSmoke) { Split-Path $SmokeDir -Leaf } elseif ($planned.arm -eq "sem") { Split-Path $AblacaoDir -Leaf } else { Split-Path $RunsDir -Leaf })
@@ -1142,7 +1156,7 @@ if ($SkipBaselines) {
   $previousAppUrl = $env:APP_URL
   try {
     $env:APP_URL = $surface.origins.site
-    & npm run baselines:fluxo -- --out $BaselinePath --collection-manifest $CollectionManifestPath --site-manifest $SiteManifestPath
+    & npm run baselines:fluxo -- --out $BaselinePath --collection-manifest $CollectionManifestPath --site-manifest $SiteManifestPath --tela $Tela
     $baselineExit = $LASTEXITCODE
   } finally {
     $env:APP_URL = $previousAppUrl

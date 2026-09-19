@@ -25,6 +25,7 @@ import {
 import { BASELINE_VERSION, type FlowBaselines } from "./run-baselines-flow";
 import { createSiteServer, loadSite } from "./measurement-surface";
 import { FLOW_INSTRUMENT_VERSION } from "./instrument";
+import { TELAS, TELA_PADRAO, telaOf, type Tela } from "./telas";
 
 const args = process.argv.slice(2);
 const command = args.shift();
@@ -101,7 +102,18 @@ function loadBaseline(path: string, collection: { manifest: CollectionManifest; 
   return { data, sha256: sha256(bytes) };
 }
 
+/**
+ * A tela de um pacote é a suíte das suas execuções, e é UMA: execuções de telas diferentes nunca
+ * entram no mesmo pacote (D-13, D-49). Suíte que telas.json não declara não é tela deste instrumento.
+ */
+function telaOfBattery(battery: Battery): Tela | null {
+  const suites = [...new Set(battery.execucoes.map(entry => entry.suite))];
+  if (suites.length !== 1) throw new Error(`Bateria mistura suítes (${suites.join(", ")}); prepare um pacote por tela`);
+  return TELAS[suites[0]] ?? null;
+}
+
 function selectBatteryRuns(battery: Battery, collectionSha: string | null) {
+  const tela = telaOfBattery(battery);
   return battery.execucoes.map(entry => {
     // A mensagem nomeia o slot e a causa. A versão anterior dizia "failed/missing/unattempted" sem
     // dizer qual nem por quê, e num pacote de seis execuções isso manda procurar no escuro — foi o
@@ -109,7 +121,7 @@ function selectBatteryRuns(battery: Battery, collectionSha: string | null) {
     // três arquivos de distância.
     // `nao-tentada` vem antes do código de saída: o runner grava o slot não tentado com
     // `exitCode: null`, e "código de saída null" esconderia a causa que a mensagem existe para dizer.
-    const motivo = entry.suite !== "fluxo" ? `suíte "${entry.suite}", não "fluxo"`
+    const motivo = !tela ? `suíte "${entry.suite}" não é tela declarada em telas.json (${Object.keys(TELAS).join(", ")})`
       : entry.collectionStatus === "nao-tentada" ? "slot não tentado"
       : entry.exitCode !== 0 ? `código de saída ${entry.exitCode}`
       : entry.collectionStatus === "sem-relatorio" ? "o coletor não recebeu relatório desta execução"
@@ -120,7 +132,7 @@ function selectBatteryRuns(battery: Battery, collectionSha: string | null) {
         "Não selecione em silêncio as tentativas bem-sucedidas; prepare antes um manifesto de análise explicitamente documentado.");
     }
     if (collectionSha && entry.collectionManifestSha256 !== collectionSha) throw new Error("Run was not collected under this collection manifest");
-    const expectedDir = entry.arm === "com" ? "results/runs-fluxo" : entry.arm === "sem" ? "results/runs-fluxo-ablacao" : null;
+    const expectedDir = entry.arm === "com" ? tela!.runs.com : entry.arm === "sem" ? tela!.runs.sem : null;
     if (entry.archiveDir.replaceAll("\\", "/") !== expectedDir) throw new Error("Archive arm/directory mismatch");
     const archive = entry.archive;
     if (!archive) throw new Error(`Slot ${entry.slot ?? "?"} (${entry.arm}) não entra no pacote: sem arquivo arquivado`);
@@ -167,7 +179,7 @@ async function prepare(): Promise<void> {
   // Reference: the collection's archived copy. A different reference is an explicitly new analysis.
   const referenceArg = option("reference", false);
   const referencePath = referenceArg ? resolve(referenceArg)
-    : collection ? join(ROOT, collection.manifest.archive!.reference.path) : join(ROOT, "ground-truth-fluxo.json");
+    : collection ? join(ROOT, collection.manifest.archive!.reference.path) : join(ROOT, (telaOfBattery(battery) ?? telaOf(TELA_PADRAO)).reference);
   const referenceBytes = readFileSync(referencePath);
   if (collection && !referenceArg && sha256(referenceBytes) !== collection.manifest.identity.referenceSha256) {
     throw new Error("Archived reference changed since collection");

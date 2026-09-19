@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "nota": "Telas medidas pelo instrumento de fluxo (fluxo-1.x / flow-semantic-1.x). O CONTRATO de coleta e de pontuação é um só e mora em instrument.json; aqui fica só o que muda de uma tela para outra: a página servida, a referência, o código-fonte que o ESLint lê e — o que impede mistura — as pastas de execução e de revisão. Números de telas diferentes nunca se somam, se promediam nem formam série (D-13, D-49)."
+  },
+  "fluxo": {
+    "titulo": "tela de fluxo (identificação no gov.br)",
+    "entry": "fluxo.html",
+    "reference": "ground-truth-fluxo.json",
+    "sources": ["src/pages/LoginPage.tsx"],
+    "runs": { "com": "results/runs-fluxo", "sem": "results/runs-fluxo-ablacao", "smoke": "results/runs-fluxo-smoke" },
+    "review": "results/semantic-review",
+    "isolamento": { "texto": "CPF", "clicar": ".acao-continuar", "esperar": ".mensagem-erro-cpf", "alvo": "#cpf", "fonte": "/src/fluxo.tsx" }
+  },
+  "solicitacao": {
+    "titulo": "tela A — solicitar serviço (fatia 8, D-49)",
+    "entry": "solicitacao.html",
+    "reference": "ground-truth-solicitacao.json",
+    "sources": ["src/pages/SolicitacaoPage.tsx"],
+    "runs": { "com": "results/runs-solicitacao", "sem": "results/runs-solicitacao-ablacao", "smoke": "results/runs-solicitacao-smoke" },
+    "review": "results/semantic-review-solicitacao",
+    "isolamento": { "texto": "Solicitar serviço", "clicar": ".acao-enviar", "esperar": ".mensagem-retorno", "alvo": "#servico", "fonte": "/src/solicitacao.tsx" }
+  }
+}
