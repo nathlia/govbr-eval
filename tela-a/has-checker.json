@@ -1,0 +1,104 @@
+{
+  "_meta": {
+    "anotadoEm": "2026-09-18",
+    "depoisDe": "commit 5e45024 (referência congelada)",
+    "fonte": "checker-aliases.json — gerado de govbr-ds-validator/src/checkers/grounding.ts",
+    "criterio": "a regra sorteada (ou uma duplicata listada na spec) aparece em aliases/generic de um verificador determinístico",
+    "uso": "só para repartir o relatório. Não aceita, rejeita, estratifica nem ressorteia nada (procedimento § 2).",
+    "limite": "Casar por alias diz que o verificador se APOIA nessa regra, não que ele detecta este defeito neste elemento; e um verificador pode disparar sobre o mesmo elemento sob outra regra. O que o oráculo determinístico de fato detecta em cada unidade é MEDIDO pela linha de base da bateria (validator não guiado), nunca presumido daqui (D-06)."
+  },
+  "resumo": {
+    "specs": 12,
+    "comVerificadorPorAlias": 1,
+    "unidadesComVerificadorPorAlias": 1,
+    "unidades": 14
+  },
+  "specs": [
+    {
+      "spec": "A-01",
+      "estrato": "K",
+      "regra": "govbr-3.7.0-accessibility-global-5be1f553cc03",
+      "unidades": 1,
+      "verificadorPorAlias": null
+    },
+    {
+      "spec": "A-02",
+      "estrato": "K",
+      "regra": "govbr-3.7.0-accessibility-global-79db88c7f55d",
+      "unidades": 1,
+      "verificadorPorAlias": null
+    },
+    {
+      "spec": "A-03",
+      "estrato": "T",
+      "regra": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+      "unidades": 1,
+      "verificadorPorAlias": [
+        "token-color"
+      ]
+    },
+    {
+      "spec": "A-04",
+      "estrato": "T",
+      "regra": "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+      "unidades": 2,
+      "verificadorPorAlias": null
+    },
+    {
+      "spec": "A-05",
+      "estrato": "E",
+      "regra": "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+      "unidades": 1,
+      "verificadorPorAlias": null
+    },
+    {
+      "spec": "A-06",
+      "estrato": "E",
+      "regra": "govbr-3.7.0-accessibility-global-1cb2c878824b",
+      "unidades": 1,
+      "verificadorPorAlias": null
+    },
+    {
+      "spec": "A-07",
+      "estrato": "E",
+      "regra": "govbr-3.7.0-accessibility-global-cf61b3eb3c71",
+      "unidades": 1,
+      "verificadorPorAlias": null
+    },
+    {
+      "spec": "A-08",
+      "estrato": "E",
+      "regra": "govbr-3.7.0-accessibility-global-cc837bbaf713",
+      "unidades": 2,
+      "verificadorPorAlias": null
+    },
+    {
+      "spec": "A-09",
+      "estrato": "S",
+      "regra": "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+      "unidades": 1,
+      "verificadorPorAlias": null
+    },
+    {
+      "spec": "A-10",
+      "estrato": "S",
+      "regra": "govbr-3.7.0-component-upload-985fd2775586",
+      "unidades": 1,
+      "verificadorPorAlias": null
+    },
+    {
+      "spec": "A-11",
+      "estrato": "S",
+      "regra": "govbr-3.7.0-component-message-66b01a712e67",
+      "unidades": 1,
+      "verificadorPorAlias": null
+    },
+    {
+      "spec": "A-12",
+      "estrato": "S",
+      "regra": "govbr-3.7.0-accessibility-global-e038367bd7d6",
+      "unidades": 1,
+      "verificadorPorAlias": null
+    }
+  ]
+}
