@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-14T22:01:06.514Z",
+    "generatedAt": "2026-09-21T14:04:14.357Z",
     "generatedBy": "scripts/generate-checker-aliases.ts — do not edit by hand",
     "source": "govbr-ds-validator/src/checkers/grounding.ts (CHECK_GROUNDING, D-27)",
     "direction": "expected unit only: a spec anchored on `matches` also accepts `aliases`; claims are never widened",
@@ -62,6 +62,34 @@
       ],
       "generic": [],
       "basis": "'A anatomia implementada do componente deve corresponder à diretriz oficial de Design' (required) — a tag raiz é anatomia."
+    },
+    {
+      "kind": "page-header",
+      "matches": "ds:page-header",
+      "aliases": [
+        "govbr-3.7.0-template-global-19f93475dc5e"
+      ],
+      "generic": [],
+      "basis": "'Use o Template Base como ponto de partida para páginas' (required), lido junto com o texto integral da página oficial do Template Base (data/ds-page-rules.json, page_structure): '1. Área de Cabeçalho (Obrigatório) — Esta é uma área essencial e obrigatória no template base. Nesta região deve-se utilizar apenas o componente header'. O D-29 vetava inferir áreas do excerto truncado; a fonte agora é o texto integral, e o trecho é conferido em teste."
+    },
+    {
+      "kind": "page-footer",
+      "matches": "ds:page-footer",
+      "aliases": [
+        "govbr-3.7.0-template-global-19f93475dc5e"
+      ],
+      "generic": [],
+      "basis": "Mesma regra e mesma fonte integral do Template Base: '5. Área de Rodapé (Obrigatório) — Esta é uma área essencial do template base onde é utilizado o componente Footer'. O Padrão Mínimo lista Cabeçalho e Rodapé entre os pontos de aderência mínima."
+    },
+    {
+      "kind": "page-skip-link",
+      "matches": "ds:page-skip-link",
+      "aliases": [
+        "emag:1.5",
+        "govbr-3.7.0-accessibility-global-7d2b85f81c52"
+      ],
+      "generic": [],
+      "basis": "e-MAG 1.5 (required): 'forneça atalhos para blocos relevantes e faça do salto para o conteúdo o primeiro link da página'. A verificação lê exatamente isso: o primeiro <a href> do documento é uma âncora interna cujo alvo existe. A regra do DS sobre Skip Link no Template Base é apenas recomendada e não é citada como norma."
     }
   ]
 }

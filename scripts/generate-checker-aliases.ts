@@ -47,6 +47,10 @@ const REPORTED_ID: Record<string, string | null> = {
   "structure-tag": "ds:structure-*-tag",
   "structure-accessible-name": null, // reports `emag-2.2` itself
   "structure-unknown-classes": "ds:structure-*-variant",
+  // 2.7.0: restrições de página (Template Base + e-MAG 1.5), reportadas com id próprio.
+  "page-header": "ds:page-header",
+  "page-footer": "ds:page-footer",
+  "page-skip-link": "ds:page-skip-link",
 };
 
 /** Validator ids (`emag-2.2`) normalized the way the scorer does (`emag:2.2`). */
