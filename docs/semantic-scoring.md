@@ -180,7 +180,8 @@ npm run flow:review -- prepare --battery pipeline/logs/STAMP-bateria.json --out 
 - A bateria precisa citar o manifesto pelo hash, cada execução também (`collectionManifestSha256`
   no manifesto da bateria e em `config`), e o manifesto da bateria precisa contabilizar todos os
   slots do plano. Slot `nao-tentada`, falho ou sem relatório impede a preparação.
-- A linha de base precisa ser `linha-de-base-fluxo-2.0.0`, `status: complete`, `scope: bateria`,
+- A linha de base precisa ser `linha-de-base-fluxo-2.1.0` (checks `tokens+structure+page`, D-54) ou a
+  `2.0.0` de uma bateria já fechada (`tokens+structure`), `status: complete`, `scope: bateria`,
   escrita sob este manifesto, com identidade medida igual à da coleta e uma passada por janela do
   plano. Sem linha de base, declare `--no-baseline "motivo"` (ausência planejada, registrada).
 - `--reference OUTRO.json` prepara uma **análise nova**, rotulada `nova-analise-com-outra-referencia`,

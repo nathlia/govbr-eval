@@ -46,9 +46,18 @@ import { telaFromArgs } from "./telas";
 
 const execFileAsync = promisify(execFile);
 
-export const BASELINE_VERSION = "linha-de-base-fluxo-2.0.0";
+/**
+ * 2.1.0 (D-54): a política passa a incluir o check `page` do validator 2.7.0 (regiões obrigatórias do
+ * Template Base e salto para o conteúdo). O formato do arquivo não mudou, só o que a varredura pede;
+ * cada varredura grava os seus `checks`, então o arquivo diz por si o que rodou. Linhas de base
+ * 2.0.0 de baterias fechadas continuam legíveis (READABLE_BASELINE_VERSIONS) e não são regravadas.
+ */
+export const BASELINE_VERSION = "linha-de-base-fluxo-2.1.0";
+export const READABLE_BASELINE_VERSIONS: readonly string[] = ["linha-de-base-fluxo-2.0.0", BASELINE_VERSION];
+/** Checks pedidos ao validator nas duas passadas. Fixos e independentes da tela. */
+export const BASELINE_CHECKS = ["tokens", "structure", "page"] as const;
 /** Política da varredura comparável. Fixa e independente da tela. */
-export const UNGUIDED_POLICY = "pagina-inteira: checks tokens+structure, seletor padrão do validator, " +
+export const UNGUIDED_POLICY = "pagina-inteira: checks tokens+structure+page, seletor padrão do validator, " +
   "todos os componentes e verificações de token, janela e setup do plano de estados, sem seletor do gabarito";
 export const GUIDED_POLICY = "diagnostico: âncoras das specs da janela; não comparável ao agente";
 
@@ -97,7 +106,7 @@ export interface BaselinePass {
 }
 
 export interface FlowBaselines {
-  baselineVersion: typeof BASELINE_VERSION;
+  baselineVersion: string;
   /** `failed`: nada aqui é comparável; as passadas concluídas ficam para diagnóstico. */
   status: "complete" | "failed";
   error: string | null;
@@ -241,7 +250,7 @@ async function main(): Promise<number> {
 
     async function scan(mode: "nao-guiada" | "guiada", viewport: FlowViewport, anchors: string[]): Promise<ValidatorScanRecord> {
       const selectors = mode === "guiada" ? [...new Set(anchors)] : null;
-      const checks = ["tokens", "structure"];
+      const checks = [...BASELINE_CHECKS];
       const request = { url, checks, actions: setupActions, viewport, ...(selectors ? { selectors } : {}) };
       const t = Date.now();
       const { stdout } = await execFileAsync(process.execPath,

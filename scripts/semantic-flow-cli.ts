@@ -22,7 +22,7 @@ import {
   analysisIdentity, checkPlanConformity, compareIdentities, readCollectionManifest, sha256, statePlanOf, statePlanSha256,
   type CollectionManifest, type StatePlan,
 } from "./collection-manifest";
-import { BASELINE_VERSION, type FlowBaselines } from "./run-baselines-flow";
+import { READABLE_BASELINE_VERSIONS, type FlowBaselines } from "./run-baselines-flow";
 import { createSiteServer, loadSite } from "./measurement-surface";
 import { FLOW_INSTRUMENT_VERSION } from "./instrument";
 import { TELAS, TELA_PADRAO, telaOf, type Tela } from "./telas";
@@ -68,7 +68,8 @@ interface Battery {
 /** Baseline claims become runs of the package: same cards, same review, same matching. */
 function baselineRuns(baseline: FlowBaselines, build: string, steps: string[]): PrepareRun[] {
   const config = (tool: string) => ({ instrumentVersion: FLOW_INSTRUMENT_VERSION,
-    protocolVersion: `${BASELINE_VERSION}:${tool}`, siteManifestSha256: build });
+    // A versão é a do ARQUIVO lido: uma linha de base 2.0.0 de bateria fechada não vira 2.1.0 ao ser relida (D-54).
+    protocolVersion: `${baseline.baselineVersion}:${tool}`, siteManifestSha256: build });
   const run = (id: string, tool: string, findings: unknown[], seconds: number): PrepareRun => ({
     id, kind: "linha-de-base", tool,
     data: { model: tool, timestamp: baseline.timestamp, appUrl: baseline.appUrl, findings: findings as FlowAgentResults["findings"],
@@ -91,7 +92,8 @@ function baselineRuns(baseline: FlowBaselines, build: string, steps: string[]): 
 function loadBaseline(path: string, collection: { manifest: CollectionManifest; sha256: string }, plan: StatePlan): { data: FlowBaselines; sha256: string } {
   const bytes = readFileSync(path);
   const data = JSON.parse(bytes.toString("utf8")) as FlowBaselines;
-  if (data.baselineVersion !== BASELINE_VERSION) throw new Error(`Baseline version ${String(data.baselineVersion)} is not ${BASELINE_VERSION}`);
+  // D-54: 2.0.0 (tokens+structure) e 2.1.0 (+page) têm o mesmo formato; a bateria só se compara com a própria linha de base.
+  if (!READABLE_BASELINE_VERSIONS.includes(String(data.baselineVersion))) throw new Error(`Baseline version ${String(data.baselineVersion)} is not one of ${READABLE_BASELINE_VERSIONS.join(", ")}`);
   if (data.status !== "complete") throw new Error(`Baseline did not complete: ${data.error ?? "unknown failure"}`);
   if (data.scope !== "bateria") throw new Error("A dev-global baseline cannot be compared with a battery");
   if (data.provenance.collectionManifest?.sha256 !== collection.sha256) throw new Error("Baseline belongs to another collection manifest");
