@@ -59,6 +59,16 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
   - `npm run conferir:referencia -- --tela <nome>` (com `APP_URL` apontando para o `dist/` servido)
     — mede estados, aditividade, contagens e predicados da referência contra a página, sem modelo:
     é a conferência da preparação do pacote, feita ANTES de pagar a bateria.
+  - **Tela B (`privacidade`)**: `real/pnip-privacidade.html`, captura estática da aplicação PNIP
+    (Angular + `@govbr-ds/webcomponents`). Não é entrada Vite: `sources` vazio (não há TSX, então a
+    linha de base não roda ESLint e diz por quê), `isolamento.fonte` nulo e `isolamento.interacao`
+    nula — os bindings não sobreviveram à captura e nenhum clique é simulado. O que ela referencia
+    fora da política (CDN) e o que a captura não trouxe (imagens 404) são DECLARADOS em `telas.json`
+    e cobrados nos dois sentidos pelo `test:isolation`. **`reference: null`**: o gabarito sai de
+    auditoria por medição, antes de qualquer execução (D-49). Até ele existir, tudo que precisa da
+    referência para nomeando `ground-truth-privacidade.json` — `conferir:referencia`,
+    `manifest:coleta build`, `flow:review`, `score:fluxo`, `baselines:fluxo` de bateria e a própria
+    `run-battery.ps1`. O que roda hoje é `npm run baselines:fluxo:dev -- --tela privacidade`.
   - **Tela A (`solicitacao`)**: `ground-truth-solicitacao.json` (12 specs, 14 unidades, 3 estados).
     As specs vieram de SORTEIO — procedimento em `docs/tela-a-procedimento-sorteio.md`, tudo o mais
     em `tela-a/` (inventário, elegibilidade, sorteio, registro da construção, conferência sem

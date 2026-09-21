@@ -34,7 +34,7 @@ import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 import type { FlowGroundTruth, FlowSetupStep, FlowViewport } from "../types";
 import { ROOT } from "./adjudication";
-import { preparePage, resolveOnPage } from "./anchors";
+import { VIEWPORT_PADRAO, preparePage, resolveOnPage } from "./anchors";
 import { normalizeRuleId } from "./units";
 import { FLOW_INSTRUMENT_VERSION } from "./instrument";
 import {
@@ -42,7 +42,7 @@ import {
   statePlanOf, statePlanSha256, type ExecutableIdentity,
 } from "./collection-manifest";
 import { verifyServedSite } from "./measurement-surface";
-import { telaFromArgs } from "./telas";
+import { referenciaDe, telaFromArgs } from "./telas";
 
 const execFileAsync = promisify(execFile);
 
@@ -139,6 +139,11 @@ export interface FlowBaselines {
     seconds: number;
   } | null;
   /**
+   * Por que não há medida de fonte, quando `eslint` é `null`: a tela não declara `sources`. Fica
+   * dito no arquivo para que um zero ausente não seja lido como zero medido.
+   */
+  eslintAusente?: string;
+  /**
    * Custo de execução. Zero de API não é zero de custo: a passada determinística consome relógio e
    * máquina, e comparar "de graça" com o agente sem dizer isso é meia verdade.
    */
@@ -176,15 +181,19 @@ async function main(): Promise<number> {
 
   const appOrigin = process.env.APP_URL ?? "http://localhost:3000";
   const collection = manifestArg ? readCollectionManifest(resolve(manifestArg)) : null;
-  // Na bateria, o gabarito é a cópia arquivada pela coleta, não o arquivo vivo.
-  const gtPath = collection?.manifest.archive
-    ? join(ROOT, collection.manifest.archive.reference.path)
-    : join(ROOT, process.env.FLOW_GT ?? tela.reference);
   if (collection && !collection.manifest.archive) throw new Error("O manifesto de coleta não arquivou o gabarito.");
-  const gtBytes = readFileSync(gtPath);
-  const gt = JSON.parse(gtBytes.toString("utf8")) as FlowGroundTruth;
-  const statePlan = statePlanOf(gt);
-  const url = new URL(gt._meta.url, appOrigin).toString();
+  // Na bateria, o gabarito é a cópia arquivada pela coleta, não o arquivo vivo — e uma bateria sem
+  // referência para em `referenciaDe`, nomeando o arquivo que falta. O arquivo AVULSO aceita tela
+  // ainda sem referência (tela B, D-49): mede a página como ela é, sem spec, sem varredura guiada e
+  // sem diagnóstico de cobertura. Nada aqui inventa gabarito nem antecipa achado.
+  const arquivoGt = process.env.FLOW_GT ?? (devGlobal ? tela.reference : referenciaDe(tela));
+  const gtPath = collection?.manifest.archive ? join(ROOT, collection.manifest.archive.reference.path)
+    : arquivoGt ? join(ROOT, arquivoGt) : null;
+  const gtBytes = gtPath ? readFileSync(gtPath) : null;
+  const gt = gtBytes ? JSON.parse(gtBytes.toString("utf8")) as FlowGroundTruth : null;
+  const statePlan = gt ? statePlanOf(gt)
+    : { padrao: VIEWPORT_PADRAO, extras: [], setup: [], waitFor: null, url: tela.entry };
+  const url = new URL(gt?._meta.url ?? tela.entry, appOrigin).toString();
   const corpusSrc = process.env.CORPUS_SRC ?? join(ROOT, "..", "govbr-corpus", "src");
   const flowSources = tela.sources.map(source => join(corpusSrc, "..", source));
 
@@ -194,7 +203,7 @@ async function main(): Promise<number> {
   const served = siteManifestArg ? await verifyServedSite(appOrigin, resolve(siteManifestArg)) : null;
   const identity: ExecutableIdentity = {
     collection: FLOW_INSTRUMENT_VERSION,
-    referenceSha256: sha256(gtBytes),
+    referenceSha256: gtBytes ? sha256(gtBytes) : null,
     siteManifestSha256: served?.manifestSha256 ?? null,
     oracleDistSha256: oracleAtStart.distSha256,
     oracleDataSha256: oracleAtStart.dataSha256,
@@ -209,7 +218,7 @@ async function main(): Promise<number> {
     scope: devGlobal ? "dev-global" : "bateria",
     timestamp: new Date().toISOString(),
     appUrl: url,
-    state: { setup: gt._meta.setup ?? [], waitFor: gt._meta.waitFor ?? null },
+    state: { setup: gt?._meta.setup ?? [], waitFor: gt?._meta.waitFor ?? null },
     provenance: {
       collectionManifest: collection ? { path: resolve(manifestArg!).replace(/\\/g, "/"), sha256: collection.sha256 } : null,
       identity,
@@ -272,10 +281,12 @@ async function main(): Promise<number> {
       };
     }
 
+    // Sem gabarito não há spec: uma cena só, a janela padrão do experimento, e nenhuma âncora.
+    const violations = gt?.violations ?? [];
     const scenes = [
-      { viewport: statePlan.padrao, specs: gt.violations.filter(v => !v.viewport ||
+      { viewport: statePlan.padrao, specs: violations.filter(v => !v.viewport ||
         (v.viewport.width === statePlan.padrao.width && v.viewport.height === statePlan.padrao.height)) },
-      ...statePlan.extras.map(e => ({ viewport: e.viewport, specs: gt.violations.filter(v => e.specs.includes(v.id)) })),
+      ...statePlan.extras.map(e => ({ viewport: e.viewport, specs: violations.filter(v => e.specs.includes(v.id)) })),
     ];
 
     const browser = await chromium.launch();
@@ -284,7 +295,7 @@ async function main(): Promise<number> {
         const passStarted = Date.now();
         const context = await browser.newContext({ viewport: scene.viewport });
         const page: Page = await context.newPage();
-        await preparePage(page, url, { waitFor: gt._meta.waitFor, setup: gt._meta.setup });
+        await preparePage(page, url, { waitFor: gt?._meta.waitFor, setup: gt?._meta.setup });
         const axeStarted = Date.now();
         const axe = await new AxeBuilder({ page }).analyze();
         const axeSeconds = seconds(axeStarted);
@@ -318,9 +329,9 @@ async function main(): Promise<number> {
     }
 
     // Diagnóstico de cobertura: cada spec marcada deve ter sido medida pela guiada da sua janela.
-    for (const pass of record.passes) {
+    for (const pass of gt ? record.passes : []) {
       for (const specId of pass.specs) {
-        const spec = gt.violations.find(v => v.id === specId)!;
+        const spec = gt!.violations.find(v => v.id === specId)!;
         if (!spec.deterministicBaseline) continue;
         const keys = new Set(pass.resolution.bySelector[spec.anchor]?.keys ?? []);
         const rules = new Set(spec.rules.map(normalizeRuleId));
@@ -330,29 +341,36 @@ async function main(): Promise<number> {
       }
     }
 
-    const eslintStarted = Date.now();
-    const eslint = new ESLint({
-      // O fonte do corpus mora fora do govbr-eval; sem isto o ESLint 9 o ignora.
-      cwd: dirname(corpusSrc),
-      overrideConfigFile: true,
-      overrideConfig: [{
-        files: ["**/*.tsx"],
-        languageOptions: { parser: tsParser, parserOptions: { ecmaFeatures: { jsx: true } } },
-        plugins: { "jsx-a11y": jsxA11y },
-        rules: jsxA11y.flatConfigs.recommended.rules,
-      }],
-    });
-    const lintResults = await eslint.lintFiles(flowSources);
-    record.eslint = {
-      tool: "eslint-plugin-jsx-a11y (recommended)",
-      config: "flat, recommended",
-      files: flowSources.map(path => ({ path: path.replace(/\\/g, "/"), sha256: sha256File(path) })),
-      findings: lintResults.flatMap(r => r.messages.map(m => ({ rule: m.ruleId ?? "?", message: m.message, file: r.filePath, line: m.line }))),
-      seconds: seconds(eslintStarted),
-    };
-    console.log(`\neslint-plugin-jsx-a11y: ${record.eslint.findings.length} achado(s) no fonte (não atribuídos a elemento)`);
+    if (flowSources.length === 0) {
+      // Tela sem fonte declarada: página capturada, não entrada Vite. Rodar o linter sobre nada e
+      // gravar "0 achados" seria apresentar ausência de medida como ausência de defeito.
+      record.eslintAusente = `a tela "${tela.nome}" não declara fonte em telas.json: página capturada, sem TSX para o linter ler`;
+      console.log(`\neslint-plugin-jsx-a11y: não executado — ${record.eslintAusente}`);
+    } else {
+      const eslintStarted = Date.now();
+      const eslint = new ESLint({
+        // O fonte do corpus mora fora do govbr-eval; sem isto o ESLint 9 o ignora.
+        cwd: dirname(corpusSrc),
+        overrideConfigFile: true,
+        overrideConfig: [{
+          files: ["**/*.tsx"],
+          languageOptions: { parser: tsParser, parserOptions: { ecmaFeatures: { jsx: true } } },
+          plugins: { "jsx-a11y": jsxA11y },
+          rules: jsxA11y.flatConfigs.recommended.rules,
+        }],
+      });
+      const lintResults = await eslint.lintFiles(flowSources);
+      record.eslint = {
+        tool: "eslint-plugin-jsx-a11y (recommended)",
+        config: "flat, recommended",
+        files: flowSources.map(path => ({ path: path.replace(/\\/g, "/"), sha256: sha256File(path) })),
+        findings: lintResults.flatMap(r => r.messages.map(m => ({ rule: m.ruleId ?? "?", message: m.message, file: r.filePath, line: m.line }))),
+        seconds: seconds(eslintStarted),
+      };
+      console.log(`\neslint-plugin-jsx-a11y: ${record.eslint.findings.length} achado(s) no fonte (não atribuídos a elemento)`);
+    }
 
-    record.legacy = legacySummary(record, gt);
+    record.legacy = gt ? legacySummary(record, gt) : null;
 
     const oracleAtEnd = oracleIdentity();
     if (oracleAtEnd.distSha256 !== oracleAtStart.distSha256 || oracleAtEnd.dataSha256 !== oracleAtStart.dataSha256) {

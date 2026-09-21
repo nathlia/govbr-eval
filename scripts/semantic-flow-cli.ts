@@ -25,7 +25,7 @@ import {
 import { READABLE_BASELINE_VERSIONS, type FlowBaselines } from "./run-baselines-flow";
 import { createSiteServer, loadSite } from "./measurement-surface";
 import { FLOW_INSTRUMENT_VERSION } from "./instrument";
-import { TELAS, TELA_PADRAO, telaOf, type Tela } from "./telas";
+import { TELAS, TELA_PADRAO, referenciaDe, telaOf, type Tela } from "./telas";
 
 const args = process.argv.slice(2);
 const command = args.shift();
@@ -181,7 +181,7 @@ async function prepare(): Promise<void> {
   // Reference: the collection's archived copy. A different reference is an explicitly new analysis.
   const referenceArg = option("reference", false);
   const referencePath = referenceArg ? resolve(referenceArg)
-    : collection ? join(ROOT, collection.manifest.archive!.reference.path) : join(ROOT, (telaOfBattery(battery) ?? telaOf(TELA_PADRAO)).reference);
+    : collection ? join(ROOT, collection.manifest.archive!.reference.path) : join(ROOT, referenciaDe(telaOfBattery(battery) ?? telaOf(TELA_PADRAO)));
   const referenceBytes = readFileSync(referencePath);
   if (collection && !referenceArg && sha256(referenceBytes) !== collection.manifest.identity.referenceSha256) {
     throw new Error("Archived reference changed since collection");

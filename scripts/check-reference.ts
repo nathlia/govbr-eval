@@ -17,15 +17,17 @@ import { openPage, resolveStatesOnPage, resolveWithExcept } from "./anchors";
 import { statePlanOf } from "./collection-manifest";
 import { combinePredicate, describePredicate, measurePredicate, validatePredicate, type PredicateResult } from "./acceptance-predicates";
 import { buildFlowUnits, measureStatePresence, selectorsOfGroundTruth, statesOfGroundTruth } from "./units-flow";
-import { telaFromArgs } from "./telas";
+import { referenciaDe, telaFromArgs } from "./telas";
 import type { FlowGroundTruth } from "../types";
 
 async function main(): Promise<number> {
   const tela = telaFromArgs(process.argv.slice(2));
-  const gt = JSON.parse(readFileSync(join(ROOT, tela.reference), "utf8")) as FlowGroundTruth;
+  // Tela sem referência congelada para aqui, nomeando o arquivo que falta: não há o que conferir.
+  const referencia = referenciaDe(tela);
+  const gt = JSON.parse(readFileSync(join(ROOT, referencia), "utf8")) as FlowGroundTruth;
   const url = new URL(gt._meta.url, process.env.APP_URL ?? "http://localhost:3000").toString();
   const checkpoints = statesOfGroundTruth(gt);
-  if (!checkpoints) throw new Error(`${tela.reference} não declara _meta.states: não há estado a conferir.`);
+  if (!checkpoints) throw new Error(`${referencia} não declara _meta.states: não há estado a conferir.`);
   const problems: string[] = [];
   for (const spec of gt.violations) {
     const forma = spec.acceptance ? validatePredicate(spec.acceptance) : null;
@@ -54,7 +56,7 @@ async function main(): Promise<number> {
     const built = buildFlowUnits(gt, across.byState.get(across.order[across.order.length - 1])!, medida.presence);
     problems.push(...built.defects.map(d => `${d.specId}: ${d.problem}`));
 
-    console.log(`${tela.nome} · ${tela.reference} ${String(gt._meta.version)} · ${url}`);
+    console.log(`${tela.nome} · ${referencia} ${String(gt._meta.version)} · ${url}`);
     console.log(`estados: ${across.order.join(" → ")} · ${gt.violations.length} specs · ${built.units.length} unidades\n`);
     for (const spec of gt.violations) {
       const unidades = built.units.filter(u => u.specId === spec.id);

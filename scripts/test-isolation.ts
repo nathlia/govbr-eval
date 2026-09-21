@@ -18,7 +18,8 @@ import { join, resolve } from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { ROOT } from "./adjudication";
-import { statePlanOf } from "./collection-manifest";
+import { VIEWPORT_PADRAO } from "./anchors";
+import { statePlanOf, type StatePlan } from "./collection-manifest";
 import { TELAS, telaFromArgs } from "./telas";
 import { DEFAULT_PORTS, HOST, createEgressProxy, startSurface, type EgressEvent, type RunningSurface } from "./measurement-surface";
 
@@ -140,8 +141,14 @@ async function main(): Promise<void> {
     surface = await startSurface({ corpusDist, entry: tela.entry, outDir: join(work, "surface") });
     const entryUrl = surface.description.entryUrl;
 
-    // ── O alvo do vazamento tem de estar vivo, conferido de FORA da política.
-    const gabaritoProbe = fsUrl("localhost:4000", tela.reference);
+    // ── O alvo do vazamento tem de estar vivo, conferido de FORA da política. Precisa ser um
+    // gabarito que EXISTA: a tela B ainda não tem o seu (D-49), e apontar para arquivo inexistente
+    // faria o teste passar sem provar nada. Usa-se o da tela medida quando ela tem um; senão o da
+    // primeira tela que tiver — as referências das outras telas entram como rota irmã logo abaixo,
+    // de modo que nenhuma delas deixa de ser conferida.
+    const referenciaAlvo = tela.reference ?? Object.values(TELAS).map(t => t.reference).find(Boolean);
+    if (!referenciaAlvo) throw new Error("Nenhuma tela declara referência: sem gabarito vivo o teste de isolamento não prova nada.");
+    const gabaritoProbe = fsUrl("localhost:4000", referenciaAlvo);
     if (!(await httpText(gabaritoProbe))) {
       const dashboard = spawn("npm --prefix dashboard run dev -- --port 4000 --strictPort", { cwd: ROOT, shell: true, stdio: "ignore" });
       children.push(dashboard);
@@ -160,8 +167,8 @@ async function main(): Promise<void> {
     const blockedHttp = [
       "http://localhost:4000/",
       gabaritoProbe,
-      fsUrl("127.0.0.1:4000", tela.reference),
-      fsUrl("[::1]:4000", tela.reference),
+      fsUrl("127.0.0.1:4000", referenciaAlvo),
+      fsUrl("[::1]:4000", referenciaAlvo),
       fsUrl("localhost:4000", "ground-truth.json"),
       fsUrl("localhost:4000", "results/agent-results.json"),
       fsUrl("localhost:4000", "adjudications.json"),
@@ -186,9 +193,15 @@ async function main(): Promise<void> {
     // As OUTRAS telas do instrumento também são rotas irmãs: uma bateria sobre uma tela não pode
     // alcançar a página, o fonte nem o gabarito de outra.
     const outras = Object.values(TELAS).filter(t => t.nome !== tela.nome);
-    const siblings = ["/", "/index.html", "/real/pnip-login.html", "/static/protocolo.html", tela.isolamento.fonte,
-      ...outras.flatMap(t => [`/${t.entry}`, t.isolamento.fonte, `/@fs/${encodeURI(join(ROOT, t.reference).replace(/\\/g, "/"))}`]),
-      `/@fs/${encodeURI(join(ROOT, tela.reference).replace(/\\/g, "/"))}`, ...(mainBundle ? [`/assets/${mainBundle}`] : [])];
+    // Fonte e referência só entram quando a tela declara uma: a tela B não tem TSX nem gabarito, e
+    // um caminho vazio na lista viraria uma conferência que não confere nada.
+    const fsRef = (rel: string): string => `/@fs/${encodeURI(join(ROOT, rel).replace(/\\/g, "/"))}`;
+    const siblings = ["/", "/index.html", "/real/pnip-login.html", "/static/protocolo.html",
+      ...(tela.isolamento.fonte ? [tela.isolamento.fonte] : []),
+      ...outras.flatMap(t => [`/${t.entry}`, ...(t.isolamento.fonte ? [t.isolamento.fonte] : []),
+        ...(t.reference ? [fsRef(t.reference)] : [])]),
+      ...(tela.reference ? [fsRef(tela.reference)] : []), ...(mainBundle ? [`/assets/${mainBundle}`] : [])]
+      .filter(path => path !== `/${tela.entry}`);
     for (const path of siblings) {
       const result = await navigate(playwright, `${siteOrigin}${path}`);
       check(`rota irmã indisponível: ${path}`, result.body.trim() === "404", result.error ?? result.body.slice(0, 60));
@@ -198,15 +211,30 @@ async function main(): Promise<void> {
     let from = surface.egress.length;
     const page = await navigate(playwright, entryUrl);
     check("a tela congelada carrega", page.body.includes(tela.isolamento.texto), page.error ?? page.body.slice(0, 80));
-    await evaluate(playwright, `() => { document.querySelector(${JSON.stringify(tela.isolamento.clicar)}).click(); return 'ok'; }`);
-    const errorShown = await evaluate(playwright, `() => new Promise(r => setTimeout(() => r(String(!!document.querySelector(${JSON.stringify(tela.isolamento.esperar)}))), 500))`);
-    check("o estado do setup do gabarito é alcançável", errorShown === "true");
+    const interacao = tela.isolamento.interacao;
+    if (interacao) {
+      await evaluate(playwright, `() => { document.querySelector(${JSON.stringify(interacao.clicar)}).click(); return 'ok'; }`);
+      const errorShown = await evaluate(playwright, `() => new Promise(r => setTimeout(() => r(String(!!document.querySelector(${JSON.stringify(interacao.esperar)}))), 500))`);
+      check("o estado do setup do gabarito é alcançável", errorShown === "true");
+    } else {
+      // Declarado, não simulado. A captura não preservou os bindings do Angular (README da ala real
+      // do corpus) e a tela ainda não tem gabarito que peça um estado. Forjar aqui um clique faria o
+      // teste afirmar um estado que ninguém mediu.
+      // Nota, não conferência: neste ramo a condição é verdadeira por construção, e contá-la como
+      // verificação inflaria o total.
+      console.log("  · sem interação de setup declarada: só o estado inicial é conferido; nenhum clique é simulado");
+    }
 
     // ── A janela é uma dimensão do experimento (D-46). O scorer só ancora uma alegação na cena de
     // mesma LARGURA, e o protocolo manda relatar a janela real: se o navegador medido não abre na
     // janela padrão do plano, o braço mede 0 por construção. Conferir os argumentos não basta — a
     // janela é MEDIDA aqui, contra o mesmo plano de estados que o manifesto e o scorer leem.
-    const statePlan = statePlanOf(JSON.parse(readFileSync(join(ROOT, tela.reference), "utf8")));
+    // Sem referência congelada não há plano de estados a ler: confere-se a janela padrão do
+    // experimento, que é a que a bateria abriria de qualquer modo, e nenhuma janela extra — extras
+    // vêm de spec, e specs a tela B ainda não tem.
+    const statePlan: Pick<StatePlan, "padrao" | "extras"> = tela.reference
+      ? statePlanOf(JSON.parse(readFileSync(join(ROOT, tela.reference), "utf8")))
+      : { padrao: VIEWPORT_PADRAO, extras: [] };
     const windowSize = "() => window.innerWidth + 'x' + window.innerHeight";
     const opened = await evaluate(playwright, windowSize);
     check("o navegador medido abre na janela padrão do plano", opened === `${statePlan.padrao.width}x${statePlan.padrao.height}`,
@@ -219,16 +247,37 @@ async function main(): Promise<void> {
         resized === `${extra.viewport.width}x${extra.viewport.height}`, `medido ${resized}`);
     }
     const loadEvents = eventsSince(surface.egress, from);
-    const missing = loadEvents.filter((e) => e.target.startsWith(siteOrigin) && e.status !== 200 && !e.target.endsWith("/favicon.ico"));
+    // O que a captura declaradamente não trouxe (`ausentes`) não é falha da superfície: a página
+    // real cita ativos que o congelamento não copiou. Fica declarado na tela, e as duas direções
+    // são cobradas — nada mais pode faltar, e o que está declarado tem de faltar mesmo.
+    const ausentes = new Set((tela.isolamento.ausentes ?? []).map((path) => `${siteOrigin}${path}`));
+    const naoServidos = loadEvents.filter((e) => e.target.startsWith(siteOrigin) && e.status !== 200 && !e.target.endsWith("/favicon.ico"));
+    const missing = naoServidos.filter((e) => !ausentes.has(e.target));
     check("nenhum arquivo da tela falta no site congelado", missing.length === 0, missing.map((e) => `${e.target} ${e.status}`).join(", "));
-    const externalFromPage = loadEvents.filter((e) => !e.allowed && !CHROME_BACKGROUND.test(e.target.replace(/^https?:\/\//, "").split("/")[0]));
+    if (ausentes.size > 0) {
+      const vistos = new Set(naoServidos.map((e) => e.target));
+      const naoPedidos = [...ausentes].filter((target) => !vistos.has(target));
+      check("os ativos declarados ausentes na captura são exatamente os que faltam", naoPedidos.length === 0,
+        naoPedidos.length ? `declarado e não pedido: ${naoPedidos.join(", ")}` : [...ausentes].join(", "));
+    }
+    // Os CDN que a página real referencia são negados pela política, como qualquer outra origem: a
+    // tela os declara para que a recusa seja conferida em vez de confundida com recurso furtivo.
+    const hostDe = (e: EgressEvent): string => e.target.replace(/^https?:\/\//, "").split("/")[0];
+    const externos = new Set(tela.isolamento.externos ?? []);
+    const externalFromPage = loadEvents.filter((e) => !e.allowed && !CHROME_BACKGROUND.test(hostDe(e)) && !externos.has(hostDe(e)));
     check("a tela não pede recurso fora da política", externalFromPage.length === 0, externalFromPage.map((e) => e.target).join(", "));
+    if (externos.size > 0) {
+      const negados = new Set(loadEvents.filter((e) => !e.allowed).map(hostDe));
+      const semRecusa = [...externos].filter((host) => !negados.has(host));
+      check("os CDN que a tela referencia são negados pela política", semRecusa.length === 0,
+        semRecusa.length ? `declarado e não negado: ${semRecusa.join(", ")}` : [...externos].join(", "));
+    }
 
     // ── Negativos: pedidos feitos pela própria página (fetch, frame, worker).
     from = surface.egress.length;
     const inPage = await evaluate(playwright, `async () => {
       const out = [];
-      for (const target of ${JSON.stringify([gabaritoProbe, fsUrl("127.0.0.1:4000", tela.reference), `http://${HOST}:${DEFAULT_PORTS.control}/control/status`])}) {
+      for (const target of ${JSON.stringify([gabaritoProbe, fsUrl("127.0.0.1:4000", referenciaAlvo), `http://${HOST}:${DEFAULT_PORTS.control}/control/status`])}) {
         try { const r = await fetch(target); out.push(r.status + ':' + (await r.text()).slice(0, 80)); } catch (e) { out.push('erro'); }
       }
       const frame = document.createElement('iframe'); frame.src = ${JSON.stringify(fsUrl("localhost:4000", "ground-truth.json"))}; document.body.appendChild(frame);
@@ -264,7 +313,7 @@ async function main(): Promise<void> {
     const redirectClient = await connect(com.playwright, work, redirectArgs);
     clients.push(redirectClient);
     const redirected = await navigate(redirectClient, `http://${redirectorHost}/go`);
-    const followed = testProxy.events.find((e) => e.target.includes(tela.reference));
+    const followed = testProxy.events.find((e) => e.target.includes(referenciaAlvo));
     check("redirecionamento para fora da política é negado no salto",
       Boolean(followed && !followed.allowed) && !redirected.body.includes('"violations"'),
       followed ? `${followed.target} → ${followed.status}` : "o salto não passou pelo proxy");

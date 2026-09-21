@@ -30,7 +30,7 @@ import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { ROOT } from "./adjudication";
 import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION, FLOW_ACCEPTANCE_POLICY_VERSION, FLOW_REFERENCE_FILE } from "./instrument";
-import { telaFromArgs } from "./telas";
+import { referenciaDe, telaFromArgs } from "./telas";
 import { SCORER_FILES, digest } from "./semantic-flow";
 import { VIEWPORT_PADRAO } from "./anchors";
 
@@ -568,7 +568,7 @@ async function main(): Promise<void> {
   // A referência é a da tela medida. Sem isto o manifesto arquivaria e hashearia o gabarito da
   // tela de fluxo para qualquer bateria, e a conferência de identidade aceitaria a troca.
   const tela = telaFromArgs(args);
-  const referencePath = join(ROOT, tela.reference);
+  const referencePath = join(ROOT, referenciaDe(tela));
   const manifest = await buildCollectionManifest({
     referencePath,
     siteManifestPath: resolve(required(args, "--site-manifest")),

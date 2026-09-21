@@ -1,6 +1,7 @@
 {
   "_meta": {
-    "nota": "Telas medidas pelo instrumento de fluxo (fluxo-1.x / flow-semantic-1.x). O CONTRATO de coleta e de pontuação é um só e mora em instrument.json; aqui fica só o que muda de uma tela para outra: a página servida, a referência, o código-fonte que o ESLint lê e — o que impede mistura — as pastas de execução e de revisão. Números de telas diferentes nunca se somam, se promediam nem formam série (D-13, D-49)."
+    "nota": "Telas medidas pelo instrumento de fluxo (fluxo-1.x / flow-semantic-1.x). O CONTRATO de coleta e de pontuação é um só e mora em instrument.json; aqui fica só o que muda de uma tela para outra: a página servida, a referência, o código-fonte que o ESLint lê e — o que impede mistura — as pastas de execução e de revisão. Números de telas diferentes nunca se somam, se promediam nem formam série (D-13, D-49).",
+    "sem_referencia": "reference: null é tela declarada e ainda sem gabarito. Quem precisa da referência para aqui nomeando o arquivo que falta; nada neste arquivo antecipa achado."
   },
   "fluxo": {
     "titulo": "tela de fluxo (identificação no gov.br)",
@@ -9,7 +10,7 @@
     "sources": ["src/pages/LoginPage.tsx"],
     "runs": { "com": "results/runs-fluxo", "sem": "results/runs-fluxo-ablacao", "smoke": "results/runs-fluxo-smoke" },
     "review": "results/semantic-review",
-    "isolamento": { "texto": "CPF", "clicar": ".acao-continuar", "esperar": ".mensagem-erro-cpf", "alvo": "#cpf", "fonte": "/src/fluxo.tsx" }
+    "isolamento": { "texto": "CPF", "alvo": "#cpf", "fonte": "/src/fluxo.tsx", "interacao": { "clicar": ".acao-continuar", "esperar": ".mensagem-erro-cpf" } }
   },
   "solicitacao": {
     "titulo": "tela A — solicitar serviço (fatia 8, D-49)",
@@ -18,6 +19,23 @@
     "sources": ["src/pages/SolicitacaoPage.tsx"],
     "runs": { "com": "results/runs-solicitacao", "sem": "results/runs-solicitacao-ablacao", "smoke": "results/runs-solicitacao-smoke" },
     "review": "results/semantic-review-solicitacao",
-    "isolamento": { "texto": "Solicitar serviço", "clicar": ".acao-enviar", "esperar": ".mensagem-retorno", "alvo": "#servico", "fonte": "/src/solicitacao.tsx" }
+    "isolamento": { "texto": "Solicitar serviço", "alvo": "#servico", "fonte": "/src/solicitacao.tsx", "interacao": { "clicar": ".acao-enviar", "esperar": ".mensagem-retorno" } }
+  },
+  "privacidade": {
+    "titulo": "tela B — política de privacidade do PNIP (página real congelada, fatia 8, D-49)",
+    "entry": "real/pnip-privacidade.html",
+    "reference": null,
+    "sources": [],
+    "runs": { "com": "results/runs-privacidade", "sem": "results/runs-privacidade-ablacao", "smoke": "results/runs-privacidade-smoke" },
+    "review": "results/semantic-review-privacidade",
+    "nota": "Captura estática de rota pública da aplicação PNIP (Angular 15, @govbr-ds/core 3.4.1 + @govbr-ds/webcomponents 1.16.0), congelada em govbr-corpus/public/real/ com sha256 no manifesto da ala. Não é entrada Vite: não há TSX para o ESLint ler (sources vazio) e os bindings do Angular não sobreviveram à captura (botões não navegam, formulários não submetem), então nenhuma interação de setup é declarada. Os web components do DS voltam a hidratar; o que eles ainda fazem por conta própria (o menu do cabeçalho, por exemplo) é pergunta da auditoria, não afirmação deste arquivo. Sem referência: o gabarito sai de auditoria por medição, antes de qualquer execução (D-49).",
+    "isolamento": {
+      "texto": "Política de Privacidade do serviço",
+      "alvo": "h1",
+      "fonte": null,
+      "interacao": null,
+      "externos": ["cdngovbr-ds.estaleiro.serpro.gov.br:443", "fonts.googleapis.com:443", "cdnjs.cloudflare.com:443"],
+      "ausentes": ["/real/assets/images/govbr-logo.png", "/assets/images/exit-icon.png"]
+    }
   }
 }
