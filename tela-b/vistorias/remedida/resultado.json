@@ -1,0 +1,1142 @@
+{
+  "geradoEm": "2026-09-30T23:54:55.790Z",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "resumo": {
+    "specs": {
+      "confirma": 24
+    },
+    "conformes": {
+      "confirma": 12
+    },
+    "unidadesConfirmadas": 96,
+    "unidadesTotal": 96
+  },
+  "agregado": {
+    "B-01": "confirma",
+    "B-02": "confirma",
+    "B-03": "confirma",
+    "B-22": "confirma",
+    "B-04": "confirma",
+    "B-05": "confirma",
+    "B-06": "confirma",
+    "B-20": "confirma",
+    "B-07": "confirma",
+    "B-08": "confirma",
+    "B-09": "confirma",
+    "B-10": "confirma",
+    "B-11": "confirma",
+    "B-12": "confirma",
+    "B-13": "confirma",
+    "B-14": "confirma",
+    "B-23": "confirma",
+    "B-15": "confirma",
+    "B-16": "confirma",
+    "B-17": "confirma",
+    "B-18": "confirma",
+    "B-19": "confirma",
+    "B-21": "confirma",
+    "B-24": "confirma",
+    "C-01": "confirma",
+    "C-02": "confirma",
+    "C-03": "confirma",
+    "C-04": "confirma",
+    "C-05": "confirma",
+    "C-06": "confirma",
+    "C-08": "confirma",
+    "C-10": "confirma",
+    "C-11": "confirma",
+    "C-12": "confirma",
+    "C-07": "confirma",
+    "C-09": "confirma"
+  },
+  "estados": [
+    {
+      "id": "inicial",
+      "path": "/pnip/portal-mpa/vistorias",
+      "medido": "/pnip/portal-mpa/vistorias",
+      "ok": true
+    },
+    {
+      "id": "detalhe-menu",
+      "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046",
+      "medido": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046",
+      "ok": true
+    },
+    {
+      "id": "detalhe",
+      "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038",
+      "medido": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038",
+      "ok": true
+    },
+    {
+      "id": "modal",
+      "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038",
+      "medido": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038",
+      "ok": true
+    }
+  ],
+  "escritasNoMock": [],
+  "requisicoesExternasAbortadas": [],
+  "medidas": [
+    {
+      "id": "B-01",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "anchorsHash": [],
+        "skiplinkEls": 0,
+        "hashTargets": [],
+        "hasMain": 1,
+        "primeiroTab": "button#navigation.br-button.small.circle \"\"",
+        "tabParadas": 3
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-01",
+      "tipo": "spec",
+      "estado": "detalhe-menu",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "anchorsHash": [],
+        "skiplinkEls": 0,
+        "hashTargets": [],
+        "hasMain": 1,
+        "primeiroTab": "button.br-item.dropdown-button.focus-visible \"Sair\"",
+        "tabParadas": 3
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-01",
+      "tipo": "spec",
+      "estado": "detalhe",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "anchorsHash": [],
+        "skiplinkEls": 0,
+        "hashTargets": [],
+        "hasMain": 1,
+        "primeiroTab": "a \"Home\"",
+        "tabParadas": 3
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-01",
+      "tipo": "spec",
+      "estado": "modal",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "anchorsHash": [],
+        "skiplinkEls": 0,
+        "hashTargets": [],
+        "hasMain": 1,
+        "primeiroTab": "button.mr-2.focus-visible.br-button.secondary.middle.mr-2.focus-visible \"Cancelar\"",
+        "tabParadas": 3
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-02",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "h1": 0,
+        "headings": [
+          "h2:Vistorias"
+        ]
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-03",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "caption": false,
+        "ariaLabel": null,
+        "labelledby": null,
+        "title": null,
+        "cols": 9,
+        "rows": 10,
+        "ax": {
+          "role": "table",
+          "name": "",
+          "ignored": false
+        }
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-22",
+      "tipo": "spec",
+      "estado": "detalhe",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "caption": false,
+        "ariaLabel": null,
+        "labelledby": null,
+        "title": null,
+        "cols": 3,
+        "rows": 2,
+        "ax": {
+          "role": "table",
+          "name": "",
+          "ignored": false
+        }
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-04",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "amostra": [
+          {
+            "type": "text",
+            "labels": 0,
+            "ariaLabel": null,
+            "labelledby": null,
+            "id": "search",
+            "placeholder": "Pesquise aqui ...",
+            "title": null
+          }
+        ],
+        "axNomes": [
+          "Pesquise aqui ..."
+        ],
+        "nomeVazioAX": false
+      },
+      "nota": "DOM confirma (sem label/aria), mas a árvore de acessibilidade dá nome não vazio (ver axNomes)"
+    },
+    {
+      "id": "B-05",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 2,
+        "expectedCount": 2,
+        "amostra": [
+          {
+            "type": "date",
+            "labels": 0,
+            "ariaLabel": null,
+            "labelledby": null,
+            "id": "br-input-8",
+            "placeholder": null,
+            "title": null
+          },
+          {
+            "type": "date",
+            "labels": 0,
+            "ariaLabel": null,
+            "labelledby": null,
+            "id": "br-input-9",
+            "placeholder": null,
+            "title": null
+          }
+        ],
+        "axNomes": [
+          "",
+          ""
+        ],
+        "nomeVazioAX": true
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-06",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 11,
+        "expectedCount": 11,
+        "amostra": [
+          {
+            "type": "checkbox",
+            "labels": 0,
+            "ariaLabel": null,
+            "labelledby": null,
+            "id": "",
+            "placeholder": null,
+            "title": null
+          },
+          {
+            "type": "checkbox",
+            "labels": 0,
+            "ariaLabel": null,
+            "labelledby": null,
+            "id": "",
+            "placeholder": null,
+            "title": null
+          },
+          {
+            "type": "checkbox",
+            "labels": 0,
+            "ariaLabel": null,
+            "labelledby": null,
+            "id": "",
+            "placeholder": null,
+            "title": null
+          }
+        ],
+        "axNomes": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "nomeVazioAX": true
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-20",
+      "tipo": "spec",
+      "estado": "detalhe-menu",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "amostra": [
+          {
+            "type": "textarea",
+            "labels": 0,
+            "ariaLabel": null,
+            "labelledby": null,
+            "id": "",
+            "placeholder": null,
+            "title": null
+          }
+        ],
+        "axNomes": [
+          ""
+        ],
+        "nomeVazioAX": true,
+        "textareaId": "",
+        "siblingLabels": [
+          {
+            "text": "Descrever o motivo do não comparecimento",
+            "for": null
+          }
+        ]
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-07",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 10,
+        "expectedCount": 10,
+        "amostra": {
+          "text": "",
+          "aria": "",
+          "title": null,
+          "hostTitle": null,
+          "hostAria": null
+        },
+        "axRoles": [
+          "button"
+        ],
+        "axNomes": [
+          ""
+        ]
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-08",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 40,
+        "expectedCount": 40,
+        "classes": [
+          "br-button secondary middle"
+        ],
+        "sizes": [
+          "78x40"
+        ],
+        "secondary": true,
+        "iconCount": 40
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-09",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "classes": [
+          "br-button"
+        ],
+        "sizes": [
+          "32x32"
+        ]
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-10",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 2,
+        "expectedCount": 2,
+        "classes": [
+          "br-button"
+        ],
+        "sizes": [
+          "32x32"
+        ]
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-11",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 4,
+        "expectedCount": 4,
+        "textos": [
+          "Cidade",
+          "Porto",
+          "Vistoriador",
+          "Status"
+        ],
+        "tabindexAttr": [
+          null
+        ],
+        "roleAttr": [
+          null
+        ],
+        "alcancadosPorTab": 0,
+        "tabAvancoRetrocesso": {
+          "fwd": 0,
+          "bwd": 0
+        },
+        "cliqueMudaDe3PorEtiqueta": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "enterMudaDe3PorEtiqueta": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-12",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 10,
+        "expectedCount": 10,
+        "razoes": [
+          3.14
+        ],
+        "fg": [
+          "#ffffff"
+        ],
+        "bg": [
+          "#4f97d1"
+        ],
+        "tamanho": [
+          "14px/500"
+        ],
+        "textos": [
+          "Vistoria agendada"
+        ],
+        "fundoComImagem": false
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-13",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "razoes": [
+          1.5
+        ],
+        "fg": [
+          "#ffffff"
+        ],
+        "bg": [
+          "#c5d4eb"
+        ],
+        "tamanho": [
+          "14px/500"
+        ],
+        "textos": [
+          "Nenhum filtro de data aplicado"
+        ],
+        "fundoComImagem": false
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-14",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "razoes": [
+          2.33
+        ],
+        "fg": [
+          "#ffffff"
+        ],
+        "bg": [
+          "#ff8c00"
+        ],
+        "tamanho": [
+          "24.192px/700"
+        ],
+        "textos": [
+          "U"
+        ],
+        "fundoComImagem": false
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-14",
+      "tipo": "spec",
+      "estado": "detalhe-menu",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "razoes": [
+          2.33
+        ],
+        "fg": [
+          "#ffffff"
+        ],
+        "bg": [
+          "#ff8c00"
+        ],
+        "tamanho": [
+          "24.192px/700"
+        ],
+        "textos": [
+          "U"
+        ],
+        "fundoComImagem": false
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-14",
+      "tipo": "spec",
+      "estado": "detalhe",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "razoes": [
+          2.33
+        ],
+        "fg": [
+          "#ffffff"
+        ],
+        "bg": [
+          "#ff8c00"
+        ],
+        "tamanho": [
+          "24.192px/700"
+        ],
+        "textos": [
+          "U"
+        ],
+        "fundoComImagem": false
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-14",
+      "tipo": "spec",
+      "estado": "modal",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "razoes": [
+          2.33
+        ],
+        "fg": [
+          "#ffffff"
+        ],
+        "bg": [
+          "#ff8c00"
+        ],
+        "tamanho": [
+          "24.192px/700"
+        ],
+        "textos": [
+          "U"
+        ],
+        "fundoComImagem": false
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-23",
+      "tipo": "spec",
+      "estado": "detalhe",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "razoes": [
+          3.54
+        ],
+        "fg": [
+          "#ffffff"
+        ],
+        "bg": [
+          "#888888"
+        ],
+        "tamanho": [
+          "14px/400"
+        ],
+        "textos": [
+          "0%"
+        ],
+        "fundoComImagem": false
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-15",
+      "tipo": "spec",
+      "estado": "detalhe-menu",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "borda": "2px solid rgb(187, 187, 187)",
+        "bbbEmTokens3_7_0": false
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-16",
+      "tipo": "spec",
+      "estado": "detalhe-menu",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "hasAlt": false,
+        "src": "../../../assets/images/exit-icon.png",
+        "inBtn": "Sair"
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-17",
+      "tipo": "spec",
+      "estado": "detalhe-menu",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "role": "menu",
+        "explicitItems": 0,
+        "kids": [
+          "span:",
+          "br:",
+          "span:",
+          "span:",
+          "i:",
+          "hr:",
+          "button:",
+          "img:"
+        ],
+        "axSelf": {
+          "role": "menu",
+          "name": "Avatar com dropdown",
+          "ignored": false
+        },
+        "axRolesDescendentes": [
+          "generic",
+          "StaticText",
+          "InlineTextBox",
+          "LineBreak",
+          "none",
+          "separator",
+          "button",
+          "image",
+          "paragraph"
+        ],
+        "axMenuitems": 0
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-18",
+      "tipo": "spec",
+      "estado": "detalhe-menu",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "tag": "button",
+        "href": "javascript:void(0)",
+        "hasHref": true,
+        "p": 1,
+        "text": "Sair",
+        "htmlSnippet": "<button _ngcontent-vwt-c16=\"\" type=\"button\" href=\"javascript:void(0)\" class=\"br-item dropdown-button\"><img _ngcontent-vwt-c16=\"\" src=\"../../../assets/images/exi"
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-19",
+      "tipo": "spec",
+      "estado": "detalhe-menu",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "tag": "span",
+        "text": "Trocar unidade",
+        "cursor": "pointer",
+        "tabindex": null,
+        "role": null,
+        "inMenuLi": true,
+        "alcancadoPorTab": 0,
+        "focoAposFocus": "button#avatar-dropdown-trigger.br-sign-in \"U  Olá, Usuária de Teste,\"",
+        "enterMudouUrl": false,
+        "cliqueNavega": {
+          "antes": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046",
+          "depois": "/pnip/portal-mpa"
+        }
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-21",
+      "tipo": "spec",
+      "estado": "detalhe",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "h1": 0,
+        "h2": 0,
+        "seq": [
+          "h3:Programa Nacional de Regularização ",
+          "h4:Dados da Notificação",
+          "h4:Dados da vistoria",
+          "h4:Dados da embarcação",
+          "h4:Dados do Responsável pela embarcaçã",
+          "h4:Dados do Solicitante",
+          "h4:Dados do Vistoriador",
+          "h4:Vistoria",
+          "h4:Envio de documentação",
+          "h4:Conclusão"
+        ]
+      },
+      "nota": ""
+    },
+    {
+      "id": "B-24",
+      "tipo": "spec",
+      "estado": "modal",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "cls": "br-modal medium",
+        "role": null,
+        "ariaModal": null,
+        "ariaLabel": null,
+        "labelledby": null,
+        "visible": true,
+        "ancestorRole": [],
+        "descDialog": 0,
+        "axDialogosNaArvore": 0
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-01",
+      "tipo": "conforme",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 2,
+        "expectedCount": 2,
+        "axNomes": [
+          "Página anterior",
+          "Página seguinte"
+        ],
+        "circle": true
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-02",
+      "tipo": "conforme",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "text": "Limpar Filtro",
+        "visivel": true,
+        "disabled": true,
+        "ax": {
+          "role": "button",
+          "name": "Limpar Filtro",
+          "ignored": false
+        }
+      },
+      "nota": "botao disabled (sem filtro aplicado), fora da ordem de Tab; o texto visivel e o nome acessivel conferem"
+    },
+    {
+      "id": "C-03",
+      "tipo": "conforme",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 2,
+        "expectedCount": 2,
+        "campos": [
+          {
+            "id": "total",
+            "labels": 1,
+            "labelText": "Exibir"
+          },
+          {
+            "id": "page",
+            "labels": 1,
+            "labelText": "Página"
+          }
+        ],
+        "axNomes": [
+          "Exibir",
+          "Página"
+        ]
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-04",
+      "tipo": "conforme",
+      "estado": "detalhe",
+      "veredito": "confirma",
+      "medido": {
+        "count": 19,
+        "expectedCount": 19,
+        "comLabel": 19,
+        "total": 19,
+        "axSemNome": 0
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-05",
+      "tipo": "conforme",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 10,
+        "expectedCount": 10,
+        "razoes": [
+          12.63
+        ],
+        "fg": [
+          "#333333"
+        ],
+        "bg": [
+          "#ffffff"
+        ]
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-06",
+      "tipo": "conforme",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 10,
+        "expectedCount": 10,
+        "nomes": [
+          "Excluir vistoria"
+        ]
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-08",
+      "tipo": "conforme",
+      "estado": "modal",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "labels": 1,
+        "lab": "Embarcação",
+        "ax": {
+          "role": "textbox",
+          "name": "Embarcação",
+          "ignored": false
+        }
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-10",
+      "tipo": "conforme",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "alcancadoPorTab": 2,
+        "avancoRetrocesso": {
+          "fwd": 2,
+          "bwd": 0
+        },
+        "ax": [
+          {
+            "role": "link",
+            "name": "Home",
+            "ignored": false
+          }
+        ],
+        "textoVisivel": [
+          "Home"
+        ]
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-11",
+      "tipo": "conforme",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "hasShadow": true,
+        "focusables": 0,
+        "inner": [
+          "style",
+          "span"
+        ],
+        "alcancadoPorTab": 0,
+        "axSelf": null,
+        "axDescendentes": []
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-12",
+      "tipo": "conforme",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "radius": "50%",
+        "w": 40,
+        "h": 40
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-12",
+      "tipo": "conforme",
+      "estado": "detalhe-menu",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "radius": "50%",
+        "w": 40,
+        "h": 40
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-12",
+      "tipo": "conforme",
+      "estado": "detalhe",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "radius": "50%",
+        "w": 40,
+        "h": 40
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-12",
+      "tipo": "conforme",
+      "estado": "modal",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "expectedCount": 1,
+        "radius": "50%",
+        "w": 40,
+        "h": 40
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-07",
+      "tipo": "conforme",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 3,
+        "expectedCount": 3,
+        "reach": 3,
+        "reachDir": {
+          "fwd": 3,
+          "bwd": 0
+        },
+        "per": [
+          {
+            "tabIndex": 0,
+            "tag": "button",
+            "text": "Agendar",
+            "mudaPorClique": true,
+            "mudaPorEnter": true,
+            "enterIgualClique": true
+          },
+          {
+            "tabIndex": 0,
+            "tag": "button",
+            "text": "Tramitando",
+            "mudaPorClique": false,
+            "mudaPorEnter": false,
+            "enterIgualClique": true
+          },
+          {
+            "tabIndex": 0,
+            "tag": "button",
+            "text": "Concluídos",
+            "mudaPorClique": true,
+            "mudaPorEnter": true,
+            "enterIgualClique": true
+          }
+        ]
+      },
+      "nota": ""
+    },
+    {
+      "id": "C-09",
+      "tipo": "conforme",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 4,
+        "expectedCount": 4,
+        "reach": 4,
+        "reachDir": {
+          "fwd": 0,
+          "bwd": 4
+        },
+        "per": [
+          {
+            "tabIndex": 0,
+            "tag": "a",
+            "text": "1",
+            "mudaPorClique": false,
+            "mudaPorEnter": false,
+            "enterIgualClique": true
+          },
+          {
+            "tabIndex": 0,
+            "tag": "a",
+            "text": "2",
+            "mudaPorClique": true,
+            "mudaPorEnter": true,
+            "enterIgualClique": true
+          },
+          {
+            "tabIndex": 0,
+            "tag": "a",
+            "text": "3",
+            "mudaPorClique": true,
+            "mudaPorEnter": true,
+            "enterIgualClique": true
+          },
+          {
+            "tabIndex": 0,
+            "tag": "a",
+            "text": "4",
+            "mudaPorClique": true,
+            "mudaPorEnter": true,
+            "enterIgualClique": true
+          }
+        ]
+      },
+      "nota": ""
+    }
+  ]
+}

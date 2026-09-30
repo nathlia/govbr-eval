@@ -37,3 +37,14 @@ não é medida. Na dúvida, fica fora e ganha a marca ⚠.
 **Efeito se tudo for aceito:** 5 itens viram unidade (E-01, E-04, E-06, E-07, E-20), E-18 vira
 controle conforme e os demais ficam registrados como fora, com o motivo. As unidades vão de 96 para
 cerca de 102 + N.
+
+## Citações questionadas pela re-medida independente
+
+A re-medida (§ 12 de `auditoria.md`) confirmou 24/24 specs, 96/96 unidades e 12/12 conformes. Ela
+apontou duas citações que sustentam o fato só pela parte ampla da regra. As duas regras são
+`required` na KB 3.7.0, então as unidades ficam dentro do método.
+
+| Spec | Recomendação | Por quê |
+|---|---|---|
+| B-02 (lista sem `<h1>`) | **Manter** ⚠ | A regra `3ac0aaa53900` é `required`: "Estruture títulos de H1 a H6 hierarquicamente; prefira um único H1…". Uma hierarquia que começa em H2 fere a primeira parte. O "prefira" só fala de quantos H1. |
+| B-07, B-18 (botões sem nome / fora do padrão HTML) | **Manter** ⚠ | A regra `7e6420514860` é `required` ("siga padrões Web interoperáveis"). A exigência de nome acessível vem do `wcag:4.1.2`, que já está na spec como alias. A autora pode preferir tirar essas unidades por serem sustentadas pela parte genérica da regra. |

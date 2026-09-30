@@ -357,5 +357,24 @@ expostas: 90 unidades, as mesmas 3 famílias. O peso de B-08 (40 unidades de uma
 
 ## 12. Re-medida independente (segundo agente)
 
-_(vazio — a preencher pelo segundo agente, em contexto novo e sob as mesmas regras de cegueira, com
-código próprio, a partir só das descrições das unidades e dos conformes.)_
+Segundo agente, contexto novo, em 2026-09-30. Entrada única: `ground-truth-vistorias.json` (`specs` e `_meta`) mais os dois documentos de método. Não li nada mais desta pasta, nem `.mjs`, nem `results/`, nem validator/axe/ESLint. Código próprio: `tela-b/vistorias/remedida/remedir.mjs` (headless; servidor estático próprio de `govbr-corpus/public/` com fallback SPA sob `/pnip/`; tudo fora da origem abortado; 1280×900, `America/Sao_Paulo`, relógio fixo 2026-03-16 09:30; o `setup` refeito por mim e `location.pathname` conferido nas 4 paradas: 4/4). Saída: `remedida/resultado.json`. Zero requisições externas, zero escritas no mock.
+
+**Resultado.** Specs: 24 confirmadas, 0 divergem, 0 inconclusivas. Unidades cobertas: 96/96 (contagem de âncora igual a `expectedCount` em todas as specs). Conformes: 12/12 confirmados. Nenhuma divergência aberta de medida.
+
+**Método por tipo.** Contagem: seletor próprio que desce shadow roots abertas e entende `>>>`. Nome acessível: CDP `Accessibility.getPartialAXTree`/`getFullAXTree`. Contraste: fórmula WCAG sobre cores computadas, com composição de alfa e primeiro fundo opaco. Foco: `Tab`/`Shift+Tab` reais, lendo `activeElement` através das shadow roots. Efeito de clique e Enter: 3 cargas novas por etiqueta (B-11), comparando assinatura da página antes e depois.
+
+**Observações que não mudam veredito (honestidade sobre o que a medida mostrou além do claim):**
+
+1. B-04: o DOM confirma (sem `label`, `aria-label`, `aria-labelledby`), mas a árvore de acessibilidade dá nome "Pesquise aqui ..." (o Chromium usa o placeholder como nome de reserva). A descrição de B-04 só afirma ausência de rótulo e que há "só o placeholder", então confirma; B-05, B-06 e B-20 têm nome AX vazio, como afirmam.
+2. Ordem de Tab (C-09, C-07, C-10, B-11, B-19): em Chromium headless, o `Tab` para frente a partir do início do documento passa dos campos de data direto para o último botão da página, pulando a tabela e a paginação; o `Shift+Tab` a partir do fim percorre tudo, inclusive os 4 links `a.page` (4/4), as caixas e os botões da linha. Os 4 links têm `tabIndex` 0 e `href`. C-09 confirma por essa via (frente 0/4, trás 4/4), não por "Tab para frente desde o topo". Quem reproduzir só a caminhada para frente vai ver 0/4. Não investiguei a causa (suspeita: interação do foco sequencial com o campo `type=date`); vale a autora saber que a ordem para frente da lista é incompleta nessa medida.
+3. B-01: nas paradas com menu aberto ou detalhe, o primeiro `Tab` já parte do ponto de início sequencial deixado pelo clique do `setup` (caiu em "Sair" e em "Home"), então "o primeiro ponto de Tab é o botão Menu" só se reproduz na parada `inicial` (confirmado: `button#navigation`). O defeito (nenhuma âncora `#…` nem `.br-skiplink` em nenhuma das 4 paradas) confirma igualmente.
+4. C-02: o botão "Limpar Filtro" está `disabled` na parada `inicial` (sem filtro aplicado): tem texto visível e nome acessível "Limpar Filtro" (confirma), mas fica fora da ordem de Tab.
+5. B-17: os 9 papéis descendentes na árvore AX não incluem nenhum `menuitem`; o próprio menu tem nome "Avatar com dropdown".
+6. C-07: o teste Enter ≡ clique para a aba "Tramitando" (já ativa) é trivial, pois não há mudança em nenhum dos dois; as outras 2 abas mudam igual por Enter e por clique. C-09: idem para a página "1".
+
+**Citação de norma (texto em `rules.jsonl`, 3.7.0).** Sustentam o claim: B-01 ("salto para o conteúdo o primeiro link da página"), B-03 (e-MAG 3.9, "Identifique tabelas com caption"), B-04/05/06/20 ("Associe label aos campos … usando for e id"), B-08..10 ("O Button deve possuir rótulo visível, exceto na variante circular"), B-11/B-19 ("Todas as funções devem ser operáveis por teclado"), B-12..14/B-23 ("contraste de pelo menos 4,5:1"), B-16 ("texto alternativo … imagens informativas"), B-17/B-24 ("Associe cada widget customizado ao role, estado e propriedade ARIA"), B-18, B-15, e os conformes C-01..C-12.
+
+**Não sustentam inteiramente (para a autora decidir; nenhuma é erro de medida):**
+
+- **B-07** (e **C-06**, mesma regra): `govbr-3.7.0-accessibility-global-7e6420514860` é a e-MAG 1.1, "Respeitar os Padrões Web" ("Mantenha HTML, CSS e JavaScript em camadas adequadas e siga padrões Web interoperáveis"). Não diz que todo botão precisa de nome acessível; essa exigência vem do `wcag:4.1.2`, que a KB só aceita como alias. O fato (botão com nome "" na AX) está confirmado, mas a âncora normativa é indireta. No B-18 a mesma regra serve (`href` em `<button>` e `<p>` dentro dele violam padrões Web).
+- **B-02**: a regra 1.3 diz "Estruture títulos de H1 a H6 hierarquicamente; **prefira** um único H1". "Prefira" é fraco; a ausência de `<h1>` e o início em `h2` (B-02) e `h3` (B-21) são fatos confirmados, mas o texto não os torna violação sem juízo de leitura. Também pode ser lido como suportado.
