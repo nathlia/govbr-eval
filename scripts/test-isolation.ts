@@ -20,7 +20,7 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 import { ROOT } from "./adjudication";
 import { VIEWPORT_PADRAO } from "./anchors";
 import { statePlanOf, type StatePlan } from "./collection-manifest";
-import { TELAS, telaFromArgs } from "./telas";
+import { TELAS, arquivoDeEntrada, telaFromArgs } from "./telas";
 import { DEFAULT_PORTS, HOST, createEgressProxy, startSurface, type EgressEvent, type RunningSurface } from "./measurement-surface";
 
 interface McpServerConfig { command: string; args?: string[]; env?: Record<string, string> }
@@ -115,7 +115,7 @@ function eventsSince(events: EgressEvent[], from: number): EgressEvent[] {
 }
 
 async function main(): Promise<void> {
-  if (!existsSync(join(corpusDist, tela.entry))) throw new Error(`Build do corpus ausente em ${corpusDist}. Rode 'npm run build' em govbr-corpus.`);
+  if (!existsSync(join(corpusDist, arquivoDeEntrada(tela)))) throw new Error(`Build do corpus ausente em ${corpusDist}. Rode 'npm run build' em govbr-corpus.`);
 
   // ── Configuração: a mesma que o runner entrega aos dois braços.
   const com = readMcp("mcp-com-oraculo.json");
@@ -196,7 +196,10 @@ async function main(): Promise<void> {
     // Fonte e referência só entram quando a tela declara uma: a tela B não tem TSX nem gabarito, e
     // um caminho vazio na lista viraria uma conferência que não confere nada.
     const fsRef = (rel: string): string => `/@fs/${encodeURI(join(ROOT, rel).replace(/\\/g, "/"))}`;
-    const siblings = ["/", "/index.html", "/real/pnip-login.html", "/static/protocolo.html",
+    // A captura estática de /privacidade saiu de telas.json (D-57), mas continua no build do corpus:
+    // segue conferida como rota irmã. O que a SPA exclui da árvore (o manifesto da ala) também.
+    const siblings = ["/", "/index.html", "/real/pnip-login.html", "/real/pnip-privacidade.html", "/static/protocolo.html",
+      ...(tela.isolamento.site?.excluir ?? []).map((rel) => `/${rel}`),
       ...(tela.isolamento.fonte ? [tela.isolamento.fonte] : []),
       ...outras.flatMap(t => [`/${t.entry}`, ...(t.isolamento.fonte ? [t.isolamento.fonte] : []),
         ...(t.reference ? [fsRef(t.reference)] : [])]),
@@ -215,7 +218,8 @@ async function main(): Promise<void> {
     if (interacao) {
       await evaluate(playwright, `() => { document.querySelector(${JSON.stringify(interacao.clicar)}).click(); return 'ok'; }`);
       const errorShown = await evaluate(playwright, `() => new Promise(r => setTimeout(() => r(String(!!document.querySelector(${JSON.stringify(interacao.esperar)}))), 500))`);
-      check("o estado do setup do gabarito é alcançável", errorShown === "true");
+      check(interacao.nota ? "a interação declarada responde na tela congelada" : "o estado do setup do gabarito é alcançável",
+        errorShown === "true");
     } else {
       // Declarado, não simulado. A captura não preservou os bindings do Angular (README da ala real
       // do corpus) e a tela ainda não tem gabarito que peça um estado. Forjar aqui um clique faria o

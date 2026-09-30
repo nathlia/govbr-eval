@@ -59,16 +59,24 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
   - `npm run conferir:referencia -- --tela <nome>` (com `APP_URL` apontando para o `dist/` servido)
     — mede estados, aditividade, contagens e predicados da referência contra a página, sem modelo:
     é a conferência da preparação do pacote, feita ANTES de pagar a bateria.
-  - **Tela B (`privacidade`)**: `real/pnip-privacidade.html`, captura estática da aplicação PNIP
-    (Angular + `@govbr-ds/webcomponents`). Não é entrada Vite: `sources` vazio (não há TSX, então a
-    linha de base não roda ESLint e diz por quê), `isolamento.fonte` nulo e `isolamento.interacao`
-    nula — os bindings não sobreviveram à captura e nenhum clique é simulado. O que ela referencia
-    fora da política (CDN) e o que a captura não trouxe (imagens 404) são DECLARADOS em `telas.json`
-    e cobrados nos dois sentidos pelo `test:isolation`. **`reference: null`**: o gabarito sai de
-    auditoria por medição, antes de qualquer execução (D-49). Até ele existir, tudo que precisa da
-    referência para nomeando `ground-truth-privacidade.json` — `conferir:referencia`,
-    `manifest:coleta build`, `flow:review`, `score:fluxo`, `baselines:fluxo` de bateria e a própria
-    `run-battery.ps1`. O que roda hoje é `npm run baselines:fluxo:dev -- --tela privacidade`.
+  - **Tela B (`vistorias`, D-57)**: a tela Vistorias PROPESC da aplicação PNIP rodando de verdade —
+    o build do modo mock (`pnip-mock`, Angular 15 + `@govbr-ds/webcomponents`) congelado byte a
+    byte em `govbr-corpus/public/pnip/` (manifesto com sha256 em `public/pnip/manifesto.json`).
+    Entrada `pnip/portal-mpa/vistorias?mock-perfil=mpa` (a consulta escolhe a sessão fictícia: usuária já logada,
+    com o vínculo de coordenador que a página inicial do portal escolheria — pnip-mock `1067443`). É
+    uma SPA: `isolamento.site` faz a superfície congelar a árvore `pnip/` inteira (os chunks lazy
+    não são citados por extenso), responder com `pnip/index.html` a toda rota sem extensão sob
+    `/pnip/` e servir o ícone do "Sair" pelo único alias declarado. As interações são reais
+    (Angular + backend em memória no navegador); recarregar volta ao estado inicial; nenhum
+    recurso externo é esperado (`externos: []`). Não é entrada Vite: `sources` vazio (a linha de
+    base não roda ESLint e diz por quê). **`reference: null`**: o gabarito sai de auditoria por
+    medição, antes de qualquer execução (D-49). Até ele existir, tudo que precisa da referência para
+    nomeando `ground-truth-vistorias.json` — `conferir:referencia`, `manifest:coleta build`,
+    `flow:review`, `score:fluxo`, `baselines:fluxo` de bateria e a própria `run-battery.ps1`.
+  - **Captura de `/privacidade` (tela B até D-57)**: saiu de `telas.json`. A página continua em
+    `govbr-corpus/public/real/`, e as auditorias por medição dela e do `pnip-login` ficam em
+    `tela-b/` (e `tela-b/login/`) como registro; `tela-b/comum.mjs` guarda os externos e ausentes
+    que `telas.json` declarava, para que continuem reproduzíveis.
   - **Tela A (`solicitacao`)**: `ground-truth-solicitacao.json` (12 specs, 14 unidades, 3 estados).
     As specs vieram de SORTEIO — procedimento em `docs/tela-a-procedimento-sorteio.md`, tudo o mais
     em `tela-a/` (inventário, elegibilidade, sorteio, registro da construção, conferência sem

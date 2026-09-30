@@ -27,11 +27,10 @@ export interface TelaIsolamento {
   fonte: string | null;
   /**
    * Interação que leva a página ao estado condicional do gabarito. `null` quando nenhuma é
-   * declarada: a captura da aplicação real não preservou os bindings do Angular (README da ala real
-   * do corpus) e a tela ainda não tem gabarito que peça um estado. Não afirma que a página é inerte —
-   * os web components do DS hidratam, e o que ainda respondem é matéria da auditoria.
+   * declarada. Em tela ainda sem gabarito, a interação declarada é só prova de vida da página
+   * servida, e `nota` diz isso — nunca um estado que ninguém mediu.
    */
-  interacao: { clicar: string; esperar: string } | null;
+  interacao: { clicar: string; esperar: string; nota?: string } | null;
   /**
    * Hosts (`host:porta`) que a própria página referencia e a política de saída nega de propósito.
    * O teste exige que cada um apareça NEGADO e que nada fora desta lista seja pedido.
@@ -42,12 +41,37 @@ export interface TelaIsolamento {
    * captura, não falha da superfície; declarados para que o teste exija exatamente estes.
    */
   ausentes?: string[];
+  /**
+   * Site de aplicação de página única (a ala pnip/ do corpus). Sem este campo, a superfície congela
+   * o fechamento de arquivos da entrada e serve só caminho exato — como sempre fez.
+   */
+  site?: TelaSite;
+}
+
+/**
+ * Como a superfície congela e serve uma SPA. O fechamento por nome citado não basta: o runtime do
+ * Angular monta o nome dos chunks lazy a partir de um mapa id → hash, e nenhum arquivo os cita por
+ * extenso. Então a árvore inteira entra, e rota sem extensão sob a árvore recebe o índice.
+ */
+export interface TelaSite {
+  /** Pasta do `dist/` do corpus congelada inteira (com barra final: "pnip/"). */
+  arvore: string;
+  /** Arquivos da árvore que não são parte da tela (o manifesto da ala) e ficam fora do site. */
+  excluir?: string[];
+  /** Arquivo servido a todo GET sem extensão sob `/<arvore>`. */
+  indice: string;
+  /** Caminho pedido fora da árvore → arquivo da árvore que responde por ele. */
+  aliases?: Record<string, string>;
+  nota?: string;
 }
 
 export interface Tela {
   nome: string;
   titulo: string;
-  /** Página de entrada dentro do `dist/` do corpus. */
+  /**
+   * Página de entrada dentro do `dist/` do corpus. Numa SPA é a rota (pode levar consulta, como a
+   * sessão fictícia da tela B), e o arquivo que a responde é `isolamento.site.indice`.
+   */
   entry: string;
   /**
    * Referência, relativa à raiz deste repo. `null` enquanto a tela não tem gabarito congelado: o da
@@ -87,6 +111,16 @@ export function telaOf(nome: string): Tela {
 export function telaFromArgs(args: string[]): Tela {
   const index = args.indexOf("--tela");
   return telaOf(index >= 0 ? args[index + 1] : TELA_PADRAO);
+}
+
+/** Tela cuja entrada é esta (a superfície recebe `--entry`, não o nome). */
+export function telaDaEntrada(entry: string): Tela | null {
+  return Object.values(TELAS).find((tela) => tela.entry === entry) ?? null;
+}
+
+/** Arquivo do `dist/` que responde pela entrada: ela mesma, ou o índice da SPA. */
+export function arquivoDeEntrada(tela: Tela): string {
+  return tela.isolamento.site?.indice ?? tela.entry;
 }
 
 /** Arquivo em que a referência da tela mora — ou vai morar, quando ela ainda não existe. */

@@ -6,7 +6,10 @@
  *
  *   site      a tela congelada: somente o fechamento de arquivos da entrada, copiado do build de
  *             produção do corpus, conferido por sha256 e servido da memória. Sem índice, sem
- *             fallback de SPA, sem /@fs — o que não está no manifesto é 404.
+ *             fallback de SPA, sem /@fs — o que não está no manifesto é 404. A exceção é declarada
+ *             por tela (`isolamento.site` em telas.json): uma SPA congela a árvore dela inteira, e
+ *             rota sem extensão sob a árvore recebe o índice dela; fora da árvore, só os aliases
+ *             declarados.
  *   coletor   recebe o relatório da execução armada (POST /api/submit). Não serve arquivo nenhum.
  *   proxy     todo pedido do navegador passa por ele — o Playwright encaminha inclusive o loopback.
  *             Só as origens do site e do coletor seguem adiante; o resto recebe 403 e fica no log.
@@ -27,12 +30,15 @@ import { fileURLToPath } from "node:url";
 import { REFUSED_SUBMISSION, validateFlowReport } from "./flow-contract";
 import { gitState } from "./collection-manifest";
 import type { FlowCollectorRecord } from "../types";
-import { TELA_PADRAO, telaOf } from "./telas";
+import { TELA_PADRAO, telaDaEntrada, telaOf, type TelaSite } from "./telas";
 
 // 1.1.0: o coletor exige o contrato do achado de fluxo-1.3.0 (scripts/flow-contract.ts).
 // 1.2.0: sem relatório aceito, o desarme arquiva a última recusa como relatório da execução,
 //        sinalizado e sem satisfazer o contrato (recusa-arquivada).
-export const SURFACE_VERSION = "surface-1.2.0";
+// 1.3.0: a tela pode declarar uma SPA (`isolamento.site` em telas.json): a árvore dela congelada
+//        inteira, índice para rota sem extensão sob a árvore e aliases declarados. Sem a
+//        declaração, o site é o mesmo de antes (fechamento da entrada, caminho exato).
+export const SURFACE_VERSION = "surface-1.3.0";
 export const HOST = "127.0.0.1";
 export const DEFAULT_PORTS = { site: 3100, collector: 4100, control: 4101, proxy: 4102 } as const;
 export type SurfacePorts = { site: number; collector: number; control: number; proxy: number };
@@ -53,6 +59,10 @@ export interface SiteManifest {
   corpusDirty: boolean | null;
   /** caminho servido ("/fluxo.html") → sha256 */
   files: Record<string, string>;
+  /** Só em SPA: GET sem extensão sob `prefixo` recebe os bytes de `indice` (caminho servido). */
+  spa?: { prefixo: string; indice: string };
+  /** Só em SPA: caminho pedido fora da árvore → caminho servido que responde por ele. */
+  aliases?: Record<string, string>;
 }
 
 const TEXT_EXTENSIONS = new Set([".html", ".js", ".mjs", ".css", ".json", ".svg"]);
@@ -68,6 +78,14 @@ const CONTENT_TYPES: Record<string, string> = {
   ".woff2": "font/woff2",
   ".woff": "font/woff",
   ".ttf": "font/ttf",
+  ".eot": "application/vnd.ms-fontobject",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".gif": "image/gif",
+  ".webp": "image/webp",
+  ".txt": "text/plain; charset=utf-8",
+  ".pdf": "application/pdf",
+  ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 };
 
 function listFiles(root: string, prefix = ""): string[] {
@@ -108,9 +126,24 @@ export function assetClosure(distDir: string, entry: string): string[] {
   return [...included].sort();
 }
 
-export function freezeSite(distDir: string, entry: string, outDir: string, corpusRoot = dirname(resolve(distDir))): SiteManifest {
+/**
+ * Arquivos de uma SPA declarada: a árvore inteira, menos o que a tela exclui. A entrada é uma rota
+ * (com consulta, se houver) e tem de cair no fallback — senão o índice não a responderia.
+ */
+export function spaFiles(distDir: string, entry: string, site: TelaSite): string[] {
+  const arvore = site.arvore.replace(/\/+$/, "");
+  if (!existsSync(join(distDir, site.indice))) throw new Error(`Índice ${site.indice} não existe em ${distDir}. Rode 'npm run build' no corpus.`);
+  const rota = `/${entry.split("?")[0]}`;
+  if (!rota.startsWith(`/${arvore}/`) || extname(rota)) throw new Error(`Entrada ${entry} não é rota da SPA ${arvore}/`);
+  const excluir = new Set(site.excluir ?? []);
+  return listFiles(distDir, arvore).filter((rel) => !excluir.has(rel)).sort();
+}
+
+/** `site`: a SPA que a tela declara em telas.json; sem ela, o fechamento da entrada, como sempre. */
+export function freezeSite(distDir: string, entry: string, outDir: string, corpusRoot = dirname(resolve(distDir)),
+  site?: TelaSite): SiteManifest {
   const files: Record<string, string> = {};
-  for (const rel of assetClosure(distDir, entry)) {
+  for (const rel of site ? spaFiles(distDir, entry, site) : assetClosure(distDir, entry)) {
     const body = readFileSync(join(distDir, rel));
     const target = join(outDir, "site", rel);
     mkdirSync(dirname(target), { recursive: true });
@@ -126,6 +159,13 @@ export function freezeSite(distDir: string, entry: string, outDir: string, corpu
     corpusDirty: git.dirty,
     files,
   };
+  if (site) {
+    manifest.spa = { prefixo: `/${site.arvore.replace(/\/+$/, "")}/`, indice: `/${site.indice}` };
+    manifest.aliases = Object.fromEntries(Object.entries(site.aliases ?? {}).map(([from, to]) => {
+      if (!files[`/${to}`]) throw new Error(`Alias ${from} aponta para ${to}, fora do site congelado`);
+      return [from, `/${to}`];
+    }));
+  }
   writeFileSync(join(outDir, "site-manifest.json"), JSON.stringify(manifest, null, 2) + "\n", { flag: "wx" });
   return manifest;
 }
@@ -174,10 +214,24 @@ function requestPath(url: string | undefined): string | null {
   }
 }
 
+/**
+ * Arquivo que responde por `path`: o caminho exato; numa SPA declarada, também o alias e, para rota
+ * sem extensão sob a árvore, o índice. Sem `spa` no manifesto, só o caminho exato — como sempre.
+ */
+export function resolveSitePath(site: LoadedSite, path: string): { body: Buffer; type: string } | undefined {
+  const exact = site.files.get(path);
+  if (exact) return exact;
+  const { spa, aliases } = site.manifest;
+  if (!spa) return undefined;
+  if (aliases?.[path]) return site.files.get(aliases[path]);
+  if (path.startsWith(spa.prefixo) && !extname(path)) return site.files.get(spa.indice);
+  return undefined;
+}
+
 export function createSiteServer(site: LoadedSite): Server {
   return createServer((req, res) => {
     const path = requestPath(req.url);
-    const file = path ? site.files.get(path) : undefined;
+    const file = path ? resolveSitePath(site, path) : undefined;
     if (!file || (req.method !== "GET" && req.method !== "HEAD")) {
       res.writeHead(404, { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" });
       res.end("404");
@@ -542,7 +596,7 @@ export async function startSurface(options: {
   const ports = options.ports ?? DEFAULT_PORTS;
   if (existsSync(options.outDir)) throw new Error(`${options.outDir} já existe: a superfície de cada bateria é nova.`);
   mkdirSync(options.outDir, { recursive: true });
-  freezeSite(options.corpusDist, options.entry, options.outDir);
+  freezeSite(options.corpusDist, options.entry, options.outDir, undefined, telaDaEntrada(options.entry)?.isolamento.site);
   const site = loadSite(options.outDir);
 
   const siteHost = `${HOST}:${ports.site}`;
@@ -570,7 +624,9 @@ export async function startSurface(options: {
       boundary: "proxy HTTP de encaminhamento; o navegador do Playwright MCP e o do oráculo apontam para ele (--proxy-server / GOVBR_VALIDATOR_PROXY_SERVER), e o Playwright encaminha o loopback",
       allowed: "somente as origens do site congelado e do coletor, por host:porta exato, só HTTP",
       https: "negado (CONNECT 403)",
-      site: "somente os arquivos do manifesto; sem índice, sem fallback, sem /@fs",
+      site: site.manifest.spa
+        ? `somente os arquivos do manifesto; SPA declarada: rota sem extensão sob ${site.manifest.spa.prefixo} recebe ${site.manifest.spa.indice}, mais ${Object.keys(site.manifest.aliases ?? {}).length} alias declarado(s); sem índice de diretório, sem /@fs`
+        : "somente os arquivos do manifesto; sem índice, sem fallback, sem /@fs",
       collector: "POST /api/submit da execução armada; relatório diferente do aceito é recusado e arquivado",
     },
   };

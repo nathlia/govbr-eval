@@ -5,7 +5,7 @@
  * - confere os quatro sha256 do § 1 antes de medir (recusa se qualquer um divergir);
  * - serve o `dist/` do corpus num servidor próprio (porta efêmera, nunca 3100/4100-4102);
  * - janela 1280×900, Chromium do Playwright do govbr-eval;
- * - aborta por `page.route` os três hosts de telas.json › privacidade.isolamento.externos e registra
+ * - aborta por `page.route` os três hosts externos da captura (EXTERNOS, abaixo) e registra
  *   todo pedido, para que um pedido a host não declarado apareça.
  */
 import { createServer } from "http";
@@ -52,9 +52,11 @@ export function paginaDeArgs(args) {
   return { nome, ...PAGINAS[nome] };
 }
 
-const telas = JSON.parse(readFileSync(join(RAIZ_EVAL, "telas.json"), "utf8"));
-export const EXTERNOS = telas.privacidade.isolamento.externos.map(h => h.replace(/:443$/, ""));
-export const AUSENTES = telas.privacidade.isolamento.ausentes;
+// A captura de /privacidade saiu de telas.json quando a tela B passou a ser a de Vistorias (D-57).
+// Estes são os valores que telas.json › privacidade.isolamento declarava (govbr-eval a493164), sob
+// os quais estas auditorias foram medidas; ficam aqui para que o registro continue reproduzível.
+export const EXTERNOS = ["cdngovbr-ds.estaleiro.serpro.gov.br", "fonts.googleapis.com", "cdnjs.cloudflare.com"];
+export const AUSENTES = ["/real/assets/images/govbr-logo.png", "/assets/images/exit-icon.png"];
 
 /** Confere os quatro arquivos em `public/` e em `dist/`. Devolve a lista de divergências. */
 export function conferirHashes(hashes = HASHES) {

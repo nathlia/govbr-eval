@@ -21,21 +21,31 @@
     "review": "results/semantic-review-solicitacao",
     "isolamento": { "texto": "Solicitar serviço", "alvo": "#servico", "fonte": "/src/solicitacao.tsx", "interacao": { "clicar": ".acao-enviar", "esperar": ".mensagem-retorno" } }
   },
-  "privacidade": {
-    "titulo": "tela B — política de privacidade do PNIP (página real congelada, fatia 8, D-49)",
-    "entry": "real/pnip-privacidade.html",
+  "vistorias": {
+    "titulo": "tela B — Vistorias PROPESC do PNIP (aplicação real em modo mock, fatia 8, D-57)",
+    "entry": "pnip/portal-mpa/vistorias?mock-perfil=mpa",
     "reference": null,
     "sources": [],
-    "runs": { "com": "results/runs-privacidade", "sem": "results/runs-privacidade-ablacao", "smoke": "results/runs-privacidade-smoke" },
-    "review": "results/semantic-review-privacidade",
-    "nota": "Captura estática de rota pública da aplicação PNIP (Angular 15, @govbr-ds/core 3.4.1 + @govbr-ds/webcomponents 1.16.0), congelada em govbr-corpus/public/real/ com sha256 no manifesto da ala. Não é entrada Vite: não há TSX para o ESLint ler (sources vazio) e os bindings do Angular não sobreviveram à captura (botões não navegam, formulários não submetem), então nenhuma interação de setup é declarada. Os web components do DS voltam a hidratar; o que eles ainda fazem por conta própria (o menu do cabeçalho, por exemplo) é pergunta da auditoria, não afirmação deste arquivo. Sem referência: o gabarito sai de auditoria por medição, antes de qualquer execução (D-49).",
+    "runs": { "com": "results/runs-vistorias", "sem": "results/runs-vistorias-ablacao", "smoke": "results/runs-vistorias-smoke" },
+    "review": "results/semantic-review-vistorias",
+    "nota": "Build do modo mock da aplicação PNIP (Angular 15, @govbr-ds/core 3.4.1 + @govbr-ds/webcomponents 1.16.0), congelado byte a byte em govbr-corpus/public/pnip/ com sha256 no manifesto da ala (public/pnip/manifesto.json). O código de produção roda: roteamento, guards, componentes e web components do DS. Sessão, backend e recursos externos são substituídos dentro do navegador, com dados fictícios e o hoje congelado em 2026-03-16 09:30. A rota é /pnip/portal-mpa/vistorias; o `?mock-perfil=mpa` da entrada escolhe a sessão fictícia — usuária já logada, com o vínculo de coordenador que o portal escolheria (pnip-mock 1067443); sem ele o AuthGuard real manda para /pnip/login —, e o próprio app o retira da barra de endereço. Não é entrada Vite: não há TSX para o ESLint ler (sources vazio). Sem referência: o gabarito sai de auditoria por medição, antes de qualquer execução (D-49). A captura estática de /privacidade que ocupava este lugar (real/pnip-privacidade.html) saiu do instrumento (D-57); as auditorias dela ficam em tela-b/ como registro (D-56).",
     "isolamento": {
-      "texto": "Política de Privacidade do serviço",
-      "alvo": "h1",
+      "texto": "Vistorias",
+      "alvo": "#TRAMITANDO",
       "fonte": null,
-      "interacao": null,
-      "externos": ["cdngovbr-ds.estaleiro.serpro.gov.br:443", "fonts.googleapis.com:443", "cdnjs.cloudflare.com:443"],
-      "ausentes": ["/real/assets/images/govbr-logo.png", "/assets/images/exit-icon.png"]
+      "interacao": {
+        "clicar": "#AGENDAR",
+        "esperar": ".tab-item.active #AGENDAR",
+        "nota": "Interações reais: o Angular roda e o backend é um armazenamento em memória dentro do navegador, então abas, paginação, filtros, modais e ações de linha respondem como no projeto, e o que se grava persiste na navegação interna. Recarregar a página volta ao estado inicial. O clique declarado aqui é só prova de vida (troca de aba), não estado de gabarito: a tela ainda não tem referência."
+      },
+      "externos": [],
+      "site": {
+        "arvore": "pnip/",
+        "excluir": ["pnip/manifesto.json"],
+        "indice": "pnip/index.html",
+        "aliases": { "/assets/images/exit-icon.png": "pnip/assets/images/exit-icon.png" },
+        "nota": "SPA. A superfície congela a árvore pnip/ inteira, porque os nomes dos chunks lazy são montados em tempo de execução pelo runtime do Angular e não aparecem por extenso em arquivo nenhum, e responde com o índice a todo GET sem extensão sob /pnip/. O único alias é o ícone do \"Sair\": o template sobe três níveis e, sob <base href=\"/pnip/\">, sai do prefixo. O manifesto da ala é proveniência, não parte da tela, e fica fora do site."
+      }
     }
   }
 }
