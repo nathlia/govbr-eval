@@ -67,6 +67,25 @@ export interface Resolution {
 export interface StateCheckpoint {
   id: string;
   afterStep: number;
+  /** Caminho (`pathname`) em que a parada tem de estar. Obrigatório quando o setup navega. */
+  path?: string;
+}
+
+/**
+ * O que a varredura mediu sobre ONDE a página estava em cada parada (navegação, D-57).
+ *
+ * `segmentOf` é o número de passos `navigate` já corridos até a parada: paradas de mesmo segmento
+ * falam da mesma árvore, e só entre elas a aditividade é cobrada. `documentOf` é uma marca posta
+ * no `window` do documento na primeira parada; se ela some ou muda, o documento foi RECARREGADO
+ * entre duas paradas — o que nenhum passo declara e o que zeraria o estado de uma SPA.
+ */
+export interface StateNavigation {
+  segmentOf: Map<string, number>;
+  /** `pathname` MEDIDO em cada parada. */
+  pathOf: Map<string, string>;
+  /** `path` DECLARADO em `_meta.states`, quando há. */
+  declaredPathOf: Map<string, string>;
+  documentOf: Map<string, string>;
 }
 
 export interface StateResolutions {
@@ -74,6 +93,8 @@ export interface StateResolutions {
   /** Ordem declarada, do primeiro paint ao estado mais avançado. */
   order: string[];
   byState: Map<string, Resolution>;
+  /** Ausente em resoluções montadas à mão (fixtures): tudo num segmento só, sem endereço medido. */
+  navigation?: StateNavigation;
 }
 
 interface InPageResult {
@@ -256,6 +277,9 @@ export async function preparePage(
   url: string,
   opts: { waitFor?: string; setup?: FlowSetupStep[] } = {},
 ): Promise<void> {
+  // Este caminho mede UM estado, o do fim do setup: com navegação isso perderia os segmentos
+  // anteriores, então para aqui em vez de medir o que sobrou.
+  exigeSegmentoUnico(opts.setup, "preparação de estado único (preparePage)");
   await openPage(page, url, opts);
 
   // Leva a página ao estado que o gabarito descreve. Sem isto, uma violação que só nasce
@@ -277,13 +301,142 @@ export async function openPage(
 /** Aplica uma FATIA da sequência de `setup`. Separado para que os estados sejam alcançados em ordem. */
 export async function runSetupSteps(page: Page, steps: FlowSetupStep[]): Promise<void> {
   for (const step of steps) {
-    if (step.action === "click" && step.selector) await page.click(step.selector);
-    else if (step.action === "fill" && step.selector) await page.fill(step.selector, step.value ?? "");
+    // Passo malformado ou de tipo desconhecido PARA aqui. Antes, um `click` sem seletor ou uma
+    // ação que o código não conhecia eram pulados em silêncio, e a página era medida num estado
+    // que o gabarito não descreve.
+    const problemas = problemasDoPasso(step);
+    if (problemas.length) throw new Error(`passo de setup inválido ${JSON.stringify(step)}: ${problemas.join("; ")}`);
+    if (step.action === "click") await page.click(step.selector!);
+    else if (step.action === "fill") await page.fill(step.selector!, step.value ?? "");
     else if (step.action === "wait") {
       if (step.selector) await page.waitForSelector(step.selector, { timeout: 10_000 });
       else await page.waitForTimeout(step.ms ?? 250);
+    } else await navegar(page, step);
+  }
+}
+
+// ── Navegação dentro da aplicação (D-57) ─────────────────────────────────────
+
+/** Marca posta no `window` do documento: se some, o documento foi recarregado. */
+const MARCA_DOCUMENTO = `(() => {
+  if (!window.__govbrEvalDocumento) window.__govbrEvalDocumento = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  return window.__govbrEvalDocumento;
+})()`;
+
+/** Problemas de forma de um passo de `setup`; vazio quando o passo é executável. */
+export function problemasDoPasso(step: FlowSetupStep): string[] {
+  const p: string[] = [];
+  const texto = (v: unknown) => typeof v === "string" && v.trim().length > 0;
+  const sobrando = (campos: (keyof FlowSetupStep)[]) => {
+    for (const c of campos) if (step[c] !== undefined) p.push(`"${c}" não se aplica a "${step.action}"`);
+  };
+  switch (step.action) {
+    case "click":
+      if (!texto(step.selector)) p.push("click exige selector");
+      sobrando(["path", "waitFor", "value", "ms"]);
+      break;
+    case "fill":
+      if (!texto(step.selector)) p.push("fill exige selector");
+      sobrando(["path", "waitFor", "ms"]);
+      break;
+    case "wait":
+      sobrando(["path", "waitFor", "value"]);
+      break;
+    case "navigate":
+      if (texto(step.selector) === texto(step.path)) p.push("navigate declara exatamente um de selector (clique) ou path (caminho)");
+      if (!texto(step.waitFor)) p.push("navigate exige waitFor: o seletor que prova que a rota nova pintou");
+      if (step.path !== undefined && !(typeof step.path === "string" && step.path.startsWith("/") && !step.path.startsWith("//"))) {
+        p.push(`path tem de ser caminho absoluto na mesma origem ("/…"), não ${JSON.stringify(step.path)}`);
+      }
+      sobrando(["value", "ms"]);
+      break;
+    default:
+      p.push(`ação desconhecida: ${JSON.stringify((step as { action?: unknown }).action)}`);
+  }
+  return p;
+}
+
+/** A sequência contém alguma navegação? */
+export function temNavegacao(setup: readonly unknown[] | undefined): boolean {
+  return (setup ?? []).some(s => (s as FlowSetupStep | null)?.action === "navigate");
+}
+
+/** Segmento em que a página está depois de `afterStep` passos: quantos `navigate` já correram. */
+export function segmentoApos(setup: readonly FlowSetupStep[] | undefined, afterStep: number): number {
+  return (setup ?? []).slice(0, afterStep).filter(s => s.action === "navigate").length;
+}
+
+/**
+ * Recusa explícita de quem mede UM estado só, no fim do `setup`.
+ *
+ * Numa sequência aditiva o último estado contém todos os anteriores, e medir só ele não perde
+ * nada. Com `navigate` isso deixa de valer: a rota nova troca a árvore, e o que o gabarito ancora
+ * nos segmentos anteriores não existe mais no fim. Medir mesmo assim seria pular esses segmentos em
+ * silêncio — então o consumidor para, dizendo por quê.
+ */
+export function exigeSegmentoUnico(setup: readonly unknown[] | undefined, consumidor: string): void {
+  if (!temNavegacao(setup)) return;
+  const n = (setup ?? []).filter(s => (s as FlowSetupStep | null)?.action === "navigate").length;
+  throw new Error(`${consumidor}: o setup desta referência navega (${n} passo(s) navigate, ${n + 1} segmentos), e este ` +
+    "consumidor mede um estado só, no fim do setup — perderia em silêncio o que os segmentos anteriores ancoram. " +
+    "Recusado. Hoje só `conferir:referencia` mede referência com navegação (estado a estado, segmento a segmento).");
+}
+
+/**
+ * Executa um `navigate`: troca de rota na MESMA origem e no MESMO documento.
+ *
+ * Por clique, espera o endereço mudar (um clique que não troca de endereço não é navegação — é um
+ * `click` mal declarado). Por caminho, empurra o endereço no histórico e avisa o roteador com
+ * `popstate`, como o botão Voltar faria; `page.goto` está fora de questão porque recarregaria o
+ * documento e zeraria o backend em memória. Em ambos: a origem tem de continuar a mesma, o
+ * documento não pode ter sido recarregado e `waitFor` tem de aparecer.
+ */
+async function navegar(page: Page, step: FlowSetupStep): Promise<void> {
+  const antes = new URL(page.url());
+  const documento = await page.evaluate(MARCA_DOCUMENTO) as string;
+  if (step.selector) {
+    await page.click(step.selector);
+    try {
+      await page.waitForURL(u => u.href !== antes.href, { timeout: 10_000, waitUntil: "commit" });
+    } catch {
+      throw new Error(`navigate por clique em ${step.selector}: o endereço não mudou (${antes.pathname}); não é navegação`);
+    }
+  } else {
+    const alvo = new URL(step.path!, antes);
+    if (alvo.origin !== antes.origin) throw new Error(`navigate: ${step.path} sai da origem ${antes.origin}`);
+    if (alvo.href === antes.href) throw new Error(`navigate: a página já está em ${step.path}`);
+    await page.evaluate(`history.pushState(null, "", ${JSON.stringify(alvo.pathname + alvo.search + alvo.hash)});
+      dispatchEvent(new PopStateEvent("popstate", { state: null }));`);
+  }
+  await page.waitForSelector(step.waitFor!, { timeout: 10_000 });
+  const depois = new URL(page.url());
+  if (depois.origin !== antes.origin) throw new Error(`navigate: a página saiu da origem ${antes.origin} para ${depois.origin}`);
+  const agora = await page.evaluate(`window.__govbrEvalDocumento || null`) as string | null;
+  if (agora !== documento) {
+    throw new Error(`navigate ${JSON.stringify(step)}: o documento foi recarregado (${antes.pathname} → ${depois.pathname}); ` +
+      "navegação só dentro da aplicação, sem recarga");
+  }
+}
+
+/**
+ * Forma da sequência e das paradas, conferida ANTES de a página ser tocada.
+ *
+ * Com navegação, toda parada declara `path`: é o endereço que diz de que rota a parada fala.
+ */
+export function problemasDaSequencia(setup: readonly FlowSetupStep[], states: readonly StateCheckpoint[]): string[] {
+  const p: string[] = [];
+  setup.forEach((step, i) => { for (const q of problemasDoPasso(step)) p.push(`setup[${i}]: ${q}`); });
+  const navega = temNavegacao(setup);
+  for (const st of states) {
+    if (st.path === undefined) {
+      if (navega) p.push(`estado ${st.id}: o setup navega, então a parada declara path (o pathname em que a página tem de estar)`);
+      continue;
+    }
+    if (typeof st.path !== "string" || !st.path.startsWith("/") || st.path.startsWith("//") || /[?#]/.test(st.path)) {
+      p.push(`estado ${st.id}: path tem de ser um pathname absoluto sem consulta nem fragmento, não ${JSON.stringify(st.path)}`);
     }
   }
+  return p;
 }
 
 /**
@@ -358,18 +511,26 @@ export async function resolveStatesOnPage(
   if (ultimo.afterStep !== setup.length) {
     throw new Error(`último estado (${ultimo.id}) para em ${ultimo.afterStep} de ${setup.length} passos de setup`);
   }
+  const forma = problemasDaSequencia(setup, states);
+  if (forma.length) throw new Error(`sequência de setup/estados malformada:\n  - ${forma.join("\n  - ")}`);
 
   const byState = new Map<string, Resolution>();
+  const navigation: StateNavigation = { segmentOf: new Map(), pathOf: new Map(), declaredPathOf: new Map(), documentOf: new Map() };
   let applied = 0;
   for (const st of states) {
     await runSetupSteps(page, setup.slice(applied, st.afterStep));
     applied = st.afterStep;
+    // Onde a página está, medido ANTES da resolução: segmento, endereço e documento.
+    navigation.segmentOf.set(st.id, segmentoApos(setup, st.afterStep));
+    navigation.pathOf.set(st.id, new URL(page.url()).pathname);
+    if (st.path !== undefined) navigation.declaredPathOf.set(st.id, st.path);
+    navigation.documentOf.set(st.id, await page.evaluate(MARCA_DOCUMENTO) as string);
     const { bySelector, byKey } = await resolveOnPage(page, selectors);
     const resolution: Resolution = { url, bySelector, byKey };
     byState.set(st.id, resolution);
     if (opts.onState) await opts.onState(st.id, resolution, page);
   }
-  return { url, order: states.map(s => s.id), byState };
+  return { url, order: states.map(s => s.id), byState, navigation };
 }
 
 /**

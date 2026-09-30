@@ -34,7 +34,7 @@ import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 import type { FlowGroundTruth, FlowSetupStep, FlowViewport } from "../types";
 import { ROOT } from "./adjudication";
-import { VIEWPORT_PADRAO, preparePage, resolveOnPage } from "./anchors";
+import { VIEWPORT_PADRAO, exigeSegmentoUnico, preparePage, resolveOnPage } from "./anchors";
 import { normalizeRuleId } from "./units";
 import { FLOW_INSTRUMENT_VERSION } from "./instrument";
 import {
@@ -193,6 +193,9 @@ async function main(): Promise<number> {
   const gt = gtBytes ? JSON.parse(gtBytes.toString("utf8")) as FlowGroundTruth : null;
   const statePlan = gt ? statePlanOf(gt)
     : { padrao: VIEWPORT_PADRAO, extras: [], setup: [], waitFor: null, url: tela.entry };
+  // A linha de base varre o estado do FIM do setup, e o scanner do oráculo recebe a mesma sequência
+  // como `actions` — a extensão de navegação (D-57) não chega a ele. Recusa antes de gastar nada.
+  exigeSegmentoUnico(statePlan.setup, "baselines:fluxo (axe e varredura do validator no fim do setup)");
   const url = new URL(gt?._meta.url ?? tela.entry, appOrigin).toString();
   const corpusSrc = process.env.CORPUS_SRC ?? join(ROOT, "..", "govbr-corpus", "src");
   const flowSources = tela.sources.map(source => join(corpusSrc, "..", source));

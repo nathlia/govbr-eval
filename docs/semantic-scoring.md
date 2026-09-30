@@ -359,6 +359,40 @@ falhando **para a preparação** em vez de medir:
 | `state: "sempre"` | rótulo | a unidade existe em todos os estados medidos |
 | `conditional: true` | documentação do campo | a unidade **não** existe antes do estado que declara |
 
+### Navegação dentro da aplicação: segmentos (D-57)
+
+A tela B (`vistorias`) é uma SPA cujo conteúdo mais rico só se alcança trocando de rota (lista →
+detalhe → formulário). Uma sequência só aditiva não chega lá: a rota nova troca a árvore inteira.
+Por isso o `setup` aceita um quarto passo:
+
+```json
+{ "action": "navigate", "selector": "<alvo do clique>", "waitFor": "<seletor da rota nova>" }
+{ "action": "navigate", "path": "/pnip/portal-mpa/vistorias/…", "waitFor": "<seletor da rota nova>" }
+```
+
+- **Só dentro da aplicação.** Exatamente um de `selector` (clique; o endereço tem de mudar) ou
+  `path` (pathname absoluto na MESMA origem, aplicado com `history.pushState` + `popstate`, que é o
+  que o roteador escuta). `waitFor` é obrigatório. Nunca `page.goto`: o documento não pode ser
+  recarregado — recarregar zera o backend em memória. Uma marca no `window` do documento acusa
+  recarga, e o passo para.
+- **Cada `navigate` abre um segmento.** A aditividade é cobrada só entre paradas do MESMO segmento
+  (sem navegação entre elas); do outro lado de um `navigate`, sumir é o que a navegação declara, não
+  defeito. `conditional` é cobrado dentro do segmento do estado declarado (a mesma chave estrutural
+  noutra rota é outro elemento); `sempre` continua valendo para todas as paradas.
+- **Toda parada declara `path`** quando o setup navega (`_meta.states[].path`, só o pathname). A
+  conferência mede o endereço em cada parada e acusa o que diverge, a mudança de endereço sem
+  `navigate` dentro de um segmento e a recarga do documento entre paradas.
+- **Unidades por segmento.** Cada spec é construída no último estado do segmento do seu `state`
+  (`sempre`, no último de todos), e seu predicado de aceitação só é medido nas paradas desse
+  segmento. Sem navegação nada disso muda: um segmento só, o mesmo último estado, as mesmas saídas
+  (`ground-truth-fluxo.json` e `ground-truth-solicitacao.json` conferidos byte a byte antes e depois).
+- **Quem mede um estado só recusa.** A cena do pacote (`flow:review prepare`), as linhas de base
+  (`baselines:fluxo`, cujo scanner recebe o setup como `actions`), o manifesto de coleta
+  (`manifest:coleta build`, para a bateria não ser paga e parar depois) e todo caminho que passa por
+  `preparePage` (`score:fluxo:legacy`, `adjudicate`, `pacote:revisao`) param com erro nomeando o
+  motivo quando o setup navega. Hoje só `conferir:referencia` mede referência com navegação. Passo
+  malformado ou de ação desconhecida também para — antes, um `click` sem seletor era pulado.
+
 A visibilidade passou a ser medida junto da chave canônica. A chave é estrutural: oculto e visível
 produzem a mesma. Agora cada sujeito chega ao cartão dizendo se está oculto e por quê
 (`nao-renderizado`, `aria-hidden`, atributo `hidden`). Não é veredito — há defeito legítimo em

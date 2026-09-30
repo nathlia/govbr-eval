@@ -433,15 +433,28 @@ export interface FlowAcceptancePredicate {
   note?: string;
 }
 
-/** Um passo de preparação da página antes da resolução de âncoras. */
+/**
+ * Um passo de preparação da página antes da resolução de âncoras.
+ *
+ * `navigate` (tela B, D-57) é a navegação DENTRO da aplicação: troca de rota sem recarregar o
+ * documento, pelo clique num alvo (`selector`) OU por um caminho da mesma origem (`path`, aplicado
+ * com `history.pushState` + `popstate`, que é o que o roteador da SPA escuta). Nunca recarrega:
+ * recarregar zeraria o backend em memória e mediria um estado que o setup não descreve. Exige
+ * `waitFor`, o seletor que prova que a rota nova pintou. Cada `navigate` abre um SEGMENTO novo da
+ * sequência: a aditividade só é cobrada dentro de um segmento (ver `_meta.states`).
+ */
 export interface FlowSetupStep {
-  action: "click" | "fill" | "wait";
-  /** Alvo de `click`/`fill`, ou seletor a aguardar em `wait`. */
+  action: "click" | "fill" | "wait" | "navigate";
+  /** Alvo de `click`/`fill`, seletor a aguardar em `wait`, ou alvo do clique de `navigate`. */
   selector?: string;
   /** Texto de `fill`. */
   value?: string;
   /** Milissegundos de `wait` quando não há seletor. */
   ms?: number;
+  /** `navigate` sem clique: caminho absoluto (`/…`) na MESMA origem da entrada. */
+  path?: string;
+  /** `navigate`: seletor que tem de existir depois da troca de rota. Obrigatório. */
+  waitFor?: string;
 }
 
 /** Tamanho de janela em que uma unidade é medida. */
@@ -465,6 +478,8 @@ export interface FlowGroundTruth {
      * A sequência tem de ser ADITIVA: pode fazer nascer elementos, nunca destruir os que o
      * gabarito já ancora. Se um passo removesse um elemento, as duas metades do gabarito
      * passariam a descrever estados diferentes da página e nada acusaria.
+     *
+     * Com `navigate` (D-57) a promessa vale POR SEGMENTO: entre paradas sem navegação no meio.
      */
     setup?: FlowSetupStep[];
     /**
@@ -478,8 +493,13 @@ export interface FlowGroundTruth {
      * `afterStep` é um índice na sequência de `setup` — nunca uma segunda cópia dela, para que o
      * gabarito e o resolvedor não possam discordar sobre o que um estado quer dizer. O primeiro
      * estado declarado deve ser o primeiro paint (`afterStep: 0`).
+     *
+     * `path` é o caminho da barra de endereço (só `pathname`) em que a parada tem de estar. É
+     * OBRIGATÓRIO em todas as paradas quando o `setup` tem algum `navigate` — a navegação troca a
+     * árvore inteira, e é o endereço que diz de qual rota a parada fala; sem navegação é opcional.
+     * Em ambos os casos, se declarado, é conferido contra a página.
      */
-    states?: { id: string; afterStep: number; note?: string }[];
+    states?: { id: string; afterStep: number; note?: string; path?: string }[];
     /**
      * Viewport padrão da suíte, em que toda spec que não declara `viewport` é medida.
      *

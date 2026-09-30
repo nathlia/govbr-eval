@@ -32,7 +32,7 @@ import { ROOT } from "./adjudication";
 import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION, FLOW_ACCEPTANCE_POLICY_VERSION, FLOW_REFERENCE_FILE } from "./instrument";
 import { referenciaDe, telaFromArgs } from "./telas";
 import { SCORER_FILES, digest } from "./semantic-flow";
-import { VIEWPORT_PADRAO } from "./anchors";
+import { VIEWPORT_PADRAO, exigeSegmentoUnico } from "./anchors";
 
 export const COLLECTION_MANIFEST_VERSION = "manifesto-coleta-1.0.0";
 export const COLLECTION_PLAN_VERSION = "plano-bateria-1.0.0";
@@ -424,6 +424,9 @@ export async function buildCollectionManifest(options: {
   const referencePath = options.referencePath ?? join(ROOT, FLOW_REFERENCE_FILE);
   const reference = referenceIdentity(referencePath);
   const statePlan = existsSync(referencePath) ? statePlanOf(JSON.parse(readFileSync(referencePath, "utf8"))) : null;
+  // Não se congela coleta cuja linha de base e cujo pacote não podem ser montados (D-57): a bateria
+  // seria paga para depois parar na preparação.
+  if (statePlan) exigeSegmentoUnico(statePlan.setup, "manifest:coleta build (a linha de base e o pacote desta referência recusariam)");
   const oracle = oracleIdentity(VALIDATOR_ROOT, options.oracleBuilt ?? false);
   const siteBytes = existsSync(options.siteManifestPath) ? readFileSync(options.siteManifestPath) : null;
   const siteManifest = siteBytes ? JSON.parse(siteBytes.toString("utf8")) as { corpusCommit: string | null; corpusDirty: boolean | null } : null;

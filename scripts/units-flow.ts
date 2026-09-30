@@ -64,6 +64,21 @@ export interface StatePresence {
   /** Ordem declarada, do primeiro paint ao estado mais avançado. */
   order: string[];
   statesOfKey: Map<string, string[]>;
+  /**
+   * Segmento de cada estado (quantos `navigate` do setup já correram). Ausente, ou tudo 0, quando o
+   * setup não navega — e aí nada abaixo muda de comportamento.
+   */
+  segmentOf?: Map<string, number>;
+}
+
+/** Segmento de um estado; 0 quando a medida não registrou segmentos. */
+function segmentoDe(presence: { segmentOf?: Map<string, number> }, state: string): number {
+  return presence.segmentOf?.get(state) ?? 0;
+}
+
+/** A medida atravessa mais de um segmento, isto é, o setup navega? */
+export function haSegmentos(presence: { segmentOf?: Map<string, number> } | undefined): boolean {
+  return !!presence?.segmentOf && [...presence.segmentOf.values()].some(s => s > 0);
 }
 
 /** Todo seletor do gabarito que a página desmente. Enquanto houver um, não se mede nada. */
@@ -88,7 +103,7 @@ export interface FlowUnitsBuild {
 export function statesOfGroundTruth(gt: FlowGroundTruth): StateCheckpoint[] | null {
   const declared = gt._meta.states;
   if (!declared || declared.length === 0) return null;
-  return declared.map(s => ({ id: s.id, afterStep: s.afterStep }));
+  return declared.map(s => ({ id: s.id, afterStep: s.afterStep, ...(s.path !== undefined ? { path: s.path } : {}) }));
 }
 
 export function selectorsOfGroundTruth(gt: FlowGroundTruth): string[] {
@@ -129,18 +144,50 @@ export function measureStatePresence(res: StateResolutions): { presence: StatePr
     }
   }
 
+  // Aditividade POR SEGMENTO (D-57). Um `navigate` troca a rota e, com ela, a árvore: o que existia
+  // antes pode sumir, e isso é o que a navegação declara, não defeito. Entre paradas SEM navegação
+  // no meio a promessa continua a mesma de sempre. Sem navegação há um segmento só, e o laço abaixo
+  // é exatamente a conferência de antes, com a mesma mensagem.
+  const nav = res.navigation;
+  const segmentOf = new Map(res.order.map(e => [e, nav?.segmentOf.get(e) ?? 0] as const));
+  const segmentos = [...new Set(res.order.map(e => segmentOf.get(e)!))];
   for (const [key, states] of statesOfKey) {
-    const desde = res.order.indexOf(states[0]);
-    const faltando = res.order.slice(desde).filter(e => !states.includes(e));
-    if (faltando.length > 0) {
-      defects.push({
-        specId: "_meta.setup",
-        problem: `sequência de setup NÃO é aditiva: ${key} resolve em ${states.join(", ")} e desaparece em ${faltando.join(", ")}`,
-      });
+    for (const seg of segmentos) {
+      const ordem = res.order.filter(e => segmentOf.get(e) === seg);
+      const presentes = states.filter(e => segmentOf.get(e) === seg);
+      if (presentes.length === 0) continue;
+      const desde = ordem.indexOf(presentes[0]);
+      const faltando = ordem.slice(desde).filter(e => !states.includes(e));
+      if (faltando.length > 0) {
+        defects.push({
+          specId: "_meta.setup",
+          problem: `sequência de setup NÃO é aditiva: ${key} resolve em ${states.join(", ")} e desaparece em ${faltando.join(", ")}` +
+            (segmentos.length > 1 ? ` (segmento ${seg}, sem navegação entre as paradas)` : ""),
+        });
+      }
     }
   }
 
-  return { presence: { order: res.order, statesOfKey }, defects };
+  // Onde a página estava em cada parada. Só há o que conferir quando a varredura mediu.
+  if (nav) {
+    for (const [i, e] of res.order.entries()) {
+      const medido = nav.pathOf.get(e);
+      const declarado = nav.declaredPathOf.get(e);
+      if (declarado !== undefined && medido !== declarado) {
+        defects.push({ specId: "_meta.states", problem: `estado ${e} declara path ${declarado}, mas a página está em ${medido}` });
+      }
+      if (i === 0) continue;
+      const anterior = res.order[i - 1];
+      if (nav.documentOf.get(anterior) !== nav.documentOf.get(e)) {
+        defects.push({ specId: "_meta.setup", problem: `o documento foi recarregado entre ${anterior} e ${e}: nenhum passo declara recarga, e ela zera o estado da página` });
+      }
+      if (segmentOf.get(anterior) === segmentOf.get(e) && nav.pathOf.get(anterior) !== medido) {
+        defects.push({ specId: "_meta.setup", problem: `a página mudou de endereço entre ${anterior} (${nav.pathOf.get(anterior)}) e ${e} (${medido}) sem passo navigate` });
+      }
+    }
+  }
+
+  return { presence: { order: res.order, statesOfKey, ...(segmentos.length > 1 ? { segmentOf } : {}) }, defects };
 }
 
 /**
@@ -188,7 +235,11 @@ function stateDefectsOf(
       continue;
     }
     if (!conditional) continue;
-    const antes = presence.order.slice(0, alvo).filter(e => states.includes(e));
+    // "Antes" é antes DENTRO do segmento: do outro lado de um `navigate` a árvore é outra, e a
+    // mesma chave estrutural pode nomear outro elemento. Sem navegação, é a ordem inteira.
+    const antes = presence.order.slice(0, alvo)
+      .filter(e => segmentoDe(presence, e) === segmentoDe(presence, declarado))
+      .filter(e => states.includes(e));
     if (antes.length > 0) {
       defects.push({ specId: spec.id, problem: `conditional: true, mas ${key} já existe antes de "${declarado}": ${antes.join(", ")}` });
     }
@@ -203,9 +254,57 @@ function stateDefectsOf(
  * todos os participantes existem. Sem medição devolve vazio: ausência de medida não é ausência de
  * estado.
  */
-function statesOf(keys: string[], presence?: StatePresence): string[] {
+function statesOf(keys: string[], presence?: StatePresence, declarado?: string): string[] {
   if (!presence) return [];
-  return presence.order.filter(state => keys.every(k => (presence.statesOfKey.get(k) ?? []).includes(state)));
+  const todos = presence.order.filter(state => keys.every(k => (presence.statesOfKey.get(k) ?? []).includes(state)));
+  // Com navegação, uma unidade de estado declarado só existe no segmento desse estado: a mesma
+  // chave estrutural noutra rota é outro elemento. `sempre` foi conferido em todas as paradas.
+  if (!haSegmentos(presence) || !declarado || declarado === ESTADO_SEMPRE) return todos;
+  return todos.filter(e => segmentoDe(presence, e) === segmentoDe(presence, declarado));
+}
+
+/**
+ * A spec é medida nesta parada? Com um segmento só, em toda parada em que a âncora resolve (o de
+ * sempre). Com navegação, uma spec de estado declarado só nas paradas do segmento desse estado —
+ * seletor genérico (`.br-button`) resolve em outra rota para OUTROS elementos, e medir o predicado
+ * lá seria medir outra coisa sob o mesmo nome.
+ */
+export function specMedidaNoEstado(
+  spec: FlowViolationSpec,
+  state: string,
+  segmentOf: Map<string, number> | undefined,
+): boolean {
+  const declarado = spec.state ?? ESTADO_SEMPRE;
+  if (!segmentOf || declarado === ESTADO_SEMPRE || ![...segmentOf.values()].some(s => s > 0)) return true;
+  if (!segmentOf.has(declarado)) return true; // estado não declarado: a construção acusa
+  return segmentOf.get(state) === segmentOf.get(declarado);
+}
+
+/**
+ * Unidades a partir da varredura por estados.
+ *
+ * Sem navegação é exatamente `buildFlowUnits` sobre o ÚLTIMO estado — a sequência é aditiva, então
+ * ele contém todos os anteriores. Com navegação isso deixa de valer: cada spec é construída no
+ * último estado do segmento a que pertence (`sempre`, no último estado de todos), na ordem das
+ * specs, para que a saída continue na ordem do gabarito.
+ */
+export function buildFlowUnitsAcross(gt: FlowGroundTruth, res: StateResolutions, presence: StatePresence): FlowUnitsBuild {
+  const ultimo = res.byState.get(res.order[res.order.length - 1])!;
+  if (!haSegmentos(presence)) return buildFlowUnits(gt, ultimo, presence);
+  const fimDoSegmento = new Map<number, string>();
+  for (const e of res.order) fimDoSegmento.set(segmentoDe(presence, e), e);
+  const units: FlowUnit[] = [];
+  const defects: GabaritoDefect[] = [];
+  for (const spec of gt.violations) {
+    const declarado = spec.state ?? ESTADO_SEMPRE;
+    const alvo = declarado !== ESTADO_SEMPRE && presence.segmentOf!.has(declarado)
+      ? res.byState.get(fimDoSegmento.get(segmentoDe(presence, declarado))!)!
+      : ultimo;
+    const built = buildFlowUnits({ ...gt, violations: [spec] }, alvo, presence);
+    units.push(...built.units);
+    defects.push(...built.defects);
+  }
+  return { units, defects };
 }
 
 export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution, presence?: StatePresence): FlowUnitsBuild {
@@ -261,7 +360,7 @@ export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution, presence?: 
         categories: spec.categories,
         description: spec.description,
         state: spec.state ?? ESTADO_SEMPRE,
-        states: statesOf(keys, presence),
+        states: statesOf(keys, presence, spec.state),
         conditional: spec.conditional ?? false,
       });
       continue;
@@ -295,7 +394,7 @@ export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution, presence?: 
         categories: spec.categories,
         description: spec.description,
         state: spec.state ?? ESTADO_SEMPRE,
-        states: statesOf([element.key], presence),
+        states: statesOf([element.key], presence, spec.state),
         conditional: spec.conditional ?? false,
       });
     }

@@ -33,7 +33,15 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
     para a preparação. Uma spec pode declarar `acceptance`: um predicado pequeno e transparente
     (`scripts/acceptance-predicates.ts`, nada importado do oráculo) medido na página congelada, que
     **sustenta** a spec mas nunca credita a alegação. Sem predicado, `nao-implementado` — que não é
-    aceitação nem recusa, e jamais vira correção por elemento. Testes: `test:states`.
+    aceitação nem recusa, e jamais vira correção por elemento. **Navegação (D-57):** o `setup`
+    aceita `{ "action": "navigate", "selector" | "path", "waitFor" }` — troca de rota dentro da SPA,
+    por clique ou por pathname da mesma origem (pushState + popstate), nunca recarga. Cada
+    `navigate` abre um SEGMENTO: a aditividade só é cobrada dentro dele, `conditional` também, e
+    toda parada declara `path` (pathname), que a conferência mede junto com recarga e troca de
+    endereço sem `navigate`. Cada spec é construída no fim do segmento do seu `state`. Sem
+    navegação nada muda (fluxo e solicitação conferidos byte a byte). Só `conferir:referencia`
+    mede referência que navega; pacote, linha de base, manifesto de coleta e todo `preparePage`
+    RECUSAM com erro explícito. Ver `docs/semantic-scoring.md`. Testes: `test:states`.
   - **fatia 6:** a bateria grava plano + manifesto de coleta (`scripts/collection-manifest.ts`) antes
     da primeira execução e a linha de base sob o próprio carimbo; o pacote só é preparado com esse
     manifesto, essa linha de base e o site congelado (`--collection-manifest --site-dir --baseline`),

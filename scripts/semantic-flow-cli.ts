@@ -5,7 +5,7 @@ import { resolve, join, relative, isAbsolute } from "node:path";
 import { chromium } from "playwright";
 import type { FlowAgentResults, FlowGroundTruth } from "../types";
 import { ROOT } from "./adjudication";
-import { openPage, preparePage, resolveOnPage, resolveStatesOnPage, resolveWithExcept, type Resolution } from "./anchors";
+import { exigeSegmentoUnico, openPage, preparePage, resolveOnPage, resolveStatesOnPage, resolveWithExcept, type Resolution } from "./anchors";
 import { combinePredicate, measurePredicate, type PredicateResult } from "./acceptance-predicates";
 import {
   buildFlowUnits, measureStatePresence, selectorsOfGroundTruth, selectorsOfRuns,
@@ -187,6 +187,9 @@ async function prepare(): Promise<void> {
     throw new Error("Archived reference changed since collection");
   }
   const gt = JSON.parse(referenceBytes.toString("utf8")) as FlowGroundTruth;
+  // Uma cena por janela, capturada no FIM do setup, e as unidades construídas ali: com navegação
+  // (D-57) os segmentos anteriores não estariam na cena nem no casamento. Recusa antes de tudo.
+  exigeSegmentoUnico(gt._meta.setup, "flow:review prepare (cena e unidades por janela)");
   const plan = statePlanOf(gt);
   if (collection && !referenceArg && statePlanSha256(plan) !== collection.manifest.identity.statePlanSha256) {
     throw new Error("State plan differs from the collection");

@@ -6,17 +6,24 @@
  * ancora deixa de existir — vivia num comentário. O mesmo valia para `conditional`, cuja
  * documentação diz "a unidade só existe no estado declarado; nunca é presumida no primeiro paint".
  *
- * Estas fixtures existem para que as duas promessas FALHEM quando forem falsas. Nenhuma delas abre
- * navegador: a medida de presença é uma função sobre resoluções por estado, e é aí que ela é
- * cobrada. A conferência contra a página viva fica no `test:fatia6`, que prepara o pacote sobre o
- * build congelado e o gabarito real.
+ * Estas fixtures existem para que as duas promessas FALHEM quando forem falsas. As de presença não
+ * abrem navegador: a medida é uma função sobre resoluções por estado, e é aí que ela é cobrada. A
+ * conferência contra a página viva fica no `test:fatia6`, que prepara o pacote sobre o build
+ * congelado e o gabarito real.
+ *
+ * As de NAVEGAÇÃO (D-57) abrem: uma SPA mínima servida em HTTP local, com pushState, porque só a
+ * página diz se o `navigate` trocou de rota sem recarregar, em que endereço cada parada ficou e
+ * se a aditividade foi cobrada dentro do segmento e dispensada entre segmentos.
  */
 
 import assert from "node:assert/strict";
-import type { FlowGroundTruth } from "../types";
-import type { ElementRef, Resolution, StateResolutions } from "./anchors";
-import { resolveSelectors } from "./anchors";
-import { buildFlowUnits, measureStatePresence, statesOfGroundTruth } from "./units-flow";
+import { createServer, type Server } from "node:http";
+import type { AddressInfo } from "node:net";
+import { chromium } from "playwright";
+import type { FlowGroundTruth, FlowSetupStep } from "../types";
+import type { ElementRef, Resolution, StateCheckpoint, StateResolutions } from "./anchors";
+import { exigeSegmentoUnico, openPage, preparePage, resolveSelectors, resolveStatesOnPage } from "./anchors";
+import { buildFlowUnits, buildFlowUnitsAcross, measureStatePresence, specMedidaNoEstado, statesOfGroundTruth } from "./units-flow";
 
 let tests = 0;
 function test(name: string, fn: () => void): void { fn(); tests++; console.log(`ok ${name}`); }
@@ -187,6 +194,190 @@ async function testeDeElementoOculto(): Promise<void> {
   console.log("ok elemento oculto resolve como qualquer outro, mas chega à revisão dizendo que está oculto");
 }
 
-testeDeElementoOculto().then(() => {
+// ── Navegação dentro da aplicação (D-57) ─────────────────────────────────────
+
+/**
+ * Uma SPA mínima, servida por HTTP local (pushState precisa de origem de verdade): `/app/lista` e
+ * `/app/detalhe` desenhados pelo mesmo documento, links internos com `data-spa` e um link comum
+ * que RECARREGA — o caso que o `navigate` tem de recusar.
+ */
+const SPA = `<!doctype html><html><head><meta charset="utf-8"><title>spa</title></head><body>
+  <nav class="menu"><a id="ir-detalhe" data-spa href="/app/detalhe">Detalhe</a>
+    <a id="ir-lista" data-spa href="/app/lista">Lista</a> <a id="ir-recarga" href="/app/detalhe">Recarga</a></nav>
+  <main id="raiz"></main>
+  <script>
+    function render() {
+      var raiz = document.getElementById("raiz");
+      if (location.pathname === "/app/detalhe") {
+        raiz.innerHTML = '<section class="detalhe"><h1 class="titulo">Detalhe</h1>' +
+          '<button id="apagar-titulo">apagar</button><button id="abrir-painel">abrir</button></section>';
+      } else {
+        raiz.innerHTML = '<ul class="lista"><li class="item">A</li><li class="item">B</li></ul>' +
+          '<button id="abrir-painel">abrir</button><button id="rota-escondida">ir</button>';
+      }
+    }
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest("a[data-spa]");
+      if (a) { e.preventDefault(); history.pushState(null, "", a.getAttribute("href")); render(); return; }
+      if (e.target.id === "abrir-painel") { var p = document.createElement("div"); p.className = "painel"; p.textContent = "painel"; document.getElementById("raiz").appendChild(p); }
+      if (e.target.id === "apagar-titulo") document.querySelector(".titulo").remove();
+      if (e.target.id === "rota-escondida") { history.pushState(null, "", "/app/detalhe"); render(); }
+    });
+    window.addEventListener("popstate", render);
+    render();
+  </script></body></html>`;
+
+const SELETORES_SPA = [".menu a", ".item", ".titulo", ".painel", ".detalhe"];
+
+async function testesDeNavegacao(): Promise<void> {
+  const server: Server = createServer((_req, res) => {
+    res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
+    res.end(SPA);
+  });
+  await new Promise<void>(ok => server.listen(0, "127.0.0.1", () => ok()));
+  const origem = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
+  const entrada = `${origem}/app/lista`;
+  const browser = await chromium.launch();
+  const ok = (nome: string) => { tests++; console.log(`ok ${nome}`); };
+
+  /** Abre a SPA numa página nova e varre as paradas, como `conferir:referencia` faz. */
+  async function varrer(setup: FlowSetupStep[], states: StateCheckpoint[]) {
+    const page = await browser.newPage();
+    try {
+      await openPage(page, entrada, { waitFor: ".lista" });
+      const across = await resolveStatesOnPage(page, entrada, SELETORES_SPA, { setup, states });
+      return { across, ...measureStatePresence(across) };
+    } finally {
+      await page.close();
+    }
+  }
+
+  const PELO_CLIQUE: FlowSetupStep[] = [
+    { action: "click", selector: "#abrir-painel" },
+    { action: "wait", selector: ".painel" },
+    { action: "navigate", selector: "#ir-detalhe", waitFor: ".detalhe" },
+    { action: "click", selector: "#abrir-painel" },
+    { action: "wait", selector: ".painel" },
+  ];
+  const PARADAS: StateCheckpoint[] = [
+    { id: "lista", afterStep: 0, path: "/app/lista" },
+    { id: "lista-painel", afterStep: 2, path: "/app/lista" },
+    { id: "detalhe", afterStep: 3, path: "/app/detalhe" },
+    { id: "detalhe-painel", afterStep: 5, path: "/app/detalhe" },
+  ];
+
+  try {
+    {
+      // Navegação por clique: a lista SOME depois do navigate, e isso não é defeito — a aditividade
+      // não atravessa a navegação. Dentro de cada segmento, o painel só nasce.
+      const { across, presence, defects } = await varrer(PELO_CLIQUE, PARADAS);
+      assert.deepEqual(defects, [], "sumir do outro lado de um navigate não quebra a aditividade");
+      assert.deepEqual([...across.navigation!.segmentOf.values()], [0, 0, 1, 1]);
+      assert.deepEqual([...across.navigation!.pathOf.values()], ["/app/lista", "/app/lista", "/app/detalhe", "/app/detalhe"]);
+      const item = across.byState.get("lista")!.bySelector.get(".item")!.keys[0];
+      assert.deepEqual(presence.statesOfKey.get(item), ["lista", "lista-painel"], "o item existe só no segmento da lista");
+      assert.ok(presence.segmentOf, "com navegação a presença carrega os segmentos");
+
+      // Unidades: cada spec é construída no fim do SEU segmento, e só carrega estados dele.
+      const gt: FlowGroundTruth = {
+        _meta: { page: "spa", url: "/app/lista", setup: PELO_CLIQUE, states: PARADAS },
+        violations: [
+          spec({ id: "V-item", anchor: ".item", scope: "todos", expectedCount: 2, state: "lista" }),
+          // A mesma chave estrutural (main>div) já existiu na lista, do outro lado do navigate: não é
+          // "existir antes" — o condicional é cobrado dentro do segmento.
+          spec({ id: "V-painel-detalhe", anchor: ".painel", state: "detalhe-painel", conditional: true }),
+          spec({ id: "V-menu", anchor: ".menu a", scope: "todos", expectedCount: 3, state: "sempre" }),
+        ],
+      };
+      const sel = SELETORES_SPA;
+      const page = await browser.newPage();
+      await openPage(page, entrada, { waitFor: ".lista" });
+      const medida = await resolveStatesOnPage(page, entrada, sel, { setup: PELO_CLIQUE, states: PARADAS });
+      await page.close();
+      const m2 = measureStatePresence(medida);
+      const built = buildFlowUnitsAcross(gt, medida, m2.presence);
+      assert.deepEqual(built.defects, [], JSON.stringify(built.defects));
+      assert.deepEqual(built.units.map(u => u.specId), ["V-item", "V-item", "V-painel-detalhe", "V-menu", "V-menu", "V-menu"]);
+      assert.deepEqual(built.units[0].states, ["lista", "lista-painel"]);
+      assert.deepEqual(built.units[2].states, ["detalhe-painel"]);
+      const painel = medida.byState.get("detalhe-painel")!.bySelector.get(".painel")!.keys[0];
+      assert.deepEqual(m2.presence.statesOfKey.get(painel), ["lista-painel", "detalhe-painel"],
+        "a mesma chave estrutural resolve nos dois segmentos — e o condicional não a confunde");
+      assert.deepEqual(built.units[3].states, ["lista", "lista-painel", "detalhe", "detalhe-painel"]);
+      // Predicado de spec com estado declarado só é medido nas paradas do segmento desse estado.
+      assert.equal(specMedidaNoEstado(gt.violations[0], "detalhe", m2.presence.segmentOf), false);
+      assert.equal(specMedidaNoEstado(gt.violations[0], "lista-painel", m2.presence.segmentOf), true);
+      assert.equal(specMedidaNoEstado(gt.violations[2], "detalhe", m2.presence.segmentOf), true);
+      ok("navigate por clique: novo segmento, endereço medido, aditividade não atravessa a navegação, unidades por segmento");
+    }
+    {
+      // Navegação por caminho: pushState + popstate, sem recarregar.
+      const { across, defects } = await varrer(
+        [{ action: "navigate", path: "/app/detalhe", waitFor: ".detalhe" }],
+        [{ id: "lista", afterStep: 0, path: "/app/lista" }, { id: "detalhe", afterStep: 1, path: "/app/detalhe" }],
+      );
+      assert.deepEqual(defects, []);
+      assert.equal(across.navigation!.pathOf.get("detalhe"), "/app/detalhe");
+      assert.equal(across.navigation!.documentOf.get("lista"), across.navigation!.documentOf.get("detalhe"), "mesmo documento");
+      ok("navigate por caminho: mesma origem, mesmo documento, rota nova");
+    }
+    {
+      // Aditividade DENTRO de um segmento continua cobrada: apagar o título depois do navigate.
+      const { defects } = await varrer(
+        [{ action: "navigate", selector: "#ir-detalhe", waitFor: ".titulo" },
+          { action: "click", selector: "#apagar-titulo" }],
+        [{ id: "lista", afterStep: 0, path: "/app/lista" }, { id: "detalhe", afterStep: 1, path: "/app/detalhe" },
+          { id: "detalhe-sem-titulo", afterStep: 2, path: "/app/detalhe" }],
+      );
+      assert.equal(defects.length, 1, JSON.stringify(defects));
+      assert.equal(defects[0].specId, "_meta.setup");
+      assert.match(defects[0].problem, /NÃO é aditiva: .*h1.* desaparece em detalhe-sem-titulo \(segmento 1/);
+      ok("aditividade dentro de um segmento continua cobrada depois de um navigate");
+    }
+    {
+      // O MESMO sumiço sem navegação no meio é defeito (a violação que o navigate isenta).
+      const { defects } = await varrer(
+        [{ action: "click", selector: "#rota-escondida" }, { action: "wait", selector: ".detalhe" }],
+        [{ id: "lista", afterStep: 0 }, { id: "depois", afterStep: 2 }],
+      );
+      assert.match(defects.map(d => d.problem).join("\n"), /NÃO é aditiva: .*li.* desaparece em depois/);
+      assert.match(defects.map(d => d.problem).join("\n"), /mudou de endereço entre lista \(\/app\/lista\) e depois \(\/app\/detalhe\) sem passo navigate/);
+      ok("troca de rota por um click comum não abre segmento: some = defeito, e o endereço denuncia");
+    }
+    {
+      // Endereço declarado que a página desmente.
+      const { defects } = await varrer(PELO_CLIQUE, PARADAS.map(p => p.id === "detalhe" ? { ...p, path: "/app/editar" } : p));
+      assert.deepEqual(defects, [{ specId: "_meta.states", problem: "estado detalhe declara path /app/editar, mas a página está em /app/detalhe" }]);
+      ok("path declarado diferente do medido é acusado");
+    }
+    {
+      // Recusas: forma, recarga, origem, e quem mede um estado só.
+      await assert.rejects(varrer(PELO_CLIQUE, PARADAS.map(({ path: _p, ...r }) => r)), /o setup navega, então a parada declara path/);
+      await assert.rejects(varrer([{ action: "navigate", selector: "#ir-detalhe", path: "/app/detalhe", waitFor: ".detalhe" }],
+        [{ id: "a", afterStep: 0, path: "/app/lista" }, { id: "b", afterStep: 1, path: "/app/detalhe" }]), /exatamente um de selector/);
+      await assert.rejects(varrer([{ action: "navigate", selector: "#ir-detalhe" }],
+        [{ id: "a", afterStep: 0, path: "/app/lista" }, { id: "b", afterStep: 1, path: "/app/detalhe" }]), /exige waitFor/);
+      await assert.rejects(varrer([{ action: "navigate", selector: "#ir-recarga", waitFor: ".detalhe" }],
+        [{ id: "a", afterStep: 0, path: "/app/lista" }, { id: "b", afterStep: 1, path: "/app/detalhe" }]), /documento foi recarregado/);
+      await assert.rejects(varrer([{ action: "navigate", path: "//exemplo.invalid/app", waitFor: ".detalhe" }],
+        [{ id: "a", afterStep: 0, path: "/app/lista" }, { id: "b", afterStep: 1, path: "/app/detalhe" }]), /caminho absoluto na mesma origem/);
+      await assert.rejects(varrer([{ action: "navigate", selector: "#abrir-painel", waitFor: ".painel" }],
+        [{ id: "a", afterStep: 0, path: "/app/lista" }, { id: "b", afterStep: 1, path: "/app/lista" }]), /o endereço não mudou/);
+      await assert.rejects(varrer([{ action: "scroll" as FlowSetupStep["action"], selector: "#x" }],
+        [{ id: "a", afterStep: 0 }, { id: "b", afterStep: 1 }]), /ação desconhecida/);
+      const page = await browser.newPage();
+      await assert.rejects(preparePage(page, entrada, { waitFor: ".lista", setup: PELO_CLIQUE }), /mede um estado só.*Recusado/);
+      await page.close();
+      assert.throws(() => exigeSegmentoUnico(PELO_CLIQUE, "consumidor"), /1 passo\(s\) navigate, 2 segmentos/);
+      assert.doesNotThrow(() => exigeSegmentoUnico([{ action: "click", selector: "#a" }], "consumidor"));
+      ok("recusas explícitas: path ausente, forma do passo, recarga, outra origem, clique que não navega, ação desconhecida, consumidor de estado único");
+    }
+  } finally {
+    await browser.close();
+    server.close();
+  }
+}
+
+testeDeElementoOculto().then(testesDeNavegacao).then(() => {
   console.log(`${tests} state-measurement tests passed.`);
 }).catch(err => { console.error(err); process.exit(1); });
