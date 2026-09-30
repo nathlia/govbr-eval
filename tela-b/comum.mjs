@@ -29,14 +29,37 @@ export const HASHES = {
   "real/assets/webcomponents.umd.min.js": "c196dbc1a8f5af079bb4c8c50bedb883872b2fa3f0e86d3451182072b77ae478",
 };
 
+/**
+ * Recuo do § 9: a mesma auditoria em real/pnip-login.html. A tela de login NÃO está declarada em
+ * telas.json (declarar é decisão da autora); seus hosts externos são os mesmos três que o <head> da
+ * captura referencia, e os ausentes são medidos pela auditoria (tela-b/login/auditoria.md § 1).
+ */
+export const HASHES_LOGIN = {
+  "real/pnip-login.html": "badd4707f5b59522a779143dc98b1bf68dd95cb938155d9118f0caaa48387c4f",
+  "real/manifesto.json": HASHES["real/manifesto.json"],
+  "real/assets/core.min.css": HASHES["real/assets/core.min.css"],
+  "real/assets/webcomponents.umd.min.js": HASHES["real/assets/webcomponents.umd.min.js"],
+};
+export const PAGINAS = {
+  privacidade: { url: URL_TELA, hashes: HASHES, raiz: "privacidade", inventario: "tela-b/inventario.json" },
+  login: { url: "/real/pnip-login.html", hashes: HASHES_LOGIN, raiz: "pnip-login", inventario: "tela-b/login/inventario.json" },
+};
+/** `--pagina login` escolhe o recuo; sem a opção, a tela B como sempre. */
+export function paginaDeArgs(args) {
+  const i = args.indexOf("--pagina");
+  const nome = i >= 0 ? args[i + 1] : "privacidade";
+  if (!PAGINAS[nome]) throw new Error(`página desconhecida: ${nome}`);
+  return { nome, ...PAGINAS[nome] };
+}
+
 const telas = JSON.parse(readFileSync(join(RAIZ_EVAL, "telas.json"), "utf8"));
 export const EXTERNOS = telas.privacidade.isolamento.externos.map(h => h.replace(/:443$/, ""));
 export const AUSENTES = telas.privacidade.isolamento.ausentes;
 
 /** Confere os quatro arquivos em `public/` e em `dist/`. Devolve a lista de divergências. */
-export function conferirHashes() {
+export function conferirHashes(hashes = HASHES) {
   const medidos = [];
-  for (const [rel, esperado] of Object.entries(HASHES)) {
+  for (const [rel, esperado] of Object.entries(hashes)) {
     for (const raiz of ["public", "dist"]) {
       const caminho = join(RAIZ_EVAL, "../govbr-corpus", raiz, rel);
       let obtido;
@@ -79,8 +102,8 @@ export async function novaPagina(navegador) {
 }
 
 /** Carrega a tela e espera a hidratação (§ 2, passo 1). */
-export async function carregar(pagina, base) {
-  await pagina.goto(base + URL_TELA, { waitUntil: "networkidle" });
+export async function carregar(pagina, base, url = URL_TELA) {
+  await pagina.goto(base + url, { waitUntil: "networkidle" });
   await pagina.evaluate(async () => {
     const tags = new Set();
     const visitar = raiz => { for (const el of raiz.querySelectorAll("*")) { if (el.tagName.toLowerCase().startsWith("br-")) tags.add(el.tagName.toLowerCase()); if (el.shadowRoot) visitar(el.shadowRoot); } };

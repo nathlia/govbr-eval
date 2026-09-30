@@ -9,16 +9,19 @@
  * Os papéis e nomes acessíveis são ligados ao elemento por um atributo `data-aud-i` posto DEPOIS de
  * todas as outras medidas, só nesta sessão (a página congelada não muda).
  *
- * Uso: node tela-b/inventario.mjs
+ * Uso: node tela-b/inventario.mjs [--pagina login]
  */
 import { writeFileSync } from "fs";
 import { join } from "path";
-import { chromium, servir, novaPagina, carregar, conferirHashes, PRELUDIO, RAIZ_EVAL } from "./comum.mjs";
+import { chromium, servir, novaPagina, carregar as carregarTela, conferirHashes, PRELUDIO, RAIZ_EVAL, paginaDeArgs } from "./comum.mjs";
 
-const hashes = conferirHashes();
+const P = paginaDeArgs(process.argv.slice(2));
+const carregar = (pagina, base) => carregarTela(pagina, base, P.url);
+
+const hashes = conferirHashes(P.hashes);
 if (hashes.some(h => !h.ok)) { console.error("hash divergente — a medida é recusada"); process.exit(2); }
 
-const MEDIR = `() => {
+const MEDIR = `(RAIZ) => {
 ${PRELUDIO}
   const paiComposto = el => el.parentElement || (ehSombra(raizDe(el)) ? raizDe(el).host : null);
   const rgba = s => { const m = s.match(/rgba?\\(([^)]+)\\)/); if (!m) return null; const p = m[1].split(",").map(x => parseFloat(x)); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; };
@@ -71,7 +74,7 @@ ${PRELUDIO}
   const imagens = els.filter(e => e.tagName === "IMG").map(e => ({ chave: chave(e), alt: e.getAttribute("alt"), src: e.getAttribute("src"), completa: e.complete, naturalWidth: e.naturalWidth, visivel: visivel(e), sombra: ehSombra(raizDe(e)) }));
   const links = els.filter(e => e.tagName === "A").map(e => ({ chave: chave(e), href: e.getAttribute("href"), texto: e.textContent.trim() }));
   const listas = els.filter(e => ["UL", "OL", "DL"].includes(e.tagName)).map(e => ({ chave: chave(e), itens: e.children.length, filhosNaoLi: Array.from(e.children).filter(c => c.tagName !== "LI").length }));
-  const tipografia = ["h1", "h3", "p", "li", "strong"].map(t => { const e = document.querySelector("privacidade " + t); const cs = getComputedStyle(e); return { tag: t, fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight, lineHeight: cs.lineHeight, color: cs.color, textAlign: cs.textAlign }; });
+  const tipografia = ["h1", "h2", "h3", "p", "li", "strong", "div.info", "button", "button span"].map(t => { const e = document.querySelector(RAIZ + " " + t); if (!e) return { tag: t, ausente: true }; const cs = getComputedStyle(e); return { tag: t, fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight, lineHeight: cs.lineHeight, color: cs.color, textAlign: cs.textAlign }; });
   const cores = {};
   for (const el of els.filter(visivel)) {
     const cs = getComputedStyle(el);
@@ -100,7 +103,7 @@ let inv;
 try {
   const { contexto, pagina, pedidos } = await novaPagina(navegador);
   await carregar(pagina, base);
-  inv = await pagina.evaluate(`(${MEDIR})()`);
+  inv = await pagina.evaluate(`(${MEDIR})(${JSON.stringify(P.raiz)})`);
   inv.pedidos = pedidos.map(p => `${p.abortado ? "ABORTADO " : ""}${p.host}${p.caminho}`);
 
   // Ordem de Tab real, lendo o foco através das shadow roots.
@@ -116,8 +119,7 @@ try {
   // Indicador de foco do(s) focável(is): estilo computado com o foco vindo do teclado.
   await pagina.keyboard.press("Escape");
   inv.focoTeclado = [];
-  await pagina.goto(base + "/real/pnip-privacidade.html", { waitUntil: "networkidle" });
-  await carregar(pagina, base);
+    await carregar(pagina, base);
   const semFoco = await pagina.evaluate(`(() => { ${PRELUDIO} return todos().filter(e => e.tabIndex >= 0 && visivel(e)).map(e => { const c = getComputedStyle(e); return { chave: chave(e), outline: c.outlineStyle + " " + c.outlineWidth + " " + c.outlineColor, boxShadow: c.boxShadow, border: c.borderTopWidth + " " + c.borderTopColor }; }); })()`);
   await pagina.keyboard.press("Tab");
   const comFoco = await pagina.evaluate(`(() => { ${PRELUDIO} const e = ativoProfundo(); const c = getComputedStyle(e); return { chave: chave(e), outline: c.outlineStyle + " " + c.outlineWidth + " " + c.outlineColor, outlineOffset: c.outlineOffset, boxShadow: c.boxShadow, border: c.borderTopWidth + " " + c.borderTopColor, focusVisible: e.matches(":focus-visible") }; })()`);
@@ -159,7 +161,7 @@ inv.componentes = componentes;
 inv.hashes = hashes;
 inv.medidoEm = new Date().toISOString();
 
-writeFileSync(join(RAIZ_EVAL, "tela-b/inventario.json"), JSON.stringify(inv, null, 2));
+writeFileSync(join(RAIZ_EVAL, P.inventario), JSON.stringify(inv, null, 2));
 const vis = inv.elementos.filter(e => e.visivel).length;
 console.log(`elementos: ${inv.elementos.length} (${vis} visíveis; ${inv.elementos.filter(e => e.sombra).length} em shadow root)`);
 console.log(`título: "${inv.titulo}" · lang: ${inv.lang} · links: ${inv.links.length} · imagens: ${inv.imagens.length} · listas: ${inv.listas.length}`);
@@ -171,4 +173,4 @@ console.log(`componentes: ${Object.entries(componentes).map(([k, v]) => `${k}×$
 const falhas = inv.contraste.filter(c => c.razao !== null && c.razao < 4.5);
 console.log(`contraste: ${inv.contraste.length} elementos com texto; ${inv.contraste.filter(c => c.razao === null).length} não resolvidos; ${falhas.length} abaixo de 4,5:1; mínimo ${Math.min(...inv.contraste.filter(c => c.razao).map(c => c.razao))}`);
 console.log(`desconhecidos (HTMLUnknownElement): ${inv.elementos.filter(e => !e.conhecido).map(e => e.tag).join(", ") || "nenhum"}`);
-console.log("inventário gravado em tela-b/inventario.json");
+console.log(`inventário gravado em ${P.inventario}`);

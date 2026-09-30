@@ -10,16 +10,19 @@
  * 4. produz estado sse: elemento passa a visível ou aria-expanded vira, URL igual, nenhum pedido a
  *    host externo depois do gesto, efeito 3/3 cargas novas, e mudança aditiva.
  *
- * Uso: node tela-b/teste-estados.mjs [--json <arquivo>]
+ * Uso: node tela-b/teste-estados.mjs [--pagina login] [--json <arquivo>]
  */
 import { writeFileSync } from "fs";
 import { createHash } from "crypto";
-import { chromium, servir, novaPagina, carregar, conferirHashes, PRELUDIO } from "./comum.mjs";
+import { chromium, servir, novaPagina, carregar as carregarTela, conferirHashes, PRELUDIO, paginaDeArgs } from "./comum.mjs";
+
+const P = paginaDeArgs(process.argv.slice(2));
+const carregar = (pagina, base) => carregarTela(pagina, base, P.url);
 
 const CARGAS = 3;
 const saidaJson = process.argv.includes("--json") ? process.argv[process.argv.indexOf("--json") + 1] : null;
 
-const hashes = conferirHashes();
+const hashes = conferirHashes(P.hashes);
 if (hashes.some(h => !h.ok)) {
   console.error("hash divergente — a medida é recusada:\n" + hashes.filter(h => !h.ok).map(h => `  ${h.arquivo}: ${h.obtido}`).join("\n"));
   process.exit(2);
@@ -126,6 +129,7 @@ try {
   servidor.close();
 }
 
+console.log(`página: ${P.url}`);
 console.log(`hashes: ${hashes.length}/${hashes.length} conferem`);
 console.log(`pedidos na carga: ${registro.pedidosCarga.join(" · ")}`);
 console.log(`\n${registro.gatilhos.length} gatilho(s) candidato(s):`);

@@ -1,0 +1,2499 @@
+{
+  "titulo": "PNIP",
+  "lang": "pt-br",
+  "metaRefresh": false,
+  "scripts": [
+    {
+      "src": "assets/webcomponents.umd.min.js",
+      "type": null
+    }
+  ],
+  "cabeca": [
+    "meta",
+    "meta",
+    "title",
+    "link https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css",
+    "link https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&display=swap",
+    "link https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css",
+    "link assets/core.min.css",
+    "style",
+    "style"
+  ],
+  "elementos": [
+    {
+      "i": 0,
+      "chave": "",
+      "tag": "html",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "lang": "pt-br"
+      },
+      "caixa": [
+        0,
+        0,
+        1280,
+        488
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 1,
+      "chave": "head",
+      "tag": "head",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 2,
+      "chave": "head>meta:nth-of-type(1)",
+      "tag": "meta",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "charset": "utf-8"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 3,
+      "chave": "head>meta:nth-of-type(2)",
+      "tag": "meta",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "name": "viewport",
+        "content": "width=device-width, initial-scale=1"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 4,
+      "chave": "head>title",
+      "tag": "title",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "PNIP",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 5,
+      "chave": "head>link:nth-of-type(1)",
+      "tag": "link",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "rel": "stylesheet",
+        "href": "https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawl"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 6,
+      "chave": "head>link:nth-of-type(2)",
+      "tag": "link",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "rel": "stylesheet",
+        "href": "https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&disp"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 7,
+      "chave": "head>link:nth-of-type(3)",
+      "tag": "link",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "rel": "stylesheet",
+        "href": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 8,
+      "chave": "head>link:nth-of-type(4)",
+      "tag": "link",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "rel": "stylesheet",
+        "href": "assets/core.min.css"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 9,
+      "chave": "head>style:nth-of-type(1)",
+      "tag": "style",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "type": "text/css"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": ":root{--blue-90:#11181d;--blue-80:#1f303e;--blue-70:#274863;",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 10,
+      "chave": "head>style:nth-of-type(2)",
+      "tag": "style",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "type": "text/css"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "@keyframes fadeInOpacity{0%{opacity:0}to{opacity:1}}@keyfram",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 11,
+      "chave": "body",
+      "tag": "body",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        1280,
+        488
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "generic",
+        "nome": ""
+      }
+    },
+    {
+      "i": 12,
+      "chave": "body>pnip-root",
+      "tag": "pnip-root",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "ng-version": "15.2.10"
+      },
+      "caixa": [
+        0,
+        0,
+        1280,
+        488
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": true,
+      "definido": false,
+      "ax": null
+    },
+    {
+      "i": 13,
+      "chave": "body>pnip-root>pnip-header",
+      "tag": "pnip-header",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        1280,
+        115
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": true,
+      "definido": false,
+      "ax": null
+    },
+    {
+      "i": 14,
+      "chave": "body>pnip-root>pnip-header>br-header",
+      "tag": "br-header",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "image": "assets/images/govbr-logo.png",
+        "signature": "Ministério da Pesca e Aquicultura",
+        "title": "Plataforma Nacional da Indústria do Pescado",
+        "has-menu": ""
+      },
+      "caixa": [
+        0,
+        0,
+        1280,
+        115
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": true,
+      "definido": true,
+      "ax": {
+        "ignorado": false,
+        "papel": "generic",
+        "nome": "Plataforma Nacional da Indústria do Pescado"
+      }
+    },
+    {
+      "i": 15,
+      "chave": "body>pnip-root>pnip-header>br-header >>> style",
+      "tag": "style",
+      "sombra": true,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "@import\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 16,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header",
+      "tag": "header",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "br-header",
+        "mb-4"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        1280,
+        115
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "banner",
+        "nome": ""
+      }
+    },
+    {
+      "i": 17,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "container-lg"
+      ],
+      "atributos": {},
+      "caixa": [
+        20,
+        16,
+        1240,
+        83
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 18,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-top"
+      ],
+      "atributos": {},
+      "caixa": [
+        60,
+        16,
+        1160,
+        40
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 19,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-logo"
+      ],
+      "atributos": {},
+      "caixa": [
+        60,
+        16,
+        1160,
+        40
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 20,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>img",
+      "tag": "img",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "large-img"
+      ],
+      "atributos": {
+        "src": "assets/images/govbr-logo.png",
+        "alt": "logo"
+      },
+      "caixa": [
+        60,
+        16,
+        45,
+        40
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "image",
+        "nome": "logo"
+      }
+    },
+    {
+      "i": 21,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>span",
+      "tag": "span",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "br-divider",
+        "vertical",
+        "mx-half",
+        "mx-sm-1"
+      ],
+      "atributos": {},
+      "caixa": [
+        125,
+        16,
+        1,
+        40
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 22,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>div",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-sign"
+      ],
+      "atributos": {},
+      "caixa": [
+        146,
+        26,
+        217,
+        20
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Ministério da Pesca e Aquicultura",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "generic",
+        "nome": ""
+      }
+    },
+    {
+      "i": 23,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>slot",
+      "tag": "slot",
+      "sombra": true,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "name": "headerAction"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "contents",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 24,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-bottom"
+      ],
+      "atributos": {},
+      "caixa": [
+        60,
+        64,
+        1160,
+        35
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 25,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-menu"
+      ],
+      "atributos": {},
+      "caixa": [
+        60,
+        64,
+        1160,
+        35
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 26,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-menu-trigger"
+      ],
+      "atributos": {},
+      "caixa": [
+        60,
+        67,
+        32,
+        32
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "generic",
+        "nome": ""
+      }
+    },
+    {
+      "i": 27,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot",
+      "tag": "slot",
+      "sombra": true,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "name": "headerMenu"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "contents",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 28,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+      "tag": "button",
+      "sombra": true,
+      "id": "navigation",
+      "classes": [
+        "br-button",
+        "small",
+        "circle"
+      ],
+      "atributos": {
+        "id": "navigation",
+        "aria-label": "Menu",
+        "data-toggle": "menu",
+        "data-target": "#main-navigation",
+        "type": "button"
+      },
+      "caixa": [
+        60,
+        67,
+        32,
+        32
+      ],
+      "display": "inline-flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": true,
+      "tabIndex": 0,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "button",
+        "nome": "Menu"
+      }
+    },
+    {
+      "i": 29,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button>i",
+      "tag": "i",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "fas",
+        "fa-bars"
+      ],
+      "atributos": {
+        "aria-hidden": "true"
+      },
+      "caixa": [
+        64,
+        83,
+        24,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 30,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(2)",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-info"
+      ],
+      "atributos": {},
+      "caixa": [
+        108,
+        64,
+        501,
+        35
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 31,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-title"
+      ],
+      "atributos": {},
+      "caixa": [
+        108,
+        64,
+        501,
+        35
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Plataforma Nacional da Indústria do Pescado",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "generic",
+        "nome": ""
+      }
+    },
+    {
+      "i": 32,
+      "chave": "body>pnip-root>pnip-header>div",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "container-lg"
+      ],
+      "atributos": {},
+      "caixa": [
+        20,
+        139,
+        1240,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 33,
+      "chave": "body>pnip-root>pnip-header>div>div",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "drop-menu-login",
+        "row",
+        "justify-content-end"
+      ],
+      "atributos": {
+        "style": "display: none;"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 34,
+      "chave": "body>pnip-root>pnip-header>div>div>button",
+      "tag": "button",
+      "sombra": false,
+      "id": "avatar-dropdown-trigger",
+      "classes": [
+        "br-sign-in"
+      ],
+      "atributos": {
+        "type": "button",
+        "id": "avatar-dropdown-trigger",
+        "aria-controls": "avatar-menu",
+        "data-toggle": "dropdown",
+        "data-target": "avatar-menu",
+        "aria-label": "Avatar com dropdown",
+        "data-visible": "false",
+        "aria-expanded": "false"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "inline-flex",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": 0,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 35,
+      "chave": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "br-avatar"
+      ],
+      "atributos": {
+        "title": ""
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 36,
+      "chave": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "content",
+        "bg-orange-vivid-30",
+        "text-pure-0"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 37,
+      "chave": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(2)",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "ml-2",
+        "text-gray-80",
+        "text-weight-regular"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Olá,",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 38,
+      "chave": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(2)>span",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-weight-semi-bold"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 39,
+      "chave": "body>pnip-root>pnip-header>div>div>button>i",
+      "tag": "i",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "fas",
+        "fa-caret-down",
+        "fa-chevron-down"
+      ],
+      "atributos": {
+        "aria-hidden": "true"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 40,
+      "chave": "body>pnip-root>pnip-header>div>div>div",
+      "tag": "div",
+      "sombra": false,
+      "id": "avatar-menu",
+      "classes": [
+        "br-list",
+        "dropdown-menu",
+        "mt-1"
+      ],
+      "atributos": {
+        "id": "avatar-menu",
+        "hidden": "hidden",
+        "role": "menu",
+        "aria-labelledby": "avatar-dropdown-trigger",
+        "aria-hidden": "true"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 41,
+      "chave": "body>pnip-root>pnip-header>div>div>div>div",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "dropdown-user-info"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 42,
+      "chave": "body>pnip-root>pnip-header>div>div>div>div>span:nth-of-type(1)",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "dropdown-name"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 43,
+      "chave": "body>pnip-root>pnip-header>div>div>div>div>br",
+      "tag": "br",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 44,
+      "chave": "body>pnip-root>pnip-header>div>div>div>div>span:nth-of-type(2)",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "dropdown-email"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 45,
+      "chave": "body>pnip-root>pnip-header>div>div>div>button",
+      "tag": "button",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "br-item",
+        "dropdown-button"
+      ],
+      "atributos": {
+        "type": "button",
+        "href": "javascript:void(0)"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": 0,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 46,
+      "chave": "body>pnip-root>pnip-header>div>div>div>button>img",
+      "tag": "img",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "src": "../../../assets/images/exit-icon.png"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 47,
+      "chave": "body>pnip-root>pnip-header>div>div>div>button>p",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Sair",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 48,
+      "chave": "body>pnip-root>main",
+      "tag": "main",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "container-lg",
+        "pb-3"
+      ],
+      "atributos": {},
+      "caixa": [
+        20,
+        139,
+        1240,
+        349
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "main",
+        "nome": ""
+      }
+    },
+    {
+      "i": 49,
+      "chave": "body>pnip-root>main>router-outlet",
+      "tag": "router-outlet",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        60,
+        139,
+        0,
+        0
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": true,
+      "definido": false,
+      "ax": null
+    },
+    {
+      "i": 50,
+      "chave": "body>pnip-root>main>pnip-login",
+      "tag": "pnip-login",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        60,
+        139,
+        1160,
+        333
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": true,
+      "definido": false,
+      "ax": null
+    },
+    {
+      "i": 51,
+      "chave": "body>pnip-root>main>pnip-login>div",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "row",
+        "justify-content-md-center",
+        "align-items-center",
+        "pt-5",
+        "pb-5"
+      ],
+      "atributos": {},
+      "caixa": [
+        48,
+        139,
+        1184,
+        333
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 52,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(1)",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "col-md-8",
+        "ml-4",
+        "pr-4",
+        "d-flex",
+        "justify-content-center",
+        "justify-content-md-end"
+      ],
+      "atributos": {},
+      "caixa": [
+        72,
+        306,
+        789,
+        0
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 53,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(1)>div",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "image-container"
+      ],
+      "atributos": {},
+      "caixa": [
+        461,
+        306,
+        0,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 54,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "col",
+        "padding-login",
+        "text-center"
+      ],
+      "atributos": {},
+      "caixa": [
+        861,
+        171,
+        371,
+        269
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 55,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>h2",
+      "tag": "h2",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-bold",
+        "text-blue-vivid-60",
+        "mt-4",
+        "mt-md-0",
+        "mb-4",
+        "pb-0"
+      ],
+      "atributos": {},
+      "caixa": [
+        873,
+        171,
+        347,
+        40
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Acesso via gov.br",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Acesso via gov.br"
+      }
+    },
+    {
+      "i": 56,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(1)",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "info",
+        "mt-2"
+      ],
+      "atributos": {},
+      "caixa": [
+        873,
+        235,
+        347,
+        61
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "O GovBR é um serviço online de identificação e autenticação ",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "generic",
+        "nome": ""
+      }
+    },
+    {
+      "i": 57,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(2)",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "mt-4"
+      ],
+      "atributos": {},
+      "caixa": [
+        873,
+        320,
+        347,
+        40
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "generic",
+        "nome": ""
+      }
+    },
+    {
+      "i": 58,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(2)>br-button",
+      "tag": "br-button",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "label": "Entrar com gov.br",
+        "type": "secondary"
+      },
+      "caixa": [
+        952,
+        326,
+        190,
+        19
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": true,
+      "definido": true,
+      "ax": null
+    },
+    {
+      "i": 59,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(2)>br-button >>> style",
+      "tag": "style",
+      "sombra": true,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "@import\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 60,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(2)>br-button >>> button",
+      "tag": "button",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "br-button",
+        "secondary",
+        "middle"
+      ],
+      "atributos": {
+        "aria-label": "",
+        "type": "button"
+      },
+      "caixa": [
+        952,
+        320,
+        190,
+        40
+      ],
+      "display": "inline-flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": true,
+      "tabIndex": 0,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "button",
+        "nome": "Entrar com gov.br"
+      }
+    },
+    {
+      "i": 61,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(2)>br-button >>> button>slot",
+      "tag": "slot",
+      "sombra": true,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "contents",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 62,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(2)>br-button >>> button>slot>span",
+      "tag": "span",
+      "sombra": true,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        977,
+        328,
+        140,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 63,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(2)>br-button >>> button>slot>span>slot",
+      "tag": "slot",
+      "sombra": true,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "contents",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Entrar com gov.br",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 64,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>button",
+      "tag": "button",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-auto",
+        "mt-6",
+        "br-button",
+        "primary",
+        "middle",
+        "text-auto"
+      ],
+      "atributos": {
+        "aria-label": "",
+        "type": "button"
+      },
+      "caixa": [
+        873,
+        400,
+        627,
+        40
+      ],
+      "display": "inline-flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": true,
+      "tabIndex": 0,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "button",
+        "nome": "Problemas ou dificuldades? Contate nossa central de relacionamento"
+      }
+    },
+    {
+      "i": 65,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>button>slot",
+      "tag": "slot",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "contents",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 66,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>button>slot>i",
+      "tag": "i",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "fas",
+        "fa-headset",
+        "mr-1",
+        "icon-size-med"
+      ],
+      "atributos": {
+        "aria-hidden": "true"
+      },
+      "caixa": [
+        897,
+        420,
+        24,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 67,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>button>slot>span",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        925,
+        408,
+        551,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 68,
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>button>slot>span>slot",
+      "tag": "slot",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "contents",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Problemas ou dificuldades? Contate nossa central de relacion",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 69,
+      "chave": "body>script",
+      "tag": "script",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "src": "assets/webcomponents.umd.min.js"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    }
+  ],
+  "contraste": [
+    {
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>div",
+      "texto": "Ministério da Pesca e Aquicultura",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body>pnip-root>pnip-header>br-header >>> header"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div",
+      "texto": "Plataforma Nacional da Indústria do Pesc",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "24.192px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body>pnip-root>pnip-header>br-header >>> header"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>h2",
+      "texto": "Acesso via gov.br",
+      "cor": "rgb(0, 94, 162)",
+      "fontSize": "34.832px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 6.72
+    },
+    {
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(1)",
+      "texto": "O GovBR é um serviço online de identific",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    }
+  ],
+  "cabecalhos": [
+    {
+      "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>h2",
+      "nivel": 2,
+      "texto": "Acesso via gov.br",
+      "filhos": [],
+      "fontSize": "34.832px",
+      "fontWeight": "700"
+    }
+  ],
+  "pseudo": [],
+  "imagens": [
+    {
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>img",
+      "alt": "logo",
+      "src": "assets/images/govbr-logo.png",
+      "completa": true,
+      "naturalWidth": 0,
+      "visivel": true,
+      "sombra": true
+    },
+    {
+      "chave": "body>pnip-root>pnip-header>div>div>div>button>img",
+      "alt": null,
+      "src": "../../../assets/images/exit-icon.png",
+      "completa": true,
+      "naturalWidth": 0,
+      "visivel": false,
+      "sombra": false
+    }
+  ],
+  "links": [],
+  "listas": [],
+  "tipografia": [
+    {
+      "tag": "h1",
+      "ausente": true
+    },
+    {
+      "tag": "h2",
+      "fontFamily": "Rawline, Raleway, sans-serif",
+      "fontSize": "34.832px",
+      "fontWeight": "700",
+      "lineHeight": "40.0568px",
+      "color": "rgb(0, 94, 162)",
+      "textAlign": "center"
+    },
+    {
+      "tag": "h3",
+      "ausente": true
+    },
+    {
+      "tag": "p",
+      "ausente": true
+    },
+    {
+      "tag": "li",
+      "ausente": true
+    },
+    {
+      "tag": "strong",
+      "ausente": true
+    },
+    {
+      "tag": "div.info",
+      "fontFamily": "Rawline, Raleway, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "20.3px",
+      "color": "rgb(51, 51, 51)",
+      "textAlign": "center"
+    },
+    {
+      "tag": "button",
+      "fontFamily": "Rawline, Raleway, sans-serif",
+      "fontSize": "16.8px",
+      "fontWeight": "600",
+      "lineHeight": "24.36px",
+      "color": "rgb(255, 255, 255)",
+      "textAlign": "center"
+    },
+    {
+      "tag": "button span",
+      "fontFamily": "Rawline, Raleway, sans-serif",
+      "fontSize": "16.8px",
+      "fontWeight": "600",
+      "lineHeight": "24.36px",
+      "color": "rgb(255, 255, 255)",
+      "textAlign": "center"
+    }
+  ],
+  "cores": {
+    "rgb(255, 255, 255)": [
+      "background-color@light",
+      "background-color@sombra"
+    ],
+    "rgb(204, 204, 204)": [
+      "border-right-color@sombra"
+    ],
+    "rgb(51, 51, 51)": [
+      "color@sombra",
+      "color@light"
+    ],
+    "rgb(0, 94, 162)": [
+      "color@light"
+    ],
+    "rgb(19, 81, 180)": [
+      "border-top-color@sombra",
+      "border-right-color@sombra",
+      "border-bottom-color@sombra",
+      "border-left-color@sombra",
+      "background-color@light"
+    ]
+  },
+  "rolagemHorizontal": true,
+  "alturaDocumento": 900,
+  "varsRaiz": {
+    "--font-family-base": "Rawline,Raleway,sans-serif"
+  },
+  "pedidos": [
+    "127.0.0.1/real/pnip-login.html",
+    "ABORTADO cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css",
+    "ABORTADO fonts.googleapis.com/css",
+    "ABORTADO cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css",
+    "127.0.0.1/real/assets/core.min.css",
+    "127.0.0.1/assets/images/exit-icon.png",
+    "127.0.0.1/real/assets/webcomponents.umd.min.js",
+    "ABORTADO cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css",
+    "127.0.0.1/real/assets/images/govbr-logo.png"
+  ],
+  "ordemTab": [
+    "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+    "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(2)>br-button >>> button",
+    "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>button",
+    "body",
+    "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button"
+  ],
+  "focoTeclado": {
+    "semFoco": [
+      {
+        "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+        "outline": "none 3px rgb(19, 81, 180)",
+        "boxShadow": "none",
+        "border": "0px rgb(19, 81, 180)"
+      },
+      {
+        "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(2)>br-button >>> button",
+        "outline": "none 3px rgb(19, 81, 180)",
+        "boxShadow": "none",
+        "border": "1px rgb(19, 81, 180)"
+      },
+      {
+        "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>button",
+        "outline": "none 3px rgb(255, 255, 255)",
+        "boxShadow": "none",
+        "border": "0px rgb(255, 255, 255)"
+      }
+    ],
+    "comFoco": {
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+      "outline": "dashed 4px rgb(194, 133, 12)",
+      "outlineOffset": "4px",
+      "boxShadow": "none",
+      "border": "0px rgb(19, 81, 180)",
+      "focusVisible": true
+    }
+  },
+  "marcos": [
+    {
+      "papel": "main",
+      "nome": "",
+      "elemento": "body>pnip-root>main"
+    },
+    {
+      "papel": "banner",
+      "nome": "",
+      "elemento": "body>pnip-root>pnip-header>br-header >>> header"
+    }
+  ],
+  "componentes": {
+    "<br-header>": [
+      {
+        "chave": "body>pnip-root>pnip-header>br-header",
+        "visivel": true,
+        "sombra": false
+      }
+    ],
+    "br-header": [
+      {
+        "chave": "body>pnip-root>pnip-header>br-header >>> header",
+        "visivel": true,
+        "sombra": true
+      }
+    ],
+    "br-divider": [
+      {
+        "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>span",
+        "visivel": true,
+        "sombra": true
+      }
+    ],
+    "br-button": [
+      {
+        "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+        "visivel": true,
+        "sombra": true
+      },
+      {
+        "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(2)>br-button >>> button",
+        "visivel": true,
+        "sombra": true
+      },
+      {
+        "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>button",
+        "visivel": true,
+        "sombra": false
+      }
+    ],
+    "br-sign-in": [
+      {
+        "chave": "body>pnip-root>pnip-header>div>div>button",
+        "visivel": false,
+        "sombra": false
+      }
+    ],
+    "br-avatar": [
+      {
+        "chave": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)",
+        "visivel": false,
+        "sombra": false
+      }
+    ],
+    "br-list": [
+      {
+        "chave": "body>pnip-root>pnip-header>div>div>div",
+        "visivel": false,
+        "sombra": false
+      }
+    ],
+    "br-item": [
+      {
+        "chave": "body>pnip-root>pnip-header>div>div>div>button",
+        "visivel": false,
+        "sombra": false
+      }
+    ],
+    "<br-button>": [
+      {
+        "chave": "body>pnip-root>main>pnip-login>div>div:nth-of-type(2)>div:nth-of-type(2)>br-button",
+        "visivel": true,
+        "sombra": false
+      }
+    ]
+  },
+  "hashes": [
+    {
+      "arquivo": "public/real/pnip-login.html",
+      "esperado": "badd4707f5b59522a779143dc98b1bf68dd95cb938155d9118f0caaa48387c4f",
+      "obtido": "badd4707f5b59522a779143dc98b1bf68dd95cb938155d9118f0caaa48387c4f",
+      "ok": true
+    },
+    {
+      "arquivo": "dist/real/pnip-login.html",
+      "esperado": "badd4707f5b59522a779143dc98b1bf68dd95cb938155d9118f0caaa48387c4f",
+      "obtido": "badd4707f5b59522a779143dc98b1bf68dd95cb938155d9118f0caaa48387c4f",
+      "ok": true
+    },
+    {
+      "arquivo": "public/real/manifesto.json",
+      "esperado": "d03efe953d7bcc4fbf23e0270eaeee3af0e2f824a3f196bc155d3658c4f60227",
+      "obtido": "d03efe953d7bcc4fbf23e0270eaeee3af0e2f824a3f196bc155d3658c4f60227",
+      "ok": true
+    },
+    {
+      "arquivo": "dist/real/manifesto.json",
+      "esperado": "d03efe953d7bcc4fbf23e0270eaeee3af0e2f824a3f196bc155d3658c4f60227",
+      "obtido": "d03efe953d7bcc4fbf23e0270eaeee3af0e2f824a3f196bc155d3658c4f60227",
+      "ok": true
+    },
+    {
+      "arquivo": "public/real/assets/core.min.css",
+      "esperado": "cf176bd46bb3f8032991ef5c79ffe05997cd72d21951f287a6270fd05ed266aa",
+      "obtido": "cf176bd46bb3f8032991ef5c79ffe05997cd72d21951f287a6270fd05ed266aa",
+      "ok": true
+    },
+    {
+      "arquivo": "dist/real/assets/core.min.css",
+      "esperado": "cf176bd46bb3f8032991ef5c79ffe05997cd72d21951f287a6270fd05ed266aa",
+      "obtido": "cf176bd46bb3f8032991ef5c79ffe05997cd72d21951f287a6270fd05ed266aa",
+      "ok": true
+    },
+    {
+      "arquivo": "public/real/assets/webcomponents.umd.min.js",
+      "esperado": "c196dbc1a8f5af079bb4c8c50bedb883872b2fa3f0e86d3451182072b77ae478",
+      "obtido": "c196dbc1a8f5af079bb4c8c50bedb883872b2fa3f0e86d3451182072b77ae478",
+      "ok": true
+    },
+    {
+      "arquivo": "dist/real/assets/webcomponents.umd.min.js",
+      "esperado": "c196dbc1a8f5af079bb4c8c50bedb883872b2fa3f0e86d3451182072b77ae478",
+      "obtido": "c196dbc1a8f5af079bb4c8c50bedb883872b2fa3f0e86d3451182072b77ae478",
+      "ok": true
+    }
+  ],
+  "medidoEm": "2026-09-30T16:56:41.920Z"
+}
