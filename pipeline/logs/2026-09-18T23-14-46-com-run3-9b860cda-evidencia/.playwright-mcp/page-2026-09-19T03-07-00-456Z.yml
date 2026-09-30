@@ -1,0 +1,227 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - menubar:
+      - menuitem "Ir para o conteúdo" [ref=e4] [cursor=pointer]:
+        - text: Ir para o conteúdo
+        - generic [ref=e5]: (1/1)
+        - generic [ref=e6]: "1"
+    - banner [ref=e7]:
+      - link "gov.br — página inicial" [ref=e8] [cursor=pointer]:
+        - /url: /solicitacao
+        - text: gov
+        - strong [ref=e9]: .br
+    - navigation "Breadcrumbs" [ref=e10]:
+      - list [ref=e11]:
+        - listitem [ref=e12]:
+          - link "Página inicial" [ref=e13] [cursor=pointer]:
+            - /url: /solicitacao
+            - generic [ref=e14]: Página inicial
+            - generic [ref=e15]: 
+        - listitem [ref=e16]:
+          - generic [ref=e17]: 
+          - link "Serviços" [ref=e18] [cursor=pointer]:
+            - /url: /solicitacao
+        - listitem [ref=e19]:
+          - generic [ref=e20]: 
+          - generic [ref=e21]: Solicitar serviço
+    - main [ref=e22]:
+      - heading "Solicitar serviço" [level=1] [ref=e23]
+      - paragraph [ref=e24]: Todos os campos são de preenchimento obrigatório, exceto os indicados como opcionais.
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e28]:
+            - text: Nome completo
+            - textbox "Nome completo" [ref=e29]
+          - generic [ref=e31]:
+            - text: CPF
+            - textbox "CPF" [ref=e32]:
+              - /placeholder: "00000000000"
+            - paragraph [ref=e33]: Somente números, 11 dígitos.
+        - generic [ref=e34]:
+          - combobox [ref=e37]:
+            - text: Tipo de serviço
+            - generic [ref=e38]:
+              - generic [ref=e40]: 
+              - textbox "Tipo de serviço" [ref=e41]:
+                - /placeholder: Selecione uma opção
+                - text: Emissão de certidão
+            - button "Exibir lista" [ref=e163] [cursor=pointer]:
+              - generic [ref=e43]: 
+          - combobox [ref=e46]:
+            - text: Unidade de atendimento
+            - generic [ref=e47]:
+              - generic [ref=e49]: 
+              - textbox "Unidade de atendimento" [ref=e50]:
+                - /placeholder: Selecione uma opção
+                - text: Agência Centro
+            - button "Exibir lista" [ref=e182] [cursor=pointer]:
+              - generic [ref=e52]: 
+        - group "Forma de atendimento" [ref=e53]:
+          - generic [ref=e54]: Forma de atendimento
+          - generic [ref=e55]:
+            - radio [ref=e56]
+            - generic [ref=e57] [cursor=pointer]: Presencial
+          - generic [ref=e58]:
+            - radio "Por videochamada" [ref=e59]
+            - generic [ref=e60] [cursor=pointer]: Por videochamada
+          - generic [ref=e61]:
+            - radio "Por telefone" [ref=e62]
+            - generic [ref=e63] [cursor=pointer]: Por telefone
+        - generic [ref=e67]:
+          - text: Data preferencial
+          - textbox "Data preferencial" [ref=e68]:
+            - /placeholder: "exemplo: 02/02/2027"
+          - button [active] [ref=e69] [cursor=pointer]:
+            - generic [ref=e70]: 
+          - paragraph [ref=e71]: Informe no formato dd/mm/aaaa.
+        - generic [ref=e73]:
+          - generic [ref=e74]: Descrição da solicitação
+          - textbox "Descrição da solicitação" [ref=e75]
+          - paragraph [ref=e76]: Descreva o que você precisa, em até 500 caracteres.
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]: Documentos comprobatórios (opcional)
+            - button [ref=e80] [cursor=pointer]:
+              - generic [ref=e81]: 
+              - text: Selecione o arquivo
+          - paragraph [ref=e82]: Um arquivo PDF, JPG ou PNG de até 5 MB.
+        - group "Recursos de acessibilidade no atendimento (opcional)" [ref=e83]:
+          - generic [ref=e84]: Recursos de acessibilidade no atendimento (opcional)
+          - generic [ref=e85]:
+            - checkbox "Intérprete de Libras" [ref=e86]
+            - generic [ref=e87] [cursor=pointer]: Intérprete de Libras
+          - generic [ref=e88]:
+            - checkbox "Atendimento em local sem degraus" [ref=e89]
+            - generic [ref=e90] [cursor=pointer]: Atendimento em local sem degraus
+        - generic [ref=e92]:
+          - checkbox "Declaro que as informações prestadas são verdadeiras." [ref=e93]
+          - generic [ref=e94] [cursor=pointer]: Declaro que as informações prestadas são verdadeiras.
+        - generic [ref=e95]:
+          - button "Cancelar" [ref=e96] [cursor=pointer]
+          - button "Enviar" [ref=e97] [cursor=pointer]
+      - region "Solicitações anteriores" [ref=e98]:
+        - heading "Solicitações anteriores" [level=2] [ref=e99]
+        - generic [ref=e100]:
+          - generic [ref=e103]: Solicitações anteriores
+          - table [ref=e104]:
+            - rowgroup [ref=e105]:
+              - row "Protocolo Serviço Data Situação" [ref=e106]:
+                - columnheader "Protocolo" [ref=e107]
+                - columnheader "Serviço" [ref=e108]
+                - columnheader "Data" [ref=e109]
+                - columnheader "Situação" [ref=e110]
+            - rowgroup [ref=e111]:
+              - row "2026.0918.004417 Emissão de certidão 02/09/2026 Em análise" [ref=e112]:
+                - cell "2026.0918.004417" [ref=e113]
+                - cell "Emissão de certidão" [ref=e114]
+                - cell "02/09/2026" [ref=e115]
+                - cell "Em análise" [ref=e116]
+              - row "2026.0811.003102 Atualização cadastral 11/08/2026 Concluída" [ref=e117]:
+                - cell "2026.0811.003102" [ref=e118]
+                - cell "Atualização cadastral" [ref=e119]
+                - cell "11/08/2026" [ref=e120]
+                - cell "Concluída" [ref=e121]
+              - row "2026.0703.002876 Segunda via de documento 03/07/2026 Concluída" [ref=e122]:
+                - cell "2026.0703.002876" [ref=e123]
+                - cell "Segunda via de documento" [ref=e124]
+                - cell "03/07/2026" [ref=e125]
+                - cell "Concluída" [ref=e126]
+              - row "2026.0522.001954 Agendamento de perícia 22/05/2026 Cancelada" [ref=e127]:
+                - cell "2026.0522.001954" [ref=e128]
+                - cell "Agendamento de perícia" [ref=e129]
+                - cell "22/05/2026" [ref=e130]
+                - cell "Cancelada" [ref=e131]
+              - row "2026.0409.001220 Emissão de certidão 09/04/2026 Concluída" [ref=e132]:
+                - cell "2026.0409.001220" [ref=e133]
+                - cell "Emissão de certidão" [ref=e134]
+                - cell "09/04/2026" [ref=e135]
+                - cell "Concluída" [ref=e136]
+          - navigation "Paginação de solicitações anteriores" [ref=e138]:
+            - button "Página anterior" [disabled] [ref=e139]:
+              - generic: 
+            - link "Página 1" [ref=e140] [cursor=pointer]:
+              - /url: "#titulo-historico"
+              - text: "1"
+            - link "Página 2" [ref=e141] [cursor=pointer]:
+              - /url: "#titulo-historico"
+              - text: "2"
+            - link "Página 3" [ref=e142] [cursor=pointer]:
+              - /url: "#titulo-historico"
+              - text: "3"
+            - button "Página seguinte" [ref=e143] [cursor=pointer]:
+              - generic [ref=e144]: 
+  - generic [ref=e183]:
+    - generic [ref=e184]:
+      - button "" [ref=e186] [cursor=pointer]:
+        - generic [ref=e187]: 
+      - generic [ref=e189]:
+        - combobox "Month" [ref=e190] [cursor=pointer]:
+          - option "Janeiro"
+          - option "Fevereiro"
+          - option "Março"
+          - option "Abril"
+          - option "Maio"
+          - option "Junho"
+          - option "Julho"
+          - option "Agosto"
+          - option "Setembro" [selected]
+          - option "Outubro"
+          - option "Novembro"
+          - option "Dezembro"
+        - generic [ref=e191]:
+          - spinbutton "Year" [ref=e192]: "2026"
+          - text:  
+      - button "" [ref=e194] [cursor=pointer]:
+        - generic [ref=e195]: 
+    - generic [ref=e197]:
+      - generic [ref=e199]:
+        - generic [ref=e200]: Dom
+        - generic [ref=e201]: Seg
+        - generic [ref=e202]: Ter
+        - generic [ref=e203]: Qua
+        - generic [ref=e204]: Qui
+        - generic [ref=e205]: Sex
+        - generic [ref=e206]: Sáb
+      - generic [ref=e208]:
+        - generic "Agosto 30, 2026" [ref=e209]: "30"
+        - generic "Agosto 31, 2026" [ref=e210]: "31"
+        - generic "Setembro 1, 2026" [ref=e211] [cursor=pointer]: "1"
+        - generic "Setembro 2, 2026" [ref=e212] [cursor=pointer]: "2"
+        - generic "Setembro 3, 2026" [ref=e213] [cursor=pointer]: "3"
+        - generic "Setembro 4, 2026" [ref=e214] [cursor=pointer]: "4"
+        - generic "Setembro 5, 2026" [ref=e215] [cursor=pointer]: "5"
+        - generic "Setembro 6, 2026" [ref=e216] [cursor=pointer]: "6"
+        - generic "Setembro 7, 2026" [ref=e217] [cursor=pointer]: "7"
+        - generic "Setembro 8, 2026" [ref=e218] [cursor=pointer]: "8"
+        - generic "Setembro 9, 2026" [ref=e219] [cursor=pointer]: "9"
+        - generic "Setembro 10, 2026" [ref=e220] [cursor=pointer]: "10"
+        - generic "Setembro 11, 2026" [ref=e221] [cursor=pointer]: "11"
+        - generic "Setembro 12, 2026" [ref=e222] [cursor=pointer]: "12"
+        - generic "Setembro 13, 2026" [ref=e223] [cursor=pointer]: "13"
+        - generic "Setembro 14, 2026" [ref=e224] [cursor=pointer]: "14"
+        - generic "Setembro 15, 2026" [ref=e225] [cursor=pointer]: "15"
+        - generic "Setembro 16, 2026" [ref=e226] [cursor=pointer]: "16"
+        - generic "Setembro 17, 2026" [ref=e227] [cursor=pointer]: "17"
+        - generic "Setembro 18, 2026" [ref=e228] [cursor=pointer]: "18"
+        - generic "Setembro 19, 2026" [ref=e229] [cursor=pointer]: "19"
+        - generic "Setembro 20, 2026" [ref=e230] [cursor=pointer]: "20"
+        - generic "Setembro 21, 2026" [ref=e231] [cursor=pointer]: "21"
+        - generic "Setembro 22, 2026" [ref=e232] [cursor=pointer]: "22"
+        - generic "Setembro 23, 2026" [ref=e233] [cursor=pointer]: "23"
+        - generic "Setembro 24, 2026" [ref=e234] [cursor=pointer]: "24"
+        - generic "Setembro 25, 2026" [ref=e235] [cursor=pointer]: "25"
+        - generic "Setembro 26, 2026" [ref=e236] [cursor=pointer]: "26"
+        - generic "Setembro 27, 2026" [ref=e237] [cursor=pointer]: "27"
+        - generic "Setembro 28, 2026" [ref=e238] [cursor=pointer]: "28"
+        - generic "Setembro 29, 2026" [ref=e239] [cursor=pointer]: "29"
+        - generic "Setembro 30, 2026" [ref=e240] [cursor=pointer]: "30"
+        - generic "Outubro 1, 2026" [ref=e241]: "1"
+        - generic "Outubro 2, 2026" [ref=e242]: "2"
+        - generic "Outubro 3, 2026" [ref=e243]: "3"
+        - generic "Outubro 4, 2026" [ref=e244]: "4"
+        - generic "Outubro 5, 2026" [ref=e245]: "5"
+        - generic "Outubro 6, 2026" [ref=e246]: "6"
+        - generic "Outubro 7, 2026" [ref=e247]: "7"
+        - generic "Outubro 8, 2026" [ref=e248]: "8"
+        - generic "Outubro 9, 2026" [ref=e249]: "9"
+        - generic "Outubro 10, 2026" [ref=e250]: "10"

@@ -1,0 +1,1687 @@
+{
+  "version": "flow-semantic-1.4.0",
+  "decisions": [
+    {
+      "cardId": "C-01051902e18abce7965c16f87517675f257d9f027e32fbe184eb707e398b2c40",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: #data-preferencial-btn tem aria-hidden=true e tabindex=-1; focar o campo, Enter, seta e Espaço não abrem o calendário (display none, sem .open); o clique no botão abre. Verdadeiro e fora da referência. Citação incerta: a data pode ser digitada, então é o calendário, não a função, que fica só no mouse. Descoberta de fato (D-48).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O botão que abre o calendário, com aria-label Abrir calendário e data-toggle, tem ao mesmo tempo aria-hidden=true e tabindex=-1, portanto não recebe foco nem existe para a tecnologia assistiva. O calendário também não abre ao focar nem ao acionar o campo #data-preferencial: .flatpickr-calendar continua com display none e sem a classe open. Assim, o calendário só é alcançável com o mouse, pelo próprio botão.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)>div>div>div>button"
+          ],
+          "unitIds": [],
+          "citation": "uncertain",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-064867287f2624db792f663b4c9fbe6ef15296aa9d9f6f140141e28fa3071fff",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Duas afirmações que não se resolvem com a mesma correção (tirar o aria-hidden não conserta a ordem; tabindex=0 não conserta a exposição). Medido: .upload-button tem tabindex=1 e é o único tabindex positivo do estado inicial; o primeiro Tab do documento recém-carregado cai nele (activeElement = button.upload-button), antes do atalho para o conteúdo. É a A-02. Medido também: aria-hidden=true no mesmo botão, escrito pelo BRUpload do core.js; #documentos com display:none. Divisão feita por quem decide (D-48: alegação composta; A-02 não tem predicado).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O botão de upload tem tabindex positivo: o primeiro Tab da página cai nele, antes do atalho para o conteúdo.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+          ],
+          "unitIds": [
+            "U-b3362afca6c4004dc1bfe74c6ea6d81e8a2e500a8eb931d94b772c90ee1746bd"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        },
+        {
+          "id": "a2",
+          "text": "O botão tem aria-hidden=true e continua focalizável: a parada de foco não expõe nome nem papel.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-0bb2ebf131e21711248360e5c6b32a2d8df208eef0b6313eef83929cab2bd586",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido após envio vazio: #unidade com aria-invalid=true e aria-describedby=null; o span 'Selecione a unidade de atendimento.' tem role=alert e nenhum id. Os outros seis campos referenciam o próprio retorno. É a A-08 em #unidade.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Ao enviar o formulário com campos vazios, #unidade recebe aria-invalid=\"true\", mas seu aria-describedby é null e o span de erro correspondente ('Selecione a unidade de atendimento.') é inserido sem atributo id, de modo que nenhuma referência pode alcançá-lo. Todos os demais campos inválidos associam a mensagem: #nome→nome-retorno, #cpf→'cpf-apoio cpf-retorno', os três rádios de forma→forma-retorno, #data-preferencial→'data-apoio data-retorno', #descricao→'descricao-apoio descricao-retorno' e #declaracao→declaracao-retorno.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [
+            "U-51a6b48fcbf886149c29705242f258a4c46c4b607bc8f80c640a3e74faea8b16"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-0dec41c2fb64de210343732dd574e6093d2e8a5d35f45eb1e8fc6a13067ca7f6",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido a 320x800 e 375x812: scrollWidth 549 contra 320/375; a tabela mede 533px num .br-table com overflow-x visible e sem .responsive; só a tabela e suas células passam da janela. Verdadeiro; janela fora do plano de cenas e sem unidade na referência. Descoberta de fato (D-48).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com a janela em 375x812 a tabela ocupa 533px dentro do contêiner .br-table de 328px, que computa overflow: visible; documentElement.scrollWidth=549 contra clientWidth=360, ou seja, a página inteira passa a rolar horizontalmente e as colunas Data e Situação ficam fora da viewport.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>section>div>table"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-17b6bebf4dcdbc9df20b0251d7f4c4069525a4d8077fe3f7de91f6a73ef3919c",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: .upload-button tem tabindex=1 e é o único tabindex positivo do estado inicial; o primeiro Tab do documento recém-carregado cai nele (activeElement = button.upload-button), antes do atalho para o conteúdo. É a A-02. Unidade sem predicado: o casamento se apoia nesta medição.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O botão visível de upload tem tabindex=\"1\", o único tabindex positivo da página. Com o foco no início do documento, o primeiro Tab levou o foco diretamente para este botão (document.activeElement = BUTTON.upload-button, tabindex=1), antes do skiplink 'Ir para o conteúdo', do cabeçalho, do breadcrumb e de todos os campos que o precedem visualmente.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+          ],
+          "unitIds": [
+            "U-b3362afca6c4004dc1bfe74c6ea6d81e8a2e500a8eb931d94b772c90ee1746bd"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-18d5745883f85dabb1124e4c2d75187a409838338bd801c204a91f66e320ce3b",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido após envio vazio: #servico com aria-invalid=true e aria-describedby=null; o span 'Selecione o tipo de serviço.' tem role=alert e nenhum id. Os outros seis campos referenciam o próprio retorno. É a A-08 em #servico.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Após enviar o formulário vazio, o campo Tipo de serviço recebe aria-invalid=true e a mensagem Selecione o tipo de serviço é inserida ao lado dele, mas o span da mensagem não tem id e o input não tem aria-describedby. Os demais campos do mesmo formulário associam a mensagem, como #nome com aria-describedby=nome-retorno. Ao voltar ao campo, a tecnologia assistiva anuncia apenas o estado inválido, sem o texto do erro.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [
+            "U-a10dcb076ad236543b32667bd7e0adfec72fef26085a4924a9eb55ecf74492e3"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-1a6a4648dcbf0eb226158cb4bd96190741254c1917c8d6d7b105ce7c3fcb8a48",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: .upload-button tem aria-hidden=true e é focalizável e visível (550x40), e #documentos computa display:none — nenhum controle de arquivo fica exposto. Verdadeiro e fora da referência: o aria-hidden é escrito pelo BRUpload do core.js do DS (a tela só injetou o tabindex=1). A alegação é sobre a exposição do controle, não sobre a ordem de tabulação, então não credita a A-02. Descoberta de fato (D-48): defeito que o próprio componente do DS traz.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O botao visivel 'Selecione o arquivo' (550x40 px, display:block) tem aria-hidden=\"true\" e mesmo assim permanece focalizavel (tabindex=\"1\"). O input[type=file] #documentos associado esta com display:none pela regra .br-upload input, portanto esse botao e o unico controle operavel do upload e nao e exposto a tecnologia assistiva.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-1cd7532a6b72ab9090396cb40720690879aadbef8d80a9495f01aa5ff0834fe3",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: .upload-button tem tabindex=1 e é o único tabindex positivo do estado inicial; o primeiro Tab do documento recém-carregado cai nele (activeElement = button.upload-button), antes do atalho para o conteúdo. É a A-02. Unidade sem predicado: o casamento se apoia nesta medição.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O botão Selecione o arquivo usa tabindex=1, valor positivo. Partindo do início do documento, o primeiro Tab leva o foco para esse botão, antes do link Ir para o conteúdo, do cabeçalho, da trilha de navegação e de todos os campos do formulário que o precedem visualmente.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+          ],
+          "unitIds": [
+            "U-b3362afca6c4004dc1bfe74c6ea6d81e8a2e500a8eb931d94b772c90ee1746bd"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-1df5d484362d63751a7ea7058f7ad7c39fe68f15c206753d4db400b471c2b6fe",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "A medição confirma o observado (span com tabindex=0 e aria-current=page no item atual da trilha), mas não o defeito: é a marcação do exemplo oficial do breadcrumb no pacote @govbr-ds/core (10 ocorrências de <span tabindex=\"0\" aria-current=\"page\">), e o cartão não cita regra. A tela usa o componente como o DS o publica; não há o que a página corrigir. Veredito decidido pela autora em 19/09 (D-48: incorreta).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O item atual da trilha de navegação, Solicitar serviço, é um span de texto estático com tabindex=0 e aria-current=page. Ele entra na sequência de tabulação e recebe foco, embora não tenha papel interativo nem ação associada, criando uma parada de foco em conteúdo não operável. Os demais itens da trilha são links.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>nav:nth-of-type(2)>ol>li:nth-of-type(3)>span"
+          ],
+          "unitIds": [],
+          "citation": "unsupported",
+          "decisao": "incorreta"
+        }
+      ]
+    },
+    {
+      "cardId": "C-1ea809eaefbbc077023114e613488ae01b73ad4af658e0f8dd52266343bd2a0a",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido no estado inicial: #forma-presencial tem labels.length=0, sem aria-label, aria-labelledby nem title; o irmão é <label>Presencial</label> sem for. #forma-video e #forma-telefone têm 1 label cada. Clicar no texto não marca o rádio (checked=false); foco+Espaço marca. É a A-09. O axe acusa exatamente a falta de etiqueta.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Form elements must have labels",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input"
+          ],
+          "unitIds": [
+            "U-471fd34bfed8d491133fe60cfe6233aa00117fefb796768495ff7598fa7a6a5e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-1eb87212f702e1064075fe9e3f7a712df9c6d3f187a335853a35a0ff150d9d3e",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: .upload-button tem aria-hidden=true e é focalizável e visível (550x40), e #documentos computa display:none — nenhum controle de arquivo fica exposto. Verdadeiro e fora da referência: o aria-hidden é escrito pelo BRUpload do core.js do DS (a tela só injetou o tabindex=1). A alegação é sobre a exposição do controle, não sobre a ordem de tabulação, então não credita a A-02. Descoberta de fato (D-48): defeito que o próprio componente do DS traz.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O único controle de upload visível e operável é <button class=\"upload-button\" aria-hidden=\"true\" tabindex=\"1\">Selecione o arquivo</button>, removido da árvore de acessibilidade por aria-hidden=\"true\"; o input real #documentos está com display:none (getBoundingClientRect 0x0), portanto também não é exposto nem focável. Nenhum controle de envio de arquivo aparece na árvore de acessibilidade do campo \"Documentos comprobatórios (opcional)\".",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-21eae35992e586bb8203aa602742e30eb840c076f2077629ac86fdbbe89497d4",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: com CPF '123' e o resto válido o envio é aceito ('Solicitação enviada…', nenhum aria-invalid), embora #cpf-apoio declare 'Somente números, 11 dígitos.'. Verdadeiro e fora da referência: a validação da tela só cobra campo vazio. Descoberta de fato (D-48) — nenhuma regra citada.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O campo declara o formato exigido em #cpf-apoio (\"Somente números, 11 dígitos.\") e é aria-required, mas o envio com o valor \"123\" foi aceito: nenhuma mensagem de erro foi gerada para o CPF e o formulário retornou \"Solicitação enviada. Acompanhe o andamento em Solicitações anteriores.\" com #cpf.value === \"123\". A validação do campo só rejeita valor vazio.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(2)>div>input"
+          ],
+          "unitIds": [],
+          "citation": "uncertain",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-3499c99fc4913ce4572a867939a34e8563a73b7edcf1c76c4b3bba33b3cd8016",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido após envio vazio: #unidade com aria-invalid=true e aria-describedby=null; o span 'Selecione a unidade de atendimento.' tem role=alert e nenhum id. Os outros seis campos referenciam o próprio retorno. É a A-08 em #unidade.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Apos submeter o formulario vazio, #unidade recebe aria-invalid=\"true\" e e exibida a mensagem visivel 'Selecione a unidade de atendimento.' em <span class=\"feedback danger retorno-campo\" role=\"alert\">, mas esse span nao tem id e o aria-describedby de #unidade e null: a mensagem nao esta associada ao campo.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [
+            "U-51a6b48fcbf886149c29705242f258a4c46c4b607bc8f80c640a3e74faea8b16"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-36ec53336454132249051349f7b9b26761add9ce6d489c22be218dd431650b68",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido após envio vazio: #servico com aria-invalid=true e aria-describedby=null; o span 'Selecione o tipo de serviço.' tem role=alert e nenhum id. Os outros seis campos referenciam o próprio retorno. É a A-08 em #servico.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Após enviar o formulário vazio, #servico recebe aria-invalid=\"true\" e é inserido <span class=\"feedback danger retorno-campo\" role=\"alert\">Selecione o tipo de serviço.</span>, mas esse span não tem id e #servico permanece com aria-describedby=null. Dos 8 campos em erro, 6 associam a mensagem por id (nome-retorno, cpf-retorno, forma-retorno, data-retorno, descricao-retorno, declaracao-retorno).",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [
+            "U-a10dcb076ad236543b32667bd7e0adfec72fef26085a4924a9eb55ecf74492e3"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-3846d8d8c5326981d61f6b37add1e80cc4e14c3bfdc15e578a9034a70065c522",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Valor medido (padding 0 29px 0 40px), mas os 29px vêm de '.br-select .br-input input{padding-right:29px}' no core.min.css do DS, não da página. Falso positivo do validator; não é a A-04 nem a A-08, candidatas só pelo elemento. Veredito decidido pela autora em 19/09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "padding: 0px 29px 0px 40px (fora da escala: 29px)",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [],
+          "citation": "unsupported",
+          "decisao": "incorreta"
+        }
+      ]
+    },
+    {
+      "cardId": "C-4152c062b55b3475447592c0227901211404fcc9a88eb0715030708f65d42399",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: .upload-button tem tabindex=1 e é o único tabindex positivo do estado inicial; o primeiro Tab do documento recém-carregado cai nele (activeElement = button.upload-button), antes do atalho para o conteúdo. É a A-02. Unidade sem predicado: o casamento se apoia nesta medição.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O botao tem tabindex=\"1\" (positivo). Na pagina recem-carregada, o primeiro Tab leva o foco diretamente a esse botao, saltando o link 'Ir para o conteudo', o cabecalho, o breadcrumb e todos os campos do formulario que o antecedem (nome, CPF, tipo de servico, unidade, forma de atendimento, data, descricao).",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+          ],
+          "unitIds": [
+            "U-b3362afca6c4004dc1bfe74c6ea6d81e8a2e500a8eb931d94b772c90ee1746bd"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-44978a37c6859b658fd440adbb11b308677621f4d5866ab3700652b8fe0d5df7",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido a 320x800 e 375x812: scrollWidth 549 contra 320/375; a tabela mede 533px num .br-table com overflow-x visible e sem .responsive; só a tabela e suas células passam da janela. Verdadeiro; janela fora do plano de cenas e sem unidade na referência. Descoberta de fato (D-48).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com a janela em 320x800, a tabela do histórico mantém largura intrínseca de 532.99px e não está dentro do contêiner de rolagem previsto pelo Design System (a regra '.br-table .responsive { overflow: auto; }' existe na folha de estilo, mas não há elemento .responsive na marcação; o estilo computado de .br-table traz overflow-x: visible). Em consequência, document.documentElement.scrollWidth passa a 549px contra innerWidth de 320px e a rolagem horizontal atinge a página inteira; a tabela e suas 21 linhas e células são os únicos elementos que ultrapassam a viewport, pois o restante do formulário reflui normalmente.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>section>div>table"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-4855a70bc14f2196ac0a925b1dff98aa7aa1dc00d125854199a8fd3d0bacfd7b",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: .upload-button tem aria-hidden=true e é focalizável e visível (550x40), e #documentos computa display:none — nenhum controle de arquivo fica exposto. Verdadeiro e fora da referência: o aria-hidden é escrito pelo BRUpload do core.js do DS (a tela só injetou o tabindex=1). A alegação é sobre a exposição do controle, não sobre a ordem de tabulação, então não credita a A-02. Descoberta de fato (D-48): defeito que o próprio componente do DS traz.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O campo de arquivo #documentos tem display:none (largura e altura 0), portanto não é focalizável nem aparece na árvore de acessibilidade — no snapshot a região de upload expõe apenas texto genérico 'Documentos comprobatórios (opcional)' e um botão. O único controle visível e focalizável, .upload-button, tem aria-hidden=\"true\", ficando removido da árvore de acessibilidade. O rótulo .upload-label[for=documentos] aponta para o input oculto e é exposto como texto solto. Resultado: não há nenhum controle com nome e papel de campo de arquivo disponível para tecnologia assistiva.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>input"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-4896a950335db93f5bf80b85cda819c61feba3738d11adbe3a140d63fc657a8e",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: o link inicial da trilha é <a class='br-button circle'>. É a marcação dos exemplos oficiais do pacote (breadcrumb e 14+ ocorrências de <a class=\"br-button circle\">): o 'esperado' (<button>) contradiz o DS. Falso positivo do validator. Veredito confirmado pela autora em 19/09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "br-button aplicado a <a>",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>nav:nth-of-type(2)>ol>li:nth-of-type(1)>a"
+          ],
+          "unitIds": [],
+          "citation": "unsupported",
+          "decisao": "incorreta"
+        }
+      ]
+    },
+    {
+      "cardId": "C-4a8827bc3cc214362ce630026fa3cc2d1bdfcfb2cc7f061786d616a2c1a1b114",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido nos dois selects: foco no campo, ArrowDown, Enter sobre o .br-item — o valor é preenchido e document.activeElement vira BODY. Verdadeiro e fora da referência (não é a A-04 nem a A-08, candidatas só pelo elemento). A citação do e-MAG 2.1 é discutível: a função é operável por teclado; o que se perde é o foco. Comportamento do BRSelect do core.js. Descoberta de fato (D-48).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Selecionando uma opção só pelo teclado (foco no campo, ArrowDown para entrar na lista, Enter sobre o .br-item), o valor é preenchido e a lista fecha, mas document.activeElement passa a ser <body>. Reproduzido nos dois campos: #servico ficou \"Emissão de certidão\" e #unidade ficou \"Agência Centro\", ambos com foco em BODY.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input",
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [],
+          "citation": "uncertain",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-4b40d76d40799ae88546815bc04062952049385b1d8442de7c03780fea9a7a29",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: os três links a.page estão sem aria-current no carregamento e depois de acionar a Página 2 (a classe active migra, aria-current continua nulo); os únicos aria-current da página são o item da trilha e o dia do calendário. É a A-12. A alegação não fala da falta de lista (A-07), que fica sem crédito aqui.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A página corrente da paginação é indicada apenas pela classe CSS \"active\" (<a class=\"page active\" aria-label=\"Página 1\" href=\"#titulo-historico\">1</a>); não há aria-current. Após clicar em \"Página 2\", a classe migra para o link 2 (data-current=\"2\") e continua sem aria-current, enquanto o breadcrumb da mesma tela usa aria-current=\"page\".",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)"
+          ],
+          "unitIds": [
+            "U-fa46b3b01953095c45ccd4ee7da378bc7eaab3a1936698faa3f365516a5be29e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-4d5575e696ae1986a22fe08c20c17f4de392c813ce53a06ead7e9448ef8b9ece",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido com o calendário aberto: os botões de mês anterior e próximo são <button class='br-button circle small'> só com <i>, sem aria-label, title nem texto, visíveis e fora de aria-hidden — nome acessível vazio. Verdadeiro e fora da referência; a marcação é gerada pelo datetimepicker do core.js do DS. Descoberta de fato (D-48).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Os dois botões de navegação de mês do calendário são <button class=\"br-button circle small\" type=\"button\"><i class=\"fas fas fa-chevron-left\"></i></button> e <button ...><i class=\"fas fa-chevron-right\"></i></button>: sem aria-label, sem texto e com o ícone marcado como decorativo, resultando em nome acessível vazio.",
+          "subjects": [
+            "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(1)>button",
+            "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(2)>button"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-5185de19ad85d907e48d98397fe57a963cf6381f728b77ed729ee904c1b079bc",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Duas afirmações que não se resolvem com a mesma correção (tirar o aria-hidden não conserta a ordem; tabindex=0 não conserta a exposição). Medido: .upload-button tem tabindex=1 e é o único tabindex positivo do estado inicial; o primeiro Tab do documento recém-carregado cai nele (activeElement = button.upload-button), antes do atalho para o conteúdo. É a A-02. Medido também: aria-hidden=true no mesmo botão, escrito pelo BRUpload do core.js; #documentos com display:none. Divisão feita por quem decide (D-48: alegação composta; A-02 não tem predicado).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O botão de upload tem tabindex positivo: o primeiro Tab da página cai nele, antes do atalho para o conteúdo.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+          ],
+          "unitIds": [
+            "U-b3362afca6c4004dc1bfe74c6ea6d81e8a2e500a8eb931d94b772c90ee1746bd"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        },
+        {
+          "id": "a2",
+          "text": "O botão tem aria-hidden=true e continua focalizável: a parada de foco não expõe nome nem papel.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-52823235effc265d68dddd8eef4e6941cba057c09cbb3076c8c93cc553af50e7",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Valor medido (padding 0 29px 0 40px), mas os 29px vêm de '.br-select .br-input input{padding-right:29px}' no core.min.css do DS, não da página. Falso positivo do validator; não é a A-04 nem a A-08, candidatas só pelo elemento. Veredito decidido pela autora em 19/09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "padding: 0px 29px 0px 40px (fora da escala: 29px)",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [],
+          "citation": "unsupported",
+          "decisao": "incorreta"
+        }
+      ]
+    },
+    {
+      "cardId": "C-56378f8104a1ffcdb037d2103b22142ca5fbbd3d17e105e5612ad31bd068911f",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido no estado inicial: #forma-presencial tem labels.length=0, sem aria-label, aria-labelledby nem title; o irmão é <label>Presencial</label> sem for. #forma-video e #forma-telefone têm 1 label cada. Clicar no texto não marca o rádio (checked=false); foco+Espaço marca. É a A-09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O rótulo da primeira opção é <label>Presencial</label>, sem atributo for e sem envolver o input. O snapshot da árvore de acessibilidade expõe o controle como 'radio' sem nome, enquanto os irmãos aparecem como 'radio \"Por videochamada\"' e 'radio \"Por telefone\"'. Como o input tem opacity:0 e position:absolute e é totalmente coberto pelo rótulo (input e label com mesmo x=193 e y=499.8; elementFromPoint sobre o rótulo devolve o LABEL), o clique é interceptado: após clicar no texto 'Presencial', forma-presencial.checked permaneceu false. A opção só foi marcada por teclado (ArrowUp a partir de forma-video).",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input"
+          ],
+          "unitIds": [
+            "U-471fd34bfed8d491133fe60cfe6233aa00117fefb796768495ff7598fa7a6a5e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-5d1f3f75950edaef62e89b010ad9dfc4fadadbbcc0ee93a6e7b0f4d9789823c0",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido após envio vazio: #servico com aria-invalid=true e aria-describedby=null; o span 'Selecione o tipo de serviço.' tem role=alert e nenhum id. Os outros seis campos referenciam o próprio retorno. É a A-08 em #servico.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Apos submeter o formulario vazio, #servico recebe aria-invalid=\"true\" e e exibida a mensagem visivel 'Selecione o tipo de servico.' em <span class=\"feedback danger retorno-campo\" role=\"alert\">, mas esse span nao tem id e o aria-describedby de #servico e null: a mensagem nao esta associada ao campo.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [
+            "U-a10dcb076ad236543b32667bd7e0adfec72fef26085a4924a9eb55ecf74492e3"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-5d921a52f61cd76a1c708a65551541e45b87c41724379bfc19f712211a00b2a9",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido com o calendário aberto: os botões de mês anterior e próximo são <button class='br-button circle small'> só com <i>, sem aria-label, title nem texto, visíveis e fora de aria-hidden — nome acessível vazio. Verdadeiro e fora da referência; a marcação é gerada pelo datetimepicker do core.js do DS. Descoberta de fato (D-48).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+          "subjects": [
+            "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(2)>button"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-68fa075a63b2e576c9ce640022c1496ee2cf8e34f3d1aa3c3bb0bdd598458a80",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: .upload-button tem aria-hidden=true e é focalizável e visível (550x40), e #documentos computa display:none — nenhum controle de arquivo fica exposto. Verdadeiro e fora da referência: o aria-hidden é escrito pelo BRUpload do core.js do DS (a tela só injetou o tabindex=1). A alegação é sobre a exposição do controle, não sobre a ordem de tabulação, então não credita a A-02. Descoberta de fato (D-48): defeito que o próprio componente do DS traz.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O único controle visível e acionável do campo Documentos comprobatórios é o botão Selecione o arquivo, que tem aria-hidden=true, enquanto o input file #documentos está com display none. Não há, portanto, nenhum componente correspondente na árvore de acessibilidade, embora o botão receba foco pelo teclado e abra o seletor de arquivos ao receber Enter.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-6a1210ec961ecf56f364f8d795441fc00a72ff431fc5e8f3c4751b4710f9dda8",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido com o calendário aberto: os botões de mês anterior e próximo são <button class='br-button circle small'> só com <i>, sem aria-label, title nem texto, visíveis e fora de aria-hidden — nome acessível vazio. Verdadeiro e fora da referência; a marcação é gerada pelo datetimepicker do core.js do DS. Descoberta de fato (D-48).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com o calendario aberto, o botao de mes anterior fica visivel (inline-flex, 32x32 px) e contem apenas <i class=\"fas fa-chevron-left\">, sem texto, sem aria-label e sem title: o nome acessivel e vazio.",
+          "subjects": [
+            "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(1)>button"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-6bb9202c3eae215e9381e4a240860d829455f799d234031a41441e7b5ce77f27",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido após envio vazio: #servico com aria-invalid=true e aria-describedby=null; o span 'Selecione o tipo de serviço.' tem role=alert e nenhum id. Os outros seis campos referenciam o próprio retorno. É a A-08 em #servico.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Após envio inválido, #servico recebe aria-invalid=\"true\" mas aria-describedby é null; a mensagem <span class=\"feedback danger retorno-campo\" role=\"alert\">Selecione o tipo de serviço.</span> não tem id e não é referenciada pelo campo. Nos demais campos a associação existe (#nome → nome-retorno, #cpf → \"cpf-apoio cpf-retorno\", #data-preferencial → \"data-apoio data-retorno\", #descricao → \"descricao-apoio descricao-retorno\", rádios → forma-retorno).",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [
+            "U-a10dcb076ad236543b32667bd7e0adfec72fef26085a4924a9eb55ecf74492e3"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-6bbb2992254d437eab80b7efbbf0a4d34c2b113958975d0c8eb1bc13a1dcd42e",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido no estado inicial: #forma-presencial tem labels.length=0, sem aria-label, aria-labelledby nem title; o irmão é <label>Presencial</label> sem for. #forma-video e #forma-telefone têm 1 label cada. Clicar no texto não marca o rádio (checked=false); foco+Espaço marca. É a A-09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O rótulo da opção é <label>Presencial</label>, sem atributo for, e o input não tem aria-label, aria-labelledby nem title: #forma-presencial fica sem nome acessível. Clicar no texto \"Presencial\" não marca o rádio (checked permanece false). As outras duas opções do mesmo fieldset têm label[for=\"forma-video\"] e label[for=\"forma-telefone\"].",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input"
+          ],
+          "unitIds": [
+            "U-471fd34bfed8d491133fe60cfe6233aa00117fefb796768495ff7598fa7a6a5e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-71518f8f9fda0a85bc86440d02394bb27a7db0b9e5efdcbcb91b6cd2990feb95",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido após envio vazio: br-button aplicado a <div role='button'> no fechar da mensagem de retorno. É a A-06.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "br-button aplicado a <div>",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div"
+          ],
+          "unitIds": [
+            "U-bbfc7654327714d26fe1c4acef5b74dd3a8b5e541d8cd630d6ebc6f9d63f8fc0"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-71b3956f3acaa24e774685d602d021967e0c1e983e885c2fc317d180f0ec2e94",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: os três links a.page estão sem aria-current no carregamento e depois de acionar a Página 2 (a classe active migra, aria-current continua nulo); os únicos aria-current da página são o item da trilha e o dia do calendário. É a A-12. A alegação não fala da falta de lista (A-07), que fica sem crédito aqui.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A página corrente da paginação do histórico é sinalizada apenas pela classe 'active' e pelo contraste visual (texto branco sobre rgb(12,50,111), contra azul sobre fundo claro nas demais). O link não tem aria-current e seu aria-label é apenas 'Página 1'. Após clicar em 'Página 2' as linhas da tabela mudam e a classe 'active' migra para o segundo link, mas o único elemento com aria-current na página continua sendo o span do breadcrumb ('Solicitar serviço'), ou seja, a paginação nunca expõe a página atual programaticamente.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)"
+          ],
+          "unitIds": [
+            "U-fa46b3b01953095c45ccd4ee7da378bc7eaab3a1936698faa3f365516a5be29e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-72b78f660ad34c2de04b83ed5b37e5ee5b459b3909b761e5e154f52a973f8cf9",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido após envio vazio: #unidade com aria-invalid=true e aria-describedby=null; o span 'Selecione a unidade de atendimento.' tem role=alert e nenhum id. Os outros seis campos referenciam o próprio retorno. É a A-08 em #unidade.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Após enviar o formulário vazio, o campo Unidade de atendimento recebe aria-invalid=true e a mensagem Selecione a unidade de atendimento é inserida ao lado dele, mas o span da mensagem não tem id e o input não tem aria-describedby, ao contrário dos campos Nome completo, CPF, Data preferencial, Descrição e da declaração, que usam aria-describedby.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [
+            "U-51a6b48fcbf886149c29705242f258a4c46c4b607bc8f80c640a3e74faea8b16"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-7ef093938c51a6f70a0251af6e6630969dc112a9481e19ab582535a7750a5ba0",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido no estado inicial: #forma-presencial tem labels.length=0, sem aria-label, aria-labelledby nem title; o irmão é <label>Presencial</label> sem for. #forma-video e #forma-telefone têm 1 label cada. Clicar no texto não marca o rádio (checked=false); foco+Espaço marca. É a A-09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O rádio da opção Presencial não tem nome acessível: o texto visível está em um label sem atributo for, que também não envolve o campo, e o input não tem aria-label nem aria-labelledby, de modo que input.labels.length é 0. No snapshot da árvore de acessibilidade ele aparece como radio sem nome, ao lado de radio Por videochamada e radio Por telefone, cujos labels usam for.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input"
+          ],
+          "unitIds": [
+            "U-471fd34bfed8d491133fe60cfe6233aa00117fefb796768495ff7598fa7a6a5e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-7f837090ed356d8d782df92ee5a18441cdd7d374211446f3f3674e100f0ae0b9",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido após envio vazio: #unidade com aria-invalid=true e aria-describedby=null; o span 'Selecione a unidade de atendimento.' tem role=alert e nenhum id. Os outros seis campos referenciam o próprio retorno. É a A-08 em #unidade.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Após enviar o formulário vazio, #unidade recebe aria-invalid=\"true\" e é inserido <span class=\"feedback danger retorno-campo\" role=\"alert\">Selecione a unidade de atendimento.</span>, mas esse span não tem id e #unidade permanece com aria-describedby=null.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [
+            "U-51a6b48fcbf886149c29705242f258a4c46c4b607bc8f80c640a3e74faea8b16"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-8826711d636da9d79d16e148899b8d03ce23b6da99ef0a89bd82adeb27f6dfa8",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Valor medido (margin -2px 0 0 nos dois div.br-list dos selects), mas declarado por '.br-select .br-list{margin-top:-2px}' no core.min.css do DS, não pela página. Falso positivo do validator: acusa a folha de estilo do próprio DS. Veredito decidido pela autora em 19/09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "margin: -2px 0px 0px (fora da escala: -2px)",
+          "subjects": [
+            "unresolved:#list-3046"
+          ],
+          "unitIds": [],
+          "citation": "unsupported",
+          "decisao": "incorreta"
+        }
+      ]
+    },
+    {
+      "cardId": "C-8ae96ec4770459aa94a2f693214380325adf7886f90e7b7dce05e1b2877cd847",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido com o calendário aberto: os botões de mês anterior e próximo são <button class='br-button circle small'> só com <i>, sem aria-label, title nem texto, visíveis e fora de aria-hidden — nome acessível vazio. Verdadeiro e fora da referência; a marcação é gerada pelo datetimepicker do core.js do DS. Descoberta de fato (D-48).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com o calendario aberto, o botao de mes anterior e focalizavel (tabindex padrao de <button>, fora de qualquer aria-hidden) e contem apenas o icone <i class=\"fas fas fa-chevron-left\">, sem aria-label e sem texto: nome acessivel vazio.",
+          "subjects": [
+            "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(1)>button"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-8b146cd2e82e72d02f7fd3572bfc6effcf9d6aac38752f95214974f4e5fcda09",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido com o calendário aberto: os botões de mês anterior e próximo são <button class='br-button circle small'> só com <i>, sem aria-label, title nem texto, visíveis e fora de aria-hidden — nome acessível vazio. Verdadeiro e fora da referência; a marcação é gerada pelo datetimepicker do core.js do DS. Descoberta de fato (D-48).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+          "subjects": [
+            "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(1)>button"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-8b5627ec3a8eca66332d9233983e13373d679ec0c83632ef8e51970d1a5e4b85",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: com CPF '123' e o resto válido o envio é aceito ('Solicitação enviada…', nenhum aria-invalid), embora #cpf-apoio declare 'Somente números, 11 dígitos.'. Verdadeiro e fora da referência: a validação da tela só cobra campo vazio. Descoberta de fato (D-48) — nenhuma regra citada.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com #cpf=\"123\" e todos os demais campos obrigatórios preenchidos, o envio é aceito: .retorno-envio passa a exibir \"Solicitação enviada. Acompanhe o andamento em Solicitações anteriores.\", #cpf fica com aria-invalid=null e nenhuma .retorno-campo é gerada.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(2)>div>input"
+          ],
+          "unitIds": [],
+          "citation": "uncertain",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-8c63a309ba0f3edb4563d74621578159a06adadd3dac6be4da142ffc46af44d8",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "A medição não confirma: o select de mês do calendário computa margin 0px. O -1px é de '.flatpickr-current-month .flatpickr-monthDropdown-months', declaração vencida por '.flatpickr-calendar .flatpickr-months .flatpickr-monthDropdown-months{margin:0}'. O verificador leu declaração sobrescrita. Falso positivo do validator. Veredito confirmado pela autora em 19/09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "margin: 0px (fora da escala: -1px, -1px)",
+          "subjects": [
+            "body>div:nth-of-type(2)>div:nth-of-type(1)>div>div>select"
+          ],
+          "unitIds": [],
+          "citation": "unsupported",
+          "decisao": "incorreta"
+        }
+      ]
+    },
+    {
+      "cardId": "C-939ae3b73752e7f67aae4200a52129f00b4509b8c7068cd174b6c2dd312e4c6b",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: os três links a.page estão sem aria-current no carregamento e depois de acionar a Página 2 (a classe active migra, aria-current continua nulo); os únicos aria-current da página são o item da trilha e o dia do calendário. É a A-12. A alegação não fala da falta de lista (A-07), que fica sem crédito aqui.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Na paginação de Solicitações anteriores, a página corrente é indicada apenas visualmente, pela classe active e pelo fundo azul escuro. Nenhum dos três links tem aria-current: no carregamento o link 1 está com classe active e aria-current nulo e, após acionar o link 2, o conteúdo da tabela muda, a classe active passa para o segundo link e os três continuam com aria-current nulo.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)"
+          ],
+          "unitIds": [
+            "U-fa46b3b01953095c45ccd4ee7da378bc7eaab3a1936698faa3f365516a5be29e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-94a4aaa8f81d74dbe6e03d789c42fdb9f9f2f2bfa10171592291aba31f57faee",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido no estado inicial: #forma-presencial tem labels.length=0, sem aria-label, aria-labelledby nem title; o irmão é <label>Presencial</label> sem for. #forma-video e #forma-telefone têm 1 label cada. Clicar no texto não marca o rádio (checked=false); foco+Espaço marca. É a A-09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O <label>Presencial</label> irmao nao tem atributo for, e o input nao tem aria-label nem aria-labelledby: o nome acessivel do radio e vazio. Os outros dois radios do mesmo fieldset (#forma-video e #forma-telefone) usam label[for] e sao anunciados corretamente.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input"
+          ],
+          "unitIds": [
+            "U-471fd34bfed8d491133fe60cfe6233aa00117fefb796768495ff7598fa7a6a5e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-9c02ee2979e422fdae14c520bf90f1abd246e5f2b5e88796446ea5a7d0d7f220",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: 0 <caption> na tabela; o título é <div class='table-title'> fora do <table>. É a A-05.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "A tabela de 'Solicitacoes anteriores' nao tem <caption> (document.querySelectorAll('.tabela-anteriores table caption').length === 0). O titulo aparece somente como <div class=\"table-title\">Solicitacoes anteriores</div>, fora do elemento table.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>section>div>table"
+          ],
+          "unitIds": [
+            "U-6db298382eaecec8e3346bd8ea72a635adfaa9c2ebfbbe38cb860faff6759a16"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-a3547056f912211f37748f456e252b17383b2656cc90e2d72b42cfb478bb73a4",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido com o calendário aberto: 42 .flatpickr-day, todas com tabindex='1' (escrito pelo core.js do DS) — verdadeiro e fora da referência. O cartão afirma ainda, com o .upload-button como relacionado, que ele tem tabindex positivo e fura a ordem: Medido: .upload-button tem tabindex=1 e é o único tabindex positivo do estado inicial; o primeiro Tab do documento recém-carregado cai nele (activeElement = button.upload-button), antes do atalho para o conteúdo. É a A-02. Divisão feita por quem decide (D-48).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "As 42 células de dia do calendário têm tabindex=1.",
+          "subjects": [
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(1)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(10)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(11)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(12)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(13)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(14)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(15)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(16)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(17)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(18)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(19)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(2)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(20)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(21)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(22)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(23)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(24)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(25)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(26)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(27)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(28)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(29)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(3)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(30)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(31)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(32)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(33)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(34)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(35)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(36)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(37)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(38)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(39)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(4)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(40)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(41)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(42)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(5)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(6)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(7)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(8)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(9)"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        },
+        {
+          "id": "a2",
+          "text": "O .upload-button também tem tabindex positivo e é percorrido antes da ordem natural do documento.",
+          "subjects": [
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(1)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(10)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(11)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(12)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(13)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(14)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(15)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(16)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(17)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(18)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(19)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(2)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(20)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(21)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(22)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(23)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(24)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(25)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(26)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(27)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(28)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(29)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(3)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(30)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(31)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(32)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(33)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(34)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(35)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(36)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(37)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(38)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(39)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(4)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(40)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(41)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(42)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(5)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(6)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(7)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(8)",
+            "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(9)"
+          ],
+          "unitIds": [
+            "U-b3362afca6c4004dc1bfe74c6ea6d81e8a2e500a8eb931d94b772c90ee1746bd"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-acf16e829fa44560c34d39579546d72f9a7cee10b71882234a8accd9cb5a551d",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Valor medido (margin -2px 0 0 nos dois div.br-list dos selects), mas declarado por '.br-select .br-list{margin-top:-2px}' no core.min.css do DS, não pela página. Falso positivo do validator: acusa a folha de estilo do próprio DS. Veredito decidido pela autora em 19/09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "margin: -2px 0px 0px (fora da escala: -2px)",
+          "subjects": [
+            "unresolved:#list-4514"
+          ],
+          "unitIds": [],
+          "citation": "unsupported",
+          "decisao": "incorreta"
+        }
+      ]
+    },
+    {
+      "cardId": "C-ae85203c016854fe5e67b0cb64de88ac9a6062b556c5d89a34d6a3e293c81697",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Mesmo elemento, mesmo estado, mesma execução da linha de base e o mesmo defeito (rádio sem etiqueta) sob outra regra do axe. Duplicata do cartão de axe:label.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Form elements should have a visible label",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input"
+          ],
+          "unitIds": [
+            "U-471fd34bfed8d491133fe60cfe6233aa00117fefb796768495ff7598fa7a6a5e"
+          ],
+          "citation": "supported",
+          "decisao": "duplicada",
+          "duplicateOf": {
+            "cardId": "C-1ea809eaefbbc077023114e613488ae01b73ad4af658e0f8dd52266343bd2a0a",
+            "atomId": "a1"
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "C-afd44feadc495269a2d978494729776a552a06421a459321f6fbdfead5e60574",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido após envio vazio: #unidade com aria-invalid=true e aria-describedby=null; o span 'Selecione a unidade de atendimento.' tem role=alert e nenhum id. Os outros seis campos referenciam o próprio retorno. É a A-08 em #unidade.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Após envio inválido, #unidade recebe aria-invalid=\"true\" mas aria-describedby é null; a mensagem <span class=\"feedback danger retorno-campo\" role=\"alert\">Selecione a unidade de atendimento.</span> não tem id e não é referenciada pelo campo.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [
+            "U-51a6b48fcbf886149c29705242f258a4c46c4b607bc8f80c640a3e74faea8b16"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-b12bbecf5e375be027e0346a0f97765a5a496fe7950ff480fefb7a11217cc9cc",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: ao focar, #servico e #unidade ficam idênticos ao estado sem foco (borda rgb(136,136,136), box-shadow none, outline none), enquanto #nome, #cpf e #descricao passam a borda e halo rgb(194,133,12). A regra citada no cartão existe na folha da página, palavra por palavra. É a A-04 nos dois selects. Unidade sem predicado: o casamento se apoia nesta medição.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Uma regra da folha de estilo da página (solicitacao) anula o indicador de foco dos dois campos de combobox: '.campo-servico .br-input input:focus, .campo-servico .br-input input:focus-visible, .campo-unidade .br-input input:focus, .campo-unidade .br-input input:focus-visible { box-shadow: none; outline: none; border-color: var(--border-color-alternative) !important; }'. Medindo o estilo computado antes e depois de focar, #servico ficou idêntico (border rgb(136,136,136) 0.666667px, box-shadow none, outline none), enquanto #nome, no mesmo estado, muda para border rgb(194,133,12) e box-shadow rgb(194,133,12) 0 0 0 2px.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input",
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [
+            "U-a4c4e6005ce86b914ed8b58011b3f8effcee1326c119327ddd4eb9e9e0540a41",
+            "U-27cc0d4a8e5df91ab64931d3374ec1ea9b51d3e9b519f740b3d4b3c1a6c195d8"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-b296921b8708822af84a51dd4fcf72de3a61091350bad61e860170f01e99af78",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Valor medido (6px), mas declarado pelo core.min.css do DS em '.br-textarea textarea', não pela página: o verificador de token acusa a folha de estilo do próprio DS. Falso positivo do validator. Veredito decidido pela autora em 19/09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "border-radius: 6px fora da escala do DS",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(5)>div>textarea"
+          ],
+          "unitIds": [],
+          "citation": "unsupported",
+          "decisao": "incorreta"
+        }
+      ]
+    },
+    {
+      "cardId": "C-b654e69f99b45ec4ed21d22b34987450cec0c7a59ef0d1e5bb77a56cef9026af",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido com o calendário aberto: os botões de mês anterior e próximo são <button class='br-button circle small'> só com <i>, sem aria-label, title nem texto, visíveis e fora de aria-hidden — nome acessível vazio. Verdadeiro e fora da referência; a marcação é gerada pelo datetimepicker do core.js do DS. Descoberta de fato (D-48).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com o calendario aberto, o botao de proximo mes e focalizavel e contem apenas o icone <i class=\"fas fa-chevron-right\">, sem aria-label e sem texto: nome acessivel vazio.",
+          "subjects": [
+            "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(2)>button"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-c2dc2499abd000a4ded1ba1ca706c792fd603d95e353257b899795c70dec5c04",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: #descricao aceita 520 caracteres, sem maxlength, e o envio é aceito, embora #descricao-apoio anuncie 'até 500 caracteres'. Verdadeiro e fora da referência. Descoberta de fato (D-48) — nenhuma regra citada.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O campo aceitou 520 caracteres (value.length=520), não tem maxlength nem contador, e o formulário foi enviado com sucesso sem erro associado ao campo.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(5)>div>textarea"
+          ],
+          "unitIds": [],
+          "citation": "uncertain",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-c75a5f2ad92060b8b10d5f1b4fe987aebe792dd985adb6331c2a18f0bc5288c2",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido: .upload-button tem tabindex=1 e é o único tabindex positivo do estado inicial; o primeiro Tab do documento recém-carregado cai nele (activeElement = button.upload-button), antes do atalho para o conteúdo. É a A-02. Unidade sem predicado: o casamento se apoia nesta medição.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O botão de upload tem tabindex=\"1\" (único tabindex positivo da página). A partir do topo do documento, o primeiro Tab leva o foco para .upload-button, que fica no fim do formulário, antes do link \"Ir para o conteúdo\", da marca gov.br, do breadcrumb e de todos os campos.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+          ],
+          "unitIds": [
+            "U-b3362afca6c4004dc1bfe74c6ea6d81e8a2e500a8eb931d94b772c90ee1746bd"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-c7d69d23ba02b8eb01fad19955173e576b410fb7d7c1a15c0b0eea3e36b8035f",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido após envio vazio: o fechar da mensagem é <div class='br-button circle small' role='button' tabindex='0' aria-label='Fechar a mensagem'>; os exemplos do pacote usam <button>. É a A-06. O cartão nada diz sobre a posição do ícone e do fechar (A-11), que fica sem crédito.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O acionador de fechar da br-message de retorno é <div class=\"br-button circle small\" role=\"button\" tabindex=\"0\" aria-label=\"Fechar a mensagem\">, ou seja, a classe br-button aplicada a um <div>.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div"
+          ],
+          "unitIds": [
+            "U-bbfc7654327714d26fe1c4acef5b74dd3a8b5e541d8cd630d6ebc6f9d63f8fc0"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-c86eec1d1811b5578e7fdd44d82937558605bf178be48ffe690316b324d07197",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido com o calendário aberto: os botões de mês anterior e próximo são <button class='br-button circle small'> só com <i>, sem aria-label, title nem texto, visíveis e fora de aria-hidden — nome acessível vazio. Verdadeiro e fora da referência; a marcação é gerada pelo datetimepicker do core.js do DS. Descoberta de fato (D-48).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Com o calendario aberto, o botao de proximo mes fica visivel (inline-flex, 32x32 px) e contem apenas <i class=\"fas fa-chevron-right\">, sem texto, sem aria-label e sem title: o nome acessivel e vazio.",
+          "subjects": [
+            "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(2)>button"
+          ],
+          "unitIds": [],
+          "citation": "supported",
+          "decisao": "defeito-novo-correto"
+        }
+      ]
+    },
+    {
+      "cardId": "C-ce2d73239cb03c8c24270c7f20cf878b44f0d7d6785dbdbec7e7ab29a4d2d959",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "A medição confirma o valor (border-radius 6px em #descricao, 4px nos demais campos), mas não o defeito: os 6px vêm de '.br-textarea textarea{border-radius:6px}' no core.min.css do próprio DS, sem nenhuma regra da página. O 'esperado' (4px) contradiz o componente oficial. Veredito decidido pela autora em 19/09 (D-48: incorreta).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "código e exemplos do pacote @govbr-ds/core instalado no corpus"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "border-radius computado de 6px, fora da escala do DS. Os demais campos de entrada da mesma tela (#nome, #cpf, #servico, #unidade, #data-preferencial) computam 4px, e --surface-rounder-sm resolve para 4px no próprio #descricao.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(5)>div>textarea"
+          ],
+          "unitIds": [],
+          "citation": "unsupported",
+          "decisao": "incorreta"
+        }
+      ]
+    },
+    {
+      "cardId": "C-d57e5446867e2462f25f35694cd3d272871bd025713af71ef96e939d700183e5",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido no estado inicial: #forma-presencial tem labels.length=0, sem aria-label, aria-labelledby nem title; o irmão é <label>Presencial</label> sem for. #forma-video e #forma-telefone têm 1 label cada. Clicar no texto não marca o rádio (checked=false); foco+Espaço marca. É a A-09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O rádio tem <label>Presencial</label> sem atributo for e sem aria-label/aria-labelledby: na árvore de acessibilidade aparece como \"radio\" sem nome. O rádio está com opacity:0 e coberto pelo rótulo, que intercepta o clique (Playwright: \"<label>Presencial</label> intercepts pointer events\"); clicar no texto \"Presencial\" deixa forma-presencial.checked === false. Só o teclado (foco + Espaço) marca a opção. Os outros dois rádios do grupo têm for=\"forma-video\" e for=\"forma-telefone\".",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input"
+          ],
+          "unitIds": [
+            "U-471fd34bfed8d491133fe60cfe6233aa00117fefb796768495ff7598fa7a6a5e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-dca271e951cf685c60bdcf234c394df943f55521e23a1b70b18695b8b8c027dc",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido com o diálogo aberto: div.br-modal.dialogo-descarte computa color rgb(51, 67, 51) = #334333, que não é token. É a A-03. O cartão nada diz sobre a devolução do foco (A-01).",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "color: rgb(51, 67, 51) (#334333) não corresponde a nenhum token do DS",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>div>div"
+          ],
+          "unitIds": [
+            "U-07d298f4df34c286740799c74d0ebada13b65d950a4b6ad514d6f6e090153e4d"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-e3d8f816c2e5818c6de3d2c572b89f27c044430f508fddc171834880a34cf18e",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido após envio vazio: #servico com aria-invalid=true e aria-describedby=null; o span 'Selecione o tipo de serviço.' tem role=alert e nenhum id. Os outros seis campos referenciam o próprio retorno. É a A-08 em #servico. Medido após envio vazio: #unidade com aria-invalid=true e aria-describedby=null; o span 'Selecione a unidade de atendimento.' tem role=alert e nenhum id. Os outros seis campos referenciam o próprio retorno. É a A-08 em #unidade. Um átomo, dois sujeitos, uma unidade por sujeito.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "Apos submeter o formulario vazio, os dois campos recebem aria-invalid=\"true\" mas ficam com aria-describedby nulo, e os <span class=\"feedback danger retorno-campo\" role=\"alert\"> que carregam 'Selecione o tipo de servico.' e 'Selecione a unidade de atendimento.' nao possuem id, portanto nao ha como vincula-los. Todos os demais campos invalidos recebem o vinculo: #nome tem aria-describedby=\"nome-retorno\", #cpf tem \"cpf-apoio cpf-retorno\", #data-preferencial tem \"data-apoio data-retorno\", #descricao tem \"descricao-apoio descricao-retorno\" e #declaracao tem \"declaracao-retorno\".",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input",
+            "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+          ],
+          "unitIds": [
+            "U-a10dcb076ad236543b32667bd7e0adfec72fef26085a4924a9eb55ecf74492e3",
+            "U-51a6b48fcbf886149c29705242f258a4c46c4b607bc8f80c640a3e74faea8b16"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    },
+    {
+      "cardId": "C-f33e069975b8c0adeb572753d49d02eb564731161ce428a572116bc2d67f57dc",
+      "status": "reviewed",
+      "reviewer": "Claude Fable 5.1 (assistente, D-48)",
+      "rationale": "Medido no estado inicial: #forma-presencial tem labels.length=0, sem aria-label, aria-labelledby nem title; o irmão é <label>Presencial</label> sem for. #forma-video e #forma-telefone têm 1 label cada. Clicar no texto não marca o rádio (checked=false); foco+Espaço marca. É a A-09.",
+      "complete": true,
+      "evidenceRefs": [
+        "cartão",
+        "reconstrução da cena",
+        "medição própria da tela congelada (conferencia-assistente.json)",
+        "norma citada conferida contra as regras que a unidade candidata lista"
+      ],
+      "atoms": [
+        {
+          "id": "a1",
+          "text": "O <label>Presencial</label> irmao nao tem atributo for, e o input nao tem aria-label nem aria-labelledby, portanto seu nome acessivel e vazio. Os outros dois radios do mesmo fieldset usam label[for=forma-video] e label[for=forma-telefone] e sao expostos corretamente.",
+          "subjects": [
+            "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input"
+          ],
+          "unitIds": [
+            "U-471fd34bfed8d491133fe60cfe6233aa00117fefb796768495ff7598fa7a6a5e"
+          ],
+          "citation": "supported",
+          "decisao": "defeito-do-gabarito"
+        }
+      ]
+    }
+  ]
+}

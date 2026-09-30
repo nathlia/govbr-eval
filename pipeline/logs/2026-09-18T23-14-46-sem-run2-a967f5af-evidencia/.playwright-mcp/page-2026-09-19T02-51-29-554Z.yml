@@ -1,0 +1,158 @@
+- generic [ref=e3]:
+  - menubar:
+    - menuitem "Ir para o conteúdo" [ref=e4] [cursor=pointer]:
+      - text: Ir para o conteúdo
+      - generic [ref=e5]: (1/1)
+      - generic [ref=e6]: "1"
+  - banner [ref=e7]:
+    - link "gov.br — página inicial" [ref=e8] [cursor=pointer]:
+      - /url: /solicitacao
+      - text: gov
+      - strong [ref=e9]: .br
+  - navigation "Breadcrumbs" [ref=e10]:
+    - list [ref=e11]:
+      - listitem [ref=e12]:
+        - link "Página inicial" [ref=e13] [cursor=pointer]:
+          - /url: /solicitacao
+          - generic [ref=e14]: Página inicial
+          - generic [ref=e15]: 
+      - listitem [ref=e16]:
+        - generic [ref=e17]: 
+        - link "Serviços" [ref=e18] [cursor=pointer]:
+          - /url: /solicitacao
+      - listitem [ref=e19]:
+        - generic [ref=e20]: 
+        - generic [ref=e21]: Solicitar serviço
+  - main [ref=e22]:
+    - heading "Solicitar serviço" [level=1] [ref=e23]
+    - paragraph [ref=e24]: Todos os campos são de preenchimento obrigatório, exceto os indicados como opcionais.
+    - generic [ref=e25]:
+      - generic [ref=e184]:
+        - generic [ref=e186]: 
+        - alert [ref=e187]: Solicitação enviada. Acompanhe o andamento em Solicitações anteriores.
+        - button "Fechar a mensagem" [ref=e189] [cursor=pointer]:
+          - generic [ref=e190]: 
+      - generic [ref=e26]:
+        - generic [ref=e28]:
+          - text: Nome completo
+          - textbox "Nome completo" [ref=e29]: Maria Souza
+        - generic [ref=e31]:
+          - text: CPF
+          - textbox "CPF" [ref=e32]:
+            - /placeholder: "00000000000"
+            - text: "12345678901"
+          - paragraph [ref=e33]: Somente números, 11 dígitos.
+      - generic [ref=e34]:
+        - combobox [ref=e37]:
+          - text: Tipo de serviço
+          - generic [ref=e38]:
+            - generic [ref=e40]: 
+            - textbox "Tipo de serviço" [ref=e41]:
+              - /placeholder: Selecione uma opção
+              - text: Emissão de certidão
+          - button "Exibir lista" [ref=e163] [cursor=pointer]:
+            - generic [ref=e43]: 
+        - combobox [ref=e46]:
+          - text: Unidade de atendimento
+          - generic [ref=e47]:
+            - generic [ref=e49]: 
+            - textbox "Unidade de atendimento" [ref=e50]:
+              - /placeholder: Selecione uma opção
+              - text: Agência Centro
+          - button "Exibir lista" [ref=e182] [cursor=pointer]:
+            - generic [ref=e52]: 
+      - group "Forma de atendimento" [ref=e53]:
+        - generic [ref=e54]: Forma de atendimento
+        - generic [ref=e55]:
+          - radio [checked] [ref=e56]
+          - generic [ref=e57] [cursor=pointer]: Presencial
+        - generic [ref=e58]:
+          - radio "Por videochamada" [ref=e59]
+          - generic [ref=e60] [cursor=pointer]: Por videochamada
+        - generic [ref=e61]:
+          - radio "Por telefone" [ref=e62]
+          - generic [ref=e63] [cursor=pointer]: Por telefone
+      - generic [ref=e67]:
+        - text: Data preferencial
+        - textbox "Data preferencial" [ref=e68]:
+          - /placeholder: "exemplo: 02/02/2027"
+          - text: 02/10/2026
+        - button [ref=e69] [cursor=pointer]:
+          - generic [ref=e70]: 
+        - paragraph [ref=e71]: Informe no formato dd/mm/aaaa.
+      - generic [ref=e73]:
+        - generic [ref=e74]: Descrição da solicitação
+        - textbox "Descrição da solicitação" [ref=e75]: Preciso de uma certidao de tempo de contribuicao.
+        - paragraph [ref=e76]: Descreva o que você precisa, em até 500 caracteres.
+      - generic [ref=e77]:
+        - generic [ref=e78]:
+          - generic [ref=e79]: Documentos comprobatórios (opcional)
+          - button [ref=e80] [cursor=pointer]:
+            - generic [ref=e81]: 
+            - text: Selecione o arquivo
+        - paragraph [ref=e82]: Um arquivo PDF, JPG ou PNG de até 5 MB.
+      - group "Recursos de acessibilidade no atendimento (opcional)" [ref=e83]:
+        - generic [ref=e84]: Recursos de acessibilidade no atendimento (opcional)
+        - generic [ref=e85]:
+          - checkbox "Intérprete de Libras" [ref=e86]
+          - generic [ref=e87] [cursor=pointer]: Intérprete de Libras
+        - generic [ref=e88]:
+          - checkbox "Atendimento em local sem degraus" [ref=e89]
+          - generic [ref=e90] [cursor=pointer]: Atendimento em local sem degraus
+      - generic [ref=e92]:
+        - checkbox "Declaro que as informações prestadas são verdadeiras." [checked] [ref=e93]
+        - generic [ref=e94] [cursor=pointer]: Declaro que as informações prestadas são verdadeiras.
+      - generic [ref=e95]:
+        - button "Cancelar" [ref=e96] [cursor=pointer]
+        - button "Enviar" [ref=e97] [cursor=pointer]
+    - region "Solicitações anteriores" [ref=e98]:
+      - heading "Solicitações anteriores" [level=2] [ref=e99]
+      - generic [ref=e100]:
+        - generic [ref=e103]: Solicitações anteriores
+        - table [ref=e104]:
+          - rowgroup [ref=e105]:
+            - row "Protocolo Serviço Data Situação" [ref=e106]:
+              - columnheader "Protocolo" [ref=e107]
+              - columnheader "Serviço" [ref=e108]
+              - columnheader "Data" [ref=e109]
+              - columnheader "Situação" [ref=e110]
+          - rowgroup [ref=e111]:
+            - row "2026.0217.000731 Atualização cadastral 17/02/2026 Concluída" [ref=e191]:
+              - cell "2026.0217.000731" [ref=e192]
+              - cell "Atualização cadastral" [ref=e193]
+              - cell "17/02/2026" [ref=e194]
+              - cell "Concluída" [ref=e195]
+            - row "2026.0108.000045 Segunda via de documento 08/01/2026 Concluída" [ref=e196]:
+              - cell "2026.0108.000045" [ref=e197]
+              - cell "Segunda via de documento" [ref=e198]
+              - cell "08/01/2026" [ref=e199]
+              - cell "Concluída" [ref=e200]
+            - row "2025.1124.009812 Agendamento de perícia 24/11/2025 Concluída" [ref=e201]:
+              - cell "2025.1124.009812" [ref=e202]
+              - cell "Agendamento de perícia" [ref=e203]
+              - cell "24/11/2025" [ref=e204]
+              - cell "Concluída" [ref=e205]
+            - row "2025.1002.008340 Emissão de certidão 02/10/2025 Indeferida" [ref=e206]:
+              - cell "2025.1002.008340" [ref=e207]
+              - cell "Emissão de certidão" [ref=e208]
+              - cell "02/10/2025" [ref=e209]
+              - cell "Indeferida" [ref=e210]
+            - row "2025.0815.006998 Atualização cadastral 15/08/2025 Concluída" [ref=e211]:
+              - cell "2025.0815.006998" [ref=e212]
+              - cell "Atualização cadastral" [ref=e213]
+              - cell "15/08/2025" [ref=e214]
+              - cell "Concluída" [ref=e215]
+        - navigation "Paginação de solicitações anteriores" [ref=e138]:
+          - button "Página anterior" [ref=e139] [cursor=pointer]:
+            - generic [ref=e216]: 
+          - link "Página 1" [ref=e140] [cursor=pointer]:
+            - /url: "#titulo-historico"
+            - text: "1"
+          - link "Página 2" [active] [ref=e141] [cursor=pointer]:
+            - /url: "#titulo-historico"
+            - text: "2"
+          - link "Página 3" [ref=e142] [cursor=pointer]:
+            - /url: "#titulo-historico"
+            - text: "3"
+          - button "Página seguinte" [ref=e143] [cursor=pointer]:
+            - generic [ref=e144]: 

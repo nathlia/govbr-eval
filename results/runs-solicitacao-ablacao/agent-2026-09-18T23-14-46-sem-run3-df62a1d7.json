@@ -1,0 +1,220 @@
+{
+  "timestamp": "2026-09-19T03:20:43.071Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/solicitacao.html",
+  "scope": [
+    "tela inteira /solicitacao.html: skiplink, cabeçalho, breadcrumb, formulário de solicitação (nome, CPF, dois selects br-select, grupo de rádios, datetimepicker, textarea, upload, grupo de checkboxes, declaração, ações), mensagens de retorno de envio, tabela \"Solicitações anteriores\" e paginação"
+  ],
+  "notes": "Sem oráculo de regras nesta execução: nenhuma ferramenta de consulta de regras, scan_page ou verificação heurística estava disponível; as atribuições usam wcag:<critério> apenas quando justificáveis e rule:null quando não. Interações realizadas: carga inicial e árvore de acessibilidade; Tab a partir do topo (13 paradas registradas por listener de focusin); abertura dos dois selects por mouse e por teclado (ArrowDown/Enter) com verificação de aria-expanded e valor; clique no rótulo \"Presencial\" e seleção do mesmo rádio por Espaço; envio do formulário vazio (mensagem \"Há 8 campo(s) obrigatório(s) sem preenchimento\", foco movido para o role=alert) e inspeção de aria-invalid/aria-describedby de todos os campos; fechamento da mensagem de erro pelo teclado (Enter no div role=button, funcionou); preenchimento completo e envio bem-sucedido; clique em \"Página 2\" da paginação; varredura de contraste de texto calculada em 1280x900 nos estados inicial e de erro (nenhuma reprovação); verificação de reflow em 320x640. Limitações e pontos incertos, não reportados como achados: (a) o papel combobox está no div .br-input e não no input focável (#servico/#unidade não expõem aria-expanded/aria-controls) — padrão do próprio design system, aplicabilidade incerta sem oráculo; (b) após escolher uma opção do select pelo teclado o foco vai para <body> em vez de voltar ao input; (c) o botão do calendário (#data-preferencial-btn) tem aria-hidden=\"true\" e tabindex=\"-1\", ficando indisponível a teclado e a leitores de tela, embora a data possa ser digitada; (d) em 320x640 a página rola horizontalmente (scrollWidth 545 vs clientWidth 305) por causa da tabela de solicitações anteriores, caso possivelmente coberto pela exceção de tabelas de dados do reflow; (e) a data \"30/02/2026\" digitada foi normalizada silenciosamente para \"02/03/2026\"; (f) a solicitação enviada com sucesso não passa a constar na tabela \"Solicitações anteriores\"; (g) o diálogo de seleção de arquivo não pôde ser exercido; (h) único erro de console é 404 de /favicon.ico. Todos os seletores enviados foram executados com document.querySelectorAll na página e resolvem para exatamente 1 elemento.",
+  "findings": [
+    {
+      "selector": "#forma-presencial",
+      "relatedSelectors": [
+        ".grupo-forma .br-radio:first-of-type label"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "O rádio tem <label>Presencial</label> sem atributo for e sem aria-label/aria-labelledby: na árvore de acessibilidade aparece como \"radio\" sem nome. O rádio está com opacity:0 e coberto pelo rótulo, que intercepta o clique (Playwright: \"<label>Presencial</label> intercepts pointer events\"); clicar no texto \"Presencial\" deixa forma-presencial.checked === false. Só o teclado (foco + Espaço) marca a opção. Os outros dois rádios do grupo têm for=\"forma-video\" e for=\"forma-telefone\".",
+      "expected": "O rádio deve ter nome acessível programático (label com for=\"forma-presencial\") e o rótulo visível deve ativá-lo ao clique, como nas demais opções do grupo.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar no texto \"Presencial\"",
+          "focar #forma-presencial e pressionar Espaço"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-19T03-13-32-616Z.yml (snapshot: \"radio [ref=e56]\" sem nome, ao lado de \"radio \\\"Por videochamada\\\"\")",
+        ".playwright-mcp/page-2026-09-19T03-17-35-298Z.yml (após clique no rótulo)",
+        "browser_click ref=e56: TimeoutError com \"<label>Presencial</label> intercepts pointer events\"",
+        "browser_evaluate: {presencial:false} após clique no rótulo; {presencial:true} após Espaço com foco no input"
+      ]
+    },
+    {
+      "selector": ".upload-button",
+      "relatedSelectors": [
+        "#documentos"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "O único controle de upload visível e operável é <button class=\"upload-button\" aria-hidden=\"true\" tabindex=\"1\">Selecione o arquivo</button>, removido da árvore de acessibilidade por aria-hidden=\"true\"; o input real #documentos está com display:none (getBoundingClientRect 0x0), portanto também não é exposto nem focável. Nenhum controle de envio de arquivo aparece na árvore de acessibilidade do campo \"Documentos comprobatórios (opcional)\".",
+      "expected": "O controle de upload deve estar exposto à tecnologia assistiva com papel e nome acessível — por exemplo mantendo #documentos focável (oculto visualmente, não display:none) ou removendo aria-hidden do botão que o aciona.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-19T03-13-32-616Z.yml (snapshot mostra apenas \"button [ref=e80]\" com texto, sem nenhum controle de arquivo)",
+        "browser_evaluate: fileInput {display:\"none\", rect 0x0}; uploadBtn {ariaHidden:\"true\", tabindex:\"1\", display:\"block\", 550x40}"
+      ]
+    },
+    {
+      "selector": ".upload-button",
+      "relatedSelectors": [
+        ".br-skiplink .br-item",
+        "#nome"
+      ],
+      "rule": "wcag:2.4.3",
+      "observed": "O botão de upload tem tabindex=\"1\" (único tabindex positivo da página). A partir do topo do documento, o primeiro Tab leva o foco para .upload-button, que fica no fim do formulário, antes do link \"Ir para o conteúdo\", da marca gov.br, do breadcrumb e de todos os campos.",
+      "expected": "A ordem de foco deve seguir a ordem de leitura/DOM; o botão não deve usar tabindex positivo (tabindex=\"-1\" ou \"0\", conforme o controle focável do componente).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "pressionar Tab 6 vezes a partir do topo do documento"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate (log de focusin): [\"BUTTON#.upload-button.focus-visible[ti=1]\", \"A#.br-item...\", \"A#.marca-govbr...\", \"A#.br-button.circle...\", \"A#...\", \"SPAN#...[ti=0]\"]",
+        "browser_evaluate: positiveTabindex = [\"upload-button|1\"]"
+      ]
+    },
+    {
+      "selector": "#servico",
+      "relatedSelectors": [
+        ".campo-servico .br-select .feedback.retorno-campo"
+      ],
+      "rule": "wcag:1.3.1",
+      "observed": "Após envio inválido, #servico recebe aria-invalid=\"true\" mas aria-describedby é null; a mensagem <span class=\"feedback danger retorno-campo\" role=\"alert\">Selecione o tipo de serviço.</span> não tem id e não é referenciada pelo campo. Nos demais campos a associação existe (#nome → nome-retorno, #cpf → \"cpf-apoio cpf-retorno\", #data-preferencial → \"data-apoio data-retorno\", #descricao → \"descricao-apoio descricao-retorno\", rádios → forma-retorno).",
+      "expected": "A mensagem de erro do campo deve ser programaticamente associada ao controle inválido (id na mensagem e aria-describedby no input), como nos outros campos do mesmo formulário.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar em Enviar com o formulário vazio"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-19T03-16-27-242Z.yml (estado de erro)",
+        "browser_evaluate: {id:\"servico\", invalid:\"true\", desc:null} e span de erro sem atributo id"
+      ]
+    },
+    {
+      "selector": "#unidade",
+      "relatedSelectors": [
+        ".campo-unidade .br-select .feedback.retorno-campo"
+      ],
+      "rule": "wcag:1.3.1",
+      "observed": "Após envio inválido, #unidade recebe aria-invalid=\"true\" mas aria-describedby é null; a mensagem <span class=\"feedback danger retorno-campo\" role=\"alert\">Selecione a unidade de atendimento.</span> não tem id e não é referenciada pelo campo.",
+      "expected": "A mensagem de erro do campo deve ser programaticamente associada ao controle inválido (id na mensagem e aria-describedby no input), como nos outros campos do mesmo formulário.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar em Enviar com o formulário vazio"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-19T03-16-27-242Z.yml (estado de erro)",
+        "browser_evaluate: {id:\"unidade\", invalid:\"true\", desc:null} e span de erro sem atributo id"
+      ]
+    },
+    {
+      "selector": ".paginacao-anteriores a.page.active",
+      "relatedSelectors": [
+        ".paginacao-anteriores"
+      ],
+      "rule": "wcag:1.3.1",
+      "observed": "A página corrente da paginação é indicada apenas pela classe CSS \"active\" (<a class=\"page active\" aria-label=\"Página 1\" href=\"#titulo-historico\">1</a>); não há aria-current. Após clicar em \"Página 2\", a classe migra para o link 2 (data-current=\"2\") e continua sem aria-current, enquanto o breadcrumb da mesma tela usa aria-current=\"page\".",
+      "expected": "O link da página corrente deve expor a condição programaticamente com aria-current=\"page\", e não somente por estilo visual.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "rolar até \"Solicitações anteriores\"",
+          "clicar em \"Página 2\""
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-19T03-18-54-512Z.yml (paginação na página 2)",
+        "browser_evaluate: outerHTML do nav com data-current=\"2\" e <a class=\"page active\" aria-label=\"Página 2\"> sem aria-current",
+        "snapshot inicial: \"link \\\"Página 1\\\"\" sem estado de página atual"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        "#cpf-apoio",
+        ".acao-enviar"
+      ],
+      "rule": null,
+      "observed": "O campo declara o formato exigido em #cpf-apoio (\"Somente números, 11 dígitos.\") e é aria-required, mas o envio com o valor \"123\" foi aceito: nenhuma mensagem de erro foi gerada para o CPF e o formulário retornou \"Solicitação enviada. Acompanhe o andamento em Solicitações anteriores.\" com #cpf.value === \"123\". A validação do campo só rejeita valor vazio.",
+      "expected": "O CPF informado deve ser validado contra a regra declarada na própria tela (11 dígitos numéricos) e, se inválido, o envio deve ser bloqueado com mensagem de erro no campo, como ocorre para o campo vazio.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "preencher Nome \"Maria Souza\" e CPF \"123\"",
+          "selecionar Tipo de serviço \"Segunda via de documento\" e Unidade \"Agência Centro\"",
+          "marcar Forma de atendimento \"Presencial\" pelo teclado",
+          "preencher Data preferencial e Descrição",
+          "marcar a declaração",
+          "clicar em Enviar"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-19T03-18-16-252Z.yml (estado após envio)",
+        "browser_evaluate: {msg:\"Solicitação enviada...\", errors:[], invalids:[], values:{cpf:\"123\"}}"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.277 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cda467a80f3a22ea1123119df18683340c481e468aa5f762a8341c56ae9ccc50",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "853795fa6da7f4e1a1f4c28c680285ee6075a70bd604fd4e9bc5582fff5a3d70",
+    "schedule": {
+      "slot": 6,
+      "block": 3,
+      "repetition": 3,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-18T23-14-46-sem-run3-df62a1d7-evidencia",
+    "evidenceIndexSha256": "6e3743dd29ba752eceb6d055e3ae695b3e9084aed6ac04dfe3523eff1d1d5250"
+  },
+  "cost": {
+    "startedAt": "2026-09-19T03:13:23.5339160Z",
+    "finishedAt": "2026-09-19T03:20:56.6900183Z",
+    "wallClockSeconds": 453.0,
+    "tokens": 3927602,
+    "tokenUsage": {
+      "input": 148,
+      "cacheCreationInput": 80063,
+      "cacheReadInput": 3816365,
+      "output": 31026
+    },
+    "totalCostUsd": 3.4852024999999998,
+    "turns": 75
+  }
+}

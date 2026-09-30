@@ -1,0 +1,380 @@
+{
+ "inicial": {
+  "trilhaAtual": {
+   "tabindex": "0",
+   "aria-current": "page"
+  },
+  "trilhaPrimeiroLink": "br-button circle",
+  "upload": {
+   "botao": {
+    "class": "upload-button",
+    "type": "button",
+    "aria-hidden": "true",
+    "tabindex": "1"
+   },
+   "botaoBox": {
+    "x": 201,
+    "y": 948.859375,
+    "width": 550,
+    "height": 40,
+    "top": 948.859375,
+    "right": 751,
+    "bottom": 988.859375,
+    "left": 201
+   },
+   "inputDisplay": "none",
+   "labelFor": "documentos"
+  },
+  "tabindexPositivos": [
+   "button.upload-button"
+  ],
+  "tabela": {
+   "caption": 0,
+   "titulo": "<div class=\"table-title\">Solicitações anteriores</div>",
+   "titutoDentroDaTable": false,
+   "responsive": 0
+  },
+  "presencial": {
+   "labels": 0,
+   "ariaLabel": null,
+   "labelledby": null,
+   "title": null,
+   "labelIrmao": "<label>Presencial</label>",
+   "outros": [
+    [
+     "forma-video",
+     1
+    ],
+    [
+     "forma-telefone",
+     1
+    ]
+   ]
+  },
+  "raios": {
+   "nome": "4px",
+   "cpf": "4px",
+   "servico": "4px",
+   "unidade": "4px",
+   "data-preferencial": "4px",
+   "descricao": "6px"
+  },
+  "paddingSelects": [
+   "0px 29px 0px 40px",
+   "0px 29px 0px 40px"
+  ],
+  "listas": [
+   [
+    "list-5104",
+    "div",
+    "br-list",
+    "-2px 0px 0px"
+   ],
+   [
+    "list-8436",
+    "div",
+    "br-list",
+    "-2px 0px 0px"
+   ]
+  ],
+  "descricao": {
+   "maxlength": null,
+   "apoio": "Descreva o que você precisa, em até 500 caracteres."
+  },
+  "cpfApoio": "Somente números, 11 dígitos.",
+  "calendarioBtn": {
+   "class": "br-button circle small",
+   "type": "button",
+   "aria-label": "Abrir calendário",
+   "data-toggle": "data-toggle",
+   "id": "data-preferencial-btn",
+   "tabindex": "-1",
+   "aria-hidden": "true",
+   "tab-index": "-1"
+  },
+  "paginacao": [
+   {
+    "cls": "page active",
+    "cur": null,
+    "label": "Página 1",
+    "pai": "NAV"
+   },
+   {
+    "cls": "page",
+    "cur": null,
+    "label": "Página 2",
+    "pai": "NAV"
+   },
+   {
+    "cls": "page",
+    "cur": null,
+    "label": "Página 3",
+    "pai": "NAV"
+   }
+  ],
+  "ariaCurrentNaPagina": [
+   "span:Solicitar serviço",
+   "span:19"
+  ]
+ },
+ "primeiroTab": {
+  "el": "<button class=\"upload-button focus-visible\" type=\"button\" aria-hidden=\"true\" tabindex=\"1\" data-focus-visible-added=\"\"><i class=\"fas fa-uploa",
+  "outline": "dashed 4px"
+ },
+ "cliquePresencial": {
+  "checked": false,
+  "opacity": "0"
+ },
+ "espacoPresencial": true,
+ "foco": {
+  "nome": {
+   "antes": "rgb(136, 136, 136) | none | none 3px",
+   "depois": "rgb(194, 133, 12) | rgb(194, 133, 12) 0px 0px 0px 2px | none 3px",
+   "mudou": true
+  },
+  "cpf": {
+   "antes": "rgb(136, 136, 136) | none | none 3px",
+   "depois": "rgb(194, 133, 12) | rgb(194, 133, 12) 0px 0px 0px 2px | none 3px",
+   "mudou": true
+  },
+  "servico": {
+   "antes": "rgb(136, 136, 136) | none | none 3px",
+   "depois": "rgb(136, 136, 136) | none | none 3px",
+   "mudou": false
+  },
+  "unidade": {
+   "antes": "rgb(136, 136, 136) | none | none 3px",
+   "depois": "rgb(136, 136, 136) | none | none 3px",
+   "mudou": false
+  },
+  "descricao": {
+   "antes": "rgb(136, 136, 136) | none | none 3px",
+   "depois": "rgb(194, 133, 12) | rgb(194, 133, 12) 0px 0px 0px 2px | none 3px",
+   "mudou": true
+  }
+ },
+ "regraFoco": [
+  ".campo-servico .br-input input:focus, .campo-servico .br-input input:focus-visible, .campo-unidade .br-input input:focus, .campo-unidade .br-input input:focus-visible { box-shadow: none; outline: none; border-color: var(--border-color-alternative) !important; }"
+ ],
+ "selectTeclado": {
+  "servico": {
+   "valor": "Emissão de certidão",
+   "ativo": "BODY",
+   "naLista": "<div class=\"br-item focus-visible\" tabindex=\"-1\" role=\"option\" data-focus-visible-added=\"\"><div clas"
+  },
+  "unidade": {
+   "valor": "Agência Centro",
+   "ativo": "BODY",
+   "naLista": "<div class=\"br-item focus-visible\" tabindex=\"-1\" role=\"option\" data-focus-visible-added=\"\"><div clas"
+  }
+ },
+ "calendario": {
+  "aoFocar": {
+   "open": false,
+   "display": "none"
+  },
+  "aposEnter": {
+   "open": false,
+   "display": "none"
+  },
+  "aposSeta": {
+   "open": false,
+   "display": "none"
+  },
+  "aposEspaco": {
+   "open": false,
+   "display": "none"
+  },
+  "aposCliqueNoBotao": {
+   "open": true,
+   "display": "block"
+  },
+  "navegacao": [
+   {
+    "html": "<button class=\"br-button circle small\" type=\"button\"><i class=\"fas fas fa-chevron-left\"></i></button>",
+    "label": null,
+    "title": null,
+    "texto": "",
+    "visivel": true,
+    "caminhoPai": "span.flatpickr-prev-month",
+    "escondidoPorAria": false
+   },
+   {
+    "html": "<button class=\"br-button circle small\" type=\"button\"><i class=\"fas fa-chevron-right\"></i></button>",
+    "label": null,
+    "title": null,
+    "texto": "",
+    "visivel": true,
+    "caminhoPai": "span.flatpickr-next-month",
+    "escondidoPorAria": false
+   }
+  ],
+  "dias": {
+   "total": 42,
+   "tabindex": [
+    "1"
+   ]
+  },
+  "selectMes": {
+   "margin": "0px",
+   "marginTop": "0px",
+   "marginLeft": "0px",
+   "padding": "0px",
+   "cls": "flatpickr-monthDropdown-months"
+  },
+  "selectMesRegras": [
+   ".flatpickr-current-month .flatpickr-monthDropdown-months { margin: -1px 0px 0px / top -1px }",
+   "button, input, optgroup, select, textarea { margin: 0px / top 0px }",
+   ".flatpickr-calendar .flatpickr-months .flatpickr-monthDropdown-months { margin: 0px / top 0px }"
+  ]
+ },
+ "envioVazio": {
+  "campos": {
+   "nome": {
+    "invalid": "true",
+    "describedby": "nome-retorno"
+   },
+   "cpf": {
+    "invalid": "true",
+    "describedby": "cpf-apoio cpf-retorno"
+   },
+   "servico": {
+    "invalid": "true",
+    "describedby": null
+   },
+   "unidade": {
+    "invalid": "true",
+    "describedby": null
+   },
+   "forma-presencial": {
+    "invalid": "true",
+    "describedby": "forma-retorno"
+   },
+   "data-preferencial": {
+    "invalid": "true",
+    "describedby": "data-apoio data-retorno"
+   },
+   "descricao": {
+    "invalid": "true",
+    "describedby": "descricao-apoio descricao-retorno"
+   },
+   "declaracao": {
+    "invalid": "true",
+    "describedby": "declaracao-retorno"
+   }
+  },
+  "retornos": [
+   {
+    "id": "nome-retorno",
+    "role": "alert",
+    "texto": "Informe o nome completo."
+   },
+   {
+    "id": "cpf-retorno",
+    "role": "alert",
+    "texto": "Informe o CPF."
+   },
+   {
+    "id": null,
+    "role": "alert",
+    "texto": "Selecione o tipo de serviço."
+   },
+   {
+    "id": null,
+    "role": "alert",
+    "texto": "Selecione a unidade de atendimento."
+   },
+   {
+    "id": "forma-retorno",
+    "role": "alert",
+    "texto": "Escolha a forma de atendimento."
+   },
+   {
+    "id": "data-retorno",
+    "role": "alert",
+    "texto": "Informe a data preferencial."
+   },
+   {
+    "id": "descricao-retorno",
+    "role": "alert",
+    "texto": "Descreva a solicitação."
+   },
+   {
+    "id": "declaracao-retorno",
+    "role": "alert",
+    "texto": "Confirme a declaração para enviar."
+   }
+  ],
+  "mensagem": {
+   "texto": "Não foi possível enviar. Há 8 campo(s) obrigatório(s) sem preenchimento.",
+   "filhos": [
+    "div.close",
+    "div.content",
+    "div.icon"
+   ],
+   "fechar": "<div class=\"br-button circle small\" role=\"button\" tabindex=\"0\" aria-label=\"Fechar a mensagem\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></div>"
+  }
+ },
+ "dialogo": {
+  "sujeito": "div.br-modal medium dialogo-descarte",
+  "cor": "rgb(51, 67, 51)",
+  "texto": "Descartar solicitação? Os dados preenchidos nesta página serão apagados. Esta aç",
+  "focoDentro": true,
+  "focoAposFechar": "BODY."
+ },
+ "cpf123": {
+  "mensagem": "Solicitação enviada. Acompanhe o andamento em Solicitações anteriores.",
+  "camposEmErro": [],
+  "valores": {
+   "nome": "Maria Souza",
+   "cpf": "123",
+   "servico": "Emissão de certidão",
+   "unidade": "Agência Centro",
+   "data-preferencial": "02/10/2026"
+  },
+  "descricaoLen": 23
+ },
+ "descricao520": {
+  "mensagem": "Solicitação enviada. Acompanhe o andamento em Solicitações anteriores.",
+  "camposEmErro": [],
+  "valores": {
+   "nome": "Maria Souza",
+   "cpf": "12345678901",
+   "servico": "Emissão de certidão",
+   "unidade": "Agência Centro",
+   "data-preferencial": "02/10/2026"
+  },
+  "descricaoLen": 520
+ },
+ "pagina2": {
+  "links": [
+   "1:page:null",
+   "2:page active:null",
+   "3:page:null"
+  ],
+  "ariaCurrent": [
+   "Solicitar serviço",
+   "19"
+  ]
+ },
+ "w320x800": {
+  "scrollWidth": 549,
+  "clientWidth": 320,
+  "innerWidth": 320,
+  "tabela": 533,
+  "conteiner": 288,
+  "overflowX": "visible",
+  "foraDaJanela": 21,
+  "foraQueNaoETabela": []
+ },
+ "w375x812": {
+  "scrollWidth": 549,
+  "clientWidth": 375,
+  "innerWidth": 375,
+  "tabela": 533,
+  "conteiner": 343,
+  "overflowX": "visible",
+  "foraDaJanela": 21,
+  "foraQueNaoETabela": []
+ }
+}

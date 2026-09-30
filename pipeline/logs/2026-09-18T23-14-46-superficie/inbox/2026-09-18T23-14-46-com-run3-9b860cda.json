@@ -1,0 +1,292 @@
+{
+  "timestamp": "2026-09-19T03:13:05.641Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/solicitacao.html",
+  "scope": [
+    "página inteira em http://127.0.0.1:3100/solicitacao.html",
+    "skiplink, cabeçalho gov.br e breadcrumb",
+    "formulário Solicitar serviço: estado inicial, estado de erro após envio vazio e estado de sucesso",
+    "componentes br-select (Tipo de serviço, Unidade de atendimento) abertos por mouse e por teclado",
+    "br-datetimepicker e o calendário flatpickr aberto",
+    "br-upload, fieldsets de rádio e checkbox, br-message de retorno",
+    "seção Solicitações anteriores: br-table e br-pagination (páginas 1 a 3)",
+    "viewports 1280x900 e 375x812"
+  ],
+  "notes": "Interações executadas: carregamento e snapshot da árvore de acessibilidade; Tab a partir do topo do documento; envio do formulário vazio (estado de erro) e envio preenchido (estado de sucesso); abertura dos dois br-select por clique e por teclado (ArrowDown/Enter) com verificação de aria-expanded, valor e document.activeElement; abertura do calendário pelo botão do campo Data preferencial; clique no texto \"Presencial\" para testar a associação do rótulo; foco e acionamento por Enter/Espaço do fechar da br-message (funciona); navegação da paginação pelos links 1-3 e pelo botão \"Página seguinte\" (tabela e estados disabled corretos); redimensionamento para 375x812. Varreduras do oráculo: S-page-001 (estado inicial) e S-page-002 (estado de erro, via actions click .acao-enviar, compareToScanId=S-page-001); verify_finding V-001 para emag-6.6 em #servico (ruleExists=pass, applicability=pass, evidenceConsistent=pass, violation=no-predicate — o oráculo não tem predicado para emag-6.6, a evidência DOM foi conferida diretamente). Candidatos rejeitados: F-007/F-018 (br-button em <a> no item home do breadcrumb) foi rejeitado porque o próprio exemplo canônico breadcrumb-default do oráculo usa <a class=\"br-button circle\">; F-001/F-003/F-012/F-014 (padding 29px em #servico/#unidade), F-002/F-004/F-013/F-015 (margin -2px em .br-list) e F-006/F-017 (margin do <select> do flatpickr) foram rejeitados por serem valores internos e uniformes dos componentes br-select/flatpickr, não desvios autorais; F-023 (label-title-only) não foi repetido por ser o mesmo defeito de F-024. Incertezas declaradas, não reportadas como achados: a br-pagination não usa <ul>/<li> e a página ativa é indicada só por class=\"page active\" sem aria-current, mas o único constraint registrado para br-pagination é o de tag raiz e os exemplos canônicos também omitem aria-current; role=\"combobox\"/aria-expanded ficam no <div class=\"br-input\"> e não no input focalizável, o que diverge do padrão ARIA, mas corresponde ao comportamento do próprio br-select e não há regra no oráculo. Os achados de #cpf e #descricao saem com \"rule\": null: a falha é observada e reproduzível, mas não consegui justificar uma referência normativa exata (WCAG 3.3.1 exige identificar erro detectado, não exige detectá-lo). Limitações: o oráculo não tem predicado implementado para emag-6.6 nem para a perda de foco, então esses achados ficaram unverifiable no verify_finding e se apoiam em evidência DOM/comportamental direta; não foi possível enumerar as regras CSS de origem (document.styleSheets não retornou regras legíveis), então a atribuição autoral dos desvios de token foi feita por comparação entre elementos irmãos; nenhuma outra falha, timeout ou truncamento ocorreu.",
+  "findings": [
+    {
+      "selector": "#forma-presencial",
+      "relatedSelectors": [
+        ".grupo-forma label:not([for])"
+      ],
+      "rule": "emag:6.2",
+      "observed": "O rótulo da opção é <label>Presencial</label>, sem atributo for, e o input não tem aria-label, aria-labelledby nem title: #forma-presencial fica sem nome acessível. Clicar no texto \"Presencial\" não marca o rádio (checked permanece false). As outras duas opções do mesmo fieldset têm label[for=\"forma-video\"] e label[for=\"forma-telefone\"].",
+      "expected": "Todo campo de formulário deve ter etiqueta associada programaticamente — <label for=\"forma-presencial\">, aria-label ou aria-labelledby — como nas demais opções do grupo.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar no texto \"Presencial\" ao lado do rádio"
+        ]
+      },
+      "evidence": [
+        "govbr-ds-validator scan_page S-page-001 finding F-011 (axe-core rule 'label', severity critical)",
+        "govbr-ds-validator scan_page S-page-002 findings F-024 e F-023",
+        "playwright browser_snapshot .playwright-mcp/page-2026-09-19T03-02-53-052Z.yml (radio sem nome acessível)",
+        "browser_evaluate: forma-presencial.checked=false, label.getAttribute('for')=null após o clique no texto"
+      ]
+    },
+    {
+      "selector": ".upload-button",
+      "relatedSelectors": [
+        "#documentos",
+        ".upload-label"
+      ],
+      "rule": "emag:2.2",
+      "observed": "O botão tem aria-hidden=\"true\" e tabindex=\"1\". Um único Tab a partir do topo do documento leva o foco para ele (document.activeElement = button.upload-button, com outline tracejado visível), antes mesmo do skiplink — e, por estar aria-hidden, nenhum nome é exposto a leitores de tela nessa parada.",
+      "expected": "Elemento com aria-hidden=\"true\" não pode ser focalizável: o botão decorativo do br-upload deve ter tabindex=\"-1\", deixando a interação acessível para o par <label for=\"documentos\"> / <input id=\"documentos\" type=\"file\">.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "pressionar Tab uma vez a partir do topo do documento"
+        ]
+      },
+      "evidence": [
+        "govbr-ds-validator scan_page S-page-001 finding F-010 (axe-core 'aria-hidden-focus', severity serious)",
+        "govbr-ds-validator scan_page S-page-002 finding F-022",
+        "browser_evaluate após browser_press_key Tab: activeElement = BUTTON.upload-button focus-visible, tabindex=\"1\", aria-hidden=\"true\""
+      ]
+    },
+    {
+      "selector": "#servico",
+      "relatedSelectors": [
+        ".campo-servico .retorno-campo"
+      ],
+      "rule": "emag:6.6",
+      "observed": "Após enviar o formulário vazio, #servico recebe aria-invalid=\"true\" e é inserido <span class=\"feedback danger retorno-campo\" role=\"alert\">Selecione o tipo de serviço.</span>, mas esse span não tem id e #servico permanece com aria-describedby=null. Dos 8 campos em erro, 6 associam a mensagem por id (nome-retorno, cpf-retorno, forma-retorno, data-retorno, descricao-retorno, declaracao-retorno).",
+      "expected": "A mensagem de erro deve ser vinculada ao campo em erro por aria-describedby, como nos demais campos do mesmo formulário.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar em Enviar com o formulário vazio"
+        ]
+      },
+      "evidence": [
+        "govbr-ds-validator verify_finding V-001 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, violation=no-predicate)",
+        "browser_evaluate no estado de erro: #servico aria-describedby=null; .retorno-campo:not([id]) resolve 2 elementos (servico e unidade); .retorno-campo[id] resolve 6",
+        "playwright browser_snapshot .playwright-mcp/page-2026-09-19T03-11-10-864Z.yml"
+      ]
+    },
+    {
+      "selector": "#unidade",
+      "relatedSelectors": [
+        ".campo-unidade .retorno-campo"
+      ],
+      "rule": "emag:6.6",
+      "observed": "Após enviar o formulário vazio, #unidade recebe aria-invalid=\"true\" e é inserido <span class=\"feedback danger retorno-campo\" role=\"alert\">Selecione a unidade de atendimento.</span>, mas esse span não tem id e #unidade permanece com aria-describedby=null.",
+      "expected": "A mensagem de erro deve ser vinculada ao campo em erro por aria-describedby, como nos demais campos do mesmo formulário.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar em Enviar com o formulário vazio"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate no estado de erro: #unidade aria-describedby=null e .campo-unidade .retorno-campo resolve 1 span sem id",
+        "playwright browser_snapshot .playwright-mcp/page-2026-09-19T03-11-10-864Z.yml"
+      ]
+    },
+    {
+      "selector": ".mensagem-retorno .close > div.br-button",
+      "relatedSelectors": [
+        ".mensagem-retorno"
+      ],
+      "rule": "ds:ds-structure-button-tag",
+      "observed": "O acionador de fechar da br-message de retorno é <div class=\"br-button circle small\" role=\"button\" tabindex=\"0\" aria-label=\"Fechar a mensagem\">, ou seja, a classe br-button aplicada a um <div>.",
+      "expected": "br-button deve ser aplicado a <button>: nos exemplos canônicos message-padrao e message-inverted o fechar é <button class=\"br-button circle small\" type=\"button\" aria-label=\"...\">.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar em Enviar com o formulário vazio"
+        ]
+      },
+      "evidence": [
+        "govbr-ds-validator scan_page S-page-002 finding F-019 (ds-structure-button-tag, 'br-button aplicado a <div>', severity serious)",
+        "govbr-ds-validator get_component_spec message → exemplos message-padrao e message-inverted usam <button class=\"br-button circle small\" type=\"button\">",
+        "browser_evaluate: seletor resolve 1 elemento, tagName DIV"
+      ]
+    },
+    {
+      "selector": "#descricao",
+      "rule": "ds:ds-token-radius",
+      "observed": "border-radius computado de 6px, fora da escala do DS. Os demais campos de entrada da mesma tela (#nome, #cpf, #servico, #unidade, #data-preferencial) computam 4px, e --surface-rounder-sm resolve para 4px no próprio #descricao.",
+      "expected": "Raio de borda da escala do DS: 4px (--surface-rounder-sm / --input-radius), igual aos outros campos do formulário.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html"
+        ]
+      },
+      "evidence": [
+        "govbr-ds-validator scan_page S-page-001 finding F-005 e S-page-002 finding F-016 (ds-token-radius, 'border-radius: 6px fora da escala do DS')",
+        "govbr-ds-validator get_design_tokens query=radius → --input-radius: var(--surface-rounder-sm)",
+        "browser_evaluate: #descricao borderRadius=6px vs 4px em #nome/#cpf/#servico/#unidade/#data-preferencial; --surface-rounder-sm=4px"
+      ]
+    },
+    {
+      "selector": ".flatpickr-prev-month > button, .flatpickr-next-month > button",
+      "relatedSelectors": [
+        "#data-preferencial-btn"
+      ],
+      "rule": "emag:2.2",
+      "observed": "Os dois botões de navegação de mês do calendário são <button class=\"br-button circle small\" type=\"button\"><i class=\"fas fas fa-chevron-left\"></i></button> e <button ...><i class=\"fas fa-chevron-right\"></i></button>: sem aria-label, sem texto e com o ícone marcado como decorativo, resultando em nome acessível vazio.",
+      "expected": "Botão apenas com ícone precisa de nome acessível via aria-label (por exemplo \"Mês anterior\" e \"Próximo mês\"), como nos demais botões circulares da tela (\"Página anterior\", \"Página seguinte\", \"Abrir calendário\").",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar no botão de calendário do campo Data preferencial"
+        ]
+      },
+      "evidence": [
+        "govbr-ds-validator scan_page S-page-001 findings F-008 e F-009 (emag-2.2, 'Elemento interativo apenas com ícone, sem aria-label (br-button)')",
+        "govbr-ds-validator scan_page S-page-002 findings F-020 e F-021",
+        "browser_evaluate com o calendário aberto: .flatpickr-calendar.open, 2 botões com aria-label=null e textContent vazio"
+      ]
+    },
+    {
+      "selector": ".tabela-anteriores table",
+      "relatedSelectors": [
+        ".tabela-anteriores"
+      ],
+      "rule": "wcag:1.4.10",
+      "observed": "Com a janela em 375x812 a tabela ocupa 533px dentro do contêiner .br-table de 328px, que computa overflow: visible; documentElement.scrollWidth=549 contra clientWidth=360, ou seja, a página inteira passa a rolar horizontalmente e as colunas Data e Situação ficam fora da viewport.",
+      "expected": "Sem rolagem horizontal da página em viewport estreita (320 CSS px): a tabela deve caber na largura disponível ou rolar dentro do próprio contêiner (overflow-x: auto em .br-table).",
+      "state": {
+        "viewport": {
+          "width": 375,
+          "height": 812
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "redimensionar a janela para 375x812"
+        ]
+      },
+      "evidence": [
+        "govbr-ds-validator get_ds_rules id=govbr-3.7.0-accessibility-global-1c3bd2a1c1a7 (\"Componente utilizável em dispositivos móveis\", force=required, validationStrategy=responsive-viewport)",
+        "browser_evaluate em 375x812: documentElement.scrollWidth=549, clientWidth=360, .br-table width=328, table scrollWidth=533, .br-table overflowX=visible"
+      ]
+    },
+    {
+      "selector": "#servico, #unidade",
+      "relatedSelectors": [
+        ".campo-servico .br-list",
+        ".campo-unidade .br-list"
+      ],
+      "rule": "emag:2.1",
+      "observed": "Selecionando uma opção só pelo teclado (foco no campo, ArrowDown para entrar na lista, Enter sobre o .br-item), o valor é preenchido e a lista fecha, mas document.activeElement passa a ser <body>. Reproduzido nos dois campos: #servico ficou \"Emissão de certidão\" e #unidade ficou \"Agência Centro\", ambos com foco em BODY.",
+      "expected": "Ao fechar a lista após a seleção, o foco deve voltar ao campo do combobox correspondente, para que o usuário de teclado continue de onde parou em vez de tabular desde o início do documento.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar em #servico para abrir a lista",
+          "ArrowDown",
+          "Enter",
+          "focar #unidade",
+          "ArrowDown",
+          "Enter"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate após Enter em #servico: value=\"Emissão de certidão\", aria-expanded=\"false\", document.activeElement === document.body",
+        "browser_evaluate após Enter em #unidade: value=\"Agência Centro\", document.activeElement === document.body",
+        "playwright browser_snapshot .playwright-mcp/page-2026-09-19T03-05-57-996Z.yml"
+      ]
+    },
+    {
+      "selector": "#cpf",
+      "relatedSelectors": [
+        "#cpf-apoio"
+      ],
+      "rule": null,
+      "observed": "Com #cpf=\"123\" e todos os demais campos obrigatórios preenchidos, o envio é aceito: .retorno-envio passa a exibir \"Solicitação enviada. Acompanhe o andamento em Solicitações anteriores.\", #cpf fica com aria-invalid=null e nenhuma .retorno-campo é gerada.",
+      "expected": "O valor deve ser recusado com erro identificado e descrito no campo, já que a orientação associada (#cpf-apoio) declara \"Somente números, 11 dígitos.\"",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "preencher #nome com \"Maria da Silva\"",
+          "preencher #cpf com \"123\"",
+          "selecionar \"Emissão de certidão\" em Tipo de serviço",
+          "selecionar \"Agência Centro\" em Unidade de atendimento",
+          "marcar o rádio Presencial",
+          "preencher Data preferencial com \"02/10/2026\"",
+          "preencher Descrição",
+          "marcar a declaração",
+          "clicar em Enviar"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate após o envio: .retorno-envio.textContent=\"Solicitação enviada. Acompanhe o andamento em Solicitações anteriores.\", #cpf aria-invalid=null, [...document.querySelectorAll('.retorno-campo')] vazio",
+        "playwright browser_snapshot .playwright-mcp/page-2026-09-19T03-09-03-559Z.yml"
+      ]
+    },
+    {
+      "selector": "#descricao",
+      "relatedSelectors": [
+        "#descricao-apoio"
+      ],
+      "rule": null,
+      "observed": "O campo aceitou 520 caracteres (value.length=520), não tem maxlength nem contador, e o formulário foi enviado com sucesso sem erro associado ao campo.",
+      "expected": "Respeitar o limite anunciado pela orientação #descricao-apoio (\"Descreva o que você precisa, em até 500 caracteres.\"), impedindo ou sinalizando a entrada acima de 500 caracteres.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "preencher #descricao com 520 caracteres",
+          "preencher os demais campos obrigatórios",
+          "clicar em Enviar"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: #descricao.value.length=520, getAttribute('maxlength')=null",
+        "browser_evaluate após o envio: .retorno-envio.textContent=\"Solicitação enviada...\", #descricao aria-invalid=null"
+      ]
+    }
+  ]
+}

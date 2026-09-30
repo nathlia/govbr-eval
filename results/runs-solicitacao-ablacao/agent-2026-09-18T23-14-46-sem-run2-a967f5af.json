@@ -1,0 +1,231 @@
+{
+  "timestamp": "2026-09-19T02:53:44.613Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/solicitacao.html",
+  "scope": [
+    "solicitacao.html — tela inteira: skiplink, cabeçalho gov.br, breadcrumb, formulário de solicitação (nome, CPF, tipo de serviço, unidade, forma de atendimento, data preferencial, descrição, documentos, recursos de acessibilidade, declaração, ações) e seção 'Solicitações anteriores' com tabela e paginação",
+    "estados observados: carga inicial; combobox aberto; formulário submetido vazio (erros); formulário submetido válido (sucesso); paginação na página 2; viewport 320x800"
+  ],
+  "notes": "Ferramentas usadas: navegação, snapshot da árvore de acessibilidade, avaliação de DOM/CSS computado, teclado e mouse. Interações executadas: Tab a partir do início do documento para verificar ordem de foco; abertura e fechamento dos dois comboboxes por clique e por teclado (ArrowDown/Enter); seleção de opções; clique no rótulo 'Presencial' e no input correspondente; navegação por ArrowUp dentro do grupo de rádio; preenchimento de nome, CPF, data e descrição; submissão com campos vazios e verificação das mensagens de erro, de aria-invalid, de aria-describedby e do destino do foco; fechamento da mensagem de erro por Enter no controle 'Fechar a mensagem' (funcionou); submissão válida completa e verificação da mensagem de sucesso (role=alert, foco movido, aria-invalid limpo); clique em 'Página 2' da paginação; redimensionamento para 320x800 e medição de transbordo. Contraste verificado por cálculo de razão em 23 combinações de texto e fundo (rótulos, textos de apoio, mensagens, botões, breadcrumb, paginação, tabela, skiplink): todas passaram em AA, nenhum achado de contraste. Indicadores de foco verificados em 16 controles. Limitações: nenhum oráculo de regras nem ferramenta scan_page/verificação heurística estava disponível nesta execução, portanto não há identificadores de regra devolvidos por ferramenta; as atribuições usam critérios WCAG que consigo justificar pela observação, e os candidatos que não consegui atribuir com segurança foram deixados fora dos achados e estão declarados aqui como incertos. Incertos (observados, não reportados como achado por atribuição normativa insegura ou por serem possivelmente o comportamento padrão do Design System gov.br, não um defeito da tela): (1) o skiplink usa nav[role=menubar] com a[role=menuitem] para um único link de atalho, o que faz leitores de tela anunciarem barra de menus em vez de link; (2) role=combobox está no wrapper div.br-input, que não é focalizável, enquanto o elemento que recebe foco (#servico/#unidade) é exposto como textbox simples, sem aria-expanded — o estado de expansão existe mas fica no wrapper; as opções em role=option não têm aria-selected; (3) o span do item atual do breadcrumb tem tabindex=0, criando uma parada de foco sem ação; (4) a troca de página da tabela não é anunciada (o conteúdo muda sem região viva e o foco permanece no link). O erro 404 de /favicon.ico no console é irrelevante para conformidade. Um único achado usa seletor com dois elementos (#servico, #unidade) porque a mesma regra CSS produz a mesma afirmação para ambos.",
+  "findings": [
+    {
+      "selector": "#forma-presencial",
+      "relatedSelectors": [
+        ".grupo-forma .br-radio:first-of-type label"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "O rótulo da primeira opção é <label>Presencial</label>, sem atributo for e sem envolver o input. O snapshot da árvore de acessibilidade expõe o controle como 'radio' sem nome, enquanto os irmãos aparecem como 'radio \"Por videochamada\"' e 'radio \"Por telefone\"'. Como o input tem opacity:0 e position:absolute e é totalmente coberto pelo rótulo (input e label com mesmo x=193 e y=499.8; elementFromPoint sobre o rótulo devolve o LABEL), o clique é interceptado: após clicar no texto 'Presencial', forma-presencial.checked permaneceu false. A opção só foi marcada por teclado (ArrowUp a partir de forma-video).",
+      "expected": "O rótulo deve estar associado ao controle (for=\"forma-presencial\" ou envolvendo o input), de modo que #forma-presencial tenha nome acessível 'Presencial' e que o clique no rótulo marque a opção, como já ocorre em #forma-video e #forma-telefone.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "tirar snapshot da árvore de acessibilidade",
+          "clicar no rótulo 'Presencial'",
+          "ler forma-presencial.checked e getBoundingClientRect do input e do label",
+          "focar forma-video e pressionar ArrowUp"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-19T02-44-23-945Z.yml",
+        ".playwright-mcp/page-2026-09-19T02-50-03-507Z.yml",
+        "browser_evaluate: formaHTML de .grupo-forma",
+        "browser_evaluate: presencialChecked=false, inputOpacity=0, elementAtLabelCenter=LABEL sem for",
+        "browser_click em e56 falhou com '<label>Presencial</label> intercepts pointer events'"
+      ]
+    },
+    {
+      "selector": ".upload-button",
+      "rule": "wcag:2.4.3",
+      "observed": "O botão visível de upload tem tabindex=\"1\", o único tabindex positivo da página. Com o foco no início do documento, o primeiro Tab levou o foco diretamente para este botão (document.activeElement = BUTTON.upload-button, tabindex=1), antes do skiplink 'Ir para o conteúdo', do cabeçalho, do breadcrumb e de todos os campos que o precedem visualmente.",
+      "expected": "A ordem de tabulação deve seguir a ordem visual e de leitura: o botão de upload deve ser alcançado na sua posição do formulário, após a descrição da solicitação, usando tabindex=\"0\" ou nenhum tabindex, sem valores positivos.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "blur do elemento ativo para iniciar do começo do documento",
+          "pressionar Tab uma vez",
+          "ler document.activeElement"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: positiveTabindex=[{tag:BUTTON, cls:upload-button, ti:1}]",
+        "browser_press_key Tab seguido de browser_evaluate: activeElement=BUTTON.upload-button tabindex=1",
+        ".playwright-mcp/page-2026-09-19T02-44-23-945Z.yml"
+      ]
+    },
+    {
+      "selector": "#documentos",
+      "relatedSelectors": [
+        ".upload-button",
+        ".upload-label"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "O campo de arquivo #documentos tem display:none (largura e altura 0), portanto não é focalizável nem aparece na árvore de acessibilidade — no snapshot a região de upload expõe apenas texto genérico 'Documentos comprobatórios (opcional)' e um botão. O único controle visível e focalizável, .upload-button, tem aria-hidden=\"true\", ficando removido da árvore de acessibilidade. O rótulo .upload-label[for=documentos] aponta para o input oculto e é exposto como texto solto. Resultado: não há nenhum controle com nome e papel de campo de arquivo disponível para tecnologia assistiva.",
+      "expected": "O envio de documentos deve ter um controle exposto com nome e papel, por exemplo mantendo #documentos focalizável (oculto visualmente, sem display:none) ou removendo aria-hidden=\"true\" de .upload-button, para que a tecnologia assistiva anuncie o campo e sua finalidade.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "tirar snapshot da árvore de acessibilidade",
+          "ler estilo computado de .upload-input e .upload-button",
+          "enumerar elementos focalizáveis e elementos com aria-hidden=true"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-19T02-44-23-945Z.yml",
+        "browser_evaluate: uploadInput display=none w=0 h=0; uploadButton aria-hidden=true tabindex=1",
+        "browser_evaluate: uploadHTML de .br-upload",
+        "browser_evaluate: ariaHiddenFocusable inclui BUTTON.upload-button"
+      ]
+    },
+    {
+      "selector": "#servico, #unidade",
+      "rule": "wcag:2.4.7",
+      "observed": "Uma regra da folha de estilo da página (solicitacao) anula o indicador de foco dos dois campos de combobox: '.campo-servico .br-input input:focus, .campo-servico .br-input input:focus-visible, .campo-unidade .br-input input:focus, .campo-unidade .br-input input:focus-visible { box-shadow: none; outline: none; border-color: var(--border-color-alternative) !important; }'. Medindo o estilo computado antes e depois de focar, #servico ficou idêntico (border rgb(136,136,136) 0.666667px, box-shadow none, outline none), enquanto #nome, no mesmo estado, muda para border rgb(194,133,12) e box-shadow rgb(194,133,12) 0 0 0 2px.",
+      "expected": "Os campos devem manter um indicador de foco visível ao receberem foco por teclado, como os demais campos de texto da tela (borda e halo na cor de foco rgb(194,133,12)).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "ler estilo computado de #servico, #unidade e #nome sem foco",
+          "focar #servico simulando foco por teclado e reler o estilo computado",
+          "focar #nome e reler o estilo computado",
+          "listar as regras CSS de foco aplicáveis a inputs"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: identicalServico=true, identicalNome=false",
+        "browser_evaluate: regra CSS '.campo-servico .br-input input:focus, ... { box-shadow: none; outline: none; border-color: var(--border-color-alternative) !important; }'",
+        "browser_evaluate: afterServico borderColor=rgb(136,136,136) boxShadow=none; afterNome borderColor=rgb(194,133,12) boxShadow=rgb(194,133,12) 0px 0px 0px 2px"
+      ]
+    },
+    {
+      "selector": "#unidade",
+      "relatedSelectors": [
+        ".campo-unidade .feedback.danger"
+      ],
+      "rule": "wcag:3.3.1",
+      "observed": "Ao enviar o formulário com campos vazios, #unidade recebe aria-invalid=\"true\", mas seu aria-describedby é null e o span de erro correspondente ('Selecione a unidade de atendimento.') é inserido sem atributo id, de modo que nenhuma referência pode alcançá-lo. Todos os demais campos inválidos associam a mensagem: #nome→nome-retorno, #cpf→'cpf-apoio cpf-retorno', os três rádios de forma→forma-retorno, #data-preferencial→'data-apoio data-retorno', #descricao→'descricao-apoio descricao-retorno' e #declaracao→declaracao-retorno.",
+      "expected": "A mensagem de erro do campo deve ser programaticamente associada a ele, recebendo um id (por exemplo unidade-retorno) referenciado pelo aria-describedby de #unidade, como nos demais campos, para que o erro seja identificado ao navegar até o campo.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "abrir o combobox 'Tipo de serviço' e selecionar 'Emissão de certidão'",
+          "acionar o botão 'Enviar' com os demais campos vazios",
+          "listar elementos com aria-invalid e seus aria-describedby",
+          "listar todos os .feedback e seus ids"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: invalidMarked inclui {id:'unidade', v:'true', desc:null}",
+        "browser_evaluate: unidadeInputDescribedby=null e unidadeFeedback=[{id:null, role:'alert', txt:'Selecione a unidade de atendimento.'}]",
+        "browser_evaluate: allFeedbackIds mostra id null apenas para a mensagem de unidade",
+        ".playwright-mcp/page-2026-09-19T02-47-03-424Z.yml"
+      ]
+    },
+    {
+      "selector": ".br-pagination a.page.active",
+      "rule": "wcag:1.3.1",
+      "observed": "A página corrente da paginação do histórico é sinalizada apenas pela classe 'active' e pelo contraste visual (texto branco sobre rgb(12,50,111), contra azul sobre fundo claro nas demais). O link não tem aria-current e seu aria-label é apenas 'Página 1'. Após clicar em 'Página 2' as linhas da tabela mudam e a classe 'active' migra para o segundo link, mas o único elemento com aria-current na página continua sendo o span do breadcrumb ('Solicitar serviço'), ou seja, a paginação nunca expõe a página atual programaticamente.",
+      "expected": "O link da página corrente deve expor esse estado de forma programática, com aria-current=\"page\", acompanhando a mudança ao navegar entre páginas — como já é feito no item atual do breadcrumb da mesma tela.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "ler o HTML de .br-pagination",
+          "clicar no link 'Página 2'",
+          "reler .br-pagination e listar todos os elementos com aria-current"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: paginationHTML com '<a class=\"page active\" aria-label=\"Página 1\" href=\"#titulo-historico\">1</a>' sem aria-current",
+        "browser_evaluate após clicar em Página 2: data-current=2, classe active em '2', ariaCurrentAnywhere=[{tag:SPAN, val:'page', txt:'Solicitar serviço'}]",
+        ".playwright-mcp/page-2026-09-19T02-51-29-554Z.yml"
+      ]
+    },
+    {
+      "selector": ".tabela-anteriores table",
+      "relatedSelectors": [
+        ".tabela-anteriores"
+      ],
+      "rule": "wcag:1.4.10",
+      "observed": "Com a janela em 320x800, a tabela do histórico mantém largura intrínseca de 532.99px e não está dentro do contêiner de rolagem previsto pelo Design System (a regra '.br-table .responsive { overflow: auto; }' existe na folha de estilo, mas não há elemento .responsive na marcação; o estilo computado de .br-table traz overflow-x: visible). Em consequência, document.documentElement.scrollWidth passa a 549px contra innerWidth de 320px e a rolagem horizontal atinge a página inteira; a tabela e suas 21 linhas e células são os únicos elementos que ultrapassam a viewport, pois o restante do formulário reflui normalmente.",
+      "expected": "A 320px de largura o conteúdo não deve exigir rolagem horizontal da página: a tabela deve ficar dentro de um contêiner com rolagem própria (por exemplo o .responsive do Design System), confinando a rolagem lateral à própria tabela.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 800
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "redimensionar a janela para 320x800",
+          "comparar document.documentElement.scrollWidth com window.innerWidth",
+          "listar elementos cujo limite direito ultrapassa a viewport",
+          "ler o estilo computado de .br-table e as regras CSS de .br-table"
+        ]
+      },
+      "evidence": [
+        "browser_resize 320x800",
+        "browser_evaluate: winW=320, docW=549, horizontalScroll=true, overflowCount=21 (TABLE/THEAD/TBODY/TR/TH/TD)",
+        "browser_evaluate: brTableOverflowX=visible, tableWidth=532.99px, regra '.br-table .responsive { overflow: auto; }' presente e não utilizada"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.277 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cda467a80f3a22ea1123119df18683340c481e468aa5f762a8341c56ae9ccc50",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "853795fa6da7f4e1a1f4c28c680285ee6075a70bd604fd4e9bc5582fff5a3d70",
+    "schedule": {
+      "slot": 3,
+      "block": 2,
+      "repetition": 2,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-18T23-14-46-sem-run2-a967f5af-evidencia",
+    "evidenceIndexSha256": "b97e46bc712f50cbe97d6c78e5a60ededab21fe73d1b7b5cbb8f5dc3ba4fdb78"
+  },
+  "cost": {
+    "startedAt": "2026-09-19T02:44:14.5114984Z",
+    "finishedAt": "2026-09-19T02:54:05.5211545Z",
+    "wallClockSeconds": 590.8,
+    "tokens": 6231222,
+    "tokenUsage": {
+      "input": 138,
+      "cacheCreationInput": 127942,
+      "cacheReadInput": 6063058,
+      "output": 40084
+    },
+    "totalCostUsd": 5.313738999999999,
+    "turns": 71
+  }
+}

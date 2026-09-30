@@ -1,0 +1,20 @@
+{"at":"2026-09-19T02:15:50.2226925Z","event":"plano-congelado","data":{"path":"F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-18T23-14-46-plano.json","sha256":"e095fba9ae032d302912d028ecd17ad7196d6de2186efa17f783ab64c76a6b4c"}}
+{"at":"2026-09-19T02:15:54.6544753Z","event":"manifesto-gravado","data":{"path":"pipeline/logs/2026-09-18T23-14-46-coleta/manifesto.json","sha256":"853795fa6da7f4e1a1f4c28c680285ee6075a70bd604fd4e9bc5582fff5a3d70"}}
+{"at":"2026-09-19T02:15:54.6582483Z","event":"execucao-inicio","data":{"slot":1,"arm":"com","repetition":1}}
+{"at":"2026-09-19T02:25:43.2359063Z","event":"execucao-fim","data":{"slot":1,"runId":"2026-09-18T23-14-46-com-run1-724f34c9","exitCode":0,"apiErrorStatus":null,"collectionStatus":"collected","archive":"agent-2026-09-18T23-14-46-com-run1-724f34c9.json"}}
+{"at":"2026-09-19T02:25:43.2373976Z","event":"execucao-inicio","data":{"slot":2,"arm":"sem","repetition":1}}
+{"at":"2026-09-19T02:44:14.4931071Z","event":"execucao-fim","data":{"slot":2,"runId":"2026-09-18T23-14-46-sem-run1-7e66c8d8","exitCode":0,"apiErrorStatus":null,"collectionStatus":"collected","archive":"agent-2026-09-18T23-14-46-sem-run1-7e66c8d8.json"}}
+{"at":"2026-09-19T02:44:14.4946411Z","event":"execucao-inicio","data":{"slot":3,"arm":"sem","repetition":2}}
+{"at":"2026-09-19T02:54:07.2196710Z","event":"execucao-fim","data":{"slot":3,"runId":"2026-09-18T23-14-46-sem-run2-a967f5af","exitCode":0,"apiErrorStatus":null,"collectionStatus":"collected","archive":"agent-2026-09-18T23-14-46-sem-run2-a967f5af.json"}}
+{"at":"2026-09-19T02:54:07.2216667Z","event":"execucao-inicio","data":{"slot":4,"arm":"com","repetition":2}}
+{"at":"2026-09-19T03:02:42.8581129Z","event":"execucao-fim","data":{"slot":4,"runId":"2026-09-18T23-14-46-com-run2-7824e8ff","exitCode":0,"apiErrorStatus":null,"collectionStatus":"collected","archive":"agent-2026-09-18T23-14-46-com-run2-7824e8ff.json"}}
+{"at":"2026-09-19T03:02:42.8596797Z","event":"execucao-inicio","data":{"slot":5,"arm":"com","repetition":3}}
+{"at":"2026-09-19T03:13:23.5198953Z","event":"execucao-fim","data":{"slot":5,"runId":"2026-09-18T23-14-46-com-run3-9b860cda","exitCode":0,"apiErrorStatus":null,"collectionStatus":"collected","archive":"agent-2026-09-18T23-14-46-com-run3-9b860cda.json"}}
+{"at":"2026-09-19T03:13:23.5223140Z","event":"execucao-inicio","data":{"slot":6,"arm":"sem","repetition":3}}
+{"at":"2026-09-19T03:20:58.2733170Z","event":"execucao-fim","data":{"slot":6,"runId":"2026-09-18T23-14-46-sem-run3-df62a1d7","exitCode":0,"apiErrorStatus":null,"collectionStatus":"collected","archive":"agent-2026-09-18T23-14-46-sem-run3-df62a1d7.json"}}
+{"at":"2026-09-19T03:20:58.2821509Z","event":"coleta-fim","data":{"status":"concluida","motivo":null,"manifest":"F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-18T23-14-46-bateria.json"}}
+{"at":"2026-09-19T03:20:58.3238303Z","event":"estagio-inicio","data":{"stage":"linha-de-base","out":"F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-09-18T23-14-46-linha-de-base.json"}}
+{"at":"2026-09-19T03:21:08.0305056Z","event":"estagio-fim","data":{"stage":"linha-de-base","status":"concluida","exitCode":0,"file":"2026-09-18T23-14-46-linha-de-base.json","sha256":"3c38859c301b926e119a6f9fa32567f2ae238d09c8b941b766aea9911f78fb19"}}
+{"at":"2026-09-19T03:21:08.0332529Z","event":"estagio-inicio","data":{"stage":"preparacao","out":"F:\\Dev Nath\\TCC\\govbr-eval\\results\\semantic-review-solicitacao\\2026-09-18T23-14-46"}}
+{"at":"2026-09-19T03:21:11.8161172Z","event":"estagio-fim","data":{"stage":"preparacao","status":"concluida","exitCode":0}}
+{"at":"2026-09-19T03:21:11.9905592Z","event":"desfecho","data":{"status":"concluida"}}

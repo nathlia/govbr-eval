@@ -1,0 +1,297 @@
+{
+  "timestamp": "2026-09-19T02:25:24.61Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/solicitacao.html",
+  "scope": [
+    "tela inteira de solicitacao.html: skiplink, cabecalho, breadcrumb, formulario de solicitacao, secao Solicitacoes anteriores (tabela + paginacao)",
+    "estados: carga inicial, erro de validacao apos Enviar vazio, envio bem-sucedido, lista do br-select aberta, calendario do br-datetimepicker aberto"
+  ],
+  "notes": "Interacoes realizadas: carga inicial em 1280x900; snapshot da arvore de acessibilidade; tabulacao a partir de pagina recem-carregada (primeiro Tab); clique em Enviar com formulario vazio; foco e acionamento do botao de fechar da mensagem de erro com Enter e com Space (ambos funcionam e removem a mensagem); abertura da lista de #servico e de #unidade por ArrowDown e selecao por Enter (aria-expanded alterna corretamente e o foco vai para o primeiro br-item); Enter dentro de #servico dispara submissao implicita do formulario (comportamento nativo, nao tratado como defeito); preenchimento completo e envio bem-sucedido (mensagem br-message success, aria-invalid limpos, foco movido para .content[role=alert]); abertura do calendario pelo botao #data-preferencial-btn e inspecao dos controles de mes; leitura de CSS computado e de regras de origem para distinguir folha do @govbr-ds/core da folha da aplicacao. Varreduras do oraculo: S-page-001 (estado inicial, fingerprint sha256:fec51e82...) e S-page-002 (estado de erro, fingerprint sha256:d5b6611b...). Candidatos rejeitados e por que: (a) as 6 deteccoes ds-token-spacing/ds-token-radius (#descricao 6px, #servico e #unidade padding 29px, .br-list margin -2px, select do flatpickr) foram rejeitadas - verify_finding V-001 devolveu verdict=rejected, applicability=fail, 'verificacao deterministica sem norma nomeada nao produz achado' (D-27), e a inspecao de origem mostrou que todos esses valores vem da folha do proprio @govbr-ds/core (jsx-runtime-B-RTDNcS.css), nao da aplicacao; (b) ds-structure-button-tag no <a class='br-button circle'> do breadcrumb e no <div class='br-button' role='button'> do fechar da mensagem de erro - rejeitado por V-003 pelo mesmo motivo de ausencia de norma nomeada, e no caso do breadcrumb o exemplo canonico breadcrumb-default do proprio DS usa exatamente <a class='br-button circle'>; o div com role=button tem nome acessivel e responde a Enter e a Space, entao nao restou violacao normativa a citar; (c) #data-preferencial-btn com aria-hidden='true' e tabindex='-1' - coincide com os exemplos canonicos datetimepicker-simple/range/time do DS, rejeitado; (d) ausencia de aria-current='page' no <a class='page active'> da paginacao - os exemplos canonicos pagination-default/sizes/ellipsis tambem usam apenas a classe active e o oraculo nao expoe regra para isso: classificado como incerto e nao reportado; (e) ausencia de <ul>/<li> envolvendo os itens da paginacao e classes fora do vocabulario canonico (trilha-servico, acao-enviar, tabela-anteriores etc.) - o proprio oraculo as trata como observacao sem norma; (f) #servico mantem aria-invalid='true' e a mensagem de erro depois de a opcao ser escolhida (a limpeza so ocorre em nova submissao) - nao encontrei norma que exija revalidacao imediata, fica como incerto; (g) apos fechar a mensagem de erro o foco volta para <body> - incerto, nao reportado. Limitacoes: axe-core 4.12.1 rodou com 0 resultados incomplete e nenhuma violacao de contraste; emag-6.2, emag-6.3 e emag-2.2 nao tem predicado mecanico no oraculo (verify_finding V-002 e V-004 devolveram 'no-predicate' com ruleExists=pass, applicability=pass e evidenceConsistent=pass), de modo que esses achados se apoiam em inspecao direta do DOM, do CSS computado e da operacao por teclado, e nao em confirmacao mecanica; nao foi possivel exercitar o envio real de arquivo no input de upload; nao foram avaliados outros viewports alem de 1280x900.",
+  "findings": [
+    {
+      "selector": "#forma-presencial",
+      "relatedSelectors": [
+        "#forma-presencial + label"
+      ],
+      "rule": "emag-6.2",
+      "observed": "O <label>Presencial</label> irmao nao tem atributo for, e o input nao tem aria-label nem aria-labelledby: o nome acessivel do radio e vazio. Os outros dois radios do mesmo fieldset (#forma-video e #forma-telefone) usam label[for] e sao anunciados corretamente.",
+      "expected": "O radio deve ter rotulo associado programaticamente, por exemplo <label for=\"forma-presencial\">Presencial</label>.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html"
+        ]
+      },
+      "evidence": [
+        "scan S-page-001 finding F-011 (axe 'label', critical)",
+        "scan S-page-002 findings F-024 e F-023 (axe 'label' e 'label-title-only')",
+        "verify_finding V-004: ruleExists=pass, applicability=pass, evidenceConsistent=pass",
+        "DOM: outerHTML de fieldset.grupo-forma"
+      ]
+    },
+    {
+      "selector": ".upload-button",
+      "relatedSelectors": [
+        "#documentos"
+      ],
+      "rule": "emag-2.2",
+      "observed": "O botao visivel 'Selecione o arquivo' (550x40 px, display:block) tem aria-hidden=\"true\" e mesmo assim permanece focalizavel (tabindex=\"1\"). O input[type=file] #documentos associado esta com display:none pela regra .br-upload input, portanto esse botao e o unico controle operavel do upload e nao e exposto a tecnologia assistiva.",
+      "expected": "Controle visivel e operavel deve permanecer exposto na arvore de acessibilidade: remover aria-hidden=\"true\" do botao (ou entao torna-lo nao focalizavel e deixar o input acessivel).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "pressionar Tab a partir do documento recem-carregado"
+        ]
+      },
+      "evidence": [
+        "scan S-page-001 finding F-010 (axe 'aria-hidden-focus', serious)",
+        "scan S-page-002 finding F-022",
+        "DOM/CSS computado: aria-hidden=true, tabindex=1, display=block, 550x40; #documentos display=none"
+      ]
+    },
+    {
+      "selector": ".upload-button",
+      "rule": "emag-6.3",
+      "observed": "O botao tem tabindex=\"1\" (positivo). Na pagina recem-carregada, o primeiro Tab leva o foco diretamente a esse botao, saltando o link 'Ir para o conteudo', o cabecalho, o breadcrumb e todos os campos do formulario que o antecedem (nome, CPF, tipo de servico, unidade, forma de atendimento, data, descricao).",
+      "expected": "Nao usar tabindex positivo: sem o atributo (ou com tabindex=\"0\") o botao seguiria a ordem do DOM, entre o campo de descricao e o grupo de recursos de acessibilidade.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "pressionar Tab uma vez"
+        ]
+      },
+      "evidence": [
+        "observacao direta: apos reload, Tab #1 deixa document.activeElement = button.upload-button (tabindex=1)",
+        "verify_finding V-002: ruleExists=pass, applicability=pass, evidenceConsistent=pass, violation=no-predicate",
+        "unico elemento da pagina com tabindex positivo"
+      ]
+    },
+    {
+      "selector": "#servico",
+      "relatedSelectors": [
+        ".campo-servico .feedback.retorno-campo"
+      ],
+      "rule": "emag-6.6",
+      "observed": "Apos submeter o formulario vazio, #servico recebe aria-invalid=\"true\" e e exibida a mensagem visivel 'Selecione o tipo de servico.' em <span class=\"feedback danger retorno-campo\" role=\"alert\">, mas esse span nao tem id e o aria-describedby de #servico e null: a mensagem nao esta associada ao campo.",
+      "expected": "A mensagem de erro deve ter id e ser referenciada no aria-describedby do campo, como ja ocorre em #nome (nome-retorno), #cpf (cpf-retorno), #data-preferencial (data-retorno), #descricao (descricao-retorno) e #declaracao (declaracao-retorno).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar no botao Enviar com o formulario vazio"
+        ]
+      },
+      "evidence": [
+        "scan S-page-002, fingerprint sha256:d5b6611b292acc6a60122b1b11cced0ffc4bbf8b08b89eb0931727830eef2d86",
+        "DOM no estado de erro: #servico aria-invalid=true, aria-describedby=null",
+        "DOM: span.feedback.retorno-campo de .campo-servico sem atributo id"
+      ]
+    },
+    {
+      "selector": "#unidade",
+      "relatedSelectors": [
+        ".campo-unidade .feedback.retorno-campo"
+      ],
+      "rule": "emag-6.6",
+      "observed": "Apos submeter o formulario vazio, #unidade recebe aria-invalid=\"true\" e e exibida a mensagem visivel 'Selecione a unidade de atendimento.' em <span class=\"feedback danger retorno-campo\" role=\"alert\">, mas esse span nao tem id e o aria-describedby de #unidade e null: a mensagem nao esta associada ao campo.",
+      "expected": "A mensagem de erro deve ter id e ser referenciada no aria-describedby do campo, como ja ocorre nos demais campos obrigatorios do formulario.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar no botao Enviar com o formulario vazio"
+        ]
+      },
+      "evidence": [
+        "scan S-page-002, fingerprint sha256:d5b6611b292acc6a60122b1b11cced0ffc4bbf8b08b89eb0931727830eef2d86",
+        "DOM no estado de erro: #unidade aria-invalid=true, aria-describedby=null",
+        "DOM: span.feedback.retorno-campo de .campo-unidade sem atributo id"
+      ]
+    },
+    {
+      "selector": ".flatpickr-prev-month button",
+      "rule": "emag-2.2",
+      "observed": "Com o calendario aberto, o botao de mes anterior fica visivel (inline-flex, 32x32 px) e contem apenas <i class=\"fas fa-chevron-left\">, sem texto, sem aria-label e sem title: o nome acessivel e vazio.",
+      "expected": "aria-label descritivo no botao, por exemplo aria-label=\"Mes anterior\", como nos demais botoes circulares icon-only da pagina (#data-preferencial-btn, setas da paginacao).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar no botao de calendario #data-preferencial-btn para abrir o flatpickr"
+        ]
+      },
+      "evidence": [
+        "scan S-page-001 finding F-008 (emag-2.2, serious)",
+        "scan S-page-002 finding F-020",
+        "DOM com calendario aberto: textContent='', aria-label=null, title='', 32x32 px"
+      ]
+    },
+    {
+      "selector": ".flatpickr-next-month button",
+      "rule": "emag-2.2",
+      "observed": "Com o calendario aberto, o botao de proximo mes fica visivel (inline-flex, 32x32 px) e contem apenas <i class=\"fas fa-chevron-right\">, sem texto, sem aria-label e sem title: o nome acessivel e vazio.",
+      "expected": "aria-label descritivo no botao, por exemplo aria-label=\"Proximo mes\".",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar no botao de calendario #data-preferencial-btn para abrir o flatpickr"
+        ]
+      },
+      "evidence": [
+        "scan S-page-001 finding F-009 (emag-2.2, serious)",
+        "scan S-page-002 finding F-021",
+        "DOM com calendario aberto: textContent='', aria-label=null, title='', 32x32 px"
+      ]
+    },
+    {
+      "selector": ".tabela-anteriores table",
+      "rule": "emag-3.9",
+      "observed": "A tabela de 'Solicitacoes anteriores' nao tem <caption> (document.querySelectorAll('.tabela-anteriores table caption').length === 0). O titulo aparece somente como <div class=\"table-title\">Solicitacoes anteriores</div>, fora do elemento table.",
+      "expected": "A tabela deve trazer <caption> com o titulo, como no exemplo canonico 'table' do br-table no gov.br DS. Os cabecalhos ja usam <th scope=\"col\">, de modo que falta apenas a legenda.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html"
+        ]
+      },
+      "evidence": [
+        "DOM: outerHTML de div.br-table.tabela-anteriores sem caption",
+        "get_component_spec('table') exemplo 'table' inclui <caption>Titulo da Tabela</caption>",
+        "get_emag_rules secao 3, regra 3.9"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.277 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cda467a80f3a22ea1123119df18683340c481e468aa5f762a8341c56ae9ccc50",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "853795fa6da7f4e1a1f4c28c680285ee6075a70bd604fd4e9bc5582fff5a3d70",
+    "schedule": {
+      "slot": 1,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-18T23-14-46-com-run1-724f34c9-evidencia",
+    "evidenceIndexSha256": "896f69cf55ae5417b5db45910ab76e79ec5411e85b7983a08d78f322de6871c1",
+    "validatorVersion": "2.5.2"
+  },
+  "cost": {
+    "startedAt": "2026-09-19T02:15:54.7625604Z",
+    "finishedAt": "2026-09-19T02:25:41.2118440Z",
+    "wallClockSeconds": 586.2,
+    "tokens": 6266019,
+    "tokenUsage": {
+      "input": 124,
+      "cacheCreationInput": 150444,
+      "cacheReadInput": 6071790,
+      "output": 43661
+    },
+    "totalCostUsd": 5.632479999999998,
+    "turns": 74,
+    "mcp": {
+      "runId": "2026-09-18T23-14-46-com-run1-724f34c9",
+      "telemetryFile": "pipeline/logs/2026-09-18T23-14-46-com-run1-724f34c9-mcp.ndjson",
+      "calls": 18,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 4156,
+      "responseBytes": 125645,
+      "durationMs": 5865,
+      "byTool": {
+        "scan_page": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 306,
+          "responseBytes": 48805,
+          "durationMs": 4392
+        },
+        "get_component_spec": {
+          "calls": 6,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 292,
+          "responseBytes": 47696,
+          "durationMs": 2
+        },
+        "get_emag_rules": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 39,
+          "responseBytes": 9355,
+          "durationMs": 1
+        },
+        "get_page_rules": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 33,
+          "responseBytes": 8297,
+          "durationMs": 2
+        },
+        "get_finding_details": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 110,
+          "responseBytes": 6571,
+          "durationMs": 0
+        },
+        "verify_finding": {
+          "calls": 4,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 3289,
+          "responseBytes": 4592,
+          "durationMs": 1467
+        },
+        "get_ds_rules": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 87,
+          "responseBytes": 329,
+          "durationMs": 1
+        }
+      }
+    }
+  }
+}

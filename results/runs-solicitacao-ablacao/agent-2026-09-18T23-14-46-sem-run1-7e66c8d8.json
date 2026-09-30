@@ -1,0 +1,231 @@
+{
+  "timestamp": "2026-09-19T02:43:27.903Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/solicitacao.html",
+  "scope": [
+    "tela inteira: barra superior, trilha de navegação, formulário Solicitar serviço e região Solicitações anteriores"
+  ],
+  "notes": "Execução sem oráculo de regras: nenhuma ferramenta de consulta de regras ou de varredura estava disponível, portanto as atribuições wcag: são próprias e justificadas em cada achado, e um achado fica com rule null por atribuição normativa incerta. Interações feitas: carregamento e snapshot da árvore de acessibilidade; leitura de DOM, atributos e estilos computados; Tab a partir do início do documento; Enter no botão de upload, que abriu o seletor de arquivos; envio do formulário vazio pelo botão Enviar, que produziu 8 mensagens de erro e moveu o foco para o alerta de resumo; Enter no controle Fechar a mensagem, que fecha corretamente, sem achado; abertura da lista do combobox Tipo de serviço, com aria-expanded passando a true no wrapper e no gatilho, sem achado; clique no link da página 2 da paginação, que troca o conteúdo da tabela; tentativas de abrir o calendário por foco e por clique no campo Data preferencial. Contraste calculado para os principais pares de texto e fundo (rótulos, textos de apoio, mensagens, botões, trilha, tabela e paginação): menor valor 4.60 na mensagem de erro de campo, todos acima de 4.5, sem achado. Limitação: depois do teste do upload o seletor de arquivos nativo ficou pendente e o servidor MCP passou a recusar browser_click, browser_type, browser_press_key, browser_evaluate, browser_resize e o conteúdo de browser_snapshot, sem ferramenta disponível para encerrar esse estado. As verificações seguintes foram feitas por URLs javascript: com leitura pelo título de uma janela auxiliar, ou seja, com eventos sintéticos no lugar de mouse e teclado reais e sem novo snapshot da árvore de acessibilidade. O comportamento do calendário e da paginação foi observado por script; as demais evidências vêm de leitura direta de DOM e de estilos computados, que independe do tipo de evento.",
+  "findings": [
+    {
+      "selector": "#forma-presencial",
+      "relatedSelectors": [
+        ".grupo-forma .br-radio:first-of-type label"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "O rádio da opção Presencial não tem nome acessível: o texto visível está em um label sem atributo for, que também não envolve o campo, e o input não tem aria-label nem aria-labelledby, de modo que input.labels.length é 0. No snapshot da árvore de acessibilidade ele aparece como radio sem nome, ao lado de radio Por videochamada e radio Por telefone, cujos labels usam for.",
+      "expected": "O rádio deve expor como nome acessível o texto visível Presencial, por label com for=forma-presencial, por label envolvente ou por aria-label.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-09-19T02-25-53-574Z.yml: radio [ref=e56] sem nome dentro do grupo Forma de atendimento",
+        "browser_evaluate sobre .grupo-forma: label sem atributo for imediatamente após input id=forma-presencial",
+        "janela auxiliar p2: BAD[I:forma-presencial] e FP:10, isto é, 1 elemento e 0 labels"
+      ]
+    },
+    {
+      "selector": ".upload-button",
+      "relatedSelectors": [
+        "#documentos"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "O único controle visível e acionável do campo Documentos comprobatórios é o botão Selecione o arquivo, que tem aria-hidden=true, enquanto o input file #documentos está com display none. Não há, portanto, nenhum componente correspondente na árvore de acessibilidade, embora o botão receba foco pelo teclado e abra o seletor de arquivos ao receber Enter.",
+      "expected": "O controle que aciona o envio de arquivo deve estar exposto à tecnologia assistiva com nome e papel: remover aria-hidden do botão ou tornar o input file perceptível em vez de display none.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar a página",
+          "pressionar Tab uma vez",
+          "pressionar Enter no botão Selecione o arquivo"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: atributos do .upload-button iguais a class upload-button, type button, aria-hidden true, tabindex 1",
+        "browser_evaluate: getComputedStyle de #documentos com display none e caixa de 0 por 0",
+        "browser_press_key Enter: o servidor passou a reportar Modal state [File chooser], confirmando que o botão aciona o input oculto",
+        "janela auxiliar p2: UP:11true e DOC:1none"
+      ]
+    },
+    {
+      "selector": ".upload-button",
+      "rule": "wcag:2.4.3",
+      "observed": "O botão Selecione o arquivo usa tabindex=1, valor positivo. Partindo do início do documento, o primeiro Tab leva o foco para esse botão, antes do link Ir para o conteúdo, do cabeçalho, da trilha de navegação e de todos os campos do formulário que o precedem visualmente.",
+      "expected": "A ordem de tabulação deve seguir a ordem de leitura e significado da página; o botão não deve usar tabindex positivo, mas tabindex 0 ou nenhum tabindex.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar a página",
+          "pressionar Tab uma vez"
+        ]
+      },
+      "evidence": [
+        "browser_press_key Tab e leitura de document.activeElement: BUTTON class upload-button focus-visible, tabindex 1, aria-hidden true, texto Selecione o arquivo",
+        "browser_evaluate: único elemento com tabindex positivo na página",
+        "janela auxiliar p2: UP:11true"
+      ]
+    },
+    {
+      "selector": "#servico",
+      "relatedSelectors": [
+        ".campo-servico .feedback"
+      ],
+      "rule": "wcag:3.3.1",
+      "observed": "Após enviar o formulário vazio, o campo Tipo de serviço recebe aria-invalid=true e a mensagem Selecione o tipo de serviço é inserida ao lado dele, mas o span da mensagem não tem id e o input não tem aria-describedby. Os demais campos do mesmo formulário associam a mensagem, como #nome com aria-describedby=nome-retorno. Ao voltar ao campo, a tecnologia assistiva anuncia apenas o estado inválido, sem o texto do erro.",
+      "expected": "A mensagem de erro deve estar programaticamente associada ao campo, por exemplo com id no span e aria-describedby no input, como nos demais campos.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar a página",
+          "acionar o botão Enviar com o formulário vazio"
+        ]
+      },
+      "evidence": [
+        "janela auxiliar p2: S:true,null,FBID:EMPTY e N:nome-retorno",
+        "browser_evaluate sobre .campo-servico: span class feedback danger retorno-campo com role alert e sem id"
+      ]
+    },
+    {
+      "selector": "#unidade",
+      "relatedSelectors": [
+        ".campo-unidade .feedback"
+      ],
+      "rule": "wcag:3.3.1",
+      "observed": "Após enviar o formulário vazio, o campo Unidade de atendimento recebe aria-invalid=true e a mensagem Selecione a unidade de atendimento é inserida ao lado dele, mas o span da mensagem não tem id e o input não tem aria-describedby, ao contrário dos campos Nome completo, CPF, Data preferencial, Descrição e da declaração, que usam aria-describedby.",
+      "expected": "A mensagem de erro deve estar programaticamente associada ao campo, por exemplo com id no span e aria-describedby no input, como nos demais campos.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar a página",
+          "acionar o botão Enviar com o formulário vazio"
+        ]
+      },
+      "evidence": [
+        "janela auxiliar p2: U:true,null,FBID:EMPTY",
+        "browser_evaluate: lista de .feedback mostra as duas únicas mensagens sem id, nas caixas br-input danger de serviço e unidade"
+      ]
+    },
+    {
+      "selector": "a.page.active",
+      "rule": "wcag:1.3.1",
+      "observed": "Na paginação de Solicitações anteriores, a página corrente é indicada apenas visualmente, pela classe active e pelo fundo azul escuro. Nenhum dos três links tem aria-current: no carregamento o link 1 está com classe active e aria-current nulo e, após acionar o link 2, o conteúdo da tabela muda, a classe active passa para o segundo link e os três continuam com aria-current nulo.",
+      "expected": "O link da página corrente deve expor essa condição programaticamente, com aria-current=page, como já é feito no item atual da trilha de navegação.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar a página",
+          "acionar o link Página 2 da paginação"
+        ]
+      },
+      "evidence": [
+        "janela auxiliar p2 no carregamento: AC:11null, ou seja, 1 elemento, texto 1 e aria-current nulo",
+        "janela auxiliar p2 após acionar a página 2: NOW:2026.0217.000731/ACT:010/CUR:,,",
+        ".playwright-mcp/page-2026-09-19T02-25-53-574Z.yml: navigation Paginação de solicitações anteriores com links Página 1, Página 2 e Página 3"
+      ]
+    },
+    {
+      "selector": "#data-preferencial-btn",
+      "relatedSelectors": [
+        "#data-preferencial",
+        ".flatpickr-calendar"
+      ],
+      "rule": "wcag:2.1.1",
+      "observed": "O botão que abre o calendário, com aria-label Abrir calendário e data-toggle, tem ao mesmo tempo aria-hidden=true e tabindex=-1, portanto não recebe foco nem existe para a tecnologia assistiva. O calendário também não abre ao focar nem ao acionar o campo #data-preferencial: .flatpickr-calendar continua com display none e sem a classe open. Assim, o calendário só é alcançável com o mouse, pelo próprio botão.",
+      "expected": "A abertura do calendário deve ser operável por teclado: o botão deve ser focável e exposto, sem aria-hidden e sem tabindex=-1, ou o campo deve abrir o calendário por interação de teclado.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar a página",
+          "focar o campo Data preferencial",
+          "acionar o campo Data preferencial"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: atributos do #data-preferencial-btn iguais a aria-label Abrir calendário, data-toggle, tabindex -1, aria-hidden true",
+        "janela auxiliar p2: DT:1true-1",
+        "janela auxiliar p2 após foco e acionamento do campo: OPEN:false/VIS:none/ACT:data-preferencial"
+      ]
+    },
+    {
+      "selector": "span[aria-current=page]",
+      "rule": null,
+      "observed": "O item atual da trilha de navegação, Solicitar serviço, é um span de texto estático com tabindex=0 e aria-current=page. Ele entra na sequência de tabulação e recebe foco, embora não tenha papel interativo nem ação associada, criando uma parada de foco em conteúdo não operável. Os demais itens da trilha são links.",
+      "expected": "O item atual da trilha não deve ser focável: manter aria-current=page e remover tabindex=0 do span.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar a página"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate: span tabindex=0 aria-current=page dentro de li.crumb com data-active",
+        ".playwright-mcp/page-2026-09-19T02-25-53-574Z.yml: terceiro item da navegação Breadcrumbs exposto como generic, não como link",
+        "janela auxiliar p2: SPN:10, ou seja, 1 elemento com tabindex 0"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.277 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.2.0",
+    "siteManifestSha256": "cda467a80f3a22ea1123119df18683340c481e468aa5f762a8341c56ae9ccc50",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "853795fa6da7f4e1a1f4c28c680285ee6075a70bd604fd4e9bc5582fff5a3d70",
+    "schedule": {
+      "slot": 2,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-09-18T23-14-46-sem-run1-7e66c8d8-evidencia",
+    "evidenceIndexSha256": "b58721e6703819917874758c6efb16704cb3363919690f81acbfa714c023d19c"
+  },
+  "cost": {
+    "startedAt": "2026-09-19T02:25:43.2478975Z",
+    "finishedAt": "2026-09-19T02:44:12.5561566Z",
+    "wallClockSeconds": 1109.2,
+    "tokens": 10098746,
+    "tokenUsage": {
+      "input": 222,
+      "cacheCreationInput": 143031,
+      "cacheReadInput": 9884656,
+      "output": 70837
+    },
+    "totalCostUsd": 8.144673000000001,
+    "turns": 114
+  }
+}

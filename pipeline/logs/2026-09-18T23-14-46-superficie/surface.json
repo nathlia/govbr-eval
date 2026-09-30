@@ -1,0 +1,28 @@
+{
+  "version": "surface-1.2.0",
+  "startedAt": "2026-09-19T02:15:51.692Z",
+  "pid": 5220,
+  "entryUrl": "http://127.0.0.1:3100/solicitacao.html",
+  "origins": {
+    "site": "http://127.0.0.1:3100",
+    "collector": "http://127.0.0.1:4100"
+  },
+  "proxyServer": "http://127.0.0.1:4102",
+  "control": "http://127.0.0.1:4101",
+  "allowedHosts": [
+    "127.0.0.1:3100",
+    "127.0.0.1:4100"
+  ],
+  "siteManifest": "site-manifest.json",
+  "siteManifestSha256": "cda467a80f3a22ea1123119df18683340c481e468aa5f762a8341c56ae9ccc50",
+  "corpusCommit": "520e06374be2a2b2365960c9dbccc1a77c7b3b80",
+  "corpusDirty": false,
+  "egressLog": "egress.ndjson",
+  "policy": {
+    "boundary": "proxy HTTP de encaminhamento; o navegador do Playwright MCP e o do oráculo apontam para ele (--proxy-server / GOVBR_VALIDATOR_PROXY_SERVER), e o Playwright encaminha o loopback",
+    "allowed": "somente as origens do site congelado e do coletor, por host:porta exato, só HTTP",
+    "https": "negado (CONNECT 403)",
+    "site": "somente os arquivos do manifesto; sem índice, sem fallback, sem /@fs",
+    "collector": "POST /api/submit da execução armada; relatório diferente do aceito é recusado e arquivado"
+  }
+}

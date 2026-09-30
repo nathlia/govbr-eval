@@ -3,8 +3,8 @@
   "status": "complete",
   "error": null,
   "scope": "dev-global",
-  "timestamp": "2026-09-18T00:49:38.444Z",
-  "appUrl": "http://localhost:3000/fluxo.html",
+  "timestamp": "2026-09-19T04:52:51.998Z",
+  "appUrl": "http://127.0.0.1:4399/fluxo.html",
   "state": {
     "setup": [
       {
@@ -24,15 +24,15 @@
       "collection": "fluxo-1.3.0",
       "referenceSha256": "6debda737dd0f713be8508fba59ad52e99dc0392cd672e251c6eeecb7275a5c8",
       "siteManifestSha256": null,
-      "oracleDistSha256": "11f68a1d3697196ef4c89bbc359624d583e279967270f01725163999da008574",
-      "oracleDataSha256": "0b3739e2a697fed137ffdaa8b8e45e6469c866b840c8a4764683547ee7785d3c",
+      "oracleDistSha256": "85cdbbf5ab368052e45e647522fabca40313d42522bcd3014907e019b0fdde97",
+      "oracleDataSha256": "ade4f658553e2a6cc13b3f6118bfaf95e5dd9b05d18d22d8c113e456420c5162",
       "statePlanSha256": "8ce8e00c08e7ac1ba8d899dc8549be9a1ead98b90f7338e7a7526a8498565a2c"
     },
     "corpus": {
-      "commit": "4767b4146d1f46244e506a0991028164f7903ef7",
+      "commit": "520e06374be2a2b2365960c9dbccc1a77c7b3b80",
       "dirty": false
     },
-    "validatorVersion": "2.5.2",
+    "validatorVersion": "2.6.0",
     "tools": {
       "axe": "4.11.4",
       "playwright": "1.61.1"
@@ -58,7 +58,7 @@
         "V-10",
         "V-11"
       ],
-      "startedAt": "2026-09-18T00:49:38.515Z",
+      "startedAt": "2026-09-19T04:52:52.089Z",
       "seconds": 4.2,
       "axe": {
         "violations": 0,
@@ -83,7 +83,7 @@
             },
             "actions": 2
           },
-          "stateFingerprint": "sha256:11d24d9ef1b3f62e6a83592909801de372ab02a763fb769d471788fd9fcd8ae7",
+          "stateFingerprint": "sha256:aaa31777165a37690a3127de9ae9c5a1b79449bca182f02d721d8b31bdebab4d",
           "coverage": {
             "checks": [
               "structure",
@@ -165,7 +165,7 @@
               "id": "F-002",
               "rule": "ds:token-spacing",
               "source": "govbr-ds-token",
-              "description": "padding: 13px (fora da escala: 13px)",
+              "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
               "expected": "Múltiplos de 4px",
               "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)"
             },
@@ -173,7 +173,7 @@
               "id": "F-003",
               "rule": "ds:token-spacing",
               "source": "govbr-ds-token",
-              "description": "padding: 13px (fora da escala: 13px)",
+              "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
               "expected": "Múltiplos de 4px",
               "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)"
             },
@@ -181,7 +181,7 @@
               "id": "F-004",
               "rule": "ds:token-spacing",
               "source": "govbr-ds-token",
-              "description": "padding: 13px (fora da escala: 13px)",
+              "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
               "expected": "Múltiplos de 4px",
               "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)"
             },
@@ -189,7 +189,7 @@
               "id": "F-005",
               "rule": "ds:token-spacing",
               "source": "govbr-ds-token",
-              "description": "padding: 13px (fora da escala: 13px)",
+              "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
               "expected": "Múltiplos de 4px",
               "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)"
             },
@@ -228,7 +228,7 @@
             },
             "actions": 2
           },
-          "stateFingerprint": "sha256:11d24d9ef1b3f62e6a83592909801de372ab02a763fb769d471788fd9fcd8ae7",
+          "stateFingerprint": "sha256:aaa31777165a37690a3127de9ae9c5a1b79449bca182f02d721d8b31bdebab4d",
           "coverage": {
             "checks": [
               "structure",
@@ -339,7 +339,7 @@
               "id": "F-004",
               "rule": "ds:token-spacing",
               "source": "govbr-ds-token",
-              "description": "padding: 13px (fora da escala: 13px)",
+              "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
               "expected": "Múltiplos de 4px",
               "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)"
             },
@@ -347,7 +347,7 @@
               "id": "F-005",
               "rule": "ds:token-spacing",
               "source": "govbr-ds-token",
-              "description": "padding: 13px (fora da escala: 13px)",
+              "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
               "expected": "Múltiplos de 4px",
               "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)"
             },
@@ -355,7 +355,7 @@
               "id": "F-006",
               "rule": "ds:token-spacing",
               "source": "govbr-ds-token",
-              "description": "padding: 13px (fora da escala: 13px)",
+              "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
               "expected": "Múltiplos de 4px",
               "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)"
             },
@@ -363,7 +363,7 @@
               "id": "F-007",
               "rule": "ds:token-spacing",
               "source": "govbr-ds-token",
-              "description": "padding: 13px (fora da escala: 13px)",
+              "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
               "expected": "Múltiplos de 4px",
               "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)"
             },
@@ -384,7 +384,7 @@
               "target": "#cpf"
             }
           ],
-          "seconds": 1.4
+          "seconds": 1.5
         }
       },
       "resolution": {
@@ -547,8 +547,8 @@
       "specs": [
         "V-12"
       ],
-      "startedAt": "2026-09-18T00:49:42.709Z",
-      "seconds": 3.9,
+      "startedAt": "2026-09-19T04:52:56.241Z",
+      "seconds": 3.8,
       "axe": {
         "violations": 0,
         "passes": 36,
@@ -572,7 +572,7 @@
             },
             "actions": 2
           },
-          "stateFingerprint": "sha256:03e69af7b269218d1d0ee02c7f552665614632ff8c0a58424c4d0823e0a3b281",
+          "stateFingerprint": "sha256:aa84a681926f3b1620505fcf81d342701429c7b4fc85826ac1e3944d8053eb83",
           "coverage": {
             "checks": [
               "structure",
@@ -654,7 +654,7 @@
               "id": "F-002",
               "rule": "ds:token-spacing",
               "source": "govbr-ds-token",
-              "description": "padding: 13px (fora da escala: 13px)",
+              "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
               "expected": "Múltiplos de 4px",
               "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)"
             },
@@ -662,7 +662,7 @@
               "id": "F-003",
               "rule": "ds:token-spacing",
               "source": "govbr-ds-token",
-              "description": "padding: 13px (fora da escala: 13px)",
+              "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
               "expected": "Múltiplos de 4px",
               "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)"
             },
@@ -670,7 +670,7 @@
               "id": "F-004",
               "rule": "ds:token-spacing",
               "source": "govbr-ds-token",
-              "description": "padding: 13px (fora da escala: 13px)",
+              "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
               "expected": "Múltiplos de 4px",
               "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)"
             },
@@ -678,7 +678,7 @@
               "id": "F-005",
               "rule": "ds:token-spacing",
               "source": "govbr-ds-token",
-              "description": "padding: 13px (fora da escala: 13px)",
+              "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
               "expected": "Múltiplos de 4px",
               "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)"
             },
@@ -710,7 +710,7 @@
             },
             "actions": 2
           },
-          "stateFingerprint": "sha256:03e69af7b269218d1d0ee02c7f552665614632ff8c0a58424c4d0823e0a3b281",
+          "stateFingerprint": "sha256:aa84a681926f3b1620505fcf81d342701429c7b4fc85826ac1e3944d8053eb83",
           "coverage": {
             "checks": [
               "structure",
@@ -775,7 +775,7 @@
             ]
           },
           "findings": [],
-          "seconds": 1.4
+          "seconds": 1.3
         }
       },
       "resolution": {
@@ -872,7 +872,7 @@
     "seconds": 0.1
   },
   "cost": {
-    "wallClockSeconds": 8.3,
+    "wallClockSeconds": 8.2,
     "apiUsd": 0,
     "platform": "win32 x64",
     "passes": [
@@ -882,7 +882,7 @@
       },
       {
         "id": "320x720",
-        "seconds": 3.9
+        "seconds": 3.8
       }
     ]
   },
@@ -929,7 +929,7 @@
             "id": "F-004",
             "rule": "ds:token-spacing",
             "source": "govbr-ds-token",
-            "description": "padding: 13px (fora da escala: 13px)",
+            "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
             "expected": "Múltiplos de 4px",
             "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)"
           }
@@ -939,7 +939,7 @@
             "id": "F-005",
             "rule": "ds:token-spacing",
             "source": "govbr-ds-token",
-            "description": "padding: 13px (fora da escala: 13px)",
+            "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
             "expected": "Múltiplos de 4px",
             "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)"
           }
@@ -949,7 +949,7 @@
             "id": "F-006",
             "rule": "ds:token-spacing",
             "source": "govbr-ds-token",
-            "description": "padding: 13px (fora da escala: 13px)",
+            "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
             "expected": "Múltiplos de 4px",
             "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)"
           }
@@ -959,7 +959,7 @@
             "id": "F-007",
             "rule": "ds:token-spacing",
             "source": "govbr-ds-token",
-            "description": "padding: 13px (fora da escala: 13px)",
+            "description": "padding: 13px (fora da escala: 13px, 13px, 13px, 13px, 13px)",
             "expected": "Múltiplos de 4px",
             "target": "#root > main > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)"
           }

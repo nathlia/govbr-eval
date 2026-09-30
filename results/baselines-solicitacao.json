@@ -1,0 +1,619 @@
+{
+  "baselineVersion": "linha-de-base-fluxo-2.0.0",
+  "status": "complete",
+  "error": null,
+  "scope": "dev-global",
+  "timestamp": "2026-09-19T04:52:43.700Z",
+  "appUrl": "http://127.0.0.1:4399/solicitacao.html",
+  "state": {
+    "setup": [
+      {
+        "action": "click",
+        "selector": ".acao-enviar"
+      },
+      {
+        "action": "wait",
+        "selector": ".mensagem-retorno"
+      },
+      {
+        "action": "click",
+        "selector": ".acao-cancelar"
+      },
+      {
+        "action": "wait",
+        "selector": ".dialogo-descarte"
+      }
+    ],
+    "waitFor": ".linhas-anteriores tr"
+  },
+  "provenance": {
+    "collectionManifest": null,
+    "identity": {
+      "collection": "fluxo-1.3.0",
+      "referenceSha256": "34cef315da02494c21eaf0af72dd7bf8b537f00add0153511d00ed23c2ef9f36",
+      "siteManifestSha256": null,
+      "oracleDistSha256": "85cdbbf5ab368052e45e647522fabca40313d42522bcd3014907e019b0fdde97",
+      "oracleDataSha256": "ade4f658553e2a6cc13b3f6118bfaf95e5dd9b05d18d22d8c113e456420c5162",
+      "statePlanSha256": "7df636edf5445c06ae185e7479d656e29012b093b28e86f582e1878e63b42c69"
+    },
+    "corpus": {
+      "commit": "520e06374be2a2b2365960c9dbccc1a77c7b3b80",
+      "dirty": false
+    },
+    "validatorVersion": "2.6.0",
+    "tools": {
+      "axe": "4.11.4",
+      "playwright": "1.61.1"
+    }
+  },
+  "passes": [
+    {
+      "id": "1280x900",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "specs": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-05",
+        "A-06",
+        "A-07",
+        "A-08",
+        "A-09",
+        "A-10",
+        "A-11",
+        "A-12"
+      ],
+      "startedAt": "2026-09-19T04:52:43.784Z",
+      "seconds": 5.6,
+      "axe": {
+        "violations": 2,
+        "passes": 49,
+        "incomplete": [
+          "aria-hidden-focus",
+          "color-contrast"
+        ],
+        "findings": [
+          {
+            "rule": "label-title-only",
+            "impact": "serious",
+            "description": "Form elements should have a visible label",
+            "target": "#forma-presencial"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "#forma-presencial"
+          }
+        ],
+        "seconds": 0.7
+      },
+      "validator": {
+        "unguided": {
+          "mode": "nao-guiada",
+          "policy": "pagina-inteira: checks tokens+structure, seletor padrão do validator, todos os componentes e verificações de token, janela e setup do plano de estados, sem seletor do gabarito",
+          "request": {
+            "selectors": null,
+            "checks": [
+              "tokens",
+              "structure"
+            ],
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "actions": 4
+          },
+          "stateFingerprint": "sha256:5d47bc47954861effb52b5efab131ed092e4057e29c508fabd390e3d2100fe48",
+          "coverage": {
+            "checks": [
+              "structure",
+              "tokens"
+            ],
+            "selectors": [],
+            "evidenceSelectors": [
+              "button, a, input, select, textarea, [role='button'], [role='link'], [role='checkbox'], [role='radio'], [class*='br-']"
+            ],
+            "axeScope": null,
+            "elementsInspected": 89,
+            "componentsRequested": [
+              "accordion",
+              "avatar",
+              "breadcrumb",
+              "button",
+              "card",
+              "carousel",
+              "checkbox",
+              "cookiebar",
+              "datetimepicker",
+              "divider",
+              "footer",
+              "header",
+              "input",
+              "item",
+              "list",
+              "loading",
+              "magicbutton",
+              "menu",
+              "message",
+              "modal",
+              "notification",
+              "pagination",
+              "radio",
+              "scrim",
+              "select",
+              "signin",
+              "skiplink",
+              "step",
+              "switch",
+              "tab",
+              "table",
+              "tag",
+              "textarea",
+              "tooltip",
+              "upload",
+              "wizard"
+            ],
+            "componentsFound": [
+              "skiplink",
+              "item",
+              "tag",
+              "breadcrumb",
+              "button",
+              "message",
+              "input",
+              "select",
+              "list",
+              "radio",
+              "datetimepicker",
+              "textarea",
+              "upload",
+              "checkbox",
+              "table",
+              "pagination",
+              "modal"
+            ],
+            "actionsApplied": [
+              {
+                "action": "click",
+                "selector": ".acao-enviar"
+              },
+              {
+                "action": "wait",
+                "selector": ".mensagem-retorno"
+              },
+              {
+                "action": "click",
+                "selector": ".acao-cancelar"
+              },
+              {
+                "action": "wait",
+                "selector": ".dialogo-descarte"
+              }
+            ]
+          },
+          "findings": [
+            {
+              "id": "F-001",
+              "rule": "ds:token-color",
+              "source": "govbr-ds-token",
+              "description": "color: rgb(51, 67, 51) (#334333) não corresponde a nenhum token do DS",
+              "expected": "Valor de token do DS; mais próximo: --green-cool-70 (#37493b, distância RGB 10.77)",
+              "target": "#root > div > div > div"
+            },
+            {
+              "id": "F-002",
+              "rule": "ds:structure-button-tag",
+              "source": "govbr-ds-structure",
+              "description": "br-button aplicado a <div>",
+              "expected": "Elemento <button>",
+              "target": "#main-content > form > div:nth-of-type(1) > div > div:nth-of-type(1) > div"
+            },
+            {
+              "id": "F-003",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1) > button"
+            },
+            {
+              "id": "F-004",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(2) > button"
+            }
+          ],
+          "seconds": 2.3
+        },
+        "guided": {
+          "mode": "guiada",
+          "policy": "diagnostico: âncoras das specs da janela; não comparável ao agente",
+          "request": {
+            "selectors": [
+              ".dialogo-descarte",
+              ".campo-documentos .upload-button",
+              "#servico, #unidade",
+              ".tabela-anteriores, .tabela-anteriores table",
+              ".mensagem-retorno .close [role=button]",
+              ".paginacao-anteriores, .paginacao-anteriores a.page",
+              "#forma-presencial, .grupo-forma .br-radio:first-of-type label",
+              ".campo-documentos .br-upload, #documentos-apoio",
+              ".mensagem-retorno, .mensagem-retorno .close, .mensagem-retorno .icon"
+            ],
+            "checks": [
+              "tokens",
+              "structure"
+            ],
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "actions": 4
+          },
+          "stateFingerprint": "sha256:8563625760d69b83653136cfa8a5b9222f2522549170cf851203a6a32c983110",
+          "coverage": {
+            "checks": [
+              "structure",
+              "tokens"
+            ],
+            "selectors": [
+              "#forma-presencial, .grupo-forma .br-radio:first-of-type label",
+              "#servico, #unidade",
+              ".campo-documentos .br-upload, #documentos-apoio",
+              ".campo-documentos .upload-button",
+              ".dialogo-descarte",
+              ".mensagem-retorno .close [role=button]",
+              ".mensagem-retorno, .mensagem-retorno .close, .mensagem-retorno .icon",
+              ".paginacao-anteriores, .paginacao-anteriores a.page",
+              ".tabela-anteriores, .tabela-anteriores table"
+            ],
+            "evidenceSelectors": [
+              "#forma-presencial, .grupo-forma .br-radio:first-of-type label",
+              "#servico, #unidade",
+              ".campo-documentos .br-upload, #documentos-apoio",
+              ".campo-documentos .upload-button",
+              ".dialogo-descarte",
+              ".mensagem-retorno .close [role=button]",
+              ".mensagem-retorno, .mensagem-retorno .close, .mensagem-retorno .icon",
+              ".paginacao-anteriores, .paginacao-anteriores a.page",
+              ".tabela-anteriores, .tabela-anteriores table"
+            ],
+            "axeScope": null,
+            "elementsInspected": 18,
+            "componentsRequested": [
+              "accordion",
+              "avatar",
+              "breadcrumb",
+              "button",
+              "card",
+              "carousel",
+              "checkbox",
+              "cookiebar",
+              "datetimepicker",
+              "divider",
+              "footer",
+              "header",
+              "input",
+              "item",
+              "list",
+              "loading",
+              "magicbutton",
+              "menu",
+              "message",
+              "modal",
+              "notification",
+              "pagination",
+              "radio",
+              "scrim",
+              "select",
+              "signin",
+              "skiplink",
+              "step",
+              "switch",
+              "tab",
+              "table",
+              "tag",
+              "textarea",
+              "tooltip",
+              "upload",
+              "wizard"
+            ],
+            "componentsFound": [
+              "upload",
+              "modal",
+              "button",
+              "message",
+              "pagination",
+              "table"
+            ],
+            "actionsApplied": [
+              {
+                "action": "click",
+                "selector": ".acao-enviar"
+              },
+              {
+                "action": "wait",
+                "selector": ".mensagem-retorno"
+              },
+              {
+                "action": "click",
+                "selector": ".acao-cancelar"
+              },
+              {
+                "action": "wait",
+                "selector": ".dialogo-descarte"
+              }
+            ]
+          },
+          "findings": [
+            {
+              "id": "F-001",
+              "rule": "ds:token-color",
+              "source": "govbr-ds-token",
+              "description": "color: rgb(51, 67, 51) (#334333) não corresponde a nenhum token do DS",
+              "expected": "Valor de token do DS; mais próximo: --green-cool-70 (#37493b, distância RGB 10.77)",
+              "target": "#root > div > div > div"
+            },
+            {
+              "id": "F-002",
+              "rule": "ds:structure-button-tag",
+              "source": "govbr-ds-structure",
+              "description": "br-button aplicado a <div>",
+              "expected": "Elemento <button>",
+              "target": "#main-content > form > div:nth-of-type(1) > div > div:nth-of-type(1) > div"
+            }
+          ],
+          "seconds": 1.5
+        }
+      },
+      "resolution": {
+        "bySelector": {
+          "#forma-presencial": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input"
+            ]
+          },
+          "#root > div > div > div": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(1)>div>div>div"
+            ]
+          },
+          "#main-content > form > div:nth-of-type(1) > div > div:nth-of-type(1) > div": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div"
+            ]
+          },
+          "div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1) > button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(1)>button"
+            ]
+          },
+          "div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(2) > button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(2)>button"
+            ]
+          },
+          ".dialogo-descarte": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(1)>div>div>div"
+            ]
+          },
+          ".campo-documentos .upload-button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+            ]
+          },
+          "#servico, #unidade": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input",
+              "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+            ]
+          },
+          ".tabela-anteriores, .tabela-anteriores table": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(1)>div>main>section>div",
+              "body>div:nth-of-type(1)>div>main>section>div>table"
+            ]
+          },
+          ".mensagem-retorno .close [role=button]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div"
+            ]
+          },
+          ".paginacao-anteriores, .paginacao-anteriores a.page": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav",
+              "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)",
+              "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(2)",
+              "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(3)"
+            ]
+          },
+          "#forma-presencial, .grupo-forma .br-radio:first-of-type label": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input",
+              "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>label"
+            ]
+          },
+          ".campo-documentos .br-upload, #documentos-apoio": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div",
+              "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>p"
+            ]
+          },
+          ".mensagem-retorno, .mensagem-retorno .close, .mensagem-retorno .icon": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div",
+              "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)",
+              "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(3)"
+            ]
+          }
+        },
+        "labels": {
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input": "<input#forma-presencial>",
+          "body>div:nth-of-type(1)>div>div>div": "<div> \"Descartar solicitação? Os dados preenchidos nest\"",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div": "<div> \"Fechar a mensagem\"",
+          "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(1)>button": "<button>",
+          "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(2)>button": "<button>",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button": "<button> \"Selecione o arquivo\"",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input": "<input#servico> \"Selecione uma opção\"",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input": "<input#unidade> \"Selecione uma opção\"",
+          "body>div:nth-of-type(1)>div>main>section>div": "<div> \"Solicitações anteriores Protocolo Serviço Data S\"",
+          "body>div:nth-of-type(1)>div>main>section>div>table": "<table> \"Protocolo Serviço Data Situação 2026.0918.004417\"",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav": "<nav> \"Paginação de solicitações anteriores\"",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)": "<a> \"Página 1\"",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(2)": "<a> \"Página 2\"",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(3)": "<a> \"Página 3\"",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>label": "<label> \"Presencial\"",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div": "<div> \"Documentos comprobatórios (opcional) Selecione o\"",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>p": "<p#documentos-apoio> \"Um arquivo PDF, JPG ou PNG de até 5 MB.\"",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div": "<div> \"Não foi possível enviar. Há 8 campo(s) obrigatór\"",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)": "<div>",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(3)": "<div>"
+        }
+      }
+    }
+  ],
+  "coverageCheck": [],
+  "eslint": {
+    "tool": "eslint-plugin-jsx-a11y (recommended)",
+    "config": "flat, recommended",
+    "files": [
+      {
+        "path": "F:/Dev Nath/TCC/govbr-corpus/src/pages/SolicitacaoPage.tsx",
+        "sha256": "6b71298d557c13c3faa3091eab9ac9ec402bcf2c62e6ff057180784042f3910d"
+      }
+    ],
+    "findings": [
+      {
+        "rule": "jsx-a11y/no-noninteractive-tabindex",
+        "message": "`tabIndex` should only be declared on interactive elements.",
+        "file": "F:\\Dev Nath\\TCC\\govbr-corpus\\src\\pages\\SolicitacaoPage.tsx",
+        "line": 29
+      },
+      {
+        "rule": "jsx-a11y/no-noninteractive-element-to-interactive-role",
+        "message": "Non-interactive elements should not be assigned interactive roles.",
+        "file": "F:\\Dev Nath\\TCC\\govbr-corpus\\src\\pages\\SolicitacaoPage.tsx",
+        "line": 53
+      },
+      {
+        "rule": "jsx-a11y/no-access-key",
+        "message": "No access key attribute allowed. Inconsistencies between keyboard shortcuts and keyboard commands used by screen readers and keyboard-only users create a11y complications.",
+        "file": "F:\\Dev Nath\\TCC\\govbr-corpus\\src\\pages\\SolicitacaoPage.tsx",
+        "line": 54
+      },
+      {
+        "rule": "jsx-a11y/no-redundant-roles",
+        "message": "The element ol has an implicit role of list. Defining this explicitly is redundant and should be avoided.",
+        "file": "F:\\Dev Nath\\TCC\\govbr-corpus\\src\\pages\\SolicitacaoPage.tsx",
+        "line": 68
+      },
+      {
+        "rule": "jsx-a11y/no-noninteractive-tabindex",
+        "message": "`tabIndex` should only be declared on interactive elements.",
+        "file": "F:\\Dev Nath\\TCC\\govbr-corpus\\src\\pages\\SolicitacaoPage.tsx",
+        "line": 81
+      },
+      {
+        "rule": "jsx-a11y/label-has-associated-control",
+        "message": "A form label must be associated with a control.",
+        "file": "F:\\Dev Nath\\TCC\\govbr-corpus\\src\\pages\\SolicitacaoPage.tsx",
+        "line": 120
+      }
+    ],
+    "seconds": 0.1
+  },
+  "cost": {
+    "wallClockSeconds": 5.8,
+    "apiUsd": 0,
+    "platform": "win32 x64",
+    "passes": [
+      {
+        "id": "1280x900",
+        "seconds": 5.6
+      }
+    ]
+  },
+  "legacy": {
+    "axe": {
+      "byElementKey": {
+        "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input": [
+          {
+            "rule": "label-title-only",
+            "impact": "serious",
+            "description": "Form elements should have a visible label",
+            "target": "#forma-presencial"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "#forma-presencial"
+          }
+        ]
+      },
+      "unattributed": [],
+      "passes": 49
+    },
+    "validator": {
+      "byElementKey": {
+        "body>div:nth-of-type(1)>div>div>div": [
+          {
+            "id": "F-001",
+            "rule": "ds:token-color",
+            "source": "govbr-ds-token",
+            "description": "color: rgb(51, 67, 51) (#334333) não corresponde a nenhum token do DS",
+            "expected": "Valor de token do DS; mais próximo: --green-cool-70 (#37493b, distância RGB 10.77)",
+            "target": "#root > div > div > div"
+          }
+        ],
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div": [
+          {
+            "id": "F-002",
+            "rule": "ds:structure-button-tag",
+            "source": "govbr-ds-structure",
+            "description": "br-button aplicado a <div>",
+            "expected": "Elemento <button>",
+            "target": "#main-content > form > div:nth-of-type(1) > div > div:nth-of-type(1) > div"
+          }
+        ]
+      },
+      "mode": "guiada"
+    }
+  }
+}

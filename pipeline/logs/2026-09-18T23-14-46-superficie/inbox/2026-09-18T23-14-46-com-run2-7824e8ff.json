@@ -1,0 +1,158 @@
+{
+  "timestamp": "2026-09-19T03:02:26.944Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/solicitacao.html",
+  "scope": [
+    "tela inteira de solicitacao.html: skiplink, cabecalho, breadcrumb, formulario de solicitacao (nome, CPF, dois br-select, grupo de radio, datetimepicker, textarea, upload, checkboxes, declaracao, acoes), mensagem de retorno de validacao, tabela de solicitacoes anteriores e paginacao"
+  ],
+  "notes": "Viewport 1280x900. Interacoes executadas: submissao do formulario vazio via .acao-enviar (mensagem br-message danger + feedbacks por campo + aria-invalid + foco movido para .content[role=alert][tabindex=-1]); fechamento da mensagem pelo controle .close com Enter via teclado (funcionou, mensagem removida); abertura/fechamento do br-select 'Tipo de servico' por clique no botao data-trigger e por ArrowDown com foco no input (aria-expanded alterna corretamente em ambos); foco/clique em #data-preferencial (NAO abre o calendario) e clique em #data-preferencial-btn (abre); inspecao da arvore do calendario aberto; Tab unico a partir do carregamento (foco caiu em .upload-button, nao no skiplink); clique em 'Pagina 2' da paginacao (as linhas da tabela mudam e data-current vai para 2, funcional). Varreduras do oraculo: S-page-001 (estado inicial) e S-page-002 (apos clique em .acao-enviar, comparada por compareToScanId). CANDIDATOS REJEITADOS, com motivo: (a) ds-structure-button-tag sobre o <a class='br-button circle'> do breadcrumb - o exemplo canonico breadcrumb-default usa exatamente <a class='br-button circle'>, entao a marcacao esta conforme; (b) ds-structure-button-tag sobre o <div class='br-button' role='button'> do fechar-mensagem - diverge do exemplo canonico message-padrao, que usa <button>, e seria um achado plausivel, mas verify_finding rejeitou o id (D-27: 'ds-structure-button-tag nao declara qual regra normativa implementa'), e o protocolo proibe emprestar o id de outra norma para sustentar exigencia estrutural; alem disso confirmei por teclado que o controle e operavel com Enter; (c) todos os ds-token-spacing e ds-token-radius (padding 29px em #servico/#unidade, margin -2px nas .br-list, border-radius 6px em #descricao, margin do select do flatpickr) - verify_finding rejeitou ds-token-spacing e ds-token-radius pelo mesmo D-27; permanecem como observacoes de revisao, nao como achados, ainda que 6px em #descricao destoe dos 4px dos demais controles; (d) o F-017 do scanner alega escala violada mas reporta 'margin: 0px', valor que esta na escala - evidencia autocontraditoria; (e) label-title-only em #forma-presencial - mesmo defeito ja reportado sob e-MAG 6.2, nao repetido sob outra regra; (f) #data-preferencial-btn com aria-hidden='true' e tabindex='-1' - identico aos exemplos canonicos do datetimepicker, e o campo aceita digitacao com instrucao de formato, entao ha alternativa de entrada; (g) <span tabindex='0' aria-current='page'> do breadcrumb - presente literalmente no exemplo canonico; (h) papel combobox no wrapper .br-input e opcoes como radio dentro de .br-list - padrao canonico do br-select, e verifiquei que e operavel por teclado; (i) ausencia de aria-current='page' no <a class='page active'> da paginacao - os exemplos canonicos de paginacao tambem nao usam aria-current, sem norma para sustentar; (j) erro de console 404 de /favicon.ico - irrelevante para conformidade. LIMITACOES: avaliei apenas o viewport 1280x900, sem checagem responsiva em larguras menores; nao testei leitor de tela real, apenas a arvore de acessibilidade e atributos ARIA; nao exercitei o upload de arquivo real nem uma submissao valida completa ate o estado de sucesso, entao o estado de sucesso do formulario nao foi avaliado; os ids das .br-list sao gerados aleatoriamente a cada carga, por isso nenhum seletor deste relatorio depende deles; os achados 4, 5 e 6 estao na marcacao do flatpickr embutido no componente datetimepicker, e nao no codigo proprio da tela, mas integram a interface entregue.",
+  "findings": [
+    {
+      "selector": "#forma-presencial",
+      "relatedSelectors": [
+        "#forma-presencial ~ label"
+      ],
+      "rule": "emag:6.2",
+      "observed": "O <label>Presencial</label> irmao nao tem atributo for, e o input nao tem aria-label nem aria-labelledby, portanto seu nome acessivel e vazio. Os outros dois radios do mesmo fieldset usam label[for=forma-video] e label[for=forma-telefone] e sao expostos corretamente.",
+      "expected": "Todo campo de formulario deve ter rotulo associado programaticamente, por <label for=\"forma-presencial\">, aria-label ou aria-labelledby.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html"
+        ]
+      },
+      "evidence": [
+        "scan_page S-page-001 finding F-011 (axe-core 'label', critical, locator #forma-presencial)",
+        "scan_page S-page-002 finding F-024 (mesma regra, estado pos-submissao)",
+        "browser_snapshot: 'radio [ref=e56]' sem nome acessivel, enquanto e59 expoe 'Por videochamada' e e62 expoe 'Por telefone'",
+        "browser_evaluate: parentElement.outerHTML = '<div class=\"br-radio\"><input id=\"forma-presencial\" type=\"radio\" value=\"presencial\" name=\"forma\"><label>Presencial</label></div>'"
+      ]
+    },
+    {
+      "selector": ".upload-button",
+      "relatedSelectors": [
+        "#documentos"
+      ],
+      "rule": "emag:2.2",
+      "observed": "O botao tem aria-hidden=\"true\" junto com tabindex=\"1\": fica removido da arvore de acessibilidade mas permanece focalizavel e, por ser tabindex positivo, assume a frente da ordem de tabulacao. Um unico Tab a partir do carregamento da pagina leva o foco a ele (document.activeElement = button.upload-button), antes mesmo do skiplink 'Ir para o conteudo'.",
+      "expected": "Um elemento com aria-hidden=\"true\" nao pode ser focalizavel nem conter conteudo focalizavel: usar tabindex=\"-1\" (o input real #documentos ja e o controle acessivel) ou remover o aria-hidden e dar-lhe nome acessivel. Tabindex positivo tambem nao deve ser usado.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html"
+        ]
+      },
+      "evidence": [
+        "scan_page S-page-001 finding F-010 (axe-core 'aria-hidden-focus', serious, locator .upload-button)",
+        "scan_page S-page-002 finding F-022 (mesma regra)",
+        "browser_press_key Tab a partir do carregamento; browser_evaluate: document.activeElement = {tag:'BUTTON', cls:'upload-button focus-visible', tabindex:'1', ariaHidden:'true', text:'Selecione o arquivo'}",
+        "browser_evaluate: outerHTML = '<button class=\"upload-button\" type=\"button\" aria-hidden=\"true\" tabindex=\"1\">...'"
+      ]
+    },
+    {
+      "selector": "#servico, #unidade",
+      "relatedSelectors": [
+        ".campo-servico .feedback",
+        ".campo-unidade .feedback"
+      ],
+      "rule": "emag:6.6",
+      "observed": "Apos submeter o formulario vazio, os dois campos recebem aria-invalid=\"true\" mas ficam com aria-describedby nulo, e os <span class=\"feedback danger retorno-campo\" role=\"alert\"> que carregam 'Selecione o tipo de servico.' e 'Selecione a unidade de atendimento.' nao possuem id, portanto nao ha como vincula-los. Todos os demais campos invalidos recebem o vinculo: #nome tem aria-describedby=\"nome-retorno\", #cpf tem \"cpf-apoio cpf-retorno\", #data-preferencial tem \"data-apoio data-retorno\", #descricao tem \"descricao-apoio descricao-retorno\" e #declaracao tem \"declaracao-retorno\".",
+      "expected": "A mensagem de erro deve ser vinculada ao campo que a originou por aria-describedby, alem de marcar aria-invalid=\"true\", para que quem usa leitor de tela receba o motivo do erro ao voltar ao campo.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar em .acao-enviar com o formulario inteiramente vazio"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate apos clique em .acao-enviar: {servico:{desc:null, invalid:'true'}, unidade:{desc:null, invalid:'true'}, nome:{desc:'nome-retorno', invalid:'true'}}",
+        "browser_evaluate: .campo-servico .feedback e .campo-unidade .feedback com fbId = '' (sem id), outerHTML '<span class=\"feedback danger retorno-campo\" role=\"alert\">...'",
+        "scan_page S-page-002 (estado pos-submissao, fingerprint sha256:43d8ed8abc5a582075fe93ee8d079db0ed811b0b5152513003f38955021be885)"
+      ]
+    },
+    {
+      "selector": ".flatpickr-prev-month > button",
+      "relatedSelectors": [
+        "#data-preferencial-btn"
+      ],
+      "rule": "emag:2.2",
+      "observed": "Com o calendario aberto, o botao de mes anterior e focalizavel (tabindex padrao de <button>, fora de qualquer aria-hidden) e contem apenas o icone <i class=\"fas fas fa-chevron-left\">, sem aria-label e sem texto: nome acessivel vazio.",
+      "expected": "Controle interativo apenas com icone precisa de nome acessivel, por exemplo aria-label=\"Mes anterior\".",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar em #data-preferencial-btn para abrir o calendario"
+        ]
+      },
+      "evidence": [
+        "scan_page S-page-001 finding F-008 (emag-2.2, serious, 'Elemento interativo apenas com icone, sem aria-label (br-button)')",
+        "scan_page S-page-002 finding F-020 (mesma regra)",
+        "browser_evaluate no estado de calendario aberto: {tag:'BUTTON', cls:'br-button circle small', tabindex:null, label:null, text:'', ariaHidden:false}",
+        "browser_evaluate: outerHTML de .flatpickr-prev-month = '<span class=\"flatpickr-prev-month\"><button class=\"br-button circle small\" type=\"button\"><i class=\"fas fas fa-chevron-left\"></i></button></span>'"
+      ]
+    },
+    {
+      "selector": ".flatpickr-next-month > button",
+      "relatedSelectors": [
+        "#data-preferencial-btn"
+      ],
+      "rule": "emag:2.2",
+      "observed": "Com o calendario aberto, o botao de proximo mes e focalizavel e contem apenas o icone <i class=\"fas fa-chevron-right\">, sem aria-label e sem texto: nome acessivel vazio.",
+      "expected": "Controle interativo apenas com icone precisa de nome acessivel, por exemplo aria-label=\"Proximo mes\".",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar em #data-preferencial-btn para abrir o calendario"
+        ]
+      },
+      "evidence": [
+        "scan_page S-page-001 finding F-009 (emag-2.2, serious, 'Elemento interativo apenas com icone, sem aria-label (br-button)')",
+        "scan_page S-page-002 finding F-021 (mesma regra)",
+        "browser_evaluate no estado de calendario aberto: segundo BUTTON de .flatpickr-calendar com {label:null, text:'', tabindex:null}",
+        "browser_evaluate: outerHTML = '<button class=\"br-button circle small\" type=\"button\"><i class=\"fas fa-chevron-right\"></i></button>'"
+      ]
+    },
+    {
+      "selector": ".flatpickr-day",
+      "relatedSelectors": [
+        ".upload-button"
+      ],
+      "rule": "emag:6.3",
+      "observed": "As 42 celulas de dia do calendario usam tabindex=\"1\" (positivo) - verifiquei que todas, sem excecao, tem tabindex='1'. Somadas ao .upload-button, a pagina fica com 43 elementos de tabindex positivo, que sao percorridos antes de toda a ordem natural do documento, quebrando a sequencia de navegacao da tela.",
+      "expected": "A ordem de navegacao deve seguir a ordem logica do codigo, com tabindex apenas quando indispensavel e sem valores positivos; celulas de dia devem usar tabindex=\"-1\" com navegacao por setas, ou \"0\".",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "carregar http://127.0.0.1:3100/solicitacao.html",
+          "clicar em #data-preferencial-btn para abrir o calendario"
+        ]
+      },
+      "evidence": [
+        "browser_evaluate no estado de calendario aberto: document.querySelectorAll('.flatpickr-day').length = 42 e todas com tabindex='1'; amostra '<span class=\"flatpickr-day prevMonthDay\" aria-label=\"Agosto 30, 2026\" tabindex=\"1\">30</span>'",
+        "browser_evaluate: document.querySelectorAll('[tabindex=\"1\"]').length = 43",
+        "browser_press_key Tab a partir do carregamento: o foco salta para o primeiro elemento de tabindex positivo (.upload-button) em vez do skiplink, demonstrando o efeito do tabindex positivo na ordem"
+      ]
+    }
+  ]
+}

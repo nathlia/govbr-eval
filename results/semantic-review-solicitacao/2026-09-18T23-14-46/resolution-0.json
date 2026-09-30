@@ -1,0 +1,1045 @@
+{
+  "scene": "1280x900",
+  "url": "http://127.0.0.1:61557/solicitacao.html",
+  "bySelector": {
+    ".dialogo-descarte": {
+      "selector": ".dialogo-descarte",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>div>div"
+      ]
+    },
+    ".campo-documentos .upload-button": {
+      "selector": ".campo-documentos .upload-button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+      ]
+    },
+    "#servico, #unidade": {
+      "selector": "#servico, #unidade",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input",
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+      ]
+    },
+    ".tabela-anteriores, .tabela-anteriores table": {
+      "selector": ".tabela-anteriores, .tabela-anteriores table",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>section>div",
+        "body>div:nth-of-type(1)>div>main>section>div>table"
+      ]
+    },
+    ".mensagem-retorno .close [role=button]": {
+      "selector": ".mensagem-retorno .close [role=button]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div"
+      ]
+    },
+    ".paginacao-anteriores, .paginacao-anteriores a.page": {
+      "selector": ".paginacao-anteriores, .paginacao-anteriores a.page",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav",
+        "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)",
+        "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(2)",
+        "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(3)"
+      ]
+    },
+    "#forma-presencial, .grupo-forma .br-radio:first-of-type label": {
+      "selector": "#forma-presencial, .grupo-forma .br-radio:first-of-type label",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input",
+        "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>label"
+      ]
+    },
+    ".campo-documentos .br-upload, #documentos-apoio": {
+      "selector": ".campo-documentos .br-upload, #documentos-apoio",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div",
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>p"
+      ]
+    },
+    ".mensagem-retorno, .mensagem-retorno .close, .mensagem-retorno .icon": {
+      "selector": ".mensagem-retorno, .mensagem-retorno .close, .mensagem-retorno .icon",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div",
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)",
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(3)"
+      ]
+    },
+    "#forma-presencial": {
+      "selector": "#forma-presencial",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input"
+      ]
+    },
+    "#forma-presencial + label": {
+      "selector": "#forma-presencial + label",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>label"
+      ]
+    },
+    ".upload-button": {
+      "selector": ".upload-button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+      ]
+    },
+    "#documentos": {
+      "selector": "#documentos",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>input"
+      ]
+    },
+    "#servico": {
+      "selector": "#servico",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input"
+      ]
+    },
+    ".campo-servico .feedback.retorno-campo": {
+      "selector": ".campo-servico .feedback.retorno-campo",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>span"
+      ]
+    },
+    "#unidade": {
+      "selector": "#unidade",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+      ]
+    },
+    ".campo-unidade .feedback.retorno-campo": {
+      "selector": ".campo-unidade .feedback.retorno-campo",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>span"
+      ]
+    },
+    ".flatpickr-prev-month button": {
+      "selector": ".flatpickr-prev-month button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(1)>button"
+      ]
+    },
+    ".flatpickr-next-month button": {
+      "selector": ".flatpickr-next-month button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(2)>button"
+      ]
+    },
+    ".tabela-anteriores table": {
+      "selector": ".tabela-anteriores table",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>section>div>table"
+      ]
+    },
+    ".grupo-forma .br-radio:first-of-type label": {
+      "selector": ".grupo-forma .br-radio:first-of-type label",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>label"
+      ]
+    },
+    ".campo-servico .feedback": {
+      "selector": ".campo-servico .feedback",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>span"
+      ]
+    },
+    ".campo-unidade .feedback": {
+      "selector": ".campo-unidade .feedback",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>span"
+      ]
+    },
+    "a.page.active": {
+      "selector": "a.page.active",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)"
+      ]
+    },
+    "#data-preferencial-btn": {
+      "selector": "#data-preferencial-btn",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)>div>div>div>button"
+      ]
+    },
+    "#data-preferencial": {
+      "selector": "#data-preferencial",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)>div>div>div>input"
+      ]
+    },
+    ".flatpickr-calendar": {
+      "selector": ".flatpickr-calendar",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(2)"
+      ]
+    },
+    "span[aria-current=page]": {
+      "selector": "span[aria-current=page]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>nav:nth-of-type(2)>ol>li:nth-of-type(3)>span"
+      ]
+    },
+    ".upload-label": {
+      "selector": ".upload-label",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>label"
+      ]
+    },
+    ".campo-unidade .feedback.danger": {
+      "selector": ".campo-unidade .feedback.danger",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>span"
+      ]
+    },
+    ".br-pagination a.page.active": {
+      "selector": ".br-pagination a.page.active",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)"
+      ]
+    },
+    ".tabela-anteriores": {
+      "selector": ".tabela-anteriores",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>section>div"
+      ]
+    },
+    "#forma-presencial ~ label": {
+      "selector": "#forma-presencial ~ label",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>label"
+      ]
+    },
+    ".flatpickr-prev-month > button": {
+      "selector": ".flatpickr-prev-month > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(1)>button"
+      ]
+    },
+    ".flatpickr-next-month > button": {
+      "selector": ".flatpickr-next-month > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(2)>button"
+      ]
+    },
+    ".flatpickr-day": {
+      "selector": ".flatpickr-day",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(1)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(2)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(3)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(4)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(5)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(6)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(7)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(8)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(9)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(10)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(11)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(12)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(13)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(14)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(15)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(16)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(17)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(18)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(19)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(20)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(21)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(22)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(23)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(24)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(25)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(26)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(27)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(28)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(29)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(30)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(31)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(32)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(33)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(34)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(35)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(36)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(37)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(38)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(39)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(40)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(41)",
+        "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(42)"
+      ]
+    },
+    ".grupo-forma label:not([for])": {
+      "selector": ".grupo-forma label:not([for])",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>label"
+      ]
+    },
+    ".campo-servico .retorno-campo": {
+      "selector": ".campo-servico .retorno-campo",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>span"
+      ]
+    },
+    ".campo-unidade .retorno-campo": {
+      "selector": ".campo-unidade .retorno-campo",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>span"
+      ]
+    },
+    ".mensagem-retorno .close > div.br-button": {
+      "selector": ".mensagem-retorno .close > div.br-button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div"
+      ]
+    },
+    ".mensagem-retorno": {
+      "selector": ".mensagem-retorno",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div"
+      ]
+    },
+    "#descricao": {
+      "selector": "#descricao",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(5)>div>textarea"
+      ]
+    },
+    ".flatpickr-prev-month > button, .flatpickr-next-month > button": {
+      "selector": ".flatpickr-prev-month > button, .flatpickr-next-month > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(1)>button",
+        "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(2)>button"
+      ]
+    },
+    ".campo-servico .br-list": {
+      "selector": ".campo-servico .br-list",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(2)"
+      ]
+    },
+    ".campo-unidade .br-list": {
+      "selector": ".campo-unidade .br-list",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(2)"
+      ]
+    },
+    "#cpf": {
+      "selector": "#cpf",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(2)>div>input"
+      ]
+    },
+    "#cpf-apoio": {
+      "selector": "#cpf-apoio",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(2)>div>p"
+      ]
+    },
+    "#descricao-apoio": {
+      "selector": "#descricao-apoio",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(5)>div>p"
+      ]
+    },
+    ".br-skiplink .br-item": {
+      "selector": ".br-skiplink .br-item",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>nav:nth-of-type(1)>a"
+      ]
+    },
+    "#nome": {
+      "selector": "#nome",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(1)>div>input"
+      ]
+    },
+    ".campo-servico .br-select .feedback.retorno-campo": {
+      "selector": ".campo-servico .br-select .feedback.retorno-campo",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>span"
+      ]
+    },
+    ".campo-unidade .br-select .feedback.retorno-campo": {
+      "selector": ".campo-unidade .br-select .feedback.retorno-campo",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>span"
+      ]
+    },
+    ".paginacao-anteriores a.page.active": {
+      "selector": ".paginacao-anteriores a.page.active",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)"
+      ]
+    },
+    ".paginacao-anteriores": {
+      "selector": ".paginacao-anteriores",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav"
+      ]
+    },
+    ".acao-enviar": {
+      "selector": ".acao-enviar",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(8)>button:nth-of-type(2)"
+      ]
+    },
+    "#list-4514": {
+      "selector": "#list-4514",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "#list-3046": {
+      "selector": "#list-3046",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "#root > div > div > div": {
+      "selector": "#root > div > div > div",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>div>div"
+      ]
+    },
+    "div:nth-of-type(2) > div:nth-of-type(1) > div > div > select": {
+      "selector": "div:nth-of-type(2) > div:nth-of-type(1) > div > div > select",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(2)>div:nth-of-type(1)>div>div>select"
+      ]
+    },
+    "#root > div > nav:nth-of-type(2) > ol > li:nth-of-type(1) > a": {
+      "selector": "#root > div > nav:nth-of-type(2) > ol > li:nth-of-type(1) > a",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>nav:nth-of-type(2)>ol>li:nth-of-type(1)>a"
+      ]
+    },
+    "#main-content > form > div:nth-of-type(1) > div > div:nth-of-type(1) > div": {
+      "selector": "#main-content > form > div:nth-of-type(1) > div > div:nth-of-type(1) > div",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div"
+      ]
+    },
+    "div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1) > button": {
+      "selector": "div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1) > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(1)>button"
+      ]
+    },
+    "div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(2) > button": {
+      "selector": "div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(2) > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(2)>button"
+      ]
+    }
+  },
+  "byKey": {
+    "body>div:nth-of-type(1)>div>div>div": {
+      "key": "body>div:nth-of-type(1)>div>div>div",
+      "id": "E-82a710",
+      "label": "<div> \"Descartar solicitação? Os dados preenchidos nest\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button",
+      "id": "E-1d2c35",
+      "label": "<button> \"Selecione o arquivo\"",
+      "hidden": "aria-hidden"
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input",
+      "id": "E-40be7e",
+      "label": "<input#servico> \"Selecione uma opção\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input",
+      "id": "E-3b4c62",
+      "label": "<input#unidade> \"Selecione uma opção\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>section>div": {
+      "key": "body>div:nth-of-type(1)>div>main>section>div",
+      "id": "E-2c9780",
+      "label": "<div> \"Solicitações anteriores Protocolo Serviço Data S\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>section>div>table": {
+      "key": "body>div:nth-of-type(1)>div>main>section>div>table",
+      "id": "E-1967d1",
+      "label": "<table> \"Protocolo Serviço Data Situação 2026.0918.004417\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div",
+      "id": "E-f96d2f",
+      "label": "<div> \"Fechar a mensagem\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav": {
+      "key": "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav",
+      "id": "E-3319d4",
+      "label": "<nav> \"Paginação de solicitações anteriores\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)": {
+      "key": "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)",
+      "id": "E-bd2d82",
+      "label": "<a> \"Página 1\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(2)": {
+      "key": "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(2)",
+      "id": "E-805264",
+      "label": "<a> \"Página 2\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(3)": {
+      "key": "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(3)",
+      "id": "E-b0e4ff",
+      "label": "<a> \"Página 3\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input": {
+      "key": "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input",
+      "id": "E-575db1",
+      "label": "<input#forma-presencial>",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>label": {
+      "key": "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>label",
+      "id": "E-f66f04",
+      "label": "<label> \"Presencial\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div",
+      "id": "E-134951",
+      "label": "<div> \"Documentos comprobatórios (opcional) Selecione o\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>p": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>p",
+      "id": "E-357d8d",
+      "label": "<p#documentos-apoio> \"Um arquivo PDF, JPG ou PNG de até 5 MB.\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div",
+      "id": "E-dc2f2d",
+      "label": "<div> \"Não foi possível enviar. Há 8 campo(s) obrigatór\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)",
+      "id": "E-10f704",
+      "label": "<div>",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(3)": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(3)",
+      "id": "E-891c59",
+      "label": "<div>",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>input": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>input",
+      "id": "E-a0ee22",
+      "label": "<input#documentos>",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>span": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>span",
+      "id": "E-5c2113",
+      "label": "<span> \"Selecione o tipo de serviço.\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>span": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>span",
+      "id": "E-eeb258",
+      "label": "<span> \"Selecione a unidade de atendimento.\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(1)>button": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(1)>button",
+      "id": "E-9cc853",
+      "label": "<button>",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(2)>button": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(1)>span:nth-of-type(2)>button",
+      "id": "E-f2bdba",
+      "label": "<button>",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)>div>div>div>button": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)>div>div>div>button",
+      "id": "E-35a9b5",
+      "label": "<button#data-preferencial-btn> \"Abrir calendário\"",
+      "hidden": "aria-hidden"
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)>div>div>div>input": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)>div>div>div>input",
+      "id": "E-006f06",
+      "label": "<input#data-preferencial> \"exemplo: 02/02/2027\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(2)": {
+      "key": "body>div:nth-of-type(2)",
+      "id": "E-6cdf33",
+      "label": "<div> \"JaneiroFevereiroMarçoAbrilMaioJunhoJulhoAgostoSe\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(1)>div>nav:nth-of-type(2)>ol>li:nth-of-type(3)>span": {
+      "key": "body>div:nth-of-type(1)>div>nav:nth-of-type(2)>ol>li:nth-of-type(3)>span",
+      "id": "E-f4650e",
+      "label": "<span> \"Solicitar serviço\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>label": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>label",
+      "id": "E-ad9d08",
+      "label": "<label> \"Documentos comprobatórios (opcional)\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(1)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(1)",
+      "id": "E-6d63c3",
+      "label": "<span> \"Agosto 30, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(2)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(2)",
+      "id": "E-0fafe5",
+      "label": "<span> \"Agosto 31, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(3)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(3)",
+      "id": "E-d26f1c",
+      "label": "<span> \"Setembro 1, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(4)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(4)",
+      "id": "E-9ae469",
+      "label": "<span> \"Setembro 2, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(5)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(5)",
+      "id": "E-4d6f25",
+      "label": "<span> \"Setembro 3, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(6)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(6)",
+      "id": "E-cc5376",
+      "label": "<span> \"Setembro 4, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(7)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(7)",
+      "id": "E-4fd3af",
+      "label": "<span> \"Setembro 5, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(8)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(8)",
+      "id": "E-d7c57e",
+      "label": "<span> \"Setembro 6, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(9)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(9)",
+      "id": "E-29fde4",
+      "label": "<span> \"Setembro 7, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(10)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(10)",
+      "id": "E-4bfd29",
+      "label": "<span> \"Setembro 8, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(11)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(11)",
+      "id": "E-820ead",
+      "label": "<span> \"Setembro 9, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(12)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(12)",
+      "id": "E-3fc0c3",
+      "label": "<span> \"Setembro 10, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(13)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(13)",
+      "id": "E-03651a",
+      "label": "<span> \"Setembro 11, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(14)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(14)",
+      "id": "E-757ef6",
+      "label": "<span> \"Setembro 12, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(15)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(15)",
+      "id": "E-e9f8fa",
+      "label": "<span> \"Setembro 13, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(16)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(16)",
+      "id": "E-ccdc8e",
+      "label": "<span> \"Setembro 14, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(17)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(17)",
+      "id": "E-a27365",
+      "label": "<span> \"Setembro 15, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(18)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(18)",
+      "id": "E-334001",
+      "label": "<span> \"Setembro 16, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(19)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(19)",
+      "id": "E-cc10f0",
+      "label": "<span> \"Setembro 17, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(20)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(20)",
+      "id": "E-cc3cd8",
+      "label": "<span> \"Setembro 18, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(21)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(21)",
+      "id": "E-31df2f",
+      "label": "<span> \"Setembro 19, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(22)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(22)",
+      "id": "E-078abd",
+      "label": "<span> \"Setembro 20, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(23)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(23)",
+      "id": "E-3f9c80",
+      "label": "<span> \"Setembro 21, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(24)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(24)",
+      "id": "E-e9d2bf",
+      "label": "<span> \"Setembro 22, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(25)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(25)",
+      "id": "E-c4d5d3",
+      "label": "<span> \"Setembro 23, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(26)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(26)",
+      "id": "E-9d5527",
+      "label": "<span> \"Setembro 24, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(27)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(27)",
+      "id": "E-89c5ea",
+      "label": "<span> \"Setembro 25, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(28)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(28)",
+      "id": "E-0678f6",
+      "label": "<span> \"Setembro 26, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(29)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(29)",
+      "id": "E-ca40d2",
+      "label": "<span> \"Setembro 27, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(30)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(30)",
+      "id": "E-45ea15",
+      "label": "<span> \"Setembro 28, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(31)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(31)",
+      "id": "E-69852f",
+      "label": "<span> \"Setembro 29, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(32)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(32)",
+      "id": "E-4bcbb5",
+      "label": "<span> \"Setembro 30, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(33)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(33)",
+      "id": "E-598825",
+      "label": "<span> \"Outubro 1, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(34)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(34)",
+      "id": "E-b96818",
+      "label": "<span> \"Outubro 2, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(35)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(35)",
+      "id": "E-a65af9",
+      "label": "<span> \"Outubro 3, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(36)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(36)",
+      "id": "E-68f370",
+      "label": "<span> \"Outubro 4, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(37)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(37)",
+      "id": "E-443ea8",
+      "label": "<span> \"Outubro 5, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(38)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(38)",
+      "id": "E-0e9151",
+      "label": "<span> \"Outubro 6, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(39)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(39)",
+      "id": "E-6bdb47",
+      "label": "<span> \"Outubro 7, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(40)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(40)",
+      "id": "E-4f3de9",
+      "label": "<span> \"Outubro 8, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(41)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(41)",
+      "id": "E-88fbec",
+      "label": "<span> \"Outubro 9, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(42)": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(2)>div>div:nth-of-type(2)>div>span:nth-of-type(42)",
+      "id": "E-d55408",
+      "label": "<span> \"Outubro 10, 2026\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(5)>div>textarea": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(5)>div>textarea",
+      "id": "E-2f2b8a",
+      "label": "<textarea#descricao>",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(2)": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(2)",
+      "id": "E-1900e4",
+      "label": "<div#list-6074> \"Lista de Opções\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(2)": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(2)",
+      "id": "E-183eec",
+      "label": "<div#list-9421> \"Lista de Opções\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(2)>div>input": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(2)>div>input",
+      "id": "E-79a4c3",
+      "label": "<input#cpf> \"00000000000\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(2)>div>p": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(2)>div>p",
+      "id": "E-e853d0",
+      "label": "<p#cpf-apoio> \"Somente números, 11 dígitos.\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(5)>div>p": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(5)>div>p",
+      "id": "E-ec867b",
+      "label": "<p#descricao-apoio> \"Descreva o que você precisa, em até 500 caracter\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>nav:nth-of-type(1)>a": {
+      "key": "body>div:nth-of-type(1)>div>nav:nth-of-type(1)>a",
+      "id": "E-7ddb3c",
+      "label": "<a> \"Ir para o conteúdo (1/1) 1\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(1)>div>input": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(1)>div>input",
+      "id": "E-56d061",
+      "label": "<input#nome>",
+      "hidden": null
+    },
+    "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(8)>button:nth-of-type(2)": {
+      "key": "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(8)>button:nth-of-type(2)",
+      "id": "E-e8e312",
+      "label": "<button> \"Enviar\"",
+      "hidden": null
+    },
+    "body>div:nth-of-type(2)>div:nth-of-type(1)>div>div>select": {
+      "key": "body>div:nth-of-type(2)>div:nth-of-type(1)>div>div>select",
+      "id": "E-f24fa6",
+      "label": "<select> \"Month\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>div:nth-of-type(1)>div>nav:nth-of-type(2)>ol>li:nth-of-type(1)>a": {
+      "key": "body>div:nth-of-type(1)>div>nav:nth-of-type(2)>ol>li:nth-of-type(1)>a",
+      "id": "E-60b0ee",
+      "label": "<a> \"Página inicial\"",
+      "hidden": null
+    }
+  }
+}
