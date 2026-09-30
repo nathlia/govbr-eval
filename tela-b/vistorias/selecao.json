@@ -1,0 +1,424 @@
+{
+ "traco": [
+  "rodada 0: inicial (obrigatória) — cobre DS [avatar breadcrumb button divider header input pagination select signin tab table tag] · estruturas [caixa-de-selecao campo imagem link lista regiao:banner regiao:main regiao:navigation tabela titulo:h2]",
+  "rodada 1: escolhida detalhe@17 + clique \"Avatar com dropdown\" [comum] — melhores candidatas:\n    detalhe@17 + clique \"Avatar com dropdown\" [comum] +DS 3 (item,list,textarea) +estr 3 (formulario,titulo:h3,titulo:h4) · 3 passos\n    detalhe@17 + clique \"U\" [comum] +DS 3 (item,list,textarea) +estr 3 (formulario,titulo:h3,titulo:h4) · 3 passos\n    detalhe@18 + clique \"Trocar embarcação da vistoria\" [diálogo (com a rota nua como parada comum)] +DS 2 (modal,scrim) +estr 4 (dialogo,formulario,titulo:h3,titulo:h4) · 3 passos\n    detalhe@1 + clique \"Avatar com dropdown\" [comum] +DS 2 (item,list) +estr 3 (formulario,titulo:h3,titulo:h4) · 3 passos\n    detalhe@1 + clique \"U\" [comum] +DS 2 (item,list) +estr 3 (formulario,titulo:h3,titulo:h4) · 3 passos\n    detalhe@18 + clique \"Avatar com dropdown\" [comum] +DS 2 (item,list) +estr 3 (formulario,titulo:h3,titulo:h4) · 3 passos",
+  "rodada 2: escolhida detalhe@18 + clique \"Trocar embarcação da vistoria\" [diálogo (com a rota nua como parada comum)] — melhores candidatas:\n    detalhe@18 + clique \"Trocar embarcação da vistoria\" [diálogo (com a rota nua como parada comum)] +DS 2 (modal,scrim) +estr 1 (dialogo) · 3 passos",
+  "rodada 3: nenhuma vista elegível acrescenta tipo — fim"
+ ],
+ "paradas": [
+  {
+   "id": "inicial",
+   "base": "lista",
+   "gesto": null,
+   "tipo": "comum",
+   "novos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   }
+  },
+  {
+   "id": "detalhe@17 + clique \"Avatar com dropdown\"",
+   "base": "detalhe@17",
+   "gesto": "body>pnip-root>pnip-header>div>div>button",
+   "rotulo": "Avatar com dropdown",
+   "tipo": "comum",
+   "novos": {
+    "componentes": [
+     "item",
+     "list",
+     "textarea"
+    ],
+    "estruturas": [
+     "formulario",
+     "titulo:h3",
+     "titulo:h4"
+    ]
+   },
+   "passos": 3,
+   "enter": "produz-estado"
+  },
+  {
+   "id": "detalhe@18 (rota)",
+   "base": "detalhe@18",
+   "gesto": null,
+   "tipo": "comum",
+   "novos": {
+    "componentes": [],
+    "estruturas": []
+   }
+  },
+  {
+   "id": "detalhe@18 + clique \"Trocar embarcação da vistoria\"",
+   "base": "detalhe@18",
+   "gesto": "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(1)>div:nth-of-type(2)>br-button >>> button",
+   "rotulo": "Trocar embarcação da vistoria",
+   "tipo": "diálogo",
+   "novos": {
+    "componentes": [
+     "modal",
+     "scrim"
+    ],
+    "estruturas": [
+     "dialogo"
+    ]
+   },
+   "passos": 3,
+   "enter": "produz-estado"
+  }
+ ],
+ "fora": [
+  {
+   "vista": "lista + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "lista + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "lista + clique \"Agendar\"",
+   "motivo": "não aditiva (troca de conteúdo: aba/paginação/edição no lugar — item 2 ou não aditiva)"
+  },
+  {
+   "vista": "lista + clique \"Concluídos\"",
+   "motivo": "não aditiva (troca de conteúdo: aba/paginação/edição no lugar — item 2 ou não aditiva)"
+  },
+  {
+   "vista": "lista + clique \"eye\"",
+   "motivo": "navegação para rota já tratada como base (/pnip/portal-mpa/vistorias/agendar-vistoria/:uuid)"
+  },
+  {
+   "vista": "lista + clique \"2\"",
+   "motivo": "não aditiva (troca de conteúdo: aba/paginação/edição no lugar — item 2 ou não aditiva)"
+  },
+  {
+   "vista": "lista + clique \"3\"",
+   "motivo": "não aditiva (troca de conteúdo: aba/paginação/edição no lugar — item 2 ou não aditiva)"
+  },
+  {
+   "vista": "lista + clique \"4\"",
+   "motivo": "não aditiva (troca de conteúdo: aba/paginação/edição no lugar — item 2 ou não aditiva)"
+  },
+  {
+   "vista": "lista + clique \"Página seguinte\"",
+   "motivo": "não aditiva (troca de conteúdo: aba/paginação/edição no lugar — item 2 ou não aditiva)"
+  },
+  {
+   "vista": "lista + clique \"Voltar\"",
+   "motivo": "navegação para fora da árvore vistorias/ (/pnip/portal-mpa)"
+  },
+  {
+   "vista": "detalhe@1 + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "detalhe@1 + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "detalhe@1 + clique \"Vistorias\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa/vistorias)"
+  },
+  {
+   "vista": "detalhe@1 + clique \"Editar\"",
+   "motivo": "navegação para rota já tratada como base (/pnip/portal-mpa/vistorias/editar-dados-vistoria/:uuid)"
+  },
+  {
+   "vista": "detalhe@1 + clique \"Voltar\"",
+   "motivo": "navegação para fora da árvore vistorias/ (/pnip/portal-mpa/vistorias)"
+  },
+  {
+   "vista": "detalhe@17 + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "detalhe@17 + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "detalhe@17 + clique \"Vistorias\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa/vistorias)"
+  },
+  {
+   "vista": "detalhe@17 + clique \"Editar\"",
+   "motivo": "navegação para rota já tratada como base (/pnip/portal-mpa/vistorias/editar-dados-vistoria/:uuid)"
+  },
+  {
+   "vista": "detalhe@17 + clique \"Voltar\"",
+   "motivo": "navegação para fora da árvore vistorias/ (/pnip/portal-mpa/vistorias)"
+  },
+  {
+   "vista": "detalhe@17 + clique \"Avançar\"",
+   "motivo": "dispara escrita no mock (POST /api/propesc/editar/preenchimento/vistoria/00000000-0000-4000-8a01-000000003046)"
+  },
+  {
+   "vista": "detalhe@18 + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "detalhe@18 + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "detalhe@18 + clique \"Vistorias\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa/vistorias)"
+  },
+  {
+   "vista": "detalhe@18 + clique \"Editar\"",
+   "motivo": "navegação para rota já tratada como base (/pnip/portal-mpa/vistorias/editar-dados-vistoria/:uuid)"
+  },
+  {
+   "vista": "detalhe@18 + clique \"Editar\"",
+   "motivo": "não aditiva (troca de conteúdo: aba/paginação/edição no lugar — item 2 ou não aditiva)"
+  },
+  {
+   "vista": "detalhe@18 + clique \"Voltar\"",
+   "motivo": "navegação para fora da árvore vistorias/ (/pnip/portal-mpa/vistorias)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@1 + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@1 + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@1 + clique \"Vistorias\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa/vistorias)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@1 + clique \"Voltar\"",
+   "motivo": "navegação para rota já tratada como base (/pnip/portal-mpa/vistorias/agendar-vistoria/:uuid)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@17 + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@17 + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@17 + clique \"Vistorias\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa/vistorias)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@17 + clique \"Voltar\"",
+   "motivo": "navegação para rota já tratada como base (/pnip/portal-mpa/vistorias/agendar-vistoria/:uuid)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@17 + clique \"Salvar\"",
+   "motivo": "dispara escrita no mock (POST /api/propesc/editar/dados-vistoria/00000000-0000-4000-8a01-000000003046)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@18 + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@18 + clique \"Home\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@18 + clique \"Vistorias\"",
+   "motivo": "recarrega o documento (sai da aplicação: /portal-mpa/vistorias)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@18 + clique \"Voltar\"",
+   "motivo": "navegação para rota já tratada como base (/pnip/portal-mpa/vistorias/agendar-vistoria/:uuid)"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@18 + clique \"Salvar\"",
+   "motivo": "dispara escrita no mock (POST /api/propesc/editar/dados-vistoria/00000000-0000-4000-8a01-000000003038)"
+  },
+  {
+   "vista": "lista + clique \"Avatar com dropdown\"",
+   "motivo": "regra 5: o segmento da lista já tem sua parada (inicial, afterStep 0) e esta vista não é diálogo"
+  },
+  {
+   "vista": "lista + clique \"U\"",
+   "motivo": "regra 5: o segmento da lista já tem sua parada (inicial, afterStep 0) e esta vista não é diálogo"
+  },
+  {
+   "vista": "lista + clique \"Cidade\"",
+   "motivo": "regra 5: o segmento da lista já tem sua parada (inicial, afterStep 0) e esta vista não é diálogo"
+  },
+  {
+   "vista": "lista + clique \"Porto\"",
+   "motivo": "regra 5: o segmento da lista já tem sua parada (inicial, afterStep 0) e esta vista não é diálogo"
+  },
+  {
+   "vista": "lista + clique \"Vistoriador\"",
+   "motivo": "regra 5: o segmento da lista já tem sua parada (inicial, afterStep 0) e esta vista não é diálogo"
+  },
+  {
+   "vista": "lista + clique \"Status\"",
+   "motivo": "regra 5: o segmento da lista já tem sua parada (inicial, afterStep 0) e esta vista não é diálogo"
+  },
+  {
+   "vista": "lista + clique \"Exibir lista\"",
+   "motivo": "regra 5: o segmento da lista já tem sua parada (inicial, afterStep 0) e esta vista não é diálogo"
+  },
+  {
+   "vista": "lista + clique \"Exibir lista\"",
+   "motivo": "regra 5: o segmento da lista já tem sua parada (inicial, afterStep 0) e esta vista não é diálogo"
+  },
+  {
+   "vista": "detalhe@1 (rota)",
+   "motivo": "regra 3: não torna visível nenhum tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "detalhe@1 + clique \"Avatar com dropdown\"",
+   "motivo": "regra 3: não torna visível nenhum tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "detalhe@1 + clique \"U\"",
+   "motivo": "regra 3: não torna visível nenhum tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "detalhe@17 (rota)",
+   "motivo": "regra 5: o segmento já tem sua parada comum"
+  },
+  {
+   "vista": "detalhe@17 + clique \"U\"",
+   "motivo": "regra 5: o segmento já tem sua parada comum"
+  },
+  {
+   "vista": "detalhe@18 + clique \"Avatar com dropdown\"",
+   "motivo": "regra 5: o segmento já tem sua parada comum"
+  },
+  {
+   "vista": "detalhe@18 + clique \"U\"",
+   "motivo": "regra 5: o segmento já tem sua parada comum"
+  },
+  {
+   "vista": "detalhe@18 + clique \"Mostrar\"",
+   "motivo": "regra 5: o segmento já tem sua parada comum"
+  },
+  {
+   "vista": "detalhe@18 + clique \"Mostrar\"",
+   "motivo": "regra 5: o segmento já tem sua parada comum"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@1 (rota)",
+   "motivo": "regra 3: não torna visível nenhum tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@1 + clique \"Avatar com dropdown\"",
+   "motivo": "regra 3: não torna visível nenhum tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@1 + clique \"U\"",
+   "motivo": "regra 3: não torna visível nenhum tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@17 (rota)",
+   "motivo": "regra 3: não torna visível nenhum tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@17 + clique \"Avatar com dropdown\"",
+   "motivo": "regra 3: não torna visível nenhum tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@17 + clique \"U\"",
+   "motivo": "regra 3: não torna visível nenhum tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@18 (rota)",
+   "motivo": "regra 3: não torna visível nenhum tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@18 + clique \"Avatar com dropdown\"",
+   "motivo": "regra 3: não torna visível nenhum tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@18 + clique \"U\"",
+   "motivo": "regra 3: não torna visível nenhum tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "lista + clique \"pe(1)>div>br-button >>> button\"",
+   "motivo": "regra 5: diálogo sem componente do DS novo (estruturas novas: nenhuma)"
+  },
+  {
+   "vista": "lista + clique \"Atribuir vistoriador\"",
+   "motivo": "regra 5: diálogo sem componente do DS novo (estruturas novas: nenhuma)"
+  },
+  {
+   "vista": "lista + clique \"Excluir vistoria\"",
+   "motivo": "regra 5: diálogo sem componente do DS novo (estruturas novas: nenhuma)"
+  },
+  {
+   "vista": "lista + clique \"Notificar solicitante da vistoria\"",
+   "motivo": "regra 5: diálogo sem componente do DS novo (estruturas novas: nenhuma)"
+  },
+  {
+   "vista": "detalhe@18 + clique \"Avançar\"",
+   "motivo": "regra 5: o segmento já tem uma parada de diálogo"
+  },
+  {
+   "vista": "editar-dados-vistoria@detalhe@1 + clique \"Salvar\"",
+   "motivo": "regra 5: diálogo sem componente do DS novo (estruturas novas: mensagem)"
+  }
+ ],
+ "cobertos": {
+  "componentes": [
+   "avatar",
+   "breadcrumb",
+   "button",
+   "divider",
+   "header",
+   "input",
+   "pagination",
+   "select",
+   "signin",
+   "tab",
+   "table",
+   "tag",
+   "item",
+   "list",
+   "textarea",
+   "modal",
+   "scrim"
+  ],
+  "estruturas": [
+   "caixa-de-selecao",
+   "campo",
+   "imagem",
+   "link",
+   "lista",
+   "regiao:banner",
+   "regiao:main",
+   "regiao:navigation",
+   "tabela",
+   "titulo:h2",
+   "formulario",
+   "titulo:h3",
+   "titulo:h4",
+   "dialogo"
+  ]
+ }
+}
