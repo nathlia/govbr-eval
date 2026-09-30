@@ -1,0 +1,7789 @@
+{
+  "titulo": "PNIP",
+  "lang": "pt-br",
+  "metaRefresh": false,
+  "scripts": [
+    {
+      "src": "assets/webcomponents.umd.min.js",
+      "type": null
+    }
+  ],
+  "cabeca": [
+    "meta",
+    "meta",
+    "title",
+    "link https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css",
+    "link https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&display=swap",
+    "link https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css",
+    "link assets/core.min.css",
+    "style",
+    "style"
+  ],
+  "elementos": [
+    {
+      "i": 0,
+      "chave": "",
+      "tag": "html",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "lang": "pt-br"
+      },
+      "caixa": [
+        0,
+        0,
+        1280,
+        8967
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 1,
+      "chave": "head",
+      "tag": "head",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 2,
+      "chave": "head>meta:nth-of-type(1)",
+      "tag": "meta",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "charset": "utf-8"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 3,
+      "chave": "head>meta:nth-of-type(2)",
+      "tag": "meta",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "name": "viewport",
+        "content": "width=device-width, initial-scale=1"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 4,
+      "chave": "head>title",
+      "tag": "title",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "PNIP",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 5,
+      "chave": "head>link:nth-of-type(1)",
+      "tag": "link",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "rel": "stylesheet",
+        "href": "https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawl"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 6,
+      "chave": "head>link:nth-of-type(2)",
+      "tag": "link",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "rel": "stylesheet",
+        "href": "https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&disp"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 7,
+      "chave": "head>link:nth-of-type(3)",
+      "tag": "link",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "rel": "stylesheet",
+        "href": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 8,
+      "chave": "head>link:nth-of-type(4)",
+      "tag": "link",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "rel": "stylesheet",
+        "href": "assets/core.min.css"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 9,
+      "chave": "head>style:nth-of-type(1)",
+      "tag": "style",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "type": "text/css"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": ":root{--blue-90:#11181d;--blue-80:#1f303e;--blue-70:#274863;",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 10,
+      "chave": "head>style:nth-of-type(2)",
+      "tag": "style",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "type": "text/css"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "@keyframes fadeInOpacity{0%{opacity:0}to{opacity:1}}@keyfram",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 11,
+      "chave": "body",
+      "tag": "body",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        1280,
+        8967
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "generic",
+        "nome": ""
+      }
+    },
+    {
+      "i": 12,
+      "chave": "body>pnip-root",
+      "tag": "pnip-root",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "ng-version": "15.2.10"
+      },
+      "caixa": [
+        0,
+        0,
+        1280,
+        8967
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": true,
+      "definido": false,
+      "ax": null
+    },
+    {
+      "i": 13,
+      "chave": "body>pnip-root>pnip-header",
+      "tag": "pnip-header",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        1280,
+        115
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": true,
+      "definido": false,
+      "ax": null
+    },
+    {
+      "i": 14,
+      "chave": "body>pnip-root>pnip-header>br-header",
+      "tag": "br-header",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "image": "assets/images/govbr-logo.png",
+        "signature": "Ministério da Pesca e Aquicultura",
+        "title": "Plataforma Nacional da Indústria do Pescado",
+        "has-menu": ""
+      },
+      "caixa": [
+        0,
+        0,
+        1280,
+        115
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": true,
+      "definido": true,
+      "ax": {
+        "ignorado": false,
+        "papel": "generic",
+        "nome": "Plataforma Nacional da Indústria do Pescado"
+      }
+    },
+    {
+      "i": 15,
+      "chave": "body>pnip-root>pnip-header>br-header >>> style",
+      "tag": "style",
+      "sombra": true,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "@import\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 16,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header",
+      "tag": "header",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "br-header",
+        "mb-4"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        1280,
+        115
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "banner",
+        "nome": ""
+      }
+    },
+    {
+      "i": 17,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "container-lg"
+      ],
+      "atributos": {},
+      "caixa": [
+        20,
+        16,
+        1240,
+        83
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 18,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-top"
+      ],
+      "atributos": {},
+      "caixa": [
+        60,
+        16,
+        1160,
+        40
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 19,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-logo"
+      ],
+      "atributos": {},
+      "caixa": [
+        60,
+        16,
+        1160,
+        40
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 20,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>img",
+      "tag": "img",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "large-img"
+      ],
+      "atributos": {
+        "src": "assets/images/govbr-logo.png",
+        "alt": "logo"
+      },
+      "caixa": [
+        60,
+        16,
+        45,
+        40
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "image",
+        "nome": "logo"
+      }
+    },
+    {
+      "i": 21,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>span",
+      "tag": "span",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "br-divider",
+        "vertical",
+        "mx-half",
+        "mx-sm-1"
+      ],
+      "atributos": {},
+      "caixa": [
+        125,
+        16,
+        1,
+        40
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 22,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>div",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-sign"
+      ],
+      "atributos": {},
+      "caixa": [
+        146,
+        26,
+        217,
+        20
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Ministério da Pesca e Aquicultura",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "generic",
+        "nome": ""
+      }
+    },
+    {
+      "i": 23,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>slot",
+      "tag": "slot",
+      "sombra": true,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "name": "headerAction"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "contents",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 24,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-bottom"
+      ],
+      "atributos": {},
+      "caixa": [
+        60,
+        64,
+        1160,
+        35
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 25,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-menu"
+      ],
+      "atributos": {},
+      "caixa": [
+        60,
+        64,
+        1160,
+        35
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 26,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-menu-trigger"
+      ],
+      "atributos": {},
+      "caixa": [
+        60,
+        67,
+        32,
+        32
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "generic",
+        "nome": ""
+      }
+    },
+    {
+      "i": 27,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot",
+      "tag": "slot",
+      "sombra": true,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "name": "headerMenu"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "contents",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 28,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+      "tag": "button",
+      "sombra": true,
+      "id": "navigation",
+      "classes": [
+        "br-button",
+        "small",
+        "circle"
+      ],
+      "atributos": {
+        "id": "navigation",
+        "aria-label": "Menu",
+        "data-toggle": "menu",
+        "data-target": "#main-navigation",
+        "type": "button"
+      },
+      "caixa": [
+        60,
+        67,
+        32,
+        32
+      ],
+      "display": "inline-flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": true,
+      "tabIndex": 0,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "button",
+        "nome": "Menu"
+      }
+    },
+    {
+      "i": 29,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button>i",
+      "tag": "i",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "fas",
+        "fa-bars"
+      ],
+      "atributos": {
+        "aria-hidden": "true"
+      },
+      "caixa": [
+        64,
+        83,
+        24,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 30,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(2)",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-info"
+      ],
+      "atributos": {},
+      "caixa": [
+        108,
+        64,
+        501,
+        35
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 31,
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div",
+      "tag": "div",
+      "sombra": true,
+      "id": null,
+      "classes": [
+        "header-title"
+      ],
+      "atributos": {},
+      "caixa": [
+        108,
+        64,
+        501,
+        35
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Plataforma Nacional da Indústria do Pescado",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "generic",
+        "nome": ""
+      }
+    },
+    {
+      "i": 32,
+      "chave": "body>pnip-root>pnip-header>div",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "container-lg"
+      ],
+      "atributos": {},
+      "caixa": [
+        20,
+        139,
+        1240,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 33,
+      "chave": "body>pnip-root>pnip-header>div>div",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "drop-menu-login",
+        "row",
+        "justify-content-end"
+      ],
+      "atributos": {
+        "style": "display: none;"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 34,
+      "chave": "body>pnip-root>pnip-header>div>div>button",
+      "tag": "button",
+      "sombra": false,
+      "id": "avatar-dropdown-trigger",
+      "classes": [
+        "br-sign-in"
+      ],
+      "atributos": {
+        "type": "button",
+        "id": "avatar-dropdown-trigger",
+        "aria-controls": "avatar-menu",
+        "data-toggle": "dropdown",
+        "data-target": "avatar-menu",
+        "aria-label": "Avatar com dropdown",
+        "data-visible": "false",
+        "aria-expanded": "false"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "inline-flex",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": 0,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 35,
+      "chave": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "br-avatar"
+      ],
+      "atributos": {
+        "title": ""
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 36,
+      "chave": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "content",
+        "bg-orange-vivid-30",
+        "text-pure-0"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 37,
+      "chave": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(2)",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "ml-2",
+        "text-gray-80",
+        "text-weight-regular"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Olá,",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 38,
+      "chave": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(2)>span",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-weight-semi-bold"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 39,
+      "chave": "body>pnip-root>pnip-header>div>div>button>i",
+      "tag": "i",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "fas",
+        "fa-caret-down",
+        "fa-chevron-down"
+      ],
+      "atributos": {
+        "aria-hidden": "true"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 40,
+      "chave": "body>pnip-root>pnip-header>div>div>div",
+      "tag": "div",
+      "sombra": false,
+      "id": "avatar-menu",
+      "classes": [
+        "br-list",
+        "dropdown-menu",
+        "mt-1"
+      ],
+      "atributos": {
+        "id": "avatar-menu",
+        "hidden": "hidden",
+        "role": "menu",
+        "aria-labelledby": "avatar-dropdown-trigger",
+        "aria-hidden": "true"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 41,
+      "chave": "body>pnip-root>pnip-header>div>div>div>div",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "dropdown-user-info"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 42,
+      "chave": "body>pnip-root>pnip-header>div>div>div>div>span:nth-of-type(1)",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "dropdown-name"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 43,
+      "chave": "body>pnip-root>pnip-header>div>div>div>div>br",
+      "tag": "br",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 44,
+      "chave": "body>pnip-root>pnip-header>div>div>div>div>span:nth-of-type(2)",
+      "tag": "span",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "dropdown-email"
+      ],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 45,
+      "chave": "body>pnip-root>pnip-header>div>div>div>button",
+      "tag": "button",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "br-item",
+        "dropdown-button"
+      ],
+      "atributos": {
+        "type": "button",
+        "href": "javascript:void(0)"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": 0,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 46,
+      "chave": "body>pnip-root>pnip-header>div>div>div>button>img",
+      "tag": "img",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "src": "../../../assets/images/exit-icon.png"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 47,
+      "chave": "body>pnip-root>pnip-header>div>div>div>button>p",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Sair",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 48,
+      "chave": "body>pnip-root>main",
+      "tag": "main",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "container-lg",
+        "pb-3"
+      ],
+      "atributos": {},
+      "caixa": [
+        20,
+        139,
+        1240,
+        8828
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "main",
+        "nome": ""
+      }
+    },
+    {
+      "i": 49,
+      "chave": "body>pnip-root>main>router-outlet",
+      "tag": "router-outlet",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        60,
+        139,
+        0,
+        0
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": true,
+      "definido": false,
+      "ax": null
+    },
+    {
+      "i": 50,
+      "chave": "body>pnip-root>main>privacidade",
+      "tag": "privacidade",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        60,
+        139,
+        1160,
+        8812
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": false,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    },
+    {
+      "i": 51,
+      "chave": "body>pnip-root>main>privacidade>div",
+      "tag": "div",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "container",
+        "d-flex",
+        "justify-content-center",
+        "flex-column"
+      ],
+      "atributos": {
+        "style": "max-width: 800px;"
+      },
+      "caixa": [
+        240,
+        139,
+        800,
+        8812
+      ],
+      "display": "flex",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": true,
+        "papel": "none",
+        "nome": ""
+      }
+    },
+    {
+      "i": 52,
+      "chave": "body>pnip-root>main>privacidade>div>h1",
+      "tag": "h1",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify",
+        "mt-2"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        147,
+        720,
+        144
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Política de Privacidade do serviço Plataforma Nacional da In",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Política de Privacidade do serviço Plataforma Nacional da Indústria do Pescado - PNIP"
+      }
+    },
+    {
+      "i": 53,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(1)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        323,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Para receber informações sobre os seus dados pessoais, os pr",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 54,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(2)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        388,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 55,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(2)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        388,
+        290,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Proprietário e Controlador de Dados",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 56,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(3)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        428,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Laboratório de Computação Ubíqua, Móvel e Aplicada (LUMAC). ",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 57,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(3)>br",
+      "tag": "br",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        775,
+        428,
+        0,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "LineBreak",
+        "nome": "\n"
+      }
+    },
+    {
+      "i": 58,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(4)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        493,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "E-mail de contato do Proprietário: lumac@ufsm.br",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 59,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(1)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        561,
+        720,
+        33
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Tipos de Dados coletados"
+      }
+    },
+    {
+      "i": 60,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(1)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        557,
+        359,
+        40
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Tipos de Dados coletados",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 61,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(5)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        615,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 62,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(5)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        615,
+        319,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Uso de Dados e outros dados coletados",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 63,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(6)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        655,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Detalhes completos sobre cada tipo de Dados Pessoais coletad",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 64,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(7)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        744,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Os Dados Pessoais poderão ser fornecidos livremente pelo Usu",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 65,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(8)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        809,
+        720,
+        146
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "A menos que especificado diferentemente todos os Dados solic",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 66,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(9)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        971,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Os Usuários que tiverem dúvidas a respeito de quais Dados Pe",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 67,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(10)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        1036,
+        720,
+        97
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Quaisquer usos de cookies – ou de outras ferramentas de rast",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 68,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(11)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        1149,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Os Usuários ficam responsáveis por quaisquer Dados Pessoais ",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 69,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(2)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        1242,
+        720,
+        33
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Modo e local de processamento dos Dados"
+      }
+    },
+    {
+      "i": 70,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(2)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        1238,
+        597,
+        40
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Modo e local de processamento dos Dados",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 71,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(12)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        1295,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 72,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(12)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        1295,
+        216,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Método de processamento",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 73,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(13)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        1335,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "O Proprietário tomará as medidas de segurança adequadas para",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 74,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(14)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        1400,
+        720,
+        219
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "O processamento dos Dados é realizado utilizando computadore",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 75,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(15)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        1635,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 76,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(15)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        1635,
+        47,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Lugar",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 77,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(16)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        1675,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Os dados são processados nas sedes de operação dos Proprietá",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 78,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(17)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        1740,
+        720,
+        97
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Dependendo da localização do Usuário as transferências de da",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 79,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(18)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        1853,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 80,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(18)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        1853,
+        194,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Período de conservação",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 81,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(19)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        1894,
+        720,
+        97
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Salvo especificação em contrário neste documento, os Dados P",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 82,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(3)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        2035,
+        720,
+        33
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Informações adicionais para usuários"
+      }
+    },
+    {
+      "i": 83,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(3)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        2031,
+        515,
+        40
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Informações adicionais para usuários",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 84,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(20)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        2089,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 85,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(20)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        2089,
+        287,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Base jurídica para o processamento",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 86,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(21)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        2129,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "O Proprietário poderá processar os Dados Pessoais relacionad",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 87,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(1)",
+      "tag": "ul",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        2194,
+        720,
+        183
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "list",
+        "nome": ""
+      }
+    },
+    {
+      "i": 88,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(1)>li:nth-of-type(1)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        2194,
+        680,
+        20
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Os Usuários tenham dado a sua anuência para uma ou mais fina",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 89,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(1)>li:nth-of-type(2)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        2214,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "O fornecimento dos Dados for necessário para o cumprimento d",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 90,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(1)>li:nth-of-type(3)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        2254,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "O processamento for necessário para o cumprimento de uma obr",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 91,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(1)>li:nth-of-type(4)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        2295,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "O processamento estiver relacionado a uma tarefa que for exe",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 92,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(1)>li:nth-of-type(5)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        2336,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "O processamento for necessário para a finalidade de interess",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 93,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(22)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        2392,
+        720,
+        97
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Em qualquer caso, o Proprietário colaborará de bom grado par",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 94,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(4)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        2534,
+        720,
+        33
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Mais informações sobre o tempo de retenção"
+      }
+    },
+    {
+      "i": 95,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(4)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        2530,
+        627,
+        40
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Mais informações sobre o tempo de retenção",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 96,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(23)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        2587,
+        720,
+        97
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Salvo especificação em contrário neste documento, os Dados P",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 97,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(2)",
+      "tag": "ul",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        2700,
+        720,
+        122
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "list",
+        "nome": ""
+      }
+    },
+    {
+      "i": 98,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(2)>li:nth-of-type(1)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        2700,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Os Dados Pessoais coletados para as finalidades relacionadas",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 99,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(2)>li:nth-of-type(2)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        2741,
+        680,
+        81
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Os Dados Pessoais coletados para as finalidades relacionadas",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 100,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(24)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        2838,
+        720,
+        122
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "O Proprietário poderá ter a permissão de conservar os Dados ",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 101,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(25)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        2976,
+        720,
+        97
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Assim que o prazo de conservação vencer os Dados Pessoais se",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 102,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(5)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        3117,
+        720,
+        67
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Os direitos dos Usuários com base na Lei Geral de Proteção de Dados (LGPD)"
+      }
+    },
+    {
+      "i": 103,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(5)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        3113,
+        689,
+        73
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Os direitos dos Usuários com base na Lei Geral de Proteção d",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 104,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(26)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        3204,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Os Usuários poderão exercer determinados direitos a respeito",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 105,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(27)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        3269,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Em especial, os Usuários possuem os direitos a fazer o segui",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 106,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(28)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        3333,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Retirar a sua anuência a qualquer momento. Os Usuários possu",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 107,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(29)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        3422,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Objetar o processamento dos seus Dados. Os Usuários possuem ",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 108,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(30)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        3511,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Acessar os seus Dados. Os Usuários possuem o direito de sabe",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 109,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(31)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        3600,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Verificar e pedir retificação. Os Usuários possuem o direito",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 110,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(32)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        3665,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Restringir o processamento dos seus Dados. Os Usuários possu",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 111,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(33)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        3754,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Ter os seus Dados Pessoais apagados ou retirados de outra ma",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 112,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(34)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        3819,
+        720,
+        97
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Receber os seus Dados e ter os mesmos transferidos para outr",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 113,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(35)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        3932,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Registrar uma reclamação. Os Usuários possuem o direito de a",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 114,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(36)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        3997,
+        720,
+        97
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Os Usuários também possuem o direito de serem informados sob",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 115,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(6)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        4138,
+        720,
+        67
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Detalhes sobre o direito de objetar ao processamento"
+      }
+    },
+    {
+      "i": 116,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(6)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        4134,
+        522,
+        73
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Detalhes sobre o direito de objetar ao processamento",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 117,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(37)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        4225,
+        720,
+        268
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Nos casos em que os Dados Pessoais forem processados por um ",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 118,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(7)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        4537,
+        720,
+        33
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Como exercer esses direitos"
+      }
+    },
+    {
+      "i": 119,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(7)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        4533,
+        390,
+        40
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Como exercer esses direitos",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 120,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(38)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        4590,
+        720,
+        195
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Quaisquer solicitações para exercer os direitos do Usuário p",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 121,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(8)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        4829,
+        720,
+        33
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Informações adicionais para Usuários no Brasil"
+      }
+    },
+    {
+      "i": 122,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(8)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        4825,
+        646,
+        40
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Informações adicionais para Usuários no Brasil",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 123,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(39)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        4882,
+        720,
+        97
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Esta seção do documento se integra e complementa as informaç",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 124,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(40)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        4996,
+        720,
+        97
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Esta seção se aplica a todos os Usuários do Brasil (os Usuár",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 125,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(41)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        5109,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Esta parte do documento usa o termo \"informações pessoais\", ",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 126,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(9)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        5177,
+        720,
+        67
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Em que nos embasamos para processar suas informações pessoais"
+      }
+    },
+    {
+      "i": 127,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(9)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        5173,
+        621,
+        73
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Em que nos embasamos para processar suas informações pessoai",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 128,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(42)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        5264,
+        720,
+        341
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Podemos processar suas informações pessoais somente se tiver",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 129,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(10)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        5649,
+        720,
+        33
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Categorias de informações pessoais processadas"
+      }
+    },
+    {
+      "i": 130,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(10)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        5645,
+        684,
+        40
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Categorias de informações pessoais processadas",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 131,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(43)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        5702,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Para saber que categorias de suas informações pessoais são p",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 132,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(11)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        5819,
+        720,
+        33
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Por que processamos suas informações pessoais"
+      }
+    },
+    {
+      "i": 133,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(11)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        5815,
+        676,
+        40
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Por que processamos suas informações pessoais",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 134,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(44)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        5873,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Para saber por que processamos suas informações pessoais, vo",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 135,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(45)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        5962,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Seus direitos de privacidade como brasileiro, como enviar um",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 136,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(12)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        6055,
+        720,
+        33
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Seus direitos de privacidade como brasileiro"
+      }
+    },
+    {
+      "i": 137,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(12)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        6051,
+        617,
+        40
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Seus direitos de privacidade como brasileiro",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 138,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(46)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        6108,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Você tem o direito de:",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 139,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)",
+      "tag": "ul",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        6148,
+        720,
+        467
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "list",
+        "nome": ""
+      }
+    },
+    {
+      "i": 140,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(1)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6148,
+        680,
+        20
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Obter confirmação sobre a existência de atividades de tratam",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 141,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(2)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6169,
+        680,
+        20
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Acesso a suas informações pessoais;",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 142,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(3)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6189,
+        680,
+        20
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Fazer com que suas informações pessoais incompletas, inexata",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 143,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(4)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6209,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Obter o anonimato, bloqueio ou eliminação de suas informaçõe",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 144,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(5)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6250,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Obter informações sobre a possibilidade de fornecer ou recus",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 145,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(6)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6290,
+        680,
+        20
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Obter informações sobre os terceiros com quem compartilhamos",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 146,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(7)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6311,
+        680,
+        61
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Obter, mediante sua solicitação expressa, a portabilidade de",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 147,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(8)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6372,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Obter a exclusão de suas informações pessoais tratadas, se o",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 148,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(9)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6412,
+        680,
+        20
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Retirar sua anuência a qualquer momento;",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 149,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(10)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6432,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Registrar uma reclamação com relação a suas informações pess",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 150,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(11)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6473,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Opor-se a uma atividade de tratamento nos casos em que o tra",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 151,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(12)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6514,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Solicitar informações claras e adequadas a respeito dos crit",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 152,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(13)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        6554,
+        680,
+        61
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Solicitar a revisão de decisões tomadas exclusivamente com b",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 153,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(13)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        6659,
+        720,
+        67
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Você nunca será discriminado ou sofrerá qualquer tipo de prejuízo se exercer seus direitos."
+      }
+    },
+    {
+      "i": 154,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(13)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        6655,
+        697,
+        73
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Você nunca será discriminado ou sofrerá qualquer tipo de pre",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 155,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(47)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        6746,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 156,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(47)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        6746,
+        243,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Como registrar sua solicitação",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 157,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(48)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        6786,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Você poderá registrar sua solicitação expressa de exercer se",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 158,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(49)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        6875,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 159,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(49)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        6875,
+        428,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Como e quando nós responderemos a sua solicitação",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 160,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(50)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        6916,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Faremos o possível para responder imediatamente a suas solic",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 161,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(51)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        6956,
+        720,
+        122
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Em qualquer caso, caso seja impossível, faremos questão de c",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 162,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(52)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        7094,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Caso você registre uma solicitação de acesso ou de confirmaç",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 163,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(53)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        7183,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Você também precisará nos informar se deseja que respondamos",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 164,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(54)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        7272,
+        720,
+        219
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Neste último caso, responderemos no prazo de 15 dias a conta",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 165,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(14)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        7535,
+        720,
+        67
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Transferência de informações pessoais para fora do Brasil permitida por lei"
+      }
+    },
+    {
+      "i": 166,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(14)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        7531,
+        717,
+        73
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Transferência de informações pessoais para fora do Brasil pe",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 167,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(55)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        7622,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Temos permissão para transferir suas informações pessoais pa",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 168,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)",
+      "tag": "ul",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        7686,
+        720,
+        244
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "list",
+        "nome": ""
+      }
+    },
+    {
+      "i": 169,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)>li:nth-of-type(1)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        7686,
+        680,
+        61
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Quando a transferência for necessária para fins de cooperaçã",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 170,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)>li:nth-of-type(2)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        7747,
+        680,
+        20
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Quando a transferência for necessária para proteger sua vida",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 171,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)>li:nth-of-type(3)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        7767,
+        680,
+        20
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Quando a transferência for autorizada pela ANPD;",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 172,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)>li:nth-of-type(4)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        7788,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Quando a transferência decorrer de um compromisso assumido e",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 173,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)>li:nth-of-type(5)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        7828,
+        680,
+        41
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Quando a transferência for necessária para a execução de uma",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 174,
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)>li:nth-of-type(6)",
+      "tag": "li",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        320,
+        7869,
+        680,
+        61
+      ],
+      "display": "list-item",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Quando a transferência for necessária para o cumprimento de ",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "listitem",
+        "nome": ""
+      }
+    },
+    {
+      "i": 175,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(15)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        7974,
+        720,
+        67
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "Informações adicionais sobre a coleta e processamento de Dados"
+      }
+    },
+    {
+      "i": 176,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(15)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        7970,
+        550,
+        73
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Informações adicionais sobre a coleta e processamento de Dad",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 177,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(56)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        8061,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 178,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(56)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        8061,
+        104,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Ação jurídica",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 179,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(57)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        8101,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Os Dados Pessoais dos Usuários podem ser utilizados para fin",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 180,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(58)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        8190,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "O Usuário declara estar ciente de que o Proprietário poderá ",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 181,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(59)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        8255,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 182,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(59)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        8255,
+        477,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Informações adicionais sobre os Dados Pessoais do Usuário",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 183,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(60)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        8295,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Além das informações contidas nesta política de privacidade,",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 184,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(61)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        8384,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 185,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(61)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        8384,
+        250,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Logs do sistema e manutenção",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 186,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(62)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        8424,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Para fins de operação e manutenção, este Aplicativo e quaisq",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 187,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(16)",
+      "tag": "h3",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        8541,
+        720,
+        33
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "heading",
+        "nome": "As informações não contidas nesta política"
+      }
+    },
+    {
+      "i": 188,
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(16)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        8537,
+        594,
+        40
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "As informações não contidas nesta política",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 189,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(63)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        8595,
+        720,
+        73
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Mais detalhes sobre a coleta ou processamento de Dados Pesso",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 190,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(64)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        8684,
+        720,
+        24
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 191,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(64)>strong",
+      "tag": "strong",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {},
+      "caixa": [
+        280,
+        8684,
+        320,
+        23
+      ],
+      "display": "inline",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Mudanças nesta política de privacidade",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "strong",
+        "nome": ""
+      }
+    },
+    {
+      "i": 192,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(65)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        8724,
+        720,
+        146
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "O Proprietário se reserva o direito de fazer alterações nest",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 193,
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(66)",
+      "tag": "p",
+      "sombra": false,
+      "id": null,
+      "classes": [
+        "text-justify"
+      ],
+      "atributos": {},
+      "caixa": [
+        280,
+        8886,
+        720,
+        49
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "visivel": true,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "Caso as mudanças afetem as atividades de processamento reali",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": {
+        "ignorado": false,
+        "papel": "paragraph",
+        "nome": ""
+      }
+    },
+    {
+      "i": 194,
+      "chave": "body>script",
+      "tag": "script",
+      "sombra": false,
+      "id": null,
+      "classes": [],
+      "atributos": {
+        "src": "assets/webcomponents.umd.min.js"
+      },
+      "caixa": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "display": "none",
+      "visibility": "visible",
+      "visivel": false,
+      "focavel": false,
+      "tabIndex": -1,
+      "texto": "",
+      "conhecido": true,
+      "customizado": false,
+      "definido": null,
+      "ax": null
+    }
+  ],
+  "contraste": [
+    {
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>div",
+      "texto": "Ministério da Pesca e Aquicultura",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body>pnip-root>pnip-header>br-header >>> header"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div",
+      "texto": "Plataforma Nacional da Indústria do Pesc",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "24.192px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body>pnip-root>pnip-header>br-header >>> header"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h1",
+      "texto": "Política de Privacidade do serviço Plata",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "41.804px",
+      "fontWeight": "300",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(1)",
+      "texto": "Para receber informações sobre os seus d",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(2)>strong",
+      "texto": "Proprietário e Controlador de Dados",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(3)",
+      "texto": "Laboratório de Computação Ubíqua, Móvel ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(4)",
+      "texto": "E-mail de contato do Proprietário: lumac",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(1)>strong",
+      "texto": "Tipos de Dados coletados",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(5)>strong",
+      "texto": "Uso de Dados e outros dados coletados",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(6)",
+      "texto": "Detalhes completos sobre cada tipo de Da",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(7)",
+      "texto": "Os Dados Pessoais poderão ser fornecidos",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(8)",
+      "texto": "A menos que especificado diferentemente ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(9)",
+      "texto": "Os Usuários que tiverem dúvidas a respei",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(10)",
+      "texto": "Quaisquer usos de cookies – ou de outras",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(11)",
+      "texto": "Os Usuários ficam responsáveis por quais",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(2)>strong",
+      "texto": "Modo e local de processamento dos Dados",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(12)>strong",
+      "texto": "Método de processamento",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(13)",
+      "texto": "O Proprietário tomará as medidas de segu",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(14)",
+      "texto": "O processamento dos Dados é realizado ut",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(15)>strong",
+      "texto": "Lugar",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(16)",
+      "texto": "Os dados são processados nas sedes de op",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(17)",
+      "texto": "Dependendo da localização do Usuário as ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(18)>strong",
+      "texto": "Período de conservação",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(19)",
+      "texto": "Salvo especificação em contrário neste d",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(3)>strong",
+      "texto": "Informações adicionais para usuários",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(20)>strong",
+      "texto": "Base jurídica para o processamento",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(21)",
+      "texto": "O Proprietário poderá processar os Dados",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(1)>li:nth-of-type(1)",
+      "texto": "Os Usuários tenham dado a sua anuência p",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(1)>li:nth-of-type(2)",
+      "texto": "O fornecimento dos Dados for necessário ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(1)>li:nth-of-type(3)",
+      "texto": "O processamento for necessário para o cu",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(1)>li:nth-of-type(4)",
+      "texto": "O processamento estiver relacionado a um",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(1)>li:nth-of-type(5)",
+      "texto": "O processamento for necessário para a fi",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(22)",
+      "texto": "Em qualquer caso, o Proprietário colabor",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(4)>strong",
+      "texto": "Mais informações sobre o tempo de retenç",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(23)",
+      "texto": "Salvo especificação em contrário neste d",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(2)>li:nth-of-type(1)",
+      "texto": "Os Dados Pessoais coletados para as fina",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(2)>li:nth-of-type(2)",
+      "texto": "Os Dados Pessoais coletados para as fina",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(24)",
+      "texto": "O Proprietário poderá ter a permissão de",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(25)",
+      "texto": "Assim que o prazo de conservação vencer ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(5)>strong",
+      "texto": "Os direitos dos Usuários com base na Lei",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(26)",
+      "texto": "Os Usuários poderão exercer determinados",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(27)",
+      "texto": "Em especial, os Usuários possuem os dire",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(28)",
+      "texto": "Retirar a sua anuência a qualquer moment",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(29)",
+      "texto": "Objetar o processamento dos seus Dados. ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(30)",
+      "texto": "Acessar os seus Dados. Os Usuários possu",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(31)",
+      "texto": "Verificar e pedir retificação. Os Usuári",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(32)",
+      "texto": "Restringir o processamento dos seus Dado",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(33)",
+      "texto": "Ter os seus Dados Pessoais apagados ou r",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(34)",
+      "texto": "Receber os seus Dados e ter os mesmos tr",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(35)",
+      "texto": "Registrar uma reclamação. Os Usuários po",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(36)",
+      "texto": "Os Usuários também possuem o direito de ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(6)>strong",
+      "texto": "Detalhes sobre o direito de objetar ao p",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(37)",
+      "texto": "Nos casos em que os Dados Pessoais forem",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(7)>strong",
+      "texto": "Como exercer esses direitos",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(38)",
+      "texto": "Quaisquer solicitações para exercer os d",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(8)>strong",
+      "texto": "Informações adicionais para Usuários no ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(39)",
+      "texto": "Esta seção do documento se integra e com",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(40)",
+      "texto": "Esta seção se aplica a todos os Usuários",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(41)",
+      "texto": "Esta parte do documento usa o termo \"inf",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(9)>strong",
+      "texto": "Em que nos embasamos para processar suas",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(42)",
+      "texto": "Podemos processar suas informações pesso",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(10)>strong",
+      "texto": "Categorias de informações pessoais proce",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(43)",
+      "texto": "Para saber que categorias de suas inform",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(11)>strong",
+      "texto": "Por que processamos suas informações pes",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(44)",
+      "texto": "Para saber por que processamos suas info",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(45)",
+      "texto": "Seus direitos de privacidade como brasil",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(12)>strong",
+      "texto": "Seus direitos de privacidade como brasil",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(46)",
+      "texto": "Você tem o direito de:",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(1)",
+      "texto": "Obter confirmação sobre a existência de ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(2)",
+      "texto": "Acesso a suas informações pessoais;",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(3)",
+      "texto": "Fazer com que suas informações pessoais ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(4)",
+      "texto": "Obter o anonimato, bloqueio ou eliminaçã",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(5)",
+      "texto": "Obter informações sobre a possibilidade ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(6)",
+      "texto": "Obter informações sobre os terceiros com",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(7)",
+      "texto": "Obter, mediante sua solicitação expressa",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(8)",
+      "texto": "Obter a exclusão de suas informações pes",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(9)",
+      "texto": "Retirar sua anuência a qualquer momento;",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(10)",
+      "texto": "Registrar uma reclamação com relação a s",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(11)",
+      "texto": "Opor-se a uma atividade de tratamento no",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(12)",
+      "texto": "Solicitar informações claras e adequadas",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)>li:nth-of-type(13)",
+      "texto": "Solicitar a revisão de decisões tomadas ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(13)>strong",
+      "texto": "Você nunca será discriminado ou sofrerá ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(47)>strong",
+      "texto": "Como registrar sua solicitação",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(48)",
+      "texto": "Você poderá registrar sua solicitação ex",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(49)>strong",
+      "texto": "Como e quando nós responderemos a sua so",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(50)",
+      "texto": "Faremos o possível para responder imedia",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(51)",
+      "texto": "Em qualquer caso, caso seja impossível, ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(52)",
+      "texto": "Caso você registre uma solicitação de ac",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(53)",
+      "texto": "Você também precisará nos informar se de",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(54)",
+      "texto": "Neste último caso, responderemos no praz",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(14)>strong",
+      "texto": "Transferência de informações pessoais pa",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(55)",
+      "texto": "Temos permissão para transferir suas inf",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)>li:nth-of-type(1)",
+      "texto": "Quando a transferência for necessária pa",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)>li:nth-of-type(2)",
+      "texto": "Quando a transferência for necessária pa",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)>li:nth-of-type(3)",
+      "texto": "Quando a transferência for autorizada pe",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)>li:nth-of-type(4)",
+      "texto": "Quando a transferência decorrer de um co",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)>li:nth-of-type(5)",
+      "texto": "Quando a transferência for necessária pa",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)>li:nth-of-type(6)",
+      "texto": "Quando a transferência for necessária pa",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(15)>strong",
+      "texto": "Informações adicionais sobre a coleta e ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(56)>strong",
+      "texto": "Ação jurídica",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(57)",
+      "texto": "Os Dados Pessoais dos Usuários podem ser",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(58)",
+      "texto": "O Usuário declara estar ciente de que o ",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(59)>strong",
+      "texto": "Informações adicionais sobre os Dados Pe",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(60)",
+      "texto": "Além das informações contidas nesta polí",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(61)>strong",
+      "texto": "Logs do sistema e manutenção",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(62)",
+      "texto": "Para fins de operação e manutenção, este",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(16)>strong",
+      "texto": "As informações não contidas nesta políti",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "29.036px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(63)",
+      "texto": "Mais detalhes sobre a coleta ou processa",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(64)>strong",
+      "texto": "Mudanças nesta política de privacidade",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(65)",
+      "texto": "O Proprietário se reserva o direito de f",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(66)",
+      "texto": "Caso as mudanças afetem as atividades de",
+      "cor": "rgb(51, 51, 51)",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "fundo": {
+        "resolvido": true,
+        "cor": "rgb(255, 255, 255)",
+        "de": "body"
+      },
+      "razao": 12.63
+    }
+  ],
+  "cabecalhos": [
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h1",
+      "nivel": 1,
+      "texto": "Política de Privacidade do serviço Plataforma Nacional da Indústria do",
+      "filhos": [],
+      "fontSize": "41.804px",
+      "fontWeight": "300"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(1)",
+      "nivel": 3,
+      "texto": "Tipos de Dados coletados",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(2)",
+      "nivel": 3,
+      "texto": "Modo e local de processamento dos Dados",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(3)",
+      "nivel": 3,
+      "texto": "Informações adicionais para usuários",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(4)",
+      "nivel": 3,
+      "texto": "Mais informações sobre o tempo de retenção",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(5)",
+      "nivel": 3,
+      "texto": "Os direitos dos Usuários com base na Lei Geral de Proteção de Dados (L",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(6)",
+      "nivel": 3,
+      "texto": "Detalhes sobre o direito de objetar ao processamento",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(7)",
+      "nivel": 3,
+      "texto": "Como exercer esses direitos",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(8)",
+      "nivel": 3,
+      "texto": "Informações adicionais para Usuários no Brasil",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(9)",
+      "nivel": 3,
+      "texto": "Em que nos embasamos para processar suas informações pessoais",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(10)",
+      "nivel": 3,
+      "texto": "Categorias de informações pessoais processadas",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(11)",
+      "nivel": 3,
+      "texto": "Por que processamos suas informações pessoais",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(12)",
+      "nivel": 3,
+      "texto": "Seus direitos de privacidade como brasileiro",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(13)",
+      "nivel": 3,
+      "texto": "Você nunca será discriminado ou sofrerá qualquer tipo de prejuízo se e",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(14)",
+      "nivel": 3,
+      "texto": "Transferência de informações pessoais para fora do Brasil permitida po",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(15)",
+      "nivel": 3,
+      "texto": "Informações adicionais sobre a coleta e processamento de Dados",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>h3:nth-of-type(16)",
+      "nivel": 3,
+      "texto": "As informações não contidas nesta política",
+      "filhos": [
+        "strong"
+      ],
+      "fontSize": "29.036px",
+      "fontWeight": "500"
+    }
+  ],
+  "pseudo": [
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(2)",
+      "texto": "Proprietário e Controlador de Dados",
+      "fontSize": "16.8px",
+      "fontWeight": "700"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(5)",
+      "texto": "Uso de Dados e outros dados coletados",
+      "fontSize": "16.8px",
+      "fontWeight": "700"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(12)",
+      "texto": "Método de processamento",
+      "fontSize": "16.8px",
+      "fontWeight": "700"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(15)",
+      "texto": "Lugar",
+      "fontSize": "16.8px",
+      "fontWeight": "700"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(18)",
+      "texto": "Período de conservação",
+      "fontSize": "16.8px",
+      "fontWeight": "700"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(20)",
+      "texto": "Base jurídica para o processamento",
+      "fontSize": "16.8px",
+      "fontWeight": "700"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(47)",
+      "texto": "Como registrar sua solicitação",
+      "fontSize": "16.8px",
+      "fontWeight": "700"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(49)",
+      "texto": "Como e quando nós responderemos a sua solicitação",
+      "fontSize": "16.8px",
+      "fontWeight": "700"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(56)",
+      "texto": "Ação jurídica",
+      "fontSize": "16.8px",
+      "fontWeight": "700"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(59)",
+      "texto": "Informações adicionais sobre os Dados Pessoais do Usuário",
+      "fontSize": "16.8px",
+      "fontWeight": "700"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(61)",
+      "texto": "Logs do sistema e manutenção",
+      "fontSize": "16.8px",
+      "fontWeight": "700"
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>p:nth-of-type(64)",
+      "texto": "Mudanças nesta política de privacidade",
+      "fontSize": "16.8px",
+      "fontWeight": "700"
+    }
+  ],
+  "imagens": [
+    {
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>img",
+      "alt": "logo",
+      "src": "assets/images/govbr-logo.png",
+      "completa": true,
+      "naturalWidth": 0,
+      "visivel": true,
+      "sombra": true
+    },
+    {
+      "chave": "body>pnip-root>pnip-header>div>div>div>button>img",
+      "alt": null,
+      "src": "../../../assets/images/exit-icon.png",
+      "completa": true,
+      "naturalWidth": 0,
+      "visivel": false,
+      "sombra": false
+    }
+  ],
+  "links": [],
+  "listas": [
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(1)",
+      "itens": 5,
+      "filhosNaoLi": 0
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(2)",
+      "itens": 2,
+      "filhosNaoLi": 0
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(3)",
+      "itens": 13,
+      "filhosNaoLi": 0
+    },
+    {
+      "chave": "body>pnip-root>main>privacidade>div>ul:nth-of-type(4)",
+      "itens": 6,
+      "filhosNaoLi": 0
+    }
+  ],
+  "tipografia": [
+    {
+      "tag": "h1",
+      "fontFamily": "Rawline, Raleway, sans-serif",
+      "fontSize": "41.804px",
+      "fontWeight": "300",
+      "lineHeight": "48.0746px",
+      "color": "rgb(51, 51, 51)",
+      "textAlign": "justify"
+    },
+    {
+      "tag": "h3",
+      "fontFamily": "Rawline, Raleway, sans-serif",
+      "fontSize": "29.036px",
+      "fontWeight": "500",
+      "lineHeight": "33.3914px",
+      "color": "rgb(51, 51, 51)",
+      "textAlign": "start"
+    },
+    {
+      "tag": "p",
+      "fontFamily": "Rawline, Raleway, sans-serif",
+      "fontSize": "16.8px",
+      "fontWeight": "400",
+      "lineHeight": "24.36px",
+      "color": "rgb(51, 51, 51)",
+      "textAlign": "justify"
+    },
+    {
+      "tag": "li",
+      "fontFamily": "Rawline, Raleway, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "20.3px",
+      "color": "rgb(51, 51, 51)",
+      "textAlign": "start"
+    },
+    {
+      "tag": "strong",
+      "fontFamily": "Rawline, Raleway, sans-serif",
+      "fontSize": "16.8px",
+      "fontWeight": "700",
+      "lineHeight": "24.36px",
+      "color": "rgb(51, 51, 51)",
+      "textAlign": "start"
+    }
+  ],
+  "cores": {
+    "rgb(255, 255, 255)": [
+      "background-color@light",
+      "background-color@sombra"
+    ],
+    "rgb(204, 204, 204)": [
+      "border-right-color@sombra"
+    ],
+    "rgb(51, 51, 51)": [
+      "color@sombra",
+      "color@light"
+    ]
+  },
+  "rolagemHorizontal": false,
+  "alturaDocumento": 8967,
+  "varsRaiz": {
+    "--font-family-base": "Rawline,Raleway,sans-serif"
+  },
+  "pedidos": [
+    "127.0.0.1/real/pnip-privacidade.html",
+    "ABORTADO cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css",
+    "ABORTADO fonts.googleapis.com/css",
+    "ABORTADO cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css",
+    "127.0.0.1/real/assets/core.min.css",
+    "127.0.0.1/assets/images/exit-icon.png",
+    "127.0.0.1/real/assets/webcomponents.umd.min.js",
+    "ABORTADO cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css",
+    "127.0.0.1/real/assets/images/govbr-logo.png"
+  ],
+  "ordemTab": [
+    "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+    "body",
+    "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button"
+  ],
+  "focoTeclado": {
+    "semFoco": [
+      {
+        "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+        "outline": "none 3px rgb(19, 81, 180)",
+        "boxShadow": "none",
+        "border": "0px rgb(19, 81, 180)"
+      }
+    ],
+    "comFoco": {
+      "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+      "outline": "dashed 4px rgb(194, 133, 12)",
+      "outlineOffset": "4px",
+      "boxShadow": "none",
+      "border": "0px rgb(19, 81, 180)",
+      "focusVisible": true
+    }
+  },
+  "marcos": [
+    {
+      "papel": "main",
+      "nome": "",
+      "elemento": "body>pnip-root>main"
+    },
+    {
+      "papel": "banner",
+      "nome": "",
+      "elemento": "body>pnip-root>pnip-header>br-header >>> header"
+    }
+  ],
+  "componentes": {
+    "<br-header>": [
+      {
+        "chave": "body>pnip-root>pnip-header>br-header",
+        "visivel": true,
+        "sombra": false
+      }
+    ],
+    "br-header": [
+      {
+        "chave": "body>pnip-root>pnip-header>br-header >>> header",
+        "visivel": true,
+        "sombra": true
+      }
+    ],
+    "br-divider": [
+      {
+        "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>span",
+        "visivel": true,
+        "sombra": true
+      }
+    ],
+    "br-button": [
+      {
+        "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+        "visivel": true,
+        "sombra": true
+      }
+    ],
+    "br-sign-in": [
+      {
+        "chave": "body>pnip-root>pnip-header>div>div>button",
+        "visivel": false,
+        "sombra": false
+      }
+    ],
+    "br-avatar": [
+      {
+        "chave": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)",
+        "visivel": false,
+        "sombra": false
+      }
+    ],
+    "br-list": [
+      {
+        "chave": "body>pnip-root>pnip-header>div>div>div",
+        "visivel": false,
+        "sombra": false
+      }
+    ],
+    "br-item": [
+      {
+        "chave": "body>pnip-root>pnip-header>div>div>div>button",
+        "visivel": false,
+        "sombra": false
+      }
+    ]
+  },
+  "hashes": [
+    {
+      "arquivo": "public/real/pnip-privacidade.html",
+      "esperado": "83d8e1973235dd08d2d14417c4764f78a566209c228a8af51211873a258f71a7",
+      "obtido": "83d8e1973235dd08d2d14417c4764f78a566209c228a8af51211873a258f71a7",
+      "ok": true
+    },
+    {
+      "arquivo": "dist/real/pnip-privacidade.html",
+      "esperado": "83d8e1973235dd08d2d14417c4764f78a566209c228a8af51211873a258f71a7",
+      "obtido": "83d8e1973235dd08d2d14417c4764f78a566209c228a8af51211873a258f71a7",
+      "ok": true
+    },
+    {
+      "arquivo": "public/real/manifesto.json",
+      "esperado": "d03efe953d7bcc4fbf23e0270eaeee3af0e2f824a3f196bc155d3658c4f60227",
+      "obtido": "d03efe953d7bcc4fbf23e0270eaeee3af0e2f824a3f196bc155d3658c4f60227",
+      "ok": true
+    },
+    {
+      "arquivo": "dist/real/manifesto.json",
+      "esperado": "d03efe953d7bcc4fbf23e0270eaeee3af0e2f824a3f196bc155d3658c4f60227",
+      "obtido": "d03efe953d7bcc4fbf23e0270eaeee3af0e2f824a3f196bc155d3658c4f60227",
+      "ok": true
+    },
+    {
+      "arquivo": "public/real/assets/core.min.css",
+      "esperado": "cf176bd46bb3f8032991ef5c79ffe05997cd72d21951f287a6270fd05ed266aa",
+      "obtido": "cf176bd46bb3f8032991ef5c79ffe05997cd72d21951f287a6270fd05ed266aa",
+      "ok": true
+    },
+    {
+      "arquivo": "dist/real/assets/core.min.css",
+      "esperado": "cf176bd46bb3f8032991ef5c79ffe05997cd72d21951f287a6270fd05ed266aa",
+      "obtido": "cf176bd46bb3f8032991ef5c79ffe05997cd72d21951f287a6270fd05ed266aa",
+      "ok": true
+    },
+    {
+      "arquivo": "public/real/assets/webcomponents.umd.min.js",
+      "esperado": "c196dbc1a8f5af079bb4c8c50bedb883872b2fa3f0e86d3451182072b77ae478",
+      "obtido": "c196dbc1a8f5af079bb4c8c50bedb883872b2fa3f0e86d3451182072b77ae478",
+      "ok": true
+    },
+    {
+      "arquivo": "dist/real/assets/webcomponents.umd.min.js",
+      "esperado": "c196dbc1a8f5af079bb4c8c50bedb883872b2fa3f0e86d3451182072b77ae478",
+      "obtido": "c196dbc1a8f5af079bb4c8c50bedb883872b2fa3f0e86d3451182072b77ae478",
+      "ok": true
+    }
+  ],
+  "medidoEm": "2026-09-30T16:40:17.022Z"
+}

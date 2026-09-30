@@ -1,0 +1,68 @@
+{
+  "_meta": {
+    "version": "1.0.0-candidata",
+    "status": "candidata — aguarda ratificação da autora e a re-medida independente; não congelada",
+    "version_note": "1.0.0-candidata (2026-09-30, fatia 8 / D-49, D-55, D-56): referência AUDITADA da tela B, saída da auditoria por medição de tela-b/metodo-auditoria.md (congelado no commit 5838702 do govbr-eval), executada por assistente LLM sem o oráculo. É incompleta por natureza: recall nesta tela é \"contra a referência auditada\", e alegações corretas fora dela são descobertas (D-48) que não mudam o denominador. Escrita ANTES de qualquer execução de modelo sobre a tela. Não congelada: faltam as decisões da autora sobre a lista escalada (tela-b/auditoria.md § 7), a re-medida do segundo agente e a ratificação no log. 3 specs, 3 unidades, 1 estado.",
+    "page": "Política de privacidade do PNIP — tela B da fatia 8 (D-49), página real congelada",
+    "url": "/real/pnip-privacidade.html",
+    "waitFor": "br-header header.br-header .header-title",
+    "suite": "privacidade",
+    "ds": "gov.br Design System 3.7.0 como norma; a página usa @govbr-ds/core 3.4.1 + @govbr-ds/webcomponents 1.16.0 (tratamento de versão: método § 1)",
+    "unit_of_evaluation": "(elemento × defeito), no estado aplicável — a mesma unidade da tela de fluxo e da tela A.",
+    "viewport": { "width": 1280, "height": 900 },
+    "setup": [],
+    "setup_rationale": "Nenhum passo: o teste de estados (tela-b/teste-estados.mjs, saída em tela-b/auditoria.md § 3) acionou os 4 gatilhos candidatos por clique real e por Enter, 3 cargas novas cada, e nenhum produziu estado — o botão Menu do cabeçalho não muda DOM, árvore de acessibilidade nem URL; os outros três não são renderizados.",
+    "states": [
+      { "id": "inicial", "afterStep": 0, "note": "primeiro paint depois da hidratação do <br-header> (whenDefined + shadow root não vazio); único estado da tela" }
+    ],
+    "conformes": {
+      "note": "Controles medidos conformes (método § 5), documentais como os chamarizes da tela A: nenhum script do instrumento os consome, não entram em denominador, e alegação sobre eles é adjudicada como qualquer outra fora da referência (D-48). Só (elemento × norma) sobre normas que também têm unidade `viola` nesta tela ou sobre componentes do inventário. Re-medidos em tela-b/conferir-auditoria.mjs.",
+      "itens": [
+        { "id": "C-01", "selector": "privacidade h1", "count": 1, "rules": ["govbr-3.7.0-accessibility-global-3ac0aaa53900", "emag:1.3"], "medida": "um único h1, primeiro título do documento (a norma tem unidade B-02)." },
+        { "id": "C-02", "selector": "br-header", "count": 1, "rules": ["govbr-3.7.0-accessibility-global-7e6420514860", "emag:1.1"], "medida": "custom element com hífen, definido (customElements.get), não é HTMLUnknownElement (a norma tem unidade B-03)." },
+        { "id": "C-03", "selector": "br-header >>> #navigation", "count": 1, "rules": ["govbr-3.7.0-accessibility-global-21fbcc2fe37b", "emag:4.4", "wcag:2.4.7"], "medida": "foco de teclado: outline dashed 4px rgb(194, 133, 12), offset 4px." },
+        { "id": "C-04", "selector": "br-header >>> #navigation", "count": 1, "rules": ["govbr-3.7.0-component-button-4d7b5f978df1"], "medida": "variante circular (br-button circle small), nome acessível \"Menu\" — exceção do rótulo visível." },
+        { "id": "C-05", "selector": "br-header >>> #navigation", "count": 1, "rules": ["govbr-3.7.0-accessibility-global-79db88c7f55d", "emag:1.4", "govbr-3.7.0-accessibility-global-e6fd5e1247de", "emag:2.1"], "medida": "único ponto de Tab da página, tabIndex 0, nenhum tabindex positivo; Enter ≡ clique; sem aprisionamento." },
+        { "id": "C-06", "selector": "br-header >>> .br-divider", "count": 1, "rules": ["govbr-3.7.0-accessibility-divider-30bbcbf3a17c"], "medida": "tabIndex -1 e ignorado pela árvore de acessibilidade." },
+        { "id": "C-07", "selector": "br-header >>> .header-sign, .header-title", "count": 2, "rules": ["govbr-3.7.0-accessibility-global-cb09bc0c77c0", "emag:4.1", "govbr-3.7.0-foundation-global-21b1a2733f7b"], "medida": "texto rgb(51, 51, 51) (#333 --gray-80) sobre rgb(255, 255, 255) (#fff --pure-0): 12,63:1." }
+      ]
+    },
+    "fundo": "Condições que o autor da página não escreveu (método § 5; tela-b/auditoria.md § 6), que não são unidades — alegação correta sobre elas entra como descoberta: (1) do web component 1.16.0: botão Menu de 32×32 px (< 48×48 de foundation-global-1c0146e93d2e), alt=\"logo\" fixo no logo do <br-header>, @import de Font Awesome 5.11.2 dentro do shadow root; (2) da captura/isolamento: govbr-logo.png e exit-icon.png respondem 404, Rawline, Raleway e Font Awesome 5.15.4 negados (texto em fonte de fallback, ícone fa-bars sem glifo).",
+    "escaladas": "tela-b/auditoria.md § 7 (E-01…E-09): decididas pela autora antes do congelamento; o que ela incluir entra aqui com origem: \"autora\" na descrição.",
+    "nunca_agregar_com": "ground-truth-fluxo.json, ground-truth-solicitacao.json (tela A), ground-truth.json (suíte TC-*), organic-ground-truth.json e qualquer referência de real/pnip-login.html — instrumentos ou páginas diferentes (D-13, D-49). Os números desta tela nunca se somam, se promediam nem formam série com os de outra.",
+    "baselines": "MEDIDAS sob o carimbo de cada bateria; nenhuma expectativa de detecção por ferramenta é declarada aqui (D-06).",
+    "auditoria": "tela-b/auditoria.md · tela-b/decisoes.json · tela-b/inventario.json · conferência sem modelo: node tela-b/conferir-auditoria.mjs"
+  },
+  "violations": [
+    {
+      "id": "B-01",
+      "anchor": "pnip-root",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": ["govbr-3.7.0-accessibility-global-7d2b85f81c52", "emag:1.5", "wcag:2.4.1"],
+      "categories": ["navegacao", "acessibilidade"],
+      "description": "Defeito de ausência, ancorado no contêiner raiz da aplicação (método § 5; escolha justificada em tela-b/auditoria.md § 5). Não há salto para o conteúdo: a página inteira (light DOM e shadow roots) não tem nenhum <a href> nem âncora \"#…\", e o primeiro ponto de Tab é o botão Menu do cabeçalho. O <main> existe e nada leva a ele. Sem predicado na referência (nenhuma espécie mede ausência de elemento); medido em tela-b/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-02",
+      "anchor": "privacidade h3:first-of-type",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": ["govbr-3.7.0-accessibility-global-3ac0aaa53900", "emag:1.3", "wcag:1.3.1"],
+      "categories": ["estrutura", "acessibilidade"],
+      "description": "Hierarquia de títulos salta de nível: depois do h1 da política vêm 16 títulos h3 e não há nenhum h2 na página. O salto 1→3 ocorre no primeiro h3 (\"Tipos de Dados coletados\"); os h3 seguintes não saltam em relação ao anterior. O h1 é único e é o primeiro título (controle conforme C-01). Sem predicado na referência; medido em tela-b/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-03",
+      "anchor": "privacidade",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": ["govbr-3.7.0-accessibility-global-7e6420514860", "emag:1.1", "wcag:4.1.1"],
+      "categories": ["estrutura"],
+      "description": "O conteúdo inteiro da política está dentro de um elemento <privacidade> (seletor do componente Angular): o nome não tem hífen, então não é nome válido de custom element, e não é elemento HTML — o navegador o trata como HTMLUnknownElement e customElements.get('privacidade') é indefinido. Marcação fora do padrão Web. O <br-header> ao lado é custom element válido (controle conforme C-02). Sem predicado na referência; medido em tela-b/conferir-auditoria.mjs."
+    }
+  ]
+}
