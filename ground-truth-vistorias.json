@@ -43,6 +43,10 @@
       {
         "action": "wait",
         "selector": ".br-modal"
+      },
+      {
+        "action": "wait",
+        "selector": ".lista-embarcacoes .item-embarcacao:nth-child(2)"
       }
     ],
     "setup_rationale": "Escolha gulosa do adendo § B, feita por cobertura de tipos ANTES de procurar defeito (tela-b/vistorias/selecionar-estados.mjs; traço em auditoria.md § 3). Segmento 0: lista (inicial). Segmento 1: navigate por path ao detalhe da 1ª linha da aba padrão que oferece \"Avançar\" (não comparecimento, p.2 l.7) e abertura do menu do avatar (componentes list, item, textarea novos); o segundo clique no avatar é trânsito depois da última parada (fecha o menu, que persiste entre rotas). Segmento 2: navigate por path ao detalhe da 1ª linha que oferece \"Trocar embarcação da vistoria\" (preenchida, p.2 l.8) e abertura do br-modal (modal, scrim). Aditivo dentro de cada segmento; nenhuma escrita no mock; nenhuma recarga. Path em vez de clique: as duas linhas estão na página 2 (desvio registrado em auditoria.md § 11).",
@@ -67,7 +71,7 @@
       },
       {
         "id": "modal",
-        "afterStep": 7,
+        "afterStep": 8,
         "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038",
         "note": "br-modal \"Trocar embarcação\" aberto sobre o detalhe — última parada do segmento"
       }
