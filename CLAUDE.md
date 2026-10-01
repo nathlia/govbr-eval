@@ -39,13 +39,23 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
     `navigate` abre um SEGMENTO: a aditividade só é cobrada dentro dele, `conditional` também, e
     toda parada declara `path` (pathname), que a conferência mede junto com recarga e troca de
     endereço sem `navigate`. Cada spec é construída no fim do segmento do seu `state`. Sem
-    navegação nada muda (fluxo e solicitação conferidos byte a byte). Só `conferir:referencia`
-    mede referência que navega; pacote, linha de base, manifesto de coleta e todo `preparePage`
-    RECUSAM com erro explícito. Ver `docs/semantic-scoring.md`. Testes: `test:states`.
+    navegação nada muda (fluxo e solicitação conferidos byte a byte). **Cenas por segmento
+    (D-60):** conferência, manifesto, linha de base e pacote medem referência que navega. O plano
+    guarda as paradas com `path` (no hash); cada janela vira uma cena por segmento, capturada na
+    última parada dele (`1280x900@parada`, lista única em `cenasDoPlano`); as unidades ficam no
+    segmento do seu `state` (`sempre` no último); toda parada tem de ficar parada por 1 s — senão
+    falta declarar uma espera, e a conferência para. O scanner do oráculo não conhece `navigate`:
+    entra direto na rota (com a consulta da entrada) e repete os passos seguintes, e essa árvore é
+    conferida contra a navegada (ids por contador não contam; diverge ou ainda carrega → para).
+    Alegação que resolve em mais de um segmento vira cartão `a-decidir`, e a revisora escreve
+    `"cena"` na decisão. Só o v01 (`preparePage`: `score:fluxo:legacy`, `adjudicate`,
+    `pacote:revisao`) ainda RECUSA. Ver `docs/semantic-scoring.md`. Testes: `test:states`,
+    `test:semantic`, `test:manifest`, `test:fatia6` (SPA de pushState de ponta a ponta).
   - **fatia 6:** a bateria grava plano + manifesto de coleta (`scripts/collection-manifest.ts`) antes
     da primeira execução e a linha de base sob o próprio carimbo; o pacote só é preparado com esse
     manifesto, essa linha de base e o site congelado (`--collection-manifest --site-dir --baseline`),
-    com uma cena por janela do plano. `npm run baselines:fluxo:dev` é o arquivo avulso
+    com uma cena por janela do plano (por segmento de cada janela, se o setup navega). O preflight
+    da bateria roda `conferir:referencia` contra a página congelada antes de qualquer modelo. `npm run baselines:fluxo:dev` é o arquivo avulso
     (`results/baselines-fluxo.json`), nunca confrontável com bateria. Testes: `test:manifest`,
     `test:fatia6` (navegador real, sem modelo), `test:pipeline`.
   - **v01:** `npm run score:fluxo:legacy` — casamento por (elemento × regra), só para reproduzir os

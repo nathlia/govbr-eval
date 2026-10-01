@@ -34,12 +34,15 @@ import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 import type { FlowGroundTruth, FlowSetupStep, FlowViewport } from "../types";
 import { ROOT } from "./adjudication";
-import { VIEWPORT_PADRAO, exigeSegmentoUnico, preparePage, resolveOnPage } from "./anchors";
+import {
+  VIEWPORT_PADRAO, abrirEntradaDireta, entradaDireta, impressaoDaArvore, instabilidadeDaParada, openPage, preparePage, resolveOnPage, runSetupSteps,
+  type EntradaDireta,
+} from "./anchors";
 import { normalizeRuleId } from "./units";
 import { FLOW_INSTRUMENT_VERSION } from "./instrument";
 import {
-  VALIDATOR_ROOT, compareIdentities, gitState, oracleIdentity, readCollectionManifest, sha256, sha256File,
-  statePlanOf, statePlanSha256, type ExecutableIdentity,
+  VALIDATOR_ROOT, cenasDoPlano, compareIdentities, gitState, oracleIdentity, readCollectionManifest, sha256, sha256File,
+  statePlanOf, statePlanSha256, type CenaDoPlano, type ExecutableIdentity,
 } from "./collection-manifest";
 import { verifyServedSite } from "./measurement-surface";
 import { referenciaDe, telaFromArgs } from "./telas";
@@ -84,7 +87,8 @@ export interface ValidatorFindingRef {
 export interface ValidatorScanRecord {
   mode: "nao-guiada" | "guiada";
   policy: string;
-  request: { selectors: string[] | null; checks: string[]; viewport: FlowViewport; actions: number };
+  /** `url` só aparece quando a passada entra direto numa rota (D-60); sem ela é a entrada da tela. */
+  request: { selectors: string[] | null; checks: string[]; viewport: FlowViewport; actions: number; url?: string };
   stateFingerprint: string | null;
   coverage: unknown;
   findings: ValidatorFindingRef[];
@@ -101,6 +105,14 @@ export interface BaselinePass {
   seconds: number;
   axe: { violations: number; passes: number; incomplete: string[]; findings: AxeFindingRef[]; seconds: number };
   validator: { unguided: ValidatorScanRecord; guided: ValidatorScanRecord | null };
+  /**
+   * Só quando o setup navega (D-60): a passada é a cena de um segmento, medida na última parada dele.
+   * `entradaDireta` diz como o scanner do oráculo — que não conhece `navigate` — chegou lá (endereço,
+   * número de passos) e quais seletores dele só resolveram nessa entrada; a árvore dela foi conferida
+   * contra a navegada antes de qualquer varredura.
+   */
+  segmento?: { numero: number; estado: string; afterStep: number; path: string | null; estados: string[];
+    entradaDireta: { url: string; passos: number; seletores: string[] } | null };
   /** Resolução de todo seletor desta passada, na mesma página e no mesmo estado. */
   resolution: { bySelector: Record<string, { ok: boolean; error: string | null; keys: string[] }>; labels: Record<string, string> };
 }
@@ -143,6 +155,8 @@ export interface FlowBaselines {
    * dito no arquivo para que um zero ausente não seja lido como zero medido.
    */
   eslintAusente?: string;
+  /** Por que `legacy` é `null` numa referência que navega: o resumo legado atribui por chave, sem cena. */
+  legacyAusente?: string;
   /**
    * Custo de execução. Zero de API não é zero de custo: a passada determinística consome relógio e
    * máquina, e comparar "de graça" com o agente sem dizer isso é meia verdade.
@@ -193,9 +207,9 @@ async function main(): Promise<number> {
   const gt = gtBytes ? JSON.parse(gtBytes.toString("utf8")) as FlowGroundTruth : null;
   const statePlan = gt ? statePlanOf(gt)
     : { padrao: VIEWPORT_PADRAO, extras: [], setup: [], waitFor: null, url: tela.entry };
-  // A linha de base varre o estado do FIM do setup, e o scanner do oráculo recebe a mesma sequência
-  // como `actions` — a extensão de navegação (D-57) não chega a ele. Recusa antes de gastar nada.
-  exigeSegmentoUnico(statePlan.setup, "baselines:fluxo (axe e varredura do validator no fim do setup)");
+  // Uma passada por cena do plano: por janela e, se o setup navega (D-60), por segmento. É a mesma
+  // lista que o pacote prepara. Malformada, para aqui, antes de gastar nada.
+  const cenas: CenaDoPlano[] = gt ? cenasDoPlano(gt, statePlan) : [{ id: sceneId(statePlan.padrao), viewport: statePlan.padrao, specIds: [] }];
   const url = new URL(gt?._meta.url ?? tela.entry, appOrigin).toString();
   const corpusSrc = process.env.CORPUS_SRC ?? join(ROOT, "..", "govbr-corpus", "src");
   const flowSources = tela.sources.map(source => join(corpusSrc, "..", source));
@@ -260,10 +274,17 @@ async function main(): Promise<number> {
       ...(step.ms !== undefined ? { ms: step.ms } : {}),
     }));
 
-    async function scan(mode: "nao-guiada" | "guiada", viewport: FlowViewport, anchors: string[]): Promise<ValidatorScanRecord> {
+    async function scan(mode: "nao-guiada" | "guiada", viewport: FlowViewport, anchors: string[], alcance?: EntradaDireta): Promise<ValidatorScanRecord> {
       const selectors = mode === "guiada" ? [...new Set(anchors)] : null;
       const checks = [...BASELINE_CHECKS];
-      const request = { url, checks, actions: setupActions, viewport, ...(selectors ? { selectors } : {}) };
+      // Com navegação (D-60) o scanner recebe o alcance da cena: só clique, preenchimento e espera.
+      const actions = alcance ? alcance.passos.map(step => ({
+        action: step.action,
+        ...(step.selector ? { selector: step.selector } : {}),
+        ...(step.value !== undefined ? { value: step.value } : {}),
+        ...(step.ms !== undefined ? { ms: step.ms } : {}),
+      })) : setupActions;
+      const request = { url: alcance?.url ?? url, checks, actions, viewport, ...(selectors ? { selectors } : {}) };
       const t = Date.now();
       const { stdout } = await execFileAsync(process.execPath,
         [validatorEntry, Buffer.from(JSON.stringify(request), "utf8").toString("base64")], { maxBuffer: 32 * 1024 * 1024 });
@@ -273,7 +294,7 @@ async function main(): Promise<number> {
       };
       return {
         mode, policy: mode === "guiada" ? GUIDED_POLICY : UNGUIDED_POLICY,
-        request: { selectors, checks, viewport, actions: setupActions.length },
+        request: { selectors, checks, viewport, actions: actions.length, ...(alcance ? { url: alcance.url } : {}) },
         stateFingerprint: result.stateFingerprint ?? null,
         coverage: result.coverage ?? null,
         findings: result.findings.map(f => ({
@@ -286,11 +307,8 @@ async function main(): Promise<number> {
 
     // Sem gabarito não há spec: uma cena só, a janela padrão do experimento, e nenhuma âncora.
     const violations = gt?.violations ?? [];
-    const scenes = [
-      { viewport: statePlan.padrao, specs: violations.filter(v => !v.viewport ||
-        (v.viewport.width === statePlan.padrao.width && v.viewport.height === statePlan.padrao.height)) },
-      ...statePlan.extras.map(e => ({ viewport: e.viewport, specs: violations.filter(v => e.specs.includes(v.id)) })),
-    ];
+    const scenes = cenas.map(c => ({ id: c.id, viewport: c.viewport, segmento: c.segmento,
+      specs: violations.filter(v => c.specIds.includes(v.id)) }));
 
     const browser = await chromium.launch();
     try {
@@ -298,7 +316,24 @@ async function main(): Promise<number> {
         const passStarted = Date.now();
         const context = await browser.newContext({ viewport: scene.viewport });
         const page: Page = await context.newPage();
-        await preparePage(page, url, { waitFor: gt?._meta.waitFor, setup: gt?._meta.setup });
+        const seg = scene.segmento;
+        let alcance: EntradaDireta | undefined;
+        if (seg) {
+          // Cena de um segmento (D-60): navegando até a última parada dele, com as mesmas conferências
+          // da varredura por estados (passo malformado, recarga, origem) e o endereço declarado.
+          await openPage(page, url, { waitFor: gt?._meta.waitFor });
+          await runSetupSteps(page, (gt?._meta.setup ?? []).slice(0, seg.afterStep));
+          const agora = new URL(page.url()).pathname;
+          if (seg.path !== null && agora !== seg.path) throw new Error(`cena ${scene.id}: a parada ${seg.estado} declara path ${seg.path}, mas a página está em ${agora}`);
+          const instavel = await instabilidadeDaParada(page);
+          if (instavel.length) {
+            throw new Error(`cena ${scene.id}: a parada ${seg.estado} não é estável — a árvore muda depois do último passo, e o axe e o ` +
+              `scanner a veriam em instantes diferentes. Declare no setup uma espera pelo que ainda carrega:\n  - ${instavel.join("\n  - ")}`);
+          }
+          alcance = entradaDireta(url, gt?._meta.setup ?? [], seg.afterStep);
+        } else {
+          await preparePage(page, url, { waitFor: gt?._meta.waitFor, setup: gt?._meta.setup });
+        }
         const axeStarted = Date.now();
         const axe = await new AxeBuilder({ page }).analyze();
         const axeSeconds = seconds(axeStarted);
@@ -306,18 +341,47 @@ async function main(): Promise<number> {
           rule: v.id, impact: v.impact ?? null, description: v.help ?? v.description, target: n.target.flat().join(" "),
         })));
         const anchors = scene.specs.map(spec => spec.anchor);
-        const unguided = await scan("nao-guiada", scene.viewport, []);
-        const guided = anchors.length ? await scan("guiada", scene.viewport, anchors) : null;
-        const selectors = [...axeFindings.map(f => f.target), ...unguided.findings.map(f => f.target),
-          ...(guided?.findings.map(f => f.target) ?? []), ...anchors, ...scene.specs.flatMap(s => s.except ? [s.except] : [])];
-        const resolved = await resolveOnPage(page, selectors);
+        // Entrada direta (D-60): antes de o scanner varrer, a árvore que ela alcança é conferida contra
+        // a navegada. Divergiu, a passada para — o oráculo estaria medindo outra página.
+        const direta = alcance?.direta
+          ? await abrirEntradaDireta(browser, scene.viewport, alcance, await impressaoDaArvore(page), `linha de base, cena ${scene.id}`)
+          : null;
+        let unguided: ValidatorScanRecord, guided: ValidatorScanRecord | null, resolved: Awaited<ReturnType<typeof resolveOnPage>>;
+        let seletoresDaEntrada: string[] = [];
+        try {
+          unguided = await scan("nao-guiada", scene.viewport, [], alcance);
+          guided = anchors.length ? await scan("guiada", scene.viewport, anchors, alcance) : null;
+          const selectors = [...axeFindings.map(f => f.target), ...unguided.findings.map(f => f.target),
+            ...(guided?.findings.map(f => f.target) ?? []), ...anchors, ...scene.specs.flatMap(s => s.except ? [s.except] : [])];
+          resolved = await resolveOnPage(page, selectors);
+          if (direta) {
+            // O scanner citou a página da entrada direta: o seletor dele que não alcança nada navegando
+            // (id numerado por contador, por exemplo) é resolvido lá — a árvore é a mesma, conferida acima.
+            const doScanner = [...new Set([...unguided.findings, ...(guided?.findings ?? [])].map(f => f.target))];
+            const la = await resolveOnPage(direta.page, doScanner);
+            for (const s of doScanner) {
+              const aqui = resolved.bySelector.get(s);
+              const lida = la.bySelector.get(s);
+              if (!aqui?.ok || aqui.keys.length > 0 || !lida?.ok || lida.keys.length === 0) continue;
+              resolved.bySelector.set(s, lida);
+              for (const k of lida.keys) if (!resolved.byKey.has(k)) resolved.byKey.set(k, la.byKey.get(k)!);
+              seletoresDaEntrada.push(s);
+            }
+            seletoresDaEntrada = seletoresDaEntrada.sort();
+          }
+        } finally {
+          await direta?.close();
+        }
         await context.close();
         const pass: BaselinePass = {
-          id: sceneId(scene.viewport), viewport: scene.viewport, specs: scene.specs.map(s => s.id),
+          id: scene.id, viewport: scene.viewport, specs: scene.specs.map(s => s.id),
           startedAt: new Date(passStarted).toISOString(), seconds: seconds(passStarted),
           axe: { violations: axe.violations.length, passes: axe.passes.length, incomplete: axe.incomplete.map(i => i.id),
             findings: axeFindings, seconds: axeSeconds },
           validator: { unguided, guided },
+          ...(seg ? { segmento: { numero: seg.numero, estado: seg.estado, afterStep: seg.afterStep, path: seg.path, estados: seg.estados,
+            entradaDireta: alcance?.direta ? { url: new URL(alcance.url).pathname + new URL(alcance.url).search,
+              passos: alcance.passos.length, seletores: seletoresDaEntrada } : null } } : {}),
           resolution: {
             bySelector: Object.fromEntries([...resolved.bySelector].map(([s, r]) => [s, { ok: r.ok, error: r.error, keys: r.keys }])),
             labels: Object.fromEntries([...resolved.byKey].map(([k, e]) => [k, e.label])),
@@ -373,7 +437,12 @@ async function main(): Promise<number> {
       console.log(`\neslint-plugin-jsx-a11y: ${record.eslint.findings.length} achado(s) no fonte (não atribuídos a elemento)`);
     }
 
-    record.legacy = gt ? legacySummary(record, gt) : null;
+    // O resumo legado atribui por chave de elemento, sem cena: com segmentos (D-60) a mesma chave nomeia
+    // elementos de rotas diferentes, e somar as passadas misturaria os dois. Fica ausente, dito.
+    if (cenas.some(c => c.segmento)) {
+      record.legacyAusente = "a referência navega (D-60): o resumo legado soma passadas por chave, e chaves de segmentos diferentes nomeiam elementos diferentes";
+    }
+    record.legacy = gt && !record.legacyAusente ? legacySummary(record, gt) : null;
 
     const oracleAtEnd = oracleIdentity();
     if (oracleAtEnd.distSha256 !== oracleAtStart.distSha256 || oracleAtEnd.dataSha256 !== oracleAtStart.dataSha256) {

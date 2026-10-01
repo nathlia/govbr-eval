@@ -7,6 +7,7 @@ import type { FlowAgentResults } from "../types";
 import type { Resolution } from "./anchors";
 import type { FlowUnit } from "./units-flow";
 import type { PredicateResult } from "./acceptance-predicates";
+import { renderReview } from "./semantic-flow-render";
 import {
   SCORER_FILES, digest, maximumMatching, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, validatePackage,
   type SemanticDecision, type SemanticPackage, type SemanticReviews, type ReviewAtom, type PrepareRun, type SceneResolution,
@@ -504,5 +505,82 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
   const s = scoreSemanticPackage(mudo, reviews(mudo, [decision(mudo.cards[0].id, [atom(mudo, ["A"])])])).scores[0];
   assert.equal(s.counts.detectedUnits, 1);
 });
+
+// ── D-60: cenas por segmento ─────────────────────────────────────────────────
+{
+  const li = { key: "body>ul>li", id: "E-li", label: "<li>", hidden: null };
+  const botao = { key: "body>main>button", id: "E-bt", label: "<button>", hidden: null };
+  const sel = (keys: Record<string, string[]>) => new Map(Object.entries(keys).map(([s, k]) => [s, { selector: s, ok: true, error: null, keys: k }]));
+  const resLista: Resolution = { url: "http://fixture/app/lista", byKey: new Map([[li.key, li], [botao.key, botao]]),
+    bySelector: sel({ li: [li.key], button: [botao.key], "#so-detalhe": [], "#nada": [] }) };
+  const resDetalhe: Resolution = { url: "http://fixture/app/lista", byKey: new Map([[botao.key, { ...botao, label: "<button> detalhe" }]]),
+    bySelector: sel({ li: [], button: [botao.key], "#so-detalhe": [botao.key], "#nada": [] }) };
+  const segScenes: SceneResolution[] = [
+    { id: "1280x900@lista", viewport: wide, specIds: ["L", "LB"], resolution: resLista, segmento: { numero: 0, estado: "lista", path: "/app/lista", estados: ["lista"] } },
+    { id: "1280x900@detalhe", viewport: wide, specIds: ["D"], resolution: resDetalhe, segmento: { numero: 1, estado: "detalhe", path: "/app/detalhe", estados: ["detalhe"] } },
+  ];
+  const u = (specId: string, el: typeof li, scene: string, state: string) => ({ specId, element: el, participants: [el.key],
+    rules: ["wcag:1.3.1"], categories: ["x"], description: specId, state, states: [state], conditional: false, scene });
+  const segUnits = [u("L", li, "1280x900@lista", "lista"), u("LB", botao, "1280x900@lista", "lista"), u("D", botao, "1280x900@detalhe", "detalhe")];
+  const claim = (selector: string) => ({ selector, rule: null, observed: `sobre ${selector}`, expected: "e",
+    state: { viewport: wide, steps: ["abriu o detalhe"] }, evidence: [] });
+  const pkg = prepareSemanticPackage(context, segUnits, segScenes,
+    [{ id: "r1", data: run([claim("button"), claim("li"), claim("#nada"), claim("#so-detalhe")] as FlowAgentResults["findings"]) }],
+    { stateOrder: ["lista", "detalhe"] });
+  const unitOf = (specId: string) => pkg.units.find(x => x.specId === specId)!.id;
+  const card = (selector: string) => pkg.cards.find(c => c.selector === selector)!;
+
+  test("D-60: a scene per segment is declared in the package, and the same key in two segments is two units", () => {
+    assert.deepEqual(pkg.scenes.map(s => [s.id, s.segmento?.path]), [["1280x900@lista", "/app/lista"], ["1280x900@detalhe", "/app/detalhe"]]);
+    assert.notEqual(unitOf("LB"), unitOf("D"));
+  });
+
+  test("D-60: a selector resolving in one segment is placed there; in none, flagged; in several, the reviewer chooses", () => {
+    assert.equal(card("li").scene, "1280x900@lista");
+    assert.ok(card("li").flags.some(f => f.startsWith("segmento-pela-resolucao")));
+    assert.equal(card("li").segmentos, undefined);
+    assert.equal(card("#so-detalhe").scene, "1280x900@detalhe");
+    assert.ok(card("#nada").flags.some(f => f.startsWith("segmento-nao-resolvido")));
+    assert.equal(card("#nada").subjects[0].key, null);
+    const b = card("button");
+    assert.equal(b.scene, "a-decidir:1280x900");
+    assert.deepEqual(b.segmentos!.map(o => [o.scene, o.path]), [["1280x900@lista", "/app/lista"], ["1280x900@detalhe", "/app/detalhe"]]);
+    assert.deepEqual(b.subjects.map(s => [s.id, s.scene, s.label]), [
+      ["1280x900@lista|body>main>button", "1280x900@lista", "<button>"],
+      ["1280x900@detalhe|body>main>button", "1280x900@detalhe", "<button> detalhe"]]);
+    assert.deepEqual(b.candidateUnitIds.sort(), [unitOf("LB"), unitOf("D")].sort());
+    assert.ok(b.flags.some(f => f.startsWith("segmento-a-decidir")));
+  });
+
+  test("D-60: the chosen scene decides which subjects count and which units they can earn", () => {
+    const b = card("button");
+    const em = (cena: string | undefined, atoms: ReviewAtom[]) => ({ ...decision(b.id, atoms), ...(cena ? { cena } : {}) });
+    const sujeito = (cena: string) => `${cena}|body>main>button`;
+    const ref = (cena: string, unitId: string): ReviewAtom => ({ id: "a", text: "t", subjects: [sujeito(cena)], verdict: "reference", unitIds: [unitId], citation: "supported" });
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [em(undefined, [ref("1280x900@detalhe", unitOf("D"))])])), /must name "cena"/);
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [em("1280x900@outra", [ref("1280x900@detalhe", unitOf("D"))])])), /must name "cena"/);
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [em("1280x900@detalhe", [ref("1280x900@lista", unitOf("LB"))])])), /Subject outside the chosen scene/);
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [em("1280x900@detalhe", [ref("1280x900@detalhe", unitOf("LB"))])])), /Unanchored/);
+    const s = scoreSemanticPackage(pkg, reviews(pkg, [em("1280x900@detalhe", [ref("1280x900@detalhe", unitOf("D"))])])).scores[0];
+    assert.deepEqual(s.matched.map(m => m.unitId), [unitOf("D")]);
+    // A subject of the other segment is not a claim: nothing is charged for it.
+    assert.equal(s.assertions.filter(a => a.cardId === b.id).length, 1);
+    // "cena" only exists where there is a choice, and a pending decision carries no choice.
+    const li = card("li");
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [{ ...decision(li.id, [atom(pkg, [], { subjects: [li.subjects[0].id], verdict: "novel", unitIds: [] })]), cena: "1280x900@lista" }])), /only applies/);
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [{ cardId: b.id, status: "pending", reviewer: "", rationale: "", complete: false, evidenceRefs: [], atoms: [], cena: "1280x900@lista" }])), /Pending decision carries effects/);
+    // Pending: the floor is the smallest segment group, never the union.
+    const pendente = scoreSemanticPackage(pkg, reviews(pkg, [])).scores[0];
+    assert.equal(pendente.assertions.filter(a => a.cardId === b.id).length, 1);
+  });
+
+  test("D-60: review.md says the plan navigates and lists the subjects per scene to choose from", () => {
+    const md = renderReview(pkg, reviews(pkg, []));
+    assert.match(md, /Este plano navega \(D-60\)/);
+    assert.match(md, /Cena `1280x900@detalhe` \(\/app\/detalhe\) — escolha com `"cena": "1280x900@detalhe"`/);
+    // Without segments, review.md does not mention them.
+    assert.doesNotMatch(renderReview(prepare(), reviews(prepare(), [])), /Este plano navega|"cena"/);
+  });
+}
 
 console.log(`${tests} semantic scoring tests passed (including exhaustive 512-graph matching verification).`);

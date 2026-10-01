@@ -104,6 +104,13 @@ export function renderReview(pkg: SemanticPackage, reviews: SemanticReviews, opt
     "Confira também reportedEvidence, inclusive as limitações declaradas. Use unresolved quando não houver suporte.", "",
     "Cartões de linha de base (origem determinística) são revisados como os do agente: é o que permite dizer o que o agente acrescenta ou perde em relação à ferramenta.",
     "Cena = janela do plano de estados. Uma unidade só pode ser creditada por cartão da mesma cena.", "",
+    // Só em pacote com cenas por segmento (D-60); sem navegação o texto é o de sempre.
+    ...(pkg.scenes.some(s => s.segmento) ? [
+      "**Este plano navega (D-60):** cada janela tem uma cena por SEGMENTO, capturada na última parada dele " +
+        `(${pkg.scenes.map(s => `${s.id} = ${s.segmento?.path ?? "?"}`).join(" · ")}). ` +
+        "Quando o seletor de uma alegação resolve em mais de um segmento, o cartão lista os sujeitos de cada um e a " +
+        "decisão precisa dizer em `\"cena\"` de qual segmento a alegação fala (pelos passos declarados e pela evidência). " +
+        "Só os sujeitos dessa cena contam; os dos outros segmentos não são alegação.", ""] : []),
     "Um átomo = um defeito. subjects identifica cada elemento alegado; unitIds contém somente alternativas semanticamente aceitas.",
     "Cada átomo/elemento vale no máximo uma detecção. Divida alegações compostas; contabilize também as partes falsas.",
     'Duplicatas revisadas: no átomo repetido, acrescente duplicateOf: { "cardId": "C-...", "atomId": "..." }. A citação continua avaliada separadamente.', ""];
@@ -111,7 +118,10 @@ export function renderReview(pkg: SemanticPackage, reviews: SemanticReviews, opt
     const d = decisions.get(c.id);
     lines.push(`## ${c.id}`, "", `Estado: ${pending.has(c.id) ? "pendente" : "concluído"}`, "", ...claim(c, cego),
       "### Sujeitos", "",
-      ...c.subjects.map(s => `- ${JSON.stringify(s.id)} — ${s.label}${s.hidden ? ` · **oculto**: ${s.hidden}` : ""}`), "",
+      ...(c.segmentos
+        ? c.segmentos.flatMap(o => [`Cena \`${o.scene}\` (${o.path ?? "?"}) — escolha com \`"cena": ${JSON.stringify(o.scene)}\`:`,
+          ...c.subjects.filter(s => s.scene === o.scene).map(s => `- ${JSON.stringify(s.id)} — ${s.label}${s.hidden ? ` · **oculto**: ${s.hidden}` : ""}`), ""])
+        : c.subjects.map(s => `- ${JSON.stringify(s.id)} — ${s.label}${s.hidden ? ` · **oculto**: ${s.hidden}` : ""}`)), "",
       "### Unidades candidatas (não são crédito)", "");
     for (const id of c.candidateUnitIds) {
       const u = pkg.units.find(u => u.id === id)!;

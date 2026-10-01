@@ -50,7 +50,14 @@ export interface SemanticScene {
   /** Specs this window exists to measure; the default scene holds the specs without a window. */
   specIds: string[];
   resolutionHash: string;
+  /**
+   * Só quando o setup navega (D-60): a cena é um SEGMENTO da janela, capturado na última parada dele.
+   * Ausente sem navegação — e aí a cena é a janela inteira, no fim do setup, como sempre foi.
+   */
+  segmento?: CenaSegmento;
 }
+/** Onde, na sequência de setup, uma cena por segmento foi capturada. */
+export interface CenaSegmento { numero: number; estado: string; path: string | null; estados: string[] }
 export interface SemanticUnit extends FlowUnit { id: string; scene: string; acceptance: PredicateResult }
 /** Where the claims of a run come from. Baseline runs are deterministic tools, reviewed the same way. */
 export type RunKind = "agente" | "linha-de-base";
@@ -79,11 +86,19 @@ export interface ReviewCard {
    * not visible, measured with the key: the canonical key alone cannot tell them apart, and a
    * claim about something nobody can see should reach review saying so.
    */
-  subjects: { id: string; key: string | null; label: string; hidden: string | null }[];
+  subjects: { id: string; key: string | null; label: string; hidden: string | null; scene?: string }[];
   relatedKeys: string[];
   /** Hints only. Broad normative aliases do not establish defect identity. */
   candidateUnitIds: string[];
   reportedEvidence: unknown;
+  /**
+   * Só em pacote com cenas por segmento (D-60), e só quando o seletor da alegação resolve em MAIS de
+   * um segmento da janela: a alegação do agente diz a janela e os passos em texto livre, nunca a
+   * rota, e casar esse texto com um segmento seria a inferência que o D-39 proíbe. Então o cartão
+   * traz os sujeitos resolvidos em cada segmento (em `subjects`, com `scene`), e a revisora diz em
+   * `cena` de qual segmento a alegação fala. Só os sujeitos dessa cena são contabilizados.
+   */
+  segmentos?: { scene: string; estado: string; path: string | null; relatedKeys: string[]; candidateUnitIds: string[] }[];
 }
 export interface SemanticRun {
   id: string;
@@ -157,6 +172,11 @@ export interface SemanticDecision {
    * em nenhuma hipótese ela recai em "casou por elemento, logo está certa".
    */
   automatic?: { predicate: string };
+  /**
+   * Cena (segmento) de que a alegação fala, escolhida pela revisora. Obrigatória num cartão com
+   * `segmentos` revisado, proibida em qualquer outro (D-60).
+   */
+  cena?: string;
 }
 export interface SemanticReviews {
   version: typeof SEMANTIC_SCORING_VERSION;
@@ -232,7 +252,7 @@ export function normalizeReviews(raw: RawReviews | SemanticReviews): SemanticRev
   });
 }
 
-export interface SceneResolution { id: string; viewport: FlowViewport; specIds: string[]; resolution: Resolution }
+export interface SceneResolution { id: string; viewport: FlowViewport; specIds: string[]; resolution: Resolution; segmento?: CenaSegmento }
 export interface PrepareRun {
   id: string;
   data: FlowAgentResults;
@@ -241,6 +261,8 @@ export interface PrepareRun {
   tool?: string | null;
 }
 export const sceneIdOf = (v: FlowViewport): string => `${v.width}x${v.height}`;
+/** Cena de um segmento (D-60): a janela e a última parada do segmento. */
+export const sceneIdOfSegment = (v: FlowViewport, estado: string): string => `${sceneIdOf(v)}@${estado}`;
 const DEFAULT_VIEWPORT: FlowViewport = { width: 1280, height: 900 };
 
 /**
@@ -248,10 +270,16 @@ const DEFAULT_VIEWPORT: FlowViewport = { width: 1280, height: 900 };
  * planned scene with the same window WIDTH (layout follows width; a different height is flagged).
  * Any other window is outside the plan: its subjects are resolved in the default scene for reading,
  * but the card belongs to no planned scene and cannot anchor a reference unit.
+ *
+ * Com cenas por segmento (D-60) a janela de um cartão do agente tem várias cenas, e o texto livre
+ * dos passos não diz qual: `segmentos` devolve todas as cenas da janela, e o cartão é montado sobre
+ * aquelas em que o seletor resolve.
  */
 function sceneOfClaim(f: NormalizedFinding, raw: unknown, kind: RunKind, scenes: SceneResolution[]):
-  { scene: string; resolution: Resolution; flags: string[] } {
+  { scene: string; resolution: Resolution; flags: string[]; segmentos?: SceneResolution[] } {
   const fallback = scenes[0];
+  const segmentada = scenes.some(s => s.segmento);
+  const daJanela = (v: FlowViewport) => scenes.filter(s => s.viewport.width === v.width && s.viewport.height === v.height);
   if (kind === "linha-de-base") {
     const id = (raw as { scene?: unknown })?.scene;
     const scene = scenes.find(s => s.id === id);
@@ -259,8 +287,10 @@ function sceneOfClaim(f: NormalizedFinding, raw: unknown, kind: RunKind, scenes:
     return { scene: scene.id, resolution: scene.resolution, flags: [] };
   }
   if (!f.state) {
+    const janelas = new Set(scenes.map(s => sceneIdOf(s.viewport))).size;
     return { scene: fallback.id, resolution: fallback.resolution,
-      flags: scenes.length > 1 ? [`sem-janela-declarada: resolvido na cena ${fallback.id}`] : [] };
+      flags: janelas > 1 ? [`sem-janela-declarada: resolvido na cena ${fallback.id}`] : [],
+      ...(segmentada ? { segmentos: daJanela(fallback.viewport) } : {}) };
   }
   const { width, height } = f.state.viewport;
   const scene = scenes.find(s => s.viewport.width === width);
@@ -269,7 +299,29 @@ function sceneOfClaim(f: NormalizedFinding, raw: unknown, kind: RunKind, scenes:
       flags: [`janela-fora-do-plano: ${width}x${height}; sujeitos lidos na cena ${fallback.id}, sem âncora em unidade`] };
   }
   return { scene: scene.id, resolution: scene.resolution,
-    flags: scene.viewport.height === height ? [] : [`altura-diferente: ${width}x${height} na cena ${scene.id}`] };
+    flags: scene.viewport.height === height ? [] : [`altura-diferente: ${width}x${height} na cena ${scene.id}`],
+    ...(segmentada ? { segmentos: daJanela(scene.viewport) } : {}) };
+}
+
+/** Sujeitos e relacionados de um seletor numa cena. */
+function subjectsIn(res: Resolution, selector: string, relatedSelectors: string[]) {
+  const resolved = res.bySelector.get(selector);
+  const keys = resolved?.ok ? unique(resolved.keys) : [];
+  const relatedKeys = unique(relatedSelectors.flatMap(s => {
+    const r = res.bySelector.get(s);
+    return r?.ok ? r.keys : [];
+  }));
+  return { keys, relatedKeys };
+}
+
+/**
+ * Sujeitos que uma decisão pendente deve, no mínimo. Num cartão com `segmentos` a revisora escolhe
+ * UMA cena, então o piso é o menor grupo; sem segmentos, todos os sujeitos, como sempre.
+ */
+function sujeitosDevidos(card: ReviewCard): ReviewCard["subjects"] {
+  if (!card.segmentos) return card.subjects;
+  const grupos = card.segmentos.map(o => card.subjects.filter(s => s.scene === o.scene));
+  return grupos.reduce((menor, g) => g.length < menor.length ? g : menor, grupos[0]);
 }
 
 export function prepareSemanticPackage(
@@ -285,7 +337,7 @@ export function prepareSemanticPackage(
     : [{ id: sceneIdOf(DEFAULT_VIEWPORT), viewport: DEFAULT_VIEWPORT, specIds: unique(units.map(u => u.specId)), resolution: res }];
   requireThat(scenes.length > 0 && new Set(scenes.map(s => s.id)).size === scenes.length, "Scenes must be unique and nonempty");
   const semanticScenes: SemanticScene[] = scenes.map(s => ({ id: s.id, viewport: { width: s.viewport.width, height: s.viewport.height },
-    specIds: unique(s.specIds), resolutionHash: resolutionDigest(s.resolution) }));
+    specIds: unique(s.specIds), resolutionHash: resolutionDigest(s.resolution), ...(s.segmento ? { segmento: s.segmento } : {}) }));
   const semanticUnits = units.map(u => {
     const scene = u.scene ?? scenes[0].id;
     requireThat(scenes.some(s => s.id === scene), `Unit in an undeclared scene: ${u.specId}@${scene}`);
@@ -305,16 +357,33 @@ export function prepareSemanticPackage(
       // collector refused and archived yields `recusado`/`malformado` cards, never `achado-2`.
       const f = kind === "linha-de-base" ? deterministicFinding(raw) : normalizeFinding(raw, refusal);
       const placed = sceneOfClaim(f, raw, kind, scenes);
+      // Cenas por segmento (D-60): o seletor é resolvido em cada segmento da janela. Resolvendo em
+      // UM só, o cartão fica nele (é a página que responde onde o elemento existe). Em nenhum, fica
+      // no primeiro, não resolvido. Em mais de um, a revisora escolhe a cena na decisão.
+      const porSegmento = (placed.segmentos ?? []).map(s => ({ s, ...subjectsIn(s.resolution, f.selector, f.relatedSelectors) }));
+      const resolvem = porSegmento.filter(x => x.keys.length > 0);
+      const aDecidir = resolvem.length > 1 ? resolvem : null;
+      if (placed.segmentos && resolvem.length === 1) {
+        const s = resolvem[0].s;
+        placed.scene = s.id;
+        placed.resolution = s.resolution;
+        placed.flags.push(`segmento-pela-resolucao: o seletor só resolve em ${s.id} (${s.segmento?.path ?? "?"})`);
+      } else if (placed.segmentos && resolvem.length === 0) {
+        placed.flags.push(`segmento-nao-resolvido: o seletor não resolve em nenhuma cena da janela (${placed.segmentos.map(s => s.id).join(", ")})`);
+      } else if (aDecidir) {
+        placed.scene = `a-decidir:${sceneIdOf(aDecidir[0].s.viewport)}`;
+        placed.flags.push(`segmento-a-decidir: o seletor resolve em ${aDecidir.map(x => x.s.id).join(", ")}; ` +
+          "escolha em \"cena\" de qual a alegação fala — só os sujeitos dela contam");
+      }
       const sceneRes = placed.resolution;
-      const resolved = sceneRes.bySelector.get(f.selector);
-      const keys = resolved?.ok ? unique(resolved.keys) : [];
-      const subjects: ReviewCard["subjects"] = keys.length ? keys.map(key => ({
-        id: key, key, label: sceneRes.byKey.get(key)?.label ?? key, hidden: sceneRes.byKey.get(key)?.hidden ?? null,
-      })) : [{ id: `unresolved:${f.selector}`, key: null, label: "Seletor não resolvido", hidden: null }];
-      const relatedKeys = unique(f.relatedSelectors.flatMap(s => {
-        const r = sceneRes.bySelector.get(s);
-        return r?.ok ? r.keys : [];
-      }));
+      const { keys, relatedKeys: relatedHere } = subjectsIn(sceneRes, f.selector, f.relatedSelectors);
+      const subjects: ReviewCard["subjects"] = aDecidir
+        ? aDecidir.flatMap(({ s, keys: ks }) => ks.map(key => ({ id: `${s.id}|${key}`, key,
+          label: s.resolution.byKey.get(key)?.label ?? key, hidden: s.resolution.byKey.get(key)?.hidden ?? null, scene: s.id })))
+        : keys.length ? keys.map(key => ({
+          id: key, key, label: sceneRes.byKey.get(key)?.label ?? key, hidden: sceneRes.byKey.get(key)?.hidden ?? null,
+        })) : [{ id: `unresolved:${f.selector}`, key: null, label: "Seletor não resolvido", hidden: null }];
+      const relatedKeys = aDecidir ? [] : relatedHere;
       // Include full finding and run-supplied evidence/limitations. No fuzzy, case-folded,
       // rule-only or cross-state reuse. Grouped subjects remain individually accountable.
       const reportedEvidence = {
@@ -323,8 +392,14 @@ export function prepareSemanticPackage(
         ...(data.collector ? { submission: { status: data.collector.status, reason: data.collector.reason,
           rejectedFile: data.collector.rejectedFile, parseable: data.collector.parseable, filled: data.collector.filled } } : {}),
       };
-      const candidates = semanticUnits.filter(u => u.scene === placed.scene && u.participants.some(k =>
-        keys.includes(k) || relatedKeys.includes(k)));
+      const candidatesIn = (scene: string, ks: string[], rel: string[]) => semanticUnits.filter(u => u.scene === scene &&
+        u.participants.some(k => ks.includes(k) || rel.includes(k)));
+      const segmentos = aDecidir?.map(({ s, keys: ks, relatedKeys: rel }) => ({
+        scene: s.id, estado: s.segmento?.estado ?? s.id, path: s.segmento?.path ?? null, relatedKeys: rel,
+        candidateUnitIds: candidatesIn(s.id, ks, rel).map(u => u.id) }));
+      const candidates = aDecidir
+        ? semanticUnits.filter(u => segmentos!.some(o => o.candidateUnitIds.includes(u.id)))
+        : candidatesIn(placed.scene, keys, relatedKeys);
       const candidateUnitIds = candidates.map(u => u.id);
       // Estado declarado × estado medido (fatia 3). A unidade que só existe depois de uma interação
       // foi MEDIDA assim; uma alegação que não declara passo nenhum pode estar falando de outra
@@ -350,7 +425,7 @@ export function prepareSemanticPackage(
       const body = { origin: kind, scene: placed.scene, selector: f.selector, rule: f.rule, description: f.description,
         contract: f.contract, observed: f.observed, expected: f.expected, state: f.state,
         evidence: resolvedEvidence, binding, flags: [...f.flags, ...placed.flags, ...estadoFlags],
-        subjects, relatedKeys, candidateUnitIds, reportedEvidence };
+        subjects, relatedKeys, candidateUnitIds, reportedEvidence, ...(segmentos ? { segmentos } : {}) };
       const cardId = `C-${digest({ context, body, units: semanticUnits })}`;
       cardMap.set(cardId, { id: cardId, ...body });
       return cardId;
@@ -491,7 +566,7 @@ export function reviewEffort(pkg: SemanticPackage): ReviewEffort {
     + semEvidencia.length * TAXA_REVISAO.minutosExtraSemEvidencia;
   return {
     cartoes: pkg.cards.length,
-    sujeitos: pkg.cards.reduce((n, c) => n + c.subjects.length, 0),
+    sujeitos: pkg.cards.reduce((n, c) => n + sujeitosDevidos(c).length, 0),
     semEvidenciaVerificada: semEvidencia.length,
     comCandidatos: pkg.cards.filter(c => c.candidateUnitIds.length > 0).length,
     estimativaMinutos: estimativa,
@@ -540,16 +615,28 @@ export function scopeReviews(pkg: SemanticPackage, old?: SemanticReviews): Seman
 function anchored(subject: ReviewCard["subjects"][number], card: ReviewCard, unit: SemanticUnit): boolean {
   // An unresolved subject cannot borrow a resolved related selector to claim credit, and a claim
   // never earns a unit of another scene just because the element key is the same there.
-  return subject.key !== null && card.scene === unit.scene && (unit.participants.includes(subject.key)
-    || unit.participants.some(k => card.relatedKeys.includes(k)));
+  // Num cartão com `segmentos` (D-60) cada sujeito diz a sua cena, e os relacionados são os dela.
+  const scene = subject.scene ?? card.scene;
+  const related = subject.scene ? card.segmentos?.find(o => o.scene === subject.scene)?.relatedKeys ?? [] : card.relatedKeys;
+  return subject.key !== null && scene === unit.scene && (unit.participants.includes(subject.key)
+    || unit.participants.some(k => related.includes(k)));
 }
 
 function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<string, SemanticUnit>): void {
   requireThat(d.status === "pending" || d.status === "reviewed", `Invalid status: ${card.id}`);
   if (d.status === "pending") {
-    requireThat(!d.complete && d.atoms.length === 0, `Pending decision carries effects: ${card.id}`);
+    requireThat(!d.complete && d.atoms.length === 0 && d.cena === undefined, `Pending decision carries effects: ${card.id}`);
     return;
   }
+  // Cena escolhida pela revisora (D-60): obrigatória onde o seletor resolve em mais de um segmento,
+  // e só ali. Os sujeitos que contam são os dela; os dos outros segmentos não são alegação.
+  if (card.segmentos) {
+    requireThat(typeof d.cena === "string" && card.segmentos.some(o => o.scene === d.cena),
+      `Card resolves in several segments; the decision must name "cena" (${card.segmentos.map(o => o.scene).join(" | ")}): ${card.id}`);
+  } else {
+    requireThat(d.cena === undefined, `"cena" only applies to a card with segments to choose from: ${card.id}`);
+  }
+  const devidos = card.segmentos ? card.subjects.filter(s => s.scene === d.cena) : card.subjects;
   requireThat(d.complete && d.reviewer.trim() && d.rationale.trim() && d.evidenceRefs.length > 0
     && d.evidenceRefs.every(ref => typeof ref === "string" && ref.trim()), `Incomplete review: ${card.id}`);
   requireThat(d.atoms.length > 0, `Reviewed card without atoms: ${card.id}`);
@@ -566,8 +653,8 @@ function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<stri
     requireThat(a.verdict === "reference" ? a.unitIds.length > 0 : a.unitIds.length === 0,
       `Only reference atoms declare nonempty unitIds: ${a.id}`);
     const subjects = a.subjects.map(id => {
-      const s = card.subjects.find(s => s.id === id);
-      requireThat(s, `Unknown subject: ${id}`);
+      const s = devidos.find(s => s.id === id);
+      requireThat(s, card.subjects.some(s => s.id === id) ? `Subject outside the chosen scene ${d.cena}: ${id}` : `Unknown subject: ${id}`);
       covered.add(id);
       return s;
     });
@@ -579,7 +666,7 @@ function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<stri
       requireThat(a.unitIds.some(id => anchored(s, card, units.get(id)!)), `Unsupported subject: ${s.id}`);
     }
   }
-  requireThat(card.subjects.every(s => covered.has(s.id)), `Review omitted a subject: ${card.id}`);
+  requireThat(devidos.every(s => covered.has(s.id)), `Review omitted a subject: ${card.id}`);
 
   // O caminho automático só existe onde a máquina de fato verificou alguma coisa. Um predicado que
   // este avaliador não implementa não vira crédito nem recusa: a alegação fica sem resolver, e a
@@ -730,8 +817,9 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
       if (!decision || decision.status === "pending") {
         pendingCardIds.push(id);
         // A lower count of unresolved assertion instances, not an exact atom count.
-        unresolved += card.subjects.length;
-        for (const s of card.subjects) assertions.push({ instanceId: digest([id, null, s.id]),
+        const devidos = sujeitosDevidos(card);
+        unresolved += devidos.length;
+        for (const s of devidos) assertions.push({ instanceId: digest([id, null, s.id]),
           cardId: id, atomId: null, subjectId: s.id, verdict: "pending", eligibleUnitIds: [], matchedUnitId: null });
         continue;
       }

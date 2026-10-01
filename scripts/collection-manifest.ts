@@ -31,8 +31,9 @@ import { chromium } from "playwright";
 import { ROOT } from "./adjudication";
 import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION, FLOW_ACCEPTANCE_POLICY_VERSION, FLOW_REFERENCE_FILE } from "./instrument";
 import { referenciaDe, telaFromArgs } from "./telas";
-import { SCORER_FILES, digest } from "./semantic-flow";
-import { VIEWPORT_PADRAO, exigeSegmentoUnico } from "./anchors";
+import { SCORER_FILES, digest, sceneIdOf, sceneIdOfSegment } from "./semantic-flow";
+import { VIEWPORT_PADRAO, problemasDaSequencia, segmentosDasParadas, temNavegacao, type StateCheckpoint } from "./anchors";
+import type { FlowSetupStep } from "../types";
 
 export const COLLECTION_MANIFEST_VERSION = "manifesto-coleta-1.0.0";
 export const COLLECTION_PLAN_VERSION = "plano-bateria-1.0.0";
@@ -111,6 +112,13 @@ export interface StatePlan {
   setup: unknown[];
   waitFor: string | null;
   url: string;
+  /**
+   * Só quando o setup navega (D-60): as paradas, com o `path` de cada uma. Com navegação a cena deixa
+   * de ser "o fim do setup" e passa a ser o fim de cada segmento, então as paradas fazem parte do que
+   * a coleta se propõe a observar e entram no hash do plano. Sem navegação o campo não existe, e o
+   * hash do plano é o de sempre.
+   */
+  paradas?: { id: string; afterStep: number; path: string | null }[];
 }
 
 /** Plano de estados declarado pelo gabarito: o que a coleta e as linhas de base se propõem a observar. */
@@ -146,10 +154,13 @@ export function checkPlanConformity(
   }
 }
 
-export function statePlanOf(gt: {
-  _meta: { url: string; viewport?: { width: number; height: number }; setup?: unknown[]; waitFor?: string };
-  violations: { id: string; viewport?: { width: number; height: number } }[];
-}): StatePlan {
+type GabaritoDoPlano = {
+  _meta: { url: string; viewport?: { width: number; height: number }; setup?: unknown[]; waitFor?: string;
+    states?: { id: string; afterStep: number; path?: string }[] };
+  violations: { id: string; viewport?: { width: number; height: number }; state?: string }[];
+};
+
+export function statePlanOf(gt: GabaritoDoPlano): StatePlan {
   const padrao = gt._meta.viewport ?? VIEWPORT_PADRAO;
   const grupos = new Map<string, { viewport: { width: number; height: number }; specs: string[] }>();
   for (const spec of gt.violations) {
@@ -166,7 +177,54 @@ export function statePlanOf(gt: {
     setup: gt._meta.setup ?? [],
     waitFor: gt._meta.waitFor ?? null,
     url: gt._meta.url,
+    ...(temNavegacao(gt._meta.setup)
+      ? { paradas: (gt._meta.states ?? []).map(s => ({ id: s.id, afterStep: s.afterStep, path: s.path ?? null })) }
+      : {}),
   };
+}
+
+/**
+ * Cena planejada: uma janela do plano e, quando o setup navega, um segmento dela (D-60).
+ *
+ * Sem navegação é o que sempre foi — uma cena por janela, capturada no fim do setup, com as specs
+ * daquela janela, e o id `LARGURAxALTURA`. Com navegação cada janela vira uma cena por segmento,
+ * capturada na última parada do segmento (`LARGURAxALTURA@parada`), e cada spec cai no segmento do
+ * seu `state`; `sempre` cai no último, onde `buildFlowUnitsAcross` a constrói. Linha de base e pacote
+ * leem daqui, para que as passadas de uma e as cenas do outro nunca discordem.
+ */
+export interface CenaDoPlano {
+  id: string;
+  viewport: { width: number; height: number };
+  specIds: string[];
+  /** Só com navegação. */
+  segmento?: { numero: number; estado: string; afterStep: number; path: string | null; estados: string[] };
+}
+
+export function cenasDoPlano(gt: GabaritoDoPlano, plan: StatePlan = statePlanOf(gt)): CenaDoPlano[] {
+  const janelas = [
+    { viewport: plan.padrao, specIds: gt.violations.filter(v => !plan.extras.some(e => e.specs.includes(v.id))).map(v => v.id) },
+    ...plan.extras.map(e => ({ viewport: e.viewport, specIds: [...e.specs] })),
+  ];
+  if (!plan.paradas) return janelas.map(j => ({ id: sceneIdOf(j.viewport), viewport: j.viewport, specIds: j.specIds }));
+  const setup = plan.setup as FlowSetupStep[];
+  const paradas: StateCheckpoint[] = plan.paradas.map(p => ({ id: p.id, afterStep: p.afterStep, ...(p.path !== null ? { path: p.path } : {}) }));
+  const forma = problemasDaSequencia(setup, paradas);
+  if (!paradas.length) forma.push("o setup navega e _meta.states não declara parada nenhuma");
+  if (forma.length) throw new Error(`plano de estados malformado:\n  - ${forma.join("\n  - ")}`);
+  const segmentos = segmentosDasParadas(setup, paradas);
+  const ultimo = segmentos[segmentos.length - 1];
+  if (ultimo.ultimo.afterStep !== setup.length) {
+    throw new Error(`plano de estados malformado: a última parada (${ultimo.ultimo.id}) para em ${ultimo.ultimo.afterStep} de ${setup.length} passos`);
+  }
+  const segmentoDaSpec = (id: string): number => {
+    const estado = gt.violations.find(v => v.id === id)?.state;
+    return segmentos.find(s => estado !== undefined && s.estados.includes(estado))?.segmento ?? ultimo.segmento;
+  };
+  return janelas.flatMap(j => segmentos.map(s => ({
+    id: sceneIdOfSegment(j.viewport, s.ultimo.id), viewport: j.viewport,
+    specIds: j.specIds.filter(id => segmentoDaSpec(id) === s.segmento),
+    segmento: { numero: s.segmento, estado: s.ultimo.id, afterStep: s.ultimo.afterStep, path: s.ultimo.path ?? null, estados: s.estados },
+  })));
 }
 
 export interface OracleIdentity {
@@ -424,9 +482,10 @@ export async function buildCollectionManifest(options: {
   const referencePath = options.referencePath ?? join(ROOT, FLOW_REFERENCE_FILE);
   const reference = referenceIdentity(referencePath);
   const statePlan = existsSync(referencePath) ? statePlanOf(JSON.parse(readFileSync(referencePath, "utf8"))) : null;
-  // Não se congela coleta cuja linha de base e cujo pacote não podem ser montados (D-57): a bateria
-  // seria paga para depois parar na preparação.
-  if (statePlan) exigeSegmentoUnico(statePlan.setup, "manifest:coleta build (a linha de base e o pacote desta referência recusariam)");
+  // Não se congela coleta cujo plano de estados a linha de base e o pacote não conseguiriam montar: a
+  // bateria seria paga para depois parar na preparação. Com navegação (D-60) o plano carrega as
+  // paradas, e as cenas por segmento têm de sair dele.
+  if (statePlan) cenasDoPlano(JSON.parse(readFileSync(referencePath, "utf8")) as GabaritoDoPlano, statePlan);
   const oracle = oracleIdentity(VALIDATOR_ROOT, options.oracleBuilt ?? false);
   const siteBytes = existsSync(options.siteManifestPath) ? readFileSync(options.siteManifestPath) : null;
   const siteManifest = siteBytes ? JSON.parse(siteBytes.toString("utf8")) as { corpusCommit: string | null; corpusDirty: boolean | null } : null;

@@ -14,7 +14,7 @@
  * pista nenhuma do gabarito).
  */
 
-import { chromium, type Page } from "playwright";
+import { chromium, type Browser, type Page } from "playwright";
 import { createHash } from "crypto";
 import type { FlowSetupStep, FlowViewport } from "../types";
 
@@ -86,6 +86,11 @@ export interface StateNavigation {
   /** `path` DECLARADO em `_meta.states`, quando há. */
   declaredPathOf: Map<string, string>;
   documentOf: Map<string, string>;
+  /**
+   * Só quando a varredura conferiu estabilidade (setup que navega, D-60): o que mudou na árvore
+   * dentro da janela depois de cada parada. Vazio = parada estável.
+   */
+  instavelOf?: Map<string, string[]>;
 }
 
 export interface StateResolutions {
@@ -379,7 +384,165 @@ export function exigeSegmentoUnico(setup: readonly unknown[] | undefined, consum
   const n = (setup ?? []).filter(s => (s as FlowSetupStep | null)?.action === "navigate").length;
   throw new Error(`${consumidor}: o setup desta referência navega (${n} passo(s) navigate, ${n + 1} segmentos), e este ` +
     "consumidor mede um estado só, no fim do setup — perderia em silêncio o que os segmentos anteriores ancoram. " +
-    "Recusado. Hoje só `conferir:referencia` mede referência com navegação (estado a estado, segmento a segmento).");
+    "Recusado. Medem referência com navegação, segmento a segmento: `conferir:referencia`, `flow:review prepare`, " +
+    "`baselines:fluxo` e `manifest:coleta build` (D-60).");
+}
+
+// ── Cenas por segmento (D-60) ────────────────────────────────────────────────
+
+/**
+ * Um segmento do plano de estados: as paradas entre dois `navigate`, e a ÚLTIMA delas, em que a
+ * cena do segmento é capturada. Dentro do segmento a sequência é aditiva (cobrado pela medida), então
+ * a última parada contém tudo o que as anteriores ancoram — o mesmo argumento que sempre autorizou
+ * uma cena só no fim do setup, agora aplicado a cada segmento.
+ */
+export interface SegmentoDoPlano {
+  segmento: number;
+  estados: string[];
+  /** Última parada declarada do segmento: onde a cena é capturada e as unidades são construídas. */
+  ultimo: StateCheckpoint;
+}
+
+export function segmentosDasParadas(setup: readonly FlowSetupStep[], states: readonly StateCheckpoint[]): SegmentoDoPlano[] {
+  const ordem = [...states].sort((a, b) => a.afterStep - b.afterStep);
+  const porSegmento = new Map<number, SegmentoDoPlano>();
+  for (const st of ordem) {
+    const segmento = segmentoApos(setup, st.afterStep);
+    const atual = porSegmento.get(segmento);
+    if (atual) { atual.estados.push(st.id); atual.ultimo = st; } else porSegmento.set(segmento, { segmento, estados: [st.id], ultimo: st });
+  }
+  return [...porSegmento.values()];
+}
+
+/**
+ * Como alcançar uma parada numa página NOVA, só com clique, preenchimento e espera — o vocabulário do
+ * scanner do oráculo, que não conhece `navigate` e não herda a página de ninguém.
+ *
+ * `navigate` por clique vira clique + espera pelo `waitFor`: é a mesma navegação dentro da aplicação.
+ * `navigate` por caminho não tem equivalente em clique, então a página nova ENTRA DIRETO na rota: o
+ * endereço é o `path` do último `navigate` por caminho, com a consulta da entrada repetida (numa SPA
+ * a consulta costuma escolher sessão ou perfil, como o `?mock-perfil` da tela B), e os passos são a
+ * espera pelo `waitFor` dele e o que vem depois. Entrar direto não é a mesma coisa que navegar, e por
+ * isso ninguém presume que dê no mesmo: `diferencasDeArvore` MEDE, e quem usa isto recusa quando a
+ * árvore diverge.
+ *
+ * Sem `navigate` por caminho antes da parada, o endereço é a entrada e os passos são o próprio setup
+ * (com os `navigate` por clique traduzidos) — sem navegação nenhuma, exatamente o setup de sempre.
+ */
+export interface EntradaDireta {
+  url: string;
+  passos: FlowSetupStep[];
+  /** true quando a página nova entra numa rota diferente da entrada (houve `navigate` por caminho). */
+  direta: boolean;
+}
+
+export function entradaDireta(url: string, setup: readonly FlowSetupStep[], afterStep: number): EntradaDireta {
+  const ate = setup.slice(0, afterStep);
+  let inicio = 0;
+  let endereco = url;
+  let direta = false;
+  ate.forEach((step, i) => {
+    if (step.action !== "navigate" || !step.path) return;
+    const entrada = new URL(url);
+    const alvo = new URL(step.path, entrada);
+    if (!alvo.search) alvo.search = entrada.search;
+    endereco = alvo.toString();
+    inicio = i;
+    direta = true;
+  });
+  const passos: FlowSetupStep[] = [];
+  ate.slice(inicio).forEach((step, i) => {
+    if (step.action !== "navigate") { passos.push(step); return; }
+    if (direta && i === 0) { passos.push({ action: "wait", selector: step.waitFor }); return; }
+    passos.push({ action: "click", selector: step.selector }, { action: "wait", selector: step.waitFor });
+  });
+  return { url: endereco, passos, direta };
+}
+
+/**
+ * Impressão estrutural da árvore: cada elemento sob `body` (atravessando shadow roots abertos) com
+ * sua chave canônica, a visibilidade medida e o rótulo SEM o id do DOM. O id sai porque aplicações
+ * reais numeram ids por contador de instância (`br-input-14` numa entrada direta, `br-input-105`
+ * depois de passar pela lista): o mesmo elemento, no mesmo lugar, com o mesmo texto. `head` sai
+ * porque é onde o framework injeta o CSS dos componentes que já carregou — o que depende do caminho
+ * percorrido, não do que está na tela.
+ */
+export async function impressaoDaArvore(page: Page): Promise<string[]> {
+  // `*` e não `body *`: dentro de um shadow root nenhum seletor alcança o `body` do documento.
+  const { bySelector, byKey } = await resolveOnPage(page, ["*"]);
+  return (bySelector.get("*")?.keys ?? []).filter(k => k === "body" || k.startsWith("body>")).map(k => {
+    const e = byKey.get(k)!;
+    return `${k} | ${e.label.replace(/^<([a-z0-9-]+)#[^>]*>/i, "<$1>")} | ${e.hidden ?? ""}`;
+  });
+}
+
+/**
+ * Janela em que uma parada tem de ficar parada (D-60). Numa SPA real o conteúdo continua chegando
+ * depois de o seletor esperado aparecer (a lista do modal da tela B chega ~0,5 s depois do
+ * `.br-modal`), e cada medidor olharia a página num instante diferente: a resolução logo depois do
+ * passo, o axe um pouco depois, o scanner do oráculo noutro navegador. Uma parada que muda dentro da
+ * janela não é um estado — falta declarar uma espera pelo que ainda carrega.
+ */
+export const JANELA_ESTABILIDADE_MS = 1000;
+
+/** Diferenças da árvore entre o instante da parada e o fim da janela; vazio = parada estável. */
+export async function instabilidadeDaParada(page: Page): Promise<string[]> {
+  const inicio = await impressaoDaArvore(page);
+  let fim = inicio;
+  for (let i = 0; i < 2; i++) {
+    await page.waitForTimeout(JANELA_ESTABILIDADE_MS / 2);
+    fim = await impressaoDaArvore(page);
+    const d = diferencasDeArvore(inicio, fim, { a: "na parada", b: `até ${JANELA_ESTABILIDADE_MS} ms depois` });
+    if (d.length) return d;
+  }
+  return [];
+}
+
+/** Diferenças entre duas impressões; vazio = mesma árvore. */
+export function diferencasDeArvore(a: readonly string[], b: readonly string[], rotulos = { a: "navegando", b: "entrada direta" }): string[] {
+  const sa = new Set(a);
+  const sb = new Set(b);
+  const soA = a.filter(x => !sb.has(x));
+  const soB = b.filter(x => !sa.has(x));
+  if (!soA.length && !soB.length && a.length === b.length) return [];
+  return [`${a.length} elemento(s) ${rotulos.a} × ${b.length} ${rotulos.b}`,
+    ...soA.slice(0, 5).map(x => `só ${rotulos.a}: ${x}`), ...soB.slice(0, 5).map(x => `só ${rotulos.b}: ${x}`)];
+}
+
+/**
+ * Abre a entrada direta numa página nova do mesmo navegador (contexto próprio, como o scanner do
+ * oráculo abriria), confere a árvore contra a impressão medida navegando e devolve a página para quem
+ * precisa resolver nela os seletores de quem mediu por essa entrada. Árvore divergente para aqui.
+ */
+export async function abrirEntradaDireta(
+  browser: Browser,
+  viewport: FlowViewport,
+  alcance: EntradaDireta,
+  impressaoNavegando: readonly string[],
+  onde: string,
+): Promise<{ page: Page; close: () => Promise<void> }> {
+  const context = await browser.newContext({ viewport });
+  try {
+    const page = await context.newPage();
+    await page.goto(alcance.url, { waitUntil: "networkidle" });
+    await runSetupSteps(page, alcance.passos);
+    // O scanner varre quando a última ação dele termina. Se a entrada direta ainda está carregando
+    // nesse instante, ele mediria uma árvore que a navegada não tem — mesmo que as duas acabem iguais.
+    const instavel = await instabilidadeDaParada(page);
+    if (instavel.length) {
+      throw new Error(`${onde}: a entrada direta (${alcance.url}, ${alcance.passos.length} passo(s)) ainda muda depois do último ` +
+        `passo — o scanner do oráculo varreria antes de ela assentar. Declare no setup uma espera pelo que ainda carrega:\n  - ${instavel.join("\n  - ")}`);
+    }
+    const diferencas = diferencasDeArvore(impressaoNavegando, await impressaoDaArvore(page));
+    if (diferencas.length) {
+      throw new Error(`${onde}: a entrada direta (${alcance.url}, ${alcance.passos.length} passo(s)) não reproduz a árvore ` +
+        `alcançada navegando — quem mede por essa entrada estaria medindo outra página:\n  - ${diferencas.join("\n  - ")}`);
+    }
+    return { page, close: () => context.close() };
+  } catch (error) {
+    await context.close();
+    throw error;
+  }
 }
 
 /**
@@ -491,6 +654,11 @@ export async function resolveStatesOnPage(
      * estado, e medir tudo lá seria medir um estado e cobrar outro.
      */
     onState?: (state: string, resolution: Resolution, page: Page) => Promise<void>;
+    /**
+     * Confere, em cada parada e antes da resolução, que a árvore não muda dentro da janela de
+     * estabilidade (D-60). Ligado por quem mede referência que navega; sem isto nada muda.
+     */
+    estabilidade?: boolean;
   },
 ): Promise<StateResolutions> {
   const setup = opts.setup ?? [];
@@ -525,6 +693,7 @@ export async function resolveStatesOnPage(
     navigation.pathOf.set(st.id, new URL(page.url()).pathname);
     if (st.path !== undefined) navigation.declaredPathOf.set(st.id, st.path);
     navigation.documentOf.set(st.id, await page.evaluate(MARCA_DOCUMENTO) as string);
+    if (opts.estabilidade) (navigation.instavelOf ??= new Map()).set(st.id, await instabilidadeDaParada(page));
     const { bySelector, byKey } = await resolveOnPage(page, selectors);
     const resolution: Resolution = { url, bySelector, byKey };
     byState.set(st.id, resolution);

@@ -22,7 +22,10 @@ import type { AddressInfo } from "node:net";
 import { chromium } from "playwright";
 import type { FlowGroundTruth, FlowSetupStep } from "../types";
 import type { ElementRef, Resolution, StateCheckpoint, StateResolutions } from "./anchors";
-import { exigeSegmentoUnico, openPage, preparePage, resolveSelectors, resolveStatesOnPage } from "./anchors";
+import {
+  abrirEntradaDireta, entradaDireta, exigeSegmentoUnico, impressaoDaArvore, openPage, preparePage, resolveSelectors,
+  resolveStatesOnPage, runSetupSteps, segmentosDasParadas,
+} from "./anchors";
 import { buildFlowUnits, buildFlowUnitsAcross, measureStatePresence, specMedidaNoEstado, statesOfGroundTruth } from "./units-flow";
 
 let tests = 0;
@@ -206,22 +209,31 @@ const SPA = `<!doctype html><html><head><meta charset="utf-8"><title>spa</title>
     <a id="ir-lista" data-spa href="/app/lista">Lista</a> <a id="ir-recarga" href="/app/detalhe">Recarga</a></nav>
   <main id="raiz"></main>
   <script>
+    // Contador de instância (D-60): como os ids das aplicações reais, depende do caminho percorrido.
+    var renders = 0, primeira = location.pathname;
     function render() {
       var raiz = document.getElementById("raiz");
+      renders++;
       if (location.pathname === "/app/detalhe") {
         raiz.innerHTML = '<section class="detalhe"><h1 class="titulo">Detalhe</h1>' +
+          '<input class="campo" id="campo-' + renders + '">' +
           '<button id="apagar-titulo">apagar</button><button id="abrir-painel">abrir</button></section>';
+        // ?diverge: a entrada direta desenha algo que a navegação não desenha.
+        if (location.search.indexOf("diverge") >= 0 && primeira === "/app/detalhe") raiz.insertAdjacentHTML("beforeend", '<p class="so-direto">x</p>');
       } else {
         raiz.innerHTML = '<ul class="lista"><li class="item">A</li><li class="item">B</li></ul>' +
-          '<button id="abrir-painel">abrir</button><button id="rota-escondida">ir</button>';
+          '<button id="abrir-painel">abrir</button><button id="rota-escondida">ir</button><button id="carregar-tarde">tarde</button>';
       }
     }
     document.addEventListener("click", function (e) {
       var a = e.target.closest("a[data-spa]");
       if (a) { e.preventDefault(); history.pushState(null, "", a.getAttribute("href")); render(); return; }
+      // ?lento: o painel do detalhe traz uma parte que chega 300 ms depois do seletor esperado.
+      if (e.target.id === "abrir-painel" && location.search.indexOf("lento") >= 0) setTimeout(function () { document.getElementById("raiz").insertAdjacentHTML("beforeend", '<p class="tarde">t</p>'); }, 300);
       if (e.target.id === "abrir-painel") { var p = document.createElement("div"); p.className = "painel"; p.textContent = "painel"; document.getElementById("raiz").appendChild(p); }
       if (e.target.id === "apagar-titulo") document.querySelector(".titulo").remove();
       if (e.target.id === "rota-escondida") { history.pushState(null, "", "/app/detalhe"); render(); }
+      if (e.target.id === "carregar-tarde") setTimeout(function () { document.getElementById("raiz").insertAdjacentHTML("beforeend", '<p class="tarde">t</p>'); }, 300);
     });
     window.addEventListener("popstate", render);
     render();
@@ -371,6 +383,78 @@ async function testesDeNavegacao(): Promise<void> {
       assert.throws(() => exigeSegmentoUnico(PELO_CLIQUE, "consumidor"), /1 passo\(s\) navigate, 2 segmentos/);
       assert.doesNotThrow(() => exigeSegmentoUnico([{ action: "click", selector: "#a" }], "consumidor"));
       ok("recusas explícitas: path ausente, forma do passo, recarga, outra origem, clique que não navega, ação desconhecida, consumidor de estado único");
+    }
+    // ── Cenas por segmento (D-60) ───────────────────────────────────────────────
+    {
+      // Segmentos do plano: a cena de cada um é a ÚLTIMA parada dele.
+      const segs = segmentosDasParadas(PELO_CLIQUE, PARADAS);
+      assert.deepEqual(segs.map(s => [s.segmento, s.estados, s.ultimo.id]),
+        [[0, ["lista", "lista-painel"], "lista-painel"], [1, ["detalhe", "detalhe-painel"], "detalhe-painel"]]);
+      // Entrada direta: navigate por clique vira clique + espera; por caminho, a rota com a consulta
+      // da entrada, a espera do navigate e o que vem depois. Sem navigate por caminho, o próprio setup.
+      assert.deepEqual(entradaDireta(entrada, PELO_CLIQUE, 5), { url: entrada, direta: false, passos: [
+        { action: "click", selector: "#abrir-painel" }, { action: "wait", selector: ".painel" },
+        { action: "click", selector: "#ir-detalhe" }, { action: "wait", selector: ".detalhe" },
+        { action: "click", selector: "#abrir-painel" }, { action: "wait", selector: ".painel" }] });
+      const PELO_CAMINHO: FlowSetupStep[] = [
+        { action: "click", selector: "#abrir-painel" }, { action: "wait", selector: ".painel" },
+        { action: "navigate", path: "/app/detalhe", waitFor: ".detalhe" },
+        { action: "click", selector: "#abrir-painel" }, { action: "wait", selector: ".painel" },
+      ];
+      assert.deepEqual(entradaDireta(`${entrada}?perfil=x`, PELO_CAMINHO, 5), { url: `${origem}/app/detalhe?perfil=x`, direta: true,
+        passos: [{ action: "wait", selector: ".detalhe" }, { action: "click", selector: "#abrir-painel" }, { action: "wait", selector: ".painel" }] });
+      assert.deepEqual(entradaDireta(entrada, PELO_CAMINHO, 2).direta, false, "antes do navigate, a entrada de sempre");
+      assert.deepEqual(entradaDireta(entrada, [], 0), { url: entrada, direta: false, passos: [] });
+      ok("segmentos do plano e entrada direta: clique traduzido, caminho vira rota com a consulta da entrada");
+    }
+    {
+      // Navegando e entrando direto, a árvore é a mesma — só o id numerado por contador difere, e a
+      // impressão não o vê. Medido, não presumido.
+      const PELO_CAMINHO: FlowSetupStep[] = [{ action: "navigate", path: "/app/detalhe", waitFor: ".detalhe" },
+        { action: "click", selector: "#abrir-painel" }, { action: "wait", selector: ".painel" }];
+      const page = await browser.newPage();
+      await openPage(page, entrada, { waitFor: ".lista" });
+      await runSetupSteps(page, PELO_CAMINHO);
+      const navegando = await impressaoDaArvore(page);
+      const idNavegando = await page.getAttribute(".campo", "id");
+      const alcance = entradaDireta(entrada, PELO_CAMINHO, 3);
+      const direta = await abrirEntradaDireta(browser, { width: 1280, height: 900 }, alcance, navegando, "teste");
+      const idDireto = await direta.page.getAttribute(".campo", "id");
+      assert.notEqual(idNavegando, idDireto, "o contador numera diferente nos dois caminhos");
+      assert.deepEqual(await impressaoDaArvore(direta.page), navegando);
+      await direta.close();
+      // ?diverge: a entrada direta desenha um elemento a mais — e é recusada.
+      const divergente = entradaDireta(`${entrada}?diverge=1`, PELO_CAMINHO, 3);
+      await assert.rejects(abrirEntradaDireta(browser, { width: 1280, height: 900 }, divergente, navegando, "teste"),
+        /não reproduz a árvore alcançada navegando[\s\S]*só entrada direta: .*p.*"x"/);
+      // ?lento: a entrada direta ainda está mudando quando o último passo termina — o scanner varreria antes.
+      const lenta = entradaDireta(`${entrada}?lento=1`, PELO_CAMINHO, 3);
+      await assert.rejects(abrirEntradaDireta(browser, { width: 1280, height: 900 }, lenta, navegando, "teste"),
+        /ainda muda depois do último passo/);
+      await page.close();
+      ok("entrada direta: mesma árvore apesar do id por contador; árvore diferente ou ainda carregando é recusada");
+    }
+    {
+      // Parada instável: o clique faz algo chegar 300 ms depois, e nenhuma espera o declara.
+      const instavel: FlowSetupStep[] = [{ action: "click", selector: "#carregar-tarde" },
+        { action: "navigate", path: "/app/detalhe", waitFor: ".detalhe" }];
+      const states: StateCheckpoint[] = [{ id: "lista", afterStep: 0, path: "/app/lista" },
+        { id: "tarde", afterStep: 1, path: "/app/lista" }, { id: "detalhe", afterStep: 2, path: "/app/detalhe" }];
+      const page = await browser.newPage();
+      await openPage(page, entrada, { waitFor: ".lista" });
+      const medida = measureStatePresence(await resolveStatesOnPage(page, entrada, SELETORES_SPA, { setup: instavel, states, estabilidade: true }));
+      await page.close();
+      assert.equal(medida.defects.length, 1, JSON.stringify(medida.defects));
+      assert.match(medida.defects[0].problem, /a parada tarde não é estável: .*só até 1000 ms depois: .*"t"/);
+      // Declarando a espera, a mesma parada é estável.
+      const comEspera: FlowSetupStep[] = [instavel[0], { action: "wait", selector: ".tarde" }, instavel[1]];
+      const page2 = await browser.newPage();
+      await openPage(page2, entrada, { waitFor: ".lista" });
+      const ok2 = measureStatePresence(await resolveStatesOnPage(page2, entrada, SELETORES_SPA, { setup: comEspera,
+        states: states.map(s => s.id === "tarde" ? { ...s, afterStep: 2 } : s.id === "detalhe" ? { ...s, afterStep: 3 } : s), estabilidade: true }));
+      await page2.close();
+      assert.deepEqual(ok2.defects, []);
+      ok("parada que muda depois do último passo é acusada; com a espera declarada, estável");
     }
   } finally {
     await browser.close();

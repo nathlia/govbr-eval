@@ -386,12 +386,61 @@ Por isso o `setup` aceita um quarto passo:
   (`sempre`, no último de todos), e seu predicado de aceitação só é medido nas paradas desse
   segmento. Sem navegação nada disso muda: um segmento só, o mesmo último estado, as mesmas saídas
   (`ground-truth-fluxo.json` e `ground-truth-solicitacao.json` conferidos byte a byte antes e depois).
-- **Quem mede um estado só recusa.** A cena do pacote (`flow:review prepare`), as linhas de base
-  (`baselines:fluxo`, cujo scanner recebe o setup como `actions`), o manifesto de coleta
-  (`manifest:coleta build`, para a bateria não ser paga e parar depois) e todo caminho que passa por
-  `preparePage` (`score:fluxo:legacy`, `adjudicate`, `pacote:revisao`) param com erro nomeando o
-  motivo quando o setup navega. Hoje só `conferir:referencia` mede referência com navegação. Passo
-  malformado ou de ação desconhecida também para — antes, um `click` sem seletor era pulado.
+- **Quem mede um estado só recusa.** Todo caminho que passa por `preparePage` (`score:fluxo:legacy`,
+  `adjudicate`, `pacote:revisao`, todos do v01) para com erro nomeando o motivo quando o setup navega.
+  Passo malformado ou de ação desconhecida também para — antes, um `click` sem seletor era pulado.
+
+### Cenas por segmento: pacote, linha de base e manifesto (D-60)
+
+Com navegação, a cena deixa de ser "a janela no fim do setup" e passa a ser **o fim de cada
+segmento**. O argumento é o mesmo que sempre autorizou uma cena só: dentro de um segmento a sequência
+é aditiva (cobrado), então a última parada dele contém tudo o que as anteriores ancoram.
+
+- **Plano.** `statePlanOf` grava `paradas` (`id`, `afterStep`, `path`) quando o setup navega, e elas
+  entram no `statePlanSha256`: mudar onde uma parada está ou o endereço dela é outro plano. Sem
+  navegação o campo não existe e o hash é o de sempre. `cenasDoPlano` (em `collection-manifest.ts`) é a
+  lista única de cenas que a linha de base mede e o pacote prepara: sem navegação, uma por janela
+  (`1280x900`); com navegação, uma por segmento de cada janela, com id `1280x900@<última parada>`. Cada
+  spec cai na cena do segmento do seu `state`; `sempre`, na do último segmento. O manifesto de coleta
+  monta essa lista antes de congelar — plano malformado (parada sem `path`, última parada antes do fim
+  do setup) não é congelado.
+- **Pacote.** Uma página por janela percorre todas as paradas no mesmo carregamento; na última parada
+  de cada segmento captura HTML, imagem e resolução. As unidades são construídas por
+  `buildFlowUnitsAcross` — a mesma construção da `conferir:referencia` — e cada uma fica na cena do seu
+  segmento. Cada predicado é medido só nas paradas do segmento da sua spec. `scenes[].segmento` e
+  `capture.json` dizem número, parada, `path` e estados de cada cena.
+- **Parada estável.** Com navegação, cada parada tem de ficar parada por 1 s depois do último passo
+  (`JANELA_ESTABILIDADE_MS`): uma SPA real continua desenhando depois do seletor esperado aparecer, e
+  resolução, captura, axe e scanner do oráculo a veriam em instantes diferentes. Parada que muda é
+  defeito do plano (`conferir:referencia`, pacote e linha de base param), e o conserto é declarar uma
+  espera pelo que ainda carrega. Sem navegação nada disso roda.
+- **Entrada direta.** O scanner do oráculo só conhece clique, preenchimento, tecla e espera, e não
+  herda a página de ninguém. Para alcançar a cena de um segmento ele entra direto na rota do último
+  `navigate` por caminho, repetindo a consulta da entrada (é ela que escolhe sessão/perfil na tela B),
+  e repete a espera dele e os passos seguintes; `navigate` por clique vira clique + espera. Isso não é
+  presumido igual à navegação: a árvore da entrada direta é comparada com a navegada (chave, rótulo
+  sem id do DOM e visibilidade de cada elemento sob `body`) e, se diverge ou ainda muda depois do
+  último passo, a linha de base para. Ids numerados por contador (`br-input-14` direto, `br-input-105`
+  navegando) são o mesmo elemento; por isso o seletor de alegação que não alcança nada navegando e
+  alcança na entrada direta é resolvido lá — na linha de base (`passes[].segmento.entradaDireta`) e no
+  pacote (`capture.json`, `scenes[].entradaDireta.seletores`).
+- **Linha de base.** Uma passada por cena do plano, com `segmento` e, no scanner, `request.url` da
+  entrada direta. O resumo `legacy` fica `null` (`legacyAusente` diz por quê): ele soma passadas por
+  chave, e chaves de segmentos diferentes nomeiam elementos diferentes.
+- **Alegação em mais de um segmento.** O achado do agente diz a janela e os passos em texto livre,
+  nunca a rota; casar esse texto com um segmento seria a inferência que o D-39 proíbe. O seletor é
+  resolvido em cada segmento da janela: resolvendo em um só, o cartão fica nele
+  (`segmento-pela-resolucao`); em nenhum, fica no primeiro, não resolvido (`segmento-nao-resolvido`);
+  em mais de um, o cartão é `a-decidir:<janela>`, traz `segmentos` e os sujeitos de cada um
+  (`<cena>|<chave>`), e a decisão **precisa** de `"cena"` — só os sujeitos dela contam e só unidades
+  dela podem ser creditadas. `"cena"` em qualquer outro cartão, ou numa decisão pendente, é recusado. A
+  pendência conta o menor grupo de sujeitos (piso). A bancada (`review-ui.ts`) pede a cena antes de
+  gravar. Linha de base nunca é ambígua: cada passada é uma cena.
+
+Sem navegação, fluxo e solicitação saem byte a byte iguais ao código anterior: mesmo manifesto
+(identidade e plano), mesma linha de base (fora relógio e caminhos) e o mesmo pacote e a mesma
+pontuação — `package.json`, `review.md`, `reviews.json`, capturas, resoluções e `score.json` — sobre
+as mesmas entradas, com o hash do scorer igualado.
 
 A visibilidade passou a ser medida junto da chave canônica. A chave é estrutural: oculto e visível
 produzem a mesma. Agora cada sujeito chega ao cartão dizendo se está oculto e por quê
@@ -466,7 +515,8 @@ transparente o bastante para entrar sem reconstruir o avaliado dentro do avaliad
 As capturas são **reconstruções para revisão**, não evidência capturada na execução original. O
 preparador abre uma página nova **por janela do plano**, reproduz `_meta.setup` em cada uma e, nela,
 resolve todos os seletores (gabarito, agente, linha de base), constrói as unidades das specs daquela
-janela e captura HTML e imagem. O mapa de cada cena fica em `resolution-*.json`, e seu hash em
+janela e captura HTML e imagem — no fim do setup, ou, quando ele navega, no fim de cada segmento
+(D-60, acima). O mapa de cada cena fica em `resolution-*.json`, e seu hash em
 `scenes[].resolutionHash`.
 
 Um cartão do agente vai para a cena de **mesma largura** que `state.viewport` (altura diferente é

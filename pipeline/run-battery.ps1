@@ -619,6 +619,27 @@ if (-not $surface) {
 }
 Write-Ok "Superfície $($surface.version): tela $($surface.entryUrl), coletor $($surface.origins.collector), proxy $($surface.proxyServer)"
 
+# A referência é conferida contra a página CONGELADA que a bateria vai servir, antes de qualquer
+# modelo (D-60): estados, segmentos e endereços de cada parada, aditividade, contagens e predicados.
+# É a mesma medida da preparação do pacote; uma referência que ela desmente pararia o pacote depois
+# de a bateria ter sido paga.
+$siteOrigin = ([System.Uri]$surface.entryUrl).GetLeftPart([System.UriPartial]::Authority)
+$previousAppUrl = $env:APP_URL
+Push-Location $EvalRoot
+try {
+  $env:APP_URL = $siteOrigin
+  & npm run conferir:referencia --silent -- --tela $Tela
+  $referenceExit = $LASTEXITCODE
+} finally {
+  $env:APP_URL = $previousAppUrl
+  Pop-Location
+}
+if ($referenceExit -ne 0) {
+  Stop-Surface
+  throw "conferir:referencia falhou contra a página congelada (ver motivo acima). Nenhum modelo foi chamado."
+}
+Write-Ok "Referência conferida contra a página congelada ($siteOrigin)"
+
 # ---------------------------------------------------------------- manifesto de coleta (fatia 6)
 # Gravado antes da primeira execução. Incompleto, não é gravado e a bateria não parte. Fora do
 # preflight, arquiva o oráculo compilado e o gabarito ao lado dele.

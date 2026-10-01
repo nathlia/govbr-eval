@@ -19,7 +19,9 @@ import { join, relative, resolve } from "node:path";
 import { randomUUID } from "node:crypto";
 import { ROOT } from "./adjudication";
 import { createSiteServer, freezeSite, loadSite } from "./measurement-surface";
-import { COLLECTION_PLAN_VERSION, sha256, sha256File, type CollectionManifest } from "./collection-manifest";
+import {
+  COLLECTION_PLAN_VERSION, archiveCollection, buildCollectionManifest, manifestProblems, sha256, sha256File, type CollectionManifest,
+} from "./collection-manifest";
 import type { FlowBaselines } from "./run-baselines-flow";
 import type { SemanticPackage, SemanticReviews } from "./semantic-flow";
 import { FLOW_INSTRUMENT_VERSION } from "./instrument";
@@ -406,4 +408,194 @@ async function main(): Promise<void> {
   console.log(`${tests} slice-6 integration tests passed.`);
 }
 
-main().catch(error => { console.error(error); process.exitCode = 1; });
+/**
+ * D-60: referência que NAVEGA, de ponta a ponta, sem modelo — numa SPA mínima de pushState congelada
+ * como a tela B (árvore inteira, índice para toda rota). Manifesto (plano com as paradas), linha de
+ * base de bateria pela CLI (uma passada por segmento; o scanner do oráculo entra direto na rota do
+ * segundo), pacote pela CLI (uma cena por segmento, unidades no segmento do seu estado, alegação que
+ * resolve em dois segmentos com cena a decidir, id por contador resolvido na entrada direta) e
+ * pontuação offline com a cena escolhida.
+ */
+const SPA_SEGMENTOS = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>spa</title></head><body>
+  <nav class="menu"><a id="ir-detalhe" data-spa href="/spa/detalhe">Detalhe</a>
+    <a id="ir-lista" data-spa href="/spa/lista">Lista</a> <a id="ir-outra" data-spa href="/spa/outra">Outra</a></nav>
+  <main id="raiz"></main>
+  <script>
+    var renders = 0;
+    function render() {
+      var raiz = document.getElementById("raiz");
+      renders++;
+      if (location.pathname === "/spa/detalhe") {
+        raiz.innerHTML = '<section class="detalhe"><h1>Detalhe</h1><label>Campo <input class="campo" id="campo-' + renders + '"></label>' +
+          '<button id="abrir-painel">abrir</button></section>';
+      } else {
+        raiz.innerHTML = '<ul class="lista"><li class="item">A</li><li class="item">B</li></ul><button id="abrir-painel">abrir</button>';
+      }
+    }
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest("a[data-spa]");
+      if (a) { e.preventDefault(); history.pushState(null, "", a.getAttribute("href")); render(); return; }
+      if (e.target.id === "abrir-painel") { var p = document.createElement("div"); p.className = "painel"; p.textContent = "painel"; document.getElementById("raiz").appendChild(p); }
+    });
+    window.addEventListener("popstate", render);
+    render();
+  </script></body></html>`;
+
+async function segmentos(): Promise<void> {
+  const work = join(ROOT, "pipeline", "logs", `_teste-fatia6-seg-${id}`);
+  const runFile = join(ROOT, "results", "runs-fluxo-ablacao", `agent-teste-fatia6-seg-${id}.json`);
+  const servers: Server[] = [];
+  mkdirSync(join(work, "dist", "spa"), { recursive: true });
+  try {
+    writeFileSync(join(work, "dist", "spa", "index.html"), SPA_SEGMENTOS);
+    const surfaceDir = join(work, "superficie");
+    mkdirSync(surfaceDir);
+    freezeSite(join(work, "dist"), "spa/lista?perfil=x", surfaceDir, ROOT, { arvore: "spa/", indice: "spa/index.html" });
+    const site = loadSite(surfaceDir);
+    const siteServer = createSiteServer(site);
+    servers.push(siteServer);
+    const origin = await listen(siteServer);
+    writeJson(join(surfaceDir, "surface.json"), { version: "teste", entryUrl: `${origin}/spa/lista?perfil=x`,
+      siteManifest: "site-manifest.json", siteManifestSha256: site.manifestSha256, policy: { teste: "sem proxy" } });
+    const gt = {
+      _meta: { version: "teste-seg", page: "spa", url: "/spa/lista?perfil=x", waitFor: ".lista", viewport: { width: 1280, height: 900 },
+        setup: [{ action: "click", selector: "#abrir-painel" }, { action: "wait", selector: ".painel" },
+          { action: "navigate", path: "/spa/detalhe", waitFor: ".detalhe" },
+          { action: "click", selector: "#abrir-painel" }, { action: "wait", selector: ".painel" }],
+        states: [{ id: "lista", afterStep: 0, path: "/spa/lista" }, { id: "lista-painel", afterStep: 2, path: "/spa/lista" },
+          { id: "detalhe", afterStep: 3, path: "/spa/detalhe" }, { id: "detalhe-painel", afterStep: 5, path: "/spa/detalhe" }] },
+      violations: [
+        { id: "V-item", anchor: ".item", scope: "todos", expectedCount: 2, rules: ["wcag:1.3.1"], categories: ["x"], description: "itens", state: "lista" },
+        { id: "V-campo", anchor: ".campo", scope: "unico", rules: ["wcag:3.3.2"], categories: ["x"], description: "campo", state: "detalhe" },
+        { id: "V-menu", anchor: ".menu a", scope: "todos", expectedCount: 3, rules: ["wcag:2.4.4"], categories: ["x"], description: "menu", state: "sempre" },
+      ],
+    };
+    const referencePath = join(work, "gabarito-seg.json");
+    writeJson(referencePath, gt);
+    const planPath = join(work, "plano.json");
+    writeJson(planPath, { planVersion: COLLECTION_PLAN_VERSION, stamp: `teste-seg-${id}`, schedule: "alternado", seed: null, attemptBudget: 1,
+      retryPolicy: "nenhuma", failurePolicy: "teste", arms: ["sem"], runsPerArm: 1, model: "fixture", reasoningEffort: "high",
+      oracleProfile: "combined", provider: "claude", scope: "full", suite: "fluxo", slots: [{ slot: 1, arm: "sem", repetition: 1, block: 1 }] });
+
+    const collectionDir = join(work, "coleta");
+    const manifestPath = join(collectionDir, "manifesto.json");
+    let manifestSha = "";
+    await test("D-60 manifest: a plan that navigates is frozen with its stops, never refused", async () => {
+      const manifest = await buildCollectionManifest({ referencePath, siteManifestPath: join(surfaceDir, "site-manifest.json"),
+        surfacePath: join(surfaceDir, "surface.json"), planPath, client: { name: "fixture-cli", version: "1.0.0" } });
+      assert.deepEqual(manifestProblems(manifest), []);
+      assert.deepEqual(manifest.statePlan!.paradas, gt._meta.states);
+      mkdirSync(collectionDir, { recursive: true });
+      manifest.archive = archiveCollection(manifest, collectionDir, referencePath);
+      writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+      manifestSha = sha256File(manifestPath)!;
+    });
+
+    const baselinePath = join(work, "linha-de-base.json");
+    let baseline!: FlowBaselines;
+    await test("D-60 baseline: one pass per segment; the oracle scanner enters the second segment's route directly", async () => {
+      const run = await cli("run-baselines-flow.ts", ["--out", baselinePath, "--collection-manifest", manifestPath,
+        "--site-manifest", join(surfaceDir, "site-manifest.json")], { APP_URL: origin });
+      assert.equal(run.status, 0, run.out);
+      baseline = readJson<FlowBaselines>(baselinePath);
+      assert.equal(baseline.status, "complete");
+      assert.deepEqual(baseline.passes.map(p => p.id), ["1280x900@lista-painel", "1280x900@detalhe-painel"]);
+      const [lista, detalhe] = baseline.passes;
+      assert.deepEqual(lista.specs, ["V-item"]);
+      assert.deepEqual(detalhe.specs, ["V-campo", "V-menu"]);
+      assert.equal(lista.segmento!.entradaDireta, null, "first segment: the scanner replays the setup from the entry, as always");
+      assert.equal(lista.validator.unguided.request.actions, 2);
+      assert.equal(detalhe.segmento!.entradaDireta!.url, "/spa/detalhe?perfil=x", "the entry query is repeated on the route");
+      assert.equal(detalhe.segmento!.entradaDireta!.passos, 3);
+      assert.equal(new URL(detalhe.validator.unguided.request.url!).pathname, "/spa/detalhe");
+      assert.equal(detalhe.validator.unguided.request.actions, 3);
+      assert.equal(baseline.legacy, null);
+      assert.match(baseline.legacyAusente ?? "", /navega/);
+    });
+
+    writeJson(runFile, {
+      timestamp: new Date().toISOString(), model: "fixture", appUrl: `${origin}/spa/lista?perfil=x`,
+      findings: [
+        { selector: ".menu a", rule: null, observed: "Links do menu sem nome descritivo", expected: "Nome descritivo",
+          state: { viewport: { width: 1280, height: 900 }, steps: ["abriu o detalhe"] }, evidence: [] },
+        { selector: ".item", rule: null, observed: "Itens sem semântica", expected: "Lista", state: { viewport: { width: 1280, height: 900 }, steps: [] }, evidence: [] },
+        // Citado da página que o oráculo abre por entrada direta: o contador numera o campo como 1, navegando ele é 2.
+        { selector: "#campo-1", rule: null, observed: "Campo sem instrução", expected: "Instrução", state: { viewport: { width: 1280, height: 900 }, steps: ["abriu o detalhe"] }, evidence: [] },
+      ],
+      config: { instrumentVersion: FLOW_INSTRUMENT_VERSION, protocolVersion: "sha256:fixture", siteManifestSha256: site.manifestSha256, collectionManifestSha256: manifestSha },
+    });
+    const batteryPath = join(work, "bateria.json");
+    writeJson(batteryPath, { stamp: `teste-seg-${id}`, collectionManifest: { path: rel(manifestPath), sha256: manifestSha },
+      execucoes: [{ run: 1, slot: 1, arm: "sem", suite: "fluxo", archive: rel(runFile).split("/").pop(), archiveDir: "results/runs-fluxo-ablacao",
+        exitCode: 0, instrumentVersion: FLOW_INSTRUMENT_VERSION, protocolVersion: "sha256:fixture", evidence: null, collectionStatus: "collected",
+        collectionManifestSha256: manifestSha }] });
+    const pkgDir = join(work, "pacote");
+    let pkg!: SemanticPackage;
+    await test("D-60 package: a scene per segment, units in their state's segment, a claim on two segments left to the reviewer", async () => {
+      const prepared = await cli("semantic-flow-cli.ts", ["prepare", "--battery", batteryPath, "--out", pkgDir,
+        "--collection-manifest", manifestPath, "--site-dir", surfaceDir, "--baseline", baselinePath]);
+      assert.equal(prepared.status, 0, prepared.out);
+      pkg = readJson<SemanticPackage>(join(pkgDir, "package.json"));
+      assert.deepEqual(pkg.scenes.map(s => [s.id, s.segmento?.path, s.specIds]), [
+        ["1280x900@lista-painel", "/spa/lista", ["V-item"]], ["1280x900@detalhe-painel", "/spa/detalhe", ["V-campo", "V-menu"]]]);
+      const unitsIn = (scene: string) => pkg.units.filter(u => u.scene === scene).map(u => u.specId).sort();
+      assert.deepEqual(unitsIn("1280x900@lista-painel"), ["V-item", "V-item"]);
+      assert.deepEqual(unitsIn("1280x900@detalhe-painel"), ["V-campo", "V-menu", "V-menu", "V-menu"]);
+      const card = (selector: string) => pkg.cards.find(c => c.origin === "agente" && c.selector === selector)!;
+      assert.deepEqual(card(".menu a").segmentos!.map(o => o.scene), ["1280x900@lista-painel", "1280x900@detalhe-painel"]);
+      assert.equal(card(".item").scene, "1280x900@lista-painel");
+      const campo = card("#campo-1");
+      assert.equal(campo.scene, "1280x900@detalhe-painel", "resolved on the direct entry, where the oracle reads it");
+      assert.deepEqual(campo.candidateUnitIds, pkg.units.filter(u => u.specId === "V-campo").map(u => u.id));
+      const capture = readJson<{ scenes: { id: string; entradaDireta: { url: string; seletores: string[] } | null }[] }>(join(pkgDir, "capture.json"));
+      assert.equal(capture.scenes[0].entradaDireta, null);
+      assert.ok(capture.scenes[1].entradaDireta!.seletores.includes("#campo-1"));
+      assert.ok(existsSync(join(pkgDir, "scene-1.png")) && existsSync(join(pkgDir, "resolution-1.json")));
+      assert.match(readFileSync(join(pkgDir, "review.md"), "utf8"), /Este plano navega \(D-60\)/);
+    });
+
+    await test("D-60 score: the reviewer's chosen scene decides what the claim earns", async () => {
+      const reviews = readJson<SemanticReviews>(join(pkgDir, "reviews.json"));
+      const menuIds = pkg.units.filter(u => u.specId === "V-menu").map(u => u.id);
+      reviews.decisions = reviews.decisions.map(d => {
+        const card = pkg.cards.find(c => c.id === d.cardId)!;
+        const base = { ...d, status: "reviewed" as const, reviewer: "fixture", rationale: "fixture", complete: true, evidenceRefs: ["fixture"] };
+        if (card.origin === "agente" && card.selector === ".menu a") {
+          const subjects = card.subjects.filter(s => s.scene === "1280x900@detalhe-painel").map(s => s.id);
+          return { ...base, cena: "1280x900@detalhe-painel",
+            atoms: [{ id: "a", text: "fixture", subjects, verdict: "reference" as const, unitIds: menuIds, citation: "supported" as const }] };
+        }
+        if (card.origin === "agente" && card.selector === "#campo-1") {
+          return { ...base, atoms: [{ id: "a", text: "fixture", subjects: card.subjects.map(s => s.id), verdict: "reference" as const,
+            unitIds: card.candidateUnitIds, citation: "supported" as const }] };
+        }
+        return { ...base, atoms: [{ id: "a", text: "fixture", subjects: card.subjects.map(s => s.id), verdict: "novel" as const, unitIds: [], citation: "uncertain" as const }] };
+      });
+      const reviewsPath = join(work, "reviews-fixture.json");
+      writeJson(reviewsPath, reviews);
+      const scored = await cli("semantic-flow-cli.ts", ["score", "--package", join(pkgDir, "package.json"), "--reviews", reviewsPath,
+        "--out", join(work, "score.json"), "--require-complete"]);
+      assert.equal(scored.status, 0, scored.out);
+      const result = readJson<{ scores: { runId: string; counts: { detectedUnits: number; referenceUnits: number } }[] }>(join(work, "score.json"));
+      const agent = result.scores.find(s => !s.runId.startsWith("linha-de-base"))!;
+      assert.deepEqual([agent.counts.detectedUnits, agent.counts.referenceUnits], [4, 6]);
+      // Sem "cena", a mesma decisão não é aceita.
+      const semCena = structuredClone(reviews);
+      delete (semCena.decisions.find(d => pkg.cards.find(c => c.id === d.cardId)!.segmentos) as { cena?: string }).cena;
+      writeJson(join(work, "reviews-sem-cena.json"), semCena);
+      const refused = await cli("semantic-flow-cli.ts", ["score", "--package", join(pkgDir, "package.json"), "--reviews", join(work, "reviews-sem-cena.json"),
+        "--out", join(work, "score-sem-cena.json")]);
+      assert.equal(refused.status, 1);
+      assert.match(refused.out, /must name "cena"/);
+    });
+  } finally {
+    for (const server of servers) await close(server);
+    rmSync(runFile, { force: true });
+    if (resolve(work).startsWith(resolve(ROOT, "pipeline", "logs")) && work.includes("_teste-fatia6-seg-")) {
+      rmSync(work, { recursive: true, force: true });
+    }
+  }
+  console.log(`${tests} slice-6 integration tests passed (including the navigating reference).`);
+}
+
+main().then(() => process.exitCode ? undefined : segmentos()).catch(error => { console.error(error); process.exitCode = 1; });

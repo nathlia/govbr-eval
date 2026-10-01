@@ -124,6 +124,9 @@ function cardView(c: ReviewCard) {
     id: c.id, origin: c.origin, scene: c.scene, contract: c.contract, rule: c.rule, flags: c.flags,
     observed: legado ? null : c.observed, expected: legado ? null : c.expected,
     state: c.state, subjects: c.subjects, relatedKeys: c.relatedKeys,
+    // Cenas por segmento (D-60): quando o seletor resolve em mais de uma, a autora escolhe de qual a
+    // alegação fala, e só os sujeitos dela são gravados.
+    segmentos: c.segmentos?.map(o => ({ scene: o.scene, path: o.path })) ?? null,
     reuso: c.binding.runScope ? "restrito à execução de origem" : "condicionado à mesma evidência verificada",
     candidatas: c.candidateUnitIds.map(id => unitView(units.get(id)!)),
     duplicataDe: pkg.cards.filter(alvo => duplicataElegivel(c, alvo)).map(alvo => alvo.id),
@@ -235,7 +238,7 @@ const $ = s => document.querySelector(s);
 let S = null, i = 0, aberto = null, similares = [];
 const DEC = [["defeito-do-gabarito","g · acertou defeito do gabarito"],["defeito-novo-correto","n · certo, fora do gabarito"],
   ["incorreta","i · alegação errada"],["duplicada","d · já decidida noutro cartão"],["evidencia-insuficiente","e · não dá para decidir"]];
-let escolha = null, unidades = new Set(), dup = null, citacao = "uncertain";
+let escolha = null, unidades = new Set(), dup = null, citacao = "uncertain", cenaEscolhida = null;
 
 async function carrega(){ S = await (await fetch("/api/state")).json(); pinta(); }
 function card(){ return S.cards[i]; }
@@ -253,7 +256,7 @@ function pinta(){
   const decididos = Object.values(S.decisions).filter(x=>x.status==="reviewed").length;
   $("#pos").textContent = \`cartão \${i+1}/\${S.cards.length} · \${decididos} decididos\`;
   $("#resumo").textContent = \`fila ativa \${S.meta.fila.ativa} · mediana medida \${S.tempo.medianaSegundos ?? "—"}s · orçamento: \${S.meta.orcamento ?? "não declarado"}\`;
-  escolha = null; unidades = new Set(); dup = null; citacao = "uncertain";
+  escolha = null; unidades = new Set(); dup = null; citacao = "uncertain"; cenaEscolhida = null;
   $("#cartao").innerHTML = \`
     <h2>\${c.origin === "agente" ? "Execução do agente" : "Linha de base determinística"} · cena \${c.scene}</h2>
     <div class="mut">\${c.contract} · \${c.id.slice(0,18)}…</div>
@@ -262,6 +265,8 @@ function pinta(){
     <div class="kv"><b>Esperado</b><pre>\${esc(c.expected ?? "(retido/ausente)")}</pre></div>
     <div class="kv"><b>Janela e interações</b><pre>\${c.state ? c.state.viewport.width+"×"+c.state.viewport.height+" · "+(c.state.steps.join(" → ")||"nenhuma") : "ausentes no relatório"}</pre></div>
     <div class="kv"><b>Regra declarada</b><pre>\${esc(c.rule ?? "nenhuma (atribuição incerta)")}</pre></div>
+    \${c.segmentos?\`<div class="kv"><b>De que cena a alegação fala (obrigatório)</b><div class="row" id="cenas">\${c.segmentos.map(o=>\`<button data-cena="\${o.scene}">\${o.scene} · \${esc(o.path??"?")}</button>\`).join("")}</div>
+      <div class="mut">o seletor resolve em mais de um segmento; só os sujeitos da cena escolhida contam</div></div>\`:""}
     <div class="kv"><b>Sujeitos</b>\${c.subjects.map(s=>\`<pre>\${esc(s.id)} — \${esc(s.label)}\${s.hidden?" · OCULTO: "+esc(s.hidden):""}</pre>\`).join("")}</div>
     <div class="kv"><b>Unidades candidatas (não são crédito)</b>\${c.candidatas.length ? c.candidatas.map(u=>\`
       <div class="unit"><b>\${u.specId}</b> · \${u.state} · cena \${u.scene}<br>\${esc(u.description)}<br>
@@ -276,6 +281,8 @@ function pinta(){
   const proximidade = o => (o.rule===c.rule?2:0) + (o.subjects[0]?.key===c.subjects[0]?.key?1:0) + (o.expected===c.expected?1:0);
   similares.sort((a,b)=>proximidade(b)-proximidade(a));
   pintaDecisao(d);
+  if($("#cenas")) $("#cenas").onclick = e => { const v = e.target.dataset.cena; if(!v) return; cenaEscolhida = v;
+    [...$("#cenas").children].forEach(b=>b.classList.toggle("sel", b.dataset.cena===v)); };
   abre();
 }
 function esc(s){ return String(s).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m])); }
@@ -358,9 +365,11 @@ async function salvar(){
   if(!ev.length) return $("#msg").textContent = "declare o que você consultou";
   if(escolha === "defeito-do-gabarito" && !unidades.size) return $("#msg").textContent = "nomeie a unidade acertada";
   if(escolha === "duplicada" && !dup) return $("#msg").textContent = "aponte o cartão do qual esta é duplicata";
+  if(c.segmentos && !cenaEscolhida) return $("#msg").textContent = "escolha de que cena a alegação fala";
   const segundos = Math.round((Date.now()-aberto)/1000);
   const r = await fetch("/api/decisao",{method:"POST",headers:{"content-type":"application/json"},
-    body:JSON.stringify({cardId:c.id, decisao:escolha, unitIds:[...unidades], duplicadaDe:dup, citacao, rationale:just, evidenceRefs:ev, segundos})});
+    body:JSON.stringify({cardId:c.id, decisao:escolha, unitIds:[...unidades], duplicadaDe:dup, citacao, rationale:just, evidenceRefs:ev, segundos,
+      ...(c.segmentos ? {cena:cenaEscolhida} : {})})});
   const j = await r.json();
   if(!j.ok) return $("#msg").textContent = j.error;
   S = j.state; if(i < S.cards.length-1) i++; pinta();
@@ -435,10 +444,12 @@ const server = createServer((req, res) => {
 
       // Um átomo por cartão é o andaime, não uma decisão: dividir uma alegação composta em vários
       // átomos continua sendo trabalho da autora, e por ora ela o faz editando `reviews.json`.
+      // Cartão com segmentos (D-60): só os sujeitos da cena escolhida; a validação é a do scorer.
+      const sujeitos = (card.segmentos ? card.subjects.filter(s => s.scene === String(payload.cena)) : card.subjects).map(s => s.id);
       const atom = {
         id: "a1",
         text: card.observed ?? card.description,
-        subjects: card.subjects.map(s => s.id),
+        subjects: sujeitos,
         unitIds: payload.decisao === "defeito-do-gabarito" ? [...payload.unitIds] : unidadesDoAlvo,
         citation: payload.citacao as "supported" | "unsupported" | "uncertain",
         decisao: payload.decisao as keyof typeof DECISOES,
@@ -449,7 +460,7 @@ const server = createServer((req, res) => {
       // decide — a bancada não divide nada por conta própria — e passa pelo mesmo scorer ao gravar.
       const compostos = (payload as unknown as { atomos?: { texto: string; decisao: keyof typeof DECISOES; unitIds?: string[]; citacao: string }[] }).atomos;
       const atoms = !compostos?.length ? [atom] : compostos.map((a, n) => ({
-        id: `a${n + 1}`, text: a.texto, subjects: card.subjects.map(s => s.id),
+        id: `a${n + 1}`, text: a.texto, subjects: sujeitos,
         unitIds: a.decisao === "defeito-do-gabarito" ? [...(a.unitIds ?? [])] : [],
         citation: a.citacao as "supported" | "unsupported" | "uncertain", decisao: a.decisao,
       }));
@@ -458,6 +469,7 @@ const server = createServer((req, res) => {
         decisions: reviews.decisions.map(d => d.cardId !== card.id ? d : {
           ...d, status: "reviewed" as const, reviewer, rationale: String(payload.rationale),
           complete: true, evidenceRefs: [...payload.evidenceRefs], atoms,
+          ...(card.segmentos ? { cena: String(payload.cena) } : {}),
         }),
       };
       try {

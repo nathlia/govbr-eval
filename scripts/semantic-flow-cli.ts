@@ -2,14 +2,17 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import type { AddressInfo } from "node:net";
 import { resolve, join, relative, isAbsolute } from "node:path";
-import { chromium } from "playwright";
-import type { FlowAgentResults, FlowGroundTruth } from "../types";
+import { chromium, type Browser } from "playwright";
+import type { FlowAgentResults, FlowGroundTruth, FlowViewport } from "../types";
 import { ROOT } from "./adjudication";
-import { exigeSegmentoUnico, openPage, preparePage, resolveOnPage, resolveStatesOnPage, resolveWithExcept, type Resolution } from "./anchors";
+import {
+  abrirEntradaDireta, entradaDireta, impressaoDaArvore, openPage, preparePage, resolveOnPage, resolveStatesOnPage,
+  resolveWithExcept, segmentoApos, type Resolution,
+} from "./anchors";
 import { combinePredicate, measurePredicate, type PredicateResult } from "./acceptance-predicates";
 import {
-  buildFlowUnits, measureStatePresence, selectorsOfGroundTruth, selectorsOfRuns,
-  statesOfGroundTruth, type FlowUnit,
+  buildFlowUnits, buildFlowUnitsAcross, measureStatePresence, selectorsOfGroundTruth, selectorsOfRuns,
+  specMedidaNoEstado, statesOfGroundTruth, type FlowUnit,
 } from "./units-flow";
 import { loadVerifiedEvidence, verifyArchivedEvidence, type EvidenceDeclaration } from "./evidence-integrity";
 import { renderReview } from "./semantic-flow-render";
@@ -19,8 +22,8 @@ import {
   type PrepareRun, type RawReviews, type SceneResolution, type SemanticPackage, type SemanticReviews,
 } from "./semantic-flow";
 import {
-  analysisIdentity, checkPlanConformity, compareIdentities, readCollectionManifest, sha256, statePlanOf, statePlanSha256,
-  type CollectionManifest, type StatePlan,
+  analysisIdentity, cenasDoPlano, checkPlanConformity, compareIdentities, readCollectionManifest, sha256, statePlanOf,
+  statePlanSha256, type CenaDoPlano, type CollectionManifest,
 } from "./collection-manifest";
 import { READABLE_BASELINE_VERSIONS, type FlowBaselines } from "./run-baselines-flow";
 import { createSiteServer, loadSite } from "./measurement-surface";
@@ -76,7 +79,9 @@ function baselineRuns(baseline: FlowBaselines, build: string, steps: string[]): 
       config: config(tool) as FlowAgentResults["config"],
       cost: { wallClockSeconds: seconds, totalCostUsd: 0 } as unknown as FlowAgentResults["cost"] },
   });
-  const pass = (p: FlowBaselines["passes"][number]) => ({ scene: p.id, viewport: p.viewport, steps });
+  // Com cenas por segmento (D-60) a passada diz até que parada o setup correu.
+  const pass = (p: FlowBaselines["passes"][number]) => ({ scene: p.id, viewport: p.viewport,
+    steps: p.segmento ? [`setup do plano de estados até ${p.segmento.estado} (${p.segmento.afterStep} passo(s))`] : steps });
   return [
     run("linha-de-base/validator-nao-guiada", "govbr-ds-validator scan-page (não guiada)",
       baseline.passes.flatMap(p => p.validator.unguided.findings.map(f => ({ selector: f.target, rule: f.rule,
@@ -89,7 +94,7 @@ function baselineRuns(baseline: FlowBaselines, build: string, steps: string[]): 
   ];
 }
 
-function loadBaseline(path: string, collection: { manifest: CollectionManifest; sha256: string }, plan: StatePlan): { data: FlowBaselines; sha256: string } {
+function loadBaseline(path: string, collection: { manifest: CollectionManifest; sha256: string }, cenas: CenaDoPlano[]): { data: FlowBaselines; sha256: string } {
   const bytes = readFileSync(path);
   const data = JSON.parse(bytes.toString("utf8")) as FlowBaselines;
   // D-54: 2.0.0 (tokens+structure) e 2.1.0 (+page) têm o mesmo formato; a bateria só se compara com a própria linha de base.
@@ -99,7 +104,7 @@ function loadBaseline(path: string, collection: { manifest: CollectionManifest; 
   if (data.provenance.collectionManifest?.sha256 !== collection.sha256) throw new Error("Baseline belongs to another collection manifest");
   const mismatches = compareIdentities(collection.manifest.identity, data.provenance.identity);
   if (mismatches.length) throw new Error(`Baseline identity differs from the collection: ${mismatches.join("; ")}`);
-  const planned = [plan.padrao, ...plan.extras.map(e => e.viewport)].map(sceneIdOf);
+  const planned = cenas.map(c => c.id);
   if (JSON.stringify(data.passes.map(p => p.id)) !== JSON.stringify(planned)) throw new Error("Baseline passes differ from the state plan");
   return { data, sha256: sha256(bytes) };
 }
@@ -153,6 +158,116 @@ function selectBatteryRuns(battery: Battery, collectionSha: string | null) {
   });
 }
 
+/** Como a cena de um segmento foi reproduzida por entrada direta (D-60), quando foi. */
+interface EntradaDaCena { url: string; passos: number; seletores: string[] }
+
+/** Cenas por segmento, agrupadas por janela, na ordem do plano. */
+function janelasSegmentadas(cenas: CenaDoPlano[]): { viewport: FlowViewport; cenas: CenaDoPlano[] }[] {
+  const out: { viewport: FlowViewport; cenas: CenaDoPlano[] }[] = [];
+  for (const c of cenas) {
+    const j = out.find(x => sceneIdOf(x.viewport) === sceneIdOf(c.viewport));
+    if (j) j.cenas.push(c); else out.push({ viewport: c.viewport, cenas: [c] });
+  }
+  return out;
+}
+
+/**
+ * Uma janela de um plano que navega (D-60): uma página, todas as paradas no MESMO carregamento, e a
+ * cena de cada segmento capturada (HTML, imagem e resolução) na última parada dele — onde as unidades
+ * das specs daquele segmento são construídas (`buildFlowUnitsAcross`, a mesma construção da
+ * `conferir:referencia`). Cada predicado é medido só nas paradas do segmento da sua spec.
+ *
+ * Quem mede por ENTRADA DIRETA — o scanner do oráculo na linha de base, e o próprio oráculo nas
+ * execuções — cita seletores daquela página, e ids numerados por contador mudam com o caminho
+ * percorrido. Então, para cada cena alcançada por `navigate` por caminho, a entrada direta é aberta,
+ * sua árvore é conferida contra a navegada (diverge → para), e todo seletor de alegação que não
+ * alcança nada navegando e alcança na entrada direta é resolvido lá. A lista desses seletores fica em
+ * `capture.json`.
+ */
+async function prepararJanelaSegmentada(
+  browser: Browser, gt: FlowGroundTruth, url: string, janela: { viewport: FlowViewport; cenas: CenaDoPlano[] },
+  selectors: string[], claimSelectors: string[],
+): Promise<{ scenes: (SceneResolution & { html: string; image: Buffer; entrada?: EntradaDaCena })[]; units: (FlowUnit & { scene: string })[] }> {
+  const setup = gt._meta.setup ?? [];
+  const checkpoints = statesOfGroundTruth(gt);
+  if (!checkpoints) throw new Error("O setup navega e _meta.states não declara paradas: não há segmento a capturar");
+  const specIds = janela.cenas.flatMap(c => c.specIds);
+  const segmentOf = new Map(checkpoints.map(c => [c.id, segmentoApos(setup, c.afterStep)] as const));
+  const context = await browser.newContext({ viewport: janela.viewport });
+  try {
+    const page = await context.newPage();
+    await openPage(page, url, { waitFor: gt._meta.waitFor });
+    const aceitacao = new Map<string, PredicateResult[]>();
+    const capturas = new Map<string, { html: string; image: Buffer; impressao: string[] }>();
+    const across = await resolveStatesOnPage(page, url, selectors, {
+      setup, states: checkpoints, estabilidade: true,
+      onState: async (state, res, pg) => {
+        for (const spec of gt.violations) {
+          if (!spec.acceptance || !specIds.includes(spec.id) || !specMedidaNoEstado(spec, state, segmentOf)) continue;
+          const keys = resolveWithExcept(res, spec.anchor, spec.except);
+          if (keys.length === 0) continue;
+          aceitacao.set(spec.id, [...(aceitacao.get(spec.id) ?? []), await measurePredicate(pg, spec.anchor, keys, spec.acceptance, state)]);
+        }
+        if (janela.cenas.some(c => c.segmento!.estado === state)) {
+          capturas.set(state, { html: await pg.content(), image: await pg.screenshot({ fullPage: true }), impressao: await impressaoDaArvore(pg) });
+        }
+      },
+    });
+    const id = sceneIdOf(janela.viewport);
+    const medida = measureStatePresence(across);
+    if (medida.defects.length) throw new Error(JSON.stringify({ scene: id, defects: medida.defects }));
+    const built = buildFlowUnitsAcross({ ...gt, violations: gt.violations.filter(v => specIds.includes(v.id)) }, across, medida.presence);
+    if (built.defects.length) throw new Error(JSON.stringify({ scene: id, defects: built.defects }));
+    const desmentidas = built.units
+      .map(u => ({ u, r: combinePredicate(aceitacao.get(u.specId) ?? []) }))
+      .filter(({ r }) => r.outcome === "refuta" || r.outcome === "nao-replicavel");
+    if (desmentidas.length) {
+      throw new Error(JSON.stringify({ scene: id, defects: desmentidas.map(({ u, r }) => ({
+        specId: u.specId, problem: `predicado de aceitação ${r.outcome}: ${r.reason}`,
+      })) }));
+    }
+    const units = built.units.map(u => {
+      u.acceptance = combinePredicate(aceitacao.get(u.specId) ?? []);
+      return { ...u, scene: janela.cenas.find(c => c.specIds.includes(u.specId))!.id };
+    });
+
+    const scenes: (SceneResolution & { html: string; image: Buffer; entrada?: EntradaDaCena })[] = [];
+    for (const cena of janela.cenas) {
+      const seg = cena.segmento!;
+      const captura = capturas.get(seg.estado)!;
+      const navegando = across.byState.get(seg.estado)!;
+      const resolution: Resolution = { url, bySelector: new Map(navegando.bySelector), byKey: new Map(navegando.byKey) };
+      let entrada: EntradaDaCena | undefined;
+      const alcance = entradaDireta(url, setup, seg.afterStep);
+      if (alcance.direta) {
+        const direta = await abrirEntradaDireta(browser, janela.viewport, alcance, captura.impressao, `cena ${cena.id}`);
+        try {
+          const lida = await resolveOnPage(direta.page, claimSelectors);
+          const seletores: string[] = [];
+          for (const s of [...new Set(claimSelectors)]) {
+            const aqui = resolution.bySelector.get(s);
+            const la = lida.bySelector.get(s);
+            if (!aqui?.ok || aqui.keys.length > 0 || !la?.ok || la.keys.length === 0) continue;
+            resolution.bySelector.set(s, la);
+            for (const k of la.keys) if (!resolution.byKey.has(k)) resolution.byKey.set(k, lida.byKey.get(k)!);
+            seletores.push(s);
+          }
+          const endereco = new URL(alcance.url);
+          entrada = { url: endereco.pathname + endereco.search, passos: alcance.passos.length, seletores: seletores.sort() };
+        } finally {
+          await direta.close();
+        }
+      }
+      scenes.push({ id: cena.id, viewport: cena.viewport, specIds: cena.specIds, resolution,
+        segmento: { numero: seg.numero, estado: seg.estado, path: seg.path, estados: seg.estados },
+        html: captura.html, image: captura.image, ...(entrada ? { entrada } : {}) });
+    }
+    return { scenes, units };
+  } finally {
+    await context.close();
+  }
+}
+
 async function prepare(): Promise<void> {
   const batteryPath = resolve(option("battery")!);
   const out = resolve(option("out")!);
@@ -187,10 +302,10 @@ async function prepare(): Promise<void> {
     throw new Error("Archived reference changed since collection");
   }
   const gt = JSON.parse(referenceBytes.toString("utf8")) as FlowGroundTruth;
-  // Uma cena por janela, capturada no FIM do setup, e as unidades construídas ali: com navegação
-  // (D-57) os segmentos anteriores não estariam na cena nem no casamento. Recusa antes de tudo.
-  exigeSegmentoUnico(gt._meta.setup, "flow:review prepare (cena e unidades por janela)");
   const plan = statePlanOf(gt);
+  // Sem navegação, uma cena por janela no FIM do setup, como sempre. Com navegação (D-60), uma cena
+  // por segmento de cada janela, na última parada dele — e a mesma lista que a linha de base mede.
+  const cenas = cenasDoPlano(gt, plan);
   if (collection && !referenceArg && statePlanSha256(plan) !== collection.manifest.identity.statePlanSha256) {
     throw new Error("State plan differs from the collection");
   }
@@ -202,7 +317,8 @@ async function prepare(): Promise<void> {
     throw new Error("Pass --baseline FILE, or --no-baseline \"reason\" for a planned absence");
   }
   if (legacy && baselineArg) throw new Error("A legacy reconstruction has no collection identity to check a baseline against");
-  const baseline = baselineArg && collection ? loadBaseline(resolve(baselineArg), collection, collection.manifest.statePlan!) : null;
+  const baseline = baselineArg && collection ? loadBaseline(resolve(baselineArg), collection,
+    cenasDoPlano(gt, collection.manifest.statePlan!)) : null;
 
   // Page: serve the frozen site ourselves and check its identity; never whatever answers on :3000.
   let origin: string;
@@ -226,17 +342,24 @@ async function prepare(): Promise<void> {
   const baselineSelectors = baseline ? baseline.data.passes.flatMap(p => [...p.validator.unguided.findings, ...p.axe.findings].map(f => f.target)) : [];
   const selectors = [...selectorsOfGroundTruth(gt), ...selectorsOfRuns(runs.map(r => r.data)), ...baselineSelectors];
 
-  const planned = [
-    { viewport: plan.padrao, specIds: gt.violations.filter(v => !plan.extras.some(e => e.specs.includes(v.id))).map(v => v.id) },
-    ...plan.extras.map(e => ({ viewport: e.viewport, specIds: e.specs })),
-  ];
+  const planned = cenas.map(c => ({ viewport: c.viewport, specIds: c.specIds }));
+  const claimSelectors = [...selectorsOfRuns(runs.map(r => r.data)), ...baselineSelectors];
   const browser = await chromium.launch();
   try {
-    const scenes: (SceneResolution & { html: string; image: Buffer })[] = [];
+    const scenes: (SceneResolution & { html: string; image: Buffer; entrada?: EntradaDaCena })[] = [];
     const units: (FlowUnit & { scene: string })[] = [];
+    if (plan.paradas) {
+      // Com navegação (D-60): uma página por janela, varrendo todas as paradas, com a cena de cada
+      // segmento capturada na última parada dele.
+      for (const janela of janelasSegmentadas(cenas)) {
+        const r = await prepararJanelaSegmentada(browser, gt, url, janela, selectors, claimSelectors);
+        scenes.push(...r.scenes);
+        units.push(...r.units);
+      }
+    }
     // One fresh page per planned window, each brought to the reference state: selectors, units and
     // captures of a scene all come from that same page.
-    for (const p of planned) {
+    for (const p of plan.paradas ? [] : planned) {
       const context = await browser.newContext({ viewport: p.viewport });
       const page = await context.newPage();
       const id = sceneIdOf(p.viewport);
@@ -292,6 +415,7 @@ async function prepare(): Promise<void> {
       await context.close();
     }
     const sceneHash = digest({ setup: gt._meta.setup ?? [], scenes: scenes.map(s => ({
+      ...(s.segmento ? { segmento: s.segmento } : {}),
       id: s.id, viewport: s.viewport, html: s.html, image: s.image.toString("base64"),
     })) });
     const referenceOverride = Boolean(referenceArg && collection && sha256(referenceBytes) !== collection.manifest.identity.referenceSha256);
@@ -337,7 +461,8 @@ async function prepare(): Promise<void> {
       kind: collection ? "review-time reconstruction of the frozen collection build, not original execution evidence"
         : "review-time reconstruction, not original execution evidence",
       scenes: scenes.map((s, i) => ({ id: s.id, viewport: s.viewport, specIds: s.specIds,
-        resolutionHash: resolutionDigest(s.resolution), resolution: `resolution-${i}.json`, html: `scene-${i}.html`, image: `scene-${i}.png` })) });
+        resolutionHash: resolutionDigest(s.resolution), resolution: `resolution-${i}.json`, html: `scene-${i}.html`, image: `scene-${i}.png`,
+        ...(s.segmento ? { segmento: s.segmento, entradaDireta: s.entrada ?? null } : {}) })) });
     scenes.forEach((s, i) => {
       write(join(out, `resolution-${i}.json`), { scene: s.id, url: s.resolution.url,
         bySelector: Object.fromEntries(s.resolution.bySelector), byKey: Object.fromEntries(s.resolution.byKey) });

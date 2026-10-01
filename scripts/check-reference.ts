@@ -6,9 +6,10 @@
  * referência errada pare ANTES de a bateria ser paga, e não na preparação do pacote depois dela.
  * Nada é creditado e nada é gravado.
  *
- * É também, hoje, o ÚNICO consumidor que mede referência cujo `setup` navega (D-57): estado a
- * estado, com a aditividade cobrada por segmento, o endereço de cada parada conferido contra o
- * `path` declarado e cada spec construída no fim do segmento do seu estado.
+ * Mede também referência cujo `setup` navega (D-57): estado a estado, com a aditividade cobrada por
+ * segmento, o endereço de cada parada conferido contra o `path` declarado, cada parada estável na
+ * janela de estabilidade (D-60) e cada spec construída no fim do segmento do seu estado. O preflight
+ * da bateria a roda contra a página congelada antes de qualquer modelo.
  *
  * Uso: APP_URL=http://host:porta npx tsx scripts/check-reference.ts --tela solicitacao
  *      (APP_URL aponta para quem serve o `dist/` do corpus; padrão http://localhost:3000)
@@ -17,7 +18,7 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { chromium } from "playwright";
 import { ROOT } from "./adjudication";
-import { openPage, resolveStatesOnPage, resolveWithExcept, segmentoApos } from "./anchors";
+import { openPage, resolveStatesOnPage, resolveWithExcept, segmentoApos, temNavegacao } from "./anchors";
 import { statePlanOf } from "./collection-manifest";
 import { combinePredicate, describePredicate, measurePredicate, validatePredicate, type PredicateResult } from "./acceptance-predicates";
 import { buildFlowUnitsAcross, measureStatePresence, selectorsOfGroundTruth, specMedidaNoEstado, statesOfGroundTruth } from "./units-flow";
@@ -49,6 +50,9 @@ async function main(): Promise<number> {
     const aceitacao = new Map<string, PredicateResult[]>();
     const across = await resolveStatesOnPage(page, url, selectorsOfGroundTruth(gt), {
       setup: gt._meta.setup, states: checkpoints,
+      // Com navegação (D-60) cada parada tem de ficar parada: é a conferência que o preflight da
+      // bateria roda, e a linha de base e o pacote cobram a mesma coisa depois.
+      estabilidade: temNavegacao(gt._meta.setup),
       onState: async (state, res, pg) => {
         for (const spec of gt.violations) {
           if (!spec.acceptance || !specMedidaNoEstado(spec, state, segmentOf)) continue;

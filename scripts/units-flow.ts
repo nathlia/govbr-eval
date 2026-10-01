@@ -168,6 +168,16 @@ export function measureStatePresence(res: StateResolutions): { presence: StatePr
     }
   }
 
+  // Parada que continua mudando depois do último passo não é estado (D-60): cada medidor a veria
+  // num instante diferente. Só conferido quando a varredura mediu (setup que navega).
+  for (const e of res.order) {
+    const mudou = nav?.instavelOf?.get(e) ?? [];
+    if (mudou.length) {
+      defects.push({ specId: "_meta.setup", problem: `a parada ${e} não é estável: a árvore muda depois do último passo ` +
+        `(${mudou.join("; ")}). Declare no setup uma espera (wait) pelo que ainda carrega` });
+    }
+  }
+
   // Onde a página estava em cada parada. Só há o que conferir quando a varredura mediu.
   if (nav) {
     for (const [i, e] of res.order.entries()) {

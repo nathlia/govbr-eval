@@ -5,7 +5,7 @@
  */
 import assert from "node:assert/strict";
 import {
-  COLLECTION_PLAN_VERSION, compareIdentities, identityProblems, manifestProblems, planProblems, statePlanOf,
+  COLLECTION_PLAN_VERSION, cenasDoPlano, compareIdentities, identityProblems, manifestProblems, planProblems, statePlanOf,
   statePlanSha256, verifyInstalledIdentity, oracleIdentity, type CollectionManifest, type CollectionPlan,
   type ExecutableIdentity,
 } from "./collection-manifest";
@@ -113,6 +113,38 @@ test("state plan identity follows windows, setup and waitFor", () => {
   assert.notEqual(statePlanSha256(statePlanOf({ ...gt, _meta: { ...gt._meta, setup: [] } })), base);
   assert.notEqual(statePlanSha256(statePlanOf({ ...gt, violations: [{ id: "V-1" }] })), base);
   assert.equal(statePlanSha256(statePlanOf(structuredClone(gt))), base);
+});
+
+test("D-60: a plan that navigates carries its stops (with paths) in its identity, and becomes one scene per segment", () => {
+  const setup = [{ action: "click", selector: "#a" }, { action: "navigate", path: "/app/b", waitFor: ".b" }, { action: "click", selector: "#c" }];
+  const states = [{ id: "a", afterStep: 0, path: "/app/a" }, { id: "a2", afterStep: 1, path: "/app/a" },
+    { id: "b", afterStep: 2, path: "/app/b" }, { id: "b2", afterStep: 3, path: "/app/b" }];
+  const gt = { _meta: { url: "/app/a", setup, states },
+    violations: [{ id: "V-a", state: "a" }, { id: "V-b", state: "b2" }, { id: "V-s" }, { id: "V-n", state: "a2", viewport: { width: 320, height: 720 } }] };
+  const plan = statePlanOf(gt);
+  assert.deepEqual(plan.paradas, states.map(s => ({ id: s.id, afterStep: s.afterStep, path: s.path })));
+  const base = statePlanSha256(plan);
+  const outroPath = structuredClone(gt);
+  outroPath._meta.states[2].path = "/app/c";
+  assert.notEqual(statePlanSha256(statePlanOf(outroPath)), base, "the path of a stop is part of the plan");
+  const outraParada = structuredClone(gt);
+  outraParada._meta.states[1].afterStep = 0;
+  outraParada._meta.states[1].id = "a1";
+  assert.notEqual(statePlanSha256(statePlanOf(outraParada)), base, "where the stops are is part of the plan");
+  // Sem navegação, nem o campo existe: o hash é o de sempre.
+  assert.equal("paradas" in statePlanOf({ ...gt, _meta: { ...gt._meta, setup: [{ action: "click", selector: "#a" }] } }), false);
+  assert.deepEqual(cenasDoPlano({ ...gt, _meta: { ...gt._meta, setup: [], states: [{ id: "a", afterStep: 0 }] } }).map(c => c.id), ["1280x900", "320x720"]);
+
+  const cenas = cenasDoPlano(gt);
+  assert.deepEqual(cenas.map(c => [c.id, c.specIds, c.segmento?.path]), [
+    ["1280x900@a2", ["V-a"], "/app/a"], ["1280x900@b2", ["V-b", "V-s"], "/app/b"],
+    ["320x720@a2", ["V-n"], "/app/a"], ["320x720@b2", [], "/app/b"]]);
+  const semPath = structuredClone(gt);
+  delete (semPath._meta.states[2] as { path?: string }).path;
+  assert.throws(() => cenasDoPlano(semPath), /plano de estados malformado[\s\S]*estado b: o setup navega, então a parada declara path/);
+  const curto = structuredClone(gt);
+  curto._meta.states.pop();
+  assert.throws(() => cenasDoPlano(curto), /a última parada \(b\) para em 2 de 3 passos/);
 });
 
 test("installed oracle is checked against the manifest (build or KB change mid-battery)", () => {
