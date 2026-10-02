@@ -6,7 +6,7 @@ Só **método permanente**: como a medida funciona. Quem chega sem contexto deve
 
 **Planos, checklists, revisões, diagnósticos e relatórios datados não entram aqui.** Desde
 2026-10-02 eles moram em [`thesis-workspace/planejamento/`](../../thesis-workspace/planejamento/README.md),
-inclusive o próximo plano (`planos/plano-implementacao-benchmark-isolado-2026-10-02.md`) e os registros
+inclusive o plano em curso (`atual/plano-implementacao-benchmark-isolado-2026-10-02.md`) e os registros
 que estavam nesta pasta (piloto, adjudicação e auditoria da tela de fluxo, diagnósticos).
 
 | Documento | Assunto |

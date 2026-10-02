@@ -117,7 +117,7 @@ O procedimento carrega **procedimento apenas**: onde olhar, como capturar evidê
 reportar. Conhecimento de domínio — regras do DS, valores de token, specs de componente — mora no
 oráculo e **nunca** dentro de um `SKILL.md`.
 
-Isso é o requisito A6 (`thesis-workspace/planejamento/planos/tcc2-requirements.md`), e é validade experimental, não
+Isso é o requisito A6 (`thesis-workspace/planejamento/tcc2-requirements.md`), e é validade experimental, não
 organização: um protocolo que diz qual é a fonte primária do DS vira um segundo oráculo, e aí
 nenhum experimento consegue medir o que o oráculo MCP contribui — a ablação passa a comparar
 "regra por MCP" contra "a mesma regra por texto".
