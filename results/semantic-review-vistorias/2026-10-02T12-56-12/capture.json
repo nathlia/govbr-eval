@@ -1,0 +1,112 @@
+{
+  "capturedAt": "2026-10-02T16:31:13.797Z",
+  "url": "http://127.0.0.1:57304/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+  "sceneHash": "66b9e141294e1827e463c24ad842f5bb34313a7ac78bbc8f1d8f9a5d7ca187d5",
+  "kind": "review-time reconstruction of the frozen collection build, not original execution evidence",
+  "scenes": [
+    {
+      "id": "1280x900@inicial",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "specIds": [
+        "B-02",
+        "B-03",
+        "B-04",
+        "B-05",
+        "B-06",
+        "B-07",
+        "B-08",
+        "B-09",
+        "B-10",
+        "B-11",
+        "B-12",
+        "B-13",
+        "B-26",
+        "B-28",
+        "B-29"
+      ],
+      "resolutionHash": "49a512b9928cf2a38c47d72004ba341111718e95745b70f052990f44cbdd6020",
+      "resolution": "resolution-0.json",
+      "html": "scene-0.html",
+      "image": "scene-0.png",
+      "segmento": {
+        "numero": 0,
+        "estado": "inicial",
+        "path": "/pnip/portal-mpa/vistorias",
+        "estados": [
+          "inicial"
+        ]
+      },
+      "entradaDireta": null
+    },
+    {
+      "id": "1280x900@detalhe-menu",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "specIds": [
+        "B-15",
+        "B-16",
+        "B-17",
+        "B-18",
+        "B-19",
+        "B-20"
+      ],
+      "resolutionHash": "3039475a7a7b41df0190bd42a7eb53124817e0ea55e9301da238b9e85cbd2a4a",
+      "resolution": "resolution-1.json",
+      "html": "scene-1.html",
+      "image": "scene-1.png",
+      "segmento": {
+        "numero": 1,
+        "estado": "detalhe-menu",
+        "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046",
+        "estados": [
+          "detalhe-menu"
+        ]
+      },
+      "entradaDireta": {
+        "url": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046?mock-perfil=mpa",
+        "passos": 3,
+        "seletores": []
+      }
+    },
+    {
+      "id": "1280x900@modal",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "specIds": [
+        "B-01",
+        "B-14",
+        "B-21",
+        "B-22",
+        "B-23",
+        "B-24",
+        "B-25",
+        "B-27"
+      ],
+      "resolutionHash": "1fa95c39c9c1297d45a13e16f3b7313a2b3a3beb2430c605bef2f3ac78ec5c60",
+      "resolution": "resolution-2.json",
+      "html": "scene-2.html",
+      "image": "scene-2.png",
+      "segmento": {
+        "numero": 2,
+        "estado": "modal",
+        "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038",
+        "estados": [
+          "detalhe",
+          "modal"
+        ]
+      },
+      "entradaDireta": {
+        "url": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038?mock-perfil=mpa",
+        "passos": 4,
+        "seletores": []
+      }
+    }
+  ]
+}

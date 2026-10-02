@@ -1,0 +1,664 @@
+{
+  "timestamp": "2026-10-02T16:29:57.930Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+  "scope": [
+    "tela inteira de Vistorias: cabeçalho gov.br e avatar, breadcrumb, título e ação Exportar, abas Agendar/Tramitando/Concluídos, painel de filtros por chip, campo de busca, filtro de intervalo de datas, tabela de vistorias com seleção e ações por linha, paginação numérica e seletores Exibir/Página, modal \"Atribuir Vistoriador\", estado sem resultados e viewport 320x640"
+  ],
+  "notes": "Nenhuma ferramenta de oráculo (consulta de regras, scan_page ou verificação de achados) estava disponível nesta execução; por isso os identificadores de regra foram atribuídos apenas quando justificáveis por WCAG, e usei \"rule\": null nos defeitos de comportamento e estrutura sem critério normativo que eu pudesse sustentar. Interações executadas: carga inicial em 1440x900; snapshot da árvore de acessibilidade em cada estado; abertura do filtro \"Cidade\" por mouse e tentativa de fechá-lo com Escape (não fecha); aplicação e remoção do filtro Cidade=Barra Nova; aplicação e limpeza do intervalo de datas 25/03/2026–31/03/2026; marcação da caixa \"selecionar todos\" do cabeçalho; navegação para a página 2 da paginação (numérica e seletor \"Página\" permanecem sincronizados); foco por teclado no seletor \"Exibir\" (a lista abre ao focar); troca para as abas Agendar e Concluídos e retorno a Tramitando; busca por \"zzzzzz\" com Enter, levando ao estado sem resultados; abertura do modal \"Atribuir Vistoriador\" pela linha 2 e fechamento em \"Cancelar\"; medições de refluxo em 360x740 e 320x640. Foram necessárias investigações detalhadas além do limite de 12 porque a tela tem fingerprints distintos que precisavam de evidência própria: aba Tramitando, aba Agendar, aba Concluídos, filtro aberto, filtro aplicado, resultado vazio, modal aberto e viewport 320x640. Candidatos avaliados e rejeitados: o menu do avatar está corretamente oculto (hidden + aria-hidden + display:none) e o acionador expõe aria-expanded/aria-controls; as paginações numérica e por seletor permanecem sincronizadas ao trocar de página; os distintivos \"Vistoria preenchida\"/\"Concluído\" (4.59:1) e \"Não comparecimento\" (4.60:1) atingem o contraste exigido; o modal usa role=\"dialog\" com aria-modal=\"true\" e aria-labelledby, e move o foco para dentro; não há ids duplicados; o atributo lang=\"pt-br\" está presente; a ausência de caixa de seleção nas linhas com status diferente de \"Vistoria agendada\" aparenta ser regra de negócio, não defeito. Limitações registradas: (1) os três campos br-input têm outline-style:none quando focados, sem anel de foco próprio (o restante da tela usa contorno tracejado dourado de 4px) — classifiquei como incerto quanto a WCAG 2.4.7, porque o cursor de texto e o indicador nativo do seletor de data permanecem visíveis, e por isso não gerei achado; (2) os campos de data nativos exibem o formato mm/dd/yyyy, mas isso decorre do locale do navegador de teste (en-US) e não da página, então não foi reportado; (3) a troca de abas não altera a URL, o que impede marcar ou voltar para uma aba específica — deixado como incerto por não haver referência normativa que eu pudesse sustentar; (4) a avaliação foi feita com o perfil mock-perfil=mpa (SUPERVISOR); outros perfis podem expor ações diferentes e não foram percorridos.",
+  "findings": [
+    {
+      "selector": "pnip-filter-panel span.br-tag.interaction.small.bg-pure-0",
+      "relatedSelectors": [],
+      "rule": "wcag:2.1.1",
+      "observed": "Os quatro acionadores de filtro (Cidade, Porto, Vistoriador, Status) são <span class=\"br-tag interaction\"> com style=\"cursor:pointer\" e handler de clique, sem tabindex, sem role e sem aria-expanded; não aparecem em nenhuma posição da ordem de tabulação (varredura de focáveis retornou 94 elementos, nenhum deles estes spans) e Escape não fecha a lista aberta.",
+      "expected": "Cada acionador deve ser operável por teclado (elemento button ou role=\"button\" com tabindex=\"0\" acionável por Enter/Espaço) e expor aria-expanded refletindo o estado aberto/fechado da lista.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "varrer elementos focáveis em light DOM e shadow DOM",
+          "clicar no acionador \"Cidade\"",
+          "pressionar Escape"
+        ]
+      },
+      "evidence": [
+        "filtro-cidade-aberto.png",
+        "snapshot a11y refs e65/e70/e75/e80 (generic [cursor=pointer], sem role de botão)",
+        "outerHTML de pnip-filter-panel: span.br-tag sem tabindex/role/aria-expanded",
+        "varredura de focáveis: 0 ocorrências de span.br-tag",
+        "após Escape: pnip-filter-panel .br-list.d-block = 1 (continua aberta)"
+      ]
+    },
+    {
+      "selector": "pnip-filter-panel .br-list.d-block .br-item label",
+      "relatedSelectors": [
+        "pnip-filter-panel span.br-tag.interaction.small.bg-pure-0"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "As opções da lista de filtro são <label> soltos dentro de div.br-radio, sem input associado (0 inputs na lista), sem role, sem tabindex e sem estado de seleção; clicar no label aplica o filtro, mas nenhum papel ou valor é exposto. Medido com a lista \"Cidade\" aberta: 6 labels, 0 inputs, 0 elementos focáveis.",
+      "expected": "Cada opção deve expor papel e estado programaticamente (ex.: input[type=radio] com label associado, ou role=\"option\"/\"menuitemradio\" com aria-checked) e ser alcançável pelo teclado.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "clicar no acionador \"Cidade\"",
+          "inspecionar a lista aberta"
+        ]
+      },
+      "evidence": [
+        "snap-filtro-aberto.md",
+        "filtro-cidade-aberto.png",
+        "outerHTML: <div class=\"br-radio py-2 px-3\"><label>Areia Branca do Leste</label></div>",
+        "contagem: labels=6, inputs=0, focáveis=0"
+      ]
+    },
+    {
+      "selector": ".br-table .bg-blue-40 .text-secondary-01",
+      "relatedSelectors": [],
+      "rule": "wcag:1.4.3",
+      "observed": "O texto \"Vistoria agendada\" é rgb(255,255,255) sobre bg-blue-40 rgb(79,151,209), 14px peso 500: razão de contraste 3.14:1. Atinge 10 elementos na aba Tramitando.",
+      "expected": "Texto normal (menor que 18,66px em negrito ou 24px) precisa de razão de contraste mínima de 4.5:1 com o fundo.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "cálculo de contraste sobre getComputedStyle: fg rgb(255,255,255) / bg rgb(79,151,209) = 3.14:1",
+        "selecao-todos.png",
+        "snapshot a11y ref e137"
+      ]
+    },
+    {
+      "selector": ".br-table .bg-secondary-06 .text-secondary-01",
+      "relatedSelectors": [],
+      "rule": "wcag:1.4.3",
+      "observed": "Na aba \"Agendar\", o texto \"Vistoria pré agendada\" é branco sobre bg-secondary-06, 14px peso 500: razão de contraste 3.54:1. Atinge 10 elementos.",
+      "expected": "Texto normal precisa de razão de contraste mínima de 4.5:1 com o fundo.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "clicar na aba \"Agendar\""
+        ]
+      },
+      "evidence": [
+        "cálculo de contraste sobre getComputedStyle na aba Agendar = 3.54:1",
+        "contagem validada: 10 elementos para .br-table .bg-secondary-06 .text-secondary-01"
+      ]
+    },
+    {
+      "selector": "span.br-tag.primary-pastel-01",
+      "relatedSelectors": [],
+      "rule": "wcag:1.4.3",
+      "observed": "A etiqueta de estado \"Nenhum filtro de data aplicado\" é rgb(255,255,255) sobre rgb(197,212,235), 14px peso 500: razão de contraste 1.5:1 — praticamente ilegível.",
+      "expected": "Texto normal precisa de razão de contraste mínima de 4.5:1 com o fundo.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "cálculo de contraste: fg rgb(255,255,255) / bg rgb(197,212,235) = 1.5:1",
+        "filtro-cidade-aberto.png",
+        "foco-data-fim.png",
+        "snapshot a11y ref e106"
+      ]
+    },
+    {
+      "selector": "#avatar-dropdown-trigger .br-avatar .content",
+      "relatedSelectors": [],
+      "rule": "wcag:1.4.3",
+      "observed": "A inicial \"U\" do avatar é rgb(255,255,255) sobre bg-orange-vivid-30 rgb(255,140,0), 24.19px peso 700: razão de contraste 2.33:1.",
+      "expected": "Texto de grande porte (>=24px, ou >=18.66px em negrito) precisa de razão de contraste mínima de 3:1 com o fundo.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "cálculo de contraste: fg rgb(255,255,255) / bg rgb(255,140,0) = 2.33:1, fontSize 24.192px, fontWeight 700",
+        "filtro-cidade-aberto.png",
+        "snapshot a11y ref e23/e24"
+      ]
+    },
+    {
+      "selector": "table tbody input[type=\"checkbox\"]",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "As 10 caixas de seleção de linha não têm id, name, aria-label, aria-labelledby, title nem <label> associado; a árvore de acessibilidade as expõe como \"checkbox\" sem nome, sem indicar a qual vistoria pertencem.",
+      "expected": "Cada caixa de seleção de linha deve ter nome acessível que identifique a linha (ex.: aria-label=\"Selecionar vistoria Coral Mansa IV\" ou aria-labelledby apontando para a célula do nome da embarcação).",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "snapshot a11y refs e127/e163/e199 — \"checkbox\" sem nome",
+        "consulta de atributos: id=\"\", aria-label=null, aria-labelledby=null, title=null, label[for]=false, closest(label)=false"
+      ]
+    },
+    {
+      "selector": "table thead input[type=\"checkbox\"]",
+      "relatedSelectors": [
+        "table tbody input[type=\"checkbox\"]"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "A caixa \"selecionar todos\" no cabeçalho não tem nome acessível (sem aria-label, title ou label); clicá-la marca as 10 caixas de linha, mas a árvore de acessibilidade a expõe apenas como \"checkbox\" sem nome.",
+      "expected": "A caixa de seleção global deve ter nome acessível descrevendo sua função (ex.: aria-label=\"Selecionar todas as vistorias da página\").",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "clicar na caixa de seleção do cabeçalho da tabela"
+        ]
+      },
+      "evidence": [
+        "selecao-todos.png",
+        "snapshot a11y ref e115 — columnheader contendo \"checkbox\" sem nome",
+        "após clique: headerChecked=true e 10/10 caixas de linha marcadas"
+      ]
+    },
+    {
+      "selector": "table tbody br-button[icon=\"eye\"]",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "O botão de ação com ícone \"eye\" de cada linha não tem title nem aria-label (os botões irmãos têm: \"Atribuir vistoriador\", \"Excluir vistoria\", \"Notificar solicitante da vistoria\"); a árvore de acessibilidade o expõe como button sem nome. Ocorre nas abas Tramitando e Concluídos, 10 por página.",
+      "expected": "O botão deve ter nome acessível descrevendo a ação (ex.: title/aria-label \"Visualizar vistoria\"), como os demais botões da mesma célula.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "snapshot a11y refs e147/e183/e219 — \"button [ref=...]\" sem nome, ao lado de button \"Excluir vistoria\"",
+        "outerHTML: <br-button icon=\"eye\" type=\"secondary\"></br-button> sem title",
+        "verificação por aba: Tramitando 10/10 sem nome, Concluídos 10/10 sem nome"
+      ]
+    },
+    {
+      "selector": "table tbody br-button[icon=\"calendar\"]",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Na aba \"Agendar\", o botão de ação com ícone \"calendar\" de cada linha não tem title nem aria-label, enquanto o botão irmão expõe \"Excluir vistoria\". 10 ocorrências, todas sem nome.",
+      "expected": "O botão deve ter nome acessível descrevendo a ação de agendamento (ex.: title/aria-label \"Agendar vistoria\").",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "clicar na aba \"Agendar\""
+        ]
+      },
+      "evidence": [
+        "consulta por ícone na aba Agendar: {\"calendar -> (SEM NOME)\": 10, \"trash -> Excluir vistoria\": 10}",
+        "validação de seletor: table tbody br-button[icon=\"calendar\"] = 10, todos sem title e sem aria-label"
+      ]
+    },
+    {
+      "selector": "pnip-filter-panel span.br-tag.interaction.small:not(.bg-pure-0) button.br-button",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "O botão que remove um filtro aplicado (ícone \"×\") não tem aria-label, title nem texto: a árvore de acessibilidade o expõe como button \"\" (nome vazio). O glifo do FontAwesome vem de ::before e não compõe nome acessível.",
+      "expected": "O botão de remoção deve ter nome acessível identificando o filtro removido (ex.: aria-label=\"Remover filtro Barra Nova\").",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "clicar no acionador \"Cidade\"",
+          "clicar na opção \"Barra Nova\""
+        ]
+      },
+      "evidence": [
+        "snapshot a11y ref e557 — button \"\" [cursor=pointer]",
+        "outerHTML: <button type=\"button\" class=\"br-button inverted circle\"><i class=\"fas fa-times\"></i></button>",
+        "consulta de atributos: aria-label=null, title=null, textContent=\"\""
+      ]
+    },
+    {
+      "selector": "br-input[type=\"date\"]",
+      "relatedSelectors": [
+        "pnip-propesc-vistorias div.col-auto.d-flex.align-items-center.align-self-end span.text-bold"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "Os dois campos de data não têm label, aria-label nem aria-labelledby: o input interno (ids br-input-8 e br-input-9) não é referenciado por nenhum <label for>, e a árvore de acessibilidade mostra \"textbox\" sem nome. O texto visível \"Data da vistoria:\" e \"até\" são <span> sem associação programática.",
+      "expected": "Cada campo deve ter nome acessível distinto que identifique seu papel no intervalo (ex.: \"Data da vistoria — início\" e \"Data da vistoria — fim\"), associado via label/for ou aria-label.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "tabular até os campos de data"
+        ]
+      },
+      "evidence": [
+        "snapshot a11y refs e101/e105 — \"textbox [ref=...]\" sem nome",
+        "varredura em shadow DOM: {id:\"br-input-8\", al:null, alb:null, labelFor:false} e {id:\"br-input-9\", al:null, alb:null, labelFor:false}",
+        "foco-data-fim.png"
+      ]
+    },
+    {
+      "selector": "#swal2-select",
+      "relatedSelectors": [
+        "#swal2-html-container"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "No modal \"Atribuir Vistoriador\", o <select> de vistoriadores não tem aria-label, aria-labelledby, title nem <label for=\"swal2-select\">; a árvore de acessibilidade o expõe como \"combobox\" sem nome. O texto visível \"Selecione um Vistoriador\" está em #swal2-html-container, usado como aria-describedby do diálogo, não como rótulo do campo.",
+      "expected": "O select deve ter nome acessível próprio (ex.: aria-label=\"Selecione um Vistoriador\" ou aria-labelledby=\"swal2-html-container\").",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "acionar o botão de atribuir vistoriador da linha 2 (Maresia Nova I)"
+        ]
+      },
+      "evidence": [
+        "snapshot a11y: combobox [active] [ref=e745] sem nome, dentro de dialog \"Atribuir Vistoriador\"",
+        "consulta de atributos: ariaLabel=null, ariaLabelledby=null, labelFor=false, dentroDeLabel=false, title=null"
+      ]
+    },
+    {
+      "selector": "table tbody br-button[icon=\"user-times\"]",
+      "relatedSelectors": [
+        "table tbody br-button[icon=\"user-plus\"]"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "Nas 7 linhas que já possuem vistoriador, o botão usa o ícone \"user-times\" (remover usuário) mas mantém title=\"Atribuir vistoriador\"; acioná-lo abre o modal \"Atribuir Vistoriador\" com a lista de vistoriadores, confirmando que a ação é atribuir/reatribuir. Nas 3 linhas sem vistoriador o ícone é \"user-plus\" com o mesmo title.",
+      "expected": "O ícone deve corresponder à ação executada e ao nome acessível: usar um ícone de atribuição/edição para a ação de atribuir, ou — se a intenção for desatribuir — alterar a ação e o nome acessível de forma coerente.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "acionar o botão com ícone user-times da linha 2 (Maresia Nova I, vistoriador Paulo Cordeiro Paiva)",
+          "fechar o modal em \"Cancelar\""
+        ]
+      },
+      "evidence": [
+        "mapa linha→ícone/título: linhas 2,3,4,6,7,8,10 = user-times + title \"Atribuir vistoriador\"; linhas 1,5,9 (sem vistoriador) = user-plus + mesmo title",
+        "snapshot do modal: dialog \"Atribuir Vistoriador\" com opções de vistoriador e botões OK/Cancelar",
+        "vistoriador da linha antes do clique: \"Paulo Cordeiro Paiva\""
+      ]
+    },
+    {
+      "selector": "i.fas:not([aria-hidden]), span.fas:not([aria-hidden]), i.far:not([aria-hidden])",
+      "relatedSelectors": [],
+      "rule": "wcag:1.1.1",
+      "observed": "10 ícones decorativos do FontAwesome (8 no painel de filtros, 1 de prédio no cabeçalho do menu, 1 de relógio em \"Última atualização\") não têm aria-hidden=\"true\". O glifo de ::before é exposto na árvore de acessibilidade como texto — ex.: generic [ref=e66]: \"\", generic [ref=e68]: \"\". Os demais ícones da mesma tela (paginação, selects, botão Limpar) já usam aria-hidden=\"true\".",
+      "expected": "Ícones puramente decorativos devem ser ignorados pela tecnologia assistiva, com aria-hidden=\"true\", como já feito no restante da tela.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "snapshot a11y inicial: generics contendo caracteres de área privada do FontAwesome (refs e66, e68, e71, e73, e76, e78, e81, e83, e108)",
+        "agrupamento por componente: PNIP-FILTER-PANEL aria-hidden=null ×8, PNIP-HEADER aria-hidden=null ×1, relógio ×1; GOVBR-CUSTOM-PAGINATION e BR-SELECT-PNIP aria-hidden=true",
+        "getComputedStyle(el, \"::before\").content retorna o glifo"
+      ]
+    },
+    {
+      "selector": "nav.tab-nav li.tab-item.active > button",
+      "relatedSelectors": [
+        "nav.tab-nav li.tab-item:not(.active) > button"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "A aba ativa é indicada apenas pela classe CSS .active no <li> (cor rgb(12,50,111) e borda inferior de 4px). Os três botões não têm role=\"tab\", aria-selected nem aria-current, e o <ul> não tem role=\"tablist\"; na árvore de acessibilidade as três abas são indistinguíveis. Confirmado também após trocar para \"Agendar\".",
+      "expected": "O estado selecionado deve ser programaticamente determinável, via padrão de abas (role=\"tablist\"/role=\"tab\" com aria-selected) ou, mantendo os botões, via aria-current na aba ativa.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "clicar na aba \"Agendar\"",
+          "clicar na aba \"Concluídos\"",
+          "voltar para a aba \"Tramitando\""
+        ]
+      },
+      "evidence": [
+        "outerHTML: <li class=\"tab-item active\"><button id=\"TRAMITANDO\" type=\"button\">",
+        "consulta: AGENDAR/TRAMITANDO/HISTORICO todos com aria-selected=null, aria-current=null, role=null; ul role=null",
+        "snapshot a11y refs e53/e55/e57 — três \"button\" equivalentes",
+        "após clicar em Agendar: AGENDAR* ativo, aria ainda todos null"
+      ]
+    },
+    {
+      "selector": "govbr-custom-pagination a.page.active",
+      "relatedSelectors": [
+        "govbr-custom-pagination a.page:not(.active)"
+      ],
+      "rule": "wcag:1.3.1",
+      "observed": "A página corrente da paginação é sinalizada só por estilo (classe .active: branco sobre rgb(12,50,111), font-weight 600, contra rgb(19,81,180) transparente nas demais) e pelo atributo não semântico data-current=\"1\" no <nav>. O link ativo não tem aria-current; na árvore de acessibilidade os links 1–4 são expostos apenas como \"link 1\"..\"link 4\".",
+      "expected": "O link da página corrente deve expor aria-current=\"page\" para que a posição seja programaticamente determinável.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "clicar no link da página 2 da paginação numérica"
+        ]
+      },
+      "evidence": [
+        "outerHTML: <a href=\"javascript:void(0)\" class=\"page active\"> 1 </a> com aria-current=null",
+        "estilos comparados: ativo color rgb(255,255,255)/bg rgb(12,50,111)/fw 600 vs inativo color rgb(19,81,180)/bg transparente/fw 400",
+        "snapshot a11y refs e494/e497/e500/e503 — \"link 1..4\" sem estado",
+        "após ir à página 2: activeLink=\"2\", contador \"11– 20 de 34 itens\""
+      ]
+    },
+    {
+      "selector": "govbr-custom-pagination nav.br-pagination li > li",
+      "relatedSelectors": [
+        "govbr-custom-pagination nav.br-pagination ul"
+      ],
+      "rule": "wcag:1.3.1",
+      "observed": "Cada link numérico da paginação está dentro de um <li> aninhado diretamente em outro <li>, sem lista intermediária: <ul><li><li><a class=\"page\">1</a></li></li>...</ul>. A árvore de acessibilidade reflete a estrutura inválida, expondo \"listitem\" dentro de \"listitem\" (refs e492 > e493).",
+      "expected": "Itens de lista devem ser filhos diretos de um <ul>/<ol>; cada link de página deve ficar em um único <li> irmão dos demais.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "outerHTML de govbr-custom-pagination: <li _ngcontent><!----><li _ngcontent><a class=\"page active\"> 1 </a></li><!----><!----></li>",
+        "snapshot a11y: listitem [ref=e492] contendo listitem [ref=e493]",
+        "validação de seletor: 4 ocorrências de li > li"
+      ]
+    },
+    {
+      "selector": "br-select-pnip button[data-trigger] i",
+      "relatedSelectors": [
+        "br-select-pnip .br-list"
+      ],
+      "rule": null,
+      "observed": "Os dois selects da paginação (\"Exibir\" e \"Página\") mantêm o ícone fa-angle-up (seta para cima) tanto com a lista fechada (.br-list display:none) quanto aberta (display:block). Com a lista fechada a seta aponta para cima, indicando recolher; o ícone não muda entre os estados.",
+      "expected": "O ícone deve refletir o estado do select: seta para baixo quando a lista está fechada e para cima quando aberta.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "inspecionar o select \"Exibir\" fechado",
+          "focar o campo \"Exibir\", que abre a lista",
+          "inspecionar o ícone novamente"
+        ]
+      },
+      "evidence": [
+        "fechado: {listDisplay:\"none\", triggerIcon:\"fas fa-angle-up\"} para label \"Exibir\" e \"Página\"",
+        "aberto: {listaDisplay:\"block\", iconeAberto:\"fas fa-angle-up\"}",
+        "validação de seletor: 2 ocorrências"
+      ]
+    },
+    {
+      "selector": "br-select-pnip input[type=\"text\"]",
+      "relatedSelectors": [
+        "br-select-pnip .br-list",
+        "br-select-pnip button[data-trigger]"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "Os campos #total (\"Exibir\") e #page (\"Página\") abrem uma lista de opções ao receber foco (.br-list passa de display:none para block), mas não têm role=\"combobox\", aria-expanded, aria-haspopup nem aria-controls; o botão acionador tem tabindex=\"-1\". A abertura e o fechamento da lista não são expostos à tecnologia assistiva.",
+      "expected": "O campo deve expor seu papel de combobox e o estado da lista (aria-expanded true/false), referenciando a lista via aria-controls.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "focar o campo \"Exibir\" da paginação"
+        ]
+      },
+      "evidence": [
+        "consulta nos dois selects: {inputRole:null, ariaExpanded:null, ariaHaspopup:null}",
+        "ao focar #total: listaVisivel=\"block\" e ariaExpanded continua null",
+        "outerHTML: <button type=\"button\" aria-label=\"Exibir lista\" tabindex=\"-1\" data-trigger=\"data-trigger\">"
+      ]
+    },
+    {
+      "selector": "pnip-filter-panel button.br-button",
+      "relatedSelectors": [
+        "span.br-tag.primary-pastel-01"
+      ],
+      "rule": null,
+      "observed": "O botão \"Limpar Filtro\" inicia desabilitado (nenhum filtro aplicado), é habilitado ao aplicar um filtro de data e permanece habilitado depois que todos os filtros são removidos — estado final com 0 chips aplicados, etiqueta de volta a \"Nenhum filtro de data aplicado\" e contador em \"1– 10 de 34 itens\".",
+      "expected": "O botão deve voltar ao estado desabilitado quando não houver nenhum filtro aplicado, como no carregamento inicial.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "preencher data inicial 25/03/2026 e data final 31/03/2026",
+          "limpar os dois campos de data"
+        ]
+      },
+      "evidence": [
+        "ciclo medido: inicial disabled=true → com filtro de data disabled=false → após limpar as datas disabled=false",
+        "estado final: chipsAplicados=0, etiqueta \"Nenhum filtro de data aplicado\", itens \"1– 10 de 34 itens\"",
+        "selecao-todos.png (botão \"Limpar Filtro\" habilitado sem filtros ativos)"
+      ]
+    },
+    {
+      "selector": "pnip-propesc-vistorias div.d-flex.flex-column.justify-content-center.align-items-center.mt-5 p",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.3",
+      "observed": "Ao buscar um termo sem resultados, a tabela e a paginação são removidas e surge o <p>Não há vistorias para exibir.</p>, sem role=\"status\", aria-live ou aria-atomic. Nesse estado a página fica com zero regiões live — a única existente (.pagination-information com aria-live=\"polite\", que anuncia \"1– 10 de 34 itens\") é removida junto com a paginação. O foco permanece no campo de busca e nada é anunciado.",
+      "expected": "A mensagem de resultado vazio deve ser exposta como mensagem de status (role=\"status\" ou aria-live=\"polite\") para ser anunciada sem receber foco.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "digitar \"zzzzzz\" no campo \"Pesquise aqui ...\"",
+          "pressionar Enter"
+        ]
+      },
+      "evidence": [
+        "busca-sem-resultados.png",
+        "estado após Enter: {temTabela:false, p:1, texto:\"Não há vistorias para exibir.\", liveRegions:[], foco:\"BR-INPUT#search\"}",
+        "outerHTML: <p>Não há vistorias para exibir.</p> sem aria-live/role",
+        "estado com resultados: liveRegions=[\"DIV|polite|1– 10 de 34 itens\"]"
+      ]
+    },
+    {
+      "selector": "pnip-propesc-vistorias div.col-auto.d-flex.align-items-center.align-self-end",
+      "relatedSelectors": [
+        "br-input[type=\"date\"]"
+      ],
+      "rule": "wcag:1.4.10",
+      "observed": "Com a janela em 320 px de largura (clientWidth 305 px), a linha do filtro de data (\"Data da vistoria:\" + dois campos + \"até\") ocupa 580 px e se estende até x=612, quase o dobro da viewport, exigindo rolagem horizontal. O conteúdo não é tabular e não requer layout bidimensional.",
+      "expected": "Em 320 px de largura o conteúdo deve refluir sem exigir rolagem horizontal; a linha de filtro de data deve quebrar em várias linhas.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "steps": [
+          "carregar a tela",
+          "redimensionar a janela para 320x640"
+        ]
+      },
+      "evidence": [
+        "medição em 320x640: clientWidth=305, scrollWidth=1309, excesso=1004 px",
+        "elemento infrator fora da tabela: {sel:\"div.col-auto.d-flex.align-items-center\", right:612, w:580, txt:\"Data da vistoria: até\"}",
+        "validação de seletor em 1440x900: 1 ocorrência"
+      ]
+    },
+    {
+      "selector": "nav.tab-nav ul",
+      "relatedSelectors": [
+        "nav.tab-nav li.tab-item"
+      ],
+      "rule": "wcag:1.4.10",
+      "observed": "Com a janela em 320 px de largura (clientWidth 305 px), a barra de abas não quebra nem rola internamente: o item \"Concluídos\" se estende até x=478 e \"Tramitando\" até x=324, exigindo rolagem horizontal da página para alcançar as abas.",
+      "expected": "Em 320 px de largura as abas devem refluir (quebrar em linhas ou rolar dentro do próprio contêiner) sem exigir rolagem horizontal da página.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "steps": [
+          "carregar a tela",
+          "redimensionar a janela para 320x640"
+        ]
+      },
+      "evidence": [
+        "medição em 320x640: {sel:\"li.tab-item\", right:478, w:154, txt:\"Concluídos\"} e {sel:\"li.tab-item.active\", right:324, w:155, txt:\"Tramitando\"}",
+        "clientWidth=305 px",
+        "validação de seletor: 1 ocorrência de nav.tab-nav ul"
+      ]
+    },
+    {
+      "selector": "div.br-table",
+      "relatedSelectors": [
+        "div.br-table table.table"
+      ],
+      "rule": null,
+      "observed": "O contêrner div.br-table tem overflow-x: visible e largura útil de 1096 px, enquanto a tabela interna mede 1269 px: a tabela transborda o contêiner e empurra o documento inteiro, que passa a rolar horizontalmente já em 1440x900 (scrollWidth 1433 vs clientWidth 1425, tabela chegando a x=1434).",
+      "expected": "A tabela deve rolar horizontalmente dentro do próprio contêiner (overflow-x: auto em div.br-table), sem gerar rolagem horizontal no documento.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "medir larguras de rolagem do documento e do contêiner da tabela"
+        ]
+      },
+      "evidence": [
+        "medição: {tabelaScrollW:1269, tabelaClientW:1096, tabelaOverflowX:\"visible\"}",
+        "documento: scrollWidth=1433, clientWidth=1425; elementos excedentes: TABLE.table right=1434",
+        "filtro-cidade-aberto.png e selecao-todos.png mostram a barra de rolagem horizontal do documento"
+      ]
+    },
+    {
+      "selector": "title",
+      "relatedSelectors": [
+        "pnip-propesc-vistorias h2"
+      ],
+      "rule": "wcag:2.4.2",
+      "observed": "O título do documento é \"PNIP\" — apenas a sigla da plataforma — e não identifica a tela exibida, cujo conteúdo é a listagem de Vistorias (heading \"Vistorias\"). O título permanece \"PNIP\" em todas as abas e estados percorridos, inclusive após trocar para \"Agendar\" e \"Concluídos\".",
+      "expected": "O título deve descrever o tópico ou finalidade da tela, por exemplo \"Vistorias — PNIP\".",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "alternar entre as abas Agendar, Tramitando e Concluídos"
+        ]
+      },
+      "evidence": [
+        "document.title = \"PNIP\" em todas as leituras",
+        "heading da tela: H2 \"Vistorias\"",
+        "Page Title relatado pela ferramenta em todas as navegações: \"PNIP\""
+      ]
+    },
+    {
+      "selector": "pnip-propesc-vistorias h2",
+      "relatedSelectors": [],
+      "rule": null,
+      "observed": "\"Vistorias\" — único cabeçalho da tela — está marcado como <h2>, e a página não possui nenhum <h1> (document.querySelectorAll(\"h1\").length = 0). A lista completa de cabeçalhos do documento é [\"H2: Vistorias\"].",
+      "expected": "O cabeçalho principal da tela deve ser o nível mais alto da hierarquia (h1), para que a navegação por cabeçalhos tenha um ponto de entrada de primeiro nível.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "consulta de cabeçalhos: headings=[\"H2: Vistorias\"], h1=0",
+        "snapshot a11y ref e45: heading \"Vistorias\" [level=2]"
+      ]
+    },
+    {
+      "selector": "br-breadcrumb",
+      "relatedSelectors": [],
+      "rule": null,
+      "observed": "No breadcrumb, o item \"Home\" é um <button> aninhado dentro de um <a href=\"/portal-mpa\">: <li class=\"crumb home\"><a href=\"/portal-mpa\"><button class=\"br-button small circle\" aria-label=\"\"><span class=\"sr-only\">Home</span>...</button></a></li>. A árvore de acessibilidade mostra link \"Home\" contendo button \"Home\", e a varredura de focáveis registra os dois elementos — duas paradas de tabulação para uma única ação.",
+      "expected": "O item do breadcrumb deve ser um único controle interativo: ou o link <a>, ou o botão, sem aninhar conteúdo interativo dentro do link.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "inspecionar o shadow DOM de br-breadcrumb",
+          "varrer elementos focáveis"
+        ]
+      },
+      "evidence": [
+        "snapshot a11y refs e34/e35: link \"Home\" (/url: /portal-mpa) contendo button \"Home\"",
+        "shadowRoot de br-breadcrumb: <a href=\"/portal-mpa\"><button class=\"br-button small circle\" aria-label=\"\" type=\"button\"><span class=\"sr-only\">Home</span><i class=\"fas fa-home\" aria-hidden=\"true\"></i></button></a>",
+        "varredura de focáveis: \"shadow:BR-BREADCRUMB|A|Home\" e \"shadow:BR-BREADCRUMB|BUTTON|Home\""
+      ]
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "timestamp": "2026-10-02T15:53:21.655Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+  "scope": [
+    "Plataforma Nacional da Indústria do Pescado - Tela de Vistorias"
+  ],
+  "notes": "Varredura axe-core detectou 41 achados de acessibilidade em display mode. Principais: 23 botões com ícone sem aria-label (crítico), 15 elementos com contraste insuficiente (sério), múltiplos checkboxes e inputs sem labels (crítico), 2 headers de tabela vazios (menor).",
+  "findings": [
+    {
+      "selector": "tr:nth-child(1) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] >>> .secondary.middle[aria-label=\"\"]",
+      "rule": "wcag:4.1.2",
+      "observed": "Botão com ícone 'eye' sem aria-label ou texto visível",
+      "expected": "Botão deve ter aria-label ou conteúdo de texto visível para leitores de tela",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "steps": [
+          "navigate"
+        ]
+      },
+      "evidence": [
+        "F-132"
+      ]
+    },
+    {
+      "selector": ".primary-pastel-01",
+      "rule": "wcag:1.4.3",
+      "observed": "Contraste de cor: #ffffff sobre #c5d4eb = 1.5:1",
+      "expected": "Contraste mínimo de 4.5:1 para texto normal",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "steps": [
+          "navigate"
+        ]
+      },
+      "evidence": [
+        "F-142"
+      ]
+    },
+    {
+      "selector": "br-input:nth-child(2) >>> #br-input-8",
+      "rule": "wcag:1.3.1",
+      "observed": "Input de data 'até' sem label, aria-label ou aria-labelledby",
+      "expected": "Input deve ter label associada explicitamente ou aria-label",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "steps": [
+          "navigate"
+        ]
+      },
+      "evidence": [
+        "F-196"
+      ]
+    },
+    {
+      "selector": "th:nth-child(2)",
+      "rule": "wcag:1.3.1",
+      "observed": "Header da tabela sem conteúdo de texto",
+      "expected": "Header deve ter conteúdo de texto visível",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "steps": [
+          "navigate"
+        ]
+      },
+      "evidence": [
+        "F-194"
+      ]
+    },
+    {
+      "selector": "th:nth-child(2) > input[type=\"checkbox\"]",
+      "rule": "wcag:1.3.1",
+      "observed": "Checkbox em header sem label associada",
+      "expected": "Checkbox deve ter label explícita, aria-label ou aria-labelledby",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "steps": [
+          "navigate"
+        ]
+      },
+      "evidence": [
+        "F-198"
+      ]
+    }
+  ],
+  "config": {
+    "agentReportedModel": "govbr-ds-validator",
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.287 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.3.0",
+    "siteManifestSha256": "47467813eaa78f033f7095e273385cd729f5224674cc1ec0cc57a820b98562cd",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "9df73e47982806b9d8a8bf5ec847e938a7f8f1a5fdc1fc05a2e975c3eecc26b9",
+    "schedule": {
+      "slot": 1,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-10-02T12-49-49-com-run1-c878a410-evidencia",
+    "evidenceIndexSha256": "73410af7f21509a7d401ba64479576ee49c6ea31fe8cfb2c14d813c9e01a143e",
+    "validatorVersion": "2.7.0"
+  },
+  "cost": {
+    "startedAt": "2026-10-02T15:51:41.7545635Z",
+    "finishedAt": "2026-10-02T15:53:31.1609129Z",
+    "wallClockSeconds": 109.3,
+    "tokens": 422035,
+    "tokenUsage": {
+      "input": 118,
+      "cacheCreationInput": 43400,
+      "cacheReadInput": 371760,
+      "output": 6757
+    },
+    "totalCostUsd": 0.1955796,
+    "turns": 18,
+    "mcp": {
+      "runId": "2026-10-02T12-49-49-com-run1-c878a410",
+      "telemetryFile": "pipeline/logs/2026-10-02T12-49-49-com-run1-c878a410-mcp.ndjson",
+      "calls": 8,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 2474,
+      "responseBytes": 438904,
+      "durationMs": 15139,
+      "byTool": {
+        "scan_page": {
+          "calls": 5,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 714,
+          "responseBytes": 435040,
+          "durationMs": 11597
+        },
+        "verify_finding": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 1760,
+          "responseBytes": 3864,
+          "durationMs": 3542
+        }
+      }
+    }
+  }
+}

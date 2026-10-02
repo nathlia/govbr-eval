@@ -1,0 +1,243 @@
+{
+  "timestamp": "2026-10-02T15:55:56.737Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+  "scope": [
+    "página de vistorias - filtros, tabela de dados, componentes de ação"
+  ],
+  "notes": "Avaliação realizada em viewport 1280x900. Navegação inicial da página, clique no filtro Cidade para inspecionar dropdown. Interações com snapshot de acessibilidade e avaliação de elementos ARIA. Limitações: não é possível testar navegação por teclado completa sem controle de entrada de teclado estendido.",
+  "findings": [
+    {
+      "selector": "[class*='col-auto mb-2 px-2']:has(span:contains('Cidade'))",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "short_summary": "Filtro Cidade sem papel ARIA nem aria-label",
+      "summary": "O filtro de Cidade não possui role ARIA, aria-label, ou indicação de seu propósito para leitores de tela.",
+      "observed": "Elemento genérico com cursor:pointer, sem role, sem aria-label, sem aria-labelledby",
+      "expected": "Elemento com role='button' ou equivalente, aria-label descrevendo sua função, e navegável por teclado",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "navegação inicial"
+        ]
+      },
+      "evidence": [
+        "ref=e65"
+      ]
+    },
+    {
+      "selector": "[class*='col-auto mb-2 px-2']:has(span:contains('Porto'))",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "short_summary": "Filtro Porto sem papel ARIA nem aria-label",
+      "summary": "O filtro de Porto não possui role ARIA, aria-label, ou indicação de seu propósito para leitores de tela.",
+      "observed": "Elemento genérico com cursor:pointer, sem role, sem aria-label, sem aria-labelledby",
+      "expected": "Elemento com role='button' ou equivalente, aria-label descrevendo sua função, e navegável por teclado",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "navegação inicial"
+        ]
+      },
+      "evidence": [
+        "ref=e70"
+      ]
+    },
+    {
+      "selector": "[class*='col-auto mb-2 px-2']:has(span:contains('Vistoriador'))",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "short_summary": "Filtro Vistoriador sem papel ARIA nem aria-label",
+      "summary": "O filtro de Vistoriador não possui role ARIA, aria-label, ou indicação de seu propósito para leitores de tela.",
+      "observed": "Elemento genérico com cursor:pointer, sem role, sem aria-label, sem aria-labelledby",
+      "expected": "Elemento com role='button' ou equivalente, aria-label descrevendo sua função, e navegável por teclado",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "navegação inicial"
+        ]
+      },
+      "evidence": [
+        "ref=e75"
+      ]
+    },
+    {
+      "selector": "[class*='col-auto mb-2 px-2']:has(span:contains('Status'))",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "short_summary": "Filtro Status sem papel ARIA nem aria-label",
+      "summary": "O filtro de Status não possui role ARIA, aria-label, ou indicação de seu propósito para leitores de tela.",
+      "observed": "Elemento genérico com cursor:pointer, sem role, sem aria-label, sem aria-labelledby",
+      "expected": "Elemento com role='button' ou equivalente, aria-label descrevendo sua função, e navegável por teclado",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "navegação inicial"
+        ]
+      },
+      "evidence": [
+        "ref=e80"
+      ]
+    },
+    {
+      "selector": ".br-list.d-block",
+      "relatedSelectors": [
+        ".br-item"
+      ],
+      "rule": "wcag:4.1.2",
+      "short_summary": "Dropdown de filtro sem papel ARIA apropriado",
+      "summary": "O dropdown que se abre ao clicar nos filtros não possui role='listbox' nem role='menu', e seus itens não possuem role='option'.",
+      "observed": "Container é DIV sem role; itens são DIV.br-item sem role",
+      "expected": "Container com role='listbox' ou role='menu'; itens com role='option' ou role='menuitem'",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "clicou em filtro Cidade"
+        ]
+      },
+      "evidence": [
+        "snapshot: dropdown-cidade-snapshot.md"
+      ]
+    },
+    {
+      "selector": "table tbody input[type='checkbox']",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "short_summary": "Checkboxes de seleção da tabela sem nome acessível",
+      "summary": "Os checkboxes da coluna de seleção não possuem aria-label, title, ou elemento label associado.",
+      "observed": "Checkbox sem aria-label, aria-labelledby, ou title",
+      "expected": "Checkbox com aria-label como 'Selecionar linha X' ou similar",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "navegação inicial"
+        ]
+      },
+      "evidence": [
+        "tabela primeira linha"
+      ]
+    },
+    {
+      "selector": "br-button[icon='eye']",
+      "relatedSelectors": [
+        "table tbody tr:first-child"
+      ],
+      "rule": "wcag:4.1.2",
+      "short_summary": "Botão de visualizar sem nome acessível",
+      "summary": "O botão de visualizar (ícone 'eye') na tabela não possui title nem aria-label para identificar sua função.",
+      "observed": "Botão com apenas ícone, sem title, sem aria-label, sem textContent",
+      "expected": "Botão com title='Visualizar vistoria' ou aria-label equivalente",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "navegação inicial"
+        ]
+      },
+      "evidence": [
+        "botão index 2 na primeira linha de dados"
+      ]
+    },
+    {
+      "selector": "br-button",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "short_summary": "Componentes br-button sem role ARIA",
+      "summary": "Os componentes customizados <br-button> não expõem role='button' no elemento, tornando-os inacessíveis para leitores de tela.",
+      "observed": "Custom element <br-button> sem atributo role",
+      "expected": "Custom element deve ter role='button' ou interno nativo <button>",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "navegação inicial"
+        ]
+      },
+      "evidence": [
+        "42 instâncias encontradas"
+      ]
+    },
+    {
+      "selector": "table tbody tr:first-child td:nth-child(7)",
+      "relatedSelectors": [
+        "table thead th:nth-child(7)"
+      ],
+      "rule": "wcag:1.3.1",
+      "short_summary": "Célula de Vistoriador vazia sem indicação apropriada",
+      "summary": "A célula de Vistoriador na primeira linha está vazia, sem aria-label ou textContent indicando 'Não atribuído' ou similar.",
+      "observed": "Célula vazia com innerHTML vazio",
+      "expected": "Célula com textContent 'Não atribuído' ou aria-label descritivo",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "navegação inicial"
+        ]
+      },
+      "evidence": [
+        "primeira linha de dados"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.287 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.3.0",
+    "siteManifestSha256": "47467813eaa78f033f7095e273385cd729f5224674cc1ec0cc57a820b98562cd",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "9df73e47982806b9d8a8bf5ec847e938a7f8f1a5fdc1fc05a2e975c3eecc26b9",
+    "schedule": {
+      "slot": 2,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-10-02T12-49-49-sem-run1-a3c1f819-evidencia",
+    "evidenceIndexSha256": "3f775f6916332cd2934c3ca305266ecf7f3efce2a772dd08bb19fe75be422958"
+  },
+  "cost": {
+    "startedAt": "2026-10-02T15:53:32.5400989Z",
+    "finishedAt": "2026-10-02T15:56:10.5882266Z",
+    "wallClockSeconds": 157.9,
+    "tokens": 981180,
+    "tokenUsage": {
+      "input": 230,
+      "cacheCreationInput": 44879,
+      "cacheReadInput": 923427,
+      "output": 12644
+    },
+    "totalCostUsd": 0.24555069999999998,
+    "turns": 29
+  }
+}

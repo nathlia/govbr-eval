@@ -1,0 +1,3000 @@
+{
+  "scene": "1280x900@inicial",
+  "url": "http://127.0.0.1:53067/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+  "bySelector": {
+    "pnip-root": {
+      "selector": "pnip-root",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root"
+      ]
+    },
+    "pnip-propesc-vistorias h2": {
+      "selector": "pnip-propesc-vistorias h2",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(1)>h2"
+      ]
+    },
+    "pnip-propesc-vistorias table": {
+      "selector": "pnip-propesc-vistorias table",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table"
+      ]
+    },
+    "pnip-search-table-utils br-input >>> input": {
+      "selector": "pnip-search-table-utils br-input >>> input",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input >>> div>input"
+      ]
+    },
+    "pnip-propesc-vistorias br-input[type=date] >>> input": {
+      "selector": "pnip-propesc-vistorias br-input[type=date] >>> input",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1) >>> div>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2) >>> div>input"
+      ]
+    },
+    "pnip-propesc-vistorias table input[type=checkbox]": {
+      "selector": "pnip-propesc-vistorias table input[type=checkbox]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input"
+      ]
+    },
+    "pnip-propesc-vistorias tbody br-button[icon=eye] >>> button": {
+      "selector": "pnip-propesc-vistorias tbody br-button[icon=eye] >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+      ]
+    },
+    "pnip-propesc-vistorias tbody br-button >>> button": {
+      "selector": "pnip-propesc-vistorias tbody br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+      ]
+    },
+    "pnip-search-table-utils button.br-button": {
+      "selector": "pnip-search-table-utils button.br-button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button"
+      ]
+    },
+    "br-select-pnip button.br-button": {
+      "selector": "br-select-pnip button.br-button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button"
+      ]
+    },
+    "pnip-filter-panel span.br-tag.interaction": {
+      "selector": "pnip-filter-panel span.br-tag.interaction",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span"
+      ]
+    },
+    "pnip-propesc-vistorias tbody pnip-status-solicitacao-utils .text-secondary-01": {
+      "selector": "pnip-propesc-vistorias tbody pnip-status-solicitacao-utils .text-secondary-01",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "pnip-propesc-vistorias span.br-tag.primary-pastel-01": {
+      "selector": "pnip-propesc-vistorias span.br-tag.primary-pastel-01",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span"
+      ]
+    },
+    "pnip-header .br-avatar .content": {
+      "selector": "pnip-header .br-avatar .content",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span"
+      ]
+    },
+    "pnip-header hr.solid": {
+      "selector": "pnip-header hr.solid",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>hr"
+      ]
+    },
+    "pnip-header .br-item img": {
+      "selector": "pnip-header .br-item img",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>div>button>img"
+      ]
+    },
+    "pnip-header #avatar-menu": {
+      "selector": "pnip-header #avatar-menu",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>div"
+      ]
+    },
+    "pnip-header button.br-item": {
+      "selector": "pnip-header button.br-item",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>div>button"
+      ]
+    },
+    "pnip-header #avatar-menu span.text-blue-vivid-60": {
+      "selector": "pnip-header #avatar-menu span.text-blue-vivid-60",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>div:nth-of-type(2)>span"
+      ]
+    },
+    "pnip-propesc-agendar-vistoria .br-textarea textarea": {
+      "selector": "pnip-propesc-agendar-vistoria .br-textarea textarea",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-propesc-agendar-vistoria h3": {
+      "selector": "pnip-propesc-agendar-vistoria h3",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-propesc-agendar-vistoria table": {
+      "selector": "pnip-propesc-agendar-vistoria table",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-propesc-agendar-vistoria .bg-secondary-06 > .text-secondary-01": {
+      "selector": "pnip-propesc-agendar-vistoria .bg-secondary-06 > .text-secondary-01",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-propesc-trocar-embarcacao .br-modal": {
+      "selector": "pnip-propesc-trocar-embarcacao .br-modal",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "head > title": {
+      "selector": "head > title",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "head>title"
+      ]
+    },
+    "pnip-propesc-vistorias thead th:nth-child(9)": {
+      "selector": "pnip-propesc-vistorias thead th:nth-child(9)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)"
+      ]
+    },
+    "html": {
+      "selector": "html",
+      "ok": true,
+      "error": null,
+      "keys": [
+        ""
+      ]
+    },
+    "main h2": {
+      "selector": "main h2",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(1)>h2"
+      ]
+    },
+    "tbody br-button[icon=\"eye\"]": {
+      "selector": "tbody br-button[icon=\"eye\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button"
+      ]
+    },
+    ".br-tag.primary-pastel-01": {
+      "selector": ".br-tag.primary-pastel-01",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span"
+      ]
+    },
+    "tbody .bg-blue-40 > .text-secondary-01": {
+      "selector": "tbody .bg-blue-40 > .text-secondary-01",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "thead th:nth-child(2)": {
+      "selector": "thead th:nth-child(2)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)"
+      ]
+    },
+    "thead th:nth-child(9)": {
+      "selector": "thead th:nth-child(9)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)"
+      ]
+    },
+    "br-input[type=\"date\"]:nth-child(2)": {
+      "selector": "br-input[type=\"date\"]:nth-child(2)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1)"
+      ]
+    },
+    ".col-auto.d-flex.align-items-center.align-self-end > span.text-bold:nth-child(1)": {
+      "selector": ".col-auto.d-flex.align-items-center.align-self-end > span.text-bold:nth-child(1)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>span:nth-of-type(1)"
+      ]
+    },
+    "br-input[type=\"date\"]:nth-child(4)": {
+      "selector": "br-input[type=\"date\"]:nth-child(4)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2)"
+      ]
+    },
+    ".col-auto.d-flex.align-items-center.align-self-end > span.text-bold:nth-child(3)": {
+      "selector": ".col-auto.d-flex.align-items-center.align-self-end > span.text-bold:nth-child(3)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>span:nth-of-type(2)"
+      ]
+    },
+    "thead input[type=\"checkbox\"]": {
+      "selector": "thead input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input"
+      ]
+    },
+    "tbody input[type=\"checkbox\"]": {
+      "selector": "tbody input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input"
+      ]
+    },
+    "nav.br-pagination.small li > li": {
+      "selector": "nav.br-pagination.small li > li",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li"
+      ]
+    },
+    "br-input#search": {
+      "selector": "br-input#search",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input"
+      ]
+    },
+    "span.br-tag.interaction": {
+      "selector": "span.br-tag.interaction",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span"
+      ]
+    },
+    "nav.tab-nav li.tab-item.active > button": {
+      "selector": "nav.tab-nav li.tab-item.active > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button"
+      ]
+    },
+    "nav.tab-nav li.tab-item > button": {
+      "selector": "nav.tab-nav li.tab-item > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)>button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>button"
+      ]
+    },
+    ".col-auto.d-flex.align-items-center.align-self-end": {
+      "selector": ".col-auto.d-flex.align-items-center.align-self-end",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div"
+      ]
+    },
+    ".br-table": {
+      "selector": ".br-table",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)"
+      ]
+    },
+    ".br-table > table.table": {
+      "selector": ".br-table > table.table",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table"
+      ]
+    },
+    ".br-list .br-radio:not(:has(input))": {
+      "selector": ".br-list .br-radio:not(:has(input))",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    ".row.pl-2 .br-tag.interaction > button.br-button.inverted.circle": {
+      "selector": ".row.pl-2 .br-tag.interaction > button.br-button.inverted.circle",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    ".col.align-content-center.px-1 > .br-tag.interaction > button.br-button.inverted.circle": {
+      "selector": ".col.align-content-center.px-1 > .br-tag.interaction > button.br-button.inverted.circle",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-filter-panel span.br-tag.interaction[style*=\"cursor\"]": {
+      "selector": "pnip-filter-panel span.br-tag.interaction[style*=\"cursor\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span"
+      ]
+    },
+    "pnip-filter-panel .br-select .br-item": {
+      "selector": "pnip-filter-panel .br-select .br-item",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-filter-panel span.br-tag.interaction:not([style]) button": {
+      "selector": "pnip-filter-panel span.br-tag.interaction:not([style]) button",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "table tbody br-button[icon=\"eye\"]:not([title])": {
+      "selector": "table tbody br-button[icon=\"eye\"]:not([title])",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button"
+      ]
+    },
+    "table thead input[type=\"checkbox\"]": {
+      "selector": "table thead input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input"
+      ]
+    },
+    "table tbody input[type=\"checkbox\"]": {
+      "selector": "table tbody input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input"
+      ]
+    },
+    "br-input[type=\"date\"]": {
+      "selector": "br-input[type=\"date\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2)"
+      ]
+    },
+    "span.br-tag.primary-pastel-01": {
+      "selector": "span.br-tag.primary-pastel-01",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span"
+      ]
+    },
+    "nav.tab-nav li.tab-item button": {
+      "selector": "nav.tab-nav li.tab-item button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)>button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>button"
+      ]
+    },
+    "nav.br-pagination.small a.page.active": {
+      "selector": "nav.br-pagination.small a.page.active",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a"
+      ]
+    },
+    "pnip-status-solicitacao-utils .bg-blue-40 > .text-secondary-01": {
+      "selector": "pnip-status-solicitacao-utils .bg-blue-40 > .text-secondary-01",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    ".br-sign-in .content": {
+      "selector": ".br-sign-in .content",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span"
+      ]
+    },
+    "div.br-table": {
+      "selector": "div.br-table",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)"
+      ]
+    },
+    "nav.tab-nav": {
+      "selector": "nav.tab-nav",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav"
+      ]
+    },
+    "main i.fas:not([aria-hidden]), main i.far:not([aria-hidden]), main span.fas:not([aria-hidden])": {
+      "selector": "main i.fas:not([aria-hidden]), main i.far:not([aria-hidden]), main span.fas:not([aria-hidden])",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span>i",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span>span:nth-of-type(2)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span>i",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span>span:nth-of-type(2)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span>i",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span>span:nth-of-type(2)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span>i",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span>span:nth-of-type(2)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(3)>i"
+      ]
+    },
+    "pnip-status-solicitacao-utils .bg-secondary-06 > .text-secondary-01": {
+      "selector": "pnip-status-solicitacao-utils .bg-secondary-06 > .text-secondary-01",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "div.br-list.d-block .br-radio label": {
+      "selector": "div.br-list.d-block .br-radio label",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "table tbody br-button[icon=\"eye\"]": {
+      "selector": "table tbody br-button[icon=\"eye\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button"
+      ]
+    },
+    "nav.tab-nav li.tab-item:not(.active) > button": {
+      "selector": "nav.tab-nav li.tab-item:not(.active) > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)>button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>button"
+      ]
+    },
+    "nav.br-pagination.small ul > li > li": {
+      "selector": "nav.br-pagination.small ul > li > li",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li"
+      ]
+    },
+    "br-breadcrumb": {
+      "selector": "br-breadcrumb",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb"
+      ]
+    },
+    "table tbody td:nth-child(7)": {
+      "selector": "table tbody td:nth-child(7)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(7)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(7)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(7)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(7)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(7)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(7)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(7)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(7)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(7)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(7)"
+      ]
+    },
+    "select#swal2-select": {
+      "selector": "select#swal2-select",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "table tbody br-button[icon=\"user-times\"]": {
+      "selector": "table tbody br-button[icon=\"user-times\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button"
+      ]
+    },
+    "table tbody br-button[icon=\"user-plus\"]": {
+      "selector": "table tbody br-button[icon=\"user-plus\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button"
+      ]
+    },
+    "pnip-propesc-vistorias > br-breadcrumb": {
+      "selector": "pnip-propesc-vistorias > br-breadcrumb",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb"
+      ]
+    },
+    "pnip-filter-panel span.br-tag > button.br-button.inverted.circle": {
+      "selector": "pnip-filter-panel span.br-tag > button.br-button.inverted.circle",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "tbody pnip-status-solicitacao-utils .text-secondary-01": {
+      "selector": "tbody pnip-status-solicitacao-utils .text-secondary-01",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "thead th:nth-child(2) input[type=\"checkbox\"]": {
+      "selector": "thead th:nth-child(2) input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input"
+      ]
+    },
+    "tbody td:nth-child(2) input[type=\"checkbox\"]": {
+      "selector": "tbody td:nth-child(2) input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input"
+      ]
+    },
+    "thead th:nth-child(2), thead th:nth-child(9)": {
+      "selector": "thead th:nth-child(2), thead th:nth-child(9)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)"
+      ]
+    },
+    "nav[aria-label=\"Paginação de resultados\"] li > li": {
+      "selector": "nav[aria-label=\"Paginação de resultados\"] li > li",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li"
+      ]
+    },
+    "pnip-filter-panel .row > div > span.br-tag": {
+      "selector": "pnip-filter-panel .row > div > span.br-tag",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span"
+      ]
+    },
+    "pnip-filter-panel .br-select .br-item .br-radio": {
+      "selector": "pnip-filter-panel .br-select .br-item .br-radio",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    ".br-tab li.tab-item.active > button": {
+      "selector": ".br-tab li.tab-item.active > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button"
+      ]
+    },
+    "pnip-propesc-vistorias div.p-5 p": {
+      "selector": "pnip-propesc-vistorias div.p-5 p",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    ".br-tab nav.tab-nav": {
+      "selector": ".br-tab nav.tab-nav",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav"
+      ]
+    },
+    "div.col-auto.d-flex.align-items-center.align-self-end": {
+      "selector": "div.col-auto.d-flex.align-items-center.align-self-end",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div"
+      ]
+    },
+    "table.table": {
+      "selector": "table.table",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table"
+      ]
+    },
+    "table tbody tr td:nth-child(9) br-button[icon=\"eye\"]": {
+      "selector": "table tbody tr td:nth-child(9) br-button[icon=\"eye\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button"
+      ]
+    },
+    "table input[type=\"checkbox\"]": {
+      "selector": "table input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input"
+      ]
+    },
+    "table thead th:nth-child(2)": {
+      "selector": "table thead th:nth-child(2)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)"
+      ]
+    },
+    "div.col-auto.d-flex.align-items-center > br-input": {
+      "selector": "div.col-auto.d-flex.align-items-center > br-input",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2)"
+      ]
+    },
+    "pnip-propesc-vistorias .br-tag.primary-pastel-01": {
+      "selector": "pnip-propesc-vistorias .br-tag.primary-pastel-01",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span"
+      ]
+    },
+    "pnip-search-table-utils br-input": {
+      "selector": "pnip-search-table-utils br-input",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input"
+      ]
+    },
+    "pnip-filter-panel .br-tag.interaction": {
+      "selector": "pnip-filter-panel .br-tag.interaction",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span"
+      ]
+    },
+    "pnip-filter-panel .br-radio > label": {
+      "selector": "pnip-filter-panel .br-radio > label",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-filter-panel .br-select .br-list": {
+      "selector": "pnip-filter-panel .br-select .br-list",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    ".br-tab .tab-item button": {
+      "selector": ".br-tab .tab-item button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)>button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>button"
+      ]
+    },
+    ".br-tab .tab-nav ul": {
+      "selector": ".br-tab .tab-nav ul",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul"
+      ]
+    },
+    "#avatar-dropdown-trigger": {
+      "selector": "#avatar-dropdown-trigger",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>button"
+      ]
+    },
+    "#avatar-menu": {
+      "selector": "#avatar-menu",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>div"
+      ]
+    },
+    ".br-pagination a.page.active": {
+      "selector": ".br-pagination a.page.active",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a"
+      ]
+    },
+    ".br-pagination a.page": {
+      "selector": ".br-pagination a.page",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li>a",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li>a",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li>a"
+      ]
+    },
+    ".br-pagination li > li": {
+      "selector": ".br-pagination li > li",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li"
+      ]
+    },
+    "table tbody tr td:nth-child(8) pnip-status-solicitacao-utils .text-secondary-01": {
+      "selector": "table tbody tr td:nth-child(8) pnip-status-solicitacao-utils .text-secondary-01",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "table tbody tr td:nth-child(7) pnip-status-solicitacao-utils .text-secondary-01": {
+      "selector": "table tbody tr td:nth-child(7) pnip-status-solicitacao-utils .text-secondary-01",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "table thead th:nth-child(2), table thead th:nth-child(9)": {
+      "selector": "table thead th:nth-child(2), table thead th:nth-child(9)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)"
+      ]
+    },
+    "pnip-search-table-utils button": {
+      "selector": "pnip-search-table-utils button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button"
+      ]
+    },
+    "pnip-filter-panel div:nth-of-type(5) > button": {
+      "selector": "pnip-filter-panel div:nth-of-type(5) > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(5)>button"
+      ]
+    },
+    "#avatar-menu > button": {
+      "selector": "#avatar-menu > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>div>button"
+      ]
+    },
+    "pnip-filter-panel span.br-tag.interaction.small.bg-pure-0": {
+      "selector": "pnip-filter-panel span.br-tag.interaction.small.bg-pure-0",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span"
+      ]
+    },
+    "pnip-filter-panel .br-list.d-block .br-item label": {
+      "selector": "pnip-filter-panel .br-list.d-block .br-item label",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    ".br-table .bg-blue-40 .text-secondary-01": {
+      "selector": ".br-table .bg-blue-40 .text-secondary-01",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    ".br-table .bg-secondary-06 .text-secondary-01": {
+      "selector": ".br-table .bg-secondary-06 .text-secondary-01",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "#avatar-dropdown-trigger .br-avatar .content": {
+      "selector": "#avatar-dropdown-trigger .br-avatar .content",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span"
+      ]
+    },
+    "table tbody br-button[icon=\"calendar\"]": {
+      "selector": "table tbody br-button[icon=\"calendar\"]",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-filter-panel span.br-tag.interaction.small:not(.bg-pure-0) button.br-button": {
+      "selector": "pnip-filter-panel span.br-tag.interaction.small:not(.bg-pure-0) button.br-button",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-propesc-vistorias div.col-auto.d-flex.align-items-center.align-self-end span.text-bold": {
+      "selector": "pnip-propesc-vistorias div.col-auto.d-flex.align-items-center.align-self-end span.text-bold",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>span:nth-of-type(1)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>span:nth-of-type(2)"
+      ]
+    },
+    "#swal2-select": {
+      "selector": "#swal2-select",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "#swal2-html-container": {
+      "selector": "#swal2-html-container",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "i.fas:not([aria-hidden]), span.fas:not([aria-hidden]), i.far:not([aria-hidden])": {
+      "selector": "i.fas:not([aria-hidden]), span.fas:not([aria-hidden]), i.far:not([aria-hidden])",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>div:nth-of-type(2)>span>i",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span>i",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span>span:nth-of-type(2)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span>i",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span>span:nth-of-type(2)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span>i",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span>span:nth-of-type(2)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span>i",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span>span:nth-of-type(2)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(3)>i"
+      ]
+    },
+    "govbr-custom-pagination a.page.active": {
+      "selector": "govbr-custom-pagination a.page.active",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a"
+      ]
+    },
+    "govbr-custom-pagination a.page:not(.active)": {
+      "selector": "govbr-custom-pagination a.page:not(.active)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li>a",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li>a",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li>a"
+      ]
+    },
+    "govbr-custom-pagination nav.br-pagination li > li": {
+      "selector": "govbr-custom-pagination nav.br-pagination li > li",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li"
+      ]
+    },
+    "govbr-custom-pagination nav.br-pagination ul": {
+      "selector": "govbr-custom-pagination nav.br-pagination ul",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul"
+      ]
+    },
+    "br-select-pnip button[data-trigger] i": {
+      "selector": "br-select-pnip button[data-trigger] i",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button>i",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button>i"
+      ]
+    },
+    "br-select-pnip .br-list": {
+      "selector": "br-select-pnip .br-list",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)"
+      ]
+    },
+    "br-select-pnip input[type=\"text\"]": {
+      "selector": "br-select-pnip input[type=\"text\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>div>input"
+      ]
+    },
+    "br-select-pnip button[data-trigger]": {
+      "selector": "br-select-pnip button[data-trigger]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button"
+      ]
+    },
+    "pnip-filter-panel button.br-button": {
+      "selector": "pnip-filter-panel button.br-button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(5)>button"
+      ]
+    },
+    "pnip-propesc-vistorias div.d-flex.flex-column.justify-content-center.align-items-center.mt-5 p": {
+      "selector": "pnip-propesc-vistorias div.d-flex.flex-column.justify-content-center.align-items-center.mt-5 p",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-propesc-vistorias div.col-auto.d-flex.align-items-center.align-self-end": {
+      "selector": "pnip-propesc-vistorias div.col-auto.d-flex.align-items-center.align-self-end",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div"
+      ]
+    },
+    "nav.tab-nav ul": {
+      "selector": "nav.tab-nav ul",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul"
+      ]
+    },
+    "nav.tab-nav li.tab-item": {
+      "selector": "nav.tab-nav li.tab-item",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)",
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)"
+      ]
+    },
+    "div.br-table table.table": {
+      "selector": "div.br-table table.table",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table"
+      ]
+    },
+    "title": {
+      "selector": "title",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "head>title"
+      ]
+    },
+    "div:nth-of-type(1) > pnip-filter-panel > div > div:nth-of-type(5) > button": {
+      "selector": "div:nth-of-type(1) > pnip-filter-panel > div > div:nth-of-type(5) > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(5)>button"
+      ]
+    },
+    "pnip-search-table-utils > div > div > div > button": {
+      "selector": "pnip-search-table-utils > div > div > div > button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button"
+      ]
+    },
+    "pnip-root > main > pnip-mpa > pnip-propesc-vistorias > br-breadcrumb >>> div > ul > li:nth-of-type(1) > a": {
+      "selector": "pnip-root > main > pnip-mpa > pnip-propesc-vistorias > br-breadcrumb >>> div > ul > li:nth-of-type(1) > a",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a"
+      ]
+    },
+    "pnip-root > main > pnip-mpa > pnip-propesc-vistorias > br-breadcrumb >>> div": {
+      "selector": "pnip-root > main > pnip-mpa > pnip-propesc-vistorias > br-breadcrumb >>> div",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div"
+      ]
+    },
+    "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+      "selector": "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+      "selector": "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+      "selector": "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+      "selector": "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+      "selector": "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+      "selector": "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+      "selector": "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+      "selector": "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+      "selector": "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+      "selector": "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+      "selector": "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+      "selector": "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+      "selector": "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+      "selector": "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+      "selector": "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+      "selector": "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+      "selector": "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+      "selector": "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+      "selector": "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+      "selector": "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+      "selector": "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+      "selector": "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+      "selector": "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+      "selector": "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+      "selector": "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+      "selector": "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+      "selector": "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+      "selector": "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+      "selector": "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+      "selector": "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+      "selector": "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+      "selector": "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+      "selector": "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+      "selector": "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+      "selector": "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+      "selector": "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+      "selector": "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+      "selector": "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+      "selector": "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+      ]
+    },
+    "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+      "selector": "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+      ]
+    },
+    "tr:nth-child(1) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+      "selector": "tr:nth-child(1) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "tr:nth-child(2) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+      "selector": "tr:nth-child(2) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "tr:nth-child(3) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+      "selector": "tr:nth-child(3) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "tr:nth-child(4) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+      "selector": "tr:nth-child(4) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "tr:nth-child(5) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+      "selector": "tr:nth-child(5) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "tr:nth-child(6) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+      "selector": "tr:nth-child(6) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "tr:nth-child(7) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+      "selector": "tr:nth-child(7) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "tr:nth-child(8) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+      "selector": "tr:nth-child(8) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "tr:nth-child(9) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+      "selector": "tr:nth-child(9) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "tr:nth-child(10) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+      "selector": "tr:nth-child(10) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    ".primary-pastel-01": {
+      "selector": ".primary-pastel-01",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span"
+      ]
+    },
+    "tr:nth-child(1) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+      "selector": "tr:nth-child(1) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "tr:nth-child(2) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+      "selector": "tr:nth-child(2) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "tr:nth-child(3) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+      "selector": "tr:nth-child(3) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "tr:nth-child(4) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+      "selector": "tr:nth-child(4) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "tr:nth-child(5) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+      "selector": "tr:nth-child(5) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "tr:nth-child(6) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+      "selector": "tr:nth-child(6) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "tr:nth-child(7) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+      "selector": "tr:nth-child(7) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "tr:nth-child(8) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+      "selector": "tr:nth-child(8) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "tr:nth-child(9) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+      "selector": "tr:nth-child(9) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "tr:nth-child(10) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+      "selector": "tr:nth-child(10) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+      ]
+    },
+    "th:nth-child(2)": {
+      "selector": "th:nth-child(2)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)"
+      ]
+    },
+    "th:nth-child(9)": {
+      "selector": "th:nth-child(9)",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)"
+      ]
+    },
+    "br-input:nth-child(2) #br-input-8": {
+      "selector": "br-input:nth-child(2) #br-input-8",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "br-input:nth-child(4) #br-input-9": {
+      "selector": "br-input:nth-child(4) #br-input-9",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "th:nth-child(2) > input[type=\"checkbox\"]": {
+      "selector": "th:nth-child(2) > input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input"
+      ]
+    },
+    "tr:nth-child(1) > td:nth-child(2) > input[type=\"checkbox\"]": {
+      "selector": "tr:nth-child(1) > td:nth-child(2) > input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input"
+      ]
+    },
+    "tr:nth-child(2) > td:nth-child(2) > input[type=\"checkbox\"]": {
+      "selector": "tr:nth-child(2) > td:nth-child(2) > input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input"
+      ]
+    },
+    "tr:nth-child(3) > td:nth-child(2) > input[type=\"checkbox\"]": {
+      "selector": "tr:nth-child(3) > td:nth-child(2) > input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input"
+      ]
+    },
+    "tr:nth-child(4) > td:nth-child(2) > input[type=\"checkbox\"]": {
+      "selector": "tr:nth-child(4) > td:nth-child(2) > input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input"
+      ]
+    },
+    "tr:nth-child(5) > td:nth-child(2) > input[type=\"checkbox\"]": {
+      "selector": "tr:nth-child(5) > td:nth-child(2) > input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input"
+      ]
+    },
+    "tr:nth-child(6) > td:nth-child(2) > input[type=\"checkbox\"]": {
+      "selector": "tr:nth-child(6) > td:nth-child(2) > input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input"
+      ]
+    },
+    "tr:nth-child(7) > td:nth-child(2) > input[type=\"checkbox\"]": {
+      "selector": "tr:nth-child(7) > td:nth-child(2) > input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input"
+      ]
+    },
+    "tr:nth-child(8) > td:nth-child(2) > input[type=\"checkbox\"]": {
+      "selector": "tr:nth-child(8) > td:nth-child(2) > input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input"
+      ]
+    },
+    "tr:nth-child(9) > td:nth-child(2) > input[type=\"checkbox\"]": {
+      "selector": "tr:nth-child(9) > td:nth-child(2) > input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input"
+      ]
+    },
+    "tr:nth-child(10) > td:nth-child(2) > input[type=\"checkbox\"]": {
+      "selector": "tr:nth-child(10) > td:nth-child(2) > input[type=\"checkbox\"]",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input"
+      ]
+    },
+    "li:nth-child(2) > li": {
+      "selector": "li:nth-child(2) > li",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li"
+      ]
+    },
+    "li:nth-child(3) > li": {
+      "selector": "li:nth-child(3) > li",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li"
+      ]
+    },
+    "li:nth-child(4) > li": {
+      "selector": "li:nth-child(4) > li",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li"
+      ]
+    },
+    "li:nth-child(5) > li": {
+      "selector": "li:nth-child(5) > li",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li"
+      ]
+    },
+    "div > div:nth-of-type(2) > div > div > textarea": {
+      "selector": "div > div:nth-of-type(2) > div > div > textarea",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div > ul > li:nth-of-type(1) > a": {
+      "selector": "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div > ul > li:nth-of-type(1) > a",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div > ul > li:nth-of-type(2) > a": {
+      "selector": "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div > ul > li:nth-of-type(2) > a",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div": {
+      "selector": "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "img": {
+      "selector": "img",
+      "ok": true,
+      "error": null,
+      "keys": [
+        "body>pnip-root>pnip-header>div>div>div>button>img",
+        "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>img"
+      ]
+    },
+    "textarea": {
+      "selector": "textarea",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    "div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(3) > div > textarea": {
+      "selector": "div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(3) > div > textarea",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    ".bg-secondary-06 > .text-secondary-01.text-center": {
+      "selector": ".bg-secondary-06 > .text-secondary-01.text-center",
+      "ok": true,
+      "error": null,
+      "keys": []
+    },
+    ".lista-embarcacoes": {
+      "selector": ".lista-embarcacoes",
+      "ok": true,
+      "error": null,
+      "keys": []
+    }
+  },
+  "byKey": {
+    "body>pnip-root": {
+      "key": "body>pnip-root",
+      "id": "E-84ebb5",
+      "label": "<pnip-root> \"U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(1)>h2": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(1)>h2",
+      "id": "E-035a3e",
+      "label": "<h2> \"Vistorias\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table",
+      "id": "E-6b3f92",
+      "label": "<table> \"# Nome da embarcação RAEP Data/Hora Vistoria Loc\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input >>> div>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input >>> div>input",
+      "id": "E-6f18eb",
+      "label": "<input#search> \"Pesquise aqui ...\" [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1) >>> div>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1) >>> div>input",
+      "id": "E-dc73f8",
+      "label": "<input#br-input-8> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2) >>> div>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2) >>> div>input",
+      "id": "E-0ea5b9",
+      "label": "<input#br-input-9> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input",
+      "id": "E-802205",
+      "label": "<input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input",
+      "id": "E-efc732",
+      "label": "<input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input",
+      "id": "E-d45493",
+      "label": "<input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input",
+      "id": "E-378f2b",
+      "label": "<input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input",
+      "id": "E-807177",
+      "label": "<input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input",
+      "id": "E-ba38db",
+      "label": "<input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input",
+      "id": "E-a6dbea",
+      "label": "<input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input",
+      "id": "E-2c7a12",
+      "label": "<input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input",
+      "id": "E-28f82d",
+      "label": "<input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input",
+      "id": "E-b7f637",
+      "label": "<input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input",
+      "id": "E-f01429",
+      "label": "<input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+      "id": "E-76c207",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+      "id": "E-ba932b",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+      "id": "E-0709c4",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+      "id": "E-71005f",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+      "id": "E-5db671",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+      "id": "E-7bf766",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+      "id": "E-f876d2",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+      "id": "E-38b0c5",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+      "id": "E-c01ec9",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+      "id": "E-f3c418",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+      "id": "E-845e40",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+      "id": "E-a5d016",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+      "id": "E-b1601f",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+      "id": "E-01fbac",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+      "id": "E-429e16",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+      "id": "E-9afd89",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+      "id": "E-a30be4",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+      "id": "E-14f3cd",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+      "id": "E-ddd513",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+      "id": "E-2afbdf",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+      "id": "E-fd6b4b",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+      "id": "E-f6156b",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+      "id": "E-d004a3",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+      "id": "E-ea8646",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+      "id": "E-858229",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+      "id": "E-7bdbe9",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+      "id": "E-692ed2",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+      "id": "E-f39d23",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+      "id": "E-d04351",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+      "id": "E-1af7c4",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+      "id": "E-03c025",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+      "id": "E-0d84ea",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+      "id": "E-625056",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+      "id": "E-5ce640",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+      "id": "E-37c9c7",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+      "id": "E-1f1fcc",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+      "id": "E-c6b491",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+      "id": "E-2f2450",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+      "id": "E-c64c02",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+      "id": "E-88e20e",
+      "label": "<button> [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button",
+      "id": "E-04e882",
+      "label": "<button> \"Buscar\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button",
+      "id": "E-e4e14e",
+      "label": "<button> \"Exibir lista\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button",
+      "id": "E-314096",
+      "label": "<button> \"Exibir lista\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span",
+      "id": "E-cd158a",
+      "label": "<span> \"Cidade\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span",
+      "id": "E-7d755c",
+      "label": "<span> \"Porto\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span",
+      "id": "E-22533c",
+      "label": "<span> \"Vistoriador\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span",
+      "id": "E-2402ba",
+      "label": "<span> \"Status\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+      "id": "E-91b7fc",
+      "label": "<div> \"Vistoria agendada\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+      "id": "E-18306c",
+      "label": "<div> \"Vistoria agendada\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+      "id": "E-fc736a",
+      "label": "<div> \"Vistoria agendada\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+      "id": "E-e502f5",
+      "label": "<div> \"Vistoria agendada\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+      "id": "E-3ffb9b",
+      "label": "<div> \"Vistoria agendada\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+      "id": "E-9553bb",
+      "label": "<div> \"Vistoria agendada\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+      "id": "E-f0cc6b",
+      "label": "<div> \"Vistoria agendada\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+      "id": "E-fd1179",
+      "label": "<div> \"Vistoria agendada\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+      "id": "E-ec024b",
+      "label": "<div> \"Vistoria agendada\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+      "id": "E-565cfa",
+      "label": "<div> \"Vistoria agendada\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span",
+      "id": "E-800c40",
+      "label": "<span> \"Nenhum filtro de data aplicado\"",
+      "hidden": null
+    },
+    "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span": {
+      "key": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span",
+      "id": "E-cdbade",
+      "label": "<span> \"U\"",
+      "hidden": null
+    },
+    "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>hr": {
+      "key": "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>hr",
+      "id": "E-c9b86e",
+      "label": "<hr>",
+      "hidden": "nao-renderizado, aria-hidden"
+    },
+    "body>pnip-root>pnip-header>div>div>div>button>img": {
+      "key": "body>pnip-root>pnip-header>div>div>div>button>img",
+      "id": "E-2e16f2",
+      "label": "<img>",
+      "hidden": "nao-renderizado, aria-hidden"
+    },
+    "body>pnip-root>pnip-header>div>div>div": {
+      "key": "body>pnip-root>pnip-header>div>div>div",
+      "id": "E-bc0104",
+      "label": "<div#avatar-menu> \"Usuária de Testeusuaria.teste@exemplo.invalid SU\"",
+      "hidden": "nao-renderizado, aria-hidden, atributo hidden"
+    },
+    "body>pnip-root>pnip-header>div>div>div>button": {
+      "key": "body>pnip-root>pnip-header>div>div>div>button",
+      "id": "E-31bd1c",
+      "label": "<button> \"Sair\"",
+      "hidden": "nao-renderizado, aria-hidden"
+    },
+    "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>div:nth-of-type(2)>span": {
+      "key": "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>div:nth-of-type(2)>span",
+      "id": "E-1eb59f",
+      "label": "<span> \"Trocar unidade\"",
+      "hidden": "nao-renderizado, aria-hidden"
+    },
+    "head>title": {
+      "key": "head>title",
+      "id": "E-c5034f",
+      "label": "<title> \"PNIP\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)",
+      "id": "E-31404b",
+      "label": "<th>",
+      "hidden": null
+    },
+    "": {
+      "key": "",
+      "id": "E-e3b0c4",
+      "label": "<html> \"U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+      "id": "E-ddc652",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+      "id": "E-f656a9",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+      "id": "E-3ebb6c",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+      "id": "E-ec444f",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+      "id": "E-2947cd",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+      "id": "E-a3c72b",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+      "id": "E-1a49cf",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+      "id": "E-f5d5f2",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+      "id": "E-c973ed",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button",
+      "id": "E-30ac9e",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)",
+      "id": "E-0d5335",
+      "label": "<th>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1)",
+      "id": "E-5460fc",
+      "label": "<br-input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>span:nth-of-type(1)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>span:nth-of-type(1)",
+      "id": "E-ebe2fb",
+      "label": "<span> \"Data da vistoria:\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2)",
+      "id": "E-5d81f9",
+      "label": "<br-input>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>span:nth-of-type(2)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>span:nth-of-type(2)",
+      "id": "E-9ed8fb",
+      "label": "<span> \"até\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li",
+      "id": "E-2d6ab7",
+      "label": "<li> \"1\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li",
+      "id": "E-876cc1",
+      "label": "<li> \"2\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li",
+      "id": "E-222575",
+      "label": "<li> \"3\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li",
+      "id": "E-872d5b",
+      "label": "<li> \"4\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input",
+      "id": "E-8e2205",
+      "label": "<br-input#search> \"Pesquise aqui ...\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button",
+      "id": "E-496aac",
+      "label": "<button#TRAMITANDO> \"Tramitando\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)>button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)>button",
+      "id": "E-83a20f",
+      "label": "<button#AGENDAR> \"Agendar\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>button",
+      "id": "E-dc18c6",
+      "label": "<button#HISTORICO> \"Concluídos\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div",
+      "id": "E-5a6338",
+      "label": "<div> \"Data da vistoria: até\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)",
+      "id": "E-26265f",
+      "label": "<div> \"# Nome da embarcação RAEP Data/Hora Vistoria Loc\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a",
+      "id": "E-dc3e79",
+      "label": "<a> \"1\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav",
+      "id": "E-334c12",
+      "label": "<nav> \"Abas de Navegação Simples\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span>i": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span>i",
+      "id": "E-33e67d",
+      "label": "<i>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span>span:nth-of-type(2)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span>span:nth-of-type(2)",
+      "id": "E-a9ca5b",
+      "label": "<span>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span>i": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span>i",
+      "id": "E-32f09d",
+      "label": "<i>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span>span:nth-of-type(2)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span>span:nth-of-type(2)",
+      "id": "E-c9d3c9",
+      "label": "<span>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span>i": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span>i",
+      "id": "E-aeb456",
+      "label": "<i>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span>span:nth-of-type(2)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span>span:nth-of-type(2)",
+      "id": "E-fceee2",
+      "label": "<span>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span>i": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span>i",
+      "id": "E-bdd69a",
+      "label": "<i>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span>span:nth-of-type(2)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span>span:nth-of-type(2)",
+      "id": "E-f86748",
+      "label": "<span>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(3)>i": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(3)>i",
+      "id": "E-744c7e",
+      "label": "<i>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb",
+      "id": "E-987642",
+      "label": "<br-breadcrumb>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(7)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(7)",
+      "id": "E-3475fd",
+      "label": "<td>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(7)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(7)",
+      "id": "E-6eb277",
+      "label": "<td> \"Paulo Cordeiro Paiva\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(7)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(7)",
+      "id": "E-838a24",
+      "label": "<td> \"Elisa Guedes Amaral\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(7)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(7)",
+      "id": "E-3f5a3a",
+      "label": "<td> \"Sabrina Ventura Nogueira\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(7)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(7)",
+      "id": "E-61ccbd",
+      "label": "<td>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(7)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(7)",
+      "id": "E-94f397",
+      "label": "<td> \"Iara Sampaio Teixeira\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(7)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(7)",
+      "id": "E-5eadf3",
+      "label": "<td> \"Heitor Quintela Nogueira\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(7)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(7)",
+      "id": "E-a11cd2",
+      "label": "<td> \"Paulo Cordeiro Paiva\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(7)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(7)",
+      "id": "E-7e2d23",
+      "label": "<td>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(7)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(7)",
+      "id": "E-2b4da0",
+      "label": "<td> \"Sabrina Ventura Nogueira\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+      "id": "E-25ceb2",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+      "id": "E-e1b23a",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+      "id": "E-d53753",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+      "id": "E-ad7a21",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+      "id": "E-d9332b",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+      "id": "E-956d8f",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+      "id": "E-a719c9",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+      "id": "E-201c9a",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+      "id": "E-d11ee7",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button",
+      "id": "E-a640de",
+      "label": "<br-button>",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul",
+      "id": "E-ffbf04",
+      "label": "<ul> \"Agendar Tramitando Concluídos\"",
+      "hidden": null
+    },
+    "body>pnip-root>pnip-header>div>div>button": {
+      "key": "body>pnip-root>pnip-header>div>div>button",
+      "id": "E-f38bc0",
+      "label": "<button#avatar-dropdown-trigger> \"Avatar com dropdown\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li>a": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li>a",
+      "id": "E-3b6088",
+      "label": "<a> \"2\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li>a": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li>a",
+      "id": "E-cc8ba1",
+      "label": "<a> \"3\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li>a": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li>a",
+      "id": "E-3a41cd",
+      "label": "<a> \"4\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(5)>button": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(5)>button",
+      "id": "E-e9febf",
+      "label": "<button> \"Limpar Filtro\"",
+      "hidden": null
+    },
+    "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>div:nth-of-type(2)>span>i": {
+      "key": "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>div:nth-of-type(2)>span>i",
+      "id": "E-402540",
+      "label": "<i>",
+      "hidden": "nao-renderizado, aria-hidden"
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul",
+      "id": "E-ceef71",
+      "label": "<ul> \"1 2 3 4\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button>i": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button>i",
+      "id": "E-fae8b1",
+      "label": "<i>",
+      "hidden": "aria-hidden"
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button>i": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button>i",
+      "id": "E-42f49f",
+      "label": "<i>",
+      "hidden": "aria-hidden"
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)",
+      "id": "E-778603",
+      "label": "<div> \"102550100\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)",
+      "id": "E-c6b668",
+      "label": "<div> \"1234\"",
+      "hidden": "nao-renderizado"
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input",
+      "id": "E-724b8f",
+      "label": "<input#total> \"Selecione\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>div>input": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>div>input",
+      "id": "E-f9beb1",
+      "label": "<input#page> \"Selecione\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)",
+      "id": "E-43dcc9",
+      "label": "<li> \"Agendar\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)",
+      "id": "E-9a7521",
+      "label": "<li> \"Tramitando\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)",
+      "id": "E-6a0eb3",
+      "label": "<li> \"Concluídos\"",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a",
+      "id": "E-6c7569",
+      "label": "<a> \"Home\" [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div": {
+      "key": "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div",
+      "id": "E-8042e9",
+      "label": "<div> \"Home Vistorias\" [shadow]",
+      "hidden": null
+    },
+    "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>img": {
+      "key": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>img",
+      "id": "E-6871f9",
+      "label": "<img> [shadow]",
+      "hidden": null
+    }
+  }
+}

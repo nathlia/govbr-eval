@@ -1,0 +1,316 @@
+[
+   {
+      "id": "peixes-branco",
+      "grupoPescado": "A. Peixes brancos",
+      "especies": [
+         "Pescada (Cynoscion striatus)",
+         "Peixe sapo (Lophius gastrophysus)",
+         "Linguado (Paralichthys brasiliensis, Paralichthys isósceles, Paralichthys triocellatus, Paralichthys patagonicus)",
+         "Espadarte (Xiphias gladius)"
+      ],
+      "categoriasFrescor": [
+         {"id": "pele", "label": "Pele", "opcoes": [
+            "Extra — Pigmentação viva e furta-cor, sem descoloração",
+            "A — Pigmentação viva, mas sem brilho",
+            "B — Pigmentação em vias de descoloração e perda de brilho",
+            "Não admitidos⁽¹⁾ — Pigmentação pálida e sem brilho⁽²⁾"
+         ]},
+         {"id": "muco-cutaneo", "label": "Muco cutâneo", "opcoes": [
+            "Extra — Aquoso, transparente",
+            "A — Ligeiramente turvo",
+            "B — Leitoso",
+            "Não admitidos⁽¹⁾ — Cinzento amarelado, opaco"
+         ]},
+         {"id": "olhos", "label": "Olhos", "opcoes": [
+            "Extra — Convexo, pupila negra e viva, córnea transparente",
+            "A — Convexo, pupila negra com perda de brilho, córnea ligeiramente leitosa",
+            "B — Chato, córnea leitosa, pupila opaca",
+            "Não admitidos⁽¹⁾ — Côncavo no centro, pupila cinzenta, córnea leitosa⁽²⁾"
+         ]},
+         {"id": "guelras", "label": "Guelras", "opcoes": [
+            "Extra — Coloração viva, sem muco",
+            "A — Coloração menos viva, muco transparente",
+            "B — Coloração marrom/acinzentada em descoloração, muco opaco e espesso",
+            "Não admitidos⁽¹⁾ — Amareladas, muco leitoso⁽²⁾"
+         ]},
+         {"id": "peritonio", "label": "Peritônio (eviscerados)", "opcoes": [
+            "Extra — Liso, brilhante, difícil de separar da carne",
+            "A — Ligeiramente sem brilho, pode ser separado da carne",
+            "B — Descolado da carne⁽²⁾",
+            "Não admitidos⁽¹⁾ — Grumoso, bastante fácil de separar da carne"
+         ]},
+         {"id": "carne", "label": "Carne", "opcoes": [
+            "Extra — Firme e elástica, superfície macia⁽³⁾",
+            "A — Menos elástica",
+            "B — Ligeiramente mole, menos elástica, superfície mole como cera (aveludada) e sem brilho",
+            "Não admitidos⁽¹⁾ — Mole flácida⁽²⁾, escamas facilmente separáveis da pele, superfície rugosa"
+         ]},
+         {"id": "atende-requisitos", "label": "Atende aos requisitos?", "opcoes": [
+            "Sim — critérios cumpridos",
+            "Não — critérios não cumpridos"
+         ]}
+      ],
+      "odorGuelrasCavidadeAbdominal": [
+         {"id": "adicional-peixes-brancos", "label": "Peixes brancos: (exceto solha ou patruça)", "opcoes": [
+            "Extra — A algas marinhas",
+            "A — Ausência de cheiro a algas marinhas, cheiro neutro",
+            "B — Fermentado, ligeiramente acre",
+            "Não admitidos⁽¹⁾ — Acre⁽²⁾"
+         ]},
+         {"id": "adicional-solha-patruca", "label": "Solha ou patruça", "opcoes": [
+            "Extra — A óleo fresco, apimentado, cheiro a terra",
+            "A — A óleo, a algas marinhas ou ligeiramente adocicado",
+            "B — A óleo, fermentado, ligeiramente rançoso",
+            "Não admitidos⁽¹⁾ — Acre⁽²⁾"
+         ]}
+      ],
+      "criteriosAdicionaisPeixeSapo": [
+         {"id": "adicional-vasos-sanguineos", "label": "Vasos sanguíneos (músculos da barriga)", "opcoes": [
+            "Extra — Salientes, de cor vermelho vivo",
+            "A — Salientes, de cor vermelho escuro",
+            "B — Difusa e amarronzada",
+            "Não admitidos⁽¹⁾ — Totalmente difusa, carne amarronzada e amarelada⁽²⁾"
+         ]}
+      ],
+      "observacoes": [
+         "(1) Esta coluna apenas será aplicável até ser adotada uma decisão da Comissão que fixe as características do peixe impróprio para consumo humano, nos termos da Diretiva nº 91/493/CEE do Conselho.",
+         "(2) Ou num estado de decomposição mais adiantado.",
+         "(3) O peixe fresco, antes dos primeiros sintomas do rigor mortis, não se apresentará firme e elástico, sendo, no entanto, ainda classificado na categoria Extra."
+      ]
+   },
+   {
+      "id": "peixes-azuis",
+      "grupoPescado": "B. Peixes azuis",
+      "especies": [
+         "Albacora bandolim (Thunnus obesus)",
+         "Albacora bandolim (Thunnus obesus) Bonito listrado (Katsuwonus pelamis)",
+         "Albacora branca (Thunnus alalunga)",
+         "Albacora branca (Thunnus albacares)",
+         "Albacora laje (Thunnus alalunga)",
+         "Albacora laje (Thunnus albacares)",
+         "Albacorinhas (Thunnus atlanticus)",
+         "Albacorinha (Thunnus atlanticus)",
+         "Anchova (Pomatomus saltatrix)",
+         "Arenque",
+         "Sarda",
+         "Sardinha-boca-torta (Cetengraulis edentulus)",
+         "Sardinha-cascuda (Harengula clupeola)",
+         "Sardinha-laje (Opisthonema oglinum)",
+         "Sardinha verdadeira (Sardinella brasiliensis)",
+         "Cavala (Scomberomorus cavalla)",
+         "Xixarro (Trachurus lathami)"
+      ],
+      "categoriasFrescor": [
+         {"id": "pele", "label": "Pele⁽²⁾", "opcoes": [
+            "Extra — Pigmentação viva e furta-cor, diferença nítida entre superfície dorsal e ventral",
+            "A — Perda de brilho, cores mais pálidas, menos diferença entre superfície dorsal e ventral",
+            "B — Pálida, sem brilho, cores esvanecidas, pele plissada quando se dobra o peixe",
+            "Não admitidos⁽¹⁾ — Pigmentação muito pálida, pele a soltar-se da carne⁽³⁾"
+         ]},
+         {"id": "muco-cutaneo", "label": "Muco cutâneo", "opcoes": [
+            "Extra — Aquoso, transparente",
+            "A — Ligeiramente turvo",
+            "B — Leitoso",
+            "Não admitidos⁽¹⁾ — Cinzento, amarelo, opaco⁽³⁾"
+         ]},
+         {"id": "consistencia-carne", "label": "Consistência da carne⁽²⁾", "opcoes": [
+            "Extra — Muito firme, rígida",
+            "A — Bastante rígida, firme",
+            "B — Ligeiramente mole",
+            "Não admitidos⁽¹⁾ — Mole flácida⁽³⁾"
+         ]},
+         {"id": "operculos", "label": "Opérculos", "opcoes": [
+            "Extra — Prateados",
+            "A — Prateados, ligeiramente tingidos de vermelho ou de marrom",
+            "B — Escurecido e extravasamento sanguíneo extenso",
+            "Não admitidos⁽¹⁾ — Amarelados⁽³⁾"
+         ]},
+         {"id": "olho", "label": "Olho", "opcoes": [
+            "Extra — Convexo, pupila azul-preto vivo",
+            "A — Convexo e ligeiramente encovado, pupila escura, córnea ligeiramente opaca",
+            "B — Chato: pupila enevoada, extravasações sanguíneas à volta do olho",
+            "Não admitidos⁽¹⁾ — Côncavo no centro, pupila cinzenta, córnea leitosa⁽³⁾"
+         ]},
+         {"id": "guelras", "label": "Guelras⁽²⁾", "opcoes": [
+            "Extra — Vermelho vivo a púrpura por todo o lado, sem muco",
+            "A — Cor menos viva, mais pálida nos bordos, muco transparente",
+            "B — Em descoloração, muco opaco",
+            "Não admitidos⁽¹⁾ — Amareladas, muco leitoso⁽³⁾"
+         ]},
+         {"id": "cheiro-guelras", "label": "Cheiro das guelras", "opcoes": [
+            "Extra — A algas marinhas frescas, picante, iodado",
+            "A — Ausência de cheiro a algas marinhas, cheiro neutro",
+            "B — Cheiro gorduroso⁽⁴⁾, um pouco sulfuroso, a toucinho rançoso ou a fruta podre",
+            "Não admitidos⁽¹⁾ — Extremamente acre⁽³⁾"
+         ]},
+         {"id": "atende-requisitos", "label": "Atende aos requisitos?", "opcoes": [
+            "Sim — critérios cumpridos",
+            "Não — critérios não cumpridos"
+         ]}
+      ],
+      "observacoes": [
+         "(1) Esta coluna apenas será aplicável até ser adotada uma decisão da Comissão que fixe as características do peixe impróprio para consumo humano, nos termos da Diretiva nº 91/493/CEE do Conselho.",
+         "(2) Ao arenque, à sarda e à cavala conservados em água do mar fria [ou refrigerada com gelo (CSW) ou por meios mecânicos (RSW) que preencham os requisitos fixados no anexo II, ponto 8 da Diretiva nº 92/48/CEE (JO Nº L 187 de 7. 7. 1992, p. 41) aplicam-se as seguintes categorias de frescura: — o critério A aplica-se às categorias Extra e A.",
+         "(3) Ou num estado de decomposição mais adiantado.",
+         "(4) O peixe congelado fica rançoso antes de ficar com odor parecido ao mofo, o peixe CSW/RSW fica com odor parecido ao mofo antes de ficar rançoso."
+      ]
+   },
+   {
+      "id": "elasmobranquios",
+      "grupoPescado": "C. Elasmobrânquios",
+      "especies": [
+         "Cação",
+         "Raias"
+      ],
+      "categoriasFrescor": [
+         {"id": "olho", "label": "Olho", "opcoes": [
+            "Extra — Convexo, muito brilhante e furta-cor, pupilas pequenas",
+            "A — De convexo e ligeiramente plano, perda de brilho, pupilas ovais",
+            "B — Plano, enevoado",
+            "Não admitidos⁽¹⁾ — Côncavo amarelado⁽²⁾"
+         ]},
+         {"id": "aspecto", "label": "Aspecto", "opcoes": [
+            "Extra — In rigor mortis ou parcialmente in rigor, presença de um pouco de muco claro na pele",
+            "A — Estádio rigor ultrapassado, ausência de muco na pele e especialmente na boca e nas aberturas das guelras",
+            "B — Algum muco na boca e nas aberturas das guelras, mandíbula ligeiramente achatada",
+            "Não admitidos⁽¹⁾ — Grandes quantidades de muco na boca e nas aberturas das guelras⁽²⁾"
+         ]},
+         {"id": "cheiro", "label": "Cheiro", "opcoes": [
+            "Extra — De algas marinhas",
+            "A — Sem cheiro ou cheiro muito ligeiro a ranço mas não a amoníaco",
+            "B — Cheiro a amoníaco, acre",
+            "Não admitidos⁽¹⁾ — Forte cheiro a amoníaco⁽³⁾"
+         ]},
+         {"id": "atende-requisitos", "label": "Atende aos requisitos?", "opcoes": [
+            "Sim — critérios cumpridos",
+            "Não — critérios não cumpridos"
+         ]}
+      ],
+      "criteriosAdicionaisRaias": [
+         {"id": "adicional-pele", "label": "Pele", "opcoes": [
+            "Extra — Pigmentação viva e brilhante, muco aquoso",
+            "A — Pigmentação menos viva e menos brilhante, muco aquoso",
+            "B — Pigmentação em vias de descoloração, muco opaco",
+            "Não admitidos — Descoloração, pele rugosa, muco espesso"
+         ]},
+         {"id": "adicional-textura-carne", "label": "Textura da carne", "opcoes": [
+            "Extra — Firme e elástica",
+            "A — Firme",
+            "B — Mole",
+            "Não admitidos — Flácida"
+         ]},
+         {"id": "adicional-aspecto", "label": "Aspecto", "opcoes": [
+            "Extra — Borda das barbatanas translúcido e encurvado",
+            "A — Barbatanas duras",
+            "B — Mole",
+            "Não admitidos — Caído"
+         ]},
+         {"id": "adicional-abdomen", "label": "Abdômen", "opcoes": [
+            "Extra — Branco e brilhante, com um bordo arroxeado à volta das barbatanas",
+            "A — Branco e brilhante, com zonas encarnadas à volta das barbatanas apenas",
+            "B — Branco e baço, com numerosas zonas encarnadas ou amarelas",
+            "Não admitidos — Abdômen de amarelado a esverdeado, manchas encarnadas na própria carne"
+         ]}
+      ],
+      "observacoes": [
+         "(1) Esta coluna apenas será aplicável até ser adotada uma decisão da Comissão que fixe as características do peixe impróprio para consumo humano, nos termos da Diretiva nº 91/493/CEE do Conselho.",
+         "(2) Ou num estado de decomposição mais adiantado."
+      ]
+   },
+   {
+      "id": "cefalopodes",
+      "grupoPescado": "D. Cefalópodes",
+      "especies": [
+         "Polvo (Octopus vulgaris, Octopus insularis)",
+         "Choco",
+         "Lula"
+      ],
+      "categoriasFrescor": [
+         {"id": "pele", "label": "Pele", "opcoes": [
+            "Extra — Pigmentação viva, pele aderente à carne",
+            "A — Pigmentação pálida sem brilho, pele aderente à carne",
+            "B — Descolorada, facilmente separada da carne"
+         ]},
+         {"id": "carne", "label": "Carne", "opcoes": [
+            "Extra — Muito firme, branca perolada",
+            "A — Firme, branca",
+            "B — Ligeiramente mole, branca rosada ou ligeiramente amarelada"
+         ]},
+         {"id": "tentaculos", "label": "Tentáculos", "opcoes": [
+            "Extra — Resistentes ao arranque",
+            "A — Resistentes ao arranque",
+            "B — Mais fáceis de arrancar"
+         ]},
+         {"id": "cheiro", "label": "Cheiro", "opcoes": [
+            "Extra — Fresco, a algas marinhas ",
+            "A — Fraco ou nulo",
+            "B — Cheiro a tinta"
+         ]},
+         {"id": "atende-requisitos", "label": "Atende aos requisitos?", "opcoes": [
+            "Sim — critérios cumpridos",
+            "Não — critérios não cumpridos"
+         ]}
+      ],
+      "observacoes": []
+   },
+   {
+      "id": "crustaceos",
+      "grupoPescado": "E. Crustáceos",
+      "especies": [
+         "Camarão barba ruça (Artemesia longinaris)",
+         "Camarão branco (Litopenaeus schmitti)",
+         "Camarão rosa (Farfantepenaeus brasiliensis, Farfantepenaeus subtilis) Camarão sete-barbas (Xiphopenaeus kroyeri)",
+         "Camarão rosa (Farfantepenaeus brasiliensis, Farfantepenaeus subtilis, Farfantepenaeus paulensis)",
+         "Camarão santana (Pleoticus muelleri)",
+         "Camarão sete-barbas (Xiphopenaeus kroyeri)",
+         "Lagosta verde (Panulirus laevicauda)",
+         "Lagosta vermelha (Panulirus argus)",
+         "Lagostim"
+      ],
+      "categoriasFrescorCamarao": [
+         {"id": "camarao-caracteristicas-minimas", "label": "Características mínimas", "opcoes": [
+            "Extra — Superfície da casca: úmida e brilhante - Em caso de transvasamento, os camarões devem cair separados- Carne sem cheiro anormal - Sem areia, muco ou outros corpos estranhos.",
+            "A — As mesmas que para a categoria Extra"
+         ]},
+         {"id": "camarao-aspecto-camarao", "label": "Aspecto do camarão com casca", "opcoes": [
+            "Extra — Nítido cor-de-rosa avermelhado, com pintas brancas, parte peitoral da casca predominantemente clara",
+            "A — Do cor-de-rosa avermelhado ligeiramente deslavado ao encarnado azulado com pintas brancas, parte peitoral da casca predominantemente clara, a tender para o cinzento"
+         ]},
+         {"id": "camarao-cheiro", "label": "Cheiro", "opcoes": [
+            "Extra — Fresco, a algas marinhas, ligeiramente adocicado",
+            "A — Ácido, ausência de cheiro a algas marinhas"
+         ]},
+         {"id": "camarao-atende-requisitos", "label": "Atende aos requisitos?", "opcoes": [
+            "Sim — critérios cumpridos",
+            "Não — critérios não cumpridos"
+         ]}
+      ],
+      "categoriasFrescorLagostas": [
+         {"id": "lagosta-carapaca", "label": "Carapaça", "opcoes": [
+            "Extra — Do cor-de-rosa claro ou do cor-de-rosa ao vermelho-laranja",
+            "A — Do cor-de-rosa claro ou do rosa ao vermelho-laranja, sem manchas negras",
+            "B — Ligeira descoloração, algumas manchas negras e cor acinzentada, principalmente na carapaça e entre os segmentos da cauda"
+         ]},
+         {"id": "lagosta-olhos-guelras", "label": "Olhos e guelras", "opcoes": [
+            "Extra — Olhos negros e brilhantes, guelras cor-de-rosa",
+            "A — Olhos sem brilho e cinzento-negro, guelras acinzentadas",
+            "B — Guelras cinzento escuro ou cor esverdeada na superfície dorsal da carapaça"
+         ]},
+         {"id": "lagosta-cheiro", "label": "Cheiro", "opcoes": [
+            "Extra — Característico dos crustáceos",
+            "A — Perda do cheiro característico dos crustáceos, sem cheiro a amoníaco",
+            "B — Ligeiramente acre"
+         ]},
+         {"id": "lagosta-carne", "label": "Carne (cauda)", "opcoes": [
+            "Extra — Transparente, de cor azul a tender para o branco",
+            "A — Já sem transparência, mas não descorada",
+            "B — Opaca e de aspecto pálido"
+         ]},
+         {"id": "lagosta-atende-requisitos", "label": "Atende aos requisitos?", "opcoes": [
+            "Sim — critérios cumpridos",
+            "Não — critérios não cumpridos"
+         ]}
+      ],
+      "observacoes": []
+   }
+]

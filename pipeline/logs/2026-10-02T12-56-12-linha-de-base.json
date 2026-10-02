@@ -1,0 +1,3133 @@
+{
+  "baselineVersion": "linha-de-base-fluxo-2.1.0",
+  "status": "complete",
+  "error": null,
+  "scope": "bateria",
+  "timestamp": "2026-10-02T16:30:28.544Z",
+  "appUrl": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+  "state": {
+    "setup": [
+      {
+        "action": "navigate",
+        "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046",
+        "waitFor": "pnip-propesc-detalhes-vistoria"
+      },
+      {
+        "action": "click",
+        "selector": "#avatar-dropdown-trigger"
+      },
+      {
+        "action": "wait",
+        "selector": "pnip-header .br-list[role=menu]"
+      },
+      {
+        "action": "click",
+        "selector": "#avatar-dropdown-trigger"
+      },
+      {
+        "action": "navigate",
+        "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038",
+        "waitFor": "br-button[label=\"Trocar embarcação da vistoria\"]"
+      },
+      {
+        "action": "click",
+        "selector": "br-button[label=\"Trocar embarcação da vistoria\"] button"
+      },
+      {
+        "action": "wait",
+        "selector": ".br-modal"
+      },
+      {
+        "action": "wait",
+        "selector": ".lista-embarcacoes .item-embarcacao:nth-child(2)"
+      }
+    ],
+    "waitFor": "main tbody tr"
+  },
+  "provenance": {
+    "collectionManifest": {
+      "path": "F:/Dev Nath/TCC/govbr-eval/pipeline/logs/2026-10-02T12-56-12-coleta/manifesto.json",
+      "sha256": "6b3c09c74d9df7b389cd069c5f132258d1e58a8153a51415786b8401d1014629"
+    },
+    "identity": {
+      "collection": "fluxo-1.3.0",
+      "referenceSha256": "5ad4b8e2acca86d057ad793edabe35f5fa8c4270e80abc421242171a079cecc8",
+      "siteManifestSha256": "47467813eaa78f033f7095e273385cd729f5224674cc1ec0cc57a820b98562cd",
+      "oracleDistSha256": "31749c29b0dd2c0378b5955c1ba4c3804c66edd38cf90958c0de8196f11652f2",
+      "oracleDataSha256": "ade4f658553e2a6cc13b3f6118bfaf95e5dd9b05d18d22d8c113e456420c5162",
+      "statePlanSha256": "d5a2bb2537249ade5384db1a1241419c74dcffa38a0db0b5a8f2acb1d63b1211"
+    },
+    "corpus": {
+      "commit": "5a3c3f8082c5a4595d27addc759270a0cfab4d92",
+      "dirty": false
+    },
+    "validatorVersion": "2.7.0",
+    "tools": {
+      "axe": "4.11.4",
+      "playwright": "1.61.1"
+    }
+  },
+  "passes": [
+    {
+      "id": "1280x900@inicial",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "specs": [
+        "B-02",
+        "B-03",
+        "B-04",
+        "B-05",
+        "B-06",
+        "B-07",
+        "B-08",
+        "B-09",
+        "B-10",
+        "B-11",
+        "B-12",
+        "B-13",
+        "B-26",
+        "B-28",
+        "B-29"
+      ],
+      "startedAt": "2026-10-02T16:30:28.610Z",
+      "seconds": 8.2,
+      "axe": {
+        "violations": 6,
+        "passes": 43,
+        "incomplete": [
+          "color-contrast"
+        ],
+        "findings": [
+          {
+            "rule": "button-name",
+            "impact": "critical",
+            "description": "Buttons must have discernible text",
+            "target": "tr:nth-child(1) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]"
+          },
+          {
+            "rule": "button-name",
+            "impact": "critical",
+            "description": "Buttons must have discernible text",
+            "target": "tr:nth-child(2) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]"
+          },
+          {
+            "rule": "button-name",
+            "impact": "critical",
+            "description": "Buttons must have discernible text",
+            "target": "tr:nth-child(3) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]"
+          },
+          {
+            "rule": "button-name",
+            "impact": "critical",
+            "description": "Buttons must have discernible text",
+            "target": "tr:nth-child(4) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]"
+          },
+          {
+            "rule": "button-name",
+            "impact": "critical",
+            "description": "Buttons must have discernible text",
+            "target": "tr:nth-child(5) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]"
+          },
+          {
+            "rule": "button-name",
+            "impact": "critical",
+            "description": "Buttons must have discernible text",
+            "target": "tr:nth-child(6) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]"
+          },
+          {
+            "rule": "button-name",
+            "impact": "critical",
+            "description": "Buttons must have discernible text",
+            "target": "tr:nth-child(7) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]"
+          },
+          {
+            "rule": "button-name",
+            "impact": "critical",
+            "description": "Buttons must have discernible text",
+            "target": "tr:nth-child(8) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]"
+          },
+          {
+            "rule": "button-name",
+            "impact": "critical",
+            "description": "Buttons must have discernible text",
+            "target": "tr:nth-child(9) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]"
+          },
+          {
+            "rule": "button-name",
+            "impact": "critical",
+            "description": "Buttons must have discernible text",
+            "target": "tr:nth-child(10) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Elements must meet minimum color contrast ratio thresholds",
+            "target": ".primary-pastel-01"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Elements must meet minimum color contrast ratio thresholds",
+            "target": "tr:nth-child(1) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Elements must meet minimum color contrast ratio thresholds",
+            "target": "tr:nth-child(2) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Elements must meet minimum color contrast ratio thresholds",
+            "target": "tr:nth-child(3) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Elements must meet minimum color contrast ratio thresholds",
+            "target": "tr:nth-child(4) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Elements must meet minimum color contrast ratio thresholds",
+            "target": "tr:nth-child(5) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Elements must meet minimum color contrast ratio thresholds",
+            "target": "tr:nth-child(6) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Elements must meet minimum color contrast ratio thresholds",
+            "target": "tr:nth-child(7) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Elements must meet minimum color contrast ratio thresholds",
+            "target": "tr:nth-child(8) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Elements must meet minimum color contrast ratio thresholds",
+            "target": "tr:nth-child(9) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center"
+          },
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Elements must meet minimum color contrast ratio thresholds",
+            "target": "tr:nth-child(10) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center"
+          },
+          {
+            "rule": "empty-table-header",
+            "impact": "minor",
+            "description": "Table header text should not be empty",
+            "target": "th:nth-child(2)"
+          },
+          {
+            "rule": "empty-table-header",
+            "impact": "minor",
+            "description": "Table header text should not be empty",
+            "target": "th:nth-child(9)"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "br-input:nth-child(2) #br-input-8"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "br-input:nth-child(4) #br-input-9"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "th:nth-child(2) > input[type=\"checkbox\"]"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "tr:nth-child(1) > td:nth-child(2) > input[type=\"checkbox\"]"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "tr:nth-child(2) > td:nth-child(2) > input[type=\"checkbox\"]"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "tr:nth-child(3) > td:nth-child(2) > input[type=\"checkbox\"]"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "tr:nth-child(4) > td:nth-child(2) > input[type=\"checkbox\"]"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "tr:nth-child(5) > td:nth-child(2) > input[type=\"checkbox\"]"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "tr:nth-child(6) > td:nth-child(2) > input[type=\"checkbox\"]"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "tr:nth-child(7) > td:nth-child(2) > input[type=\"checkbox\"]"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "tr:nth-child(8) > td:nth-child(2) > input[type=\"checkbox\"]"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "tr:nth-child(9) > td:nth-child(2) > input[type=\"checkbox\"]"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "tr:nth-child(10) > td:nth-child(2) > input[type=\"checkbox\"]"
+          },
+          {
+            "rule": "listitem",
+            "impact": "serious",
+            "description": "<li> elements must be contained in a <ul> or <ol>",
+            "target": "li:nth-child(2) > li"
+          },
+          {
+            "rule": "listitem",
+            "impact": "serious",
+            "description": "<li> elements must be contained in a <ul> or <ol>",
+            "target": "li:nth-child(3) > li"
+          },
+          {
+            "rule": "listitem",
+            "impact": "serious",
+            "description": "<li> elements must be contained in a <ul> or <ol>",
+            "target": "li:nth-child(4) > li"
+          },
+          {
+            "rule": "listitem",
+            "impact": "serious",
+            "description": "<li> elements must be contained in a <ul> or <ol>",
+            "target": "li:nth-child(5) > li"
+          },
+          {
+            "rule": "page-has-heading-one",
+            "impact": "moderate",
+            "description": "Page should contain a level-one heading",
+            "target": "html"
+          }
+        ],
+        "seconds": 0.9
+      },
+      "validator": {
+        "unguided": {
+          "mode": "nao-guiada",
+          "policy": "pagina-inteira: checks tokens+structure+page, seletor padrão do validator, todos os componentes e verificações de token, janela e setup do plano de estados, sem seletor do gabarito",
+          "request": {
+            "selectors": null,
+            "checks": [
+              "tokens",
+              "structure",
+              "page"
+            ],
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "actions": 0,
+            "url": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa"
+          },
+          "stateFingerprint": "sha256:24d09ed5a9e866c039a24cde4a6004bf2327a3c61cc94c2d189e22e33c9ee61e",
+          "coverage": {
+            "checks": [
+              "page",
+              "structure",
+              "tokens"
+            ],
+            "selectors": [],
+            "evidenceSelectors": [
+              "button, a, input, select, textarea, [role='button'], [role='link'], [role='checkbox'], [role='radio'], [class*='br-']"
+            ],
+            "axeScope": null,
+            "elementsInspected": 127,
+            "componentsRequested": [
+              "accordion",
+              "avatar",
+              "breadcrumb",
+              "button",
+              "card",
+              "carousel",
+              "checkbox",
+              "cookiebar",
+              "datetimepicker",
+              "divider",
+              "footer",
+              "header",
+              "input",
+              "item",
+              "list",
+              "loading",
+              "magicbutton",
+              "menu",
+              "message",
+              "modal",
+              "notification",
+              "pagination",
+              "radio",
+              "scrim",
+              "select",
+              "signin",
+              "skiplink",
+              "step",
+              "switch",
+              "tab",
+              "table",
+              "tag",
+              "textarea",
+              "tooltip",
+              "upload",
+              "wizard"
+            ],
+            "componentsFound": [
+              "avatar",
+              "list",
+              "item",
+              "tab",
+              "tag",
+              "button",
+              "input",
+              "table",
+              "pagination",
+              "select",
+              "radio",
+              "divider",
+              "header",
+              "breadcrumb"
+            ],
+            "actionsApplied": []
+          },
+          "findings": [
+            {
+              "id": "F-001",
+              "rule": "ds:token-radius",
+              "source": "govbr-ds-token",
+              "description": "border-radius: 20px fora da escala do DS",
+              "expected": "Um de: 0px, 4px, 8px, 16px, 50% (circle) ou pill (100em/999em × font-size)",
+              "target": "#avatar-menu > button"
+            },
+            {
+              "id": "F-002",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "margin: -5px 0px 0px (fora da escala: -5px)",
+              "expected": "Múltiplos de 4px",
+              "target": "div:nth-of-type(1) > pnip-filter-panel > div > div:nth-of-type(5) > button"
+            },
+            {
+              "id": "F-003",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "margin: -38px 4px 0px 0px (fora da escala: -38px)",
+              "expected": "Múltiplos de 4px",
+              "target": "pnip-search-table-utils > div > div > div > button"
+            },
+            {
+              "id": "F-004",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 0px 6px (fora da escala: 6px, 6px, 6px)",
+              "expected": "Múltiplos de 4px",
+              "target": "pnip-root > main > pnip-mpa > pnip-propesc-vistorias > br-breadcrumb >>> div > ul > li:nth-of-type(1) > a"
+            },
+            {
+              "id": "F-005",
+              "rule": "ds:structure-breadcrumb-tag",
+              "source": "govbr-ds-structure",
+              "description": "br-breadcrumb aplicado a <div>",
+              "expected": "Elemento <nav>",
+              "target": "pnip-root > main > pnip-mpa > pnip-propesc-vistorias > br-breadcrumb >>> div"
+            },
+            {
+              "id": "F-006",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-007",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-008",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-009",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-010",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-011",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-012",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-013",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-014",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-015",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-016",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-017",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-018",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-019",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-020",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-021",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-022",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-023",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-024",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-025",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-026",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-027",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-028",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-029",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-030",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-031",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-032",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-033",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-034",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-035",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-036",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-037",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-038",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-039",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-040",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-041",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-042",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-043",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-044",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-045",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-046",
+              "rule": "ds:page-footer",
+              "source": "govbr-ds-page",
+              "description": "Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos).",
+              "expected": "Uma Área de Rodapé com o componente Footer (.br-footer ou <br-footer>), como o Template Base exige.",
+              "target": "html"
+            },
+            {
+              "id": "F-047",
+              "rule": "ds:page-skip-link",
+              "source": "govbr-ds-page",
+              "description": "O primeiro link da página (href=\"/portal-mpa\", \"Home\") não é uma âncora interna.",
+              "expected": "O primeiro link da página é o salto para o conteúdo: âncora interna cujo alvo existe (e-MAG 1.5).",
+              "target": "html"
+            }
+          ],
+          "seconds": 2.7
+        },
+        "guided": {
+          "mode": "guiada",
+          "policy": "diagnostico: âncoras das specs da janela; não comparável ao agente",
+          "request": {
+            "selectors": [
+              "pnip-propesc-vistorias h2",
+              "pnip-propesc-vistorias table",
+              "pnip-search-table-utils br-input >>> input",
+              "pnip-propesc-vistorias br-input[type=date] >>> input",
+              "pnip-propesc-vistorias table input[type=checkbox]",
+              "pnip-propesc-vistorias tbody br-button[icon=eye] >>> button",
+              "pnip-propesc-vistorias tbody br-button >>> button",
+              "pnip-search-table-utils button.br-button",
+              "br-select-pnip button.br-button",
+              "pnip-filter-panel span.br-tag.interaction",
+              "pnip-propesc-vistorias tbody pnip-status-solicitacao-utils .text-secondary-01",
+              "pnip-propesc-vistorias span.br-tag.primary-pastel-01",
+              "pnip-propesc-vistorias thead th:nth-child(9)"
+            ],
+            "checks": [
+              "tokens",
+              "structure",
+              "page"
+            ],
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "actions": 0,
+            "url": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa"
+          },
+          "stateFingerprint": "sha256:7093fbd9326a5208d5c45ccc0a1531cd30ec66bf6d7ff48361f0c6b4ae36673e",
+          "coverage": {
+            "checks": [
+              "page",
+              "structure",
+              "tokens"
+            ],
+            "selectors": [
+              "br-select-pnip button.br-button",
+              "pnip-filter-panel span.br-tag.interaction",
+              "pnip-propesc-vistorias br-input[type=date] >>> input",
+              "pnip-propesc-vistorias h2",
+              "pnip-propesc-vistorias span.br-tag.primary-pastel-01",
+              "pnip-propesc-vistorias table",
+              "pnip-propesc-vistorias table input[type=checkbox]",
+              "pnip-propesc-vistorias tbody br-button >>> button",
+              "pnip-propesc-vistorias tbody br-button[icon=eye] >>> button",
+              "pnip-propesc-vistorias tbody pnip-status-solicitacao-utils .text-secondary-01",
+              "pnip-propesc-vistorias thead th:nth-child(9)",
+              "pnip-search-table-utils br-input >>> input",
+              "pnip-search-table-utils button.br-button"
+            ],
+            "evidenceSelectors": [
+              "br-select-pnip button.br-button",
+              "pnip-filter-panel span.br-tag.interaction",
+              "pnip-propesc-vistorias br-input[type=date] >>> input",
+              "pnip-propesc-vistorias h2",
+              "pnip-propesc-vistorias span.br-tag.primary-pastel-01",
+              "pnip-propesc-vistorias table",
+              "pnip-propesc-vistorias table input[type=checkbox]",
+              "pnip-propesc-vistorias tbody br-button >>> button",
+              "pnip-propesc-vistorias tbody br-button[icon=eye] >>> button",
+              "pnip-propesc-vistorias tbody pnip-status-solicitacao-utils .text-secondary-01",
+              "pnip-propesc-vistorias thead th:nth-child(9)",
+              "pnip-search-table-utils br-input >>> input",
+              "pnip-search-table-utils button.br-button"
+            ],
+            "axeScope": null,
+            "elementsInspected": 75,
+            "componentsRequested": [
+              "accordion",
+              "avatar",
+              "breadcrumb",
+              "button",
+              "card",
+              "carousel",
+              "checkbox",
+              "cookiebar",
+              "datetimepicker",
+              "divider",
+              "footer",
+              "header",
+              "input",
+              "item",
+              "list",
+              "loading",
+              "magicbutton",
+              "menu",
+              "message",
+              "modal",
+              "notification",
+              "pagination",
+              "radio",
+              "scrim",
+              "select",
+              "signin",
+              "skiplink",
+              "step",
+              "switch",
+              "tab",
+              "table",
+              "tag",
+              "textarea",
+              "tooltip",
+              "upload",
+              "wizard"
+            ],
+            "componentsFound": [
+              "button",
+              "tag"
+            ],
+            "actionsApplied": []
+          },
+          "findings": [
+            {
+              "id": "F-001",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "margin: -38px 4px 0px 0px (fora da escala: -38px)",
+              "expected": "Múltiplos de 4px",
+              "target": "pnip-search-table-utils > div > div > div > button"
+            },
+            {
+              "id": "F-002",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-003",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-004",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-005",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-006",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-007",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-008",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-009",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-010",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-011",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-012",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-013",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-014",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-015",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-016",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-017",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-018",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-019",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-020",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-021",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-022",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-023",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-024",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-025",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-026",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-027",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-028",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-029",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-030",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-031",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-032",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-033",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-034",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-035",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-036",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-037",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-038",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button"
+            },
+            {
+              "id": "F-039",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button"
+            },
+            {
+              "id": "F-040",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button"
+            },
+            {
+              "id": "F-041",
+              "rule": "emag:2.2",
+              "source": "emag",
+              "description": "Elemento interativo apenas com ícone, sem aria-label (br-button)",
+              "expected": "aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)",
+              "target": "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button"
+            },
+            {
+              "id": "F-042",
+              "rule": "ds:page-footer",
+              "source": "govbr-ds-page",
+              "description": "Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos).",
+              "expected": "Uma Área de Rodapé com o componente Footer (.br-footer ou <br-footer>), como o Template Base exige.",
+              "target": "html"
+            },
+            {
+              "id": "F-043",
+              "rule": "ds:page-skip-link",
+              "source": "govbr-ds-page",
+              "description": "O primeiro link da página (href=\"/portal-mpa\", \"Home\") não é uma âncora interna.",
+              "expected": "O primeiro link da página é o salto para o conteúdo: âncora interna cujo alvo existe (e-MAG 1.5).",
+              "target": "html"
+            }
+          ],
+          "seconds": 2.2
+        }
+      },
+      "segmento": {
+        "numero": 0,
+        "estado": "inicial",
+        "afterStep": 0,
+        "path": "/pnip/portal-mpa/vistorias",
+        "estados": [
+          "inicial"
+        ],
+        "entradaDireta": null
+      },
+      "resolution": {
+        "bySelector": {
+          "tr:nth-child(1) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+            "ok": true,
+            "error": null,
+            "keys": []
+          },
+          "tr:nth-child(2) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+            "ok": true,
+            "error": null,
+            "keys": []
+          },
+          "tr:nth-child(3) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+            "ok": true,
+            "error": null,
+            "keys": []
+          },
+          "tr:nth-child(4) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+            "ok": true,
+            "error": null,
+            "keys": []
+          },
+          "tr:nth-child(5) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+            "ok": true,
+            "error": null,
+            "keys": []
+          },
+          "tr:nth-child(6) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+            "ok": true,
+            "error": null,
+            "keys": []
+          },
+          "tr:nth-child(7) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+            "ok": true,
+            "error": null,
+            "keys": []
+          },
+          "tr:nth-child(8) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+            "ok": true,
+            "error": null,
+            "keys": []
+          },
+          "tr:nth-child(9) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+            "ok": true,
+            "error": null,
+            "keys": []
+          },
+          "tr:nth-child(10) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]": {
+            "ok": true,
+            "error": null,
+            "keys": []
+          },
+          ".primary-pastel-01": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span"
+            ]
+          },
+          "tr:nth-child(1) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+            ]
+          },
+          "tr:nth-child(2) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+            ]
+          },
+          "tr:nth-child(3) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+            ]
+          },
+          "tr:nth-child(4) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+            ]
+          },
+          "tr:nth-child(5) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+            ]
+          },
+          "tr:nth-child(6) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+            ]
+          },
+          "tr:nth-child(7) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+            ]
+          },
+          "tr:nth-child(8) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+            ]
+          },
+          "tr:nth-child(9) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+            ]
+          },
+          "tr:nth-child(10) > td:nth-child(8) > pnip-status-solicitacao-utils > .justify-content-center.d-flex > .pt-1.pb-1.pr-2 > .text-secondary-01.text-center": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+            ]
+          },
+          "th:nth-child(2)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)"
+            ]
+          },
+          "th:nth-child(9)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)"
+            ]
+          },
+          "br-input:nth-child(2) #br-input-8": {
+            "ok": true,
+            "error": null,
+            "keys": []
+          },
+          "br-input:nth-child(4) #br-input-9": {
+            "ok": true,
+            "error": null,
+            "keys": []
+          },
+          "th:nth-child(2) > input[type=\"checkbox\"]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input"
+            ]
+          },
+          "tr:nth-child(1) > td:nth-child(2) > input[type=\"checkbox\"]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input"
+            ]
+          },
+          "tr:nth-child(2) > td:nth-child(2) > input[type=\"checkbox\"]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input"
+            ]
+          },
+          "tr:nth-child(3) > td:nth-child(2) > input[type=\"checkbox\"]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input"
+            ]
+          },
+          "tr:nth-child(4) > td:nth-child(2) > input[type=\"checkbox\"]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input"
+            ]
+          },
+          "tr:nth-child(5) > td:nth-child(2) > input[type=\"checkbox\"]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input"
+            ]
+          },
+          "tr:nth-child(6) > td:nth-child(2) > input[type=\"checkbox\"]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input"
+            ]
+          },
+          "tr:nth-child(7) > td:nth-child(2) > input[type=\"checkbox\"]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input"
+            ]
+          },
+          "tr:nth-child(8) > td:nth-child(2) > input[type=\"checkbox\"]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input"
+            ]
+          },
+          "tr:nth-child(9) > td:nth-child(2) > input[type=\"checkbox\"]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input"
+            ]
+          },
+          "tr:nth-child(10) > td:nth-child(2) > input[type=\"checkbox\"]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input"
+            ]
+          },
+          "li:nth-child(2) > li": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li"
+            ]
+          },
+          "li:nth-child(3) > li": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li"
+            ]
+          },
+          "li:nth-child(4) > li": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li"
+            ]
+          },
+          "li:nth-child(5) > li": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li"
+            ]
+          },
+          "html": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              ""
+            ]
+          },
+          "#avatar-menu > button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>pnip-header>div>div>div>button"
+            ]
+          },
+          "div:nth-of-type(1) > pnip-filter-panel > div > div:nth-of-type(5) > button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(5)>button"
+            ]
+          },
+          "pnip-search-table-utils > div > div > div > button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button"
+            ]
+          },
+          "pnip-root > main > pnip-mpa > pnip-propesc-vistorias > br-breadcrumb >>> div > ul > li:nth-of-type(1) > a": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a"
+            ]
+          },
+          "pnip-root > main > pnip-mpa > pnip-propesc-vistorias > br-breadcrumb >>> div": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div"
+            ]
+          },
+          "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(1) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(2) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(3) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(4) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(5) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(6) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(7) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(8) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(9) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(1) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(2) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(3) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button"
+            ]
+          },
+          "tr:nth-of-type(10) > td:nth-of-type(9) > div > div:nth-of-type(4) > br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+            ]
+          },
+          "pnip-propesc-vistorias h2": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(1)>h2"
+            ]
+          },
+          "pnip-propesc-vistorias table": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table"
+            ]
+          },
+          "pnip-search-table-utils br-input >>> input": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input >>> div>input"
+            ]
+          },
+          "pnip-propesc-vistorias br-input[type=date] >>> input": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1) >>> div>input",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2) >>> div>input"
+            ]
+          },
+          "pnip-propesc-vistorias table input[type=checkbox]": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input"
+            ]
+          },
+          "pnip-propesc-vistorias tbody br-button[icon=eye] >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button"
+            ]
+          },
+          "pnip-propesc-vistorias tbody br-button >>> button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button"
+            ]
+          },
+          "pnip-search-table-utils button.br-button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button"
+            ]
+          },
+          "br-select-pnip button.br-button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button"
+            ]
+          },
+          "pnip-filter-panel span.br-tag.interaction": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span"
+            ]
+          },
+          "pnip-propesc-vistorias tbody pnip-status-solicitacao-utils .text-secondary-01": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div",
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div"
+            ]
+          },
+          "pnip-propesc-vistorias span.br-tag.primary-pastel-01": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span"
+            ]
+          },
+          "pnip-propesc-vistorias thead th:nth-child(9)": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)"
+            ]
+          }
+        },
+        "labels": {
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span": "<span> \"Nenhum filtro de data aplicado\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": "<div> \"Vistoria agendada\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": "<div> \"Vistoria agendada\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": "<div> \"Vistoria agendada\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": "<div> \"Vistoria agendada\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": "<div> \"Vistoria agendada\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": "<div> \"Vistoria agendada\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": "<div> \"Vistoria agendada\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": "<div> \"Vistoria agendada\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": "<div> \"Vistoria agendada\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div": "<div> \"Vistoria agendada\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)": "<th>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)": "<th>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input": "<input>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input": "<input>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input": "<input>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input": "<input>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input": "<input>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input": "<input>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input": "<input>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input": "<input>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input": "<input>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input": "<input>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input": "<input>",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li": "<li> \"1\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li": "<li> \"2\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li": "<li> \"3\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li": "<li> \"4\"",
+          "": "<html> \"U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex\"",
+          "body>pnip-root>pnip-header>div>div>div>button": "<button> \"Sair\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(5)>button": "<button> \"Limpar Filtro\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button": "<button> \"Buscar\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a": "<a> \"Home\" [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div": "<div> \"Home Vistorias\" [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button": "<button> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(1)>h2": "<h2> \"Vistorias\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table": "<table> \"# Nome da embarcação RAEP Data/Hora Vistoria Loc\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input >>> div>input": "<input#search> \"Pesquise aqui ...\" [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1) >>> div>input": "<input#br-input-8> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2) >>> div>input": "<input#br-input-9> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button": "<button> \"Exibir lista\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button": "<button> \"Exibir lista\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span": "<span> \"Cidade\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span": "<span> \"Porto\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span": "<span> \"Vistoriador\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span": "<span> \"Status\""
+        }
+      }
+    },
+    {
+      "id": "1280x900@detalhe-menu",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "specs": [
+        "B-15",
+        "B-16",
+        "B-17",
+        "B-18",
+        "B-19",
+        "B-20"
+      ],
+      "startedAt": "2026-10-02T16:30:36.849Z",
+      "seconds": 8.5,
+      "axe": {
+        "violations": 5,
+        "passes": 38,
+        "incomplete": [
+          "color-contrast"
+        ],
+        "findings": [
+          {
+            "rule": "aria-required-children",
+            "impact": "critical",
+            "description": "Certain ARIA roles must contain particular children",
+            "target": "#avatar-menu"
+          },
+          {
+            "rule": "image-alt",
+            "impact": "critical",
+            "description": "Images must have alternative text",
+            "target": "img"
+          },
+          {
+            "rule": "label",
+            "impact": "critical",
+            "description": "Form elements must have labels",
+            "target": "textarea"
+          },
+          {
+            "rule": "page-has-heading-one",
+            "impact": "moderate",
+            "description": "Page should contain a level-one heading",
+            "target": "html"
+          },
+          {
+            "rule": "region",
+            "impact": "moderate",
+            "description": "All page content should be contained by landmarks",
+            "target": "#avatar-menu"
+          }
+        ],
+        "seconds": 0.5
+      },
+      "validator": {
+        "unguided": {
+          "mode": "nao-guiada",
+          "policy": "pagina-inteira: checks tokens+structure+page, seletor padrão do validator, todos os componentes e verificações de token, janela e setup do plano de estados, sem seletor do gabarito",
+          "request": {
+            "selectors": null,
+            "checks": [
+              "tokens",
+              "structure",
+              "page"
+            ],
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "actions": 3,
+            "url": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046?mock-perfil=mpa"
+          },
+          "stateFingerprint": "sha256:9b5f80001c084ea85c54d041cd036964d7bd399ed66a75d8a3d05769ece655b0",
+          "coverage": {
+            "checks": [
+              "page",
+              "structure",
+              "tokens"
+            ],
+            "selectors": [],
+            "evidenceSelectors": [
+              "button, a, input, select, textarea, [role='button'], [role='link'], [role='checkbox'], [role='radio'], [class*='br-']"
+            ],
+            "axeScope": null,
+            "elementsInspected": 57,
+            "componentsRequested": [
+              "accordion",
+              "avatar",
+              "breadcrumb",
+              "button",
+              "card",
+              "carousel",
+              "checkbox",
+              "cookiebar",
+              "datetimepicker",
+              "divider",
+              "footer",
+              "header",
+              "input",
+              "item",
+              "list",
+              "loading",
+              "magicbutton",
+              "menu",
+              "message",
+              "modal",
+              "notification",
+              "pagination",
+              "radio",
+              "scrim",
+              "select",
+              "signin",
+              "skiplink",
+              "step",
+              "switch",
+              "tab",
+              "table",
+              "tag",
+              "textarea",
+              "tooltip",
+              "upload",
+              "wizard"
+            ],
+            "componentsFound": [
+              "avatar",
+              "list",
+              "item",
+              "textarea",
+              "header",
+              "divider",
+              "button",
+              "breadcrumb",
+              "input"
+            ],
+            "actionsApplied": [
+              {
+                "action": "wait",
+                "selector": "pnip-propesc-detalhes-vistoria"
+              },
+              {
+                "action": "click",
+                "selector": "#avatar-dropdown-trigger"
+              },
+              {
+                "action": "wait",
+                "selector": "pnip-header .br-list[role=menu]"
+              }
+            ]
+          },
+          "findings": [
+            {
+              "id": "F-001",
+              "rule": "ds:token-radius",
+              "source": "govbr-ds-token",
+              "description": "border-radius: 20px fora da escala do DS",
+              "expected": "Um de: 0px, 4px, 8px, 16px, 50% (circle) ou pill (100em/999em × font-size)",
+              "target": "#avatar-menu > button"
+            },
+            {
+              "id": "F-002",
+              "rule": "ds:token-radius",
+              "source": "govbr-ds-token",
+              "description": "border-radius: 6px fora da escala do DS",
+              "expected": "Um de: 0px, 4px, 8px, 16px, 50% (circle) ou pill (100em/999em × font-size)",
+              "target": "div > div:nth-of-type(2) > div > div > textarea"
+            },
+            {
+              "id": "F-003",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 0px 6px (fora da escala: 6px, 6px, 6px)",
+              "expected": "Múltiplos de 4px",
+              "target": "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div > ul > li:nth-of-type(1) > a"
+            },
+            {
+              "id": "F-004",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 0px 6px (fora da escala: 6px, 6px, 6px)",
+              "expected": "Múltiplos de 4px",
+              "target": "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div > ul > li:nth-of-type(2) > a"
+            },
+            {
+              "id": "F-005",
+              "rule": "ds:structure-breadcrumb-tag",
+              "source": "govbr-ds-structure",
+              "description": "br-breadcrumb aplicado a <div>",
+              "expected": "Elemento <nav>",
+              "target": "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div"
+            },
+            {
+              "id": "F-006",
+              "rule": "ds:page-footer",
+              "source": "govbr-ds-page",
+              "description": "Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos).",
+              "expected": "Uma Área de Rodapé com o componente Footer (.br-footer ou <br-footer>), como o Template Base exige.",
+              "target": "html"
+            },
+            {
+              "id": "F-007",
+              "rule": "ds:page-skip-link",
+              "source": "govbr-ds-page",
+              "description": "O primeiro link da página (href=\"/portal-mpa\", \"Home\") não é uma âncora interna.",
+              "expected": "O primeiro link da página é o salto para o conteúdo: âncora interna cujo alvo existe (e-MAG 1.5).",
+              "target": "html"
+            }
+          ],
+          "seconds": 2
+        },
+        "guided": {
+          "mode": "guiada",
+          "policy": "diagnostico: âncoras das specs da janela; não comparável ao agente",
+          "request": {
+            "selectors": [
+              "pnip-header hr.solid",
+              "pnip-header .br-item img",
+              "pnip-header #avatar-menu",
+              "pnip-header button.br-item",
+              "pnip-header #avatar-menu span.text-blue-vivid-60",
+              "pnip-propesc-agendar-vistoria .br-textarea textarea"
+            ],
+            "checks": [
+              "tokens",
+              "structure",
+              "page"
+            ],
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "actions": 3,
+            "url": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046?mock-perfil=mpa"
+          },
+          "stateFingerprint": "sha256:1471361d0f863c99cb34963c39a09e28000fb64c8c1b31632f98ddfb0730139e",
+          "coverage": {
+            "checks": [
+              "page",
+              "structure",
+              "tokens"
+            ],
+            "selectors": [
+              "pnip-header #avatar-menu",
+              "pnip-header #avatar-menu span.text-blue-vivid-60",
+              "pnip-header .br-item img",
+              "pnip-header button.br-item",
+              "pnip-header hr.solid",
+              "pnip-propesc-agendar-vistoria .br-textarea textarea"
+            ],
+            "evidenceSelectors": [
+              "pnip-header #avatar-menu",
+              "pnip-header #avatar-menu span.text-blue-vivid-60",
+              "pnip-header .br-item img",
+              "pnip-header button.br-item",
+              "pnip-header hr.solid",
+              "pnip-propesc-agendar-vistoria .br-textarea textarea"
+            ],
+            "axeScope": null,
+            "elementsInspected": 6,
+            "componentsRequested": [
+              "accordion",
+              "avatar",
+              "breadcrumb",
+              "button",
+              "card",
+              "carousel",
+              "checkbox",
+              "cookiebar",
+              "datetimepicker",
+              "divider",
+              "footer",
+              "header",
+              "input",
+              "item",
+              "list",
+              "loading",
+              "magicbutton",
+              "menu",
+              "message",
+              "modal",
+              "notification",
+              "pagination",
+              "radio",
+              "scrim",
+              "select",
+              "signin",
+              "skiplink",
+              "step",
+              "switch",
+              "tab",
+              "table",
+              "tag",
+              "textarea",
+              "tooltip",
+              "upload",
+              "wizard"
+            ],
+            "componentsFound": [
+              "list",
+              "item"
+            ],
+            "actionsApplied": [
+              {
+                "action": "wait",
+                "selector": "pnip-propesc-detalhes-vistoria"
+              },
+              {
+                "action": "click",
+                "selector": "#avatar-dropdown-trigger"
+              },
+              {
+                "action": "wait",
+                "selector": "pnip-header .br-list[role=menu]"
+              }
+            ]
+          },
+          "findings": [
+            {
+              "id": "F-001",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "margin: 0px 0px 10px (fora da escala: 10px)",
+              "expected": "Múltiplos de 4px",
+              "target": "#avatar-menu > button > img"
+            },
+            {
+              "id": "F-002",
+              "rule": "ds:token-radius",
+              "source": "govbr-ds-token",
+              "description": "border-radius: 20px fora da escala do DS",
+              "expected": "Um de: 0px, 4px, 8px, 16px, 50% (circle) ou pill (100em/999em × font-size)",
+              "target": "#avatar-menu > button"
+            },
+            {
+              "id": "F-003",
+              "rule": "ds:token-radius",
+              "source": "govbr-ds-token",
+              "description": "border-radius: 6px fora da escala do DS",
+              "expected": "Um de: 0px, 4px, 8px, 16px, 50% (circle) ou pill (100em/999em × font-size)",
+              "target": "div > div:nth-of-type(2) > div > div > textarea"
+            },
+            {
+              "id": "F-004",
+              "rule": "ds:page-footer",
+              "source": "govbr-ds-page",
+              "description": "Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos).",
+              "expected": "Uma Área de Rodapé com o componente Footer (.br-footer ou <br-footer>), como o Template Base exige.",
+              "target": "html"
+            },
+            {
+              "id": "F-005",
+              "rule": "ds:page-skip-link",
+              "source": "govbr-ds-page",
+              "description": "O primeiro link da página (href=\"/portal-mpa\", \"Home\") não é uma âncora interna.",
+              "expected": "O primeiro link da página é o salto para o conteúdo: âncora interna cujo alvo existe (e-MAG 1.5).",
+              "target": "html"
+            }
+          ],
+          "seconds": 1.6
+        }
+      },
+      "segmento": {
+        "numero": 1,
+        "estado": "detalhe-menu",
+        "afterStep": 3,
+        "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046",
+        "estados": [
+          "detalhe-menu"
+        ],
+        "entradaDireta": {
+          "url": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046?mock-perfil=mpa",
+          "passos": 3,
+          "seletores": []
+        }
+      },
+      "resolution": {
+        "bySelector": {
+          "#avatar-menu": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>pnip-header>div>div>div"
+            ]
+          },
+          "img": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>pnip-header>div>div>div>button>img",
+              "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>img"
+            ]
+          },
+          "textarea": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>pnip-propesc-nao-comparecimento>div>div:nth-of-type(2)>div>div>textarea"
+            ]
+          },
+          "html": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              ""
+            ]
+          },
+          "#avatar-menu > button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>pnip-header>div>div>div>button"
+            ]
+          },
+          "div > div:nth-of-type(2) > div > div > textarea": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>pnip-propesc-nao-comparecimento>div>div:nth-of-type(2)>div>div>textarea"
+            ]
+          },
+          "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div > ul > li:nth-of-type(1) > a": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a"
+            ]
+          },
+          "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div > ul > li:nth-of-type(2) > a": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div>ul>li:nth-of-type(2)>a"
+            ]
+          },
+          "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div"
+            ]
+          },
+          "#avatar-menu > button > img": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>pnip-header>div>div>div>button>img"
+            ]
+          },
+          "pnip-header hr.solid": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>hr"
+            ]
+          },
+          "pnip-header .br-item img": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>pnip-header>div>div>div>button>img"
+            ]
+          },
+          "pnip-header #avatar-menu": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>pnip-header>div>div>div"
+            ]
+          },
+          "pnip-header button.br-item": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>pnip-header>div>div>div>button"
+            ]
+          },
+          "pnip-header #avatar-menu span.text-blue-vivid-60": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>div:nth-of-type(2)>span"
+            ]
+          },
+          "pnip-propesc-agendar-vistoria .br-textarea textarea": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>pnip-propesc-nao-comparecimento>div>div:nth-of-type(2)>div>div>textarea"
+            ]
+          }
+        },
+        "labels": {
+          "body>pnip-root>pnip-header>div>div>div": "<div#avatar-menu> \"Usuária de Teste usuaria.teste@exemplo.invalid S\"",
+          "body>pnip-root>pnip-header>div>div>div>button>img": "<img>",
+          "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>img": "<img> [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>pnip-propesc-nao-comparecimento>div>div:nth-of-type(2)>div>div>textarea": "<textarea>",
+          "": "<html> \"U Olá, Usuária de Teste, SUPERVISOR Usuária de T\"",
+          "body>pnip-root>pnip-header>div>div>div>button": "<button> \"Sair\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a": "<a> \"Home\" [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div>ul>li:nth-of-type(2)>a": "<a> \"Vistorias\" [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div": "<div> \"Home Vistorias Agendar vistoria\" [shadow]",
+          "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>hr": "<hr>",
+          "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>div:nth-of-type(2)>span": "<span> \"Trocar unidade\""
+        }
+      }
+    },
+    {
+      "id": "1280x900@modal",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "specs": [
+        "B-01",
+        "B-14",
+        "B-21",
+        "B-22",
+        "B-23",
+        "B-24",
+        "B-25",
+        "B-27"
+      ],
+      "startedAt": "2026-10-02T16:30:45.373Z",
+      "seconds": 13.1,
+      "axe": {
+        "violations": 2,
+        "passes": 41,
+        "incomplete": [
+          "color-contrast"
+        ],
+        "findings": [
+          {
+            "rule": "color-contrast",
+            "impact": "serious",
+            "description": "Elements must meet minimum color contrast ratio thresholds",
+            "target": ".bg-secondary-06 > .text-secondary-01.text-center"
+          },
+          {
+            "rule": "scrollable-region-focusable",
+            "impact": "serious",
+            "description": "Scrollable region must have keyboard access",
+            "target": ".lista-embarcacoes"
+          }
+        ],
+        "seconds": 0.7
+      },
+      "validator": {
+        "unguided": {
+          "mode": "nao-guiada",
+          "policy": "pagina-inteira: checks tokens+structure+page, seletor padrão do validator, todos os componentes e verificações de token, janela e setup do plano de estados, sem seletor do gabarito",
+          "request": {
+            "selectors": null,
+            "checks": [
+              "tokens",
+              "structure",
+              "page"
+            ],
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "actions": 4,
+            "url": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038?mock-perfil=mpa"
+          },
+          "stateFingerprint": "sha256:3b0da02b83e7f9dce86b27c1f877de7f01841025c0afddd23342f75d46614a6b",
+          "coverage": {
+            "checks": [
+              "page",
+              "structure",
+              "tokens"
+            ],
+            "selectors": [],
+            "evidenceSelectors": [
+              "button, a, input, select, textarea, [role='button'], [role='link'], [role='checkbox'], [role='radio'], [class*='br-']"
+            ],
+            "axeScope": null,
+            "elementsInspected": 107,
+            "componentsRequested": [
+              "accordion",
+              "avatar",
+              "breadcrumb",
+              "button",
+              "card",
+              "carousel",
+              "checkbox",
+              "cookiebar",
+              "datetimepicker",
+              "divider",
+              "footer",
+              "header",
+              "input",
+              "item",
+              "list",
+              "loading",
+              "magicbutton",
+              "menu",
+              "message",
+              "modal",
+              "notification",
+              "pagination",
+              "radio",
+              "scrim",
+              "select",
+              "signin",
+              "skiplink",
+              "step",
+              "switch",
+              "tab",
+              "table",
+              "tag",
+              "textarea",
+              "tooltip",
+              "upload",
+              "wizard"
+            ],
+            "componentsFound": [
+              "avatar",
+              "list",
+              "item",
+              "modal",
+              "input",
+              "select",
+              "button",
+              "radio",
+              "textarea",
+              "header",
+              "divider",
+              "breadcrumb"
+            ],
+            "actionsApplied": [
+              {
+                "action": "wait",
+                "selector": "br-button[label=\"Trocar embarcação da vistoria\"]"
+              },
+              {
+                "action": "click",
+                "selector": "br-button[label=\"Trocar embarcação da vistoria\"] button"
+              },
+              {
+                "action": "wait",
+                "selector": ".br-modal"
+              },
+              {
+                "action": "wait",
+                "selector": ".lista-embarcacoes .item-embarcacao:nth-child(2)"
+              }
+            ]
+          },
+          "findings": [
+            {
+              "id": "F-001",
+              "rule": "ds:token-radius",
+              "source": "govbr-ds-token",
+              "description": "border-radius: 20px fora da escala do DS",
+              "expected": "Um de: 0px, 4px, 8px, 16px, 50% (circle) ou pill (100em/999em × font-size)",
+              "target": "#avatar-menu > button"
+            },
+            {
+              "id": "F-002",
+              "rule": "ds:token-radius",
+              "source": "govbr-ds-token",
+              "description": "border-radius: 6px fora da escala do DS",
+              "expected": "Um de: 0px, 4px, 8px, 16px, 50% (circle) ou pill (100em/999em × font-size)",
+              "target": "div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(3) > div > textarea"
+            },
+            {
+              "id": "F-003",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 0px 6px (fora da escala: 6px, 6px, 6px)",
+              "expected": "Múltiplos de 4px",
+              "target": "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div > ul > li:nth-of-type(1) > a"
+            },
+            {
+              "id": "F-004",
+              "rule": "ds:token-spacing",
+              "source": "govbr-ds-token",
+              "description": "padding: 0px 6px (fora da escala: 6px, 6px, 6px)",
+              "expected": "Múltiplos de 4px",
+              "target": "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div > ul > li:nth-of-type(2) > a"
+            },
+            {
+              "id": "F-005",
+              "rule": "ds:structure-breadcrumb-tag",
+              "source": "govbr-ds-structure",
+              "description": "br-breadcrumb aplicado a <div>",
+              "expected": "Elemento <nav>",
+              "target": "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div"
+            },
+            {
+              "id": "F-006",
+              "rule": "ds:page-footer",
+              "source": "govbr-ds-page",
+              "description": "Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos).",
+              "expected": "Uma Área de Rodapé com o componente Footer (.br-footer ou <br-footer>), como o Template Base exige.",
+              "target": "html"
+            },
+            {
+              "id": "F-007",
+              "rule": "ds:page-skip-link",
+              "source": "govbr-ds-page",
+              "description": "O primeiro link da página (href=\"/portal-mpa\", \"Home\") não é uma âncora interna.",
+              "expected": "O primeiro link da página é o salto para o conteúdo: âncora interna cujo alvo existe (e-MAG 1.5).",
+              "target": "html"
+            }
+          ],
+          "seconds": 3.4
+        },
+        "guided": {
+          "mode": "guiada",
+          "policy": "diagnostico: âncoras das specs da janela; não comparável ao agente",
+          "request": {
+            "selectors": [
+              "pnip-root",
+              "pnip-header .br-avatar .content",
+              "pnip-propesc-agendar-vistoria h3",
+              "pnip-propesc-agendar-vistoria table",
+              "pnip-propesc-agendar-vistoria .bg-secondary-06 > .text-secondary-01",
+              "pnip-propesc-trocar-embarcacao .br-modal",
+              "head > title"
+            ],
+            "checks": [
+              "tokens",
+              "structure",
+              "page"
+            ],
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "actions": 4,
+            "url": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038?mock-perfil=mpa"
+          },
+          "stateFingerprint": "sha256:30ea0011fe588319bc27c3579c1d068c1f0d7bca8ebf2cf954ad09afcf7ff950",
+          "coverage": {
+            "checks": [
+              "page",
+              "structure",
+              "tokens"
+            ],
+            "selectors": [
+              "head > title",
+              "pnip-header .br-avatar .content",
+              "pnip-propesc-agendar-vistoria .bg-secondary-06 > .text-secondary-01",
+              "pnip-propesc-agendar-vistoria h3",
+              "pnip-propesc-agendar-vistoria table",
+              "pnip-propesc-trocar-embarcacao .br-modal",
+              "pnip-root"
+            ],
+            "evidenceSelectors": [
+              "head > title",
+              "pnip-header .br-avatar .content",
+              "pnip-propesc-agendar-vistoria .bg-secondary-06 > .text-secondary-01",
+              "pnip-propesc-agendar-vistoria h3",
+              "pnip-propesc-agendar-vistoria table",
+              "pnip-propesc-trocar-embarcacao .br-modal",
+              "pnip-root"
+            ],
+            "axeScope": null,
+            "elementsInspected": 7,
+            "componentsRequested": [
+              "accordion",
+              "avatar",
+              "breadcrumb",
+              "button",
+              "card",
+              "carousel",
+              "checkbox",
+              "cookiebar",
+              "datetimepicker",
+              "divider",
+              "footer",
+              "header",
+              "input",
+              "item",
+              "list",
+              "loading",
+              "magicbutton",
+              "menu",
+              "message",
+              "modal",
+              "notification",
+              "pagination",
+              "radio",
+              "scrim",
+              "select",
+              "signin",
+              "skiplink",
+              "step",
+              "switch",
+              "tab",
+              "table",
+              "tag",
+              "textarea",
+              "tooltip",
+              "upload",
+              "wizard"
+            ],
+            "componentsFound": [
+              "modal"
+            ],
+            "actionsApplied": [
+              {
+                "action": "wait",
+                "selector": "br-button[label=\"Trocar embarcação da vistoria\"]"
+              },
+              {
+                "action": "click",
+                "selector": "br-button[label=\"Trocar embarcação da vistoria\"] button"
+              },
+              {
+                "action": "wait",
+                "selector": ".br-modal"
+              },
+              {
+                "action": "wait",
+                "selector": ".lista-embarcacoes .item-embarcacao:nth-child(2)"
+              }
+            ]
+          },
+          "findings": [
+            {
+              "id": "F-001",
+              "rule": "ds:page-footer",
+              "source": "govbr-ds-page",
+              "description": "Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos).",
+              "expected": "Uma Área de Rodapé com o componente Footer (.br-footer ou <br-footer>), como o Template Base exige.",
+              "target": "html"
+            },
+            {
+              "id": "F-002",
+              "rule": "ds:page-skip-link",
+              "source": "govbr-ds-page",
+              "description": "O primeiro link da página (href=\"/portal-mpa\", \"Home\") não é uma âncora interna.",
+              "expected": "O primeiro link da página é o salto para o conteúdo: âncora interna cujo alvo existe (e-MAG 1.5).",
+              "target": "html"
+            }
+          ],
+          "seconds": 2.5
+        }
+      },
+      "segmento": {
+        "numero": 2,
+        "estado": "modal",
+        "afterStep": 8,
+        "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038",
+        "estados": [
+          "detalhe",
+          "modal"
+        ],
+        "entradaDireta": {
+          "url": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038?mock-perfil=mpa",
+          "passos": 4,
+          "seletores": []
+        }
+      },
+      "resolution": {
+        "bySelector": {
+          ".bg-secondary-06 > .text-secondary-01.text-center": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>div:nth-of-type(4)>div:nth-of-type(1)>div:nth-of-type(2)>div>div>div"
+            ]
+          },
+          ".lista-embarcacoes": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>pnip-propesc-trocar-embarcacao>div>div>div:nth-of-type(2)>div:nth-of-type(2)"
+            ]
+          },
+          "#avatar-menu > button": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>pnip-header>div>div>div>button"
+            ]
+          },
+          "div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(3) > div > textarea": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>div:nth-of-type(4)>div:nth-of-type(2)>div:nth-of-type(3)>div>textarea"
+            ]
+          },
+          "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div > ul > li:nth-of-type(1) > a": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a"
+            ]
+          },
+          "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div > ul > li:nth-of-type(2) > a": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div>ul>li:nth-of-type(2)>a"
+            ]
+          },
+          "pnip-root > main > pnip-mpa > pnip-propesc-agendar-vistoria > br-breadcrumb >>> div": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div"
+            ]
+          },
+          "html": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              ""
+            ]
+          },
+          "pnip-root": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root"
+            ]
+          },
+          "pnip-header .br-avatar .content": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span"
+            ]
+          },
+          "pnip-propesc-agendar-vistoria h3": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(1)>div:nth-of-type(1)>h3"
+            ]
+          },
+          "pnip-propesc-agendar-vistoria table": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>div>table"
+            ]
+          },
+          "pnip-propesc-agendar-vistoria .bg-secondary-06 > .text-secondary-01": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>div:nth-of-type(4)>div:nth-of-type(1)>div:nth-of-type(2)>div>div>div"
+            ]
+          },
+          "pnip-propesc-trocar-embarcacao .br-modal": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>pnip-propesc-trocar-embarcacao>div>div"
+            ]
+          },
+          "head > title": {
+            "ok": true,
+            "error": null,
+            "keys": [
+              "head>title"
+            ]
+          }
+        },
+        "labels": {
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>div:nth-of-type(4)>div:nth-of-type(1)>div:nth-of-type(2)>div>div>div": "<div> \"0%\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>pnip-propesc-trocar-embarcacao>div>div>div:nth-of-type(2)>div:nth-of-type(2)": "<div> \"Aurora Veloz - RAEP SC99100000 / TIE 9910000000 \"",
+          "body>pnip-root>pnip-header>div>div>div>button": "<button> \"Sair\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>div:nth-of-type(4)>div:nth-of-type(2)>div:nth-of-type(3)>div>textarea": "<textarea> \"Complemente aqui o texto da conclusão se desejar\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a": "<a> \"Home\" [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div>ul>li:nth-of-type(2)>a": "<a> \"Vistorias\" [shadow]",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div": "<div> \"Home Vistorias Agendar vistoria\" [shadow]",
+          "": "<html> \"U Olá, Usuária de Teste, SUPERVISOR Programa Nac\"",
+          "body>pnip-root": "<pnip-root> \"U Olá, Usuária de Teste, SUPERVISOR Programa Nac\"",
+          "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span": "<span> \"U\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(1)>div:nth-of-type(1)>h3": "<h3> \"Programa Nacional de Regularização de Embarcação\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>div>table": "<table> \"Status Data Hora Visualizado 06/03/2026 08:21:00\"",
+          "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>pnip-propesc-trocar-embarcacao>div>div": "<div> \"Trocar embarcação da vistoria Busque e selecione\"",
+          "head>title": "<title> \"PNIP\""
+        }
+      }
+    }
+  ],
+  "coverageCheck": [],
+  "eslint": null,
+  "cost": {
+    "wallClockSeconds": 30,
+    "apiUsd": 0,
+    "platform": "win32 x64",
+    "passes": [
+      {
+        "id": "1280x900@inicial",
+        "seconds": 8.2
+      },
+      {
+        "id": "1280x900@detalhe-menu",
+        "seconds": 8.5
+      },
+      {
+        "id": "1280x900@modal",
+        "seconds": 13.1
+      }
+    ]
+  },
+  "legacy": null,
+  "eslintAusente": "a tela \"vistorias\" não declara fonte em telas.json: página capturada, sem TSX para o linter ler",
+  "legacyAusente": "a referência navega (D-60): o resumo legado soma passadas por chave, e chaves de segmentos diferentes nomeiam elementos diferentes"
+}

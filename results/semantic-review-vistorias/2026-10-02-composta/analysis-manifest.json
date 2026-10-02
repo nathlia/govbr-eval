@@ -1,0 +1,279 @@
+{
+  "manifestVersion": "manifesto-analise-1.0.0",
+  "generatedAt": "2026-10-02T16:32:02.398Z",
+  "tela": "vistorias",
+  "justificativa": "D-62: no Pro uma 3+3 opus-5 não cabe numa janela de 5 h; A parou no slot 5 com 429. B é uma bateria complementar 1+1 (com, sem), com plano próprio e mesma identidade, que repõe com3 e sem3. Composição declarada no D-62 antes da coleta de B.",
+  "divergenciasRegistradas": [
+    {
+      "campo": "repos",
+      "valores": [
+        {
+          "fonte": "A",
+          "valor": "{\"govbr-eval\":{\"commit\":\"0364ebb42c7c81a54c787cb1222a40387d56c380\",\"dirty\":true,\"lockSha256\":\"6bd9ec253e1d31412cf1e136d7d1ab2530f127ca130882e2e9d69fb58c7d83b6\"},\"govbr-ds-validator\":{\"commit\":\"9b6549da030e62728394d8e41cb35c36dde0bace\",\"dirty\":false,\"lockSha256\":\"e8124de6eb6b66c12f46f42044092b74557cd60a35e6c74056cb31a5fc3ffd7c\"},\"govbr-corpus\":{\"commit\":\"5a3c3f8082c5a4595d27addc759270a0cfab4d92\",\"dirty\":false,\"lockSha256\":\"b1e04ed3b7e27cd64521e5e691afce4bd41b3852271e15bd0a4bf1e33748894f\"}}"
+        },
+        {
+          "fonte": "B",
+          "valor": "{\"govbr-eval\":{\"commit\":\"c8fa22d23dcca4f78efdf109e327ab831c5aa7a9\",\"dirty\":true,\"lockSha256\":\"6bd9ec253e1d31412cf1e136d7d1ab2530f127ca130882e2e9d69fb58c7d83b6\"},\"govbr-ds-validator\":{\"commit\":\"9b6549da030e62728394d8e41cb35c36dde0bace\",\"dirty\":false,\"lockSha256\":\"e8124de6eb6b66c12f46f42044092b74557cd60a35e6c74056cb31a5fc3ffd7c\"},\"govbr-corpus\":{\"commit\":\"5a3c3f8082c5a4595d27addc759270a0cfab4d92\",\"dirty\":false,\"lockSha256\":\"b1e04ed3b7e27cd64521e5e691afce4bd41b3852271e15bd0a4bf1e33748894f\"}}"
+        }
+      ],
+      "nota": "commits e árvore suja dos três repositórios no preflight; o que identifica é o hash, mas a diferença fica à vista"
+    },
+    {
+      "campo": "analysisAtCollection",
+      "valores": [
+        {
+          "fonte": "A",
+          "valor": "{\"scoringVersion\":\"flow-semantic-1.4.0\",\"acceptancePolicy\":\"aceitacao-semantica-1.4.0\",\"scorerSha256\":\"d11b32463d00b3d5c00c22e50c8f11f9a78f698a900fbd04a9776db5d6af8bbd\",\"checkerAliasesSha256\":\"191a97399ad66c045b7a986f720ed47a03006de99ce27546c9ddd253390890f3\",\"kbAliasesSha256\":\"e3d79270490f7f18ad0bcd3c9655526d8b15a1f2016c0f7753af581ce01dc656\"}"
+        },
+        {
+          "fonte": "B",
+          "valor": "{\"scoringVersion\":\"flow-semantic-1.4.0\",\"acceptancePolicy\":\"aceitacao-semantica-1.4.0\",\"scorerSha256\":\"ae135c34ceeb3aa03942d90623a39bc609a0ea2d89822bb7d5938ca1c04132df\",\"checkerAliasesSha256\":\"191a97399ad66c045b7a986f720ed47a03006de99ce27546c9ddd253390890f3\",\"kbAliasesSha256\":\"e3d79270490f7f18ad0bcd3c9655526d8b15a1f2016c0f7753af581ce01dc656\"}"
+        }
+      ],
+      "nota": "código de análise instalado na coleta; o pacote confere o seu próprio na preparação"
+    },
+    {
+      "campo": "surfaceSha256",
+      "valores": [
+        {
+          "fonte": "A",
+          "valor": "\"72883d55ac723e10f28dad3007972d9b5c8c2418af82ce38e31b97aa26daaf52\""
+        },
+        {
+          "fonte": "B",
+          "valor": "\"66a760f03db54005d0e65c5eba81ef75ae5557e04f08a2511f9f3f76b9e5ecf6\""
+        }
+      ],
+      "nota": "descrição da superfície (portas, pid, horário); o site servido já está na identidade"
+    }
+  ],
+  "fontes": [
+    {
+      "fonte": "A",
+      "stamp": "2026-10-02T03-39-50",
+      "bateria": {
+        "path": "pipeline/logs/2026-10-02T03-39-50-bateria.json",
+        "sha256": "c691225ddedd48a6eebff66e34515fef0bd5b90f3db57c230a686c1f95a0d3c1"
+      },
+      "collectionManifest": {
+        "path": "pipeline/logs/2026-10-02T03-39-50-coleta/manifesto.json",
+        "sha256": "dad2ccdc5bb7dcf79fa319f27971d3b416563377eb4e60b7c67d9ebb75cadec2"
+      },
+      "slotsIncluidos": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "slotsExcluidos": [
+        5,
+        6
+      ]
+    },
+    {
+      "fonte": "B",
+      "stamp": "2026-10-02T12-56-12",
+      "bateria": {
+        "path": "pipeline/logs/2026-10-02T12-56-12-bateria.json",
+        "sha256": "1d497a6b6cbce8af40df12fed99d4e2113c08f23ca790e33116b6c37ab4af19d"
+      },
+      "collectionManifest": {
+        "path": "pipeline/logs/2026-10-02T12-56-12-coleta/manifesto.json",
+        "sha256": "6b3c09c74d9df7b389cd069c5f132258d1e58a8153a51415786b8401d1014629"
+      },
+      "slotsIncluidos": [
+        1,
+        2
+      ],
+      "slotsExcluidos": []
+    }
+  ],
+  "incluidos": [
+    {
+      "fonte": "A",
+      "slot": 1,
+      "arm": "com",
+      "repetition": 1,
+      "runId": "2026-10-02T03-39-50-com-run1-3c27143f",
+      "archive": {
+        "path": "results/runs-vistorias/agent-2026-10-02T03-39-50-com-run1-3c27143f.json",
+        "sha256": "9498917a69c47efa1fb190f4895535b32ff4f98ae2cb0c6e7b104f058c28f9c3"
+      },
+      "collectionManifestSha256": "dad2ccdc5bb7dcf79fa319f27971d3b416563377eb4e60b7c67d9ebb75cadec2"
+    },
+    {
+      "fonte": "A",
+      "slot": 2,
+      "arm": "sem",
+      "repetition": 1,
+      "runId": "2026-10-02T03-39-50-sem-run1-4bbd8345",
+      "archive": {
+        "path": "results/runs-vistorias-ablacao/agent-2026-10-02T03-39-50-sem-run1-4bbd8345.json",
+        "sha256": "8afed38a9bd01e793deb89e3eeeebae6310a1039d0179ecbc30d2cbe67f76bac"
+      },
+      "collectionManifestSha256": "dad2ccdc5bb7dcf79fa319f27971d3b416563377eb4e60b7c67d9ebb75cadec2"
+    },
+    {
+      "fonte": "A",
+      "slot": 3,
+      "arm": "sem",
+      "repetition": 2,
+      "runId": "2026-10-02T03-39-50-sem-run2-dfa77ab4",
+      "archive": {
+        "path": "results/runs-vistorias-ablacao/agent-2026-10-02T03-39-50-sem-run2-dfa77ab4.json",
+        "sha256": "074274fc5624940f98b910b5e66c0aced10fbd786d0c73fb3c20287858b2a2a1"
+      },
+      "collectionManifestSha256": "dad2ccdc5bb7dcf79fa319f27971d3b416563377eb4e60b7c67d9ebb75cadec2"
+    },
+    {
+      "fonte": "A",
+      "slot": 4,
+      "arm": "com",
+      "repetition": 2,
+      "runId": "2026-10-02T03-39-50-com-run2-71b61273",
+      "archive": {
+        "path": "results/runs-vistorias/agent-2026-10-02T03-39-50-com-run2-71b61273.json",
+        "sha256": "994fbfa146ccb600a01be743e85491dc10dd80c921a89c2cfbf0a367f8a1bc6d"
+      },
+      "collectionManifestSha256": "dad2ccdc5bb7dcf79fa319f27971d3b416563377eb4e60b7c67d9ebb75cadec2"
+    },
+    {
+      "fonte": "B",
+      "slot": 1,
+      "arm": "com",
+      "repetition": 1,
+      "runId": "2026-10-02T12-56-12-com-run1-45f31d67",
+      "archive": {
+        "path": "results/runs-vistorias/agent-2026-10-02T12-56-12-com-run1-45f31d67.json",
+        "sha256": "7c29beaca6e9eea290184f85796b330d824b3d3b24f1620859e12576c83c51bd"
+      },
+      "collectionManifestSha256": "6b3c09c74d9df7b389cd069c5f132258d1e58a8153a51415786b8401d1014629"
+    },
+    {
+      "fonte": "B",
+      "slot": 2,
+      "arm": "sem",
+      "repetition": 1,
+      "runId": "2026-10-02T12-56-12-sem-run1-120f567c",
+      "archive": {
+        "path": "results/runs-vistorias-ablacao/agent-2026-10-02T12-56-12-sem-run1-120f567c.json",
+        "sha256": "9abebb02146e2ddd80211e7a32a9c5a6c716dbe036441b6125023d5e15a71e7c"
+      },
+      "collectionManifestSha256": "6b3c09c74d9df7b389cd069c5f132258d1e58a8153a51415786b8401d1014629"
+    }
+  ],
+  "excluidos": [
+    {
+      "fonte": "A",
+      "slot": 5,
+      "arm": "com",
+      "collectionStatus": "sem-relatorio",
+      "exitCode": 1,
+      "apiErrorStatus": 429,
+      "motivo": "limite de uso do Pro (429, session limit) aos 11 s; a execução morreu sem relatório",
+      "elegivel": false
+    },
+    {
+      "fonte": "A",
+      "slot": 6,
+      "arm": "sem",
+      "collectionStatus": "nao-tentada",
+      "exitCode": null,
+      "apiErrorStatus": null,
+      "motivo": "não tentado: a bateria parou no 429 do slot 5",
+      "elegivel": false
+    }
+  ],
+  "execucoesPorBraco": {
+    "com": 3,
+    "sem": 3
+  },
+  "identidade": {
+    "collection": "fluxo-1.3.0",
+    "referenceSha256": "5ad4b8e2acca86d057ad793edabe35f5fa8c4270e80abc421242171a079cecc8",
+    "siteManifestSha256": "47467813eaa78f033f7095e273385cd729f5224674cc1ec0cc57a820b98562cd",
+    "oracleDistSha256": "31749c29b0dd2c0378b5955c1ba4c3804c66edd38cf90958c0de8196f11652f2",
+    "oracleDataSha256": "ade4f658553e2a6cc13b3f6118bfaf95e5dd9b05d18d22d8c113e456420c5162",
+    "statePlanSha256": "d5a2bb2537249ade5384db1a1241419c74dcffa38a0db0b5a8f2acb1d63b1211"
+  },
+  "designada": {
+    "fonte": "A",
+    "collectionManifest": {
+      "path": "pipeline/logs/2026-10-02T03-39-50-coleta/manifesto.json",
+      "sha256": "dad2ccdc5bb7dcf79fa319f27971d3b416563377eb4e60b7c67d9ebb75cadec2"
+    },
+    "siteDir": "pipeline/logs/2026-10-02T03-39-50-superficie",
+    "siteManifestSha256": "47467813eaa78f033f7095e273385cd729f5224674cc1ec0cc57a820b98562cd",
+    "baseline": {
+      "path": "pipeline/logs/2026-10-02T03-39-50-linha-de-base.json",
+      "sha256": "bcbc3735160aeb8125ed5d88a02df91a832760c7a9777accce48a6faa4e6640a",
+      "motivo": "A é a bateria de 4 das 6 execuções e a linha de base dela foi medida sob a mesma identidade de coleta que a de B"
+    }
+  },
+  "dimensoesConferidas": [
+    {
+      "campo": "model",
+      "escopo": "todas",
+      "valores": {
+        "todas": "claude-opus-5"
+      }
+    },
+    {
+      "campo": "reasoningEffort",
+      "escopo": "todas",
+      "valores": {
+        "todas": "high"
+      }
+    },
+    {
+      "campo": "client",
+      "escopo": "todas",
+      "valores": {
+        "todas": "claude-cli"
+      }
+    },
+    {
+      "campo": "protocolVersion",
+      "escopo": "todas",
+      "valores": {
+        "todas": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb"
+      }
+    },
+    {
+      "campo": "instrumentVersion",
+      "escopo": "todas",
+      "valores": {
+        "todas": "fluxo-1.3.0"
+      }
+    },
+    {
+      "campo": "suite",
+      "escopo": "todas",
+      "valores": {
+        "todas": "vistorias"
+      }
+    },
+    {
+      "campo": "scope",
+      "escopo": "todas",
+      "valores": {
+        "todas": "full"
+      }
+    },
+    {
+      "campo": "prompt",
+      "escopo": "todas",
+      "valores": {
+        "todas": "Avalie a tela em http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa. Para salvar, navegue ate http://127.0.0.1:4100 e faca POST em /api/submit a partir dali."
+      }
+    },
+    {
+      "campo": "oracleProfile",
+      "escopo": "por-braco",
+      "valores": {
+        "com": "combined",
+        "sem": "none"
+      }
+    }
+  ]
+}
