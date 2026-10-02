@@ -38,6 +38,29 @@ não é medida. Na dúvida, fica fora e ganha a marca ⚠.
 controle conforme e os demais ficam registrados como fora, com o motivo. As unidades vão de 96 para
 cerca de 102 + N.
 
+## Decisão da autora (2026-10-01, D-61)
+
+A autora aceitou a recomendação inteira ("ok, apply them"), inclusive manter B-02 e B-07/B-18.
+Aplicado em `ground-truth-vistorias.json` `1.0.0`:
+
+| Item | Resultado |
+|---|---|
+| E-01 | B-25 (`head > title`, `sempre`) |
+| E-04 | B-26 (`th` da 9ª coluna) |
+| E-06 | B-27 (mesma âncora da B-24, `modal`, condicional; medido por Tab real: 7 de 30 pontos dentro do modal) |
+| E-07 | B-28 (Buscar, 1) e B-29 (Exibir lista, 2). Duas specs porque as âncoras são de componentes diferentes |
+| E-18 | controle conforme C-13 (scrim de 1280×900 com o modal aberto) |
+| E-20 | **Fora, ao contrário da recomendação.** A medida feita ao aplicar desmentiu a premissa. O botão `user-times` (7 na página 1) e o `user-plus` chamam a mesma `atribuirVistoriador(v.uuid)`: os dois abrem o diálogo "Atribuir Vistoriador" e gravam `POST /api/propesc/atribuir-vistoriador` ao confirmar. O nome corresponde à ação. Só o ícone (o de remover) diverge, e isso é juízo de iconografia. O critério desta página ("há medida determinística") não é atendido, e a dúvida manda deixar fora. |
+| demais | fora / não-aplicável / forma mantida, com o motivo em `_meta.escaladas` |
+
+**Efeito:** 29 specs, **102 unidades** (eram 96), 13 controles conformes. Portões:
+`conferir-auditoria` 135/135, `conferir:referencia` passa, `test:isolation` 53/53, 53/53 e 54/54,
+typecheck limpo. `telas.json › vistorias.reference` = `ground-truth-vistorias.json`.
+
+**Achado lateral.** O commit `15e007e` acrescentou a espera da lista do modal à referência, mas não
+a `sequencia.mjs`. Por isso `conferir-auditoria` dava 118/120 desde então (as duas conferências
+"referência = sequência"). As duas foram sincronizadas nesta aplicação.
+
 ## Citações questionadas pela re-medida independente
 
 A re-medida (§ 12 de `auditoria.md`) confirmou 24/24 specs, 96/96 unidades e 12/12 conformes. Ela

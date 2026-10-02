@@ -268,6 +268,11 @@ lista; valores de dados fictícios recortados em campos desabilitados do detalhe
 
 Cada item: medida + pergunta. O que a autora incluir entra com `origem: "autora"` na descrição.
 
+> **Decidida em 2026-10-01 (D-61).** Resultado item a item em `recomendacoes-escaladas.md` §
+> "Decisão da autora" e em `ground-truth-vistorias.json › _meta.escaladas`. Viraram unidade E-01, E-04,
+> E-06 e E-07 (B-25…B-29), E-18 virou o controle C-13, e E-20 ficou fora porque a medida desmentiu a
+> premissa. A tabela abaixo é o registro da escalada como foi feita, sem alteração.
+
 | # | Normas | Medida | Pergunta |
 |---|---|---|---|
 | E-01 | 5d5a5f21d94b · e-MAG 3.3 | `<title>PNIP</title>` na lista e nos dois detalhes; títulos visíveis "Vistorias" (h2) e o nome do programa (h3) | Um título que só nomeia o sistema e não muda entre rotas viola a 3.3? Se sim: unidade em `title`, `único`, estado `sempre`. |

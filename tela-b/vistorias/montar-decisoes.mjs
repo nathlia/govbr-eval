@@ -28,6 +28,8 @@ const NA = motivo => ({ veredito: "não-aplicável", destino: "registro", medida
 const NM = (escalada, medida) => ({ veredito: "não-mensurável", destino: "escalada", escalada, medida });
 const OK = medida => ({ veredito: "conforme", destino: "registro", medida });
 const V = (unidades, medida) => ({ veredito: "viola", destino: "unidade", unidades, medida });
+/** Item escalado (auditoria.md § 8) decidido pela autora em 2026-10-01 (D-61; recomendacoes-escaladas.md). */
+const AUTORA = (escalada, d) => ({ ...d, escalada, decididaPor: "autora (D-61, 2026-10-01)" });
 
 const SEM_FONTE = "a tela é um build congelado (JS/CSS minificados, sem fonte: telas.json › sources vazio); a regra fala do código-fonte ou do processo, que a página não responde";
 const PROCESSO = "regra dirigida ao processo ou à equipe, não a um observável da página";
@@ -38,14 +40,14 @@ const D = {
   "accessibility-breadcrumb-992f162ca821": OK("Tab real alcança os itens interativos do <br-breadcrumb> em todas as paradas: link \"Home\" (e o botão circular dentro dele) e, no detalhe, o link \"Vistorias\"."),
   "accessibility-input-6fe41e804955": OK("inicial: a busca e os dois campos de data são alcançados por Tab na ordem do DOM (busca → Buscar → data inicial → data final); no detalhe os 19 campos são `disabled` (exibição) e ficam fora do Tab, como o HTML prevê; no modal o campo \"Embarcação\" é alcançado por Tab."),
   "accessibility-list-03813ffeeb42": V(["B-19"], "detalhe-menu: o menu do avatar (div#avatar-menu.br-list) tem dois elementos interativos — o botão \"Sair\" (alcançado por Tab) e \"Trocar unidade\" (span com cursor:pointer, tabIndex -1: não alcançado por Tab nem Shift+Tab; o clique navega para /pnip/portal-mpa)."),
-  "accessibility-modal-64b84991229c": OK("modal: Tab e Shift+Tab percorrem o conteúdo do br-modal (lista de embarcações, Cancelar, Trocar). A contenção do foco (o Tab sai do modal para o detalhe por trás) vai à escalada E-06."),
+  "accessibility-modal-64b84991229c": AUTORA("E-06", V(["B-27"], "modal: Tab e Shift+Tab percorrem o conteúdo do br-modal (lista de embarcações, Cancelar, Trocar), mas o foco não fica contido: depois do Trocar, Tab sai para os botões do detalhe, o cabeçalho e o breadcrumb por trás do scrim.")),
   "accessibility-tab-f1807d71dc5f": OK("inicial: os três botões de aba (Agendar, Tramitando, Concluídos) são <button> alcançados por Tab; Enter produz o mesmo efeito do clique em 3/3 cargas (teste de estados). O estado da aba ativa só por classe vai à E-03."),
   "component-avatar-81c7524692f0": OK(".br-avatar .content: 40×40 px, border-radius 50% (superfície circular)."),
   "component-button-4d7b5f978df1": V(["B-08", "B-09", "B-10"], "inicial: 40 br-button das ações de linha (ícones user-plus/user-times, eye, trash, bell; classes \"br-button secondary middle\", sem circle) só com ícone, sem rótulo visível; o botão \"Buscar\" (button.br-button, 32×32, sem circle) e os dois \"Exibir lista\" do br-select-pnip (button.br-button, sem circle) idem. Conformes: Voltar, Limpar Filtro, Exportar Vistorias, as abas e o Trocar/Cancelar do modal têm rótulo visível; Página anterior/seguinte são circulares (C-01, C-02)."),
   "component-checkbox-6923ae0af84f": OK("inicial: caixas de seleção nativas nas linhas da tabela e no cabeçalho, para selecionar uma ou mais vistorias (ações em lote)."),
   "component-input-3788829b08fe": NM("E-09", "inicial: a busca é um br-input (density small) e, ao lado, um button.br-button de 32×32 com ícone de lupa e nome \"Buscar\", FORA do br-input; não é terciário circular. Se esse botão é a \"ação interna padrão do Input\" é juízo de anatomia."),
   "component-list-8f67e7cc7677": NA("a única br-list visível (menu do avatar, detalhe-menu) tem um só br-item; não há itens a comparar"),
-  "component-scrim-d5ba51dda2b0": NM("E-18", "modal: .br-scrim-util cobre a página inteira atrás do br-modal \"Trocar embarcação\"; se o bloqueio tem justificativa clara é juízo"),
+  "component-scrim-d5ba51dda2b0": AUTORA("E-18", OK("modal: .br-scrim-util cobre a página inteira atrás do br-modal \"Trocar embarcação\", aberto pela usuária: o bloqueio tem justificativa (controle C-13).")),
   "component-signin-2752fd23bbe8": OK("o Sign-in (button.br-sign-in, \"U Olá, Usuária de Teste, SUPERVISOR\") ocupa uma linha: 392×40 px, sem <br> no rótulo."),
   "component-table-7c605ca2f85e": OK("tabela da lista: 9 colunas; tabela do detalhe (Dados da Notificação): 3 colunas."),
   "accessibility-divider-30bbcbf3a17c": OK("<br-divider> da lista e o divisor do cabeçalho: tabIndex -1 e o span interno é ignorado pela árvore de acessibilidade (role none)."),
@@ -72,7 +74,7 @@ const D = {
   // ---------- globais: fundamentos (F3)
   "foundation-global-0578aa6c2828": NM("E-08", "detalhe: colunas .row > .col* com padding 12 px + 12 px (espaçamento de 24 px entre colunas) — valor do grid do core 3.4.1 congelado, não de CSS autoral; a KB 3.7.0 diz 40 px. Valor que difere entre a versão da página e a da norma (método § 1.4)."),
   "foundation-global-21b1a2733f7b": V(["B-15"], "cores computadas de todo elemento visível nas 4 paradas: todas estão em tokens/colors.json 3.7.0 (#333 --gray-80, #fff, #ccc, #888 --gray-40, #ff8c00 --orange-vivid-30, #4f97d1 --blue-40, #c5d4eb --blue-warm-20, #1351b4…), exceto a borda de 2px #bbb (rgb 187,187,187) do <hr class=\"solid\"> do menu do avatar (detalhe-menu), declarada no CSS do componente do cabeçalho do app (main.*.js: hr.solid[_ngcontent-%COMP%]{border-top:2px solid #bbb})."),
-  "foundation-global-1c0146e93d2e": NM("E-07", "ícones interativos abaixo de 48×48: ações de linha 78×40 (web component br-button, densidade padrão), Buscar 32×32, Exibir lista 32×32, Página anterior/seguinte 40×40, Menu 32×32 (web component), Home do breadcrumb 32×32 (web component). Quanto é tamanho padrão do DS (fundo) e quanto é escolha autoral é juízo."),
+  "foundation-global-1c0146e93d2e": AUTORA("E-07", V(["B-28", "B-29"], "ícones interativos abaixo de 48×48. Autorais (unidade): Buscar 32×32 e os dois Exibir lista 32×32, montados pelo app. Fundo (padrão do DS, não unidade): ações de linha 78×40 (web component br-button, densidade padrão), Página anterior/seguinte 40×40, Menu 32×32 (web component), Home do breadcrumb 32×32 (web component).")),
   // ---------- globais: página, padrões, templates (F2)
   "page-global-f6e03bce515b": NA("regra-guarda sem observável próprio: é medida pelas demais linhas desta tabela"),
   "pattern-global-eb8c1606a52e": NA("nenhuma região de dados vazia em nenhuma das paradas (" + FORA_PARADAS + ")"),
@@ -102,11 +104,11 @@ const D = {
   "accessibility-global-8faca42c2c9a": OK("document.getAnimations() = 0 em todas as paradas; nenhum GIF/vídeo."),
   "accessibility-global-33b13d9fa271": OK("nenhum conteúdo em movimento (0 animações)."),
   "accessibility-global-698e0a4783a9": OK("<html lang=\"pt-br\">."),
-  "accessibility-global-1ccbc61dddbc": NM("E-04", "tabela da lista: 9 <th scope=col> no <thead>, <td> no corpo; dois cabeçalhos sem texto (o da coluna de caixas, que só contém um checkbox sem nome, e o da coluna de ações). Tabela do detalhe: 3 <th> sem scope, simples. Se cabeçalho vazio é associação incorreta é juízo"),
+  "accessibility-global-1ccbc61dddbc": AUTORA("E-04", V(["B-26"], "unidade só no th de ações (o th de caixas contém um controle; o defeito dele é a B-06). tabela da lista: 9 <th scope=col> no <thead>, <td> no corpo; dois cabeçalhos sem texto (o da coluna de caixas, que só contém um checkbox sem nome, e o da coluna de ações). Tabela do detalhe: 3 <th> sem scope, simples.")),
   "accessibility-global-fb83eab75d8d": NM("E-12", "texto fixo do template (rótulos, títulos, botões); linguagem simples fora do escopo (§ 6) salvo decisão da autora"),
   "accessibility-global-20c08f26d8e8": NM("E-12", "siglas no texto fixo, sem expansão nem <abbr>: RAEP, TIE, UF (detalhe), PNIP no título; \"Programa Nacional de Regularização de Embarcação de Pesca\" aparece por extenso no h3 do detalhe sem a sigla"),
   "accessibility-global-1db13803cbf8": NM("E-12", "nenhum trecho autoral em outro idioma medido; \"Show date picker\" é o nome dado pelo Chromium ao botão interno do <input type=date> (UI do navegador)"),
-  "accessibility-global-5d5a5f21d94b": NM("E-01", "<title>PNIP</title> nas três rotas (lista, dois detalhes); h2 \"Vistorias\" e h3 do detalhe. Se o título representa o conteúdo principal é juízo"),
+  "accessibility-global-5d5a5f21d94b": AUTORA("E-01", V(["B-25"], "<title>PNIP</title> nas três rotas (lista, dois detalhes); h2 \"Vistorias\" e h3 do detalhe. O título só nomeia o sistema e não representa o conteúdo principal de nenhuma rota.")),
   "accessibility-global-75c11ccac582": OK("<br-breadcrumb> em todas as rotas: \"Home › Vistorias\" (lista) e \"Home › Vistorias › …\" (detalhe). O item atual sem aria-current está no shadow root do web component (fundo)."),
   "accessibility-global-cdfbb56eebc5": NM("E-13", "links da paginação com texto \"1\", \"2\", \"3\", \"4\" e href=\"javascript:void(0)\"; os links do breadcrumb têm texto claro"),
   "accessibility-global-3a3e47354c53": V(["B-16"], "detalhe-menu: <img src=\"../../../assets/images/exit-icon.png\"> dentro do botão \"Sair\" do menu do avatar (template do pnip-header, autoral), sem atributo alt. O logo do <br-header> tem alt=\"logo\" fixo no web component (fundo)."),
@@ -201,6 +203,7 @@ const saida = {
     estados: "inicial · detalhe-menu · detalhe · modal (tela-b/vistorias/sequencia.mjs)",
     familias: "F1 componente presente · F2 Template Base/regras de página · F3 fundamentos (cor, tipografia, espaçamento) · F4 e-MAG · global = regra global da KB fora das quatro",
     destinos: "unidade (viola autoral) · escalada (não-mensurável → lista da autora) · registro · observacao · nenhum",
+    escaladas: "decididas pela autora em 2026-10-01 (D-61; recomendacoes-escaladas.md): as linhas com `decididaPor` saíram de `escalada`; as que seguem `escalada` ficaram fora da referência com o motivo em ground-truth-vistorias.json › _meta.escaladas",
     contagem,
   },
   linhas,

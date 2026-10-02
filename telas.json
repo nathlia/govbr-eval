@@ -24,11 +24,11 @@
   "vistorias": {
     "titulo": "tela B — Vistorias PROPESC do PNIP (aplicação real em modo mock, fatia 8, D-57)",
     "entry": "pnip/portal-mpa/vistorias?mock-perfil=mpa",
-    "reference": null,
+    "reference": "ground-truth-vistorias.json",
     "sources": [],
     "runs": { "com": "results/runs-vistorias", "sem": "results/runs-vistorias-ablacao", "smoke": "results/runs-vistorias-smoke" },
     "review": "results/semantic-review-vistorias",
-    "nota": "Build do modo mock da aplicação PNIP (Angular 15, @govbr-ds/core 3.4.1 + @govbr-ds/webcomponents 1.16.0), congelado byte a byte em govbr-corpus/public/pnip/ com sha256 no manifesto da ala (public/pnip/manifesto.json). O código de produção roda: roteamento, guards, componentes e web components do DS. Sessão, backend e recursos externos são substituídos dentro do navegador, com dados fictícios e o hoje congelado em 2026-03-16 09:30. A rota é /pnip/portal-mpa/vistorias; o `?mock-perfil=mpa` da entrada escolhe a sessão fictícia — usuária já logada, com o vínculo de coordenador que o portal escolheria (pnip-mock 1067443); sem ele o AuthGuard real manda para /pnip/login —, e o próprio app o retira da barra de endereço. Não é entrada Vite: não há TSX para o ESLint ler (sources vazio). Sem referência: o gabarito sai de auditoria por medição, antes de qualquer execução (D-49). A captura estática de /privacidade que ocupava este lugar (real/pnip-privacidade.html) saiu do instrumento (D-57); as auditorias dela ficam em tela-b/ como registro (D-56).",
+    "nota": "Build do modo mock da aplicação PNIP (Angular 15, @govbr-ds/core 3.4.1 + @govbr-ds/webcomponents 1.16.0), congelado byte a byte em govbr-corpus/public/pnip/ com sha256 no manifesto da ala (public/pnip/manifesto.json). O código de produção roda: roteamento, guards, componentes e web components do DS. Sessão, backend e recursos externos são substituídos dentro do navegador, com dados fictícios e o hoje congelado em 2026-03-16 09:30. A rota é /pnip/portal-mpa/vistorias; o `?mock-perfil=mpa` da entrada escolhe a sessão fictícia — usuária já logada, com o vínculo de coordenador que o portal escolheria (pnip-mock 1067443); sem ele o AuthGuard real manda para /pnip/login —, e o próprio app o retira da barra de endereço. Não é entrada Vite: não há TSX para o ESLint ler (sources vazio). Referência: ground-truth-vistorias.json 1.0.0, saída da auditoria por medição feita antes de qualquer execução (D-49, D-59) e congelada depois das decisões da autora sobre os itens escalados (D-61). A captura estática de /privacidade que ocupava este lugar (real/pnip-privacidade.html) saiu do instrumento (D-57); as auditorias dela ficam em tela-b/ como registro (D-56).",
     "isolamento": {
       "texto": "Vistorias",
       "alvo": "#TRAMITANDO",
@@ -36,7 +36,7 @@
       "interacao": {
         "clicar": "#AGENDAR",
         "esperar": ".tab-item.active #AGENDAR",
-        "nota": "Interações reais: o Angular roda e o backend é um armazenamento em memória dentro do navegador, então abas, paginação, filtros, modais e ações de linha respondem como no projeto, e o que se grava persiste na navegação interna. Recarregar a página volta ao estado inicial. O clique declarado aqui é só prova de vida (troca de aba), não estado de gabarito: a tela ainda não tem referência."
+        "nota": "Interações reais: o Angular roda e o backend é um armazenamento em memória dentro do navegador, então abas, paginação, filtros, modais e ações de linha respondem como no projeto, e o que se grava persiste na navegação interna. Recarregar a página volta ao estado inicial. O clique declarado aqui é só prova de vida (troca de aba), não estado de gabarito: os estados da referência são os do _meta.setup dela."
       },
       "externos": [],
       "site": {

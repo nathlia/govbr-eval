@@ -87,10 +87,12 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
     `/pnip/` e servir o ícone do "Sair" pelo único alias declarado. As interações são reais
     (Angular + backend em memória no navegador); recarregar volta ao estado inicial; nenhum
     recurso externo é esperado (`externos: []`). Não é entrada Vite: `sources` vazio (a linha de
-    base não roda ESLint e diz por quê). **`reference: null`**: o gabarito sai de auditoria por
-    medição, antes de qualquer execução (D-49). Até ele existir, tudo que precisa da referência para
-    nomeando `ground-truth-vistorias.json` — `conferir:referencia`, `manifest:coleta build`,
-    `flow:review`, `score:fluxo`, `baselines:fluxo` de bateria e a própria `run-battery.ps1`.
+    base não roda ESLint e diz por quê). **Referência `ground-truth-vistorias.json` 1.0.0** (D-61):
+    29 specs, 102 unidades, 4 estados em 3 segmentos, 13 controles conformes. Saiu de auditoria
+    por medição feita antes de qualquer execução (D-49, D-59; tudo em `tela-b/vistorias/`, conferência
+    sem modelo `node tela-b/vistorias/conferir-auditoria.mjs`). Foi re-medida por um segundo agente e
+    congelada depois das decisões da autora sobre a lista escalada. Para servir o `dist/` a
+    `conferir:referencia`: `node tela-b/vistorias/servir.mjs` (porta 3217).
   - **Captura de `/privacidade` (tela B até D-57)**: saiu de `telas.json`. A página continua em
     `govbr-corpus/public/real/`, e as auditorias por medição dela e do `pnip-login` ficam em
     `tela-b/` (e `tela-b/login/`) como registro; `tela-b/comum.mjs` guarda os externos e ausentes

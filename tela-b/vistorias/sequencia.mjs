@@ -26,11 +26,14 @@ export const SETUP = [
   { action: "navigate", path: DETALHE_PRE, waitFor: "br-button[label=\"Trocar embarcação da vistoria\"]" },
   { action: "click", selector: "br-button[label=\"Trocar embarcação da vistoria\"] button" },
   { action: "wait", selector: ".br-modal" },
+  // A lista de embarcações passa por "Nenhuma" → "Buscando..." → 10 itens depois de .br-modal
+  // (achado do preflight, D-60, `15e007e`): sem esta espera a parada `modal` não fica estável.
+  { action: "wait", selector: ".lista-embarcacoes .item-embarcacao:nth-child(2)" },
 ];
 
 export const STATES = [
   { id: "inicial", afterStep: 0, path: LISTA, note: "lista, aba padrão Tramitando, página 1 — primeiro paint depois da hidratação" },
   { id: "detalhe-menu", afterStep: 3, path: DETALHE_NC, note: "detalhe da vistoria de não comparecimento (1ª linha da aba padrão que oferece \"Avançar\") com o menu do avatar aberto" },
   { id: "detalhe", afterStep: 5, path: DETALHE_PRE, note: "detalhe da vistoria preenchida (1ª linha da aba padrão que oferece \"Trocar embarcação da vistoria\"), rota nua" },
-  { id: "modal", afterStep: 7, path: DETALHE_PRE, note: "br-modal \"Trocar embarcação\" aberto sobre o detalhe — última parada do segmento" },
+  { id: "modal", afterStep: 8, path: DETALHE_PRE, note: "br-modal \"Trocar embarcação\" aberto sobre o detalhe — última parada do segmento" },
 ];

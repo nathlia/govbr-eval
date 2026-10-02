@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "version": "1.0.0-candidata",
-    "status": "candidata — aguarda ratificação da autora e a re-medida independente; não congelada",
-    "version_note": "1.0.0-candidata (2026-09-30, fatia 8 / D-49, D-57, D-58): referência AUDITADA da tela B (Vistorias PROPESC do PNIP, build do modo mock congelado em govbr-corpus/public/pnip/), saída da auditoria por medição de tela-b/metodo-auditoria.md (govbr-eval 5838702) com o adendo tela-b/metodo-auditoria-adendo-vistorias.md (9406aed), executada por assistente LLM sem o oráculo. É incompleta por natureza: recall nesta tela é \"contra a referência auditada\", e alegações corretas fora dela são descobertas (D-48) que não mudam o denominador. Escrita ANTES de qualquer execução de modelo sobre a tela. Não congelada: faltam as decisões da autora sobre a lista escalada (tela-b/vistorias/auditoria.md § 8), a re-medida do segundo agente e a ratificação no log. 24 specs, 96 unidades, 4 estados em 3 segmentos.",
+    "version": "1.0.0",
+    "status": "congelada — 2026-10-01 (D-61): escaladas decididas pela autora, re-medida independente feita (1acf20b), portões repassados",
+    "version_note": "1.0.0 (2026-10-01, D-61): congelamento da 1.0.0-candidata. A autora aceitou a recomendação do assistente para os 20 itens escalados (tela-b/vistorias/recomendacoes-escaladas.md): E-01, E-04, E-06 e E-07 viram unidade (B-25…B-29, origem autora), E-18 vira o controle C-13, e as demais ficam fora com motivo. E-20 era recomendada como unidade, mas a medida feita ao aplicar desmentiu a premissa: o botão user-times chama a mesma ação de atribuir (diálogo \"Atribuir Vistoriador\", POST /atribuir-vistoriador), então o nome corresponde à ação e o critério da recomendação não é atendido; ficou fora. B-02 e B-07/B-18 mantidas (citações ⚠). 29 specs, 102 unidades, 4 estados em 3 segmentos. 1.0.0-candidata (2026-09-30, fatia 8 / D-49, D-57, D-58): referência AUDITADA da tela B (Vistorias PROPESC do PNIP, build do modo mock congelado em govbr-corpus/public/pnip/), saída da auditoria por medição de tela-b/metodo-auditoria.md (govbr-eval 5838702) com o adendo tela-b/metodo-auditoria-adendo-vistorias.md (9406aed), executada por assistente LLM sem o oráculo. É incompleta por natureza: recall nesta tela é \"contra a referência auditada\", e alegações corretas fora dela são descobertas (D-48) que não mudam o denominador. Escrita ANTES de qualquer execução de modelo sobre a tela. Não congelada: faltam as decisões da autora sobre a lista escalada (tela-b/vistorias/auditoria.md § 8), a re-medida do segundo agente e a ratificação no log. 24 specs, 96 unidades, 4 estados em 3 segmentos.",
     "page": "Vistorias PROPESC do PNIP — tela B da fatia 8 (D-57), aplicação real em modo mock",
     "url": "/pnip/portal-mpa/vistorias?mock-perfil=mpa",
     "waitFor": "main tbody tr",
@@ -208,12 +208,63 @@
             "govbr-3.7.0-component-avatar-81c7524692f0"
           ],
           "medida": "superfície do avatar circular: border-radius 50%, 40×40."
+        },
+        {
+          "id": "C-13",
+          "state": "modal",
+          "selector": "pnip-propesc-trocar-embarcacao .br-scrim-util",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-component-scrim-d5ba51dda2b0"
+          ],
+          "medida": "Escalada E-18, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). O scrim cobre a página inteira atrás do br-modal \"Trocar embarcação\": o bloqueio tem justificativa (diálogo modal aberto pela usuária)."
         }
       ]
     },
     "fundo": "Condições que o autor da tela não escreveu (método § 5, adendo § C), que não são unidades — alegação correta sobre elas entra como descoberta: (1) código do DS 3.4.1/1.16.0: alt=\"logo\" fixo no logo do <br-header>, item atual do <br-breadcrumb> sem aria-current, texto visualmente oculto \"Home\" do breadcrumb, botões de 32×32/40×40 dos web components (Menu, Home, ações br-button de densidade padrão), grid de 24 px do core; (2) interno de bibliotecas de terceiros (SweetAlert2, Summernote) — nenhum visível nas paradas escolhidas; (3) isolamento/mock: nenhuma perda medida (fontes e ícones servidos localmente, 0 pedidos externos, 0 escritas); os links do breadcrumb apontam para /portal-mpa… sem o prefixo /pnip/ e recarregam o documento — artefato da hospedagem sob /pnip/ (em produção o app está na raiz).",
     "fora_de_escopo": "Vistas excluídas pela regra de escolha (adendo § B), com o motivo, em tela-b/vistorias/auditoria.md § 3 e tela-b/vistorias/selecao.json: abas, paginação, \"Exibir N\" (item 2); menu do avatar, painéis de filtro e listas \"Exibir\"/\"Página\" na lista (regra 5: o segmento da lista tem a sua parada); diálogos SweetAlert2 de exportar/atribuir/excluir/notificar e da validação de \"Salvar\" (regra 5: diálogo sem componente do DS novo); \"Avançar\" do detalhe preenchido (segundo diálogo do segmento); \"Avançar\" do não comparecimento e \"Salvar\" da edição (escrita no mock); detalhe da 1ª linha, rota de edição de dados (regra 3: nenhum tipo novo); breadcrumb Home/Vistorias (recarga), Voltar (fora da árvore vistorias/). Defeitos do README-MOCK § 8.6 fora das paradas ou sem norma aplicável: tabela que passa de 1280 px (rolagem horizontal, 1364 px — nenhuma regra required a 1280×900), \"Selec\" truncado (não aparece: o \"Exibir\" mostra \"10\"), término anterior ao início, Exibir 25/50 em página > 1, filtro pelo 1º caractere (fora das paradas); Hora da vistoria vazia (visível nos detalhes; valor de dado, sem norma aplicável).",
-    "escaladas": "tela-b/vistorias/auditoria.md § 8 (E-01…E-20): decididas pela autora antes do congelamento; o que ela incluir entra aqui com origem: \"autora\" na descrição.",
+    "escaladas": {
+      "fonte": "tela-b/vistorias/auditoria.md § 8 (E-01…E-20); proposta em tela-b/vistorias/recomendacoes-escaladas.md; decisão da autora em 2026-10-01 (D-61)",
+      "unidade": {
+        "E-01": [
+          "B-25"
+        ],
+        "E-04": [
+          "B-26"
+        ],
+        "E-06": [
+          "B-27"
+        ],
+        "E-07": [
+          "B-28",
+          "B-29"
+        ]
+      },
+      "conforme": {
+        "E-18": "C-13"
+      },
+      "manter": {
+        "E-19": "forma `todos` mantida (D-33)"
+      },
+      "nao_aplicavel": {
+        "E-16": "regra de produto; uma tela isolada não responde se há ajuda em outra"
+      },
+      "fora": {
+        "E-02": "nenhuma regra required exige rodapé textualmente; exposto",
+        "E-03": "aria-selected/aria-current dependem de papéis ARIA declarados (interpretação) ⚠",
+        "E-05": "a lista aberta do Exibir/Página não é estado declarado",
+        "E-08": "valor difere entre 3.4.1 e 3.7.0 (método § 1.4)",
+        "E-09": "ação interna padrão do Input é interpretação de anatomia; o defeito medível é a B-09",
+        "E-10": "mesmos elementos e família de B-11/B-19",
+        "E-11": "estilo inline só viola a 1.1 por leitura ampla",
+        "E-12": "linguagem (§ 6)",
+        "E-13": "números na paginação são o padrão do componente",
+        "E-14": "formulário só de exibição; instrução das datas coberta pela B-05",
+        "E-15": "a anatomia não fala de botão sem efeito; exposto ⚠",
+        "E-17": "se é o Collapse da regra é interpretação",
+        "E-20": "medida ao aplicar: user-times e user-plus chamam a mesma ação (Atribuir Vistoriador, POST /atribuir-vistoriador); o nome corresponde à ação, só o ícone diverge — juízo de iconografia, fora"
+      }
+    },
     "nunca_agregar_com": "ground-truth-fluxo.json, ground-truth-solicitacao.json (tela A), ground-truth.json (suíte TC-*), organic-ground-truth.json, ground-truth-privacidade.json e ground-truth-pnip-login.json — instrumentos ou páginas diferentes (D-13, D-49). Os números desta tela nunca se somam, se promediam nem formam série com os de outra.",
     "baselines": "MEDIDAS sob o carimbo de cada bateria; nenhuma expectativa de detecção por ferramenta é declarada aqui (D-06). Hoje o setup navega e a linha de base de bateria recusa (D-58).",
     "auditoria": "tela-b/vistorias/auditoria.md · decisoes.json · inventario.json · estados.json · selecao.json · conferência sem modelo: node tela-b/vistorias/conferir-auditoria.mjs"
@@ -653,6 +704,84 @@
         ]
       },
       "description": "O br-modal \"Trocar embarcação\" (div.br-modal medium) não declara role dialog/alertdialog, aria-modal nem nome: a árvore de acessibilidade do Chromium não expõe nenhum diálogo quando ele está aberto. Só existe depois do clique em \"Trocar embarcação da vistoria\"."
+    },
+    {
+      "id": "B-25",
+      "anchor": "head > title",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-5d5a5f21d94b",
+        "emag:3.3",
+        "wcag:2.4.2"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "Escalada E-01, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). O <title> é \"PNIP\" nas quatro paradas (lista, dois detalhes, modal): nomeia só o sistema, não muda entre rotas e não representa o conteúdo principal (\"Vistorias\", o detalhe de uma vistoria). Âncora não renderizada por natureza (elemento do <head>). Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-26",
+      "anchor": "pnip-propesc-vistorias thead th:nth-child(9)",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-1ccbc61dddbc",
+        "emag:3.10",
+        "wcag:1.3.1"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "description": "Escalada E-04, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). O <th scope=col> da coluna de ações (9ª) não tem texto, aria-label nem filhos: as células de ação ficam associadas a um cabeçalho sem nome. O <th> da coluna de caixas (2ª) fica fora: contém um controle, e o defeito dele já é a B-06. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-27",
+      "anchor": "pnip-propesc-trocar-embarcacao .br-modal",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "modal",
+      "conditional": true,
+      "rules": [
+        "govbr-3.7.0-accessibility-modal-64b84991229c"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "Escalada E-06, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). Com o br-modal \"Trocar embarcação\" aberto, Tab sai do modal depois do último controle (Trocar) e percorre os botões do detalhe, o cabeçalho e o breadcrumb por trás do scrim antes de voltar: o foco não fica contido na Modal aberta. Só existe depois do clique em \"Trocar embarcação da vistoria\". Sem predicado na referência; medido por Tab real em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-28",
+      "anchor": "pnip-search-table-utils button.br-button",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-foundation-global-1c0146e93d2e"
+      ],
+      "categories": [
+        "estrutura"
+      ],
+      "description": "Escalada E-07, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). O botão de ícone \"Buscar\", montado pelo app fora do br-input, mede 32×32 px: abaixo da área de toque de 48×48. Tamanhos padrão do DS (br-button de 40 px, Menu e Home dos web components, paginação) ficam como fundo. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-29",
+      "anchor": "br-select-pnip button.br-button",
+      "scope": "todos",
+      "expectedCount": 2,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-foundation-global-1c0146e93d2e"
+      ],
+      "categories": [
+        "estrutura"
+      ],
+      "description": "Escalada E-07, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). Os dois botões de ícone \"Exibir lista\" do br-select-pnip (\"Exibir\" e \"Página\") medem 32×32 px: abaixo da área de toque de 48×48. Mesmo tratamento de fundo da B-28. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
     }
   ]
 }

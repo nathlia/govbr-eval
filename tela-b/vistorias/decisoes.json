@@ -6,12 +6,13 @@
     "estados": "inicial · detalhe-menu · detalhe · modal (tela-b/vistorias/sequencia.mjs)",
     "familias": "F1 componente presente · F2 Template Base/regras de página · F3 fundamentos (cor, tipografia, espaçamento) · F4 e-MAG · global = regra global da KB fora das quatro",
     "destinos": "unidade (viola autoral) · escalada (não-mensurável → lista da autora) · registro · observacao · nenhum",
+    "escaladas": "decididas pela autora em 2026-10-01 (D-61; recomendacoes-escaladas.md): as linhas com `decididaPor` saíram de `escalada`; as que seguem `escalada` ficaram fora da referência com o motivo em ground-truth-vistorias.json › _meta.escaladas",
     "contagem": {
       "conforme": 30,
       "observação": 31,
       "não-aplicável": 45,
-      "viola": 15,
-      "não-mensurável": 22,
+      "viola": 19,
+      "não-mensurável": 18,
       "não normatiza": 43
     }
   },
@@ -99,9 +100,14 @@
       "emag": [],
       "wcag": [],
       "norma": "A Modal deve permitir navegação interna com Tab e Shift+Tab.",
-      "veredito": "conforme",
-      "destino": "registro",
-      "medida": "modal: Tab e Shift+Tab percorrem o conteúdo do br-modal (lista de embarcações, Cancelar, Trocar). A contenção do foco (o Tab sai do modal para o detalhe por trás) vai à escalada E-06."
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "B-27"
+      ],
+      "medida": "modal: Tab e Shift+Tab percorrem o conteúdo do br-modal (lista de embarcações, Cancelar, Trocar), mas o foco não fica contido: depois do Trocar, Tab sai para os botões do detalhe, o cabeçalho e o breadcrumb por trás do scrim.",
+      "escalada": "E-06",
+      "decididaPor": "autora (D-61, 2026-10-01)"
     },
     {
       "id": "govbr-3.7.0-accessibility-modal-31c45e5f6081",
@@ -359,10 +365,11 @@
       "emag": [],
       "wcag": [],
       "norma": "O Scrim só deve bloquear áreas de busca ou acessibilidade quando houver justificativa clara.",
-      "veredito": "não-mensurável",
-      "destino": "escalada",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "modal: .br-scrim-util cobre a página inteira atrás do br-modal \"Trocar embarcação\", aberto pela usuária: o bloqueio tem justificativa (controle C-13).",
       "escalada": "E-18",
-      "medida": "modal: .br-scrim-util cobre a página inteira atrás do br-modal \"Trocar embarcação\"; se o bloqueio tem justificativa clara é juízo"
+      "decididaPor": "autora (D-61, 2026-10-01)"
     },
     {
       "id": "govbr-3.7.0-component-signin-837c5ed4fe6a",
@@ -568,10 +575,15 @@
       "emag": [],
       "wcag": [],
       "norma": "Ícones interativos devem possuir área de toque de 48 × 48 px.",
-      "veredito": "não-mensurável",
-      "destino": "escalada",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "B-28",
+        "B-29"
+      ],
+      "medida": "ícones interativos abaixo de 48×48. Autorais (unidade): Buscar 32×32 e os dois Exibir lista 32×32, montados pelo app. Fundo (padrão do DS, não unidade): ações de linha 78×40 (web component br-button, densidade padrão), Página anterior/seguinte 40×40, Menu 32×32 (web component), Home do breadcrumb 32×32 (web component).",
       "escalada": "E-07",
-      "medida": "ícones interativos abaixo de 48×48: ações de linha 78×40 (web component br-button, densidade padrão), Buscar 32×32, Exibir lista 32×32, Página anterior/seguinte 40×40, Menu 32×32 (web component), Home do breadcrumb 32×32 (web component). Quanto é tamanho padrão do DS (fundo) e quanto é escolha autoral é juízo."
+      "decididaPor": "autora (D-61, 2026-10-01)"
     },
     {
       "id": "govbr-3.7.0-page-global-f6e03bce515b",
@@ -896,10 +908,14 @@
         "WCAG 2.0 1.3.1"
       ],
       "norma": "Use th para cabeçalhos, td para dados e associe corretamente cabeçalhos e células.",
-      "veredito": "não-mensurável",
-      "destino": "escalada",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "B-26"
+      ],
+      "medida": "unidade só no th de ações (o th de caixas contém um controle; o defeito dele é a B-06). tabela da lista: 9 <th scope=col> no <thead>, <td> no corpo; dois cabeçalhos sem texto (o da coluna de caixas, que só contém um checkbox sem nome, e o da coluna de ações). Tabela do detalhe: 3 <th> sem scope, simples.",
       "escalada": "E-04",
-      "medida": "tabela da lista: 9 <th scope=col> no <thead>, <td> no corpo; dois cabeçalhos sem texto (o da coluna de caixas, que só contém um checkbox sem nome, e o da coluna de ações). Tabela do detalhe: 3 <th> sem scope, simples. Se cabeçalho vazio é associação incorreta é juízo"
+      "decididaPor": "autora (D-61, 2026-10-01)"
     },
     {
       "id": "govbr-3.7.0-accessibility-global-fb83eab75d8d",
@@ -965,10 +981,14 @@
         "WCAG 2.0 2.4.2"
       ],
       "norma": "Defina um title descritivo que represente o conteúdo principal e identifique o sítio ou sistema.",
-      "veredito": "não-mensurável",
-      "destino": "escalada",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "B-25"
+      ],
+      "medida": "<title>PNIP</title> nas três rotas (lista, dois detalhes); h2 \"Vistorias\" e h3 do detalhe. O título só nomeia o sistema e não representa o conteúdo principal de nenhuma rota.",
       "escalada": "E-01",
-      "medida": "<title>PNIP</title> nas três rotas (lista, dois detalhes); h2 \"Vistorias\" e h3 do detalhe. Se o título representa o conteúdo principal é juízo"
+      "decididaPor": "autora (D-61, 2026-10-01)"
     },
     {
       "id": "govbr-3.7.0-accessibility-global-75c11ccac582",

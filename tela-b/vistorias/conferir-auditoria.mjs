@@ -10,7 +10,7 @@
  *    que o documento não recarregou, nenhuma escrita no mock (rede + registro do mock) e nenhum pedido
  *    externo; resolve as âncoras e confere contagem; entre paradas do mesmo segmento confere que
  *    atributos e texto próprio de cada âncora não mudaram;
- * 5. re-mede cada unidade (B-01…B-24) e cada conforme (C-01…C-12) no seu estado, mais as medidas
+ * 5. re-mede cada unidade (B-01…B-29) e cada conforme (C-01…C-13) no seu estado, mais as medidas
  *    das linhas `conforme` de decisoes.json que não viram controle; gestos (clique/Enter) e Tab em
  *    cargas auxiliares novas, para não mexer na carga principal;
  * 6. imprime N/N e sai com código ≠ 0 se algo falhar.
@@ -82,7 +82,7 @@ const GLOBAL = `(() => {
 ${PRELUDIO}
   const els = todos();
   return {
-    path: location.pathname, doc: window.__auditoriaDoc || null, lang: document.documentElement.getAttribute("lang"),
+    path: location.pathname, doc: window.__auditoriaDoc || null, titulo: document.title, lang: document.documentElement.getAttribute("lang"),
     metaRefresh: !!document.querySelector("meta[http-equiv=refresh i]"), animacoes: document.getAnimations().length,
     ancoras: els.filter(e => e.tagName === "A" && (e.getAttribute("href") || "").startsWith("#")).length, skiplink: els.filter(e => e.classList && e.classList.contains("br-skiplink")).length,
     cabecalhos: els.filter(e => /^H[1-6]$/.test(e.tagName) && visivel(e)).map(e => +e.tagName[1]),
@@ -124,7 +124,9 @@ try {
     porEstado[st.id] = { g, med };
     for (const a of ancorasDe(st)) {
       const sel = a.anchor ?? a.selector; const n = a.expectedCount ?? a.count;
-      ok(`${a.id} @${st.id}: âncora resolve ${n}`, med[sel].length === n && med[sel].every(x => x.visivel), `${med[sel].length} elemento(s), ${med[sel].filter(x => x.visivel).length} visível(is)`);
+      // B-25 ancora no <title>, que não é renderizado por natureza: só a contagem vale para ele.
+      const exigeVisivel = !sel.startsWith("head");
+      ok(`${a.id} @${st.id}: âncora resolve ${n}`, med[sel].length === n && (!exigeVisivel || med[sel].every(x => x.visivel)), `${med[sel].length} elemento(s), ${med[sel].filter(x => x.visivel).length} visível(is)`);
     }
   }
   // Mesmo segmento: atributos e texto próprio de cada âncora não mudaram entre paradas.
@@ -138,8 +140,8 @@ try {
     }
     ok(`segmento ${segmentoDe(b.afterStep)} (${a.id} → ${b.id}): âncoras com atributos e texto inalterados`, difs.length === 0, difs.join("; ") || "nenhuma diferença");
   }
-  // conditional: B-24 não existe antes do modal no seu segmento
-  ok("B-24 condicional: .br-modal ausente em `detalhe`", porEstado.detalhe.med["pnip-propesc-trocar-embarcacao .br-modal"].length === 0, `${porEstado.detalhe.med["pnip-propesc-trocar-embarcacao .br-modal"].length} em detalhe`);
+  // conditional: B-24 e B-27 (mesma âncora) não existem antes do modal no seu segmento
+  ok("B-24/B-27 condicional: .br-modal ausente em `detalhe`", porEstado.detalhe.med["pnip-propesc-trocar-embarcacao .br-modal"].length === 0, `${porEstado.detalhe.med["pnip-propesc-trocar-embarcacao .br-modal"].length} em detalhe`);
   await principal.contexto.close();
 
   const M = (st, sel) => porEstado[st].med[sel];
@@ -170,6 +172,10 @@ try {
   ok("B-21 detalhe: títulos começam em h3, sem h1/h2", G("detalhe")?.cabecalhos[0] === 3 && !G("detalhe").cabecalhos.some(n => n < 3), `títulos: ${G("detalhe").cabecalhos.map(n => "h" + n).join(" ")}`);
   { const t = M("detalhe", sp("B-22").anchor)[0]; ok("B-22 tabela do detalhe sem caption/aria-label", t.caption === null && !t.attrs["aria-label"] && !t.attrs["aria-labelledby"], `caption ${t.caption}`); }
   { const x = M("modal", sp("B-24").anchor)[0]; ok("B-24 br-modal sem role/aria-modal/nome", !x.attrs.role && !x.attrs["aria-modal"] && !x.attrs["aria-label"] && !x.attrs["aria-labelledby"], `classes ${x.classes.join(".")}`); }
+  // Escaladas decididas pela autora (D-61): B-25…B-29 (B-27 por Tab, nas cargas auxiliares)
+  ok("B-25 <title> \"PNIP\" igual nas 4 paradas", STATES.every(s => G(s.id).titulo === "PNIP"), STATES.map(s => `${s.id}: "${G(s.id).titulo}"`).join(" · "));
+  { const x = M("inicial", sp("B-26").anchor)[0]; ok("B-26 th da coluna de ações sem texto, nome nem filhos", x.tag === "th" && !x.texto && !x.attrs["aria-label"] && !x.attrs["aria-labelledby"] && x.filhos.length === 0, `scope=${x.attrs.scope} · filhos ${x.filhos.length}`); }
+  for (const id of ["B-28", "B-29"]) { const xs = M("inicial", sp(id).anchor); ok(`${id} alvo de ícone autoral < 48×48`, xs.length === sp(id).expectedCount && xs.every(x => x.caixa[0] < 48 && x.caixa[1] < 48), xs.map(x => x.caixa.join("×")).join(", ")); }
 
   // ── conformes (_meta.conformes) ───────────────────────────────────────────────────────────────
   const C = id => conformes.find(c => c.id === id);
@@ -185,6 +191,7 @@ try {
   ok("C-09 links de página focáveis", MC("C-09").every(x => x.tabIndex === 0 && "href" in x.attrs), MC("C-09").map(x => x.texto).join(","));
   ok("C-10 link Home do breadcrumb focável", MC("C-10").every(x => x.tabIndex === 0), MC("C-10").map(x => x.texto).join(","));
   ok("C-11 divisor não focável", MC("C-11").every(x => x.tabIndex < 0), `tabIndex ${MC("C-11").map(x => x.tabIndex)}`);
+  ok("C-13 scrim cobre a página com o modal aberto", MC("C-13").every(x => x.visivel && x.caixa[0] >= 1260 && x.caixa[1] >= 880) && M("modal", sp("B-24").anchor).length === 1, MC("C-13").map(x => x.caixa.join("×")).join(","));
   ok("C-12 avatar circular", MC("C-12").every(x => x.raio === "50%"), MC("C-12").map(x => x.raio + " " + x.caixa.join("×")).join(","));
 
   // ── linhas `conforme` de decisoes.json medidas na página ──────────────────────────────────────
@@ -264,6 +271,22 @@ try {
       return nodes.filter(n => !n.ignored && ["dialog", "alertdialog"].includes(n.role?.value)).length;
     });
     ok("B-24 nenhum dialog na árvore com o modal aberto", md === 0, `${md} nós dialog/alertdialog`);
+    // B-27: Tab real a partir do primeiro controle do modal; "dentro" sobe pela árvore composta (os
+    // botões do modal vivem na shadow root de <br-button>).
+    const giro = await aux(async ({ pagina }) => {
+      await executarPassos(pagina, SETUP);
+      await pagina.evaluate(() => document.querySelector(".br-modal input, .br-modal button")?.focus());
+      const pts = [];
+      for (let k = 0; k < 30; k++) {
+        await pagina.keyboard.press("Tab"); await pagina.waitForTimeout(150);
+        pts.push(await pagina.evaluate(`(() => { ${PRELUDIO} const a = ativoProfundo(); if (!a || a === document.body) return { fora: true, chave: "body" };
+          let e = a; while (e && !(e.classList && e.classList.contains("br-modal"))) e = e.parentElement || (ehSombra(raizDe(e)) ? raizDe(e).host : null);
+          return { fora: !e, chave: chave(a) }; })()`));
+      }
+      return pts;
+    });
+    const fora = giro.filter(p => p.fora);
+    ok("B-27 Tab sai do modal aberto (foco não contido)", fora.length > 0 && giro.some(p => !p.fora), `${giro.length - fora.length}/${giro.length} pontos dentro do modal; 1º fora: ${(fora[0]?.chave ?? "—").slice(-60)}`);
   }
 } finally {
   await navegador.close();
