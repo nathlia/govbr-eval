@@ -188,13 +188,37 @@ npm run flow:review -- prepare --battery pipeline/logs/STAMP-bateria.json --out 
   mantendo o hash da referência coletada.
 - Bateria anterior à fatia 6 (sem manifesto): `--legacy-reconstruction [--app-url URL]`, rotulada
   `reconstrucao-sem-manifesto`, sem linha de base. Recusado se a bateria tiver manifesto.
+- Bateria interrompida, ou execuções de mais de uma bateria: **manifesto de análise**
+  (`manifesto-analise-1.0.0`, `scripts/analysis-manifest.ts`), e `prepare --analysis-manifest ARQ
+  --out NOVO_DIR` no lugar de `--battery/--collection-manifest/--site-dir/--baseline`. O pacote sai
+  rotulado `analise-composta`, com `analysisManifest` (caminho, hash, justificativa, excluídos,
+  divergências) e `sourceBatteries` na proveniência; `sourceBattery` fica nulo. O manifesto recusa:
+  identidades de coleta diferentes (`compareIdentities`), dimensões diferentes entre as execuções
+  incluídas (modelo, esforço, cliente, protocolo, contrato, suíte, escopo, invocação; perfil de
+  oráculo dentro de cada braço), slot incluído que `--battery` recusaria, e qualquer slot de bateria
+  fonte que não esteja incluído nem excluído com motivo. Diferenças fora da identidade (versão do
+  cliente, Node, navegadores, commits) não recusam: ficam em `divergenciasRegistradas`. Coleta, site
+  congelado e linha de base são os da bateria `--designada`; cada execução continua conferida contra
+  o manifesto de coleta da SUA bateria. Na preparação, os hashes de baterias, manifestos de coleta,
+  execuções e linha de base são reconferidos e o manifesto é refeito a partir das fontes — editado à
+  mão, não confere.
+
+  ```
+  npm run manifest:analise -- build --out pipeline/logs/analises/NOME.json \
+    --bateria A=pipeline/logs/X-bateria.json --bateria B=pipeline/logs/Y-bateria.json \
+    --incluir A:1,2,3,4 --incluir B:1,2 \
+    --excluir "A:5=limite de uso (429), sem relatório" --excluir "A:6=não tentado após o 429" \
+    --designada A --baseline pipeline/logs/X-linha-de-base.json --baseline-motivo "..." \
+    --justificativa "..."
+  ```
 
 O diretório precisa ser novo. É gerado:
 
 - `package.json`: alegações, cenas, unidades, execuções (agente e linha de base), proveniência e hashes; **não editar**.
 - `reviews.json`: decisões editáveis da autora, inicialmente pendentes.
 - `review.md`: cartões com origem, cena, alegação, sujeitos, unidades candidatas e evidência declarada; sem coluna de braço/score.
-- `reference.json` (os bytes do gabarito usado), `collection-manifest.json`, `baseline.json`, `source-battery.json`,
+- `reference.json` (os bytes do gabarito usado), `collection-manifest.json`, `baseline.json`, `source-battery.json`
+  (na análise composta: `analysis-manifest.json` e um `source-battery-<RÓTULO>.json` por bateria fonte),
   `capture.json` e, por cena, `resolution-*.json`, `scene-*.html`, `scene-*.png`: proveniência e reconstrução.
 
 Leia o cartão e preencha a decisão em `reviews.json`. Exemplo estrutural (substitua os IDs pelos do cartão):

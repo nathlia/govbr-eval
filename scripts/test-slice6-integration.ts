@@ -31,6 +31,8 @@ const corpusDist = resolve(ROOT, "..", "govbr-corpus", "dist");
 const id = randomUUID().slice(0, 8);
 const work = join(ROOT, "pipeline", "logs", `_teste-fatia6-${id}`);
 const runFile = join(ROOT, "results", "runs-fluxo-ablacao", `agent-teste-fatia6-${id}.json`);
+/** Execução da bateria complementar da análise composta (braço com). */
+const runFileB = join(ROOT, "results", "runs-fluxo", `agent-teste-fatia6-B-${id}.json`);
 const rel = (path: string): string => relative(ROOT, path).replaceAll("\\", "/");
 
 let tests = 0;
@@ -398,9 +400,86 @@ async function main(): Promise<void> {
       // never overwrite
       await refuse("overwrite", prepareArgs(pkgDir, ["--baseline", baselinePath]), /already exists/);
     });
+
+    // ── análise composta: bateria complementar sob OUTRO manifesto de mesma identidade ──
+    await test("analysis manifest composes two batteries; each run checked against its own collection manifest", async () => {
+      const dims = { model: "fixture", reasoningEffort: "high", client: "fixture-cli", protocolVersion: "sha256:fixture",
+        instrumentVersion: FLOW_INSTRUMENT_VERSION, scope: "full", prompt: "Avalie a tela." };
+      const batteryA = join(work, "bateria-A.json");
+      writeJson(batteryA, { ...battery, clientVersion: "1.0.0",
+        execucoes: [{ ...entry, ...dims, oracleProfile: "none", clientVersion: "1.0.0" }] });
+      // B: plano próprio (um slot, braço com), manifesto próprio, outra versão do cliente — mesma identidade.
+      const planB = join(work, "plano-B.json");
+      writeJson(planB, { ...plan, stamp: `teste-B-${id}`, arms: ["com"], slots: [{ slot: 1, arm: "com", repetition: 1, block: 1 }] });
+      const collectionB = join(work, "coleta-B");
+      const builtB = await cli("collection-manifest.ts", buildArgs.map(a => a === planPath ? planB : a === collectionDir ? collectionB : a === "1.0.0" ? "2.0.0" : a));
+      assert.equal(builtB.status, 0, builtB.out);
+      const manifestB = join(collectionB, "manifesto.json");
+      const shaB = sha256File(manifestB)!;
+      assert.notEqual(shaB, manifestSha);
+      assert.deepEqual(readJson<CollectionManifest>(manifestB).identity, manifest.identity);
+      writeJson(runFileB, { ...report, config: { ...report.config, collectionManifestSha256: shaB } });
+      const batteryB = join(work, "bateria-B.json");
+      writeJson(batteryB, { stamp: `teste-B-${id}`, clientVersion: "2.0.0", collectionManifest: { path: rel(manifestB), sha256: shaB },
+        execucoes: [{ ...entry, ...dims, arm: "com", archive: rel(runFileB).split("/").pop(), archiveDir: "results/runs-fluxo",
+          oracleProfile: "combined", clientVersion: "2.0.0", collectionManifestSha256: shaB }] });
+
+      const analysis = join(work, "analise.json");
+      const buildAnalysis = (out: string, extra: string[] = []) => cli("analysis-manifest.ts", ["build", "--out", out,
+        "--bateria", `A=${batteryA}`, "--bateria", `B=${batteryB}`, "--incluir", "A:1", "--incluir", "B:1",
+        "--designada", "A", "--baseline", baselinePath, "--baseline-motivo", "a linha de base da coleta A",
+        "--justificativa", "fixture: A tem o braço sem, B o com", "--site-dir", surfaceDir, ...extra]);
+      // A linha de base pertence a A; designar B com ela é recusado.
+      const wrong = await cli("analysis-manifest.ts", ["build", "--out", join(work, "analise-errada.json"),
+        "--bateria", `A=${batteryA}`, "--bateria", `B=${batteryB}`, "--incluir", "A:1", "--incluir", "B:1",
+        "--designada", "B", "--baseline", baselinePath, "--baseline-motivo", "x", "--justificativa", "x", "--site-dir", surfaceDir]);
+      assert.equal(wrong.status, 1, wrong.out);
+      assert.match(wrong.out, /outro manifesto de coleta que o da bateria designada \(B\)/);
+      const built = await buildAnalysis(analysis);
+      assert.equal(built.status, 0, built.out);
+      assert.match(built.out, /clientVersion/);
+      const analysisSha = sha256File(analysis)!;
+      assert.match(built.out, new RegExp(`ANALYSIS_MANIFEST_SHA256=${analysisSha}`));
+      assert.equal((await buildAnalysis(analysis)).status, 1, "manifesto de análise nunca é reescrito");
+
+      const conflict = await cli("semantic-flow-cli.ts", ["prepare", "--analysis-manifest", analysis, "--battery", batteryA, "--out", join(work, "pc0")]);
+      assert.equal(conflict.status, 1);
+      assert.match(conflict.out, /retire --battery/);
+      const composite = join(work, "pacote-composto");
+      const prepared = await cli("semantic-flow-cli.ts", ["prepare", "--analysis-manifest", analysis, "--out", composite]);
+      assert.equal(prepared.status, 0, prepared.out);
+      const cpkg = readJson<SemanticPackage>(join(composite, "package.json"));
+      const prov = cpkg.provenance as { kind: string; sourceBattery: unknown; collectionManifest: { sha256: string };
+        analysisManifest: { sha256: string; divergenciasRegistradas: { campo: string }[] }; sourceBatteries: { fonte: string; sha256: string }[];
+        baseline: { sha256: string } };
+      assert.equal(prov.kind, "analise-composta");
+      assert.equal(prov.sourceBattery, null);
+      assert.equal(prov.analysisManifest.sha256, analysisSha);
+      assert.ok(prov.analysisManifest.divergenciasRegistradas.some(d => d.campo === "clientVersion"));
+      assert.deepEqual(prov.sourceBatteries.map(b => [b.fonte, b.sha256]), [["A", sha256File(batteryA)], ["B", sha256File(batteryB)]]);
+      assert.equal(prov.collectionManifest.sha256, manifestSha, "coleta e linha de base da designada");
+      assert.equal(prov.baseline.sha256, sha256File(baselinePath));
+      assert.deepEqual(cpkg.runs.filter(r => r.kind === "agente").map(r => r.id).sort(), [rel(runFileB), rel(runFile)].sort());
+      for (const file of ["analysis-manifest.json", "source-battery-A.json", "source-battery-B.json", "collection-manifest.json", "baseline.json"]) {
+        assert.ok(existsSync(join(composite, file)), file);
+      }
+      assert.ok(!existsSync(join(composite, "source-battery.json")));
+
+      // Mexer numa fonte depois do manifesto derruba a preparação.
+      const original = readFileSync(runFileB);
+      writeFileSync(runFileB, Buffer.concat([original, Buffer.from("\n")]));
+      try {
+        const tampered = await cli("semantic-flow-cli.ts", ["prepare", "--analysis-manifest", analysis, "--out", join(work, "pc1")]);
+        assert.equal(tampered.status, 1);
+        assert.match(tampered.out, /a execução B:1 mudou/);
+      } finally {
+        writeFileSync(runFileB, original);
+      }
+    });
   } finally {
     for (const server of servers) await close(server);
     rmSync(runFile, { force: true });
+    rmSync(runFileB, { force: true });
     if (resolve(work).startsWith(resolve(ROOT, "pipeline", "logs")) && work.includes("_teste-fatia6-")) {
       rmSync(work, { recursive: true, force: true });
     }

@@ -1,7 +1,7 @@
 /** Offline scoring and a finite, manifest-selected semantic review workbench. */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import type { AddressInfo } from "node:net";
-import { resolve, join, relative, isAbsolute } from "node:path";
+import { resolve, join, relative } from "node:path";
 import { chromium, type Browser } from "playwright";
 import type { FlowAgentResults, FlowGroundTruth, FlowViewport } from "../types";
 import { ROOT } from "./adjudication";
@@ -14,7 +14,7 @@ import {
   buildFlowUnits, buildFlowUnitsAcross, measureStatePresence, selectorsOfGroundTruth, selectorsOfRuns,
   specMedidaNoEstado, statesOfGroundTruth, type FlowUnit,
 } from "./units-flow";
-import { loadVerifiedEvidence, verifyArchivedEvidence, type EvidenceDeclaration } from "./evidence-integrity";
+import { verifyArchivedEvidence } from "./evidence-integrity";
 import { renderReview } from "./semantic-flow-render";
 import {
   SCORER_FILES, armLeaks, digest, historicalPending, normalizeReviews, prepareSemanticPackage, resolutionDigest,
@@ -27,8 +27,9 @@ import {
 } from "./collection-manifest";
 import { READABLE_BASELINE_VERSIONS, type FlowBaselines } from "./run-baselines-flow";
 import { createSiteServer, loadSite } from "./measurement-surface";
+import { loadBatteryEntry, motivoDeRecusa, readAnalysisManifest, telaOfBattery, type Battery } from "./analysis-manifest";
 import { FLOW_INSTRUMENT_VERSION } from "./instrument";
-import { TELAS, TELA_PADRAO, referenciaDe, telaOf, type Tela } from "./telas";
+import { TELA_PADRAO, referenciaDe, telaOf } from "./telas";
 
 const args = process.argv.slice(2);
 const command = args.shift();
@@ -56,17 +57,6 @@ function loadPackage(path: string): SemanticPackage {
   for (const run of pkg.runs) if (run.evidenceIndex) verifyArchivedEvidence(ROOT, run.evidenceIndex);
   return pkg;
 }
-
-interface BatteryEntry {
-  archive: string | null; archiveDir: string; exitCode: number | null; suite: string; arm: string; slot?: number;
-  collectionStatus?: string; collectionManifestSha256?: string;
-  instrumentVersion?: string; protocolVersion?: string; evidence?: EvidenceDeclaration | null;
-}
-interface Battery {
-  collectionManifest?: { path: string; sha256: string };
-  execucoes: BatteryEntry[];
-}
-
 
 /** Baseline claims become runs of the package: same cards, same review, same matching. */
 function baselineRuns(baseline: FlowBaselines, build: string, steps: string[]): PrepareRun[] {
@@ -110,51 +100,21 @@ function loadBaseline(path: string, collection: { manifest: CollectionManifest; 
 }
 
 /**
- * A tela de um pacote é a suíte das suas execuções, e é UMA: execuções de telas diferentes nunca
- * entram no mesmo pacote (D-13, D-49). Suíte que telas.json não declara não é tela deste instrumento.
+ * Uma bateria inteira, slot a slot. As conferências por slot moram em analysis-manifest.ts e são as
+ * MESMAS que o manifesto de análise aplica a cada slot que inclui: o caminho composto não tem régua
+ * mais frouxa que este.
  */
-function telaOfBattery(battery: Battery): Tela | null {
-  const suites = [...new Set(battery.execucoes.map(entry => entry.suite))];
-  if (suites.length !== 1) throw new Error(`Bateria mistura suítes (${suites.join(", ")}); prepare um pacote por tela`);
-  return TELAS[suites[0]] ?? null;
-}
-
 function selectBatteryRuns(battery: Battery, collectionSha: string | null) {
   const tela = telaOfBattery(battery);
   return battery.execucoes.map(entry => {
-    // A mensagem nomeia o slot e a causa. A versão anterior dizia "failed/missing/unattempted" sem
-    // dizer qual nem por quê, e num pacote de seis execuções isso manda procurar no escuro — foi o
-    // que o ensaio de 17/09 fez perder tempo, com a causa real (nenhum relatório no coletor) a
-    // três arquivos de distância.
-    // `nao-tentada` vem antes do código de saída: o runner grava o slot não tentado com
-    // `exitCode: null`, e "código de saída null" esconderia a causa que a mensagem existe para dizer.
-    const motivo = !tela ? `suíte "${entry.suite}" não é tela declarada em telas.json (${Object.keys(TELAS).join(", ")})`
-      : entry.collectionStatus === "nao-tentada" ? "slot não tentado"
-      : entry.exitCode !== 0 ? `código de saída ${entry.exitCode}`
-      : entry.collectionStatus === "sem-relatorio" ? "o coletor não recebeu relatório desta execução"
-      : entry.collectionStatus && entry.collectionStatus !== "collected" ? `estado de coleta "${entry.collectionStatus}"`
-      : !entry.archive ? "sem arquivo arquivado" : null;
+    const motivo = motivoDeRecusa(entry, tela);
     if (motivo) {
       throw new Error(`Slot ${entry.slot ?? "?"} (${entry.arm}) não entra no pacote: ${motivo}. ` +
-        "Não selecione em silêncio as tentativas bem-sucedidas; prepare antes um manifesto de análise explicitamente documentado.");
+        "Não selecione em silêncio as tentativas bem-sucedidas; prepare antes um manifesto de análise explicitamente documentado " +
+        "(scripts/analysis-manifest.ts) e passe --analysis-manifest.");
     }
-    if (collectionSha && entry.collectionManifestSha256 !== collectionSha) throw new Error("Run was not collected under this collection manifest");
-    const expectedDir = entry.arm === "com" ? tela!.runs.com : entry.arm === "sem" ? tela!.runs.sem : null;
-    if (entry.archiveDir.replaceAll("\\", "/") !== expectedDir) throw new Error("Archive arm/directory mismatch");
-    const archive = entry.archive;
-    if (!archive) throw new Error(`Slot ${entry.slot ?? "?"} (${entry.arm}) não entra no pacote: sem arquivo arquivado`);
-    const path = resolve(ROOT, entry.archiveDir, archive);
-    const rel = relative(join(ROOT, entry.archiveDir), path);
-    if (rel.startsWith("..") || isAbsolute(rel) || rel.includes("/") || rel.includes("\\")) throw new Error("Archive must be a file in its declared run directory");
-    const data = read<FlowAgentResults>(path);
-    if (data.config?.instrumentVersion !== entry.instrumentVersion || data.config?.protocolVersion !== entry.protocolVersion) {
-      throw new Error(`Manifest/archive configuration mismatch: ${path}`);
-    }
-    if (collectionSha && (data.config as { collectionManifestSha256?: string } | undefined)?.collectionManifestSha256 !== collectionSha) {
-      throw new Error(`Archived run does not name this collection manifest: ${path}`);
-    }
-    return { id: relative(ROOT, path).replaceAll("\\", "/"), data, kind: "agente" as const,
-      evidence: loadVerifiedEvidence(ROOT, entry.evidence, data.config) };
+    const { path: _path, ...run } = loadBatteryEntry(entry, tela!, collectionSha);
+    return run;
   });
 }
 
@@ -269,24 +229,37 @@ async function prepararJanelaSegmentada(
 }
 
 async function prepare(): Promise<void> {
-  const batteryPath = resolve(option("battery")!);
   const out = resolve(option("out")!);
   if (existsSync(out)) throw new Error("Output directory already exists; choose a new one (raw packages are never overwritten)");
-  const battery = read<Battery>(batteryPath);
-  if (!battery.execucoes?.length) throw new Error("Empty battery");
+  // Duas portas, nunca as duas: a bateria inteira como foi coletada (--battery), ou uma análise
+  // composta declarada antes num manifesto de análise (--analysis-manifest). Com o manifesto, coleta,
+  // site e linha de base vêm DELE — aceitar os mesmos argumentos soltos abriria um segundo lugar para
+  // dizer a mesma coisa, e os dois poderiam discordar.
+  const analysisArg = option("analysis-manifest", false);
+  if (analysisArg) {
+    const soltos = ["battery", "collection-manifest", "baseline", "no-baseline", "site-dir", "legacy-reconstruction"].filter(a => args.includes(`--${a}`));
+    if (soltos.length) throw new Error(`--analysis-manifest já nomeia bateria(s), coleta, site e linha de base; retire ${soltos.map(a => `--${a}`).join(", ")}`);
+  }
+  const analysis = analysisArg ? readAnalysisManifest(resolve(analysisArg)) : null;
+  const batteryPath = analysis ? null : resolve(option("battery")!);
+  const battery = batteryPath ? read<Battery>(batteryPath) : null;
+  if (battery && !battery.execucoes?.length) throw new Error("Empty battery");
   const legacy = args.includes("--legacy-reconstruction");
   const manifestArg = option("collection-manifest", false);
-  if (legacy === Boolean(manifestArg)) {
+  const manifestFile = analysis ? analysis.collectionManifestPath : manifestArg ? resolve(manifestArg) : null;
+  if (!analysis && legacy === Boolean(manifestFile)) {
     throw new Error("Use --collection-manifest (battery with frozen identity) OR --legacy-reconstruction (battery collected before slice 6).");
   }
-  if (battery.collectionManifest && legacy) throw new Error("This battery has a collection manifest; a legacy reconstruction would discard it");
+  if (battery?.collectionManifest && legacy) throw new Error("This battery has a collection manifest; a legacy reconstruction would discard it");
 
-  const collection = manifestArg ? readCollectionManifest(resolve(manifestArg)) : null;
-  if (collection) {
+  const collection = manifestFile ? readCollectionManifest(manifestFile) : null;
+  if (collection && battery) {
     if (battery.collectionManifest?.sha256 !== collection.sha256) throw new Error("Battery does not reference this collection manifest");
     checkPlanConformity(battery.execucoes, collection.manifest.plan!.slots);
   }
-  const runs = selectBatteryRuns(battery, collection?.sha256 ?? null);
+  // Composta: cada execução já foi conferida contra o manifesto de coleta da SUA bateria (que o
+  // manifesto de análise exige ter identidade igual à da designada), nunca contra o da designada.
+  const runs = analysis ? analysis.runs.map(({ path: _path, ...run }) => run) : selectBatteryRuns(battery!, collection?.sha256 ?? null);
   // One collection contract per package: a legacy run next to a current one would read as if both
   // had been asked the same thing.
   if (new Set(runs.map(r => r.data.config?.instrumentVersion ?? null)).size > 1) {
@@ -296,7 +269,7 @@ async function prepare(): Promise<void> {
   // Reference: the collection's archived copy. A different reference is an explicitly new analysis.
   const referenceArg = option("reference", false);
   const referencePath = referenceArg ? resolve(referenceArg)
-    : collection ? join(ROOT, collection.manifest.archive!.reference.path) : join(ROOT, referenciaDe(telaOfBattery(battery) ?? telaOf(TELA_PADRAO)));
+    : collection ? join(ROOT, collection.manifest.archive!.reference.path) : join(ROOT, referenciaDe(telaOfBattery(battery!) ?? telaOf(TELA_PADRAO)));
   const referenceBytes = readFileSync(referencePath);
   if (collection && !referenceArg && sha256(referenceBytes) !== collection.manifest.identity.referenceSha256) {
     throw new Error("Archived reference changed since collection");
@@ -311,8 +284,8 @@ async function prepare(): Promise<void> {
   }
 
   // Baseline: required with a collection manifest, unless its absence is declared.
-  const baselineArg = option("baseline", false);
-  const noBaseline = option("no-baseline", false);
+  const baselineArg = analysis ? analysis.baselinePath : option("baseline", false);
+  const noBaseline = analysis ? undefined : option("no-baseline", false);
   if (collection && Boolean(baselineArg) === Boolean(noBaseline)) {
     throw new Error("Pass --baseline FILE, or --no-baseline \"reason\" for a planned absence");
   }
@@ -324,7 +297,7 @@ async function prepare(): Promise<void> {
   let origin: string;
   let closeSite = async (): Promise<void> => {};
   if (collection) {
-    const site = loadSite(resolve(option("site-dir")!));
+    const site = loadSite(analysis ? analysis.siteDir : resolve(option("site-dir")!));
     if (site.manifestSha256 !== collection.manifest.identity.siteManifestSha256) throw new Error("Frozen site differs from the collection");
     const server = createSiteServer(site);
     await new Promise<void>((ok, fail) => { server.once("error", fail); server.listen(0, "127.0.0.1", () => ok()); });
@@ -420,8 +393,11 @@ async function prepare(): Promise<void> {
     })) });
     const referenceOverride = Boolean(referenceArg && collection && sha256(referenceBytes) !== collection.manifest.identity.referenceSha256);
     const provenance = {
-      kind: collection ? (referenceOverride ? "nova-analise-com-outra-referencia" : "coleta-congelada") : "reconstrucao-sem-manifesto",
-      collectionManifest: collection ? { path: relative(ROOT, resolve(manifestArg!)).replaceAll("\\", "/"), sha256: collection.sha256,
+      // Composta sobrepõe os outros rótulos: é o que muda a leitura do pacote. Uma composta com outra
+      // referência continua dizendo isso em `reference.override`.
+      kind: analysis ? "analise-composta"
+        : collection ? (referenceOverride ? "nova-analise-com-outra-referencia" : "coleta-congelada") : "reconstrucao-sem-manifesto",
+      collectionManifest: collection ? { path: relative(ROOT, manifestFile!).replaceAll("\\", "/"), sha256: collection.sha256,
         identity: collection.manifest.identity } : null,
       reference: { path: relative(ROOT, referencePath).replaceAll("\\", "/"), sha256: sha256(referenceBytes), version: gt._meta.version,
         collectedSha256: collection?.manifest.identity.referenceSha256 ?? null, override: referenceOverride },
@@ -436,7 +412,16 @@ async function prepare(): Promise<void> {
         cost: baseline.data.cost,
       } : { absent: noBaseline ?? "reconstrução sem manifesto: sem linha de base confrontável" },
       analysis: analysisIdentity(),
-      sourceBattery: { path: relative(ROOT, batteryPath).replaceAll("\\", "/"), sha256: sha256(readFileSync(batteryPath)) },
+      // Composta: não há UMA bateria fonte; `sourceBattery` fica nulo de propósito, para que ninguém leia
+      // a designada como se fosse a origem de todas as execuções. As fontes estão em `sourceBatteries`.
+      sourceBattery: batteryPath ? { path: relative(ROOT, batteryPath).replaceAll("\\", "/"), sha256: sha256(readFileSync(batteryPath)) } : null,
+      ...(analysis ? {
+        analysisManifest: { path: relative(ROOT, analysis.path).replaceAll("\\", "/"), sha256: analysis.sha256,
+          justificativa: analysis.manifest.justificativa, designada: analysis.manifest.designada.fonte,
+          divergenciasRegistradas: analysis.manifest.divergenciasRegistradas, excluidos: analysis.manifest.excluidos },
+        sourceBatteries: analysis.manifest.fontes.map(f => ({ fonte: f.fonte, path: f.bateria.path, sha256: f.bateria.sha256,
+          collectionManifest: f.collectionManifest, slotsIncluidos: f.slotsIncluidos })),
+      } : {}),
     };
     const reuse = option("reuse", false);
     const anterior = reuse ? normalizeReviews(read<RawReviews>(resolve(reuse))) : undefined;
@@ -453,9 +438,13 @@ async function prepare(): Promise<void> {
     mkdirSync(out, { recursive: true });
     write(join(out, "package.json"), pkg);
     write(join(out, "reviews.json"), reviews);
-    write(join(out, "source-battery.json"), battery);
+    if (battery) write(join(out, "source-battery.json"), battery);
+    if (analysis) {
+      writeFileSync(join(out, "analysis-manifest.json"), readFileSync(analysis.path), { flag: "wx" });
+      for (const b of analysis.batteries) writeFileSync(join(out, `source-battery-${b.fonte}.json`), b.bytes, { flag: "wx" });
+    }
     writeFileSync(join(out, "reference.json"), referenceBytes, { flag: "wx" });
-    if (collection) writeFileSync(join(out, "collection-manifest.json"), readFileSync(resolve(manifestArg!)), { flag: "wx" });
+    if (collection) writeFileSync(join(out, "collection-manifest.json"), readFileSync(manifestFile!), { flag: "wx" });
     if (baseline) writeFileSync(join(out, "baseline.json"), readFileSync(resolve(baselineArg!)), { flag: "wx" });
     write(join(out, "capture.json"), { capturedAt: new Date().toISOString(), url, sceneHash,
       kind: collection ? "review-time reconstruction of the frozen collection build, not original execution evidence"
@@ -486,6 +475,12 @@ async function prepare(): Promise<void> {
       console.log(`ATENÇÃO — ${vazamentos.length} cartão(ões) com texto que revela o braço. Decida em review.md gerado com --cego,`);
       console.log(`e não abra package.json durante a decisão: ele guarda config.arm e o caminho do arquivo da execução.`);
     }
+    if (analysis) {
+      console.log(`Análise composta (${relative(ROOT, analysis.path).replaceAll("\\", "/")}, ${analysis.sha256.slice(0, 12)}): ` +
+        analysis.manifest.fontes.map(f => `${f.fonte} slots ${f.slotsIncluidos.join(",")}`).join(" + ") +
+        ` · fora: ${analysis.manifest.excluidos.map(e => `${e.fonte}:${e.slot}`).join(", ") || "nenhum"}`);
+      for (const d of analysis.manifest.divergenciasRegistradas) console.log(`  divergência registrada (fora da identidade): ${d.campo}`);
+    }
     console.log(`Provenance: ${provenance.kind}${baseline ? "" : ` · no baseline (${provenance.baseline && "absent" in provenance.baseline ? provenance.baseline.absent : ""})`}`);
     console.log("No verdicts invented; no legacy decisions or raw runs changed.");
   } finally {
@@ -499,6 +494,7 @@ async function main(): Promise<void> {
   if (command !== "score" && command !== "render") {
     throw new Error("Usage: semantic-flow-cli.ts prepare --battery FILE --out NEW_DIR --collection-manifest FILE --site-dir DIR\n" +
       "         (--baseline FILE | --no-baseline REASON) [--reference FILE] [--reuse REVIEWS]\n" +
+      "       semantic-flow-cli.ts prepare --analysis-manifest FILE --out NEW_DIR [--reference FILE] [--reuse REVIEWS]\n" +
       "       semantic-flow-cli.ts prepare --battery FILE --out NEW_DIR --legacy-reconstruction [--app-url URL] [--reuse REVIEWS]\n" +
       "       score|render --package FILE --reviews FILE --out NEW_FILE [--require-complete] [--cego]");
   }
