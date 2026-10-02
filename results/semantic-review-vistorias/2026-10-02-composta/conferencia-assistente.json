@@ -1,0 +1,605 @@
+{
+  "manifesto": "eb2d439d128c6ca3bd5bd3a66f33de4dd22e4f15efcf05447c0a0df7a4c44d98",
+  "medidas": {
+    "acoes-linha: nome acessível por ícone": {
+      "user-plus": {
+        "n": 3,
+        "nomes": [
+          "Atribuir vistoriador"
+        ],
+        "titleHospedeiro": [
+          "Atribuir vistoriador"
+        ]
+      },
+      "eye": {
+        "n": 10,
+        "nomes": [
+          ""
+        ],
+        "titleHospedeiro": [
+          null
+        ]
+      },
+      "trash": {
+        "n": 10,
+        "nomes": [
+          "Excluir vistoria"
+        ],
+        "titleHospedeiro": [
+          "Excluir vistoria"
+        ]
+      },
+      "bell": {
+        "n": 10,
+        "nomes": [
+          "Notificar solicitante da vistoria"
+        ],
+        "titleHospedeiro": [
+          "Notificar solicitante da vistoria"
+        ]
+      },
+      "user-times": {
+        "n": 7,
+        "nomes": [
+          "Atribuir vistoriador"
+        ],
+        "titleHospedeiro": [
+          "Atribuir vistoriador"
+        ]
+      }
+    },
+    "paginação: li filho de li": {
+      "n": 4,
+      "textos": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "definidoPeloDS": false,
+      "atual": {
+        "texto": "1",
+        "ariaCurrent": null
+      }
+    },
+    "abas: estado selecionado": [
+      {
+        "texto": "Agendar",
+        "liActive": false,
+        "role": null,
+        "ariaSelected": null,
+        "ariaCurrent": null
+      },
+      {
+        "texto": "Tramitando",
+        "liActive": true,
+        "role": null,
+        "ariaSelected": null,
+        "ariaCurrent": null
+      },
+      {
+        "texto": "Concluídos",
+        "liActive": false,
+        "role": null,
+        "ariaSelected": null,
+        "ariaCurrent": null
+      }
+    ],
+    "ícones do painel de filtros e relógio": [
+      {
+        "classe": "fa-filter fas mr-1 text-gray-50",
+        "ariaHidden": null,
+        "antes": "f0b0",
+        "visivel": true,
+        "ax": {
+          "papel": "generic",
+          "nome": "",
+          "ignorado": false
+        }
+      },
+      {
+        "classe": "fa-filter fas mr-1 text-gray-50",
+        "ariaHidden": null,
+        "antes": "f0b0",
+        "visivel": true,
+        "ax": {
+          "papel": "generic",
+          "nome": "",
+          "ignorado": false
+        }
+      },
+      {
+        "classe": "fa-filter fas mr-1 text-gray-50",
+        "ariaHidden": null,
+        "antes": "f0b0",
+        "visivel": true,
+        "ax": {
+          "papel": "generic",
+          "nome": "",
+          "ignorado": false
+        }
+      },
+      {
+        "classe": "fa-filter fas mr-1 text-gray-50",
+        "ariaHidden": null,
+        "antes": "f0b0",
+        "visivel": true,
+        "ax": {
+          "papel": "generic",
+          "nome": "",
+          "ignorado": false
+        }
+      },
+      {
+        "classe": "fa-clock far text-gray-50",
+        "ariaHidden": null,
+        "antes": "f017",
+        "visivel": true,
+        "ax": {
+          "papel": "generic",
+          "nome": "",
+          "ignorado": false
+        }
+      }
+    ],
+    "árvore: nós com caractere da área privativa (PUA)": {
+      "n": 27,
+      "amostra": [
+        {
+          "papel": "StaticText",
+          "nome": "\"\""
+        },
+        {
+          "papel": "InlineTextBox",
+          "nome": "\"\""
+        },
+        {
+          "papel": "StaticText",
+          "nome": "\"\""
+        },
+        {
+          "papel": "InlineTextBox",
+          "nome": "\"\""
+        },
+        {
+          "papel": "StaticText",
+          "nome": "\"\""
+        },
+        {
+          "papel": "InlineTextBox",
+          "nome": "\"\""
+        },
+        {
+          "papel": "StaticText",
+          "nome": "\"\""
+        },
+        {
+          "papel": "InlineTextBox",
+          "nome": "\"\""
+        },
+        {
+          "papel": "StaticText",
+          "nome": "\"\""
+        },
+        {
+          "papel": "InlineTextBox",
+          "nome": "\"\""
+        },
+        {
+          "papel": "InlineTextBox",
+          "nome": "\"\""
+        },
+        {
+          "papel": "StaticText",
+          "nome": "\"\""
+        }
+      ]
+    },
+    "breadcrumb: div.br-breadcrumb e links": {
+      "brBreadcrumbDoDS": true,
+      "div": {
+        "classe": "br-breadcrumb",
+        "naSombraDe": "br-breadcrumb"
+      },
+      "link": {
+        "padding": "0px 6px",
+        "inline": null,
+        "naSombraDe": "br-breadcrumb",
+        "regras": [
+          {
+            "sel": ":host .crumb a",
+            "prop": "padding",
+            "v": "0px 6px",
+            "folha": "STYLE"
+          },
+          {
+            "sel": ":host .crumb a",
+            "prop": "padding-left",
+            "v": "6px",
+            "folha": "STYLE"
+          },
+          {
+            "sel": ":host .crumb a",
+            "prop": "padding-right",
+            "v": "6px",
+            "folha": "STYLE"
+          }
+        ]
+      }
+    },
+    "tokens: Buscar (margin -38px)": {
+      "margin": "-38px 4px 0px 0px",
+      "texto": "",
+      "classe": "br-button",
+      "inline": "margin-top: -38px;",
+      "naSombraDe": null,
+      "regras": [
+        {
+          "sel": "button, input, optgroup, select, textarea",
+          "prop": "margin",
+          "v": "0px",
+          "folha": "styles.0756bc3ea9d8bc23.css"
+        },
+        {
+          "sel": "button, input, optgroup, select, textarea",
+          "prop": "margin-top",
+          "v": "0px",
+          "folha": "styles.0756bc3ea9d8bc23.css"
+        },
+        {
+          "sel": "button, input, optgroup, select, textarea",
+          "prop": "margin-right",
+          "v": "0px",
+          "folha": "styles.0756bc3ea9d8bc23.css"
+        },
+        {
+          "sel": ".br-input .br-button",
+          "prop": "margin-top",
+          "v": "calc((var(--input-size) + var(--spacing-scale-half))*-1)",
+          "folha": "styles.0756bc3ea9d8bc23.css"
+        },
+        {
+          "sel": ".br-input .br-button",
+          "prop": "margin-right",
+          "v": "var(--input-button-margin)",
+          "folha": "styles.0756bc3ea9d8bc23.css"
+        },
+        {
+          "sel": "button, input, select",
+          "prop": "margin",
+          "v": "0px",
+          "folha": "STYLE"
+        },
+        {
+          "sel": "button, input, select",
+          "prop": "margin-top",
+          "v": "0px",
+          "folha": "STYLE"
+        },
+        {
+          "sel": "button, input, select",
+          "prop": "margin-right",
+          "v": "0px",
+          "folha": "STYLE"
+        }
+      ]
+    },
+    "tokens: botão do painel de filtros (margin -5px)": {
+      "margin": "-5px 0px 0px",
+      "texto": "Limpar Filtro",
+      "classe": "br-button secondary",
+      "inline": "margin-top: -5px;",
+      "naSombraDe": null,
+      "regras": [
+        {
+          "sel": "button, input, optgroup, select, textarea",
+          "prop": "margin",
+          "v": "0px",
+          "folha": "styles.0756bc3ea9d8bc23.css"
+        },
+        {
+          "sel": "button, input, optgroup, select, textarea",
+          "prop": "margin-top",
+          "v": "0px",
+          "folha": "styles.0756bc3ea9d8bc23.css"
+        },
+        {
+          "sel": "button, input, select",
+          "prop": "margin",
+          "v": "0px",
+          "folha": "STYLE"
+        },
+        {
+          "sel": "button, input, select",
+          "prop": "margin-top",
+          "v": "0px",
+          "folha": "STYLE"
+        }
+      ]
+    },
+    "tokens: botão do cabeçalho (radius 20px, oculto na inicial)": {
+      "radius": "20px",
+      "texto": "Sair",
+      "classe": "br-item dropdown-button",
+      "visivel": false,
+      "inline": null,
+      "naSombraDe": null,
+      "regras": [
+        {
+          "sel": ".dropdown-button[_ngcontent-djf-c16]",
+          "prop": "border-radius",
+          "v": "20px",
+          "folha": "STYLE"
+        }
+      ]
+    },
+    "tokens: padding 0 6px (inicial)": [
+      {
+        "chave": "nip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a",
+        "inline": null,
+        "naSombraDe": "br-breadcrumb",
+        "regras": [
+          {
+            "sel": ":host .crumb a",
+            "prop": "padding",
+            "v": "0px 6px",
+            "folha": "STYLE"
+          }
+        ]
+      }
+    ],
+    "th da coluna de caixas": {
+      "texto": "",
+      "filhos": [
+        "INPUT[checkbox]"
+      ],
+      "ariaLabel": null
+    },
+    "busca sem resultado": {
+      "vivasAntes": [
+        "tom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(2) live=polite"
+      ],
+      "vivasDepois": [],
+      "mensagem": {
+        "texto": "Não há vistorias para exibir.",
+        "role": null,
+        "live": null,
+        "ancestralVivo": false
+      },
+      "linhas": 0,
+      "titulos": [
+        "H2 Vistorias"
+      ],
+      "foco": "INPUT#search"
+    },
+    "filtro Cidade aberto: opções": {
+      "itens": 6,
+      "primeiro": "<div _ngcontent-ibi-c38=\"\" class=\"br-item\"><div _ngcontent-ibi-c38=\"\" class=\"br-radio py-2 px-3\"><label _ngcontent-ibi-c38=\"\">Areia Branca do Leste</label></div></div>",
+      "inputs": 0,
+      "radios": 0,
+      "focalizaveis": 0,
+      "labelsComFor": 0
+    },
+    "filtro aplicado: botão de remover": {
+      "opcao": "Areia Branca do Leste",
+      "botoes": [
+        {
+          "html": "<button _ngcontent-ibi-c38=\"\" type=\"button\" class=\"br-button inverted circle\"><i _ngcontent-ibi-c38=\"\" class=\"fas fa-times\"></i></button>",
+          "ariaLabel": null,
+          "title": null,
+          "texto": "",
+          "ax": {
+            "papel": "button",
+            "nome": "",
+            "ignorado": false
+          }
+        }
+      ]
+    },
+    "datas invertidas": {
+      "valores": [
+        "2026-05-01",
+        "2026-01-01"
+      ],
+      "ariaInvalid": [
+        null,
+        null
+      ],
+      "describedby": [
+        null,
+        null
+      ],
+      "etiqueta": [
+        "Porto",
+        "Exibindo vistorias de 01/05/2026 até 01/01/2026"
+      ],
+      "mensagem": "Não há vistorias para exibir nesse periodo selecionado.",
+      "erroNoDom": [],
+      "linhas": 0
+    },
+    "aba Agendar: etiquetas de status": [
+      {
+        "total": 0
+      }
+    ],
+    "reflow 320x640": {
+      "doc": {
+        "scrollWidth": 1312,
+        "clientWidth": 320
+      },
+      "nav": {
+        "overflowX": "auto",
+        "scrollWidth": 438,
+        "clientWidth": 240,
+        "x": 40,
+        "right": 280,
+        "w": 240
+      },
+      "ultimaAba": {
+        "x": 324,
+        "right": 478,
+        "w": 154
+      },
+      "filtroDatas": {
+        "x": 32,
+        "right": 618,
+        "w": 586,
+        "flexWrap": "nowrap"
+      },
+      "tabela": {
+        "x": 40,
+        "right": 1312,
+        "w": 1272
+      },
+      "contTabela": {
+        "classe": "br-table",
+        "overflowX": "visible",
+        "scrollWidth": 1272,
+        "clientWidth": 240
+      },
+      "ancestralComScroll": null
+    },
+    "reflow 320x800": {
+      "doc": {
+        "scrollWidth": 1312,
+        "clientWidth": 320
+      },
+      "nav": {
+        "overflowX": "auto",
+        "scrollWidth": 438,
+        "clientWidth": 240,
+        "x": 40,
+        "right": 280,
+        "w": 240
+      },
+      "ultimaAba": {
+        "x": 324,
+        "right": 478,
+        "w": 154
+      },
+      "filtroDatas": {
+        "x": 32,
+        "right": 618,
+        "w": 586,
+        "flexWrap": "nowrap"
+      },
+      "tabela": {
+        "x": 40,
+        "right": 1312,
+        "w": 1272
+      },
+      "contTabela": {
+        "classe": "br-table",
+        "overflowX": "visible",
+        "scrollWidth": 1272,
+        "clientWidth": 240
+      },
+      "ancestralComScroll": null
+    },
+    "detalhe-menu: títulos, landmark do menu, botão Sair, textarea": {
+      "h": [
+        "H3",
+        "H4",
+        "H4",
+        "H4",
+        "H4",
+        "H4",
+        "H4"
+      ],
+      "menuDentroDeMarco": null,
+      "sair": {
+        "radius": "20px",
+        "inline": null,
+        "naSombraDe": null,
+        "regras": [
+          {
+            "sel": ".dropdown-button[_ngcontent-nqr-c16]",
+            "prop": "border-radius",
+            "v": "20px",
+            "folha": "STYLE"
+          }
+        ]
+      },
+      "textarea": {
+        "radius": "6px",
+        "inline": null,
+        "naSombraDe": null,
+        "regras": [
+          {
+            "sel": ".br-textarea textarea",
+            "prop": "border-radius",
+            "v": "6px",
+            "folha": "styles.0756bc3ea9d8bc23.css"
+          }
+        ]
+      },
+      "breadcrumbLinkPadding": [
+        {
+          "padding": "0px 6px",
+          "inline": null,
+          "naSombraDe": "br-breadcrumb",
+          "regras": [
+            {
+              "sel": ":host .crumb a",
+              "prop": "padding",
+              "v": "0px 6px",
+              "folha": "STYLE"
+            }
+          ]
+        },
+        {
+          "padding": "0px 6px",
+          "inline": null,
+          "naSombraDe": "br-breadcrumb",
+          "regras": [
+            {
+              "sel": ":host .crumb a",
+              "prop": "padding",
+              "v": "0px 6px",
+              "folha": "STYLE"
+            }
+          ]
+        }
+      ]
+    },
+    "modal: região rolável da lista de embarcações": {
+      "regiao": {
+        "classe": "lista-embarcacoes mt-2",
+        "overflowY": "auto",
+        "scrollHeight": 372,
+        "clientHeight": 218,
+        "tabindex": null,
+        "focalizaveisDentro": [],
+        "nFocalizaveis": 0
+      },
+      "textareaOculta": {
+        "radius": "6px",
+        "visivel": false,
+        "inline": null,
+        "naSombraDe": null,
+        "regras": [
+          {
+            "sel": ".br-textarea textarea",
+            "prop": "border-radius",
+            "v": "6px",
+            "folha": "styles.0756bc3ea9d8bc23.css"
+          }
+        ]
+      }
+    },
+    "modal: 12 Tabs": [
+      "DIV.lista-embarcacoes mt-2 focus-visible [modal]",
+      "BUTTON.mr-2 focus-visible br-button secondary m",
+      "BUTTON.focus-visible br-button primary middle f",
+      "BUTTON.pull-right focus-visible br-button middl",
+      "BUTTON.pull-right focus-visible br-button middl",
+      "BUTTON.focus-visible br-button middle focus-vis",
+      "BUTTON.focus-visible br-button middle focus-vis",
+      "BUTTON.mr-2 focus-visible br-button secondary m",
+      "BUTTON.focus-visible br-button primary middle f",
+      "BODY.",
+      "BUTTON.br-button small circle",
+      "BUTTON.br-sign-in focus-visible"
+    ]
+  }
+}

@@ -1,0 +1,12748 @@
+# Revisão semântica — pacote fechado
+
+Versão: flow-semantic-1.4.0 · 237 cartões únicos · 237 pendentes · **renderização cega**
+
+## As três filas
+
+| Fila | Quantidade | O que ela cobra |
+|---|---|---|
+| **Ativa — desta bateria** | 237 cartão(ões) | **Só esta fecha a bateria.** Enquanto houver um, as métricas são provisórias. |
+| Histórica — de outras baterias | 0 | Dívida declarada do projeto. Não cobra nada desta bateria, e não some por isso. |
+| Descobertas para a próxima referência | 0 afirmação(ões) | Defeito correto fora do gabarito congelado. Entra na PRÓXIMA versão; não mexe no denominador desta. |
+
+Esforço: 497 sujeitos · 178 cartão(ões) sem evidência verificada · 87 com unidade candidata · estimativa **1245 min** (3 min/cartão +3 sem evidência — DECLARADA, não medida: nenhuma sessão de revisão foi cronometrada até aqui).
+
+Nenhum orçamento de revisão foi declarado. Declare antes de começar — depois de ver os cartões já não é orçamento.
+
+Cegueira: o texto livre da execução está retido em todos os cartões. 128 deles contêm termos que nomeiam o braço, e é isso que a retenção esconde. **Não abra `package.json` enquanto decide**: ele guarda `config.arm` e o caminho do arquivo da execução.
+
+## Como decidir
+
+Escreva `decisao` em cada átomo, com uma destas cinco palavras:
+
+| `decisao` | Quer dizer |
+|---|---|
+| `defeito-do-gabarito` | a alegação acertou um defeito que o gabarito cataloga (nomeie a unidade em `unitIds`) |
+| `defeito-novo-correto` | está certa, mas o defeito não está no gabarito: vai para a próxima referência |
+| `incorreta` | a alegação está errada |
+| `duplicada` | é a mesma afirmação de outro átomo já decidido (aponte `duplicateOf`) |
+| `evidencia-insuficiente` | não dá para decidir com o que está aqui |
+
+A contabilidade (`reference`/`novel`/`false`/`unresolved`) é derivada disso; você não precisa escrevê-la.
+
+Este pacote inclui todas as alegações selecionadas, inclusive as que casariam por regra.
+Candidatos são sugestões de âncora, não vereditos. Você continua sendo a adjudicadora.
+Edite reviews.json; depois gere uma NOVA saída com score. Não edite package.json.
+
+Evidência da execução (achado-2) aponta para a cópia preservada do que as ferramentas gravaram durante a execução; confira-a antes das reconstruções.
+As capturas scene-* são reconstruções no momento de preparar o pacote, não prova de que o agente observou o mesmo estado.
+Confira também reportedEvidence, inclusive as limitações declaradas. Use unresolved quando não houver suporte.
+
+Cartões de linha de base (origem determinística) são revisados como os do agente: é o que permite dizer o que o agente acrescenta ou perde em relação à ferramenta.
+Cena = janela do plano de estados. Uma unidade só pode ser creditada por cartão da mesma cena.
+
+**Este plano navega (D-60):** cada janela tem uma cena por SEGMENTO, capturada na última parada dele (1280x900@inicial = /pnip/portal-mpa/vistorias · 1280x900@detalhe-menu = /pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046 · 1280x900@modal = /pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038). Quando o seletor de uma alegação resolve em mais de um segmento, o cartão lista os sujeitos de cada um e a decisão precisa dizer em `"cena"` de qual segmento a alegação fala (pelos passos declarados e pela evidência). Só os sujeitos dessa cena contam; os dos outros segmentos não são alegação.
+
+Um átomo = um defeito. subjects identifica cada elemento alegado; unitIds contém somente alternativas semanticamente aceitas.
+Cada átomo/elemento vale no máximo uma detecção. Divida alegações compostas; contabilize também as partes falsas.
+Duplicatas revisadas: no átomo repetido, acrescente duplicateOf: { "cardId": "C-...", "atomId": "..." }. A citação continua avaliada separadamente.
+
+## C-02395d8f9105b42699e3680856086a558331173d999d2ac5bb7002193593f1a3
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-00d1141e08ad376117efa9541fe624b5c5501835885644a09a6557220f9290e3 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-02395d8f9105b42699e3680856086a558331173d999d2ac5bb7002193593f1a3",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-03635d1eea2d7317f6eecd84aa59c118cc36d537a7ae71a2271c6ee14b2aba22
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Table header text should not be empty
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:empty-table-header
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)" — <th>
+
+### Unidades candidatas (não são crédito)
+
+- U-b7e530416a4355be7bcf78d035eaf9bd1ffb67d4420e5cb566793a700e04d842 — B-26 · inicial · cena 1280x900@inicial · <th>: Escalada E-04, origem: "autora" (decisão da escalada, 2026-10-01, D-61). O <th scope=col> da coluna de ações (9ª) não tem texto, aria-label nem filhos: as células de ação ficam associadas a um cabeçalho sem nome. O <th> da coluna de caixas (2ª) fica fora: contém um controle, e o defeito dele já é a B-06. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-03635d1eea2d7317f6eecd84aa59c118cc36d537a7ae71a2271c6ee14b2aba22",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-03cd07680b0fe0afaf390de139349923e42f95da65619fe89b032f2b474f0e6b
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os dois campos de data não têm label, aria-label nem aria-labelledby: o input interno (ids br-input-8 e br-input-9) não é referenciado por nenhum <label for>, e a árvore de acessibilidade mostra "textbox" sem nome. O texto visível "Data da vistoria:" e "até" são <span> sem associação programática.
+
+Esperado: Cada campo deve ter nome acessível distinto que identifique seu papel no intervalo (ex.: "Data da vistoria — início" e "Data da vistoria — fim"), associado via label/for ou aria-label.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. tabular até os campos de data
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1)" — <br-input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2)" — <br-input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `snapshot a11y refs e101/e105 — "textbox [ref=...]" sem nome` → não encontrado na evidência preservada da execução
+- `varredura em shadow DOM: {id:"br-input-8", al:null, alb:null, labelFor:false} e {id:"br-input-9", al:null, alb:null, labelFor:false}` → identificador devolvido por ferramenta (sem arquivo)
+- `foco-data-fim.png` → `pipeline/logs/2026-10-02T12-56-12-sem-run1-120f567c-evidencia/foco-data-fim.png` (sha256 3c930f035ead)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-03cd07680b0fe0afaf390de139349923e42f95da65619fe89b032f2b474f0e6b",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-03cdc3697b4dd54f1139a22bee081d330ebeea28a9b06883e825151b1f1e55f6
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-0307b9397f820c4ffbf876ccaea7aa7d9ce4580f2b54b683cc87e86fe5edabf4 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-03cdc3697b4dd54f1139a22bee081d330ebeea28a9b06883e825151b1f1e55f6",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-075a5630f332a22e8b6428ffb8df0f1792adbdab2da390a8bce54e30d579878d
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Buttons must have discernible text
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:button-name
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "unresolved:tr:nth-child(4) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-075a5630f332a22e8b6428ffb8df0f1792adbdab2da390a8bce54e30d579878d",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-07928e7764d439f3ec5e763f8afea785f489d43b50e54fe7e4d7da7e25c443fd
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-50a27493b185c0bbb0179208240a74e28e88df151508b8845c55406c1030426e — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-07928e7764d439f3ec5e763f8afea785f489d43b50e54fe7e4d7da7e25c443fd",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-07c970430a9dda1c866ebe83203742e8e9324aaf590af8be29b8273d81e44971
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-a80ba4fa0e4e8dcc3209bd5f984d110e3d9b52df1b836a9579647be5634914aa — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-07c970430a9dda1c866ebe83203742e8e9324aaf590af8be29b8273d81e44971",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-0b7a117a389839173cc33cfd2d66ca635aff7bfc2db062efe6e898eadc03dc69
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A etiqueta de estado "Nenhum filtro de data aplicado" é rgb(255,255,255) sobre rgb(197,212,235), 14px peso 500: razão de contraste 1.5:1 — praticamente ilegível.
+
+Esperado: Texto normal precisa de razão de contraste mínima de 4.5:1 com o fundo.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: wcag:1.4.3
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span" — <span> "Nenhum filtro de data aplicado"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `cálculo de contraste: fg rgb(255,255,255) / bg rgb(197,212,235) = 1.5:1` → não encontrado na evidência preservada da execução
+- `filtro-cidade-aberto.png` → `pipeline/logs/2026-10-02T12-56-12-sem-run1-120f567c-evidencia/filtro-cidade-aberto.png` (sha256 41445e56f6e6)
+- `foco-data-fim.png` → `pipeline/logs/2026-10-02T12-56-12-sem-run1-120f567c-evidencia/foco-data-fim.png` (sha256 3c930f035ead)
+- `snapshot a11y ref e106` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-0b7a117a389839173cc33cfd2d66ca635aff7bfc2db062efe6e898eadc03dc69",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-0c4ceaab083c2f21b8a9525314f7dda177e22c39780636dd74c3305331758d8b
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-f9f3d45544d87746e9a1c7094a4cc62f5d90ef5f8242736a83ca2bd7164880a8 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-0c4ceaab083c2f21b8a9525314f7dda177e22c39780636dd74c3305331758d8b",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-0c50b77baee0ae0519e11b1225bbe0d39c46d7e8082fb43a555544ea88301359
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Os quatro acionadores de filtro (Cidade, Porto, Vistoriador, Status) são <span class="br-tag interaction" style="cursor:pointer"> sem tabindex, sem role e sem aria-expanded. Não entram na ordem de tabulação: com foco no botão 'Concluídos' (#HISTORICO), um Tab leva direto ao campo de busca (input#search). Abrem/fecham somente com clique de mouse; o estado aberto é indicado apenas pela troca visual do ícone fa-caret-down/fa-caret-up. O axe não acusa nada neste painel.
+
+Esperado: Todas as funções devem ser operáveis via teclado, com papel e estado expostos — p.ex. <button aria-expanded> em vez de <span>.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: emag:2.1
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span" — <span> "Cidade"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span" — <span> "Porto"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span" — <span> "Vistoriador"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span" — <span> "Status"
+
+### Unidades candidatas (não são crédito)
+
+- U-05b87158ac88b5d030d58ee8ec4975da77defd6f42e15bef94c2adc565bfce9f — B-11 · inicial · cena 1280x900@inicial · <span> "Cidade": As 4 etiquetas de filtro ("Cidade", "Porto", "Vistoriador", "Status"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: atributos-ausentes sustenta em inicial — nenhum destes atributos presente: tabindex, role. Medido: ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-124a6e3df510b7411b1d60ba552eefccc737cd33b85d05267974881867d06c07 — B-11 · inicial · cena 1280x900@inicial · <span> "Status": As 4 etiquetas de filtro ("Cidade", "Porto", "Vistoriador", "Status"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: atributos-ausentes sustenta em inicial — nenhum destes atributos presente: tabindex, role. Medido: ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-6f0ac137d5bade8c86303e0afc551d4b53699c58fea6717d3a622ccd615710d1 — B-11 · inicial · cena 1280x900@inicial · <span> "Vistoriador": As 4 etiquetas de filtro ("Cidade", "Porto", "Vistoriador", "Status"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: atributos-ausentes sustenta em inicial — nenhum destes atributos presente: tabindex, role. Medido: ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-ffc998ab00b11ff3f14640a0556517c49967185977f90f93e3a43477569ab1a2 — B-11 · inicial · cena 1280x900@inicial · <span> "Porto": As 4 etiquetas de filtro ("Cidade", "Porto", "Vistoriador", "Status"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: atributos-ausentes sustenta em inicial — nenhum destes atributos presente: tabindex, role. Medido: ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+- `.playwright-mcp/page-2026-10-02T07-33-04-102Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-33-04-102Z.yml` (sha256 595f728bd1d2)
+- `S-page-011` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-0c50b77baee0ae0519e11b1225bbe0d39c46d7e8082fb43a555544ea88301359",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-0cc2b85dc5cccd6c80716874aefc40e4be711f29ad7b5c2470826df646cdb660
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-10a37dc0d8c4dfcdb169ccb9616aa37cb63dc2ef443778ecb5719fde1e491f5c — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-0cc2b85dc5cccd6c80716874aefc40e4be711f29ad7b5c2470826df646cdb660",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-0e17824bad3021a25215f68f34417422dafe6eeea5aedfec936c006aae62c6bf
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-3709122ef551796d381883922a2608a3e1e33f879789e165d56b6c8d43a7d2b5 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-0e17824bad3021a25215f68f34417422dafe6eeea5aedfec936c006aae62c6bf",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-0f98b7d53cc9740516f5a30bdb777cdfa926815e90e24ffacbb30e06788cf7ed
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Table header text should not be empty
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:empty-table-header
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)" — <th>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-0f98b7d53cc9740516f5a30bdb777cdfa926815e90e24ffacbb30e06788cf7ed",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-11302aa41cb0a6c98f17f11179a29b13d221671c936719d2694820395be47053
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Com a lista do filtro 'Cidade' aberta, as 6 opcoes sao renderizadas como <div class="br-radio"><label>Texto</label></div>: nao existe nenhum <input type="radio"> (document.querySelectorAll('pnip-filter-panel .br-radio input') retorna 0), os <label> nao tem atributo for nem controle aninhado, e o container nao expoe role=listbox/radiogroup. As opcoes nao recebem foco, nao tem papel nem estado de selecao.
+
+Esperado: Cada opcao do filtro deve ser um controle real e operavel por teclado — <input type="radio"> associado ao seu <label for>, dentro de um agrupamento com papel e estado de selecao expostos — de modo que a opcao possa ser alcancada, lida e escolhida sem mouse.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa) 2. clicar no acionador de filtro 'Cidade' para abrir a lista de opcoes
+
+Regra declarada: govbr-3.7.0-accessibility-global-e6fd5e1247de
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:pnip-filter-panel .br-radio > label" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `DOM no estado aberto: 6 elementos em 'pnip-filter-panel .br-radio > label', 0 elementos em 'pnip-filter-panel .br-radio input', label sem atributo for` → identificador devolvido por ferramenta (sem arquivo)
+- `S-page-011 (axe com o dropdown aberto: stateChanged=true, findings added=[] — o axe nao cobre opcao sem controle, achado sustentado por inspecao direta)` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-11302aa41cb0a6c98f17f11179a29b13d221671c936719d2694820395be47053",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-11e627989a023f8f443da74278b3a60865ae29b8511fbb8f6011bff5f09ef760
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-6c245502c15b87a2a3da34719c7b1d1f47aadd9a7ab7ca55ebbdfa117ae64ba8 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-11e627989a023f8f443da74278b3a60865ae29b8511fbb8f6011bff5f09ef760",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-11f451951c08b7ae51b47266240a9a73aca7dafe5762a10739acf65062f5e7d6
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Nas 7 linhas que já têm vistoriador o botão usa o ícone "user-times" (usuário com X, que significa remover usuário), enquanto nas 3 linhas sem vistoriador o mesmo botão usa "user-plus". Os dois acionam exatamente a mesma função: ambos abrem o diálogo com título "Atribuir Vistoriador", texto "Selecione um Vistoriador" e a mesma lista de 6 vistoriadores; nenhum remove a atribuição. Todos os 10 botões têm title="Atribuir vistoriador".
+
+Esperado: Uma mesma função deve ser identificada pelo mesmo ícone; o ícone de remover usuário não deve ser usado para a ação de atribuir/trocar vistoriador.
+
+Janela: 1440×900 · interações desde o carregamento: 1. clicar no botão br-button[icon="user-times"] da 2ª linha 2. fechar o diálogo com Escape 3. clicar no botão br-button[icon="user-plus"] da 1ª linha
+
+Regra declarada: nenhuma (atribuição incerta)
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: regra-incerta · janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `linha 2 (vistoriador "Paulo Cordeiro Paiva", ícone user-times) => diálogo {title:"Atribuir Vistoriador", body:"Selecione um Vistoriador"}; linha 1 (sem vistoriador, ícone user-plus) => diálogo idêntico, mesmas 6 opções; após fechar, a atribuição da linha 2 permanece "Paulo Cordeiro Paiva"` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-11f451951c08b7ae51b47266240a9a73aca7dafe5762a10739acf65062f5e7d6",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-1257a09575a40b39572f0ec80a190665388146acd40243649a92c34003148154
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena a-decidir:1280x900
+
+Observado: Dois cabeçalhos de coluna não têm texto disponível para leitores de tela: o da coluna de seleção (contém apenas o input checkbox) e o da coluna de ações (innerHTML vazio).
+
+Esperado: Cada <th> deve expor texto a tecnologias assistivas, ainda que visualmente oculto, p.ex. "Seleção" e "Ações".
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: empty-table-header
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-a-decidir: o seletor resolve em 1280x900@inicial, 1280x900@modal; escolha em "cena" de qual a alegação fala — só os sujeitos dela contam
+
+### Sujeitos
+
+Cena `1280x900@inicial` (/pnip/portal-mpa/vistorias) — escolha com `"cena": "1280x900@inicial"`:
+- "1280x900@inicial|body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)" — <th>
+- "1280x900@inicial|body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)" — <th>
+
+Cena `1280x900@modal` (/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038) — escolha com `"cena": "1280x900@modal"`:
+- "1280x900@modal|body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>div>table>thead>tr>th:nth-of-type(2)" — <th> "Data"
+
+
+### Unidades candidatas (não são crédito)
+
+- U-b7e530416a4355be7bcf78d035eaf9bd1ffb67d4420e5cb566793a700e04d842 — B-26 · inicial · cena 1280x900@inicial · <th>: Escalada E-04, origem: "autora" (decisão da escalada, 2026-10-01, D-61). O <th scope=col> da coluna de ações (9ª) não tem texto, aria-label nem filhos: as células de ação ficam associadas a um cabeçalho sem nome. O <th> da coluna de caixas (2ª) fica fora: contém um controle, e o defeito dele já é a B-06. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `S-page-003` → identificador devolvido por ferramenta (sem arquivo)
+- `F-112` → identificador devolvido por ferramenta (sem arquivo)
+- `F-113` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-1257a09575a40b39572f0ec80a190665388146acd40243649a92c34003148154",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-12a9ea3185136deed53c393111026fc7f2118aebca843b56102e0a19e8fe30f1
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O terceiro botao de acao de cada linha (icone de olho, 10 instancias) renderiza no shadow root um <button class="secondary middle" aria-label=""> sem texto visivel a leitores de tela, sem aria-labelledby e com title ausente; a arvore de acessibilidade expoe 'button' sem nome, ao contrario dos vizinhos 'Atribuir vistoriador', 'Excluir vistoria' e 'Notificar solicitante da vistoria'.
+
+Esperado: Todo botao deve ter nome acessivel determinavel programaticamente, descrevendo sua acao (por exemplo 'Visualizar vistoria'), via conteudo textual, aria-label nao vazio ou aria-labelledby valido.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-008/F-213..F-222 (axe-core 4.12.1, regra button-name, severidade critical, 10 elementos)` → não encontrado na evidência preservada da execução
+- `arvore de acessibilidade: nodes e147, e183, e219, e255, e291, e327, e363, e399, e435, e471 expostos como 'button' sem nome` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-12a9ea3185136deed53c393111026fc7f2118aebca843b56102e0a19e8fe30f1",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-163e5583d526fc35d987d8880658e04b192feed323128d947e845a639a091680
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@detalhe-menu
+
+Observado: Certain ARIA roles must contain particular children
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até detalhe-menu (3 passo(s))
+
+Regra declarada: axe:aria-required-children
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>pnip-header>div>div>div" — <div#avatar-menu> "Usuária de Teste usuaria.teste@exemplo.invalid S"
+
+### Unidades candidatas (não são crédito)
+
+- U-060619c23f438737b6ceda1f36f200d1431c490df3fd7941c57b2f4a1a8679bc — B-17 · detalhe-menu · cena 1280x900@detalhe-menu · <div#avatar-menu> "Usuária de Teste usuaria.teste@exemplo.invalid S": Menu do avatar (div#avatar-menu.br-list) declara role="menu" e não tem nenhum descendente com papel menuitem: o "Sair" é um <button> sem papel e "Trocar unidade" um <span>. O papel declarado não corresponde ao conteúdo. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: detalhe-menu
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-163e5583d526fc35d987d8880658e04b192feed323128d947e845a639a091680",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-176cb639d3b2f304a60033d41ef98f1dfdac4542652b63faf72d8cc29c55e586
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O único cabeçalho da página é o <h2> "Vistorias" (consulta a h1..h6 retornou exatamente um elemento, de nível 2). Não existe <h1> na tela, de modo que a hierarquia de títulos começa no nível 2 e o título principal do conteúdo não está no nível mais alto.
+
+Esperado: O título principal do conteúdo deve ser marcado como <h1>, com os níveis seguintes usados em ordem, sem iniciar a hierarquia no nível 2.
+
+Janela: 1440×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: emag:1.3
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(1)>h2" — <h2> "Vistorias"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` (sha256 6e8798cb118e)
+- `state-01-initial.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/state-01-initial.png` (sha256 27d62eb8866e)
+- `document.querySelectorAll("h1,h2,h3,h4,h5,h6") => [{tag:"H2", text:"Vistorias"}]` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-176cb639d3b2f304a60033d41ef98f1dfdac4542652b63faf72d8cc29c55e586",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-17ba6b0523018749646aef8f63bf0f90496060fe2f9373b272f85371fcc6b3f8
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os quatro filtros (Cidade, Porto, Vistoriador, Status) são <span class="br-tag interaction"> com style="cursor:pointer", sem tabindex, sem role e sem aria-expanded; não aparecem na lista de elementos focáveis do documento e um clique neles abre div.br-list com as opções. As opções são <label> soltos dentro de div.br-radio, sem nenhum input associado e sem nenhum elemento focável (0 focáveis na lista aberta). Clicar numa opção filtra de fato a tabela (34 → 6 itens com "Barra Nova").
+
+Esperado: Gatilho e opções do filtro devem ser operáveis por teclado (ex.: <button> com role e aria-expanded, e opções como controles focáveis), já que a funcionalidade existe e só é alcançável com o mouse.
+
+Janela: 1440×900 · interações desde o carregamento: 1. clicar no chip de filtro "Cidade"
+
+Regra declarada: wcag:2.1.1
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span" — <span> "Cidade"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span" — <span> "Porto"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span" — <span> "Vistoriador"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span" — <span> "Status"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` (sha256 6e8798cb118e)
+- `state-01-initial.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/state-01-initial.png` (sha256 27d62eb8866e)
+- `varredura de focáveis (light DOM + shadow DOM): os 4 chips não constam entre os 84 elementos focáveis; tabindex=null, role=null, aria-expanded=null; div.br-list.d-block contém 6 <label> e 0 elementos focáveis` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-17ba6b0523018749646aef8f63bf0f90496060fe2f9373b272f85371fcc6b3f8",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-1892608a148b04151db544d1ec84733d0ec4c3c826d29493e2e22290c3323d9b
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A tabela de vistorias (9 colunas, 10 linhas, 34 itens paginados) nao tem <caption>, nem aria-label, aria-labelledby ou summary; a arvore de acessibilidade expoe 'table' sem nome. O titulo 'Vistorias' da tela e um <h2> independente, sem associacao programatica com a tabela.
+
+Esperado: A tabela deve ser identificada com <caption> (ou nome acessivel equivalente) descrevendo seu conteudo, e receber descricao contextual quando a complexidade exigir.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: govbr-3.7.0-accessibility-global-cd705eb5da2a
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table" — <table> "# Nome da embarcação RAEP Data/Hora Vistoria Loc"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `DOM: table.table com hasCaption=false, aria-label=null, aria-labelledby=null, summary=null` → identificador devolvido por ferramenta (sem arquivo)
+- `arvore de acessibilidade: node e110 exposto como 'table' sem nome` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-1892608a148b04151db544d1ec84733d0ec4c3c826d29493e2e22290c3323d9b",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-1924f8d9c67fb23d6fe51b247c23e3a2ce0cee858964e2e683a4539c9dac5bea
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os 10 botoes de acao "visualizar" das linhas renderizam no shadow root <button class="secondary middle" aria-label=""> sem texto interno, title ou aria-labelledby; na arvore de acessibilidade aparecem como button sem nome, ao lado de irmaos nomeados.
+
+Esperado: Cada botao deve ter nome acessivel (aria-label preenchido ou texto visivel), como os irmaos "Atribuir vistoriador", "Excluir vistoria" e "Notificar solicitante da vistoria".
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: button-name
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-003 (checks=axe)` → identificador devolvido por ferramenta (sem arquivo)
+- `findings F-091..F-100` → identificador devolvido por ferramenta (sem arquivo)
+- `snapshot da arvore de acessibilidade: button [ref=e147] sem nome` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-1924f8d9c67fb23d6fe51b247c23e3a2ce0cee858964e2e683a4539c9dac5bea",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-1a97406c2d0c78eb73df828534dcb5c243bf6a2b1f9f28ecfcb6ba5e4023b187
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Os quatro gatilhos de filtro (Cidade, Porto, Vistoriador, Status) sao <span class="br-tag interaction" style="cursor: pointer;"> sem tabindex, sem role, sem aria-haspopup e sem aria-expanded. Nao aparecem na ordem de tabulacao (nenhum deles e retornado pelo traversal de elementos focalizaveis) e o foco permanece em BODY apos o clique. Por mouse sao funcionais: clicar em Cidade abre uma lista de 6 municipios e escolher 'Vila do Farol' reduz a tabela de 34 para 6 itens, habilita 'Limpar Filtro' e cria um chip.
+
+Esperado: Controles que alteram o conjunto de resultados devem ser operaveis por teclado: usar <button> (ou role=button com tabindex=0 e handler de Enter/Espaco), expondo aria-haspopup="listbox" e aria-expanded refletindo o estado aberto/fechado.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:2.1.1
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span" — <span> "Cidade"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span" — <span> "Porto"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span" — <span> "Vistoriador"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span" — <span> "Status"
+
+### Unidades candidatas (não são crédito)
+
+- U-05b87158ac88b5d030d58ee8ec4975da77defd6f42e15bef94c2adc565bfce9f — B-11 · inicial · cena 1280x900@inicial · <span> "Cidade": As 4 etiquetas de filtro ("Cidade", "Porto", "Vistoriador", "Status"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: atributos-ausentes sustenta em inicial — nenhum destes atributos presente: tabindex, role. Medido: ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-124a6e3df510b7411b1d60ba552eefccc737cd33b85d05267974881867d06c07 — B-11 · inicial · cena 1280x900@inicial · <span> "Status": As 4 etiquetas de filtro ("Cidade", "Porto", "Vistoriador", "Status"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: atributos-ausentes sustenta em inicial — nenhum destes atributos presente: tabindex, role. Medido: ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-6f0ac137d5bade8c86303e0afc551d4b53699c58fea6717d3a622ccd615710d1 — B-11 · inicial · cena 1280x900@inicial · <span> "Vistoriador": As 4 etiquetas de filtro ("Cidade", "Porto", "Vistoriador", "Status"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: atributos-ausentes sustenta em inicial — nenhum destes atributos presente: tabindex, role. Medido: ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-ffc998ab00b11ff3f14640a0556517c49967185977f90f93e3a43477569ab1a2 — B-11 · inicial · cena 1280x900@inicial · <span> "Porto": As 4 etiquetas de filtro ("Cidade", "Porto", "Vistoriador", "Status"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: atributos-ausentes sustenta em inicial — nenhum destes atributos presente: tabindex, role. Medido: ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `state1-full.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/state1-full.png` (sha256 0a3ccd50a730)
+- `.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` (sha256 6e8798cb118e)
+- `deep.json` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/deep.json` (sha256 d470a093ae95)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-1a97406c2d0c78eb73df828534dcb5c243bf6a2b1f9f28ecfcb6ba5e4023b187",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-1aac8101195bd2aead404e390c0367cc2f1e3e958cd27fcc059788b2b2634c07
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A caixa "selecionar todos" no cabeçalho não tem nome acessível (sem aria-label, title ou label); clicá-la marca as 10 caixas de linha, mas a árvore de acessibilidade a expõe apenas como "checkbox" sem nome.
+
+Esperado: A caixa de seleção global deve ter nome acessível descrevendo sua função (ex.: aria-label="Selecionar todas as vistorias da página").
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. clicar na caixa de seleção do cabeçalho da tabela
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `selecao-todos.png` → `pipeline/logs/2026-10-02T12-56-12-sem-run1-120f567c-evidencia/selecao-todos.png` (sha256 73cbcfc3dcec)
+- `snapshot a11y ref e115 — columnheader contendo "checkbox" sem nome` → identificador devolvido por ferramenta (sem arquivo)
+- `após clique: headerChecked=true e 10/10 caixas de linha marcadas` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-1aac8101195bd2aead404e390c0367cc2f1e3e958cd27fcc059788b2b2634c07",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-1be81b3ecbba0a5b9e6b77edde45ed3a40706540da0a43c2df3afa1027419506
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos).
+
+Esperado: Uma Área de Rodapé com o componente Footer (.br-footer ou <br-footer>), como o Template Base exige.
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: ds:page-footer
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-1be81b3ecbba0a5b9e6b77edde45ed3a40706540da0a43c2df3afa1027419506",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-1c3df49b3ad5304a7724945c16dc3b0a424828347ee2c114bd6c519b2c9c034e
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A aba ativa é indicada apenas pela classe CSS .active no <li> (cor rgb(12,50,111) e borda inferior de 4px). Os três botões não têm role="tab", aria-selected nem aria-current, e o <ul> não tem role="tablist"; na árvore de acessibilidade as três abas são indistinguíveis. Confirmado também após trocar para "Agendar".
+
+Esperado: O estado selecionado deve ser programaticamente determinável, via padrão de abas (role="tablist"/role="tab" com aria-selected) ou, mantendo os botões, via aria-current na aba ativa.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. clicar na aba "Agendar" 3. clicar na aba "Concluídos" 4. voltar para a aba "Tramitando"
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button" — <button#TRAMITANDO> "Tramitando"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `outerHTML: <li class="tab-item active"><button id="TRAMITANDO" type="button">` → identificador devolvido por ferramenta (sem arquivo)
+- `consulta: AGENDAR/TRAMITANDO/HISTORICO todos com aria-selected=null, aria-current=null, role=null; ul role=null` → não encontrado na evidência preservada da execução
+- `snapshot a11y refs e53/e55/e57 — três "button" equivalentes` → não encontrado na evidência preservada da execução
+- `após clicar em Agendar: AGENDAR* ativo, aria ainda todos null` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-1c3df49b3ad5304a7724945c16dc3b0a424828347ee2c114bd6c519b2c9c034e",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-1cda7c9b6ad8c4a83f1a054dc1abbb823b296484722e79fada64893faed427fb
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: 9 icones puramente decorativos (4 fa-filter e 4 fa-caret-down dos gatilhos de filtro, e 1 fa-clock de "Ultima atualizacao") nao tem aria-hidden="true" e injetam glifo via conteudo gerado em ::before, sem texto proprio - o glifo da area de uso privativa aparece como no de texto na arvore de acessibilidade. Na mesma tela, 51 outros icones (paginacao, breadcrumb, botoes do design system) trazem aria-hidden="true", evidenciando a inconsistencia.
+
+Esperado: Icones decorativos que nao transmitem informacao devem ser removidos da arvore de acessibilidade com aria-hidden="true", como ja fazem os demais icones da tela.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:1.1.1
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span>i" — <i>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span>span:nth-of-type(2)" — <span>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span>i" — <i>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span>span:nth-of-type(2)" — <span>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span>i" — <i>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span>span:nth-of-type(2)" — <span>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span>i" — <i>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span>span:nth-of-type(2)" — <span>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(3)>i" — <i>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` (sha256 6e8798cb118e)
+- `state1-full.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/state1-full.png` (sha256 0a3ccd50a730)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-1cda7c9b6ad8c4a83f1a054dc1abbb823b296484722e79fada64893faed427fb",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-1eaeaa6b04b5c3f12cf3909a32e9b50880eca1fdf7084a6f38da717611e34b83
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-0b56e5b10f4881a7605386c84f28bbcd225b3a6127a73c212dad3d0d8c45a4e5 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-1eaeaa6b04b5c3f12cf3909a32e9b50880eca1fdf7084a6f38da717611e34b83",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-1f9e13fc9b1b44b7968f17cf626246396c0714a88887e874abdc5064f9854939
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@detalhe-menu
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até detalhe-menu (3 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>pnip-propesc-nao-comparecimento>div>div:nth-of-type(2)>div>div>textarea" — <textarea>
+
+### Unidades candidatas (não são crédito)
+
+- U-238f9e8879e41566f840160f72c03e67a02b73d7a42128f02a5935cc250e0e6f — B-20 · detalhe-menu · cena 1280x900@detalhe-menu · <textarea>: Detalhe da vistoria de não comparecimento: a <textarea> do motivo tem um <label> "Descrever o motivo do não comparecimento" como irmão, mas sem for (e a textarea sem id): o rótulo não está associado; nome acessível vazio. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: detalhe-menu
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-1f9e13fc9b1b44b7968f17cf626246396c0714a88887e874abdc5064f9854939",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-200d2f8481c8f69075aca1e497223bb90d49c0ecd2953060c91bd5e99aedc0d6
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-d32966d9163ab3f1dd27e4670fae6cb1b4a4c1d16cd90f4f97a7e5aabc5e31d0 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-d9869f3ea32b35bb4fa9584d5e128f1578dfee7ed4a5f37b8dad906257ebc811 — B-07 · inicial · cena 1280x900@inicial · <button> [shadow]: O botão de abrir a vistoria (ícone de olho) de cada linha não tem nome acessível: sem texto, aria-label vazio, sem title (o hospedeiro br-button também não tem title, ao contrário das outras três ações da linha). Papel button com nome "" na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-200d2f8481c8f69075aca1e497223bb90d49c0ecd2953060c91bd5e99aedc0d6",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-205d676b1892c442b4aeb80eb80fb43c668664f974f785e30e6bc01fd8e963de
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: margin: -38px 4px 0px 0px (fora da escala: -38px)
+
+Esperado: Múltiplos de 4px
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: ds:token-spacing
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button" — <button> "Buscar"
+
+### Unidades candidatas (não são crédito)
+
+- U-3993a821217adf04163bb635bbef658eeedd7f545eec0c26ed68d7166e39e8f6 — B-09 · inicial · cena 1280x900@inicial · <button> "Buscar": Botão "Buscar" da busca: button.br-button só com ícone (lupa), 32×32, sem a classe circle — sem rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-cc6c46e167e0d20868ba66ed04918cd88020fedbf3ffcdb7395251824f07d313 — B-28 · inicial · cena 1280x900@inicial · <button> "Buscar": Escalada E-07, origem: "autora" (decisão da escalada, 2026-10-01, D-61). O botão de ícone "Buscar", montado pelo app fora do br-input, mede 32×32 px: abaixo da área de toque de 48×48. Tamanhos padrão do DS (br-button de 40 px, Menu e Home dos web components, paginação) ficam como fundo. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-205d676b1892c442b4aeb80eb80fb43c668664f974f785e30e6bc01fd8e963de",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-2248434323723e1f203ac4b61f6b888bef3d3b1574e7e207830986b3b83653dd
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O item 'Sair' do menu do usuario (botao dentro de #avatar-menu) tem border-radius: 20px, valor fora da escala de raio do DS. O elemento esta no DOM desde o carregamento e torna-se visivel ao abrir o menu do avatar.
+
+Esperado: O raio de borda deve pertencer a escala de raio do gov.br DS (tokens --surface-rounder-*/--radius), sem valores arbitrarios.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa) 2. abrir o menu do avatar para visualizar o item 'Sair'
+
+Regra declarada: ds-token-radius
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>pnip-header>div>div>div>button" — <button> "Sair" · **oculto**: nao-renderizado, aria-hidden
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-010/F-254 (govbr-ds-token, regra ds-token-radius, severidade minor, confidence 1, locator '#avatar-menu > button')` → não encontrado na evidência preservada da execução
+- `estilo computado: border-radius 20px no botao 'Sair'` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-2248434323723e1f203ac4b61f6b888bef3d3b1574e7e207830986b3b83653dd",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-225ec4f21421e16fb59f5d19d9cbd2d4cf2c52325e53eba69a6e3deaf9a657d9
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A página corrente da paginação é marcada apenas pela classe CSS "active" no <a class="page active">1</a>. Não há aria-current; na árvore de acessibilidade o link aparece como "link \"1\"", idêntico aos links 2, 3 e 4.
+
+Esperado: O link da página corrente deve expor aria-current="page" (ou equivalente) para que a posição atual seja programaticamente determinável.
+
+Janela: 1440×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a" — <a> "1"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` (sha256 6e8798cb118e)
+- `state-01-initial.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/state-01-initial.png` (sha256 27d62eb8866e)
+- `HTML: <a href="javascript:void(0)" class="page active"> 1 </a>; nav tem data-current="1" mas nenhum aria-current nos links` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-225ec4f21421e16fb59f5d19d9cbd2d4cf2c52325e53eba69a6e3deaf9a657d9",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-234d737a704e004736c3335826958e168c43eb60e298e26fbd4f8af0c9315822
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-cd1bf589230dd069e95d596ab76a47f1eeff2d20a5b45d248f6be9d4a03a2fff — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-234d737a704e004736c3335826958e168c43eb60e298e26fbd4f8af0c9315822",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-243a73eaa1a61b338e6d02c93ee67df4eedf84c4a2dba661ae14eae5a42625b4
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Buttons must have discernible text
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:button-name
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "unresolved:tr:nth-child(3) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-243a73eaa1a61b338e6d02c93ee67df4eedf84c4a2dba661ae14eae5a42625b4",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-2451729ee00170e472a930cd9b3da8a167881579711fee395966d1a01c5e34c5
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: O botao que remove o filtro aplicado e <button type="button" class="br-button inverted circle"><i class="fas fa-times"></i></button>: sem aria-label, sem title, sem texto (textContent vazio) e com o icone sem aria-hidden. Na arvore de acessibilidade aparece como button "" (nome vazio).
+
+Esperado: O botao deve ter nome acessivel descrevendo a acao e o filtro removido, por exemplo aria-label="Remover filtro Vila do Farol".
+
+Janela: 1280×900 · interações desde o carregamento: 1. Clicar no gatilho de filtro 'Cidade' 2. Clicar na opcao 'Vila do Farol'
+
+Regra declarada: wcag:4.1.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-nao-resolvido: o seletor não resolve em nenhuma cena da janela (1280x900@inicial, 1280x900@detalhe-menu, 1280x900@modal)
+
+### Sujeitos
+
+- "unresolved:pnip-filter-panel span.br-tag.interaction:not([style]) button" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `state-filtro-cidade.md` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/state-filtro-cidade.md` (sha256 ddafcb1bd9a0)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-2451729ee00170e472a930cd9b3da8a167881579711fee395966d1a01c5e34c5",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-24a5b74ff9efd84643115a06cd35bfaeea8b5887ffbea25a020e247e3c5d7b20
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elements must meet minimum color contrast ratio thresholds
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:color-contrast
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-378ca27cdcd3ddaeff869d2dc65fb85c2dbae1863257673c49fff068452ab683 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-24a5b74ff9efd84643115a06cd35bfaeea8b5887ffbea25a020e247e3c5d7b20",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-26cc027450555605b9b0a807c1754986eac4cf44a6f06ac1bc1c93f5bde39af7
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-a536907d260e7d4c81756d2ad78e31444190463c52bbc16565eaa9564d319dd6 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-26cc027450555605b9b0a807c1754986eac4cf44a6f06ac1bc1c93f5bde39af7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-2a15acedced8e86e23824c7dd05185f8b43b9b8cd9e4a59406ec824ec9cd7362
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Com o painel do filtro "Cidade" aberto, as 6 opcoes sao div.br-radio contendo apenas um <label> e nenhum <input>: label sem atributo for, HTMLLabelElement.control nulo, e o painel tem 0 elementos focalizaveis, de modo que a selecao so funciona por clique do mouse. No mesmo documento os seletores de paginacao usam div.br-radio com input + label[for] corretos.
+
+Esperado: Cada opcao deve ser um controle real e focalizavel (input[type=radio] com id associado ao label[for], ou role=radio/option com tabindex), selecionavel por teclado e exposta com papel e estado.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. clicar no gatilho de filtro "Cidade" (primeiro span.br-tag.interaction)
+
+Regra declarada: emag:2.1
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:.br-list .br-radio:not(:has(input))" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `verify_finding V-004 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, elements=6, violation=no-predicate)` → identificador devolvido por ferramenta (sem arquivo)
+- `scan S-page-005 (structure) no mesmo estado: nenhuma violacao de tag estrutural, apenas observacao sem norma` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-2a15acedced8e86e23824c7dd05185f8b43b9b8cd9e4a59406ec824ec9cd7362",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-2de822fe0dbe4375e7c18aac80d715c88b9d6fd2f4dfad8612f58534442e53ef
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Os 10 botões de visualizar da coluna de ações não têm nome acessível: o <button> gerado no shadow root tem aria-label="" e nenhum texto, e o host <br-button icon="eye"> não define title nem aria-label. Os irmãos (user-plus, trash, bell) recebem nome via title no host.
+
+Esperado: Todo botão deve ter texto discernível por tecnologia assistiva (texto, aria-label, aria-labelledby ou title).
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: button-name
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-003` → identificador devolvido por ferramenta (sem arquivo)
+- `F-091` → identificador devolvido por ferramenta (sem arquivo)
+- `F-092` → identificador devolvido por ferramenta (sem arquivo)
+- `F-093` → identificador devolvido por ferramenta (sem arquivo)
+- `F-094` → identificador devolvido por ferramenta (sem arquivo)
+- `F-095` → identificador devolvido por ferramenta (sem arquivo)
+- `F-096` → identificador devolvido por ferramenta (sem arquivo)
+- `F-097` → identificador devolvido por ferramenta (sem arquivo)
+- `F-098` → identificador devolvido por ferramenta (sem arquivo)
+- `F-099` → identificador devolvido por ferramenta (sem arquivo)
+- `F-100` → identificador devolvido por ferramenta (sem arquivo)
+- `V-005` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-2de822fe0dbe4375e7c18aac80d715c88b9d6fd2f4dfad8612f58534442e53ef",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-2e879e870b0bf8070773e2ddf073da5bbf0fa8cfc02efbc55c71cf76a29579e2
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-f4c4b8d4dce8ec5c0563c669076815a62a663913fd2dc5d9f0800feb47660c62 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-2e879e870b0bf8070773e2ddf073da5bbf0fa8cfc02efbc55c71cf76a29579e2",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-2ec08d5dacc5f9ad9376bb7f296a567c90c243f3412e101976c34bd4f11e1626
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: A aba corrente é distinguida só visualmente (cor #0c326f e borda inferior de 4px, via a classe 'active' no <li> pai). O <button> não tem aria-selected, aria-current nem role; na árvore de acessibilidade as três abas aparecem como buttons indistinguíveis e nada indica qual está ativa.
+
+Esperado: O estado selecionado definido pelo autor deve ser programaticamente determinável, p.ex. aria-current="true" ou aria-selected com role="tab" em tablist.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button" — <button#TRAMITANDO> "Tramitando"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+- `.playwright-mcp/page-2026-10-02T07-41-51-661Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-41-51-661Z.yml` (sha256 9ee6b6192c71)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-2ec08d5dacc5f9ad9376bb7f296a567c90c243f3412e101976c34bd4f11e1626",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-3091988acc73c4f8faee6c48b6772d40df3334ac651eacc9c35f4d7da506a52c
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-d1ef6c8b7de732ce0cc20c8f4af61e9023217ac2944c179ffc72c2b5d7d6bf30 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-3091988acc73c4f8faee6c48b6772d40df3334ac651eacc9c35f4d7da506a52c",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-31e866c9e5794c5172e632f436413e482e789ecba664622989c488d3035cad0d
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-12016f38bbfe6f3d2ddf321f52931758cf1254bf4eeefc27fb37ce683c6c5ce2 — B-07 · inicial · cena 1280x900@inicial · <button> [shadow]: O botão de abrir a vistoria (ícone de olho) de cada linha não tem nome acessível: sem texto, aria-label vazio, sem title (o hospedeiro br-button também não tem title, ao contrário das outras três ações da linha). Papel button com nome "" na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-377e0c75de9f9a39252a341918da83b93669c82f954178b59b446ff438c5d245 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-31e866c9e5794c5172e632f436413e482e789ecba664622989c488d3035cad0d",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-323e24de164e9655716ac6fe358b2b938429f904eae20b3eed1d650679d1bfc3
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A tag de apoio do filtro de data exibe o texto "Nenhum filtro de data aplicado" em branco (rgb(255,255,255)) sobre fundo rgb(197,212,235), 14px/500 — razão de contraste medida 1.5:1. No screenshot de página inteira o texto é praticamente ilegível.
+
+Esperado: Texto normal (14px, peso 500) deve ter contraste mínimo de 4.5:1 com o fundo.
+
+Janela: 1440×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:1.4.3
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span" — <span> "Nenhum filtro de data aplicado"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` (sha256 6e8798cb118e)
+- `state-01-initial.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/state-01-initial.png` (sha256 27d62eb8866e)
+- `getComputedStyle: color=rgb(255,255,255), backgroundColor=rgb(197,212,235); contraste calculado=1.5` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-323e24de164e9655716ac6fe358b2b938429f904eae20b3eed1d650679d1bfc3",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-35139f51103d124f4314b3e6232a16c381e960c5a9ab39b061a471475f0873ce
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O campo de busca da tabela (input#search no shadow root do host br-input) nao tem label nem aria-label; sua unica identificacao e o placeholder 'Pesquise aqui ...', que desaparece ao digitar e nao constitui etiqueta.
+
+Esperado: O campo de busca deve ter etiqueta persistente e programaticamente associada (por exemplo <label for="search">Pesquisar vistorias</label> ou aria-label equivalente), nao apenas placeholder.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: govbr-3.7.0-accessibility-global-b95c42b61ed3
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input" — <br-input#search> "Pesquise aqui ..."
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `DOM: input#search com placeholder='Pesquise aqui ...', aria-label=null, aria-labelledby=null, nenhum label[for='search'] no documento e nenhum label ancestral` → identificador devolvido por ferramenta (sem arquivo)
+- `arvore de acessibilidade: node e93 exposto como textbox nomeado apenas pelo placeholder` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-35139f51103d124f4314b3e6232a16c381e960c5a9ab39b061a471475f0873ce",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-38d78a9cfd737f09ce7232ce07c75ca5263aa05f871ee11f93fc084f6c4af74c
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O unico nome acessivel do campo de busca e o placeholder "Pesquise aqui ...": o shadow root nao tem nenhum <label> (0 elementos) e o input interno tem aria-label=null e aria-labelledby ausente.
+
+Esperado: O campo deve ter etiqueta associada programaticamente (<label for>, aria-label ou aria-labelledby); e-MAG 6.2 declara explicitamente que placeholder nao substitui etiqueta, pois desaparece ao digitar e nao e anunciado de forma consistente.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: emag:6.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input" — <br-input#search> "Pesquise aqui ..."
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `verify_finding V-003 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, violation=no-predicate)` → identificador devolvido por ferramenta (sem arquivo)
+- `inspecao do shadow root de #search` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-38d78a9cfd737f09ce7232ce07c75ca5263aa05f871ee11f93fc084f6c4af74c",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-3955a28dce50898a10a996b28e9c27a3ebd0094f4456c581d972c7305413c7d5
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-80d427f0aba5699380a544bbe2c85dbca2b581b8471d21c72c60691c2e9c6636 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-3955a28dce50898a10a996b28e9c27a3ebd0094f4456c581d972c7305413c7d5",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-3aeea964f5c6274d41a66f80ab946845d355e90a7b7554db108cc245738075fc
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elements must meet minimum color contrast ratio thresholds
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:color-contrast
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-31b4d9ec28350f49ebccde7fa4125d03c35bef0f8509b31c305a4335353bcd3a — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-3aeea964f5c6274d41a66f80ab946845d355e90a7b7554db108cc245738075fc",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-3cb27ffc28a7223a32c2e0339b9874fab583d24ba845ae208081716990f42b56
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-3049775918cf20de601f3ade85d8fdbdb3805ce950056f454a06a7409f6cf244 — B-07 · inicial · cena 1280x900@inicial · <button> [shadow]: O botão de abrir a vistoria (ícone de olho) de cada linha não tem nome acessível: sem texto, aria-label vazio, sem title (o hospedeiro br-button também não tem title, ao contrário das outras três ações da linha). Papel button com nome "" na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-c1a9610f089cbeee868f23860b3d533f7c2b696814cd4ac8c5af2d9a7039917f — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-3cb27ffc28a7223a32c2e0339b9874fab583d24ba845ae208081716990f42b56",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-3d6ef793b6e69db434f88c561ce1a02662997ff7eab9d53e8253d8b9984ff9dc
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:320x640
+
+Observado: Com a janela em 320x640 (clientWidth 305), o wrapper .br-table tem overflow-x computado visible e caixa de 225px, enquanto a <table> interna mede 1269px e termina em x=1309; document.documentElement.scrollWidth = 1309, de modo que toda a pagina (filtros, abas, paginacao e botao Voltar) passa a exigir rolagem horizontal, e nao apenas a tabela.
+
+Esperado: O wrapper da tabela deve conter a propria rolagem (overflow-x: auto), para que a excecao de layout bidimensional aplicavel a tabelas de dados nao imponha rolagem horizontal ao restante do conteudo da pagina.
+
+Janela: 320×640 · interações desde o carregamento: 1. carregar a tela 2. redimensionar a janela para 320x640
+
+Regra declarada: wcag:1.4.10
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 320x640; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)" — <div> "# Nome da embarcação RAEP Data/Hora Vistoria Loc"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `medicao a 320px: .br-table width 225 / scrollWidth 1269 / overflow-x visible; table width 1269 right 1309; documentElement.scrollWidth 1309 vs clientWidth 305` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-3d6ef793b6e69db434f88c561ce1a02662997ff7eab9d53e8253d8b9984ff9dc",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-3d75021a9d5dc407be27e2689581d3c4b73f49b10e2163ca7c69f6a0dd263412
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@modal
+
+Observado: Elements must meet minimum color contrast ratio thresholds
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até modal (8 passo(s))
+
+Regra declarada: axe:color-contrast
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>div:nth-of-type(4)>div:nth-of-type(1)>div:nth-of-type(2)>div>div>div" — <div> "0%"
+
+### Unidades candidatas (não são crédito)
+
+- U-47e455721d9db772bfcf9d81fb3760168dc6269c6849d5348ccb5207c5570bb1 — B-23 · detalhe · cena 1280x900@modal · <div> "0%": Indicador "0%" do detalhe: texto branco (text-secondary-01) sobre #888 (bg-secondary-06), 14 px peso 400 — contraste 3,54:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: detalhe, modal
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-3d75021a9d5dc407be27e2689581d3c4b73f49b10e2163ca7c69f6a0dd263412",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-3e32bfb8ba6ea10681353d89df7954643b4c23cf9ca8f238dab150b9e21b38a0
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-9cb4d2d7fcd6a67dd6eb7d11ce81a26f74e902e4fe0e3e5a4bff10bc1bb57456 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-3e32bfb8ba6ea10681353d89df7954643b4c23cf9ca8f238dab150b9e21b38a0",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-3ef5c323f98829f8f73a2af4cb74a113f0557b25163dab102e0d3ae8383af279
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-d9d058c837d7a226ee252aedac0d3081d5e7e7d1deea30e21093ded6eb031d76 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-ee5e64797680cb09161a6820073c7c7e530cf5b4d2d0ea4233d37a9fd9d356fa — B-07 · inicial · cena 1280x900@inicial · <button> [shadow]: O botão de abrir a vistoria (ícone de olho) de cada linha não tem nome acessível: sem texto, aria-label vazio, sem title (o hospedeiro br-button também não tem title, ao contrário das outras três ações da linha). Papel button com nome "" na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-3ef5c323f98829f8f73a2af4cb74a113f0557b25163dab102e0d3ae8383af279",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-402d3344f9eb822405c122b92a9aaad13e7e5fb668e523621619fdb8c053ed58
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elements must meet minimum color contrast ratio thresholds
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:color-contrast
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-f07a8ab3363a61b30ea8baef943842cb2689f88dfed8b214272ef7c0fe9ad32e — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-402d3344f9eb822405c122b92a9aaad13e7e5fb668e523621619fdb8c053ed58",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4051dab0abf114f3011c4833022831059f0eef046612fd1b2e06ab24e9a4daa6
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O checkbox de selecionar todas as linhas nao tem <label> implicito nem explicito, aria-label, aria-labelledby ou title; na arvore de acessibilidade aparece como checkbox sem nome.
+
+Esperado: O checkbox deve ter etiqueta associada programaticamente, por exemplo aria-label="Selecionar todas as vistorias".
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: label
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-003 (checks=axe)` → identificador devolvido por ferramenta (sem arquivo)
+- `finding F-116` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4051dab0abf114f3011c4833022831059f0eef046612fd1b2e06ab24e9a4daa6",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-409e5a173e52e242b67092b2935205eabc50ca852221722fc98536b2bafc087a
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A aba selecionada ("Tramitando") e indicada apenas pela classe CSS active no <li> e pelo estilo computado resultante (color rgb(12,50,111) e border-bottom 4px rgb(12,50,111), contra rgb(51,51,51) e borda transparente nas outras). Os tres botoes tem aria-selected=null, aria-current=null e role=null, e o <ul> nao tem role=tablist.
+
+Esperado: O estado selecionado deve ser programaticamente determinavel: role=tablist/role=tab com aria-selected="true" no botao ativo, ou aria-current no botao ativo.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button" — <button#TRAMITANDO> "Tramitando"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `verify_finding V-002 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, elements=1, violation=no-predicate)` → identificador devolvido por ferramenta (sem arquivo)
+- `leitura dos 3 li.tab-item com estilos computados` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-409e5a173e52e242b67092b2935205eabc50ca852221722fc98536b2bafc087a",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-41da500c532c5ffa8dbbe9b1fc6e8f2a4a0b0fd684f69115b6c3a8552a79acb2
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A inicial "U" do avatar é rgb(255,255,255) sobre bg-orange-vivid-30 rgb(255,140,0), 24.19px peso 700: razão de contraste 2.33:1.
+
+Esperado: Texto de grande porte (>=24px, ou >=18.66px em negrito) precisa de razão de contraste mínima de 3:1 com o fundo.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: wcag:1.4.3
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span" — <span> "U"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `cálculo de contraste: fg rgb(255,255,255) / bg rgb(255,140,0) = 2.33:1, fontSize 24.192px, fontWeight 700` → não encontrado na evidência preservada da execução
+- `filtro-cidade-aberto.png` → `pipeline/logs/2026-10-02T12-56-12-sem-run1-120f567c-evidencia/filtro-cidade-aberto.png` (sha256 41445e56f6e6)
+- `snapshot a11y ref e23/e24` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-41da500c532c5ffa8dbbe9b1fc6e8f2a4a0b0fd684f69115b6c3a8552a79acb2",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-42c1fbcb245fd75aef27dcb5a08caabc65d0bad2d67224c633cd32c449d4d728
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A página corrente da paginação é sinalizada só por estilo (classe .active: branco sobre rgb(12,50,111), font-weight 600, contra rgb(19,81,180) transparente nas demais) e pelo atributo não semântico data-current="1" no <nav>. O link ativo não tem aria-current; na árvore de acessibilidade os links 1–4 são expostos apenas como "link 1".."link 4".
+
+Esperado: O link da página corrente deve expor aria-current="page" para que a posição seja programaticamente determinável.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. clicar no link da página 2 da paginação numérica
+
+Regra declarada: wcag:1.3.1
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a" — <a> "1"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `outerHTML: <a href="javascript:void(0)" class="page active"> 1 </a> com aria-current=null` → não encontrado na evidência preservada da execução
+- `estilos comparados: ativo color rgb(255,255,255)/bg rgb(12,50,111)/fw 600 vs inativo color rgb(19,81,180)/bg transparente/fw 400` → não encontrado na evidência preservada da execução
+- `snapshot a11y refs e494/e497/e500/e503 — "link 1..4" sem estado` → não encontrado na evidência preservada da execução
+- `após ir à página 2: activeLink="2", contador "11– 20 de 34 itens"` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-42c1fbcb245fd75aef27dcb5a08caabc65d0bad2d67224c633cd32c449d4d728",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-42d4f55626abe6240ba308a329fba97344b6fbfb3cc0374732bb3c39c7dcf478
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@detalhe-menu
+
+Observado: border-radius: 6px fora da escala do DS
+
+Esperado: Um de: 0px, 4px, 8px, 16px, 50% (circle) ou pill (100em/999em × font-size)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até detalhe-menu (3 passo(s))
+
+Regra declarada: ds:token-radius
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>pnip-propesc-nao-comparecimento>div>div:nth-of-type(2)>div>div>textarea" — <textarea>
+
+### Unidades candidatas (não são crédito)
+
+- U-238f9e8879e41566f840160f72c03e67a02b73d7a42128f02a5935cc250e0e6f — B-20 · detalhe-menu · cena 1280x900@detalhe-menu · <textarea>: Detalhe da vistoria de não comparecimento: a <textarea> do motivo tem um <label> "Descrever o motivo do não comparecimento" como irmão, mas sem for (e a textarea sem id): o rótulo não está associado; nome acessível vazio. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: detalhe-menu
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-42d4f55626abe6240ba308a329fba97344b6fbfb3cc0374732bb3c39c7dcf478",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4477f0c556d3b57f4388954ad2c8fcecdb04bfe648c9000c01fa528514cf2a50
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: A aba ativa e sinalizada apenas pela classe CSS do <li> pai (li.tab-item.active) e por estilo visual (sublinhado e cor). Nenhum dos tres botoes tem aria-selected, aria-current ou aria-expanded, e nao ha role=tab/tablist. Verificado em dois estados: na carga a ativa e 'Tramitando'; apos clicar em 'Agendar' a classe migra para o primeiro <li> e os atributos ARIA continuam todos nulos.
+
+Esperado: A aba selecionada deve ser determinavel programaticamente, por exemplo aria-current="page" (ou role=tab com aria-selected="true") no botao ativo.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)>button" — <button#AGENDAR> "Agendar"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button" — <button#TRAMITANDO> "Tramitando"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>button" — <button#HISTORICO> "Concluídos"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` (sha256 6e8798cb118e)
+- `.playwright-mcp/page-2026-10-02T07-04-35-005Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/.playwright-mcp/page-2026-10-02T07-04-35-005Z.yml` (sha256 9ee6b6192c71)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4477f0c556d3b57f4388954ad2c8fcecdb04bfe648c9000c01fa528514cf2a50",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-44afe6cb6803d38600d8e16b262afa10c221d68540860678d1bdf70347471c0e
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os 4 itens de numero de pagina sao <li> aninhados diretamente dentro de outro <li>, sem <ul> ou <ol> intermediario.
+
+Esperado: Todo <li> deve ter <ul> ou <ol> como elemento pai, para que a lista seja exposta corretamente como lista.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: listitem
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li" — <li> "1"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li" — <li> "2"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li" — <li> "3"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li" — <li> "4"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-003 (checks=axe)` → identificador devolvido por ferramenta (sem arquivo)
+- `findings F-127..F-130` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-44afe6cb6803d38600d8e16b262afa10c221d68540860678d1bdf70347471c0e",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-46e4d0610382a166afd0ab97d20c00a14c52083a42cd5c84776c723dac6c1e4f
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A caixa de seleção do cabeçalho da tabela não tem nome acessível (sem id, aria-label, aria-labelledby, <label for> ou <label> ancestral) e está dentro de um <th scope="col"> sem texto. Clicá-la marca as 10 caixas das linhas, confirmando que é um "selecionar todos".
+
+Esperado: O controle de selecionar todos deve expor um nome acessível (ex.: aria-label "Selecionar todas as vistorias").
+
+Janela: 1440×900 · interações desde o carregamento: 1. clicar na caixa de seleção do cabeçalho da tabela
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` (sha256 6e8798cb118e)
+- `state-01-initial.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/state-01-initial.png` (sha256 27d62eb8866e)
+- `inspeção de inputs: {type:checkbox, id:"", ariaLabel:null, ariaLabelledby:null, labelFor:false, closestLabel:false}; após clique: headChecked=true, rowsChecked=10/10` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-46e4d0610382a166afd0ab97d20c00a14c52083a42cd5c84776c723dac6c1e4f",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-470700a2f4af183b5bca49b9c43e3a7cee6de21bc292f38eadf7b5e6161dde24
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: As 10 caixas de seleção de linha não têm id, name, aria-label, aria-labelledby, title nem <label> associado; a árvore de acessibilidade as expõe como "checkbox" sem nome, sem indicar a qual vistoria pertencem.
+
+Esperado: Cada caixa de seleção de linha deve ter nome acessível que identifique a linha (ex.: aria-label="Selecionar vistoria Coral Mansa IV" ou aria-labelledby apontando para a célula do nome da embarcação).
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `snapshot a11y refs e127/e163/e199 — "checkbox" sem nome` → não encontrado na evidência preservada da execução
+- `consulta de atributos: id="", aria-label=null, aria-labelledby=null, title=null, label[for]=false, closest(label)=false` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-470700a2f4af183b5bca49b9c43e3a7cee6de21bc292f38eadf7b5e6161dde24",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-479853119423e6e0a0a7b3a6f724fcbf5a8f0462125a0c4c1245dc6a268f0c14
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O primeiro link da pagina e <a href="/portal-mpa"> ("Home", no breadcrumb). Nao existe nenhum <a href="#..."> no documento: document.querySelectorAll('a[href^="#"]').length === 0.
+
+Esperado: O primeiro link da pagina deve ser o salto para o conteudo: ancora interna href="#id" cujo alvo exista no documento.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: ds-page-skip-link
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-002 (checks=page)` → identificador devolvido por ferramenta (sem arquivo)
+- `finding F-090` → identificador devolvido por ferramenta (sem arquivo)
+- `get_page_rules: ds-page-skip-link` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-479853119423e6e0a0a7b3a6f724fcbf5a8f0462125a0c4c1245dc6a268f0c14",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4a55dc24b113dbe01fbc4ed0eaf965179631523872cd3dbac0860906c0629e8e
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@detalhe-menu
+
+Observado: br-breadcrumb aplicado a <div>
+
+Esperado: Elemento <nav>
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até detalhe-menu (3 passo(s))
+
+Regra declarada: ds:structure-breadcrumb-tag
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div" — <div> "Home Vistorias Agendar vistoria" [shadow]
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4a55dc24b113dbe01fbc4ed0eaf965179631523872cd3dbac0860906c0629e8e",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4ae3513ce7a4035762aa1537ec121af10939e43db0e3f6d953e8e3f8cafb7f49
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Com o dropdown aberto, as 6 opcoes sao <div class="br-item"><div class="br-radio"><label>Areia Branca do Leste</label></div></div>: o painel contem 0 input, 0 button, 0 elemento com role e 0 elemento focalizavel; os <label> dentro de .br-radio estao orfaos, sem input associado (sem atributo for e sem radio irmao). Na arvore de acessibilidade as opcoes aparecem como generic sem papel de lista/opcao.
+
+Esperado: Cada opcao deve ser um controle real e focalizavel - o input[type=radio] que .br-radio pressupoe, ou role=option dentro de um role=listbox com gerenciamento de foco - de modo que a escolha seja possivel por teclado e o papel/estado selecionado seja exposto.
+
+Janela: 1280×900 · interações desde o carregamento: 1. Clicar no gatilho de filtro 'Cidade' para abrir o dropdown
+
+Regra declarada: wcag:2.1.1
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-nao-resolvido: o seletor não resolve em nenhuma cena da janela (1280x900@inicial, 1280x900@detalhe-menu, 1280x900@modal)
+
+### Sujeitos
+
+- "unresolved:pnip-filter-panel .br-select .br-item" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+- U-05b87158ac88b5d030d58ee8ec4975da77defd6f42e15bef94c2adc565bfce9f — B-11 · inicial · cena 1280x900@inicial · <span> "Cidade": As 4 etiquetas de filtro ("Cidade", "Porto", "Vistoriador", "Status"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: atributos-ausentes sustenta em inicial — nenhum destes atributos presente: tabindex, role. Medido: ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-124a6e3df510b7411b1d60ba552eefccc737cd33b85d05267974881867d06c07 — B-11 · inicial · cena 1280x900@inicial · <span> "Status": As 4 etiquetas de filtro ("Cidade", "Porto", "Vistoriador", "Status"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: atributos-ausentes sustenta em inicial — nenhum destes atributos presente: tabindex, role. Medido: ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-6f0ac137d5bade8c86303e0afc551d4b53699c58fea6717d3a622ccd615710d1 — B-11 · inicial · cena 1280x900@inicial · <span> "Vistoriador": As 4 etiquetas de filtro ("Cidade", "Porto", "Vistoriador", "Status"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: atributos-ausentes sustenta em inicial — nenhum destes atributos presente: tabindex, role. Medido: ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-ffc998ab00b11ff3f14640a0556517c49967185977f90f93e3a43477569ab1a2 — B-11 · inicial · cena 1280x900@inicial · <span> "Porto": As 4 etiquetas de filtro ("Cidade", "Porto", "Vistoriador", "Status"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: atributos-ausentes sustenta em inicial — nenhum destes atributos presente: tabindex, role. Medido: ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role | ausentes: tabindex, role
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `state-filtro-cidade.md` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/state-filtro-cidade.md` (sha256 ddafcb1bd9a0)
+- `snap-filtro.md` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/snap-filtro.md` (sha256 4ddd410f4767)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4ae3513ce7a4035762aa1537ec121af10939e43db0e3f6d953e8e3f8cafb7f49",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4b16d11894268fad3fc296e8a4da1ce175adb5877b68593ba7fb5e82d5beedbc
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O botao 'Limpar Filtro' do painel de filtros tem margin: -5px 0px 0px, com -5px fora da escala de espacamento do DS.
+
+Esperado: Valores de margem devem pertencer a escala de espacamento do gov.br DS (tokens --spacing-scale-*), sem deslocamentos negativos arbitrarios.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: ds-token-spacing
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(5)>button" — <button> "Limpar Filtro"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-010/F-255 (govbr-ds-token, regra ds-token-spacing, severidade minor, confidence 1, pathway deterministic)` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4b16d11894268fad3fc296e8a4da1ce175adb5877b68593ba7fb5e82d5beedbc",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4b3527db0cb8fe5124127dbbaa865559ee76902e3d7ae4848a4f118c06ff02f7
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: O link da pagina corrente e <a href="javascript:void(0)" class="page active">1</a>: a condicao de pagina atual e dada apenas pela classe CSS e pelo destaque visual, sem aria-current. Na arvore de acessibilidade ele e um link "1" indistinguivel dos links "2", "3" e "4".
+
+Esperado: O link da pagina corrente deve expor aria-current="page".
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a" — <a> "1"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4b3527db0cb8fe5124127dbbaa865559ee76902e3d7ae4848a4f118c06ff02f7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4da5c81552958327236e0d3078d8754a1734786e0c13fc2e72932bdc1c9b61d6
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os dois campos do intervalo "Data da vistoria" não têm nome acessível: o <input type="date"> dentro do shadow root (ids br-input-8 e br-input-9) não tem label, aria-label, aria-labelledby nem placeholder. Os textos visíveis "Data da vistoria:" e "até" são <span class="text-bold"> sem associação programática. Na árvore de acessibilidade ambos aparecem como "textbox" sem nome.
+
+Esperado: Cada campo de data deve ter nome acessível próprio e distinto (ex.: "Data da vistoria - início" e "Data da vistoria - fim").
+
+Janela: 1440×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1)" — <br-input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2)" — <br-input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` (sha256 6e8798cb118e)
+- `state-01-initial.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/state-01-initial.png` (sha256 27d62eb8866e)
+- `shadowRoot de br-input[type=date]: input sem label/aria-label/aria-labelledby/placeholder; árvore de acessibilidade: textbox [ref=e101] e textbox [ref=e105] sem nome` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4da5c81552958327236e0d3078d8754a1734786e0c13fc2e72932bdc1c9b61d6",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4ddcfb6801dce770a742959659b3a747e869553f0fa6615dc19261ad366ca409
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-7426e44eda093679f1f4893f006351774a9c67a087a32d79b722e14b9f9f8923 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4ddcfb6801dce770a742959659b3a747e869553f0fa6615dc19261ad366ca409",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4e6f35c0f31e9ac623317e64bf99bdd0fd603216c6c8d304489f44a37cddfab7
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Page should contain a level-one heading
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:page-has-heading-one
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4e6f35c0f31e9ac623317e64bf99bdd0fd603216c6c8d304489f44a37cddfab7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4e8335fec4dbf583fefb6da5a0865ce70f10971355e6dbf879d43e79e98eda06
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Cada link numérico da paginação está dentro de um <li> aninhado diretamente em outro <li>, sem lista intermediária: <ul><li><li><a class="page">1</a></li></li>...</ul>. A árvore de acessibilidade reflete a estrutura inválida, expondo "listitem" dentro de "listitem" (refs e492 > e493).
+
+Esperado: Itens de lista devem ser filhos diretos de um <ul>/<ol>; cada link de página deve ficar em um único <li> irmão dos demais.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: wcag:1.3.1
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li" — <li> "1"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li" — <li> "2"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li" — <li> "3"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li" — <li> "4"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `outerHTML de govbr-custom-pagination: <li _ngcontent><!----><li _ngcontent><a class="page active"> 1 </a></li><!----><!----></li>` → não encontrado na evidência preservada da execução
+- `snapshot a11y: listitem [ref=e492] contendo listitem [ref=e493]` → identificador devolvido por ferramenta (sem arquivo)
+- `validação de seletor: 4 ocorrências de li > li` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4e8335fec4dbf583fefb6da5a0865ce70f10971355e6dbf879d43e79e98eda06",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4f36f438f3ff3f981508ba8d40ba4ea1ba9007dabb99fe1116ea85e0b95eab69
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O cabecalho da coluna de acoes esta vazio: <th scope="col"></th>, sem texto perceptivel por leitor de tela.
+
+Esperado: Toda celula th deve ter texto acessivel descrevendo a coluna (visivel ou alternativa textual equivalente).
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: empty-table-header
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)" — <th>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-003 (checks=axe)` → identificador devolvido por ferramenta (sem arquivo)
+- `finding F-113` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4f36f438f3ff3f981508ba8d40ba4ea1ba9007dabb99fe1116ea85e0b95eab69",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4f5f72e394c74239d2c9fc9bc897dd00139c15ab747c006945f5ede0946a43d7
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: As 10 caixas de seleção de linha não têm nome acessível (sem id, aria-label, aria-labelledby, <label for> ou <label> ancestral). Na árvore de acessibilidade aparecem como "checkbox" sem nome, indistinguíveis entre si.
+
+Esperado: Cada caixa de linha deve expor um nome acessível que identifique a vistoria selecionada (ex.: aria-label "Selecionar vistoria Coral Mansa IV").
+
+Janela: 1440×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` (sha256 6e8798cb118e)
+- `state-01-initial.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/state-01-initial.png` (sha256 27d62eb8866e)
+- `inspeção de inputs: 10 checkboxes em tbody, todos com id:"", ariaLabel:null, ariaLabelledby:null, labelFor:false, closestLabel:false` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4f5f72e394c74239d2c9fc9bc897dd00139c15ab747c006945f5ede0946a43d7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-4fce01bc36ee61322e29422c087045e0f7177554e15866385849167c4b8d02a8
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Nas 7 linhas que já possuem vistoriador, o botão usa o ícone "user-times" (remover usuário) mas mantém title="Atribuir vistoriador"; acioná-lo abre o modal "Atribuir Vistoriador" com a lista de vistoriadores, confirmando que a ação é atribuir/reatribuir. Nas 3 linhas sem vistoriador o ícone é "user-plus" com o mesmo title.
+
+Esperado: O ícone deve corresponder à ação executada e ao nome acessível: usar um ícone de atribuição/edição para a ação de atribuir, ou — se a intenção for desatribuir — alterar a ação e o nome acessível de forma coerente.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. acionar o botão com ícone user-times da linha 2 (Maresia Nova I, vistoriador Paulo Cordeiro Paiva) 3. fechar o modal em "Cancelar"
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button" — <br-button>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `mapa linha→ícone/título: linhas 2,3,4,6,7,8,10 = user-times + title "Atribuir vistoriador"; linhas 1,5,9 (sem vistoriador) = user-plus + mesmo title` → não encontrado na evidência preservada da execução
+- `snapshot do modal: dialog "Atribuir Vistoriador" com opções de vistoriador e botões OK/Cancelar` → não encontrado na evidência preservada da execução
+- `vistoriador da linha antes do clique: "Paulo Cordeiro Paiva"` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-4fce01bc36ee61322e29422c087045e0f7177554e15866385849167c4b8d02a8",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-512f5b3b00739a9c3c3f99b25f69550ea648ca12db0e8be831443c8427b29391
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-6341b4d0d71c65cc5e698aec6269b94450f2785ffa61177947917f532001448e — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-512f5b3b00739a9c3c3f99b25f69550ea648ca12db0e8be831443c8427b29391",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-519bd85eb9e050dedefd655b18ebdb429f1a21404f7358abb99e9a481e335773
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os campos #total ("Exibir") e #page ("Página") abrem uma lista de opções ao receber foco (.br-list passa de display:none para block), mas não têm role="combobox", aria-expanded, aria-haspopup nem aria-controls; o botão acionador tem tabindex="-1". A abertura e o fechamento da lista não são expostos à tecnologia assistiva.
+
+Esperado: O campo deve expor seu papel de combobox e o estado da lista (aria-expanded true/false), referenciando a lista via aria-controls.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. focar o campo "Exibir" da paginação
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input" — <input#total> "Selecione"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>div>input" — <input#page> "Selecione"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `consulta nos dois selects: {inputRole:null, ariaExpanded:null, ariaHaspopup:null}` → identificador devolvido por ferramenta (sem arquivo)
+- `ao focar #total: listaVisivel="block" e ariaExpanded continua null` → identificador devolvido por ferramenta (sem arquivo)
+- `outerHTML: <button type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger">` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-519bd85eb9e050dedefd655b18ebdb429f1a21404f7358abb99e9a481e335773",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-51a4d7d0e0b299493155c7e31c8b131c68ed8d51ade245424d40c57800618112
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-35a1f7371e59f01053d63393c5ee402d75453afba1a50119725e8b0ef7b7ffc5 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-51a4d7d0e0b299493155c7e31c8b131c68ed8d51ade245424d40c57800618112",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-52e2252cbdf7c51fff5cab8b3db844ffe089baaf7c2c689ce49e767d7ce83b03
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena a-decidir:1280x900
+
+Observado: A inicial "U" do avatar do usuario usa texto rgb(255,255,255) sobre fundo rgb(255,140,0) (classes bg-orange-vivid-30 text-pure-0), razao de contraste 2.33:1, com font-size 24.192px e font-weight 700 - abaixo inclusive do limiar relaxado de texto grande.
+
+Esperado: Texto grande (a partir de 24px, ou 18.66px negrito) exige contraste minimo de 3:1; texto normal, 4.5:1.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:1.4.3
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-a-decidir: o seletor resolve em 1280x900@inicial, 1280x900@detalhe-menu, 1280x900@modal; escolha em "cena" de qual a alegação fala — só os sujeitos dela contam
+
+### Sujeitos
+
+Cena `1280x900@inicial` (/pnip/portal-mpa/vistorias) — escolha com `"cena": "1280x900@inicial"`:
+- "1280x900@inicial|body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span" — <span> "U"
+
+Cena `1280x900@detalhe-menu` (/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046) — escolha com `"cena": "1280x900@detalhe-menu"`:
+- "1280x900@detalhe-menu|body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span" — <span> "U"
+
+Cena `1280x900@modal` (/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038) — escolha com `"cena": "1280x900@modal"`:
+- "1280x900@modal|body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)>span" — <span> "U"
+
+
+### Unidades candidatas (não são crédito)
+
+- U-0da734102116cfb16ecf375cff41bd3bee78f5a433e685539c6b5fb80a03d037 — B-14 · sempre · cena 1280x900@modal · <span> "U": Inicial do avatar no cabeçalho do app (span.content bg-orange-vivid-30 text-pure-0): "U" branco sobre #ff8c00, 24,2 px peso 700 — contraste 2,33:1 (abaixo também dos 3:1 de texto grande). Presente em todas as paradas. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial, detalhe-menu, detalhe, modal
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `state1-full.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/state1-full.png` (sha256 0a3ccd50a730)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-52e2252cbdf7c51fff5cab8b3db844ffe089baaf7c2c689ce49e767d7ce83b03",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-55419d33dd5d35f093a7761d7935fe829d64d6e401a2c05f5b37d08f92829757
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: As 10 tarjas de status "Vistoria agendada" usam color #ffffff sobre .bg-blue-40 (#4f97d1) a 14px peso normal: razao 3.14:1. As variantes .bg-success (#168821, 4.59:1) e .bg-danger (#e52207, 4.60:1) do mesmo componente passam; so a variante azul reprova.
+
+Esperado: Contraste minimo de 4.5:1 para o texto de 14px da tarja de status.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: color-contrast
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-003 (checks=axe)` → identificador devolvido por ferramenta (sem arquivo)
+- `findings F-102..F-111` → identificador devolvido por ferramenta (sem arquivo)
+- `medicao de contraste por estado de filtro: agendada 3.14, preenchida 4.59, nao comparecimento 4.60` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-55419d33dd5d35f093a7761d7935fe829d64d6e401a2c05f5b37d08f92829757",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-55b8a02a3596f296340b382522e2dfe182a11db97736dcfa29e07c4bcd1d3057
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Ao submeter a busca, a tabela de 10 linhas é removida do DOM e a mensagem "Não há vistorias para exibir." é inserida sem aria-live, role=status ou role=alert. A única região aria-live="polite" da tela é o contador de itens da paginação, que desaparece junto com a paginação: document.querySelectorAll('[aria-live],[role=status],[role=alert]').length cai de 1 para 0. O foco permanece no campo de busca, então nada é anunciado.
+
+Esperado: A mensagem de estado sobre o resultado da busca deve ser programaticamente determinável sem receber foco, via role="status" ou aria-live.
+
+Janela: 1280×900 · interações desde o carregamento: 1. digitar 'zzzznaoexiste' no campo de busca 2. pressionar Enter
+
+Regra declarada: wcag:4.1.3
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-nao-resolvido: o seletor não resolve em nenhuma cena da janela (1280x900@inicial, 1280x900@detalhe-menu, 1280x900@modal)
+
+### Sujeitos
+
+- "unresolved:pnip-propesc-vistorias div.p-5 p" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-36-04-295Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-36-04-295Z.yml` (sha256 b6b644a30693)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-55b8a02a3596f296340b382522e2dfe182a11db97736dcfa29e07c4bcd1d3057",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-55f2d94afc1c26f956f0360c442992ce9b6d445b45b50a974c39925d872dce7c
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "unresolved:br-input:nth-child(4) #br-input-9" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-55f2d94afc1c26f956f0360c442992ce9b6d445b45b50a974c39925d872dce7c",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-55f4bf0317d57c728dbc9d83796c271bc9c3e464f282452517442916470cac20
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@modal
+
+Observado: Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos).
+
+Esperado: Uma Área de Rodapé com o componente Footer (.br-footer ou <br-footer>), como o Template Base exige.
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até modal (8 passo(s))
+
+Regra declarada: ds:page-footer
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Programa Nac"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-55f4bf0317d57c728dbc9d83796c271bc9c3e464f282452517442916470cac20",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-568cdc5580041e887551415c82adec8817d973df0314a3a5438ef93090df5aff
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O selo informativo 'Nenhum filtro de data aplicado', ao lado do filtro de data, tem contraste de 1,5:1 (primeiro plano #ffffff sobre fundo #c5d4eb, 14px, peso normal).
+
+Esperado: Texto deve ter contraste minimo de 4,5:1 em relacao ao fundo; a combinacao de texto branco sobre o pastel claro precisa ser substituida por par de cores conforme.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: govbr-3.7.0-accessibility-global-cb09bc0c77c0
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span" — <span> "Nenhum filtro de data aplicado"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-008/F-223 (axe-core, regra color-contrast, severidade serious, razao medida 1.5)` → não encontrado na evidência preservada da execução
+- `DOM: span.br-tag.primary-pastel-01.small com texto 'Nenhum filtro de data aplicado'` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-568cdc5580041e887551415c82adec8817d973df0314a3a5438ef93090df5aff",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-57ad0b6f990eba790771e56e44e5866824a38611d67137defb123f0e2e08eb8b
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-7dbabbfc203702ec5d6e398b0a04a8cc04ee87295ca955abff49ba0d95c4ffd1 — B-07 · inicial · cena 1280x900@inicial · <button> [shadow]: O botão de abrir a vistoria (ícone de olho) de cada linha não tem nome acessível: sem texto, aria-label vazio, sem title (o hospedeiro br-button também não tem title, ao contrário das outras três ações da linha). Papel button com nome "" na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-e3a9d62c1adea42986e20e735443ee7e824a8d1ada3b0c9f2c2320bc0834bce5 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-57ad0b6f990eba790771e56e44e5866824a38611d67137defb123f0e2e08eb8b",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-57afad700041673b206f67e6eff51d878e3b59bfc703c1bc7ec013e7952fd85c
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O texto do selo de status 'Vistoria agendada' nas 10 linhas da aba 'Tramitando' tem contraste de 3,14:1 (primeiro plano #ffffff sobre fundo #4f97d1, 14px, peso normal).
+
+Esperado: Texto deve ter contraste minimo de 4,5:1 em relacao ao fundo; para 14px e peso normal nao se aplica a excecao de texto grande.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: govbr-3.7.0-accessibility-global-cb09bc0c77c0
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-008/F-224..F-233 (axe-core, regra color-contrast, severidade serious, 10 elementos, razao medida 3.14)` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-57afad700041673b206f67e6eff51d878e3b59bfc703c1bc7ec013e7952fd85c",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-57ff8309ccb3f0b4493ea2a846a6e05aeea9b8fff01d43cb6b6aa12c71e80bcd
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Buttons must have discernible text
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:button-name
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "unresolved:tr:nth-child(7) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-57ff8309ccb3f0b4493ea2a846a6e05aeea9b8fff01d43cb6b6aa12c71e80bcd",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-58f3570c0029ddc89781765617700d86c806a9d2914ad13a7db6af23b62a8bee
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-719e012653c9e138c309d9114860d8c4ca1d23331f29f580175ea72d282d9606 — B-07 · inicial · cena 1280x900@inicial · <button> [shadow]: O botão de abrir a vistoria (ícone de olho) de cada linha não tem nome acessível: sem texto, aria-label vazio, sem title (o hospedeiro br-button também não tem title, ao contrário das outras três ações da linha). Papel button com nome "" na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-b3e7529e3a437858f21a9fedcb26980f3dcedcf07f8b8e43d6d500141e508e1c — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-58f3570c0029ddc89781765617700d86c806a9d2914ad13a7db6af23b62a8bee",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-5a74c7382afbba3329686d6c172916af27d2b647744f7cd84b9fe043dbd87b16
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Nao existe nenhum elemento .br-footer nem web component <br-footer> no documento, considerando DOM claro e shadow roots abertos; a tela termina no botao 'Voltar', sem rodape.
+
+Esperado: A pagina deve conter a regiao de rodape do Template Base do gov.br DS (.br-footer ou <br-footer>).
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: ds-page-footer
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-002/F-089 (govbr-ds-page, restricao ds-page-footer, severidade serious, confidence 1, pathway deterministic)` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-5a74c7382afbba3329686d6c172916af27d2b647744f7cd84b9fe043dbd87b16",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-5c31076e0439d9c939c993f136b35ca7443f4a9feefcba0c83ee13e0b5f37c90
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Buttons must have discernible text
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:button-name
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "unresolved:tr:nth-child(9) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-5c31076e0439d9c939c993f136b35ca7443f4a9feefcba0c83ee13e0b5f37c90",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-5f6bce1dd905db2e06b57058efad1bddbac44757347d2fc1bf7a0b08d4ed5a45
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A aba selecionada é indicada apenas visualmente pela classe "active" no <li> e pela cor/sublinhado do texto. Os três <button> (AGENDAR, TRAMITANDO, HISTORICO) não têm aria-selected, aria-current nem role=tab; a árvore de acessibilidade mostra três "button" idênticos dentro de uma navigation, sem estado.
+
+Esperado: A aba ativa deve expor seu estado programaticamente (ex.: aria-current="page" no botão ativo, ou padrão tab/tablist com aria-selected).
+
+Janela: 1440×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button" — <button#TRAMITANDO> "Tramitando"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` (sha256 6e8798cb118e)
+- `state-01-initial.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/state-01-initial.png` (sha256 27d62eb8866e)
+- `HTML: <li class="tab-item active"><button id="TRAMITANDO" type="button"><span class="name">Tramitando</span></button></li>; nenhum atributo aria nos 3 botões` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-5f6bce1dd905db2e06b57058efad1bddbac44757347d2fc1bf7a0b08d4ed5a45",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-5fa4b30c0ae675c9ef70171ccbd056905efa3dee7c83438c45544bbb8987eea6
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@detalhe-menu
+
+Observado: padding: 0px 6px (fora da escala: 6px, 6px, 6px)
+
+Esperado: Múltiplos de 4px
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até detalhe-menu (3 passo(s))
+
+Regra declarada: ds:token-spacing
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a" — <a> "Home" [shadow]
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-5fa4b30c0ae675c9ef70171ccbd056905efa3dee7c83438c45544bbb8987eea6",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-60deaec061b9949b569b7c1aeeed299a98e7587493050b6ae812380658629a7e
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Na aba Agendar, o badge "Vistoria pré agendada" nas 10 linhas usa texto #ffffff sobre fundo #888888 a 14px — razão de contraste 3.54:1. É um mapeamento de cor distinto do da aba Tramitando.
+
+Esperado: Razão de contraste mínima de 4.5:1 para texto normal.
+
+Janela: 1280×900 · interações desde o carregamento: 1. clicar na aba 'Agendar'
+
+Regra declarada: color-contrast
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-16826af28e0996f408c83115a4435f7af40ac4cc53bf08f36e9dbbac871436f1 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-28dabc8a49f3528f77fddf8a2abab3ce60b6f30b3339050c6377bd1baa2c1e7d — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-31b4d9ec28350f49ebccde7fa4125d03c35bef0f8509b31c305a4335353bcd3a — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-378ca27cdcd3ddaeff869d2dc65fb85c2dbae1863257673c49fff068452ab683 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-3fe5e8cc28ad339c48044f5f6514da4499172e643dc7133757f61235be604ffb — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-4947f781cee61c8d4e34f8fd68e6068c6ba9186a16939eaf9993f0dab21ea6cc — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-8188a105d675aa0dc47295d0aa263c5574ae6994c59e058e2a0f7b8c4ed890e2 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-82a357f4dc0d11ac01d09f3785422081482a834ab5bd069e99d1823aec324264 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-c94d9504d7c2bb1c534d9c85744bbbbe2810353f383044b076a2d9255c2b7e75 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-f07a8ab3363a61b30ea8baef943842cb2689f88dfed8b214272ef7c0fe9ad32e — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `S-page-013` → identificador devolvido por ferramenta (sem arquivo)
+- `F-259` → identificador devolvido por ferramenta (sem arquivo)
+- `F-260` → identificador devolvido por ferramenta (sem arquivo)
+- `F-261` → identificador devolvido por ferramenta (sem arquivo)
+- `F-262` → identificador devolvido por ferramenta (sem arquivo)
+- `F-263` → identificador devolvido por ferramenta (sem arquivo)
+- `F-264` → identificador devolvido por ferramenta (sem arquivo)
+- `F-265` → identificador devolvido por ferramenta (sem arquivo)
+- `F-266` → identificador devolvido por ferramenta (sem arquivo)
+- `F-267` → identificador devolvido por ferramenta (sem arquivo)
+- `F-268` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-41-51-661Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-41-51-661Z.yml` (sha256 9ee6b6192c71)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-60deaec061b9949b569b7c1aeeed299a98e7587493050b6ae812380658629a7e",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-62f369e470983ad0e415fdfc4c56c588defb68df310767c6a8d058b23c87301b
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A pagina nao possui nenhum cabecalho de nivel 1: o titulo principal da tela, 'Vistorias', e marcado como <h2> (node e45), e nao existe <h1> no documento.
+
+Esperado: A hierarquia de titulos deve comecar em H1, preferencialmente um unico H1 identificando o conteudo principal da pagina — aqui, 'Vistorias'.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: govbr-3.7.0-accessibility-global-3ac0aaa53900
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-008/F-253 (axe-core, regra page-has-heading-one, severidade moderate: 'Page must have a level-one heading')` → não encontrado na evidência preservada da execução
+- `arvore de acessibilidade: heading 'Vistorias' com level=2` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-62f369e470983ad0e415fdfc4c56c588defb68df310767c6a8d058b23c87301b",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-6308c36e8caffae0b21f1b972475a0046146123859439491cbcb87de724450f5
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@detalhe-menu
+
+Observado: padding: 0px 6px (fora da escala: 6px, 6px, 6px)
+
+Esperado: Múltiplos de 4px
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até detalhe-menu (3 passo(s))
+
+Regra declarada: ds:token-spacing
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div>ul>li:nth-of-type(2)>a" — <a> "Vistorias" [shadow]
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-6308c36e8caffae0b21f1b972475a0046146123859439491cbcb87de724450f5",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-634b68dd61691a0ba70b94347b90f608514351dbf6c644624e3fe298fb99838a
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Buttons must have discernible text
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:button-name
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "unresolved:tr:nth-child(10) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-634b68dd61691a0ba70b94347b90f608514351dbf6c644624e3fe298fb99838a",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-640ef6cce6ed1dd024a8b549328a17957b29cb0dbcce8ff5a98450cde3e587b1
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@detalhe-menu
+
+Observado: Images must have alternative text
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até detalhe-menu (3 passo(s))
+
+Regra declarada: axe:image-alt
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(1)>div>img" — <img> [shadow]
+- "body>pnip-root>pnip-header>div>div>div>button>img" — <img>
+
+### Unidades candidatas (não são crédito)
+
+- U-9bc6e7a1ad04bfa95826d4923672ddd61d6dec27b94086ecea975dbb3ea09d60 — B-16 · detalhe-menu · cena 1280x900@detalhe-menu · <img>: Ícone do botão "Sair" do menu do avatar (<img src="../../../assets/images/exit-icon.png">) sem atributo alt — nem texto alternativo nem alt vazio de imagem decorativa.
+  - estados em que a unidade existe: detalhe-menu
+  - predicado de aceitação: atributos-ausentes sustenta em detalhe-menu — nenhum destes atributos presente: alt. Medido: ausentes: alt
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-640ef6cce6ed1dd024a8b549328a17957b29cb0dbcce8ff5a98450cde3e587b1",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-6449db671cfecd5492b567a01259a4b932631f56f0b3cda0fe959c51c2144973
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os 4 gatilhos de filtro (Cidade, Porto, Vistoriador, Status) sao <span style="cursor:pointer"> que abrem e fecham um painel .br-list por clique, sem tabindex, sem role e sem aria-expanded. Nao aparecem na enumeracao de focalizaveis do documento e, com Tab real a partir do botao #HISTORICO, o foco vai para o botao de remocao da tarja e em seguida para "Limpar Filtro", pulando os quatro gatilhos.
+
+Esperado: O gatilho deve ser focalizavel e operavel por teclado (<button type="button"> ou tabindex="0" com tratamento de Enter/Espaco), expondo papel de botao e o estado aria-expanded.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: emag:2.1
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span" — <span> "Cidade"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span" — <span> "Porto"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span" — <span> "Vistoriador"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span" — <span> "Status"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `verify_finding V-001 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, elements=4, violation=no-predicate)` → identificador devolvido por ferramenta (sem arquivo)
+- `sequencia de Tab real: #HISTORICO -> button.br-button.inverted.circle -> button.br-button.secondary "Limpar Filtro"` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-6449db671cfecd5492b567a01259a4b932631f56f0b3cda0fe959c51c2144973",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-64e4a3ba77fe36deefc107744b1d4064e958035363b1467f9cc1e5931d16a3c7
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Na aba "Concluídos", a coluna "Situação" exibe identificadores brutos em caixa alta e sem acentuação: "NAO COMPARECIMENTO", "NAO ADEQUADA" e "ADEQUADA" (10 células). As demais colunas da mesma tabela usam rótulos redigidos em português ("Vistoria agendada", "Concluído").
+
+Esperado: A coluna deve exibir rótulos legíveis em português, com acentuação e capitalização corretas (ex.: "Não comparecimento", "Não adequada", "Adequada"), e não a constante interna do sistema.
+
+Janela: 1440×900 · interações desde o carregamento: 1. clicar na aba "Concluídos" (button#HISTORICO)
+
+Regra declarada: nenhuma (atribuição incerta)
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: regra-incerta · janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(7)" — <td>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(7)" — <td> "Sabrina Ventura Nogueira"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(7)" — <td> "Paulo Cordeiro Paiva"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(7)" — <td> "Elisa Guedes Amaral"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(7)" — <td> "Sabrina Ventura Nogueira"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(7)" — <td>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(7)" — <td> "Iara Sampaio Teixeira"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(7)" — <td> "Heitor Quintela Nogueira"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(7)" — <td> "Paulo Cordeiro Paiva"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(7)" — <td>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `document.querySelectorAll("table tbody td:nth-child(7)") => 10 células; valores distintos: ["NAO COMPARECIMENTO","NAO ADEQUADA","ADEQUADA"]; cabeçalho da 7ª coluna = "Situação"` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-64e4a3ba77fe36deefc107744b1d4064e958035363b1467f9cc1e5931d16a3c7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-664978818f39bf73b92da430e3b4263c8c38e5d4836182fa0ac7dd1a7115b932
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Na aba "Agendar", o botão de ação com ícone "calendar" de cada linha não tem title nem aria-label, enquanto o botão irmão expõe "Excluir vistoria". 10 ocorrências, todas sem nome.
+
+Esperado: O botão deve ter nome acessível descrevendo a ação de agendamento (ex.: title/aria-label "Agendar vistoria").
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. clicar na aba "Agendar"
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:table tbody br-button[icon=\"calendar\"]" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `consulta por ícone na aba Agendar: {"calendar -> (SEM NOME)": 10, "trash -> Excluir vistoria": 10}` → identificador devolvido por ferramenta (sem arquivo)
+- `validação de seletor: table tbody br-button[icon="calendar"] = 10, todos sem title e sem aria-label` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-664978818f39bf73b92da430e3b4263c8c38e5d4836182fa0ac7dd1a7115b932",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-6682bfd7bcc0d26b3d6d81c53ca656fbc6de1144532894c1bbd9123abce1a6e8
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Na paginacao de resultados, a pagina corrente ('1' de 4) e distinguida apenas pela classe CSS 'active' no <a class="page active">, sem aria-current; a arvore de acessibilidade expoe os quatro itens como 'link' equivalentes ('1', '2', '3', '4'), sem indicar qual esta em uso.
+
+Esperado: O item da pagina corrente deve expor seu estado programaticamente, com aria-current="page" (ou equivalente), para que a posicao atual na paginacao nao dependa apenas de estilo visual.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: govbr-3.7.0-accessibility-global-e038367bd7d6
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a" — <a> "1"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `DOM: <a href="javascript:void(0)" class="page active"> 1 </a> sem aria-current; nav.br-pagination[data-current='1'][data-total='4']` → não encontrado na evidência preservada da execução
+- `arvore de acessibilidade: nodes e494, e497, e500, e503 expostos como 'link' sem estado de atual` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-6682bfd7bcc0d26b3d6d81c53ca656fbc6de1144532894c1bbd9123abce1a6e8",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-6b8799e378d970526410ce0a93311b1f5569420c109762b6caaaf0e24fae46d4
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elements must meet minimum color contrast ratio thresholds
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:color-contrast
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-16826af28e0996f408c83115a4435f7af40ac4cc53bf08f36e9dbbac871436f1 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-6b8799e378d970526410ce0a93311b1f5569420c109762b6caaaf0e24fae46d4",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-6c3778d82ded0392a42ac3ff435de2bd340e9be657ea188dde1b61bcc5a111f0
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O cabecalho da coluna de selecao contem apenas <input type="checkbox"> e nenhum texto perceptivel por leitor de tela.
+
+Esperado: Toda celula th deve ter texto acessivel descrevendo a coluna (visivel ou alternativa textual equivalente).
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: empty-table-header
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)" — <th>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-003 (checks=axe)` → identificador devolvido por ferramenta (sem arquivo)
+- `finding F-112` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-6c3778d82ded0392a42ac3ff435de2bd340e9be657ea188dde1b61bcc5a111f0",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-6cebca0e63e881bdf3957474192f90e8f26bee423a7c55355d93c62b9268af2a
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Cada numero de pagina esta dentro de um <li> aninhado diretamente em outro <li> (<li><!----><li><a class="page">1</a></li></li>), sem <ul>/<ol> intermediario - 4 ocorrencias. A arvore de acessibilidade reproduz o defeito, expondo listitem dentro de listitem.
+
+Esperado: Itens de lista devem ser filhos diretos de um <ul>/<ol>; cada pagina deve ocupar um unico <li> do <ul> da paginacao, sem aninhamento.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:1.3.1
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li" — <li> "1"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li" — <li> "2"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li" — <li> "3"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li" — <li> "4"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-6cebca0e63e881bdf3957474192f90e8f26bee423a7c55355d93c62b9268af2a",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-6dbc54e84299c73569bfdb940d713da3e939526e175631acf68f9b30509eaf1a
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Os quatro itens numéricos de página são <li> aninhados diretamente dentro de outro <li>, sem <ul>/<ol> intermediário, invalidando a estrutura da lista de paginação.
+
+Esperado: Todo <li> deve ter <ul> ou <ol> como elemento pai.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: listitem
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li" — <li> "1"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li" — <li> "2"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li" — <li> "3"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li" — <li> "4"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-003` → identificador devolvido por ferramenta (sem arquivo)
+- `F-127` → identificador devolvido por ferramenta (sem arquivo)
+- `F-128` → identificador devolvido por ferramenta (sem arquivo)
+- `F-129` → identificador devolvido por ferramenta (sem arquivo)
+- `F-130` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-6dbc54e84299c73569bfdb940d713da3e939526e175631acf68f9b30509eaf1a",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-6e51d497ef49e3ec9d6bd859a36fcebd650928891afcad9f3dc76084c75f0eba
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: No shadow root do br-breadcrumb o item "Home" é um <button class="br-button small circle"> aninhado dentro de um <a href="/portal-mpa">, controles interativos encaixados. A árvore de acessibilidade expõe link "Home" contendo button "Home", e a varredura de focáveis lista os dois separadamente (dois pontos de tabulação para uma única ação).
+
+Esperado: Um controle interativo não deve conter outro; o item do breadcrumb deve ser apenas o link (ou apenas o botão), com um único ponto de foco.
+
+Janela: 1440×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb" — <br-breadcrumb>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` (sha256 6e8798cb118e)
+- `state-01-initial.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/state-01-initial.png` (sha256 27d62eb8866e)
+- `shadowRoot br-breadcrumb: <li class="crumb home"><a href="/portal-mpa"><button class="br-button small circle" aria-label="" type="button"><span class="sr-only">Home</span><i class="fas fa-home" aria-hidden="true"></i></button></a></li>` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-6e51d497ef49e3ec9d6bd859a36fcebd650928891afcad9f3dc76084c75f0eba",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-6f515f59f9c16f0c77f720a80eb82f5cd034c7c43662faac4270809f1b961d74
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os quatro acionadores de filtro (Cidade, Porto, Vistoriador, Status) são <span class="br-tag interaction"> com style="cursor:pointer" e handler de clique, sem tabindex, sem role e sem aria-expanded; não aparecem em nenhuma posição da ordem de tabulação (varredura de focáveis retornou 94 elementos, nenhum deles estes spans) e Escape não fecha a lista aberta.
+
+Esperado: Cada acionador deve ser operável por teclado (elemento button ou role="button" com tabindex="0" acionável por Enter/Espaço) e expor aria-expanded refletindo o estado aberto/fechado da lista.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. varrer elementos focáveis em light DOM e shadow DOM 3. clicar no acionador "Cidade" 4. pressionar Escape
+
+Regra declarada: wcag:2.1.1
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span" — <span> "Cidade"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span" — <span> "Porto"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span" — <span> "Vistoriador"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span" — <span> "Status"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `filtro-cidade-aberto.png` → `pipeline/logs/2026-10-02T12-56-12-sem-run1-120f567c-evidencia/filtro-cidade-aberto.png` (sha256 41445e56f6e6)
+- `snapshot a11y refs e65/e70/e75/e80 (generic [cursor=pointer], sem role de botão)` → não encontrado na evidência preservada da execução
+- `outerHTML de pnip-filter-panel: span.br-tag sem tabindex/role/aria-expanded` → não encontrado na evidência preservada da execução
+- `varredura de focáveis: 0 ocorrências de span.br-tag` → identificador devolvido por ferramenta (sem arquivo)
+- `após Escape: pnip-filter-panel .br-list.d-block = 1 (continua aberta)` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-6f515f59f9c16f0c77f720a80eb82f5cd034c7c43662faac4270809f1b961d74",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-70104636cc3b4be63ca72695ea84a000d259e11748d75c97558bd98993415886
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@detalhe-menu
+
+Observado: Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos).
+
+Esperado: Uma Área de Rodapé com o componente Footer (.br-footer ou <br-footer>), como o Template Base exige.
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até detalhe-menu (3 passo(s))
+
+Regra declarada: ds:page-footer
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Usuária de T"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-70104636cc3b4be63ca72695ea84a000d259e11748d75c97558bd98993415886",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-7032fafd4156fc5409144820447b7d6139e28b028f3d98f6f0705edad661c0ef
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@detalhe-menu
+
+Observado: border-radius: 20px fora da escala do DS
+
+Esperado: Um de: 0px, 4px, 8px, 16px, 50% (circle) ou pill (100em/999em × font-size)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até detalhe-menu (3 passo(s))
+
+Regra declarada: ds:token-radius
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>pnip-header>div>div>div>button" — <button> "Sair"
+
+### Unidades candidatas (não são crédito)
+
+- U-9c7e2ca111d2c9a7961c1ee8e3072a064ed3c2f32391f51ce2f7fc92f0cbd327 — B-18 · detalhe-menu · cena 1280x900@detalhe-menu · <button> "Sair": Botão "Sair" do menu do avatar fora do padrão HTML: tem atributo href (inexistente em <button>) e contém um <p>, conteúdo de fluxo que o modelo de conteúdo de <button> não admite. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: detalhe-menu
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-7032fafd4156fc5409144820447b7d6139e28b028f3d98f6f0705edad661c0ef",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-7037813ebf9546d9313b96aa9cd1b2fe3524b39e9966fd0b6765c8a3f97595db
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: O badge de status "Vistoria agendada" usa texto rgb(255,255,255) sobre fundo rgb(79,151,209) (classe bg-blue-40), razao de contraste 3.14:1, com font-size 14px e font-weight 500 - abaixo do limiar de texto normal. 10 ocorrencias no estado de carga.
+
+Esperado: Texto normal (menor que 18.66px negrito ou 24px) exige contraste minimo de 4.5:1 em relacao ao fundo.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:1.4.3
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-16826af28e0996f408c83115a4435f7af40ac4cc53bf08f36e9dbbac871436f1 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-28dabc8a49f3528f77fddf8a2abab3ce60b6f30b3339050c6377bd1baa2c1e7d — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-31b4d9ec28350f49ebccde7fa4125d03c35bef0f8509b31c305a4335353bcd3a — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-378ca27cdcd3ddaeff869d2dc65fb85c2dbae1863257673c49fff068452ab683 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-3fe5e8cc28ad339c48044f5f6514da4499172e643dc7133757f61235be604ffb — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-4947f781cee61c8d4e34f8fd68e6068c6ba9186a16939eaf9993f0dab21ea6cc — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-8188a105d675aa0dc47295d0aa263c5574ae6994c59e058e2a0f7b8c4ed890e2 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-82a357f4dc0d11ac01d09f3785422081482a834ab5bd069e99d1823aec324264 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-c94d9504d7c2bb1c534d9c85744bbbbe2810353f383044b076a2d9255c2b7e75 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-f07a8ab3363a61b30ea8baef943842cb2689f88dfed8b214272ef7c0fe9ad32e — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `state1-full.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/state1-full.png` (sha256 0a3ccd50a730)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-7037813ebf9546d9313b96aa9cd1b2fe3524b39e9966fd0b6765c8a3f97595db",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-74d6d443c8ccbbf2dae75513c47c0e57104a5d333a162afc915668991a5e78f4
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: O primeiro link da página (href="/portal-mpa", "Home") não é uma âncora interna.
+
+Esperado: O primeiro link da página é o salto para o conteúdo: âncora interna cujo alvo existe (e-MAG 1.5).
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: ds:page-skip-link
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-74d6d443c8ccbbf2dae75513c47c0e57104a5d333a162afc915668991a5e78f4",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-757b2889b78a5d33e18fc187858b4f3d6cfa16780b9b0b282b9b2d28b016edfa
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os tres botoes de aba (Agendar, Tramitando, Concluidos) nao tem role=tab, aria-selected nem aria-current, e o <ul> ancestral nao tem role=tablist. A aba ativa e indicada somente pela classe CSS 'active' no <li> pai: no carregamento, li.tab-item.active e 'Tramitando'. Depois de clicar em 'Agendar', a classe migrou e o conteudo da tabela mudou, mas aria-selected permaneceu null nos tres botoes.
+
+Esperado: A aba selecionada deve expor seu estado programaticamente — role=tab com aria-selected=true no botao ativo e false nos demais, dentro de container role=tablist (ou aria-current equivalente) — e nao apenas por classe CSS e estilo visual.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa) 2. clicar na aba 'Agendar' e reinspecionar os atributos dos tres botoes
+
+Regra declarada: govbr-3.7.0-accessibility-global-e038367bd7d6
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)>button" — <button#AGENDAR> "Agendar"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>button" — <button#TRAMITANDO> "Tramitando"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>button" — <button#HISTORICO> "Concluídos"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `V-002 (verify_finding, live=true, 3 elementos: ruleExists=pass, applicability=pass, evidenceConsistent=pass, violation=no-predicate; stateFingerprint sha256:fc09f343e8c5ce6a1d8ede7553c2adf608fd54aa2b5fc6a86ad1386abfb5a2b0)` → identificador devolvido por ferramenta (sem arquivo)
+- `DOM antes e depois do clique: role=null, aria-selected=null, aria-current=null nos 3 botoes; indicador de ativo = class='tab-item active'` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-757b2889b78a5d33e18fc187858b4f3d6cfa16780b9b0b282b9b2d28b016edfa",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-76133662b07a45a57b0f910be44500b7bff3b14079173469c767cbde4ef438fe
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@modal
+
+Observado: br-breadcrumb aplicado a <div>
+
+Esperado: Elemento <nav>
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até modal (8 passo(s))
+
+Regra declarada: ds:structure-breadcrumb-tag
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div" — <div> "Home Vistorias Agendar vistoria" [shadow]
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-76133662b07a45a57b0f910be44500b7bff3b14079173469c767cbde4ef438fe",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-7665e806f4f47ffb490d05bb6be67b73260b28d3e4adb8bf76461bdeddd0b97f
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-3bf71c1b9bc5e863496d0227d9b0c52b17896364fce0fa37e170ff35a34c3f1b — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-7665e806f4f47ffb490d05bb6be67b73260b28d3e4adb8bf76461bdeddd0b97f",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-76e1421712218f4e5fac6896d8a64bba6291536a1430d29c2ab686e5c2637207
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os 10 checkboxes de selecao de linha nao tem <label> implicito nem explicito, aria-label, aria-labelledby ou title; na arvore de acessibilidade aparecem como checkbox sem nome, sem referencia a embarcacao da linha.
+
+Esperado: Cada checkbox deve ter etiqueta associada programaticamente que identifique a linha, por exemplo aria-label="Selecionar vistoria da embarcacao Coral Mansa IV".
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: label
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-003 (checks=axe)` → identificador devolvido por ferramenta (sem arquivo)
+- `findings F-117..F-126` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-76e1421712218f4e5fac6896d8a64bba6291536a1430d29c2ab686e5c2637207",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-77c5facaa52f45d472b6d92d4c307493a941090fb6addc8de46159bf02d3ea1d
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Os dois campos do intervalo de datas sao <br-input type="date" density="small"> sem label, sem placeholder, sem id/name e sem aria-label; o input[type=date] dentro do shadow root recebe id gerado (br-input-8 / br-input-9) sem rotulo. Na arvore de acessibilidade ambos aparecem como textbox sem nome. Os textos visiveis "Data da vistoria:" e "ate" sao nos de texto adjacentes, sem associacao programatica.
+
+Esperado: Cada campo deve ter nome acessivel distinto, por exemplo aria-label="Data da vistoria - inicio" e "Data da vistoria - fim", ou <label for> associado aos inputs.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1)" — <br-input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2)" — <br-input>
+
+### Unidades candidatas (não são crédito)
+
+- U-294d06e9c9ac03ecc74fb602199737580e11736300a52c3df77daafce5eb8a3c — B-13 · inicial · cena 1280x900@inicial · <span> "Nenhum filtro de data aplicado": Etiqueta "Nenhum filtro de data aplicado" (br-tag primary-pastel-01 small): texto branco sobre #c5d4eb, 14 px peso 500 — contraste 1,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `deep.json` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/deep.json` (sha256 d470a093ae95)
+- `state1-full.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/state1-full.png` (sha256 0a3ccd50a730)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-77c5facaa52f45d472b6d92d4c307493a941090fb6addc8de46159bf02d3ea1d",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-780ab2ca33dff65a395594155784f14e2913bfc85c115830e0097e60d77e5305
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@detalhe-menu
+
+Observado: All page content should be contained by landmarks
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até detalhe-menu (3 passo(s))
+
+Regra declarada: axe:region
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>pnip-header>div>div>div" — <div#avatar-menu> "Usuária de Teste usuaria.teste@exemplo.invalid S"
+
+### Unidades candidatas (não são crédito)
+
+- U-060619c23f438737b6ceda1f36f200d1431c490df3fd7941c57b2f4a1a8679bc — B-17 · detalhe-menu · cena 1280x900@detalhe-menu · <div#avatar-menu> "Usuária de Teste usuaria.teste@exemplo.invalid S": Menu do avatar (div#avatar-menu.br-list) declara role="menu" e não tem nenhum descendente com papel menuitem: o "Sair" é um <button> sem papel e "Trocar unidade" um <span>. O papel declarado não corresponde ao conteúdo. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: detalhe-menu
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-780ab2ca33dff65a395594155784f14e2913bfc85c115830e0097e60d77e5305",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-79dd035b948d0975b1c3cfc0565f46475b90e06952f6da6fdec60dc2c1a3739c
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: <li> elements must be contained in a <ul> or <ol>
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:listitem
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li" — <li> "4"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-79dd035b948d0975b1c3cfc0565f46475b90e06952f6da6fdec60dc2c1a3739c",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-7c51341a44d8594f3bd6638c81b6f6edfab2ad7a2aae1bd4b24bc198ad6decc7
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-61b0f575c57922f2491d6c2312a813385a09e1f96cd24a34a53e9b14edc5b401 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-7c51341a44d8594f3bd6638c81b6f6edfab2ad7a2aae1bd4b24bc198ad6decc7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-7eb1ee0ecec1c0fd54c24d046efaeebddb07563632cadb451844ce9435f9b437
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O botão de ação com ícone "eye" de cada linha não tem title nem aria-label (os botões irmãos têm: "Atribuir vistoriador", "Excluir vistoria", "Notificar solicitante da vistoria"); a árvore de acessibilidade o expõe como button sem nome. Ocorre nas abas Tramitando e Concluídos, 10 por página.
+
+Esperado: O botão deve ter nome acessível descrevendo a ação (ex.: title/aria-label "Visualizar vistoria"), como os demais botões da mesma célula.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `snapshot a11y refs e147/e183/e219 — "button [ref=...]" sem nome, ao lado de button "Excluir vistoria"` → não encontrado na evidência preservada da execução
+- `outerHTML: <br-button icon="eye" type="secondary"></br-button> sem title` → não encontrado na evidência preservada da execução
+- `verificação por aba: Tramitando 10/10 sem nome, Concluídos 10/10 sem nome` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-7eb1ee0ecec1c0fd54c24d046efaeebddb07563632cadb451844ce9435f9b437",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-7ec0c8d6a818ece4a1f2c7d9db886e635e509835a1a2f11f873b9bd23fdb0c43
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O campo final do intervalo renderiza <input id="br-input-9" type="date"> no shadow root sem nenhum <label> (0 elementos), sem aria-label, aria-labelledby, title ou placeholder. O texto visivel "ate" e um <span class="text-bold"> irmao, nao associado programaticamente.
+
+Esperado: O campo deve ter etiqueta associada programaticamente (<label for>, aria-label ou aria-labelledby) identificando o fim do intervalo.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: label
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2)" — <br-input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-003 (checks=axe)` → identificador devolvido por ferramenta (sem arquivo)
+- `finding F-115` → identificador devolvido por ferramenta (sem arquivo)
+- `inspecao do shadow root: labelsInShadow=0, ariaLabel=null, placeholder=null, title=null` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-7ec0c8d6a818ece4a1f2c7d9db886e635e509835a1a2f11f873b9bd23fdb0c43",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-7fa2d89f84fb8d2ad013b08aafefa6f624c82001c2c91b630524b1992bc7f917
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Buttons must have discernible text
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:button-name
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "unresolved:tr:nth-child(8) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-7fa2d89f84fb8d2ad013b08aafefa6f624c82001c2c91b630524b1992bc7f917",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-803a5507912b3687416710a6b83d457ea6e518f23abb748993187cabacda697e
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Com data inicial 01/05/2026 e data final 01/01/2026 (fim antes do início), o intervalo invertido é aceito em silêncio: a tag confirma "Exibindo vistorias de 01/05/2026 até 01/01/2026", os inputs permanecem ng-valid, sem aria-invalid nem aria-describedby, não há nenhum texto de erro no DOM e o usuário recebe apenas um resultado vazio.
+
+Esperado: O erro de entrada deve ser identificado e descrito em texto no DOM, associado ao campo via aria-describedby e com aria-invalid="true", informando como corrigi-lo.
+
+Janela: 1280×900 · interações desde o carregamento: 1. preencher a data inicial com 01/05/2026 2. preencher a data final com 01/01/2026
+
+Regra declarada: emag:6.6
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1)" — <br-input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2)" — <br-input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-803a5507912b3687416710a6b83d457ea6e518f23abb748993187cabacda697e",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-80765e3f7dd30ef3d8e9ab90bd2b056cb36f80ac9a7fe9893cd83c1467d3de98
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:320x800
+
+Observado: Em viewport de 320x800 o contentor da tabela tem clientWidth 225px e scrollWidth 1269px com overflow-x: visible, e nenhum ancestral ate <body> define overflow-x. O transbordo propaga para o documento: document.documentElement.scrollWidth = 1309px contra clientWidth de 305px, forcando rolagem horizontal da pagina inteira - cabecalho gov.br, breadcrumb, titulo, filtros e campos de data ficam cortados a direita, nao so a tabela. O nav.tab-nav da mesma tela resolve o caso com overflow-x: auto proprio (scrollWidth 438px contido em 225px).
+
+Esperado: Em 320px de largura o conteudo nao deve exigir rolagem em duas dimensoes: a rolagem horizontal da tabela deve ficar contida no seu proprio contentor (overflow-x: auto em div.br-table), preservando as demais regioes dentro da largura da janela.
+
+Janela: 320×800 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:1.4.10
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: janela-fora-do-plano: 320x800; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)" — <div> "# Nome da embarcação RAEP Data/Hora Vistoria Loc"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `state-320.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/state-320.png` (sha256 84abaf659b47)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-80765e3f7dd30ef3d8e9ab90bd2b056cb36f80ac9a7fe9893cd83c1467d3de98",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-8123ac32a741c5cdef344f70d068fc25c73550d6c05d4149f17014dafc8f2165
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@modal
+
+Observado: padding: 0px 6px (fora da escala: 6px, 6px, 6px)
+
+Esperado: Múltiplos de 4px
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até modal (8 passo(s))
+
+Regra declarada: ds:token-spacing
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a" — <a> "Home" [shadow]
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-8123ac32a741c5cdef344f70d068fc25c73550d6c05d4149f17014dafc8f2165",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-81538fed0c7df5a848fb34202280f1660bccc36bcdb3d4120e8bc376247146d8
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@modal
+
+Observado: padding: 0px 6px (fora da escala: 6px, 6px, 6px)
+
+Esperado: Múltiplos de 4px
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até modal (8 passo(s))
+
+Regra declarada: ds:token-spacing
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>br-breadcrumb >>> div>ul>li:nth-of-type(2)>a" — <a> "Vistorias" [shadow]
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-81538fed0c7df5a848fb34202280f1660bccc36bcdb3d4120e8bc376247146d8",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-83af8df46136e79c7acb6bb35337df936667a3f3b30c8be4d6fa22297103f675
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elements must meet minimum color contrast ratio thresholds
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:color-contrast
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span" — <span> "Nenhum filtro de data aplicado"
+
+### Unidades candidatas (não são crédito)
+
+- U-294d06e9c9ac03ecc74fb602199737580e11736300a52c3df77daafce5eb8a3c — B-13 · inicial · cena 1280x900@inicial · <span> "Nenhum filtro de data aplicado": Etiqueta "Nenhum filtro de data aplicado" (br-tag primary-pastel-01 small): texto branco sobre #c5d4eb, 14 px peso 500 — contraste 1,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-83af8df46136e79c7acb6bb35337df936667a3f3b30c8be4d6fa22297103f675",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-83ce187aff62791ae37224ceb0b1982f1c7fd8f1cb0e2dccc10247fe9c0c2422
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: O segundo botao de acao de cada linha e <br-button icon="eye" type="secondary"> sem atributo title e sem aria-label, resultando em button sem nome acessivel na arvore (10 ocorrencias na aba Tramitando; o mesmo ocorre nas abas Agendar e Concluidos). Os tres botoes irmaos da mesma celula trazem title ("Atribuir vistoriador", "Excluir vistoria", "Notificar solicitante da vistoria").
+
+Esperado: O botao deve ter nome acessivel coerente com os irmaos, por exemplo title/aria-label="Visualizar vistoria".
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `deep.json` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/deep.json` (sha256 d470a093ae95)
+- `.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-83ce187aff62791ae37224ceb0b1982f1c7fd8f1cb0e2dccc10247fe9c0c2422",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-849b87d5d25a60b221083a0a31d79b3ecc8ea0a476528a5f9b78ac75429b6550
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Buttons must have discernible text
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:button-name
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "unresolved:tr:nth-child(6) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-849b87d5d25a60b221083a0a31d79b3ecc8ea0a476528a5f9b78ac75429b6550",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-87a8ef3b13b2656ea46ca923f9a6c57f874f252a5f36beecbf35f7d7867de6e6
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@modal
+
+Observado: border-radius: 20px fora da escala do DS
+
+Esperado: Um de: 0px, 4px, 8px, 16px, 50% (circle) ou pill (100em/999em × font-size)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até modal (8 passo(s))
+
+Regra declarada: ds:token-radius
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>pnip-header>div>div>div>button" — <button> "Sair" · **oculto**: nao-renderizado, aria-hidden
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-87a8ef3b13b2656ea46ca923f9a6c57f874f252a5f36beecbf35f7d7867de6e6",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-88b7c42abdd663ba97d5548212536eee7b401b705bce731865418bf495a68058
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Ao buscar um termo sem resultados, a tabela e a paginação são removidas e surge o <p>Não há vistorias para exibir.</p>, sem role="status", aria-live ou aria-atomic. Nesse estado a página fica com zero regiões live — a única existente (.pagination-information com aria-live="polite", que anuncia "1– 10 de 34 itens") é removida junto com a paginação. O foco permanece no campo de busca e nada é anunciado.
+
+Esperado: A mensagem de resultado vazio deve ser exposta como mensagem de status (role="status" ou aria-live="polite") para ser anunciada sem receber foco.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. digitar "zzzzzz" no campo "Pesquise aqui ..." 3. pressionar Enter
+
+Regra declarada: wcag:4.1.3
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:pnip-propesc-vistorias div.d-flex.flex-column.justify-content-center.align-items-center.mt-5 p" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `busca-sem-resultados.png` → `pipeline/logs/2026-10-02T12-56-12-sem-run1-120f567c-evidencia/busca-sem-resultados.png` (sha256 96bb2f457802)
+- `estado após Enter: {temTabela:false, p:1, texto:"Não há vistorias para exibir.", liveRegions:[], foco:"BR-INPUT#search"}` → identificador devolvido por ferramenta (sem arquivo)
+- `outerHTML: <p>Não há vistorias para exibir.</p> sem aria-live/role` → não encontrado na evidência preservada da execução
+- `estado com resultados: liveRegions=["DIV|polite|1– 10 de 34 itens"]` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-88b7c42abdd663ba97d5548212536eee7b401b705bce731865418bf495a68058",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-897be618b03638890ed1ec6bfbbeb2880703eff3d7895ec3726efba33381cfc7
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Os 10 checkboxes de selecao de linha sao <input type="checkbox" style="transform: scale(1.5);"> sem id, sem label associado (element.labels.length === 0), sem aria-label e sem title. Na arvore de acessibilidade aparecem como checkbox sem nome, indistinguiveis entre si.
+
+Esperado: Cada checkbox deve ter nome acessivel que identifique a linha, por exemplo aria-label="Selecionar vistoria da embarcacao Coral Mansa IV" ou aria-labelledby apontando para a celula do nome da embarcacao.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-07d2b621292b581da4954c5639be7a8609cf001aa47f0b34539dc3947e0274dc — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-0b56e5b10f4881a7605386c84f28bbcd225b3a6127a73c212dad3d0d8c45a4e5 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-19ca16582dcc40a9305397b4cebe70cf60687de565533ab4f4d5de3991446b95 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-2b33b7eba5e9c5af4e4fbea1a344d0a19086aa2b6a02cb38d30d56d8de042000 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-47b56f8da889530a10d5db47459e51252e664d92a5cadf585b1a90afb15ed1c1 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-4e1a48a085fa1848925675355c50a9f84de93f9ffbc1e0fb5f4f22caaf7a6bfa — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-6341b4d0d71c65cc5e698aec6269b94450f2785ffa61177947917f532001448e — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-80d427f0aba5699380a544bbe2c85dbca2b581b8471d21c72c60691c2e9c6636 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-a80ba4fa0e4e8dcc3209bd5f984d110e3d9b52df1b836a9579647be5634914aa — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-f9f3d45544d87746e9a1c7094a4cc62f5d90ef5f8242736a83ca2bd7164880a8 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `deep.json` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/deep.json` (sha256 d470a093ae95)
+- `.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-897be618b03638890ed1ec6bfbbeb2880703eff3d7895ec3726efba33381cfc7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-89d7d23512aa81a1f55444a0fec0a7a01bc8c9008e9db8f9d0a1192037fb1568
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O botao 'Buscar' da barra de busca tem margin: -38px 4px 0px 0px, com -38px fora da escala de espacamento do DS — deslocamento negativo usado para posicionar o botao sobre o campo.
+
+Esperado: Valores de margem devem pertencer a escala de espacamento do gov.br DS (tokens --spacing-scale-*), sem deslocamentos negativos arbitrarios.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: ds-token-spacing
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button" — <button> "Buscar"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-010/F-256 (govbr-ds-token, regra ds-token-spacing, severidade minor, confidence 1, pathway deterministic)` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-89d7d23512aa81a1f55444a0fec0a7a01bc8c9008e9db8f9d0a1192037fb1568",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-8a8d722adcb14a458e22e56735d307f450b4793d25b72f4c41673c8c677c8ec7
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O botão de visualizar de cada uma das 10 linhas não tem nome acessível: o host br-button não tem title nem aria-label, o <button> interno tem aria-label="" e texto vazio, e o único conteúdo é <i class="fas fa-eye" aria-hidden="true">. Na árvore de acessibilidade ele aparece como "button" sem nome. Os botões irmãos da mesma linha têm title ("Atribuir vistoriador", "Excluir vistoria", "Notificar solicitante da vistoria").
+
+Esperado: Todo botão deve expor um nome acessível que descreva sua ação (ex.: title/aria-label "Visualizar vistoria").
+
+Janela: 1440×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button" — <br-button>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` (sha256 6e8798cb118e)
+- `state-01-initial.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/state-01-initial.png` (sha256 27d62eb8866e)
+- `árvore de acessibilidade: button [ref=e147] sem nome; host attrs = icon=eye, type=secondary (sem title); shadow button aria-label="" e textContent=""` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-8a8d722adcb14a458e22e56735d307f450b4793d25b72f4c41673c8c677c8ec7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-8b451919fb241937ee41350a845892401a59eb87e1f0d12cc5a0cae9f08559d7
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: As opções da lista de filtro são <label> soltos dentro de div.br-radio, sem input associado (0 inputs na lista), sem role, sem tabindex e sem estado de seleção; clicar no label aplica o filtro, mas nenhum papel ou valor é exposto. Medido com a lista "Cidade" aberta: 6 labels, 0 inputs, 0 elementos focáveis.
+
+Esperado: Cada opção deve expor papel e estado programaticamente (ex.: input[type=radio] com label associado, ou role="option"/"menuitemradio" com aria-checked) e ser alcançável pelo teclado.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. clicar no acionador "Cidade" 3. inspecionar a lista aberta
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:pnip-filter-panel .br-list.d-block .br-item label" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `snap-filtro-aberto.md` → `pipeline/logs/2026-10-02T12-56-12-sem-run1-120f567c-evidencia/snap-filtro-aberto.md` (sha256 a0fff67126ec)
+- `filtro-cidade-aberto.png` → `pipeline/logs/2026-10-02T12-56-12-sem-run1-120f567c-evidencia/filtro-cidade-aberto.png` (sha256 41445e56f6e6)
+- `outerHTML: <div class="br-radio py-2 px-3"><label>Areia Branca do Leste</label></div>` → não encontrado na evidência preservada da execução
+- `contagem: labels=6, inputs=0, focáveis=0` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-8b451919fb241937ee41350a845892401a59eb87e1f0d12cc5a0cae9f08559d7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-8bdf18f65e5969d58decfb37acbea79f38855324d8da4ee581d36ef9111b4ead
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-45c20706f1d48bc1746de862e07a2bebfa8d36d3c0e635f9b31e3bf29f73ac52 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-8bdf18f65e5969d58decfb37acbea79f38855324d8da4ee581d36ef9111b4ead",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-8c3f9d99992ef7eb7c2f3c6c66b080fa72a63039102714433140e21acd0d5b0a
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O texto "Vistoria agendada" é rgb(255,255,255) sobre bg-blue-40 rgb(79,151,209), 14px peso 500: razão de contraste 3.14:1. Atinge 10 elementos na aba Tramitando.
+
+Esperado: Texto normal (menor que 18,66px em negrito ou 24px) precisa de razão de contraste mínima de 4.5:1 com o fundo.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: wcag:1.4.3
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `cálculo de contraste sobre getComputedStyle: fg rgb(255,255,255) / bg rgb(79,151,209) = 3.14:1` → não encontrado na evidência preservada da execução
+- `selecao-todos.png` → `pipeline/logs/2026-10-02T12-56-12-sem-run1-120f567c-evidencia/selecao-todos.png` (sha256 73cbcfc3dcec)
+- `snapshot a11y ref e137` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-8c3f9d99992ef7eb7c2f3c6c66b080fa72a63039102714433140e21acd0d5b0a",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-8c4e7d086701f74d35fcdad0c889c80f9194e5ea8eb7cff61bb3595131324ec5
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Tag "Nenhum filtro de data aplicado": texto #ffffff sobre fundo #c5d4eb a 14px — razão de contraste 1.5:1.
+
+Esperado: Razão de contraste mínima de 4.5:1 para texto normal.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: color-contrast
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span" — <span> "Nenhum filtro de data aplicado"
+
+### Unidades candidatas (não são crédito)
+
+- U-294d06e9c9ac03ecc74fb602199737580e11736300a52c3df77daafce5eb8a3c — B-13 · inicial · cena 1280x900@inicial · <span> "Nenhum filtro de data aplicado": Etiqueta "Nenhum filtro de data aplicado" (br-tag primary-pastel-01 small): texto branco sobre #c5d4eb, 14 px peso 500 — contraste 1,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `S-page-003` → identificador devolvido por ferramenta (sem arquivo)
+- `F-101` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-8c4e7d086701f74d35fcdad0c889c80f9194e5ea8eb7cff61bb3595131324ec5",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-8c7ac0eca53eea712b153fc132b3be03eff9241fdc5af02020de79a3aa1c42d6
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena a-decidir:1280x900
+
+Observado: O primeiro link do documento é o 'Home' do breadcrumb, href="/portal-mpa" — navegação entre páginas, não âncora interna. Não existe nenhum link de salto para o conteúdo.
+
+Esperado: O primeiro link da página deve ser o salto para o conteúdo: âncora interna (href="#id") cujo alvo exista no documento (e-MAG 1.5).
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: ds-page-skip-link
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-a-decidir: o seletor resolve em 1280x900@inicial, 1280x900@detalhe-menu, 1280x900@modal; escolha em "cena" de qual a alegação fala — só os sujeitos dela contam
+
+### Sujeitos
+
+Cena `1280x900@inicial` (/pnip/portal-mpa/vistorias) — escolha com `"cena": "1280x900@inicial"`:
+- "1280x900@inicial|" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+Cena `1280x900@detalhe-menu` (/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046) — escolha com `"cena": "1280x900@detalhe-menu"`:
+- "1280x900@detalhe-menu|" — <html> "U Olá, Usuária de Teste, SUPERVISOR Usuária de T"
+
+Cena `1280x900@modal` (/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038) — escolha com `"cena": "1280x900@modal"`:
+- "1280x900@modal|" — <html> "U Olá, Usuária de Teste, SUPERVISOR Programa Nac"
+
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-002` → identificador devolvido por ferramenta (sem arquivo)
+- `F-090` → identificador devolvido por ferramenta (sem arquivo)
+- `V-002` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-8c7ac0eca53eea712b153fc132b3be03eff9241fdc5af02020de79a3aa1c42d6",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-8cfb92af6c25275e242dd90dbe89e828801367b16eb05232c1694524c583d804
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@modal
+
+Observado: border-radius: 6px fora da escala do DS
+
+Esperado: Um de: 0px, 4px, 8px, 16px, 50% (circle) ou pill (100em/999em × font-size)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até modal (8 passo(s))
+
+Regra declarada: ds:token-radius
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>div:nth-of-type(2)>form>div:nth-of-type(4)>div:nth-of-type(2)>div:nth-of-type(3)>div>textarea" — <textarea> "Complemente aqui o texto da conclusão se desejar" · **oculto**: nao-renderizado
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-8cfb92af6c25275e242dd90dbe89e828801367b16eb05232c1694524c583d804",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-8e2fa91d61e136277ac7a213b2d8a65ef9dc5bd0123921f3417691cb2606acf9
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Na aba "Agendar", o texto "Vistoria pré agendada" é branco sobre bg-secondary-06, 14px peso 500: razão de contraste 3.54:1. Atinge 10 elementos.
+
+Esperado: Texto normal precisa de razão de contraste mínima de 4.5:1 com o fundo.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. clicar na aba "Agendar"
+
+Regra declarada: wcag:1.4.3
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:.br-table .bg-secondary-06 .text-secondary-01" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `cálculo de contraste sobre getComputedStyle na aba Agendar = 3.54:1` → identificador devolvido por ferramenta (sem arquivo)
+- `contagem validada: 10 elementos para .br-table .bg-secondary-06 .text-secondary-01` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-8e2fa91d61e136277ac7a213b2d8a65ef9dc5bd0123921f3417691cb2606acf9",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-910b55a6c55abff7d5468dee14bf9ad5436b4609d204fe0d9cac5c50ce7c2783
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: No diálogo "Atribuir Vistoriador" o <select> que recebe o foco ao abrir não tem nome acessível: sem aria-label, sem aria-labelledby e sem <label for="swal2-select">. O texto "Selecione um Vistoriador" está em div#swal2-html-container, referenciado apenas por aria-describedby do diálogo. Na árvore de acessibilidade o controle aparece como "combobox" sem nome.
+
+Esperado: O campo de seleção deve ter nome acessível próprio (ex.: <label for="swal2-select"> ou aria-labelledby apontando para "Selecione um Vistoriador").
+
+Janela: 1440×900 · interações desde o carregamento: 1. clicar no botão de atribuir vistoriador da 2ª linha (br-button[icon="user-times"])
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:select#swal2-select" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `inspeção do diálogo: {id:"swal2-select", ariaLabel:null, ariaLabelledby:null, labelFor:false}; árvore de acessibilidade: combobox [active] sem nome; diálogo tem role=dialog, aria-modal=true, aria-labelledby=swal2-title` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-910b55a6c55abff7d5468dee14bf9ad5436b4609d204fe0d9cac5c50ce7c2783",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-9187e49fdd4921f807a632bfc9d2e35a0b5dd45c90155378681949cc56c2f288
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-8e1c6e6dfaa6a3ae9b7ab34d5b2172ff399e720d098a46041fe748f07ccb9520 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-9187e49fdd4921f807a632bfc9d2e35a0b5dd45c90155378681949cc56c2f288",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-92c2f8b2d9b836c2a8eb9e6ae90e86c0ce502c88e7718d747dcb92c17ed47a32
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-e8a833be6f8e67c0174db0b62af794a56b992fcb720b940ff7e1902b393b2536 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-92c2f8b2d9b836c2a8eb9e6ae90e86c0ce502c88e7718d747dcb92c17ed47a32",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-92e9e67bcd79a6abcdf3a431dd0a78b868333035c88db00059e289555436033a
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Na aba 'Agendar', o texto do selo de status nas 10 linhas tem contraste de 3,54:1 (primeiro plano #ffffff sobre fundo #888888, 14px, peso normal). E um par de cores distinto do selo da aba 'Tramitando': corrigir um nao corrige o outro.
+
+Esperado: Texto deve ter contraste minimo de 4,5:1 em relacao ao fundo, em todos os pares de cor de status produzidos pelo componente de selo.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa) 2. clicar na aba 'Agendar' (#AGENDAR)
+
+Regra declarada: govbr-3.7.0-accessibility-global-cb09bc0c77c0
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:table tbody tr td:nth-child(7) pnip-status-solicitacao-utils .text-secondary-01" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-012/F-300..F-309 (axe-core, regra color-contrast, severidade serious, 10 elementos, razao medida 3.54; stateDiff em relacao a S-page-008 com added incluindo F-300..F-309)` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-92e9e67bcd79a6abcdf3a431dd0a78b868333035c88db00059e289555436033a",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-9541164a750843998315a108fe7cd7ede1fe59e2030f379a84e035ba207f54ce
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: A pagina nao possui nenhum <h1>: o unico cabecalho do documento e o <h2 class="text-bold text-blue-vivid-60">Vistorias</h2> (document.querySelectorAll('h1,h2,h3,h4,h5,h6') retorna um unico elemento, de nivel 2). A hierarquia de cabecalhos comeca no nivel 2 e o titulo principal da tela nao e marcado como tal.
+
+Esperado: O titulo principal da pagina deve ser marcado como <h1>, iniciando a hierarquia de cabecalhos no nivel 1 e sem saltar niveis.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: emag:1.3
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(1)>h2" — <h2> "Vistorias"
+
+### Unidades candidatas (não são crédito)
+
+- U-7417abf3b736412929e5aac6c0f8edf05a3bee20d5a3aa4fee840137b342a4cd — B-02 · inicial · cena 1280x900@inicial · <h2> "Vistorias": Lista de vistorias: o único título da página é um <h2> "Vistorias"; não há nenhum <h1> (light DOM e shadow roots). A hierarquia começa no nível 2. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-9541164a750843998315a108fe7cd7ede1fe59e2030f379a84e035ba207f54ce",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-96e3e1ded147739a5f4a896b7da0ad46d7fe947b9853bba10de1fc2c3c828181
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-4e1a48a085fa1848925675355c50a9f84de93f9ffbc1e0fb5f4f22caaf7a6bfa — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-96e3e1ded147739a5f4a896b7da0ad46d7fe947b9853bba10de1fc2c3c828181",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-985c43e53d82d61c36c0a59bca63ebbcde7e470ba289bbd2d8a2a4c34e9a870e
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elements must meet minimum color contrast ratio thresholds
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:color-contrast
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-3fe5e8cc28ad339c48044f5f6514da4499172e643dc7133757f61235be604ffb — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-985c43e53d82d61c36c0a59bca63ebbcde7e470ba289bbd2d8a2a4c34e9a870e",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-989917aa3d8a47f92e6a775864d451e0b29de36298707b24241905cf1a5bbb79
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-0110934d42ae3ae66442d691b2b20b23d9d07ce6f4c4c8aa8480df203d202125 — B-07 · inicial · cena 1280x900@inicial · <button> [shadow]: O botão de abrir a vistoria (ícone de olho) de cada linha não tem nome acessível: sem texto, aria-label vazio, sem title (o hospedeiro br-button também não tem title, ao contrário das outras três ações da linha). Papel button com nome "" na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-13a157c9b6a196ee3914cb6bc301202d68f0f7a52f693739e9bc9a8f1789cfcc — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-989917aa3d8a47f92e6a775864d451e0b29de36298707b24241905cf1a5bbb79",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-99947e0c8d40744b1ce2dfc56dcc503b0fa502e15e76f84dcbdff30ad1b6398d
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Com o filtro de cidade aplicado, o botao que remove a tarja "Barra Nova" e <button type="button" class="br-button inverted circle"><i class="fas fa-times"></i></button>, sem texto interno, aria-label, aria-labelledby ou title; um Tab real a partir de #HISTORICO para nele sem nome anunciado.
+
+Esperado: O botao de remocao deve ter nome acessivel, por exemplo aria-label="Remover filtro de cidade Barra Nova".
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. clicar no gatilho de filtro "Cidade" 3. clicar na opcao "Barra Nova"
+
+Regra declarada: button-name
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:.row.pl-2 .br-tag.interaction > button.br-button.inverted.circle" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-006 (checks=axe, actions reproduzidas)` → identificador devolvido por ferramenta (sem arquivo)
+- `finding F-173` → identificador devolvido por ferramenta (sem arquivo)
+- `sequencia de Tab real a partir de #HISTORICO` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-99947e0c8d40744b1ce2dfc56dcc503b0fa502e15e76f84dcbdff30ad1b6398d",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-99bacaf94acb3d745132f5c6feb6703cb729ec32190d790dbc9d323ca3b9fd77
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-3ec4428dd5adf38650270e029ad19fabdea037fa2d7ea63fc5e8caed85ad1047 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-99bacaf94acb3d745132f5c6feb6703cb729ec32190d790dbc9d323ca3b9fd77",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-99bc9f834a8358eb1832b483de478a06d91b8dd29ba120a6fe302d9d1ce48e68
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: <li> elements must be contained in a <ul> or <ol>
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:listitem
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li" — <li> "2"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-99bc9f834a8358eb1832b483de478a06d91b8dd29ba120a6fe302d9d1ce48e68",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-9a987be90e6214dd6205d5b3560f8451cc4580ebcde846707522ddad35243471
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:320x640
+
+Observado: Com a janela em 320px de largura (clientWidth 305), a barra de abas não reflui: cada li.tab-item mede ~155px e a aba 'Concluídos' termina em x=478, 173px além da área visível, exigindo rolagem horizontal para alcançá-la.
+
+Esperado: O conteúdo deve ser apresentável a 320px de largura sem exigir rolagem horizontal — p.ex. permitindo quebra de linha ou dando rolagem própria à barra de abas.
+
+Janela: 320×640 · interações desde o carregamento: 1. redimensionar a janela para 320x640 2. recarregar a tela
+
+Regra declarada: wcag:1.4.10
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: janela-fora-do-plano: 320x640; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav" — <nav> "Abas de Navegação Simples"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-37-36-852Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-37-36-852Z.yml` (sha256 f9147f8cc0b6)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-9a987be90e6214dd6205d5b3560f8451cc4580ebcde846707522ddad35243471",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-9aa6c4cd03e73eab1161c19b1b400747c32c047b5e164714e71dad12082338d4
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena a-decidir:1280x900
+
+Observado: Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos); document.querySelectorAll('.br-footer, br-footer').length === 0.
+
+Esperado: O Template Base exige a Área de Rodapé ocupada pelo componente Footer (.br-footer do core ou <br-footer>).
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: ds-page-footer
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-a-decidir: o seletor resolve em 1280x900@inicial, 1280x900@detalhe-menu, 1280x900@modal; escolha em "cena" de qual a alegação fala — só os sujeitos dela contam
+
+### Sujeitos
+
+Cena `1280x900@inicial` (/pnip/portal-mpa/vistorias) — escolha com `"cena": "1280x900@inicial"`:
+- "1280x900@inicial|" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+Cena `1280x900@detalhe-menu` (/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046) — escolha com `"cena": "1280x900@detalhe-menu"`:
+- "1280x900@detalhe-menu|" — <html> "U Olá, Usuária de Teste, SUPERVISOR Usuária de T"
+
+Cena `1280x900@modal` (/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038) — escolha com `"cena": "1280x900@modal"`:
+- "1280x900@modal|" — <html> "U Olá, Usuária de Teste, SUPERVISOR Programa Nac"
+
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-002` → identificador devolvido por ferramenta (sem arquivo)
+- `F-089` → identificador devolvido por ferramenta (sem arquivo)
+- `V-001` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-9aa6c4cd03e73eab1161c19b1b400747c32c047b5e164714e71dad12082338d4",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-9b55b15f0f1e85b9b4c7b42c8f119db12d452165968592ce994aff5010815382
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O botão que remove um filtro aplicado (ícone "×") não tem aria-label, title nem texto: a árvore de acessibilidade o expõe como button "" (nome vazio). O glifo do FontAwesome vem de ::before e não compõe nome acessível.
+
+Esperado: O botão de remoção deve ter nome acessível identificando o filtro removido (ex.: aria-label="Remover filtro Barra Nova").
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. clicar no acionador "Cidade" 3. clicar na opção "Barra Nova"
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:pnip-filter-panel span.br-tag.interaction.small:not(.bg-pure-0) button.br-button" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `snapshot a11y ref e557 — button "" [cursor=pointer]` → identificador devolvido por ferramenta (sem arquivo)
+- `outerHTML: <button type="button" class="br-button inverted circle"><i class="fas fa-times"></i></button>` → não encontrado na evidência preservada da execução
+- `consulta de atributos: aria-label=null, title=null, textContent=""` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-9b55b15f0f1e85b9b4c7b42c8f119db12d452165968592ce994aff5010815382",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-9c3dbc6d38c50b9bd9eb5a96f4338ee24e7d8f589f5b63da1097155d25313de8
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: 10 ícones decorativos do FontAwesome (8 no painel de filtros, 1 de prédio no cabeçalho do menu, 1 de relógio em "Última atualização") não têm aria-hidden="true". O glifo de ::before é exposto na árvore de acessibilidade como texto — ex.: generic [ref=e66]: "", generic [ref=e68]: "". Os demais ícones da mesma tela (paginação, selects, botão Limpar) já usam aria-hidden="true".
+
+Esperado: Ícones puramente decorativos devem ser ignorados pela tecnologia assistiva, com aria-hidden="true", como já feito no restante da tela.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: wcag:1.1.1
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span>i" — <i>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span>span:nth-of-type(2)" — <span>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span>i" — <i>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span>span:nth-of-type(2)" — <span>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span>i" — <i>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span>span:nth-of-type(2)" — <span>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span>i" — <i>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span>span:nth-of-type(2)" — <span>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(3)>i" — <i>
+- "body>pnip-root>pnip-header>div>div>div>div:nth-of-type(2)>div:nth-of-type(2)>span>i" — <i> · **oculto**: nao-renderizado, aria-hidden
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `snapshot a11y inicial: generics contendo caracteres de área privada do FontAwesome (refs e66, e68, e71, e73, e76, e78, e81, e83, e108)` → identificador devolvido por ferramenta (sem arquivo)
+- `agrupamento por componente: PNIP-FILTER-PANEL aria-hidden=null ×8, PNIP-HEADER aria-hidden=null ×1, relógio ×1; GOVBR-CUSTOM-PAGINATION e BR-SELECT-PNIP aria-hidden=true` → identificador devolvido por ferramenta (sem arquivo)
+- `getComputedStyle(el, "::before").content retorna o glifo` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-9c3dbc6d38c50b9bd9eb5a96f4338ee24e7d8f589f5b63da1097155d25313de8",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-9f191207a17c0ba22124cef2aabdd360bc2d90b3ed697cc0d9c0b99862a173a1
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:320x640
+
+Observado: Com a janela em 320px de largura (clientWidth 305), a linha do filtro de período mede 580px e termina em x=612 — 307px além da área visível. O d-flex em col-auto impede a quebra, e os dois br-input de data mantêm 191px cada.
+
+Esperado: O conteúdo deve ser apresentável a 320px de largura sem exigir rolagem horizontal — p.ex. empilhando rótulo e campos de data.
+
+Janela: 320×640 · interações desde o carregamento: 1. redimensionar a janela para 320x640 2. recarregar a tela
+
+Regra declarada: wcag:1.4.10
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: janela-fora-do-plano: 320x640; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div" — <div> "Data da vistoria: até"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-37-36-852Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-37-36-852Z.yml` (sha256 f9147f8cc0b6)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-9f191207a17c0ba22124cef2aabdd360bc2d90b3ed697cc0d9c0b99862a173a1",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-a0135ad8a20eb4723f132b094d9c941e9886638bbb1c264bea3a7e069a2fafcf
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@detalhe-menu
+
+Observado: Page should contain a level-one heading
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até detalhe-menu (3 passo(s))
+
+Regra declarada: axe:page-has-heading-one
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Usuária de T"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-a0135ad8a20eb4723f132b094d9c941e9886638bbb1c264bea3a7e069a2fafcf",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-a05f48d7ccaaefb82df3b27ba71b1b3e214632278aaa165fde2da4de587cdb6b
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os dois selects da paginação ("Exibir" e "Página") mantêm o ícone fa-angle-up (seta para cima) tanto com a lista fechada (.br-list display:none) quanto aberta (display:block). Com a lista fechada a seta aponta para cima, indicando recolher; o ícone não muda entre os estados.
+
+Esperado: O ícone deve refletir o estado do select: seta para baixo quando a lista está fechada e para cima quando aberta.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. inspecionar o select "Exibir" fechado 3. focar o campo "Exibir", que abre a lista 4. inspecionar o ícone novamente
+
+Regra declarada: nenhuma (atribuição incerta)
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: regra-incerta · janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button>i" — <i> · **oculto**: aria-hidden
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button>i" — <i> · **oculto**: aria-hidden
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `fechado: {listDisplay:"none", triggerIcon:"fas fa-angle-up"} para label "Exibir" e "Página"` → identificador devolvido por ferramenta (sem arquivo)
+- `aberto: {listaDisplay:"block", iconeAberto:"fas fa-angle-up"}` → identificador devolvido por ferramenta (sem arquivo)
+- `validação de seletor: 2 ocorrências` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-a05f48d7ccaaefb82df3b27ba71b1b3e214632278aaa165fde2da4de587cdb6b",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-a0d29b5e4ac7f3e61f0d5739e4f49bbfbb96e7a7c4ad7a45b0057193a2af4b5a
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: O empty state da busca sem resultados é um único <p>Não há vistorias para exibir.</p>. Não há título algum (nenhum cabeçalho é acrescentado: document.querySelectorAll('h1..h6') continua só com o H2 'Vistorias') nem orientação sobre o próximo passo.
+
+Esperado: A anatomia do padrão Empty States do DS marca o Título como obrigatório, e para ausência de dados por ação do usuário em pesquisa orienta explicar o ocorrido e indicar as etapas seguintes (ajustar filtros, 'Limpar Filtros').
+
+Janela: 1280×900 · interações desde o carregamento: 1. digitar 'zzzznaoexiste' no campo de busca 2. pressionar Enter
+
+Regra declarada: ds:empty-states
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-nao-resolvido: o seletor não resolve em nenhuma cena da janela (1280x900@inicial, 1280x900@detalhe-menu, 1280x900@modal)
+
+### Sujeitos
+
+- "unresolved:pnip-propesc-vistorias div.p-5 p" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-36-04-295Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-36-04-295Z.yml` (sha256 b6b644a30693)
+- `get_page_rules(category=empty_states)` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-a0d29b5e4ac7f3e61f0d5739e4f49bbfbb96e7a7c4ad7a45b0057193a2af4b5a",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-a1b53f916edd5c4f43f394a672eb5ee59b9111fb03b2824d63de16cdb6aeb103
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-6ee11b5414617b1588a795c9ff95c7ee16756d82512b41d92507434edd975bfd — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-a1b53f916edd5c4f43f394a672eb5ee59b9111fb03b2824d63de16cdb6aeb103",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-a4fb98d55176503971f7bf078c9e78a3e4b8699a17ebf60a2ffa1dc7805f6756
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Com o intervalo de datas aplicado, o botao que remove a tarja "Exibindo vistorias de 01/03/2026 ate 20/03/2026" e <button type="button" class="br-button inverted circle"><i aria-hidden="true" class="fas fa-times"></i></button>: o unico conteudo esta marcado como aria-hidden e nao ha aria-label, aria-labelledby nem title, logo o botao nao tem nome acessivel.
+
+Esperado: O botao de remocao deve ter nome acessivel, por exemplo aria-label="Remover filtro de data".
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. preencher a data inicial com 01/03/2026 3. preencher a data final com 20/03/2026
+
+Regra declarada: button-name
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:.col.align-content-center.px-1 > .br-tag.interaction > button.br-button.inverted.circle" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `inspecao do botao: aria-label=null, title=null, textContent vazio, icone com aria-hidden=true` → identificador devolvido por ferramenta (sem arquivo)
+- `mesmo padrao confirmado deterministicamente pelo scan S-page-006 / finding F-173 na tarja de cidade` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-a4fb98d55176503971f7bf078c9e78a3e4b8699a17ebf60a2ffa1dc7805f6756",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-a5416e9996f29bb3dc6a36024838dff50caa69dac45e28e3c79a221253e75633
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: padding: 0px 6px (fora da escala: 6px, 6px, 6px)
+
+Esperado: Múltiplos de 4px
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: ds:token-spacing
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a" — <a> "Home" [shadow]
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-a5416e9996f29bb3dc6a36024838dff50caa69dac45e28e3c79a221253e75633",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-a5593d4bc2609da4e322d61626e5d0ae06856beb6f8fec425ce413a88bb04aa2
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elements must meet minimum color contrast ratio thresholds
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:color-contrast
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-c94d9504d7c2bb1c534d9c85744bbbbe2810353f383044b076a2d9255c2b7e75 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-a5593d4bc2609da4e322d61626e5d0ae06856beb6f8fec425ce413a88bb04aa2",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-a72f53895cdbd9da45a87522601ac2acc5b5947cc5c76d4816590cd4f4ffef8a
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Badge de status "Vistoria agendada" nas 10 linhas: texto #ffffff sobre fundo #4f97d1 a 14px — razão de contraste 3.14:1.
+
+Esperado: Razão de contraste mínima de 4.5:1 para texto normal.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: color-contrast
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-16826af28e0996f408c83115a4435f7af40ac4cc53bf08f36e9dbbac871436f1 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-28dabc8a49f3528f77fddf8a2abab3ce60b6f30b3339050c6377bd1baa2c1e7d — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-31b4d9ec28350f49ebccde7fa4125d03c35bef0f8509b31c305a4335353bcd3a — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-378ca27cdcd3ddaeff869d2dc65fb85c2dbae1863257673c49fff068452ab683 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-3fe5e8cc28ad339c48044f5f6514da4499172e643dc7133757f61235be604ffb — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-4947f781cee61c8d4e34f8fd68e6068c6ba9186a16939eaf9993f0dab21ea6cc — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-8188a105d675aa0dc47295d0aa263c5574ae6994c59e058e2a0f7b8c4ed890e2 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-82a357f4dc0d11ac01d09f3785422081482a834ab5bd069e99d1823aec324264 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-c94d9504d7c2bb1c534d9c85744bbbbe2810353f383044b076a2d9255c2b7e75 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-f07a8ab3363a61b30ea8baef943842cb2689f88dfed8b214272ef7c0fe9ad32e — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `S-page-003` → identificador devolvido por ferramenta (sem arquivo)
+- `F-102` → identificador devolvido por ferramenta (sem arquivo)
+- `F-103` → identificador devolvido por ferramenta (sem arquivo)
+- `F-104` → identificador devolvido por ferramenta (sem arquivo)
+- `F-105` → identificador devolvido por ferramenta (sem arquivo)
+- `F-106` → identificador devolvido por ferramenta (sem arquivo)
+- `F-107` → identificador devolvido por ferramenta (sem arquivo)
+- `F-108` → identificador devolvido por ferramenta (sem arquivo)
+- `F-109` → identificador devolvido por ferramenta (sem arquivo)
+- `F-110` → identificador devolvido por ferramenta (sem arquivo)
+- `F-111` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-a72f53895cdbd9da45a87522601ac2acc5b5947cc5c76d4816590cd4f4ffef8a",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-a7a8cb43c5d999af8d6f3ae4846318679a07034506862525ce8554db8074b9d2
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-0258a2251c421932d6e11f3c0ce23150e365764ed2e697c7e9c5c6825933bb54 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-a7a8cb43c5d999af8d6f3ae4846318679a07034506862525ce8554db8074b9d2",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-a7b1bfd959702305e3f8493aabd81ba7ce95890983b67b670609c548c6adef0a
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-c15b6c5eebcba3398c66c3e0637a94d83df38dbadd90880ebdf2d2fc868db6b8 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-a7b1bfd959702305e3f8493aabd81ba7ce95890983b67b670609c548c6adef0a",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-a9c3a6134b3b22d80017bb9b2f2abaa501f69c0de38c00ba073ea85fc67672c6
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: As 11 caixas de selecao da tabela (1 no cabecalho, para selecionar todas, e 1 por linha) nao possuem label implicito nem explicito, nem aria-label ou aria-labelledby; a arvore de acessibilidade expoe 'checkbox' sem nome em todas.
+
+Esperado: Cada campo de formulario deve ter etiqueta programaticamente associada: <label for> correspondente ao id do input, ou aria-label/aria-labelledby, identificando a selecao do cabecalho ('Selecionar todas as vistorias') e a de cada linha (a embarcacao correspondente).
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: govbr-3.7.0-accessibility-global-b95c42b61ed3
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-008/F-238..F-248 (axe-core, regra label, severidade critical, 11 elementos)` → não encontrado na evidência preservada da execução
+- `arvore de acessibilidade: nodes e115, e127, e163, e199, e235, e271, e307, e343, e379, e415, e451` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-a9c3a6134b3b22d80017bb9b2f2abaa501f69c0de38c00ba073ea85fc67672c6",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-a9d9999e96815a089f58ca9b5ce29ba9f355bb0d2167459690775cf1801409bb
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A tarja "Nenhum filtro de data aplicado" usa color #ffffff sobre background #c5d4eb a 14px peso normal: razao de contraste 1.5:1.
+
+Esperado: Texto normal (menor que 18,66px) exige contraste minimo de 4.5:1 entre primeiro plano e plano de fundo.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: color-contrast
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span" — <span> "Nenhum filtro de data aplicado"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-003 (checks=axe)` → identificador devolvido por ferramenta (sem arquivo)
+- `finding F-101` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-a9d9999e96815a089f58ca9b5ce29ba9f355bb0d2167459690775cf1801409bb",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-aa3d4b4da5ad4694b116042f39ee319c079a9dc25031efafde5657bb80049eb4
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: As 10 caixas de seleção de linha não têm rótulo, aria-label nem aria-labelledby; aparecem na árvore de acessibilidade como checkbox sem nome, sem indicar qual vistoria seria selecionada.
+
+Esperado: Cada caixa de seleção de linha deve ter nome acessível identificando a linha, p.ex. aria-label="Selecionar vistoria Coral Mansa IV".
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: emag:6.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(2)>input" — <input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-07d2b621292b581da4954c5639be7a8609cf001aa47f0b34539dc3947e0274dc — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-0b56e5b10f4881a7605386c84f28bbcd225b3a6127a73c212dad3d0d8c45a4e5 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-19ca16582dcc40a9305397b4cebe70cf60687de565533ab4f4d5de3991446b95 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-2b33b7eba5e9c5af4e4fbea1a344d0a19086aa2b6a02cb38d30d56d8de042000 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-47b56f8da889530a10d5db47459e51252e664d92a5cadf585b1a90afb15ed1c1 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-4e1a48a085fa1848925675355c50a9f84de93f9ffbc1e0fb5f4f22caaf7a6bfa — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-6341b4d0d71c65cc5e698aec6269b94450f2785ffa61177947917f532001448e — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-80d427f0aba5699380a544bbe2c85dbca2b581b8471d21c72c60691c2e9c6636 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-a80ba4fa0e4e8dcc3209bd5f984d110e3d9b52df1b836a9579647be5634914aa — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-f9f3d45544d87746e9a1c7094a4cc62f5d90ef5f8242736a83ca2bd7164880a8 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `S-page-003` → identificador devolvido por ferramenta (sem arquivo)
+- `F-117` → identificador devolvido por ferramenta (sem arquivo)
+- `F-118` → identificador devolvido por ferramenta (sem arquivo)
+- `F-119` → identificador devolvido por ferramenta (sem arquivo)
+- `F-120` → identificador devolvido por ferramenta (sem arquivo)
+- `F-121` → identificador devolvido por ferramenta (sem arquivo)
+- `F-122` → identificador devolvido por ferramenta (sem arquivo)
+- `F-123` → identificador devolvido por ferramenta (sem arquivo)
+- `F-124` → identificador devolvido por ferramenta (sem arquivo)
+- `F-125` → identificador devolvido por ferramenta (sem arquivo)
+- `F-126` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-aa3d4b4da5ad4694b116042f39ee319c079a9dc25031efafde5657bb80049eb4",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-aa7d2ddf8648e7dcd64512a0dcc8d8a533e01df2e2f4f601594c3a86d54f6e21
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: No shadow root do breadcrumb, o item 'Home' aninha um <button> dentro de um <a>: <a href="/portal-mpa"><button class="br-button small circle" aria-label=""><span class="sr-only">Home</span><i class="fas fa-home"></i></button></a>. A arvore de acessibilidade expoe dois controles encaixados (link 'Home' contendo button 'Home', nodes e34 e e35). O seletor aponta o host, pois o elemento infrator esta no shadow root.
+
+Esperado: Conteudo interativo nao pode conter outro conteudo interativo: o item 'Home' deve ser um unico controle — um <a> com o icone e o texto acessivel, ou um <button> — expondo um unico no na arvore de acessibilidade.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: govbr-3.7.0-accessibility-global-1cb2c878824b
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb" — <br-breadcrumb>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `DOM do shadow root de br-breadcrumb: <a href='/portal-mpa'><button class='br-button small circle' aria-label=''>` → não encontrado na evidência preservada da execução
+- `arvore de acessibilidade: node e34 link 'Home' contendo node e35 button 'Home'` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-aa7d2ddf8648e7dcd64512a0dcc8d8a533e01df2e2f4f601594c3a86d54f6e21",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-abaa66751ec2f9239a5a72853e700479a187e68cda31d6809add09bc671c23db
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Na aba "Agendar", os 10 selos "Vistoria pré agendada" usam texto branco rgb(255,255,255) sobre fundo rgb(136,136,136) (classe bg-secondary-06), 14px/500 — razão de contraste medida 3.54:1.
+
+Esperado: Texto normal (14px, peso 500) deve ter contraste mínimo de 4.5:1 com o fundo do selo.
+
+Janela: 1440×900 · interações desde o carregamento: 1. clicar na aba "Agendar" (button#AGENDAR)
+
+Regra declarada: wcag:1.4.3
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:pnip-status-solicitacao-utils .bg-secondary-06 > .text-secondary-01" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `getComputedStyle: color=rgb(255,255,255), bg=rgb(136,136,136); contraste calculado=3.54; 10 ocorrências. Comparação: o selo "Concluído" (bg-success, rgb(22,136,33)) mede 4.59:1 e passa.` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-abaa66751ec2f9239a5a72853e700479a187e68cda31d6809add09bc671c23db",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-adca813189ecdb02816b020405f5af6d168b544780b10b7e256f2667954329c2
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-02eacb6cd7eb8dedefea92feb5039dd63e1b11239e1984b948668c20a2629c38 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-4e50ada7ea0559d48e3cbb150ecbb78d2afbb5cec4cbd286c632cc311c6895cb — B-07 · inicial · cena 1280x900@inicial · <button> [shadow]: O botão de abrir a vistoria (ícone de olho) de cada linha não tem nome acessível: sem texto, aria-label vazio, sem title (o hospedeiro br-button também não tem title, ao contrário das outras três ações da linha). Papel button com nome "" na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-adca813189ecdb02816b020405f5af6d168b544780b10b7e256f2667954329c2",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-af18148c9127a61ec5eddf8f048e841d5b4c723e0a679b5ea50fdf6ea6c5f366
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(1)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-9a56858ccf8efa67d6cb2c9c8a8aaf3c02ab1069eece36e12a20fd44ae311f7a — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-af18148c9127a61ec5eddf8f048e841d5b4c723e0a679b5ea50fdf6ea6c5f366",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-af4b9228f165d564a886b6f3ecca50d943d97dfbdff3b89e7bfdec14fb410227
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "unresolved:br-input:nth-child(2) #br-input-8" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-af4b9228f165d564a886b6f3ecca50d943d97dfbdff3b89e7bfdec14fb410227",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-afb057e7dfb610d92f957c2433d240509bae0da2af64a70e07fcf6884fb2a469
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Com o filtro 'Cidade' aberto, as 6 opções são <div class="br-radio"><label>Texto</label></div> sem nenhum <input type="radio">: o seletor '...​.br-radio input' devolve 0 e o painel inteiro não contém nenhum elemento focalizável (0 para input/button/a/[tabindex]). Na árvore de acessibilidade são apenas generic com texto. Só é possível selecionar com o mouse. O componente .br-select da paginação da mesma tela traz os <input type="radio"> e <label for> corretos.
+
+Esperado: As opções devem ser controles reais e operáveis por teclado (input type="radio" com label associado, ou role/aria equivalentes com gestão de foco).
+
+Janela: 1280×900 · interações desde o carregamento: 1. clicar no filtro 'Cidade'
+
+Regra declarada: emag:2.1
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-nao-resolvido: o seletor não resolve em nenhuma cena da janela (1280x900@inicial, 1280x900@detalhe-menu, 1280x900@modal)
+
+### Sujeitos
+
+- "unresolved:pnip-filter-panel .br-select .br-item .br-radio" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-33-04-102Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-33-04-102Z.yml` (sha256 595f728bd1d2)
+- `S-page-011` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-afb057e7dfb610d92f957c2433d240509bae0da2af64a70e07fcf6884fb2a469",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-b07cc30d94096ecde0d8a92ffa577f46988fe7ec9218a9c5d4d4679c080ddfba
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os 10 selos de status "Vistoria agendada" da aba Tramitando usam texto branco rgb(255,255,255) sobre fundo rgb(79,151,209) (classe bg-blue-40), 14px/500 — razão de contraste medida 3.14:1.
+
+Esperado: Texto normal (14px, peso 500) deve ter contraste mínimo de 4.5:1 com o fundo do selo.
+
+Janela: 1440×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:1.4.3
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` (sha256 6e8798cb118e)
+- `state-01-initial.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/state-01-initial.png` (sha256 27d62eb8866e)
+- `getComputedStyle: color=rgb(255,255,255), bg=rgb(79,151,209); contraste calculado=3.14; 10 ocorrências` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-b07cc30d94096ecde0d8a92ffa577f46988fe7ec9218a9c5d4d4679c080ddfba",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-b0d59ff4498ade792140b68dabe3e012e711946f186917aa5aea3444ec149d2c
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-07d2b621292b581da4954c5639be7a8609cf001aa47f0b34539dc3947e0274dc — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-b0d59ff4498ade792140b68dabe3e012e711946f186917aa5aea3444ec149d2c",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-b19c23b621ea7859dd883a56af3a809adff8b84e9340ea11677a6eef78b2a40e
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elements must meet minimum color contrast ratio thresholds
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:color-contrast
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-28dabc8a49f3528f77fddf8a2abab3ce60b6f30b3339050c6377bd1baa2c1e7d — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-b19c23b621ea7859dd883a56af3a809adff8b84e9340ea11677a6eef78b2a40e",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-b2b5da042ca11f19b2b3cb4c763891529b24e7c3ce5ba3ea39598ed564bca0a7
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Duas colunas da tabela tem <th> sem nenhum texto acessivel a leitores de tela: a 2a coluna (caixa de selecao da linha) e a 9a coluna (botoes de acao). Nao ha texto visivel, texto em classe de leitura exclusiva nem aria-label.
+
+Esperado: Cada cabecalho de coluna deve transmitir programaticamente o proposito da coluna, por texto visivel ou alternativa para leitores de tela (por exemplo 'Selecao' e 'Acoes').
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: wcag:1.3.1
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)" — <th>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(9)" — <th>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-008/F-234 e S-page-008/F-235 (axe-core, regra empty-table-header, severidade minor: 'Element does not have text that is visible to screen readers')` → não encontrado na evidência preservada da execução
+- `arvore de acessibilidade: nodes e114 e e122 expostos como 'columnheader' sem nome` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-b2b5da042ca11f19b2b3cb4c763891529b24e7c3ce5ba3ea39598ed564bca0a7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-b3409a765795fb1a006e331633ef660542430f458624f932a9b520e0f0511825
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elements must meet minimum color contrast ratio thresholds
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:color-contrast
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-82a357f4dc0d11ac01d09f3785422081482a834ab5bd069e99d1823aec324264 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-b3409a765795fb1a006e331633ef660542430f458624f932a9b520e0f0511825",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-b3a335cafeb9eab2bcb1200e270254835026e90c9410b77f34817d40f7c8efe3
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O botão "Limpar Filtro" inicia desabilitado (nenhum filtro aplicado), é habilitado ao aplicar um filtro de data e permanece habilitado depois que todos os filtros são removidos — estado final com 0 chips aplicados, etiqueta de volta a "Nenhum filtro de data aplicado" e contador em "1– 10 de 34 itens".
+
+Esperado: O botão deve voltar ao estado desabilitado quando não houver nenhum filtro aplicado, como no carregamento inicial.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. preencher data inicial 25/03/2026 e data final 31/03/2026 3. limpar os dois campos de data
+
+Regra declarada: nenhuma (atribuição incerta)
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: regra-incerta · janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(5)>button" — <button> "Limpar Filtro"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `ciclo medido: inicial disabled=true → com filtro de data disabled=false → após limpar as datas disabled=false` → identificador devolvido por ferramenta (sem arquivo)
+- `estado final: chipsAplicados=0, etiqueta "Nenhum filtro de data aplicado", itens "1– 10 de 34 itens"` → identificador devolvido por ferramenta (sem arquivo)
+- `selecao-todos.png (botão "Limpar Filtro" habilitado sem filtros ativos)` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-b3a335cafeb9eab2bcb1200e270254835026e90c9410b77f34817d40f7c8efe3",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-b6b9f18586ef553e5888d8d0382dd20eff93a4e0ef62991a891cbb162cad568f
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:320x640
+
+Observado: Com a janela em 320x640 (document.documentElement.clientWidth = 305), a linha do filtro de data mede 580px de largura e termina em x=612, fora da viewport; a classe col-auto impede a quebra e o bloco nao tem rolagem propria (overflow-x computado: visible).
+
+Esperado: A 320px CSS de largura o bloco deve caber na viewport ou quebrar em varias linhas, sem exigir rolagem horizontal; nao e conteudo que exija layout bidimensional.
+
+Janela: 320×640 · interações desde o carregamento: 1. carregar a tela 2. redimensionar a janela para 320x640
+
+Regra declarada: wcag:1.4.10
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 320x640; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div" — <div> "Data da vistoria: até"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `verify_finding V-005 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, elements=1, violation=no-predicate)` → identificador devolvido por ferramenta (sem arquivo)
+- `getBoundingClientRect: width 580, right 612; clientWidth 305` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-b6b9f18586ef553e5888d8d0382dd20eff93a4e0ef62991a891cbb162cad568f",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-bb5a797b93f2b8d0c9cf96013c96af699446681eabb235fbf87899d739fd8f35
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: A mensagem exibida é "Não há vistorias para exibir nesse periodo selecionado." — "periodo" está sem acento (deveria ser "período").
+
+Esperado: Texto de interface ortograficamente correto: "Não há vistorias para exibir nesse período selecionado."
+
+Janela: 1280×900 · interações desde o carregamento: 1. preencher a data inicial com 01/05/2026 2. preencher a data final com 01/01/2026
+
+Regra declarada: nenhuma (atribuição incerta)
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: regra-incerta · segmento-nao-resolvido: o seletor não resolve em nenhuma cena da janela (1280x900@inicial, 1280x900@detalhe-menu, 1280x900@modal)
+
+### Sujeitos
+
+- "unresolved:pnip-propesc-vistorias div.p-5 p" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-bb5a797b93f2b8d0c9cf96013c96af699446681eabb235fbf87899d739fd8f35",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-bca7461cd502772479708428c962825f786bd41a99b0d2ee57420a9496a68ffd
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: "Vistorias" — único cabeçalho da tela — está marcado como <h2>, e a página não possui nenhum <h1> (document.querySelectorAll("h1").length = 0). A lista completa de cabeçalhos do documento é ["H2: Vistorias"].
+
+Esperado: O cabeçalho principal da tela deve ser o nível mais alto da hierarquia (h1), para que a navegação por cabeçalhos tenha um ponto de entrada de primeiro nível.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: nenhuma (atribuição incerta)
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: regra-incerta · janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(1)>h2" — <h2> "Vistorias"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `consulta de cabeçalhos: headings=["H2: Vistorias"], h1=0` → identificador devolvido por ferramenta (sem arquivo)
+- `snapshot a11y ref e45: heading "Vistorias" [level=2]` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-bca7461cd502772479708428c962825f786bd41a99b0d2ee57420a9496a68ffd",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-be7f8261e646155a5bc7fcd8b7f906134dcccea12d3a01ca7c10e4d591ab414d
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-2b33b7eba5e9c5af4e4fbea1a344d0a19086aa2b6a02cb38d30d56d8de042000 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-be7f8261e646155a5bc7fcd8b7f906134dcccea12d3a01ca7c10e4d591ab414d",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-bfd74978d73b00259a951a6c7a34088dc02ccc7b6ae6cc95c1fa43ae2d85c5b6
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:320x640
+
+Observado: Com a janela em 320 px de largura (clientWidth 305 px), a barra de abas não quebra nem rola internamente: o item "Concluídos" se estende até x=478 e "Tramitando" até x=324, exigindo rolagem horizontal da página para alcançar as abas.
+
+Esperado: Em 320 px de largura as abas devem refluir (quebrar em linhas ou rolar dentro do próprio contêiner) sem exigir rolagem horizontal da página.
+
+Janela: 320×640 · interações desde o carregamento: 1. carregar a tela 2. redimensionar a janela para 320x640
+
+Regra declarada: wcag:1.4.10
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 320x640; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(2)>nav>ul" — <ul> "Agendar Tramitando Concluídos"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `medição em 320x640: {sel:"li.tab-item", right:478, w:154, txt:"Concluídos"} e {sel:"li.tab-item.active", right:324, w:155, txt:"Tramitando"}` → identificador devolvido por ferramenta (sem arquivo)
+- `clientWidth=305 px` → identificador devolvido por ferramenta (sem arquivo)
+- `validação de seletor: 1 ocorrência de nav.tab-nav ul` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-bfd74978d73b00259a951a6c7a34088dc02ccc7b6ae6cc95c1fa43ae2d85c5b6",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-c03646d27d484f3060e8f06c56edcb0456a94cb18c175533a8174f610e170dc7
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-47b56f8da889530a10d5db47459e51252e664d92a5cadf585b1a90afb15ed1c1 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-c03646d27d484f3060e8f06c56edcb0456a94cb18c175533a8174f610e170dc7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-c383e1f081744d6e0e47e53348a0de3ee6f1b65ef8d78c3e7dff852a86cbeab4
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(10)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-fa4d8e390509b90a7ed8f88a4689048ece8c78b098632c14b12bea93b2ed45c7 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-c383e1f081744d6e0e47e53348a0de3ee6f1b65ef8d78c3e7dff852a86cbeab4",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-c48b504eb9291dfd81b6b94eee7a57a414412447ebfe71140180a95e930ce63b
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O contêrner div.br-table tem overflow-x: visible e largura útil de 1096 px, enquanto a tabela interna mede 1269 px: a tabela transborda o contêiner e empurra o documento inteiro, que passa a rolar horizontalmente já em 1440x900 (scrollWidth 1433 vs clientWidth 1425, tabela chegando a x=1434).
+
+Esperado: A tabela deve rolar horizontalmente dentro do próprio contêiner (overflow-x: auto em div.br-table), sem gerar rolagem horizontal no documento.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. medir larguras de rolagem do documento e do contêiner da tabela
+
+Regra declarada: nenhuma (atribuição incerta)
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: regra-incerta · janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)" — <div> "# Nome da embarcação RAEP Data/Hora Vistoria Loc"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `medição: {tabelaScrollW:1269, tabelaClientW:1096, tabelaOverflowX:"visible"}` → identificador devolvido por ferramenta (sem arquivo)
+- `documento: scrollWidth=1433, clientWidth=1425; elementos excedentes: TABLE.table right=1434` → identificador devolvido por ferramenta (sem arquivo)
+- `filtro-cidade-aberto.png e selecao-todos.png mostram a barra de rolagem horizontal do documento` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-c48b504eb9291dfd81b6b94eee7a57a414412447ebfe71140180a95e930ce63b",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-c76e5dbc78784fe62e28ce09d250c532a3239e5f607832177d53670c0ae933e0
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-c107963b013ece13fc69392f42f23faf374a86814164af59c37a7353b97fd898 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-c76e5dbc78784fe62e28ce09d250c532a3239e5f607832177d53670c0ae933e0",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-c7bddc5cb4f4a937b3dcb8e3a03b51b5136358cd69abf3c5f9938b585a1cff0c
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@modal
+
+Observado: Scrollable region must have keyboard access
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até modal (8 passo(s))
+
+Regra declarada: axe:scrollable-region-focusable
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-agendar-vistoria>div>pnip-propesc-trocar-embarcacao>div>div>div:nth-of-type(2)>div:nth-of-type(2)" — <div> "Aurora Veloz - RAEP SC99100000 / TIE 9910000000 "
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-c7bddc5cb4f4a937b3dcb8e3a03b51b5136358cd69abf3c5f9938b585a1cff0c",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-c808927b4249d5d1de9ee934a6ec5a1bbbd13d0892ef960db5dd6e9d1532ecde
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O <title> do documento e apenas 'PNIP', a sigla do sistema; nao identifica o conteudo principal desta tela (Vistorias). O mesmo titulo e servido para as demais rotas da aplicacao, de modo que abas, historico e favoritos nao distinguem a pagina.
+
+Esperado: O title deve ser descritivo e informativo, representando o conteudo principal da pagina e identificando o sistema (por exemplo 'Vistorias - PNIP').
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: govbr-3.7.0-accessibility-global-5d5a5f21d94b
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `DOM: document.title = 'PNIP'; titulo principal do conteudo = 'Vistorias' (h2)` → identificador devolvido por ferramenta (sem arquivo)
+- `navegacoes repetidas para /pnip/portal-mpa/vistorias retornaram sempre 'Page Title: PNIP'` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-c808927b4249d5d1de9ee934a6ec5a1bbbd13d0892ef960db5dd6e9d1532ecde",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-c8b8ba1599f0e63c73e322a8202100f7514d2efb2226e754d791e10ad24bbcd7
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elements must meet minimum color contrast ratio thresholds
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:color-contrast
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-4947f781cee61c8d4e34f8fd68e6068c6ba9186a16939eaf9993f0dab21ea6cc — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-c8b8ba1599f0e63c73e322a8202100f7514d2efb2226e754d791e10ad24bbcd7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-cbca49c17998b5449dc411445baff2640d486b3a3a04549e412a99a8f145edce
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena a-decidir:1280x900
+
+Observado: A página não tem nenhum <h1>; o único cabeçalho é <h2>Vistorias</h2> (document.querySelectorAll('h1').length === 0).
+
+Esperado: A página deve ter um cabeçalho de nível um identificando seu assunto; o DS orienta usar H1 para títulos de página.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: page-has-heading-one
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-a-decidir: o seletor resolve em 1280x900@inicial, 1280x900@detalhe-menu, 1280x900@modal; escolha em "cena" de qual a alegação fala — só os sujeitos dela contam
+
+### Sujeitos
+
+Cena `1280x900@inicial` (/pnip/portal-mpa/vistorias) — escolha com `"cena": "1280x900@inicial"`:
+- "1280x900@inicial|" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+Cena `1280x900@detalhe-menu` (/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046) — escolha com `"cena": "1280x900@detalhe-menu"`:
+- "1280x900@detalhe-menu|" — <html> "U Olá, Usuária de Teste, SUPERVISOR Usuária de T"
+
+Cena `1280x900@modal` (/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038) — escolha com `"cena": "1280x900@modal"`:
+- "1280x900@modal|" — <html> "U Olá, Usuária de Teste, SUPERVISOR Programa Nac"
+
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-003` → identificador devolvido por ferramenta (sem arquivo)
+- `F-131` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-cbca49c17998b5449dc411445baff2640d486b3a3a04549e412a99a8f145edce",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-cd2c0660cabbda651763a587e9ed16c17a98c16099c09aa539e259b536389479
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: A caixa de seleção de "selecionar todos" no cabeçalho da tabela não tem rótulo, aria-label nem aria-labelledby; aparece na árvore de acessibilidade como checkbox sem nome.
+
+Esperado: A caixa de seleção deve ter nome acessível indicando sua função, p.ex. aria-label="Selecionar todas as vistorias".
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: emag:6.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-50a27493b185c0bbb0179208240a74e28e88df151508b8845c55406c1030426e — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `S-page-003` → identificador devolvido por ferramenta (sem arquivo)
+- `F-116` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-cd2c0660cabbda651763a587e9ed16c17a98c16099c09aa539e259b536389479",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-ce3080a7dea26af9c9db95beeeeb562dbd88c4b0b3bee1e46364b6c2e49a5aae
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: margin: -5px 0px 0px (fora da escala: -5px)
+
+Esperado: Múltiplos de 4px
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: ds:token-spacing
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(5)>button" — <button> "Limpar Filtro"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-ce3080a7dea26af9c9db95beeeeb562dbd88c4b0b3bee1e46364b6c2e49a5aae",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-ce5643516007a4d9aff8f9af80f2bc00de3504c27aa198f44cb2812954c02f0a
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@modal
+
+Observado: O primeiro link da página (href="/portal-mpa", "Home") não é uma âncora interna.
+
+Esperado: O primeiro link da página é o salto para o conteúdo: âncora interna cujo alvo existe (e-MAG 1.5).
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até modal (8 passo(s))
+
+Regra declarada: ds:page-skip-link
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Programa Nac"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-ce5643516007a4d9aff8f9af80f2bc00de3504c27aa198f44cb2812954c02f0a",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-cf264dbb7503fd903c03d556de43b1c2b7e73c73b48c75e3a1a3a802e8a5ce62
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-4f081c926e22051c0886a1266c2cedaef9f77dc4fcd663cbe7a2deb4e5217557 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-a2a0cc2aaaa329c1ee52c5e557a86f1e37849ffca60ba55cebf674a57ca12786 — B-07 · inicial · cena 1280x900@inicial · <button> [shadow]: O botão de abrir a vistoria (ícone de olho) de cada linha não tem nome acessível: sem texto, aria-label vazio, sem title (o hospedeiro br-button também não tem title, ao contrário das outras três ações da linha). Papel button com nome "" na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-cf264dbb7503fd903c03d556de43b1c2b7e73c73b48c75e3a1a3a802e8a5ce62",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-cf73cba2eae0f09fffbef67788459acec12368e631a7e4a27e2669f850129ad2
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O primeiro link da pagina e o 'Home' do breadcrumb (href="/portal-mpa"), que nao e ancora interna; nao existe link de salto para o conteudo principal antes dele.
+
+Esperado: O primeiro link da pagina deve ser uma ancora interna de salto para o conteudo principal (skip link), permitindo pular as regioes de navegacao.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: ds-page-skip-link
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-002/F-090 (govbr-ds-page, restricao ds-page-skip-link, severidade serious, confidence 1, pathway deterministic)` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-cf73cba2eae0f09fffbef67788459acec12368e631a7e4a27e2669f850129ad2",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d17b3e889984bfa591730abb571807e44914f4c6f83b0e6f84ee09c1d916dcb7
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: border-radius: 20px fora da escala do DS
+
+Esperado: Um de: 0px, 4px, 8px, 16px, 50% (circle) ou pill (100em/999em × font-size)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: ds:token-radius
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>pnip-header>div>div>div>button" — <button> "Sair" · **oculto**: nao-renderizado, aria-hidden
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d17b3e889984bfa591730abb571807e44914f4c6f83b0e6f84ee09c1d916dcb7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d255c8f5b6c9df862c3fb694825f1b4468df8dcf15aedbaf446c7426d3ca408b
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-9bca684779864d487de252714c42d88bf603438c290f8f1035d9d643cf38aad9 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d255c8f5b6c9df862c3fb694825f1b4468df8dcf15aedbaf446c7426d3ca408b",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d2d7822930d58f80eabeb0d84a2e7f917970968502c9a6ae2a9b5981bc3e9d40
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>div>div:nth-of-type(2)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-0e3c3cd985ca9f31b3d3465ce348f80f17e37e60b54b2f8671135a6f5e75482f — B-07 · inicial · cena 1280x900@inicial · <button> [shadow]: O botão de abrir a vistoria (ícone de olho) de cada linha não tem nome acessível: sem texto, aria-label vazio, sem title (o hospedeiro br-button também não tem title, ao contrário das outras três ações da linha). Papel button com nome "" na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+- U-7f3e0abf3655e5a4a709cc014a2b7d516cdb5ccdc9697e86aba1022d0e14db65 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d2d7822930d58f80eabeb0d84a2e7f917970968502c9a6ae2a9b5981bc3e9d40",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d31919c02b55d5e04f6dcecd4666f11db2cec0e4eb5d074c53f2d7076f650c5d
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O componente breadcrumb instanciado nesta tela aplica a classe br-breadcrumb a um <div> (raiz do shadow root: <div class="br-breadcrumb">), e nao ha nenhum <nav> no shadow root nem aria-label de navegacao. O seletor aponta o host, pois o elemento infrator esta no shadow root e nao e alcancavel por document.querySelectorAll.
+
+Esperado: br-breadcrumb deve ser aplicado ao elemento canonico <nav> do componente, expondo a regiao de navegacao estrutural.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: ds-structure-breadcrumb-tag
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb" — <br-breadcrumb>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-004/F-132 (govbr-ds-structure, restricao ds-structure-breadcrumb-tag, severidade serious, confidence 1, locator 'pnip-root > main > pnip-mpa > pnip-propesc-vistorias > br-breadcrumb >>> div')` → não encontrado na evidência preservada da execução
+- `DOM do shadow root: elemento raiz div.br-breadcrumb, 0 elementos <nav>, aria-label=null` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d31919c02b55d5e04f6dcecd4666f11db2cec0e4eb5d074c53f2d7076f650c5d",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d3826c2a87317228d14f5c9da92c84eb4bd09a10e7839581ed67edadd1b0f191
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Form elements must have labels
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:label
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-19ca16582dcc40a9305397b4cebe70cf60687de565533ab4f4d5de3991446b95 — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d3826c2a87317228d14f5c9da92c84eb4bd09a10e7839581ed67edadd1b0f191",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d3c1972c45f45837bbfaa57b7c408dddf22c5f657e37e9345db5488aa44f6d17
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O título do documento é "PNIP" — apenas a sigla da plataforma — e não identifica a tela exibida, cujo conteúdo é a listagem de Vistorias (heading "Vistorias"). O título permanece "PNIP" em todas as abas e estados percorridos, inclusive após trocar para "Agendar" e "Concluídos".
+
+Esperado: O título deve descrever o tópico ou finalidade da tela, por exemplo "Vistorias — PNIP".
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. alternar entre as abas Agendar, Tramitando e Concluídos
+
+Regra declarada: wcag:2.4.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "head>title" — <title> "PNIP" · **oculto**: nao-renderizado
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `document.title = "PNIP" em todas as leituras` → identificador devolvido por ferramenta (sem arquivo)
+- `heading da tela: H2 "Vistorias"` → identificador devolvido por ferramenta (sem arquivo)
+- `Page Title relatado pela ferramenta em todas as navegações: "PNIP"` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d3c1972c45f45837bbfaa57b7c408dddf22c5f657e37e9345db5488aa44f6d17",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d5f08a31a70a24b80a59c486ebf91022f9a4569301ffc621ff96bc236b13c531
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: <li> elements must be contained in a <ul> or <ol>
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:listitem
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li" — <li> "3"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d5f08a31a70a24b80a59c486ebf91022f9a4569301ffc621ff96bc236b13c531",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d67818b9f16768437031e9119d3b3843082b7fd0694ab932fd7abe3349010c80
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os quatro acionadores de filtro (Cidade, Porto, Vistoriador, Status) sao <span class="br-tag interaction" style="cursor:pointer"> com handler de clique, sem role, sem atributo tabindex e com tabIndex computado -1. O levantamento da ordem de foco sequencial (84 elementos focaveis em light DOM e shadow roots abertos) nao inclui nenhum dos quatro; o clique do mouse em 'Cidade' abre a lista de opcoes, comprovando que ha funcao associada.
+
+Esperado: Toda funcao da pagina deve ser operavel por teclado: cada acionador de filtro deve ser um <button> nativo (ou expor role e tabindex equivalentes), alcancavel por Tab, acionavel por Enter/Space e com aria-expanded refletindo abertura e fechamento da lista.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa) 2. percorrer a ordem de foco sequencial 3. clicar com o mouse em 'Cidade' para confirmar que existe funcao associada ao span
+
+Regra declarada: govbr-3.7.0-accessibility-global-e6fd5e1247de
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(1)>span" — <span> "Cidade"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(2)>span" — <span> "Porto"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(3)>span" — <span> "Vistoriador"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(1)>div:nth-of-type(1)>pnip-filter-panel>div>div:nth-of-type(4)>span" — <span> "Status"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `V-001 (verify_finding, live=true, 4 elementos: ruleExists=pass, applicability=pass, evidenceConsistent=pass, violation=no-predicate; stateFingerprint sha256:b60751a09cf9fe1177e030cb97b9bced8f166410fa5f454d25076605af2a590a)` → identificador devolvido por ferramenta (sem arquivo)
+- `DOM: role=null, tabindex=null, tabIndex=-1, aria-expanded=null nos 4 elementos` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d67818b9f16768437031e9119d3b3843082b7fd0694ab932fd7abe3349010c80",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d6a845294440e1f5adaae91dd9987d21ef559432b9920e96a9c4405ef8789867
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: No breadcrumb, o item "Home" é um <button> aninhado dentro de um <a href="/portal-mpa">: <li class="crumb home"><a href="/portal-mpa"><button class="br-button small circle" aria-label=""><span class="sr-only">Home</span>...</button></a></li>. A árvore de acessibilidade mostra link "Home" contendo button "Home", e a varredura de focáveis registra os dois elementos — duas paradas de tabulação para uma única ação.
+
+Esperado: O item do breadcrumb deve ser um único controle interativo: ou o link <a>, ou o botão, sem aninhar conteúdo interativo dentro do link.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. inspecionar o shadow DOM de br-breadcrumb 3. varrer elementos focáveis
+
+Regra declarada: nenhuma (atribuição incerta)
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: regra-incerta · janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb" — <br-breadcrumb>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `snapshot a11y refs e34/e35: link "Home" (/url: /portal-mpa) contendo button "Home"` → não encontrado na evidência preservada da execução
+- `shadowRoot de br-breadcrumb: <a href="/portal-mpa"><button class="br-button small circle" aria-label="" type="button"><span class="sr-only">Home</span><i class="fas fa-home" aria-hidden="true"></i></button></a>` → não encontrado na evidência preservada da execução
+- `varredura de focáveis: "shadow:BR-BREADCRUMB|A|Home" e "shadow:BR-BREADCRUMB|BUTTON|Home"` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d6a845294440e1f5adaae91dd9987d21ef559432b9920e96a9c4405ef8789867",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d6c79cb3ff7f2b7e85753d33b5bf7ca8c604d25ef52c13cdfa167700b71b8db6
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Buttons must have discernible text
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:button-name
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "unresolved:tr:nth-child(5) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d6c79cb3ff7f2b7e85753d33b5bf7ca8c604d25ef52c13cdfa167700b71b8db6",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d7271023f437800dcf58150dafd9129fc5d510af996a16ab7f0f865be6d3b0d5
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O campo inicial do intervalo renderiza <input id="br-input-8" type="date"> no shadow root sem nenhum <label> (0 elementos), sem aria-label, aria-labelledby, title ou placeholder. O texto visivel "Data da vistoria:" e um <span class="text-bold"> irmao, nao associado programaticamente.
+
+Esperado: O campo deve ter etiqueta associada programaticamente (<label for>, aria-label ou aria-labelledby) identificando o inicio do intervalo.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: label
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1)" — <br-input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-003 (checks=axe)` → identificador devolvido por ferramenta (sem arquivo)
+- `finding F-114` → identificador devolvido por ferramenta (sem arquivo)
+- `inspecao do shadow root: labelsInShadow=0, ariaLabel=null, placeholder=null, title=null` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d7271023f437800dcf58150dafd9129fc5d510af996a16ab7f0f865be6d3b0d5",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d87206a4f1128154cccee041d711cfdd9d31df757d8188f7f41d00a6a0cbdca3
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(4)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-bc94b709a32b5dc36e82b199cb34b306729bc6a42eada6adcc6c404ae056735d — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d87206a4f1128154cccee041d711cfdd9d31df757d8188f7f41d00a6a0cbdca3",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d8acd39c5bf0ae1f50a3a53713777c6ff262c9acb57101886f180f880155c862
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Buttons must have discernible text
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:button-name
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "unresolved:tr:nth-child(1) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d8acd39c5bf0ae1f50a3a53713777c6ff262c9acb57101886f180f880155c862",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-d9d8cce0b1b1c28c4bb81f38e65b6ca9d7593117becda8742c6834132b4e244d
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-a940b158ce742af299cd0ad0f8ba65e2f23c6fd95f48e6da4753c1c601d7d960 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-d9d8cce0b1b1c28c4bb81f38e65b6ca9d7593117becda8742c6834132b4e244d",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-dc65d9c8c7b4b8089223ee9198aab76c93b0f19045bb776fd15953a69b52057a
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Cada um dos 4 itens numerados da paginação é um <li> aninhado diretamente dentro de outro <li> (estrutura ul > li > li > a), aninhamento inválido em HTML. A árvore de acessibilidade reflete o erro, expondo "listitem" dentro de "listitem".
+
+Esperado: Os itens da lista devem ser filhos diretos do <ul>; um <li> não pode conter outro <li> sem uma lista intermediária.
+
+Janela: 1440×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:1.3.1
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li" — <li> "1"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li" — <li> "2"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li" — <li> "3"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li" — <li> "4"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/.playwright-mcp/page-2026-10-02T07-10-40-213Z.yml` (sha256 6e8798cb118e)
+- `state-01-initial.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run2-dfa77ab4-evidencia/state-01-initial.png` (sha256 27d62eb8866e)
+- `HTML: <ul><li><li><a class="page active"> 1 </a></li></li>...; document.querySelectorAll("nav.br-pagination.small ul > li > li").length === 4` → não encontrado na evidência preservada da execução
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-dc65d9c8c7b4b8089223ee9198aab76c93b0f19045bb776fd15953a69b52057a",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-dca83a40b6f397a5ef1404e929fe3eafe2766c1830118c3d8eca26a56424506e
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os quatro itens numerados da paginacao estao em <li> aninhados dentro de outros <li> (<li><li><a class="page">1</a></li></li>), ou seja, <li> cujo pai e um <li> e nao um <ul>/<ol>. A arvore de acessibilidade reflete o aninhamento indevido (listitem dentro de listitem nos nodes e492/e493, e495/e496, e498/e499, e501/e502).
+
+Esperado: Cada <li> deve ser filho direto de um <ul> ou <ol>; os itens de pagina devem ser um unico nivel de <li> sob o <ul> da paginacao, sem aninhamento duplicado.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: govbr-3.7.0-accessibility-global-1cb2c878824b
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li" — <li> "1"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>li" — <li> "2"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(4)>li" — <li> "3"
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(5)>li" — <li> "4"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-008/F-249..F-252 (axe-core, regra listitem, severidade serious, 4 elementos: 'List item does not have a <ul>, <ol> parent element')` → não encontrado na evidência preservada da execução
+- `DOM da nav.br-pagination confirmando <li><li><a class='page'>` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-dca83a40b6f397a5ef1404e929fe3eafe2766c1830118c3d8eca26a56424506e",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-de68d46de4447faa0d1237aead271f35cb6632b6727365f26df97ff9e9400f6d
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos); document.querySelectorAll('footer,.br-footer,br-footer,[role=contentinfo]').length === 0.
+
+Esperado: O Template Base exige uma Area de Rodape ocupada pelo componente Footer (.br-footer do core ou <br-footer>).
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: ds-page-footer
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-002 (checks=page)` → identificador devolvido por ferramenta (sem arquivo)
+- `finding F-089` → identificador devolvido por ferramenta (sem arquivo)
+- `get_page_rules: ds-page-footer` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-de68d46de4447faa0d1237aead271f35cb6632b6727365f26df97ff9e9400f6d",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-dfd27bf27487976af881397aec7cd2bb66f16bc1bb749acc684fa52e1fd83b35
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: A etiqueta "Nenhum filtro de data aplicado" usa texto rgb(255,255,255) sobre fundo rgb(197,212,235), razao de contraste 1.5:1, com font-size 14px e font-weight 500 - o menor contraste medido na tela.
+
+Esperado: Texto normal exige contraste minimo de 4.5:1 em relacao ao fundo.
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:1.4.3
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>span" — <span> "Nenhum filtro de data aplicado"
+
+### Unidades candidatas (não são crédito)
+
+- U-294d06e9c9ac03ecc74fb602199737580e11736300a52c3df77daafce5eb8a3c — B-13 · inicial · cena 1280x900@inicial · <span> "Nenhum filtro de data aplicado": Etiqueta "Nenhum filtro de data aplicado" (br-tag primary-pastel-01 small): texto branco sobre #c5d4eb, 14 px peso 500 — contraste 1,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `state1-full.png` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/state1-full.png` (sha256 0a3ccd50a730)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-dfd27bf27487976af881397aec7cd2bb66f16bc1bb749acc684fa52e1fd83b35",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-e2ae3b510fafeaf1bd3c62856863913dfe25b1683a4818de4fb60d3bfcd85794
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: Os dois campos do filtro 'Data da vistoria' (inputs #br-input-8 e #br-input-9 nos shadow roots dos hosts br-input) nao tem label, placeholder, aria-label nem aria-labelledby; o texto 'Data da vistoria:' e o separador 'ate' sao spans soltos, sem associacao programatica com nenhum dos dois campos.
+
+Esperado: Cada um dos dois campos deve expor etiqueta propria e programaticamente associada, distinguindo inicio e fim do intervalo (por exemplo 'Data da vistoria - de' e 'Data da vistoria - ate').
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa)
+
+Regra declarada: govbr-3.7.0-accessibility-global-b95c42b61ed3
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1)" — <br-input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2)" — <br-input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-008/F-236 e S-page-008/F-237 (axe-core, regra label, severidade critical)` → não encontrado na evidência preservada da execução
+- `arvore de acessibilidade: nodes e101 e e105 expostos como 'textbox' sem nome` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-e2ae3b510fafeaf1bd3c62856863913dfe25b1683a4818de4fb60d3bfcd85794",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-e2bd647963bd6be7b283281e8973ab82a7b0b882b6f623c9686688b3d4157b1e
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elements must meet minimum color contrast ratio thresholds
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:color-contrast
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(8)>pnip-status-solicitacao-utils>div>div>div" — <div> "Vistoria agendada"
+
+### Unidades candidatas (não são crédito)
+
+- U-8188a105d675aa0dc47295d0aa263c5574ae6994c59e058e2a0f7b8c4ed890e2 — B-12 · inicial · cena 1280x900@inicial · <div> "Vistoria agendada": Etiqueta de status "Vistoria agendada" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-e2bd647963bd6be7b283281e8973ab82a7b0b882b6f623c9686688b3d4157b1e",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-e554a0c0926c2c6f4b016ab532e2c16c25cdb8ec599e4e6b2bcd0a7320289325
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: <li> elements must be contained in a <ul> or <ol>
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:listitem
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li" — <li> "1"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-e554a0c0926c2c6f4b016ab532e2c16c25cdb8ec599e4e6b2bcd0a7320289325",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-e7c8a030508e223345f32f2c37e69986925917dc3cd077fabb31a6a2b6599b89
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: O checkbox de selecionar todos no cabecalho e <input type="checkbox" style="transform: scale(1.5);"> sem id, sem label associado (element.labels.length === 0), sem aria-label e sem title; o <th> que o contem nao tem texto. Clicar nele marca os 11 checkboxes da tabela, confirmando que e o controle de selecao em massa.
+
+Esperado: O checkbox deve ter nome acessivel, por exemplo aria-label="Selecionar todas as vistorias desta pagina".
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: wcag:4.1.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>thead>tr>th:nth-of-type(2)>input" — <input>
+
+### Unidades candidatas (não são crédito)
+
+- U-50a27493b185c0bbb0179208240a74e28e88df151508b8845c55406c1030426e — B-06 · inicial · cena 1280x900@inicial · <input>: As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência da execução
+
+- `deep.json` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/deep.json` (sha256 d470a093ae95)
+- `.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` → `pipeline/logs/2026-10-02T03-39-50-sem-run1-4bbd8345-evidencia/.playwright-mcp/page-2026-10-02T06-59-55-089Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-e7c8a030508e223345f32f2c37e69986925917dc3cd077fabb31a6a2b6599b89",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-e81b8bab634478b59af9ca949e37095be4e1c4bc6e6a49367510d309486ec0ae
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:320x640
+
+Observado: Com a janela em 320 px de largura (clientWidth 305 px), a linha do filtro de data ("Data da vistoria:" + dois campos + "até") ocupa 580 px e se estende até x=612, quase o dobro da viewport, exigindo rolagem horizontal. O conteúdo não é tabular e não requer layout bidimensional.
+
+Esperado: Em 320 px de largura o conteúdo deve refluir sem exigir rolagem horizontal; a linha de filtro de data deve quebrar em várias linhas.
+
+Janela: 320×640 · interações desde o carregamento: 1. carregar a tela 2. redimensionar a janela para 320x640
+
+Regra declarada: wcag:1.4.10
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 320x640; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div" — <div> "Data da vistoria: até"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `medição em 320x640: clientWidth=305, scrollWidth=1309, excesso=1004 px` → identificador devolvido por ferramenta (sem arquivo)
+- `elemento infrator fora da tabela: {sel:"div.col-auto.d-flex.align-items-center", right:612, w:580, txt:"Data da vistoria: até"}` → identificador devolvido por ferramenta (sem arquivo)
+- `validação de seletor em 1440x900: 1 ocorrência` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-e81b8bab634478b59af9ca949e37095be4e1c4bc6e6a49367510d309486ec0ae",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-eb55782ab1c06de05474a0b832449484fb56658d6d85b15dd4191c638805d947
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:320x640
+
+Observado: A tabela mede 1269px e não tem nenhum ancestral com overflow-x auto/scroll até o body, então é o próprio documento que passa a rolar na horizontal: a 320px de largura, documentElement.scrollWidth = 1309 contra clientWidth = 305. Isso arrasta toda a página (cabeçalho, abas, filtros) para rolagem bidimensional.
+
+Esperado: A tabela larga deve ficar em um contêiner com rolagem horizontal própria, para que o restante da página reflua a 320px sem rolagem horizontal do documento.
+
+Janela: 320×640 · interações desde o carregamento: 1. redimensionar a janela para 320x640 2. recarregar a tela
+
+Regra declarada: wcag:1.4.10
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+Sinalizações: janela-fora-do-plano: 320x640; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table" — <table> "# Nome da embarcação RAEP Data/Hora Vistoria Loc"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `.playwright-mcp/page-2026-10-02T07-37-36-852Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-37-36-852Z.yml` (sha256 f9147f8cc0b6)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-eb55782ab1c06de05474a0b832449484fb56658d6d85b15dd4191c638805d947",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-eb9289febc7ff78fe67439faa1597e061c4b503d0ff12efbccb6d32c70ba9db5
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: O acionador do menu do usuario ('Olá, Usuária de Teste, SUPERVISOR') controla o dropdown #avatar-menu, mas nao possui aria-expanded, aria-haspopup nem aria-controls. Apos o clique que abre o menu (container passa de display:none/aria-hidden=true para display:block/aria-hidden=false), aria-expanded permanece null; o foco tambem continua no proprio acionador.
+
+Esperado: O acionador de um menu suspenso deve expor aria-haspopup, referenciar o menu com aria-controls e refletir o estado com aria-expanded alternando entre false e true conforme o menu feche e abra.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela no estado padrao (aba 'Tramitando' ativa) 2. clicar no acionador do avatar para abrir o menu 3. reinspecionar os atributos do acionador e do container 4. clicar novamente para fechar
+
+Regra declarada: govbr-3.7.0-accessibility-global-e038367bd7d6
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "body>pnip-root>pnip-header>div>div>button" — <button#avatar-dropdown-trigger> "Avatar com dropdown"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `DOM fechado: aria-expanded=null, aria-haspopup=null, aria-controls=null; container .br-list.dropdown-menu com display:none, hidden e aria-hidden=true` → identificador devolvido por ferramenta (sem arquivo)
+- `DOM aberto: container com display:block e aria-hidden=false, acionador ainda com aria-expanded=null` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-eb9289febc7ff78fe67439faa1597e061c4b503d0ff12efbccb6d32c70ba9db5",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-ec47962cbc30d916df1d0c86e318bfc684e5ad62a7e632d0f8f785cc936e3c5e
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: A pagina tem um unico cabecalho: <h2 class="text-bold text-blue-vivid-60 mt-0 mb-4 pb-0">Vistorias</h2>. querySelectorAll('h1').length === 0.
+
+Esperado: A pagina deve ter um cabecalho de nivel 1 identificando o conteudo principal, com hierarquia de niveis sem salto.
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela
+
+Regra declarada: page-has-heading-one
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Vistorias Ex"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `scan S-page-003 (checks=axe)` → identificador devolvido por ferramenta (sem arquivo)
+- `finding F-131` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-ec47962cbc30d916df1d0c86e318bfc684e5ad62a7e632d0f8f785cc936e3c5e",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-edd3ff32f1322d0cdf811b8bfce65425636d5abfe0c61deab324da66dd529ed6
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-f723c3af7f206deab86d98a6537a4b8d0edbbcada8c6ef2af6c8570d58c6ea99 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-edd3ff32f1322d0cdf811b8bfce65425636d5abfe0c61deab324da66dd529ed6",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-effda7570bb2826c601dc2c57c20ba56c0c44d57c3c2470f6d33aa9bf4a3c822
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-86758a4dd2aff0cfdd75f4a93d7d0bed35bbca8d150354009a7c12ca64d19a6c — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-effda7570bb2826c601dc2c57c20ba56c0c44d57c3c2470f6d33aa9bf4a3c822",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-f03e4e1e4a74dcf81040475938f9bd76c4101e4144eec0b9c626773e0d5b16eb
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: O botão de remover o filtro aplicado contém apenas <i class="fas fa-times"></i>, sem texto, aria-label, aria-labelledby ou title — anunciado apenas como "button".
+
+Esperado: Todo botão deve ter texto discernível por tecnologia assistiva, p.ex. aria-label="Remover filtro Barra Nova".
+
+Janela: 1280×900 · interações desde o carregamento: 1. clicar no filtro 'Cidade' 2. clicar na opção 'Barra Nova'
+
+Regra declarada: button-name
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-nao-resolvido: o seletor não resolve em nenhuma cena da janela (1280x900@inicial, 1280x900@detalhe-menu, 1280x900@modal)
+
+### Sujeitos
+
+- "unresolved:pnip-filter-panel span.br-tag > button.br-button.inverted.circle" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-012` → identificador devolvido por ferramenta (sem arquivo)
+- `F-258` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-34-09-397Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-34-09-397Z.yml` (sha256 aacce0b64c2d)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-f03e4e1e4a74dcf81040475938f9bd76c4101e4144eec0b9c626773e0d5b16eb",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-f1f76053527a6fadb43e76076adc6e8c11508abacf4c2182f42f4376a743d179
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena fora-do-plano:1440x900
+
+Observado: No modal "Atribuir Vistoriador", o <select> de vistoriadores não tem aria-label, aria-labelledby, title nem <label for="swal2-select">; a árvore de acessibilidade o expõe como "combobox" sem nome. O texto visível "Selecione um Vistoriador" está em #swal2-html-container, usado como aria-describedby do diálogo, não como rótulo do campo.
+
+Esperado: O select deve ter nome acessível próprio (ex.: aria-label="Selecione um Vistoriador" ou aria-labelledby="swal2-html-container").
+
+Janela: 1440×900 · interações desde o carregamento: 1. carregar a tela 2. acionar o botão de atribuir vistoriador da linha 2 (Maresia Nova I)
+
+Regra declarada: wcag:4.1.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: janela-fora-do-plano: 1440x900; sujeitos lidos na cena 1280x900@inicial, sem âncora em unidade
+
+### Sujeitos
+
+- "unresolved:#swal2-select" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `snapshot a11y: combobox [active] [ref=e745] sem nome, dentro de dialog "Atribuir Vistoriador"` → identificador devolvido por ferramenta (sem arquivo)
+- `consulta de atributos: ariaLabel=null, ariaLabelledby=null, labelFor=false, dentroDeLabel=false, title=null` → identificador devolvido por ferramenta (sem arquivo)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-f1f76053527a6fadb43e76076adc6e8c11508abacf4c2182f42f4376a743d179",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-f3573d9c3dc3e01cbfe203dce0aa646a5d248d9528504e74ab02dbb0e3d364d0
+
+Estado: pendente
+
+Contrato: achado-2 — observado, esperado, estado e evidência declarados pelo agente
+
+Origem: execução do agente · cena 1280x900@inicial
+
+Observado: Os dois campos de data do filtro de período não têm rótulo associado: o <input type="date"> no shadow root não tem <label>, aria-label nem aria-labelledby. Os textos visíveis "Data da vistoria:" e "até" são <span class="text-bold">, sem associação programática. Na árvore de acessibilidade aparecem como textbox sem nome.
+
+Esperado: Todo campo de formulário deve ter rótulo associado programaticamente (<label for>, aria-label ou aria-labelledby), p.ex. "Data da vistoria de" e "Data da vistoria até".
+
+Janela: 1280×900 · interações desde o carregamento: nenhuma
+
+Regra declarada: emag:6.2
+
+Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções.
+
+Sinalizações: segmento-pela-resolucao: o seletor só resolve em 1280x900@inicial (/pnip/portal-mpa/vistorias)
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(1)" — <br-input>
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(2)>div>br-input:nth-of-type(2)" — <br-input>
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência da execução
+
+- `S-page-003` → identificador devolvido por ferramenta (sem arquivo)
+- `F-114` → identificador devolvido por ferramenta (sem arquivo)
+- `F-115` → identificador devolvido por ferramenta (sem arquivo)
+- `.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` → `pipeline/logs/2026-10-02T03-39-50-com-run2-71b61273-evidencia/.playwright-mcp/page-2026-10-02T07-29-04-391Z.yml` (sha256 6e8798cb118e)
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-f3573d9c3dc3e01cbfe203dce0aa646a5d248d9528504e74ab02dbb0e3d364d0",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-f5498d3595c8b10691bd961e6555b1b935f984446ce6714684d51fa469d0b7a7
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Buttons must have discernible text
+
+Esperado: (ausente)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: axe:button-name
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "unresolved:tr:nth-child(2) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"] .secondary.middle[aria-label=\"\"]" — Seletor não resolvido
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-f5498d3595c8b10691bd961e6555b1b935f984446ce6714684d51fa469d0b7a7",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-f80b18a176644f08eff5092abdce6e94600ca8f0626d61354a7229c3035c20a4
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@detalhe-menu
+
+Observado: O primeiro link da página (href="/portal-mpa", "Home") não é uma âncora interna.
+
+Esperado: O primeiro link da página é o salto para o conteúdo: âncora interna cujo alvo existe (e-MAG 1.5).
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até detalhe-menu (3 passo(s))
+
+Regra declarada: ds:page-skip-link
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "" — <html> "U Olá, Usuária de Teste, SUPERVISOR Usuária de T"
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-f80b18a176644f08eff5092abdce6e94600ca8f0626d61354a7229c3035c20a4",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-f97fa253456781f97673474595c1297aa614b00ab9d2e8e28b5ab50fe6a5656c
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: br-breadcrumb aplicado a <div>
+
+Esperado: Elemento <nav>
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: ds:structure-breadcrumb-tag
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>br-breadcrumb >>> div" — <div> "Home Vistorias" [shadow]
+
+### Unidades candidatas (não são crédito)
+
+Nenhuma âncora candidata; um achado novo correto continua sendo possível.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-f97fa253456781f97673474595c1297aa614b00ab9d2e8e28b5ab50fe6a5656c",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
+
+## C-fa0f64e1d32ca534c1b928570129396bfe0de02611c40af461d20a04eb392fed
+
+Estado: pendente
+
+Contrato: determinístico — achado de uma linha de base da bateria, na janela do plano de estados; mesma contabilidade semântica do agente
+
+Origem: linha de base determinística · cena 1280x900@inicial
+
+Observado: Elemento interativo apenas com ícone, sem aria-label (br-button)
+
+Esperado: aria-label descritivo (os exemplos oficiais de botão circular sempre trazem aria-label)
+
+Janela: 1280×900 · interações desde o carregamento: 1. setup do plano de estados até inicial (0 passo(s))
+
+Regra declarada: emag:2.2
+
+Reuso: condicionado à mesma evidência verificada, estado declarado e build original.
+
+### Sujeitos
+
+- "body>pnip-root>main>pnip-mpa>pnip-propesc-vistorias>div>div:nth-of-type(3)>div>div:nth-of-type(4)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>div>div:nth-of-type(3)>br-button >>> button" — <button> [shadow]
+
+### Unidades candidatas (não são crédito)
+
+- U-186bf84ebe2669bf2cf857447aa4337f5a835ca376ff49d89291fa259f3be432 — B-08 · inicial · cena 1280x900@inicial · <button> [shadow]: Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes "br-button secondary middle"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.
+  - estados em que a unidade existe: inicial
+  - predicado de aceitação: não implementado — nada foi verificado por máquina aqui; a decisão é inteiramente sua
+  - o predicado prova que o DEFEITO está na página; que esta alegação o afirme é decisão sua.
+
+### Evidência declarada
+
+_(retido na renderização cega: este texto pode nomear o braço da execução)_
+
+Peça a renderização completa DEPOIS de decidir, se precisar do texto integral.
+
+### Decisão
+
+````json
+{
+  "cardId": "C-fa0f64e1d32ca534c1b928570129396bfe0de02611c40af461d20a04eb392fed",
+  "status": "pending",
+  "reviewer": "",
+  "rationale": "",
+  "complete": false,
+  "evidenceRefs": [],
+  "atoms": []
+}
+````
