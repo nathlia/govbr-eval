@@ -1,0 +1,28 @@
+{
+  "version": "surface-1.3.0",
+  "startedAt": "2026-10-02T03:12:02.998Z",
+  "pid": 2588,
+  "entryUrl": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+  "origins": {
+    "site": "http://127.0.0.1:3100",
+    "collector": "http://127.0.0.1:4100"
+  },
+  "proxyServer": "http://127.0.0.1:4102",
+  "control": "http://127.0.0.1:4101",
+  "allowedHosts": [
+    "127.0.0.1:3100",
+    "127.0.0.1:4100"
+  ],
+  "siteManifest": "site-manifest.json",
+  "siteManifestSha256": "47467813eaa78f033f7095e273385cd729f5224674cc1ec0cc57a820b98562cd",
+  "corpusCommit": "5a3c3f8082c5a4595d27addc759270a0cfab4d92",
+  "corpusDirty": false,
+  "egressLog": "egress.ndjson",
+  "policy": {
+    "boundary": "proxy HTTP de encaminhamento; o navegador do Playwright MCP e o do oráculo apontam para ele (--proxy-server / GOVBR_VALIDATOR_PROXY_SERVER), e o Playwright encaminha o loopback",
+    "allowed": "somente as origens do site congelado e do coletor, por host:porta exato, só HTTP",
+    "https": "negado (CONNECT 403)",
+    "site": "somente os arquivos do manifesto; SPA declarada: rota sem extensão sob /pnip/ recebe /pnip/index.html, mais 1 alias declarado(s); sem índice de diretório, sem /@fs",
+    "collector": "POST /api/submit da execução armada; relatório diferente do aceito é recusado e arquivado"
+  }
+}

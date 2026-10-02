@@ -1,0 +1,35 @@
+{
+  "mcpServers": {
+    "govbr-ds-validator": {
+      "type": "stdio",
+      "command": "C:/Users/Natty Dev/AppData/Local/nvm/v25.2.1/node.exe",
+      "args": [
+        "F:/Dev Nath/TCC/govbr-ds-validator/dist/index.js"
+      ],
+      "env": {
+        "GOVBR_VALIDATOR_REPORTS_DIR": "F:/Dev Nath/TCC/govbr-eval/reports",
+        "GOVBR_VALIDATOR_TOOL_PROFILE": "evaluation",
+        "GOVBR_VALIDATOR_PROXY_SERVER": "http://127.0.0.1:4102",
+        "GOVBR_VALIDATOR_ALLOWED_ORIGINS": "http://127.0.0.1:3100",
+        "GOVBR_VALIDATOR_RUN_ID": "2026-10-02T03-39-50-com-run2-71b61273",
+        "GOVBR_VALIDATOR_TELEMETRY_FILE": "F:\\Dev Nath\\TCC\\govbr-eval\\pipeline\\logs\\2026-10-02T03-39-50-com-run2-71b61273-mcp.ndjson"
+      }
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "@playwright/mcp@0.0.70",
+        "--viewport-size",
+        "1280x900",
+        "--proxy-server",
+        "http://127.0.0.1:4102",
+        "--isolated",
+        "--block-service-workers"
+      ],
+      "env": {}
+    }
+  }
+}

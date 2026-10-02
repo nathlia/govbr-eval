@@ -1,0 +1,133 @@
+{
+  "timestamp": "2026-10-02T06:39:38.878Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+  "scope": [
+    "Página de Vistorias (abas de navegação, filtros, tabela de dados)"
+  ],
+  "notes": "Avaliação realizada conforme protocolo canônico. Interações: clique em filtro Cidade (abriu dropdown), clique em aba Agendar (mudança de estado visual). Todos os botões têm nomes acessíveis. Checkboxes na tabela aparecem no snapshot de acessibilidade mas não como input[type='checkbox'] no DOM (possivelmente implementação com aria roles ou shadow DOM). Campos de data aparentam ser componentes customizados sem inputs HTML reais.",
+  "findings": [
+    {
+      "selector": "button:nth-of-type(2)",
+      "relatedSelectors": [
+        "button:nth-of-type(3)",
+        "button:nth-of-type(4)"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "Aba 'Tramitando' visualmente indicada com borda inferior azul, mas sem atributo aria-selected no DOM",
+      "expected": "Abas em um grupo de navegação devem ter aria-selected='true' para a aba selecionada e aria-selected='false' para as não selecionadas, ou estar em um tablist com role='tab'",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "Navegou para URL",
+          "Capturou snapshot de acessibilidade",
+          "Inspecionou atributos ARIA das abas"
+        ]
+      },
+      "evidence": [
+        "snapshot de acessibilidade mostra buttons sem aria-selected",
+        "avaliação DOM confirma falta de aria-selected em todos os 3 buttons de aba"
+      ]
+    },
+    {
+      "selector": "button:nth-of-type(3)",
+      "relatedSelectors": [
+        "button:nth-of-type(2)"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "Aba 'Agendar' sem aria-selected apesar de ter indicador visual (borda) quando ativa",
+      "expected": "Deve ter aria-selected='true' quando selecionada",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "Clique na aba Agendar",
+          "Verificação de estado ARIA"
+        ]
+      },
+      "evidence": [
+        "Aba muda visualmente quando clicada mas não atualiza aria-selected"
+      ]
+    },
+    {
+      "selector": "button:nth-of-type(4)",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Aba 'Concluídos' sem aria-selected",
+      "expected": "Deve ter aria-selected='false' quando não selecionada",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "Avaliação inicial da página"
+        ]
+      },
+      "evidence": [
+        "Nenhuma das três abas tem aria-selected"
+      ]
+    },
+    {
+      "selector": "button[disabled]",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Botão 'Limpar Filtro' tem atributo disabled='true' mas não tem aria-disabled='true'",
+      "expected": "Quando um botão está disabled visualmente, deve ter aria-disabled='true' para comunicar o estado a tecnologias assistivas",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "Inspeção do botão 'Limpar Filtro' que aparece desabilitado no estado inicial"
+        ]
+      },
+      "evidence": [
+        "Avaliação DOM encontra disabled='true' sem aria-disabled='true'"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.287 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.3.0",
+    "siteManifestSha256": "47467813eaa78f033f7095e273385cd729f5224674cc1ec0cc57a820b98562cd",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "5e661560ddd058e18e743813dd90d9d922a563c45a6a33177c09885f6b3c250b",
+    "schedule": {
+      "slot": 2,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-10-02T03-30-03-sem-run1-02479c7a-evidencia",
+    "evidenceIndexSha256": "32af7fd619b23913aa652c07d4905fb7c2bf1289c72b8400ea804cd0ceb985f7"
+  },
+  "cost": {
+    "startedAt": "2026-10-02T06:35:52.7258897Z",
+    "finishedAt": "2026-10-02T06:39:48.5238746Z",
+    "wallClockSeconds": 235.7,
+    "tokens": 1750521,
+    "tokenUsage": {
+      "input": 316,
+      "cacheCreationInput": 59324,
+      "cacheReadInput": 1671527,
+      "output": 19354
+    },
+    "totalCostUsd": 0.3828867000000001,
+    "turns": 40
+  }
+}

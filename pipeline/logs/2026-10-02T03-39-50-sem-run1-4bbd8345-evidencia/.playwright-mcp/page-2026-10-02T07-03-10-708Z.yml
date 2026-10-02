@@ -1,0 +1,278 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic "Plataforma Nacional da Indústria do Pescado" [ref=e4]:
+      - banner [ref=e5]:
+        - generic [ref=e6]:
+          - generic [ref=e8]:
+            - img "logo" [ref=e9]
+            - generic [ref=e11]: Ministério da Pesca e Aquicultura
+          - generic [ref=e13]:
+            - button "Menu" [ref=e16] [cursor=pointer]:
+              - generic [ref=e17]: 
+            - generic [ref=e19]: Plataforma Nacional da Indústria do Pescado
+    - generic [ref=e21]:
+      - button "Avatar com dropdown" [ref=e22] [cursor=pointer]:
+        - generic "U" [ref=e23]:
+          - generic [ref=e24]: U
+        - generic [ref=e25]: Olá, Usuária de Teste, SUPERVISOR
+        - generic [ref=e26]: 
+      - text: 
+  - main [ref=e27]:
+    - generic [ref=e29]:
+      - list [ref=e32]:
+        - listitem [ref=e33]:
+          - link "Home" [ref=e34] [cursor=pointer]:
+            - /url: /portal-mpa
+            - button "Home" [ref=e35]:
+              - generic [ref=e36]: Home
+              - generic [ref=e37]: 
+        - listitem [ref=e38]:
+          - generic [ref=e39]: 
+          - generic [ref=e40]: Vistorias
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - heading "Vistorias" [level=2] [ref=e45]
+          - button "Exportar Vistorias" [ref=e48] [cursor=pointer]:
+            - generic: Exportar Vistorias
+        - navigation "Abas de Navegação Simples" [ref=e50]:
+          - list [ref=e51]:
+            - listitem [ref=e52]:
+              - button "Agendar" [ref=e53] [cursor=pointer]
+            - listitem [ref=e54]:
+              - button "Tramitando" [ref=e55] [cursor=pointer]
+            - listitem [ref=e56]:
+              - button "Concluídos" [ref=e57] [cursor=pointer]
+        - generic [ref=e59]:
+          - generic [ref=e60]:
+            - generic [ref=e62]:
+              - generic [ref=e554]:
+                - generic [ref=e555]: 
+                - generic [ref=e556]: Vila do Farol
+                - button "" [ref=e557] [cursor=pointer]:
+                  - generic [ref=e558]: 
+              - generic [ref=e63]:
+                - generic [ref=e65] [cursor=pointer]:
+                  - generic [ref=e66]: 
+                  - generic [ref=e67]: Cidade
+                  - generic [ref=e68]: 
+                - generic [ref=e70] [cursor=pointer]:
+                  - generic [ref=e71]: 
+                  - generic [ref=e72]: Porto
+                  - generic [ref=e73]: 
+                - generic [ref=e75] [cursor=pointer]:
+                  - generic [ref=e76]: 
+                  - generic [ref=e77]: Vistoriador
+                  - generic [ref=e78]: 
+                - generic [ref=e80] [cursor=pointer]:
+                  - generic [ref=e81]: 
+                  - generic [ref=e82]: Status
+                  - generic [ref=e83]: 
+                - button "Limpar Filtro" [ref=e85] [cursor=pointer]
+            - generic [ref=e90]:
+              - textbox "Pesquise aqui ..." [ref=e93]
+              - button "Buscar" [ref=e94] [cursor=pointer]:
+                - generic [ref=e95]: 
+          - generic [ref=e96]:
+            - generic [ref=e97]:
+              - generic [ref=e98]: "Data da vistoria:"
+              - textbox [ref=e101]
+              - generic [ref=e102]: até
+              - textbox [ref=e105]
+            - generic [ref=e106]: Nenhum filtro de data aplicado
+          - generic [ref=e559]:
+            - text: "Última atualização:"
+            - generic [ref=e560]: 
+            - text: 09:33
+          - table [ref=e562]:
+            - rowgroup [ref=e563]:
+              - row "# Nome da embarcação RAEP Data/Hora Vistoria Local Vistoria Vistoriador Status" [ref=e564]:
+                - columnheader "#" [ref=e565]
+                - columnheader [ref=e566]:
+                  - checkbox [ref=e567]
+                - columnheader "Nome da embarcação" [ref=e568]
+                - columnheader "RAEP" [ref=e569]
+                - columnheader "Data/Hora Vistoria" [ref=e570]
+                - columnheader "Local Vistoria" [ref=e571]
+                - columnheader "Vistoriador" [ref=e572]
+                - columnheader "Status" [ref=e573]
+                - columnheader [ref=e574]
+            - rowgroup [ref=e575]:
+              - row "1 Coral Mansa IV RS99103699 01/04/2026 10:30 Trapiche da Vila do Farol Vistoria agendada" [ref=e576]:
+                - cell "1" [ref=e577]
+                - cell [ref=e578]:
+                  - checkbox [ref=e579]
+                - cell "Coral Mansa IV" [ref=e580]
+                - cell "RS99103699" [ref=e581]
+                - cell "01/04/2026 10:30" [ref=e582]
+                - cell "Trapiche da Vila do Farol" [ref=e583]
+                - cell [ref=e584]
+                - cell "Vistoria agendada" [ref=e585]:
+                  - generic [ref=e589]: Vistoria agendada
+                - cell [ref=e590]:
+                  - generic [ref=e591]:
+                    - generic "Atribuir vistoriador" [ref=e593]:
+                      - button "Atribuir vistoriador" [ref=e594] [cursor=pointer]:
+                        - generic [ref=e596]: 
+                    - button [ref=e599] [cursor=pointer]:
+                      - generic [ref=e601]: 
+                    - generic "Excluir vistoria" [ref=e603]:
+                      - button "Excluir vistoria" [ref=e604] [cursor=pointer]:
+                        - generic [ref=e606]: 
+                    - generic "Notificar solicitante da vistoria" [ref=e608]:
+                      - button "Notificar solicitante da vistoria" [ref=e609] [cursor=pointer]:
+                        - generic [ref=e611]: 
+              - row "2 Âncora Serena IV RS99102877 26/03/2026 08:15 Trapiche da Vila do Farol Heitor Quintela Nogueira Vistoria agendada" [ref=e612]:
+                - cell "2" [ref=e613]
+                - cell [ref=e614]:
+                  - checkbox [ref=e615]
+                - cell "Âncora Serena IV" [ref=e616]
+                - cell "RS99102877" [ref=e617]
+                - cell "26/03/2026 08:15" [ref=e618]
+                - cell "Trapiche da Vila do Farol" [ref=e619]
+                - cell "Heitor Quintela Nogueira" [ref=e620]
+                - cell "Vistoria agendada" [ref=e621]:
+                  - generic [ref=e625]: Vistoria agendada
+                - cell [ref=e626]:
+                  - generic [ref=e627]:
+                    - generic "Atribuir vistoriador" [ref=e629]:
+                      - button "Atribuir vistoriador" [ref=e630] [cursor=pointer]:
+                        - generic [ref=e632]: 
+                    - button [ref=e635] [cursor=pointer]:
+                      - generic [ref=e637]: 
+                    - generic "Excluir vistoria" [ref=e639]:
+                      - button "Excluir vistoria" [ref=e640] [cursor=pointer]:
+                        - generic [ref=e642]: 
+                    - generic "Notificar solicitante da vistoria" [ref=e644]:
+                      - button "Notificar solicitante da vistoria" [ref=e645] [cursor=pointer]:
+                        - generic [ref=e647]: 
+              - row "3 Sereia Nova RS99102055 20/03/2026 14:00 Trapiche da Vila do Farol Vistoria agendada" [ref=e648]:
+                - cell "3" [ref=e649]
+                - cell [ref=e650]:
+                  - checkbox [ref=e651]
+                - cell "Sereia Nova" [ref=e652]
+                - cell "RS99102055" [ref=e653]
+                - cell "20/03/2026 14:00" [ref=e654]
+                - cell "Trapiche da Vila do Farol" [ref=e655]
+                - cell [ref=e656]
+                - cell "Vistoria agendada" [ref=e657]:
+                  - generic [ref=e661]: Vistoria agendada
+                - cell [ref=e662]:
+                  - generic [ref=e663]:
+                    - generic "Atribuir vistoriador" [ref=e665]:
+                      - button "Atribuir vistoriador" [ref=e666] [cursor=pointer]:
+                        - generic [ref=e668]: 
+                    - button [ref=e671] [cursor=pointer]:
+                      - generic [ref=e673]: 
+                    - generic "Excluir vistoria" [ref=e675]:
+                      - button "Excluir vistoria" [ref=e676] [cursor=pointer]:
+                        - generic [ref=e678]: 
+                    - generic "Notificar solicitante da vistoria" [ref=e680]:
+                      - button "Notificar solicitante da vistoria" [ref=e681] [cursor=pointer]:
+                        - generic [ref=e683]: 
+              - row "4 Aurora Veloz SC99100000 13/03/2026 08:45 Trapiche da Vila do Farol Heitor Quintela Nogueira Não comparecimento" [ref=e684]:
+                - cell "4" [ref=e685]
+                - cell [ref=e686]
+                - cell "Aurora Veloz" [ref=e687]
+                - cell "SC99100000" [ref=e688]
+                - cell "13/03/2026 08:45" [ref=e689]
+                - cell "Trapiche da Vila do Farol" [ref=e690]
+                - cell "Heitor Quintela Nogueira" [ref=e691]
+                - cell "Não comparecimento" [ref=e692]:
+                  - generic [ref=e696]: Não comparecimento
+                - cell [ref=e697]:
+                  - generic [ref=e698]:
+                    - generic "Atribuir vistoriador" [ref=e700]:
+                      - button "Atribuir vistoriador" [ref=e701] [cursor=pointer]:
+                        - generic [ref=e703]: 
+                    - button [ref=e706] [cursor=pointer]:
+                      - generic [ref=e708]: 
+                    - generic "Excluir vistoria" [ref=e710]:
+                      - button "Excluir vistoria" [ref=e711] [cursor=pointer]:
+                        - generic [ref=e713]: 
+                    - generic "Voltar vistoria para AGENDADA" [ref=e715]:
+                      - button "Voltar vistoria para AGENDADA" [ref=e716] [cursor=pointer]:
+                        - generic [ref=e718]: 
+              - row "5 Estrela Dourada V RS99104521 07/03/2026 14:00 Trapiche da Vila do Farol Lívia Fontoura Teixeira Vistoria preenchida" [ref=e719]:
+                - cell "5" [ref=e720]
+                - cell [ref=e721]
+                - cell "Estrela Dourada V" [ref=e722]
+                - cell "RS99104521" [ref=e723]
+                - cell "07/03/2026 14:00" [ref=e724]
+                - cell "Trapiche da Vila do Farol" [ref=e725]
+                - cell "Lívia Fontoura Teixeira" [ref=e726]
+                - cell "Vistoria preenchida" [ref=e727]:
+                  - generic [ref=e731]: Vistoria preenchida
+                - cell [ref=e732]:
+                  - generic [ref=e733]:
+                    - generic "Atribuir vistoriador" [ref=e735]:
+                      - button "Atribuir vistoriador" [ref=e736] [cursor=pointer]:
+                        - generic [ref=e738]: 
+                    - button [ref=e741] [cursor=pointer]:
+                      - generic [ref=e743]: 
+                    - generic "Excluir vistoria" [ref=e745]:
+                      - button "Excluir vistoria" [ref=e746] [cursor=pointer]:
+                        - generic [ref=e748]: 
+              - row "6 Estrela Veloz IV RS99105343 23/02/2026 10:00 Trapiche da Vila do Farol Heitor Quintela Nogueira Não comparecimento" [ref=e749]:
+                - cell "6" [ref=e750]
+                - cell [ref=e751]
+                - cell "Estrela Veloz IV" [ref=e752]
+                - cell "RS99105343" [ref=e753]
+                - cell "23/02/2026 10:00" [ref=e754]
+                - cell "Trapiche da Vila do Farol" [ref=e755]
+                - cell "Heitor Quintela Nogueira" [ref=e756]
+                - cell "Não comparecimento" [ref=e757]:
+                  - generic [ref=e761]: Não comparecimento
+                - cell [ref=e762]:
+                  - generic [ref=e763]:
+                    - generic "Atribuir vistoriador" [ref=e765]:
+                      - button "Atribuir vistoriador" [ref=e766] [cursor=pointer]:
+                        - generic [ref=e768]: 
+                    - button [ref=e771] [cursor=pointer]:
+                      - generic [ref=e773]: 
+                    - generic "Excluir vistoria" [ref=e775]:
+                      - button "Excluir vistoria" [ref=e776] [cursor=pointer]:
+                        - generic [ref=e778]: 
+                    - generic "Voltar vistoria para AGENDADA" [ref=e780]:
+                      - button "Voltar vistoria para AGENDADA" [ref=e781] [cursor=pointer]:
+                        - generic [ref=e783]: 
+        - generic [ref=e785]:
+          - navigation "Paginação de resultados" [ref=e788]:
+            - list [ref=e789]:
+              - listitem [ref=e790]:
+                - button "Página anterior" [disabled] [ref=e791]:
+                  - generic: 
+              - listitem [ref=e792]:
+                - listitem [ref=e793]:
+                  - link "1" [ref=e794] [cursor=pointer]:
+                    - /url: javascript:void(0)
+              - listitem [ref=e795]:
+                - button "Página seguinte" [disabled] [ref=e796]:
+                  - generic: 
+          - navigation "paginação" [ref=e798]:
+            - generic [ref=e802]:
+              - generic [ref=e803]: Exibir
+              - generic [ref=e804]:
+                - text: 
+                - textbox "Exibir" [ref=e805]:
+                  - /placeholder: Selecione
+                  - text: "10"
+              - button "Exibir lista" [ref=e806] [cursor=pointer]:
+                - generic [ref=e807]: 
+            - generic [ref=e809]:
+              - generic [ref=e810]: "1"
+              - text: –
+              - generic [ref=e811]: "6"
+              - text: de
+              - generic [ref=e812]: "6"
+              - text: itens
+            - generic [ref=e817]:
+              - generic [ref=e818]: Página
+              - generic [ref=e819]:
+                - text: 
+                - textbox "Página" [ref=e820]:
+                  - /placeholder: Selecione
+                  - text: "1"
+              - button "Exibir lista" [ref=e821] [cursor=pointer]:
+                - generic [ref=e822]: 
+        - button "Voltar" [ref=e535] [cursor=pointer]:
+          - generic [ref=e537]: Voltar

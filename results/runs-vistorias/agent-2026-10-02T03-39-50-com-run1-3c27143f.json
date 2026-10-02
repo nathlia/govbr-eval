@@ -1,0 +1,544 @@
+{
+  "timestamp": "2026-10-02T06:59:11.478Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+  "scope": [
+    "tela inteira de Vistorias (perfil mpa): cabecalho e avatar, breadcrumb, titulo e acao Exportar, abas Agendar/Tramitando/Concluidos, barra de filtros (4 gatilhos com painel, busca, intervalo de datas, Limpar Filtro), tabela de vistorias com selecao e acoes de linha, paginacao dupla, botao Voltar, e ausencia de rodape"
+  ],
+  "notes": "Interacoes executadas: carga em 1440x900 e snapshot da arvore de acessibilidade; enumeracao dos focalizaveis do documento; abertura e fechamento do painel de filtro \"Cidade\" por clique; selecao da opcao \"Barra Nova\" (filtro aplicado, 34 -> 6 itens, regiao aria-live=polite anunciou \"1-6 de 6 itens\"); varredura de Tab real a partir do botao #HISTORICO, confirmando que os 4 gatilhos de filtro nunca recebem foco; acionamento de \"Limpar Filtro\" por Enter (voltou a 34 itens); digitacao no campo de busca e Enter (nao submete; a submissao exige o botao Buscar, que e focalizavel e nomeado - comportamento registrado, nao reportado como defeito); preenchimento do intervalo de datas 01/03/2026-20/03/2026 (19 itens) e combinacao com o filtro de cidade (4 itens); verificacao do dropdown do avatar (aria-expanded, aria-controls, role=menu e hidden corretos - sem defeito); medicao de reflow em 360x640 e 320x640. Oraculo usado: scan_page (checks page, axe e structure), get_page_rules, get_ds_rules, get_emag_rules, get_component_spec e verify_finding. Itens conferidos e aprovados: html lang=\"pt-br\", presenca de <main>, scope=\"col\" nos 9 th, ausencia de ids duplicados, contraste das variantes bg-success e bg-danger da tarja de status, e estrutura input+label[for] dos seletores de paginacao. Limitacoes: (a) as respostas completas de scan_page com checks=structure sobre todos os componentes excederam o limite de tokens duas vezes, e a varredura estrutural foi entao restrita aos escopos .br-list e .row.pl-2 com os componentes radio/tag/item/list, de modo que a cobertura estrutural deterministica da tela nao e exaustiva; (b) os 6 achados nao provenientes do axe (emag:6.2, emag:2.1 x2, wcag:4.1.2, wcag:1.4.10 x2) foram submetidos ao verify_finding e retornaram verdict=unverifiable com ruleExists=pass, applicability=pass e evidenceConsistent=pass, mas violation=no-predicate, porque o oraculo nao implementa predicado mecanico para essas regras; sustentam-se na evidencia viva registrada em cada achado; (c) os icones FontAwesome (10 de 18 sem aria-hidden, entre eles o relogio de \"Ultima atualizacao\") aparecem na arvore de acessibilidade como glifos de area de uso privado, mas nao encontrei norma citavel no oraculo para afirmar violacao: fica como incerto e nao foi reportado; (d) a aba marcada como ativa no carregamento e \"Tramitando\" enquanto a tabela lista apenas \"Vistoria agendada\" - possivel divergencia de estado de dominio que nao pude julgar sem o codigo e que nao foi reportada.",
+  "findings": [
+    {
+      "selector": "html",
+      "rule": "ds-page-footer",
+      "observed": "Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos); document.querySelectorAll('footer,.br-footer,br-footer,[role=contentinfo]').length === 0.",
+      "expected": "O Template Base exige uma Area de Rodape ocupada pelo componente Footer (.br-footer do core ou <br-footer>).",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-002 (checks=page)",
+        "finding F-089",
+        "get_page_rules: ds-page-footer"
+      ]
+    },
+    {
+      "selector": "html",
+      "rule": "ds-page-skip-link",
+      "observed": "O primeiro link da pagina e <a href=\"/portal-mpa\"> (\"Home\", no breadcrumb). Nao existe nenhum <a href=\"#...\"> no documento: document.querySelectorAll('a[href^=\"#\"]').length === 0.",
+      "expected": "O primeiro link da pagina deve ser o salto para o conteudo: ancora interna href=\"#id\" cujo alvo exista no documento.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-002 (checks=page)",
+        "finding F-090",
+        "get_page_rules: ds-page-skip-link"
+      ]
+    },
+    {
+      "selector": "html",
+      "relatedSelectors": [
+        "main h2"
+      ],
+      "rule": "page-has-heading-one",
+      "observed": "A pagina tem um unico cabecalho: <h2 class=\"text-bold text-blue-vivid-60 mt-0 mb-4 pb-0\">Vistorias</h2>. querySelectorAll('h1').length === 0.",
+      "expected": "A pagina deve ter um cabecalho de nivel 1 identificando o conteudo principal, com hierarquia de niveis sem salto.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-003 (checks=axe)",
+        "finding F-131"
+      ]
+    },
+    {
+      "selector": "tbody br-button[icon=\"eye\"]",
+      "rule": "button-name",
+      "observed": "Os 10 botoes de acao \"visualizar\" das linhas renderizam no shadow root <button class=\"secondary middle\" aria-label=\"\"> sem texto interno, title ou aria-labelledby; na arvore de acessibilidade aparecem como button sem nome, ao lado de irmaos nomeados.",
+      "expected": "Cada botao deve ter nome acessivel (aria-label preenchido ou texto visivel), como os irmaos \"Atribuir vistoriador\", \"Excluir vistoria\" e \"Notificar solicitante da vistoria\".",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-003 (checks=axe)",
+        "findings F-091..F-100",
+        "snapshot da arvore de acessibilidade: button [ref=e147] sem nome"
+      ]
+    },
+    {
+      "selector": ".br-tag.primary-pastel-01",
+      "rule": "color-contrast",
+      "observed": "A tarja \"Nenhum filtro de data aplicado\" usa color #ffffff sobre background #c5d4eb a 14px peso normal: razao de contraste 1.5:1.",
+      "expected": "Texto normal (menor que 18,66px) exige contraste minimo de 4.5:1 entre primeiro plano e plano de fundo.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-003 (checks=axe)",
+        "finding F-101"
+      ]
+    },
+    {
+      "selector": "tbody .bg-blue-40 > .text-secondary-01",
+      "rule": "color-contrast",
+      "observed": "As 10 tarjas de status \"Vistoria agendada\" usam color #ffffff sobre .bg-blue-40 (#4f97d1) a 14px peso normal: razao 3.14:1. As variantes .bg-success (#168821, 4.59:1) e .bg-danger (#e52207, 4.60:1) do mesmo componente passam; so a variante azul reprova.",
+      "expected": "Contraste minimo de 4.5:1 para o texto de 14px da tarja de status.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-003 (checks=axe)",
+        "findings F-102..F-111",
+        "medicao de contraste por estado de filtro: agendada 3.14, preenchida 4.59, nao comparecimento 4.60"
+      ]
+    },
+    {
+      "selector": "thead th:nth-child(2)",
+      "rule": "empty-table-header",
+      "observed": "O cabecalho da coluna de selecao contem apenas <input type=\"checkbox\"> e nenhum texto perceptivel por leitor de tela.",
+      "expected": "Toda celula th deve ter texto acessivel descrevendo a coluna (visivel ou alternativa textual equivalente).",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-003 (checks=axe)",
+        "finding F-112"
+      ]
+    },
+    {
+      "selector": "thead th:nth-child(9)",
+      "rule": "empty-table-header",
+      "observed": "O cabecalho da coluna de acoes esta vazio: <th scope=\"col\"></th>, sem texto perceptivel por leitor de tela.",
+      "expected": "Toda celula th deve ter texto acessivel descrevendo a coluna (visivel ou alternativa textual equivalente).",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-003 (checks=axe)",
+        "finding F-113"
+      ]
+    },
+    {
+      "selector": "br-input[type=\"date\"]:nth-child(2)",
+      "relatedSelectors": [
+        ".col-auto.d-flex.align-items-center.align-self-end > span.text-bold:nth-child(1)"
+      ],
+      "rule": "label",
+      "observed": "O campo inicial do intervalo renderiza <input id=\"br-input-8\" type=\"date\"> no shadow root sem nenhum <label> (0 elementos), sem aria-label, aria-labelledby, title ou placeholder. O texto visivel \"Data da vistoria:\" e um <span class=\"text-bold\"> irmao, nao associado programaticamente.",
+      "expected": "O campo deve ter etiqueta associada programaticamente (<label for>, aria-label ou aria-labelledby) identificando o inicio do intervalo.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-003 (checks=axe)",
+        "finding F-114",
+        "inspecao do shadow root: labelsInShadow=0, ariaLabel=null, placeholder=null, title=null"
+      ]
+    },
+    {
+      "selector": "br-input[type=\"date\"]:nth-child(4)",
+      "relatedSelectors": [
+        ".col-auto.d-flex.align-items-center.align-self-end > span.text-bold:nth-child(3)"
+      ],
+      "rule": "label",
+      "observed": "O campo final do intervalo renderiza <input id=\"br-input-9\" type=\"date\"> no shadow root sem nenhum <label> (0 elementos), sem aria-label, aria-labelledby, title ou placeholder. O texto visivel \"ate\" e um <span class=\"text-bold\"> irmao, nao associado programaticamente.",
+      "expected": "O campo deve ter etiqueta associada programaticamente (<label for>, aria-label ou aria-labelledby) identificando o fim do intervalo.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-003 (checks=axe)",
+        "finding F-115",
+        "inspecao do shadow root: labelsInShadow=0, ariaLabel=null, placeholder=null, title=null"
+      ]
+    },
+    {
+      "selector": "thead input[type=\"checkbox\"]",
+      "rule": "label",
+      "observed": "O checkbox de selecionar todas as linhas nao tem <label> implicito nem explicito, aria-label, aria-labelledby ou title; na arvore de acessibilidade aparece como checkbox sem nome.",
+      "expected": "O checkbox deve ter etiqueta associada programaticamente, por exemplo aria-label=\"Selecionar todas as vistorias\".",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-003 (checks=axe)",
+        "finding F-116"
+      ]
+    },
+    {
+      "selector": "tbody input[type=\"checkbox\"]",
+      "rule": "label",
+      "observed": "Os 10 checkboxes de selecao de linha nao tem <label> implicito nem explicito, aria-label, aria-labelledby ou title; na arvore de acessibilidade aparecem como checkbox sem nome, sem referencia a embarcacao da linha.",
+      "expected": "Cada checkbox deve ter etiqueta associada programaticamente que identifique a linha, por exemplo aria-label=\"Selecionar vistoria da embarcacao Coral Mansa IV\".",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-003 (checks=axe)",
+        "findings F-117..F-126"
+      ]
+    },
+    {
+      "selector": "nav.br-pagination.small li > li",
+      "rule": "listitem",
+      "observed": "Os 4 itens de numero de pagina sao <li> aninhados diretamente dentro de outro <li>, sem <ul> ou <ol> intermediario.",
+      "expected": "Todo <li> deve ter <ul> ou <ol> como elemento pai, para que a lista seja exposta corretamente como lista.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "scan S-page-003 (checks=axe)",
+        "findings F-127..F-130"
+      ]
+    },
+    {
+      "selector": "br-input#search",
+      "rule": "emag:6.2",
+      "observed": "O unico nome acessivel do campo de busca e o placeholder \"Pesquise aqui ...\": o shadow root nao tem nenhum <label> (0 elementos) e o input interno tem aria-label=null e aria-labelledby ausente.",
+      "expected": "O campo deve ter etiqueta associada programaticamente (<label for>, aria-label ou aria-labelledby); e-MAG 6.2 declara explicitamente que placeholder nao substitui etiqueta, pois desaparece ao digitar e nao e anunciado de forma consistente.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "verify_finding V-003 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, violation=no-predicate)",
+        "inspecao do shadow root de #search"
+      ]
+    },
+    {
+      "selector": "span.br-tag.interaction",
+      "rule": "emag:2.1",
+      "observed": "Os 4 gatilhos de filtro (Cidade, Porto, Vistoriador, Status) sao <span style=\"cursor:pointer\"> que abrem e fecham um painel .br-list por clique, sem tabindex, sem role e sem aria-expanded. Nao aparecem na enumeracao de focalizaveis do documento e, com Tab real a partir do botao #HISTORICO, o foco vai para o botao de remocao da tarja e em seguida para \"Limpar Filtro\", pulando os quatro gatilhos.",
+      "expected": "O gatilho deve ser focalizavel e operavel por teclado (<button type=\"button\"> ou tabindex=\"0\" com tratamento de Enter/Espaco), expondo papel de botao e o estado aria-expanded.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "verify_finding V-001 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, elements=4, violation=no-predicate)",
+        "sequencia de Tab real: #HISTORICO -> button.br-button.inverted.circle -> button.br-button.secondary \"Limpar Filtro\""
+      ]
+    },
+    {
+      "selector": "nav.tab-nav li.tab-item.active > button",
+      "relatedSelectors": [
+        "nav.tab-nav li.tab-item > button"
+      ],
+      "rule": "wcag:4.1.2",
+      "observed": "A aba selecionada (\"Tramitando\") e indicada apenas pela classe CSS active no <li> e pelo estilo computado resultante (color rgb(12,50,111) e border-bottom 4px rgb(12,50,111), contra rgb(51,51,51) e borda transparente nas outras). Os tres botoes tem aria-selected=null, aria-current=null e role=null, e o <ul> nao tem role=tablist.",
+      "expected": "O estado selecionado deve ser programaticamente determinavel: role=tablist/role=tab com aria-selected=\"true\" no botao ativo, ou aria-current no botao ativo.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela"
+        ]
+      },
+      "evidence": [
+        "verify_finding V-002 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, elements=1, violation=no-predicate)",
+        "leitura dos 3 li.tab-item com estilos computados"
+      ]
+    },
+    {
+      "selector": ".col-auto.d-flex.align-items-center.align-self-end",
+      "rule": "wcag:1.4.10",
+      "observed": "Com a janela em 320x640 (document.documentElement.clientWidth = 305), a linha do filtro de data mede 580px de largura e termina em x=612, fora da viewport; a classe col-auto impede a quebra e o bloco nao tem rolagem propria (overflow-x computado: visible).",
+      "expected": "A 320px CSS de largura o bloco deve caber na viewport ou quebrar em varias linhas, sem exigir rolagem horizontal; nao e conteudo que exija layout bidimensional.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "steps": [
+          "carregar a tela",
+          "redimensionar a janela para 320x640"
+        ]
+      },
+      "evidence": [
+        "verify_finding V-005 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, elements=1, violation=no-predicate)",
+        "getBoundingClientRect: width 580, right 612; clientWidth 305"
+      ]
+    },
+    {
+      "selector": ".br-table",
+      "relatedSelectors": [
+        ".br-table > table.table"
+      ],
+      "rule": "wcag:1.4.10",
+      "observed": "Com a janela em 320x640 (clientWidth 305), o wrapper .br-table tem overflow-x computado visible e caixa de 225px, enquanto a <table> interna mede 1269px e termina em x=1309; document.documentElement.scrollWidth = 1309, de modo que toda a pagina (filtros, abas, paginacao e botao Voltar) passa a exigir rolagem horizontal, e nao apenas a tabela.",
+      "expected": "O wrapper da tabela deve conter a propria rolagem (overflow-x: auto), para que a excecao de layout bidimensional aplicavel a tabelas de dados nao imponha rolagem horizontal ao restante do conteudo da pagina.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "steps": [
+          "carregar a tela",
+          "redimensionar a janela para 320x640"
+        ]
+      },
+      "evidence": [
+        "medicao a 320px: .br-table width 225 / scrollWidth 1269 / overflow-x visible; table width 1269 right 1309; documentElement.scrollWidth 1309 vs clientWidth 305"
+      ]
+    },
+    {
+      "selector": ".br-list .br-radio:not(:has(input))",
+      "rule": "emag:2.1",
+      "observed": "Com o painel do filtro \"Cidade\" aberto, as 6 opcoes sao div.br-radio contendo apenas um <label> e nenhum <input>: label sem atributo for, HTMLLabelElement.control nulo, e o painel tem 0 elementos focalizaveis, de modo que a selecao so funciona por clique do mouse. No mesmo documento os seletores de paginacao usam div.br-radio com input + label[for] corretos.",
+      "expected": "Cada opcao deve ser um controle real e focalizavel (input[type=radio] com id associado ao label[for], ou role=radio/option com tabindex), selecionavel por teclado e exposta com papel e estado.",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "clicar no gatilho de filtro \"Cidade\" (primeiro span.br-tag.interaction)"
+        ]
+      },
+      "evidence": [
+        "verify_finding V-004 (ruleExists=pass, applicability=pass, evidenceConsistent=pass, elements=6, violation=no-predicate)",
+        "scan S-page-005 (structure) no mesmo estado: nenhuma violacao de tag estrutural, apenas observacao sem norma"
+      ]
+    },
+    {
+      "selector": ".row.pl-2 .br-tag.interaction > button.br-button.inverted.circle",
+      "rule": "button-name",
+      "observed": "Com o filtro de cidade aplicado, o botao que remove a tarja \"Barra Nova\" e <button type=\"button\" class=\"br-button inverted circle\"><i class=\"fas fa-times\"></i></button>, sem texto interno, aria-label, aria-labelledby ou title; um Tab real a partir de #HISTORICO para nele sem nome anunciado.",
+      "expected": "O botao de remocao deve ter nome acessivel, por exemplo aria-label=\"Remover filtro de cidade Barra Nova\".",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "clicar no gatilho de filtro \"Cidade\"",
+          "clicar na opcao \"Barra Nova\""
+        ]
+      },
+      "evidence": [
+        "scan S-page-006 (checks=axe, actions reproduzidas)",
+        "finding F-173",
+        "sequencia de Tab real a partir de #HISTORICO"
+      ]
+    },
+    {
+      "selector": ".col.align-content-center.px-1 > .br-tag.interaction > button.br-button.inverted.circle",
+      "rule": "button-name",
+      "observed": "Com o intervalo de datas aplicado, o botao que remove a tarja \"Exibindo vistorias de 01/03/2026 ate 20/03/2026\" e <button type=\"button\" class=\"br-button inverted circle\"><i aria-hidden=\"true\" class=\"fas fa-times\"></i></button>: o unico conteudo esta marcado como aria-hidden e nao ha aria-label, aria-labelledby nem title, logo o botao nao tem nome acessivel.",
+      "expected": "O botao de remocao deve ter nome acessivel, por exemplo aria-label=\"Remover filtro de data\".",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "steps": [
+          "carregar a tela",
+          "preencher a data inicial com 01/03/2026",
+          "preencher a data final com 20/03/2026"
+        ]
+      },
+      "evidence": [
+        "inspecao do botao: aria-label=null, title=null, textContent vazio, icone com aria-hidden=true",
+        "mesmo padrao confirmado deterministicamente pelo scan S-page-006 / finding F-173 na tarja de cidade"
+      ]
+    }
+  ],
+  "config": {
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.287 (Claude Code)",
+    "modelVersion": "claude-opus-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.3.0",
+    "siteManifestSha256": "47467813eaa78f033f7095e273385cd729f5224674cc1ec0cc57a820b98562cd",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "dad2ccdc5bb7dcf79fa319f27971d3b416563377eb4e60b7c67d9ebb75cadec2",
+    "schedule": {
+      "slot": 1,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-10-02T03-39-50-com-run1-3c27143f-evidencia",
+    "evidenceIndexSha256": "d3445dc6181c41eaf5ea98aeebd44d971d055928ac5f694427876d39efaf9e7b",
+    "validatorVersion": "2.7.0"
+  },
+  "cost": {
+    "startedAt": "2026-10-02T06:41:20.2082142Z",
+    "finishedAt": "2026-10-02T06:59:40.1186572Z",
+    "wallClockSeconds": 1099.4,
+    "tokens": 7512271,
+    "tokenUsage": {
+      "input": 148,
+      "cacheCreationInput": 169573,
+      "cacheReadInput": 7283182,
+      "output": 59368
+    },
+    "totalCostUsd": 6.822260999999999,
+    "turns": 84,
+    "mcp": {
+      "runId": "2026-10-02T03-39-50-com-run1-3c27143f",
+      "telemetryFile": "pipeline/logs/2026-10-02T03-39-50-com-run1-3c27143f-mcp.ndjson",
+      "calls": 21,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 8530,
+      "responseBytes": 354649,
+      "durationMs": 19288,
+      "byTool": {
+        "scan_page": {
+          "calls": 6,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 1609,
+          "responseBytes": 309456,
+          "durationMs": 12981
+        },
+        "get_finding_details": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 191,
+          "responseBytes": 21898,
+          "durationMs": 0
+        },
+        "get_emag_rules": {
+          "calls": 3,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 39,
+          "responseBytes": 8473,
+          "durationMs": 0
+        },
+        "verify_finding": {
+          "calls": 5,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 6492,
+          "responseBytes": 6087,
+          "durationMs": 6282
+        },
+        "get_page_rules": {
+          "calls": 1,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 2,
+          "responseBytes": 5022,
+          "durationMs": 6
+        },
+        "get_component_spec": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 40,
+          "responseBytes": 2697,
+          "durationMs": 2
+        },
+        "get_ds_rules": {
+          "calls": 2,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 157,
+          "responseBytes": 1016,
+          "durationMs": 17
+        }
+      }
+    }
+  }
+}

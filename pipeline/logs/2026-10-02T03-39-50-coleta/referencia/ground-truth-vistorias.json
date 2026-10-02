@@ -1,0 +1,787 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "status": "congelada — 2026-10-01 (D-61): escaladas decididas pela autora, re-medida independente feita (1acf20b), portões repassados",
+    "version_note": "1.0.0 (2026-10-01, D-61): congelamento da 1.0.0-candidata. A autora aceitou a recomendação do assistente para os 20 itens escalados (tela-b/vistorias/recomendacoes-escaladas.md): E-01, E-04, E-06 e E-07 viram unidade (B-25…B-29, origem autora), E-18 vira o controle C-13, e as demais ficam fora com motivo. E-20 era recomendada como unidade, mas a medida feita ao aplicar desmentiu a premissa: o botão user-times chama a mesma ação de atribuir (diálogo \"Atribuir Vistoriador\", POST /atribuir-vistoriador), então o nome corresponde à ação e o critério da recomendação não é atendido; ficou fora. B-02 e B-07/B-18 mantidas (citações ⚠). 29 specs, 102 unidades, 4 estados em 3 segmentos. 1.0.0-candidata (2026-09-30, fatia 8 / D-49, D-57, D-58): referência AUDITADA da tela B (Vistorias PROPESC do PNIP, build do modo mock congelado em govbr-corpus/public/pnip/), saída da auditoria por medição de tela-b/metodo-auditoria.md (govbr-eval 5838702) com o adendo tela-b/metodo-auditoria-adendo-vistorias.md (9406aed), executada por assistente LLM sem o oráculo. É incompleta por natureza: recall nesta tela é \"contra a referência auditada\", e alegações corretas fora dela são descobertas (D-48) que não mudam o denominador. Escrita ANTES de qualquer execução de modelo sobre a tela. Não congelada: faltam as decisões da autora sobre a lista escalada (tela-b/vistorias/auditoria.md § 8), a re-medida do segundo agente e a ratificação no log. 24 specs, 96 unidades, 4 estados em 3 segmentos.",
+    "page": "Vistorias PROPESC do PNIP — tela B da fatia 8 (D-57), aplicação real em modo mock",
+    "url": "/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+    "waitFor": "main tbody tr",
+    "suite": "vistorias",
+    "ds": "gov.br Design System 3.7.0 como norma; a página usa @govbr-ds/core 3.4.1 + @govbr-ds/webcomponents 1.16.0 (tratamento de versão: método § 1)",
+    "unit_of_evaluation": "(elemento × defeito), no estado aplicável — a mesma unidade da tela de fluxo e da tela A.",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "setup": [
+      {
+        "action": "navigate",
+        "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046",
+        "waitFor": "pnip-propesc-detalhes-vistoria"
+      },
+      {
+        "action": "click",
+        "selector": "#avatar-dropdown-trigger"
+      },
+      {
+        "action": "wait",
+        "selector": "pnip-header .br-list[role=menu]"
+      },
+      {
+        "action": "click",
+        "selector": "#avatar-dropdown-trigger"
+      },
+      {
+        "action": "navigate",
+        "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038",
+        "waitFor": "br-button[label=\"Trocar embarcação da vistoria\"]"
+      },
+      {
+        "action": "click",
+        "selector": "br-button[label=\"Trocar embarcação da vistoria\"] button"
+      },
+      {
+        "action": "wait",
+        "selector": ".br-modal"
+      },
+      {
+        "action": "wait",
+        "selector": ".lista-embarcacoes .item-embarcacao:nth-child(2)"
+      }
+    ],
+    "setup_rationale": "Escolha gulosa do adendo § B, feita por cobertura de tipos ANTES de procurar defeito (tela-b/vistorias/selecionar-estados.mjs; traço em auditoria.md § 3). Segmento 0: lista (inicial). Segmento 1: navigate por path ao detalhe da 1ª linha da aba padrão que oferece \"Avançar\" (não comparecimento, p.2 l.7) e abertura do menu do avatar (componentes list, item, textarea novos); o segundo clique no avatar é trânsito depois da última parada (fecha o menu, que persiste entre rotas). Segmento 2: navigate por path ao detalhe da 1ª linha que oferece \"Trocar embarcação da vistoria\" (preenchida, p.2 l.8) e abertura do br-modal (modal, scrim). Aditivo dentro de cada segmento; nenhuma escrita no mock; nenhuma recarga. Path em vez de clique: as duas linhas estão na página 2 (desvio registrado em auditoria.md § 11).",
+    "states": [
+      {
+        "id": "inicial",
+        "afterStep": 0,
+        "path": "/pnip/portal-mpa/vistorias",
+        "note": "lista, aba padrão Tramitando, página 1 — primeiro paint depois da hidratação"
+      },
+      {
+        "id": "detalhe-menu",
+        "afterStep": 3,
+        "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003046",
+        "note": "detalhe da vistoria de não comparecimento (1ª linha da aba padrão que oferece \"Avançar\") com o menu do avatar aberto"
+      },
+      {
+        "id": "detalhe",
+        "afterStep": 5,
+        "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038",
+        "note": "detalhe da vistoria preenchida (1ª linha da aba padrão que oferece \"Trocar embarcação da vistoria\"), rota nua"
+      },
+      {
+        "id": "modal",
+        "afterStep": 8,
+        "path": "/pnip/portal-mpa/vistorias/agendar-vistoria/00000000-0000-4000-8a01-000000003038",
+        "note": "br-modal \"Trocar embarcação\" aberto sobre o detalhe — última parada do segmento"
+      }
+    ],
+    "conformes": {
+      "note": "Controles medidos conformes (método § 5), documentais como os chamarizes da tela A: nenhum script do instrumento os consome, não entram em denominador, e alegação sobre eles é adjudicada como qualquer outra fora da referência (D-48). Só (elemento × norma) sobre normas que também têm unidade `viola` nesta tela ou sobre componentes do inventário. Re-medidos em tela-b/vistorias/conferir-auditoria.mjs.",
+      "itens": [
+        {
+          "id": "C-01",
+          "state": "inicial",
+          "selector": "govbr-custom-pagination button.br-button.circle",
+          "count": 2,
+          "rules": [
+            "govbr-3.7.0-component-button-4d7b5f978df1"
+          ],
+          "medida": "\"Página anterior\"/\"Página seguinte\": variante circular (br-button circle), nome acessível por aria-label (a norma tem unidades B-08…B-10)."
+        },
+        {
+          "id": "C-02",
+          "state": "inicial",
+          "selector": "pnip-filter-panel button.br-button",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-component-button-4d7b5f978df1"
+          ],
+          "medida": "\"Limpar Filtro\": texto visível no próprio botão."
+        },
+        {
+          "id": "C-03",
+          "state": "inicial",
+          "selector": "br-select-pnip input#total, br-select-pnip input#page",
+          "count": 2,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+            "emag:6.2",
+            "govbr-3.7.0-accessibility-global-b5fad7ce076d"
+          ],
+          "medida": "\"Exibir\" e \"Página\": <label for> associado (input.labels = 1)."
+        },
+        {
+          "id": "C-04",
+          "state": "detalhe",
+          "selector": "pnip-propesc-detalhes-vistoria br-input >>> input",
+          "count": 19,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+            "emag:6.2",
+            "govbr-3.7.0-accessibility-global-b5fad7ce076d"
+          ],
+          "medida": "os 19 campos do detalhe têm <label> associado dentro do br-input."
+        },
+        {
+          "id": "C-05",
+          "state": "inicial",
+          "selector": "pnip-propesc-vistorias tbody td:nth-child(3)",
+          "count": 10,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+            "emag:4.1"
+          ],
+          "medida": "nome da embarcação: rgb(51,51,51) sobre fundo opaco branco, ≥ 4,5:1 (a norma tem unidades B-12…B-14, B-23)."
+        },
+        {
+          "id": "C-06",
+          "state": "inicial",
+          "selector": "pnip-propesc-vistorias tbody br-button[icon=trash] >>> button",
+          "count": 10,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-7e6420514860",
+            "emag:1.1"
+          ],
+          "medida": "botão de excluir: nome acessível \"Excluir vistoria\" (title do hospedeiro), ao contrário do olho (B-07)."
+        },
+        {
+          "id": "C-07",
+          "state": "inicial",
+          "selector": ".br-tab .tab-item button",
+          "count": 3,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+            "emag:2.1",
+            "govbr-3.7.0-accessibility-tab-f1807d71dc5f"
+          ],
+          "medida": "abas: <button> no Tab, tabIndex 0; Enter ≡ clique (3/3, teste de estados)."
+        },
+        {
+          "id": "C-08",
+          "state": "modal",
+          "selector": "pnip-propesc-trocar-embarcacao input",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+            "emag:6.2"
+          ],
+          "medida": "campo \"Embarcação\" do modal com <label> associado."
+        },
+        {
+          "id": "C-09",
+          "state": "inicial",
+          "selector": "govbr-custom-pagination a.page",
+          "count": 4,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+            "emag:2.1"
+          ],
+          "medida": "links de página: no Tab; Enter ≡ clique (3/3)."
+        },
+        {
+          "id": "C-10",
+          "state": "inicial",
+          "selector": "pnip-propesc-vistorias br-breadcrumb >>> a",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-accessibility-breadcrumb-992f162ca821"
+          ],
+          "medida": "link \"Home\" do breadcrumb alcançado por Tab."
+        },
+        {
+          "id": "C-11",
+          "state": "inicial",
+          "selector": "pnip-propesc-vistorias br-divider",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-accessibility-divider-30bbcbf3a17c"
+          ],
+          "medida": "divisor: nada focável, span interno ignorado pela árvore de acessibilidade."
+        },
+        {
+          "id": "C-12",
+          "state": "sempre",
+          "selector": "pnip-header .br-avatar .content",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-component-avatar-81c7524692f0"
+          ],
+          "medida": "superfície do avatar circular: border-radius 50%, 40×40."
+        },
+        {
+          "id": "C-13",
+          "state": "modal",
+          "selector": "pnip-propesc-trocar-embarcacao .br-scrim-util",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-component-scrim-d5ba51dda2b0"
+          ],
+          "medida": "Escalada E-18, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). O scrim cobre a página inteira atrás do br-modal \"Trocar embarcação\": o bloqueio tem justificativa (diálogo modal aberto pela usuária)."
+        }
+      ]
+    },
+    "fundo": "Condições que o autor da tela não escreveu (método § 5, adendo § C), que não são unidades — alegação correta sobre elas entra como descoberta: (1) código do DS 3.4.1/1.16.0: alt=\"logo\" fixo no logo do <br-header>, item atual do <br-breadcrumb> sem aria-current, texto visualmente oculto \"Home\" do breadcrumb, botões de 32×32/40×40 dos web components (Menu, Home, ações br-button de densidade padrão), grid de 24 px do core; (2) interno de bibliotecas de terceiros (SweetAlert2, Summernote) — nenhum visível nas paradas escolhidas; (3) isolamento/mock: nenhuma perda medida (fontes e ícones servidos localmente, 0 pedidos externos, 0 escritas); os links do breadcrumb apontam para /portal-mpa… sem o prefixo /pnip/ e recarregam o documento — artefato da hospedagem sob /pnip/ (em produção o app está na raiz).",
+    "fora_de_escopo": "Vistas excluídas pela regra de escolha (adendo § B), com o motivo, em tela-b/vistorias/auditoria.md § 3 e tela-b/vistorias/selecao.json: abas, paginação, \"Exibir N\" (item 2); menu do avatar, painéis de filtro e listas \"Exibir\"/\"Página\" na lista (regra 5: o segmento da lista tem a sua parada); diálogos SweetAlert2 de exportar/atribuir/excluir/notificar e da validação de \"Salvar\" (regra 5: diálogo sem componente do DS novo); \"Avançar\" do detalhe preenchido (segundo diálogo do segmento); \"Avançar\" do não comparecimento e \"Salvar\" da edição (escrita no mock); detalhe da 1ª linha, rota de edição de dados (regra 3: nenhum tipo novo); breadcrumb Home/Vistorias (recarga), Voltar (fora da árvore vistorias/). Defeitos do README-MOCK § 8.6 fora das paradas ou sem norma aplicável: tabela que passa de 1280 px (rolagem horizontal, 1364 px — nenhuma regra required a 1280×900), \"Selec\" truncado (não aparece: o \"Exibir\" mostra \"10\"), término anterior ao início, Exibir 25/50 em página > 1, filtro pelo 1º caractere (fora das paradas); Hora da vistoria vazia (visível nos detalhes; valor de dado, sem norma aplicável).",
+    "escaladas": {
+      "fonte": "tela-b/vistorias/auditoria.md § 8 (E-01…E-20); proposta em tela-b/vistorias/recomendacoes-escaladas.md; decisão da autora em 2026-10-01 (D-61)",
+      "unidade": {
+        "E-01": [
+          "B-25"
+        ],
+        "E-04": [
+          "B-26"
+        ],
+        "E-06": [
+          "B-27"
+        ],
+        "E-07": [
+          "B-28",
+          "B-29"
+        ]
+      },
+      "conforme": {
+        "E-18": "C-13"
+      },
+      "manter": {
+        "E-19": "forma `todos` mantida (D-33)"
+      },
+      "nao_aplicavel": {
+        "E-16": "regra de produto; uma tela isolada não responde se há ajuda em outra"
+      },
+      "fora": {
+        "E-02": "nenhuma regra required exige rodapé textualmente; exposto",
+        "E-03": "aria-selected/aria-current dependem de papéis ARIA declarados (interpretação) ⚠",
+        "E-05": "a lista aberta do Exibir/Página não é estado declarado",
+        "E-08": "valor difere entre 3.4.1 e 3.7.0 (método § 1.4)",
+        "E-09": "ação interna padrão do Input é interpretação de anatomia; o defeito medível é a B-09",
+        "E-10": "mesmos elementos e família de B-11/B-19",
+        "E-11": "estilo inline só viola a 1.1 por leitura ampla",
+        "E-12": "linguagem (§ 6)",
+        "E-13": "números na paginação são o padrão do componente",
+        "E-14": "formulário só de exibição; instrução das datas coberta pela B-05",
+        "E-15": "a anatomia não fala de botão sem efeito; exposto ⚠",
+        "E-17": "se é o Collapse da regra é interpretação",
+        "E-20": "medida ao aplicar: user-times e user-plus chamam a mesma ação (Atribuir Vistoriador, POST /atribuir-vistoriador); o nome corresponde à ação, só o ícone diverge — juízo de iconografia, fora"
+      }
+    },
+    "nunca_agregar_com": "ground-truth-fluxo.json, ground-truth-solicitacao.json (tela A), ground-truth.json (suíte TC-*), organic-ground-truth.json, ground-truth-privacidade.json e ground-truth-pnip-login.json — instrumentos ou páginas diferentes (D-13, D-49). Os números desta tela nunca se somam, se promediam nem formam série com os de outra.",
+    "baselines": "MEDIDAS sob o carimbo de cada bateria; nenhuma expectativa de detecção por ferramenta é declarada aqui (D-06). Hoje o setup navega e a linha de base de bateria recusa (D-58).",
+    "auditoria": "tela-b/vistorias/auditoria.md · decisoes.json · inventario.json · estados.json · selecao.json · conferência sem modelo: node tela-b/vistorias/conferir-auditoria.mjs"
+  },
+  "violations": [
+    {
+      "id": "B-01",
+      "anchor": "pnip-root",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-7d2b85f81c52",
+        "emag:1.5",
+        "wcag:2.4.1"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "Defeito de ausência, ancorado no contêiner raiz da aplicação (método § 5; auditoria.md § 5). Em nenhuma das quatro paradas (lista, dois detalhes, modal) há salto para o conteúdo: nenhuma âncora \"#…\" nem .br-skiplink, e o primeiro ponto de Tab é o botão Menu do cabeçalho. O <main> existe e nada leva a ele. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-02",
+      "anchor": "pnip-propesc-vistorias h2",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-3ac0aaa53900",
+        "emag:1.3",
+        "wcag:1.3.1"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "description": "Lista de vistorias: o único título da página é um <h2> \"Vistorias\"; não há nenhum <h1> (light DOM e shadow roots). A hierarquia começa no nível 2. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-03",
+      "anchor": "pnip-propesc-vistorias table",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+        "emag:3.9",
+        "wcag:1.3.1"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "description": "A tabela de vistorias (9 colunas, 10 linhas) não tem <caption>, aria-label nem aria-labelledby: o nome acessível da tabela é vazio. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-04",
+      "anchor": "pnip-search-table-utils br-input >>> input",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+        "emag:6.2",
+        "wcag:1.3.1",
+        "govbr-3.7.0-accessibility-global-b5fad7ce076d"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "description": "Campo de busca da lista (input#search dentro do br-input) sem <label> associado, aria-label nem aria-labelledby; só o placeholder \"Pesquise aqui ...\". Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-05",
+      "anchor": "pnip-propesc-vistorias br-input[type=date] >>> input",
+      "scope": "todos",
+      "expectedCount": 2,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+        "emag:6.2",
+        "wcag:1.3.1",
+        "govbr-3.7.0-accessibility-global-b5fad7ce076d"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "description": "Os dois campos de data do filtro de período (br-input type=date) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-06",
+      "anchor": "pnip-propesc-vistorias table input[type=checkbox]",
+      "scope": "todos",
+      "expectedCount": 11,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+        "emag:6.2",
+        "wcag:1.3.1",
+        "govbr-3.7.0-accessibility-global-b5fad7ce076d"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "description": "As 11 caixas de seleção da tabela (a do cabeçalho, que seleciona todas, e uma por linha) não têm rótulo: nenhum <label>, aria-label nem aria-labelledby; nome acessível vazio na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-07",
+      "anchor": "pnip-propesc-vistorias tbody br-button[icon=eye] >>> button",
+      "scope": "todos",
+      "expectedCount": 10,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-7e6420514860",
+        "emag:1.1",
+        "wcag:4.1.2"
+      ],
+      "categories": [
+        "acessibilidade"
+      ],
+      "description": "O botão de abrir a vistoria (ícone de olho) de cada linha não tem nome acessível: sem texto, aria-label vazio, sem title (o hospedeiro br-button também não tem title, ao contrário das outras três ações da linha). Papel button com nome \"\" na árvore do Chromium. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-08",
+      "anchor": "pnip-propesc-vistorias tbody br-button >>> button",
+      "scope": "todos",
+      "expectedCount": 40,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-component-button-4d7b5f978df1"
+      ],
+      "categories": [
+        "estrutura"
+      ],
+      "description": "Os 40 botões de ação das linhas (4 por linha: atribuir/remover vistoriador, abrir, excluir, notificar) são br-button só com ícone, variante secondary sem circle (classes \"br-button secondary middle\"): nenhum rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-09",
+      "anchor": "pnip-search-table-utils button.br-button",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-component-button-4d7b5f978df1"
+      ],
+      "categories": [
+        "estrutura"
+      ],
+      "description": "Botão \"Buscar\" da busca: button.br-button só com ícone (lupa), 32×32, sem a classe circle — sem rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-10",
+      "anchor": "br-select-pnip button.br-button",
+      "scope": "todos",
+      "expectedCount": 2,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-component-button-4d7b5f978df1"
+      ],
+      "categories": [
+        "estrutura"
+      ],
+      "description": "Os dois botões \"Exibir lista\" dos seletores \"Exibir\" e \"Página\" da paginação (componente br-select-pnip do app): button.br-button só com ícone, sem a classe circle — sem rótulo visível fora da variante circular. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-11",
+      "anchor": "pnip-filter-panel span.br-tag.interaction",
+      "scope": "todos",
+      "expectedCount": 4,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+        "emag:2.1",
+        "wcag:2.1.1",
+        "govbr-3.7.0-accessibility-global-f639993e9416",
+        "emag:2.2",
+        "govbr-3.7.0-accessibility-global-41850b4791b8"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "acceptance": {
+        "kind": "atributos-ausentes",
+        "attributes": [
+          "tabindex",
+          "role"
+        ]
+      },
+      "description": "As 4 etiquetas de filtro (\"Cidade\", \"Porto\", \"Vistoriador\", \"Status\"; span.br-tag.interaction) abrem o painel de opções ao clique (3/3 cargas), mas são <span> sem tabindex nem papel: não entram na ordem de Tab e Enter com foco não produz efeito (0/3). Só operáveis com mouse. O predicado mede a ausência de tabindex e role; o efeito do clique e a ausência de efeito do teclado são medidos em conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-12",
+      "anchor": "pnip-propesc-vistorias tbody pnip-status-solicitacao-utils .text-secondary-01",
+      "scope": "todos",
+      "expectedCount": 10,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "categories": [
+        "acessibilidade",
+        "token"
+      ],
+      "description": "Etiqueta de status \"Vistoria agendada\" de cada linha: texto branco (rgb 255,255,255; classe text-secondary-01) sobre fundo #4f97d1 (bg-blue-40), 14 px peso 500 — contraste 3,14:1, abaixo de 4,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-13",
+      "anchor": "pnip-propesc-vistorias span.br-tag.primary-pastel-01",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "categories": [
+        "acessibilidade",
+        "token"
+      ],
+      "description": "Etiqueta \"Nenhum filtro de data aplicado\" (br-tag primary-pastel-01 small): texto branco sobre #c5d4eb, 14 px peso 500 — contraste 1,5:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-14",
+      "anchor": "pnip-header .br-avatar .content",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "categories": [
+        "acessibilidade",
+        "token"
+      ],
+      "description": "Inicial do avatar no cabeçalho do app (span.content bg-orange-vivid-30 text-pure-0): \"U\" branco sobre #ff8c00, 24,2 px peso 700 — contraste 2,33:1 (abaixo também dos 3:1 de texto grande). Presente em todas as paradas. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-15",
+      "anchor": "pnip-header hr.solid",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "detalhe-menu",
+      "rules": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "categories": [
+        "token"
+      ],
+      "acceptance": {
+        "kind": "cor-de-borda-pintada",
+        "forbidden": [
+          "rgb(187, 187, 187)"
+        ],
+        "note": "#bbb declarado no CSS do componente do cabeçalho do app (main.*.js: hr.solid{border-top:2px solid #bbb}); ausente de tokens/colors.json 3.7.0 (auditoria.md § 5)"
+      },
+      "description": "Separador do menu do avatar (<hr class=\"solid\">): borda superior de 2 px na cor #bbb (rgb 187,187,187), que não é cor predefinida do Design System; declarada no CSS do componente do cabeçalho do app."
+    },
+    {
+      "id": "B-16",
+      "anchor": "pnip-header .br-item img",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "detalhe-menu",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-3a3e47354c53",
+        "emag:3.6",
+        "wcag:1.1.1"
+      ],
+      "categories": [
+        "acessibilidade"
+      ],
+      "acceptance": {
+        "kind": "atributos-ausentes",
+        "attributes": [
+          "alt"
+        ]
+      },
+      "description": "Ícone do botão \"Sair\" do menu do avatar (<img src=\"../../../assets/images/exit-icon.png\">) sem atributo alt — nem texto alternativo nem alt vazio de imagem decorativa."
+    },
+    {
+      "id": "B-17",
+      "anchor": "pnip-header #avatar-menu",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "detalhe-menu",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-e038367bd7d6"
+      ],
+      "categories": [
+        "acessibilidade"
+      ],
+      "description": "Menu do avatar (div#avatar-menu.br-list) declara role=\"menu\" e não tem nenhum descendente com papel menuitem: o \"Sair\" é um <button> sem papel e \"Trocar unidade\" um <span>. O papel declarado não corresponde ao conteúdo. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-18",
+      "anchor": "pnip-header button.br-item",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "detalhe-menu",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-7e6420514860",
+        "emag:1.1",
+        "wcag:4.1.1"
+      ],
+      "categories": [
+        "estrutura"
+      ],
+      "description": "Botão \"Sair\" do menu do avatar fora do padrão HTML: tem atributo href (inexistente em <button>) e contém um <p>, conteúdo de fluxo que o modelo de conteúdo de <button> não admite. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-19",
+      "anchor": "pnip-header #avatar-menu span.text-blue-vivid-60",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "detalhe-menu",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+        "emag:2.1",
+        "wcag:2.1.1",
+        "govbr-3.7.0-accessibility-global-f639993e9416",
+        "emag:2.2",
+        "govbr-3.7.0-accessibility-global-41850b4791b8",
+        "govbr-3.7.0-accessibility-list-03813ffeeb42"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "acceptance": {
+        "kind": "atributos-ausentes",
+        "attributes": [
+          "tabindex",
+          "role"
+        ]
+      },
+      "description": "\"Trocar unidade\" no menu do avatar é um <span> com cursor:pointer que navega ao clique (para /pnip/portal-mpa), sem tabindex nem papel: não é alcançado por Tab nem Shift+Tab e Enter não faz nada. Elemento interativo da lista só operável com mouse."
+    },
+    {
+      "id": "B-20",
+      "anchor": "pnip-propesc-agendar-vistoria .br-textarea textarea",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "detalhe-menu",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+        "emag:6.2",
+        "wcag:1.3.1",
+        "govbr-3.7.0-accessibility-global-b5fad7ce076d"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "description": "Detalhe da vistoria de não comparecimento: a <textarea> do motivo tem um <label> \"Descrever o motivo do não comparecimento\" como irmão, mas sem for (e a textarea sem id): o rótulo não está associado; nome acessível vazio. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-21",
+      "anchor": "pnip-propesc-agendar-vistoria h3",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "detalhe",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-3ac0aaa53900",
+        "emag:1.3",
+        "wcag:1.3.1"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "description": "Detalhe da vistoria: a hierarquia começa num <h3> (\"Programa Nacional de Regularização de Embarcação de Pesca\"), seguido de <h4>; não há <h1> nem <h2>. Unidade única para o template do detalhe, ancorada na parada `detalhe` (o mesmo template da parada detalhe-menu não é contado de novo; auditoria.md § 5). Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-22",
+      "anchor": "pnip-propesc-agendar-vistoria table",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "detalhe",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+        "emag:3.9",
+        "wcag:1.3.1"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "description": "Tabela \"Dados da Notificação\" do detalhe (Status, Data, Hora) sem <caption>, aria-label nem aria-labelledby: nome acessível vazio. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-23",
+      "anchor": "pnip-propesc-agendar-vistoria .bg-secondary-06 > .text-secondary-01",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "detalhe",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "categories": [
+        "acessibilidade",
+        "token"
+      ],
+      "description": "Indicador \"0%\" do detalhe: texto branco (text-secondary-01) sobre #888 (bg-secondary-06), 14 px peso 400 — contraste 3,54:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-24",
+      "anchor": "pnip-propesc-trocar-embarcacao .br-modal",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "modal",
+      "conditional": true,
+      "rules": [
+        "govbr-3.7.0-accessibility-global-e038367bd7d6"
+      ],
+      "categories": [
+        "acessibilidade"
+      ],
+      "acceptance": {
+        "kind": "atributos-ausentes",
+        "attributes": [
+          "role",
+          "aria-modal",
+          "aria-label",
+          "aria-labelledby"
+        ]
+      },
+      "description": "O br-modal \"Trocar embarcação\" (div.br-modal medium) não declara role dialog/alertdialog, aria-modal nem nome: a árvore de acessibilidade do Chromium não expõe nenhum diálogo quando ele está aberto. Só existe depois do clique em \"Trocar embarcação da vistoria\"."
+    },
+    {
+      "id": "B-25",
+      "anchor": "head > title",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-5d5a5f21d94b",
+        "emag:3.3",
+        "wcag:2.4.2"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "Escalada E-01, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). O <title> é \"PNIP\" nas quatro paradas (lista, dois detalhes, modal): nomeia só o sistema, não muda entre rotas e não representa o conteúdo principal (\"Vistorias\", o detalhe de uma vistoria). Âncora não renderizada por natureza (elemento do <head>). Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-26",
+      "anchor": "pnip-propesc-vistorias thead th:nth-child(9)",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-1ccbc61dddbc",
+        "emag:3.10",
+        "wcag:1.3.1"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "description": "Escalada E-04, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). O <th scope=col> da coluna de ações (9ª) não tem texto, aria-label nem filhos: as células de ação ficam associadas a um cabeçalho sem nome. O <th> da coluna de caixas (2ª) fica fora: contém um controle, e o defeito dele já é a B-06. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-27",
+      "anchor": "pnip-propesc-trocar-embarcacao .br-modal",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "modal",
+      "conditional": true,
+      "rules": [
+        "govbr-3.7.0-accessibility-modal-64b84991229c"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "Escalada E-06, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). Com o br-modal \"Trocar embarcação\" aberto, Tab sai do modal depois do último controle (Trocar) e percorre os botões do detalhe, o cabeçalho e o breadcrumb por trás do scrim antes de voltar: o foco não fica contido na Modal aberta. Só existe depois do clique em \"Trocar embarcação da vistoria\". Sem predicado na referência; medido por Tab real em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-28",
+      "anchor": "pnip-search-table-utils button.br-button",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-foundation-global-1c0146e93d2e"
+      ],
+      "categories": [
+        "estrutura"
+      ],
+      "description": "Escalada E-07, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). O botão de ícone \"Buscar\", montado pelo app fora do br-input, mede 32×32 px: abaixo da área de toque de 48×48. Tamanhos padrão do DS (br-button de 40 px, Menu e Home dos web components, paginação) ficam como fundo. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    },
+    {
+      "id": "B-29",
+      "anchor": "br-select-pnip button.br-button",
+      "scope": "todos",
+      "expectedCount": 2,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-foundation-global-1c0146e93d2e"
+      ],
+      "categories": [
+        "estrutura"
+      ],
+      "description": "Escalada E-07, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). Os dois botões de ícone \"Exibir lista\" do br-select-pnip (\"Exibir\" e \"Página\") medem 32×32 px: abaixo da área de toque de 48×48. Mesmo tratamento de fundo da B-28. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+    }
+  ]
+}

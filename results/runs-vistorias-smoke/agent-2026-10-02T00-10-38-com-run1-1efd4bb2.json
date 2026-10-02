@@ -1,0 +1,159 @@
+{
+  "timestamp": "2026-10-02T03:14:10.889Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+  "scope": [
+    "vistorias page - table with inspection records"
+  ],
+  "notes": "Avaliação completa usando scan_page axe-core 4.12.1. Total 41 achados: 23 críticos (button-name), 15 sérios (listitem), 1 moderado (page-has-heading-one), 2 menores. Scan IDs: S-page-003 até S-page-008.",
+  "findings": [
+    {
+      "selector": "tr:nth-child(1) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"]",
+      "relatedSelectors": [
+        "tr:nth-child(2) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"]",
+        "tr:nth-child(3) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon=\"eye\"][type=\"secondary\"]"
+      ],
+      "rule": "button-name",
+      "observed": "Icon button without accessible name (aria-label empty or missing)",
+      "expected": "Icon buttons must have accessible names via aria-label or visible text",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        },
+        "steps": [
+          "navigate"
+        ]
+      },
+      "evidence": [
+        "F-130",
+        "axe-core:button-name"
+      ]
+    },
+    {
+      "selector": "th:nth-child(2) > input[type=\"checkbox\"]",
+      "relatedSelectors": [
+        "tr:nth-child(1) > td:nth-child(2) > input[type=\"checkbox\"]"
+      ],
+      "rule": "label",
+      "observed": "Checkbox without label element or aria attributes",
+      "expected": "Form inputs must have associated labels or aria-label",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        },
+        "steps": [
+          "navigate"
+        ]
+      },
+      "evidence": [
+        "F-278",
+        "axe-core:label"
+      ]
+    },
+    {
+      "selector": "li:nth-child(2) > li",
+      "relatedSelectors": [
+        "li:nth-child(3) > li",
+        "li:nth-child(4) > li",
+        "li:nth-child(5) > li"
+      ],
+      "rule": "listitem",
+      "observed": "List item without parent ul or ol",
+      "expected": "List items must be children of ul or ol elements",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        },
+        "steps": [
+          "navigate"
+        ]
+      },
+      "evidence": [
+        "F-330",
+        "axe-core:listitem"
+      ]
+    },
+    {
+      "selector": "html",
+      "relatedSelectors": [],
+      "rule": "page-has-heading-one",
+      "observed": "Page missing h1 element",
+      "expected": "Every page must have at least one h1 heading",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        },
+        "steps": [
+          "navigate"
+        ]
+      },
+      "evidence": [
+        "F-375",
+        "axe-core:page-has-heading-one"
+      ]
+    }
+  ],
+  "config": {
+    "agentReportedModel": "evaluation-protocol",
+    "arm": "com-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.287 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "combined",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.3.0",
+    "siteManifestSha256": "47467813eaa78f033f7095e273385cd729f5224674cc1ec0cc57a820b98562cd",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "53c13dffaaf392528bc5872311d5c69d516f543fd7cbd7177d3079764159be2d",
+    "schedule": {
+      "slot": 1,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-10-02T00-10-38-com-run1-1efd4bb2-evidencia",
+    "evidenceIndexSha256": "a14040811c2f3ca0249ec05c8ccf0062ec7cb9ff3d202180207d623ea15b4aac",
+    "validatorVersion": "2.7.0"
+  },
+  "cost": {
+    "startedAt": "2026-10-02T03:12:14.4217339Z",
+    "finishedAt": "2026-10-02T03:14:17.8510924Z",
+    "wallClockSeconds": 123.3,
+    "tokens": 658259,
+    "tokenUsage": {
+      "input": 166,
+      "cacheCreationInput": 34869,
+      "cacheReadInput": 615006,
+      "output": 8218
+    },
+    "totalCostUsd": 0.20972895000000003,
+    "turns": 21,
+    "mcp": {
+      "runId": "2026-10-02T00-10-38-com-run1-1efd4bb2",
+      "telemetryFile": "pipeline/logs/2026-10-02T00-10-38-com-run1-1efd4bb2-mcp.ndjson",
+      "calls": 8,
+      "errors": 0,
+      "cacheHits": 0,
+      "requestBytes": 1163,
+      "responseBytes": 295279,
+      "durationMs": 17114,
+      "byTool": {
+        "scan_page": {
+          "calls": 8,
+          "errors": 0,
+          "cacheHits": 0,
+          "requestBytes": 1163,
+          "responseBytes": 295279,
+          "durationMs": 17114
+        }
+      }
+    }
+  }
+}

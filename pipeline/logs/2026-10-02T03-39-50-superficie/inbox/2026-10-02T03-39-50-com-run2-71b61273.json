@@ -1,0 +1,485 @@
+{
+  "timestamp": "2026-10-02T07:43:59.341Z",
+  "model": "claude-opus-5",
+  "appUrl": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+  "scope": [
+    "Tela inteira de Vistorias (Portal MPA, mock-perfil=mpa): cabeçalho e avatar, breadcrumb, título e ação Exportar, abas Agendar/Tramitando/Concluídos, painel de filtros por tag, filtro de período, busca, tabela de vistorias com seleção e ações de linha, paginação, empty states de busca e de período, e reflow a 320px"
+  ],
+  "notes": "Interações realizadas (1280x900, salvo onde indicado): snapshot da árvore de acessibilidade no carregamento; tabulação real pelo teclado a partir do topo e de #HISTORICO para medir a ordem de foco; enumeração programática dos focalizáveis em DOM claro e shadow roots (73 elementos); abertura do filtro 'Cidade' por clique e inspeção do dropdown; seleção da opção 'Barra Nova' (34 -> 6 linhas, 'Limpar Filtro' habilitado, chip de filtro aplicado) e inspeção do botão de remoção; troca para as abas 'Agendar' e de volta; busca por 'zzzznaoexiste' submetida com Enter até o empty state; preenchimento do filtro de período com intervalo invertido (01/05/2026 ate 01/01/2026); inspeção dos dois br-select da paginação; medição de reflow a 360x640 e 320x640. | Varreduras do oráculo: page (S-page-002), axe de documento (S-page-003), tokens cor+fonte (S-page-009, sem achados), tokens raio+espaçamento (S-page-010), structure por lotes de componentes (S-page-005, S-page-008), axe no painel de filtros aberto (S-page-011, sem achados) e com filtro aplicado (S-page-012), axe na tabela da aba Agendar (S-page-013). Verificações independentes: V-001 e V-002 confirmed; V-005 unverifiable por ausência de predicado para regras axe-core (o próprio scanner do oráculo as emitiu). | Candidatos rejeitados pelo portão do oráculo e por isso NÃO reportados: ds-structure-breadcrumb-tag (br-breadcrumb aplicado a <div>) e ds-token-radius (border-radius 20px em #avatar-menu > button) receberam verdict 'rejected' em V-003 e V-004 — 'não declara qual regra normativa implementa; verificação determinística sem norma nomeada não produz achado, produz observação de revisão (D-27)'. Pelo mesmo motivo foram descartados os três achados ds-token-spacing (margin -5px no botão 'Limpar Filtro', margin -38px no botão 'Buscar', padding 6px no link do breadcrumb) e as observações structure-unknown-classes em br-tag (border-solid-sm, border-gray-50), que o oráculo marca explicitamente como 'NÃO HÁ NORMA'. | Candidatos deixados como incertos: (a) os dois br-select da paginação ('Exibir' e 'Página') não expõem role=combobox nem aria-expanded, mas são operáveis por teclado (a .br-list tem tabindex=0 e as opções são input type=radio com label for), e nem o DS nem o e-MAG consultados exigem esses papéis — não consegui justificar atribuição normativa e não reporto; (b) se o único <p> do empty state satisfaz o 'Corpo da Mensagem' obrigatório do DS é julgamento subjetivo, por isso o achado afirma apenas a ausência do Título obrigatório. | Observações sem norma citável (não são achados): o cabeçalho usa o componente Header do DS e a região banner está presente; a ordem de foco encontrada é coerente com a ordem visual; os indicadores de foco do DS funcionam (classes focus-visible / data-focus-visible-added aplicadas); o contador de itens da paginação tem aria-live=polite e anuncia a mudança de resultados enquanto a paginação existe; o estado da aba ativa é distinguido por cor E borda de 4px, portanto não é informação transmitida apenas por cor; os botões de ação 'Atribuir vistoriador', 'Excluir vistoria' e 'Notificar solicitante' recebem nome via title no host, e o de 'Agendar' na aba Agendar tem texto visível — verifiquei e não são achados. | Limitações: a tela não tem oráculo de gabarito, então nenhum achado foi comparado a resultado esperado. Os localizadores do oráculo usam travessia de shadow DOM (>>>), que document.querySelectorAll não suporta; nos casos afetados (botões de ação br-button e campos br-input) o seletor aponta o host, que é o elemento endereçável e o ponto de correção. O fingerprint de estado da tela muda entre varreduras mesmo sem interação, porque o rótulo 'Última atualização' carrega um relógio — por isso varreduras do mesmo estado aparecem como cacheMiss. Três varreduras structure (componentes button/input/select/checkbox/tag e lotes maiores) excederam o limite de resposta do runner por causa do volume de observations structure-unknown-classes e a leitura do arquivo salvo foi negada por permissão; cobri esses componentes por lotes menores (S-page-005, S-page-008) e por inspeção direta de DOM e estilos computados, mas a varredura structure não foi executada de forma agregada para todos os 36 componentes. Não foram abertos o menu do avatar nem o menu lateral do cabeçalho, nem exercitadas as ações de linha que disparam navegação ou modal (Atribuir vistoriador, Excluir, Notificar, Exportar Vistorias): ficaram fora do escopo percorrido.",
+  "findings": [
+    {
+      "selector": "html",
+      "rule": "ds-page-footer",
+      "observed": "Nenhum elemento .br-footer nem web component <br-footer> no documento (DOM claro e shadow roots abertos); document.querySelectorAll('.br-footer, br-footer').length === 0.",
+      "expected": "O Template Base exige a Área de Rodapé ocupada pelo componente Footer (.br-footer do core ou <br-footer>).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        "S-page-002",
+        "F-089",
+        "V-001",
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": "html",
+      "relatedSelectors": [
+        "pnip-propesc-vistorias > br-breadcrumb"
+      ],
+      "rule": "ds-page-skip-link",
+      "observed": "O primeiro link do documento é o 'Home' do breadcrumb, href=\"/portal-mpa\" — navegação entre páginas, não âncora interna. Não existe nenhum link de salto para o conteúdo.",
+      "expected": "O primeiro link da página deve ser o salto para o conteúdo: âncora interna (href=\"#id\") cujo alvo exista no documento (e-MAG 1.5).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        "S-page-002",
+        "F-090",
+        "V-002",
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": "html",
+      "rule": "page-has-heading-one",
+      "observed": "A página não tem nenhum <h1>; o único cabeçalho é <h2>Vistorias</h2> (document.querySelectorAll('h1').length === 0).",
+      "expected": "A página deve ter um cabeçalho de nível um identificando seu assunto; o DS orienta usar H1 para títulos de página.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        "S-page-003",
+        "F-131",
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": "tbody br-button[icon=\"eye\"]",
+      "rule": "button-name",
+      "observed": "Os 10 botões de visualizar da coluna de ações não têm nome acessível: o <button> gerado no shadow root tem aria-label=\"\" e nenhum texto, e o host <br-button icon=\"eye\"> não define title nem aria-label. Os irmãos (user-plus, trash, bell) recebem nome via title no host.",
+      "expected": "Todo botão deve ter texto discernível por tecnologia assistiva (texto, aria-label, aria-labelledby ou title).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        "S-page-003",
+        "F-091",
+        "F-092",
+        "F-093",
+        "F-094",
+        "F-095",
+        "F-096",
+        "F-097",
+        "F-098",
+        "F-099",
+        "F-100",
+        "V-005",
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": "pnip-filter-panel span.br-tag > button.br-button.inverted.circle",
+      "rule": "button-name",
+      "observed": "O botão de remover o filtro aplicado contém apenas <i class=\"fas fa-times\"></i>, sem texto, aria-label, aria-labelledby ou title — anunciado apenas como \"button\".",
+      "expected": "Todo botão deve ter texto discernível por tecnologia assistiva, p.ex. aria-label=\"Remover filtro Barra Nova\".",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "clicar no filtro 'Cidade'",
+          "clicar na opção 'Barra Nova'"
+        ]
+      },
+      "evidence": [
+        "S-page-012",
+        "F-258",
+        ".playwright-mcp/page-2026-10-02T07-34-09-397Z.yml"
+      ]
+    },
+    {
+      "selector": "span.br-tag.primary-pastel-01",
+      "rule": "color-contrast",
+      "observed": "Tag \"Nenhum filtro de data aplicado\": texto #ffffff sobre fundo #c5d4eb a 14px — razão de contraste 1.5:1.",
+      "expected": "Razão de contraste mínima de 4.5:1 para texto normal.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        "S-page-003",
+        "F-101",
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": "tbody pnip-status-solicitacao-utils .text-secondary-01",
+      "rule": "color-contrast",
+      "observed": "Badge de status \"Vistoria agendada\" nas 10 linhas: texto #ffffff sobre fundo #4f97d1 a 14px — razão de contraste 3.14:1.",
+      "expected": "Razão de contraste mínima de 4.5:1 para texto normal.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        "S-page-003",
+        "F-102",
+        "F-103",
+        "F-104",
+        "F-105",
+        "F-106",
+        "F-107",
+        "F-108",
+        "F-109",
+        "F-110",
+        "F-111",
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": "tbody pnip-status-solicitacao-utils .text-secondary-01",
+      "rule": "color-contrast",
+      "observed": "Na aba Agendar, o badge \"Vistoria pré agendada\" nas 10 linhas usa texto #ffffff sobre fundo #888888 a 14px — razão de contraste 3.54:1. É um mapeamento de cor distinto do da aba Tramitando.",
+      "expected": "Razão de contraste mínima de 4.5:1 para texto normal.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "clicar na aba 'Agendar'"
+        ]
+      },
+      "evidence": [
+        "S-page-013",
+        "F-259",
+        "F-260",
+        "F-261",
+        "F-262",
+        "F-263",
+        "F-264",
+        "F-265",
+        "F-266",
+        "F-267",
+        "F-268",
+        ".playwright-mcp/page-2026-10-02T07-41-51-661Z.yml"
+      ]
+    },
+    {
+      "selector": "br-input[type=\"date\"]",
+      "rule": "emag:6.2",
+      "observed": "Os dois campos de data do filtro de período não têm rótulo associado: o <input type=\"date\"> no shadow root não tem <label>, aria-label nem aria-labelledby. Os textos visíveis \"Data da vistoria:\" e \"até\" são <span class=\"text-bold\">, sem associação programática. Na árvore de acessibilidade aparecem como textbox sem nome.",
+      "expected": "Todo campo de formulário deve ter rótulo associado programaticamente (<label for>, aria-label ou aria-labelledby), p.ex. \"Data da vistoria de\" e \"Data da vistoria até\".",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        "S-page-003",
+        "F-114",
+        "F-115",
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": "thead th:nth-child(2) input[type=\"checkbox\"]",
+      "rule": "emag:6.2",
+      "observed": "A caixa de seleção de \"selecionar todos\" no cabeçalho da tabela não tem rótulo, aria-label nem aria-labelledby; aparece na árvore de acessibilidade como checkbox sem nome.",
+      "expected": "A caixa de seleção deve ter nome acessível indicando sua função, p.ex. aria-label=\"Selecionar todas as vistorias\".",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        "S-page-003",
+        "F-116",
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": "tbody td:nth-child(2) input[type=\"checkbox\"]",
+      "rule": "emag:6.2",
+      "observed": "As 10 caixas de seleção de linha não têm rótulo, aria-label nem aria-labelledby; aparecem na árvore de acessibilidade como checkbox sem nome, sem indicar qual vistoria seria selecionada.",
+      "expected": "Cada caixa de seleção de linha deve ter nome acessível identificando a linha, p.ex. aria-label=\"Selecionar vistoria Coral Mansa IV\".",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        "S-page-003",
+        "F-117",
+        "F-118",
+        "F-119",
+        "F-120",
+        "F-121",
+        "F-122",
+        "F-123",
+        "F-124",
+        "F-125",
+        "F-126",
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": "thead th:nth-child(2), thead th:nth-child(9)",
+      "rule": "empty-table-header",
+      "observed": "Dois cabeçalhos de coluna não têm texto disponível para leitores de tela: o da coluna de seleção (contém apenas o input checkbox) e o da coluna de ações (innerHTML vazio).",
+      "expected": "Cada <th> deve expor texto a tecnologias assistivas, ainda que visualmente oculto, p.ex. \"Seleção\" e \"Ações\".",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        "S-page-003",
+        "F-112",
+        "F-113",
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": "nav[aria-label=\"Paginação de resultados\"] li > li",
+      "rule": "listitem",
+      "observed": "Os quatro itens numéricos de página são <li> aninhados diretamente dentro de outro <li>, sem <ul>/<ol> intermediário, invalidando a estrutura da lista de paginação.",
+      "expected": "Todo <li> deve ter <ul> ou <ol> como elemento pai.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        "S-page-003",
+        "F-127",
+        "F-128",
+        "F-129",
+        "F-130",
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": "pnip-filter-panel .row > div > span.br-tag",
+      "rule": "emag:2.1",
+      "observed": "Os quatro acionadores de filtro (Cidade, Porto, Vistoriador, Status) são <span class=\"br-tag interaction\" style=\"cursor:pointer\"> sem tabindex, sem role e sem aria-expanded. Não entram na ordem de tabulação: com foco no botão 'Concluídos' (#HISTORICO), um Tab leva direto ao campo de busca (input#search). Abrem/fecham somente com clique de mouse; o estado aberto é indicado apenas pela troca visual do ícone fa-caret-down/fa-caret-up. O axe não acusa nada neste painel.",
+      "expected": "Todas as funções devem ser operáveis via teclado, com papel e estado expostos — p.ex. <button aria-expanded> em vez de <span>.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml",
+        ".playwright-mcp/page-2026-10-02T07-33-04-102Z.yml",
+        "S-page-011"
+      ]
+    },
+    {
+      "selector": "pnip-filter-panel .br-select .br-item .br-radio",
+      "rule": "emag:2.1",
+      "observed": "Com o filtro 'Cidade' aberto, as 6 opções são <div class=\"br-radio\"><label>Texto</label></div> sem nenhum <input type=\"radio\">: o seletor '...​.br-radio input' devolve 0 e o painel inteiro não contém nenhum elemento focalizável (0 para input/button/a/[tabindex]). Na árvore de acessibilidade são apenas generic com texto. Só é possível selecionar com o mouse. O componente .br-select da paginação da mesma tela traz os <input type=\"radio\"> e <label for> corretos.",
+      "expected": "As opções devem ser controles reais e operáveis por teclado (input type=\"radio\" com label associado, ou role/aria equivalentes com gestão de foco).",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "clicar no filtro 'Cidade'"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-10-02T07-33-04-102Z.yml",
+        "S-page-011"
+      ]
+    },
+    {
+      "selector": ".br-tab li.tab-item.active > button",
+      "rule": "wcag:4.1.2",
+      "observed": "A aba corrente é distinguida só visualmente (cor #0c326f e borda inferior de 4px, via a classe 'active' no <li> pai). O <button> não tem aria-selected, aria-current nem role; na árvore de acessibilidade as três abas aparecem como buttons indistinguíveis e nada indica qual está ativa.",
+      "expected": "O estado selecionado definido pelo autor deve ser programaticamente determinável, p.ex. aria-current=\"true\" ou aria-selected com role=\"tab\" em tablist.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": []
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml",
+        ".playwright-mcp/page-2026-10-02T07-41-51-661Z.yml"
+      ]
+    },
+    {
+      "selector": "pnip-propesc-vistorias div.p-5 p",
+      "rule": "ds:empty-states",
+      "observed": "O empty state da busca sem resultados é um único <p>Não há vistorias para exibir.</p>. Não há título algum (nenhum cabeçalho é acrescentado: document.querySelectorAll('h1..h6') continua só com o H2 'Vistorias') nem orientação sobre o próximo passo.",
+      "expected": "A anatomia do padrão Empty States do DS marca o Título como obrigatório, e para ausência de dados por ação do usuário em pesquisa orienta explicar o ocorrido e indicar as etapas seguintes (ajustar filtros, 'Limpar Filtros').",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "digitar 'zzzznaoexiste' no campo de busca",
+          "pressionar Enter"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-10-02T07-36-04-295Z.yml",
+        "get_page_rules(category=empty_states)"
+      ]
+    },
+    {
+      "selector": "pnip-propesc-vistorias div.p-5 p",
+      "rule": "wcag:4.1.3",
+      "observed": "Ao submeter a busca, a tabela de 10 linhas é removida do DOM e a mensagem \"Não há vistorias para exibir.\" é inserida sem aria-live, role=status ou role=alert. A única região aria-live=\"polite\" da tela é o contador de itens da paginação, que desaparece junto com a paginação: document.querySelectorAll('[aria-live],[role=status],[role=alert]').length cai de 1 para 0. O foco permanece no campo de busca, então nada é anunciado.",
+      "expected": "A mensagem de estado sobre o resultado da busca deve ser programaticamente determinável sem receber foco, via role=\"status\" ou aria-live.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "digitar 'zzzznaoexiste' no campo de busca",
+          "pressionar Enter"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-10-02T07-36-04-295Z.yml"
+      ]
+    },
+    {
+      "selector": "br-input[type=\"date\"]",
+      "rule": "emag:6.6",
+      "observed": "Com data inicial 01/05/2026 e data final 01/01/2026 (fim antes do início), o intervalo invertido é aceito em silêncio: a tag confirma \"Exibindo vistorias de 01/05/2026 até 01/01/2026\", os inputs permanecem ng-valid, sem aria-invalid nem aria-describedby, não há nenhum texto de erro no DOM e o usuário recebe apenas um resultado vazio.",
+      "expected": "O erro de entrada deve ser identificado e descrito em texto no DOM, associado ao campo via aria-describedby e com aria-invalid=\"true\", informando como corrigi-lo.",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "preencher a data inicial com 01/05/2026",
+          "preencher a data final com 01/01/2026"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": "pnip-propesc-vistorias div.p-5 p",
+      "rule": null,
+      "observed": "A mensagem exibida é \"Não há vistorias para exibir nesse periodo selecionado.\" — \"periodo\" está sem acento (deveria ser \"período\").",
+      "expected": "Texto de interface ortograficamente correto: \"Não há vistorias para exibir nesse período selecionado.\"",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "preencher a data inicial com 01/05/2026",
+          "preencher a data final com 01/01/2026"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-10-02T07-29-04-391Z.yml"
+      ]
+    },
+    {
+      "selector": ".br-tab nav.tab-nav",
+      "rule": "wcag:1.4.10",
+      "observed": "Com a janela em 320px de largura (clientWidth 305), a barra de abas não reflui: cada li.tab-item mede ~155px e a aba 'Concluídos' termina em x=478, 173px além da área visível, exigindo rolagem horizontal para alcançá-la.",
+      "expected": "O conteúdo deve ser apresentável a 320px de largura sem exigir rolagem horizontal — p.ex. permitindo quebra de linha ou dando rolagem própria à barra de abas.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "steps": [
+          "redimensionar a janela para 320x640",
+          "recarregar a tela"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-10-02T07-37-36-852Z.yml"
+      ]
+    },
+    {
+      "selector": "div.col-auto.d-flex.align-items-center.align-self-end",
+      "rule": "wcag:1.4.10",
+      "observed": "Com a janela em 320px de largura (clientWidth 305), a linha do filtro de período mede 580px e termina em x=612 — 307px além da área visível. O d-flex em col-auto impede a quebra, e os dois br-input de data mantêm 191px cada.",
+      "expected": "O conteúdo deve ser apresentável a 320px de largura sem exigir rolagem horizontal — p.ex. empilhando rótulo e campos de data.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "steps": [
+          "redimensionar a janela para 320x640",
+          "recarregar a tela"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-10-02T07-37-36-852Z.yml"
+      ]
+    },
+    {
+      "selector": "table.table",
+      "rule": "wcag:1.4.10",
+      "observed": "A tabela mede 1269px e não tem nenhum ancestral com overflow-x auto/scroll até o body, então é o próprio documento que passa a rolar na horizontal: a 320px de largura, documentElement.scrollWidth = 1309 contra clientWidth = 305. Isso arrasta toda a página (cabeçalho, abas, filtros) para rolagem bidimensional.",
+      "expected": "A tabela larga deve ficar em um contêiner com rolagem horizontal própria, para que o restante da página reflua a 320px sem rolagem horizontal do documento.",
+      "state": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "steps": [
+          "redimensionar a janela para 320x640",
+          "recarregar a tela"
+        ]
+      },
+      "evidence": [
+        ".playwright-mcp/page-2026-10-02T07-37-36-852Z.yml"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,311 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic "Plataforma Nacional da Indústria do Pescado" [ref=e4]:
+      - banner [ref=e5]:
+        - generic [ref=e6]:
+          - generic [ref=e8]:
+            - img "logo" [ref=e9]
+            - generic [ref=e11]: Ministério da Pesca e Aquicultura
+          - generic [ref=e13]:
+            - button "Menu" [ref=e16] [cursor=pointer]:
+              - generic [ref=e17]: 
+            - generic [ref=e19]: Plataforma Nacional da Indústria do Pescado
+    - generic [ref=e21]:
+      - button "Avatar com dropdown" [ref=e22] [cursor=pointer]:
+        - generic "U" [ref=e23]:
+          - generic [ref=e24]: U
+        - generic [ref=e25]: Olá, Usuária de Teste, SUPERVISOR
+        - generic [ref=e26]: 
+      - text: 
+  - main [ref=e27]:
+    - generic [ref=e29]:
+      - list [ref=e32]:
+        - listitem [ref=e33]:
+          - link "Home" [ref=e34] [cursor=pointer]:
+            - /url: /portal-mpa
+            - button "Home" [ref=e35]:
+              - generic [ref=e36]: Home
+              - generic [ref=e37]: 
+        - listitem [ref=e38]:
+          - generic [ref=e39]: 
+          - generic [ref=e40]: Vistorias
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - heading "Vistorias" [level=2] [ref=e45]
+          - button "Exportar Vistorias" [ref=e48] [cursor=pointer]:
+            - generic: Exportar Vistorias
+        - navigation "Abas de Navegação Simples" [ref=e50]:
+          - list [ref=e51]:
+            - listitem [ref=e52]:
+              - button "Agendar" [ref=e53] [cursor=pointer]
+            - listitem [ref=e54]:
+              - button "Tramitando" [ref=e55] [cursor=pointer]
+            - listitem [ref=e56]:
+              - button "Concluídos" [active] [ref=e57] [cursor=pointer]
+        - generic [ref=e59]:
+          - generic [ref=e60]:
+            - generic [ref=e63]:
+              - generic [ref=e65] [cursor=pointer]:
+                - generic [ref=e66]: 
+                - generic [ref=e67]: Cidade
+                - generic [ref=e68]: 
+              - generic [ref=e70] [cursor=pointer]:
+                - generic [ref=e71]: 
+                - generic [ref=e72]: Porto
+                - generic [ref=e73]: 
+              - generic [ref=e75] [cursor=pointer]:
+                - generic [ref=e76]: 
+                - generic [ref=e77]: Vistoriador
+                - generic [ref=e78]: 
+              - generic [ref=e80] [cursor=pointer]:
+                - generic [ref=e81]: 
+                - generic [ref=e82]: Status
+                - generic [ref=e83]: 
+              - button "Limpar Filtro" [disabled] [ref=e85]
+            - generic [ref=e90]:
+              - textbox "Pesquise aqui ..." [ref=e93]
+              - button "Buscar" [ref=e94] [cursor=pointer]:
+                - generic [ref=e95]: 
+          - generic [ref=e96]:
+            - generic [ref=e97]:
+              - generic [ref=e98]: "Data da vistoria:"
+              - textbox [ref=e101]
+              - generic [ref=e102]: até
+              - textbox [ref=e105]
+            - generic [ref=e106]: Nenhum filtro de data aplicado
+          - generic [ref=e846]:
+            - text: "Última atualização:"
+            - generic [ref=e847]: 
+            - text: 09:30
+          - table [ref=e849]:
+            - rowgroup [ref=e850]:
+              - row "# Nome da embarcação RAEP Data/Hora Vistoria Local Vistoria Vistoriador Situação Status" [ref=e851]:
+                - columnheader "#" [ref=e852]
+                - columnheader "Nome da embarcação" [ref=e853]
+                - columnheader "RAEP" [ref=e854]
+                - columnheader "Data/Hora Vistoria" [ref=e855]
+                - columnheader "Local Vistoria" [ref=e856]
+                - columnheader "Vistoriador" [ref=e857]
+                - columnheader "Situação" [ref=e858]
+                - columnheader "Status" [ref=e859]
+                - columnheader [ref=e860]
+            - rowgroup [ref=e861]:
+              - row "1 Pérola Veloz II BA99103151 16/02/2026 08:30 Porto da Lagoa das Garças Iara Sampaio Teixeira NAO COMPARECIMENTO Concluído" [ref=e862]:
+                - cell "1" [ref=e863]
+                - cell "Pérola Veloz II" [ref=e864]
+                - cell "BA99103151" [ref=e865]
+                - cell "16/02/2026 08:30" [ref=e866]
+                - cell "Porto da Lagoa das Garças" [ref=e867]
+                - cell "Iara Sampaio Teixeira" [ref=e868]
+                - cell "NAO COMPARECIMENTO" [ref=e869]
+                - cell "Concluído" [ref=e870]:
+                  - generic [ref=e874]: Concluído
+                - cell [ref=e875]:
+                  - generic [ref=e876]:
+                    - button [ref=e879] [cursor=pointer]:
+                      - generic [ref=e881]: 
+                    - generic "Excluir vistoria" [ref=e883]:
+                      - button "Excluir vistoria" [ref=e884] [cursor=pointer]:
+                        - generic [ref=e886]: 
+              - row "2 Maresia Serena I CE99103014 10/02/2026 09:45 Píer de Ponta da Areia Branca Heitor Quintela Nogueira NAO COMPARECIMENTO Concluído" [ref=e887]:
+                - cell "2" [ref=e888]
+                - cell "Maresia Serena I" [ref=e889]
+                - cell "CE99103014" [ref=e890]
+                - cell "10/02/2026 09:45" [ref=e891]
+                - cell "Píer de Ponta da Areia Branca" [ref=e892]
+                - cell "Heitor Quintela Nogueira" [ref=e893]
+                - cell "NAO COMPARECIMENTO" [ref=e894]
+                - cell "Concluído" [ref=e895]:
+                  - generic [ref=e899]: Concluído
+                - cell [ref=e900]:
+                  - generic [ref=e901]:
+                    - button [ref=e904] [cursor=pointer]:
+                      - generic [ref=e906]: 
+                    - generic "Excluir vistoria" [ref=e908]:
+                      - button "Excluir vistoria" [ref=e909] [cursor=pointer]:
+                        - generic [ref=e911]: 
+              - row "3 Âncora Serena IV RS99102877 04/02/2026 10:45 Terminal Pesqueiro de Barra Nova Paulo Cordeiro Paiva NAO COMPARECIMENTO Concluído" [ref=e912]:
+                - cell "3" [ref=e913]
+                - cell "Âncora Serena IV" [ref=e914]
+                - cell "RS99102877" [ref=e915]
+                - cell "04/02/2026 10:45" [ref=e916]
+                - cell "Terminal Pesqueiro de Barra Nova" [ref=e917]
+                - cell "Paulo Cordeiro Paiva" [ref=e918]
+                - cell "NAO COMPARECIMENTO" [ref=e919]
+                - cell "Concluído" [ref=e920]:
+                  - generic [ref=e924]: Concluído
+                - cell [ref=e925]:
+                  - generic [ref=e926]:
+                    - button [ref=e929] [cursor=pointer]:
+                      - generic [ref=e931]: 
+                    - generic "Excluir vistoria" [ref=e933]:
+                      - button "Excluir vistoria" [ref=e934] [cursor=pointer]:
+                        - generic [ref=e936]: 
+              - row "4 Coral Veloz V PA99102740 29/01/2026 14:15 Cais Municipal de Enseada Clara Elisa Guedes Amaral NAO ADEQUADA Concluído" [ref=e937]:
+                - cell "4" [ref=e938]
+                - cell "Coral Veloz V" [ref=e939]
+                - cell "PA99102740" [ref=e940]
+                - cell "29/01/2026 14:15" [ref=e941]
+                - cell "Cais Municipal de Enseada Clara" [ref=e942]
+                - cell "Elisa Guedes Amaral" [ref=e943]
+                - cell "NAO ADEQUADA" [ref=e944]
+                - cell "Concluído" [ref=e945]:
+                  - generic [ref=e949]: Concluído
+                - cell [ref=e950]:
+                  - generic [ref=e951]:
+                    - button [ref=e954] [cursor=pointer]:
+                      - generic [ref=e956]: 
+                    - generic "Excluir vistoria" [ref=e958]:
+                      - button "Excluir vistoria" [ref=e959] [cursor=pointer]:
+                        - generic [ref=e961]: 
+              - row "5 Coral do Norte IV PE99102603 23/01/2026 08:15 Entreposto de Porto Sereno Sabrina Ventura Nogueira NAO ADEQUADA Concluído" [ref=e962]:
+                - cell "5" [ref=e963]
+                - cell "Coral do Norte IV" [ref=e964]
+                - cell "PE99102603" [ref=e965]
+                - cell "23/01/2026 08:15" [ref=e966]
+                - cell "Entreposto de Porto Sereno" [ref=e967]
+                - cell "Sabrina Ventura Nogueira" [ref=e968]
+                - cell "NAO ADEQUADA" [ref=e969]
+                - cell "Concluído" [ref=e970]:
+                  - generic [ref=e974]: Concluído
+                - cell [ref=e975]:
+                  - generic [ref=e976]:
+                    - button [ref=e979] [cursor=pointer]:
+                      - generic [ref=e981]: 
+                    - generic "Excluir vistoria" [ref=e983]:
+                      - button "Excluir vistoria" [ref=e984] [cursor=pointer]:
+                        - generic [ref=e986]: 
+              - row "6 Albatroz do Sul II SC99102466 17/01/2026 08:00 Trapiche da Vila do Farol Lívia Fontoura Teixeira NAO ADEQUADA Concluído" [ref=e987]:
+                - cell "6" [ref=e988]
+                - cell "Albatroz do Sul II" [ref=e989]
+                - cell "SC99102466" [ref=e990]
+                - cell "17/01/2026 08:00" [ref=e991]
+                - cell "Trapiche da Vila do Farol" [ref=e992]
+                - cell "Lívia Fontoura Teixeira" [ref=e993]
+                - cell "NAO ADEQUADA" [ref=e994]
+                - cell "Concluído" [ref=e995]:
+                  - generic [ref=e999]: Concluído
+                - cell [ref=e1000]:
+                  - generic [ref=e1001]:
+                    - button [ref=e1004] [cursor=pointer]:
+                      - generic [ref=e1006]: 
+                    - generic "Excluir vistoria" [ref=e1008]:
+                      - button "Excluir vistoria" [ref=e1009] [cursor=pointer]:
+                        - generic [ref=e1011]: 
+              - row "7 Estrela Clara BA99102329 11/01/2026 13:00 Porto da Lagoa das Garças Iara Sampaio Teixeira NAO ADEQUADA Concluído" [ref=e1012]:
+                - cell "7" [ref=e1013]
+                - cell "Estrela Clara" [ref=e1014]
+                - cell "BA99102329" [ref=e1015]
+                - cell "11/01/2026 13:00" [ref=e1016]
+                - cell "Porto da Lagoa das Garças" [ref=e1017]
+                - cell "Iara Sampaio Teixeira" [ref=e1018]
+                - cell "NAO ADEQUADA" [ref=e1019]
+                - cell "Concluído" [ref=e1020]:
+                  - generic [ref=e1024]: Concluído
+                - cell [ref=e1025]:
+                  - generic [ref=e1026]:
+                    - button [ref=e1029] [cursor=pointer]:
+                      - generic [ref=e1031]: 
+                    - generic "Excluir vistoria" [ref=e1033]:
+                      - button "Excluir vistoria" [ref=e1034] [cursor=pointer]:
+                        - generic [ref=e1036]: 
+              - row "8 Aurora Nova III CE99102192 05/01/2026 08:00 Píer de Ponta da Areia Branca Heitor Quintela Nogueira NAO ADEQUADA Concluído" [ref=e1037]:
+                - cell "8" [ref=e1038]
+                - cell "Aurora Nova III" [ref=e1039]
+                - cell "CE99102192" [ref=e1040]
+                - cell "05/01/2026 08:00" [ref=e1041]
+                - cell "Píer de Ponta da Areia Branca" [ref=e1042]
+                - cell "Heitor Quintela Nogueira" [ref=e1043]
+                - cell "NAO ADEQUADA" [ref=e1044]
+                - cell "Concluído" [ref=e1045]:
+                  - generic [ref=e1049]: Concluído
+                - cell [ref=e1050]:
+                  - generic [ref=e1051]:
+                    - button [ref=e1054] [cursor=pointer]:
+                      - generic [ref=e1056]: 
+                    - generic "Excluir vistoria" [ref=e1058]:
+                      - button "Excluir vistoria" [ref=e1059] [cursor=pointer]:
+                        - generic [ref=e1061]: 
+              - row "9 Sereia Nova RS99102055 30/12/2025 10:00 Terminal Pesqueiro de Barra Nova Paulo Cordeiro Paiva NAO ADEQUADA Concluído" [ref=e1062]:
+                - cell "9" [ref=e1063]
+                - cell "Sereia Nova" [ref=e1064]
+                - cell "RS99102055" [ref=e1065]
+                - cell "30/12/2025 10:00" [ref=e1066]
+                - cell "Terminal Pesqueiro de Barra Nova" [ref=e1067]
+                - cell "Paulo Cordeiro Paiva" [ref=e1068]
+                - cell "NAO ADEQUADA" [ref=e1069]
+                - cell "Concluído" [ref=e1070]:
+                  - generic [ref=e1074]: Concluído
+                - cell [ref=e1075]:
+                  - generic [ref=e1076]:
+                    - button [ref=e1079] [cursor=pointer]:
+                      - generic [ref=e1081]: 
+                    - generic "Excluir vistoria" [ref=e1083]:
+                      - button "Excluir vistoria" [ref=e1084] [cursor=pointer]:
+                        - generic [ref=e1086]: 
+              - row "10 Sereia Nova V PA99101918 24/12/2025 08:30 Cais Municipal de Enseada Clara Elisa Guedes Amaral ADEQUADA Concluído" [ref=e1087]:
+                - cell "10" [ref=e1088]
+                - cell "Sereia Nova V" [ref=e1089]
+                - cell "PA99101918" [ref=e1090]
+                - cell "24/12/2025 08:30" [ref=e1091]
+                - cell "Cais Municipal de Enseada Clara" [ref=e1092]
+                - cell "Elisa Guedes Amaral" [ref=e1093]
+                - cell "ADEQUADA" [ref=e1094]
+                - cell "Concluído" [ref=e1095]:
+                  - generic [ref=e1099]: Concluído
+                - cell [ref=e1100]:
+                  - generic [ref=e1101]:
+                    - button [ref=e1104] [cursor=pointer]:
+                      - generic [ref=e1106]: 
+                    - generic "Excluir vistoria" [ref=e1108]:
+                      - button "Excluir vistoria" [ref=e1109] [cursor=pointer]:
+                        - generic [ref=e1111]: 
+        - generic [ref=e1113]:
+          - navigation "Paginação de resultados" [ref=e1116]:
+            - list [ref=e1117]:
+              - listitem [ref=e1118]:
+                - button "Página anterior" [disabled] [ref=e1119]:
+                  - generic: 
+              - listitem [ref=e1120]:
+                - listitem [ref=e1121]:
+                  - link "1" [ref=e1122] [cursor=pointer]:
+                    - /url: javascript:void(0)
+              - listitem [ref=e1123]:
+                - listitem [ref=e1124]:
+                  - link "2" [ref=e1125] [cursor=pointer]:
+                    - /url: javascript:void(0)
+              - listitem [ref=e1126]:
+                - listitem [ref=e1127]:
+                  - link "3" [ref=e1128] [cursor=pointer]:
+                    - /url: javascript:void(0)
+              - listitem [ref=e1129]:
+                - button "Página seguinte" [ref=e1130] [cursor=pointer]:
+                  - generic [ref=e1131]: 
+          - navigation "paginação" [ref=e1133]:
+            - generic [ref=e1137]:
+              - generic [ref=e1138]: Exibir
+              - generic [ref=e1139]:
+                - text: 
+                - textbox "Exibir" [ref=e1140]:
+                  - /placeholder: Selecione
+                  - text: "10"
+              - button "Exibir lista" [ref=e1141] [cursor=pointer]:
+                - generic [ref=e1142]: 
+            - generic [ref=e1144]:
+              - generic [ref=e1145]: "1"
+              - text: –
+              - generic [ref=e1146]: "10"
+              - text: de
+              - generic [ref=e1147]: "23"
+              - text: itens
+            - generic [ref=e1152]:
+              - generic [ref=e1153]: Página
+              - generic [ref=e1154]:
+                - text: 
+                - textbox "Página" [ref=e1155]:
+                  - /placeholder: Selecione
+                  - text: "1"
+              - button "Exibir lista" [ref=e1156] [cursor=pointer]:
+                - generic [ref=e1157]: 
+        - button "Voltar" [ref=e535] [cursor=pointer]:
+          - generic [ref=e537]: Voltar

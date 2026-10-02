@@ -1,0 +1,191 @@
+{
+  "stamp": "2026-10-02T00-10-38",
+  "model": "claude-haiku-4-5",
+  "reasoningEffort": "high",
+  "oracleProfile": "combined",
+  "client": "claude-cli",
+  "clientVersion": "2.1.287 (Claude Code)",
+  "scope": "smoke",
+  "runsPerArm": 1,
+  "arms": [
+    "com",
+    "sem"
+  ],
+  "schedule": "alternado",
+  "plan": {
+    "path": "pipeline/logs/2026-10-02T00-10-38-plano.json",
+    "sha256": "8a11bd162610d9dbffd32ef511cb0e7be11dafe7d545716da73d7991ab86fad1"
+  },
+  "collectionManifest": {
+    "path": "pipeline/logs/2026-10-02T00-10-38-coleta/manifesto.json",
+    "sha256": "53c13dffaaf392528bc5872311d5c69d516f543fd7cbd7177d3079764159be2d"
+  },
+  "stopReason": null,
+  "corpusUrl": "http://127.0.0.1:3100",
+  "surface": {
+    "dir": "pipeline/logs/2026-10-02T00-10-38-superficie",
+    "isolationTest": "2026-10-02T00-10-38-isolamento.json",
+    "description": {
+      "version": "surface-1.3.0",
+      "startedAt": "2026-10-02T03:12:02.998Z",
+      "pid": 2588,
+      "entryUrl": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa",
+      "origins": {
+        "site": "http://127.0.0.1:3100",
+        "collector": "http://127.0.0.1:4100"
+      },
+      "proxyServer": "http://127.0.0.1:4102",
+      "control": "http://127.0.0.1:4101",
+      "allowedHosts": [
+        "127.0.0.1:3100",
+        "127.0.0.1:4100"
+      ],
+      "siteManifest": "site-manifest.json",
+      "siteManifestSha256": "47467813eaa78f033f7095e273385cd729f5224674cc1ec0cc57a820b98562cd",
+      "corpusCommit": "5a3c3f8082c5a4595d27addc759270a0cfab4d92",
+      "corpusDirty": false,
+      "egressLog": "egress.ndjson",
+      "policy": {
+        "boundary": "proxy HTTP de encaminhamento; o navegador do Playwright MCP e o do oráculo apontam para ele (--proxy-server / GOVBR_VALIDATOR_PROXY_SERVER), e o Playwright encaminha o loopback",
+        "allowed": "somente as origens do site congelado e do coletor, por host:porta exato, só HTTP",
+        "https": "negado (CONNECT 403)",
+        "site": "somente os arquivos do manifesto; SPA declarada: rota sem extensão sob /pnip/ recebe /pnip/index.html, mais 1 alias declarado(s); sem índice de diretório, sem /@fs",
+        "collector": "POST /api/submit da execução armada; relatório diferente do aceito é recusado e arquivado"
+      }
+    }
+  },
+  "execucoes": [
+    {
+      "run": 1,
+      "slot": 1,
+      "repetition": 1,
+      "block": 1,
+      "runId": "2026-10-02T00-10-38-com-run1-1efd4bb2",
+      "arm": "com",
+      "armDescricao": "agente + oráculo MCP",
+      "model": "claude-haiku-4-5",
+      "reasoningEffort": "high",
+      "oracleProfile": "combined",
+      "client": "claude-cli",
+      "clientVersion": "2.1.287 (Claude Code)",
+      "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+      "instrumentVersion": "fluxo-1.3.0",
+      "validatorVersion": "2.7.0",
+      "mcpConfig": "2026-10-02T00-10-38-com-run1-1efd4bb2-mcp-config.json",
+      "prompt": "Avalie a tela em http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa. Para salvar, navegue ate http://127.0.0.1:4100 e faca POST em /api/submit a partir dali.",
+      "scope": "smoke",
+      "archive": "agent-2026-10-02T00-10-38-com-run1-1efd4bb2.json",
+      "suite": "vistorias",
+      "archiveDir": "results/runs-vistorias-smoke",
+      "exitCode": 0,
+      "apiErrorStatus": null,
+      "wallClockSeconds": 123.3,
+      "log": "2026-10-02T00-10-38-com-run1.json",
+      "stderrLog": "2026-10-02T00-10-38-com-run1.stderr.log",
+      "mcpTelemetry": "2026-10-02T00-10-38-com-run1-1efd4bb2-mcp.ndjson",
+      "submission": {
+        "status": "aceito",
+        "receipt": {
+          "runId": "2026-10-02T00-10-38-com-run1-1efd4bb2",
+          "status": "aceito",
+          "sha256": "7fc4bd6157d1ff5793f4e71fccea169096b8c758e72d3f2166101a4bf8ac45a0",
+          "acceptedAt": "2026-10-02T03:14:10.894Z",
+          "file": "2026-10-02T00-10-38-com-run1-1efd4bb2.json",
+          "droppedFields": []
+        },
+        "rejected": [],
+        "promotedFrom": null
+      },
+      "egress": {
+        "requests": 679,
+        "allowed": 649,
+        "denied": 30,
+        "deniedTargets": [
+          "accounts.google.com:443",
+          "android.clients.google.com:443",
+          "content-autofill.googleapis.com:443",
+          "http://clients2.google.com/time/1/current",
+          "update.googleapis.com:443",
+          "www.google.com:443",
+          "www.gstatic.com:443"
+        ]
+      },
+      "evidence": {
+        "status": "preserved",
+        "dir": "pipeline/logs/2026-10-02T00-10-38-com-run1-1efd4bb2-evidencia",
+        "files": 6,
+        "bytes": 149212,
+        "indexSha256": "a14040811c2f3ca0249ec05c8ccf0062ec7cb9ff3d202180207d623ea15b4aac"
+      },
+      "collectionStatus": "collected",
+      "collectionManifestSha256": "53c13dffaaf392528bc5872311d5c69d516f543fd7cbd7177d3079764159be2d",
+      "startedAt": "2026-10-02T03:12:14.4217339Z"
+    },
+    {
+      "run": 2,
+      "slot": 2,
+      "repetition": 1,
+      "block": 1,
+      "runId": "2026-10-02T00-10-38-sem-run1-f551324e",
+      "arm": "sem",
+      "armDescricao": "agente sem oráculo (ablação)",
+      "model": "claude-haiku-4-5",
+      "reasoningEffort": "high",
+      "oracleProfile": "none",
+      "client": "claude-cli",
+      "clientVersion": "2.1.287 (Claude Code)",
+      "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+      "instrumentVersion": "fluxo-1.3.0",
+      "validatorVersion": null,
+      "mcpConfig": "mcp-sem-oraculo.json",
+      "prompt": "Avalie a tela em http://127.0.0.1:3100/pnip/portal-mpa/vistorias?mock-perfil=mpa. Para salvar, navegue ate http://127.0.0.1:4100 e faca POST em /api/submit a partir dali.",
+      "scope": "smoke",
+      "archive": "agent-2026-10-02T00-10-38-sem-run1-f551324e.json",
+      "suite": "vistorias",
+      "archiveDir": "results/runs-vistorias-smoke",
+      "exitCode": 0,
+      "apiErrorStatus": null,
+      "wallClockSeconds": 147.7,
+      "log": "2026-10-02T00-10-38-sem-run1.json",
+      "stderrLog": "2026-10-02T00-10-38-sem-run1.stderr.log",
+      "mcpTelemetry": null,
+      "submission": {
+        "status": "aceito",
+        "receipt": {
+          "runId": "2026-10-02T00-10-38-sem-run1-f551324e",
+          "status": "aceito",
+          "sha256": "46e1c1882e48c13e7887fb7aabe281defec74f3714cd9f98b3f33a7d77a5ae06",
+          "acceptedAt": "2026-10-02T03:16:32.89Z",
+          "file": "2026-10-02T00-10-38-sem-run1-f551324e.json",
+          "droppedFields": []
+        },
+        "rejected": [],
+        "promotedFrom": null
+      },
+      "egress": {
+        "requests": 69,
+        "allowed": 39,
+        "denied": 30,
+        "deniedTargets": [
+          "accounts.google.com:443",
+          "android.clients.google.com:443",
+          "content-autofill.googleapis.com:443",
+          "http://clients2.google.com/time/1/current",
+          "update.googleapis.com:443",
+          "www.google.com:443",
+          "www.gstatic.com:443"
+        ]
+      },
+      "evidence": {
+        "status": "preserved",
+        "dir": "pipeline/logs/2026-10-02T00-10-38-sem-run1-f551324e-evidencia",
+        "files": 23,
+        "bytes": 186162,
+        "indexSha256": "ab4bbcd0d91d4bc346218996ccc1cc92b2026a933fc59954d5c2fcd767973f33"
+      },
+      "collectionStatus": "collected",
+      "collectionManifestSha256": "53c13dffaaf392528bc5872311d5c69d516f543fd7cbd7177d3079764159be2d",
+      "startedAt": "2026-10-02T03:14:19.3524686Z"
+    }
+  ]
+}

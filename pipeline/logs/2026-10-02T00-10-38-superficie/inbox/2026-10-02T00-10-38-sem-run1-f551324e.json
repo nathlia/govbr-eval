@@ -1,0 +1,83 @@
+{
+  "timestamp": "2026-10-02T03:16:32.887Z",
+  "model": "Haiku 4.5",
+  "appUrl": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias",
+  "scope": [
+    "Vistorias list page with filters and table"
+  ],
+  "notes": "Evaluated the Vistorias management interface at the specified URL. Examined filter controls, action buttons, and table structure. Tested keyboard accessibility and role/label attributes on interactive elements.",
+  "findings": [
+    {
+      "selector": "span.br-tag.interaction",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Filter buttons (Cidade, Porto, Vistoriador, Status) are styled SPAN elements with cursor:pointer but no role, aria-label, tabindex, or semantic button markup",
+      "expected": "Interactive elements should have proper role attributes (button or similar), accessible names (via aria-label or text content), and be keyboard accessible (tabindex >= 0 for non-native buttons)",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "Loaded vistorias page",
+          "Inspected filter controls",
+          "Checked accessibility tree",
+          "Verified computed styles and attributes"
+        ]
+      },
+      "evidence": [
+        "Snapshot shows generic role for filter elements",
+        "Computed style shows cursor:pointer",
+        "No role, tabindex, or aria-label attributes found"
+      ]
+    },
+    {
+      "selector": "br-button[icon='eye']",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Icon-only action button in table rows (eye icon) has no title, aria-label, or any accessible name. Element renders as a web component with shadow DOM.",
+      "expected": "Icon-only buttons must have an accessible name via title, aria-label, aria-labelledby, or meaningful text content",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "Loaded vistorias page",
+          "Examined table action buttons",
+          "Found br-button web components",
+          "Checked attributes on icon-only buttons"
+        ]
+      },
+      "evidence": [
+        "Icon attribute='eye', no title attribute",
+        "No aria-label found",
+        "Web component has shadow DOM but no accessible name exposed"
+      ]
+    },
+    {
+      "selector": "table input[type='checkbox']",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Row selection checkboxes in the table lack aria-label attributes and have no associated label elements. Checkboxes have no id or name attributes that would associate them with labels.",
+      "expected": "All form controls should have accessible names via associated label elements, aria-label, aria-labelledby, or other means",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "Loaded vistorias page",
+          "Inspected table structure",
+          "Examined all checkboxes",
+          "Verified label associations"
+        ]
+      },
+      "evidence": [
+        "Checkboxes have type='checkbox' but no aria-label",
+        "No associated label elements",
+        "No id/name attributes for label association"
+      ]
+    }
+  ]
+}

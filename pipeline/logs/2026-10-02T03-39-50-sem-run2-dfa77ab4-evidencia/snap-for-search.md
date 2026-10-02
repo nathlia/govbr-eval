@@ -1,0 +1,276 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic "Plataforma Nacional da Indústria do Pescado" [ref=e722]:
+      - banner [ref=e5]:
+        - generic [ref=e6]:
+          - generic [ref=e8]:
+            - img "logo" [ref=e723]
+            - generic [ref=e11]: Ministério da Pesca e Aquicultura
+          - generic [ref=e13]:
+            - button "Menu" [ref=e724] [cursor=pointer]:
+              - generic [ref=e17]: 
+            - generic [ref=e19]: Plataforma Nacional da Indústria do Pescado
+    - generic [ref=e21]:
+      - button "Avatar com dropdown" [ref=e725] [cursor=pointer]:
+        - generic "U" [ref=e726]:
+          - generic [ref=e24]: U
+        - generic [ref=e25]: Olá, Usuária de Teste, SUPERVISOR
+        - generic [ref=e26]: 
+      - text: 
+  - main [ref=e27]:
+    - generic [ref=e29]:
+      - list [ref=e32]:
+        - listitem [ref=e33]:
+          - link "Home" [ref=e727] [cursor=pointer]:
+            - /url: /portal-mpa
+            - button "Home" [ref=e728]:
+              - generic [ref=e36]: Home
+              - generic [ref=e37]: 
+        - listitem [ref=e38]:
+          - generic [ref=e39]: 
+          - generic [ref=e40]: Vistorias
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - heading "Vistorias" [level=2] [ref=e729]
+          - button "Exportar Vistorias" [ref=e730] [cursor=pointer]:
+            - generic: Exportar Vistorias
+        - navigation "Abas de Navegação Simples" [ref=e731]:
+          - list [ref=e51]:
+            - listitem [ref=e52]:
+              - button "Agendar" [ref=e732] [cursor=pointer]
+            - listitem [ref=e54]:
+              - button "Tramitando" [ref=e733] [cursor=pointer]
+            - listitem [ref=e56]:
+              - button "Concluídos" [ref=e734] [cursor=pointer]
+        - generic [ref=e59]:
+          - generic [ref=e60]:
+            - generic [ref=e63]:
+              - generic [ref=e65] [cursor=pointer]:
+                - generic [ref=e66]: 
+                - generic [ref=e67]: Cidade
+                - generic [ref=e68]: 
+              - generic [ref=e70] [cursor=pointer]:
+                - generic [ref=e71]: 
+                - generic [ref=e72]: Porto
+                - generic [ref=e73]: 
+              - generic [ref=e75] [cursor=pointer]:
+                - generic [ref=e76]: 
+                - generic [ref=e77]: Vistoriador
+                - generic [ref=e78]: 
+              - generic [ref=e80] [cursor=pointer]:
+                - generic [ref=e81]: 
+                - generic [ref=e82]: Status
+                - generic [ref=e83]: 
+              - button "Limpar Filtro" [disabled] [ref=e735]
+            - generic [ref=e90]:
+              - textbox "Pesquise aqui ..." [ref=e736]
+              - button "Buscar" [ref=e737] [cursor=pointer]:
+                - generic [ref=e95]: 
+          - generic [ref=e96]:
+            - generic [ref=e97]:
+              - generic [ref=e98]: "Data da vistoria:"
+              - textbox [ref=e101]
+              - generic [ref=e102]: até
+              - textbox [ref=e105]
+            - generic [ref=e106]: Nenhum filtro de data aplicado
+          - generic [ref=e107]:
+            - text: "Última atualização:"
+            - generic [ref=e108]: 
+            - text: 09:30
+          - table [ref=e110]:
+            - rowgroup [ref=e111]:
+              - row "# Nome da embarcação RAEP Data/Hora Vistoria Local Vistoria Vistoriador Status" [ref=e738]:
+                - columnheader "#" [ref=e739]
+                - columnheader [ref=e114]:
+                  - checkbox [ref=e115]
+                - columnheader "Nome da embarcação" [ref=e740]
+                - columnheader "RAEP" [ref=e741]
+                - columnheader "Data/Hora Vistoria" [ref=e742]
+                - columnheader "Local Vistoria" [ref=e743]
+                - columnheader "Vistoriador" [ref=e744]
+                - columnheader "Status" [ref=e745]
+                - columnheader [ref=e122]
+            - rowgroup [ref=e123]:
+              - row "1 Coral Mansa IV RS99103699 01/04/2026 10:30 Trapiche da Vila do Farol Vistoria agendada" [ref=e746]:
+                - cell "1" [ref=e747]
+                - cell [ref=e126]:
+                  - checkbox [ref=e127]
+                - cell "Coral Mansa IV" [ref=e748]
+                - cell "RS99103699" [ref=e749]
+                - cell "01/04/2026 10:30" [ref=e750]
+                - cell "Trapiche da Vila do Farol" [ref=e751]
+                - cell [ref=e132]
+                - cell "Vistoria agendada" [ref=e752]:
+                  - generic [ref=e137]: Vistoria agendada
+                - cell [ref=e138]:
+                  - generic [ref=e139]
+              - row "2 Maresia Nova I PA99103562 31/03/2026 15:30 Porto da Lagoa das Garças Paulo Cordeiro Paiva Vistoria agendada" [ref=e759]:
+                - cell "2" [ref=e760]
+                - cell [ref=e162]:
+                  - checkbox [ref=e163]
+                - cell "Maresia Nova I" [ref=e761]
+                - cell "PA99103562" [ref=e762]
+                - cell "31/03/2026 15:30" [ref=e763]
+                - cell "Porto da Lagoa das Garças" [ref=e764]
+                - cell "Paulo Cordeiro Paiva" [ref=e765]
+                - cell "Vistoria agendada" [ref=e766]:
+                  - generic [ref=e173]: Vistoria agendada
+                - cell [ref=e174]:
+                  - generic [ref=e175]
+              - row "3 Maré Prateada IV PE99103425 30/03/2026 09:45 Píer de Ponta da Areia Branca Elisa Guedes Amaral Vistoria agendada" [ref=e773]:
+                - cell "3" [ref=e774]
+                - cell [ref=e198]:
+                  - checkbox [ref=e199]
+                - cell "Maré Prateada IV" [ref=e775]
+                - cell "PE99103425" [ref=e776]
+                - cell "30/03/2026 09:45" [ref=e777]
+                - cell "Píer de Ponta da Areia Branca" [ref=e778]
+                - cell "Elisa Guedes Amaral" [ref=e779]
+                - cell "Vistoria agendada" [ref=e780]:
+                  - generic [ref=e209]: Vistoria agendada
+                - cell [ref=e210]:
+                  - generic [ref=e211]
+              - row "4 Âncora Nova V SC99103288 29/03/2026 09:00 Terminal Pesqueiro de Barra Nova Sabrina Ventura Nogueira Vistoria agendada" [ref=e787]:
+                - cell "4" [ref=e788]
+                - cell [ref=e234]:
+                  - checkbox [ref=e235]
+                - cell "Âncora Nova V" [ref=e789]
+                - cell "SC99103288" [ref=e790]
+                - cell "29/03/2026 09:00" [ref=e791]
+                - cell "Terminal Pesqueiro de Barra Nova" [ref=e792]
+                - cell "Sabrina Ventura Nogueira" [ref=e793]
+                - cell "Vistoria agendada" [ref=e794]:
+                  - generic [ref=e245]: Vistoria agendada
+                - cell [ref=e246]:
+                  - generic [ref=e247]
+              - row "5 Pérola Veloz II BA99103151 28/03/2026 14:45 Cais Municipal de Enseada Clara Vistoria agendada" [ref=e801]:
+                - cell "5" [ref=e802]
+                - cell [ref=e270]:
+                  - checkbox [ref=e271]
+                - cell "Pérola Veloz II" [ref=e803]
+                - cell "BA99103151" [ref=e804]
+                - cell "28/03/2026 14:45" [ref=e805]
+                - cell "Cais Municipal de Enseada Clara" [ref=e806]
+                - cell [ref=e276]
+                - cell "Vistoria agendada" [ref=e807]:
+                  - generic [ref=e281]: Vistoria agendada
+                - cell [ref=e282]:
+                  - generic [ref=e283]
+              - row "6 Maresia Serena I CE99103014 27/03/2026 09:30 Entreposto de Porto Sereno Iara Sampaio Teixeira Vistoria agendada" [ref=e814]:
+                - cell "6" [ref=e815]
+                - cell [ref=e306]:
+                  - checkbox [ref=e307]
+                - cell "Maresia Serena I" [ref=e816]
+                - cell "CE99103014" [ref=e817]
+                - cell "27/03/2026 09:30" [ref=e818]
+                - cell "Entreposto de Porto Sereno" [ref=e819]
+                - cell "Iara Sampaio Teixeira" [ref=e820]
+                - cell "Vistoria agendada" [ref=e821]:
+                  - generic [ref=e317]: Vistoria agendada
+                - cell [ref=e318]:
+                  - generic [ref=e319]
+              - row "7 Âncora Serena IV RS99102877 26/03/2026 08:15 Trapiche da Vila do Farol Heitor Quintela Nogueira Vistoria agendada" [ref=e828]:
+                - cell "7" [ref=e829]
+                - cell [ref=e342]:
+                  - checkbox [ref=e343]
+                - cell "Âncora Serena IV" [ref=e830]
+                - cell "RS99102877" [ref=e831]
+                - cell "26/03/2026 08:15" [ref=e832]
+                - cell "Trapiche da Vila do Farol" [ref=e833]
+                - cell "Heitor Quintela Nogueira" [ref=e834]
+                - cell "Vistoria agendada" [ref=e835]:
+                  - generic [ref=e353]: Vistoria agendada
+                - cell [ref=e354]:
+                  - generic [ref=e355]
+              - row "8 Coral Veloz V PA99102740 25/03/2026 10:30 Porto da Lagoa das Garças Paulo Cordeiro Paiva Vistoria agendada" [ref=e842]:
+                - cell "8" [ref=e843]
+                - cell [ref=e378]:
+                  - checkbox [ref=e379]
+                - cell "Coral Veloz V" [ref=e844]
+                - cell "PA99102740" [ref=e845]
+                - cell "25/03/2026 10:30" [ref=e846]
+                - cell "Porto da Lagoa das Garças" [ref=e847]
+                - cell "Paulo Cordeiro Paiva" [ref=e848]
+                - cell "Vistoria agendada" [ref=e849]:
+                  - generic [ref=e389]: Vistoria agendada
+                - cell [ref=e390]:
+                  - generic [ref=e391]
+              - row "9 Coral do Norte IV PE99102603 24/03/2026 08:15 Píer de Ponta da Areia Branca Vistoria agendada" [ref=e856]:
+                - cell "9" [ref=e857]
+                - cell [ref=e414]:
+                  - checkbox [ref=e415]
+                - cell "Coral do Norte IV" [ref=e858]
+                - cell "PE99102603" [ref=e859]
+                - cell "24/03/2026 08:15" [ref=e860]
+                - cell "Píer de Ponta da Areia Branca" [ref=e861]
+                - cell [ref=e420]
+                - cell "Vistoria agendada" [ref=e862]:
+                  - generic [ref=e425]: Vistoria agendada
+                - cell [ref=e426]:
+                  - generic [ref=e427]
+              - row "10 Albatroz do Sul II SC99102466 23/03/2026 08:00 Terminal Pesqueiro de Barra Nova Sabrina Ventura Nogueira Vistoria agendada" [ref=e869]:
+                - cell "10" [ref=e870]
+                - cell [ref=e450]:
+                  - checkbox [ref=e451]
+                - cell "Albatroz do Sul II" [ref=e871]
+                - cell "SC99102466" [ref=e872]
+                - cell "23/03/2026 08:00" [ref=e873]
+                - cell "Terminal Pesqueiro de Barra Nova" [ref=e874]
+                - cell "Sabrina Ventura Nogueira" [ref=e875]
+                - cell "Vistoria agendada" [ref=e876]:
+                  - generic [ref=e461]: Vistoria agendada
+                - cell [ref=e462]:
+                  - generic [ref=e463]
+        - generic [ref=e485]:
+          - navigation "Paginação de resultados" [ref=e883]:
+            - list [ref=e489]:
+              - listitem [ref=e490]:
+                - button "Página anterior" [disabled] [ref=e884]:
+                  - generic: 
+              - listitem [ref=e492]:
+                - listitem [ref=e493]:
+                  - link "1" [ref=e885] [cursor=pointer]:
+                    - /url: javascript:void(0)
+              - listitem [ref=e495]:
+                - listitem [ref=e496]:
+                  - link "2" [ref=e886] [cursor=pointer]:
+                    - /url: javascript:void(0)
+              - listitem [ref=e498]:
+                - listitem [ref=e499]:
+                  - link "3" [ref=e887] [cursor=pointer]:
+                    - /url: javascript:void(0)
+              - listitem [ref=e501]:
+                - listitem [ref=e502]:
+                  - link "4" [ref=e888] [cursor=pointer]:
+                    - /url: javascript:void(0)
+              - listitem [ref=e504]:
+                - button "Página seguinte" [ref=e889] [cursor=pointer]:
+                  - generic [ref=e506]: 
+          - navigation "paginação" [ref=e890]:
+            - generic [ref=e512]:
+              - generic [ref=e513]: Exibir
+              - generic [ref=e514]:
+                - text: 
+                - textbox "Exibir" [ref=e891]:
+                  - /placeholder: Selecione
+                  - text: "10"
+              - button "Exibir lista" [ref=e892] [cursor=pointer]:
+                - generic [ref=e517]: 
+            - generic [ref=e519]:
+              - generic [ref=e520]: "1"
+              - text: –
+              - generic [ref=e521]: "10"
+              - text: de
+              - generic [ref=e522]: "34"
+              - text: itens
+            - generic [ref=e527]:
+              - generic [ref=e528]: Página
+              - generic [ref=e529]:
+                - text: 
+                - textbox "Página" [ref=e893]:
+                  - /placeholder: Selecione
+                  - text: "1"
+              - button "Exibir lista" [ref=e894] [cursor=pointer]:
+                - generic [ref=e532]: 
+        - button "Voltar" [ref=e895] [cursor=pointer]:
+          - generic [ref=e537]: Voltar

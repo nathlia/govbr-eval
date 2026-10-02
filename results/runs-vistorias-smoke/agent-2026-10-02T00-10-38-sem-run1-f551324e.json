@@ -1,0 +1,121 @@
+{
+  "timestamp": "2026-10-02T03:16:32.887Z",
+  "model": "claude-haiku-4-5",
+  "appUrl": "http://127.0.0.1:3100/pnip/portal-mpa/vistorias",
+  "scope": [
+    "Vistorias list page with filters and table"
+  ],
+  "notes": "Evaluated the Vistorias management interface at the specified URL. Examined filter controls, action buttons, and table structure. Tested keyboard accessibility and role/label attributes on interactive elements.",
+  "findings": [
+    {
+      "selector": "span.br-tag.interaction",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Filter buttons (Cidade, Porto, Vistoriador, Status) are styled SPAN elements with cursor:pointer but no role, aria-label, tabindex, or semantic button markup",
+      "expected": "Interactive elements should have proper role attributes (button or similar), accessible names (via aria-label or text content), and be keyboard accessible (tabindex >= 0 for non-native buttons)",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "Loaded vistorias page",
+          "Inspected filter controls",
+          "Checked accessibility tree",
+          "Verified computed styles and attributes"
+        ]
+      },
+      "evidence": [
+        "Snapshot shows generic role for filter elements",
+        "Computed style shows cursor:pointer",
+        "No role, tabindex, or aria-label attributes found"
+      ]
+    },
+    {
+      "selector": "br-button[icon='eye']",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Icon-only action button in table rows (eye icon) has no title, aria-label, or any accessible name. Element renders as a web component with shadow DOM.",
+      "expected": "Icon-only buttons must have an accessible name via title, aria-label, aria-labelledby, or meaningful text content",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "Loaded vistorias page",
+          "Examined table action buttons",
+          "Found br-button web components",
+          "Checked attributes on icon-only buttons"
+        ]
+      },
+      "evidence": [
+        "Icon attribute='eye', no title attribute",
+        "No aria-label found",
+        "Web component has shadow DOM but no accessible name exposed"
+      ]
+    },
+    {
+      "selector": "table input[type='checkbox']",
+      "relatedSelectors": [],
+      "rule": "wcag:4.1.2",
+      "observed": "Row selection checkboxes in the table lack aria-label attributes and have no associated label elements. Checkboxes have no id or name attributes that would associate them with labels.",
+      "expected": "All form controls should have accessible names via associated label elements, aria-label, aria-labelledby, or other means",
+      "state": {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "steps": [
+          "Loaded vistorias page",
+          "Inspected table structure",
+          "Examined all checkboxes",
+          "Verified label associations"
+        ]
+      },
+      "evidence": [
+        "Checkboxes have type='checkbox' but no aria-label",
+        "No associated label elements",
+        "No id/name attributes for label association"
+      ]
+    }
+  ],
+  "config": {
+    "agentReportedModel": "Haiku 4.5",
+    "arm": "sem-oraculo",
+    "client": "claude-cli",
+    "clientVersion": "2.1.287 (Claude Code)",
+    "modelVersion": "claude-haiku-4-5",
+    "reasoningEffort": "high",
+    "oracleProfile": "none",
+    "turnMetric": "claude-cli-native (não comparável entre clientes)",
+    "protocolVersion": "sha256:110b05b34566487753c137e30a1988554ed3abbd10c4ddb17f0f28ad33d515cb",
+    "instrumentVersion": "fluxo-1.3.0",
+    "surfaceVersion": "surface-1.3.0",
+    "siteManifestSha256": "47467813eaa78f033f7095e273385cd729f5224674cc1ec0cc57a820b98562cd",
+    "submissionStatus": "aceito",
+    "collectionManifestSha256": "53c13dffaaf392528bc5872311d5c69d516f543fd7cbd7177d3079764159be2d",
+    "schedule": {
+      "slot": 2,
+      "block": 1,
+      "repetition": 1,
+      "order": "alternado"
+    },
+    "evidenceDir": "pipeline/logs/2026-10-02T00-10-38-sem-run1-f551324e-evidencia",
+    "evidenceIndexSha256": "ab4bbcd0d91d4bc346218996ccc1cc92b2026a933fc59954d5c2fcd767973f33"
+  },
+  "cost": {
+    "startedAt": "2026-10-02T03:14:19.3524686Z",
+    "finishedAt": "2026-10-02T03:16:47.3847320Z",
+    "wallClockSeconds": 147.7,
+    "tokens": 1572044,
+    "tokenUsage": {
+      "input": 336,
+      "cacheCreationInput": 42426,
+      "cacheReadInput": 1517577,
+      "output": 11705
+    },
+    "totalCostUsd": 0.29540169999999993,
+    "turns": 43
+  }
+}
