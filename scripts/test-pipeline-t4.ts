@@ -153,7 +153,7 @@ await teste("workflow: pacote e linha de base sobem com always(); arquivar roda 
 await teste("workflow: só ações oficiais conhecidas; todo run chama uma fase existente de scripts/ci/t4.sh", () => {
   const fases = [...readFileSync(T4SH, "utf8").matchAll(/^ {2}([a-z-]+)\)$/gm)].map((m) => m[1]);
   for (const { job, step } of todosOsPassos()) {
-    if (step.uses) assert.ok(/^actions\/(checkout|setup-node|upload-artifact|download-artifact)@v4$/.test(step.uses), `${job}: ação ${step.uses}`);
+    if (step.uses) assert.ok(/^actions\/(checkout|setup-node|upload-artifact|download-artifact)@[0-9a-f]{40}$/.test(step.uses), `${job}: ação ${step.uses}`);
     else {
       const m = /^bash govbr-eval\/scripts\/ci\/t4\.sh ([a-z-]+)$/.exec(String(step.run).trim());
       assert.ok(m, `${job}: run fora do padrão: ${step.run}`);
