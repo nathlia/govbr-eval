@@ -29,6 +29,7 @@ diretório temporário apagado no fim.
 | `site/pnip/**` | `govbr-corpus/public/pnip/` (build Angular congelado) | Exatamente a lista do manifesto do congelamento (`manifesto.json`), cada arquivo conferido por sha256; árvore com arquivo a mais ou a menos faz a exportação parar. O manifesto do congelamento fica de fora (telas.json `isolamento.site.excluir`). |
 | `server.mjs`, `README.md` | modelos em `scripts/export-telas/` | copiados como estão |
 | `package.json`, `.node-version`, `.gitattributes`, `site-manifest.json` | gerados pelo exportador | — |
+| `skills/avaliar-tela/SKILL.md` | `govbr-eval/skills/avaliar-tela/SKILL.md` (T2) | `PACKAGE_SKILLS`, lista fechada de uma entrada; fins de linha normalizados para LF; hash em `skills[]` do manifesto. Nada mais de `skills/` entra (o protocolo antigo `evaluate-screen` + `_shared/` e `evaluate-all` ficam fora). O servidor não o serve (404). Ver [`skill-avaliar-tela.md`](skill-avaliar-tela.md). |
 
 Os bytes servidos são os mesmos que a superfície de medida congelou: o teste compara cada tela com a
 última superfície em `pipeline/logs/*-superficie/` (hoje, `solicitacao` = 14 arquivos e `vistorias` =
@@ -76,7 +77,8 @@ esse campo e a classificação precisam ser revistos.
 Além do item: `screens` (id, título neutro, entrada), `routing` (SPA e alias), `origin` (commit e
 estado do corpus; comando, Vite e Node do build da tela A; sha256 do manifesto do congelamento e a
 proveniência do build da tela B), `files[]` (caminho, sha256, bytes de cada arquivo servido),
-`runtime[]` (o mesmo para os arquivos da raiz) e `total`.
+`runtime[]` (o mesmo para os arquivos da raiz), `skills[]` (o mesmo para a skill, desde
+`export-telas-1.1.0`) e `total`.
 
 ## Node
 
@@ -96,8 +98,8 @@ temporário com `core.autocrlf=true`, clona e audita o clone.
 
 `auditPackage` (no exportador; roda no fim de toda exportação) não depende de nada da avaliação:
 
-- allowlist: só os arquivos da raiz listados e os de `site/` presentes em `files[]`; nada a mais, nada
-  faltando; extensões de `site/` numa lista fechada;
+- allowlist: só os arquivos da raiz listados, a skill de `PACKAGE_SKILLS` (com hash conferido contra
+  `skills[]`) e os de `site/` presentes em `files[]`; nada a mais, nada faltando; extensões de `site/` numa lista fechada;
 - nenhum arquivo ou diretório oculto além de `.node-version` e `.gitattributes` (`.git` do clone local
   é ignorado);
 - nenhum `*.map`, nenhuma diretiva `sourceMappingURL`;

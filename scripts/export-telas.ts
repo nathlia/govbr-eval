@@ -13,6 +13,8 @@
  *                       congelamento fica de fora (telas.json `isolamento.site.excluir`).
  *   raiz                `server.mjs`, `README.md` (modelos em scripts/export-telas/), `package.json`,
  *                       `.node-version`, `.gitattributes` e `site-manifest.json` (gerados aqui).
+ *   skill               `skills/avaliar-tela/SKILL.md` (T2) — e nada mais de `skills/`: a skill
+ *                       genérica de execução, com fins de linha normalizados (LF), hash no manifesto.
  *
  * Nada de `.git`, fontes do corpus, pastas de pesquisa, referência, resultados ou texto da tese. Source
  * maps não são gerados (o build do corpus não os emite) e a auditoria (`auditPackage`) falha se um
@@ -38,7 +40,7 @@ import { gitState } from "./collection-manifest";
 import { assetClosure } from "./measurement-surface";
 import { telaOf, type TelaSite } from "./telas";
 
-export const EXPORTER_VERSION = "export-telas-1.0.0";
+export const EXPORTER_VERSION = "export-telas-1.1.0";
 /** Nome provisório do projeto exportado (pendente NAT-45). */
 export const PACKAGE_NAME = "govbr-telas";
 export const PACKAGE_VERSION = "1.0.0";
@@ -64,6 +66,12 @@ export const HIDDEN_ALLOWED = new Set([".gitattributes", ".node-version"]);
  */
 export const GITATTRIBUTES = "* -text\n";
 export const SITE_DIR = "site";
+/**
+ * Skills que entram no pacote — a lista completa (T2). O protocolo antigo (`evaluate-screen`,
+ * `_shared/`) e `evaluate-all` ficam de fora: são históricos e não são o texto da tarefa.
+ */
+export const PACKAGE_SKILLS = ["skills/avaliar-tela/SKILL.md"] as const;
+export const SKILLS_DIR = "skills";
 
 /** Extensões que podem existir em `site/`. */
 export const SITE_EXTENSIONS = new Set([
@@ -116,6 +124,8 @@ export interface SiteManifestDoc {
   files: ManifestFile[];
   /** Arquivos da raiz do pacote (exceto este manifesto). */
   runtime: ManifestFile[];
+  /** Skills do pacote (`PACKAGE_SKILLS`), relativas à raiz. */
+  skills: ManifestFile[];
   total: { files: number; bytes: number };
 }
 
@@ -211,7 +221,7 @@ function prepareOut(out: string): void {
   }
   if (!statSync(out).isDirectory()) throw new Error(`${out} não é diretório`);
   const entries = readdirSync(out);
-  const owned = new Set<string>([...ROOT_FILES, SITE_DIR]);
+  const owned = new Set<string>([...ROOT_FILES, SITE_DIR, SKILLS_DIR]);
   const foreign = entries.filter((e) => e !== ".git" && !owned.has(e));
   if (foreign.length) throw new Error(`${out} contém arquivos que não são de uma exportação: ${foreign.join(", ")}`);
   if (entries.some((e) => owned.has(e)) && !entries.includes("site-manifest.json")) {
@@ -294,6 +304,15 @@ export function exportTelas(options: ExportOptions): ExportResult {
       runtime.push({ path: name, sha256: sha256(body), bytes: body.length });
     }
 
+    const skills: ManifestFile[] = [];
+    for (const rel of [...PACKAGE_SKILLS].sort()) {
+      const body = Buffer.from(readFileSync(join(ROOT, rel), "utf8").replace(/\r\n?/g, "\n"), "utf8");
+      const target = join(out, rel);
+      mkdirSync(dirname(target), { recursive: true });
+      writeFileSync(target, body, { flag: "wx" });
+      skills.push({ path: rel, sha256: sha256(body), bytes: body.length });
+    }
+
     const bytes = files.reduce((sum, f) => sum + f.bytes, 0);
     const createdAt = options.createdAt ?? new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
     const manifest: SiteManifestDoc = {
@@ -339,6 +358,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
       },
       files,
       runtime,
+      skills,
       total: { files: files.length, bytes },
     };
     writeFileSync(join(out, "site-manifest.json"), JSON.stringify(manifest, null, 2) + "\n", { flag: "wx" });
@@ -378,7 +398,7 @@ export function auditPackage(dir: string, options: AuditOptions = {}): AuditRepo
     errors.push(`site-manifest.json ilegível: ${(error as Error).message}`);
   }
   const listedSite = new Set((manifest?.files ?? []).map((f) => `${SITE_DIR}/${f.path}`));
-  const allowed = new Set<string>([...ROOT_FILES, ...listedSite]);
+  const allowed = new Set<string>([...ROOT_FILES, ...PACKAGE_SKILLS, ...listedSite]);
 
   for (const f of files) {
     if (!allowed.has(f)) errors.push(`fora da allowlist: ${f}`);
@@ -390,6 +410,7 @@ export function auditPackage(dir: string, options: AuditOptions = {}): AuditRepo
   for (const d of dirs) if (d.split("/").some((s) => s.startsWith("."))) errors.push(`diretório oculto: ${d}`);
   for (const f of listedSite) if (!files.includes(f)) errors.push(`listado no manifesto e ausente: ${f}`);
   for (const f of ROOT_FILES) if (!files.includes(f)) errors.push(`arquivo da raiz ausente: ${f}`);
+  for (const f of PACKAGE_SKILLS) if (!files.includes(f)) errors.push(`skill ausente: ${f}`);
 
   let bytes = 0;
   const hashes = new Map<string, string>();
@@ -417,6 +438,12 @@ export function auditPackage(dir: string, options: AuditOptions = {}): AuditRepo
       const actual = hashes.get(f.path);
       if (actual && actual !== f.sha256) errors.push(`sha256 difere do manifesto: ${f.path}`);
     }
+    for (const f of manifest.skills ?? []) {
+      const actual = hashes.get(f.path);
+      if (actual && actual !== f.sha256) errors.push(`sha256 difere do manifesto: ${f.path}`);
+    }
+    const skillsListed = new Set((manifest.skills ?? []).map((f) => f.path));
+    for (const f of PACKAGE_SKILLS) if (!skillsListed.has(f)) errors.push(`skill sem hash no manifesto: ${f}`);
     const runtimeListed = new Set((manifest.runtime ?? []).map((f) => f.path));
     for (const f of ROOT_FILES) if (f !== "site-manifest.json" && !runtimeListed.has(f)) errors.push(`arquivo da raiz sem hash no manifesto: ${f}`);
     if (manifest.item?.sha256 !== listingSha256(manifest.files)) errors.push("item.sha256 não é o hash da listagem de files[]");

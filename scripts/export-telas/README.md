@@ -66,6 +66,7 @@ endereços.
 | `server.mjs` | Servidor estático (somente módulos nativos do Node.js). |
 | `site/` | Os arquivos servidos: `solicitacao.html` + `assets/`, e a aplicação em `pnip/`. |
 | `site-manifest.json` | Origem dos arquivos, rotas e sha256 + tamanho de cada arquivo. |
+| `skills/avaliar-tela/SKILL.md` | Procedimento genérico para avaliar uma tela em execução pela interface e enviar um relatório JSON. Os marcadores `{{...}}` da seção Entradas são preenchidos por quem prepara a execução. O servidor não o serve. |
 | `package.json` | Só o script `npm start`; sem dependências. |
 | `.node-version` | Versão do Node.js usada. |
 | `.gitattributes` | Desliga a conversão de fim de linha do Git, para que os arquivos continuem idênticos ao manifesto depois de um clone. |

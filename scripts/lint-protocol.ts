@@ -19,13 +19,23 @@
  */
 
 import { readFileSync, readdirSync, existsSync, statSync } from "fs";
-import { join, dirname } from "path";
+import { join, dirname, relative } from "path";
 import { fileURLToPath } from "url";
+import { FORBIDDEN_TASK_PATTERNS } from "./render-task-prompt";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const SKILLS_DIR = join(ROOT, "skills");
 const ESCAPE = "<!-- lint-protocol: ok -->";
+
+/**
+ * Protocolos entregues inteiros como texto da tarefa (T2: `skills/avaliar-tela/SKILL.md`). Neles a
+ * verificação é mais estrita, nunca mais frouxa: os blocos de código também são lidos (o exemplo JSON
+ * é parte do texto que o agente recebe), o escape não vale, e além de RULES valem os padrões de
+ * `FORBIDDEN_TASK_PATTERNS` (contexto de pesquisa, gabarito, contagem, ids normativos, marca do DS,
+ * valores de token, oráculo e suas ferramentas). Os demais protocolos seguem exatamente como antes.
+ */
+const STRICT_SKILLS = new Set(["skills/avaliar-tela/SKILL.md"]);
 
 interface Rule {
   id: string;
@@ -120,6 +130,16 @@ let inFence = false;
 for (const file of files) {
   const lines = readFileSync(file, "utf8").split(/\r?\n/);
   inFence = false;
+  const rel = relative(ROOT, file).replace(/\\/g, "/");
+
+  if (STRICT_SKILLS.has(rel)) {
+    lines.forEach((raw, i) => {
+      for (const rule of [...RULES, ...FORBIDDEN_TASK_PATTERNS]) {
+        if (rule.test.test(raw)) findings.push({ file: rel, line: i + 1, rule, text: raw.trim() });
+      }
+    });
+    continue;
+  }
 
   lines.forEach((raw, i) => {
     if (/^\s*```/.test(raw)) { inFence = !inFence; return; }

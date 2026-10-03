@@ -29,7 +29,7 @@ import { chromium, type Browser, type Page } from "playwright";
 import { validateContract } from "../contracts/index";
 import { ROOT } from "./adjudication";
 import {
-  PACKAGE_NODE_VERSION, ROOT_FILES, machineText, SCREEN_A, SCREEN_B, SITE_DIR, TEXT_EXTENSIONS, auditPackage, exportTelas, listTree,
+  PACKAGE_NODE_VERSION, PACKAGE_SKILLS, ROOT_FILES, machineText, SCREEN_A, SCREEN_B, SITE_DIR, TEXT_EXTENSIONS, auditPackage, exportTelas, listTree,
   type SiteManifestDoc,
 } from "./export-telas";
 import { createSiteServer, loadSite } from "./measurement-surface";
@@ -303,7 +303,14 @@ async function main(): Promise<void> {
     const audit = auditPackage(OUT, { forbiddenText: forbidden });
     assert.deepEqual(audit.errors, []);
     const all = listTree(OUT).files;
-    assert.deepEqual(all.filter((f) => !f.startsWith(`${SITE_DIR}/`)).sort(), [...ROOT_FILES].sort());
+    assert.deepEqual(all.filter((f) => !f.startsWith(`${SITE_DIR}/`)).sort(), [...ROOT_FILES, ...PACKAGE_SKILLS].sort());
+    // T2: a skill entra com os bytes da fonte (fins de linha LF) e com hash no manifesto; nada mais de skills/.
+    for (const rel of PACKAGE_SKILLS) {
+      const expected = readFileSync(join(ROOT, rel), "utf8").replace(/\r\n?/g, "\n");
+      assert.equal(readFileSync(join(OUT, rel), "utf8"), expected, `${rel}: bytes diferem da fonte`);
+      assert.ok(manifest.skills.some((f) => f.path === rel), `${rel}: sem hash no manifesto`);
+    }
+    assert.ok(!all.some((f) => /evaluate-(screen|all)|_shared|evaluation-protocol/.test(f)), "protocolo antigo no pacote");
     assert.ok(!all.some((f) => /(^|\/)(\.git|node_modules|src|real|static)(\/|$)/.test(f) || /ground-truth|manifesto\.json$/.test(f)));
     console.log(`   pacote: ${audit.files} arquivos, ${audit.bytes} bytes; ${forbidden.length} trechos proibidos conferidos`);
     // A palavra pode existir como CÓDIGO de biblioteca (gera mapa em tempo de execução para CSS
@@ -320,6 +327,8 @@ async function main(): Promise<void> {
     writeFileSync(join(copy, SITE_DIR, "assets", "x.js.map"), "{}");
     writeFileSync(join(copy, ".escondido"), "x");
     writeFileSync(join(copy, "notas.txt"), "x");
+    writeFileSync(join(copy, "skills", "outra.md"), "x");
+    appendFileSync(join(copy, PACKAGE_SKILLS[0]), "\nlinha acrescentada\n");
     const js = manifest.files.find((f) => f.path.startsWith("assets/") && f.path.endsWith(".js"))!.path;
     appendFileSync(join(copy, SITE_DIR, js), "\n//# sourceMappingURL=" + js.split("/").pop() + ".map\n");
     const html = join(copy, SITE_DIR, "solicitacao.html");
@@ -327,7 +336,7 @@ async function main(): Promise<void> {
     const errors = auditPackage(copy, { forbiddenText: forbidden }).errors.join("\n");
     for (const expected of [
       `fora da allowlist: ${SITE_DIR}/assets/x.js.map`, `source map: ${SITE_DIR}/assets/x.js.map`, "arquivo oculto: .escondido",
-      "fora da allowlist: notas.txt", `diretiva sourceMappingURL: ${SITE_DIR}/${js}`, `sha256 difere do manifesto: ${SITE_DIR}/${js}`,
+      "fora da allowlist: notas.txt", "fora da allowlist: skills/outra.md", `sha256 difere do manifesto: ${PACKAGE_SKILLS[0]}`, `diretiva sourceMappingURL: ${SITE_DIR}/${js}`, `sha256 difere do manifesto: ${SITE_DIR}/${js}`,
       `trecho proibido "${resolve(ROOT, "..")}" em ${SITE_DIR}/solicitacao.html`,
     ]) assert.ok(errors.includes(expected), `esperava "${expected}" em:\n${errors}`);
     rmSync(copy, { recursive: true, force: true });
@@ -402,14 +411,22 @@ async function main(): Promise<void> {
     const { hits } = scanLeaks(copy, needles);
     assert.ok(hits.some((h) => h.kind === "id" && h.needle === v.id), "id plantado não achado");
     assert.ok(hits.some((h) => h.kind === "frase"), "frase plantada não achada");
+    // A skill também está sob a varredura do gabarito.
+    const skillCopy = join(copy, PACKAGE_SKILLS[0]);
+    writeFileSync(skillCopy, readFileSync(skillCopy, "utf8") + `\n${v.id}: ${v.description}\n`);
+    const skillHits = scanLeaks(copy, needles).hits.filter((h) => h.file === PACKAGE_SKILLS[0]);
+    assert.ok(skillHits.some((h) => h.kind === "id") && skillHits.some((h) => h.kind === "frase"), "trecho plantado na skill não achado");
     rmSync(copy, { recursive: true, force: true });
   });
 
   await test("vocabulário de violação: relatório (falha só nos arquivos do exportador)", () => {
     const hits = scanVocabulary(OUT);
-    const own = hits.filter((h) => !h.file.startsWith(`${SITE_DIR}/`));
-    assert.deepEqual(own, [], "arquivos escritos pelo exportador têm de ser neutros");
-    if (hits.length === 0) console.log("   nenhuma ocorrência");
+    // A skill (T2) nomeia de propósito as normas-alvo (escopo da tarefa, igual nos dois braços), então
+    // a lista de palavras não vale para ela. Ela continua sob a varredura de vazamento do gabarito
+    // (acima) e sob o modo estrito do lint:protocol, que proíbe ids concretos e valores de token.
+    const skills = new Set<string>(PACKAGE_SKILLS);
+    const own = hits.filter((h) => !h.file.startsWith(`${SITE_DIR}/`) && !skills.has(h.file));
+    assert.deepEqual(own, [], "arquivos escritos pelo exportador têm de ser neutros");    if (hits.length === 0) console.log("   nenhuma ocorrência");
     for (const h of hits) console.log(`   ${h.file}: "${h.word}" ×${h.count} ← ${JSON.stringify(h.sample)}`);
   });
 
@@ -463,7 +480,7 @@ async function main(): Promise<void> {
       ["/pnip/../../etc", [400]], ["/pnip/%2e%2e/%2e%2e/server.mjs", [400]], ["/..%2fserver.mjs", [400]],
       ["/%2e%2e%5cserver.mjs", [400]], ["/..\\server.mjs", [400]], ["/C:/Windows/win.ini", [400]], ["/%00", [400]],
       ["/pnip/./index.html", [400]], ["//etc/passwd", [404]], ["/server.mjs", [404]], ["/site-manifest.json", [404]],
-      ["/README.md", [404]], ["/package.json", [404]], ["/.node-version", [404]], ["/site/solicitacao.html", [404]],
+      ["/README.md", [404]], ["/skills/avaliar-tela/SKILL.md", [404]], ["/site/../skills/avaliar-tela/SKILL.md", [400]], ["/package.json", [404]], ["/.node-version", [404]], ["/site/solicitacao.html", [404]],
       ["/", [404]], ["/assets/", [404]], ["/assets", [404]], ["/pnip/manifesto.json", [404]], ["/fluxo.html", [404]],
       ["/index.html", [404]], ["/src/solicitacao.tsx", [404]], ["/@fs/etc/passwd", [404]], ["/solicitacao.html", [405], "POST"],
     ];

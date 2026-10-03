@@ -8,6 +8,8 @@ const read = (path: string) => readFileSync(join(root, path), "utf8");
 const shared = read("skills/_shared/evaluation-protocol.md");
 const screen = read("skills/evaluate-screen/SKILL.md");
 const all = read("skills/evaluate-all/SKILL.md");
+// T2: skill única e genérica, entregue inteira como texto da tarefa nos dois braços.
+const avaliar = read("skills/avaliar-tela/SKILL.md");
 const failures: string[] = [];
 
 function requireText(label: string, text: string, fragments: string[]) {
@@ -42,6 +44,29 @@ requireText("evaluate-all", all, [
   "/static/atualizacao.html",
 ]);
 
+requireText("avaliar-tela", avaliar, [
+  "name: avaliar-tela",
+  // Cláusula comum dos dois braços (plano T2 / PROPOSTA), literal.
+  "Use as ferramentas de validação disponíveis para fundamentar a avaliação. Quando elas não estiverem disponíveis, inspecione a interface com as ferramentas de navegador e declare as incertezas. Não procure substitutos externos.",
+  // D-63 / NAT-32: a janela é fixada pelo ambiente; outras larguras só pelo meio declarado.
+  "A janela do navegador começa com o tamanho que o ambiente fixou",
+  "Não altere o tamanho da janela",
+  "{{MEIO_LARGURAS}}",
+  "Se houver ferramentas de validação",
+  "document.querySelectorAll",
+  '"selector"', '"relatedSelectors"', '"observed"', '"expected"', '"state"', '"viewport"', '"steps"', '"evidence"',
+  '"rule":null', '"rule": null', '"findings": []',
+  "O envio é obrigatório",
+  "declare as incertezas",
+  // O alvo da avaliação é escopo da tarefa, igual nos dois braços: nomes das normas e formatos de id.
+  "gov.br Design System", "e-MAG e WCAG 2.2", "`emag:<seção>`", "`wcag:<critério>`", "`ds:<regra>`",
+]);
+for (const forbidden of ["../_shared/", "evaluation-protocol.md", "leia o arquivo", "Antes de agir, leia"]) {
+  if (avaliar.includes(forbidden)) failures.push(`avaliar-tela: não pode pedir leitura de arquivo ('${forbidden}')`);
+}
+const avaliarWords = words(avaliar);
+if (avaliarWords < 800 || avaliarWords > 1100) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1100`);
+
 const screenWords = words(shared) + words(screen);
 if (screenWords < 600 || screenWords > 800) failures.push(`evaluate-screen: ${screenWords} palavras combinadas; meta 600–800`);
 const allWords = words(all);
@@ -53,4 +78,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`lint:skills — ok (${screenWords} palavras no protocolo geral; ${allWords} na especialização TC)`);
+console.log(`lint:skills — ok (${screenWords} palavras no protocolo geral; ${allWords} na especialização TC; ${avaliarWords} em avaliar-tela)`);

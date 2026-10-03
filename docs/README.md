@@ -14,6 +14,7 @@ que estavam nesta pasta (piloto, adjudicação e auditoria da tela de fluxo, dia
 | [`semantic-scoring.md`](semantic-scoring.md) | **O principal.** Pontuação semântica v02: filas, revisão cega, cenas, unidades, métricas. |
 | [`contratos-benchmark.md`](contratos-benchmark.md) | Contratos do benchmark isolado (M0): schemas em `contracts/`, quem escreve e lê cada arquivo, estados, ausência de linha de base, mapa de acessos. |
 | [`exportacao-telas.md`](exportacao-telas.md) | Exportação das telas A/B para o projeto mínimo servido na coleta (T1): allowlist, servidor estático, `site-manifest.json`, auditoria e varredura de vazamento do gabarito. |
+| [`skill-avaliar-tela.md`](skill-avaliar-tela.md) | Skill única e genérica de execução (T2): o que mudou em relação a `evaluate-screen` e por quê, a garantia de paridade entre braços e como renderizar o texto da tarefa. |
 | [`adjudicacao.md`](adjudicacao.md) | Quem julga as alegações e quando o assistente chama a autora (D-48). |
 | [`ancoragem.md`](ancoragem.md) | Como uma alegação é ancorada num elemento da página viva. |
 | [`pacote-revisao-fluxo.md`](pacote-revisao-fluxo.md) | O pacote de revisão da suíte de fluxo (v01). |

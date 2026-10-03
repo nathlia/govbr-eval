@@ -45,6 +45,8 @@
     "test:contracts": "tsx scripts/test-contracts.ts",
     "export:telas": "tsx scripts/export-telas.ts",
     "test:export-telas": "tsx scripts/test-export-telas.ts",
+    "test:avaliar-tela": "tsx scripts/test-avaliar-tela.ts",
+    "render:tarefa": "tsx scripts/render-task-prompt.ts",
     "test:evidence": "tsx scripts/test-evidence-integrity.ts",
     "test:states": "tsx scripts/test-flow-states.ts",
     "test:fila": "tsx scripts/test-review-queue.ts",
