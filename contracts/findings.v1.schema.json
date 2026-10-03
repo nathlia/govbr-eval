@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/findings.v1.schema.json",
+  "title": "findings.json — relatório aceito do agente, vinculado ao run, v1",
+  "description": "Envelope escrito pelo COLETOR em volta do relatório que o agente enviou. `report` é o relatório do agente tal como o contrato atual (skills/evaluate-screen/SKILL.md; validateFlowReport/validateFlowFinding em scripts/flow-contract.ts, achado-2) o define, para que a unidade de avaliação do scorer não mude. Só existe para submissão aceita: `findings: []` é resultado válido (escopo limpo); ausência de submissão é estado do run, não este arquivo.",
+  "type": "object",
+  "required": ["contract", "fixture", "campaignId", "runId", "receivedAt", "receipt", "findingContract", "report"],
+  "properties": {
+    "contract": { "const": "findings.v1" },
+    "fixture": { "$ref": "common.v1.schema.json#/$defs/fixture" },
+    "campaignId": { "$ref": "common.v1.schema.json#/$defs/id" },
+    "runId": { "$ref": "common.v1.schema.json#/$defs/id" },
+    "receivedAt": { "$ref": "common.v1.schema.json#/$defs/utcTimestamp" },
+    "receipt": { "description": "Recibo mínimo que o coletor devolveu ao agente.", "$ref": "common.v1.schema.json#/$defs/id" },
+    "findingContract": { "description": "Rótulo do contrato do achado em scripts/flow-contract.ts.", "const": "achado-2" },
+    "report": {
+      "description": "Campos declarados pelo agente. `model` aqui é o que o agente ESCREVEU, dado não confiável; a identidade do modelo vem de run.json.",
+      "type": "object",
+      "required": ["timestamp", "model", "appUrl", "findings"],
+      "properties": {
+        "timestamp": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "model": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "appUrl": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "scope": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" },
+        "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "finding": {
+      "description": "Um defeito independente por achado. Espelha validateFlowFinding (scripts/flow-contract.ts) e FlowFinding (types.ts).",
+      "type": "object",
+      "required": ["selector", "rule", "observed", "expected", "state", "evidence"],
+      "properties": {
+        "selector": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "relatedSelectors": { "type": "array", "items": { "$ref": "common.v1.schema.json#/$defs/text" } },
+        "rule": {
+          "description": "Id da regra, ou null quando a atribuição é incerta.",
+          "oneOf": [{ "$ref": "common.v1.schema.json#/$defs/text" }, { "type": "null" }]
+        },
+        "observed": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "expected": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "description": { "type": "string" },
+        "state": {
+          "type": "object",
+          "required": ["viewport", "steps"],
+          "properties": {
+            "viewport": {
+              "type": "object",
+              "required": ["width", "height"],
+              "properties": {
+                "width": { "type": "integer", "minimum": 1 },
+                "height": { "type": "integer", "minimum": 1 }
+              },
+              "additionalProperties": false
+            },
+            "steps": { "type": "array", "items": { "$ref": "common.v1.schema.json#/$defs/text" } }
+          },
+          "additionalProperties": false
+        },
+        "evidence": { "type": "array", "items": { "$ref": "common.v1.schema.json#/$defs/text" } }
+      },
+      "additionalProperties": false
+    }
+  }
+}

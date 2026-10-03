@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/isolation.v1.schema.json",
+  "title": "isolation.json — provas de isolamento de uma execução, v1",
+  "description": "Produzido pelo HARNESS (nunca pelo agente): versão da política, checks, controles positivos, inventário de ferramentas, capacidades observadas, resultado e limitações. `passed` exige checks executados, todos os obrigatórios aprovados, e controle positivo aprovado (uma negativa não pode ser explicada por alvo inexistente).",
+  "type": "object",
+  "required": [
+    "contract", "fixture", "campaignId", "runId", "policyVersion", "producedBy", "producedAt", "result",
+    "checks", "positiveControls", "toolInventory", "capabilitiesObserved", "notExercised", "limitations"
+  ],
+  "properties": {
+    "contract": { "const": "isolation.v1" },
+    "fixture": { "$ref": "common.v1.schema.json#/$defs/fixture" },
+    "campaignId": { "$ref": "common.v1.schema.json#/$defs/id" },
+    "runId": { "$ref": "common.v1.schema.json#/$defs/id" },
+    "policyVersion": { "$ref": "common.v1.schema.json#/$defs/text" },
+    "producedBy": { "const": "harness" },
+    "producedAt": { "$ref": "common.v1.schema.json#/$defs/utcTimestamp" },
+    "result": { "$ref": "common.v1.schema.json#/$defs/isolationStatus" },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "target", "required", "outcome", "evidence"],
+        "properties": {
+          "id": { "$ref": "common.v1.schema.json#/$defs/id" },
+          "category": { "enum": ["integrity", "sentinel", "network", "tools", "state", "tool-errors"] },
+          "target": { "$ref": "common.v1.schema.json#/$defs/text" },
+          "required": { "type": "boolean" },
+          "outcome": { "enum": ["passed", "failed", "not-exercised"] },
+          "evidence": { "oneOf": [{ "$ref": "common.v1.schema.json#/$defs/packagePath" }, { "type": "null" }] },
+          "detail": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "positiveControls": {
+      "description": "Prova de que o alvo existe e é acessível ao controlador.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "target", "outcome", "evidence"],
+        "properties": {
+          "id": { "$ref": "common.v1.schema.json#/$defs/id" },
+          "target": { "$ref": "common.v1.schema.json#/$defs/text" },
+          "outcome": { "enum": ["passed", "failed"] },
+          "evidence": { "oneOf": [{ "$ref": "common.v1.schema.json#/$defs/packagePath" }, { "type": "null" }] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "toolInventory": {
+      "type": "object",
+      "required": ["announced", "observed", "oracleAnnounced"],
+      "properties": {
+        "announced": { "type": "array", "items": { "$ref": "common.v1.schema.json#/$defs/text" } },
+        "observed": { "type": "array", "items": { "$ref": "common.v1.schema.json#/$defs/text" } },
+        "oracleAnnounced": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "capabilitiesObserved": { "type": "array", "items": { "$ref": "common.v1.schema.json#/$defs/text" } },
+    "notExercised": { "description": "Caminhos que a prova não exercitou.", "type": "array", "items": { "$ref": "common.v1.schema.json#/$defs/text" } },
+    "limitations": { "type": "array", "items": { "$ref": "common.v1.schema.json#/$defs/text" } }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": { "properties": { "result": { "const": "passed" } } },
+      "then": {
+        "properties": {
+          "checks": {
+            "minItems": 1,
+            "not": { "contains": { "properties": { "required": { "const": true }, "outcome": { "not": { "const": "passed" } } }, "required": ["required", "outcome"] } }
+          },
+          "positiveControls": {
+            "minItems": 1,
+            "not": { "contains": { "properties": { "outcome": { "const": "failed" } }, "required": ["outcome"] } }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "result": { "const": "failed" } } },
+      "then": {
+        "anyOf": [
+          { "properties": { "checks": { "contains": { "properties": { "outcome": { "const": "failed" } }, "required": ["outcome"] } } } },
+          { "properties": { "positiveControls": { "contains": { "properties": { "outcome": { "const": "failed" } }, "required": ["outcome"] } } } }
+        ]
+      }
+    }
+  ]
+}

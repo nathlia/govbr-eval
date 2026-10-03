@@ -1,0 +1,125 @@
+{
+  "contract": "run.v1",
+  "fixture": true,
+  "campaignId": "fixture-campanha-01",
+  "slotId": "slot-03",
+  "pairId": "par-02",
+  "runId": "fixture-run-sem-02",
+  "attempt": 1,
+  "idempotencyKey": "fixture-campanha-01/slot-03/1",
+  "screen": {
+    "id": "tela-fixture",
+    "label": "fixture",
+    "version": "fixture-0.0.0"
+  },
+  "arm": "sem",
+  "repetition": 1,
+  "model": {
+    "family": "familia-fixture",
+    "requested": "modelo-fixture",
+    "resolved": "unknown",
+    "resolvedSource": "unknown",
+    "resolvedEvidence": null
+  },
+  "provider": {
+    "name": "provedor-fixture",
+    "authMethod": "unknown"
+  },
+  "effort": "medium",
+  "client": {
+    "name": "cliente-fixture",
+    "version": "0.0.0"
+  },
+  "browser": {
+    "name": "chromium",
+    "version": "0.0.0-fixture",
+    "headless": true
+  },
+  "versions": {
+    "protocolSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "promptSha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "skillSha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "harnessCommit": "ffffffffffffffffffffffffffffffffffffffff",
+    "siteManifestSha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "playwrightMcp": "0.0.0-fixture"
+  },
+  "intervention": {
+    "oracle": null
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "isolationPolicyVersion": "isolamento-fixture-1",
+  "timestamps": {
+    "plannedAt": "2026-01-03T00:00:00Z",
+    "startedAt": null,
+    "finishedAt": null
+  },
+  "lifecycle": {
+    "state": "not-started",
+    "stage": "preflight"
+  },
+  "status": {
+    "technical": "not-run",
+    "isolation": "failed",
+    "protocol": "not-applicable",
+    "oracleUsage": "not-applicable",
+    "score": "not-applicable"
+  },
+  "failure": {
+    "stage": "preflight",
+    "reason": "preflight-failed",
+    "detail": "Check sintético de sentinela falhou; modelo não chamado."
+  },
+  "submission": {
+    "status": "none",
+    "findings": null,
+    "refusal": null
+  },
+  "usage": {
+    "wallClockSeconds": {
+      "value": null,
+      "status": "not-applicable"
+    },
+    "inputTokens": {
+      "value": null,
+      "status": "not-applicable"
+    },
+    "outputTokens": {
+      "value": null,
+      "status": "not-applicable"
+    },
+    "cacheReadTokens": {
+      "value": null,
+      "status": "not-applicable"
+    },
+    "cacheCreationTokens": {
+      "value": null,
+      "status": "not-applicable"
+    },
+    "turns": {
+      "value": null,
+      "status": "not-applicable"
+    },
+    "toolCalls": {
+      "value": null,
+      "status": "not-applicable"
+    },
+    "oracleCalls": {
+      "value": null,
+      "status": "not-applicable"
+    },
+    "estimatedCostUsd": {
+      "value": null,
+      "status": "not-applicable"
+    },
+    "billedCostUsd": {
+      "value": null,
+      "status": "not-applicable"
+    }
+  },
+  "artifactManifest": "artifact-manifest.json",
+  "isolation": "isolation.json"
+}

@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/common.v1.schema.json",
+  "title": "Definições comuns dos contratos do benchmark isolado (v1)",
+  "description": "Tipos compartilhados: hashes, caminhos, localização recuperável, estados e métricas. Não é um documento por si; os outros schemas referenciam estas definições.",
+  "$defs": {
+    "fixture": {
+      "description": "true = fixture sintética, nunca dado científico. Todo documento real grava false.",
+      "type": "boolean"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "gitCommit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "utcTimestamp": {
+      "description": "ISO 8601 em UTC, com Z.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"
+    },
+    "packagePath": {
+      "description": "Caminho relativo DENTRO do pacote: sem barra inicial, sem letra de unidade, sem barra invertida, sem segmento '..'. Arquivos de referência ou de revisão nunca entram num pacote de execução.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:)(?!/)(?!.*\\\\)(?!(?:.*/)?\\.\\.(?:/|$))[^\\u0000]+$",
+      "not": {
+        "pattern": "(^|/)(ground-truth[^/]*\\.json|reviews\\.json|adjudications\\.json)$"
+      }
+    },
+    "location": {
+      "description": "Onde os bytes podem ser recuperados. Hash sem localização não basta (plano, 'Snapshots de reprodução').",
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["package-path", "archive-repo", "git-commit-path", "external-store"] },
+        "path": { "$ref": "#/$defs/packagePath" },
+        "repo": { "$ref": "#/$defs/text" },
+        "commit": { "$ref": "#/$defs/gitCommit" },
+        "uri": { "type": "string", "pattern": "^https://\\S+$" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "package-path" } } }, "then": { "required": ["path"] } },
+        { "if": { "properties": { "kind": { "const": "archive-repo" } } }, "then": { "required": ["repo", "path"] } },
+        { "if": { "properties": { "kind": { "const": "git-commit-path" } } }, "then": { "required": ["repo", "commit", "path"] } },
+        { "if": { "properties": { "kind": { "const": "external-store" } } }, "then": { "required": ["uri"] } }
+      ]
+    },
+    "recoverableObject": {
+      "description": "Objeto imutável: hash + tamanho + onde buscar.",
+      "type": "object",
+      "required": ["sha256", "bytes", "location"],
+      "properties": {
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "location": { "$ref": "#/$defs/location" }
+      },
+      "additionalProperties": false
+    },
+    "arm": {
+      "description": "Braço do experimento. Tela A/B NÃO são braços.",
+      "enum": ["sem", "com"]
+    },
+    "screen": {
+      "type": "object",
+      "required": ["id", "label", "version"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "label": { "$ref": "#/$defs/text" },
+        "version": { "$ref": "#/$defs/text" }
+      },
+      "additionalProperties": false
+    },
+    "limits": {
+      "description": "Limites aplicados pelo controlador, iguais nos dois braços. null = eixo sem limite declarado (nunca 0).",
+      "type": "object",
+      "required": ["timeoutSeconds", "maxTurns", "maxBudgetUsd"],
+      "properties": {
+        "timeoutSeconds": { "type": "integer", "minimum": 1 },
+        "maxTurns": { "type": ["integer", "null"], "minimum": 1 },
+        "maxBudgetUsd": { "type": ["number", "null"], "exclusiveMinimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "lifecycleState": {
+      "description": "Estado operacional: planned → preparing → preflight → running → collected → archived; ou terminal failed | interrupted | not-started.",
+      "enum": ["planned", "preparing", "preflight", "running", "collected", "archived", "failed", "interrupted", "not-started"]
+    },
+    "stage": {
+      "description": "Etapa em que um estado terminal aconteceu.",
+      "enum": ["preparing", "preflight", "running", "collecting", "archiving"]
+    },
+    "technicalStatus": {
+      "description": "passed | failed | interrupted (plano) + not-run: o modelo nunca foi chamado (ex.: preflight falhou) — para que falha de preparação não pareça falha do modelo.",
+      "enum": ["passed", "failed", "interrupted", "not-run"]
+    },
+    "isolationStatus": {
+      "enum": ["passed", "failed", "unverified"]
+    },
+    "protocolStatus": {
+      "description": "adherent | non-adherent | unverified (plano) + not-applicable quando a execução não rodou.",
+      "enum": ["adherent", "non-adherent", "unverified", "not-applicable"]
+    },
+    "oracleUsage": {
+      "description": "absent-verified | used-adherent | available-unused | used-with-errors | unverified (plano) + not-applicable quando a execução não rodou.",
+      "enum": ["absent-verified", "used-adherent", "available-unused", "used-with-errors", "unverified", "not-applicable"]
+    },
+    "scoreStatus": {
+      "description": "not-prepared | pending-review | provisional | final (plano) + not-applicable quando não há submissão a pontuar.",
+      "enum": ["not-prepared", "pending-review", "provisional", "final", "not-applicable"]
+    },
+    "metric": {
+      "description": "Valor medido ou indisponível. Indisponível é null, nunca 0.",
+      "type": "object",
+      "required": ["value", "status"],
+      "properties": {
+        "value": { "type": ["number", "null"], "minimum": 0 },
+        "status": { "enum": ["measured", "unavailable", "not-applicable"] },
+        "source": { "$ref": "#/$defs/text" }
+      },
+      "additionalProperties": false,
+      "if": { "properties": { "status": { "const": "measured" } } },
+      "then": { "properties": { "value": { "type": "number" } }, "required": ["source"] },
+      "else": { "properties": { "value": { "type": "null" } } }
+    },
+    "failureReason": {
+      "enum": [
+        "preflight-failed", "isolation-failed", "rate-limited", "auth-failed", "model-unavailable",
+        "timeout", "cancelled", "output-empty", "output-malformed", "output-refused", "no-submission",
+        "vm-lost", "archive-unavailable", "harness-error"
+      ]
+    },
+    "oracleIdentity": {
+      "description": "Componente normativo da intervenção (braço com). Espelha os campos de OracleIdentity em scripts/collection-manifest.ts.",
+      "type": "object",
+      "required": ["package", "version", "distSha256", "dataSha256", "profile"],
+      "properties": {
+        "package": { "$ref": "#/$defs/text" },
+        "version": { "$ref": "#/$defs/text" },
+        "distSha256": { "$ref": "#/$defs/sha256" },
+        "dataSha256": { "$ref": "#/$defs/sha256" },
+        "profile": { "enum": ["normative", "deterministic", "evidence", "combined"] }
+      },
+      "additionalProperties": false
+    }
+  }
+}

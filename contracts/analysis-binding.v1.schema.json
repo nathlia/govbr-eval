@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/analysis-binding.v1.schema.json",
+  "title": "analysis-binding.json — o que uma análise usou, v1",
+  "description": "Liga uma análise às execuções, ao conjunto de snapshots, à referência, ao scorer e à linha de base (ou à ausência PLANEJADA dela, ou ao bloqueio). Escrito pela análise (T6) antes de pontuar; lido pelo painel (T8a) e pela restauração. Compatibilidade de uma análise composta segue scripts/analysis-manifest.ts (manifesto-analise-1.0.0), que continua sendo a fonte das regras de composição.",
+  "type": "object",
+  "required": [
+    "contract", "fixture", "analysisId", "campaignId", "createdAt", "kind", "screen", "runs", "collectionStartedAt",
+    "snapshots", "reference", "scorer", "baseline", "compatibility", "status", "blockedReason", "scoreStatus", "metrics"
+  ],
+  "properties": {
+    "contract": { "const": "analysis-binding.v1" },
+    "fixture": { "$ref": "common.v1.schema.json#/$defs/fixture" },
+    "analysisId": { "$ref": "common.v1.schema.json#/$defs/id" },
+    "campaignId": { "$ref": "common.v1.schema.json#/$defs/id" },
+    "createdAt": { "$ref": "common.v1.schema.json#/$defs/utcTimestamp" },
+    "kind": { "description": "individual = um pacote, aceita ausência planejada (--no-baseline com motivo); composite = manifesto de análise, exige linha de base completa e compatível.", "enum": ["individual", "composite"] },
+    "screen": { "$ref": "common.v1.schema.json#/$defs/screen" },
+    "runs": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["runId", "arm", "artifactManifest"],
+        "properties": {
+          "runId": { "$ref": "common.v1.schema.json#/$defs/id" },
+          "arm": { "$ref": "common.v1.schema.json#/$defs/arm" },
+          "artifactManifest": { "$ref": "common.v1.schema.json#/$defs/recoverableObject" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "collectionStartedAt": { "description": "Início da primeira execução da coleta analisada. Ausência planejada tem de ser anterior.", "$ref": "common.v1.schema.json#/$defs/utcTimestamp" },
+    "snapshots": {
+      "type": "object", "required": ["snapshotSetId", "manifest"],
+      "properties": {
+        "snapshotSetId": { "$ref": "common.v1.schema.json#/$defs/id" },
+        "manifest": { "$ref": "common.v1.schema.json#/$defs/recoverableObject" }
+      },
+      "additionalProperties": false
+    },
+    "reference": {
+      "type": "object", "required": ["snapshotItemId", "version", "sha256"],
+      "properties": {
+        "snapshotItemId": { "$ref": "common.v1.schema.json#/$defs/id" },
+        "version": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "sha256": { "$ref": "common.v1.schema.json#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "scorer": {
+      "description": "Espelha analysisIdentity() de scripts/collection-manifest.ts.",
+      "type": "object", "required": ["version", "acceptancePolicy", "scorerSha256"],
+      "properties": {
+        "version": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "acceptancePolicy": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "scorerSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "baseline": {
+      "type": "object",
+      "required": ["mode"],
+      "properties": {
+        "mode": { "enum": ["used", "planned-absence", "blocked"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "mode": { "const": "used" } } },
+          "then": {
+            "required": ["mode", "baselineId", "record", "designatedBattery", "choiceJustification"],
+            "properties": {
+              "mode": true,
+              "baselineId": { "$ref": "common.v1.schema.json#/$defs/id" },
+              "record": { "description": "O baseline.json escolhido.", "$ref": "common.v1.schema.json#/$defs/recoverableObject" },
+              "designatedBattery": { "oneOf": [{ "$ref": "common.v1.schema.json#/$defs/id" }, { "type": "null" }] },
+              "choiceJustification": { "oneOf": [{ "$ref": "common.v1.schema.json#/$defs/text" }, { "type": "null" }] }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "mode": { "const": "planned-absence" } } },
+          "then": {
+            "required": ["mode", "justification", "declaredAt", "declaredIn"],
+            "properties": {
+              "mode": true,
+              "justification": { "$ref": "common.v1.schema.json#/$defs/text" },
+              "declaredAt": { "$ref": "common.v1.schema.json#/$defs/utcTimestamp" },
+              "declaredIn": {
+                "type": "object", "required": ["campaignId", "campaignSha256"],
+                "properties": {
+                  "campaignId": { "$ref": "common.v1.schema.json#/$defs/id" },
+                  "campaignSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "mode": { "const": "blocked" } } },
+          "then": {
+            "required": ["mode", "cause", "detail"],
+            "properties": {
+              "mode": true,
+              "cause": { "enum": ["baseline-failed", "missing-unplanned", "incompatible"] },
+              "detail": { "$ref": "common.v1.schema.json#/$defs/text" }
+            },
+            "additionalProperties": false
+          }
+        }
+      ]
+    },
+    "compatibility": {
+      "type": "object", "required": ["source", "analysisManifest"],
+      "properties": {
+        "source": { "const": "scripts/analysis-manifest.ts" },
+        "analysisManifest": { "oneOf": [{ "$ref": "common.v1.schema.json#/$defs/recoverableObject" }, { "type": "null" }] }
+      },
+      "additionalProperties": false
+    },
+    "status": { "enum": ["ready", "blocked"] },
+    "blockedReason": { "oneOf": [{ "$ref": "common.v1.schema.json#/$defs/text" }, { "type": "null" }] },
+    "scoreStatus": { "$ref": "common.v1.schema.json#/$defs/scoreStatus" },
+    "metrics": {
+      "description": "Projeção do resultado do scorer. Indisponível = null, nunca 0.",
+      "type": "object",
+      "required": ["referenceUnits", "confirmedReferenceUnits", "recall", "precision", "incorrectClaims", "newCorrect", "pending"],
+      "properties": {
+        "referenceUnits": { "type": ["integer", "null"], "minimum": 0 },
+        "confirmedReferenceUnits": { "type": ["integer", "null"], "minimum": 0 },
+        "recall": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "precision": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "incorrectClaims": { "type": ["integer", "null"], "minimum": 0 },
+        "newCorrect": { "type": ["integer", "null"], "minimum": 0 },
+        "pending": { "type": ["integer", "null"], "minimum": 0 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": { "properties": { "kind": { "const": "composite" } } },
+      "then": {
+        "properties": {
+          "baseline": {
+            "properties": {
+              "mode": { "not": { "const": "planned-absence" } },
+              "designatedBattery": { "type": "string" },
+              "choiceJustification": { "type": "string" }
+            }
+          },
+          "compatibility": { "properties": { "analysisManifest": { "type": "object" } } }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "baseline": { "properties": { "mode": { "const": "blocked" } } } } },
+      "then": { "properties": { "status": { "const": "blocked" } } }
+    },
+    {
+      "if": { "properties": { "status": { "const": "blocked" } } },
+      "then": {
+        "properties": {
+          "blockedReason": { "type": "string" },
+          "scoreStatus": { "const": "not-prepared" }
+        }
+      },
+      "else": { "properties": { "blockedReason": { "type": "null" } } }
+    },
+    {
+      "if": { "properties": { "scoreStatus": { "enum": ["not-prepared", "not-applicable"] } } },
+      "then": {
+        "properties": {
+          "metrics": {
+            "properties": {
+              "referenceUnits": { "type": "null" },
+              "confirmedReferenceUnits": { "type": "null" },
+              "recall": { "type": "null" },
+              "precision": { "type": "null" },
+              "incorrectClaims": { "type": "null" },
+              "newCorrect": { "type": "null" },
+              "pending": { "type": "null" }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "contract": "analysis-binding.v1",
+  "fixture": true,
+  "analysisId": "fixture-analise-02",
+  "campaignId": "fixture-campanha-01",
+  "createdAt": "2026-01-04T00:00:00Z",
+  "kind": "individual",
+  "screen": {
+    "id": "tela-fixture",
+    "label": "fixture",
+    "version": "fixture-0.0.0"
+  },
+  "runs": [
+    {
+      "runId": "fixture-run-com-01",
+      "arm": "com",
+      "artifactManifest": {
+        "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "bytes": 1000,
+        "location": {
+          "kind": "archive-repo",
+          "repo": "repositorio-arquivo-fixture",
+          "path": "pacotes/fixture-run-com-01/artifact-manifest.json"
+        }
+      }
+    },
+    {
+      "runId": "fixture-run-sem-01",
+      "arm": "sem",
+      "artifactManifest": {
+        "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "bytes": 1000,
+        "location": {
+          "kind": "archive-repo",
+          "repo": "repositorio-arquivo-fixture",
+          "path": "pacotes/fixture-run-sem-01/artifact-manifest.json"
+        }
+      }
+    }
+  ],
+  "collectionStartedAt": "2026-01-03T00:01:00Z",
+  "snapshots": {
+    "snapshotSetId": "fixture-snapshots-01",
+    "manifest": {
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "bytes": 1000,
+      "location": {
+        "kind": "archive-repo",
+        "repo": "repositorio-arquivo-fixture",
+        "path": "snapshots/fixture-snapshots-01.json"
+      }
+    }
+  },
+  "reference": {
+    "snapshotItemId": "referencia",
+    "version": "fixture-0.0.0",
+    "sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+  },
+  "scorer": {
+    "version": "flow-semantic-1.4.0",
+    "acceptancePolicy": "aceitacao-semantica-1.4.0",
+    "scorerSha256": "5555555555555555555555555555555555555555555555555555555555555555"
+  },
+  "baseline": {
+    "mode": "planned-absence",
+    "justification": "Ausência sintética declarada para exercitar o caminho individual.",
+    "declaredAt": "2026-01-01T12:00:00Z",
+    "declaredIn": {
+      "campaignId": "fixture-campanha-01",
+      "campaignSha256": "7777777777777777777777777777777777777777777777777777777777777777"
+    }
+  },
+  "compatibility": {
+    "source": "scripts/analysis-manifest.ts",
+    "analysisManifest": null
+  },
+  "status": "ready",
+  "blockedReason": null,
+  "scoreStatus": "pending-review",
+  "metrics": {
+    "referenceUnits": 10,
+    "confirmedReferenceUnits": null,
+    "recall": null,
+    "precision": null,
+    "incorrectClaims": null,
+    "newCorrect": null,
+    "pending": 7
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "contract": "campaign.v1",
+  "fixture": true,
+  "campaignId": "fixture-campanha-01",
+  "kind": "formal",
+  "title": "Campanha fixture (FIXTURE SINTÉTICA — não é dado científico)",
+  "objective": "Exercitar os contratos M0 sem nenhuma chamada paga.",
+  "hypotheses": [
+    "Hipótese sintética de fixture."
+  ],
+  "createdAt": "2026-01-01T00:00:00Z",
+  "frozenAt": null,
+  "design": {
+    "screens": [
+      {
+        "id": "tela-fixture",
+        "label": "fixture",
+        "version": "fixture-0.0.0"
+      }
+    ],
+    "arms": [
+      "sem",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "familia-fixture",
+        "requested": "modelo-fixture"
+      }
+    ],
+    "effort": "medium",
+    "repetitions": 1,
+    "order": "sequencial",
+    "seed": null
+  },
+  "fixed": {
+    "protocolSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "client": {
+      "name": "cliente-fixture",
+      "version": "0.0.0"
+    },
+    "provider": {
+      "name": "provedor-fixture",
+      "authMethod": "unknown"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "0.0.0-fixture"
+    },
+    "playwrightMcp": "0.0.0-fixture",
+    "isolationPolicyVersion": "isolamento-fixture-1",
+    "oracle": {
+      "package": "oraculo-fixture",
+      "version": "0.0.0-fixture",
+      "distSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "dataSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "profile": "combined"
+    },
+    "scorerVersion": "flow-semantic-1.4.0"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 1,
+    "campaignAttemptCeiling": 2,
+    "retryOn": [],
+    "attemptSelection": "primeira tentativa; nenhuma repetição"
+  },
+  "failurePolicy": "Falha fica registrada no slot; nada é repetido automaticamente.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": [
+      {
+        "screenId": "tela-fixture",
+        "justification": "Ausência sintética declarada para exercitar o caminho individual.",
+        "declaredAt": "2026-01-01T12:00:00Z",
+        "analysisPath": "individual"
+      }
+    ]
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Desfecho sintético.",
+    "secondaryOutcomes": [],
+    "uncertaintyMethod": null,
+    "exclusionRules": "Nenhuma exclusão."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": null,
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": [
+    {
+      "topic": "modelo/esforço/autenticação",
+      "issue": "NAT-47",
+      "owner": "autora"
+    }
+  ]
+}

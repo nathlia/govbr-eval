@@ -12,6 +12,7 @@ que estavam nesta pasta (piloto, adjudicação e auditoria da tela de fluxo, dia
 | Documento | Assunto |
 |---|---|
 | [`semantic-scoring.md`](semantic-scoring.md) | **O principal.** Pontuação semântica v02: filas, revisão cega, cenas, unidades, métricas. |
+| [`contratos-benchmark.md`](contratos-benchmark.md) | Contratos do benchmark isolado (M0): schemas em `contracts/`, quem escreve e lê cada arquivo, estados, ausência de linha de base, mapa de acessos. |
 | [`adjudicacao.md`](adjudicacao.md) | Quem julga as alegações e quando o assistente chama a autora (D-48). |
 | [`ancoragem.md`](ancoragem.md) | Como uma alegação é ancorada num elemento da página viva. |
 | [`pacote-revisao-fluxo.md`](pacote-revisao-fluxo.md) | O pacote de revisão da suíte de fluxo (v01). |

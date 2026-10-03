@@ -1,0 +1,57 @@
+{
+  "contract": "artifact-manifest.v1",
+  "fixture": true,
+  "campaignId": "fixture-campanha-01",
+  "runId": "fixture-run-com-01",
+  "producedBy": "controlador-fixture",
+  "producedAt": "2026-01-03T00:12:00Z",
+  "schemaVersions": {
+    "run": "run.v1",
+    "findings": "findings.v1",
+    "isolation": "isolation.v1"
+  },
+  "files": [
+    {
+      "path": "run.json",
+      "bytes": 100,
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "mediaType": "application/json",
+      "role": "run"
+    },
+    {
+      "path": "findings.json",
+      "bytes": 100,
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "mediaType": "application/json",
+      "role": "findings"
+    },
+    {
+      "path": "isolation.json",
+      "bytes": 100,
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "mediaType": "application/json",
+      "role": "isolation"
+    },
+    {
+      "path": "tool-events.ndjson",
+      "bytes": 100,
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "mediaType": "application/x-ndjson",
+      "role": "tool-events"
+    },
+    {
+      "path": "evidence/fixture-evidencia-01.png",
+      "bytes": 100,
+      "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+      "mediaType": "image/png",
+      "role": "evidence"
+    },
+    {
+      "path": "summary.md",
+      "bytes": 100,
+      "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+      "mediaType": "text/markdown",
+      "role": "summary"
+    }
+  ]
+}

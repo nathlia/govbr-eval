@@ -1,0 +1,81 @@
+{
+  "contract": "snapshot-manifest.v1",
+  "fixture": true,
+  "snapshotSetId": "fixture-snapshots-01",
+  "createdAt": "2026-01-02T12:00:00Z",
+  "items": [
+    {
+      "id": "site",
+      "kind": "site",
+      "description": "Bytes sintéticos do site servido (fixture).",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "bytes": 1000,
+      "location": {
+        "kind": "archive-repo",
+        "repo": "repositorio-arquivo-fixture",
+        "path": "snapshots/site-fixture.tar"
+      },
+      "immutable": true,
+      "exposedToAgent": false
+    },
+    {
+      "id": "referencia",
+      "kind": "reference",
+      "description": "Referência sintética (fixture; nenhum conteúdo de gabarito real).",
+      "sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+      "bytes": 1000,
+      "location": {
+        "kind": "archive-repo",
+        "repo": "repositorio-arquivo-fixture",
+        "path": "snapshots/referencia-fixture.json"
+      },
+      "immutable": true,
+      "exposedToAgent": true,
+      "version": "fixture-0.0.0"
+    },
+    {
+      "id": "plano-estados",
+      "kind": "state-plan",
+      "description": "Plano sintético de estados/viewports.",
+      "sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+      "bytes": 1000,
+      "location": {
+        "kind": "archive-repo",
+        "repo": "repositorio-arquivo-fixture",
+        "path": "snapshots/plano-fixture.json"
+      },
+      "immutable": true,
+      "exposedToAgent": false
+    },
+    {
+      "id": "instrumento",
+      "kind": "instrument",
+      "description": "Código do instrumento no commit sintético.",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 1000,
+      "location": {
+        "kind": "git-commit-path",
+        "repo": "govbr-eval",
+        "commit": "ffffffffffffffffffffffffffffffffffffffff",
+        "path": "scripts"
+      },
+      "immutable": true,
+      "exposedToAgent": false
+    },
+    {
+      "id": "lock-instrumento",
+      "kind": "lockfile",
+      "description": "package-lock sintético.",
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "bytes": 1000,
+      "location": {
+        "kind": "git-commit-path",
+        "repo": "govbr-eval",
+        "commit": "ffffffffffffffffffffffffffffffffffffffff",
+        "path": "package-lock.json"
+      },
+      "immutable": true,
+      "exposedToAgent": false
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/campaign.v1.schema.json",
+  "title": "campaign.json — campanha (piloto ou formal), v1",
+  "description": "Identidade, objetivo, desenho, versões fixadas, limites, política de falhas/retries, política de linha de base e plano de análise. Escrito pela preparação ANTES da coleta; uma campanha formal é congelada e não muda no meio.",
+  "type": "object",
+  "required": [
+    "contract", "fixture", "campaignId", "kind", "title", "objective", "hypotheses", "createdAt", "frozenAt",
+    "design", "fixed", "limits", "retryPolicy", "failurePolicy", "baselinePolicy", "analysisPlan", "budget"
+  ],
+  "properties": {
+    "contract": { "const": "campaign.v1" },
+    "fixture": { "$ref": "common.v1.schema.json#/$defs/fixture" },
+    "campaignId": { "$ref": "common.v1.schema.json#/$defs/id" },
+    "kind": { "enum": ["pilot", "formal"] },
+    "title": { "$ref": "common.v1.schema.json#/$defs/text" },
+    "objective": { "$ref": "common.v1.schema.json#/$defs/text" },
+    "hypotheses": { "type": "array", "minItems": 1, "items": { "$ref": "common.v1.schema.json#/$defs/text" } },
+    "createdAt": { "$ref": "common.v1.schema.json#/$defs/utcTimestamp" },
+    "frozenAt": {
+      "description": "Momento em que desenho, agenda e análise foram congelados. null só em piloto ainda aberto.",
+      "oneOf": [{ "$ref": "common.v1.schema.json#/$defs/utcTimestamp" }, { "type": "null" }]
+    },
+    "design": {
+      "type": "object",
+      "required": ["screens", "arms", "models", "effort", "repetitions", "order", "seed"],
+      "properties": {
+        "screens": { "type": "array", "minItems": 1, "items": { "$ref": "common.v1.schema.json#/$defs/screen" } },
+        "arms": {
+          "type": "array", "minItems": 1, "maxItems": 2, "uniqueItems": true,
+          "items": { "$ref": "common.v1.schema.json#/$defs/arm" }
+        },
+        "models": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["family", "requested"],
+            "properties": {
+              "family": { "$ref": "common.v1.schema.json#/$defs/text" },
+              "requested": { "$ref": "common.v1.schema.json#/$defs/text" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "effort": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "repetitions": { "type": "integer", "minimum": 1 },
+        "order": { "enum": ["sequencial", "alternado", "balanceado", "aleatorio"] },
+        "seed": { "type": ["integer", "null"] }
+      },
+      "additionalProperties": false,
+      "if": { "properties": { "order": { "const": "aleatorio" } } },
+      "then": { "properties": { "seed": { "type": "integer" } } },
+      "else": { "properties": { "seed": { "type": "null" } } }
+    },
+    "fixed": {
+      "description": "Versões fixadas que entram na chave de comparação. O oráculo só existe no braço com.",
+      "type": "object",
+      "required": ["protocolSha256", "client", "provider", "browser", "playwrightMcp", "isolationPolicyVersion", "oracle", "scorerVersion"],
+      "properties": {
+        "protocolSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" },
+        "client": {
+          "type": "object", "required": ["name", "version"],
+          "properties": { "name": { "$ref": "common.v1.schema.json#/$defs/text" }, "version": { "$ref": "common.v1.schema.json#/$defs/text" } },
+          "additionalProperties": false
+        },
+        "provider": {
+          "type": "object", "required": ["name", "authMethod"],
+          "properties": {
+            "name": { "$ref": "common.v1.schema.json#/$defs/text" },
+            "authMethod": { "enum": ["api-key", "oauth-subscription", "unknown"] }
+          },
+          "additionalProperties": false
+        },
+        "browser": {
+          "type": "object", "required": ["name", "version"],
+          "properties": { "name": { "$ref": "common.v1.schema.json#/$defs/text" }, "version": { "$ref": "common.v1.schema.json#/$defs/text" } },
+          "additionalProperties": false
+        },
+        "playwrightMcp": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "isolationPolicyVersion": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "oracle": { "$ref": "common.v1.schema.json#/$defs/oracleIdentity" },
+        "scorerVersion": { "$ref": "common.v1.schema.json#/$defs/text" }
+      },
+      "additionalProperties": false
+    },
+    "limits": { "$ref": "common.v1.schema.json#/$defs/limits" },
+    "retryPolicy": {
+      "type": "object",
+      "required": ["maxAttemptsPerSlot", "campaignAttemptCeiling", "retryOn", "attemptSelection"],
+      "properties": {
+        "maxAttemptsPerSlot": { "type": "integer", "minimum": 1 },
+        "campaignAttemptCeiling": { "type": "integer", "minimum": 1 },
+        "retryOn": { "type": "array", "uniqueItems": true, "items": { "$ref": "common.v1.schema.json#/$defs/failureReason" } },
+        "attemptSelection": {
+          "description": "Qual tentativa entra na análise, declarado antes da coleta.",
+          "$ref": "common.v1.schema.json#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "failurePolicy": { "$ref": "common.v1.schema.json#/$defs/text" },
+    "baselinePolicy": {
+      "type": "object",
+      "required": ["required", "comparable", "diagnosticOnly", "plannedAbsences"],
+      "properties": {
+        "required": { "const": true },
+        "comparable": { "const": ["linha-de-base/validator-nao-guiada", "linha-de-base/axe"] },
+        "diagnosticOnly": { "const": ["linha-de-base/validator-guiada"] },
+        "plannedAbsences": {
+          "description": "Única forma de ausência de linha de base aceita: planejada e justificada aqui, antes da coleta, e só no caminho individual.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["screenId", "justification", "declaredAt", "analysisPath"],
+            "properties": {
+              "screenId": { "$ref": "common.v1.schema.json#/$defs/id" },
+              "justification": { "$ref": "common.v1.schema.json#/$defs/text" },
+              "declaredAt": { "$ref": "common.v1.schema.json#/$defs/utcTimestamp" },
+              "analysisPath": { "const": "individual" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "analysisPlan": {
+      "type": "object",
+      "required": ["primaryOutcome", "secondaryOutcomes", "uncertaintyMethod", "exclusionRules"],
+      "properties": {
+        "primaryOutcome": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "secondaryOutcomes": { "type": "array", "items": { "$ref": "common.v1.schema.json#/$defs/text" } },
+        "uncertaintyMethod": { "oneOf": [{ "$ref": "common.v1.schema.json#/$defs/text" }, { "type": "null" }] },
+        "exclusionRules": { "$ref": "common.v1.schema.json#/$defs/text" }
+      },
+      "additionalProperties": false
+    },
+    "budget": {
+      "description": "Orçamento aprovado. Valor não aprovado fica null; nunca 0.",
+      "type": "object",
+      "required": ["approved", "amount", "currency", "approvedBy", "approvedAt"],
+      "properties": {
+        "approved": { "type": "boolean" },
+        "amount": { "type": ["number", "null"], "exclusiveMinimum": 0 },
+        "currency": { "type": ["string", "null"] },
+        "approvedBy": { "oneOf": [{ "$ref": "common.v1.schema.json#/$defs/text" }, { "type": "null" }] },
+        "approvedAt": { "oneOf": [{ "$ref": "common.v1.schema.json#/$defs/utcTimestamp" }, { "type": "null" }] }
+      },
+      "additionalProperties": false,
+      "if": { "properties": { "approved": { "const": true } } },
+      "then": { "properties": { "amount": { "type": "number" }, "currency": { "type": "string" }, "approvedBy": { "type": "string" }, "approvedAt": { "type": "string" } } },
+      "else": { "properties": { "amount": { "type": "null" }, "approvedBy": { "type": "null" }, "approvedAt": { "type": "null" } } }
+    },
+    "pendingDecisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["topic", "issue", "owner"],
+        "properties": {
+          "topic": { "$ref": "common.v1.schema.json#/$defs/text" },
+          "issue": { "type": "string", "pattern": "^NAT-[0-9]+$" },
+          "owner": { "$ref": "common.v1.schema.json#/$defs/text" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "if": { "properties": { "kind": { "const": "formal" } } },
+  "then": {
+    "properties": {
+      "frozenAt": { "type": "string" },
+      "budget": { "properties": { "approved": { "const": true } } }
+    }
+  }
+}

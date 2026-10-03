@@ -1,0 +1,55 @@
+{
+  "contract": "findings.v1",
+  "fixture": true,
+  "campaignId": "fixture-campanha-01",
+  "runId": "fixture-run-com-01",
+  "receivedAt": "2026-01-03T00:10:30Z",
+  "receipt": "recibo-fixture-01",
+  "findingContract": "achado-2",
+  "report": {
+    "timestamp": "2026-01-03T00:10:29Z",
+    "model": "modelo-fixture",
+    "appUrl": "http://127.0.0.1:3100/fixture.html",
+    "scope": [
+      "tela fixture inteira"
+    ],
+    "notes": "FIXTURE SINTÉTICA — não é dado científico",
+    "findings": [
+      {
+        "selector": "#fixture-alvo",
+        "relatedSelectors": [
+          "#fixture-participante"
+        ],
+        "rule": null,
+        "observed": "Valor sintético observado na fixture.",
+        "expected": "Condição sintética esperada na fixture.",
+        "state": {
+          "viewport": {
+            "width": 0,
+            "height": 900
+          },
+          "steps": []
+        },
+        "evidence": [
+          "fixture-evidencia-01.png"
+        ]
+      },
+      {
+        "selector": ".fixture-outro",
+        "rule": "fixture:regra-sintetica",
+        "observed": "Outro valor sintético.",
+        "expected": "Outra condição sintética.",
+        "state": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "steps": [
+            "clicar em .fixture-acao"
+          ]
+        },
+        "evidence": []
+      }
+    ]
+  }
+}
