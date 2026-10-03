@@ -43,6 +43,8 @@
     "test:isolation": "tsx scripts/test-isolation.ts",
     "test:contract": "tsx scripts/test-flow-contract.ts",
     "test:contracts": "tsx scripts/test-contracts.ts",
+    "export:telas": "tsx scripts/export-telas.ts",
+    "test:export-telas": "tsx scripts/test-export-telas.ts",
     "test:evidence": "tsx scripts/test-evidence-integrity.ts",
     "test:states": "tsx scripts/test-flow-states.ts",
     "test:fila": "tsx scripts/test-review-queue.ts",
