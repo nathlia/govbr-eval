@@ -1,0 +1,50 @@
+{
+  "contract": "findings.v1",
+  "fixture": true,
+  "campaignId": "fixture-analise-campanha-01",
+  "runId": "fixture-analise-run-sem-01",
+  "receivedAt": "2026-01-03T00:29:30Z",
+  "receipt": "recibo-fixture-sem-01",
+  "findingContract": "achado-2",
+  "report": {
+    "timestamp": "2026-01-03T00:29:29Z",
+    "model": "modelo-fixture",
+    "appUrl": "http://127.0.0.1:3100/fixture-analise.html",
+    "scope": [
+      "tela fixture inteira"
+    ],
+    "notes": "FIXTURE SINTÉTICA — não é dado científico",
+    "findings": [
+      {
+        "selector": "#fx-campo",
+        "rule": "fixture:campo-sem-rotulo",
+        "observed": "Campo sintético sem rótulo associado. <script>alert('fixture')</script> ver http://exemplo.invalid/x",
+        "expected": "Campo com rótulo associado (condição sintética).",
+        "state": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "steps": []
+        },
+        "evidence": [
+          "sem-01.png"
+        ]
+      },
+      {
+        "selector": ".fx-aviso",
+        "rule": null,
+        "observed": "O aviso sintético parece ter contraste baixo (afirmação sintética para ser julgada incorreta).",
+        "expected": "Contraste maior (condição sintética).",
+        "state": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "steps": []
+        },
+        "evidence": []
+      }
+    ]
+  }
+}

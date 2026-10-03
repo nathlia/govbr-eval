@@ -1,0 +1,68 @@
+{
+  "contract": "isolation.v1",
+  "fixture": true,
+  "campaignId": "fixture-analise-campanha-01",
+  "runId": "fixture-analise-run-com-01",
+  "policyVersion": "isolamento-fixture-1",
+  "producedBy": "harness",
+  "producedAt": "2026-01-03T00:00:50Z",
+  "result": "passed",
+  "checks": [
+    {
+      "id": "sentinela-referencia",
+      "category": "sentinel",
+      "target": "arquivo-sentinela sintético",
+      "required": true,
+      "outcome": "passed",
+      "evidence": null
+    },
+    {
+      "id": "rede-externa",
+      "category": "network",
+      "target": "destino fora da allowlist",
+      "required": true,
+      "outcome": "passed",
+      "evidence": null
+    },
+    {
+      "id": "ipv6-loopback",
+      "category": "network",
+      "target": "[::1] alternativo",
+      "required": false,
+      "outcome": "not-exercised",
+      "evidence": null
+    }
+  ],
+  "positiveControls": [
+    {
+      "id": "controle-sentinela",
+      "target": "arquivo-sentinela sintético",
+      "outcome": "passed",
+      "evidence": null
+    }
+  ],
+  "toolInventory": {
+    "announced": [
+      "browser_navigate",
+      "browser_snapshot",
+      "browser_take_screenshot",
+      "coletor_enviar",
+      "mcp__govbr-ds-validator__scan_page"
+    ],
+    "observed": [
+      "browser_navigate",
+      "mcp__govbr-ds-validator__scan_page"
+    ],
+    "oracleAnnounced": true
+  },
+  "capabilitiesObserved": [
+    "navegação",
+    "submissão ao coletor"
+  ],
+  "notExercised": [
+    "ipv6-loopback"
+  ],
+  "limitations": [
+    "FIXTURE SINTÉTICA — não é dado científico"
+  ]
+}

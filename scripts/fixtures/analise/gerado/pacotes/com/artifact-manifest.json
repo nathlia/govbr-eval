@@ -1,0 +1,50 @@
+{
+  "contract": "artifact-manifest.v1",
+  "fixture": true,
+  "campaignId": "fixture-analise-campanha-01",
+  "runId": "fixture-analise-run-com-01",
+  "producedBy": "construtor-fixture-analise",
+  "producedAt": "2026-01-03T00:40:00Z",
+  "schemaVersions": {
+    "run": "run.v1",
+    "findings": "findings.v1",
+    "isolation": "isolation.v1"
+  },
+  "files": [
+    {
+      "path": "run.json",
+      "bytes": 3318,
+      "sha256": "6097c68fcb50ac5b9375cb8d1f6390af50717c9e96cea61b317b0c323cc4056d",
+      "mediaType": "application/json",
+      "role": "run"
+    },
+    {
+      "path": "findings.json",
+      "bytes": 1763,
+      "sha256": "42b1ad2118fdd8ba0428437775c00382d55923de6b0f822753db319bda0b1c54",
+      "mediaType": "application/json",
+      "role": "findings"
+    },
+    {
+      "path": "evidence/com-01.png",
+      "bytes": 68,
+      "sha256": "63ef318d96b5d0d0ceba6e04a4e622b1158335cdc67c49e27839132c6f655058",
+      "mediaType": "image/png",
+      "role": "evidence"
+    },
+    {
+      "path": "isolation.json",
+      "bytes": 1572,
+      "sha256": "2b66f6f27504fafc04fa69fdef5c92986ee693828e68280c07d12b382e8886e0",
+      "mediaType": "application/json",
+      "role": "isolation"
+    },
+    {
+      "path": "tool-events.ndjson",
+      "bytes": 211,
+      "sha256": "3f55eb5284d1de12df3882d2f72a46162e0f79bcb89be2f5f35bda176613327e",
+      "mediaType": "application/x-ndjson",
+      "role": "tool-events"
+    }
+  ]
+}

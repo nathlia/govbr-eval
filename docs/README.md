@@ -13,6 +13,7 @@ que estavam nesta pasta (piloto, adjudicação e auditoria da tela de fluxo, dia
 |---|---|
 | [`semantic-scoring.md`](semantic-scoring.md) | **O principal.** Pontuação semântica v02: filas, revisão cega, cenas, unidades, métricas. |
 | [`contratos-benchmark.md`](contratos-benchmark.md) | Contratos do benchmark isolado (M0): schemas em `contracts/`, quem escreve e lê cada arquivo, estados, ausência de linha de base, mapa de acessos. |
+| [`analise-execucao.md`](analise-execucao.md) | Análise determinística de um pacote ou par sem/com (T6): conferência na fronteira, política de linha de base aplicada, adaptador para o scorer existente, `summary.md`/`summary.json`, como revisar e recalcular. |
 | [`exportacao-telas.md`](exportacao-telas.md) | Exportação das telas A/B para o projeto mínimo servido na coleta (T1): allowlist, servidor estático, `site-manifest.json`, auditoria e varredura de vazamento do gabarito. |
 | [`skill-avaliar-tela.md`](skill-avaliar-tela.md) | Skill única e genérica de execução (T2): o que mudou em relação a `evaluate-screen` e por quê, a garantia de paridade entre braços e como renderizar o texto da tarefa. |
 | [`adjudicacao.md`](adjudicacao.md) | Quem julga as alegações e quando o assistente chama a autora (D-48). |

@@ -1,0 +1,63 @@
+{
+  "contract": "snapshot-manifest.v1",
+  "fixture": true,
+  "snapshotSetId": "fixture-analise-snapshots-01",
+  "createdAt": "2026-01-02T12:00:00Z",
+  "items": [
+    {
+      "id": "site",
+      "kind": "site",
+      "description": "Site congelado sintético (sha256 = do site-manifest.json).",
+      "sha256": "f62dcaf859d396ec423703300b76bf93b72fbdc23275925c640a9a4dfeef7087",
+      "bytes": 267,
+      "location": {
+        "kind": "package-path",
+        "path": "site/site-manifest.json"
+      },
+      "immutable": true,
+      "exposedToAgent": false
+    },
+    {
+      "id": "referencia",
+      "kind": "reference",
+      "description": "Referência sintética (nenhum conteúdo de gabarito real).",
+      "sha256": "47f84bb62c0aa0b30ab098049716b072ec9d6e25e7417b238daeb93dc5009434",
+      "bytes": 1257,
+      "location": {
+        "kind": "package-path",
+        "path": "referencia.json"
+      },
+      "immutable": true,
+      "exposedToAgent": false,
+      "version": "fixture-analise-0.0.1"
+    },
+    {
+      "id": "plano-estados",
+      "kind": "state-plan",
+      "description": "Plano de estados/janelas da referência sintética (sha256 = statePlanSha256).",
+      "sha256": "df50fbe008cda13831c62d47d213e2ab3c7ad26b45e2d4346ed7702c376a5b09",
+      "bytes": 143,
+      "location": {
+        "kind": "package-path",
+        "path": "plano-estados.json"
+      },
+      "immutable": true,
+      "exposedToAgent": false
+    },
+    {
+      "id": "instrumento",
+      "kind": "instrument",
+      "description": "Código do instrumento no commit sintético.",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 1,
+      "location": {
+        "kind": "git-commit-path",
+        "repo": "govbr-eval",
+        "commit": "ffffffffffffffffffffffffffffffffffffffff",
+        "path": "scripts"
+      },
+      "immutable": true,
+      "exposedToAgent": false
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "contract": "baseline.v1",
+  "fixture": true,
+  "baselineId": "fixture-analise-linha-de-base-01",
+  "campaignId": "fixture-analise-campanha-01",
+  "screen": {
+    "id": "tela-fixture-analise",
+    "label": "fixture da análise (sintética)",
+    "version": "fixture-analise-0.0.1"
+  },
+  "attempt": 1,
+  "rerunOf": null,
+  "rerunReason": null,
+  "producer": {
+    "script": "scripts/run-baselines-flow.ts",
+    "baselineVersion": "linha-de-base-fluxo-2.1.0"
+  },
+  "scope": "bateria",
+  "status": "complete",
+  "error": null,
+  "raw": {
+    "sha256": "379cc62eccea9028767b3deb5ed4641867ba798cc16bd46ba4adf0e51c5b1175",
+    "bytes": 3192,
+    "location": {
+      "kind": "package-path",
+      "path": "bruta.json"
+    }
+  },
+  "timestamps": {
+    "startedAt": "2026-01-03T01:00:00Z",
+    "finishedAt": "2026-01-03T01:00:03Z"
+  },
+  "links": {
+    "collectionManifest": {
+      "sha256": "e14e9a63beaaf628b91699352fd42a5e6b66d750d0826036d167fb61e7c6197e",
+      "bytes": 94,
+      "location": {
+        "kind": "package-path",
+        "path": "manifesto-coleta.json"
+      }
+    },
+    "site": {
+      "snapshotSetId": "fixture-analise-snapshots-01",
+      "itemId": "site",
+      "sha256": "f62dcaf859d396ec423703300b76bf93b72fbdc23275925c640a9a4dfeef7087"
+    },
+    "reference": {
+      "snapshotSetId": "fixture-analise-snapshots-01",
+      "itemId": "referencia",
+      "sha256": "47f84bb62c0aa0b30ab098049716b072ec9d6e25e7417b238daeb93dc5009434"
+    },
+    "statePlan": {
+      "snapshotSetId": "fixture-analise-snapshots-01",
+      "itemId": "plano-estados",
+      "sha256": "df50fbe008cda13831c62d47d213e2ab3c7ad26b45e2d4346ed7702c376a5b09"
+    }
+  },
+  "identity": {
+    "collection": "fluxo-1.3.0",
+    "referenceSha256": "47f84bb62c0aa0b30ab098049716b072ec9d6e25e7417b238daeb93dc5009434",
+    "siteManifestSha256": "f62dcaf859d396ec423703300b76bf93b72fbdc23275925c640a9a4dfeef7087",
+    "oracleDistSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "oracleDataSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "statePlanSha256": "df50fbe008cda13831c62d47d213e2ab3c7ad26b45e2d4346ed7702c376a5b09"
+  },
+  "comparable": [
+    "linha-de-base/validator-nao-guiada",
+    "linha-de-base/axe"
+  ],
+  "diagnosticOnly": [
+    "linha-de-base/validator-guiada"
+  ],
+  "eslint": {
+    "status": "absent",
+    "absentReason": "tela fixture sem fontes declaradas"
+  }
+}

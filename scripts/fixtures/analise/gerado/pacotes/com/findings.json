@@ -1,0 +1,64 @@
+{
+  "contract": "findings.v1",
+  "fixture": true,
+  "campaignId": "fixture-analise-campanha-01",
+  "runId": "fixture-analise-run-com-01",
+  "receivedAt": "2026-01-03T00:10:30Z",
+  "receipt": "recibo-fixture-com-01",
+  "findingContract": "achado-2",
+  "report": {
+    "timestamp": "2026-01-03T00:10:29Z",
+    "model": "modelo-fixture",
+    "appUrl": "http://127.0.0.1:3100/fixture-analise.html",
+    "scope": [
+      "tela fixture inteira"
+    ],
+    "notes": "FIXTURE SINTÉTICA — não é dado científico",
+    "findings": [
+      {
+        "selector": "#fx-campo",
+        "rule": "fixture:campo-sem-rotulo",
+        "observed": "Campo sintético sem rótulo associado.",
+        "expected": "Campo com rótulo associado (condição sintética).",
+        "state": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "steps": []
+        },
+        "evidence": [
+          "com-01.png"
+        ]
+      },
+      {
+        "selector": "#fx-botao",
+        "rule": "fixture:cor-fora-da-paleta",
+        "observed": "Fundo #ff00ff, fora da paleta sintética.",
+        "expected": "Cor da paleta sintética.",
+        "state": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "steps": []
+        },
+        "evidence": []
+      },
+      {
+        "selector": "#fx-titulo",
+        "rule": null,
+        "observed": "Título sintético sem hierarquia declarada (descoberta sintética fora da referência).",
+        "expected": "Hierarquia declarada (condição sintética).",
+        "state": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "steps": []
+        },
+        "evidence": []
+      }
+    ]
+  }
+}

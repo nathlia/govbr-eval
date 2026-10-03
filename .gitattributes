@@ -13,3 +13,5 @@ results/semantic-review/** -text
 # depois da execução. Um checkout no Windows que trocasse LF por CRLF mudaria os bytes e a
 # conferência falharia sobre artefatos que ninguém editou. Nada sob logs/ é fonte: é arquivo morto.
 pipeline/logs/** -text
+# T6: fixture sintética da análise — os documentos gerados guardam sha256 dos próprios bytes.
+scripts/fixtures/** -text
