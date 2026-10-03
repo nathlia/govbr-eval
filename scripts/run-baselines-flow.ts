@@ -19,6 +19,10 @@
  * Uso:
  *   bateria: npm run baselines:fluxo -- --out NOVO_ARQ --collection-manifest ARQ --site-manifest ARQ
  *            (APP_URL = origem que serve o site congelado; os bytes servidos são conferidos)
+ *            O manifesto pode ser o da v02 (manifesto-coleta-1.0.0, gabarito arquivado pela bateria) ou
+ *            o do benchmark isolado (manifesto-coleta-isolada-1.0.0, T4: referência no checkout do
+ *            govbr-eval, mesmo commit). O site pode ser o da superfície v02 ou o site-manifest.v1 do
+ *            govbr-telas. Roda igual em Linux (job linhas-de-base do workflow) e no Windows.
  *   avulso:  npm run baselines:fluxo -- --dev-global   (results/baselines-fluxo.json, não confrontável)
  */
 
@@ -41,9 +45,10 @@ import {
 import { normalizeRuleId } from "./units";
 import { FLOW_INSTRUMENT_VERSION } from "./instrument";
 import {
-  VALIDATOR_ROOT, cenasDoPlano, compareIdentities, gitState, oracleIdentity, readCollectionManifest, sha256, sha256File,
+  VALIDATOR_ROOT, cenasDoPlano, compareIdentities, gitState, oracleIdentity, sha256, sha256File,
   statePlanOf, statePlanSha256, type CenaDoPlano, type ExecutableIdentity,
 } from "./collection-manifest";
+import { lerManifestoDeColeta } from "./manifesto-coleta-isolada";
 import { verifyServedSite } from "./measurement-surface";
 import { referenciaDe, telaFromArgs } from "./telas";
 
@@ -194,14 +199,13 @@ async function main(): Promise<number> {
   if (outArg && existsSync(out)) throw new Error(`${out} já existe: linha de base de bateria nunca é sobrescrita.`);
 
   const appOrigin = process.env.APP_URL ?? "http://localhost:3000";
-  const collection = manifestArg ? readCollectionManifest(resolve(manifestArg)) : null;
-  if (collection && !collection.manifest.archive) throw new Error("O manifesto de coleta não arquivou o gabarito.");
+  const collection = manifestArg ? lerManifestoDeColeta(resolve(manifestArg)) : null;
   // Na bateria, o gabarito é a cópia arquivada pela coleta, não o arquivo vivo — e uma bateria sem
   // referência para em `referenciaDe`, nomeando o arquivo que falta. O arquivo AVULSO aceita tela
   // ainda sem referência (tela B, D-49): mede a página como ela é, sem spec, sem varredura guiada e
   // sem diagnóstico de cobertura. Nada aqui inventa gabarito nem antecipa achado.
   const arquivoGt = process.env.FLOW_GT ?? (devGlobal ? tela.reference : referenciaDe(tela));
-  const gtPath = collection?.manifest.archive ? join(ROOT, collection.manifest.archive.reference.path)
+  const gtPath = collection ? join(ROOT, collection.referencePath)
     : arquivoGt ? join(ROOT, arquivoGt) : null;
   const gtBytes = gtPath ? readFileSync(gtPath) : null;
   const gt = gtBytes ? JSON.parse(gtBytes.toString("utf8")) as FlowGroundTruth : null;
@@ -261,7 +265,7 @@ async function main(): Promise<number> {
 
   try {
     if (collection) {
-      const mismatches = compareIdentities(collection.manifest.identity, identity);
+      const mismatches = compareIdentities(collection.identity, identity);
       if (mismatches.length) throw new Error(`A linha de base mediria outra coleta: ${mismatches.join("; ")}`);
     }
     console.log(`\nLinhas de base da suíte de fluxo — ${url}`);

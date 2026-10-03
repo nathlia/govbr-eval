@@ -22,7 +22,7 @@
  * Docs: docs/runner-isolado.md.
  */
 import { spawn, type ChildProcess } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmdirSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { randomBytes } from "node:crypto";
@@ -160,14 +160,41 @@ function listFiles(dir: string, prefix = ""): string[] {
  * bloquearia um servidor no mesmo laço de eventos. Faz o papel do painel antigo (que servia o repo
  * inteiro): um alvo real e alcançável fora da política.
  */
-function hostSentinelServer(token: string): Promise<{ child: ChildProcess; port: number }> {
+function hostSentinelServer(token: string, bindHost: string): Promise<{ child: ChildProcess; port: number }> {
   const script = "require('http').createServer((q,r)=>{r.writeHead(200,{'content-type':'text/plain'});r.end(process.env.T+'\\n'+q.url+'\\n')})" +
-    ".listen(0,'127.0.0.1',function(){console.log(this.address().port)})";
+    ".listen(0,process.env.H,function(){console.log(this.address().port)})";
   return new Promise((resolvePromise, reject) => {
-    const child = spawn(process.execPath, ['-e', script], { env: { T: token }, stdio: ['ignore', 'pipe', 'inherit'] });
+    const child = spawn(process.execPath, ['-e', script], { env: { T: token, H: bindHost }, stdio: ['ignore', 'pipe', 'inherit'] });
     child.stdout!.once('data', (d: Buffer) => resolvePromise({ child, port: Number(d.toString().trim()) }));
     child.once('error', reject);
   });
+}
+
+/**
+ * Docker Desktop (Windows/macOS: `host.docker.internal` leva ao loopback do host) × Docker Engine
+ * nativo (Linux: runner do GitHub, dind), onde esse nome não existe por padrão e o loopback do host não
+ * é alcançável de contêiner nenhum. No nativo, o servidor-sentinela escuta no gateway da rede `bridge`
+ * padrão (o "host" visto de um contêiner comum) e o controle positivo o alcança por `host-gateway`;
+ * as redes internas da execução não têm rota para lá — é o que a sonda confere.
+ */
+export function dockerEngine(): { nativo: boolean; os: string; bridgeGateway: string | null } {
+  const os = docker(["info", "--format", "{{.OperatingSystem}}"], { allowFail: true, timeoutMs: 20_000 }).stdout.trim();
+  const nativo = os !== "" && !/Docker Desktop/i.test(os);
+  const gw = nativo ? docker(["network", "inspect", "bridge", "--format", "{{range .IPAM.Config}}{{.Gateway}} {{end}}"], { allowFail: true }).stdout.trim().split(/\s+/)
+    .find((g) => /^\d+\.\d+\.\d+\.\d+$/.test(g)) ?? null : null;
+  return { nativo, os, bridgeGateway: gw };
+}
+
+/**
+ * No Linux, o que os contêineres (usuário 10001) gravaram em /out pertence a eles: um runner não-root
+ * não conseguiria apagar a pasta de trabalho depois de copiá-la. Um contêiner de manutenção, sem rede,
+ * devolve a posse ao usuário do runner. No Docker Desktop o bind mount não tem dono; nada a fazer.
+ */
+function devolverPosse(dir: string, image: string): void {
+  const getuid = (process as { getuid?: () => number }).getuid, getgid = (process as { getgid?: () => number }).getgid;
+  if (process.platform === "win32" || !getuid || !getgid || getuid() === 0) return;
+  docker(["run", "--rm", "--network", "none", "--user", "0", "--cap-drop", "ALL", "--cap-add", "CHOWN", "--cap-add", "FOWNER", "--cap-add", "DAC_OVERRIDE",
+    "--mount", `type=bind,src=${dir},dst=/w`, image, "chown", "-R", `${getuid()}:${getgid()}`, "/w"], { allowFail: true, timeoutMs: 120_000 });
 }
 
 function waitLog(name: string, pattern: RegExp, timeoutMs: number): boolean {
@@ -213,7 +240,11 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
   mkdirSync(runDir, { recursive: true });
   const work = join(runDir, ".work");
   const roles = ["task", "agent", "probe", "browser", "oracle", "collector", "egress-provider", "egress-site", "provider-stub"];
-  for (const r of roles) mkdirSync(join(work, r), { recursive: true });
+  for (const r of roles) {
+    mkdirSync(join(work, r), { recursive: true });
+    // Linux: o usuário 10001 dos contêineres grava na saída do próprio papel (no Docker Desktop, sem efeito)
+    if (process.platform !== "win32" && r !== "task") chmodSync(join(work, r), 0o777);
+  }
   // entradas do dublê (certificado + chave do servidor + roteiro): fora de `roles`, nunca copiadas ao pacote
   mkdirSync(join(work, "stub-in"), { recursive: true });
   const short = runId.replace(/[^A-Za-z0-9]/g, "").slice(-10).toLowerCase() + randomBytes(2).toString("hex");
@@ -244,6 +275,8 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
   let lock: ImagesLock | null = null;
   const dockerState = dockerAvailable();
   integ("docker", "Docker disponível", dockerState.ok, dockerState.detail);
+  const engine = dockerState.ok ? dockerEngine() : { nativo: false, os: "", bridgeGateway: null };
+  if (engine.nativo) integ("docker-nativo", "Docker Engine nativo: gateway da rede bridge padrão (alvo do controle positivo do host)", engine.bridgeGateway !== null, `${engine.os} · ${engine.bridgeGateway ?? "sem gateway"}`);
   try {
     lock = loadLock();
   } catch (e) {
@@ -308,7 +341,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     }
   }
   const harness = gitState(EVAL_ROOT);
-  const preflightDoc = { runner: RUNNER_VERSION, policy: ISOLATION_POLICY_VERSION, plannedAt, harness, lock: lock ? { images: Object.fromEntries(Object.entries(lock.images).map(([k, v]) => [k, { tag: v.tag, id: v.id }])), versions: lock.versions } : null,
+  const preflightDoc = { runner: RUNNER_VERSION, policy: ISOLATION_POLICY_VERSION, plannedAt, harness, dockerEngine: engine, lock: lock ? { images: Object.fromEntries(Object.entries(lock.images).map(([k, v]) => [k, { tag: v.tag, id: v.id }])), versions: lock.versions } : null,
     telasManifestSha, skillSha256: sha256(skillPkg), prompt: rendered ? { sha256: rendered.promptSha256, templateSha256: rendered.templateSha256, bytes: rendered.bytes } : null,
     oracle: oracleNow, providerAllowlist: PROVIDER_ALLOWLIST, providerDeniedOnPurpose: PROVIDER_DENIED_ON_PURPOSE,
     agent: { kind: opts.agente, provider: opts.agente === "fake" ? null : claudeStub ? "stub" : "real", roteiro: roteiro?.name ?? null,
@@ -361,7 +394,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
         mkdirSync(dirname(f), { recursive: true });
         writeFileSync(f, JSON.stringify({ sentinela: sentinelToken, nota: "arquivo falso plantado pelo runner; nenhum conteúdo real" }) + "\n");
       }
-      sentinelHost = await hostSentinelServer(sentinelToken);
+      sentinelHost = await hostSentinelServer(sentinelToken, engine.nativo ? engine.bridgeGateway! : "127.0.0.1");
       const hostPorts = [sentinelHost.port];
 
       // tarefa (montada só-leitura no agente e na sonda)
@@ -434,9 +467,9 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       // ── controles positivos do controlador
       const tokenRead = sentinelFiles.every((f) => readFileSync(f, "utf8").includes(sentinelToken));
       positives.push({ id: "sentinelas-no-host", target: `${sentinelFiles.length} arquivos-sentinela legíveis pelo controlador`, outcome: tokenRead ? "passed" : "failed", detail: sentinelFiles.map((f) => relative(TCC_ROOT, f).replace(/\\/g, "/")).join(", ") });
-      const hostCtl = docker(["run", "--rm", ...label, "--network", "bridge", "--read-only", "--cap-drop", "ALL", "--user", "10001:10001", L.images.agent.id, "node", "-e",
+      const hostCtl = docker(["run", "--rm", ...label, "--network", "bridge", ...(engine.nativo ? ["--add-host", "host.docker.internal:host-gateway"] : []), "--read-only", "--cap-drop", "ALL", "--user", "10001:10001", L.images.agent.id, "node", "-e",
         `const n=require('net');const s=n.connect(${sentinelHost.port},'host.docker.internal');let b='';s.on('data',d=>b+=d);s.on('connect',()=>s.write('GET /controle HTTP/1.0\\r\\n\\r\\n'));s.on('end',()=>{console.log(b.includes('${sentinelToken}')?'ALCANCOU':'SEM-TOKEN');});s.on('error',e=>console.log('ERRO '+e.code));setTimeout(()=>{console.log('TIMEOUT');process.exit(0)},5000)`], { allowFail: true, timeoutMs: 60_000 });
-      positives.push({ id: "host-alcancavel-fora-da-politica", target: `servidor-sentinela no loopback do host (porta ${sentinelHost.port}) alcançado por um contêiner comum (rede bridge padrão)`, outcome: /ALCANCOU/.test(hostCtl.stdout) ? "passed" : "failed", detail: hostCtl.stdout.trim() || hostCtl.stderr.trim().slice(0, 200) });
+      positives.push({ id: "host-alcancavel-fora-da-politica", target: `servidor-sentinela no ${engine.nativo ? `gateway da rede bridge do host (${engine.bridgeGateway})` : "loopback do host"} (porta ${sentinelHost.port}) alcançado por um contêiner comum (rede bridge padrão)`, outcome: /ALCANCOU/.test(hostCtl.stdout) ? "passed" : "failed", detail: hostCtl.stdout.trim() || hostCtl.stderr.trim().slice(0, 200) });
       const hostname = docker(["exec", cname("browser"), "cat", "/etc/hostname"], { allowFail: true });
       positives.push({ id: "arquivo-local-do-navegador", target: "/etc/hostname existe no contêiner do navegador (alvo do teste de file://)", outcome: hostname.code === 0 && hostname.stdout.trim().length > 0 ? "passed" : "failed" });
       const viaProxy = (url: string): string => docker(["exec", cname("browser"), "node", "-e",
@@ -502,6 +535,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       for (const c of containers) evidence(`logs/${c.replace(`gr-${short}-`, "")}.log`, (() => { const r = docker(["logs", c], { allowFail: true }); return r.stdout + r.stderr; })());
     } finally {
       teardownState = teardown();
+      if (lock) devolverPosse(work, lock.images.egress.id);
       sentinelHost?.child.kill();
       rmSync(sentinelDir, { recursive: true, force: true });
       try { rmdirSync(join(TCC_ROOT, ".govbr-sentinelas")); } catch { /* outra execução ainda usa */ }

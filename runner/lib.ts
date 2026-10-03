@@ -13,7 +13,14 @@ export const EVAL_ROOT = resolve(RUNNER_DIR, "..");
 export const TCC_ROOT = resolve(EVAL_ROOT, "..");
 export const DEFAULT_TELAS_DIR = join(TCC_ROOT, "govbr-telas");
 export const DEFAULT_VALIDATOR_DIR = join(TCC_ROOT, "govbr-ds-validator");
-export const LOCK_PATH = join(RUNNER_DIR, "images.lock.json");
+/** Lock commitado: a referência que o CI confere (versões). */
+export const COMMITTED_LOCK_PATH = join(RUNNER_DIR, "images.lock.json");
+/**
+ * Lock que build-images grava e run-once lê. No CI (T4) as imagens são construídas na VM do job e os
+ * ids não se reproduzem entre máquinas: `GOVBR_RUNNER_LOCK` aponta para um lock fora do checkout, que
+ * fica limpo, e o conteúdo dele é conferido contra o commitado (scripts/pipeline-t4.ts conferir-imagens).
+ */
+export const LOCK_PATH = process.env.GOVBR_RUNNER_LOCK ? resolve(process.env.GOVBR_RUNNER_LOCK) : COMMITTED_LOCK_PATH;
 
 /** Base de todas as imagens: Node 24 LTS, fixada por digest (nunca `latest`). */
 export const BASE_IMAGE = "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6";

@@ -170,6 +170,47 @@ export function freezeSite(distDir: string, entry: string, outDir: string, corpu
   return manifest;
 }
 
+/** `site-manifest.v1` do projeto de telas (govbr-telas, T1/D-66): arquivos em lista, sem barra inicial. */
+interface SiteManifestV1 {
+  contract: "site-manifest.v1";
+  package?: { name: string; version: string };
+  screens: { id: string; entry: string }[];
+  routing?: { spa?: { prefix: string; index: string } | null; aliases?: Record<string, string> };
+  origin?: { corpus?: { commit: string | null; dirty: boolean | null } };
+  files: { path: string; sha256: string; bytes: number }[];
+}
+
+/**
+ * Os dois formatos de site congelado na forma interna (caminho servido → sha256): o da superfície v02
+ * (`files` como mapa) passa intacto; o `site-manifest.v1` do govbr-telas (T4) é traduzido. O hash que
+ * identifica o site continua sendo o dos BYTES do arquivo de manifesto, nunca o desta tradução.
+ */
+export function normalizarManifestoDoSite(raw: unknown): SiteManifest {
+  const doc = raw as { contract?: string };
+  if (doc?.contract !== "site-manifest.v1") return raw as SiteManifest;
+  const v1 = raw as SiteManifestV1;
+  if (!Array.isArray(v1.files) || !Array.isArray(v1.screens) || v1.screens.length === 0) throw new Error("site-manifest.v1 sem files[] ou screens[]");
+  const files: Record<string, string> = {};
+  for (const f of v1.files) {
+    if (typeof f.path !== "string" || f.path.startsWith("/") || f.path.split("/").includes("..") || f.path.includes("\\")) {
+      throw new Error(`caminho inválido no site-manifest.v1: ${String(f.path)}`);
+    }
+    files[`/${f.path}`] = f.sha256;
+  }
+  const spa = v1.routing?.spa ? { prefixo: v1.routing.spa.prefix, indice: `/${v1.routing.spa.index}` } : undefined;
+  const aliases = v1.routing?.aliases ? Object.fromEntries(Object.entries(v1.routing.aliases).map(([from, to]) => [from, `/${to}`])) : undefined;
+  return {
+    version: `site-manifest.v1:${v1.package?.name ?? "?"}@${v1.package?.version ?? "?"}`,
+    entry: v1.screens[0].entry,
+    sourceDist: v1.package?.name ?? "site-manifest.v1",
+    corpusCommit: v1.origin?.corpus?.commit ?? null,
+    corpusDirty: v1.origin?.corpus?.dirty ?? null,
+    files,
+    ...(spa ? { spa } : {}),
+    ...(aliases ? { aliases } : {}),
+  };
+}
+
 export interface LoadedSite {
   manifest: SiteManifest;
   manifestSha256: string;
@@ -179,7 +220,7 @@ export interface LoadedSite {
 /** Carrega o site congelado na memória e recusa qualquer arquivo que não bata com o manifesto. */
 export function loadSite(outDir: string): LoadedSite {
   const manifestText = readFileSync(join(outDir, "site-manifest.json"), "utf8");
-  const manifest = JSON.parse(manifestText) as SiteManifest;
+  const manifest = normalizarManifestoDoSite(JSON.parse(manifestText));
   const files = new Map<string, { body: Buffer; type: string }>();
   for (const [path, expected] of Object.entries(manifest.files)) {
     const body = readFileSync(join(outDir, "site", path.slice(1)));
@@ -195,7 +236,7 @@ export function loadSite(outDir: string): LoadedSite {
  */
 export async function verifyServedSite(origin: string, siteManifestPath: string): Promise<{ manifestSha256: string; entry: string }> {
   const manifestText = readFileSync(siteManifestPath);
-  const manifest = JSON.parse(manifestText.toString("utf8")) as SiteManifest;
+  const manifest = normalizarManifestoDoSite(JSON.parse(manifestText.toString("utf8")));
   for (const [path, expected] of Object.entries(manifest.files)) {
     const response = await fetch(new URL(path, origin));
     if (!response.ok) throw new Error(`${origin} não serve ${path} (${response.status})`);

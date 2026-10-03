@@ -15,3 +15,6 @@ results/semantic-review/** -text
 pipeline/logs/** -text
 # T6: fixture sintética da análise — os documentos gerados guardam sha256 dos próprios bytes.
 scripts/fixtures/** -text
+# T4: scripts de shell e o workflow rodam em Linux (CI e ensaio local): LF mesmo num checkout Windows.
+*.sh text eol=lf
+.github/workflows/*.yml text eol=lf

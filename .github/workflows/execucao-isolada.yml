@@ -1,0 +1,429 @@
+# Benchmark isolado — UMA execução por disparo (T4; plano em
+# thesis-workspace/planejamento/atual/plano-t4-pipeline-2026-10-03.md).
+#
+# Só disparo manual: sem push, sem agenda, sem matriz — nenhum gasto automático. Cada disparo:
+#   preparar        entradas, commits por SHA, identidade (site, referência, plano, oráculo) → manifesto
+#   coleta          imagens nesta VM (versões = lock travado) → run-once → pacote (sobe mesmo com falha)
+#   linhas-de-base  mesmo site e manifesto, separado da coleta; axe + validator (não guiado comparável,
+#                   guiado diagnóstico) + ESLint como já era → registro baseline.v1
+#   arquivar        único job com escrita no govbr-resultados; caminho imutável, índice, anexo na Release
+#
+# Segredos (Settings → Secrets and variables → Actions), cada um só onde é usado:
+#   GOVBR_LEITURA_TOKEN      PAT fine-grained, Contents: Read-only em govbr-telas, govbr-ds-validator, govbr-corpus
+#   GOVBR_RESULTADOS_TOKEN   PAT fine-grained, Contents: Read and write SÓ em govbr-resultados (job arquivar)
+#   CLAUDE_CODE_OAUTH_TOKEN  `claude setup-token` da assinatura (SÓ no passo da coleta real)
+# Toda lógica está em scripts/ci/t4.sh e scripts/*.ts; entradas chegam por env, nunca interpoladas no shell.
+name: execucao-isolada
+
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "real = modelo real (custa); duble = cliente real contra dublê; roteirizado = agente roteirizado (ensaios, sem modelo)"
+        type: choice
+        options: [roteirizado, duble, real]
+        default: roteirizado
+      tela:
+        description: "tela A (solicitacao) ou B (vistorias)"
+        type: choice
+        options: [solicitacao, vistorias]
+        default: solicitacao
+      braco:
+        description: "sem ou com o oráculo MCP"
+        type: choice
+        options: [sem, com]
+        default: sem
+      modelo:
+        description: "id EXATO do modelo (só modo real)"
+        type: string
+        default: ""
+      esforco:
+        description: "esforço do cliente (só modo real)"
+        type: choice
+        options: [high, medium, low, xhigh, max]
+        default: high
+      limite_min:
+        description: "teto de tempo do agente, minutos (1–90; trava, não meta)"
+        type: string
+        default: "90"
+      campanha:
+        description: "id da campanha"
+        type: string
+        required: true
+      slot:
+        description: "id do slot da agenda"
+        type: string
+        required: true
+      par:
+        description: "id do par sem/com"
+        type: string
+        default: par-01
+      tentativa:
+        description: "tentativa do slot (nova tentativa só por falha técnica, D-67)"
+        type: string
+        default: "1"
+      repeticao:
+        description: "repetição"
+        type: string
+        default: "1"
+      telas_sha:
+        description: "commit (40 hex) do govbr-telas"
+        type: string
+        required: true
+      validator_sha:
+        description: "commit (40 hex) do govbr-ds-validator"
+        type: string
+        required: true
+      etapas:
+        description: "o que rodar neste disparo"
+        type: choice
+        options: [coleta+linha-de-base, so-coleta, so-linha-de-base]
+        default: coleta+linha-de-base
+      refazer_linha_de_base_de:
+        description: "repetição técnica da linha de base: baselineId anterior (só com so-linha-de-base)"
+        type: string
+        default: ""
+      motivo_refazer:
+        description: "motivo da repetição técnica da linha de base"
+        type: string
+        default: ""
+
+permissions: {}
+
+concurrency:
+  group: execucao-isolada
+  cancel-in-progress: false
+
+jobs:
+  preparar:
+    name: Preparar (entradas, commits, identidade)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    outputs:
+      agente: ${{ steps.entradas.outputs.agente }}
+      egress: ${{ steps.entradas.outputs.egress }}
+      modelo: ${{ steps.entradas.outputs.modelo }}
+      esforco: ${{ steps.entradas.outputs.esforco }}
+      imagens: ${{ steps.entradas.outputs.imagens }}
+      coleta: ${{ steps.entradas.outputs.coleta }}
+      linha_de_base: ${{ steps.entradas.outputs.linha_de_base }}
+      limite_seg: ${{ steps.entradas.outputs.limite_seg }}
+      corpus_sha: ${{ steps.manifesto.outputs.corpus_sha }}
+    steps:
+      - name: Checkout govbr-eval (commit do disparo)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: govbr-eval
+          persist-credentials: false
+      - name: Node 24.21.0 (o mesmo das imagens)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.21.0"
+      - name: Dependências do govbr-eval
+        run: bash govbr-eval/scripts/ci/t4.sh instalar-eval
+      - name: Conferir entradas
+        id: entradas
+        env:
+          ENTRADAS: ${{ toJSON(inputs) }}
+        run: bash govbr-eval/scripts/ci/t4.sh entradas
+      - name: Checkout govbr-telas (por SHA)
+        uses: actions/checkout@v4
+        with:
+          repository: nathlia/govbr-telas
+          ref: ${{ inputs.telas_sha }}
+          path: govbr-telas
+          token: ${{ secrets.GOVBR_LEITURA_TOKEN }}
+          persist-credentials: false
+      - name: Checkout govbr-ds-validator (por SHA)
+        uses: actions/checkout@v4
+        with:
+          repository: nathlia/govbr-ds-validator
+          ref: ${{ inputs.validator_sha }}
+          path: govbr-ds-validator
+          token: ${{ secrets.GOVBR_LEITURA_TOKEN }}
+          persist-credentials: false
+      - name: Compilar o oráculo (dist/ conferido contra o lock)
+        run: bash govbr-eval/scripts/ci/t4.sh compilar-validador
+      - name: Manifesto de coleta (identidade antes de qualquer gasto)
+        id: manifesto
+        env:
+          TELA: ${{ inputs.tela }}
+          BRACO: ${{ inputs.braco }}
+          MODO: ${{ inputs.modo }}
+          MODELO: ${{ inputs.modelo }}
+          ESFORCO: ${{ inputs.esforco }}
+          LIMITE_MIN: ${{ inputs.limite_min }}
+          CAMPANHA: ${{ inputs.campanha }}
+          SLOT: ${{ inputs.slot }}
+          PAR: ${{ inputs.par }}
+          TENTATIVA: ${{ inputs.tentativa }}
+          REPETICAO: ${{ inputs.repeticao }}
+        run: bash govbr-eval/scripts/ci/t4.sh manifesto
+      - name: Guardar o manifesto (nunca vai ao job da coleta)
+        uses: actions/upload-artifact@v4
+        with:
+          name: manifesto-coleta
+          path: ${{ runner.temp }}/manifesto/
+          retention-days: 14
+          if-no-files-found: error
+
+  coleta:
+    name: Coleta (uma execução isolada)
+    needs: preparar
+    if: needs.preparar.outputs.coleta == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    permissions:
+      contents: read
+    steps:
+      # Checkout ESPARSO: nem gabarito, nem auditorias das telas, nem resultados anteriores no disco da coleta.
+      - name: Checkout govbr-eval (commit do disparo, sem gabaritos)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: govbr-eval
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/ground-truth*.json
+            !/organic-ground-truth.json
+            !/adjudications.json
+            !/checker-aliases.json
+            !/results/
+            !/reports/
+            !/tela-a/
+            !/tela-b/
+            !/dashboard/
+      - name: Node 24.21.0
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.21.0"
+      - name: Checkout govbr-telas (por SHA)
+        uses: actions/checkout@v4
+        with:
+          repository: nathlia/govbr-telas
+          ref: ${{ inputs.telas_sha }}
+          path: govbr-telas
+          token: ${{ secrets.GOVBR_LEITURA_TOKEN }}
+          persist-credentials: false
+      # Braço sem: o pacote do oráculo nem é baixado.
+      - name: Checkout govbr-ds-validator (por SHA; só no braço com)
+        if: inputs.braco == 'com'
+        uses: actions/checkout@v4
+        with:
+          repository: nathlia/govbr-ds-validator
+          ref: ${{ inputs.validator_sha }}
+          path: govbr-ds-validator
+          token: ${{ secrets.GOVBR_LEITURA_TOKEN }}
+          persist-credentials: false
+      - name: Dependências do govbr-eval
+        run: bash govbr-eval/scripts/ci/t4.sh instalar-eval
+      - name: Compilar o oráculo (só no braço com)
+        if: inputs.braco == 'com'
+        run: bash govbr-eval/scripts/ci/t4.sh compilar-validador
+      - name: Imagens nesta VM (versões = lock travado)
+        env:
+          IMAGENS: ${{ needs.preparar.outputs.imagens }}
+        run: bash govbr-eval/scripts/ci/t4.sh imagens
+      - name: Nenhuma credencial de GitHub/publicação no passo nem nos checkouts
+        run: bash govbr-eval/scripts/ci/t4.sh conferir-ambiente
+      # Único passo com a credencial do provedor; o run-once a repassa só ao contêiner do agente (-e NOME).
+      - name: Coleta com o modelo real
+        id: coleta_real
+        if: inputs.modo == 'real'
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          TELA: ${{ inputs.tela }}
+          BRACO: ${{ inputs.braco }}
+          MODO: ${{ inputs.modo }}
+          AGENTE: ${{ needs.preparar.outputs.agente }}
+          EGRESS: ${{ needs.preparar.outputs.egress }}
+          MODELO: ${{ needs.preparar.outputs.modelo }}
+          ESFORCO: ${{ needs.preparar.outputs.esforco }}
+          LIMITE_SEG: ${{ needs.preparar.outputs.limite_seg }}
+          CAMPANHA: ${{ inputs.campanha }}
+          SLOT: ${{ inputs.slot }}
+          PAR: ${{ inputs.par }}
+          TENTATIVA: ${{ inputs.tentativa }}
+          REPETICAO: ${{ inputs.repeticao }}
+        run: bash govbr-eval/scripts/ci/t4.sh coleta
+      - name: Coleta de ensaio (sem modelo, sem credencial)
+        id: coleta_ensaio
+        if: inputs.modo != 'real'
+        env:
+          TELA: ${{ inputs.tela }}
+          BRACO: ${{ inputs.braco }}
+          MODO: ${{ inputs.modo }}
+          AGENTE: ${{ needs.preparar.outputs.agente }}
+          EGRESS: ${{ needs.preparar.outputs.egress }}
+          MODELO: ${{ needs.preparar.outputs.modelo }}
+          ESFORCO: ${{ needs.preparar.outputs.esforco }}
+          LIMITE_SEG: ${{ needs.preparar.outputs.limite_seg }}
+          CAMPANHA: ${{ inputs.campanha }}
+          SLOT: ${{ inputs.slot }}
+          PAR: ${{ inputs.par }}
+          TENTATIVA: ${{ inputs.tentativa }}
+          REPETICAO: ${{ inputs.repeticao }}
+        run: bash govbr-eval/scripts/ci/t4.sh coleta
+      - name: Ambiente dos contêineres sem tokens de GitHub/publicação
+        if: always()
+        env:
+          MODO: ${{ inputs.modo }}
+        run: bash govbr-eval/scripts/ci/t4.sh conferir-ambiente-pacote
+      - name: Resumo da coleta
+        if: always()
+        run: bash govbr-eval/scripts/ci/t4.sh resumo-coleta
+      - name: Subir o pacote (também em falha)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pacote
+          path: ${{ runner.temp }}/pacote/
+          retention-days: 14
+          if-no-files-found: warn
+
+  linhas-de-base:
+    name: Linhas de base (mesmo site, mesmo manifesto)
+    needs: preparar
+    if: needs.preparar.outputs.linha_de_base == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout govbr-eval (commit do disparo)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: govbr-eval
+          persist-credentials: false
+      - name: Node 24.21.0
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.21.0"
+      - name: Checkout govbr-telas (por SHA)
+        uses: actions/checkout@v4
+        with:
+          repository: nathlia/govbr-telas
+          ref: ${{ inputs.telas_sha }}
+          path: govbr-telas
+          token: ${{ secrets.GOVBR_LEITURA_TOKEN }}
+          persist-credentials: false
+      - name: Checkout govbr-ds-validator (por SHA)
+        uses: actions/checkout@v4
+        with:
+          repository: nathlia/govbr-ds-validator
+          ref: ${{ inputs.validator_sha }}
+          path: govbr-ds-validator
+          token: ${{ secrets.GOVBR_LEITURA_TOKEN }}
+          persist-credentials: false
+      # Fonte que o ESLint lê (tela A): o commit do corpus que o site-manifest registra como origem.
+      - name: Checkout govbr-corpus (commit de origem do site)
+        uses: actions/checkout@v4
+        with:
+          repository: nathlia/govbr-corpus
+          ref: ${{ needs.preparar.outputs.corpus_sha }}
+          path: govbr-corpus
+          token: ${{ secrets.GOVBR_LEITURA_TOKEN }}
+          persist-credentials: false
+          sparse-checkout: src
+      - name: Dependências do govbr-eval
+        run: bash govbr-eval/scripts/ci/t4.sh instalar-eval
+      - name: Compilar o oráculo
+        run: bash govbr-eval/scripts/ci/t4.sh compilar-validador
+      - name: Chromium do Playwright (com dependências do sistema)
+        run: bash govbr-eval/scripts/ci/t4.sh instalar-navegador
+      - name: Manifesto de coleta do disparo
+        uses: actions/download-artifact@v4
+        with:
+          name: manifesto-coleta
+          path: ${{ runner.temp }}/manifesto/
+      - name: Linha de base e registro
+        id: linha
+        env:
+          TELA: ${{ inputs.tela }}
+          REFAZER_DE: ${{ inputs.refazer_linha_de_base_de }}
+          MOTIVO_REFAZER: ${{ inputs.motivo_refazer }}
+        run: bash govbr-eval/scripts/ci/t4.sh linha-de-base
+      - name: Resumo da linha de base
+        if: always()
+        run: bash govbr-eval/scripts/ci/t4.sh resumo-linha-de-base
+      - name: Subir a linha de base (também em falha)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linha-de-base
+          path: ${{ runner.temp }}/linha-de-base/
+          retention-days: 14
+          if-no-files-found: warn
+
+  arquivar:
+    name: Arquivar no govbr-resultados
+    needs: [preparar, coleta, linhas-de-base]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout govbr-eval (commit do disparo)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: govbr-eval
+          persist-credentials: false
+      - name: Node 24.21.0
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.21.0"
+      - name: Checkout govbr-resultados (main)
+        uses: actions/checkout@v4
+        with:
+          repository: nathlia/govbr-resultados
+          ref: main
+          path: govbr-resultados
+          token: ${{ secrets.GOVBR_RESULTADOS_TOKEN }}
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Dependências do govbr-eval
+        run: bash govbr-eval/scripts/ci/t4.sh instalar-eval
+      - name: Baixar o manifesto
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: manifesto-coleta
+          path: ${{ runner.temp }}/entrada/manifesto/
+      - name: Baixar o pacote
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: pacote
+          path: ${{ runner.temp }}/entrada/pacote/
+      - name: Baixar a linha de base
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: linha-de-base
+          path: ${{ runner.temp }}/entrada/linha-de-base/
+      - name: Gravar no arquivo (caminho imutável, índice, tar.gz de evidências)
+        env:
+          ENTRADAS: ${{ toJSON(inputs) }}
+          JOBS: ${{ toJSON(needs) }}
+          GOVBR_RESULTADOS_TOKEN: ${{ secrets.GOVBR_RESULTADOS_TOKEN }}
+        run: bash govbr-eval/scripts/ci/t4.sh arquivar
+      - name: Anexar evidências na Release e conferir baixando de volta
+        env:
+          GOVBR_RESULTADOS_TOKEN: ${{ secrets.GOVBR_RESULTADOS_TOKEN }}
+          REPO_RESULTADOS: nathlia/govbr-resultados
+        run: bash govbr-eval/scripts/ci/t4.sh anexar
+      - name: Publicar (commit + push, índice refeito a cada tentativa)
+        env:
+          GOVBR_RESULTADOS_TOKEN: ${{ secrets.GOVBR_RESULTADOS_TOKEN }}
+        run: bash govbr-eval/scripts/ci/t4.sh publicar
+      - name: Resumo do arquivamento
+        if: always()
+        run: bash govbr-eval/scripts/ci/t4.sh resumo-arquivo

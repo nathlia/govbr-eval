@@ -93,6 +93,23 @@ guarda o id de cada uma e as versões medidas de dentro dela. O preflight recusa
 
 `govbr-telas/.node-version` passou a 24.21.0 (`export-telas-1.2.0`); `site/` saiu idêntico byte a byte.
 
+### Linux / Docker Engine nativo (T4)
+
+O runner do GitHub (e o `docker:dind` da prova local, `scripts/ci/ensaio-linux.sh`) não é Docker Desktop.
+Três ajustes, todos inertes no Docker Desktop (`docker info` → `Docker Desktop`):
+
+- **Controle positivo do host.** No nativo, `host.docker.internal` não existe e o loopback do host não é
+  alcançável de contêiner nenhum. O servidor-sentinela passa a escutar no gateway da rede `bridge` padrão,
+  e o contêiner do controle o alcança por `--add-host host.docker.internal:host-gateway`. As redes internas
+  da execução não têm rota para lá — é o que o check `host-e-gateway` da sonda continua provando.
+- **Saídas graváveis.** As pastas `/out` de cada papel são criadas com modo 777 para o usuário 10001 dos
+  contêineres; no fim, um contêiner de manutenção sem rede devolve a posse ao usuário do runner (não-root no
+  GitHub), que senão não conseguiria apagar a pasta de trabalho.
+- **Lock fora do checkout.** `GOVBR_RUNNER_LOCK` aponta o lock que `runner:imagens` grava e o `run-once` lê
+  para fora do repositório: as imagens do CI são construídas na VM (ids não se reproduzem) e o checkout
+  continua limpo; `scripts/pipeline-t4.ts conferir-imagens` compara as versões com o lock commitado.
+  `runner:imagens -- --so agent,screens,collector,egress` não lê o validador (braço sem).
+
 ## Allowlist do provedor
 
 | Host | Situação |

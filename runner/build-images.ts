@@ -17,7 +17,7 @@ import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { oracleIdentity } from "../scripts/collection-manifest";
 import {
-  BASE_IMAGE, CLAUDE_CODE_VERSION, DEFAULT_TELAS_DIR, DEFAULT_VALIDATOR_DIR, EVAL_ROOT, LOCK_PATH, NODE_VERSION, PLAYWRIGHT_MCP_VERSION,
+  BASE_IMAGE, CLAUDE_CODE_VERSION, COMMITTED_LOCK_PATH, DEFAULT_TELAS_DIR, DEFAULT_VALIDATOR_DIR, EVAL_ROOT, LOCK_PATH, NODE_VERSION, PLAYWRIGHT_MCP_VERSION,
   RUNNER_DIR, RUNNER_VERSION, docker, dockerStream, imageId, imageLabels, sha256, type ImagesLock,
 } from "./lib";
 
@@ -74,26 +74,31 @@ async function main(): Promise<void> {
   const telasDir = resolve(arg("--telas") ?? DEFAULT_TELAS_DIR);
   const validatorDir = resolve(arg("--validator") ?? DEFAULT_VALIDATOR_DIR);
   const only = arg("--so")?.split(",") as Name[] | undefined;
-  const previous: Partial<ImagesLock> = existsSync(LOCK_PATH) ? JSON.parse(readFileSync(LOCK_PATH, "utf8")) : {};
+  // Lock anterior: o próprio destino, ou o commitado quando o destino é novo (CI: GOVBR_RUNNER_LOCK).
+  const previousPath = existsSync(LOCK_PATH) ? LOCK_PATH : COMMITTED_LOCK_PATH;
+  const previous: Partial<ImagesLock> = existsSync(previousPath) ? JSON.parse(readFileSync(previousPath, "utf8")) : {};
 
   const telas = telasIdentity(telasDir);
-  const oracle = oracleIdentity(validatorDir);
-  const oraclePkg = JSON.parse(readFileSync(join(validatorDir, "package.json"), "utf8")) as { name: string; version: string };
-  if (!oracle.distSha256 || !oracle.dataSha256) throw new Error(`validador sem dist/ ou data/ em ${validatorDir}`);
+  // Braço sem no CI: o validador nem é baixado. Sem a imagem do oráculo na lista, ele não é lido, e o
+  // lock repete as versões travadas do oráculo (o run-once sem nunca as usa).
+  const withOracle = !only || only.includes("oracle");
+  const oracle = withOracle ? oracleIdentity(validatorDir) : null;
+  const oraclePkg = withOracle ? JSON.parse(readFileSync(join(validatorDir, "package.json"), "utf8")) as { name: string; version: string } : null;
+  if (oracle && (!oracle.distSha256 || !oracle.dataSha256)) throw new Error(`validador sem dist/ ou data/ em ${validatorDir}`);
 
   const tags: Record<Name, string> = {
     agent: `govbr-runner-agent:1.0.0-mcp${PLAYWRIGHT_MCP_VERSION}-cc${CLAUDE_CODE_VERSION}`,
     screens: `govbr-runner-screens:telas${telas.version}-${telas.siteSha256.slice(0, 12)}`,
     collector: "govbr-runner-collector:1.0.0",
     egress: "govbr-runner-egress:1.0.0",
-    oracle: `govbr-runner-oracle:${oraclePkg.version}-${oracle.distSha256.slice(0, 12)}`,
+    oracle: oracle && oraclePkg ? `govbr-runner-oracle:${oraclePkg.version}-${oracle.distSha256!.slice(0, 12)}` : previous.images?.oracle?.tag ?? "govbr-runner-oracle:nao-construida",
   };
   const labels: Record<Name, Record<string, string>> = {
     agent: { "govbr.playwright-mcp": PLAYWRIGHT_MCP_VERSION, "govbr.claude-code": CLAUDE_CODE_VERSION },
     screens: { "govbr.telas.site-sha256": telas.siteSha256, "govbr.telas.manifest-sha256": telas.manifestSha256 },
     collector: { "govbr.collector.schemas": sha256(readFileSync(join(EVAL_ROOT, "contracts", "findings.v1.schema.json"))) },
     egress: {},
-    oracle: { "govbr.oracle.package": oraclePkg.name, "govbr.oracle.version": oraclePkg.version, "govbr.oracle.dist-sha256": oracle.distSha256, "govbr.oracle.data-sha256": oracle.dataSha256 },
+    oracle: oracle && oraclePkg ? { "govbr.oracle.package": oraclePkg.name, "govbr.oracle.version": oraclePkg.version, "govbr.oracle.dist-sha256": oracle.distSha256!, "govbr.oracle.data-sha256": oracle.dataSha256! } : {},
   };
 
   const images = { ...(previous.images ?? {}) } as ImagesLock["images"];
@@ -104,11 +109,14 @@ async function main(): Promise<void> {
       .flatMap(([k, v]) => ["--label", `${k}=${v}`]);
     const buildArgs = name === "oracle" ? ["--build-arg", `AGENT_IMAGE=${images.agent.tag}`] : [];
     console.log(`\n== ${name} → ${tags[name]}`);
+    const ultimas: string[] = [];
     const code = await dockerStream(["build", "--progress", "plain", "-t", tags[name], ...labelArgs, ...buildArgs, ctx], (l) => {
+      ultimas.push(l);
+      if (ultimas.length > 25) ultimas.shift();
       if (/^#\d+ (DONE|ERROR|\[)|error|ERROR/.test(l)) console.log(`   ${l.slice(0, 200)}`);
     });
     rmSync(ctx, { recursive: true, force: true });
-    if (code !== 0) throw new Error(`build de ${name} falhou (${code})`);
+    if (code !== 0) throw new Error(`build de ${name} falhou (${code}):\n${ultimas.map((l) => `   ${l.slice(0, 300)}`).join("\n")}`);
     images[name] = { tag: tags[name], id: imageId(tags[name])!, labels: imageLabels(tags[name]) };
     console.log(`   id ${images[name].id}`);
   }
@@ -128,7 +136,7 @@ async function main(): Promise<void> {
     images,
     versions: {
       node: NODE_VERSION, playwrightMcp: PLAYWRIGHT_MCP_VERSION, playwright, chromium, claudeCode: claude,
-      oracle: { package: oraclePkg.name, version: oraclePkg.version, distSha256: oracle.distSha256, dataSha256: oracle.dataSha256 },
+      oracle: oracle && oraclePkg ? { package: oraclePkg.name, version: oraclePkg.version, distSha256: oracle.distSha256!, dataSha256: oracle.dataSha256! } : previous.versions!.oracle,
       telas: { siteSha256: telas.siteSha256, manifestSha256: telas.manifestSha256 },
     },
   };
