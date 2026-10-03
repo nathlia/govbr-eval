@@ -82,13 +82,13 @@ proveniência do build da tela B), `files[]` (caminho, sha256, bytes de cada arq
 
 ## Node
 
-`.node-version` = **25.2.1**: é o Node que construiu a tela A no lado da preparação (o pino do
-workspace), está dentro do intervalo do Vite do corpus (`^20.19.0 || >=22.12.0`, conferido pelo teste)
-e é o único com que a pasta limpa foi exercitada. O servidor usa só módulos nativos e roda em
-qualquer Node ≥ 20.19 (`engines` do `package.json`). Ressalva para T3: a linha 25 não é LTS e já
-saiu de suporte; a imagem da coleta deve fixar uma LTS (24.x) e reexportar com o `.node-version`
-correspondente, sem mudar um byte de `site/` (o build da tela A independe do Node do servidor; a
-paridade com a superfície de medida acusa qualquer diferença).
+`.node-version` = **24.21.0** (desde `export-telas-1.2.0`): a LTS 24 que a imagem da coleta fixa
+(`runner/images/*/Dockerfile`, base `node:24-bookworm-slim` por digest), dentro do intervalo do Vite do
+corpus (`^20.19.0 || >=22.12.0`, conferido pelo teste). O pacote foi reexportado com esse Node (binário
+portátil, sem trocar o Node do workspace): `site/` saiu idêntico byte a byte (mesmo `item.sha256`, paridade
+com a superfície de medida verde); mudaram só `.node-version`, `package.node` e o Node do build da tela A
+registrados no manifesto. O servidor usa só módulos nativos e roda em qualquer Node ≥ 20.19 (`engines`).
+Até 1.1.0 o pino era 25.2.1 (o Node do workspace), que não é LTS.
 
 `.gitattributes` (`* -text`): com `core.autocrlf=true` (padrão do Git no Windows) um clone trocaria
 LF por CRLF, o sha256 deixaria de bater e o servidor não subiria. O teste faz commit num repositório

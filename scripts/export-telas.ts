@@ -40,16 +40,18 @@ import { gitState } from "./collection-manifest";
 import { assetClosure } from "./measurement-surface";
 import { telaOf, type TelaSite } from "./telas";
 
-export const EXPORTER_VERSION = "export-telas-1.1.0";
+// 1.2.0: Node do pacote fixado em 24.21.0 (LTS), o mesmo da imagem da coleta (runner T3a); site/ inalterado.
+export const EXPORTER_VERSION = "export-telas-1.2.0";
 /** Nome provisório do projeto exportado (pendente NAT-45). */
 export const PACKAGE_NAME = "govbr-telas";
 export const PACKAGE_VERSION = "1.0.0";
 /**
- * Node do projeto exportado. É o Node que construiu a tela `solicitacao` no lado da preparação (o pino
- * do workspace) e está dentro do intervalo do Vite do corpus (`^20.19.0 || >=22.12.0`); o servidor
- * usa só módulos nativos. Ver docs/exportacao-telas.md § Node.
+ * Node do projeto exportado: a LTS 24 fixada na imagem da coleta (runner/images, base
+ * node:24-bookworm-slim por digest), dentro do intervalo do Vite do corpus (`^20.19.0 || >=22.12.0`);
+ * o servidor usa só módulos nativos. A troca de 25.2.1 para 24.21.0 não muda um byte de site/ (paridade
+ * conferida pelo teste). Ver docs/exportacao-telas.md § Node.
  */
-export const PACKAGE_NODE_VERSION = "25.2.1";
+export const PACKAGE_NODE_VERSION = "24.21.0";
 export const DEFAULT_CORPUS = resolve(ROOT, "..", "govbr-corpus");
 const TEMPLATES = join(dirname(fileURLToPath(import.meta.url)), "export-telas");
 

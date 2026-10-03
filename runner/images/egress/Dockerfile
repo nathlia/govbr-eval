@@ -1,0 +1,7 @@
+# Proxy de saída com allowlist (T3a) e dublê do provedor para testes. Só módulos nativos.
+FROM node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6
+WORKDIR /opt/egress
+COPY egress.mjs stub.mjs ./
+USER 10001:10001
+EXPOSE 3128
+CMD ["node", "/opt/egress/egress.mjs"]

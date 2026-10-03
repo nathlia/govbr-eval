@@ -1,0 +1,13 @@
+{
+  "_comment": "Entradas de tarefa por tela para o runner isolado (T3a). Só escopo de procedimento e larguras da janela — nada da referência de avaliação. A rota de entrada vem do site-manifest.json do govbr-telas. A primeira largura é a janela inicial fixada; mais de uma liga o meio declarado (uma instância de navegador por largura).",
+  "solicitacao": {
+    "label": "Solicitar serviço",
+    "escopo": "a tela inteira, em todos os estados alcançáveis pela interface",
+    "larguras": ["1280x900"]
+  },
+  "vistorias": {
+    "label": "Vistorias",
+    "escopo": "a tela inteira, em todos os estados alcançáveis pela interface",
+    "larguras": ["1280x900"]
+  }
+}

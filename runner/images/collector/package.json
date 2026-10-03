@@ -1,0 +1,10 @@
+{
+  "name": "govbr-runner-collector",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dependência fixada do coletor (T3a): validador JSON Schema draft 2020-12 para findings.v1.",
+  "type": "module",
+  "dependencies": {
+    "ajv": "8.20.0"
+  }
+}

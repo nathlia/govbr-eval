@@ -1,0 +1,83 @@
+{
+  "lockVersion": 1,
+  "builtAt": "2026-10-03T04:38:11.992Z",
+  "base": {
+    "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+    "node": "24.21.0"
+  },
+  "images": {
+    "agent": {
+      "tag": "govbr-runner-agent:1.0.0-mcp0.0.70-cc2.1.288",
+      "id": "sha256:8579f69f0cd365c944d81bdd5df7da1c67311a7915f0446512ad3f745c3e00b3",
+      "labels": {
+        "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+        "govbr.claude-code": "2.1.288",
+        "govbr.playwright-mcp": "0.0.70",
+        "govbr.runner.image": "agent",
+        "govbr.runner.version": "runner-isolado-1.0.0"
+      }
+    },
+    "oracle": {
+      "tag": "govbr-runner-oracle:2.7.0-31749c29b0dd",
+      "id": "sha256:8c2619ea0be709f62abd30c77f8c2c109128ea19f31882774263055e242df07d",
+      "labels": {
+        "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+        "govbr.claude-code": "2.1.288",
+        "govbr.oracle.data-sha256": "ade4f658553e2a6cc13b3f6118bfaf95e5dd9b05d18d22d8c113e456420c5162",
+        "govbr.oracle.dist-sha256": "31749c29b0dd2c0378b5955c1ba4c3804c66edd38cf90958c0de8196f11652f2",
+        "govbr.oracle.package": "govbr-ds-validator-server",
+        "govbr.oracle.version": "2.7.0",
+        "govbr.playwright-mcp": "0.0.70",
+        "govbr.runner.image": "oracle",
+        "govbr.runner.version": "runner-isolado-1.0.0"
+      }
+    },
+    "screens": {
+      "tag": "govbr-runner-screens:telas1.0.0-1a6e8daf3cdb",
+      "id": "sha256:e59130548c706d7c75d7b88336d57a998aa8165ffc70c4db7908432cd226bb54",
+      "labels": {
+        "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+        "govbr.runner.image": "screens",
+        "govbr.runner.version": "runner-isolado-1.0.0",
+        "govbr.telas.manifest-sha256": "7438081cbc1d27f7a591dbe6e85d0d745fe3b84658f1e8c268c03737d10f5227",
+        "govbr.telas.site-sha256": "1a6e8daf3cdb02da4f03cc3e39f52c0a1f44063b8270238ac5caf78eae39d11a"
+      }
+    },
+    "collector": {
+      "tag": "govbr-runner-collector:1.0.0",
+      "id": "sha256:9182d30dcde0ceeb04e649b9e9b172d007eb16dbb9d7f5d453a3409529ba4af4",
+      "labels": {
+        "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+        "govbr.collector.schemas": "39f19e7cc70049cd1ccca759af56a57c59a9db5193e500444451b79b80d6526a",
+        "govbr.runner.image": "collector",
+        "govbr.runner.version": "runner-isolado-1.0.0"
+      }
+    },
+    "egress": {
+      "tag": "govbr-runner-egress:1.0.0",
+      "id": "sha256:72fb52ca227292fa02b33c3520b0fada6c92fc3d8f679b85ebc32d14892061be",
+      "labels": {
+        "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+        "govbr.runner.image": "egress",
+        "govbr.runner.version": "runner-isolado-1.0.0"
+      }
+    }
+  },
+  "versions": {
+    "node": "24.21.0",
+    "playwrightMcp": "0.0.70",
+    "playwright": "Version 1.60.0-alpha-1774999321000",
+    "chromium": "147.0.7727.15",
+    "claudeCode": "2.1.288 (Claude Code)",
+    "oracle": {
+      "package": "govbr-ds-validator-server",
+      "version": "2.7.0",
+      "distSha256": "31749c29b0dd2c0378b5955c1ba4c3804c66edd38cf90958c0de8196f11652f2",
+      "dataSha256": "ade4f658553e2a6cc13b3f6118bfaf95e5dd9b05d18d22d8c113e456420c5162"
+    },
+    "telas": {
+      "siteSha256": "1a6e8daf3cdb02da4f03cc3e39f52c0a1f44063b8270238ac5caf78eae39d11a",
+      "manifestSha256": "7438081cbc1d27f7a591dbe6e85d0d745fe3b84658f1e8c268c03737d10f5227"
+    }
+  }
+}

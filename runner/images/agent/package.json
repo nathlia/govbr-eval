@@ -1,0 +1,12 @@
+{
+  "name": "govbr-runner-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dependências fixadas da imagem do agente (T3a): Playwright MCP, cliente MCP e cliente Claude Code (instalado, não executado no T3a).",
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/claude-code": "2.1.288",
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "@playwright/mcp": "0.0.70"
+  }
+}
