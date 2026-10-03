@@ -13,16 +13,22 @@
  *
  *   npm run painel:fixture -- <pasta-nova>
  */
+import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, relative, resolve } from "node:path";
+import { basename, join, relative, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import type { Baseline, Run, SnapshotManifest } from "../../contracts/index";
+import type { Baseline, Campaign, Run, SnapshotManifest } from "../../contracts/index";
+import { ROOT } from "../adjudication";
+import { arquivarExecucao, confirmarEvidencias } from "../arquivar-execucao";
 import {
-  ARCHIVE_VERSION, criarTarGz, gravarEntrada, gravarImutavel, listarArquivos, pastaDaExecucao, reconstruirIndice, restaurar, sha,
-  type EntradaIndice,
+  ARCHIVE_VERSION, criarTarGz, gravarEntrada, gravarImutavel, listagemDoCommit, listarArquivos, pastaDaExecucao, reconstruirIndice, registrarLinhaDeBase,
+  restaurar, sha, type EntradaIndice,
 } from "../arquivo-resultados";
-import { CAMPANHA_ID, construirFixture, type OpcoesFixture } from "../fixtures/analise/construir";
+import { statePlanSha256, type StatePlan } from "../collection-manifest";
+import { CAMPANHA_ID, ORACULO, construirFixture, type OpcoesFixture } from "../fixtures/analise/construir";
+import { ISOLATED_MANIFEST_VERSION, documentoDaCampanha, type IsolatedCollectionManifest } from "../manifesto-coleta-isolada";
+import type { FlowBaselines } from "../run-baselines-flow";
 import { resumoColeta } from "../pipeline-t4";
 import type { SemanticPackage } from "../semantic-flow";
 import { RECEITA_VERSAO, lerAnalise, type Receita } from "./modelo";
@@ -181,10 +187,116 @@ export async function construirArquivoFixture(out: string): Promise<{ arquivo: s
   }
 }
 
+// ───────────────────────────────────────────────────────────────── arquivo no layout do T4 (T8a.1)
+
+const COMMIT_FIXTURE = { telas: "e".repeat(40), validator: "d".repeat(40) };
+
+/**
+ * Manifesto de coleta 1.1.0 SINTÉTICO para um braço da fixture da análise, como o `preparar` do T4
+ * gravaria (modo roteirizado). A referência é a fixture versionada dentro do govbr-eval, como no T4.
+ */
+function manifestoDaFixture(fx: ReturnType<typeof construirFixture>, run: Run, opcoes: { navega?: boolean } = {}): IsolatedCollectionManifest {
+  const registro = JSON.parse(readFileSync(fx.linhaDeBase, "utf8")) as Baseline;
+  const refRel = "scripts/fixtures/analise/referencia-fixture.json";
+  const refBytes = readFileSync(join(ROOT, refRel));
+  if (sha(refBytes) !== registro.identity.referenceSha256) throw new Error("fixture: referência versionada ≠ a da fixture construída");
+  let statePlan = JSON.parse(readFileSync(join(fx.dir, "plano-estados.json"), "utf8")) as StatePlan;
+  // tela que navega (D-60), só para o estado "fora do alcance": paradas no plano, hash do plano recalculado
+  if (opcoes.navega) statePlan = { ...statePlan, paradas: [{ id: "lista", afterStep: 0, path: "/fixture-analise.html" }, { id: "detalhe", afterStep: 1, path: "/fixture-detalhe" }] };
+  const siteText = readFileSync(join(fx.site, "site-manifest.json"));
+  const head = execFileSync("git", ["-C", ROOT, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+  const base: Omit<IsolatedCollectionManifest, "campaign"> = {
+    manifestVersion: ISOLATED_MANIFEST_VERSION, generatedAt: run.timestamps.plannedAt, fixture: true,
+    dispatch: { campaignId: run.campaignId, slotId: run.slotId, pairId: run.pairId, screenId: run.screen.id, arm: run.arm, mode: "roteirizado",
+      attempt: 1, repetition: 1, model: run.model.requested, effort: run.effort, limitMinutes: 30, github: null },
+    identity: { ...registro.identity, statePlanSha256: statePlanSha256(statePlan) },
+    reference: { path: refRel, sha256: sha(refBytes), bytes: refBytes.length, version: run.screen.version },
+    statePlan,
+    site: { manifestSha256: sha(siteText), manifestBytes: siteText.length, siteSha256: sha(siteText), packageVersion: "fixture", corpusCommit: null, screenVersion: run.screen.version },
+    oracle: { package: ORACULO.package, version: ORACULO.version, distSha256: ORACULO.distSha256, dataSha256: ORACULO.dataSha256 },
+    repos: { "govbr-eval": { commit: head, dirty: true }, "govbr-telas": { commit: COMMIT_FIXTURE.telas, dirty: false }, "govbr-ds-validator": { commit: COMMIT_FIXTURE.validator, dirty: false } },
+    imagesLock: { sha256: "c".repeat(64), versions: { fixture: true } },
+  };
+  const campanha = JSON.parse(readFileSync(fx.campanha, "utf8")) as Campaign;
+  return { ...base, campaign: { sha256: sha(documentoDaCampanha(campanha)), origin: "commitada", sourcePath: "fixture", sourceSha256: fx.campanhaSha256, document: campanha } };
+}
+
+export interface ArquivoT4 {
+  arquivo: string;
+  /** O que o job arquivar subiria como anexos da Release (fica FORA do arquivo, como na Release). */
+  anexos: string;
+  campanha: string;
+  pares: { par: string; sem: string; com: string; navega: boolean }[];
+}
+
+/**
+ * Arquivo SINTÉTICO montado pelo MESMO caminho do job arquivar do T4 (`arquivarExecucao`, linha de
+ * base por `registrarLinhaDeBase`, entrega por `confirmarEvidencias`), sem nenhuma análise: o ponto de
+ * partida do botão "Preparar análise". Pares: `par-t4` (tela que não navega) e, com `navega`, `par-nav`
+ * (o plano de estados declara paradas: fora do alcance do T6).
+ */
+export function construirArquivoT4(out: string, o: { navega?: boolean } = {}): ArquivoT4 {
+  const arquivo = resolve(out);
+  if (existsSync(arquivo)) throw new Error(`Pasta já existe: ${out}. O arquivo é montado sempre numa pasta nova.`);
+  mkdirSync(arquivo, { recursive: true });
+  const trabalho = mkdtempSync(join(tmpdir(), "painel-t4-"));
+  const anexos = `${arquivo}-anexos-release`;
+  mkdirSync(anexos, { recursive: true });
+  const instrumento = listagemDoCommit(ROOT, execFileSync("git", ["-C", ROOT, "rev-parse", "HEAD"], { encoding: "utf8" }).trim());
+  const pares: ArquivoT4["pares"] = [];
+  try {
+    writeFileSync(join(arquivo, "FIXTURE-SINTETICA.md"), `# ${AVISO}\n\nArquivo no layout do T4 montado por \`construirArquivoT4\` (govbr-eval, scripts/painel/fixture.ts),\n` +
+      "pelo mesmo código do job arquivar, para testar \"Preparar análise\". Nada aqui é resultado científico.\n");
+    const casos = [{ par: "par-t4", sufixo: "t4", dia: "2026-02-01", navega: false }, ...(o.navega ? [{ par: "par-nav", sufixo: "nav", dia: "2026-02-03", navega: true }] : [])];
+    for (const c of casos) {
+      const fx = construirFixture(join(trabalho, c.par), { identidade: { par: c.par, sufixo: c.sufixo, dia: c.dia, slots: { sem: `slot-${c.sufixo}-sem`, com: `slot-${c.sufixo}-com` } } });
+      const runs: Partial<Record<"sem" | "com", string>> = {};
+      for (const arm of ["sem", "com"] as const) {
+        const dir = fx[arm];
+        const run = JSON.parse(readFileSync(join(dir, "run.json"), "utf8")) as Run;
+        const m = manifestoDaFixture(fx, run, { navega: c.navega });
+        const mPath = join(trabalho, `${c.par}-${arm}-manifesto-coleta.json`);
+        writeFileSync(mPath, JSON.stringify(m, null, 2) + "\n");
+        const mBytes = readFileSync(mPath);
+        // job linhas-de-base: o bruto mede ESTE disparo (vínculo pelo sha256 do manifesto)
+        let lbDir: string | null = null;
+        if (!c.navega) {
+          lbDir = join(trabalho, `${c.par}-${arm}-linha-de-base`);
+          mkdirSync(lbDir, { recursive: true });
+          const bruto = JSON.parse(readFileSync(join(fx.dir, "linha-de-base", "bruta.json"), "utf8")) as FlowBaselines;
+          bruto.provenance = { ...bruto.provenance, collectionManifest: { path: mPath, sha256: sha(mBytes) } };
+          bruto.timestamp = `${c.dia}T01:00:0${arm === "sem" ? 0 : 5}Z`;
+          writeFileSync(join(lbDir, "bruta.json"), JSON.stringify(bruto, null, 2) + "\n");
+          const reg = registrarLinhaDeBase({ bruta: join(lbDir, "bruta.json"), manifest: m, manifestSha256: sha(mBytes), manifestBytes: mBytes.length, instrumento });
+          if (reg.problemas.length) throw new Error(`fixture T4: linha de base não utilizável: ${reg.problemas.join("; ")}`);
+          writeFileSync(join(lbDir, "baseline.json"), JSON.stringify(reg.registro, null, 2) + "\n");
+        }
+        const r = arquivarExecucao({ arquivo, evidenciasSaida: anexos, pacote: dir, manifesto: mPath, linhaDeBase: lbDir, segredos: [], telas: fx.site,
+          entradas: { modo: "roteirizado", etapas: lbDir ? "coleta+linha-de-base" : "so-coleta", campanha: run.campaignId, slot: run.slotId, par: run.pairId, tela: run.screen.id, braco: arm },
+          jobs: { preparar: { result: "success" }, coleta: { result: "success" }, "linhas-de-base": { result: lbDir ? "success" : "skipped" } } });
+        const g = r.gravacoes.find(x => x.tipo === "execucao");
+        if (!g?.anexoLocal || g.estado !== "arquivado") throw new Error(`fixture T4: ${run.runId} não foi arquivado: ${JSON.stringify(r)}`);
+        confirmarEvidencias(arquivo, run.runId, { baixado: g.anexoLocal, url: `fixture://${g.release}/${basename(g.anexoLocal)}` });
+        runs[arm] = run.runId;
+      }
+      pares.push({ par: c.par, sem: runs.sem!, com: runs.com!, navega: c.navega });
+    }
+    return { arquivo, anexos, campanha: CAMPANHA_ID, pares };
+  } finally {
+    rmSync(trabalho, { recursive: true, force: true });
+  }
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const out = process.argv[2];
-  if (!out) { console.error("Uso: npm run painel:fixture -- <pasta-nova>"); process.exitCode = 1; }
-  else construirArquivoFixture(out).then(r => {
+  const t4 = process.argv[2] === "--t4";
+  const out = process.argv[t4 ? 3 : 2];
+  if (!out) { console.error("Uso: npm run painel:fixture -- [--t4] <pasta-nova>"); process.exitCode = 1; }
+  else if (t4) {
+    const r = construirArquivoT4(out, { navega: true });
+    console.log(`Arquivo sintético no layout do T4 em ${relative(process.cwd(), r.arquivo) || "."} (${AVISO}); nenhuma análise ainda.`);
+    console.log(`Anexos da "Release" em ${relative(process.cwd(), r.anexos)}.`);
+    console.log(`Abra com: npm run painel:resultados -- --arquivo ${out} --anexos ${relative(process.cwd(), r.anexos)} --sem-download`);
+  } else construirArquivoFixture(out).then(r => {
     console.log(`Arquivo sintético montado em ${relative(process.cwd(), r.arquivo) || "."} (${AVISO}).`);
     console.log(`Abra com: npm run painel:resultados -- --arquivo ${out}`);
   }).catch(e => { console.error(e instanceof Error ? e.message : e); process.exitCode = 1; });

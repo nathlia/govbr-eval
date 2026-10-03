@@ -9,17 +9,22 @@
  * cegueira da fila; gravação versionada e recusa de concorrência; recálculo gerando rev nova; isolamento
  * de caminhos (404 para tudo fora das rotas, inclusive gabarito e /@fs); download sem a referência e
  * vista reconstruída a partir dele; hash do scorer intacto.
+ *
+ * T8a.1: num arquivo montado pelo código do job arquivar do T4 (sem análise), "Preparar análise" pela
+ * API: estado pronto para preparar, tela que navega fora do alcance, anexo ausente e hash divergente
+ * (anexo e referência) como falhas com etapa, de ponta a ponta até "aguardando revisão", isolamento
+ * (404) e cache de restauração adulterado refeito do anexo.
  */
 import assert from "node:assert/strict";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import type { Server } from "node:http";
 import { request } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { lerTarGz } from "./arquivo-resultados";
+import { lerTarGz, sha as sha256 } from "./arquivo-resultados";
 import { analysisIdentity } from "./collection-manifest";
 import { CAMPANHA_ID } from "./fixtures/analise/construir";
-import { construirArquivoFixture } from "./painel/fixture";
+import { construirArquivoFixture, construirArquivoT4 } from "./painel/fixture";
 import { lerAnalise, lerRevisao, metricasDaRevisao } from "./painel/modelo";
 import { recalcular } from "./painel/revisao";
 import { criarPainel, escutar } from "./painel/servidor";
@@ -376,6 +381,181 @@ await teste("só 127.0.0.1: Host estranho recusado; POST só JSON e da mesma ori
   assert.equal((await req(`/api/recalcular/${C}/par-02`, { metodo: "POST", corpo: "{}", cab: { origin: "http://evil.example" } })).status, 403);
   assert.equal((await req("/", { metodo: "DELETE" })).status, 405);
 });
+
+// ───────────────────────────────────────────────────────────────── T8a.1: primeira análise de um arquivo do T4
+
+// Arquivo montado pelo MESMO código do job arquivar (arquivarExecucao), sem análise nenhuma; os anexos
+// da "Release" ficam fora dele. O painel procura anexos numa pasta que começa vazia.
+const t4 = construirArquivoT4(join(TMP, "arquivo-t4"), { navega: true });
+const anexosPainel = join(TMP, "anexos-baixados");
+mkdirSync(anexosPainel, { recursive: true });
+const servidorT4: Server = criarPainel({ arquivo: t4.arquivo, revisora: "", anexos: [anexosPainel], baixarAnexos: false });
+const portaT4 = await escutar(servidorT4, 0);
+const reqT4 = (caminho: string, o: { metodo?: string; corpo?: string } = {}): Promise<{ status: number; corpo: Buffer; tipo: string }> => new Promise((ok, falha) => {
+  const r = request({ host: "127.0.0.1", port: portaT4, path: caminho, method: o.metodo ?? "GET",
+    headers: { host: `127.0.0.1:${portaT4}`, ...(o.corpo ? { "content-type": "application/json" } : {}) } }, (res) => {
+    const partes: Buffer[] = [];
+    res.on("data", (c: Buffer) => partes.push(c));
+    res.on("end", () => ok({ status: res.statusCode ?? 0, corpo: Buffer.concat(partes), tipo: String(res.headers["content-type"] ?? "") }));
+  });
+  r.on("error", falha);
+  if (o.corpo) r.write(o.corpo);
+  r.end();
+});
+const getT4 = async <T = any>(p: string): Promise<T> => { const r = await reqT4(p); assert.equal(r.status, 200, `${p} → ${r.status}`); return JSON.parse(r.corpo.toString("utf8")) as T; };
+const prepararT4 = async (par: string): Promise<any> => JSON.parse((await reqT4(`/api/preparar/par/${C}/${par}`, { metodo: "POST", corpo: "{}" })).corpo.toString("utf8"));
+const analiseT4 = (par: string) => join(t4.arquivo, "analises", C, par);
+const anexoDe = (runId: string): string => readdirSync(t4.anexos).find(f => f.endsWith(`__${runId}.tar.gz`))!;
+
+await teste("T8a.1: par do T4 sem análise aparece pronto para preparar; tela que navega fica fora do alcance", async () => {
+  const v = await getT4("/api/execucoes");
+  assert.equal(v.execucoes.length, 4);
+  assert.ok(v.execucoes.every((x: any) => x.pontuacao.estado === "sem-analise"));
+  const d = v.preparo[`${C}/par-t4`];
+  assert.equal(d.pode, true);
+  assert.equal(d.selo.estado, "sem-analise");
+  assert.deepEqual(d.execucoes, { sem: t4.pares[0].sem, com: t4.pares[0].com });
+  const nav = v.preparo[`${C}/par-nav`];
+  assert.equal(nav.pode, false);
+  assert.equal(nav.foraDeAlcance, true);
+  assert.match(nav.motivo, /navega.*NAT-51/);
+  const html = (await reqT4(`/par/${C}/par-t4`)).corpo.toString("utf8");
+  assert.match(html, new RegExp(`data-preparar="/api/preparar/par/${C}/par-t4"`));
+  assert.match(html, />Preparar análise</);
+  const htmlNav = (await reqT4(`/par/${C}/par-nav`)).corpo.toString("utf8");
+  assert.match(htmlNav, /Fora do alcance da análise/);
+  assert.ok(!/data-preparar=/.test(htmlNav), "tela que navega não tem botão");
+  assert.match((await reqT4("/")).corpo.toString("utf8"), /sem análise: pronta para preparar/);
+  // e a recusa também vale pela API, sem gravar receita
+  const r = await prepararT4("par-nav");
+  assert.equal(r.ok, false);
+  assert.equal(r.etapa, "referencia");
+  assert.ok(!existsSync(join(analiseT4("par-nav"), "receita.json")));
+});
+
+await teste("T8a.1: anexo ausente → falha com etapa e motivo; nada vira análise nem pacote restaurado", async () => {
+  const r = await prepararT4("par-t4");
+  assert.equal(r.ok, false);
+  assert.equal(r.etapa, "anexo");
+  assert.match(r.erro, /anexo ausente/);
+  assert.ok(existsSync(join(t4.arquivo, r.falha, "erro.json")), "falha registrada no arquivo");
+  assert.ok(!existsSync(join(analiseT4("par-t4"), "receita.json")), "sem receita");
+  assert.ok(!existsSync(join(analiseT4("par-t4"), "revisoes")), "sem revisão");
+  assert.ok(!existsSync(join(t4.arquivo, "restauracoes")) || readdirSync(join(t4.arquivo, "restauracoes")).filter(n => !n.startsWith(".")).length === 0, "nada restaurado pela metade");
+  const p = await getT4(`/api/par/${C}/par-t4`);
+  assert.equal(p.analise, null);
+  assert.equal(p.preparo.selo.estado, "falha");
+  assert.equal(p.preparo.ultimaFalha.etapa, "anexo");
+  const html = (await reqT4(`/par/${C}/par-t4`)).corpo.toString("utf8");
+  assert.match(html, /parou na etapa “anexo de evidências”/);
+  assert.match(html, />Tentar de novo</);
+  assert.ok(!/Resultado por braço/.test(html), "nada de números");
+});
+
+await teste("T8a.1: hash divergente — anexo adulterado e referência adulterada são recusados antes de qualquer número", async () => {
+  // anexo com um byte trocado, no lugar onde o painel procura
+  const nome = anexoDe(t4.pares[0].sem);
+  const b = Buffer.from(readFileSync(join(t4.anexos, nome)));
+  b[b.length - 30] ^= 0xff;
+  writeFileSync(join(anexosPainel, nome), b);
+  const r = await prepararT4("par-t4");
+  assert.equal(r.ok, false);
+  assert.equal(r.etapa, "anexo");
+  assert.match(r.erro, /hash divergente/);
+  rmSync(join(anexosPainel, nome));
+  // referência arquivada adulterada (a da fixture sintética): para na etapa referência
+  const refDir = join(t4.arquivo, "snapshots", "referencia");
+  const refPath = join(refDir, readdirSync(refDir)[0], "referencia.json");
+  const original = readFileSync(refPath);
+  writeFileSync(refPath, Buffer.concat([original, Buffer.from(" ")]));
+  try {
+    const r2 = await prepararT4("par-t4");
+    assert.equal(r2.ok, false);
+    assert.equal(r2.etapa, "referencia");
+    assert.match(r2.erro, /hash divergente/);
+  } finally { writeFileSync(refPath, original); }
+  assert.ok(!existsSync(join(analiseT4("par-t4"), "receita.json")));
+});
+
+await teste("T8a.1: de ponta a ponta — Preparar análise restaura, confere e cai em “aguardando revisão”", async () => {
+  for (const run of [t4.pares[0].sem, t4.pares[0].com]) cpSync(join(t4.anexos, anexoDe(run)), join(anexosPainel, anexoDe(run)));
+  const r = await prepararT4("par-t4");
+  assert.equal(r.ok, true, r.erro);
+  assert.equal(r.estado, "pronta");
+  assert.match(r.revisao, /par-t4\/revisoes\/rev-001$/);
+  const rc = JSON.parse(readFileSync(join(analiseT4("par-t4"), "receita.json"), "utf8"));
+  assert.equal(rc.tipo, "par");
+  assert.match(rc.entradas.campanha, /^campanhas\/.+\/[0-9a-f]{64}\/campaign\.json$/);
+  assert.match(rc.entradas.site, /^sites\/[0-9a-f]{64}$/);
+  assert.match(rc.entradas.linhaDeBase, /^linhas-de-base\/.+\/baseline\.json$/);
+  for (const arm of ["sem", "com"]) {
+    const pac = join(t4.arquivo, rc.pacotes[arm]);
+    assert.ok(existsSync(join(pac, "evidence")), `pacote ${arm} restaurado inteiro, com evidence/`);
+    const e = JSON.parse(readFileSync(join(t4.arquivo, "indice", "entradas", `${rc.execucoes[arm]}.json`), "utf8"));
+    assert.equal(sha256(readFileSync(join(pac, "artifact-manifest.json"))), e.pacote.artifactManifestSha256);
+  }
+  const v = await getT4("/api/execucoes");
+  for (const run of [t4.pares[0].sem, t4.pares[0].com]) {
+    const x = v.execucoes.find((y: any) => y.chave === run);
+    assert.equal(x.pontuacao.estado, "pendente");
+    assert.equal(x.pontuacao.texto, "aguardando revisão");
+  }
+  assert.equal(v.pares.find((p: any) => p.par === "par-t4").selo.estado, "pendente");
+  assert.equal(v.preparo[`${C}/par-t4`], undefined, "com análise, o botão sai");
+  const fila = await getT4(`/api/fila/${C}/par-t4`);
+  assert.ok(fila.cartoes.length > 0);
+  assert.ok(fila.cartoes.every((c: any) => c.decisao.status === "pendente"));
+  const c = fila.cartoes.find((x: any) => x.evidencias.some((ev: any) => ev.url));
+  const ev = await reqT4(c.evidencias.find((x: any) => x.url).url);
+  assert.equal(ev.status, 200, "evidência restaurada do anexo, servida por token");
+  const p = await getT4(`/api/par/${C}/par-t4`);
+  assert.equal(p.analise.atual, "rev-001");
+  assert.equal(p.metricas.find((l: any) => l.rotulo.startsWith("Recall")).valores.sem.texto, "indisponível");
+  const de2 = await prepararT4("par-t4");
+  assert.equal(de2.ok, false, "a segunda preparação não sobrescreve a análise");
+  assert.match(de2.erro, /já existe análise/);
+});
+
+await teste("T8a.1: o arquivo do T4 continua fechado — referência, site, campanha, restaurações e anexos → 404; download sem a referência", async () => {
+  const rc = JSON.parse(readFileSync(join(analiseT4("par-t4"), "receita.json"), "utf8"));
+  for (const p of [`/${rc.entradas.referencia}`, `/${rc.entradas.campanha}`, `/${rc.entradas.site}/site-manifest.json`, `/${rc.pacotes.sem}/run.json`,
+    `/${rc.entradas.linhaDeBase}`, `/analises/${C}/par-t4/receita.json`, `/api/preparar/par/${C}/par-t4`, `/anexos/x.tar.gz`, `/coletas/${C}`]) {
+    const r = await reqT4(p.replace(/ /g, "%20"));
+    assert.equal(r.status, 404, `${p} → ${r.status}`);
+    assert.ok(!/"_meta"|"violations"|FX-0\d/.test(r.corpo.toString("utf8")), `${p} devolveu conteúdo de referência`);
+  }
+  const t = await reqT4(`/baixar/analise/${C}/par-t4/rev-001.tar.gz`);
+  assert.equal(t.status, 200);
+  assert.ok(!lerTarGz(t.corpo).some(f => /referencia\.json$/.test(f.path)), "a referência não sai no download");
+});
+
+await teste("T8a.1: cache de restauração adulterado é refeito do anexo, nunca usado", async () => {
+  // uma execução avulsa do par que navega não serve (fora do alcance); usa a lib direto sobre o par-t4 já restaurado
+  const rc = JSON.parse(readFileSync(join(analiseT4("par-t4"), "receita.json"), "utf8"));
+  const pac = join(t4.arquivo, rc.pacotes.sem);
+  writeFileSync(join(pac, "run.json"), "{}\n");
+  const { prepararAnalise } = await import("./painel/preparar");
+  rmSync(analiseT4("par-t4"), { recursive: true });
+  const r = await prepararAnalise(t4.arquivo, { tipo: "par", campanha: C, par: "par-t4" }, { anexos: [anexosPainel], baixar: null });
+  assert.equal(r.ok, true, r.ok ? "" : r.erro);
+  assert.notEqual(readFileSync(join(pac, "run.json"), "utf8"), "{}\n", "restaurado de novo do anexo");
+  assert.ok(readdirSync(join(t4.arquivo, "restauracoes", rc.execucoes.sem)).some(n => n.includes(".invalido-")), "a cópia ruim fica ao lado, para inspeção");
+});
+
+await teste("T8a.1: análise individual de uma execução (mesmo caminho, alvo = runId)", async () => {
+  const run = t4.pares[0].com;
+  const r = JSON.parse((await reqT4(`/api/preparar/execucao/${run}`, { metodo: "POST", corpo: "{}" })).corpo.toString("utf8"));
+  assert.equal(r.ok, true, r.erro);
+  assert.equal(r.analise, `${C}/${run}`);
+  const rc = JSON.parse(readFileSync(join(t4.arquivo, "analises", C, run, "receita.json"), "utf8"));
+  assert.equal(rc.tipo, "individual");
+  assert.deepEqual(Object.keys(rc.pacotes), ["com"]);
+  const s = JSON.parse(readFileSync(join(t4.arquivo, "analises", C, run, "revisoes", "rev-001", "summary.json"), "utf8"));
+  assert.equal(s.execucoes.length, 1);
+  assert.equal(s.execucoes[0].pontuacao.estado, "pending-review");
+});
+
+servidorT4.close();
 
 await teste("hash de SCORER_FILES intacto", () => {
   assert.equal(analysisIdentity().scorerSha256, SCORER_SHA);

@@ -9,11 +9,19 @@
  * base e a análise comparam (`ExecutableIdentity`), mais os commits e o lock das imagens, e o
  * caminho da referência dentro do checkout do govbr-eval (no mesmo commit).
  *
+ * T8a.1 (1.1.0): o manifesto passa a levar a CAMPANHA (`campaign.v1`) que a análise T6 exige. Ela é
+ * escrita antes da coleta: no modo real, `campanhas/<campanha>/campaign.json` commitado no govbr-eval
+ * (no commit do disparo) — sem ele o `preparar` recusa, antes de qualquer gasto; nos ensaios (dublê,
+ * roteirizado), se não houver arquivo commitado, uma campanha `fixture: true` é gerada do próprio
+ * disparo, com bytes determinísticos (os dois braços de um par geram a mesma). O job `arquivar` grava
+ * a campanha por conteúdo no govbr-resultados. Manifestos 1.0.0 continuam legíveis (sem campanha).
+ *
  *   tsx scripts/manifesto-coleta-isolada.ts build --out ARQ_NOVO --tela solicitacao [--telas DIR] [--validator DIR]
  *        [--referencia ARQ] --campanha ID --slot ID --par ID --braco sem|com --modo real|duble|roteirizado
- *        [--modelo ID] [--esforco N] [--limite-min N] [--tentativa N] [--repeticao N] [--fixture]
+ *        [--modelo ID] [--esforco N] [--limite-min N] [--tentativa N] [--repeticao N] [--campanha-arquivo ARQ]
  *   tsx scripts/manifesto-coleta-isolada.ts verify --manifest ARQ
  */
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -22,15 +30,31 @@ import {
   statePlanOf, statePlanSha256, type ExecutableIdentity, type StatePlan,
 } from "./collection-manifest";
 import { ROOT } from "./adjudication";
-import { FLOW_INSTRUMENT_VERSION } from "./instrument";
+import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION } from "./instrument";
+import { SKILL_PATH } from "./render-task-prompt";
 import { referenciaDe, telaOf } from "./telas";
+import { validateContract, type Campaign } from "../contracts/index";
 
-export const ISOLATED_MANIFEST_VERSION = "manifesto-coleta-isolada-1.0.0";
+export const ISOLATED_MANIFEST_VERSION = "manifesto-coleta-isolada-1.1.0";
+/** Versões legíveis: 1.0.0 (T4, sem campanha) e 1.1.0 (T8a.1, com a campanha). */
+export const ISOLATED_MANIFEST_VERSIONS = ["manifesto-coleta-isolada-1.0.0", ISOLATED_MANIFEST_VERSION] as const;
 const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
 const COMMIT = /^[a-f0-9]{40}$/;
 
+/**
+ * A campanha do disparo. `sha256` é o dos bytes que o arquivo grava (`documentoDaCampanha(document)`);
+ * `origin` diz de onde ela veio: o arquivo commitado (com o sha256 dos bytes de lá) ou gerada para ensaio.
+ */
+export interface CampaignRecord {
+  sha256: string;
+  origin: "commitada" | "gerada-ensaio";
+  sourcePath: string | null;
+  sourceSha256: string | null;
+  document: Campaign;
+}
+
 export interface IsolatedCollectionManifest {
-  manifestVersion: typeof ISOLATED_MANIFEST_VERSION;
+  manifestVersion: (typeof ISOLATED_MANIFEST_VERSIONS)[number];
   generatedAt: string;
   /** true nos modos sem modelo (dublê, roteirizado): nunca dado científico. */
   fixture: boolean;
@@ -48,6 +72,95 @@ export interface IsolatedCollectionManifest {
   oracle: { package: string | null; version: string | null; distSha256: string; dataSha256: string };
   repos: Record<"govbr-eval" | "govbr-telas" | "govbr-ds-validator", { commit: string | null; dirty: boolean | null }>;
   imagesLock: { sha256: string; versions: unknown };
+  /** Ausente só em manifestos 1.0.0 (arquivados antes do T8a.1). */
+  campaign?: CampaignRecord;
+}
+
+/**
+ * O modelo que a coleta pede: o do disparo; nos ensaios, sem modelo no disparo, o mesmo que
+ * `pipeline-t4.ts entradas` entrega ao run-once.
+ */
+export const MODELO_ENSAIO = { duble: "claude-opus-duble-teste", roteirizado: "agente-roteirizado" } as const;
+export function modeloDaColeta(modo: "real" | "duble" | "roteirizado", modelo: string | null): string | null {
+  return modo === "real" ? modelo : (modelo ?? MODELO_ENSAIO[modo]);
+}
+
+/** Bytes canônicos da campanha no arquivo (é o que o sha256 do registro cobre). */
+export const documentoDaCampanha = (c: Campaign): string => JSON.stringify(c, null, 2) + "\n";
+const sha256Texto = (s: string | Buffer): string => createHash("sha256").update(s).digest("hex");
+export const caminhoCampanhaCommitada = (campanha: string): string => `campanhas/${campanha}/campaign.json`;
+
+/**
+ * Campanha de ENSAIO gerada do disparo (só dublê/roteirizado, nunca no modo real). Determinística: não
+ * leva braço, slot nem horário do disparo, para que os dois braços de um par cheguem aos mesmos bytes.
+ */
+export function campanhaDeEnsaio(m: Pick<IsolatedCollectionManifest, "dispatch" | "site" | "oracle" | "imagesLock">): Campaign {
+  const d = m.dispatch;
+  if (d.mode === "real") throw new Error("campanha gerada só existe para ensaio; o modo real exige campanhas/<id>/campaign.json commitado");
+  const v = (m.imagesLock.versions ?? {}) as { playwrightMcp?: string; chromium?: string; claudeCode?: string };
+  const modelo = modeloDaColeta(d.mode, d.model)!;
+  return {
+    contract: "campaign.v1", fixture: true, campaignId: d.campaignId, kind: "pilot",
+    title: `Campanha de ensaio ${d.campaignId} (gerada do disparo; ENSAIO, nunca dado científico)`,
+    objective: `Ensaio do pipeline isolado no modo ${d.mode}: exercitar coleta, arquivo e análise sem custo de modelo.`,
+    hypotheses: ["Ensaio de infraestrutura: nenhuma hipótese científica."],
+    createdAt: "2026-10-03T00:00:00Z", frozenAt: null,
+    design: { screens: [{ id: d.screenId, label: SCREEN_LABELS[d.screenId] ?? d.screenId, version: m.site.screenVersion }], arms: ["sem", "com"],
+      models: [{ family: d.mode === "roteirizado" ? "roteirizado" : "claude", requested: modelo }],
+      effort: d.mode === "roteirizado" ? "nao-se-aplica" : (d.effort ?? "high"), repetitions: 1, order: "sequencial", seed: null },
+    fixed: {
+      protocolSha256: sha256Texto(readFileSync(SKILL_PATH)),
+      client: d.mode === "roteirizado" ? { name: "fake-agent", version: "1.0.0" } : { name: "claude-code", version: v.claudeCode ?? "desconhecida" },
+      provider: d.mode === "roteirizado" ? { name: "nenhum (agente roteirizado)", authMethod: "unknown" } : { name: "stub", authMethod: "unknown" },
+      browser: { name: "chromium", version: v.chromium ?? "desconhecida" }, playwrightMcp: `@playwright/mcp@${v.playwrightMcp ?? "?"}`,
+      isolationPolicyVersion: "a do runner (registrada em cada run.json)",
+      oracle: { package: m.oracle.package ?? "desconhecido", version: m.oracle.version ?? "desconhecida", distSha256: m.oracle.distSha256, dataSha256: m.oracle.dataSha256, profile: "combined" },
+      scorerVersion: FLOW_SCORING_VERSION,
+    },
+    limits: { timeoutSeconds: d.limitMinutes * 60, maxTurns: null, maxBudgetUsd: null },
+    retryPolicy: { maxAttemptsPerSlot: 1, campaignAttemptCeiling: 2, retryOn: [], attemptSelection: "ensaio: a única tentativa arquivada de cada braço" },
+    failurePolicy: "Ensaio: falha fica registrada; nada é repetido automaticamente.",
+    baselinePolicy: { required: true, comparable: ["linha-de-base/validator-nao-guiada", "linha-de-base/axe"], diagnosticOnly: ["linha-de-base/validator-guiada"], plannedAbsences: [] },
+    analysisPlan: { primaryOutcome: "Nenhum (ensaio de infraestrutura).", secondaryOutcomes: [], uncertaintyMethod: null, exclusionRules: "Ensaio: nada entra em resultado científico." },
+    budget: { approved: false, amount: null, currency: null, approvedBy: null, approvedAt: null },
+  };
+}
+
+/** A campanha serve a este disparo? (contrato, id, natureza, tela/versão, braço, modelo, oráculo) */
+export function problemasDaCampanha(c: Campaign, m: Pick<IsolatedCollectionManifest, "dispatch" | "site" | "oracle" | "fixture">): string[] {
+  const v = validateContract(c);
+  if (v.contract !== "campaign.v1" || !v.valid) return [`campanha fora do contrato campaign.v1: ${v.errors.map((e) => `${e.path || "/"} ${e.message}`).join("; ")}`];
+  const p: string[] = [];
+  const d = m.dispatch;
+  if (c.campaignId !== d.campaignId) p.push(`campanha ${c.campaignId} ≠ ${d.campaignId} do disparo`);
+  if (c.fixture !== m.fixture) p.push(`campanha fixture=${String(c.fixture)} num disparo ${d.mode} (fixture=${String(m.fixture)})`);
+  if (!c.design.screens.some((s) => s.id === d.screenId && s.version === m.site.screenVersion)) p.push(`a campanha não traz a tela ${d.screenId}@${m.site.screenVersion} no desenho`);
+  if (!c.design.arms.includes(d.arm)) p.push(`a campanha não traz o braço ${d.arm}`);
+  const modelo = modeloDaColeta(d.mode, d.model);
+  if (!c.design.models.some((x) => x.requested === modelo)) p.push(`a campanha não traz o modelo ${String(modelo)}`);
+  if (c.fixed.oracle.distSha256 !== m.oracle.distSha256 || c.fixed.oracle.dataSha256 !== m.oracle.dataSha256) p.push("oráculo fixado na campanha ≠ o compilado para o disparo");
+  return p;
+}
+
+/** Lê a campanha commitada (o modo real exige) ou gera a de ensaio. Recusa campanha que não serve ao disparo. */
+export function campanhaDoDisparo(m: Omit<IsolatedCollectionManifest, "campaign">, caminho: string): CampaignRecord {
+  let document: Campaign, origin: CampaignRecord["origin"], sourcePath: string | null = null, sourceSha256: string | null = null;
+  if (existsSync(caminho)) {
+    const bytes = readFileSync(caminho);
+    try { document = JSON.parse(bytes.toString("utf8")) as Campaign; } catch { throw new Error(`campanha ilegível (JSON inválido): ${caminho}`); }
+    origin = "commitada";
+    const rel = relative(ROOT, caminho).replace(/\\/g, "/");
+    sourcePath = rel.startsWith("..") ? caminho.replace(/\\/g, "/") : rel;
+    sourceSha256 = sha256Texto(bytes);
+  } else if (m.dispatch.mode === "real") {
+    throw new Error(`modo real sem campanha: falta ${caminhoCampanhaCommitada(m.dispatch.campaignId)} no govbr-eval (a campanha é escrita e commitada antes da coleta, e a análise exige)`);
+  } else {
+    document = campanhaDeEnsaio(m);
+    origin = "gerada-ensaio";
+  }
+  const p = problemasDaCampanha(document, m);
+  if (p.length) throw new Error(`campanha não serve a este disparo; nada foi gravado: ${p.join("; ")}`);
+  return { sha256: sha256Texto(documentoDaCampanha(document)), origin, sourcePath, sourceSha256, document };
 }
 
 /** A identidade da tela que run-once grava em `run.screen.version`: o mesmo texto, para a análise casar. */
@@ -61,6 +174,8 @@ export interface BuildOptions {
   campanha: string; slot: string; par: string; braco: "sem" | "com"; modo: "real" | "duble" | "roteirizado";
   modelo: string | null; esforco: string | null; limiteMin: number; tentativa: number; repeticao: number;
   github?: IsolatedCollectionManifest["dispatch"]["github"];
+  /** Padrão: campanhas/<campanha>/campaign.json do govbr-eval. */
+  campanhaPath?: string;
 }
 
 export function buildIsolatedManifest(o: BuildOptions): IsolatedCollectionManifest {
@@ -91,7 +206,7 @@ export function buildIsolatedManifest(o: BuildOptions): IsolatedCollectionManife
   const pkg = existsSync(join(o.validatorDir, "package.json")) ? JSON.parse(readFileSync(join(o.validatorDir, "package.json"), "utf8")) as { name?: string; version?: string } : {};
   const relRef = relative(ROOT, referencePath).replace(/\\/g, "/");
   if (relRef.startsWith("..")) throw new Error("a referência precisa estar dentro do govbr-eval (mesmo commit do instrumento)");
-  const manifest: IsolatedCollectionManifest = {
+  const semCampanha: Omit<IsolatedCollectionManifest, "campaign"> = {
     manifestVersion: ISOLATED_MANIFEST_VERSION,
     generatedAt: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
     fixture: o.modo !== "real",
@@ -115,6 +230,8 @@ export function buildIsolatedManifest(o: BuildOptions): IsolatedCollectionManife
     repos: { "govbr-eval": gitState(ROOT), "govbr-telas": gitState(o.telasDir), "govbr-ds-validator": gitState(o.validatorDir) },
     imagesLock: { sha256: sha256(lockBytes), versions: lock.versions },
   };
+  const campaign = campanhaDoDisparo(semCampanha, resolve(o.campanhaPath ?? join(ROOT, caminhoCampanhaCommitada(o.campanha))));
+  const manifest: IsolatedCollectionManifest = { ...semCampanha, campaign };
   const problems = isolatedManifestProblems(manifest);
   if (problems.length) throw new Error(`manifesto de coleta incompleto; nada foi gravado: ${problems.join("; ")}`);
   return manifest;
@@ -122,7 +239,7 @@ export function buildIsolatedManifest(o: BuildOptions): IsolatedCollectionManife
 
 export function isolatedManifestProblems(m: IsolatedCollectionManifest): string[] {
   const p = identityProblems("identidade", m.identity);
-  if (m.manifestVersion !== ISOLATED_MANIFEST_VERSION) p.push(`versão ${String(m.manifestVersion)}`);
+  if (!(ISOLATED_MANIFEST_VERSIONS as readonly string[]).includes(m.manifestVersion)) p.push(`versão ${String(m.manifestVersion)}`);
   if (m.identity.referenceSha256 !== m.reference?.sha256) p.push("identidade × referência: sha256 diverge");
   if (statePlanSha256(m.statePlan) !== m.identity.statePlanSha256) p.push("identidade × plano de estados: sha256 diverge");
   if (m.site?.manifestSha256 !== m.identity.siteManifestSha256) p.push("identidade × site: sha256 diverge");
@@ -134,13 +251,20 @@ export function isolatedManifestProblems(m: IsolatedCollectionManifest): string[
   if (!m.dispatch || !ID.test(m.dispatch.campaignId) || !ID.test(m.dispatch.slotId)) p.push("despacho sem campanha/slot válidos");
   if (m.dispatch?.mode === "real" && (!m.dispatch.model || !m.dispatch.effort)) p.push("modo real sem modelo/esforço");
   if (m.fixture !== (m.dispatch?.mode !== "real")) p.push("fixture incoerente com o modo");
+  if (m.manifestVersion === ISOLATED_MANIFEST_VERSION) {
+    if (!m.campaign?.document) p.push("manifesto 1.1.0 sem campanha");
+    else {
+      if (sha256Texto(documentoDaCampanha(m.campaign.document)) !== m.campaign.sha256) p.push("campanha × sha256 registrado diverge");
+      if (m.dispatch && m.site && m.oracle) p.push(...problemasDaCampanha(m.campaign.document, m));
+    }
+  }
   return p;
 }
 
 export function readIsolatedManifest(path: string): { manifest: IsolatedCollectionManifest; sha256: string; bytes: number } {
   const bytes = readFileSync(path);
   const manifest = JSON.parse(bytes.toString("utf8")) as IsolatedCollectionManifest;
-  if (manifest.manifestVersion !== ISOLATED_MANIFEST_VERSION) throw new Error(`manifesto de coleta isolada de versão desconhecida: ${String(manifest.manifestVersion)}`);
+  if (!(ISOLATED_MANIFEST_VERSIONS as readonly string[]).includes(manifest.manifestVersion)) throw new Error(`manifesto de coleta isolada de versão desconhecida: ${String(manifest.manifestVersion)}`);
   const problems = isolatedManifestProblems(manifest);
   if (problems.length) throw new Error(`manifesto de coleta isolada inválido: ${problems.join("; ")}`);
   return { manifest, sha256: sha256(bytes), bytes: bytes.length };
@@ -153,9 +277,9 @@ export function readIsolatedManifest(path: string): { manifest: IsolatedCollecti
  */
 export function lerManifestoDeColeta(path: string): { versao: string; identity: ExecutableIdentity; referencePath: string; sha256: string } {
   const head = JSON.parse(readFileSync(path, "utf8")) as { manifestVersion?: string };
-  if (head.manifestVersion === ISOLATED_MANIFEST_VERSION) {
+  if ((ISOLATED_MANIFEST_VERSIONS as readonly string[]).includes(String(head.manifestVersion))) {
     const { manifest, sha256: sha } = readIsolatedManifest(path);
-    return { versao: ISOLATED_MANIFEST_VERSION, identity: manifest.identity, referencePath: manifest.reference.path, sha256: sha };
+    return { versao: manifest.manifestVersion, identity: manifest.identity, referencePath: manifest.reference.path, sha256: sha };
   }
   const { manifest, sha256: sha } = readCollectionManifest(path);
   if (!manifest.archive) throw new Error("O manifesto de coleta não arquivou o gabarito.");
@@ -191,10 +315,12 @@ function main(): void {
     braco: need("--braco") as "sem" | "com", modo: need("--modo") as "real" | "duble" | "roteirizado",
     modelo: val("--modelo") ?? null, esforco: val("--esforco") ?? null, limiteMin: Number(val("--limite-min") ?? 90),
     tentativa: Number(val("--tentativa") ?? 1), repeticao: Number(val("--repeticao") ?? 1), github: gh,
+    campanhaPath: val("--campanha-arquivo"),
   });
   writeFileSync(out, JSON.stringify(manifest, null, 2) + "\n", { flag: "wx" });
   console.log(`manifesto de coleta isolada: ${out}`);
   console.log(`  site ${manifest.identity.siteManifestSha256!.slice(0, 12)} · referência ${manifest.identity.referenceSha256!.slice(0, 12)} · plano ${manifest.identity.statePlanSha256!.slice(0, 12)} · oráculo ${manifest.identity.oracleDistSha256!.slice(0, 12)}`);
+  console.log(`  campanha ${manifest.campaign!.document.campaignId} (${manifest.campaign!.origin}) sha256=${manifest.campaign!.sha256.slice(0, 12)}`);
   console.log(`MANIFEST_SHA256=${sha256(readFileSync(out))}`);
 }
 

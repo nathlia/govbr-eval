@@ -16,6 +16,9 @@
  *   snapshots/referencia/<sha256>/referencia.json          (por conteúdo; nunca exposto ao agente)
  *   snapshots/plano-de-estados/<sha256>/plano-estados.json
  *   snapshots/conjuntos/<snapshotSetId>.json               (snapshot-manifest.v1; id derivado do conteúdo)
+ *   campanhas/<campanha>/<sha256>/campaign.json            (T8a.1; por conteúdo; a que o manifesto registra)
+ *   sites/<sha256 do site-manifest>/{site-manifest.json, site/…}   (T8a.1; o site congelado, por conteúdo:
+ *                                          só os arquivos que o site-manifest lista, conferidos um a um)
  *   indice/entradas/<chave>.json           uma entrada por execução/linha de base (imutável salvo o
  *                                          estado da entrega do anexo, que só avança)
  *   indice/indice.json, INDICE.md          projeções reconstruídas de indice/entradas a cada gravação
@@ -38,6 +41,7 @@ import { compareIdentities, statePlanSha256 } from "./collection-manifest";
 import { canonical } from "./semantic-flow";
 import { SCREEN_LABELS, screenVersionOf, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import type { FlowBaselines } from "./run-baselines-flow";
+import { loadSite } from "./measurement-surface";
 
 export const ARCHIVE_VERSION = "arquivo-resultados-1.0.0";
 export const OWNER = "nathlia";
@@ -154,6 +158,26 @@ export function listagemDoCommit(repoDir: string, commit: string): { sha256: str
 export const caminhoReferencia = (refSha: string): string => `snapshots/referencia/${refSha}/referencia.json`;
 export const caminhoPlano = (planSha: string): string => `snapshots/plano-de-estados/${planSha}/plano-estados.json`;
 export const caminhoManifesto = (campanha: string, manifestSha: string): string => `coletas/${campanha}/${manifestSha}/manifesto-coleta.json`;
+export const caminhoCampanha = (campanha: string, campanhaSha: string): string => `campanhas/${campanha}/${campanhaSha}/campaign.json`;
+export const caminhoSite = (siteManifestSha: string): string => `sites/${siteManifestSha}`;
+
+/**
+ * Grava o site congelado no arquivo, por conteúdo (T8a.1): `site-manifest.json` + só os arquivos que ele
+ * lista, cada um conferido pelo sha256 do manifesto (`loadSite`). Recusa se o site-manifest não é o
+ * esperado. Reenvio é idempotente (mesmos bytes); git guarda cada blob uma vez entre versões do site.
+ */
+export function arquivarSite(arquivo: string, telasDir: string, esperado: string): { caminho: string; arquivos: number; bytes: number } {
+  const site = loadSite(telasDir);
+  if (site.manifestSha256 !== esperado) throw new Recusa(`o site-manifest.json em ${telasDir} (${site.manifestSha256.slice(0, 12)}) não é o do manifesto de coleta (${esperado.slice(0, 12)})`);
+  const caminho = caminhoSite(esperado);
+  gravarImutavel(join(arquivo, caminho, "site-manifest.json"), readFileSync(join(telasDir, "site-manifest.json")));
+  let bytes = 0;
+  for (const [p, f] of site.files) {
+    gravarImutavel(join(arquivo, caminho, "site", p.slice(1)), f.body);
+    bytes += f.body.length;
+  }
+  return { caminho, arquivos: site.files.size, bytes };
+}
 
 /**
  * Conjunto de snapshots de um disparo. Determinístico: os dois braços de um par (mesmos commits,
@@ -209,7 +233,8 @@ export function registrarLinhaDeBase(o: RegistroOpcoes): { registro: Baseline; p
   const tentativa = o.tentativa ?? (o.rerunOf ? 2 : 1);
   const registro: Baseline = {
     contract: "baseline.v1", fixture: m.fixture, baselineId, campaignId: m.dispatch.campaignId,
-    screen: { id: m.dispatch.screenId, label: SCREEN_LABELS[m.dispatch.screenId] ?? m.dispatch.screenId, version: screenVersionOf(m.site.siteSha256) },
+    // a versão que o manifesto registra (= screenVersionOf(siteSha256) num manifesto do buildIsolatedManifest)
+    screen: { id: m.dispatch.screenId, label: SCREEN_LABELS[m.dispatch.screenId] ?? m.dispatch.screenId, version: m.site.screenVersion ?? screenVersionOf(m.site.siteSha256) },
     attempt: tentativa, rerunOf: o.rerunOf ?? null, rerunReason: o.rerunOf ? (o.motivo ?? null) : null,
     producer: { script: "scripts/run-baselines-flow.ts", baselineVersion: bruto.baselineVersion },
     scope: "bateria", status: bruto.status, error: bruto.status === "failed" ? (bruto.error ?? "falha sem mensagem") : null,
@@ -416,6 +441,17 @@ export function restaurar(arquivo: string, chave: string, anexo: string | null, 
       const plano = join(arquivo, caminhoPlano(m.identity.statePlanSha256!));
       if (!existsSync(plano) || statePlanSha256(JSON.parse(readFileSync(plano, "utf8"))) !== m.identity.statePlanSha256) p.push("plano de estados arquivado ausente ou divergente");
       else ok.push(`plano de estados ${m.identity.statePlanSha256!.slice(0, 12)}`);
+      // T8a.1: campanha e site por conteúdo (manifesto 1.1.0); manifesto 1.0.0 não os tinha
+      if (m.campaign) {
+        const c = join(arquivo, caminhoCampanha(m.dispatch.campaignId, m.campaign.sha256));
+        if (!existsSync(c) || sha(readFileSync(c)) !== m.campaign.sha256) p.push("campanha arquivada ausente ou divergente");
+        else ok.push(`campanha ${m.campaign.sha256.slice(0, 12)}`);
+        const s = join(arquivo, caminhoSite(m.identity.siteManifestSha256!));
+        let siteOk = false;
+        try { siteOk = loadSite(s).manifestSha256 === m.identity.siteManifestSha256; } catch { siteOk = false; }
+        if (!siteOk) p.push("site congelado arquivado ausente ou divergente");
+        else ok.push(`site ${m.identity.siteManifestSha256!.slice(0, 12)}`);
+      }
     }
   }
   if (e.tipo === "linha-de-base") {

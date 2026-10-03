@@ -21,10 +21,10 @@ import yaml from "js-yaml";
 import { validateContract, type Run } from "../contracts/index";
 import { avaliar, interpolar, type Workflow } from "./ci/emular-workflow";
 import { conferirAmbienteDosConteineres, conferirCheckouts, conferirEntradas, conferirImagens, resumoArquivo } from "./pipeline-t4";
-import { buildIsolatedManifest, isolatedManifestProblems, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
+import { buildIsolatedManifest, documentoDaCampanha, isolatedManifestProblems, problemasDaCampanha, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import {
-  conjuntoDeSnapshots, criarTarGz, gravarEntrada, gravarImutavel, lerTarGz, listagemDoCommit, problemasDoPacote, Recusa, registrarLinhaDeBase, restaurar, sha,
-  type EntradaIndice,
+  caminhoCampanha, caminhoSite, conjuntoDeSnapshots, criarTarGz, gravarEntrada, gravarImutavel, lerTarGz, listagemDoCommit, listarArquivos, problemasDoPacote, Recusa,
+  registrarLinhaDeBase, restaurar, sha, type EntradaIndice,
 } from "./arquivo-resultados";
 import { arquivarExecucao, confirmarEvidencias } from "./arquivar-execucao";
 import { loadSite, verifyServedSite } from "./measurement-surface";
@@ -250,6 +250,33 @@ const manifestoCom = buildIsolatedManifest({ ...comum, braco: "com", slot: "slot
 const manifestoPath = join(TMP, "manifesto-coleta.json");
 writeFileSync(manifestoPath, JSON.stringify(manifestoSem, null, 2) + "\n");
 
+await teste("manifesto 1.1.0 (T8a.1): campanha de ensaio gerada e idêntica nos dois braços; modo real sem campanha commitada é recusado", () => {
+  for (const m of [manifestoSem, manifestoCom]) {
+    assert.equal(m.manifestVersion, "manifesto-coleta-isolada-1.1.0");
+    assert.equal(m.campaign!.origin, "gerada-ensaio");
+    assert.ok(validateContract(m.campaign!.document).valid, JSON.stringify(validateContract(m.campaign!.document).errors));
+    assert.equal(sha(documentoDaCampanha(m.campaign!.document)), m.campaign!.sha256);
+    assert.deepEqual(problemasDaCampanha(m.campaign!.document, m), []);
+  }
+  assert.equal(manifestoSem.campaign!.sha256, manifestoCom.campaign!.sha256, "os dois braços de um par geram a mesma campanha");
+  assert.equal(manifestoSem.campaign!.document.design.models[0].requested, conferirEntradas({ ...ENTRADAS_OK, modo: "roteirizado", modelo: "" }).saidas.modelo);
+  const real = { ...comum, braco: "sem" as const, modo: "real" as const, modelo: "claude-opus-4-5", esforco: "high" };
+  assert.throws(() => buildIsolatedManifest({ ...real, campanhaPath: join(TMP, "nao-existe", "campaign.json") }), /modo real sem campanha/);
+  // campanha commitada que não serve ao disparo (tela fora do desenho): recusada antes de qualquer gasto
+  const errada = { ...manifestoSem.campaign!.document, fixture: false, design: { ...manifestoSem.campaign!.document.design, models: [{ family: "claude", requested: "claude-opus-4-5" }], screens: [{ id: "vistorias", label: "Vistorias", version: "x" }] } };
+  const errPath = join(TMP, "campanha-errada.json");
+  writeFileSync(errPath, JSON.stringify(errada, null, 2) + "\n");
+  assert.throws(() => buildIsolatedManifest({ ...real, campanhaPath: errPath }), /não traz a tela solicitacao/);
+  // manifesto 1.0.0 (antes do T8a.1) continua legível
+  const antigo = JSON.parse(JSON.stringify(manifestoSem)) as IsolatedCollectionManifest;
+  delete antigo.campaign;
+  (antigo as { manifestVersion: string }).manifestVersion = "manifesto-coleta-isolada-1.0.0";
+  assert.deepEqual(isolatedManifestProblems(antigo), []);
+  const adulterado = JSON.parse(JSON.stringify(manifestoSem)) as IsolatedCollectionManifest;
+  adulterado.campaign!.document.title = "outra";
+  assert.match(isolatedManifestProblems(adulterado).join(), /campanha × sha256/);
+});
+
 await teste("manifesto de coleta isolada: identidade completa, conferida contra o lock; adulteração recusada", () => {
   assert.deepEqual(isolatedManifestProblems(manifestoSem), []);
   assert.equal(readIsolatedManifest(manifestoPath).manifest.dispatch.arm, "sem");
@@ -365,7 +392,7 @@ let chaveRun = "";
 let anexoPath = "";
 
 await teste("arquivo: grava pacote, linha de base, manifesto, snapshots, índice e tar.gz com sha256", () => {
-  const r = arquivarExecucao({ arquivo, evidenciasSaida: evid, pacote, manifesto: manifestoPath, linhaDeBase: lbDir, segredos: [], entradas: ENT, jobs: JOBS });
+  const r = arquivarExecucao({ arquivo, evidenciasSaida: evid, pacote, manifesto: manifestoPath, linhaDeBase: lbDir, segredos: [], entradas: ENT, jobs: JOBS, telas: DEFAULT_TELAS_DIR });
   const run = JSON.parse(readFileSync(join(pacote!, "run.json"), "utf8")) as Run;
   chaveRun = run.runId;
   const g = r.gravacoes.find((x) => x.tipo === "execucao")!;
@@ -385,6 +412,15 @@ await teste("arquivo: grava pacote, linha de base, manifesto, snapshots, índice
   // tar determinístico e legível por tar comum
   assert.equal(sha(criarTarGz(pacote!, "x")), sha(criarTarGz(pacote!, "x")));
   assert.ok(lerTarGz(readFileSync(anexoPath)).length > 3);
+  // T8a.1: campanha e site congelado, por conteúdo
+  const camp = join(arquivo, caminhoCampanha("t4-teste", manifestoSem.campaign!.sha256));
+  assert.equal(sha(readFileSync(camp)), manifestoSem.campaign!.sha256);
+  const siteArq = join(arquivo, caminhoSite(manifestoSem.identity.siteManifestSha256!));
+  assert.equal(loadSite(siteArq).manifestSha256, manifestoSem.identity.siteManifestSha256, "site arquivado conferido arquivo a arquivo");
+  assert.equal(listarArquivos(join(siteArq, "site")).length, loadSite(DEFAULT_TELAS_DIR).files.size, "só os arquivos que o site-manifest lista");
+  assert.ok(!r.problemas.some((p) => /campanha|site/.test(p)), r.problemas.join("; "));
+  const semTelas = arquivarExecucao({ arquivo, evidenciasSaida: join(TMP, "anexos-sem-telas"), pacote: null, manifesto: manifestoPath, linhaDeBase: null, segredos: [], entradas: { ...ENT, etapas: "so-linha-de-base" }, jobs: JOBS });
+  assert.match(semTelas.problemas.join(), /site congelado não arquivado/, "sem --telas, o aviso aparece");
 });
 
 await teste("arquivo: reenvio do MESMO pacote é idempotente; bytes diferentes no mesmo caminho são recusados", () => {
@@ -451,6 +487,7 @@ await teste("arquivo: execução interrompida sem pacote fica visível no índic
 await teste("restauração: só com o arquivo + anexo, todos os hashes conferem; anexo ou cópia adulterados são pegos", () => {
   const ok = restaurar(arquivo, chaveRun, anexoPath, join(TMP, "restaurado"));
   assert.ok(ok.ok, ok.problemas.join("; "));
+  assert.ok(ok.conferidos.some((c) => /^campanha /.test(c)) && ok.conferidos.some((c) => /^site /.test(c)), `campanha e site conferidos: ${ok.conferidos.join("; ")}`);
   assert.ok(ok.conferidos.some((c) => /pacote restaurado/.test(c)) || !docker, ok.conferidos.join("; "));
   const lb = restaurar(arquivo, JSON.parse(readFileSync(join(lbDir, "baseline.json"), "utf8")).baselineId, null, join(TMP, "restaurado-lb"));
   assert.ok(lb.ok, lb.problemas.join("; "));

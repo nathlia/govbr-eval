@@ -14,6 +14,7 @@ import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { EFFORT_LEVELS, CREDENTIAL_ENV } from "../runner/cliente-claude";
 import type { Run } from "../contracts/index";
+import { MODELO_ENSAIO } from "./manifesto-coleta-isolada";
 
 const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
 const COMMIT = /^[a-f0-9]{40}$/;
@@ -56,7 +57,7 @@ export function conferirEntradas(e: Partial<Entradas>): { problemas: string[]; s
   const egress = modo === "real" ? "real" : "stub";
   const saidas: Record<string, string> = {
     agente, egress, fixture: String(modo !== "real"),
-    modelo: modo === "real" ? has("modelo") : modo === "duble" ? "claude-opus-duble-teste" : "agente-roteirizado",
+    modelo: modo === "real" ? has("modelo") : modo === "duble" ? MODELO_ENSAIO.duble : MODELO_ENSAIO.roteirizado,
     esforco: modo === "roteirizado" ? "nao-se-aplica" : (EFFORT_LEVELS.includes(has("esforco")) ? has("esforco") : "high"),
     imagens: has("braco") === "com" ? "agent,screens,collector,egress,oracle" : "agent,screens,collector,egress",
     coleta: String(has("etapas") !== "so-linha-de-base"),

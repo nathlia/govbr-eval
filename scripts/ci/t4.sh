@@ -108,6 +108,8 @@ case "$fase" in
     [ -f "$TMP/entrada/manifesto/manifesto-coleta.json" ] && args+=(--manifesto "$TMP/entrada/manifesto/manifesto-coleta.json")
     [ -f "$TMP/entrada/pacote/execucao/run.json" ] && args+=(--pacote "$TMP/entrada/pacote/execucao")
     [ -f "$TMP/entrada/linha-de-base/baseline.json" ] && args+=(--linha-de-base "$TMP/entrada/linha-de-base")
+    # T8a.1: o site congelado vai para o arquivo por conteúdo (conferido contra o manifesto de coleta)
+    [ -f "$WS/govbr-telas/site-manifest.json" ] && args+=(--telas "$WS/govbr-telas")
     tsx scripts/arquivar-execucao.ts "${args[@]}"
     ;;
   anexar)
@@ -143,7 +145,7 @@ case "$fase" in
     fi
     remoto="${GOVBR_RESULTADOS_REMOTO:-origin}"
     git checkout -- indice/indice.json INDICE.md 2>/dev/null || rm -f indice/indice.json INDICE.md
-    for d in execucoes ensaios linhas-de-base coletas snapshots indice/entradas; do
+    for d in execucoes ensaios linhas-de-base coletas snapshots campanhas sites indice/entradas; do
       if [ -e "$d" ]; then git add -A -- "$d"; fi
     done
     if git diff --cached --quiet; then echo "nada novo para arquivar"; exit 0; fi

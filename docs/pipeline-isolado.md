@@ -19,7 +19,7 @@ preparar ──┬── coleta ──────────┐
 | `preparar` | confere as entradas; baixa `govbr-telas` e `govbr-ds-validator` **pelo commit**; compila o oráculo e confere `dist/`, `data/` e o `site-manifest.json` contra `runner/images.lock.json`; grava o manifesto de coleta (site, referência, plano de estados, oráculo) | leitura (só nos checkouts) |
 | `coleta` | checkout **sem gabaritos**; no braço sem, o oráculo nem é baixado; constrói as imagens nesta VM e confere as versões contra o lock; `run-once`; confere que nenhum contêiner recebeu token do GitHub/publicação; sobe o pacote **mesmo com falha** | o provedor, **só** no passo da coleta real |
 | `linhas-de-base` | serve o mesmo site (bytes conferidos) e roda `run-baselines-flow.ts` com o mesmo manifesto: axe e validator não guiado comparáveis, guiado como diagnóstico, ESLint como já era (tela A lê o fonte do `govbr-corpus` no commit de origem do site; tela B declara ausência); registro `baseline.v1` com identidade e completude conferidas | leitura |
-| `arquivar` | único com escrita no `govbr-resultados`: caminho único e imutável, índice, anexo de evidências na Release (sha256 conferido baixando de volta), push | escrita |
+| `arquivar` | único com escrita no `govbr-resultados`: caminho único e imutável, índice, campanha e site congelado por conteúdo (T8a.1; o `govbr-telas` é lido no `telas_sha`), anexo de evidências na Release (sha256 conferido baixando de volta), push | escrita (e leitura do `govbr-telas`) |
 
 Modos: `roteirizado` (agente roteirizado) e `duble` (cliente real contra o dublê) não chamam modelo,
 gravam `fixture: true` e vão para `ensaios/`; `real` chama o modelo e vai para `execucoes/`.
@@ -62,6 +62,8 @@ gera os mesmos bytes, é aceito como reenvio e a entrega passa a `confirmado`. O
 | `linhas-de-base/<campanha>/<tela>/<baselineId>/` | `baseline.json` (registro) + `bruta.json` |
 | `coletas/<campanha>/<sha256>/manifesto-coleta.json` | manifesto do disparo (por conteúdo) |
 | `snapshots/…` | referência e plano de estados (por conteúdo) e o conjunto `snapshot-manifest.v1` (id derivado do conteúdo: igual nos dois braços de um par) |
+| `campanhas/<campanha>/<sha256>/campaign.json` | a campanha que o manifesto de coleta 1.1.0 registra (T8a.1, por conteúdo) |
+| `sites/<sha256 do site-manifest>/` | o site congelado servido às execuções: `site-manifest.json` + só os arquivos que ele lista, cada um conferido (T8a.1, por conteúdo; ~23 MB / ~15 MB comprimidos por versão do site, gravados uma vez) |
 | Release `campanha-<id>` / `ensaios-<id>` | anexo `<pasta>.tar.gz` com o pacote **inteiro** (inclusive `evidence/`) |
 
 Nada é sobrescrito: arquivo existente com outros bytes é recusado. Execução sem pacote (VM perdida,
@@ -78,7 +80,26 @@ npx tsx scripts/restaurar-execucao.ts --arquivo govbr-resultados --chave <baseli
 ```
 
 Confere o sha256 do anexo contra o índice, cada arquivo contra o `artifact-manifest.json`, as cópias do
-repositório contra o anexo, o manifesto de coleta, a referência e o plano de estados.
+repositório contra o anexo, o manifesto de coleta, a referência e o plano de estados e, no manifesto
+1.1.0, a campanha e o site arquivados.
+
+O painel de resultados faz essa restauração sozinho no botão **Preparar análise** (T8a.1), baixando o
+anexo com o `gh` quando ele não está na máquina — ver [`painel-resultados.md`](painel-resultados.md).
+
+## Campanha (T8a.1)
+
+A análise (T6) exige o `campaign.json` da campanha, escrito **antes** da coleta. Por isso o manifesto
+de coleta passou a `manifesto-coleta-isolada-1.1.0` e leva a campanha:
+
+- **modo `real`**: `campanhas/<campanha>/campaign.json` precisa estar commitado no `govbr-eval` no
+  commit do disparo. Sem ele, ou se ela não trouxer a tela (com a versão do site), o braço, o modelo
+  e o oráculo do disparo, o `preparar` para **antes de qualquer gasto**.
+- **modos `roteirizado` e `duble`**: sem arquivo commitado, uma campanha de ensaio (`fixture: true`)
+  é gerada do próprio disparo, com os mesmos bytes nos dois braços de um par.
+
+O job `arquivar` grava a campanha e o site congelado (checkout do `govbr-telas` no `telas_sha`) por
+conteúdo. Manifestos 1.0.0 continuam legíveis, mas não trazem campanha: o painel não prepara a
+análise desses disparos.
 
 ## Testes e prova local
 

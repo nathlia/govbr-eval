@@ -8,9 +8,11 @@
  *       Código 0 = utilizável; 3 = registrado, mas não utilizável pela análise (motivo em problemas.json).
  *
  *   execucao --arquivo CLONE --evidencias-saida DIR [--pacote DIR] [--manifesto ARQ] [--linha-de-base DIR]
- *       [--segredos NOME,NOME] [--saida-json ARQ]
+ *       [--telas DIR] [--segredos NOME,NOME] [--saida-json ARQ]
  *       (job arquivar) grava no clone: pacote (JSONs), despacho, resumo, linha de base, manifesto,
- *       snapshots e entradas do índice; gera o tar.gz de evidências em DIR para o anexo da Release.
+ *       snapshots, campanha e site congelado (T8a.1, por conteúdo; o site vem de --telas, o checkout do
+ *       govbr-telas no SHA do disparo) e entradas do índice; gera o tar.gz de evidências em DIR para o
+ *       anexo da Release.
  *       Lê ENTRADAS (toJSON(inputs)) e JOBS (toJSON(needs)) do ambiente.
  *       Código 0 = arquivado; 4 = recusado (sobrescrita, segredo no pacote); 1 = erro.
  *
@@ -23,9 +25,9 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ROOT } from "./adjudication";
-import { readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
+import { documentoDaCampanha, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import {
-  ARCHIVE_VERSION, Recusa, entradaExistente, caminhoLinhaDeBase, caminhoManifesto, caminhoPlano, caminhoReferencia, conjuntoDeSnapshots, criarTarGz,
+  ARCHIVE_VERSION, Recusa, arquivarSite, caminhoCampanha, entradaExistente, caminhoLinhaDeBase, caminhoManifesto, caminhoPlano, caminhoReferencia, conjuntoDeSnapshots, criarTarGz,
   gravarEntrada, gravarImutavel, listagemDoCommit, listarArquivos, pastaDaExecucao, problemasDaLinhaDeBase, problemasDeVinculo, problemasDoPacote,
   reconstruirIndice, registrarLinhaDeBase, segredosNoPacote, sha, type EntradaIndice,
 } from "./arquivo-resultados";
@@ -46,6 +48,27 @@ function github(): EntradaIndice["github"] {
   const repo = process.env.GITHUB_REPOSITORY, id = process.env.GITHUB_RUN_ID;
   if (!repo || !id) return null;
   return { repositorio: repo, execucao: id, url: `${process.env.GITHUB_SERVER_URL ?? "https://github.com"}/${repo}/actions/runs/${id}` };
+}
+
+/**
+ * T8a.1: o que a análise (T6) precisa e o T4 não guardava — a campanha (do manifesto 1.1.0) e o site
+ * congelado (do checkout do govbr-telas no SHA do disparo), os dois por conteúdo. Devolve os problemas
+ * (avisos do job): o resto do arquivamento segue, e o painel mostra a falta como motivo.
+ */
+function arquivarEntradasDaAnalise(arquivo: string, m: IsolatedCollectionManifest, telas: string | null): string[] {
+  const p: string[] = [];
+  if (!m.campaign) p.push("manifesto de coleta 1.0.0, sem campanha: a análise deste disparo não pode ser preparada pelo painel");
+  else {
+    const bytes = documentoDaCampanha(m.campaign.document);
+    if (sha(bytes) !== m.campaign.sha256) throw new Recusa("a campanha do manifesto não bate com o sha256 registrado");
+    gravarImutavel(join(arquivo, caminhoCampanha(m.dispatch.campaignId, m.campaign.sha256)), bytes);
+  }
+  if (!telas) p.push("site congelado não arquivado (sem --telas): a análise precisará de um clone do govbr-telas no mesmo commit");
+  else {
+    // site errado não derruba o arquivamento da execução: fica como aviso, e o painel recusa preparar
+    try { arquivarSite(arquivo, telas, m.identity.siteManifestSha256!); } catch (e) { p.push(`site congelado não arquivado: ${(e as Error).message}`); }
+  }
+  return p;
 }
 
 /** Grava manifesto de coleta e snapshots (por conteúdo). Devolve onde o manifesto ficou. */
@@ -84,6 +107,8 @@ function entradaBase(m: IsolatedCollectionManifest | null, ent: Record<string, s
 export function arquivarExecucao(o: {
   arquivo: string; evidenciasSaida: string; pacote: string | null; manifesto: string | null; linhaDeBase: string | null;
   segredos: string[]; entradas: Record<string, string>; jobs: Record<string, { result?: string }>;
+  /** Checkout do govbr-telas no SHA do disparo (site-manifest.json + site/), para arquivar o site (T8a.1). */
+  telas?: string | null;
 }): { gravacoes: Gravacao[]; problemas: string[] } {
   const gravacoes: Gravacao[] = [];
   const problemas: string[] = [];
@@ -94,6 +119,7 @@ export function arquivarExecucao(o: {
     m = lido.manifest; msha = lido.sha256;
     const r = arquivarManifestoESnapshots(o.arquivo, o.manifesto, m, msha);
     mcaminho = r.caminho; conjunto = r.conjunto;
+    problemas.push(...arquivarEntradasDaAnalise(o.arquivo, m, o.telas ?? null));
   } else problemas.push("manifesto de coleta ausente: o job preparar não concluiu");
   const base = entradaBase(m, o.entradas);
   const raiz = base.natureza === "formal" ? "execucoes" : "ensaios";
@@ -259,6 +285,7 @@ function main(): number {
       arquivo: resolve(need("--arquivo")), evidenciasSaida: resolve(need("--evidencias-saida")),
       pacote: val("--pacote") ? resolve(val("--pacote")!) : null, manifesto: val("--manifesto") ? resolve(val("--manifesto")!) : null,
       linhaDeBase: val("--linha-de-base") ? resolve(val("--linha-de-base")!) : null,
+      telas: val("--telas") ? resolve(val("--telas")!) : null,
       segredos: (val("--segredos") ?? "").split(",").filter(Boolean),
       entradas: JSON.parse(process.env.ENTRADAS ?? "{}") as Record<string, string>, jobs: JSON.parse(process.env.JOBS ?? "{}") as Record<string, { result?: string }>,
     });

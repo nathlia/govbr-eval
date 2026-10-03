@@ -8,6 +8,7 @@ import type { EntradaIndice } from "../arquivo-resultados";
 import {
   dataLocal, type Fonte, type LinhaExecucao, type Selo, type Valor, type VistaExecucao, type VistaExecucoes, type VistaPar,
 } from "./modelo";
+import { rotuloEtapa, type Diagnostico } from "./preparar";
 import type { VistaCartao, VistaFila } from "./revisao";
 
 export const esc = (s: unknown): string => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
@@ -146,13 +147,16 @@ ${td("Publicação", selo(x.publicacao))}
 </tr>`;
 }
 
-export function paginaExecucoes(v: VistaExecucoes): string {
-  const pares = v.pares.length ? `<div class="cartoes">${v.pares.map(p => `<article class="cartao">
+export function paginaExecucoes(v: VistaExecucoes, preparo: Record<string, Diagnostico> = {}): string {
+  const pares = v.pares.length ? `<div class="cartoes">${v.pares.map(p => {
+    const d = preparo[`${p.campanha}/${p.par}`];
+    return `<article class="cartao">
 <h3><a href="/par/${u(p.campanha)}/${u(p.par)}">Par ${esc(p.par)}</a></h3>
-<p>${selo(p.selo)}</p>
+<p>${selo(d ? d.selo : p.selo)}</p>${d?.pode ? `<p class="peq"><a href="/par/${u(p.campanha)}/${u(p.par)}#preparar">Preparar análise</a></p>` : ""}
 <p class="peq">${esc(p.tela)} · ${esc(p.modelo ?? "—")}</p>
 <p class="peq mut">${esc(dataLocal(p.dataUtc))} · braços no arquivo: ${p.bracos.length ? p.bracos.map(b => esc(b)).join(" e ") : "nenhum"}</p>
-</article>`).join("")}</div>` : `<p class="mut">Nenhum par no arquivo ainda.</p>`;
+</article>`;
+  }).join("")}</div>` : `<p class="mut">Nenhum par no arquivo ainda.</p>`;
   const linhas = v.execucoes.length ? `<div class="rolavel"><table class="empilha">
 <caption>Fonte: <span class="mono">indice/entradas/*.json</span> (T4) e, quando há análise, <span class="mono">analysis-binding.&lt;braço&gt;.json</span> da revisão atual (T6). Mais recente primeiro.</caption>
 <thead><tr><th scope="col">Execução (abre o resumo técnico)</th><th scope="col">Tela · par</th><th scope="col">Modelo · esforço</th><th scope="col">Braço</th><th scope="col">Status técnico</th><th scope="col">Achados</th><th scope="col">Pontuação</th><th scope="col">Publicação</th><th scope="col">Causa da falha</th></tr></thead>
@@ -183,8 +187,40 @@ ${lbs}
 <li>${selo({ estado: "findings-vazio", texto: "0 — lista vazia" })} — o agente terminou e não alegou nada. É um resultado, diferente de “nenhuma submissão”.</li>
 <li>${selo({ estado: "par-incompleto", texto: "par incompleto" })} — só um dos braços está no arquivo; não há comparação.</li>
 <li>${selo({ estado: "publicacao-indisponivel", texto: "publicação indisponível" })} — o pacote está no arquivo, mas o anexo de evidências não foi confirmado. Veja “Como usar”.</li>
+<li>${selo({ estado: "sem-analise", texto: "sem análise: pronta para preparar" })} — o par chegou do workflow e ainda não foi analisado. Abra o par e clique em <strong>Preparar análise</strong>.</li>
+<li>${selo({ estado: "falha", texto: "preparação falhou" })} — a última tentativa de preparar parou numa etapa; o motivo está na página do par, e nada parcial foi mostrado como resultado.</li>
+<li>${selo({ estado: "nao-se-aplica", texto: "fora do alcance da análise" })} — tela cuja referência navega (tela B): a análise ainda não a aceita.</li>
 </ul></details>` });
 }
+
+// ───────────────────────────────────────────────────────────────── Preparar análise (T8a.1)
+
+function blocoPreparo(d: Diagnostico, api: string, oQue: string): string {
+  if (d.foraDeAlcance) {
+    return `<div class="aviso info" role="status" id="preparar"><p><strong>Fora do alcance da análise.</strong> ${esc(d.motivo)}</p>
+<p class="peq">As execuções e o resumo técnico continuam disponíveis; a pontuação dessa tela espera a decisão registrada no NAT-51.</p></div>`;
+  }
+  if (!d.pode) return `<div class="aviso info" role="status" id="preparar"><p><strong>Não dá para preparar a análise ${esc(oQue)}.</strong> ${esc(d.motivo)}</p></div>`;
+  const f = d.ultimaFalha;
+  return `<section aria-labelledby="t-preparar" id="preparar"><h2 id="t-preparar">Preparar a análise ${esc(oQue)}</h2>
+${f ? `<div class="aviso falha" role="alert"><p><strong>A última tentativa, em ${esc(dataLocal(f.em))}, parou na etapa “${esc(rotuloEtapa(f.etapa))}”.</strong> ${esc(f.motivo)}</p>
+<p class="peq">Nada foi gravado como análise. Registro: <span class="mono">${esc(f.rel)}</span>. Depois de resolver a causa, tente de novo.</p></div>` : ""}
+<p>O painel monta a análise só com o que está no arquivo, conferindo cada peça pelo sha256 que o workflow registrou: a campanha, os snapshots, a referência congelada (nunca exibida), o site congelado, a linha de base dos mesmos disparos e o pacote completo de cada braço, restaurado do anexo de evidências. Depois calcula a primeira versão e abre a fila de revisão.</p>
+<div class="botoes"><button type="button" data-preparar="${esc(api)}">${f ? "Tentar de novo" : "Preparar análise"}</button></div>
+<p class="msg" id="msg-preparar" role="status" aria-live="polite"></p></section>`;
+}
+
+const SCRIPT_PREPARAR = `
+document.querySelectorAll("[data-preparar]").forEach(function(b){b.addEventListener("click",async function(){
+  var msg=document.getElementById("msg-preparar"); var api=b.getAttribute("data-preparar");
+  b.disabled=true; msg.className="msg"; msg.textContent="Preparando… restaurando os pacotes e calculando a primeira versão (pode levar alguns segundos).";
+  try{ var r=await fetch(api,{method:"POST",headers:{"content-type":"application/json"},body:"{}"}); var j=await r.json();
+    if(j.ok){ msg.className="msg ok"; msg.textContent="Pronto: "+j.revisao.split("/").pop()+" ("+j.estado+"). Abrindo…";
+      var alvo=j.analise.split("/").map(encodeURIComponent).join("/");
+      setTimeout(function(){ location.href = j.estado==="pronta" ? "/revisao/"+alvo : "/par/"+alvo; },700); }
+    else { msg.className="msg erro"; msg.textContent="Não preparada (etapa "+j.etapa+"): "+j.erro+" Nada foi mostrado como resultado."; b.disabled=false; }
+  }catch(e){ msg.className="msg erro"; msg.textContent="Sem resposta do painel: "+e; b.disabled=false; }
+});});`;
 
 // ───────────────────────────────────────────────────────────────── Par
 
@@ -205,7 +241,7 @@ function valorComFonte(rotulo: string, v: Valor): string {
   return `<tr><th scope="row">${esc(rotulo)}</th><td>${esc(v.texto)}<span class="fonte">${esc(fonteCurta(v.fonte))}</span></td></tr>`;
 }
 
-export function paginaPar(v: VistaPar): string {
+export function paginaPar(v: VistaPar, preparo: Diagnostico | null = null): string {
   const an = v.analise;
   const rv = an?.atual ?? null;
   const partes: string[] = [];
@@ -220,8 +256,14 @@ export function paginaPar(v: VistaPar): string {
 
   // 1. comparação (o resultado mais recente primeiro)
   partes.push(`<h2>Comparação com − sem</h2>`);
-  if (!an) partes.push(`<p class="mut">Ainda não há análise deste par no arquivo. ${v.faltando.length ? "A análise de par espera os dois braços." : "A análise (T6) cria a primeira versão."}</p>`);
-  else if (!rv) partes.push(`<p class="mut">A análise ainda não tem versão íntegra.</p>`);
+  if (!an) {
+    partes.push(`<p class="mut">Ainda não há análise deste par no arquivo. ${v.faltando.length ? "A análise de par espera os dois braços." : preparo?.pode ? "Prepare a análise abaixo: ela cria a primeira versão." : ""}</p>`);
+    if (preparo) partes.push(blocoPreparo(preparo, `/api/preparar/par/${u(v.campanha)}/${u(v.par)}`, "do par"));
+  } else if (!rv) {
+    partes.push(`<p class="mut">A análise ainda não tem versão íntegra.</p>
+<div class="botoes"><button type="button" data-recalcular="${esc(`${an.campanha}/${an.alvo}`)}">Tentar calcular de novo</button></div>
+<p class="msg" id="msg-recalc" role="status" aria-live="polite"></p>`);
+  }
   else if (rv.resumo.analise.estado === "bloqueada") partes.push(`<div class="aviso falha"><p><strong>Análise bloqueada:</strong> ${esc(rv.resumo.analise.motivo)}</p><p>O resumo técnico continua valendo; as métricas ficam indisponíveis.</p></div>`);
   else if (v.comparacao) {
     const c = v.comparacao;
@@ -273,7 +315,7 @@ ${v.revisaoAberta ? `<div class="aviso"><p>A revisão deste par ainda está aber
 <ul>${an!.revisoes.map(r => `<li><strong>${esc(r.nome)}</strong> — ${esc(dataLocal(r.resumo.geradoEm))} · análise ${esc(r.resumo.analise.estado)} · hash científico <span class="mono">${esc(r.resumo.hashes.conteudoCientificoSha256.slice(0, 12))}</span>${r === rv ? " · <em>atual</em>" : ""} · <a href="/baixar/analise/${u(an!.campanha)}/${u(an!.alvo)}/${u(r.nome)}.tar.gz" download>baixar</a></li>`).join("")}
 ${an!.falhas.map(f => `<li>${selo({ estado: "falha", texto: "falhou" })} ${esc(dataLocal(f.em))} — ${esc(f.motivo)} <span class="mono peq">${esc(f.rel)}</span></li>`).join("")}</ul></details>`);
   }
-  return pagina({ titulo: `Par ${v.par}`, fixture: v.fixture, corpo: partes.join("\n"), script: SCRIPT_RECALCULAR });
+  return pagina({ titulo: `Par ${v.par}`, fixture: v.fixture, corpo: partes.join("\n"), script: SCRIPT_RECALCULAR + SCRIPT_PREPARAR });
 }
 
 // ───────────────────────────────────────────────────────────────── Execução
@@ -286,15 +328,16 @@ function tabelaTecnica(titulo: string, linhas: VistaExecucao["tecnico"]): string
 <tbody>${linhas.map(l => `<tr><th scope="row">${esc(l.rotulo)}</th><td>${esc(l.valor.texto)}<span class="fonte">${esc(l.valor.fonte.campo)}</span></td></tr>`).join("")}</tbody></table></div>`;
 }
 
-export function paginaExecucao(v: VistaExecucao): string {
+export function paginaExecucao(v: VistaExecucao, preparo: Diagnostico | null = null): string {
   const x = v.linha, e = v.entrada;
   const ev = e.evidencias;
-  return pagina({ titulo: `Execução ${x.chave}`, fixture: v.fixture, corpo: `
+  return pagina({ titulo: `Execução ${x.chave}`, fixture: v.fixture, script: SCRIPT_PREPARAR, corpo: `
 <p class="migalha"><a href="/">Execuções e pares</a>${x.par ? ` › <a href="/par/${u(x.campanha)}/${u(x.par)}">Par ${esc(x.par)}</a>` : ""} › Execução</p>
 <h1>Resumo técnico</h1>
 <p class="sub mono">${esc(x.chave)}</p>
 <p>${selo(x.tecnico)} ${selo(x.pontuacao)} ${selo(x.publicacao)}</p>
-${v.origem === "pacote" ? `<div class="aviso info"><p>Esta execução ainda não tem análise. O resumo abaixo vem direto do <span class="mono">run.json</span> arquivado: estado, falha e consumo, sem pontuação.</p></div>` : ""}
+${v.origem === "pacote" ? `<div class="aviso info"><p>Esta execução ainda não tem análise. O resumo abaixo vem direto do <span class="mono">run.json</span> arquivado: estado, falha e consumo, sem pontuação.${x.par && !preparo ? ` A análise é feita no <a href="/par/${u(x.campanha)}/${u(x.par)}#preparar">par ${esc(x.par)}</a>.` : ""}</p></div>` : ""}
+${preparo ? blocoPreparo(preparo, `/api/preparar/execucao/${u(x.chave)}`, "desta execução (individual)") : ""}
 ${v.origem === "sem-pacote" ? `<div class="aviso falha"><p><strong>Execução interrompida sem pacote.</strong> ${esc(v.despacho?.motivo ?? x.causaFalha ?? "")}</p><p class="peq">Fonte: <span class="mono">${esc(v.despacho?.fonte ?? "")}</span>. Nenhum resultado foi inventado; o slot fica visível.</p></div>` : ""}
 <h2>Identidade</h2>
 <dl class="kv"><dt>Tela</dt><dd>${esc(x.tela)}</dd><dt>Braço</dt><dd>${x.braco ? esc(BRACO[x.braco]) : "—"}</dd><dt>Modelo</dt><dd>${esc(x.modelo ?? "—")}</dd>
@@ -447,6 +490,11 @@ export function paginaAjuda(fixture: boolean, arquivoRotulo: string): string {
 <ol><li>Em <a href="/">Execuções e pares</a>, o mais recente vem primeiro. Cada linha diz se a execução rodou, quantos achados enviou, se já tem pontuação e se a publicação deu certo.</li>
 <li>Abra o par. A comparação com − sem aparece no topo, com a nota “n = 1 par, sem inferência”. Embaixo de cada número está o arquivo e o campo de onde ele veio.</li>
 <li>“indisponível” quer dizer que o número ainda não existe (revisão aberta, análise bloqueada). Nunca é zero.</li></ol>
+<h2>Preparar a primeira análise</h2>
+<ol><li>Depois de um disparo, atualize o clone do arquivo (<span class="mono">git pull</span>) e recarregue. O par novo aparece como “sem análise: pronta para preparar”.</li>
+<li>Abra o par e clique em <strong>Preparar análise</strong>. O painel confere tudo pelo sha256 que o workflow registrou, restaura o pacote de cada braço do anexo de evidências (baixando-o da Release com o <span class="mono">gh</span>, se ainda não estiver em <span class="mono">anexos/</span>) e abre a fila de revisão.</li>
+<li>Se algo faltar (anexo ausente, hash divergente, linha de base ausente), a página diz em que etapa parou e por quê. Nada parcial vira análise; resolva e clique em <strong>Tentar de novo</strong>.</li>
+<li>Tela com referência que navega (tela B) aparece como “fora do alcance da análise”: a análise ainda não a aceita (NAT-51).</li></ol>
 <h2>Revisar e recalcular</h2>
 <ol><li>No par, clique em <strong>Abrir fila de revisão</strong>. Revise antes de abrir os achados por braço, para não quebrar a cegueira.</li>
 <li>Em cada cartão escolha uma das cinco decisões, escreva a justificativa e clique em <strong>Salvar decisão</strong>. Cada gravação vira um arquivo novo; nada é sobrescrito.</li>
@@ -455,7 +503,7 @@ export function paginaAjuda(fixture: boolean, arquivoRotulo: string): string {
 <h2>Publicação indisponível</h2>
 <p>O pacote está no arquivo, mas o anexo de evidências não foi confirmado na Release. No GitHub: Actions → a execução do workflow <span class="mono">execucao-isolada</span> → <em>Re-run failed jobs</em>. Só o job <span class="mono">arquivar</span> roda; o modelo não é chamado. Depois, atualize o clone do arquivo (<span class="mono">git pull</span>) e recarregue esta página.</p>
 <h2>O que o painel não faz</h2>
-<p>Não chama modelo, não usa a rede e não mostra o gabarito. Ele só lê o arquivo aberto e grava decisões e versões novas da análise dentro dele.</p>` });
+<p>Não chama modelo e não mostra o gabarito. Ele só lê o arquivo aberto e grava dentro dele as análises, as decisões e os pacotes restaurados. A única saída para a rede é o <span class="mono">gh release download</span> de um anexo de evidências que falte, com a sua sessão do <span class="mono">gh</span>; abra o painel com <span class="mono">--sem-download</span> para desligar.</p>` });
 }
 
 export function paginaErro(codigo: number, texto: string, fixture: boolean): string {

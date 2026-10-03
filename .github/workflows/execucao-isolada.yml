@@ -389,6 +389,14 @@ jobs:
           token: ${{ secrets.GOVBR_RESULTADOS_TOKEN }}
           persist-credentials: false
           fetch-depth: 0
+      - name: Checkout govbr-telas (por SHA; o site congelado vai para o arquivo, T8a.1)
+        uses: actions/checkout@v4
+        with:
+          repository: nathlia/govbr-telas
+          ref: ${{ inputs.telas_sha }}
+          path: govbr-telas
+          token: ${{ secrets.GOVBR_LEITURA_TOKEN }}
+          persist-credentials: false
       - name: Dependências do govbr-eval
         run: bash govbr-eval/scripts/ci/t4.sh instalar-eval
       - name: Baixar o manifesto

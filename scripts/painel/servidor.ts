@@ -3,6 +3,11 @@
  *
  *   npm run painel:resultados -- --arquivo <clone do govbr-resultados> [--porta 4610] [--revisora Nome] [--telas <clone do govbr-telas>]
  *   npm run painel:resultados -- recalcular --arquivo <clone> --analise <campanha>/<par ou runId> [--telas DIR]
+ *   npm run painel:resultados -- preparar --arquivo <clone> (--par <campanha>/<par> | --execucao <runId>) [--anexos DIR] [--sem-download]
+ *
+ * T8a.1: "Preparar análise" (preparar.ts) cria a PRIMEIRA análise de um par/execução arquivados pelo T4,
+ * restaurando os pacotes dos anexos (conferidos por sha256). O anexo que faltar em `anexos/<release>/`
+ * é baixado com `gh release download` (sessão da autora), salvo `--sem-download`.
  *
  * Lê SÓ a pasta passada em --arquivo. Toda rota é resolvida por id conhecido (chave do índice, id de
  * análise, nome de revisão, token de evidência); não há rota que receba caminho de arquivo, e nada fora
@@ -22,9 +27,16 @@ import {
   ID, PAINEL_VERSAO, dentroDoArquivo, ehFixture, existeDiretorio, lerAnalise, lerIndice, vistaExecucao, vistaExecucoes, vistaPar,
 } from "./modelo";
 import { paginaAjuda, paginaErro, paginaExecucao, paginaExecucoes, paginaFila, paginaPar } from "./paginas";
+import { baixarComGh, diagnosticoPreparo, prepararAnalise, preparoDaExecucao, preparoDosPares, type Diagnostico, type OpcoesPreparo } from "./preparar";
 import { arquivoDeEvidencia, imagemDaCena, recalcular, salvarDecisao, vistaFila, type PedidoDecisao } from "./revisao";
 
-export interface OpcoesPainel { arquivo: string; revisora?: string; telas?: string | null }
+export interface OpcoesPainel {
+  arquivo: string; revisora?: string; telas?: string | null;
+  /** T8a.1: pastas extras onde procurar anexos de evidências baixados (`<anexo>.tar.gz`). */
+  anexos?: string[];
+  /** T8a.1: baixar o anexo que faltar com `gh release download` (padrão do CLI; os testes nunca baixam). */
+  baixarAnexos?: boolean;
+}
 
 /** Arquivos de uma revisão que nunca saem do painel, nem no download. */
 export const NUNCA_SERVIR = ["entradas/referencia.json"];
@@ -80,6 +92,14 @@ export function criarPainel(o: OpcoesPainel): Server {
   const arquivo = resolve(o.arquivo);
   if (!existeDiretorio(arquivo)) throw new Error(`--arquivo não é uma pasta: ${o.arquivo}`);
   const fixture = () => ehFixture(arquivo, lerIndice(arquivo));
+  const preparo: OpcoesPreparo = { anexos: (o.anexos ?? []).map(d => resolve(d)), baixar: o.baixarAnexos ? baixarComGh : null };
+  const diagPar = (v: NonNullable<ReturnType<typeof vistaPar>>): Diagnostico | null =>
+    !v.analise && !v.faltando.length ? diagnosticoPreparo(arquivo, { tipo: "par", campanha: v.campanha, par: v.par }) : null;
+  const diagExecucao = (v: NonNullable<ReturnType<typeof vistaExecucao>>): Diagnostico | null => {
+    if (v.entrada.estado.arquivo === "sem-pacote") return null;
+    const parCompleto = Boolean(v.linha.par) && vistaExecucoes(arquivo).pares.some(p => p.campanha === v.linha.campanha && p.par === v.linha.par && !p.faltando.length);
+    return preparoDaExecucao(arquivo, v.linha, parCompleto);
+  };
 
   return createServer(async (req: IncomingMessage, res: ServerResponse) => {
     const enviar = (codigo: number, tipo: string, corpo: string | Buffer, extra: Record<string, string> = {}) => {
@@ -112,20 +132,27 @@ export function criarPainel(o: OpcoesPainel): Server {
           if (!lerAnalise(arquivo, seg[2], seg[3])) return nao(true);
           return json(200, await recalcular(arquivo, seg[2], seg[3], { telas: o.telas ?? null }));
         }
+        // T8a.1: primeira análise de um par ou de uma execução arquivados pelo T4
+        if (seg[0] === "api" && seg[1] === "preparar" && seg[2] === "par" && seg.length === 5 && ids(seg.slice(3))) {
+          return json(200, await prepararAnalise(arquivo, { tipo: "par", campanha: seg[3], par: seg[4] }, preparo));
+        }
+        if (seg[0] === "api" && seg[1] === "preparar" && seg[2] === "execucao" && seg.length === 4 && ids(seg.slice(3))) {
+          return json(200, await prepararAnalise(arquivo, { tipo: "individual", runId: seg[3] }, preparo));
+        }
         return nao(true);
       }
       if (req.method !== "GET" && req.method !== "HEAD") return json(405, { ok: false, erro: "método não aceito" });
 
       // páginas
-      if (seg.length === 0) return html(200, paginaExecucoes(vistaExecucoes(arquivo)));
+      if (seg.length === 0) { const v = vistaExecucoes(arquivo); return html(200, paginaExecucoes(v, preparoDosPares(arquivo, v.pares))); }
       if (seg.length === 1 && seg[0] === "ajuda") return html(200, paginaAjuda(fixture(), basename(arquivo)));
       if (seg[0] === "par" && seg.length === 3 && ids(seg.slice(1))) {
         const v = vistaPar(arquivo, seg[1], seg[2]);
-        return v ? html(200, paginaPar(v)) : nao(false);
+        return v ? html(200, paginaPar(v, diagPar(v))) : nao(false);
       }
       if (seg[0] === "execucao" && seg.length === 2 && ids(seg.slice(1))) {
         const v = vistaExecucao(arquivo, seg[1]);
-        return v ? html(200, paginaExecucao(v)) : nao(false);
+        return v ? html(200, paginaExecucao(v, diagExecucao(v))) : nao(false);
       }
       if (seg[0] === "revisao" && seg.length === 3 && ids(seg.slice(1))) {
         const f = vistaFila(arquivo, seg[1], seg[2]);
@@ -150,17 +177,17 @@ export function criarPainel(o: OpcoesPainel): Server {
       }
       // API de leitura (as mesmas vistas das páginas)
       if (seg[0] === "api") {
-        if (seg[1] === "execucoes" && seg.length === 2) return json(200, vistaExecucoes(arquivo));
+        if (seg[1] === "execucoes" && seg.length === 2) { const v = vistaExecucoes(arquivo); return json(200, { ...v, preparo: preparoDosPares(arquivo, v.pares) }); }
         if (seg[1] === "par" && seg.length === 4 && ids(seg.slice(2))) {
           const v = vistaPar(arquivo, seg[2], seg[3]);
           if (!v) return nao(true);
           const { analise, ...resto } = v;
-          return json(200, { ...resto, analise: analise ? { id: analise.id, atual: analise.atual?.nome ?? null, revisoes: analise.revisoes.map(r => r.nome),
+          return json(200, { ...resto, preparo: diagPar(v), analise: analise ? { id: analise.id, atual: analise.atual?.nome ?? null, revisoes: analise.revisoes.map(r => r.nome),
             falhas: analise.falhas, avisos: analise.avisos, decisoes: analise.decisoes.map(d => d.nome) } : null });
         }
         if (seg[1] === "execucao" && seg.length === 3 && ids(seg.slice(2))) {
           const v = vistaExecucao(arquivo, seg[2]);
-          return v ? json(200, { ...v, analise: v.analise?.id ?? null }) : nao(true);
+          return v ? json(200, { ...v, analise: v.analise?.id ?? null, preparo: diagExecucao(v) }) : nao(true);
         }
         if (seg[1] === "fila" && seg.length === 4 && ids(seg.slice(2))) {
           const f = vistaFila(arquivo, seg[2], seg[3]);
@@ -199,9 +226,20 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const val = (n: string): string | undefined => { const i = args.indexOf(`--${n}`); return i >= 0 && args[i + 1] && !args[i + 1].startsWith("--") ? args[i + 1] : undefined; };
   const arquivo = val("arquivo");
   const uso = "Uso: npm run painel:resultados -- --arquivo <clone do govbr-resultados> [--porta 4610] [--revisora Nome] [--telas <clone do govbr-telas>]\n" +
-    "     npm run painel:resultados -- recalcular --arquivo <clone> --analise <campanha>/<par ou runId> [--telas DIR]";
+    "                                       [--anexos <pasta com anexos baixados>] [--sem-download]\n" +
+    "     npm run painel:resultados -- recalcular --arquivo <clone> --analise <campanha>/<par ou runId> [--telas DIR]\n" +
+    "     npm run painel:resultados -- preparar --arquivo <clone> (--par <campanha>/<par> | --execucao <runId>) [--anexos DIR] [--sem-download]";
+  const anexos = val("anexos") ? [resolve(val("anexos")!)] : [];
+  const baixarAnexos = !args.includes("--sem-download");
   if (!arquivo || !existsSync(arquivo)) { console.error(uso); process.exitCode = 1; }
-  else if (args[0] === "recalcular") {
+  else if (args[0] === "preparar") {
+    const [c, p] = (val("par") ?? "").split("/");
+    const alvo = val("execucao") ? { tipo: "individual" as const, runId: val("execucao")! } : { tipo: "par" as const, campanha: c ?? "", par: p ?? "" };
+    prepararAnalise(resolve(arquivo), alvo, { anexos, baixar: baixarAnexos ? baixarComGh : null }).then(r => {
+      console.log(r.ok ? `análise ${r.analise}: ${r.revisao} (${r.estado})` : `não preparada (${r.etapa}): ${r.erro}${r.falha ? `\nregistro: ${r.falha}` : ""}`);
+      process.exitCode = r.ok ? 0 : 1;
+    });
+  } else if (args[0] === "recalcular") {
     const [c, a] = (val("analise") ?? "").split("/");
     recalcular(resolve(arquivo), c ?? "", a ?? "", { telas: val("telas") ?? null }).then(r => {
       console.log(r.ok ? `nova versão: ${r.revisao} (${r.estado})` : `falhou: ${r.erro}${r.falha ? `\nregistro: ${r.falha}` : ""}`);
@@ -211,7 +249,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     const porta = Number(val("porta") ?? 4610);
     if (PORTAS_PROIBIDAS.has(porta)) { console.error(`A porta ${porta} é usada por outra peça do instrumento; escolha outra.`); process.exitCode = 1; }
     else {
-      const s = criarPainel({ arquivo, revisora: val("revisora"), telas: val("telas") ?? null });
+      const s = criarPainel({ arquivo, revisora: val("revisora"), telas: val("telas") ?? null, anexos, baixarAnexos });
       escutar(s, porta).then(p => {
         console.log(`Painel de resultados em http://127.0.0.1:${p}/`);
         console.log(`Arquivo: ${resolve(arquivo)}${ehFixture(resolve(arquivo), lerIndice(resolve(arquivo))) ? "  (FIXTURE SINTÉTICA)" : ""}`);

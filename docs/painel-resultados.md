@@ -3,7 +3,8 @@
 O painel é uma página no seu computador que abre o arquivo de resultados (o clone do
 `govbr-resultados`) e mostra, do mais recente para o mais antigo: o que rodou, o que falhou, o que já
 tem pontuação e a comparação sem/com. Nele você também revisa os cartões e recalcula a pontuação.
-Ele não chama modelo, não usa a internet e não mostra o gabarito.
+Ele não chama modelo e não mostra o gabarito. A única saída para a internet é baixar, com o `gh`, um
+anexo de evidências que ainda não esteja na máquina (desligue com `--sem-download`).
 
 Plano e decisões: `thesis-workspace/planejamento/atual/plano-t8a-painel-2026-10-03.md`. Workflow e
 arquivo: [`pipeline-isolado.md`](pipeline-isolado.md). De onde vêm os números:
@@ -65,8 +66,39 @@ npm run painel:resultados -- --arquivo ../govbr-resultados
 - “indisponível” quer dizer que o número ainda não existe. Isso acontece com a revisão aberta ou a
   análise bloqueada. Não quer dizer zero.
 
-Para um par real aparecer com análise, ela precisa existir no arquivo, em `analises/`. Hoje quem
-prepara a primeira análise de uma execução real é o assistente. Veja "Limites", no fim deste guia.
+## 3a. Preparar a primeira análise (T8a.1)
+
+Um par que acabou de chegar do workflow aparece como **“sem análise: pronta para preparar”**.
+
+1. Abra o par e clique em **Preparar análise**. Nada mais: o painel monta a análise sozinho a partir
+   do arquivo, conferindo cada peça pelo sha256 que o workflow registrou — a campanha, o conjunto de
+   snapshots, a referência congelada (lida só pelo cálculo, nunca exibida), o site congelado, a linha
+   de base dos mesmos disparos e o pacote completo de cada braço.
+2. O pacote completo (com as capturas de `evidence/`) vem do **anexo da Release**. O painel procura
+   o anexo em `anexos/<release>/` dentro do clone; se não estiver lá, baixa com
+   `gh release download`, usando a sua sessão do `gh` (rode `gh auth login` uma vez). Cada anexo é
+   conferido pelo sha256 do índice antes de ser aberto.
+3. Ao terminar, o painel abre a **fila de revisão** da versão `rev-001`, com a pontuação “aguardando
+   revisão”.
+
+Se algo faltar, a página do par diz **em que etapa parou e por quê** — por exemplo “anexo ausente”
+(o anexo não está na máquina e o download falhou ou estava desligado), “hash divergente” (um arquivo
+não é o que o workflow registrou) ou “linha de base ausente”. Nada parcial vira análise: resolva a
+causa e clique em **Tentar de novo**. O registro de cada tentativa fica em
+`analises/<campanha>/<par>/preparacao/falhas/`.
+
+Uma execução sem par completo (o outro braço falhou sem pacote, por exemplo) tem o mesmo botão na
+página dela: **Preparar a análise desta execução (individual)**.
+
+Tela com referência que navega (a tela B) aparece como **“fora do alcance da análise”**, sem botão:
+a análise ainda não aceita esse caso (D-69, NAT-51). As execuções e o resumo técnico continuam ali.
+
+Sem `gh` (ou com `--sem-download`), baixe o anexo pela página da Release e coloque o arquivo em
+`anexos/<release>/` dentro do clone, ou abra o painel com `--anexos <pasta onde ele está>`.
+
+Para experimentar sem disparar nada: `npm run painel:fixture -- --t4 ../painel-t4` monta um arquivo
+inventado, pelo mesmo código do job arquivar, ainda sem análise. O terminal mostra o comando para
+abrir o painel sobre ele.
 
 ## 4. Revisar
 
@@ -116,12 +148,13 @@ visível como falha, e uma nova tentativa é um novo disparo.
 
 ## Onde o painel grava
 
-Só dentro do arquivo aberto, e só em duas pastas:
+Só dentro do arquivo aberto, e só em três pastas:
 
 | Pasta | O quê |
 |---|---|
-| `analises/<campanha>/<par>/` | `receita.json` (entradas da análise), `revisoes/rev-NNN/` (cada cálculo), `revisoes/falhas/`, `decisoes/` |
-| `restauracoes/<runId>/` | o pacote inteiro restaurado do anexo, que o recálculo precisa. É um cache: pode ser recriado com `restaurar-execucao` e não precisa ir para o git |
+| `analises/<campanha>/<par ou runId>/` | `receita.json` (entradas da análise, montada pelo **Preparar análise**), `revisoes/rev-NNN/` (cada cálculo), `revisoes/falhas/`, `decisoes/`, `preparacao/falhas/` |
+| `restauracoes/<runId>/` | o pacote inteiro restaurado do anexo, que o recálculo precisa. É um cache: o painel o refaz do anexo se estiver adulterado (a cópia ruim fica ao lado, `.invalido-<data>`), e não precisa ir para o git |
+| `anexos/<release>/` | anexos baixados pelo painel com o `gh`. Também é cache: não precisa ir para o git |
 
 ## Segurança
 
@@ -132,10 +165,11 @@ Só dentro do arquivo aberto, e só em duas pastas:
 
 ## Limites (T8a)
 
-- A **primeira** análise de uma execução real ainda não sai do painel. O arquivo do T4 não guarda o
-  `campaign.json` nem o site, e o pacote navegável não tem `evidence/`. Por isso a análise precisa de
-  uma `receita.json` e dos pacotes restaurados. A fixture tem tudo isso. Para o piloto (T5), o
-  assistente prepara a receita.
+- A primeira análise sai do botão **Preparar análise** (T8a.1) só para disparos arquivados com o
+  manifesto de coleta 1.1.0, que traz a campanha. Disparos arquivados antes disso não têm a campanha
+  e aparecem como “não dá para preparar”, com o motivo.
+- Um braço com mais de uma tentativa arquivada é recusado com motivo: escolher a tentativa pela
+  política da campanha ainda não é feito pelo painel.
 - Sem filtros, gráficos, hospedagem nem controle de acesso. Isso fica para o T8b e para a decisão de
   hospedagem.
 - Referência que navega (tela B) ainda é recusada pela análise (D-69).
@@ -144,3 +178,7 @@ Só dentro do arquivo aberto, e só em duas pastas:
 
 `npm run test:painel` monta a fixture, sobe o painel numa porta livre e confere os estados, os números
 contra `summary.json`/`score.json`, as gravações versionadas, o recálculo, o download e o isolamento.
+Num segundo arquivo, montado pelo código do job arquivar e sem análise, confere o **Preparar
+análise**: pronto para preparar, fora do alcance (referência que navega), anexo ausente e hash
+divergente como falhas com etapa, o caminho completo até “aguardando revisão”, a análise individual,
+o 404 da referência, do site, da campanha e das restaurações, e o cache adulterado refeito do anexo.

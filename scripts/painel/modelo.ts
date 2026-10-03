@@ -90,6 +90,13 @@ export interface Receita {
   };
   criadaEm: string;
   nota?: string;
+  /** T8a.1: receita montada pelo botão "Preparar análise" — de onde cada entrada veio (sha256 do arquivo). */
+  preparo?: {
+    por: string;
+    manifestosColeta: Partial<Record<Arm, string>>;
+    anexos: Partial<Record<Arm, string | null>>;
+    campanha: { sha256: string; origem: string };
+  };
 }
 
 export interface Revisao {
