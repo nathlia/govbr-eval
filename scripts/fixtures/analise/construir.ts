@@ -46,7 +46,14 @@ export interface OpcoesFixture {
   ausenciaPlanejada?: boolean;
   /** Diferença fora do desenho no braço com (versão do navegador). */
   divergenciaForaDoDesenho?: boolean;
+  /**
+   * Identidade do par (painel T8a: vários pares na mesma campanha). Padrão = par-01, sufixo 01, dia
+   * 2026-01-03 — os bytes de `gerado/` não mudam.
+   */
+  identidade?: Partial<IdentidadeFixture>;
 }
+export interface IdentidadeFixture { par: string; sufixo: string; dia: string; slots: { sem: string; com: string } }
+const IDENTIDADE_PADRAO: IdentidadeFixture = { par: "par-01", sufixo: "01", dia: "2026-01-03", slots: { sem: "slot-02", com: "slot-01" } };
 
 const estado = { viewport: { width: 1280, height: 900 }, steps: [] as string[] };
 
@@ -101,15 +108,15 @@ function campanha(o: OpcoesFixture): Campaign {
   };
 }
 
-function runDoc(arm: "sem" | "com", submissao: Submissao, siteManifestSha256: string, divergente: boolean): Run {
+function runDoc(arm: "sem" | "com", submissao: Submissao, siteManifestSha256: string, divergente: boolean, id: IdentidadeFixture): Run {
   const com = arm === "com";
   const naoExecutada = submissao === "nao-executada";
-  const slot = com ? "slot-01" : "slot-02";
-  const started = com ? "2026-01-03T00:01:00Z" : "2026-01-03T00:20:00Z";
-  const finished = com ? "2026-01-03T00:11:00Z" : "2026-01-03T00:30:00Z";
+  const slot = id.slots[arm];
+  const started = `${id.dia}${com ? "T00:01:00Z" : "T00:20:00Z"}`;
+  const finished = `${id.dia}${com ? "T00:11:00Z" : "T00:30:00Z"}`;
   const base: Run = {
-    contract: "run.v1", fixture: true, campaignId: CAMPANHA_ID, slotId: slot, pairId: "par-01",
-    runId: `fixture-analise-run-${arm}-01`, attempt: 1, idempotencyKey: `${CAMPANHA_ID}/${slot}/1`,
+    contract: "run.v1", fixture: true, campaignId: CAMPANHA_ID, slotId: slot, pairId: id.par,
+    runId: `fixture-analise-run-${arm}-${id.sufixo}`, attempt: 1, idempotencyKey: `${CAMPANHA_ID}/${slot}/1`,
     screen: TELA, arm, repetition: 1,
     model: { family: "familia-fixture", requested: "modelo-fixture", resolved: "unknown", resolvedSource: "unknown", resolvedEvidence: null },
     provider: { name: "provedor-fixture", authMethod: "unknown" }, effort: "medium",
@@ -120,7 +127,7 @@ function runDoc(arm: "sem" | "com", submissao: Submissao, siteManifestSha256: st
     intervention: { oracle: com ? ORACULO : null },
     limits: { timeoutSeconds: 1800, maxTurns: null, maxBudgetUsd: null },
     isolationPolicyVersion: "isolamento-fixture-1",
-    timestamps: { plannedAt: "2026-01-03T00:00:00Z", startedAt: naoExecutada ? null : started, finishedAt: naoExecutada ? null : finished },
+    timestamps: { plannedAt: `${id.dia}T00:00:00Z`, startedAt: naoExecutada ? null : started, finishedAt: naoExecutada ? null : finished },
     lifecycle: { state: "archived", stage: null },
     status: { technical: "passed", isolation: "passed", protocol: "adherent",
       oracleUsage: com ? "used-adherent" : "absent-verified", score: "pending-review" },
@@ -159,7 +166,7 @@ function isolationDoc(run: Run): Isolation {
   const ferramentas = ["browser_navigate", "browser_snapshot", "browser_take_screenshot", "coletor_enviar"];
   return {
     contract: "isolation.v1", fixture: true, campaignId: run.campaignId, runId: run.runId, policyVersion: "isolamento-fixture-1",
-    producedBy: "harness", producedAt: "2026-01-03T00:00:50Z", result: run.status.isolation,
+    producedBy: "harness", producedAt: `${run.timestamps.plannedAt.slice(0, 10)}T00:00:50Z`, result: run.status.isolation,
     checks: [
       { id: "sentinela-referencia", category: "sentinel", target: "arquivo-sentinela sintético", required: true,
         outcome: falhou ? "failed" : "passed", evidence: null, ...(falhou ? { detail: "sentinela sintética legível (falha de propósito)" } : {}) },
@@ -186,17 +193,17 @@ function toolEvents(arm: "sem" | "com"): string {
 
 const MEDIA: Record<string, string> = { ".json": "application/json", ".ndjson": "application/x-ndjson", ".png": "image/png", ".txt": "text/plain" };
 
-function pacote(dir: string, arm: "sem" | "com", o: OpcoesBraco, siteSha: string, divergente: boolean): void {
+function pacote(dir: string, arm: "sem" | "com", o: OpcoesBraco, siteSha: string, divergente: boolean, id: IdentidadeFixture): void {
   const submissao = o.submissao ?? "aceita";
-  const run = runDoc(arm, submissao, siteSha, divergente);
+  const run = runDoc(arm, submissao, siteSha, divergente, id);
   const files: { path: string; role: ArtifactManifest["files"][number]["role"]; body: string | Buffer }[] = [];
   files.push({ path: "run.json", role: "run", body: json(run) });
   if (submissao === "aceita") {
     const findings: Findings = {
       contract: "findings.v1", fixture: true, campaignId: CAMPANHA_ID, runId: run.runId,
-      receivedAt: arm === "com" ? "2026-01-03T00:10:30Z" : "2026-01-03T00:29:30Z", receipt: `recibo-fixture-${arm}-01`,
+      receivedAt: `${id.dia}${arm === "com" ? "T00:10:30Z" : "T00:29:30Z"}`, receipt: `recibo-fixture-${arm}-${id.sufixo}`,
       findingContract: "achado-2",
-      report: { timestamp: arm === "com" ? "2026-01-03T00:10:29Z" : "2026-01-03T00:29:29Z", model: "modelo-fixture",
+      report: { timestamp: `${id.dia}${arm === "com" ? "T00:10:29Z" : "T00:29:29Z"}`, model: "modelo-fixture",
         appUrl: `http://127.0.0.1:3100/${PAGINA}`, scope: ["tela fixture inteira"], notes: "FIXTURE SINTÉTICA — não é dado científico",
         findings: o.findings ?? FINDINGS_PADRAO[arm] },
     };
@@ -208,7 +215,7 @@ function pacote(dir: string, arm: "sem" | "com", o: OpcoesBraco, siteSha: string
   if (submissao !== "nao-executada") files.push({ path: "tool-events.ndjson", role: "tool-events", body: toolEvents(arm) });
   const manifest: ArtifactManifest = {
     contract: "artifact-manifest.v1", fixture: true, campaignId: CAMPANHA_ID, runId: run.runId,
-    producedBy: "construtor-fixture-analise", producedAt: "2026-01-03T00:40:00Z",
+    producedBy: "construtor-fixture-analise", producedAt: `${id.dia}T00:40:00Z`,
     schemaVersions: { run: "run.v1", ...(submissao === "aceita" ? { findings: "findings.v1" as const } : {}), isolation: "isolation.v1" },
     files: files.map(f => ({ path: f.path, bytes: Buffer.byteLength(f.body), sha256: sha(f.body),
       mediaType: MEDIA[f.path.slice(f.path.lastIndexOf("."))] ?? "application/octet-stream", role: f.role })),
@@ -313,8 +320,9 @@ export function construirFixture(out: string, o: OpcoesFixture = {}) {
   };
   w("linha-de-base/registro.json", json(registro));
 
-  pacote(join(out, "pacotes", "sem"), "sem", o.sem ?? {}, site.sha256, Boolean(o.divergenciaForaDoDesenho));
-  pacote(join(out, "pacotes", "com"), "com", o.com ?? {}, site.sha256, Boolean(o.divergenciaForaDoDesenho));
+  const id: IdentidadeFixture = { ...IDENTIDADE_PADRAO, ...o.identidade, slots: { ...IDENTIDADE_PADRAO.slots, ...o.identidade?.slots } };
+  pacote(join(out, "pacotes", "sem"), "sem", o.sem ?? {}, site.sha256, Boolean(o.divergenciaForaDoDesenho), id);
+  pacote(join(out, "pacotes", "com"), "com", o.com ?? {}, site.sha256, Boolean(o.divergenciaForaDoDesenho), id);
 
   return {
     dir: out, campanha: join(out, "campanha.json"), campanhaSha256: camp.sha256, snapshots: join(out, "snapshots.json"),

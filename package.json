@@ -60,6 +60,9 @@
     "test:evidence": "tsx scripts/test-evidence-integrity.ts",
     "test:states": "tsx scripts/test-flow-states.ts",
     "test:fila": "tsx scripts/test-review-queue.ts",
+    "painel:resultados": "tsx scripts/painel/servidor.ts",
+    "painel:fixture": "tsx scripts/painel/fixture.ts",
+    "test:painel": "tsx scripts/test-painel.ts",
     "relatorio:fluxo": "tsx scripts/report-flow.ts"
   },
   "dependencies": {
