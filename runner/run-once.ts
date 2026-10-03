@@ -13,8 +13,12 @@
  * artifact-manifest.json + evidence/), validado contra os contratos (validateContract + crossCheckRun).
  * Falha obrigatória no preflight ou na sonda: o agente não parte e o run.json sai `not-run`.
  *
- * `--agente claude` está ligado mas recusa partir sem `--permitir-modelo` E credencial no ambiente
- * (ANTHROPIC_API_KEY ou CLAUDE_CODE_OAUTH_TOKEN). O T3a nunca passa nenhum dos dois.
+ * `--agente claude` (T3b) roda o binário real do Claude Code com os flags de produção (cliente-claude.ts):
+ *   --egress stub  contra um DUBLÊ ROTEIRIZADO da API (sem modelo, credencial falsa, `fixture: true`,
+ *                  `provider.name: "stub"`); `--cenario` escolhe o roteiro (honesto | erros | 429 | 529).
+ *                  Recusa `--permitir-modelo`: modo dublê nunca vira dado.
+ *   --egress real  contra o provedor real; recusa partir sem `--permitir-modelo` E exatamente uma
+ *                  credencial no ambiente (ANTHROPIC_API_KEY ou CLAUDE_CODE_OAUTH_TOKEN).
  * Docs: docs/runner-isolado.md.
  */
 import { spawn, type ChildProcess } from "node:child_process";
@@ -27,6 +31,11 @@ import {
   type ArtifactManifest, type Findings, type Isolation, type Metric, type Run,
 } from "../contracts/index";
 import { gitState, oracleIdentity } from "../scripts/collection-manifest";
+import {
+  CREDENTIAL_ENV, EFFORT_LEVELS, FAKE_CREDENTIAL, ORACLE_SERVER_NAME, STUB_SCENARIOS,
+  claudeCommand, clientFailure, oracleAdherence, parseClientStream, stubRoteiro, summarizeStub, type StubRoteiro,
+} from "./cliente-claude";
+import { generateStubTls } from "./container/tls-cert.mjs";
 import { renderRun, SKILL_PATH, type TaskInputs } from "../scripts/render-task-prompt";
 import {
   DEFAULT_TELAS_DIR, DEFAULT_VALIDATOR_DIR, EVAL_ROOT, ISOLATION_POLICY_VERSION, RUNNER_DIR, RUNNER_VERSION, TCC_ROOT,
@@ -37,24 +46,28 @@ import {
 
 /**
  * Destinos que o PROCESSO DO AGENTE alcança pelo proxy do provedor (CONNECT, 443). Nada mais sai.
- * verified = exigido pela documentação do Claude Code (Network access requirements, consultada em
- * 2026-10-02) e ainda não exercitado com o cliente real (T3b); unverified = talvez necessário.
+ * T3b: com o cliente real contra o dublê (chave de API falsa e token OAuth falso), o cliente só abriu
+ * túnel para api.anthropic.com (POST /v1/messages, GET /api/claude_code/settings e /policy_limits).
+ * platform.claude.com saiu da allowlist: não foi tentado com nenhum dos dois tipos de credencial.
+ * Se a prova com credencial real (piloto) mostrar recusa a outro host, o log do proxy a registra.
  */
 export const PROVIDER_ALLOWLIST = [
-  { host: "api.anthropic.com", port: 443, status: "documentado", why: "API do Claude (inferência)" },
-  { host: "platform.claude.com", port: 443, status: "não verificado", why: "troca/renovação de token OAuth (autenticação por assinatura); confirmar no T3b" },
+  { host: "api.anthropic.com", port: 443, status: "exercitado com o cliente real contra o dublê (T3b)", why: "API do Claude (inferência) e configuração remota do cliente" },
 ] as const;
-/** Fora da allowlist de propósito: claude.ai, claude.com (login interativo), downloads.claude.ai,
- * registry.npmjs.org, mcp-proxy.anthropic.com, telemetria (datadoghq) — a imagem desliga tráfego não essencial. */
-export const PROVIDER_DENIED_ON_PURPOSE = ["claude.ai", "claude.com", "downloads.claude.ai", "registry.npmjs.org", "mcp-proxy.anthropic.com", "http-intake.logs.us5.datadoghq.com", "storage.googleapis.com", "github.com"];
+/** Fora da allowlist de propósito: claude.ai, claude.com (login interativo), platform.claude.com (OAuth
+ * interativo; não tentado com token por ambiente no T3b), downloads.claude.ai, registry.npmjs.org,
+ * mcp-proxy.anthropic.com, telemetria (datadoghq) — a imagem desliga tráfego não essencial. */
+export const PROVIDER_DENIED_ON_PURPOSE = ["claude.ai", "claude.com", "platform.claude.com", "downloads.claude.ai", "registry.npmjs.org", "mcp-proxy.anthropic.com", "http-intake.logs.us5.datadoghq.com", "storage.googleapis.com", "github.com"];
+/** Nomes a que o dublê responde (aliases na rede interna). platform.claude.com fica no dublê para que
+ * uma tentativa do cliente apareça como recusa no proxy, não como falha de DNS. */
+const STUB_HOSTS = ["api.anthropic.com", "platform.claude.com"];
 const SITE_ALLOW = ["screens:3300", "collector:8080"];
 const SCREENS_ORIGIN = "http://screens:3300";
 const COLLECTOR_ORIGIN = "http://collector:8080/";
 const OLD_PORTS = [3000, 4000, 4100, 4101, 4102];
-const ORACLE_SERVER_NAME = "govbr-ds-validator";
-const NORMATIVE_TOOLS = ["get_ds_rules", "get_emag_rules", "get_page_rules", "get_component_spec", "get_design_tokens", "list_components"];
-const SCAN_TOOLS = ["scan_page", "run_axe_scan"];
-const SECRET_ENV_NAMES = ["ANTHROPIC_API_KEY", "CLAUDE_CODE_OAUTH_TOKEN"];
+const SECRET_ENV_NAMES: readonly string[] = CREDENTIAL_ENV;
+/** Ferramenta adiada que o cliente 2.1.288 sempre anuncia, sem esquema, com a instrução de nunca chamá-la. */
+const DEFERRED_PLACEHOLDERS = ["DeferredToolPlaceholder"];
 
 export type Tela = "solicitacao" | "vistorias";
 export interface RunOptions {
@@ -122,17 +135,7 @@ export function mcpConfig(braco: "sem" | "com"): { mcpServers: Record<string, { 
   return { mcpServers: servers };
 }
 
-/**
- * Comando do cliente real (T3b). Só ferramentas MCP; nada de shell, arquivo ou web. Não exercitado no
- * T3a — as capacidades efetivas do cliente instalado continuam a verificar com o cliente real.
- */
-export function claudeCommand(opts: Pick<RunOptions, "modelo" | "esforco">): string[] {
-  return ["/opt/runner/node_modules/.bin/claude", "-p", "--input-format", "text", "--output-format", "stream-json", "--verbose",
-    "--model", opts.modelo, "--mcp-config", "/run/task/mcp.json", "--strict-mcp-config", "--setting-sources", "",
-    "--allowedTools", "mcp__playwright,mcp__govbr-ds-validator",
-    "--disallowedTools", "Bash,Read,Write,Edit,MultiEdit,NotebookEdit,Glob,Grep,LS,WebFetch,WebSearch,Task,TodoWrite",
-    "--permission-mode", "dontAsk"];
-}
+export { claudeCommand } from "./cliente-claude";
 
 // ───────────────────────────────────────────────────────────────── utilidades
 
@@ -209,13 +212,17 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
   if (existsSync(runDir) && readdirSync(runDir).length > 0) throw new Error(`${runDir} já existe e não está vazio: cada execução tem a própria saída, nova`);
   mkdirSync(runDir, { recursive: true });
   const work = join(runDir, ".work");
-  const roles = ["task", "agent", "probe", "browser", "oracle", "collector", "egress-provider", "egress-site"];
+  const roles = ["task", "agent", "probe", "browser", "oracle", "collector", "egress-provider", "egress-site", "provider-stub"];
   for (const r of roles) mkdirSync(join(work, r), { recursive: true });
+  // entradas do dublê (certificado + chave do servidor + roteiro): fora de `roles`, nunca copiadas ao pacote
+  mkdirSync(join(work, "stub-in"), { recursive: true });
   const short = runId.replace(/[^A-Za-z0-9]/g, "").slice(-10).toLowerCase() + randomBytes(2).toString("hex");
   const cname = (role: string): string => `gr-${short}-${role}`;
   const nname = (net: string): string => `gr-${short}-${net}`;
   const label = ["--label", `govbr.run=${runId}`];
-  const fixture = opts.agente === "fake";
+  /** Cliente real contra o dublê roteirizado: nunca modelo, nunca credencial real, sempre fixture. */
+  const claudeStub = opts.agente === "claude" && opts.egress === "stub";
+  const fixture = opts.agente === "fake" || claudeStub;
 
   const integrity: CheckRow[] = [];
   const positives: PositiveRow[] = [];
@@ -271,21 +278,49 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       oracleNow?.distSha256 === lock.versions.oracle.distSha256 && oracleNow?.dataSha256 === lock.versions.oracle.dataSha256,
       `${oracleNow?.distSha256?.slice(0, 12)}/${oracleNow?.dataSha256?.slice(0, 12)} × ${lock.versions.oracle.distSha256.slice(0, 12)}/${lock.versions.oracle.dataSha256.slice(0, 12)}`);
   }
+  let roteiro: StubRoteiro | null = null;
+  let credentialEnv: string[] = [];
+  let authMethod: Run["provider"]["authMethod"] = "unknown";
   if (opts.agente === "claude") {
-    const cred = SECRET_ENV_NAMES.filter((k) => process.env[k]);
-    integ("cliente-real-autorizado", "cliente real exige --permitir-modelo e credencial no ambiente", opts.permitirModelo && cred.length > 0,
-      `--permitir-modelo=${opts.permitirModelo}; credencial=${cred.length > 0 ? "presente" : "ausente"}`);
+    integ("esforco-do-cliente", `esforço aceito pelo cliente (${EFFORT_LEVELS.join(", ")})`, EFFORT_LEVELS.includes(opts.esforco), opts.esforco);
+    if (claudeStub) {
+      integ("duble-sem-modelo-real", "modo dublê: nenhuma chamada a modelo, nenhuma credencial real (recusa --permitir-modelo)", !opts.permitirModelo,
+        opts.permitirModelo ? "--permitir-modelo não vale com --egress stub: o dublê nunca produz dado" : "credencial falsa fixa; ambiente do runner não é repassado");
+      try {
+        if (rendered && inputs) roteiro = stubRoteiro(opts.cenario, opts.braco, inputs, rendered.promptSha256);
+        integ("roteiro-do-duble", `roteiro do dublê (${STUB_SCENARIOS.join(" | ")})`, roteiro !== null, roteiro ? `${roteiro.name}: ${roteiro.steps.length} turnos` : "sem texto da tarefa");
+      } catch (e) {
+        integ("roteiro-do-duble", `roteiro do dublê (${STUB_SCENARIOS.join(" | ")})`, false, (e as Error).message);
+      }
+      if (roteiro) {
+        const fake = FAKE_CREDENTIAL[roteiro.credential];
+        credentialEnv = ["-e", `${fake.env}=${fake.value}`];
+        for (const [k, v] of Object.entries(roteiro.clientEnv ?? {})) credentialEnv.push("-e", `${k}=${v}`);
+        authMethod = roteiro.credential === "oauth" ? "oauth-subscription" : "api-key";
+      }
+    } else {
+      const cred = SECRET_ENV_NAMES.filter((k) => process.env[k]);
+      integ("cliente-real-autorizado", "cliente real exige --permitir-modelo e exatamente uma credencial no ambiente", opts.permitirModelo && cred.length === 1,
+        `--permitir-modelo=${opts.permitirModelo}; credencial=${cred.length === 0 ? "ausente" : cred.length === 1 ? "presente" : "duas (escolha uma)"}`);
+      // só o NOME vai na linha de comando do docker: o valor sai do ambiente do runner direto para o contêiner
+      credentialEnv = cred.length === 1 ? ["-e", cred[0]] : [];
+      authMethod = cred[0] === "ANTHROPIC_API_KEY" ? "api-key" : cred[0] === "CLAUDE_CODE_OAUTH_TOKEN" ? "oauth-subscription" : "unknown";
+    }
   }
   const harness = gitState(EVAL_ROOT);
   const preflightDoc = { runner: RUNNER_VERSION, policy: ISOLATION_POLICY_VERSION, plannedAt, harness, lock: lock ? { images: Object.fromEntries(Object.entries(lock.images).map(([k, v]) => [k, { tag: v.tag, id: v.id }])), versions: lock.versions } : null,
     telasManifestSha, skillSha256: sha256(skillPkg), prompt: rendered ? { sha256: rendered.promptSha256, templateSha256: rendered.templateSha256, bytes: rendered.bytes } : null,
-    oracle: oracleNow, providerAllowlist: PROVIDER_ALLOWLIST, providerDeniedOnPurpose: PROVIDER_DENIED_ON_PURPOSE };
+    oracle: oracleNow, providerAllowlist: PROVIDER_ALLOWLIST, providerDeniedOnPurpose: PROVIDER_DENIED_ON_PURPOSE,
+    agent: { kind: opts.agente, provider: opts.agente === "fake" ? null : claudeStub ? "stub" : "real", roteiro: roteiro?.name ?? null,
+      credentialEnv: credentialEnv.length ? credentialEnv[1].split("=")[0] : null } };
 
   // ── estado para o pacote
   let agentStartedAt: string | null = null;
   let agentFinishedAt: string | null = null;
   let agentExit: number | "timeout" | null = null;
   let probeDoc: { checks: CheckRow[]; positiveControls: PositiveRow[]; inventory: Record<string, { ok: boolean; tools?: string[] }> } | null = null;
+  /** Linhas do log do proxy do provedor antes do agente partir: o que vem depois é do agente (a sonda usa o mesmo proxy). */
+  let egressLinesBeforeAgent = 0;
   let notRunReason: { reason: "preflight-failed" | "isolation-failed" | "harness-error"; detail: string } | null = null;
   const containers: string[] = [];
   const networks: string[] = [];
@@ -332,6 +367,15 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       // tarefa (montada só-leitura no agente e na sonda)
       writeFileSync(join(work, "task", "prompt.txt"), R.prompt);
       writeFileSync(join(work, "task", "mcp.json"), json(mcpConfig(opts.braco)));
+      // dublê do provedor: CA de teste nova por execução (o cliente confia nela via NODE_EXTRA_CA_CERTS);
+      // a chave do servidor fica só em stub-in/, que não entra no pacote; a chave da CA nem é gravada.
+      if (opts.egress === "stub") {
+        const tls = generateStubTls(STUB_HOSTS);
+        writeFileSync(join(work, "stub-in", "cert.pem"), tls.cert);
+        writeFileSync(join(work, "stub-in", "key.pem"), tls.key);
+        writeFileSync(join(work, "task", "provider-ca.pem"), tls.caCert);
+        writeFileSync(join(work, "stub-in", "roteiro.json"), json(roteiro ?? { name: "nenhum (agente roteirizado)", promptSha256: R.promptSha256, credential: "api-key", steps: [], final: "ok" }));
+      }
 
       // redes
       const net = { site: nname("site"), browse: nname("browse"), tools: nname("tools"), egress: nname("egress"), up: nname("up") };
@@ -362,7 +406,8 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       create("egress-provider", egressImage, [[net.egress, "egress"], [net.up, "egress-up"]],
         ["-e", "EGRESS_NAME=egress-provider", "-e", "EGRESS_ALLOW_HTTP=", "-e", `EGRESS_ALLOW_CONNECT=${PROVIDER_ALLOWLIST.map((a) => `${a.host}:${a.port}`).join(",")}`, "-e", "EGRESS_LOG=/out/egress.ndjson"], [], "egress-provider");
       if (opts.egress === "stub") {
-        create("provider-stub", egressImage, [[net.up, "api.anthropic.com"]], ["--network-alias", "platform.claude.com", "--sysctl", "net.ipv4.ip_unprivileged_port_start=0"], ["node", "/opt/egress/stub.mjs"], null);
+        create("provider-stub", egressImage, [[net.up, STUB_HOSTS[0]]], [...STUB_HOSTS.slice(1).flatMap((h) => ["--network-alias", h]), "--sysctl", "net.ipv4.ip_unprivileged_port_start=0",
+          "--mount", `type=bind,src=${join(work, "stub-in")},dst=/run/stub,readonly`, "-e", "STUB_DIR=/run/stub", "-e", "STUB_OUT=/out"], ["node", "/opt/egress/stub.mjs"], "provider-stub");
       }
       const windows = inputs!.larguras.map((w) => `${w.width}x${w.height}`).join(",");
       create("browser", L.images.agent.id, [[net.browse, "browser"], [net.tools, "browser"]], ["--shm-size", "512m"],
@@ -405,7 +450,9 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
 
       // ── sonda negativa: mesma imagem, flags, montagens, redes e ambiente do agente
       const agentNets: [string, string][] = [[net.tools, "agent"], [net.egress, "agent"]];
-      const agentEnv = ["-e", `GOVBR_RUN_ID=${runId}`, "-e", "HTTPS_PROXY=http://egress:3128", "-e", "HTTP_PROXY=http://egress:3128", "-e", "NO_PROXY=browser,oracle"];
+      const agentEnv = ["-e", `GOVBR_RUN_ID=${runId}`, "-e", "HTTPS_PROXY=http://egress:3128", "-e", "HTTP_PROXY=http://egress:3128", "-e", "NO_PROXY=browser,oracle",
+        // única diferença do caminho de produção no modo dublê: confiar na CA de teste desta execução
+        ...(opts.egress === "stub" ? ["-e", "NODE_EXTRA_CA_CERTS=/run/task/provider-ca.pem"] : [])];
       const taskMount = ["--mount", `type=bind,src=${join(work, "task")},dst=/run/task,readonly`];
       const probeCfg = {
         out: "/out/probe.json", sentinelPaths: sentinelFiles, otherRunPaths: otherRuns, hostPorts, egress: "egress:3128", providerStub: opts.egress === "stub",
@@ -430,7 +477,8 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       if (!notRunReason) {
         const fakeCfg = { sentinelPaths: sentinelFiles, otherRunPaths: otherRuns, hostPorts, egress: "egress:3128" };
         const cmd = opts.agente === "fake" ? ["node", "/opt/runner/fake-agent.mjs"] : claudeCommand(opts);
-        const extraEnv = opts.agente === "fake" ? ["-e", `FAKE_SCENARIO=${opts.cenario}`, "-e", `FAKE_CONFIG=${JSON.stringify(fakeCfg)}`] : [];
+        const extraEnv = opts.agente === "fake" ? ["-e", `FAKE_SCENARIO=${opts.cenario}`, "-e", `FAKE_CONFIG=${JSON.stringify(fakeCfg)}`] : credentialEnv;
+        egressLinesBeforeAgent = readNdjson(join(work, "egress-provider", "egress.ndjson")).length;
         const agent = create("agent", L.images.agent.id, agentNets, [...agentEnv, ...extraEnv, ...taskMount], cmd, "agent");
         containerConfigs = Object.fromEntries(containers.map((c) => [c.replace(`gr-${short}-`, ""), normalizedConfig(c, short, runId, sentinelHost?.port ?? null)]));
         agentStartedAt = iso();
@@ -468,6 +516,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     evidence("preflight.json", { ...preflightDoc, integrity });
     if (rendered) evidence("prompt.txt", rendered.prompt);
     evidence("mcp-config.json", mcpConfig(opts.braco));
+    if (roteiro) evidence("roteiro-do-duble.json", roteiro);
     if (Object.keys(containerConfigs).length) evidence("container-config.json", containerConfigs);
     // brutos de cada papel → evidence/raw/<papel>
     const raw = join(runDir, "evidence", "raw");
@@ -490,6 +539,11 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     const egressProvider = readNdjson(rawPath("egress-provider", "egress.ndjson"));
     const egressSite = readNdjson(rawPath("egress-site", "egress.ndjson"));
     const collectorEvents = readNdjson(rawPath("collector", "events.ndjson"));
+    // cliente real: telemetria do stream-json e, no modo dublê, o que o "modelo" recebeu
+    const client = opts.agente === "claude" && agentStartedAt ? parseClientStream(rawPath("agent", "claude-stream.ndjson")) : null;
+    const stubSeen = claudeStub && rendered ? summarizeStub(join(raw, "provider-stub"), rendered.promptSha256) : null;
+    const agentConnects = egressProvider.slice(egressLinesBeforeAgent).filter((e) => e.kind === "connect");
+    if (client) evidence("cliente.json", { client, stub: stubSeen, providerConnectsDuringAgent: agentConnects.map((e) => ({ target: e.target, allowed: e.allowed, status: e.status })) });
 
     // checks de execução (só se o agente rodou)
     const ran = agentStartedAt !== null;
@@ -504,6 +558,37 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
         const ok = oracleEvents.length === 0 && !oracleInv && (browserInv?.exposed ?? []).every((t) => t.startsWith("browser_"));
         runtimeChecks.push({ id: "oraculo-ausente-durante-a-execucao", category: "tools", target: "braço sem: nenhum servidor do oráculo, nenhuma ferramenta dele anunciada, zero chamadas", required: true, outcome: ok ? "passed" : "failed", detail: `eventos do oráculo: ${oracleEvents.length}` });
       }
+      if (opts.agente === "claude") {
+        // inventário efetivo do cliente: o que ele diz ter (init) e, no dublê, o que mandou ao "modelo"
+        const expected = [...(browserInv?.exposed ?? []).map((t) => `mcp__playwright__${t}`), ...(oracleInv?.exposed ?? []).map((t) => `mcp__${ORACLE_SERVER_NAME}__${t}`)].sort();
+        const same = (xs: string[] | undefined): boolean => JSON.stringify([...(xs ?? [])].sort()) === JSON.stringify(expected);
+        const initTools = client?.init?.tools;
+        // o cliente anuncia um marcador adiado (DeferredToolPlaceholder, defer_loading: true, "never call"); sem ferramenta
+        // de busca, o modelo não tem como carregá-lo. Qualquer OUTRA ferramenta adiada reprova.
+        const callable = stubSeen ? stubSeen.advertisedTools.filter((t) => !stubSeen.deferredTools.includes(t)) : [];
+        const deferredOk = stubSeen ? stubSeen.deferredTools.every((t) => DEFERRED_PLACEHOLDERS.includes(t)) : true;
+        const toolsOk = Boolean(client?.init) && same(initTools) && (!claudeStub || (stubSeen !== null && same(callable) && deferredOk && stubSeen.advertisedStable));
+        runtimeChecks.push({ id: "ferramentas-do-cliente", category: "tools", required: true, outcome: toolsOk ? "passed" : "failed", evidence: "evidence/cliente.json",
+          target: `o cliente real só tem (e só anuncia ao modelo) as ferramentas MCP das pontes: ${opts.braco === "sem" ? "navegador" : "navegador + oráculo"}; nenhuma ferramenta interna (Bash, Read, Write, WebFetch, Task…)`,
+          detail: JSON.stringify({ esperado: expected.length, init: initTools ?? null, anunciadoAoModelo: stubSeen?.advertisedTools ?? "não observável sem o dublê", adiadas: stubSeen?.deferredTools ?? null }).slice(0, 4000) });
+        const configured = Object.keys(mcpConfig(opts.braco).mcpServers).sort();
+        const init = client?.init;
+        const extOk = Boolean(init) && init!.skills.length === 0 && init!.slashCommands.length === 0 && init!.plugins.every((p) => p.source.endsWith("@builtin"))
+          && JSON.stringify(init!.mcpServers.map((m) => m.name).sort()) === JSON.stringify(configured) && init!.mcpServers.every((m) => m.status === "connected");
+        runtimeChecks.push({ id: "extensoes-do-cliente", category: "tools", required: true, outcome: extOk ? "passed" : "failed", evidence: "evidence/cliente.json",
+          target: "cliente sem skills, comandos, plugins instalados ou servidores MCP além dos configurados; os configurados conectados pela ponte",
+          detail: JSON.stringify(init ? { mcp: init.mcpServers, skills: init.skills, comandos: init.slashCommands, plugins: init.plugins, agentes: init.agents, credencial: init.apiKeySource } : "sem evento init").slice(0, 4000) });
+        runtimeChecks.push(claudeStub
+          ? { id: "texto-da-tarefa-entregue", category: "integrity", required: true, outcome: stubSeen?.promptDelivered ? "passed" : "failed", evidence: "evidence/cliente.json",
+            target: "o texto da tarefa chega ao modelo byte a byte igual ao renderizado (hash da mensagem do usuário no 1º pedido = hash do texto)", detail: rendered?.promptSha256 }
+          : { id: "texto-da-tarefa-entregue", category: "integrity", required: false, outcome: "not-exercised", evidence: null,
+            target: "texto da tarefa no pedido ao provedor: não observável sem o dublê (o mesmo comando e o mesmo arquivo do modo dublê)" });
+        const foreign = agentConnects.filter((e) => !PROVIDER_ALLOWLIST.some((a) => e.target === `${a.host}:${a.port}`));
+        runtimeChecks.push({ id: "hosts-do-cliente", category: "network", required: false, outcome: foreign.length === 0 ? "passed" : "failed", evidence: "evidence/raw/egress-provider/egress.ndjson",
+          target: "o cliente só tentou hosts da allowlist do provedor (informativo: uma tentativa fora dela é recusada pelo proxy, não vaza)",
+          detail: [...new Set(agentConnects.map((e) => `${String(e.target)}:${e.allowed ? "permitido" : "recusado"}`))].join(", ") || "nenhum túnel" });
+        for (const t of client?.toolErrors ?? []) capabilities.push(`erro devolvido pelo cliente ao modelo: ${t.tool} (${t.text.slice(0, 120)})`);
+      }
       for (const e of browserEvents.filter((x) => x.kind === "refused")) capabilities.push(`recusado pela ponte: ${String(e.tool)} (${String(e.reason)})`);
       for (const e of [...egressSite, ...egressProvider].filter((x) => x.allowed === false)) capabilities.push(`recusado pelo ${String(e.proxy)}: ${String(e.method)} ${String(e.target)}`);
       for (const e of collectorEvents.filter((x) => typeof x.status === "number" && (x.status as number) >= 400)) capabilities.push(`recusado pelo coletor: ${String(e.method)} ${String(e.path)} → ${String(e.status)} (${String(e.reason ?? "")})`);
@@ -513,13 +598,23 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
         outcome: teardownState.containersLeft.length === 0 && teardownState.networksLeft.length === 0 ? "passed" : "failed", detail: JSON.stringify(teardownState) });
     }
     const probeChecks = (probeDoc?.checks ?? []).map((c) => ({ ...c, evidence: "evidence/raw/probe/probe.json" }));
-    notExercised.push(
-      "cliente real (Claude Code) e suas ferramentas internas: o agente roteirizado prova as paredes, não as capacidades efetivas do cliente (T3b)",
-      "saída real para o provedor: a allowlist do proxy foi exercitada contra um dublê numa rede interna, sem internet",
-      "erros de ferramenta simulados (timeout/isError/truncamento) do lado do cliente real",
-    );
-    if (opts.egress === "real") notExercised.splice(1, 1, "túnel permitido até o provedor real: não aberto no T3a (só recusas com saída real)");
-    limitations.push("agente roteirizado: nenhuma chamada a modelo; uma recusa aqui é do sistema, não de um LLM");
+    if (opts.agente === "fake") {
+      notExercised.push(
+        "cliente real (Claude Code) e suas ferramentas internas: o agente roteirizado prova as paredes, não as capacidades efetivas do cliente (ver os casos do cliente real contra o dublê)",
+        opts.egress === "real" ? "túnel permitido até o provedor real: não aberto pelo agente roteirizado (só recusas com saída real)" : "saída real para o provedor: a allowlist do proxy foi exercitada contra um dublê numa rede interna, sem internet",
+      );
+      limitations.push("agente roteirizado: nenhuma chamada a modelo; uma recusa aqui é do sistema, não de um LLM");
+    } else if (claudeStub) {
+      notExercised.push(
+        "modelo real: os turnos vieram de um roteiro escrito à mão (dublê); o comportamento de um modelo (o que tenta, o que usa) só a execução real mostra",
+        "autenticação real e hosts que só aparecem com credencial válida: credencial falsa, o dublê não confere nada",
+        "saída real para o provedor: o túnel permitido termina no dublê, numa rede interna",
+        "timeout de ferramenta: a ponte corta em 120 s (transport-error), não exercitado aqui",
+      );
+      limitations.push("cliente real contra dublê roteirizado: nenhuma chamada a modelo; tokens, modelo e custo são os números fixos do dublê, nunca dado");
+    } else {
+      notExercised.push("pedido ao provedor (ferramentas anunciadas ao modelo, texto da tarefa): só observável contra o dublê; aqui vale o inventário que o cliente declara (init)");
+    }
     if (harness.dirty) limitations.push("govbr-eval com alterações locais no momento da execução (harnessCommit não descreve tudo)");
 
     const allChecks: CheckRow[] = [...integrity, ...probeChecks, ...runtimeChecks];
@@ -553,6 +648,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       : { status: "none", findings: null, refusal: null };
 
     // estados
+    const cf = client ? clientFailure(client) : null;
     let technical: Run["status"]["technical"];
     let lifecycle: Run["lifecycle"];
     let failure: Run["failure"] = null;
@@ -564,13 +660,18 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       technical = "interrupted";
       lifecycle = { state: "interrupted", stage: "running" };
       failure = { stage: "running", reason: "timeout", detail: `limite de ${opts.limiteSeg}s atingido; grupo de contêineres morto, evidência preservada` };
+    } else if (cf && submission.status !== "accepted") {
+      // erro de API relatado pelo cliente (429, 529, autenticação…): motivo próprio, nunca "zero achados"
+      technical = cf.interrupted ? "interrupted" : "failed";
+      lifecycle = { state: cf.interrupted ? "interrupted" : "failed", stage: "running" };
+      failure = { stage: "running", reason: cf.reason, detail: `${cf.detail}; submissão: ${submission.status}`.slice(0, 2000) };
     } else if (submission.status === "accepted" && agentExit === 0) {
       technical = "passed";
       lifecycle = { state: "collected", stage: null };
     } else if (submission.status === "accepted") {
       technical = "failed";
       lifecycle = { state: "failed", stage: "running" };
-      failure = { stage: "running", reason: "harness-error", detail: `relatório aceito, mas o agente saiu com código ${agentExit}` };
+      failure = { stage: "running", reason: cf?.reason ?? "harness-error", detail: cf ? `relatório aceito, depois ${cf.detail}` : `relatório aceito, mas o agente saiu com código ${agentExit}` };
     } else if (submission.status === "refused") {
       technical = "failed";
       lifecycle = { state: "failed", stage: "collecting" };
@@ -583,27 +684,27 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     if (isolationDoc && isolationDoc.result === "failed" && technical === "passed") limitations.push("isolamento falhou depois da coleta: execução em quarentena");
 
     const oracleCalls = oracleEvents.filter((e) => e.kind === "call");
-    let oracleUsage: Run["status"]["oracleUsage"];
-    if (technical === "not-run") oracleUsage = "not-applicable";
-    else if (opts.braco === "sem") oracleUsage = isolationDoc && !isolationDoc.toolInventory.oracleAnnounced && runtimeChecks.find((c) => c.id === "oraculo-ausente-durante-a-execucao")?.outcome === "passed" && probeChecks.find((c) => c.id === "oraculo-ausente")?.outcome === "passed" ? "absent-verified" : "unverified";
-    else if (oracleCalls.length === 0) oracleUsage = "available-unused";
-    else {
-      const okCalls = oracleCalls.filter((e) => e.outcome === "ok");
-      const gate = okCalls.some((e) => NORMATIVE_TOOLS.includes(String(e.tool))) && okCalls.some((e) => SCAN_TOOLS.includes(String(e.tool)));
-      oracleUsage = oracleCalls.some((e) => e.outcome !== "ok") ? "used-with-errors" : gate ? "used-adherent" : "unverified";
-    }
+    const absentVerified = Boolean(isolationDoc) && !isolationDoc!.toolInventory.oracleAnnounced && runtimeChecks.find((c) => c.id === "oraculo-ausente-durante-a-execucao")?.outcome === "passed" && probeChecks.find((c) => c.id === "oraculo-ausente")?.outcome === "passed";
+    const adherence = oracleAdherence(opts.braco, technical !== "not-run", absentVerified, oracleEvents, oracleInv?.exposed ?? [], findingsRaw ? findingsRaw.report.findings as { rule: unknown }[] : null);
+    const oracleUsage: Run["status"]["oracleUsage"] = adherence.usage;
+    if (technical !== "not-run") evidence("aderencia-oraculo.json", adherence);
 
     const browserCalls = browserEvents.filter((e) => e.kind === "call" || e.kind === "refused").length;
     const wall = agentStartedAt && agentFinishedAt ? (Date.parse(agentFinishedAt) - Date.parse(agentStartedAt)) / 1000 : null;
     const L = lock;
+    const tokens = (k: "input" | "output" | "cacheRead" | "cacheCreation"): Metric => opts.agente === "fake" ? na()
+      : client?.result?.usage ? measured(client.result.usage[k], `stream-json do cliente (result.usage)${claudeStub ? "; números fixos do dublê" : ""}`) : unavailable();
     const oracleIdentityDoc = opts.braco === "com" && L ? { package: L.versions.oracle.package, version: L.versions.oracle.version, distSha256: L.versions.oracle.distSha256, dataSha256: L.versions.oracle.dataSha256, profile: "combined" as const } : null;
     const run: Run = {
       contract: "run.v1", fixture, campaignId: opts.campanha, slotId: opts.slot, pairId: opts.par, runId, attempt: opts.tentativa,
       idempotencyKey: `${opts.campanha}/${opts.slot}/${opts.braco}/${opts.tentativa}`,
       screen: { id: opts.tela, label: opts.tela === "solicitacao" ? "Solicitar serviço" : "Vistorias", version: `govbr-telas-site-${(L?.versions.telas.siteSha256 ?? sha256(telasManifestText)).slice(0, 12)}` },
       arm: opts.braco, repetition: opts.repeticao,
-      model: { family: opts.agente === "fake" ? "roteirizado" : "claude", requested: opts.modelo, resolved: "unknown", resolvedSource: "unknown", resolvedEvidence: null },
-      provider: opts.agente === "fake" ? { name: "nenhum (agente roteirizado)", authMethod: "unknown" } : { name: "anthropic", authMethod: process.env.ANTHROPIC_API_KEY ? "api-key" : process.env.CLAUDE_CODE_OAUTH_TOKEN ? "oauth-subscription" : "unknown" },
+      // modelo resolvido = o `model` das respostas, lido do stream-json do cliente (nunca copiado do pedido)
+      model: client && client.models.length === 1
+        ? { family: "claude", requested: opts.modelo, resolved: client.models[0], resolvedSource: "client-log", resolvedEvidence: "evidence/raw/agent/claude-stream.ndjson" }
+        : { family: opts.agente === "fake" ? "roteirizado" : "claude", requested: opts.modelo, resolved: "unknown", resolvedSource: "unknown", resolvedEvidence: null },
+      provider: opts.agente === "fake" ? { name: "nenhum (agente roteirizado)", authMethod: "unknown" } : { name: claudeStub ? "stub" : "anthropic", authMethod },
       effort: opts.esforco,
       client: opts.agente === "fake" ? { name: "fake-agent", version: "1.0.0" } : { name: "claude-code", version: L?.versions.claudeCode ?? "desconhecida" },
       browser: { name: "chromium", version: L?.versions.chromium ?? "desconhecida", headless: true },
@@ -625,12 +726,13 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       failure, submission,
       usage: {
         wallClockSeconds: wall === null ? (technical === "not-run" ? na() : unavailable()) : measured(wall, "runner"),
-        inputTokens: opts.agente === "fake" ? na() : unavailable(), outputTokens: opts.agente === "fake" ? na() : unavailable(),
-        cacheReadTokens: opts.agente === "fake" ? na() : unavailable(), cacheCreationTokens: opts.agente === "fake" ? na() : unavailable(),
-        turns: opts.agente === "fake" ? na() : unavailable(),
+        inputTokens: tokens("input"), outputTokens: tokens("output"), cacheReadTokens: tokens("cacheRead"), cacheCreationTokens: tokens("cacheCreation"),
+        turns: opts.agente === "fake" ? na() : client?.result?.numTurns != null ? measured(client.result.numTurns, `stream-json do cliente (result.num_turns)${claudeStub ? "; turnos do dublê" : ""}`) : unavailable(),
         toolCalls: ran ? measured(browserCalls + oracleEvents.filter((e) => e.kind === "call" || e.kind === "refused").length, "ponte MCP") : na(),
         oracleCalls: !ran ? na() : opts.braco === "sem" ? measured(0, "inventário: oráculo ausente no braço sem") : measured(oracleCalls.length, "ponte MCP do oráculo"),
-        estimatedCostUsd: opts.agente === "fake" ? na() : unavailable(), billedCostUsd: opts.agente === "fake" ? na() : unavailable(),
+        // estimativa do próprio cliente a preço de referência; nunca fatura (assinatura não é custo zero)
+        estimatedCostUsd: opts.agente === "fake" ? na() : client?.result?.totalCostUsd != null ? measured(client.result.totalCostUsd, `estimativa do cliente (result.total_cost_usd)${claudeStub ? " sobre tokens fixos do dublê" : ""}`) : unavailable(),
+        billedCostUsd: opts.agente === "fake" ? na() : unavailable(),
       },
       artifactManifest: "artifact-manifest.json",
       isolation: isolationDoc ? "isolation.json" : null,
@@ -684,8 +786,13 @@ function normalizedConfig(name: string, short: string, runId: string, sentinelPo
     const t = s.split(short).join("<run>").split(runId).join("<runId>");
     return sentinelPort === null ? t : t.split(String(sentinelPort)).join("<porta-sentinela>");
   };
+  // valor de credencial nunca entra no pacote (nem o falso do dublê): fica só o nome
+  const redact = (e: string): string => {
+    const name = e.split("=")[0];
+    return SECRET_ENV_NAMES.includes(name) || /TOKEN|API_KEY|SECRET|PASSWORD/i.test(name) ? `${name}=<redigido>` : e;
+  };
   return {
-    image: c.Config.Image, cmd: c.Config.Cmd.map(scrub), env: c.Config.Env.map(scrub).sort(), user: c.Config.User, workingDir: c.Config.WorkingDir,
+    image: c.Config.Image, cmd: c.Config.Cmd.map(scrub), env: c.Config.Env.map(scrub).map(redact).sort(), user: c.Config.User, workingDir: c.Config.WorkingDir,
     readOnlyRootfs: c.HostConfig.ReadonlyRootfs, capDrop: c.HostConfig.CapDrop, capAdd: c.HostConfig.CapAdd, securityOpt: c.HostConfig.SecurityOpt,
     privileged: c.HostConfig.Privileged, pidsLimit: c.HostConfig.PidsLimit, memory: c.HostConfig.Memory, tmpfs: c.HostConfig.Tmpfs, init: c.HostConfig.Init,
     shmSize: c.HostConfig.ShmSize, sysctls: c.HostConfig.Sysctls ?? null,

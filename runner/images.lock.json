@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "builtAt": "2026-10-03T04:38:11.992Z",
+  "builtAt": "2026-10-03T05:53:12.164Z",
   "base": {
     "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
     "node": "24.21.0"
@@ -55,7 +55,7 @@
     },
     "egress": {
       "tag": "govbr-runner-egress:1.0.0",
-      "id": "sha256:72fb52ca227292fa02b33c3520b0fada6c92fc3d8f679b85ebc32d14892061be",
+      "id": "sha256:7484ab5ef243950a26a5a80e61783147397fc6bef97709b6b68fafd18607c1a1",
       "labels": {
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.runner.image": "egress",
