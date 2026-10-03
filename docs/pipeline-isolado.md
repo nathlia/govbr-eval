@@ -97,6 +97,9 @@ de coleta passou a `manifesto-coleta-isolada-1.1.0` e leva a campanha:
 - **modos `roteirizado` e `duble`**: sem arquivo commitado, uma campanha de ensaio (`fixture: true`)
   é gerada do próprio disparo, com os mesmos bytes nos dois braços de um par.
 
+A campanha do piloto (T5, D-67) é [`campanhas/piloto-01/campaign.json`](../campanhas/piloto-01/campaign.json):
+tela `solicitacao` no site `1a6e8daf3cdb` (`govbr-telas` `46318d4`), `claude-opus-5-5` `high`, oráculo 2.7.0.
+
 O job `arquivar` grava a campanha e o site congelado (checkout do `govbr-telas` no `telas_sha`) por
 conteúdo. Manifestos 1.0.0 continuam legíveis, mas não trazem campanha: o painel não prepara a
 análise desses disparos.

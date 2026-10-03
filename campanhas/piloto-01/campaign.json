@@ -1,0 +1,111 @@
+{
+  "contract": "campaign.v1",
+  "fixture": false,
+  "campaignId": "piloto-01",
+  "kind": "pilot",
+  "title": "Piloto de calibração do benchmark isolado — tela A (Solicitar serviço), Opus high, 2 pares sem/com",
+  "objective": "Calibrar o instrumento isolado com execuções reais (T5, D-67): medir duração, uso e saúde técnica de dois pares sem/com na mesma configuração, para derivar o tempo limite e o orçamento da campanha formal (T7). Não é comparação de desempenho.",
+  "hypotheses": [
+    "Calibração: nenhuma hipótese de superioridade é testada. Dois pares não estimam variabilidade nem definem N (D-67); o par só verifica que coleta, isolamento, arquivo e análise funcionam com o modelo real."
+  ],
+  "createdAt": "2026-10-03T10:18:07Z",
+  "frozenAt": "2026-10-03T10:18:07Z",
+  "design": {
+    "screens": [
+      {
+        "id": "solicitacao",
+        "label": "Solicitar serviço",
+        "version": "govbr-telas-site-1a6e8daf3cdb"
+      }
+    ],
+    "arms": [
+      "sem",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "Opus",
+        "requested": "claude-opus-5-5"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 2,
+    "order": "sequencial",
+    "seed": null
+  },
+  "fixed": {
+    "protocolSha256": "61d94cc16de2a53c3dd9b2633194d7faebba19f18a7c232904c0b6d5765faac4",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "anthropic",
+      "authMethod": "oauth-subscription"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracle": {
+      "package": "govbr-ds-validator-server",
+      "version": "2.7.0",
+      "distSha256": "31749c29b0dd2c0378b5955c1ba4c3804c66edd38cf90958c0de8196f11652f2",
+      "dataSha256": "ade4f658553e2a6cc13b3f6118bfaf95e5dd9b05d18d22d8c113e456420c5162",
+      "profile": "combined"
+    },
+    "scorerVersion": "flow-semantic-1.4.0"
+  },
+  "limits": {
+    "timeoutSeconds": 5400,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 6,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Entra na análise a primeira tentativa de cada slot sem falha técnica. Tentativas anteriores, com falha técnica, ficam arquivadas e nunca entram na análise. Nunca se repete por resultado (D-67)."
+  },
+  "failurePolicy": "Nova tentativa só por falha técnica (429, queda, modelo indisponível, erro do harness ou do arquivo), nunca por resultado (D-67). Tempo esgotado no teto de 90 min, envio vazio, malformado, recusado ou ausente são medidas da calibração: ficam registrados no slot e não são repetidos. Falha de isolamento põe a execução em quarentena e para o piloto até a causa ser entendida.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Calibração: duração de cada execução (relógio do runner), turnos e tokens, por braço, para fixar tempo limite e orçamento do T7. A análise por par (D-69) mostra defeitos confirmados da referência por braço apenas como verificação do instrumento, com n = 2 pares e sem inferência.",
+    "secondaryOutcomes": [
+      "Saúde técnica: status técnico, isolamento e falhas por slot.",
+      "Uso do oráculo no braço com (chamadas, recusas) e ausência dele no braço sem.",
+      "Precisão, falsos positivos e achados novos corretos, apresentados separadamente e só após a revisão."
+    ],
+    "uncertaintyMethod": null,
+    "exclusionRules": "Fica fora da análise: tentativa com falha técnica (substituída pela seguinte, conforme retryPolicy), execução com isolamento falho (quarentena) e execução sem linha de base válida. Nenhum número do piloto entra como resultado científico da tese."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": null,
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": []
+}
