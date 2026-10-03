@@ -439,7 +439,7 @@ document.querySelectorAll("[data-recalcular]").forEach(function(b){b.addEventLis
   b.disabled=true; msg.className="msg"; msg.textContent="Recalculando… isto leva alguns segundos (o navegador headless reconstrói a página congelada).";
   try{ var r=await fetch("/api/recalcular/"+alvo,{method:"POST",headers:{"content-type":"application/json"},body:"{}"}); var j=await r.json();
     if(j.ok){ msg.className="msg ok"; msg.textContent="Pronto: nova versão "+j.revisao.split("/").pop()+" ("+j.estado+"). Recarregando…"; setTimeout(function(){location.reload()},900); }
-    else { msg.className="msg retorno erro"; msg.textContent="O recálculo falhou e a versão anterior continua valendo: "+j.erro; b.disabled=false; }
+    else { msg.className="msg retorno erro"; msg.textContent="O recálculo falhou e a versão anterior continua valendo: "+j.erro+(j.falha?" Registro completo: "+j.falha+"/erro.json.":""); b.disabled=false; }
   }catch(e){ msg.className="msg retorno erro"; msg.textContent="Sem resposta do painel: "+e; b.disabled=false; }
 });});`;
 

@@ -26,7 +26,8 @@ import { analysisIdentity } from "./collection-manifest";
 import { CAMPANHA_ID } from "./fixtures/analise/construir";
 import { construirArquivoFixture, construirArquivoT4 } from "./painel/fixture";
 import { lerAnalise, lerRevisao, metricasDaRevisao } from "./painel/modelo";
-import { recalcular } from "./painel/revisao";
+import { chromium } from "playwright";
+import { explicarExcecao, recalcular } from "./painel/revisao";
 import { criarPainel, escutar } from "./painel/servidor";
 import type { SemanticPackage } from "./semantic-flow";
 
@@ -300,6 +301,32 @@ await teste("recálculo que falha: registro em falhas/, versão anterior continu
     assert.equal(p.analise.revisoes.length, 1);
     assert.ok(p.analise.avisos.some((a: string) => /falhou/.test(a) && /rev-001/.test(a)));
   } finally { renameSync(`${pac}.fora`, pac); }
+});
+
+await teste("botão Recalcular com navegador que não abre (NAT-52): frase legível na resposta, log cru só no erro.json", async () => {
+  // Mesmo caminho do botão (POST /api/recalcular no servidor). O navegador real é trocado por um
+  // executável que sai na hora — reproduz o "browserType.launch: Target page, context or browser has
+  // been closed … <process did exit: exitCode=…>" que a autora viu (lá, 0xC0000142 do Windows).
+  const original = chromium.launch;
+  chromium.launch = ((o?: Parameters<typeof original>[0]) => original.call(chromium, { ...o, executablePath: process.execPath })) as typeof original;
+  try {
+    const r = await postJson(`/api/recalcular/${C}/par-02`, {});
+    assert.equal(r.ok, false);
+    assert.match(r.erro, /^O navegador headless .* não conseguiu abrir nesta máquina/);
+    assert.match(r.erro, /clique em Recalcular de novo/);
+    assert.doesNotMatch(r.erro, /\n|<launching>|browserType\.launch|--headless/, "log do Playwright vazou para a tela");
+    const erro = ler(`${r.falha}/erro.json`);
+    assert.equal(erro.motivo, r.erro);
+    assert.match(erro.detalhe, /browserType\.launch/);
+    assert.match(erro.detalhe, /exitCode=/);
+    const p = await getJson(`/api/par/${C}/par-02`);
+    assert.equal(p.analise.atual, "rev-002", "a versão anterior continua valendo");
+    const html = (await req(`/par/${C}/par-02`)).corpo.toString("utf8");
+    assert.doesNotMatch(html, /&lt;launching&gt;|browserType\.launch/);
+  } finally { chromium.launch = original; }
+  assert.equal(explicarExcecao(new Error("browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n<process did exit: exitCode=3221225794, signal=null>")).motivo
+    .includes("0xC0000142"), true);
+  assert.match(explicarExcecao(new Error("browserType.launch: Executable doesn't exist at C:\\x.exe\n╔═══")).motivo, /npx playwright install chromium/);
 });
 
 await teste("pasta de revisão incompleta é ignorada com aviso, nunca mostrada como nova", async () => {

@@ -238,6 +238,27 @@ function siteDaReceita(arquivo: string, an: Analise, o: OpcoesRecalculo): string
   throw new Error("o site congelado não está no arquivo e o painel foi aberto sem --telas <clone do govbr-telas>");
 }
 
+/**
+ * Exceção → uma frase legível para o painel + o texto cru (que fica só no erro.json).
+ * O caso que motivou: o Chromium headless do Playwright não abre nesta máquina (ex.: Windows
+ * 0xC0000142 = STATUS_DLL_INIT_FAILED, falha ambiental do processo do navegador, não da análise).
+ * O log do Playwright tem dezenas de linhas; despejá-lo na tela não diz à autora o que fazer.
+ */
+export function explicarExcecao(e: unknown): { motivo: string; detalhe: string | null } {
+  const cru = e instanceof Error ? (e.stack && e.stack.includes(e.message) ? e.stack : `${e.message}\n${e.stack ?? ""}`) : String(e);
+  const msg = e instanceof Error ? e.message : String(e);
+  if (/browserType\.launch/.test(msg)) {
+    if (/Executable doesn't exist/i.test(msg)) {
+      return { motivo: "O navegador headless do Playwright não está instalado nesta máquina: rode `npx playwright install chromium` dentro do govbr-eval e clique em Recalcular de novo.", detalhe: cru };
+    }
+    const m = /exitCode=(-?\d+)/.exec(msg);
+    const codigo = m ? ` (o processo saiu com o código ${m[1]}${Number(m[1]) > 0xffff ? ` = 0x${Number(m[1]).toString(16).toUpperCase()}` : ""})` : "";
+    return { motivo: `O navegador headless que recalcula a página congelada não conseguiu abrir nesta máquina${codigo}; isso é do ambiente, não da análise: feche programas pesados (ou reinicie o Windows) e clique em Recalcular de novo, e se repetir rode \`npx playwright install chromium\` dentro do govbr-eval.`, detalhe: cru };
+  }
+  const primeira = msg.split(/\r?\n/)[0].trim() || "erro sem mensagem";
+  return { motivo: primeira, detalhe: cru };
+}
+
 export async function recalcular(arquivo: string, campanha: string, alvo: string, o: OpcoesRecalculo = {}): Promise<ResultadoRecalculo> {
   const an = lerAnalise(arquivo, campanha, alvo);
   if (!an) return { ok: false, erro: "análise desconhecida", falha: null };
@@ -248,12 +269,12 @@ export async function recalcular(arquivo: string, campanha: string, alvo: string
   const revDir = join(an.dir, "revisoes");
   const tmp = join(revDir, `.em-andamento-${c}`);
   const decisoes = an.decisoes[0] ? join(an.dir, "decisoes", an.decisoes[0].nome) : undefined;
-  const registrarFalha = (motivo: string): ResultadoRecalculo => {
+  const registrarFalha = (motivo: string, detalhe: string | null = null): ResultadoRecalculo => {
     const fdir = join(revDir, "falhas", c);
     mkdirSync(fdir, { recursive: true });
     if (existsSync(tmp)) renameSync(tmp, join(fdir, "saida-parcial"));
     writeFileSync(join(fdir, "erro.json"), JSON.stringify({ em: new Date().toISOString(), motivo,
-      decisoes: an.decisoes[0]?.nome ?? null, anterior: an.atual?.nome ?? null }, null, 2) + "\n", { flag: "wx" });
+      decisoes: an.decisoes[0]?.nome ?? null, anterior: an.atual?.nome ?? null, ...(detalhe ? { detalhe } : {}) }, null, 2) + "\n", { flag: "wx" });
     return { ok: false, erro: motivo, falha: `${an.rel}/revisoes/falhas/${c}` };
   };
   try {
@@ -280,7 +301,8 @@ export async function recalcular(arquivo: string, campanha: string, alvo: string
     renameSync(tmp, join(revDir, nome));
     return { ok: true, revisao: `${an.rel}/revisoes/${nome}`, estado: r.estado };
   } catch (e) {
-    return registrarFalha(e instanceof Error ? e.message : String(e));
+    const { motivo, detalhe } = explicarExcecao(e);
+    return registrarFalha(motivo, detalhe);
   } finally {
     emAndamento.delete(an.id);
     if (existsSync(tmp)) rmSync(tmp, { recursive: true, force: true });
