@@ -275,10 +275,31 @@ Só dentro do arquivo aberto: em três pastas e no `RESULTADOS.md` da raiz (só 
   `/@fs/...` e a referência arquivada. `npm run test:painel` confere isso.
 - Na fila, o cartão não mostra o braço, o id da execução nem o nome dos arquivos de evidência.
 
+## Elegibilidade: o que conta para a comparação (NAT-63)
+
+A análise separa duas coisas. A **pontuação diagnóstica** de um braço é calculada sempre que há
+submissão aceita e o isolamento não falhou, e aparece na página do par como antes. A **comparação
+principal** (com − sem, selo FINAL, soma do placar) só existe se os dois braços forem elegíveis:
+
+- submissão aceita, status técnico `passed` e isolamento `passed`. Relatório aceito seguido de falha
+  do harness, tempo esgotado depois do envio ou isolamento `unverified` não contam;
+- a identidade que o `run.json` registrou é a congelada na campanha: esforço, limites, cliente,
+  protocolo, tentativa até `retryPolicy.maxAttemptsPerSlot` e repetição até `design.repetitions`.
+  Quando um braço diverge, a análise é **recusada** já na entrada, mesmo que os dois braços divirjam do
+  mesmo jeito. A conferência entre braços (`checkAggregation`) não pegava esse caso.
+
+Par inelegível: o pacote, a pontuação de cada braço e os motivos ficam no `summary.json`
+(`execucoes[].elegibilidade`, `comparacao.elegivel: false`). A comparação fica **indisponível**, com o
+motivo, mesmo depois de todos os cartões serem decididos. No placar e no `RESULTADOS.md`, o selo é
+**NÃO CONTA — par inelegível**: o par nunca é FINAL e nunca entra na soma. Na página do par, a linha
+“Entra na comparação principal” mostra o motivo, e a maturidade aparece com “só diagnóstico”. Os
+resumos anteriores a esta regra não têm esses campos e são lidos como antes. Testes:
+`npm run test:identidade`.
+
 ## Limites (T8a)
 
 - A primeira análise sai do botão **Preparar análise** (T8a.1) só para disparos arquivados com o
-  manifesto de coleta 1.1.0, que traz a campanha. Disparos arquivados antes disso não têm a campanha
+  manifesto de coleta 1.1.0 ou 1.2.0, que trazem a campanha. Disparos arquivados antes disso não têm a campanha
   e aparecem como “não dá para preparar”, com o motivo.
 - Um braço com mais de uma tentativa arquivada é recusado com motivo: escolher a tentativa pela
   política da campanha ainda não é feito pelo painel.

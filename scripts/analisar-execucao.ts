@@ -39,6 +39,7 @@ import { combinePredicate, measurePredicate, type PredicateResult } from "./acce
 import { analysisIdentity, cenasDoPlano, compareIdentities, statePlanOf, statePlanSha256 } from "./collection-manifest";
 import type { EvidenceIndex } from "./flow-contract";
 import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION } from "./instrument";
+import { divergenciasDaCampanha, identidadeDoRun } from "./identidade-campanha";
 import { REGRA_IDS_GERADOS, mapearDecisoes, normalizarIdsGerados, presenteNoSite, type IdGerado, type MapaCartoes } from "./identidade-cartoes";
 import { createSiteServer, loadSite, type LoadedSite } from "./measurement-surface";
 import { READABLE_BASELINE_VERSIONS, type FlowBaselines } from "./run-baselines-flow";
@@ -524,11 +525,18 @@ export interface ExecucaoResumo {
     limitacoes: string[] };
   custoTempo: Record<keyof Run["usage"], MetricaResumo>;
   achados: { total: number; itens: { seletor: string; regra: string | null; observado: string }[] } | null;
+  /**
+   * NAT-63 (R2): entra na comparação principal? Sem ela, a pontuação acima é só diagnóstico.
+   * Ausente em resumos gerados antes desta regra.
+   */
+  elegibilidade?: { elegivel: boolean; motivos: string[] };
   links: Record<string, string | string[] | null>;
   binding: string;
 }
 export interface ComparacaoResumo {
   disponivel: boolean; motivo: string | null; estado: "final" | "provisoria" | null;
+  /** NAT-63: false = par inelegível (comparação indisponível, não conta). Ausente em resumos anteriores. */
+  elegivel?: boolean;
   diferencaUnidadesConfirmadas: number | null; diferencaRecall: number | null;
   unidades: { soCom: UnidadeResumo[]; soSem: UnidadeResumo[]; ambos: UnidadeResumo[]; nenhum: UnidadeResumo[] } | null;
   nota: string;
@@ -653,6 +661,11 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     if (!campaign.design.arms.includes(run.arm)) recusar(`braço ${run.arm} fora do desenho da campanha`);
     if (!campaign.design.models.some(m => m.requested === run.model.requested)) recusar(`modelo ${run.model.requested} fora do desenho da campanha`);
     if (run.fixture !== fixture) recusar("fixture misturada com dado real entre os pacotes");
+    // NAT-63 (R1): a identidade REGISTRADA no run.json contra a campanha congelada — esforço, limites,
+    // cliente, protocolo, tentativa e repetição. checkAggregation só compara os braços entre si: dois
+    // braços que divergem igualmente da campanha passariam lá.
+    const divergencias = divergenciasDaCampanha(campaign, identidadeDoRun(run));
+    if (divergencias.length) recusar(`${run.runId} não tem a identidade congelada na campanha ${campaign.campaignId}: ${divergencias.join("; ")}`);
   }
   if (par && pacotes[0].run.screen.id !== pacotes[1].run.screen.id) recusar("o par mistura telas; telas diferentes nunca formam par");
 
@@ -750,7 +763,10 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   }
 
   // ── pontuação ────────────────────────────────────────────────────────────
+  // `pontuavel` = há o que pontuar (DIAGNÓSTICO: calculado e mostrado, rotulado). Quem entra na
+  // comparação principal é decidido à parte por `motivosDeInelegibilidade` (NAT-63, R2).
   const pontuavel = (p: PacoteLido) => p.run.submission.status === "accepted" && p.run.status.isolation !== "failed";
+  const inelegivel = new Map(pacotes.map(p => [p.run.arm, motivosDeInelegibilidade(p.run, campaign)] as const));
   let prep: PacotePreparado | null = null;
   if (!bloqueada && pacotes.some(pontuavel)) {
     const provenance = {
@@ -803,8 +819,12 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   const unidades = new Map((prep?.pkg.units ?? []).map(u => [u.id, { unitId: u.id, specId: u.specId, elemento: u.element.label }]));
   const exec = pacotes.map(p => execucaoResumo(p, saida, bindings.get(p.run.arm)!, scoreDe(p.run.runId), cartoesDe(p.run.runId),
     prep?.result.comparisons.find(c => c.agentRunId === p.run.runId && c.baseline === "uniao-deterministica") ?? null, pontuavel(p) ? null
-      : p.run.submission.status !== "accepted" ? submissaoMotivo(p.run) : "isolamento falhou: execução em quarentena", temCamadaPagina(gt)));
+      : p.run.submission.status !== "accepted" ? submissaoMotivo(p.run) : "isolamento falhou: execução em quarentena", temCamadaPagina(gt),
+    inelegivel.get(p.run.arm)!));
   const comparacao = par ? compararPar(exec, prep, unidades, bloqueada) : null;
+  for (const e of exec) {
+    if (!e.elegibilidade!.elegivel) avisos.push(`${e.braco} (${e.runId}) fora da comparação principal — pontuação só diagnóstica: ${e.elegibilidade!.motivos.join("; ")}`);
+  }
   const pendentes = prep ? prep.fila.ativa.cartoes : 0;
   const resumoSemHash: Omit<Resumo, "hashes"> = {
     formato: RESUMO_VERSAO, fixture, geradoEm: new Date().toISOString(), revisao: { numero, anterior },
@@ -866,6 +886,25 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   return { estado: resumo.analise.estado, motivo: bloqueada, saida, resumo };
 }
 
+/**
+ * Por que esta execução NÃO entra na comparação principal (NAT-63, R2). [] = elegível. A pontuação
+ * diagnóstica pode existir mesmo assim (submissão aceita), mas nunca vira comparação, muito menos final.
+ * Exige: submissão aceita, técnico `passed` (falha depois de enviar, tempo esgotado depois de enviar e
+ * interrupção não contam), isolamento `passed` (`unverified` não basta) e a identidade congelada na
+ * campanha, com tentativa e repetição dentro dos tetos. Qual tentativa de um slot entra
+ * (`retryPolicy.attemptSelection`) exige a agenda de slots (T7) e não é decidida aqui.
+ */
+export function motivosDeInelegibilidade(run: Run, campaign: Campaign): string[] {
+  const m: string[] = [];
+  if (run.submission.status !== "accepted") m.push(`submissão ${run.submission.status} (não aceita)`);
+  if (run.status.technical !== "passed") {
+    m.push(`status técnico ${run.status.technical}${run.failure ? ` (${run.failure.stage} · ${run.failure.reason})` : ""}, não passed`);
+  }
+  if (run.status.isolation !== "passed") m.push(`isolamento ${run.status.isolation}, não comprovado (passed)`);
+  m.push(...divergenciasDaCampanha(campaign, identidadeDoRun(run)));
+  return m;
+}
+
 function submissaoMotivo(run: Run): string {
   if (run.status.technical === "not-run") return "o modelo não foi chamado (execução não rodou); não há o que pontuar";
   if (run.submission.status === "refused") return "a submissão foi recusada pelo coletor; não há achados para pontuar (não é zero achados)";
@@ -873,7 +912,7 @@ function submissaoMotivo(run: Run): string {
 }
 
 function execucaoResumo(p: PacoteLido, saida: string, b: AnalysisBinding, s: SemanticRunScore | null, cartoes: number,
-  comp: BaselineComparison | null, motivoSemPontuacao: string | null, comCamadas = false): ExecucaoResumo {
+  comp: BaselineComparison | null, motivoSemPontuacao: string | null, comCamadas = false, inelegibilidade: string[] = []): ExecucaoResumo {
   const { run, isolation, findings, manifest } = p;
   const link = (path: string | null) => path ? relDe(saida, join(p.dir, path)) : null;
   return {
@@ -910,6 +949,7 @@ function execucaoResumo(p: PacoteLido, saida: string, b: AnalysisBinding, s: Sem
       logs: manifest.files.filter(f => f.role === "log").map(f => link(f.path)!),
       recusa: link(run.submission.refusal?.archivedBody ?? null) },
     binding: `analysis-binding.${run.arm}.json`,
+    elegibilidade: { elegivel: inelegibilidade.length === 0, motivos: inelegibilidade },
   };
 }
 
@@ -919,15 +959,24 @@ function compararPar(exec: ExecucaoResumo[], prep: PacotePreparado | null, unida
     diferencaRecall: null, unidades: null, nota });
   if (bloqueada) return indisponivel(`análise bloqueada: ${bloqueada}`);
   const [sem, com] = ["sem", "com"].map(a => exec.find(e => e.braco === a)!);
+  // NAT-63 (R2): par inelegível nunca vira comparação (nem provisória, nem final); o pacote, a pontuação
+  // diagnóstica de cada braço e os motivos ficam no resumo.
+  const fora = [sem, com].filter(e => e.elegibilidade && !e.elegibilidade.elegivel);
   const faltando = [sem, com].filter(e => e.pontuacao.estado === "not-applicable" || e.pontuacao.estado === "not-prepared");
+  // sem pontuação (sem submissão aceita, quarentena): indisponível pelo motivo de sempre; a inelegibilidade
+  // também fica em execucoes[].elegibilidade
   if (faltando.length) return indisponivel(`braço sem pontuação: ${faltando.map(e => `${e.braco} (${e.pontuacao.motivo ?? e.pontuacao.estado})`).join("; ")}`);
+  if (fora.length) {
+    return { ...indisponivel(`par inelegível para a comparação principal (não conta; pontuação só diagnóstica): ${fora
+      .map(e => `${e.braco} — ${e.elegibilidade!.motivos.join("; ")}`).join(" | ")}`), elegivel: false };
+  }
   const sc = (e: ExecucaoResumo) => prep!.result.scores.find(s => s.runId === e.runId)!;
   const a = new Set(sc(sem).matched.map(m => m.unitId)), b = new Set(sc(com).matched.map(m => m.unitId));
   const ids = prep!.pkg.units.map(u => u.id);
   const pega = (f: (u: string) => boolean) => ids.filter(f).map(u => unidades.get(u)!);
   const final = sem.pontuacao.estado === "final" && com.pontuacao.estado === "final";
   return {
-    disponivel: true, motivo: null, estado: final ? "final" : "provisoria",
+    disponivel: true, motivo: null, estado: final ? "final" : "provisoria", elegivel: true,
     diferencaUnidadesConfirmadas: com.pontuacao.metricas.confirmedReferenceUnits! - sem.pontuacao.metricas.confirmedReferenceUnits!,
     diferencaRecall: final && com.pontuacao.metricas.recall !== null && sem.pontuacao.metricas.recall !== null
       ? com.pontuacao.metricas.recall - sem.pontuacao.metricas.recall : null,
@@ -1016,6 +1065,11 @@ export function renderResumo(r: Resumo): string {
       `${SUBMISSAO[e.tecnico.submissao]}${e.tecnico.motivoRecusa ? ` (${seguro(e.tecnico.motivoRecusa)})` : ""} | ${maturidade(e)} |`);
   }
   L.push("", "Uma execução pode ter rodado bem e ainda estar esperando revisão: isso é normal. A pontuação só é final quando todos os cartões dela foram decididos.", "");
+  for (const e of execs) {
+    if (e.elegibilidade && !e.elegibilidade.elegivel) {
+      L.push(`**${e.braco} não conta para a comparação principal** — a pontuação dele é só diagnóstico: ${seguro(e.elegibilidade.motivos.join("; "), 800)}`, "");
+    }
+  }
 
   // 2. identidade
   L.push("## 2. Identidade", "");
@@ -1061,6 +1115,7 @@ export function renderResumo(r: Resumo): string {
     L.push(`| Duplicadas ${m(e => num(e.pontuacao.detalhe?.duplicadas ?? null))}`);
     L.push(`| Cartões pendentes de revisão ${m(e => num(e.pontuacao.metricas.pending))}`);
     L.push(`| Maturidade ${m(e => maturidade(e))}`);
+    if (execs.some(e => e.elegibilidade)) L.push(`| Entra na comparação principal ${m(e => !e.elegibilidade ? "—" : e.elegibilidade.elegivel ? "sim" : "não (só diagnóstico)")}`);
     L.push(`| Achados enviados ${m(e => e.achados ? String(e.achados.total) : "nenhuma submissão aceita")}`, "");
     L.push("Recall e precisão só aparecem com a revisão fechada; enquanto houver cartão pendente ficam “indisponível” (nunca 0). " +
       "“Achados enviados = 0” é um resultado válido (o agente olhou e não alegou nada); submissão recusada ou ausente é outra coisa.", "");

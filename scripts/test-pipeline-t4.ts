@@ -250,9 +250,9 @@ const manifestoCom = buildIsolatedManifest({ ...comum, braco: "com", slot: "slot
 const manifestoPath = join(TMP, "manifesto-coleta.json");
 writeFileSync(manifestoPath, JSON.stringify(manifestoSem, null, 2) + "\n");
 
-await teste("manifesto 1.1.0 (T8a.1): campanha de ensaio gerada e idêntica nos dois braços; modo real sem campanha commitada é recusado", () => {
+await teste("manifesto 1.2.0 (T8a.1 + NAT-63): campanha de ensaio gerada e idêntica nos dois braços; modo real sem campanha commitada é recusado", () => {
   for (const m of [manifestoSem, manifestoCom]) {
-    assert.equal(m.manifestVersion, "manifesto-coleta-isolada-1.1.0");
+    assert.equal(m.manifestVersion, "manifesto-coleta-isolada-1.2.0");
     assert.equal(m.campaign!.origin, "gerada-ensaio");
     assert.ok(validateContract(m.campaign!.document).valid, JSON.stringify(validateContract(m.campaign!.document).errors));
     assert.equal(sha(documentoDaCampanha(m.campaign!.document)), m.campaign!.sha256);
@@ -418,7 +418,19 @@ await teste("arquivo: grava pacote, linha de base, manifesto, snapshots, índice
   const siteArq = join(arquivo, caminhoSite(manifestoSem.identity.siteManifestSha256!));
   assert.equal(loadSite(siteArq).manifestSha256, manifestoSem.identity.siteManifestSha256, "site arquivado conferido arquivo a arquivo");
   assert.equal(listarArquivos(join(siteArq, "site")).length, loadSite(DEFAULT_TELAS_DIR).files.size, "só os arquivos que o site-manifest lista");
-  assert.ok(!r.problemas.some((p) => /campanha|site/.test(p)), r.problemas.join("; "));
+  // O arquivamento da campanha e do site não pode gerar problema. Sem Docker, o pacote sintético é de
+  // outra campanha/tela de propósito: o arquivo o recusa numa única linha "pacote arquivado com
+  // problemas: …" (que TEM de aparecer, com a campanha e o site divergentes); essa linha é a do pacote,
+  // não a do arquivamento da campanha/site, e só ela é descontada. Com Docker, nada é descontado.
+  const doPacote = (p: string) => p.startsWith("pacote arquivado com problemas: ");
+  if (!docker) {
+    const linhaPacote = r.problemas.filter(doPacote);
+    assert.equal(linhaPacote.length, 1, `sem Docker, o pacote de outra campanha é recusado: ${r.problemas.join("; ")}`);
+    assert.match(linhaPacote[0], /campanha fixture-analise-campanha-01 ≠ t4-teste/);
+    assert.match(linhaPacote[0], /site da execução ≠ site do manifesto/);
+  }
+  const doArquivamento = docker ? r.problemas : r.problemas.filter((p) => !doPacote(p));
+  assert.ok(!doArquivamento.some((p) => /campanha|site/.test(p)), r.problemas.join("; "));
   const semTelas = arquivarExecucao({ arquivo, evidenciasSaida: join(TMP, "anexos-sem-telas"), pacote: null, manifesto: manifestoPath, linhaDeBase: null, segredos: [], entradas: { ...ENT, etapas: "so-linha-de-base" }, jobs: JOBS });
   assert.match(semTelas.problemas.join(), /site congelado não arquivado/, "sem --telas, o aviso aparece");
 });

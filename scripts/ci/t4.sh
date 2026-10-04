@@ -30,7 +30,9 @@ case "$fase" in
     mkdir -p "$TMP/manifesto"
     args=(build --out "$TMP/manifesto/manifesto-coleta.json" --tela "$TELA" --campanha "$CAMPANHA" --slot "$SLOT" --par "$PAR"
       --braco "$BRACO" --modo "$MODO" --limite-min "$LIMITE_MIN" --tentativa "$TENTATIVA" --repeticao "$REPETICAO")
-    if [ "$MODO" = "real" ]; then args+=(--modelo "$MODELO" --esforco "$ESFORCO"); fi
+    if [ "$MODO" = "real" ]; then args+=(--modelo "$MODELO"); fi
+    # o esforço que a coleta passa ao cliente (dublê também); o manifesto o confere contra a campanha (NAT-63)
+    if [ "$MODO" != "roteirizado" ]; then args+=(--esforco "$ESFORCO"); fi
     tsx scripts/manifesto-coleta-isolada.ts "${args[@]}"
     corpus=$(node -e 'const m=require(process.argv[1]);process.stdout.write(String(m.origin?.corpus?.commit??""))' "$WS/govbr-telas/site-manifest.json")
     saida "corpus_sha=$corpus"

@@ -217,6 +217,8 @@ function manifestoDaFixture(fx: ReturnType<typeof construirFixture>, run: Run, o
     oracle: { package: ORACULO.package, version: ORACULO.version, distSha256: ORACULO.distSha256, dataSha256: ORACULO.dataSha256 },
     repos: { "govbr-eval": { commit: head, dirty: true }, "govbr-telas": { commit: COMMIT_FIXTURE.telas, dirty: false }, "govbr-ds-validator": { commit: COMMIT_FIXTURE.validator, dirty: false } },
     imagesLock: { sha256: "c".repeat(64), versions: { fixture: true } },
+    // 1.2.0 (NAT-63): a execução efetiva da fixture — o que os run.json sintéticos registram
+    execution: { effort: run.effort, timeoutSeconds: run.limits.timeoutSeconds!, client: run.client, protocolSha256: run.versions.protocolSha256 },
   };
   const campanha = JSON.parse(readFileSync(fx.campanha, "utf8")) as Campaign;
   return { ...base, campaign: { sha256: sha(documentoDaCampanha(campanha)), origin: "commitada", sourcePath: "fixture", sourceSha256: fx.campanhaSha256, document: campanha } };

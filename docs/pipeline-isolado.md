@@ -104,6 +104,25 @@ O job `arquivar` grava a campanha e o site congelado (checkout do `govbr-telas` 
 conteúdo. Manifestos 1.0.0 continuam legíveis, mas não trazem campanha: o painel não prepara a
 análise desses disparos.
 
+### Identidade do disparo × campanha congelada (NAT-63, manifesto 1.2.0)
+
+O manifesto passou a `manifesto-coleta-isolada-1.2.0` e grava em `execution` o que a coleta vai usar:
+esforço (o mesmo que `entradas` passa ao cliente; `nao-se-aplica` no roteirizado), tempo limite em
+segundos, cliente (Claude Code travado em `runner/images.lock.json`, ou `fake-agent`) e o sha256 do
+protocolo (template da skill normalizado, o `templateSha256` que o run-once registra). O `preparar`
+(`problemasDaCampanha` → `scripts/identidade-campanha.ts`) recusa, **antes de qualquer chamada de
+modelo** e sem gravar o manifesto, quando qualquer um difere da campanha: `design.effort`,
+`limits` (tempo, e turnos/orçamento — o runner não aplica nenhum dos dois, então a campanha não pode
+exigi-los), `fixed.client`, `fixed.protocolSha256`, tentativa acima de
+`retryPolicy.maxAttemptsPerSlot` e repetição acima de `design.repetitions` — além do que já conferia
+(id, natureza, tela, braço, modelo, oráculo). O job `coleta` recebe os mesmos valores das mesmas
+entradas e só roda se o `preparar` passou; o cliente das imagens construídas é conferido contra o lock
+(`conferir-imagens`). Manifestos 1.1.0 (o piloto) continuam legíveis: a identidade é derivada do
+despacho e do lock, e o protocolo, que eles não registram, é conferido na análise pelo `run.json`.
+A mesma regra roda de novo na entrada da análise sobre cada `run.json` (ver
+[`painel-resultados.md`](painel-resultados.md)). Ficam para a T7 (agenda de slots): o teto de
+tentativas da campanha inteira e qual tentativa de cada slot entra.
+
 ## Testes e prova local
 
 - `npm run test:pipeline-t4` — workflow lido do YAML (gatilho, permissões, segredos por job/passo,
@@ -111,6 +130,11 @@ análise desses disparos.
   entradas, lock das imagens, ambiente dos contêineres, `site-manifest.v1`, manifesto de coleta,
   linha de base, arquivo (imutável, idempotente, índice, anexo, segredo, sem pacote) e restauração.
   Com Docker, uma execução do agente roteirizado com tokens-sentinela no ambiente do runner.
+  Sem Docker (`-- --sem-docker`), o arquivo recebe um pacote sintético de outra campanha/tela: o teste
+  exige que ele seja recusado numa linha "pacote arquivado com problemas" e que o arquivamento da
+  campanha e do site não gere nenhum problema.
+- `npm run test:identidade` — NAT-63: identidade × campanha no preflight (manifesto do piloto e o
+  caminho do `buildIsolatedManifest`) e na entrada da análise, e elegibilidade da comparação principal.
 - `npm run ensaio:t4-linux` (`bash scripts/ci/ensaio-linux.sh`) — o workflow inteiro num Linux de verdade (Docker Engine em
   contêiner, controlador não-root com Node 24.21.0), a partir de `git clone` limpo, pelos passos do
   próprio YAML (`scripts/ci/emular-workflow.ts`), em modo `roteirizado`, com push num `govbr-resultados`

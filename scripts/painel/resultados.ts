@@ -80,6 +80,7 @@ export function gerarResultados(arquivo: string, agora: Date = new Date()): stri
     "- **FINAL**: todos os cartões decididos; o número só muda com uma revisão nova.",
     "- **PROVISÓRIO com N cartões pendentes**: a revisão está aberta; as confirmadas são “até agora” e o recall fica indisponível (nunca 0).",
     "- **sem análise**: o par ainda não foi preparado no painel (ou falta um braço).",
+    "- **NÃO CONTA — par inelegível**: um braço teve falha técnica (mesmo depois de enviar o relatório), isolamento não comprovado ou identidade fora da campanha. A pontuação dele é só diagnóstico; o par nunca vira FINAL nem entra na soma.",
     "- A soma de uma campanha usa só os pares FINAIS e diz o n. Um par provisório nunca entra na soma.",
     "",
   );

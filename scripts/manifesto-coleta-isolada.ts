@@ -31,13 +31,18 @@ import {
 } from "./collection-manifest";
 import { ROOT } from "./adjudication";
 import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION } from "./instrument";
-import { SKILL_PATH } from "./render-task-prompt";
+import { normalizeNewlines, SKILL_PATH } from "./render-task-prompt";
+import { divergenciasDaCampanha, type IdentidadeEfetiva } from "./identidade-campanha";
 import { referenciaDe, telaOf } from "./telas";
 import { validateContract, type Campaign } from "../contracts/index";
 
-export const ISOLATED_MANIFEST_VERSION = "manifesto-coleta-isolada-1.1.0";
-/** Versões legíveis: 1.0.0 (T4, sem campanha) e 1.1.0 (T8a.1, com a campanha). */
-export const ISOLATED_MANIFEST_VERSIONS = ["manifesto-coleta-isolada-1.0.0", ISOLATED_MANIFEST_VERSION] as const;
+export const ISOLATED_MANIFEST_VERSION = "manifesto-coleta-isolada-1.2.0";
+/**
+ * Versões legíveis: 1.0.0 (T4, sem campanha), 1.1.0 (T8a.1, com a campanha) e 1.2.0 (NAT-63, com a
+ * execução efetiva — esforço, tempo limite, cliente, protocolo — conferida contra a campanha).
+ */
+export const ISOLATED_MANIFEST_VERSIONS = ["manifesto-coleta-isolada-1.0.0", "manifesto-coleta-isolada-1.1.0", ISOLATED_MANIFEST_VERSION] as const;
+const COM_CAMPANHA: readonly string[] = ["manifesto-coleta-isolada-1.1.0", ISOLATED_MANIFEST_VERSION];
 const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
 const COMMIT = /^[a-f0-9]{40}$/;
 
@@ -74,6 +79,20 @@ export interface IsolatedCollectionManifest {
   imagesLock: { sha256: string; versions: unknown };
   /** Ausente só em manifestos 1.0.0 (arquivados antes do T8a.1). */
   campaign?: CampaignRecord;
+  /**
+   * 1.2.0 (NAT-63): o que a coleta deste disparo vai usar, medido no `preparar` e conferido contra a
+   * campanha antes de qualquer chamada de modelo. Ausente em 1.0.0/1.1.0 (derivado do despacho e do
+   * lock; protocolo desconhecido, conferido só na análise pelo run.json).
+   */
+  execution?: ExecucaoDoDisparo;
+}
+
+/** A execução efetiva de um disparo: os mesmos valores que o run.json vai registrar. */
+export interface ExecucaoDoDisparo {
+  effort: string;
+  timeoutSeconds: number;
+  client: { name: string; version: string };
+  protocolSha256: string;
 }
 
 /**
@@ -85,6 +104,40 @@ export function modeloDaColeta(modo: "real" | "duble" | "roteirizado", modelo: s
   return modo === "real" ? modelo : (modelo ?? MODELO_ENSAIO[modo]);
 }
 
+/**
+ * Esforço que a coleta passa ao cliente — o mesmo de `pipeline-t4.ts entradas` (saída `esforco`):
+ * roteirizado não tem esforço; sem esforço no disparo, `high`.
+ */
+export function esforcoDaColeta(modo: "real" | "duble" | "roteirizado", esforco: string | null): string {
+  return modo === "roteirizado" ? "nao-se-aplica" : (esforco ?? "high");
+}
+
+/** Cliente que o run-once registra: o agente roteirizado ou o Claude Code travado nas imagens. */
+export function clienteDaColeta(modo: "real" | "duble" | "roteirizado", imagesLock: { versions: unknown }): { name: string; version: string } {
+  const v = (imagesLock.versions ?? {}) as { claudeCode?: string };
+  return modo === "roteirizado" ? { name: "fake-agent", version: "1.0.0" } : { name: "claude-code", version: v.claudeCode ?? "desconhecida" };
+}
+
+/** sha256 do protocolo como o run-once o registra (`templateSha256`: o template com quebras normalizadas). */
+export function protocoloSha256(path = SKILL_PATH): string {
+  return sha256Texto(normalizeNewlines(readFileSync(path, "utf8")));
+}
+
+/** Execução efetiva do disparo (manifestos sem `execution`: derivada do despacho, protocolo desconhecido). */
+export function identidadeDoDisparo(m: Pick<IsolatedCollectionManifest, "dispatch" | "imagesLock" | "execution">): IdentidadeEfetiva {
+  const d = m.dispatch;
+  const x = m.execution;
+  return {
+    effort: x?.effort ?? esforcoDaColeta(d.mode, d.effort),
+    timeoutSeconds: x?.timeoutSeconds ?? d.limitMinutes * 60,
+    // o run-once não aplica teto de turnos nem de orçamento (grava null): a campanha não pode exigi-los
+    maxTurns: null, maxBudgetUsd: null,
+    client: x?.client ?? clienteDaColeta(d.mode, m.imagesLock ?? { versions: {} }),
+    protocolSha256: x?.protocolSha256 ?? null,
+    attempt: d.attempt, repetition: d.repetition,
+  };
+}
+
 /** Bytes canônicos da campanha no arquivo (é o que o sha256 do registro cobre). */
 export const documentoDaCampanha = (c: Campaign): string => JSON.stringify(c, null, 2) + "\n";
 const sha256Texto = (s: string | Buffer): string => createHash("sha256").update(s).digest("hex");
@@ -94,11 +147,12 @@ export const caminhoCampanhaCommitada = (campanha: string): string => `campanhas
  * Campanha de ENSAIO gerada do disparo (só dublê/roteirizado, nunca no modo real). Determinística: não
  * leva braço, slot nem horário do disparo, para que os dois braços de um par cheguem aos mesmos bytes.
  */
-export function campanhaDeEnsaio(m: Pick<IsolatedCollectionManifest, "dispatch" | "site" | "oracle" | "imagesLock">): Campaign {
+export function campanhaDeEnsaio(m: Pick<IsolatedCollectionManifest, "dispatch" | "site" | "oracle" | "imagesLock" | "execution">): Campaign {
   const d = m.dispatch;
   if (d.mode === "real") throw new Error("campanha gerada só existe para ensaio; o modo real exige campanhas/<id>/campaign.json commitado");
   const v = (m.imagesLock.versions ?? {}) as { playwrightMcp?: string; chromium?: string; claudeCode?: string };
   const modelo = modeloDaColeta(d.mode, d.model)!;
+  const x = identidadeDoDisparo(m);
   return {
     contract: "campaign.v1", fixture: true, campaignId: d.campaignId, kind: "pilot",
     title: `Campanha de ensaio ${d.campaignId} (gerada do disparo; ENSAIO, nunca dado científico)`,
@@ -107,17 +161,17 @@ export function campanhaDeEnsaio(m: Pick<IsolatedCollectionManifest, "dispatch" 
     createdAt: "2026-10-03T00:00:00Z", frozenAt: null,
     design: { screens: [{ id: d.screenId, label: SCREEN_LABELS[d.screenId] ?? d.screenId, version: m.site.screenVersion }], arms: ["sem", "com"],
       models: [{ family: d.mode === "roteirizado" ? "roteirizado" : "claude", requested: modelo }],
-      effort: d.mode === "roteirizado" ? "nao-se-aplica" : (d.effort ?? "high"), repetitions: 1, order: "sequencial", seed: null },
+      effort: x.effort!, repetitions: 1, order: "sequencial", seed: null },
     fixed: {
-      protocolSha256: sha256Texto(readFileSync(SKILL_PATH)),
-      client: d.mode === "roteirizado" ? { name: "fake-agent", version: "1.0.0" } : { name: "claude-code", version: v.claudeCode ?? "desconhecida" },
+      protocolSha256: x.protocolSha256 ?? protocoloSha256(),
+      client: x.client!,
       provider: d.mode === "roteirizado" ? { name: "nenhum (agente roteirizado)", authMethod: "unknown" } : { name: "stub", authMethod: "unknown" },
       browser: { name: "chromium", version: v.chromium ?? "desconhecida" }, playwrightMcp: `@playwright/mcp@${v.playwrightMcp ?? "?"}`,
       isolationPolicyVersion: "a do runner (registrada em cada run.json)",
       oracle: { package: m.oracle.package ?? "desconhecido", version: m.oracle.version ?? "desconhecida", distSha256: m.oracle.distSha256, dataSha256: m.oracle.dataSha256, profile: "combined" },
       scorerVersion: FLOW_SCORING_VERSION,
     },
-    limits: { timeoutSeconds: d.limitMinutes * 60, maxTurns: null, maxBudgetUsd: null },
+    limits: { timeoutSeconds: x.timeoutSeconds!, maxTurns: null, maxBudgetUsd: null },
     retryPolicy: { maxAttemptsPerSlot: 1, campaignAttemptCeiling: 2, retryOn: [], attemptSelection: "ensaio: a única tentativa arquivada de cada braço" },
     failurePolicy: "Ensaio: falha fica registrada; nada é repetido automaticamente.",
     baselinePolicy: { required: true, comparable: ["linha-de-base/validator-nao-guiada", "linha-de-base/axe"], diagnosticOnly: ["linha-de-base/validator-guiada"], plannedAbsences: [] },
@@ -126,8 +180,12 @@ export function campanhaDeEnsaio(m: Pick<IsolatedCollectionManifest, "dispatch" 
   };
 }
 
-/** A campanha serve a este disparo? (contrato, id, natureza, tela/versão, braço, modelo, oráculo) */
-export function problemasDaCampanha(c: Campaign, m: Pick<IsolatedCollectionManifest, "dispatch" | "site" | "oracle" | "fixture">): string[] {
+/**
+ * A campanha serve a este disparo? Contrato, id, natureza, tela/versão, braço, modelo, oráculo e
+ * (NAT-63) a execução efetiva: esforço, tempo limite, cliente, protocolo (manifesto 1.2.0), tentativa
+ * e repetição dentro dos tetos congelados. Roda no `preparar`, antes de qualquer chamada de modelo.
+ */
+export function problemasDaCampanha(c: Campaign, m: Pick<IsolatedCollectionManifest, "dispatch" | "site" | "oracle" | "fixture" | "imagesLock" | "execution">): string[] {
   const v = validateContract(c);
   if (v.contract !== "campaign.v1" || !v.valid) return [`campanha fora do contrato campaign.v1: ${v.errors.map((e) => `${e.path || "/"} ${e.message}`).join("; ")}`];
   const p: string[] = [];
@@ -139,6 +197,7 @@ export function problemasDaCampanha(c: Campaign, m: Pick<IsolatedCollectionManif
   const modelo = modeloDaColeta(d.mode, d.model);
   if (!c.design.models.some((x) => x.requested === modelo)) p.push(`a campanha não traz o modelo ${String(modelo)}`);
   if (c.fixed.oracle.distSha256 !== m.oracle.distSha256 || c.fixed.oracle.dataSha256 !== m.oracle.dataSha256) p.push("oráculo fixado na campanha ≠ o compilado para o disparo");
+  p.push(...divergenciasDaCampanha(c, identidadeDoDisparo(m)));
   return p;
 }
 
@@ -229,6 +288,10 @@ export function buildIsolatedManifest(o: BuildOptions): IsolatedCollectionManife
     oracle: { package: pkg.name ?? null, version: pkg.version ?? null, distSha256: oracle.distSha256, dataSha256: oracle.dataSha256 },
     repos: { "govbr-eval": gitState(ROOT), "govbr-telas": gitState(o.telasDir), "govbr-ds-validator": gitState(o.validatorDir) },
     imagesLock: { sha256: sha256(lockBytes), versions: lock.versions },
+    execution: {
+      effort: esforcoDaColeta(o.modo, o.esforco), timeoutSeconds: o.limiteMin * 60,
+      client: clienteDaColeta(o.modo, { versions: lock.versions }), protocolSha256: protocoloSha256(),
+    },
   };
   const campaign = campanhaDoDisparo(semCampanha, resolve(o.campanhaPath ?? join(ROOT, caminhoCampanhaCommitada(o.campanha))));
   const manifest: IsolatedCollectionManifest = { ...semCampanha, campaign };
@@ -252,7 +315,11 @@ export function isolatedManifestProblems(m: IsolatedCollectionManifest): string[
   if (m.dispatch?.mode === "real" && (!m.dispatch.model || !m.dispatch.effort)) p.push("modo real sem modelo/esforço");
   if (m.fixture !== (m.dispatch?.mode !== "real")) p.push("fixture incoerente com o modo");
   if (m.manifestVersion === ISOLATED_MANIFEST_VERSION) {
-    if (!m.campaign?.document) p.push("manifesto 1.1.0 sem campanha");
+    if (!m.execution) p.push("manifesto 1.2.0 sem a execução efetiva");
+    else if (m.dispatch && m.execution.timeoutSeconds !== m.dispatch.limitMinutes * 60) p.push("execução × despacho: tempo limite diverge");
+  }
+  if (COM_CAMPANHA.includes(m.manifestVersion)) {
+    if (!m.campaign?.document) p.push(`${m.manifestVersion.replace("manifesto-coleta-isolada-", "manifesto ")} sem campanha`);
     else {
       if (sha256Texto(documentoDaCampanha(m.campaign.document)) !== m.campaign.sha256) p.push("campanha × sha256 registrado diverge");
       if (m.dispatch && m.site && m.oracle) p.push(...problemasDaCampanha(m.campaign.document, m));

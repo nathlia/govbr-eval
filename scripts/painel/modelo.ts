@@ -488,6 +488,8 @@ export interface ResultadoBraco {
 }
 export interface ResultadoPar {
   revisao: string; fonte: string; geradoEm: string; estado: string | null; disponivel: boolean; motivo: string | null; nota: string;
+  /** NAT-63: false = par inelegível — não conta, nunca final (comparacao.elegivel === false no summary.json). */
+  elegivel: boolean;
   bracos: Partial<Record<Arm, ResultadoBraco>>; diferencaUnidades: number | null; diferencaRecall: number | null; pendentes: number;
 }
 
@@ -504,7 +506,7 @@ export function resultadoDaRevisao(rv: Revisao, ids: Map<string, string> = new M
       ...(e.pontuacao.camadas ? { camadas: e.pontuacao.camadas } : {}) };
   }
   return { revisao: rv.nome, fonte: `${rv.rel}/summary.json`, geradoEm: rv.resumo.geradoEm, estado: c?.estado ?? null, disponivel: Boolean(c?.disponivel),
-    motivo: c?.motivo ?? null, nota: c?.nota ?? "análise de uma execução só: não há comparação",
+    elegivel: c?.elegivel !== false, motivo: c?.motivo ?? null, nota: c?.nota ?? "análise de uma execução só: não há comparação",
     bracos, diferencaUnidades: c?.diferencaUnidadesConfirmadas ?? null, diferencaRecall: c?.diferencaRecall ?? null,
     pendentes: rv.resumo.revisaoSemantica?.pendentes ?? 0 };
 }
@@ -555,7 +557,7 @@ function resumoPares(execucoes: LinhaExecucao[], analises: Analise[], campanhas:
     else if (!an) selo = { estado: "sem-analise", texto: "sem análise no arquivo" };
     else if (!an.atual) selo = { estado: "falha", texto: "análise sem versão íntegra" };
     else if (an.atual.resumo.analise.estado === "bloqueada") selo = { estado: "bloqueada", texto: "análise bloqueada" };
-    else if (comp && !comp.disponivel) selo = { estado: "nao-se-aplica", texto: "comparação indisponível" };
+    else if (comp && !comp.disponivel) selo = { estado: "nao-se-aplica", texto: comp.elegivel === false ? "não conta: par inelegível (comparação indisponível)" : "comparação indisponível" };
     else if (comp?.estado === "final") selo = { estado: "final", texto: "comparação final" };
     else selo = { estado: "pendente", texto: "comparação provisória (revisão aberta)" };
     const recente = [...xs].sort((a, b) => b.dataUtc.localeCompare(a.dataUtc))[0];
@@ -600,6 +602,10 @@ export function placarDaCampanha(info: InfoCampanha, pares: VistaParResumo[], pr
     else if (r && r.disponivel) {
       selo = "provisorio"; seloTexto = `PROVISÓRIO com ${r.pendentes} cartõ${r.pendentes === 1 ? "ão" : "es"} pendente${r.pendentes === 1 ? "" : "s"}`;
       falta = `${r.pendentes} cartõ${r.pendentes === 1 ? "ão" : "es"} pendente${r.pendentes === 1 ? "" : "s"} — aguardando a revisão cega`;
+    } else if (r && !r.elegivel) {
+      // NAT-63: par inelegível nunca é FINAL nem entra na soma; o motivo vem do summary.json
+      selo = "indisponivel"; seloTexto = "NÃO CONTA — par inelegível";
+      falta = "par inelegível para a comparação principal (falha técnica, isolamento não comprovado ou identidade fora da campanha) — abra o par para ver o motivo";
     } else if (r) { selo = "indisponivel"; seloTexto = "comparação indisponível"; falta = "comparação indisponível — abra o par para ver por quê"; }
     else {
       selo = "sem-analise"; seloTexto = "sem análise";
@@ -673,7 +679,9 @@ export function metricasDaRevisao(rv: Revisao): LinhaMetrica[] {
     linha("Afirmações incorretas", "pontuacao.metricas.incorrectClaims", e => [e.pontuacao.metricas.incorrectClaims, num(e.pontuacao.metricas.incorrectClaims)]),
     linha("Defeitos novos corretos", "pontuacao.metricas.newCorrect", e => [e.pontuacao.metricas.newCorrect, num(e.pontuacao.metricas.newCorrect)]),
     linha("Cartões pendentes", "pontuacao.metricas.pending", e => [e.pontuacao.metricas.pending, num(e.pontuacao.metricas.pending)]),
-    linha("Maturidade", "pontuacao.estado", e => [null, seloPontuacao(e.pontuacao.estado).texto]),
+    linha("Maturidade", "pontuacao.estado", e => [null, `${seloPontuacao(e.pontuacao.estado).texto}${e.elegibilidade && !e.elegibilidade.elegivel ? " — só diagnóstico" : ""}`]),
+    ...(rv.resumo.execucoes.some(e => e.elegibilidade) ? [linha("Entra na comparação principal", "elegibilidade", e => [null,
+      !e.elegibilidade ? "—" : e.elegibilidade.elegivel ? "sim" : `não conta — ${e.elegibilidade.motivos.join("; ")}`])] : []),
     linha("Achados enviados", "achados.total", e => [e.achados ? e.achados.total : null,
       e.achados ? (e.achados.total === 0 ? "0 (lista vazia aceita)" : String(e.achados.total)) : "nenhuma submissão aceita"]),
   ];
