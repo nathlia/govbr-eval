@@ -145,7 +145,7 @@ case "$fase" in
     fi
     remoto="${GOVBR_RESULTADOS_REMOTO:-origin}"
     git checkout -- indice/indice.json INDICE.md 2>/dev/null || rm -f indice/indice.json INDICE.md
-    for d in execucoes ensaios linhas-de-base coletas snapshots campanhas sites indice/entradas; do
+    for d in .gitattributes execucoes ensaios linhas-de-base coletas snapshots campanhas sites indice/entradas; do
       if [ -e "$d" ]; then git add -A -- "$d"; fi
     done
     if git diff --cached --quiet; then echo "nada novo para arquivar"; exit 0; fi

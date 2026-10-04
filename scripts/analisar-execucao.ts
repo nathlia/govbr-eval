@@ -26,7 +26,7 @@ import { existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, writeFileS
 import type { AddressInfo } from "node:net";
 import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
-import { chromium } from "playwright";
+import { chromium, type Browser } from "playwright";
 import {
   assertContract, checkAggregation, checkPlannedAbsence, crossCheckRun, validateContract,
   type AnalysisBinding, type AnalysisMetrics, type ArtifactManifest, type Baseline, type BaselineBinding, type Campaign,
@@ -300,10 +300,13 @@ async function prepararPacote(a: {
   const plan = statePlanOf(gt);
   const cenas = cenasDoPlano(gt, plan);
   const server = createSiteServer(a.site);
-  await new Promise<void>((ok, fail) => { server.once("error", fail); server.listen(0, "127.0.0.1", () => ok()); });
-  const origin = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
-  const browser = await chromium.launch();
+  // O launch fica DENTRO do try: se o navegador não abre, o finally ainda fecha o servidor do site
+  // congelado (antes ele ficava aberto e segurava o processo — T6).
+  let browser: Browser | undefined;
   try {
+    await new Promise<void>((ok, fail) => { server.once("error", fail); server.listen(0, "127.0.0.1", () => ok()); });
+    const origin = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
+    browser = await chromium.launch();
     const url = new URL(gt._meta.url, origin).toString();
     const allRuns: PrepareRun[] = [...a.agentes];
     if (a.baseline) allRuns.push(...baselineRuns(a.baseline, a.site.manifestSha256, [`setup do plano de estados (${plan.setup.length} passo(s))`]));
@@ -367,8 +370,12 @@ async function prepararPacote(a: {
     const result = scoreSemanticPackage(pkg, reviews);
     return { pkg, reviews, result, fila: reviewQueue(pkg, reviews), esforco: reviewEffort(pkg), scenes, url, sceneHash };
   } finally {
-    await browser.close();
-    await new Promise<void>(done => { server.closeAllConnections(); server.close(() => done()); });
+    try { await browser?.close(); } finally {
+      await new Promise<void>(done => {
+        server.closeAllConnections();
+        if (server.listening) server.close(() => done()); else done();
+      });
+    }
   }
 }
 

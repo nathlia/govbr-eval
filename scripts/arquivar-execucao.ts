@@ -28,7 +28,7 @@ import { ROOT } from "./adjudication";
 import { documentoDaCampanha, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import {
   ARCHIVE_VERSION, Recusa, arquivarSite, caminhoCampanha, entradaExistente, caminhoLinhaDeBase, caminhoManifesto, caminhoPlano, caminhoReferencia, conjuntoDeSnapshots, criarTarGz,
-  gravarEntrada, gravarImutavel, listagemDoCommit, listarArquivos, pastaDaExecucao, problemasDaLinhaDeBase, problemasDeVinculo, problemasDoPacote,
+  garantirGitattributes, gravarEntrada, gravarImutavel, listagemDoCommit, listarArquivos, pastaDaExecucao, problemasDaLinhaDeBase, problemasDeVinculo, problemasDoPacote,
   reconstruirIndice, registrarLinhaDeBase, segredosNoPacote, sha, type EntradaIndice,
 } from "./arquivo-resultados";
 import { canonical } from "./semantic-flow";
@@ -112,6 +112,7 @@ export function arquivarExecucao(o: {
 }): { gravacoes: Gravacao[]; problemas: string[] } {
   const gravacoes: Gravacao[] = [];
   const problemas: string[] = [];
+  garantirGitattributes(o.arquivo); // * -text: o checkout nunca converte finais de linha dos arquivos com sha256
   const gh = github();
   let m: IsolatedCollectionManifest | null = null, msha: string | null = null, mcaminho: string | null = null, conjunto: SnapshotManifest | null = null;
   if (o.manifesto && existsSync(o.manifesto)) {

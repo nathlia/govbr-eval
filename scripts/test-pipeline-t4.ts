@@ -23,7 +23,7 @@ import { avaliar, interpolar, type Workflow } from "./ci/emular-workflow";
 import { conferirAmbienteDosConteineres, conferirCheckouts, conferirEntradas, conferirImagens, resumoArquivo } from "./pipeline-t4";
 import { buildIsolatedManifest, documentoDaCampanha, isolatedManifestProblems, problemasDaCampanha, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import {
-  caminhoCampanha, caminhoSite, conjuntoDeSnapshots, criarTarGz, gravarEntrada, gravarImutavel, lerTarGz, listagemDoCommit, listarArquivos, problemasDoPacote, Recusa,
+  caminhoCampanha, caminhoSite, conjuntoDeSnapshots, criarTarGz, garantirGitattributes, gravarEntrada, gravarImutavel, lerTarGz, listagemDoCommit, listarArquivos, problemasDoPacote, Recusa,
   registrarLinhaDeBase, restaurar, sha, type EntradaIndice,
 } from "./arquivo-resultados";
 import { arquivarExecucao, confirmarEvidencias } from "./arquivar-execucao";
@@ -433,6 +433,20 @@ await teste("arquivo: reenvio do MESMO pacote é idempotente; bytes diferentes n
   assert.throws(() => arquivarExecucao({ arquivo, evidenciasSaida: join(TMP, "anexos3"), pacote: adulterado, manifesto: manifestoPath, linhaDeBase: null, segredos: [], entradas: ENT, jobs: {} }), Recusa);
   assert.throws(() => gravarImutavel(join(arquivo, "INDICE.md.teste"), "a") && gravarImutavel(join(arquivo, "INDICE.md.teste"), "b"), Recusa);
   rmSync(join(arquivo, "INDICE.md.teste"), { force: true });
+});
+
+await teste("arquivo: .gitattributes com `* -text` na raiz (clone com autocrlf não converte bytes com sha256), idempotente", () => {
+  const ga = join(arquivo, ".gitattributes");
+  assert.equal(readFileSync(ga, "utf8"), "* -text\n", "o job arquivar grava o .gitattributes");
+  assert.equal(garantirGitattributes(arquivo), "inalterado");
+  assert.equal(readFileSync(ga, "utf8"), "* -text\n");
+  const outro = join(TMP, "arquivo-gitattributes");
+  mkdirSync(outro, { recursive: true });
+  writeFileSync(join(outro, ".gitattributes"), "*.png binary");
+  assert.equal(garantirGitattributes(outro), "atualizado");
+  assert.equal(readFileSync(join(outro, ".gitattributes"), "utf8"), "*.png binary\n* -text\n", "linha existente preservada");
+  assert.equal(garantirGitattributes(outro), "inalterado");
+  assert.equal(readFileSync(join(outro, ".gitattributes"), "utf8"), "*.png binary\n* -text\n");
 });
 
 await teste("arquivo: entrega do anexo só avança (pendente → confirmado), nunca volta; sha errado não confirma", () => {

@@ -390,6 +390,21 @@ export function lerEntradas(arquivo: string): EntradaIndice[] {
 
 const md = (s: unknown): string => String(s ?? "—").replace(/[|\r\n<>]/g, " ");
 
+/**
+ * Garante `.gitattributes` com `* -text` na raiz do arquivo: os sha256 gravados são dos bytes exatos, e um
+ * clone com core.autocrlf=true converteria LF → CRLF no checkout. Cria se faltar; se existir sem a linha,
+ * acrescenta; se já tiver, não mexe (idempotente).
+ */
+export const GITATTRIBUTES_LINHA = "* -text";
+export function garantirGitattributes(arquivo: string): "criado" | "atualizado" | "inalterado" {
+  const path = join(arquivo, ".gitattributes");
+  if (!existsSync(path)) { mkdirSync(arquivo, { recursive: true }); writeFileSync(path, `${GITATTRIBUTES_LINHA}\n`); return "criado"; }
+  const atual = readFileSync(path, "utf8");
+  if (atual.split(/\r?\n/).some(l => l.trim() === GITATTRIBUTES_LINHA)) return "inalterado";
+  writeFileSync(path, `${atual}${atual === "" || atual.endsWith("\n") ? "" : "\n"}${GITATTRIBUTES_LINHA}\n`);
+  return "atualizado";
+}
+
 /** Reconstrói indice/indice.json e INDICE.md das entradas. Mais recente primeiro. */
 export function reconstruirIndice(arquivo: string): { entradas: number } {
   const entradas = lerEntradas(arquivo).sort((a, b) => b.dataUtc.localeCompare(a.dataUtc) || a.chave.localeCompare(b.chave));

@@ -136,6 +136,10 @@ git reset --hard
 
 As pastas que o painel cria (`analises/`, `restauracoes/`, `anexos/`) não são do Git e ficam como estão.
 
+O job `arquivar` agora grava um `.gitattributes` com `* -text` na raiz do `govbr-resultados` e o publica
+junto com o arquivo, então um clone novo sai com os bytes certos mesmo com `core.autocrlf=true`. Um
+clone feito antes disso continua precisando da correção acima uma vez (depois de um `git pull`).
+
 Sem `gh` (ou com `--sem-download`), baixe o anexo pela página da Release e coloque o arquivo em
 `anexos/<release>/` dentro do clone, ou abra o painel com `--anexos <pasta onde ele está>`.
 

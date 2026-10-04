@@ -313,9 +313,16 @@ await teste("botão Recalcular com navegador que não abre (NAT-52): frase legí
   // been closed … <process did exit: exitCode=…>" que a autora viu (lá, 0xC0000142 do Windows).
   const original = chromium.launch;
   chromium.launch = ((o?: Parameters<typeof original>[0]) => original.call(chromium, { ...o, executablePath: process.execPath })) as typeof original;
+  // T6: o servidor do site congelado que `analisar` sobe antes do launch tem de fechar quando o launch
+  // falha — nenhum servidor TCP a mais depois da falha (e o processo de teste termina sem process.exit).
+  const servidoresTcp = () => process.getActiveResourcesInfo().filter(t => t === "TCPServerWrap").length;
+  const antes = servidoresTcp();
   try {
     const r = await postJson(`/api/recalcular/${C}/par-02`, {});
     assert.equal(r.ok, false);
+    // o handle do libuv some um giro do laço depois do callback de close(): espera curta, nunca infinita
+    for (let i = 0; i < 20 && servidoresTcp() > antes; i++) await new Promise(r => setTimeout(r, 50));
+    assert.equal(servidoresTcp(), antes, "servidor do site congelado ficou aberto depois do launch falho");
     assert.match(r.erro, /^O navegador headless .* não conseguiu abrir nesta máquina/);
     assert.match(r.erro, /clique em Recalcular de novo/);
     assert.doesNotMatch(r.erro, /\n|<launching>|browserType\.launch|--headless/, "log do Playwright vazou para a tela");
@@ -738,7 +745,4 @@ servidor.close();
 if (!manter) rmSync(TMP, { recursive: true, force: true }); else console.log(`(mantido: ${TMP})`);
 const falhas = resultados.filter(r => !r.ok).length;
 console.log(`\n${resultados.length - falhas}/${resultados.length} testes do painel passaram`);
-// Saída explícita: o teste do navegador que não abre (NAT-52) deixa aberto o servidor do site congelado
-// que `analisar` sobe antes de `chromium.launch()` (o launch fica fora do try/finally que o fecha, em
-// scripts/analisar-execucao.ts — T6, fora do escopo do T8a.2). Sem isto o processo nunca termina.
-process.exit(falhas ? 1 : 0);
+process.exitCode = falhas ? 1 : 0;
