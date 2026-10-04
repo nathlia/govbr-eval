@@ -1,0 +1,111 @@
+{
+  "contract": "campaign.v1",
+  "fixture": true,
+  "campaignId": "ensaio-agenda-01",
+  "kind": "pilot",
+  "title": "Ensaio (dublê, sem modelo) do caminho com agenda: disparo resolve o slot pela agenda e conta tentativas pelo índice (NAT-65)",
+  "objective": "Provar no GitHub, sem chamar modelo, que um disparo de campanha com agenda resolve par/braço pela agenda, lê o índice só no preparar e arquiva a agenda. Não é dado científico.",
+  "hypotheses": [
+    "Ensaio de infraestrutura: nenhuma hipótese."
+  ],
+  "createdAt": "2026-10-04T03:38:08Z",
+  "frozenAt": "2026-10-04T03:38:08Z",
+  "design": {
+    "screens": [
+      {
+        "id": "solicitacao",
+        "label": "Solicitar serviço",
+        "version": "govbr-telas-site-1a6e8daf3cdb"
+      }
+    ],
+    "arms": [
+      "sem",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "claude",
+        "requested": "claude-opus-duble-teste"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 1,
+    "order": "balanceado",
+    "seed": null
+  },
+  "fixed": {
+    "protocolSha256": "61d94cc16de2a53c3dd9b2633194d7faebba19f18a7c232904c0b6d5765faac4",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "stub",
+      "authMethod": "unknown"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracle": {
+      "package": "govbr-ds-validator-server",
+      "version": "2.7.0",
+      "distSha256": "31749c29b0dd2c0378b5955c1ba4c3804c66edd38cf90958c0de8196f11652f2",
+      "dataSha256": "ade4f658553e2a6cc13b3f6118bfaf95e5dd9b05d18d22d8c113e456420c5162",
+      "profile": "combined"
+    },
+    "scorerVersion": "flow-semantic-1.5.0"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 4,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Entra na análise a primeira tentativa elegível de cada slot (D-88). Nova tentativa só por falha técnica, no máximo 1 por slot e 4 na campanha (teto 24 = 20 planejadas + 4), prioridade pela ordem da agenda; teto esgotado = slot perdido, par incompleto. Timeout (interrupted) não ganha nova tentativa e é inelegível."
+  },
+  "failurePolicy": "Protocolo §7: nova tentativa só por falha técnica (429, queda, modelo indisponível, erro do harness ou do arquivo); timeout de 30 min, envio vazio, malformado, recusado ou ausente ficam registrados e não se repetem; timeout é inelegível (não vira zero achados). Falha de isolamento põe a execução em quarentena e para a coleta até a causa ser entendida. Mudança do modelo efetivo ou da versão do cliente para a coleta.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Ensaio: nenhum desfecho científico.",
+    "secondaryOutcomes": [
+      "Robustez: Wilcoxon (Pratt, postos médios, p exato) e teste do sinal exato.",
+      "Unidades de página P-* (2), relatadas à parte (D-83/D-85).",
+      "Precisão das afirmações, incorretas, novos corretos, tempo, custo estimado, uso do oráculo, perdas por braço."
+    ],
+    "uncertaintyMethod": "IC 95% da média de D por bootstrap percentil, 10.000 reamostragens de pares, gerador mulberry32 com semente derivada da semente da campanha; indisponível se n efetivo < 5 ou D todos iguais.",
+    "exclusionRules": "Fora da comparação principal: execução inelegível (D-88: técnico, isolamento, submissão, identidade, tentativa) e par incompleto; listados com motivo, perdas por braço, alerta de risco de seleção."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": null,
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": []
+}
