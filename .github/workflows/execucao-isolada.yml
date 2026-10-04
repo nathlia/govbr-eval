@@ -11,6 +11,8 @@
 # Segredos (Settings → Secrets and variables → Actions), cada um só onde é usado:
 #   GOVBR_LEITURA_TOKEN      PAT fine-grained, Contents: Read-only em govbr-telas, govbr-ds-validator, govbr-corpus
 #   GOVBR_RESULTADOS_TOKEN   PAT fine-grained, Contents: Read and write SÓ em govbr-resultados (job arquivar)
+#   GOVBR_RESULTADOS_LEITURA_TOKEN  PAT fine-grained, Contents: Read-only SÓ em govbr-resultados (job preparar,
+#                            campanha com agenda: lê indice/entradas para contar tentativas; a coleta nunca o vê)
 #   CLAUDE_CODE_OAUTH_TOKEN  `claude setup-token` da assinatura (SÓ no passo da coleta real)
 # Toda lógica está em scripts/ci/t4.sh e scripts/*.ts; entradas chegam por env, nunca interpoladas no shell.
 name: execucao-isolada
@@ -29,43 +31,43 @@ on:
         options: [solicitacao, vistorias]
         default: solicitacao
       braco:
-        description: "sem ou com o oráculo MCP"
+        description: "sem ou com o oráculo MCP (da-agenda = o braço do slot; campanha sem agenda exige sem/com)"
         type: choice
-        options: [sem, com]
-        default: sem
+        options: [da-agenda, sem, com]
+        default: da-agenda
       modelo:
-        description: "id EXATO do modelo (só modo real)"
+        description: "id EXATO do modelo (só modo real; vazio = o da campanha com agenda)"
         type: string
         default: ""
       esforco:
-        description: "esforço do cliente (só modo real)"
+        description: "esforço do cliente (só modo real; da-campanha = o congelado, ou high sem agenda)"
         type: choice
-        options: [high, medium, low, xhigh, max]
-        default: high
+        options: [da-campanha, high, medium, low, xhigh, max]
+        default: da-campanha
       limite_min:
-        description: "teto de tempo do agente, minutos (1–90; trava, não meta)"
+        description: "teto de tempo do agente, minutos (1–90; vazio = o da campanha com agenda, ou 90)"
         type: string
-        default: "90"
+        default: ""
       campanha:
         description: "id da campanha"
         type: string
         required: true
       slot:
-        description: "id do slot da agenda"
+        description: "id do slot da agenda (campanha com agenda: só ele basta)"
         type: string
         required: true
       par:
-        description: "id do par sem/com"
+        description: "id do par sem/com (vazio = o do slot na agenda, ou par-01)"
         type: string
-        default: par-01
+        default: ""
       tentativa:
-        description: "tentativa do slot (nova tentativa só por falha técnica, D-67)"
+        description: "tentativa do slot (vazio = a que o índice do arquivo dá, com agenda; ou 1). Nova tentativa só por falha técnica"
         type: string
-        default: "1"
+        default: ""
       repeticao:
-        description: "repetição"
+        description: "repetição (vazio = a do slot na agenda, ou 1)"
         type: string
-        default: "1"
+        default: ""
       telas_sha:
         description: "commit (40 hex) do govbr-telas"
         type: string
@@ -111,6 +113,11 @@ jobs:
       linha_de_base: ${{ steps.entradas.outputs.linha_de_base }}
       limite_seg: ${{ steps.entradas.outputs.limite_seg }}
       corpus_sha: ${{ steps.manifesto.outputs.corpus_sha }}
+      # NAT-65: resolvidos no preparar (agenda/campanha/índice); os jobs seguintes usam estes, nunca os digitados
+      braco: ${{ steps.entradas.outputs.braco }}
+      par: ${{ steps.entradas.outputs.par }}
+      repeticao: ${{ steps.entradas.outputs.repeticao }}
+      tentativa: ${{ steps.manifesto.outputs.tentativa }}
     steps:
       - name: Checkout govbr-eval (commit do disparo)
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
@@ -147,20 +154,32 @@ jobs:
           persist-credentials: false
       - name: Compilar o oráculo (dist/ conferido contra o lock)
         run: bash govbr-eval/scripts/ci/t4.sh compilar-validador
+      # Campanha com agenda (NAT-65): só o índice (indice/entradas), só leitura, só neste job — para contar as
+      # tentativas do slot. Nenhum resultado sai daqui para a coleta (as saídas do job são ids e valores congelados).
+      - name: Índice do arquivo (só campanha com agenda; leitura esparsa)
+        if: steps.entradas.outputs.agenda == 'true'
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          repository: nathlia/govbr-resultados
+          ref: main
+          path: govbr-resultados
+          token: ${{ secrets.GOVBR_RESULTADOS_LEITURA_TOKEN }}
+          persist-credentials: false
+          sparse-checkout: indice/entradas
       - name: Manifesto de coleta (identidade antes de qualquer gasto)
         id: manifesto
         env:
           TELA: ${{ inputs.tela }}
-          BRACO: ${{ inputs.braco }}
+          BRACO: ${{ steps.entradas.outputs.braco }}
           MODO: ${{ inputs.modo }}
-          MODELO: ${{ inputs.modelo }}
-          ESFORCO: ${{ inputs.esforco }}
-          LIMITE_MIN: ${{ inputs.limite_min }}
+          MODELO: ${{ steps.entradas.outputs.modelo }}
+          ESFORCO: ${{ steps.entradas.outputs.esforco }}
+          LIMITE_MIN: ${{ steps.entradas.outputs.limite_min }}
           CAMPANHA: ${{ inputs.campanha }}
           SLOT: ${{ inputs.slot }}
-          PAR: ${{ inputs.par }}
-          TENTATIVA: ${{ inputs.tentativa }}
-          REPETICAO: ${{ inputs.repeticao }}
+          PAR: ${{ steps.entradas.outputs.par }}
+          TENTATIVA: ${{ steps.entradas.outputs.tentativa }}
+          REPETICAO: ${{ steps.entradas.outputs.repeticao }}
         run: bash govbr-eval/scripts/ci/t4.sh manifesto
       - name: Guardar o manifesto (nunca vai ao job da coleta)
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -212,7 +231,7 @@ jobs:
           persist-credentials: false
       # Braço sem: o pacote do oráculo nem é baixado.
       - name: Checkout govbr-ds-validator (por SHA; só no braço com)
-        if: inputs.braco == 'com'
+        if: needs.preparar.outputs.braco == 'com'
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           repository: nathlia/govbr-ds-validator
@@ -223,7 +242,7 @@ jobs:
       - name: Dependências do govbr-eval
         run: bash govbr-eval/scripts/ci/t4.sh instalar-eval
       - name: Compilar o oráculo (só no braço com)
-        if: inputs.braco == 'com'
+        if: needs.preparar.outputs.braco == 'com'
         run: bash govbr-eval/scripts/ci/t4.sh compilar-validador
       - name: Imagens nesta VM (versões = lock travado)
         env:
@@ -238,7 +257,7 @@ jobs:
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           TELA: ${{ inputs.tela }}
-          BRACO: ${{ inputs.braco }}
+          BRACO: ${{ needs.preparar.outputs.braco }}
           MODO: ${{ inputs.modo }}
           AGENTE: ${{ needs.preparar.outputs.agente }}
           EGRESS: ${{ needs.preparar.outputs.egress }}
@@ -247,16 +266,16 @@ jobs:
           LIMITE_SEG: ${{ needs.preparar.outputs.limite_seg }}
           CAMPANHA: ${{ inputs.campanha }}
           SLOT: ${{ inputs.slot }}
-          PAR: ${{ inputs.par }}
-          TENTATIVA: ${{ inputs.tentativa }}
-          REPETICAO: ${{ inputs.repeticao }}
+          PAR: ${{ needs.preparar.outputs.par }}
+          TENTATIVA: ${{ needs.preparar.outputs.tentativa }}
+          REPETICAO: ${{ needs.preparar.outputs.repeticao }}
         run: bash govbr-eval/scripts/ci/t4.sh coleta
       - name: Coleta de ensaio (sem modelo, sem credencial)
         id: coleta_ensaio
         if: inputs.modo != 'real'
         env:
           TELA: ${{ inputs.tela }}
-          BRACO: ${{ inputs.braco }}
+          BRACO: ${{ needs.preparar.outputs.braco }}
           MODO: ${{ inputs.modo }}
           AGENTE: ${{ needs.preparar.outputs.agente }}
           EGRESS: ${{ needs.preparar.outputs.egress }}
@@ -265,9 +284,9 @@ jobs:
           LIMITE_SEG: ${{ needs.preparar.outputs.limite_seg }}
           CAMPANHA: ${{ inputs.campanha }}
           SLOT: ${{ inputs.slot }}
-          PAR: ${{ inputs.par }}
-          TENTATIVA: ${{ inputs.tentativa }}
-          REPETICAO: ${{ inputs.repeticao }}
+          PAR: ${{ needs.preparar.outputs.par }}
+          TENTATIVA: ${{ needs.preparar.outputs.tentativa }}
+          REPETICAO: ${{ needs.preparar.outputs.repeticao }}
         run: bash govbr-eval/scripts/ci/t4.sh coleta
       - name: Ambiente dos contêineres sem tokens de GitHub/publicação
         if: always()
@@ -280,10 +299,10 @@ jobs:
         env:
           CAMPANHA: ${{ inputs.campanha }}
           SLOT: ${{ inputs.slot }}
-          PAR: ${{ inputs.par }}
-          TENTATIVA: ${{ inputs.tentativa }}
+          PAR: ${{ needs.preparar.outputs.par }}
+          TENTATIVA: ${{ needs.preparar.outputs.tentativa }}
           TELA: ${{ inputs.tela }}
-          BRACO: ${{ inputs.braco }}
+          BRACO: ${{ needs.preparar.outputs.braco }}
           MODELO: ${{ needs.preparar.outputs.modelo }}
           ESFORCO: ${{ needs.preparar.outputs.esforco }}
           ETAPAS: ${{ inputs.etapas }}
@@ -448,10 +467,10 @@ jobs:
         env:
           CAMPANHA: ${{ inputs.campanha }}
           SLOT: ${{ inputs.slot }}
-          PAR: ${{ inputs.par }}
-          TENTATIVA: ${{ inputs.tentativa }}
+          PAR: ${{ needs.preparar.outputs.par }}
+          TENTATIVA: ${{ needs.preparar.outputs.tentativa }}
           TELA: ${{ inputs.tela }}
-          BRACO: ${{ inputs.braco }}
+          BRACO: ${{ needs.preparar.outputs.braco }}
           MODELO: ${{ needs.preparar.outputs.modelo }}
           ESFORCO: ${{ needs.preparar.outputs.esforco }}
           ETAPAS: ${{ inputs.etapas }}

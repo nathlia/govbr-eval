@@ -17,6 +17,7 @@
  *   snapshots/plano-de-estados/<sha256>/plano-estados.json
  *   snapshots/conjuntos/<snapshotSetId>.json               (snapshot-manifest.v1; id derivado do conteúdo)
  *   campanhas/<campanha>/<sha256>/campaign.json            (T8a.1; por conteúdo; a que o manifesto registra)
+ *   campanhas/<campanha>/agendas/<sha256>/agenda.json      (NAT-65; por conteúdo; a agenda congelada, manifesto 1.3.0)
  *   sites/<sha256 do site-manifest>/{site-manifest.json, site/…}   (T8a.1; o site congelado, por conteúdo:
  *                                          só os arquivos que o site-manifest lista, conferidos um a um)
  *   indice/entradas/<chave>.json           uma entrada por execução/linha de base (imutável salvo o
@@ -159,6 +160,8 @@ export const caminhoReferencia = (refSha: string): string => `snapshots/referenc
 export const caminhoPlano = (planSha: string): string => `snapshots/plano-de-estados/${planSha}/plano-estados.json`;
 export const caminhoManifesto = (campanha: string, manifestSha: string): string => `coletas/${campanha}/${manifestSha}/manifesto-coleta.json`;
 export const caminhoCampanha = (campanha: string, campanhaSha: string): string => `campanhas/${campanha}/${campanhaSha}/campaign.json`;
+/** NAT-65: a agenda congelada da campanha, por conteúdo (vem no manifesto 1.3.0). */
+export const caminhoAgendaArquivada = (campanha: string, agendaSha: string): string => `campanhas/${campanha}/agendas/${agendaSha}/agenda.json`;
 export const caminhoSite = (siteManifestSha: string): string => `sites/${siteManifestSha}`;
 
 /**

@@ -14,8 +14,8 @@
  * 1.1.0, gravado antes deste campo): fica de fora da conferência daquele ponto e é conferido na
  * análise pelo `run.json`, que sempre o registra.
  *
- * Fora daqui (T7): o teto de tentativas da CAMPANHA (`retryPolicy.campaignAttemptCeiling`) e a
- * seleção de tentativa por slot exigem a agenda de slots persistida; um disparo isolado não os vê.
+ * Fora daqui: o teto de tentativas da CAMPANHA (`retryPolicy.campaignAttemptCeiling`) e a seleção
+ * de tentativa por slot ficam na agenda de slots (`agenda-campanha.ts`, NAT-65).
  */
 import type { Campaign, Run } from "../contracts/index";
 

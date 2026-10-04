@@ -17,6 +17,7 @@ import {
 } from "./modelo";
 import { DICA_CRLF, rotuloEtapa, type Diagnostico } from "./preparar";
 import type { VistaCartao, VistaFila } from "./revisao";
+import { ESTADO_SLOT_TXT, linhasDaAgenda, linhasDoDesfecho, linhasSecundarias, minTxt } from "./agenda-painel";
 
 export const esc = (s: unknown): string => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
 const u = (s: string): string => encodeURIComponent(s);
@@ -142,10 +143,37 @@ function cartaoPlacar(p: Placar, preparoLink: (par: string) => string): string {
   const faltas = p.linhas.filter(l => l.falta);
   return `<article class="placar" aria-labelledby="pl-${esc(c.id)}">
 <h3 id="pl-${esc(c.id)}"><span class="mono">${esc(c.id)}</span> ${selo({ estado: c.natureza === "formal" ? "ok" : c.natureza === "calibracao" ? "aviso" : "nao-se-aplica", texto: c.natureza === "calibracao" ? "calibração — não é resultado (D-67)" : c.rotulo })}</h3>
-${numeros}${barras}
+${p.agenda ? blocoAgenda(p) : ""}${numeros}${barras}
 ${p.linhas.length ? `<ul class="placar-selos">${p.linhas.map(l => `<li><a href="/par/${u(c.id)}/${u(l.par)}">${esc(l.par)}</a> ${selo({ estado: SELO_PLACAR[l.selo], texto: l.seloTexto })}</li>`).join("")}</ul>` : ""}
 ${faltas.length ? `<div class="placar-falta"><h4>O que falta</h4><ul>${faltas.map(l => `<li><a href="${l.falta === "pronto para preparar" ? preparoLink(l.par) : `/par/${u(c.id)}/${u(l.par)}`}">${esc(l.par)}</a>: ${esc(l.falta)}</li>`).join("")}</ul></div>` : ""}
 </article>`;
+}
+
+/**
+ * NAT-65: campanha com agenda — o desfecho principal (D nas sorteadas, estatística pareada), os secundários
+ * por braço e o planejado × executado contado pela agenda, com cada par planejado e os slots que faltam.
+ */
+function blocoAgenda(p: Placar): string {
+  const { vista: va, agregado: g } = p.agenda!;
+  const d = linhasDoDesfecho(g);
+  const s = va.situacao;
+  const linhaPar = (x: typeof s.pares[number]) => {
+    const ag = g.pares.find(q => q.pairId === x.pairId), fora = g.foraDaAnalise.find(q => q.pairId === x.pairId);
+    const slot = (a: Arm) => { const z = x.slots[a]; return `${esc(z.slot.slotId)}: ${esc(ESTADO_SLOT_TXT[z.estado])}${z.tentativas.length > 1 ? ` (${z.tentativas.length} tentativas)` : ""}${z.motivo ? ` — ${esc(z.motivo)}` : ""}`; };
+    return `<tr><th scope="row"><a href="/par/${u(p.info.id)}/${u(x.pairId)}">${esc(x.pairId)}</a></th><td>${esc(x.firstArm)} primeiro</td><td>${slot("sem")}</td><td>${slot("com")}</td>
+<td>${esc(minTxt(x.intervaloMin))}</td><td>${ag ? `<b>${esc(sinal(ag.d))}</b> (${ag.sem} → ${ag.com})` : `<span class="suave">${esc(fora?.motivo ?? "—")}</span>`}</td></tr>`;
+  };
+  return `<div class="placar-agenda">
+<p class="${g.estado === "final" ? "" : "aviso-provisorio"}"><strong>${esc(d.titulo)}</strong></p>
+<ul class="pequeno">${d.itens.map(i => `<li>${esc(i)}</li>`).join("")}</ul>
+<p class="pequeno"><strong>Secundários, por braço (nunca somados ao principal):</strong></p>
+<ul class="pequeno">${linhasSecundarias(g).map(i => `<li>${esc(i)}</li>`).join("")}</ul>
+<p class="pequeno"><strong>Planejado × executado (pela agenda):</strong></p>
+<ul class="pequeno">${linhasDaAgenda(va).map(i => `<li${i.startsWith("ATENÇÃO") ? ` class="falha"` : ""}>${esc(i)}</li>`).join("")}</ul>
+<details><summary>Os ${va.agenda.pairs} pares planejados</summary>
+<table class="tabela-agenda"><thead><tr><th scope="col">Par</th><th scope="col">Ordem</th><th scope="col">Slot sem</th><th scope="col">Slot com</th><th scope="col">Intervalo entre inícios</th><th scope="col">D (sorteadas)</th></tr></thead>
+<tbody>${s.pares.map(linhaPar).join("")}</tbody></table></details>
+</div>`;
 }
 
 /** O placar do topo da página inicial: uma ficha por campanha que não é ensaio, e o botão do RESULTADOS.md. */
@@ -154,7 +182,7 @@ function placares(v: VistaExecucoes, preparo: Record<string, Diagnostico>): stri
   const { mostradas } = campanhasDoPlacar(v);
   return `<section class="placares" aria-labelledby="t-placar"><h2 id="t-placar">Resultados de relance</h2>
 <p class="pequeno suave">Unidades da referência confirmadas na revisão cega, por campanha. Só os pares FINAIS entram na soma; o n está dito. Números de summary.json da revisão atual de cada par.</p>
-<div class="placar-grade">${mostradas.map(c => cartaoPlacar(placarDaCampanha(c, v.pares, preparo), par => `/par/${u(c.id)}/${u(par)}#preparar`)).join("")}</div>
+<div class="placar-grade">${mostradas.map(c => cartaoPlacar(placarDaCampanha(c, v.pares, preparo, v.agendas[c.id] ?? null), par => `/par/${u(c.id)}/${u(par)}#preparar`)).join("")}</div>
 <div class="botoes"><button type="button" class="sec" data-resumo>Atualizar RESULTADOS.md</button></div>
 <p class="msg" id="msg-resumo" role="status" aria-live="polite"></p></section>`;
 }

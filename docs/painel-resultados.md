@@ -296,6 +296,42 @@ motivo, mesmo depois de todos os cartões serem decididos. No placar e no `RESUL
 resumos anteriores a esta regra não têm esses campos e são lidos como antes. Testes:
 `npm run test:identidade`.
 
+## Campanha com agenda: planejado × executado e desfecho principal (T7.2, NAT-65)
+
+Quando o arquivo tem a agenda da campanha (`campanhas/<id>/agendas/<sha256>/agenda.json`, vinda do
+manifesto 1.3.0), a ficha da campanha no topo da página inicial e o `RESULTADOS.md` ganham três blocos:
+
+1. **Desfecho principal** — `D = confirmadas_com − confirmadas_sem` **só nas unidades sorteadas**
+   (`A-*`, de `summary.json` → `pontuacao.camadas`; sem camada de página, todas as unidades, e o texto
+   avisa). Entra só par **FINAL** da agenda, completo, cuja análise usa a tentativa selecionada de cada
+   slot. A unidade é o par: achados e unidades nunca viram repetições. Mostra os D de cada par, média,
+   mediana, desvio-padrão, **n efetivo de n planejado**, e (`scripts/estatistica-pareada.ts`):
+   - **teste principal:** permutação exata por troca de sinal sobre a média, bicaudal (2^n
+     atribuições, zeros incluídos; n ≤ 20; todos os D = 0 → p = 1);
+   - **IC 95% da média:** bootstrap percentil sobre pares, 10.000 reamostragens, gerador `mulberry32`,
+     semente = 8 primeiros hex de `sha256(<commit-semente da agenda>|bootstrap)`, quantil tipo 7. Com
+     n < 5 ou todos os D iguais, fica "indisponível", com o motivo;
+   - **leitura:** p < 0,05 e média > 0 → vantagem do com; o simétrico → do sem; senão "sem diferença
+     detectável", que não estabelece equivalência;
+   - **robustez (rotulada):** Wilcoxon de postos sinalizados com zeros à Pratt, postos médios e p exato
+     por enumeração; teste do sinal exato com os zeros fora e contados.
+
+   O bloco diz **PROVISÓRIO** até cada par planejado estar FINAL ou declaradamente perdido, e diz por quê.
+2. **Secundários por braço**, nunca somados ao principal: precisão média das afirmações, incorretas,
+   defeitos novos corretos e unidades de página (`P-*`).
+3. **Planejado × executado, contado pela agenda** e não pelos pares encontrados: slots planejados, não
+   iniciados, válidos, à espera de nova tentativa e perdidos; tentativas e extras usadas/limite; pares
+   completos e perdidos; perdas e tempo esgotado **por braço**, com **ATENÇÃO — risco de seleção**
+   quando os braços perdem diferente; execuções com slot fora da agenda. Na tabela dobrada, cada par
+   planejado mostra o braço que abre, o estado de cada slot e o número de tentativas, o **intervalo
+   entre os inícios dos dois braços** (o `startedAt` dos `run.json` selecionados) e o D, ou o motivo
+   de estar fora.
+
+**Preparar análise** com agenda escolhe, por braço, o slot do par e a primeira tentativa elegível
+(técnico, isolamento e submissão ok no índice; a identidade é conferida pela análise). A escolha e
+todas as tentativas do slot ficam na receita, em `preparo.selecaoTentativas`. Slot sem tentativa
+elegível → a preparação para com o motivo. Sem agenda, nada muda: tentativa repetida = recusa.
+
 ## Limites (T8a)
 
 - A primeira análise sai do botão **Preparar análise** (T8a.1) só para disparos arquivados com o

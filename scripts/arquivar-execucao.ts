@@ -26,8 +26,9 @@ import { basename, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ROOT } from "./adjudication";
 import { documentoDaCampanha, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
+import { documentoDaAgenda } from "./agenda-campanha";
 import {
-  ARCHIVE_VERSION, Recusa, arquivarSite, caminhoCampanha, entradaExistente, caminhoLinhaDeBase, caminhoManifesto, caminhoPlano, caminhoReferencia, conjuntoDeSnapshots, criarTarGz,
+  ARCHIVE_VERSION, Recusa, arquivarSite, caminhoAgendaArquivada, caminhoCampanha, entradaExistente, caminhoLinhaDeBase, caminhoManifesto, caminhoPlano, caminhoReferencia, conjuntoDeSnapshots, criarTarGz,
   garantirGitattributes, gravarEntrada, gravarImutavel, listagemDoCommit, listarArquivos, pastaDaExecucao, problemasDaLinhaDeBase, problemasDeVinculo, problemasDoPacote,
   reconstruirIndice, registrarLinhaDeBase, segredosNoPacote, sha, type EntradaIndice,
 } from "./arquivo-resultados";
@@ -63,6 +64,12 @@ function arquivarEntradasDaAnalise(arquivo: string, m: IsolatedCollectionManifes
     if (sha(bytes) !== m.campaign.sha256) throw new Recusa("a campanha do manifesto não bate com o sha256 registrado");
     gravarImutavel(join(arquivo, caminhoCampanha(m.dispatch.campaignId, m.campaign.sha256)), bytes);
   }
+  if (m.agenda) {
+    // NAT-65: a agenda congelada vai junto, por conteúdo — o painel conta planejado × executado por ela
+    const bytes = documentoDaAgenda(m.agenda.document);
+    if (sha(bytes) !== m.agenda.sha256) throw new Recusa("a agenda do manifesto não bate com o sha256 registrado");
+    gravarImutavel(join(arquivo, caminhoAgendaArquivada(m.dispatch.campaignId, m.agenda.sha256)), bytes);
+  }
   if (!telas) p.push("site congelado não arquivado (sem --telas): a análise precisará de um clone do govbr-telas no mesmo commit");
   else {
     // site errado não derruba o arquivamento da execução: fica como aviso, e o painel recusa preparar
@@ -97,7 +104,8 @@ function entradaBase(m: IsolatedCollectionManifest | null, ent: Record<string, s
   const id = (v: string | undefined, f: string): string => (v && ID.test(v) ? v : f);
   return {
     campanha: m?.dispatch.campaignId ?? id(ent.campanha, "campanha-invalida"), slot: m?.dispatch.slotId ?? id(ent.slot, "slot-invalido"),
-    par: m?.dispatch.pairId ?? id(ent.par, "par-invalido"), tela: m?.dispatch.screenId ?? id(ent.tela, "tela-invalida"),
+    // par vazio (campanha com agenda, recusada antes do manifesto): sem par, nunca um "par-invalido" no painel
+    par: m?.dispatch.pairId ?? (ent.par ? id(ent.par, "par-invalido") : null), tela: m?.dispatch.screenId ?? id(ent.tela, "tela-invalida"),
     braco: (m?.dispatch.arm ?? (ent.braco === "sem" || ent.braco === "com" ? ent.braco : null)) as "sem" | "com" | null,
     modelo: m?.dispatch.model ?? (ent.modelo || null), esforco: m?.dispatch.effort ?? (ent.esforco || null), modo,
     natureza: modo === "real" ? "formal" : "ensaio",

@@ -19,11 +19,12 @@
  *   tsx scripts/manifesto-coleta-isolada.ts build --out ARQ_NOVO --tela solicitacao [--telas DIR] [--validator DIR]
  *        [--referencia ARQ] --campanha ID --slot ID --par ID --braco sem|com --modo real|duble|roteirizado
  *        [--modelo ID] [--esforco N] [--limite-min N] [--tentativa N] [--repeticao N] [--campanha-arquivo ARQ]
+ *        [--agenda-arquivo ARQ] [--arquivo-indice CLONE_DO_GOVBR_RESULTADOS]
  *   tsx scripts/manifesto-coleta-isolada.ts verify --manifest ARQ
  */
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   COLLECTION_MANIFEST_VERSION, compareIdentities, gitState, identityProblems, oracleIdentity, readCollectionManifest, sha256,
@@ -34,15 +35,20 @@ import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION } from "./instrument";
 import { normalizeNewlines, SKILL_PATH } from "./render-task-prompt";
 import { divergenciasDaCampanha, type IdentidadeEfetiva } from "./identidade-campanha";
 import { referenciaDe, telaOf } from "./telas";
+import {
+  caminhoAgenda, documentoDaAgenda, lerEntradasDoIndice, problemasDaAgenda, proximaTentativa, type Agenda, type SlotAgenda,
+} from "./agenda-campanha";
 import { validateContract, type Campaign } from "../contracts/index";
 
-export const ISOLATED_MANIFEST_VERSION = "manifesto-coleta-isolada-1.2.0";
+export const ISOLATED_MANIFEST_VERSION = "manifesto-coleta-isolada-1.3.0";
 /**
- * Versões legíveis: 1.0.0 (T4, sem campanha), 1.1.0 (T8a.1, com a campanha) e 1.2.0 (NAT-63, com a
- * execução efetiva — esforço, tempo limite, cliente, protocolo — conferida contra a campanha).
+ * Versões legíveis: 1.0.0 (T4, sem campanha), 1.1.0 (T8a.1, com a campanha), 1.2.0 (NAT-63, com a
+ * execução efetiva — esforço, tempo limite, cliente, protocolo — conferida contra a campanha) e 1.3.0
+ * (NAT-65, com a agenda congelada quando a campanha tem uma: slot resolvido e tentativa contada no índice).
  */
-export const ISOLATED_MANIFEST_VERSIONS = ["manifesto-coleta-isolada-1.0.0", "manifesto-coleta-isolada-1.1.0", ISOLATED_MANIFEST_VERSION] as const;
-const COM_CAMPANHA: readonly string[] = ["manifesto-coleta-isolada-1.1.0", ISOLATED_MANIFEST_VERSION];
+export const ISOLATED_MANIFEST_VERSIONS = ["manifesto-coleta-isolada-1.0.0", "manifesto-coleta-isolada-1.1.0", "manifesto-coleta-isolada-1.2.0", ISOLATED_MANIFEST_VERSION] as const;
+const COM_CAMPANHA: readonly string[] = ["manifesto-coleta-isolada-1.1.0", "manifesto-coleta-isolada-1.2.0", ISOLATED_MANIFEST_VERSION];
+const COM_EXECUCAO: readonly string[] = ["manifesto-coleta-isolada-1.2.0", ISOLATED_MANIFEST_VERSION];
 const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
 const COMMIT = /^[a-f0-9]{40}$/;
 
@@ -85,6 +91,20 @@ export interface IsolatedCollectionManifest {
    * lock; protocolo desconhecido, conferido só na análise pelo run.json).
    */
   execution?: ExecucaoDoDisparo;
+  /**
+   * 1.3.0 (NAT-65): presente quando a campanha tem `campanhas/<id>/agenda.json`. O slot do disparo
+   * resolvido na agenda e a tentativa contada no índice do arquivo, ambos conferidos no `preparar`.
+   */
+  agenda?: AgendaRecord;
+}
+
+/** A agenda do disparo: os bytes (por conteúdo, como a campanha), o slot e a contagem de tentativas. */
+export interface AgendaRecord {
+  sha256: string;
+  sourcePath: string;
+  document: Agenda;
+  slot: SlotAgenda;
+  attempt: { anteriores: { chave: string; classe: string; razao: string | null }[]; extrasUsadas: number; extrasLimite: number };
 }
 
 /** A execução efetiva de um disparo: os mesmos valores que o run.json vai registrar. */
@@ -231,13 +251,53 @@ export const SCREEN_LABELS: Record<string, string> = { solicitacao: "Solicitar s
 export interface BuildOptions {
   tela: string; telasDir: string; validatorDir: string; referencePath?: string;
   campanha: string; slot: string; par: string; braco: "sem" | "com"; modo: "real" | "duble" | "roteirizado";
-  modelo: string | null; esforco: string | null; limiteMin: number; tentativa: number; repeticao: number;
+  modelo: string | null; esforco: string | null; limiteMin: number;
+  /** "auto" (só com agenda): a tentativa que o índice do arquivo dá ao slot. */
+  tentativa: number | "auto"; repeticao: number;
   github?: IsolatedCollectionManifest["dispatch"]["github"];
   /** Padrão: campanhas/<campanha>/campaign.json do govbr-eval. */
   campanhaPath?: string;
+  /** Padrão: agenda.json ao lado do campaign.json. Sem o arquivo, a campanha não tem agenda. */
+  agendaPath?: string;
+  /** Clone (ou checkout esparso de `indice/entradas`) do govbr-resultados: exigido quando há agenda. */
+  arquivoIndice?: string | null;
 }
 
-export function buildIsolatedManifest(o: BuildOptions): IsolatedCollectionManifest {
+/**
+ * Agenda do disparo (NAT-65): a campanha commitada tem agenda? Então o slot vem dela — par, braço e
+ * repetição que divergem são recusados — e a tentativa vem do índice do arquivo. Campanha formal no
+ * modo real sem agenda é recusada; campanha sem agenda (piloto, ensaio) segue como antes.
+ */
+export function agendaDoDisparo(o: Pick<BuildOptions, "slot" | "par" | "braco" | "tentativa" | "repeticao" | "arquivoIndice" | "modo">,
+  campanha: CampaignRecord, agendaPath: string): AgendaRecord | undefined {
+  if (!existsSync(agendaPath)) {
+    if (campanha.document.kind === "formal" && o.modo === "real") throw new Error(`campanha formal sem agenda: falta ${caminhoAgenda(campanha.document.campaignId)} (gere com npm run campanha:agenda e commite antes do primeiro disparo)`);
+    return undefined;
+  }
+  if (campanha.origin !== "commitada" || !campanha.sourceSha256) throw new Error("agenda sem campanha commitada: a agenda aponta os bytes de um campaign.json");
+  const bytes = readFileSync(agendaPath);
+  let document: Agenda;
+  try { document = JSON.parse(bytes.toString("utf8")) as Agenda; } catch { throw new Error(`agenda ilegível (JSON inválido): ${agendaPath}`); }
+  const pa = problemasDaAgenda(document, campanha.document, campanha.sourceSha256);
+  if (pa.length) throw new Error(`agenda não serve a esta campanha; nada foi gravado: ${pa.join("; ")}`);
+  const slot = document.slots.find((s) => s.slotId === o.slot);
+  if (!slot) throw new Error(`o slot ${o.slot} não está na agenda de ${document.campaignId} (slots: ${document.slots.map((s) => s.slotId).join(", ")})`);
+  const div: string[] = [];
+  if (o.par !== slot.pairId) div.push(`par ${o.par} ≠ ${slot.pairId}`);
+  if (o.braco !== slot.arm) div.push(`braço ${o.braco} ≠ ${slot.arm}`);
+  if (o.repeticao !== slot.repetition) div.push(`repetição ${o.repeticao} ≠ ${slot.repetition}`);
+  if (div.length) throw new Error(`o disparo diverge da agenda no slot ${slot.slotId}; nada foi gravado: ${div.join("; ")}`);
+  if (!o.arquivoIndice) throw new Error("campanha com agenda sem o índice do arquivo (--arquivo-indice): sem ele não se sabe quantas tentativas o slot já teve");
+  const d = proximaTentativa(document, campanha.document, lerEntradasDoIndice(o.arquivoIndice), slot.slotId);
+  if (!d.ok) throw new Error(`nova tentativa recusada pela política da campanha; nada foi gravado: ${d.motivo}`);
+  if (o.tentativa !== d.tentativa) throw new Error(`tentativa ${o.tentativa} ≠ ${d.tentativa}, a que o índice do arquivo dá ao slot ${slot.slotId}`);
+  const rel = relative(ROOT, agendaPath).replace(/\\/g, "/");
+  return { sha256: sha256Texto(bytes), sourcePath: rel.startsWith("..") ? agendaPath.replace(/\\/g, "/") : rel, document, slot,
+    attempt: { anteriores: d.anteriores.map((t) => ({ chave: t.chave, classe: t.classe, razao: t.razao })), extrasUsadas: d.extrasUsadas, extrasLimite: d.extrasLimite } };
+}
+
+export function buildIsolatedManifest(opcoes: BuildOptions): IsolatedCollectionManifest {
+  const o = { ...opcoes, tentativa: opcoes.tentativa === "auto" ? tentativaAutomatica(opcoes) : opcoes.tentativa };
   for (const [k, v] of [["campanha", o.campanha], ["slot", o.slot], ["par", o.par]] as const) if (!ID.test(v)) throw new Error(`--${k} inválido: ${v}`);
   if (o.braco !== "sem" && o.braco !== "com") throw new Error("--braco: sem | com");
   if (!["real", "duble", "roteirizado"].includes(o.modo)) throw new Error("--modo: real | duble | roteirizado");
@@ -293,11 +353,25 @@ export function buildIsolatedManifest(o: BuildOptions): IsolatedCollectionManife
       client: clienteDaColeta(o.modo, { versions: lock.versions }), protocolSha256: protocoloSha256(),
     },
   };
-  const campaign = campanhaDoDisparo(semCampanha, resolve(o.campanhaPath ?? join(ROOT, caminhoCampanhaCommitada(o.campanha))));
-  const manifest: IsolatedCollectionManifest = { ...semCampanha, campaign };
+  const campanhaPath = resolve(o.campanhaPath ?? join(ROOT, caminhoCampanhaCommitada(o.campanha)));
+  const campaign = campanhaDoDisparo(semCampanha, campanhaPath);
+  const agenda = agendaDoDisparo(o, campaign, resolve(o.agendaPath ?? join(dirname(campanhaPath), "agenda.json")));
+  const manifest: IsolatedCollectionManifest = { ...semCampanha, campaign, ...(agenda ? { agenda } : {}) };
   const problems = isolatedManifestProblems(manifest);
   if (problems.length) throw new Error(`manifesto de coleta incompleto; nada foi gravado: ${problems.join("; ")}`);
   return manifest;
+}
+
+/** `--tentativa auto`: a próxima tentativa do slot pela agenda e pelo índice (recusa o que a política recusa). */
+function tentativaAutomatica(o: BuildOptions): number {
+  const campanhaPath = resolve(o.campanhaPath ?? join(ROOT, caminhoCampanhaCommitada(o.campanha)));
+  const agendaPath = resolve(o.agendaPath ?? join(dirname(campanhaPath), "agenda.json"));
+  if (!existsSync(agendaPath) || !existsSync(campanhaPath)) throw new Error("--tentativa auto só existe para campanha commitada com agenda");
+  if (!o.arquivoIndice) throw new Error("--tentativa auto sem --arquivo-indice: sem o índice não se sabe quantas tentativas o slot já teve");
+  const c = JSON.parse(readFileSync(campanhaPath, "utf8")) as Campaign;
+  const d = proximaTentativa(JSON.parse(readFileSync(agendaPath, "utf8")) as Agenda, c, lerEntradasDoIndice(o.arquivoIndice), o.slot);
+  if (!d.ok) throw new Error(`nova tentativa recusada pela política da campanha; nada foi gravado: ${d.motivo}`);
+  return d.tentativa;
 }
 
 export function isolatedManifestProblems(m: IsolatedCollectionManifest): string[] {
@@ -314,8 +388,8 @@ export function isolatedManifestProblems(m: IsolatedCollectionManifest): string[
   if (!m.dispatch || !ID.test(m.dispatch.campaignId) || !ID.test(m.dispatch.slotId)) p.push("despacho sem campanha/slot válidos");
   if (m.dispatch?.mode === "real" && (!m.dispatch.model || !m.dispatch.effort)) p.push("modo real sem modelo/esforço");
   if (m.fixture !== (m.dispatch?.mode !== "real")) p.push("fixture incoerente com o modo");
-  if (m.manifestVersion === ISOLATED_MANIFEST_VERSION) {
-    if (!m.execution) p.push("manifesto 1.2.0 sem a execução efetiva");
+  if (COM_EXECUCAO.includes(m.manifestVersion)) {
+    if (!m.execution) p.push(`${m.manifestVersion.replace("manifesto-coleta-isolada-", "manifesto ")} sem a execução efetiva`);
     else if (m.dispatch && m.execution.timeoutSeconds !== m.dispatch.limitMinutes * 60) p.push("execução × despacho: tempo limite diverge");
   }
   if (COM_CAMPANHA.includes(m.manifestVersion)) {
@@ -324,6 +398,15 @@ export function isolatedManifestProblems(m: IsolatedCollectionManifest): string[
       if (sha256Texto(documentoDaCampanha(m.campaign.document)) !== m.campaign.sha256) p.push("campanha × sha256 registrado diverge");
       if (m.dispatch && m.site && m.oracle) p.push(...problemasDaCampanha(m.campaign.document, m));
     }
+  }
+  if (m.agenda) {
+    if (m.manifestVersion !== ISOLATED_MANIFEST_VERSION) p.push("agenda num manifesto anterior ao 1.3.0");
+    if (sha256Texto(documentoDaAgenda(m.agenda.document)) !== m.agenda.sha256) p.push("agenda × sha256 registrado diverge");
+    if (m.campaign?.sourceSha256 && m.campaign.document) p.push(...problemasDaAgenda(m.agenda.document, m.campaign.document, m.campaign.sourceSha256));
+    const s = m.agenda.document.slots?.find((x) => x.slotId === m.agenda!.slot.slotId);
+    if (!s || JSON.stringify(s) !== JSON.stringify(m.agenda.slot)) p.push("slot registrado ≠ o da agenda");
+    else if (m.dispatch && (m.dispatch.slotId !== s.slotId || m.dispatch.pairId !== s.pairId || m.dispatch.arm !== s.arm || m.dispatch.repetition !== s.repetition)) p.push("despacho × slot da agenda diverge");
+    if (m.dispatch && m.dispatch.attempt !== m.agenda.attempt.anteriores.length + 1) p.push("tentativa do despacho × tentativas anteriores registradas diverge");
   }
   return p;
 }
@@ -381,13 +464,14 @@ function main(): void {
     referencePath: val("--referencia"), campanha: need("--campanha"), slot: need("--slot"), par: val("--par") ?? "par-01",
     braco: need("--braco") as "sem" | "com", modo: need("--modo") as "real" | "duble" | "roteirizado",
     modelo: val("--modelo") ?? null, esforco: val("--esforco") ?? null, limiteMin: Number(val("--limite-min") ?? 90),
-    tentativa: Number(val("--tentativa") ?? 1), repeticao: Number(val("--repeticao") ?? 1), github: gh,
-    campanhaPath: val("--campanha-arquivo"),
+    tentativa: val("--tentativa") === "auto" ? "auto" : Number(val("--tentativa") ?? 1), repeticao: Number(val("--repeticao") ?? 1), github: gh,
+    campanhaPath: val("--campanha-arquivo"), agendaPath: val("--agenda-arquivo"), arquivoIndice: val("--arquivo-indice") ? resolve(val("--arquivo-indice")!) : null,
   });
   writeFileSync(out, JSON.stringify(manifest, null, 2) + "\n", { flag: "wx" });
   console.log(`manifesto de coleta isolada: ${out}`);
   console.log(`  site ${manifest.identity.siteManifestSha256!.slice(0, 12)} · referência ${manifest.identity.referenceSha256!.slice(0, 12)} · plano ${manifest.identity.statePlanSha256!.slice(0, 12)} · oráculo ${manifest.identity.oracleDistSha256!.slice(0, 12)}`);
   console.log(`  campanha ${manifest.campaign!.document.campaignId} (${manifest.campaign!.origin}) sha256=${manifest.campaign!.sha256.slice(0, 12)}`);
+  if (manifest.agenda) console.log(`  agenda ${manifest.agenda.sha256.slice(0, 12)} · slot ${manifest.agenda.slot.slotId} (par ${manifest.agenda.slot.pairId}, braço ${manifest.agenda.slot.arm}, repetição ${manifest.agenda.slot.repetition}) · tentativa ${manifest.dispatch.attempt} · extras ${manifest.agenda.attempt.extrasUsadas}/${manifest.agenda.attempt.extrasLimite}`);
   console.log(`MANIFEST_SHA256=${sha256(readFileSync(out))}`);
 }
 

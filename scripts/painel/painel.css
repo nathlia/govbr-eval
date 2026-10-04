@@ -264,6 +264,13 @@ img.cena { max-width: 100%; height: auto; border: 1px solid var(--linha); border
 
 /* Placar do topo (NAT-58): resultados de relance por campanha. */
 .placares { margin: 1.2rem 0 .4rem; }
+/* NAT-65: campanha com agenda — desfecho, secundários, planejado × executado */
+.placar-agenda { border-top: 1px solid var(--linha); border-bottom: 1px solid var(--linha); margin: .4rem 0 .7rem; padding: .4rem 0; }
+.placar-agenda ul { margin: .2rem 0 .5rem; padding-left: 1.1rem; }
+.placar-agenda li.falha { color: var(--erro); font-weight: 600; }
+.placar-agenda .aviso-provisorio { color: var(--atencao); }
+.tabela-agenda { width: 100%; border-collapse: collapse; font-size: .85rem; display: block; overflow-x: auto; }
+.tabela-agenda th, .tabela-agenda td { border-bottom: 1px solid var(--linha); padding: .25rem .4rem; text-align: left; vertical-align: top; }
 .placares > h2 { margin-bottom: .2rem; }
 .placar-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: .9rem; margin-top: .8rem; }
 .placar { background: var(--papel); border: 1px solid var(--linha); border-radius: 10px; padding: .9rem 1.1rem 1rem; box-shadow: var(--sombra); min-width: 0; }

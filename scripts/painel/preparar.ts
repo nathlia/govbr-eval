@@ -29,6 +29,8 @@ import { readIsolatedManifest, type IsolatedCollectionManifest } from "../manife
 import { loadSite } from "../measurement-surface";
 import { ARMS, ID, RECEITA_VERSAO, cloneComCrlf, dentroDoArquivo, lerAnalise, lerIndice, relArquivo, type Receita, type Selo } from "./modelo";
 import { recalcular } from "./revisao";
+import { lerAgendaDoArquivo } from "./agenda-painel";
+import { tentativaSelecionada, tentativasDoSlot } from "../agenda-campanha";
 
 export type AlvoPreparo = { tipo: "par"; campanha: string; par: string } | { tipo: "individual"; runId: string };
 
@@ -72,6 +74,7 @@ const curto = (s: string | null | undefined): string => (s ?? "").slice(0, 12);
 interface AlvoResolvido {
   campanha: string; alvo: string; tipo: "par" | "individual";
   entradas: Partial<Record<Arm, EntradaIndice>>;
+  selecao?: NonNullable<Receita["preparo"]>["selecaoTentativas"];
 }
 
 /** Um braço: a única tentativa arquivada. Repetição, pacote inválido ou interrompido dão motivo próprio. */
@@ -97,6 +100,23 @@ function resolverAlvo(arquivo: string, alvo: AlvoPreparo): AlvoResolvido {
     if (!ID.test(alvo.campanha) || !ID.test(alvo.par)) falhar("entradas", "id de campanha ou par inválido");
     const xs = execucoes.filter(e => e.campanha === alvo.campanha && e.par === alvo.par);
     if (!xs.length) falhar("entradas", `o par ${alvo.par} não está no índice`);
+    const ag = lerAgendaDoArquivo(arquivo, alvo.campanha);
+    if (ag) {
+      // NAT-65: com agenda, cada braço é o slot dele, e entra a PRIMEIRA tentativa elegível (protocolo §7)
+      const entradas: AlvoResolvido["entradas"] = {};
+      const slots: NonNullable<AlvoResolvido["selecao"]>["slots"] = {};
+      for (const arm of ARMS) {
+        const slot = ag.agenda.slots.find(s => s.pairId === alvo.par && s.arm === arm);
+        if (!slot) falhar("entradas", `o par ${alvo.par} não está na agenda da campanha`);
+        const ts = tentativasDoSlot(execucoes, ag.campanha, slot!.slotId);
+        const sel = tentativaSelecionada(ts);
+        if (!sel) falhar("entradas", `o slot ${slot!.slotId} não tem tentativa elegível${ts.length ? `: ${ts.map(t => `${t.chave} — ${t.motivo}`).join("; ")}` : " (não iniciado)"}`);
+        entradas[arm] = execucoes.find(e => e.chave === sel!.chave)!;
+        slots[arm] = { slot: slot!.slotId, escolhida: sel!.chave, tentativas: ts.map(t => ({ chave: t.chave, classe: t.classe, motivo: t.motivo })) };
+      }
+      return { campanha: alvo.campanha, alvo: alvo.par, tipo: "par", entradas,
+        selecao: { regra: `${ag.campanha.retryPolicy.attemptSelection} (NAT-65: a primeira tentativa elegível do slot, na ordem do disparo)`, agendaSemente: ag.agenda.seed.commit, slots } };
+    }
     const entradas: AlvoResolvido["entradas"] = {};
     for (const arm of ARMS) entradas[arm] = escolherBraco(arm, xs.filter(e => e.braco === arm));
     return { campanha: alvo.campanha, alvo: alvo.par, tipo: "par", entradas };
@@ -393,6 +413,7 @@ export async function prepararAnalise(arquivo: string, alvo: AlvoPreparo, o: Opc
         manifestosColeta: Object.fromEntries(arms.map(a => [a, lidos[a]!.sha256])),
         anexos: Object.fromEntries(arms.map(a => [a, r.entradas[a]!.evidencias?.sha256 ?? null])),
         campanha: { sha256: m0.campaign!.sha256, origem: m0.campaign!.origin },
+        ...(r.selecao ? { selecaoTentativas: r.selecao } : {}),
       },
     };
     const dir = dirAnalise(arquivo, r.campanha, r.alvo);

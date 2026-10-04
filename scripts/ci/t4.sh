@@ -33,7 +33,12 @@ case "$fase" in
     if [ "$MODO" = "real" ]; then args+=(--modelo "$MODELO"); fi
     # o esforço que a coleta passa ao cliente (dublê também); o manifesto o confere contra a campanha (NAT-63)
     if [ "$MODO" != "roteirizado" ]; then args+=(--esforco "$ESFORCO"); fi
+    # NAT-65: campanha com agenda — o índice do arquivo (checkout esparso de indice/entradas, só neste job)
+    # diz quantas tentativas o slot já teve; a tentativa "auto" sai dele
+    if [ -d "$WS/govbr-resultados/indice" ]; then args+=(--arquivo-indice "$WS/govbr-resultados"); fi
     tsx scripts/manifesto-coleta-isolada.ts "${args[@]}"
+    tentativa=$(node -e 'const m=require(process.argv[1]);process.stdout.write(String(m.dispatch.attempt))' "$TMP/manifesto/manifesto-coleta.json")
+    saida "tentativa=$tentativa"
     corpus=$(node -e 'const m=require(process.argv[1]);process.stdout.write(String(m.origin?.corpus?.commit??""))' "$WS/govbr-telas/site-manifest.json")
     saida "corpus_sha=$corpus"
     ;;

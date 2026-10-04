@@ -21,6 +21,7 @@ import type { EntradaIndice } from "../arquivo-resultados";
 import type { Resumo } from "../analisar-execucao";
 import { mapearDecisoes } from "../identidade-cartoes";
 import { pendingDecision, type RawReviews, type SemanticPackage } from "../semantic-flow";
+import { agregadoDaCampanha, vistaAgenda, type AgregadoCampanha, type VistaAgenda } from "./agenda-painel";
 
 export const PAINEL_VERSAO = "painel-resultados-1.1.0";
 export const RECEITA_VERSAO = "receita-analise-1.0.0";
@@ -119,6 +120,14 @@ export interface Receita {
     manifestosColeta: Partial<Record<Arm, string>>;
     anexos: Partial<Record<Arm, string | null>>;
     campanha: { sha256: string; origem: string };
+    /**
+     * NAT-65: campanha com agenda — qual tentativa de cada slot entrou (a primeira elegível) e todas as
+     * tentativas do slot com a classe delas. Ausente em campanha sem agenda.
+     */
+    selecaoTentativas?: {
+      regra: string; agendaSemente: string;
+      slots: Partial<Record<Arm, { slot: string; escolhida: string; tentativas: { chave: string; classe: string; motivo: string }[] }>>;
+    };
   };
 }
 
@@ -476,6 +485,8 @@ export interface VistaExecucoes {
   campanhas: InfoCampanha[];
   /** O Git desta máquina converteu os finais de linha do clone (ver cloneComCrlf). */
   crlf: boolean;
+  /** NAT-65: campanhas com agenda congelada no arquivo → planejado × executado contado pela agenda. */
+  agendas: Record<string, VistaAgenda>;
 }
 
 /** Números de um braço na revisão atual: SÓ valores de summary.json. */
@@ -531,9 +542,16 @@ export function vistaExecucoes(arquivo: string): VistaExecucoes {
     .sort((a, b) => b.dataUtc.localeCompare(a.dataUtc));
   const ordemCampanhas = [...new Set([...execucoes.map(x => x.campanha), ...linhasDeBase.map(e => e.campanha)])];
   const campanhas = ordemCampanhas.map(c => infoCampanha(arquivo, c, execucoes.filter(x => x.campanha === c).map(x => x.natureza)));
+  const porChave = new Map(validas.map(l => [l.entrada.chave, l.entrada]));
+  const inicioDe = (chave: string): string | null => { const e = porChave.get(chave); return e ? lerRun(arquivo, e)?.timestamps.startedAt ?? null : null; };
+  const agendas: Record<string, VistaAgenda> = {};
+  for (const c of campanhas) {
+    const va = vistaAgenda(arquivo, c.id, validas.map(l => l.entrada), inicioDe);
+    if (va) agendas[c.id] = va;
+  }
   return { fixture: ehFixture(arquivo, lidas), execucoes, linhasDeBase,
     ilegiveis: lidas.filter(l => l.erro).map(l => ({ arquivo: l.arquivoEntrada, erro: l.erro! })), pares: resumoPares(execucoes, analises, campanhas, ids),
-    campanhas, crlf: cloneComCrlf(arquivo) };
+    campanhas, crlf: cloneComCrlf(arquivo), agendas };
 }
 
 function resumoPares(execucoes: LinhaExecucao[], analises: Analise[], campanhas: InfoCampanha[], ids: Map<string, string>): VistaParResumo[] {
@@ -587,13 +605,15 @@ export interface Placar {
   total: number; finais: number;
   /** Somas de unidades confirmadas SÓ sobre os pares FINAIS (n = finais); null sem par final. */
   somaSem: number | null; somaCom: number | null; somaTotal: number | null;
+  /** NAT-65: campanha com agenda — planejado × executado e o desfecho principal (estatística pareada). */
+  agenda?: { vista: VistaAgenda; agregado: AgregadoCampanha };
 }
 
 /**
  * O placar de uma campanha: o selo e o que falta de cada par, e as somas só dos pares finais (com n).
  * `preparo` (opcional) diz quais pares sem análise já podem ser preparados.
  */
-export function placarDaCampanha(info: InfoCampanha, pares: VistaParResumo[], preparo: Record<string, { pode: boolean }> = {}): Placar {
+export function placarDaCampanha(info: InfoCampanha, pares: VistaParResumo[], preparo: Record<string, { pode: boolean }> = {}, agenda: VistaAgenda | null = null): Placar {
   const linhas: LinhaPlacar[] = pares.filter(p => p.campanha === info.id).sort((a, b) => a.par.localeCompare(b.par)).map(p => {
     const r = p.resultado;
     let selo: SeloPlacar, seloTexto: string, falta: string | null = null;
@@ -624,7 +644,8 @@ export function placarDaCampanha(info: InfoCampanha, pares: VistaParResumo[], pr
   };
   return { info, linhas, total: comparaveis.length, finais: finais.length,
     somaSem: soma(l => l.resultado?.bracos.sem?.confirmadas), somaCom: soma(l => l.resultado?.bracos.com?.confirmadas),
-    somaTotal: soma(l => l.resultado?.bracos.sem?.total ?? l.resultado?.bracos.com?.total) };
+    somaTotal: soma(l => l.resultado?.bracos.sem?.total ?? l.resultado?.bracos.com?.total),
+    ...(agenda ? { agenda: { vista: agenda, agregado: agregadoDaCampanha(agenda, linhas) } } : {}) };
 }
 
 /** Campanhas que entram no placar: as que não são ensaio; num arquivo só de ensaios (a fixture), todas. */

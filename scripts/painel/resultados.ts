@@ -10,6 +10,7 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { campanhasDoPlacar, dataLocal, placarDaCampanha, vistaExecucoes, type InfoCampanha, type LinhaPlacar, type Placar, type ResultadoBraco } from "./modelo";
+import { ESTADO_SLOT_TXT, linhasDaAgenda, linhasDoDesfecho, linhasSecundarias, minTxt, sinal as sinalD } from "./agenda-painel";
 
 export const LINHA_DATA = /^Gerado em: .*$/m;
 
@@ -61,6 +62,23 @@ function linhaDaCampanha(p: Placar): string {
   return `${base} Unidades confirmadas somadas só nos pares finais (n = ${p.finais}): **sem ${p.somaSem} · com ${p.somaCom}**${p.somaTotal !== null ? ` (de ${p.somaTotal} unidades da referência)` : ""}. Soma descritiva, sem inferência.`;
 }
 
+/** NAT-65: desfecho principal, secundários e planejado × executado de uma campanha com agenda. */
+function secaoAgenda(p: Placar): string[] {
+  const { vista: va, agregado: g } = p.agenda!;
+  const d = linhasDoDesfecho(g);
+  const L = [`### Desfecho principal — **${md(d.titulo)}**`, "", ...d.itens.map(i => `- ${md(i)}`), "",
+    "Secundários, por braço (nunca somados ao principal):", "", ...linhasSecundarias(g).map(i => `- ${md(i)}`), "",
+    "### Planejado × executado (pela agenda)", "", ...linhasDaAgenda(va).map(i => `- ${md(i)}`), "",
+    "| Par | Abre com | Slot sem | Slot com | Intervalo entre inícios | D (sorteadas) |", "|---|---|---|---|---|---|"];
+  for (const x of va.situacao.pares) {
+    const ag = g.pares.find(q => q.pairId === x.pairId), fora = g.foraDaAnalise.find(q => q.pairId === x.pairId);
+    const slot = (a: "sem" | "com") => { const z = x.slots[a]; return `${z.slot.slotId}: ${ESTADO_SLOT_TXT[z.estado]}${z.tentativas.length > 1 ? ` (${z.tentativas.length} tentativas)` : ""}${z.motivo ? ` — ${z.motivo}` : ""}`; };
+    L.push(`| ${md(x.pairId)} | ${x.firstArm} | ${md(slot("sem"))} | ${md(slot("com"))} | ${minTxt(x.intervaloMin)} | ${ag ? `**${sinalD(ag.d)}** (${ag.sem} → ${ag.com})` : md(fora?.motivo ?? "—")} |`);
+  }
+  L.push("");
+  return L;
+}
+
 /** O conteúdo do RESULTADOS.md. `agora` só entra na linha "Gerado em". */
 export function gerarResultados(arquivo: string, agora: Date = new Date()): string {
   const v = vistaExecucoes(arquivo);
@@ -86,9 +104,10 @@ export function gerarResultados(arquivo: string, agora: Date = new Date()): stri
   );
   if (!mostradas.length) L.push("O arquivo ainda não tem execuções.", "");
   for (const c of mostradas) {
-    const p = placarDaCampanha(c, v.pares);
+    const p = placarDaCampanha(c, v.pares, {}, v.agendas[c.id] ?? null);
     L.push(`## ${c.id} — ${rotuloDaCampanha(c)}`, "");
     if (c.titulo) L.push(md(c.titulo), "");
+    if (p.agenda) L.push(...secaoAgenda(p));
     L.push(linhaDaCampanha(p), "");
     if (p.linhas.length) {
       L.push(...tabela(p), "");

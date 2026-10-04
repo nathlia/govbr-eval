@@ -100,7 +100,7 @@ await teste("workflow: cada segredo só onde é usado (escrita só em arquivar; 
       assert.ok(!(s.run ?? "").includes("${{"), `interpolação no shell em ${id}#${i}`);
     }
   }
-  assert.deepEqual(Object.keys(usos).sort(), ["CLAUDE_CODE_OAUTH_TOKEN", "GOVBR_LEITURA_TOKEN", "GOVBR_RESULTADOS_TOKEN"]);
+  assert.deepEqual(Object.keys(usos).sort(), ["CLAUDE_CODE_OAUTH_TOKEN", "GOVBR_LEITURA_TOKEN", "GOVBR_RESULTADOS_LEITURA_TOKEN", "GOVBR_RESULTADOS_TOKEN"]);
   assert.ok(usos.GOVBR_RESULTADOS_TOKEN.every((u) => u.startsWith("arquivar#")), `escrita fora de arquivar: ${usos.GOVBR_RESULTADOS_TOKEN}`);
   assert.equal(usos.CLAUDE_CODE_OAUTH_TOKEN.length, 1, "credencial do provedor em mais de um passo");
   const [job, idx] = usos.CLAUDE_CODE_OAUTH_TOKEN[0].split("#");
@@ -114,11 +114,22 @@ await teste("workflow: cada segredo só onde é usado (escrita só em arquivar; 
     const s = wf.jobs[j2].steps[Number(i2)];
     assert.ok(s.uses?.startsWith("actions/checkout@") && texto(s.with?.token).includes("GOVBR_LEITURA_TOKEN") && !s.env, `leitura fora de checkout: ${u}`);
   }
-  // nenhum job além de arquivar toca o govbr-resultados; arquivar não recebe o provedor
+  // NAT-65: além de arquivar, só o preparar lê o govbr-resultados — e só o índice (esparso), só leitura, só com agenda
+  assert.equal(usos.GOVBR_RESULTADOS_LEITURA_TOKEN.length, 1, "leitura do arquivo em mais de um passo");
+  const [jl, il] = usos.GOVBR_RESULTADOS_LEITURA_TOKEN[0].split("#");
+  const leitura = wf.jobs[jl].steps[Number(il)];
+  assert.equal(jl, "preparar");
+  assert.ok(leitura.uses?.startsWith("actions/checkout@") && leitura.with?.repository === "nathlia/govbr-resultados" && !leitura.env);
+  assert.equal(String(leitura.with?.["sparse-checkout"]).trim(), "indice/entradas", "só o índice, nunca pacotes nem análises");
+  assert.equal(leitura.if, "steps.entradas.outputs.agenda == 'true'", "só campanha com agenda");
+  // nenhum outro job toca o govbr-resultados; arquivar não recebe o provedor
   for (const { job: j3, step } of todosOsPassos()) {
-    if (texto(step).includes("govbr-resultados")) assert.equal(j3, "arquivar", `govbr-resultados em ${j3}`);
+    if (texto(step).includes("govbr-resultados") && step !== leitura) assert.equal(j3, "arquivar", `govbr-resultados em ${j3}`);
     if (j3 === "arquivar") assert.ok(!texto(step).includes("CLAUDE_CODE_OAUTH_TOKEN"));
   }
+  // o que o preparar passa adiante são ids e valores congelados — nada do índice vai para a coleta
+  const saidas = Object.keys(wf.jobs.preparar.outputs ?? {}).sort();
+  assert.deepEqual(saidas, ["agente", "braco", "coleta", "corpus_sha", "egress", "esforco", "imagens", "limite_seg", "linha_de_base", "modelo", "par", "repeticao", "tentativa"]);
 });
 
 await teste("workflow: checkouts por SHA, sem credencial persistida; coleta sem gabarito e sem manifesto", () => {
@@ -136,7 +147,11 @@ await teste("workflow: checkouts por SHA, sem credencial persistida; coleta sem 
   assert.ok(!coleta.some((s) => s.uses?.startsWith("actions/download-artifact@")), "a coleta não baixa artefato nenhum (o manifesto traz o plano de estados)");
   assert.ok(!coleta.some((s) => ["nathlia/govbr-corpus", "nathlia/govbr-resultados"].includes(String(s.with?.repository))));
   const val = coleta.find((s) => s.with?.repository === "nathlia/govbr-ds-validator")!;
-  assert.equal(val.if, "inputs.braco == 'com'", "o braço sem nem baixa o oráculo");
+  assert.equal(val.if, "needs.preparar.outputs.braco == 'com'", "o braço sem nem baixa o oráculo (braço resolvido no preparar, NAT-65)");
+  // NAT-65: depois do preparar, braço/par/tentativa/repetição vêm dele, nunca do digitado
+  for (const { job, step } of todosOsPassos().filter((p) => p.job !== "preparar")) {
+    assert.ok(!/inputs\.(braco|par|tentativa|repeticao)\b/.test(texto(step)), `${job}: usa o digitado em vez do resolvido`);
+  }
 });
 
 await teste("workflow: pacote e linha de base sobem com always(); arquivar roda sempre e depois de tudo", () => {
@@ -250,9 +265,10 @@ const manifestoCom = buildIsolatedManifest({ ...comum, braco: "com", slot: "slot
 const manifestoPath = join(TMP, "manifesto-coleta.json");
 writeFileSync(manifestoPath, JSON.stringify(manifestoSem, null, 2) + "\n");
 
-await teste("manifesto 1.2.0 (T8a.1 + NAT-63): campanha de ensaio gerada e idêntica nos dois braços; modo real sem campanha commitada é recusado", () => {
+await teste("manifesto 1.3.0 (T8a.1 + NAT-63 + NAT-65): campanha de ensaio gerada e idêntica nos dois braços; modo real sem campanha commitada é recusado", () => {
   for (const m of [manifestoSem, manifestoCom]) {
-    assert.equal(m.manifestVersion, "manifesto-coleta-isolada-1.2.0");
+    assert.equal(m.manifestVersion, "manifesto-coleta-isolada-1.3.0");
+    assert.equal(m.agenda, undefined, "campanha sem agenda: como antes");
     assert.equal(m.campaign!.origin, "gerada-ensaio");
     assert.ok(validateContract(m.campaign!.document).valid, JSON.stringify(validateContract(m.campaign!.document).errors));
     assert.equal(sha(documentoDaCampanha(m.campaign!.document)), m.campaign!.sha256);

@@ -16,7 +16,8 @@ import { appendFileSync, existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { EFFORT_LEVELS, CREDENTIAL_ENV } from "../runner/cliente-claude";
-import type { Run } from "../contracts/index";
+import type { Campaign, Run } from "../contracts/index";
+import { caminhoAgenda, type Agenda } from "./agenda-campanha";
 import type { EntradaIndice } from "./arquivo-resultados";
 import { MODELO_ENSAIO } from "./manifesto-coleta-isolada";
 
@@ -33,26 +34,78 @@ export interface Entradas {
   telas_sha: string; validator_sha: string; etapas: string; refazer_linha_de_base_de?: string; motivo_refazer?: string;
 }
 
-/** Valida as entradas do disparo e devolve os valores derivados que os jobs usam. */
-export function conferirEntradas(e: Partial<Entradas>): { problemas: string[]; saidas: Record<string, string> } {
+/** Valor das entradas que diz "venha da agenda" (braço) ou "da campanha" (esforço); texto vazio vale o mesmo. */
+export const DA_AGENDA = "da-agenda", DA_CAMPANHA = "da-campanha";
+
+/** A agenda e a campanha commitadas no govbr-eval do disparo, quando a campanha tem agenda (NAT-65). */
+export interface AgendaDoDisparo { agenda: Agenda; campanha: Campaign }
+
+/** Lê `campanhas/<campanha>/agenda.json` (e a campanha) do checkout do govbr-eval; null = campanha sem agenda. */
+export function agendaDaCampanha(raiz: string, campanha: string): AgendaDoDisparo | null {
+  if (!ID.test(campanha)) return null;
+  const ag = join(raiz, caminhoAgenda(campanha)), cp = join(raiz, "campanhas", campanha, "campaign.json");
+  if (!existsSync(ag)) return null;
+  if (!existsSync(cp)) throw new Error(`${caminhoAgenda(campanha)} sem o campaign.json ao lado`);
+  return { agenda: JSON.parse(readFileSync(ag, "utf8")) as Agenda, campanha: JSON.parse(readFileSync(cp, "utf8")) as Campaign };
+}
+
+/**
+ * Valida as entradas do disparo e devolve os valores derivados que os jobs usam.
+ *
+ * Campanha COM agenda (NAT-65): o disparo leva só o slot (e os commits). Par, braço e repetição saem
+ * da agenda; modelo, esforço e tempo limite, da campanha; a tentativa, do índice do arquivo (no passo
+ * do manifesto). Campo digitado que diverge é recusado aqui, antes de qualquer gasto. Campanha SEM
+ * agenda: tudo digitado, como antes (vazio = par-01, tentativa/repetição 1, limite 90, esforço high).
+ */
+export function conferirEntradas(e: Partial<Entradas>, ag: AgendaDoDisparo | null = null): { problemas: string[]; saidas: Record<string, string> } {
   const p: string[] = [];
   const has = (k: keyof Entradas): string => String(e[k] ?? "").trim();
+  const vazio = (k: keyof Entradas): boolean => ["", DA_AGENDA, DA_CAMPANHA].includes(has(k));
   if (!(TELAS as readonly string[]).includes(has("tela"))) p.push(`tela: ${TELAS.join(" | ")}`);
-  if (!["sem", "com"].includes(has("braco"))) p.push("braco: sem | com");
   if (!(MODOS as readonly string[]).includes(has("modo"))) p.push(`modo: ${MODOS.join(" | ")}`);
   if (!(ETAPAS as readonly string[]).includes(has("etapas"))) p.push(`etapas: ${ETAPAS.join(" | ")}`);
-  for (const k of ["campanha", "slot", "par"] as const) if (!ID.test(has(k))) p.push(`${k}: id [A-Za-z0-9._-], até 128`);
+  for (const k of ["campanha", "slot"] as const) if (!ID.test(has(k))) p.push(`${k}: id [A-Za-z0-9._-], até 128`);
   for (const k of ["telas_sha", "validator_sha"] as const) if (!COMMIT.test(has(k))) p.push(`${k}: commit completo (40 hex), nunca branch ou tag`);
-  const limite = Number(has("limite_min"));
+  const modo = has("modo");
+  let braco = has("braco"), par = has("par"), repeticao = has("repeticao"), tentativa = has("tentativa"), modelo = has("modelo"), esforco = has("esforco"), limiteTxt = has("limite_min");
+  if (ag) {
+    const slot = ag.agenda.slots.find((s) => s.slotId === has("slot"));
+    const c = ag.campanha;
+    if (!slot) p.push(`slot ${has("slot")} fora da agenda de ${ag.agenda.campaignId} (${ag.agenda.slots.map((s) => s.slotId).join(", ")})`);
+    else {
+      const confere = (k: keyof Entradas, rotulo: string, esperado: string): string => {
+        if (!vazio(k) && has(k) !== esperado) p.push(`${rotulo} ${has(k)} ≠ ${esperado} da agenda/campanha (slot ${slot.slotId}): deixe vazio ou igual`);
+        return esperado;
+      };
+      braco = confere("braco", "braco", slot.arm);
+      par = confere("par", "par", slot.pairId);
+      repeticao = confere("repeticao", "repeticao", String(slot.repetition));
+      esforco = confere("esforco", "esforco", c.design.effort);
+      limiteTxt = confere("limite_min", "limite_min", String(c.limits.timeoutSeconds / 60));
+      if (modo === "real") modelo = confere("modelo", "modelo", c.design.models[0]?.requested ?? "");
+      if (vazio("tentativa")) tentativa = "auto";
+    }
+    if (c.design.screens[0] && c.design.screens[0].id !== has("tela")) p.push(`tela ${has("tela")} ≠ ${c.design.screens[0].id} da campanha`);
+  } else {
+    if (braco === DA_AGENDA || !braco) p.push(`braco: sem | com (a campanha ${has("campanha")} não tem agenda)`);
+    if (!par) par = "par-01";
+    if (!repeticao) repeticao = "1";
+    if (!tentativa) tentativa = "1";
+    if (!limiteTxt) limiteTxt = "90";
+    if (esforco === DA_CAMPANHA) esforco = "high";
+  }
+  if (!["sem", "com"].includes(braco) && !p.some((x) => x.startsWith("braco"))) p.push("braco: sem | com");
+  if (!ID.test(par)) p.push("par: id [A-Za-z0-9._-], até 128");
+  const limite = Number(limiteTxt);
   if (!Number.isInteger(limite) || limite < 1 || limite > 90) p.push("limite_min: inteiro de 1 a 90 (teto de segurança, D-67)");
-  for (const k of ["tentativa", "repeticao"] as const) {
-    const n = Number(has(k));
+  for (const [k, v] of [["tentativa", tentativa], ["repeticao", repeticao]] as const) {
+    if (v === "auto" && k === "tentativa") continue;
+    const n = Number(v);
     if (!Number.isInteger(n) || n < 1 || n > 99) p.push(`${k}: inteiro de 1 a 99`);
   }
-  const modo = has("modo");
   if (modo === "real") {
-    if (!MODELO.test(has("modelo")) || /duble|teste|roteirizado/i.test(has("modelo"))) p.push("modelo: id exato do modelo (modo real)");
-    if (!EFFORT_LEVELS.includes(has("esforco"))) p.push(`esforco: ${EFFORT_LEVELS.join(" | ")}`);
+    if (!MODELO.test(modelo) || /duble|teste|roteirizado/i.test(modelo)) p.push("modelo: id exato do modelo (modo real)");
+    if (!EFFORT_LEVELS.includes(esforco)) p.push(`esforco: ${EFFORT_LEVELS.join(" | ")}`);
   }
   const rerun = has("refazer_linha_de_base_de");
   if (rerun && (!ID.test(rerun) || !has("motivo_refazer"))) p.push("refazer_linha_de_base_de exige id válido e motivo_refazer");
@@ -61,12 +114,15 @@ export function conferirEntradas(e: Partial<Entradas>): { problemas: string[]; s
   const egress = modo === "real" ? "real" : "stub";
   const saidas: Record<string, string> = {
     agente, egress, fixture: String(modo !== "real"),
-    modelo: modo === "real" ? has("modelo") : modo === "duble" ? MODELO_ENSAIO.duble : MODELO_ENSAIO.roteirizado,
-    esforco: modo === "roteirizado" ? "nao-se-aplica" : (EFFORT_LEVELS.includes(has("esforco")) ? has("esforco") : "high"),
-    imagens: has("braco") === "com" ? "agent,screens,collector,egress,oracle" : "agent,screens,collector,egress",
+    modelo: modo === "real" ? modelo : modo === "duble" ? MODELO_ENSAIO.duble : MODELO_ENSAIO.roteirizado,
+    esforco: modo === "roteirizado" ? "nao-se-aplica" : (EFFORT_LEVELS.includes(esforco) ? esforco : "high"),
+    imagens: braco === "com" ? "agent,screens,collector,egress,oracle" : "agent,screens,collector,egress",
     coleta: String(has("etapas") !== "so-linha-de-base"),
     linha_de_base: String(has("etapas") !== "so-coleta"),
     limite_seg: String(limite * 60),
+    limite_min: String(limite),
+    braco, par, repeticao, tentativa,
+    agenda: String(Boolean(ag)),
   };
   return { problemas: p, saidas };
 }
@@ -320,7 +376,11 @@ function main(): number {
   };
   switch (cmd) {
     case "entradas": {
-      const { problemas, saidas } = conferirEntradas(JSON.parse(process.env.ENTRADAS ?? "{}") as Partial<Entradas>);
+      const ent = JSON.parse(process.env.ENTRADAS ?? "{}") as Partial<Entradas>;
+      let ag: AgendaDoDisparo | null = null, erro: string | null = null;
+      try { ag = agendaDaCampanha(resolve(fileURLToPath(import.meta.url), "..", ".."), String(ent.campanha ?? "")); } catch (x) { erro = (x as Error).message; }
+      const { problemas, saidas } = conferirEntradas(ent, ag);
+      if (erro) problemas.push(erro);
       if (problemas.length) {
         saida(`### Entradas recusadas\n\n${problemas.map((x) => `- ${x}`).join("\n")}\n\nNada foi executado.\n`);
         return 1;
