@@ -176,6 +176,24 @@ internet e sem chave de IA.
 Se o recálculo falhar, a versão anterior continua na tela e um aviso vermelho diz o motivo. O que
 deu errado fica guardado em `revisoes/falhas/`.
 
+**Os cartões mantêm o id entre recálculos.** O Recalcular captura a página congelada de novo, e
+telas reais sorteiam ids a cada carga (o `br-select` do DS: `list-4946`, depois `list-3370`). Até o
+adaptador 1.0.0 esse HTML cru entrava no `sceneHash`, que entra no id de todo cartão: cada recálculo
+trocava todos os ids e as decisões salvas ficavam órfãs (piloto-01, par-01). Desde o 1.1.0
+(`scripts/identidade-cartoes.ts`, fora de `SCORER_FILES`):
+
+- o `sceneHash` ignora só o **id gerado**: termina em dígitos e não aparece, como texto, em nenhum
+  arquivo do site congelado. Ele é renomeado pela ordem em que aparece (`list-#g1`), também onde é
+  citado (`for`, `aria-controls`, `aria-labelledby`… e `href="#…"`). Qualquer outra mudança na página
+  continua mudando o hash. `revisao/capture.json` lista o que foi renomeado em cada cena
+  (`idsGerados`) e a regra (`sceneHashIgnora`); `scene-N.html` continua sendo o HTML cru;
+- uma decisão salva com o id de outro pacote só passa para o id novo quando o cartão é **idêntico
+  em tudo menos o id**: mesmo corpo, mesmas unidades, mesma referência e mesmo scorer. A regra
+  compara com o pacote da revisão em que a decisão foi salva. Se o corpo mudou, o cartão fica pendente.
+  Cada passagem e cada recusa ficam em `revisao/mapa-cartoes.json`;
+- a fila e a gravação usam sempre os ids da revisão atual. Antes, gravar depois de um Recalcular
+  dava "cartão fora das decisões deste pacote".
+
 Para baixar uma versão, use **Baixar esta versão (.tar.gz)** na página do par. O arquivo traz tudo
 o que a página mostra, **sem** a referência congelada.
 
@@ -232,3 +250,7 @@ o 404 da referência, do site, da campanha e das restaurações, e o cache adult
 Do redesenho (T8a.2): o id curto em toda página e na URL (e ausente da fila cega), avisos de uma frase
 sem stack, a porta ocupada (outro painel recusa e diz o arquivo; outro programa → porta ao lado com
 aviso), o `/guia` servido sem rede, ensaio que não vira “fixture” e o clone com CRLF.
+Num terceiro arquivo, a página sorteia um id a cada carga. Ali o teste confere que recálculos
+seguidos dão os mesmos ids de cartão sem perder decisão. Confere também que decisões salvas com ids do
+HTML cru passam para o pacote novo por corpo idêntico, e que o cartão cujo corpo mudou fica pendente
+e pode ser gravado.

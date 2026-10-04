@@ -31,9 +31,9 @@ import { CAMPANHA_ID } from "./fixtures/analise/construir";
 import { construirArquivoFixture, construirArquivoT4 } from "./painel/fixture";
 import { lerAnalise, lerRevisao, metricasDaRevisao } from "./painel/modelo";
 import { chromium } from "playwright";
-import { explicarExcecao, recalcular } from "./painel/revisao";
+import { explicarExcecao, recalcular, salvarDecisao, vistaFila } from "./painel/revisao";
 import { criarPainel, escutar } from "./painel/servidor";
-import type { SemanticPackage } from "./semantic-flow";
+import { digest, type SemanticPackage } from "./semantic-flow";
 
 const SCORER_SHA = "ae135c34ceeb3aa03942d90623a39bc609a0ea2d89822bb7d5938ca1c04132df";
 const manter = process.argv.includes("--manter");
@@ -736,6 +736,91 @@ await teste("T8a.2: clone com finais de linha convertidos (core.autocrlf) — a 
 });
 
 servidorT4.close();
+
+// ───────────────────────────────────────────────────────────────── ids sorteados pela página (piloto-01, par-01)
+// A tela real (br-select do DS) sorteia ids a cada carga; o sceneHash cru mudava todos os ids de cartão
+// a cada Recalcular e as decisões gravadas ficavam órfãs. Arquivo separado: a página sorteia um id.
+
+const arquivoIds = join(TMP, "arquivo-ids");
+await construirArquivoFixture(arquivoIds, { idsGerados: true });
+const lerIds = (rel: string): any => JSON.parse(readFileSync(join(arquivoIds, rel), "utf8"));
+const idsDe = (par: string, rev: string): string[] => (lerIds(`${revDir(par, rev)}/revisao/package.json`) as SemanticPackage).cards.map(c => c.id).sort();
+const decidir = (par: string, c: SemanticPackage["cards"][number], base: number) => salvarDecisao(arquivoIds, C, par, {
+  cardId: c.id, decisao: c.candidateUnitIds.length ? "defeito-do-gabarito" : /julgada incorreta/.test(c.observed ?? "") ? "incorreta" : "defeito-novo-correto",
+  unitIds: c.candidateUnitIds.slice(0, 1), citacao: "supported", justificativa: "teste ids sorteados", consultado: ["cartão"], revisora: "Revisora Teste", base });
+
+await teste("página que sorteia ids a cada carga: dois recálculos dão os mesmos cartões e as decisões sobrevivem", async () => {
+  // a fixture já fez rev-001, decidiu tudo pelo painel e recalculou (rev-002); aqui, mais um Recalcular
+  const r = await recalcular(arquivoIds, C, "par-01");
+  assert.equal(r.ok, true, r.ok ? "" : r.erro);
+  const sorteado = (rev: string) => /id="(fx-lista-\d+)"/.exec(readFileSync(join(arquivoIds, revDir("par-01", rev), "revisao", "scene-0.html"), "utf8"))?.[1];
+  const ids = ["rev-001", "rev-002", "rev-003"].map(sorteado);
+  assert.ok(ids.every(Boolean), "a cena capturada tem o id sorteado");
+  assert.ok(new Set(ids).size > 1, `a página tem de sortear ids diferentes entre cargas (${ids.join(", ")})`);
+  assert.deepEqual(idsDe("par-01", "rev-002"), idsDe("par-01", "rev-001"));
+  assert.deepEqual(idsDe("par-01", "rev-003"), idsDe("par-01", "rev-001"));
+  const cap = lerIds(`${revDir("par-01", "rev-003")}/revisao/capture.json`);
+  assert.deepEqual(cap.scenes[0].idsGerados, [{ id: ids[2], como: "fx-lista-#g1" }]);
+  assert.match(cap.sceneHashIgnora, /ausente, como texto literal/);
+  assert.equal(lerIds(`${revDir("par-01", "rev-003")}/summary.json`).revisaoSemantica.pendentes, 0);
+  for (const rev of ["rev-002", "rev-003"]) assert.ok(!existsSync(join(arquivoIds, revDir("par-01", rev), "revisao", "mapa-cartoes.json")), "ids iguais: nada a transpor");
+  const f = vistaFila(arquivoIds, C, "par-01")!;
+  assert.equal(f.pendentesAtivos, 0);
+  assert.equal(f.decididos, idsDe("par-01", "rev-003").length);
+});
+
+await teste("decisões gravadas com ids do HTML cru (adaptador 1.0.0) são transpostas por corpo idêntico; corpo diferente fica pendente; gravar no pacote novo funciona", async () => {
+  // rev-001 do par-02 reescrita como o adaptador 1.0.0 a gravaria: sceneHash sobre o HTML cru, ids derivados dele
+  const dir = join(arquivoIds, revDir("par-02", "rev-001"), "revisao");
+  const atual = JSON.parse(readFileSync(join(dir, "package.json"), "utf8")) as SemanticPackage;
+  const legado = structuredClone(atual);
+  legado.context.sceneHash = digest({ htmlCru: readFileSync(join(dir, "scene-0.html"), "utf8") });
+  legado.cards[0].description = `${legado.cards[0].description} (o que o cartão diz mudou)`;
+  const novoId = new Map<string, string>();
+  for (const c of legado.cards) {
+    const { id, ...body } = c;
+    novoId.set(id, `C-${digest({ context: legado.context, body, units: legado.units })}`);
+    c.id = novoId.get(id)!;
+  }
+  for (const r of legado.runs) r.cardIds = r.cardIds.map(i => novoId.get(i)!);
+  legado.cards.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  const { packageHash: _h, ...corpo } = legado;
+  legado.packageHash = digest(corpo);
+  writeFileSync(join(dir, "package.json"), JSON.stringify(legado, null, 2));
+  const rv = JSON.parse(readFileSync(join(dir, "reviews.json"), "utf8"));
+  for (const d of rv.decisions) d.cardId = novoId.get(d.cardId);
+  writeFileSync(join(dir, "reviews.json"), JSON.stringify(rv, null, 2));
+  let base = 0;
+  for (const c of legado.cards) {
+    const r = decidir("par-02", c, base);
+    assert.equal(r.ok, true, r.ok ? "" : r.erro);
+    base = (r as { versao: number }).versao;
+  }
+  const r = await recalcular(arquivoIds, C, "par-02");
+  assert.equal(r.ok, true, r.ok ? "" : r.erro);
+  assert.deepEqual(idsDe("par-02", "rev-002"), atual.cards.map(c => c.id).sort(), "o pacote novo tem os ids normalizados");
+  const mapa = lerIds(`${revDir("par-02", "rev-002")}/revisao/mapa-cartoes.json`);
+  assert.equal(mapa.mapeados.length, legado.cards.length - 1);
+  assert.ok(mapa.mapeados.every((m: any) => idsDe("par-02", "rev-002").includes(m.para) && novoId.get(atual.cards.find(c => c.id === m.para)!.id) === m.de));
+  assert.deepEqual(mapa.naoMapeados.map((m: any) => m.de), [novoId.get(atual.cards[0].id)]);
+  assert.match(mapa.naoMapeados[0].motivo, /mesmo corpo/);
+  let f = vistaFila(arquivoIds, C, "par-02")!;
+  assert.equal(f.pendentesAtivos, 1);
+  assert.equal(f.decididos, legado.cards.length - 1);
+  const pendente = atual.cards[0];
+  assert.equal(f.cartoes.find(c => c.id === pendente.id)!.decisao.status, "pendente");
+  // antes: "cartão fora das decisões deste pacote" (o último arquivo de decisões era do pacote legado)
+  const g = decidir("par-02", pendente, f.versaoDecisoes);
+  assert.equal(g.ok, true, g.ok ? "" : g.erro);
+  f = vistaFila(arquivoIds, C, "par-02")!;
+  assert.equal(f.pendentesAtivos, 0);
+  const r3 = await recalcular(arquivoIds, C, "par-02");
+  assert.equal(r3.ok, true, r3.ok ? "" : r3.erro);
+  assert.deepEqual(idsDe("par-02", "rev-003"), idsDe("par-02", "rev-002"));
+  assert.ok(!existsSync(join(arquivoIds, revDir("par-02", "rev-003"), "revisao", "mapa-cartoes.json")));
+  assert.equal(lerIds(`${revDir("par-02", "rev-003")}/summary.json`).revisaoSemantica.pendentes, 0);
+  assert.equal(lerIds(`${revDir("par-02", "rev-003")}/summary.json`).comparacao.estado, "final");
+});
 
 await teste("hash de SCORER_FILES intacto", () => {
   assert.equal(analysisIdentity().scorerSha256, SCORER_SHA);

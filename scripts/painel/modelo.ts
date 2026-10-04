@@ -19,7 +19,8 @@ import { isAbsolute, join, relative, resolve, sep } from "node:path";
 import type { AnalysisBinding, Arm, Findings, Run } from "../../contracts/index";
 import type { EntradaIndice } from "../arquivo-resultados";
 import type { Resumo } from "../analisar-execucao";
-import type { RawReviews, SemanticPackage } from "../semantic-flow";
+import { mapearDecisoes } from "../identidade-cartoes";
+import { pendingDecision, type RawReviews, type SemanticPackage } from "../semantic-flow";
 
 export const PAINEL_VERSAO = "painel-resultados-1.1.0";
 export const RECEITA_VERSAO = "receita-analise-1.0.0";
@@ -738,17 +739,41 @@ export function pacoteDaRevisao(rv: Revisao): SemanticPackage | null {
   return existsSync(p) ? lerJson<SemanticPackage>(p) : null;
 }
 
-/** As decisões em vigor: o último arquivo salvo pelo painel, senão o reviews.json da revisão atual. */
+/**
+ * As decisões em vigor, sempre com os ids de cartão do pacote da revisão atual: o último arquivo
+ * salvo pelo painel quando ele é deste pacote, senão o reviews.json da revisão atual.
+ *
+ * Quando o último arquivo foi gravado contra o pacote de OUTRA revisão (Recalcular gerou ids novos),
+ * usá-lo cru recusava toda gravação ("cartão fora das decisões deste pacote") e mostrava a fila
+ * inteira pendente. Aí valem o reviews.json da revisão atual (que o Recalcular já transpôs) e as
+ * decisões do último arquivo transpostas pela mesma regra (identidade-cartoes.ts: corpo idêntico),
+ * para não perder o que foi salvo depois que o Recalcular leu as decisões.
+ */
 export function decisoesEmVigor(an: Analise): { raw: RawReviews; origem: string; versao: number } | null {
   const ultima = an.decisoes[0];
+  const pkg = an.atual ? pacoteDaRevisao(an.atual) : null;
+  const pRev = an.atual ? join(an.atual.dir, "revisao", "reviews.json") : null;
+  const daRevisao = pRev && existsSync(pRev) ? lerJson<RawReviews>(pRev) : null;
   if (ultima) {
-    const raw = lerJson<RawReviews & { _painel?: unknown }>(join(an.dir, "decisoes", ultima.nome));
-    const { _painel: _m, ...limpo } = raw;
-    return { raw: limpo as RawReviews, origem: ultima.rel, versao: ultima.numero };
+    const lido = lerJson<RawReviews & { _painel?: unknown }>(join(an.dir, "decisoes", ultima.nome));
+    const { _painel: _m, ...limpo } = lido;
+    const raw = limpo as RawReviews;
+    const ids = new Set(pkg?.cards.map(c => c.id) ?? []);
+    if (!pkg || (raw.decisions.length === ids.size && raw.decisions.every(d => ids.has(d.cardId)))) {
+      return { raw, origem: ultima.rel, versao: ultima.numero };
+    }
+    const origemRev = an.revisoes.find(r => r.nome === ultima.meta?.baseadaEm.revisao) ?? null;
+    const { reviews: transpostas } = mapearDecisoes(raw, pkg, origemRev ? pacoteDaRevisao(origemRev) : null, origemRev?.rel ?? "desconhecida");
+    const porId = new Map(transpostas.decisions.filter(d => ids.has(d.cardId)).map(d => [d.cardId, d]));
+    const daRev = new Map((daRevisao?.decisions ?? []).map(d => [d.cardId, d]));
+    const decisions = pkg.cards.map(c => {
+      const t = porId.get(c.id);
+      return t?.status === "reviewed" ? t : daRev.get(c.id) ?? t ?? pendingDecision(c.id);
+    });
+    return { raw: { version: raw.version, decisions } as RawReviews,
+      origem: `${an.atual!.rel}/revisao/reviews.json + ${ultima.rel} (transpostas para os ids desta revisão)`, versao: ultima.numero };
   }
-  if (!an.atual) return null;
-  const p = join(an.atual.dir, "revisao", "reviews.json");
-  return existsSync(p) ? { raw: lerJson<RawReviews>(p), origem: `${an.atual.rel}/revisao/reviews.json`, versao: 0 } : null;
+  return daRevisao ? { raw: daRevisao, origem: `${an.atual!.rel}/revisao/reviews.json`, versao: 0 } : null;
 }
 
 export const existeDiretorio = (p: string): boolean => existsSync(p) && statSync(p).isDirectory();

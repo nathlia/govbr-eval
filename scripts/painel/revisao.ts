@@ -269,6 +269,11 @@ export async function recalcular(arquivo: string, campanha: string, alvo: string
   const revDir = join(an.dir, "revisoes");
   const tmp = join(revDir, `.em-andamento-${c}`);
   const decisoes = an.decisoes[0] ? join(an.dir, "decisoes", an.decisoes[0].nome) : undefined;
+  // O pacote contra o qual essas decisões foram gravadas: é contra ele que um id antigo é transposto
+  // para o id novo (corpo idêntico; revisao/mapa-cartoes.json). Sem ele, o padrão é o da revisão atual.
+  const revDasDecisoes = an.revisoes.find(x => x.nome === an.decisoes[0]?.meta?.baseadaEm.revisao);
+  const pacoteDecisoes = revDasDecisoes && existsSync(join(revDasDecisoes.dir, "revisao", "package.json"))
+    ? join(revDasDecisoes.dir, "revisao", "package.json") : undefined;
   const registrarFalha = (motivo: string, detalhe: string | null = null): ResultadoRecalculo => {
     const fdir = join(revDir, "falhas", c);
     mkdirSync(fdir, { recursive: true });
@@ -292,7 +297,7 @@ export async function recalcular(arquivo: string, campanha: string, alvo: string
       campanha: A(rc.entradas.campanha), snapshots: A(rc.entradas.snapshots), referencia: A(rc.entradas.referencia),
       site: siteDaReceita(arquivo, an, o),
       ...(rc.entradas.semLinhaDeBase ? { semLinhaDeBase: true } : { linhaDeBase: rc.entradas.linhaDeBase ? A(rc.entradas.linhaDeBase) : undefined }),
-      arquivo, decisoes, anterior: an.atual?.dir, saida: tmp,
+      arquivo, decisoes, pacoteDecisoes, anterior: an.atual?.dir, saida: tmp,
     });
     if (r.estado === "recusada") return registrarFalha(`a análise recusou as entradas: ${r.motivo}`);
     if (!existsSync(join(tmp, "summary.json"))) return registrarFalha("a análise terminou sem summary.json");

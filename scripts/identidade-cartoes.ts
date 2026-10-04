@@ -1,0 +1,142 @@
+/**
+ * Identidade dos cartões entre recálculos (piloto-01, par-01, 2026-10-03).
+ *
+ * O id do cartão é `C-${digest({ context, body, units })}` (semantic-flow.ts) e `context.sceneHash` é
+ * um digest das cenas capturadas na página congelada. Telas reais (o `br-select` do DS) sorteiam ids
+ * em tempo de execução (`aria-controls="list-4946"` ↔ `id="list-4946"`, `list-3370` na captura
+ * seguinte): o PNG sai idêntico, o HTML não, e cada Recalcular mudava TODOS os ids — as decisões
+ * gravadas ficavam órfãs. Este módulo NÃO está em SCORER_FILES: não muda o que um cartão diz nem
+ * como ele é pontuado, só (1) o que entra no `sceneHash` e (2) a transposição auditável das decisões.
+ *
+ * (1) `normalizarIdsGerados`: um id é tratado como GERADO quando termina em dígitos E não aparece
+ * literalmente em nenhum arquivo do site congelado (então não veio do HTML/JS servido: foi montado
+ * em tempo de execução). Cada id gerado é renomeado por ordem de primeira aparição
+ * (`list-4946` → `list-#g1`), e o mesmo nome é aplicado onde ele é referenciado (`for`, `aria-*`
+ * de referência, `headers`, `list`, `form`, `href="#…"`). O prefixo fica: só um renumerar puro some
+ * do hash; texto, estrutura, atributos, quantos ids gerados existem e quem aponta para quem continuam
+ * contando. Mesmo precedente da conferência do scanner (anchors.ts `impressaoDaArvore`, "ids por
+ * contador não contam"), mais estreito: lá o id sai inteiro.
+ *
+ * (2) `mapearDecisoes`: decisão gravada com o id de OUTRO pacote só é transposta quando o cartão de
+ * lá e o daqui são iguais em tudo menos o id (corpo canônico idêntico), as unidades são idênticas e
+ * só o `sceneHash` difere no contexto (mesma referência, mesmo scorer). Corpo diferente → fica
+ * pendente. Cada transposição (e cada recusa) vai para `revisao/mapa-cartoes.json`.
+ */
+import { canonical, type RawReviews, type SemanticPackage, type SemanticReviews } from "./semantic-flow";
+
+export const REGRA_IDS_GERADOS = "id terminado em dígitos e ausente, como texto literal, de todos os arquivos do site congelado; " +
+  "renomeado por ordem de primeira aparição (prefixo mantido), também onde é referenciado (for, aria-controls, aria-labelledby, " +
+  "aria-describedby, aria-owns, aria-activedescendant, aria-flowto, aria-details, aria-errormessage, headers, list, form, href=\"#id\")";
+
+const ATRIBUTOS_DE_REFERENCIA = new Set(["for", "aria-controls", "aria-labelledby", "aria-describedby", "aria-owns",
+  "aria-activedescendant", "aria-flowto", "aria-details", "aria-errormessage", "headers", "list", "form"]);
+
+export interface IdGerado { id: string; como: string }
+
+/**
+ * HTML com os ids gerados em tempo de execução renomeados de forma estável. `noSite(id)` diz se o
+ * texto do id aparece em algum arquivo do site congelado (então não é tratado como gerado).
+ */
+export function normalizarIdsGerados(html: string, noSite: (id: string) => boolean): { html: string; ids: IdGerado[] } {
+  const nomes = new Map<string, string>();
+  for (const m of html.matchAll(/\sid="([^"]*)"/g)) {
+    const id = m[1];
+    if (nomes.has(id)) continue;
+    const p = /^(.*?)\d+$/.exec(id);
+    if (!p || noSite(id)) continue;
+    nomes.set(id, `${p[1]}#g${nomes.size + 1}`);
+  }
+  if (!nomes.size) return { html, ids: [] };
+  const trocado = html.replace(/(\s)([a-zA-Z-]+)="([^"]*)"/g, (todo, esp: string, nome: string, valor: string) => {
+    const n = nome.toLowerCase();
+    if (n === "id") return nomes.has(valor) ? `${esp}${nome}="${nomes.get(valor)}"` : todo;
+    if (n === "href") return valor.startsWith("#") && nomes.has(valor.slice(1)) ? `${esp}${nome}="#${nomes.get(valor.slice(1))}"` : todo;
+    if (!ATRIBUTOS_DE_REFERENCIA.has(n)) return todo;
+    return `${esp}${nome}="${valor.split(/(\s+)/).map(t => nomes.get(t) ?? t).join("")}"`;
+  });
+  return { html: trocado, ids: [...nomes].map(([id, como]) => ({ id, como })) };
+}
+
+/** `noSite` sobre os bytes do site congelado carregado (measurement-surface.ts `loadSite`). */
+export function presenteNoSite(arquivos: Iterable<{ body: Buffer }>): (id: string) => boolean {
+  const corpos = [...arquivos].map(f => f.body);
+  const memo = new Map<string, boolean>();
+  return id => {
+    if (!memo.has(id)) memo.set(id, corpos.some(b => b.includes(id)));
+    return memo.get(id)!;
+  };
+}
+
+// ───────────────────────────────────────────────────────────────── transposição das decisões
+
+export const MAPA_VERSAO = "mapa-cartoes-1.0.0";
+export interface MapaCartoes {
+  formato: typeof MAPA_VERSAO;
+  regra: string;
+  pacoteDasDecisoes: { origem: string; packageHash: string; context: SemanticPackage["context"] } | null;
+  contextoNovo: SemanticPackage["context"];
+  mapeados: { de: string; para: string; motivo: string }[];
+  naoMapeados: { de: string; status: string; motivo: string }[];
+}
+
+const REGRA_MAPA = "decisão com id de outro pacote é transposta só se o cartão de lá e o daqui têm o corpo canônico idêntico " +
+  "(tudo menos o id), as unidades são idênticas e o contexto difere só no sceneHash; senão fica pendente";
+
+const corpo = (c: SemanticPackage["cards"][number]): string => { const { id: _id, ...resto } = c; return canonical(resto); };
+
+/**
+ * Transpõe para os ids de `novo` as decisões de `reviews` cujo cartão não existe em `novo`, segundo
+ * a regra acima. Devolve as decisões transpostas (as que não puderam ser ficam como estavam — o
+ * `scopeReviews` as deixa de fora e o cartão novo fica pendente) e o mapa, ou `null` quando todas
+ * as decisões já são deste pacote.
+ */
+export function mapearDecisoes<R extends RawReviews | SemanticReviews>(reviews: R, novo: SemanticPackage,
+  antigo: SemanticPackage | null, origem: string): { reviews: R; mapa: MapaCartoes | null } {
+  const desta = new Set(novo.cards.map(c => c.id));
+  const fora = reviews.decisions.filter(d => !desta.has(d.cardId));
+  if (!fora.length) return { reviews, mapa: null };
+  const mapa: MapaCartoes = { formato: MAPA_VERSAO, regra: REGRA_MAPA,
+    pacoteDasDecisoes: antigo ? { origem, packageHash: antigo.packageHash, context: antigo.context } : null,
+    contextoNovo: novo.context, mapeados: [], naoMapeados: [] };
+  const recusa = (motivo: string) => {
+    mapa.naoMapeados = fora.map(d => ({ de: d.cardId, status: d.status, motivo }));
+    return { reviews, mapa };
+  };
+  if (!antigo) return recusa(`não há pacote de origem para estas decisões (${origem}); sem ele não há corpo para comparar`);
+  if (antigo.context.referenceHash !== novo.context.referenceHash) return recusa("referência diferente (referenceHash)");
+  if (antigo.context.scorerHash !== novo.context.scorerHash) return recusa("scorer diferente (scorerHash)");
+  if (canonical(antigo.units) !== canonical(novo.units)) return recusa("unidades diferentes");
+  const porCorpo = new Map(novo.cards.map(c => [corpo(c), c.id]));
+  const cartaoAntigo = new Map(antigo.cards.map(c => [c.id, c]));
+  const decididos = new Set(reviews.decisions.map(d => d.cardId).filter(id => desta.has(id)));
+  const para = new Map<string, string>();
+  const motivoDe = new Map<string, string>();
+  for (const d of fora) {
+    const velho = cartaoAntigo.get(d.cardId);
+    if (!velho) { motivoDe.set(d.cardId, "o cartão não existe no pacote de origem"); continue; }
+    const alvo = porCorpo.get(corpo(velho));
+    if (!alvo) { motivoDe.set(d.cardId, "nenhum cartão deste pacote tem o mesmo corpo (o que o cartão diz mudou): fica pendente"); continue; }
+    if (decididos.has(alvo) || [...para.values()].includes(alvo)) { motivoDe.set(d.cardId, `o cartão ${alvo} já tem decisão própria`); continue; }
+    para.set(d.cardId, alvo);
+  }
+  // Duplicata só vai junto se o cartão de que ela é duplicata também foi (ou já é deste pacote).
+  for (let mudou = true; mudou;) {
+    mudou = false;
+    for (const d of fora) {
+      if (!para.has(d.cardId)) continue;
+      const orfa = d.atoms.some(a => a.duplicateOf && !desta.has(a.duplicateOf.cardId) && !para.has(a.duplicateOf.cardId));
+      if (orfa) { para.delete(d.cardId); motivoDe.set(d.cardId, "é duplicata de um cartão que não foi transposto"); mudou = true; }
+    }
+  }
+  const out = structuredClone(reviews);
+  for (const d of out.decisions) {
+    const novoId = para.get(d.cardId);
+    if (novoId) d.cardId = novoId;
+    for (const a of d.atoms) if (a.duplicateOf && para.has(a.duplicateOf.cardId)) a.duplicateOf = { ...a.duplicateOf, cardId: para.get(a.duplicateOf.cardId)! };
+  }
+  for (const d of fora) {
+    if (para.has(d.cardId)) mapa.mapeados.push({ de: d.cardId, para: para.get(d.cardId)!, motivo: "corpo e unidades idênticos; só o sceneHash difere" });
+    else mapa.naoMapeados.push({ de: d.cardId, status: d.status, motivo: motivoDe.get(d.cardId)! });
+  }
+  return { reviews: out, mapa };
+}

@@ -51,9 +51,28 @@ export interface OpcoesFixture {
    * 2026-01-03 — os bytes de `gerado/` não mudam.
    */
   identidade?: Partial<IdentidadeFixture>;
+  /**
+   * A página monta, a cada carga, um combobox com id SORTEADO (`fx-lista-NNNN` em `id` e
+   * `aria-controls`), como o `br-select` do DS na tela real (piloto-01). Muda o site congelado.
+   */
+  idsGerados?: boolean;
 }
 export interface IdentidadeFixture { par: string; sufixo: string; dia: string; slots: { sem: string; com: string } }
 const IDENTIDADE_PADRAO: IdentidadeFixture = { par: "par-01", sufixo: "01", dia: "2026-01-03", slots: { sem: "slot-02", com: "slot-01" } };
+
+/** Combobox cujo id é sorteado a cada carga (o PNG não muda; o HTML sim). Fora de toda âncora e de todo achado. */
+const COMBO_COM_ID_SORTEADO = `  <div class="fx-combo" role="combobox" aria-expanded="false" aria-label="lista sintética"></div>
+  <script>
+    (function () {
+      var id = "fx-lista-" + Math.floor(Math.random() * 1e6);
+      var combo = document.querySelector(".fx-combo");
+      combo.setAttribute("aria-controls", id);
+      var lista = document.createElement("ul");
+      lista.id = id; lista.setAttribute("role", "listbox"); lista.hidden = true;
+      combo.appendChild(lista);
+    })();
+  </script>
+`;
 
 const estado = { viewport: { width: 1280, height: 900 }, steps: [] as string[] };
 
@@ -265,7 +284,8 @@ export function construirFixture(out: string, o: OpcoesFixture = {}) {
   };
 
   // Site congelado no formato de measurement-surface.ts (site-manifest.json + site/).
-  const html = readFileSync(join(FIXTURE_DIR, "pagina", PAGINA));
+  const original = readFileSync(join(FIXTURE_DIR, "pagina", PAGINA));
+  const html = o.idsGerados ? Buffer.from(original.toString("utf8").replace("</main>", COMBO_COM_ID_SORTEADO + "</main>"), "utf8") : original;
   w(`site/site/${PAGINA}`, html);
   const siteManifest = json({ version: SURFACE_VERSION, entry: `/${PAGINA}`, sourceDist: "fixture-sintetica",
     corpusCommit: null, corpusDirty: null, files: { [`/${PAGINA}`]: sha(html) } });

@@ -39,6 +39,7 @@ import { combinePredicate, measurePredicate, type PredicateResult } from "./acce
 import { analysisIdentity, cenasDoPlano, compareIdentities, statePlanOf, statePlanSha256 } from "./collection-manifest";
 import type { EvidenceIndex } from "./flow-contract";
 import { FLOW_INSTRUMENT_VERSION } from "./instrument";
+import { REGRA_IDS_GERADOS, mapearDecisoes, normalizarIdsGerados, presenteNoSite, type IdGerado, type MapaCartoes } from "./identidade-cartoes";
 import { createSiteServer, loadSite, type LoadedSite } from "./measurement-surface";
 import { READABLE_BASELINE_VERSIONS, type FlowBaselines } from "./run-baselines-flow";
 import { renderReview } from "./semantic-flow-render";
@@ -50,7 +51,12 @@ import {
 import { buildFlowUnits, measureStatePresence, selectorsOfGroundTruth, selectorsOfRuns, statesOfGroundTruth, type FlowUnit } from "./units-flow";
 
 export const RESUMO_VERSAO = "resumo-analise-1.0.0";
-export const ADAPTADOR_VERSAO = "adaptador-benchmark-1.0.0";
+/**
+ * 1.1.0: o `sceneHash` é calculado sobre o HTML com os ids gerados em tempo de execução normalizados
+ * (identidade-cartoes.ts) e decisões de outro pacote são transpostas por corpo idêntico
+ * (`revisao/mapa-cartoes.json`). Pontuação e conteúdo dos cartões não mudam.
+ */
+export const ADAPTADOR_VERSAO = "adaptador-benchmark-1.1.0";
 
 type Arm = "sem" | "com";
 const sha = (data: string | Buffer): string => createHash("sha256").update(data).digest("hex");
@@ -83,6 +89,11 @@ export interface OpcoesAnalise {
   /** Raiz local do repositório de arquivo, para locais `archive-repo`. */
   arquivo?: string;
   decisoes?: string;
+  /**
+   * `package.json` do pacote contra o qual `decisoes` foi gravado. Decisões com id de outro pacote só
+   * são transpostas (corpo idêntico, `revisao/mapa-cartoes.json`) contra ele. Padrão: o da `--anterior`.
+   */
+  pacoteDecisoes?: string;
   anterior?: string;
   orcamentoRevisao?: string;
   /** Também grava review-completo.md (sem cegueira). O padrão é só a renderização cega. */
@@ -285,6 +296,7 @@ function baselineRuns(baseline: FlowBaselines, build: string, steps: string[]): 
 interface PacotePreparado {
   pkg: SemanticPackage; reviews: SemanticReviews; result: ReturnType<typeof scoreSemanticPackage>; fila: ReviewQueue;
   esforco: ReviewEffort; scenes: (SceneResolution & { html: string; image: Buffer })[]; url: string; sceneHash: string;
+  idsGerados: IdGerado[][]; mapa: MapaCartoes | null;
 }
 
 /**
@@ -295,6 +307,8 @@ interface PacotePreparado {
 async function prepararPacote(a: {
   gt: FlowGroundTruth; site: LoadedSite; agentes: PrepareRun[]; baseline: FlowBaselines | null; provenance: unknown;
   anterior?: SemanticReviews; orcamento?: string;
+  /** Pacote contra o qual `anterior` foi gravado (para transpor decisões por corpo idêntico) e de onde veio. */
+  pacoteAnterior?: { pkg: SemanticPackage | null; origem: string };
 }): Promise<PacotePreparado> {
   const { gt } = a;
   const plan = statePlanOf(gt);
@@ -359,16 +373,26 @@ async function prepararPacote(a: {
         html: await page.content(), image: await page.screenshot({ fullPage: true }) });
       await context.close();
     }
-    const sceneHash = digest({ setup: gt._meta.setup ?? [], scenes: scenes.map(s => ({
-      id: s.id, viewport: s.viewport, html: s.html, image: s.image.toString("base64") })) });
+    // Ids sorteados em tempo de execução (br-select do DS: list-4946 → list-3370) não entram no hash:
+    // sem isso cada recálculo muda todos os ids de cartão (identidade-cartoes.ts).
+    const noSite = presenteNoSite(a.site.files.values());
+    const normalizadas = scenes.map(s => normalizarIdsGerados(s.html, noSite));
+    const sceneHash = digest({ setup: gt._meta.setup ?? [], scenes: scenes.map((s, i) => ({
+      id: s.id, viewport: s.viewport, html: normalizadas[i].html, image: s.image.toString("base64") })) });
     const scorerHash = analysisIdentity().scorerSha256;
     const montar = (carriedOverPending: string[]): SemanticPackage => prepareSemanticPackage(
       { referenceHash: digest(gt), sceneHash, scorerHash }, units, scenes, allRuns,
       { provenance: a.provenance, stateOrder: statesOfGroundTruth(gt)?.map(s => s.id) ?? [], carriedOverPending, reviewBudget: a.orcamento });
-    const pkg = montar(historicalPending(montar([]), a.anterior));
-    const reviews = scopeReviews(pkg, a.anterior);
+    const inicial = montar([]);
+    // Decisão gravada com o id de outro pacote: transposta só se o cartão é o mesmo em tudo menos o id.
+    const transposto = a.anterior
+      ? mapearDecisoes(a.anterior, inicial, a.pacoteAnterior?.pkg ?? null, a.pacoteAnterior?.origem ?? "sem pacote de origem informado")
+      : { reviews: undefined, mapa: null };
+    const pkg = montar(historicalPending(inicial, transposto.reviews));
+    const reviews = scopeReviews(pkg, transposto.reviews);
     const result = scoreSemanticPackage(pkg, reviews);
-    return { pkg, reviews, result, fila: reviewQueue(pkg, reviews), esforco: reviewEffort(pkg), scenes, url, sceneHash };
+    return { pkg, reviews, result, fila: reviewQueue(pkg, reviews), esforco: reviewEffort(pkg), scenes, url, sceneHash,
+      idsGerados: normalizadas.map(n => n.ids), mapa: transposto.mapa };
   } finally {
     try { await browser?.close(); } finally {
       await new Promise<void>(done => {
@@ -713,8 +737,14 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
         : { mode: lb.binding.mode, ...(lb.binding.mode === "planned-absence" ? { justification: lb.binding.justification } : {}) },
       analysis: identity,
     };
+    const pacoteDecisoes = o.pacoteDecisoes ? resolve(o.pacoteDecisoes)
+      : o.anterior && existsSync(join(resolve(o.anterior), "revisao", "package.json")) ? join(resolve(o.anterior), "revisao", "package.json") : null;
     prep = await prepararPacote({ gt, site, agentes: pacotes.filter(pontuavel).map(adaptarExecucao),
-      baseline: lb.binding.mode === "used" ? lb.bruto : null, provenance, anterior: decisoes, orcamento: o.orcamentoRevisao });
+      baseline: lb.binding.mode === "used" ? lb.bruto : null, provenance, anterior: decisoes, orcamento: o.orcamentoRevisao,
+      pacoteAnterior: decisoes ? {
+        pkg: pacoteDecisoes && existsSync(pacoteDecisoes) ? lerJson<SemanticPackage>(pacoteDecisoes, "pacote das decisões") : null,
+        origem: pacoteDecisoes ? relDe(saida, pacoteDecisoes) : "nenhum (sem --pacote-decisoes e --anterior sem revisao/package.json)",
+      } : undefined });
   }
 
   // ── bindings finais ──────────────────────────────────────────────────────
@@ -790,7 +820,10 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     put("revisao/esforco-revisao.json", json(prep.esforco));
     put("revisao/capture.json", json({ capturedAt: new Date().toISOString(), url: new URL(prep.url).pathname, sceneHash: prep.sceneHash,
       kind: "reconstrução no momento da análise do site congelado do conjunto de snapshots; não é evidência original da execução",
-      scenes: prep.scenes.map((s, i) => ({ id: s.id, viewport: s.viewport, specIds: s.specIds, html: `scene-${i}.html`, image: `scene-${i}.png` })) }));
+      sceneHashIgnora: REGRA_IDS_GERADOS,
+      scenes: prep.scenes.map((s, i) => ({ id: s.id, viewport: s.viewport, specIds: s.specIds, html: `scene-${i}.html`, image: `scene-${i}.png`,
+        idsGerados: prep!.idsGerados[i] })) }));
+    if (prep.mapa) put("revisao/mapa-cartoes.json", json(prep.mapa));
     prep.scenes.forEach((s, i) => {
       put(`revisao/resolution-${i}.json`, json({ scene: s.id, url: new URL(s.resolution.url).pathname,
         bySelector: Object.fromEntries(s.resolution.bySelector), byKey: Object.fromEntries(s.resolution.byKey) }));
@@ -1102,7 +1135,7 @@ function lerArgs(argv: string[]): OpcoesAnalise {
     campanha: req("campanha"), snapshots: req("snapshots"), referencia: req("referencia"), site: req("site"),
     linhaDeBase: val("linha-de-base"), semLinhaDeBase: argv.includes("--sem-linha-de-base"),
     tipo: tipo as OpcoesAnalise["tipo"], manifestoAnalise: val("manifesto-analise"), bateriaDesignada: val("bateria-designada"),
-    justificativa: val("justificativa"), arquivo: val("arquivo"), decisoes: val("decisoes"), anterior: val("anterior"),
+    justificativa: val("justificativa"), arquivo: val("arquivo"), decisoes: val("decisoes"), pacoteDecisoes: val("pacote-decisoes"), anterior: val("anterior"),
     orcamentoRevisao: val("orcamento-revisao"), revisaoCompleta: argv.includes("--revisao-completa"), saida: req("saida"),
   };
 }
@@ -1110,7 +1143,7 @@ function lerArgs(argv: string[]): OpcoesAnalise {
 const USO_CLI = `Uso: npm run analisar -- (--pacote DIR | --sem DIR --com DIR) --campanha campaign.json --snapshots snapshot-manifest.json
          --referencia referencia.json --site DIR_SITE (--linha-de-base baseline.json | --sem-linha-de-base) --saida PASTA_NOVA
          [--tipo individual|composta --manifesto-analise F --bateria-designada ID --justificativa TEXTO] [--arquivo RAIZ_DO_ARQUIVO]
-         [--decisoes reviews.json] [--anterior PASTA_DA_REVISAO_ANTERIOR] [--orcamento-revisao TEXTO] [--revisao-completa]`;
+         [--decisoes reviews.json [--pacote-decisoes package.json]] [--anterior PASTA_DA_REVISAO_ANTERIOR] [--orcamento-revisao TEXTO] [--revisao-completa]`;
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   (async () => {
