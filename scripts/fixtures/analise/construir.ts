@@ -56,7 +56,14 @@ export interface OpcoesFixture {
    * `aria-controls`), como o `br-select` do DS na tela real (piloto-01). Muda o site congelado.
    */
   idsGerados?: boolean;
+  /**
+   * Referência com camada de página (D-83): FX-01/FX-02 viram A-01/A-02 (sorteadas) e FX-03 vira P-01 (página).
+   * Mesmas âncoras; só os ids mudam. Padrão desligado — os bytes de `gerado/` não mudam.
+   */
+  camadaPagina?: boolean;
 }
+const IDS_CAMADA: Record<string, string> = { "FX-01": "A-01", "FX-02": "A-02", "FX-03": "P-01" };
+const idDaSpec = (o: OpcoesFixture, id: string): string => (o.camadaPagina ? IDS_CAMADA[id] ?? id : id);
 export interface IdentidadeFixture { par: string; sufixo: string; dia: string; slots: { sem: string; com: string } }
 const IDENTIDADE_PADRAO: IdentidadeFixture = { par: "par-01", sufixo: "01", dia: "2026-01-03", slots: { sem: "slot-02", com: "slot-01" } };
 
@@ -257,7 +264,7 @@ function bruto(o: OpcoesFixture, identity: Baseline["identity"], coleta: { path:
     provenance: { collectionManifest: coleta, identity, corpus: { commit: null, dirty: null }, validatorVersion: null,
       tools: { axe: null, playwright: null } },
     passes: falha ? [] : [{
-      id: "1280x900", viewport, specs: ["FX-01", "FX-02", "FX-03"], startedAt: "2026-01-03T01:00:01Z", seconds: 2,
+      id: "1280x900", viewport, specs: ["FX-01", "FX-02", "FX-03"].map(id => idDaSpec(o, id)), startedAt: "2026-01-03T01:00:01Z", seconds: 2,
       axe: { violations: 1, passes: 0, incomplete: [], seconds: 1,
         findings: [{ rule: "label", impact: "critical", description: "Campo sem rótulo (texto sintético da fixture).", target: "#fx-campo" }] },
       validator: { guided: null, unguided: { mode: "nao-guiada", policy: UNGUIDED_POLICY,
@@ -291,7 +298,8 @@ export function construirFixture(out: string, o: OpcoesFixture = {}) {
     corpusCommit: null, corpusDirty: null, files: { [`/${PAGINA}`]: sha(html) } });
   const site = w("site/site-manifest.json", siteManifest);
 
-  const refBytes = readFileSync(join(FIXTURE_DIR, "referencia-fixture.json"));
+  const refOriginal = readFileSync(join(FIXTURE_DIR, "referencia-fixture.json"));
+  const refBytes = o.camadaPagina ? Buffer.from(refOriginal.toString("utf8").replace(/"id": "(FX-0\d)"/g, (_m, id: string) => `"id": "${idDaSpec(o, id)}"`), "utf8") : refOriginal;
   const ref = w("referencia.json", refBytes);
   const plan = statePlanOf(JSON.parse(refBytes.toString("utf8")) as FlowGroundTruth);
   const planSha = statePlanSha256(plan)!;

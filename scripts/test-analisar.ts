@@ -153,6 +153,9 @@ async function main(): Promise<void> {
       assert.match(md, /n = 1 par, sem inferência/);
       assert.doesNotMatch(md, /vencedor|ganhou|melhor braço/i);
       assert.match(md, /Diferença de recall \(com − sem\): \+33,3 p\.p\./);
+      // referência sem specs P-* (como a 1.0.0): nenhuma quebra por camada, nem no JSON nem no texto
+      for (const e of r.resumo.execucoes) assert.equal("camadas" in e.pontuacao, false);
+      assert.doesNotMatch(md, /Sorteadas × página/);
       // ordem do resumo: status → identidade → científico → comparação → MCP → custo → detalhes
       const ordem = ["## 1. Status técnico", "## 2. Identidade", "## 3. Resultado científico", "## 4. Comparação com − sem",
         "## 5. MCP e isolamento", "## 6. Custo e tempo", "## 7. Detalhes e evidências"].map(h => md.indexOf(h));
@@ -160,6 +163,32 @@ async function main(): Promise<void> {
       // o pacote bruto não foi tocado
       const man = readJson<ArtifactManifest>(join(fx.sem, "artifact-manifest.json"));
       for (const f of man.files) assert.equal(sha(readFileSync(join(fx.sem, f.path))), f.sha256);
+    });
+
+    await test("camada de página (D-83): sorteadas (A-*) × página (P-*) por braço, recall só com revisão fechada", async () => {
+      const fxp = fixture({ camadaPagina: true });
+      const r1 = await analisar(opcoes(fxp));
+      for (const e of r1.resumo.execucoes) {
+        assert.equal(e.pontuacao.camadas!.sorteadas.total, 2);
+        assert.equal(e.pontuacao.camadas!.pagina.total, 1);
+        assert.equal(e.pontuacao.camadas!.sorteadas.recall, null);
+        assert.equal(e.pontuacao.camadas!.pagina.recall, null);
+      }
+      assert.ok(readFileSync(join(r1.saida, "summary.md"), "utf8").includes("| Sorteadas × página (A-\\* × P-\\*) | A-\\*: 0 de 2 (até agora) · indisponível"));
+      const decisoes = decidir(r1.saida, {
+        "fixture-analise-run-sem-01": { "#fx-campo": "gabarito", ".fx-aviso": "incorreta" },
+        "fixture-analise-run-com-01": { "#fx-campo": "gabarito", "#fx-botao": "gabarito", "#fx-titulo": "novo" },
+      });
+      const r = await analisar(opcoes(fxp, { decisoes, anterior: r1.saida }));
+      assert.deepEqual(execDe(r.resumo, "sem").pontuacao.camadas, {
+        sorteadas: { prefixo: "A-", confirmadas: 1, total: 2, recall: 0.5 }, pagina: { prefixo: "P-", confirmadas: 0, total: 1, recall: 0 } });
+      assert.deepEqual(execDe(r.resumo, "com").pontuacao.camadas, {
+        sorteadas: { prefixo: "A-", confirmadas: 2, total: 2, recall: 1 }, pagina: { prefixo: "P-", confirmadas: 0, total: 1, recall: 0 } });
+      // a camada só reparte: o total continua o mesmo
+      assert.equal(execDe(r.resumo, "com").pontuacao.metricas.confirmedReferenceUnits, 2);
+      const md = readFileSync(join(r.saida, "summary.md"), "utf8");
+      assert.ok(md.includes("A-\\*: 1 de 2 · 50,0% × P-\\*: 0 de 1 · 0,0%"), "camada no braço sem");
+      assert.ok(md.includes("A-\\*: 2 de 2 · 100,0% × P-\\*: 0 de 1 · 0,0%"), "camada no braço com");
     });
 
     await test("texto do modelo é escapado no summary.md (sem HTML ativo, sem autolink externo)", () => {

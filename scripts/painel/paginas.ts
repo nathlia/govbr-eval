@@ -315,6 +315,12 @@ function faixaCampanha(c: InfoCampanha): string {
   return `<div class="faixa ${c.natureza === "ensaio" ? "ensaio" : "calibracao"}" role="note">${esc(c.natureza === "ensaio" ? "Ensaio — não é dado científico." : c.natureza === "calibracao" ? "Calibração (D-67) — não é resultado." : c.rotulo)}<small>${esc(c.explicacao)}</small></div>`;
 }
 
+/** Uma camada da referência (D-83): só prefixo do id e números. */
+function camadaTexto(c: { prefixo: string; confirmadas: number | null; total: number | null; recall: number | null }, final: boolean): string {
+  if (c.confirmadas === null) return `${c.prefixo}*: indisponível`;
+  return `${c.prefixo}*: ${c.confirmadas} de ${c.total ?? "?"}${final ? "" : " até agora"} · recall ${c.recall === null ? "indisponível" : pct(c.recall)}`;
+}
+
 function cartaoBraco(a: Arm, b: ResultadoBraco | undefined, x: LinhaExecucao | undefined, final: boolean): string {
   if (!b) return `<div class="braco ${a}"><div class="rotulo">${esc(BRACO_T[a])}</div><p class="sub">Sem números deste braço nesta análise.</p></div>`;
   const id = x ? `<a class="id-exec" href="${esc(x.url)}">${esc(x.id)}</a>` : b.id ? `<span class="mono">${esc(b.id)}</span>` : "";
@@ -322,7 +328,8 @@ function cartaoBraco(a: Arm, b: ResultadoBraco | undefined, x: LinhaExecucao | u
 <div class="rotulo">${esc(BRACO_T[a])} ${id}</div>
 <div class="grande">${b.confirmadas === null ? "—" : esc(b.confirmadas)} <small>de ${esc(b.total ?? "?")} defeitos da referência confirmados${final ? "" : " até agora"}</small></div>
 <p class="sub">Recall ${b.recall === null ? "indisponível enquanto a revisão está aberta (não é 0)" : esc(pct(b.recall))}</p>
-<dl>
+${b.camadas ? `<p class="sub">Sorteadas × página: ${esc(camadaTexto(b.camadas.sorteadas, final))} × ${esc(camadaTexto(b.camadas.pagina, final))}</p>
+` : ""}<dl>
 <dt>Achados enviados</dt><dd>${b.achados === null ? "nenhum relatório aceito" : b.achados === 0 ? "0 (lista vazia aceita)" : esc(b.achados)}</dd>
 <dt>Cartões pendentes</dt><dd>${esc(b.pendentes ?? "indisponível")}</dd>
 <dt>Precisão</dt><dd>${esc(pct(b.precisao))}</dd>

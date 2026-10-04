@@ -911,6 +911,34 @@ await teste("NAT-58: placar no topo da página inicial — com × sem dos finais
   assert.ok(!/#fx-|Defeito sintético/.test(placar), "nada da referência no placar");
 });
 
+await teste("camada de página (D-83): par e RESULTADOS.md mostram sorteadas × página só quando a referência tem P-*", async () => {
+  // referência sem P-* (o arquivo principal): nada muda
+  assert.doesNotMatch((await req(`/par/${C}/par-01`)).corpo.toString("utf8"), /Sorteadas × página/);
+  assert.doesNotMatch(readFileSync(join(arquivo, "RESULTADOS.md"), "utf8"), /sorteadas × página/);
+  // referência com P-01: FX-01/02 → A-01/02, FX-03 → P-01
+  const arqCamada = join(TMP, "arquivo-camada");
+  await construirArquivoFixture(arqCamada, { camadaPagina: true });
+  const rv = lerAnalise(arqCamada, C, "par-01")!.atual!;
+  const camadas = Object.fromEntries(rv.resumo.execucoes.map(e => [e.braco, e.pontuacao.camadas!]));
+  for (const c of Object.values(camadas)) { assert.equal(c.sorteadas.total, 2); assert.equal(c.pagina.total, 1); }
+  const srv: Server = criarPainel({ arquivo: arqCamada, revisora: "" });
+  const pt = await escutar(srv, 0);
+  try {
+    const html = await (await fetch(`http://127.0.0.1:${pt}/par/${C}/par-01`)).text();
+    const final = rv.resumo.comparacao?.estado === "final";
+    for (const c of Object.values(camadas)) {
+      const t = (x: typeof c.sorteadas) => `${x.prefixo}*: ${x.confirmadas} de ${x.total}${final ? "" : " até agora"} · recall `;
+      assert.ok(html.includes(`Sorteadas × página: ${t(c.sorteadas)}`), "camada sorteada no cartão do braço");
+      assert.ok(html.includes(` × ${t(c.pagina)}`), "camada de página no cartão do braço");
+    }
+  } finally { srv.close(); }
+  const { gerarResultados } = await import("./painel/resultados");
+  const md = gerarResultados(arqCamada, new Date("2020-01-01T00:00:00Z"));
+  const linha = md.split("\n").find(l => l.startsWith("| par-01 |"))!;
+  for (const c of Object.values(camadas)) assert.ok(linha.includes(`sorteadas × página: A-\\* ${c.sorteadas.confirmadas}/2`) && linha.includes(` × P-\\* ${c.pagina.confirmadas}/1`), linha);
+  assert.ok(!/#fx-|Defeito sintético/.test(md), "nada além de números e prefixos");
+});
+
 await teste("hash de SCORER_FILES intacto", () => {
   assert.equal(analysisIdentity().scorerSha256, SCORER_SHA);
 });

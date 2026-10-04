@@ -97,10 +97,13 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
     `govbr-corpus/public/real/`, e as auditorias por medição dela e do `pnip-login` ficam em
     `tela-b/` (e `tela-b/login/`) como registro; `tela-b/comum.mjs` guarda os externos e ausentes
     que `telas.json` declarava, para que continuem reproduzíveis.
-  - **Tela A (`solicitacao`)**: `ground-truth-solicitacao.json` (12 specs, 14 unidades, 3 estados).
-    As specs vieram de SORTEIO — procedimento em `docs/tela-a-procedimento-sorteio.md`, tudo o mais
+  - **Tela A (`solicitacao`)**: `ground-truth-solicitacao.json` 2.0.0 (14 specs, 16 unidades, 3 estados):
+    12 specs `A-*` / 14 unidades sorteadas + camada de página `P-01`/`P-02` (D-83, não sorteada,
+    `tela-a/restricoes-pagina.md`; recall sempre reportado separado). O `piloto-01` fica na 1.0.0.
+    As specs `A-*` vieram de SORTEIO — procedimento em `docs/tela-a-procedimento-sorteio.md`, tudo o mais
     em `tela-a/` (inventário, elegibilidade, sorteio, registro da construção, conferência sem
-    modelo). Não edite specs à mão: a referência só muda por descarte previsto no procedimento.
+    modelo). Não edite specs à mão: a referência só muda por descarte previsto no procedimento ou por decisão
+    registrada (D-83, procedimento §6).
 - `adjudications.json` — human verdicts on findings that matched no expected unit (D-21).
   `npm run adjudicate` (`--emit` semeia stubs, `--blind` julga sem ver o braço). Um veredito sem
   `rationale` não é aplicado. `npm run score` imprime **piso** e **adjudicado**, nunca um no lugar

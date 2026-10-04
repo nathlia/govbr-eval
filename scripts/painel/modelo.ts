@@ -483,6 +483,8 @@ export interface ResultadoBraco {
   runId: string; id: string | null; confirmadas: number | null; total: number | null; recall: number | null; precisao: number | null;
   incorretas: number | null; novas: number | null; pendentes: number | null; achados: number | null; maturidade: string;
   segundos: number | null; custoUsd: number | null;
+  /** Só com referência de camada de página (D-83): sorteadas (A-*) × página (P-*), de summary.json → pontuacao.camadas. */
+  camadas?: NonNullable<Resumo["execucoes"][number]["pontuacao"]["camadas"]>;
 }
 export interface ResultadoPar {
   revisao: string; fonte: string; geradoEm: string; estado: string | null; disponivel: boolean; motivo: string | null; nota: string;
@@ -498,7 +500,8 @@ export function resultadoDaRevisao(rv: Revisao, ids: Map<string, string> = new M
     const m = e.pontuacao.metricas;
     bracos[e.braco] = { runId: e.runId, id: ids.get(e.runId) ?? null, confirmadas: m.confirmedReferenceUnits, total: m.referenceUnits, recall: m.recall,
       precisao: m.precision, incorretas: m.incorrectClaims, novas: m.newCorrect, pendentes: m.pending, achados: e.achados ? e.achados.total : null,
-      maturidade: e.pontuacao.estado, segundos: medido(e.custoTempo?.wallClockSeconds), custoUsd: medido(e.custoTempo?.estimatedCostUsd) };
+      maturidade: e.pontuacao.estado, segundos: medido(e.custoTempo?.wallClockSeconds), custoUsd: medido(e.custoTempo?.estimatedCostUsd),
+      ...(e.pontuacao.camadas ? { camadas: e.pontuacao.camadas } : {}) };
   }
   return { revisao: rv.nome, fonte: `${rv.rel}/summary.json`, geradoEm: rv.resumo.geradoEm, estado: c?.estado ?? null, disponivel: Boolean(c?.disponivel),
     motivo: c?.motivo ?? null, nota: c?.nota ?? "análise de uma execução só: não há comparação",

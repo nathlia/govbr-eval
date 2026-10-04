@@ -1,7 +1,8 @@
 {
   "_meta": {
-    "version": "1.0.0",
-    "version_note": "1.0.0 (2026-09-18, fatia 8 / D-49): primeira referência da tela A. As 12 specs NÃO foram escolhidas: saíram do sorteio em tela-a/sorteio.json (semente d6ed93fd095b93e9a45a3145fafac702494fe822, o commit que congelou o procedimento em docs/tela-a-procedimento-sorteio.md). Regra, hospedeiro, variante e quais são compartilhadas vêm de lá; o que a construção ainda precisou decidir está em tela-a/construcao.md. 12 specs, 14 unidades (A-04 e A-08 valem duas: os dois selects). Congelada ANTES de qualquer execução de modelo sobre a tela e antes de anotar quais regras o oráculo verifica.",
+    "version": "2.0.0",
+    "version_note": "2.0.0 (2026-10-03, D-83): acrescenta a CAMADA DE PÁGINA — specs P-01 e P-02, 2 unidades — às 12 specs e 14 unidades sorteadas, que ficam idênticas. As specs P-* NÃO foram sorteadas: vêm de uma omissão da construção (a tela foi feita sem as áreas de cabeçalho e rodapé do Template Base, procedimento §1 e §5), conhecida antes de medir, e entram por decisão da autora (D-83). Regra de inclusão escrita antes da medição e tirada só da documentação pública do Template Base (áreas obrigatórias: cabeçalho, conteúdo, rodapé); fonte, citações, medidas e vereditos em tela-a/restricoes-pagina.md. Recall da 2.0.0 se reporta sempre separado: sorteadas (A-*, 14 unidades) × página (P-*, 2 unidades). Números da 1.0.0 (piloto-01) e da 2.0.0 nunca formam série. | 1.0.0 (2026-09-18, fatia 8 / D-49): primeira referência da tela A. As 12 specs NÃO foram escolhidas: saíram do sorteio em tela-a/sorteio.json (semente d6ed93fd095b93e9a45a3145fafac702494fe822, o commit que congelou o procedimento em docs/tela-a-procedimento-sorteio.md). Regra, hospedeiro, variante e quais são compartilhadas vêm de lá; o que a construção ainda precisou decidir está em tela-a/construcao.md. 12 specs, 14 unidades (A-04 e A-08 valem duas: os dois selects). Congelada ANTES de qualquer execução de modelo sobre a tela e antes de anotar quais regras o oráculo verifica.",
+    "camada_pagina": "Specs com id P-* são a camada de página (D-83): não sorteadas, escopo página, estado sempre. Specs com id A-* são as sorteadas (tela-a/sorteio.json). O prefixo do id é a marca da camada — types.ts entra no hash do scorer, por isso não há campo novo na spec.",
     "page": "Solicitar serviço — tela A da fatia 8 (D-49)",
     "url": "/solicitacao.html",
     "waitFor": ".linhas-anteriores tr",
@@ -182,6 +183,26 @@
         "kind": "atributos-ausentes",
         "attributes": ["aria-current"]
       }
+    },
+    {
+      "id": "P-01",
+      "anchor": "header.barra-superior",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [],
+      "categories": ["estrutura"],
+      "description": "Camada de página (D-83) · não sorteada · área de cabeçalho. A região de cabeçalho da página é um <header> que contém só a marca gov.br (um link); o componente Header do DS não é usado nessa área. Sem predicado na referência; medido em tela-a/restricoes-pagina.md."
+    },
+    {
+      "id": "P-02",
+      "anchor": "body",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [],
+      "categories": ["estrutura"],
+      "description": "Camada de página (D-83) · não sorteada · área de rodapé. A página não tem área de rodapé: nenhum componente Footer do DS e nenhuma região de rodapé (footer ou contentinfo), em estado algum. A âncora é o documento porque a área ausente não tem elemento. Sem predicado na referência; medido em tela-a/restricoes-pagina.md."
     }
   ]
 }

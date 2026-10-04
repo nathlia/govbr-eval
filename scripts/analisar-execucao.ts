@@ -485,6 +485,21 @@ function avaliarLinhaDeBase(o: OpcoesAnalise, ctx: {
 
 // ───────────────────────────────────────────────────────────────── resumo
 
+/** Unidades de uma camada da referência, pelo prefixo do id da spec. `recall` só com o recall total disponível (revisão fechada). */
+export interface CamadaResumo { prefixo: "A-" | "P-"; confirmadas: number | null; total: number | null; recall: number | null }
+export const PREFIXO_PAGINA = "P-", PREFIXO_SORTEADAS = "A-";
+export const temCamadaPagina = (gt: { violations: { id: string }[] }): boolean => gt.violations.some(v => v.id.startsWith(PREFIXO_PAGINA));
+
+function camadasDe(s: SemanticRunScore | null, recallDisponivel: boolean): NonNullable<ExecucaoResumo["pontuacao"]["camadas"]> {
+  const camada = (prefixo: "A-" | "P-"): CamadaResumo => {
+    if (!s) return { prefixo, confirmadas: null, total: null, recall: null };
+    const fs = s.families.filter(f => f.specId.startsWith(prefixo));
+    const confirmadas = fs.reduce((n, f) => n + f.detected, 0), total = fs.reduce((n, f) => n + f.total, 0);
+    return { prefixo, confirmadas, total, recall: recallDisponivel && total ? confirmadas / total : null };
+  };
+  return { sorteadas: camada(PREFIXO_SORTEADAS), pagina: camada(PREFIXO_PAGINA) };
+}
+
 export interface MetricaResumo { valor: number | null; estado: "medido" | "indisponivel" | "nao-se-aplica"; fonte: string | null }
 export interface ExecucaoResumo {
   runId: string; braco: Arm;
@@ -496,7 +511,12 @@ export interface ExecucaoResumo {
   pontuacao: { estado: ScoreStatus; motivo: string | null; metricas: AnalysisMetrics;
     detalhe: { cartoes: number; afirmacoesPendentes: number; duplicadas: number; redundantes: number;
       precisaoAfirmacoes: number | null; recallConfirmadoAteAgora: number | null; citacaoSustentada: number | null } | null;
-    linhaDeBase: BaselineComparison["counts"] & { estado: BaselineComparison["status"] } | null };
+    linhaDeBase: BaselineComparison["counts"] & { estado: BaselineComparison["status"] } | null;
+    /**
+     * Só quando a referência tem specs `P-*` (camada de página, D-83): unidades sorteadas (`A-*`) e de página (`P-*`)
+     * contadas à parte, das famílias do score.json. Ausente nas referências sem camada de página (1.0.0 inalterada).
+     */
+    camadas?: { sorteadas: CamadaResumo; pagina: CamadaResumo } };
   mcpIsolamento: { isolamento: Run["status"]["isolation"]; protocolo: Run["status"]["protocol"]; usoOraculo: Run["status"]["oracleUsage"];
     oraculoAnunciado: boolean | null; oraculo: Run["intervention"]["oracle"]; chamadasOraculo: MetricaResumo;
     ferramentasAnunciadas: string[] | null; ferramentasObservadas: string[] | null; errosDeFerramenta: MetricaResumo;
@@ -783,7 +803,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   const unidades = new Map((prep?.pkg.units ?? []).map(u => [u.id, { unitId: u.id, specId: u.specId, elemento: u.element.label }]));
   const exec = pacotes.map(p => execucaoResumo(p, saida, bindings.get(p.run.arm)!, scoreDe(p.run.runId), cartoesDe(p.run.runId),
     prep?.result.comparisons.find(c => c.agentRunId === p.run.runId && c.baseline === "uniao-deterministica") ?? null, pontuavel(p) ? null
-      : p.run.submission.status !== "accepted" ? submissaoMotivo(p.run) : "isolamento falhou: execução em quarentena"));
+      : p.run.submission.status !== "accepted" ? submissaoMotivo(p.run) : "isolamento falhou: execução em quarentena", temCamadaPagina(gt)));
   const comparacao = par ? compararPar(exec, prep, unidades, bloqueada) : null;
   const pendentes = prep ? prep.fila.ativa.cartoes : 0;
   const resumoSemHash: Omit<Resumo, "hashes"> = {
@@ -853,7 +873,7 @@ function submissaoMotivo(run: Run): string {
 }
 
 function execucaoResumo(p: PacoteLido, saida: string, b: AnalysisBinding, s: SemanticRunScore | null, cartoes: number,
-  comp: BaselineComparison | null, motivoSemPontuacao: string | null): ExecucaoResumo {
+  comp: BaselineComparison | null, motivoSemPontuacao: string | null, comCamadas = false): ExecucaoResumo {
   const { run, isolation, findings, manifest } = p;
   const link = (path: string | null) => path ? relDe(saida, join(p.dir, path)) : null;
   return {
@@ -868,7 +888,8 @@ function execucaoResumo(p: PacoteLido, saida: string, b: AnalysisBinding, s: Sem
       detalhe: s && b.status === "ready" ? { cartoes, afirmacoesPendentes: s.counts.unresolvedAssertions, duplicadas: s.counts.duplicateAssertions,
         redundantes: s.counts.redundantReferenceAssertions, precisaoAfirmacoes: s.metrics.assertionPrecision,
         recallConfirmadoAteAgora: s.metrics.confirmedReferenceRecall, citacaoSustentada: s.metrics.citationSupport } : null,
-      linhaDeBase: comp && b.status === "ready" ? { ...comp.counts, estado: comp.status } : null },
+      linhaDeBase: comp && b.status === "ready" ? { ...comp.counts, estado: comp.status } : null,
+      ...(comCamadas ? { camadas: camadasDe(s && b.status === "ready" ? s : null, b.metrics.recall !== null) } : {}) },
     mcpIsolamento: { isolamento: run.status.isolation, protocolo: run.status.protocol, usoOraculo: run.status.oracleUsage,
       oraculoAnunciado: isolation?.toolInventory.oracleAnnounced ?? null, oraculo: run.intervention.oracle,
       chamadasOraculo: metrica(run.usage.oracleCalls),
@@ -1027,6 +1048,12 @@ export function renderResumo(r: Resumo): string {
     };
     L.push(`| Defeitos da referência confirmados ${m(confirmadas)}`);
     L.push(`| Recall (cobertura da referência) ${m(e => pct(e.pontuacao.metricas.recall))}`);
+    if (execs.some(e => e.pontuacao.camadas)) {
+      const camada = (c: CamadaResumo, fim: boolean) => c.confirmadas === null ? `${c.prefixo}\\*: indisponível`
+        : `${c.prefixo}\\*: ${c.confirmadas} de ${c.total}${fim ? "" : " (até agora)"} · ${pct(c.recall)}`;
+      L.push(`| Sorteadas × página (A-\\* × P-\\*) ${m(e => e.pontuacao.camadas
+        ? `${camada(e.pontuacao.camadas.sorteadas, e.pontuacao.estado === "final")} × ${camada(e.pontuacao.camadas.pagina, e.pontuacao.estado === "final")}` : "—")}`);
+    }
     L.push(`| Precisão sobre a referência — D/(D+F) ${m(e => pct(e.pontuacao.metricas.precision))}`);
     L.push(`| Precisão das afirmações — (D+N)/(D+N+F) ${m(e => pct(e.pontuacao.detalhe?.precisaoAfirmacoes ?? null))}`);
     L.push(`| Afirmações incorretas (falsos positivos) ${m(e => num(e.pontuacao.metricas.incorrectClaims))}`);

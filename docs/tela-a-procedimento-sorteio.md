@@ -226,3 +226,35 @@ discards. Committed **before** the screen is built.
   `html lang`, one `h1`, a `main` region, and the scaffold's skip link and breadcrumb — so screen A
   says nothing about them either.
 - A constructed screen remains a constructed screen; screen B answers the other question.
+
+---
+
+## 6. Camada de página (2.0.0)
+
+**Decision:** D-83 (the author's, 2026-10-04; the assistant had recommended adding header and footer
+to the screen instead). **Plan:** `thesis-workspace/planejamento/atual/plano-referencia-tela-a-2-2026-10-04.md`.
+
+The screen was built without header and footer on purpose (§ 1), and page-level rules were declared
+outside the population (§ 5). Reference 2.0.0 adds a **page layer** on top of the drawn specs; it
+does not reopen the draw.
+
+- **Not drawn.** The page-layer units come from a construction omission known before measuring.
+  They are marked by the spec id prefix `P-` (drawn specs keep `A-`); no new field, because
+  `types.ts` is part of the scorer hash. `_meta.camada_pagina` says the same.
+- **Inclusion rule, written before measuring:** the areas the public gov.br DS "Template Base" page
+  (<https://www.gov.br/ds/templates/base>) declares *Obrigatório* — header, content, footer. Each one
+  absent or non-conforming on the frozen page becomes one page-scope spec (`sempre`, S0) with a
+  measured anchor and a neutral description. Breadcrumb and menu are *Opcional* in that text, and
+  the skip link is outside its anatomy table: none of them is judged.
+- **Blindness.** Building the layer did not open the validator's `src/` or `data/`,
+  `checker-aliases.json`, `kb-aliases.json`, `results/`, `reports/`, `govbr-resultados` or
+  `ds-rules/`.
+- **Result** (measured on `govbr-telas-site-1a6e8daf3cdb`, 1280×900): header **non-conforming** (a
+  `header` with only the gov.br mark, no Header component) → **P-01**; content present and
+  conforming; footer **absent** → **P-02** (anchored on `body`). 14 specs, 16 units (14 drawn + 2
+  page). Source quotes, measurements and verdicts: `tela-a/restricoes-pagina.md`.
+- **The 12 drawn specs and 14 units are unchanged**, byte for byte.
+- **Reporting.** Recall on 2.0.0 is always split: drawn units (`A-*`, 14) × page units (`P-*`, 2),
+  each with its own recall. Numbers on 1.0.0 (`piloto-01`, calibration) and on 2.0.0 never form a
+  series. 1.0.0 stays in git history; frozen analyses bind it by sha256 and refuse any other.
+- **Limitation for the thesis:** the page units come from a construction omission, not from the draw.

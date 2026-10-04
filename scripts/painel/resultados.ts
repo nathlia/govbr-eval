@@ -26,7 +26,11 @@ export function rotuloDaCampanha(c: InfoCampanha): string {
 
 function braco(b: ResultadoBraco | undefined): string {
   if (!b) return "—";
-  return `${b.confirmadas ?? "?"}/${b.total ?? "?"}${b.maturidade === "final" ? "" : " até agora"} (${pct(b.recall)})`;
+  const base = `${b.confirmadas ?? "?"}/${b.total ?? "?"}${b.maturidade === "final" ? "" : " até agora"} (${pct(b.recall)})`;
+  if (!b.camadas) return base;
+  // Camada de página (D-83): sorteadas × página, só prefixo e números.
+  const c = (x: NonNullable<ResultadoBraco["camadas"]>["sorteadas"]) => `${x.prefixo}\\* ${x.confirmadas ?? "?"}/${x.total ?? "?"} (${pct(x.recall)})`;
+  return `${base}<br>sorteadas × página: ${c(b.camadas.sorteadas)} × ${c(b.camadas.pagina)}`;
 }
 const par2 = (l: LinhaPlacar, f: (b: ResultadoBraco) => number | null): string => {
   const r = l.resultado;

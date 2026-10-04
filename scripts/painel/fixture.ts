@@ -105,7 +105,7 @@ function decidirTudo(arquivo: string, campanha: string, alvo: string): void {
 }
 
 /** `idsGerados`: a página de todos os pares sorteia um id a cada carga (ver OpcoesFixture.idsGerados). */
-export async function construirArquivoFixture(out: string, opcoes: { idsGerados?: boolean } = {}): Promise<{ arquivo: string }> {
+export async function construirArquivoFixture(out: string, opcoes: { idsGerados?: boolean; camadaPagina?: boolean } = {}): Promise<{ arquivo: string }> {
   const arquivo = resolve(out);
   if (existsSync(arquivo)) throw new Error(`Pasta já existe: ${out}. A fixture é montada sempre numa pasta nova.`);
   mkdirSync(arquivo, { recursive: true });
@@ -121,7 +121,7 @@ export async function construirArquivoFixture(out: string, opcoes: { idsGerados?
       { nome: "p4", o: { identidade: { par: "par-04", sufixo: "04", dia: "2026-01-09", slots: { sem: "slot-08", com: "slot-07" } },
         sem: { findings: [] }, com: { submissao: "nenhuma" } } },
     ];
-    const fx = Object.fromEntries(pares.map(p => [p.nome, construirFixture(join(trabalho, p.nome), { ...p.o, idsGerados: opcoes.idsGerados })]));
+    const fx = Object.fromEntries(pares.map(p => [p.nome, construirFixture(join(trabalho, p.nome), { ...p.o, idsGerados: opcoes.idsGerados, ...(opcoes.camadaPagina ? { camadaPagina: true } : {}) })]));
     const base = fx.p1;
 
     // ── entradas compartilhadas (por conteúdo, como no T4)
