@@ -14,6 +14,10 @@
  * API: estado pronto para preparar, tela que navega fora do alcance, anexo ausente e hash divergente
  * (anexo e referência) como falhas com etapa, de ponta a ponta até "aguardando revisão", isolamento
  * (404) e cache de restauração adulterado refeito do anexo.
+ *
+ * T8a.2: id curto (slot) visível em toda página e na URL, fila cega sem ids, avisos de uma frase sem
+ * stack, porta ocupada (outro painel recusa; outro programa → porta ao lado com aviso), /guia servido
+ * sem rede (reveal.js de node_modules, SVG de docs/diagramas), ensaio ≠ fixture, clone com CRLF.
  */
 import assert from "node:assert/strict";
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
@@ -70,7 +74,7 @@ const revDir = (par: string, rev: string) => `analises/${C}/${par}/revisoes/${re
 // ───────────────────────────────────────────────────────────────── páginas e estados
 
 await teste("páginas respondem 200 em HTML, com aviso de fixture", async () => {
-  for (const p of ["/", "/ajuda", `/par/${C}/par-01`, `/par/${C}/par-03`, `/revisao/${C}/par-02`, "/execucao/fixture-analise-run-sem-03"]) {
+  for (const p of ["/", "/ajuda", "/guia", `/execucao/${C}/slot-04`, `/par/${C}/par-01`, `/par/${C}/par-03`, `/revisao/${C}/par-02`, "/execucao/fixture-analise-run-sem-03"]) {
     const r = await req(p);
     assert.equal(r.status, 200, p);
     assert.match(r.tipo, /text\/html/);
@@ -409,6 +413,121 @@ await teste("só 127.0.0.1: Host estranho recusado; POST só JSON e da mesma ori
   assert.equal((await req("/", { metodo: "DELETE" })).status, 405);
 });
 
+
+// ───────────────────────────────────────────────────────────────── T8a.2: ids, avisos, porta, /guia
+
+await teste("T8a.2: id curto (slot) visível em toda página e na URL; runId só no detalhe; fila cega sem ids", async () => {
+  const v = await getJson("/api/execucoes");
+  const home = (await req("/")).corpo.toString("utf8");
+  for (const x of v.execucoes) {
+    assert.ok(x.id && x.id.length < x.chave.length, `${x.chave} sem id curto`);
+    assert.equal(x.id, x.slot, "o id curto é o slot quando o slot é legível");
+    assert.ok(home.includes(`>${x.id}</a>`), `id ${x.id} fora da página inicial`);
+    const r = await req(x.url);
+    assert.equal(r.status, 200, x.url);
+    const html = r.corpo.toString("utf8");
+    assert.match(html, new RegExp(`<h1><span class="id">${x.id}</span></h1>`), `${x.url} sem o id no título`);
+    assert.ok(html.includes(x.chave), "o runId completo continua na página da execução (detalhe)");
+  }
+  assert.equal((await req(`/execucao/fixture-analise-run-sem-02`)).status, 200, "a URL antiga (runId) continua valendo");
+  assert.equal((await req(`/execucao/${C}/slot-99`)).status, 404);
+  const par = (await req(`/par/${C}/par-02`)).corpo.toString("utf8");
+  for (const id of ["slot-04", "slot-03"]) assert.ok(par.includes(`>${id}</a>`), `par-02 sem ${id}`);
+  const fila = (await req(`/revisao/${C}/par-02`)).corpo.toString("utf8");
+  for (const x of v.execucoes) assert.ok(!fila.includes(x.id), `a fila cega mostrou o id ${x.id}`);
+  // o resumo do topo responde às perguntas da autora pelos ids
+  assert.match(home, /Falharam<\/div>\s*<div class="valor">2<\/div>[\s\S]*?slot-07[\s\S]*?0 achados \(lista vazia\)<\/div>\s*<div class="valor">1<\/div><div class="ids"><a href="[^"]+">slot-08</);
+  assert.match(home, /Pares incompletos<\/div>\s*<div class="valor">2<\/div>/);
+});
+
+await teste("T8a.2: avisos são uma frase “<id>: o que aconteceu — o que fazer”, nunca stack nem log", async () => {
+  // erro.json no formato antigo (antes do D-78): o motivo trazia o log do Playwright inteiro
+  const quando = new Date(Date.now() + 5000).toISOString();
+  const dir = join(arquivo, "analises", C, "par-04", "revisoes", "falhas", quando.replace(/[:.]/g, "-"));
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, "erro.json"), JSON.stringify({ em: quando, motivo: "browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n<launching> C:\\x\\chrome.exe --headless\n    at Object.launch (C:\\x\\index.js:1:1)\n    at async analisar (x.ts:2:2)" }));
+  const p = await getJson(`/api/par/${C}/par-04`);
+  const a = p.analise.avisos.find((s: string) => /browserType/.test(s));
+  assert.ok(a, "aviso do recálculo falho");
+  assert.match(a, /^par-04: a última tentativa de recalcular, em .+, falhou — browserType\.launch: Target page, context or browser has been closed\. Os números continuam os da rev-001/);
+  assert.doesNotMatch(a, /\n|<launching>|\bat Object\.|Browser logs/);
+  for (const pg of ["/", `/par/${C}/par-04`, `/revisao/${C}/par-04`]) {
+    const html = (await req(pg)).corpo.toString("utf8");
+    assert.doesNotMatch(html, /&lt;launching&gt;|at Object\.launch|Browser logs/, `${pg} despejou log`);
+  }
+  const home = (await req("/")).corpo.toString("utf8");
+  for (const [alvo, re] of [["slot-par-05-com", /interrompida sem pacote/], ["slot-07", /a execução falhou/], ["slot-06", /anexo de evidências não publicado/], ["par-03", /par incompleto, falta o braço com oráculo/]] as const) {
+    assert.match(home, new RegExp(`<li class="[a-z]+"><b class="alvo">${alvo}</b>: [^<]*${re.source}[^<]* — `), `aviso de ${alvo}`);
+  }
+  rmSync(dir, { recursive: true });
+});
+
+await teste("T8a.2: porta ocupada — outro painel recusa (diz o arquivo); com --porta ou outro programa, sobe ao lado com aviso", async () => {
+  const { abrirPainel, quemOcupa, PortaRecusada } = await import("./painel/servidor");
+  const ocupante = await quemOcupa(porta);
+  assert.deepEqual(ocupante && ocupante.painel && ocupante.arquivo, arquivo);
+  await assert.rejects(abrirPainel({ arquivo, porta, portaExplicita: false }), (e: Error) => e instanceof PortaRecusada && e.message.includes(arquivo) && /--porta/.test(e.message));
+  const lado = await abrirPainel({ arquivo, porta, portaExplicita: true });
+  try {
+    assert.notEqual(lado.porta, porta);
+    assert.match(lado.aviso!.join("\n"), new RegExp(`porta ${porta} está ocupada por outro painel[\\s\\S]*http://127\\.0\\.0\\.1:${lado.porta}/`));
+  } finally { lado.servidor.close(); }
+  const { createServer } = await import("node:http");
+  const outro = createServer((_q, s) => { s.end("outra coisa"); });
+  const pOutro = await escutar(outro, 0);
+  try {
+    const r = await abrirPainel({ arquivo, porta: pOutro, portaExplicita: false });
+    r.servidor.close();
+    assert.notEqual(r.porta, pOutro);
+    assert.match(r.aviso!.join("\n"), /ocupada por outro programa/);
+  } finally { outro.close(); }
+  const vazio = createServer();
+  const livre = await escutar(vazio, 0);
+  vazio.close();
+  assert.equal(await quemOcupa(livre), null, "porta livre não tem ocupante");
+});
+
+await teste("T8a.2: /guia servido sem rede — reveal.js de node_modules (versão fixada), 3 diagramas SVG dos arquivos de docs/diagramas", async () => {
+  const pkg = JSON.parse(readFileSync(join(import.meta.dirname, "..", "package.json"), "utf8"));
+  assert.match(pkg.dependencies["reveal.js"] ?? pkg.devDependencies?.["reveal.js"], /^\d+\.\d+\.\d+$/, "reveal.js com versão exata");
+  const r = await req("/guia");
+  assert.equal(r.status, 200);
+  const html = r.corpo.toString("utf8");
+  const refs = [...html.matchAll(/\b(?:src|href)="([^"]*)"/g)].map(m => m[1]);
+  assert.ok(refs.length > 3);
+  for (const ref of refs) assert.match(ref, /^(\/(?!\/)|#)/, `referência externa no /guia: ${ref}`);
+  assert.doesNotMatch(html, /https?:\/\/(?!www\.w3\.org\/2000\/svg)/, "nenhum endereço de rede no /guia");
+  const { DIAGRAMAS } = await import("./painel/servidor");
+  assert.equal(DIAGRAMAS.length, 3);
+  for (const d of DIAGRAMAS) {
+    const svg = readFileSync(join(import.meta.dirname, "..", "docs", "diagramas", d.arquivo), "utf8");
+    assert.ok(html.includes(svg.trim().slice(0, 120)), `${d.arquivo} não está inline no /guia`);
+  }
+  const js = await req("/guia/reveal/reveal.js");
+  assert.equal(js.status, 200);
+  assert.match(js.tipo, /javascript/);
+  assert.match(js.corpo.toString("utf8", 0, 400), /reveal\.js/);
+  assert.equal((await req("/guia/reveal/reveal.css")).status, 200);
+  for (const p of ["/guia/reveal/package.json", "/guia/reveal/plugin/notes.js", "/guia/reveal/..%2fpackage.json", "/guia/diagramas/x.svg", "/guia/reveal/dist/reveal.js"]) {
+    assert.equal((await req(p)).status, 404, p);
+  }
+  const css = await req("/estilo.css");
+  assert.equal(css.status, 200);
+  assert.match(css.tipo, /text\/css/);
+});
+
+await teste("T8a.2: entradas de ensaio não fazem o arquivo inteiro virar FIXTURE; campanha piloto é rotulada calibração", async () => {
+  const { ehFixture, infoCampanha } = await import("./painel/modelo");
+  const sem = join(TMP, "sem-marcador");
+  mkdirSync(join(sem, "campanhas", "piloto-x"), { recursive: true });
+  assert.equal(ehFixture(sem, [{ entrada: { natureza: "ensaio" } as never, arquivoEntrada: "x", erro: null }]), false);
+  writeFileSync(join(sem, "campanhas", "piloto-x", "campaign.json"), JSON.stringify({ kind: "pilot", fixture: false, title: "t", design: { arms: ["com"] } }));
+  const c = infoCampanha(sem, "piloto-x", ["formal"]);
+  assert.equal(c.natureza, "calibracao");
+  assert.match(c.rotulo, /calibração \(D-67\).*não é resultado/);
+  assert.deepEqual(c.bracos, ["com"]);
+});
+
 // ───────────────────────────────────────────────────────────────── T8a.1: primeira análise de um arquivo do T4
 
 // Arquivo montado pelo MESMO código do job arquivar (arquivarExecucao), sem análise nenhuma; os anexos
@@ -582,6 +701,33 @@ await teste("T8a.1: análise individual de uma execução (mesmo caminho, alvo =
   assert.equal(s.execucoes[0].pontuacao.estado, "pending-review");
 });
 
+
+await teste("T8a.2: clone com finais de linha convertidos (core.autocrlf) — a preparação recusa com a causa e o painel avisa no topo", async () => {
+  const copia = join(TMP, "arquivo-t4-crlf");
+  cpSync(t4.arquivo, copia, { recursive: true, filter: (s) => !/[\\/](analises|restauracoes)([\\/]|$)/.test(s) });
+  // o que o Git do Windows faz no checkout: LF → CRLF em todo arquivo de texto
+  const entradas = join(copia, "indice", "entradas");
+  for (const f of readdirSync(entradas)) writeFileSync(join(entradas, f), readFileSync(join(entradas, f), "utf8").replace(/\r?\n/g, "\r\n"));
+  const e = JSON.parse(readFileSync(join(entradas, `${t4.pares[0].sem}.json`), "utf8"));
+  const m = join(copia, e.manifestoColeta.caminho);
+  writeFileSync(m, readFileSync(m, "utf8").replace(/\r?\n/g, "\r\n"));
+  const { prepararAnalise, DICA_CRLF } = await import("./painel/preparar");
+  const r = await prepararAnalise(copia, { tipo: "par", campanha: C, par: "par-t4" }, { anexos: [anexosPainel], baixar: null });
+  assert.equal(r.ok, false);
+  assert.equal(!r.ok && r.etapa, "manifesto");
+  assert.ok(!r.ok && r.erro.includes("hash divergente") && r.erro.includes(DICA_CRLF), !r.ok ? r.erro : "");
+  const s = criarPainel({ arquivo: copia, revisora: "", baixarAnexos: false });
+  const p = await escutar(s, 0);
+  try {
+    const html = await new Promise<string>((ok, falha) => {
+      const q = request({ host: "127.0.0.1", port: p, path: "/", headers: { host: `127.0.0.1:${p}` } }, (res) => { const b: Buffer[] = []; res.on("data", (c: Buffer) => b.push(c)); res.on("end", () => ok(Buffer.concat(b).toString("utf8"))); });
+      q.on("error", falha); q.end();
+    });
+    assert.match(html, /<b class="alvo">arquivo<\/b>: o Git desta máquina trocou os finais de linha do clone/);
+    assert.match(html, /href="\/ajuda#finais-de-linha"/);
+  } finally { s.close(); }
+});
+
 servidorT4.close();
 
 await teste("hash de SCORER_FILES intacto", () => {
@@ -592,4 +738,7 @@ servidor.close();
 if (!manter) rmSync(TMP, { recursive: true, force: true }); else console.log(`(mantido: ${TMP})`);
 const falhas = resultados.filter(r => !r.ok).length;
 console.log(`\n${resultados.length - falhas}/${resultados.length} testes do painel passaram`);
-process.exitCode = falhas ? 1 : 0;
+// Saída explícita: o teste do navegador que não abre (NAT-52) deixa aberto o servidor do site congelado
+// que `analisar` sobe antes de `chromium.launch()` (o launch fica fora do try/finally que o fecha, em
+// scripts/analisar-execucao.ts — T6, fora do escopo do T8a.2). Sem isto o processo nunca termina.
+process.exit(falhas ? 1 : 0);

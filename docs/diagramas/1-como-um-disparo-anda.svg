@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="diagrama d1" viewBox="0 0 1000 605" role="img" aria-labelledby="d1-titulo d1-desc" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title id="d1-titulo">Como um disparo anda</title>
+  <desc id="d1-desc">No GitHub, um disparo passa por preparar; depois coleta e linhas de base rodam lado a lado; arquivar grava tudo no govbr-resultados. No seu computador, o painel lê o clone: preparar análise, revisão cega, recalcular e comparação com e sem oráculo.</desc>
+  <style>
+    .d1 .faixa { fill: var(--d-muro, #eceff2); }
+    .d1 .caixa { fill: var(--d-papel, #ffffff); stroke: var(--d-linha, #c3ccd8); stroke-width: 2; }
+    .d1 .caixa.acento { stroke: var(--d-acento, #1351b4); stroke-width: 3; }
+    .d1 .t { fill: var(--d-texto, #16181d); font-size: 22px; font-weight: 700; }
+    .d1 .s { fill: var(--d-suave, #555d69); font-size: 17px; }
+    .d1 .r { fill: var(--d-suave, #555d69); font-size: 16px; font-weight: 700; letter-spacing: .06em; }
+    .d1 .seta { stroke: var(--d-texto, #16181d); stroke-width: 2.5; fill: none; marker-end: url(#d1-ponta); }
+    .d1 .ponta { fill: var(--d-texto, #16181d); }
+    .d1 .num { fill: var(--d-acento, #1351b4); font-size: 20px; font-weight: 700; }
+  </style>
+  <defs><marker id="d1-ponta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="ponta" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+
+  <rect class="faixa" x="0" y="0" width="1000" height="330" rx="14"/>
+  <text class="r" x="20" y="32">NO GITHUB · UM DISPARO = UMA EXECUÇÃO (UMA TELA, UM BRAÇO, UM MODELO)</text>
+
+  <rect class="caixa" x="20" y="120" width="210" height="140" rx="10"/>
+  <text class="num" x="38" y="152">1</text><text class="t" x="62" y="152">preparar</text>
+  <text class="s" x="38" y="182">confere as entradas e</text>
+  <text class="s" x="38" y="204">congela tela, referência</text>
+  <text class="s" x="38" y="226">e oráculo pelo commit</text>
+
+  <rect class="caixa" x="300" y="56" width="300" height="118" rx="10"/>
+  <text class="num" x="318" y="88">2</text><text class="t" x="342" y="88">coleta</text>
+  <text class="s" x="318" y="118">o agente avalia a tela, isolado,</text>
+  <text class="s" x="318" y="140">e envia o relatório de achados</text>
+
+  <rect class="caixa" x="300" y="196" width="300" height="118" rx="10"/>
+  <text class="num" x="318" y="228">2</text><text class="t" x="342" y="228">linhas de base</text>
+  <text class="s" x="318" y="258">axe, validador e ESLint medem</text>
+  <text class="s" x="318" y="280">a mesma tela, sem agente</text>
+
+  <rect class="caixa" x="670" y="120" width="310" height="140" rx="10"/>
+  <text class="num" x="688" y="152">3</text><text class="t" x="712" y="152">arquivar</text>
+  <text class="s" x="688" y="182">grava tudo no govbr-resultados,</text>
+  <text class="s" x="688" y="204">sem apagar nada; as capturas</text>
+  <text class="s" x="688" y="226">vão para um anexo da Release</text>
+
+  <path class="seta" d="M230 170 C 265 170, 265 115, 296 115"/>
+  <path class="seta" d="M230 210 C 265 210, 265 255, 296 255"/>
+  <path class="seta" d="M600 115 C 635 115, 635 170, 666 170"/>
+  <path class="seta" d="M600 255 C 635 255, 635 210, 666 210"/>
+
+  <text class="r" x="20" y="590">NO SEU COMPUTADOR · GIT PULL NO GOVBR-RESULTADOS, E O PAINEL LÊ O CLONE</text>
+  <path class="seta" d="M825 262 L825 365 L120 365 L120 400"/>
+
+  <rect class="caixa acento" x="20" y="404" width="220" height="150" rx="10"/>
+  <text class="num" x="38" y="436">4</text><text class="t" x="62" y="436">preparar análise</text>
+  <text class="s" x="38" y="466">o painel confere cada</text>
+  <text class="s" x="38" y="488">peça pelo sha256 e</text>
+  <text class="s" x="38" y="510">restaura os pacotes</text>
+
+  <rect class="caixa acento" x="270" y="404" width="220" height="150" rx="10"/>
+  <text class="num" x="288" y="436">5</text><text class="t" x="312" y="436">revisão cega</text>
+  <text class="s" x="288" y="466">a revisora decide cada</text>
+  <text class="s" x="288" y="488">cartão sem saber de</text>
+  <text class="s" x="288" y="510">que braço ele veio</text>
+
+  <rect class="caixa acento" x="520" y="404" width="210" height="150" rx="10"/>
+  <text class="num" x="538" y="436">6</text><text class="t" x="562" y="436">recalcular</text>
+  <text class="s" x="538" y="466">a análise roda de novo</text>
+  <text class="s" x="538" y="488">com as decisões e grava</text>
+  <text class="s" x="538" y="510">uma versão nova</text>
+
+  <rect class="caixa acento" x="760" y="404" width="220" height="150" rx="10"/>
+  <text class="num" x="778" y="436">7</text><text class="t" x="802" y="436">com × sem</text>
+  <text class="s" x="778" y="466">a comparação do par,</text>
+  <text class="s" x="778" y="488">provisória até a revisão</text>
+  <text class="s" x="778" y="510">fechar; n sempre dito</text>
+
+  <path class="seta" d="M240 479 L266 479"/>
+  <path class="seta" d="M490 479 L516 479"/>
+  <path class="seta" d="M730 479 L756 479"/>
+</svg>

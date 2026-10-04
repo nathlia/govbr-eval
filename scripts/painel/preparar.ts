@@ -27,7 +27,7 @@ import {
 } from "../arquivo-resultados";
 import { readIsolatedManifest, type IsolatedCollectionManifest } from "../manifesto-coleta-isolada";
 import { loadSite } from "../measurement-surface";
-import { ARMS, ID, RECEITA_VERSAO, dentroDoArquivo, lerAnalise, lerIndice, relArquivo, type Receita, type Selo } from "./modelo";
+import { ARMS, ID, RECEITA_VERSAO, cloneComCrlf, dentroDoArquivo, lerAnalise, lerIndice, relArquivo, type Receita, type Selo } from "./modelo";
 import { recalcular } from "./revisao";
 
 export type AlvoPreparo = { tipo: "par"; campanha: string; par: string } | { tipo: "individual"; runId: string };
@@ -134,6 +134,15 @@ export function motivoForaDeAlcance(m: IsolatedCollectionManifest): string | nul
     : null;
 }
 
+/**
+ * Hash divergente num clone cujo Git converteu os finais de linha (core.autocrlf=true): a causa não é
+ * adulteração, e a correção é uma vez só, no clone. A conferência continua byte a byte (nada é aceito).
+ */
+export const DICA_CRLF = "Causa provável: o Git desta máquina trocou os finais de linha do clone (core.autocrlf); corrija o clone uma vez com os comandos de “Finais de linha” em Como usar e tente de novo.";
+export function comDicaCrlf(arquivo: string, motivo: string): string {
+  return /hash divergente/.test(motivo) && !motivo.includes(DICA_CRLF) && cloneComCrlf(arquivo) ? `${motivo.replace(/\s*$/, "")} ${DICA_CRLF}` : motivo;
+}
+
 // ───────────────────────────────────────────────────────────────── falhas de preparo
 
 const dirAnalise = (arquivo: string, campanha: string, alvo: string): string => join(arquivo, "analises", campanha, alvo);
@@ -188,7 +197,7 @@ export function diagnosticoPreparo(arquivo: string, alvo: AlvoPreparo): Diagnost
       if (fora) return { ...d, foraDeAlcance: true, motivo: fora, selo: { estado: "nao-se-aplica", texto: "fora do alcance da análise (referência que navega)" } };
     }
   } catch (e) {
-    return { ...d, motivo: (e as Error).message, selo: { estado: "nao-se-aplica", texto: "não dá para preparar a análise" } };
+    return { ...d, motivo: comDicaCrlf(arquivo, (e as Error).message), selo: { estado: "nao-se-aplica", texto: "não dá para preparar a análise" } };
   }
   if (d.ultimaFalha) return { ...d, pode: true, motivo: d.ultimaFalha.motivo, selo: { estado: "falha", texto: `preparação falhou (${rotuloEtapa(d.ultimaFalha.etapa)})` } };
   return { ...d, pode: true, selo: { estado: "sem-analise", texto: "sem análise: pronta para preparar" } };
@@ -394,7 +403,7 @@ export async function prepararAnalise(arquivo: string, alvo: AlvoPreparo, o: Opc
     return { ok: true, analise: chave, revisao: calc.revisao, estado: calc.estado };
   } catch (e) {
     const etapa = e instanceof ErroPreparo ? e.etapa : "inesperado";
-    const motivo = (e as Error).message;
+    const motivo = comDicaCrlf(arquivo, (e as Error).message);
     return { ok: false, etapa, erro: motivo, falha: registrarFalha(arquivo, r.campanha, r.alvo, etapa, motivo) };
   } finally {
     emAndamento.delete(chave);

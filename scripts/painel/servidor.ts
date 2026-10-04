@@ -16,17 +16,17 @@
  *
  * Método e operação: docs/painel-resultados.md.
  */
-import { cpSync, existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
+import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { createServer, request as requisicao, type IncomingMessage, type Server, type ServerResponse } from "node:http";
 import type { AddressInfo } from "node:net";
 import { tmpdir } from "node:os";
-import { basename, join, resolve } from "node:path";
-import { pathToFileURL } from "node:url";
+import { basename, dirname, join, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { criarTarGz } from "../arquivo-resultados";
 import {
-  ID, PAINEL_VERSAO, dentroDoArquivo, ehFixture, existeDiretorio, lerAnalise, lerIndice, vistaExecucao, vistaExecucoes, vistaPar,
+  ID, PAINEL_VERSAO, chaveDoId, dentroDoArquivo, ehFixture, existeDiretorio, lerAnalise, lerIndice, vistaExecucao, vistaExecucoes, vistaPar,
 } from "./modelo";
-import { paginaAjuda, paginaErro, paginaExecucao, paginaExecucoes, paginaFila, paginaPar } from "./paginas";
+import { paginaAjuda, paginaErro, paginaExecucao, paginaExecucoes, paginaFila, paginaGuia, paginaPar, type Contexto, type Diagrama } from "./paginas";
 import { baixarComGh, diagnosticoPreparo, prepararAnalise, preparoDaExecucao, preparoDosPares, type Diagnostico, type OpcoesPreparo } from "./preparar";
 import { arquivoDeEvidencia, imagemDaCena, recalcular, salvarDecisao, vistaFila, type PedidoDecisao } from "./revisao";
 
@@ -41,13 +41,42 @@ export interface OpcoesPainel {
 /** Arquivos de uma revisão que nunca saem do painel, nem no download. */
 export const NUNCA_SERVIR = ["entradas/referencia.json"];
 
+const AQUI = dirname(fileURLToPath(import.meta.url));
+const RAIZ = resolve(AQUI, "..", "..");
+/** A folha única do painel (tokens de cor, claro e escuro). */
+const ESTILO = join(AQUI, "painel.css");
+/** reveal.js servido de node_modules (versão fixada no package.json; sem CDN: o painel funciona offline). Só estes arquivos. */
+const REVEAL: Record<string, { arquivo: string; tipo: string }> = {
+  "reveal.js": { arquivo: "dist/reveal.js", tipo: "text/javascript; charset=utf-8" },
+  "reveal.css": { arquivo: "dist/reveal.css", tipo: "text/css; charset=utf-8" },
+  "reset.css": { arquivo: "dist/reset.css", tipo: "text/css; charset=utf-8" },
+};
+/** Os diagramas do /guia: arquivos próprios em docs/diagramas/ (o deck da defesa reaproveita os mesmos .svg). */
+export const DIAGRAMAS: { arquivo: string; titulo: string; texto: string[] }[] = [
+  { arquivo: "1-como-um-disparo-anda.svg", titulo: "Como um disparo anda", texto: [
+    "No GitHub, cada disparo é uma execução. Coleta e linhas de base rodam ao mesmo tempo, sobre a mesma tela congelada; o arquivar grava tudo, até as falhas.",
+    "No seu computador, o painel lê o clone do govbr-resultados: prepara a análise, abre a revisão cega, recalcula e mostra a comparação."] },
+  { arquivo: "2-paredes-da-execucao.svg", titulo: "As paredes da execução", texto: [
+    "O agente só alcança as próprias ferramentas — o navegador e, no braço com, o oráculo — e o provedor do modelo, por um proxy que só deixa passar esse endereço. É o navegador que abre a tela e entrega o relatório ao coletor.",
+    "Tudo o mais fica do lado de fora, e cada execução prova isso com testes negativos que entram no pacote."] },
+  { arquivo: "3-de-um-achado-ao-numero.svg", titulo: "De um achado ao número", texto: [
+    "Nenhuma alegação vira crédito sozinha: cada uma vira um cartão, e a revisora decide sem saber o braço. Só depois o recálculo conta os defeitos confirmados.",
+    "A comparação é por par, com n dito. Enquanto houver cartão pendente, o número é provisório e recall fica indisponível — nunca zero."] },
+];
+function diagramas(): Diagrama[] {
+  return DIAGRAMAS.map((d, i) => ({ id: `d${i + 1}`, titulo: d.titulo, texto: d.texto,
+    svg: readFileSync(join(RAIZ, "docs", "diagramas", d.arquivo), "utf8").replace(/^<\?xml[^>]*>\s*/, "") }));
+}
+
 const CABECALHOS = {
   "cache-control": "no-store",
   "x-content-type-options": "nosniff",
   "x-frame-options": "DENY",
   "referrer-policy": "no-referrer",
-  "content-security-policy": "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; form-action 'none'; base-uri 'none'; frame-ancestors 'none'",
+  "content-security-policy": "default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; form-action 'none'; base-uri 'none'; frame-ancestors 'none'",
 };
+/** O /guia carrega o reveal.js do próprio painel ('self'); o reveal.css usa ícones em data:. Nada de rede. */
+const CSP_GUIA = "default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; form-action 'none'; base-uri 'none'; frame-ancestors 'none'";
 
 function tarDaRevisao(arquivo: string, campanha: string, alvo: string, rev: string): { corpo: Buffer; nome: string } | null {
   const an = lerAnalise(arquivo, campanha, alvo);
@@ -101,6 +130,8 @@ export function criarPainel(o: OpcoesPainel): Server {
     return preparoDaExecucao(arquivo, v.linha, parCompleto);
   };
 
+  const ctx = (): Contexto => ({ arquivo, fixture: fixture() });
+
   return createServer(async (req: IncomingMessage, res: ServerResponse) => {
     const enviar = (codigo: number, tipo: string, corpo: string | Buffer, extra: Record<string, string> = {}) => {
       res.writeHead(codigo, { ...CABECALHOS, "content-type": tipo, ...extra });
@@ -108,7 +139,7 @@ export function criarPainel(o: OpcoesPainel): Server {
     };
     const html = (codigo: number, corpo: string) => enviar(codigo, "text/html; charset=utf-8", corpo);
     const json = (codigo: number, corpo: unknown) => enviar(codigo, "application/json; charset=utf-8", JSON.stringify(corpo));
-    const nao = (api: boolean) => api ? json(404, { ok: false, erro: "não encontrado" }) : html(404, paginaErro(404, "Este endereço não existe no painel.", fixture()));
+    const nao = (api: boolean) => api ? json(404, { ok: false, erro: "não encontrado" }) : html(404, paginaErro(404, "Este endereço não existe no painel.", ctx()));
     try {
       const host = (req.headers.host ?? "").replace(/:\d+$/, "");
       if (!["127.0.0.1", "localhost"].includes(host)) return json(421, { ok: false, erro: "o painel só atende 127.0.0.1/localhost" });
@@ -144,19 +175,31 @@ export function criarPainel(o: OpcoesPainel): Server {
       if (req.method !== "GET" && req.method !== "HEAD") return json(405, { ok: false, erro: "método não aceito" });
 
       // páginas
-      if (seg.length === 0) { const v = vistaExecucoes(arquivo); return html(200, paginaExecucoes(v, preparoDosPares(arquivo, v.pares))); }
-      if (seg.length === 1 && seg[0] === "ajuda") return html(200, paginaAjuda(fixture(), basename(arquivo)));
+      if (seg.length === 0) { const v = vistaExecucoes(arquivo); return html(200, paginaExecucoes(v, preparoDosPares(arquivo, v.pares), ctx())); }
+      if (seg.length === 1 && seg[0] === "ajuda") return html(200, paginaAjuda(ctx()));
+      if (seg.length === 1 && seg[0] === "estilo.css") return enviar(200, "text/css; charset=utf-8", readFileSync(ESTILO));
+      // T8a.2: guia em diagramas (reveal.js de node_modules, SVG dos arquivos de docs/diagramas/)
+      if (seg.length === 1 && seg[0] === "guia") return enviar(200, "text/html; charset=utf-8", paginaGuia(ctx(), diagramas()), { "content-security-policy": CSP_GUIA });
+      if (seg[0] === "guia" && seg[1] === "reveal" && seg.length === 3 && Object.hasOwn(REVEAL, seg[2])) {
+        const r = REVEAL[seg[2]];
+        return enviar(200, r.tipo, readFileSync(join(RAIZ, "node_modules", "reveal.js", r.arquivo)));
+      }
+      if (seg[0] === "execucao" && seg.length === 3 && ids(seg.slice(1))) {
+        const chave = chaveDoId(arquivo, seg[1], seg[2]);
+        const v = chave ? vistaExecucao(arquivo, chave) : null;
+        return v ? html(200, paginaExecucao(v, diagExecucao(v), ctx())) : nao(false);
+      }
       if (seg[0] === "par" && seg.length === 3 && ids(seg.slice(1))) {
         const v = vistaPar(arquivo, seg[1], seg[2]);
-        return v ? html(200, paginaPar(v, diagPar(v))) : nao(false);
+        return v ? html(200, paginaPar(v, diagPar(v), ctx())) : nao(false);
       }
       if (seg[0] === "execucao" && seg.length === 2 && ids(seg.slice(1))) {
         const v = vistaExecucao(arquivo, seg[1]);
-        return v ? html(200, paginaExecucao(v, diagExecucao(v))) : nao(false);
+        return v ? html(200, paginaExecucao(v, diagExecucao(v), ctx())) : nao(false);
       }
       if (seg[0] === "revisao" && seg.length === 3 && ids(seg.slice(1))) {
         const f = vistaFila(arquivo, seg[1], seg[2]);
-        return f ? html(200, paginaFila(f, fixture(), o.revisora ?? "")) : nao(false);
+        return f ? html(200, paginaFila(f, ctx(), o.revisora ?? "")) : nao(false);
       }
       // arquivos por id
       if (seg[0] === "evidencia" && seg.length === 4 && ids(seg.slice(1, 3))) {
@@ -177,6 +220,8 @@ export function criarPainel(o: OpcoesPainel): Server {
       }
       // API de leitura (as mesmas vistas das páginas)
       if (seg[0] === "api") {
+        // T8a.2: quem é este painel (a CLI de outro painel pergunta antes de subir na mesma porta)
+        if (seg[1] === "painel" && seg.length === 2) return json(200, { painel: PAINEL_VERSAO, arquivo, fixture: fixture() });
         if (seg[1] === "execucoes" && seg.length === 2) { const v = vistaExecucoes(arquivo); return json(200, { ...v, preparo: preparoDosPares(arquivo, v.pares) }); }
         if (seg[1] === "par" && seg.length === 4 && ids(seg.slice(2))) {
           const v = vistaPar(arquivo, seg[2], seg[3]);
@@ -217,6 +262,66 @@ export async function escutar(s: Server, porta: number): Promise<number> {
   throw new Error(`nenhuma porta livre entre ${porta} e ${porta + 20}`);
 }
 
+// ───────────────────────────────────────────────────────────────── porta ocupada (T8a.2)
+
+export type Ocupante = { painel: true; arquivo: string | null; versao: string | null } | { painel: false };
+
+function pedir(porta: number, caminho: string): Promise<{ status: number; corpo: string } | null> {
+  return new Promise((ok) => {
+    const r = requisicao({ host: "127.0.0.1", port: porta, path: caminho, method: "GET", headers: { host: `127.0.0.1:${porta}` }, timeout: 1500 }, (res) => {
+      const partes: Buffer[] = [];
+      res.on("data", (c: Buffer) => partes.push(c));
+      res.on("end", () => ok({ status: res.statusCode ?? 0, corpo: Buffer.concat(partes).toString("utf8").slice(0, 20000) }));
+    });
+    r.on("timeout", () => { r.destroy(); ok({ status: 0, corpo: "" }); });
+    r.on("error", (e: NodeJS.ErrnoException) => ok(e.code === "ECONNREFUSED" ? null : { status: 0, corpo: "" }));
+    r.end();
+  });
+}
+
+/** null = porta livre. Um painel (desta versão ou anterior) é reconhecido; o resto é "outro programa". */
+export async function quemOcupa(porta: number): Promise<Ocupante | null> {
+  const a = await pedir(porta, "/api/painel");
+  if (a === null) return null;
+  try { const j = JSON.parse(a.corpo) as { painel?: string; arquivo?: string }; if (j.painel) return { painel: true, arquivo: j.arquivo ?? null, versao: j.painel }; } catch { /* abaixo */ }
+  const b = await pedir(porta, "/");
+  return b && /<title>[^<]*Painel de resultados<\/title>/.test(b.corpo) ? { painel: true, arquivo: null, versao: null } : { painel: false };
+}
+
+export class PortaRecusada extends Error {}
+
+/**
+ * Sobe o painel. Porta pedida ocupada por OUTRO PAINEL: recusa (foi assim que a autora acabou olhando
+ * um painel órfão de outro arquivo), salvo `--porta` explícita. Ocupada por outro programa (ou com
+ * `--porta`): usa a próxima livre e devolve um aviso para imprimir em destaque.
+ */
+export async function abrirPainel(o: OpcoesPainel & { porta: number; portaExplicita: boolean }): Promise<{ servidor: Server; porta: number; aviso: string[] | null }> {
+  const ocupante = o.porta === 0 ? null : await quemOcupa(o.porta);
+  if (ocupante?.painel && !o.portaExplicita) {
+    throw new PortaRecusada([
+      `Já existe um painel de resultados na porta ${o.porta}${ocupante.arquivo ? `, servindo:` : " (de uma versão anterior, que não diz o arquivo)."}`,
+      ...(ocupante.arquivo ? [`    ${ocupante.arquivo}`] : []),
+      `Este painel NÃO foi aberto. Se é esse o arquivo que você quer, use http://127.0.0.1:${o.porta}/ .`,
+      "Senão, feche o outro painel (Ctrl+C no terminal dele) e rode de novo,",
+      `ou abra este ao lado, numa porta escolhida: --porta ${o.porta + 1}`,
+    ].join("\n"));
+  }
+  const servidor = criarPainel(o);
+  const porta = await escutar(servidor, o.porta);
+  const aviso = porta !== o.porta && o.porta !== 0 ? [
+    `ATENÇÃO: a porta ${o.porta} está ocupada ${ocupante?.painel ? "por outro painel" : "por outro programa"}.`,
+    `Este painel está em  http://127.0.0.1:${porta}/   <- use ESTE endereço.`,
+    `O que responde na ${o.porta} NÃO é este arquivo.`,
+  ] : null;
+  return { servidor, porta, aviso };
+}
+
+export function emDestaque(linhas: string[]): string {
+  const w = Math.max(...linhas.map(l => l.length)) + 4;
+  const barra = "=".repeat(w);
+  return ["", barra, ...linhas.map(l => `  ${l}`), barra, ""].join("\n");
+}
+
 // ───────────────────────────────────────────────────────────────── CLI
 
 const PORTAS_PROIBIDAS = new Set([3000, 3100, 3217, 3300, 4000, 4100, 4101, 4102]);
@@ -249,12 +354,12 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     const porta = Number(val("porta") ?? 4610);
     if (PORTAS_PROIBIDAS.has(porta)) { console.error(`A porta ${porta} é usada por outra peça do instrumento; escolha outra.`); process.exitCode = 1; }
     else {
-      const s = criarPainel({ arquivo, revisora: val("revisora"), telas: val("telas") ?? null, anexos, baixarAnexos });
-      escutar(s, porta).then(p => {
+      abrirPainel({ arquivo, revisora: val("revisora"), telas: val("telas") ?? null, anexos, baixarAnexos, porta, portaExplicita: val("porta") !== undefined }).then(({ porta: p, aviso }) => {
+        if (aviso) console.log(emDestaque(aviso));
         console.log(`Painel de resultados em http://127.0.0.1:${p}/`);
         console.log(`Arquivo: ${resolve(arquivo)}${ehFixture(resolve(arquivo), lerIndice(resolve(arquivo))) ? "  (FIXTURE SINTÉTICA)" : ""}`);
-        console.log("Ctrl+C encerra. Nada sai desta máquina: sem rede, sem modelo.");
-      }).catch(e => { console.error(e instanceof Error ? e.message : e); process.exitCode = 1; });
+        console.log("Ctrl+C encerra. Sem modelo; a rede só é usada para baixar um anexo de evidências que falte (gh).");
+      }).catch(e => { console.error(e instanceof PortaRecusada ? emDestaque(e.message.split("\n")) : e instanceof Error ? e.message : e); process.exitCode = 1; });
     }
   }
 }

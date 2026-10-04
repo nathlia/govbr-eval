@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="diagrama d2" viewBox="0 0 1000 600" role="img" aria-labelledby="d2-titulo d2-desc" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title id="d2-titulo">As paredes da execução</title>
+  <desc id="d2-desc">Dentro de uma máquina isolada, o agente só fala com o navegador, com o oráculo (só no braço com) e com o provedor do modelo, através de um proxy que só deixa passar o endereço do provedor. O navegador só abre a tela congelada e o coletor do relatório. Internet, disco pessoal, outras execuções e o gabarito ficam do lado de fora.</desc>
+  <style>
+    .d2 .muro { fill: var(--d-muro, #eceff2); stroke: var(--d-texto, #16181d); stroke-width: 3; }
+    .d2 .caixa { fill: var(--d-papel, #ffffff); stroke: var(--d-linha, #c3ccd8); stroke-width: 2; }
+    .d2 .agente { stroke: var(--d-acento, #1351b4); stroke-width: 3; }
+    .d2 .oraculo { stroke: var(--d-com, #2a6fd0); stroke-width: 3; stroke-dasharray: 8 5; }
+    .d2 .fora { fill: var(--d-erro-fraco, #fbeceb); stroke: var(--d-erro, #b3261e); stroke-width: 2; }
+    .d2 .t { fill: var(--d-texto, #16181d); font-size: 21px; font-weight: 700; }
+    .d2 .s { fill: var(--d-suave, #555d69); font-size: 16px; }
+    .d2 .r { fill: var(--d-suave, #555d69); font-size: 16px; font-weight: 700; letter-spacing: .06em; }
+    .d2 .x { fill: var(--d-erro, #b3261e); font-size: 17px; font-weight: 700; }
+    .d2 .seta { stroke: var(--d-texto, #16181d); stroke-width: 2.5; fill: none; marker-end: url(#d2-ponta); }
+    .d2 .seta.com { stroke: var(--d-com, #2a6fd0); stroke-dasharray: 8 5; marker-end: url(#d2-ponta-com); }
+    .d2 .ponta { fill: var(--d-texto, #16181d); }
+    .d2 .ponta-com { fill: var(--d-com, #2a6fd0); }
+    .d2 .bloq { stroke: var(--d-erro, #b3261e); stroke-width: 3; }
+  </style>
+  <defs>
+    <marker id="d2-ponta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="ponta" d="M0 0 L10 5 L0 10 z"/></marker>
+    <marker id="d2-ponta-com" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="ponta-com" d="M0 0 L10 5 L0 10 z"/></marker>
+  </defs>
+
+  <rect class="muro" x="20" y="40" width="700" height="540" rx="16"/>
+  <text class="r" x="40" y="72">MÁQUINA ISOLADA DA EXECUÇÃO (REDES INTERNAS, SEM ROTA PARA FORA)</text>
+
+  <rect class="caixa agente" x="60" y="230" width="200" height="120" rx="10"/>
+  <text class="t" x="80" y="266">agente</text>
+  <text class="s" x="80" y="294">o modelo, no cliente;</text>
+  <text class="s" x="80" y="316">só usa ferramentas</text>
+
+  <rect class="caixa" x="340" y="100" width="190" height="110" rx="10"/>
+  <text class="t" x="360" y="136">navegador</text>
+  <text class="s" x="360" y="164">Chromium, guiado</text>
+  <text class="s" x="360" y="186">pelo agente</text>
+
+  <rect class="caixa oraculo" x="340" y="250" width="190" height="110" rx="10"/>
+  <text class="t" x="360" y="286">oráculo</text>
+  <text class="s" x="360" y="314">só no braço com;</text>
+  <text class="s" x="360" y="336">no sem, nem existe</text>
+
+  <rect class="caixa" x="560" y="100" width="140" height="70" rx="10"/>
+  <text class="t" x="578" y="142">tela</text>
+  <rect class="caixa" x="560" y="190" width="140" height="70" rx="10"/>
+  <text class="t" x="578" y="232">coletor</text>
+  <text class="s" x="560" y="286">a tela congelada;</text>
+  <text class="s" x="560" y="306">o coletor recebe</text>
+  <text class="s" x="560" y="326">o relatório</text>
+
+  <rect class="caixa" x="340" y="430" width="250" height="110" rx="10"/>
+  <text class="t" x="360" y="466">proxy do provedor</text>
+  <text class="s" x="360" y="494">só deixa passar o endereço</text>
+  <text class="s" x="360" y="516">do provedor do modelo</text>
+
+  <path class="seta" d="M260 260 C 300 260, 300 155, 336 155"/>
+  <path class="seta com" d="M260 290 L336 300"/>
+  <path class="seta" d="M530 140 L556 136"/>
+  <path class="seta" d="M530 180 C 545 190, 545 220, 556 224"/>
+  <path class="seta" d="M530 290 C 545 260, 545 170, 556 150"/>
+  <path class="seta" d="M260 330 C 300 330, 300 485, 336 485"/>
+  <path class="seta" d="M590 485 L 790 485"/>
+
+  <rect class="caixa" x="790" y="440" width="190" height="90" rx="10"/>
+  <text class="t" x="808" y="476">provedor</text>
+  <text class="s" x="808" y="502">a API do modelo</text>
+
+  <text class="r" x="760" y="72">FICA DO LADO DE FORA</text>
+  <rect class="fora" x="760" y="90" width="220" height="300" rx="10"/>
+  <text class="x" x="780" y="128">✕ internet</text>
+  <text class="x" x="780" y="166">✕ disco pessoal</text>
+  <text class="x" x="780" y="204">✕ outras execuções</text>
+  <text class="x" x="780" y="242">✕ gabarito</text>
+  <text class="x" x="780" y="280">✕ tela e coletor</text>
+  <text class="s" x="800" y="302">direto pelo agente</text>
+  <text class="x" x="780" y="340">✕ credenciais do</text>
+  <text class="s" x="800" y="362">GitHub</text>
+  <line class="bloq" x1="720" y1="240" x2="756" y2="240"/>
+</svg>

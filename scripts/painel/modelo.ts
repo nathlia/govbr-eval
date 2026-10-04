@@ -21,7 +21,7 @@ import type { EntradaIndice } from "../arquivo-resultados";
 import type { Resumo } from "../analisar-execucao";
 import type { RawReviews, SemanticPackage } from "../semantic-flow";
 
-export const PAINEL_VERSAO = "painel-resultados-1.0.0";
+export const PAINEL_VERSAO = "painel-resultados-1.1.0";
 export const RECEITA_VERSAO = "receita-analise-1.0.0";
 export const DECISOES_VERSAO = "decisoes-painel-1.0.0";
 export const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
@@ -60,6 +60,28 @@ export const dataLocal = (iso: string | null | undefined): string => {
   const d = new Date(iso);
   return Number.isNaN(d.getTime()) ? "—" : `${LOCAL.format(d)} (Brasília)`;
 };
+
+/**
+ * Uma frase para a tela: a primeira linha não vazia, sem stack nem log, com no máximo `max` caracteres.
+ * O texto inteiro fica no arquivo de onde veio (erro.json, despacho.json); a tela nunca despeja log.
+ */
+export function frase(texto: string | null | undefined, max = 220): string {
+  const linha = String(texto ?? "").split(/\r?\n/).map(l => l.trim()).find(l => l && !/^at\s/.test(l)) ?? "";
+  const limpa = linha.replace(/\s+/g, " ");
+  return limpa.length > max ? `${limpa.slice(0, max - 1).trimEnd()}…` : limpa;
+}
+
+/**
+ * O Git desta máquina converteu os finais de linha do clone (core.autocrlf=true sem .gitattributes)?
+ * O job arquivar grava JSON com LF; CRLF numa entrada do índice só aparece por conversão no checkout.
+ * Com conversão, todo arquivo de texto deixa de ter o sha256 que o workflow registrou.
+ */
+export function cloneComCrlf(arquivo: string): boolean {
+  const dir = join(arquivo, "indice", "entradas");
+  if (!existsSync(dir)) return false;
+  const f = readdirSync(dir).find(n => n.endsWith(".json"));
+  return f ? readFileSync(join(dir, f)).includes("\r\n") : false;
+}
 
 // ───────────────────────────────────────────────────────────────── fonte de cada valor
 
@@ -129,13 +151,13 @@ const NOME_DEC = /^decisoes-(\d{4,})\.json$/;
 export function lerRevisao(rdir: string, nome: string, rel: string): Revisao | string {
   const m = NOME_REV.exec(nome);
   const s = tentarJson<Resumo>(join(rdir, "summary.json"));
-  if (!s.ok) return `A revisão ${nome} está incompleta (summary.json ausente ou ilegível) e foi ignorada; a anterior íntegra continua valendo`;
+  if (!s.ok) return `A pasta ${nome} está incompleta (sem summary.json legível) e foi ignorada — a versão anterior íntegra continua valendo`;
   const bindings: Partial<Record<Arm, AnalysisBinding>> = {};
   for (const arm of ARMS) {
     const p = join(rdir, `analysis-binding.${arm}.json`);
     if (!existsSync(p)) continue;
     const b = tentarJson<AnalysisBinding>(p);
-    if (!b.ok) return `A revisão ${nome} tem binding ilegível e foi ignorada`;
+    if (!b.ok) return `A pasta ${nome} tem binding ilegível e foi ignorada — a versão anterior íntegra continua valendo`;
     bindings[arm] = b.valor;
   }
   return { numero: m ? Number(m[1]) : 0, nome, dir: rdir, rel, resumo: s.valor, bindings };
@@ -149,14 +171,14 @@ export function lerAnalise(arquivo: string, campanha: string, alvo: string): Ana
   const r = tentarJson<Receita>(join(dir, "receita.json"));
   const receita = r.ok && r.valor.formato === RECEITA_VERSAO ? r.valor : null;
   const erroReceita = r.ok ? (receita ? null : `formato desconhecido: ${String((r.valor as { formato?: unknown }).formato)}`) : r.erro;
-  if (erroReceita) avisos.push(`A receita.json está ilegível (${erroReceita}): não dá para recalcular esta análise`);
+  if (erroReceita) avisos.push(`${alvo}: a receita.json está ilegível (${frase(erroReceita, 120)}) — não dá para recalcular; prepare a análise de novo numa cópia limpa do arquivo.`);
 
   const revisoes: Revisao[] = [];
   for (const nome of subpastas(join(dir, "revisoes"))) {
     if (!NOME_REV.test(nome)) continue;
     const rdir = join(dir, "revisoes", nome);
     const r = lerRevisao(rdir, nome, relArquivo(arquivo, rdir));
-    if (typeof r === "string") avisos.push(r); else revisoes.push(r);
+    if (typeof r === "string") avisos.push(`${alvo}: ${r.charAt(0).toLowerCase()}${r.slice(1)}.`); else revisoes.push(r);
   }
   revisoes.sort((a, b) => b.numero - a.numero);
   // a atual é a última íntegra que não foi recusada (recusada não tem números; é tratada como falha)
@@ -172,9 +194,10 @@ export function lerAnalise(arquivo: string, campanha: string, alvo: string): Ana
   const ultima = falhas[0] ?? null;
   const ultimaFalhaDepoisDaAtual = ultima && (!atual || ultima.em > atual.resumo.geradoEm) ? ultima : null;
   if (ultimaFalhaDepoisDaAtual) {
+    const motivo = frase(ultimaFalhaDepoisDaAtual.motivo).replace(/[.;:]$/, "");
     avisos.push(atual
-      ? `A última tentativa de recalcular, em ${dataLocal(ultimaFalhaDepoisDaAtual.em)}, falhou: ${ultimaFalhaDepoisDaAtual.motivo}. Os números mostrados são da ${atual.nome}, a última versão íntegra.`
-      : `A tentativa de calcular, em ${dataLocal(ultimaFalhaDepoisDaAtual.em)}, falhou: ${ultimaFalhaDepoisDaAtual.motivo}. Ainda não há versão íntegra.`);
+      ? `${alvo}: a última tentativa de recalcular, em ${dataLocal(ultimaFalhaDepoisDaAtual.em)}, falhou — ${motivo}. Os números continuam os da ${atual.nome}, a última versão íntegra; resolva a causa e clique em Recalcular de novo.`
+      : `${alvo}: a tentativa de calcular, em ${dataLocal(ultimaFalhaDepoisDaAtual.em)}, falhou — ${motivo}. Ainda não há versão íntegra; resolva a causa e clique em Tentar calcular de novo.`);
   }
 
   const decisoes: VersaoDecisoes[] = [];
@@ -184,7 +207,7 @@ export function lerAnalise(arquivo: string, campanha: string, alvo: string): Ana
       const m = NOME_DEC.exec(nome);
       if (!m) continue;
       const d = tentarJson<RawReviews & { _painel?: MetaDecisao }>(join(ddir, nome));
-      if (!d.ok) { avisos.push(`As decisões ${nome} estão ilegíveis: ignoradas (a versão anterior continua valendo)`); continue; }
+      if (!d.ok) { avisos.push(`${alvo}: as decisões ${nome} estão ilegíveis e foram ignoradas — a versão anterior das decisões continua valendo.`); continue; }
       decisoes.push({ numero: Number(m[1]), nome, rel: relArquivo(arquivo, join(ddir, nome)), meta: d.valor._painel ?? null });
     }
   }
@@ -223,9 +246,40 @@ export function lerIndice(arquivo: string): EntradaLida[] {
   });
 }
 
-/** O arquivo é fixture se o marcador existe ou alguma entrada é ensaio. */
-export function ehFixture(arquivo: string, entradas: EntradaLida[]): boolean {
-  return existsSync(join(arquivo, "FIXTURE-SINTETICA.md")) || entradas.some(e => e.entrada?.natureza === "ensaio");
+/**
+ * O arquivo INTEIRO é fixture só com o marcador que `npm run painel:fixture` grava. Entradas de ensaio
+ * (dublê, roteiro) convivem com execuções reais no mesmo `govbr-resultados`: são rotuladas por
+ * campanha e por linha ("ensaio"), nunca fazem o arquivo todo virar "FIXTURE SINTÉTICA" (T8a.2).
+ */
+export function ehFixture(arquivo: string, _entradas: EntradaLida[] = []): boolean {
+  return existsSync(join(arquivo, "FIXTURE-SINTETICA.md"));
+}
+
+// ───────────────────────────────────────────────────────────────── campanhas
+
+export interface InfoCampanha {
+  id: string; titulo: string | null; tipo: "pilot" | "formal" | null; bracos: Arm[] | null;
+  /** ensaio = dublê/roteiro/fixture; calibracao = piloto real (D-67); formal = campanha que vira resultado. */
+  natureza: "ensaio" | "calibracao" | "formal" | "desconhecida";
+  rotulo: string; explicacao: string;
+}
+
+/** A campanha congelada no arquivo (`campanhas/<id>/<sha>/campaign.json`, ou direto na pasta na fixture). */
+export function infoCampanha(arquivo: string, id: string, naturezas: ("formal" | "ensaio")[] = []): InfoCampanha {
+  type Doc = { title?: string; kind?: "pilot" | "formal"; fixture?: boolean; frozenAt?: string; design?: { arms?: Arm[] } };
+  const docs: Doc[] = [];
+  if (ID.test(id)) {
+    const dir = join(arquivo, "campanhas", id);
+    const candidatos = [join(dir, "campaign.json"), ...subpastas(dir).map(s => join(dir, s, "campaign.json"))];
+    for (const c of candidatos) if (existsSync(c)) { const r = tentarJson<Doc>(c); if (r.ok) docs.push(r.valor); }
+  }
+  const d = docs.sort((a, b) => (b.frozenAt ?? "").localeCompare(a.frozenAt ?? ""))[0] ?? null;
+  const ensaio = d?.fixture === true || (naturezas.length > 0 && naturezas.every(n => n === "ensaio"));
+  const base = { id, titulo: d?.title ?? null, tipo: d?.kind ?? null, bracos: d?.design?.arms ?? null };
+  if (ensaio) return { ...base, natureza: "ensaio", rotulo: "ensaio — não é dado científico", explicacao: "Execuções com dublê, roteiro ou fixture: provam o caminho (coleta, arquivo, análise), nunca o modelo." };
+  if (d?.kind === "pilot") return { ...base, natureza: "calibracao", rotulo: "calibração (D-67) — não é resultado", explicacao: "Piloto com o modelo real para calibrar o instrumento (tempo, uso, saúde técnica). Os números daqui não são comparação de desempenho e não entram na tese como resultado." };
+  if (d?.kind === "formal") return { ...base, natureza: "formal", rotulo: "campanha formal", explicacao: "Campanha cujos pares entram no resultado, cada um pela sua análise revisada." };
+  return { ...base, natureza: "desconhecida", rotulo: "campanha sem documento no arquivo", explicacao: "O arquivo não traz o campaign.json desta campanha; trate os números com cautela." };
 }
 
 // ───────────────────────────────────────────────────────────────── estados com nome próprio
@@ -283,9 +337,19 @@ function achadosDe(arquivo: string, e: EntradaIndice): Achados {
 }
 
 export interface LinhaExecucao {
-  chave: string; arquivoEntrada: string; natureza: "formal" | "ensaio"; campanha: string; par: string | null; slot: string | null;
+  chave: string;
+  /** Id curto (T8a.2): o slot da campanha (`p01-sem`), o mesmo em toda tabela, aviso, cartão e URL. */
+  id: string;
+  /** O id com a campanha entre parênteses quando o mesmo id existe em outra campanha do arquivo. */
+  idQualificado: string;
+  url: string;
+  arquivoEntrada: string; natureza: "formal" | "ensaio"; campanha: string; par: string | null; slot: string | null;
+  tentativa: number | null; repeticao: number | null;
   tela: string; braco: Arm | null; modelo: string | null; esforco: string | null; dataUtc: string; dataLocal: string;
-  tecnico: Selo; causaFalha: string | null; achados: Achados; publicacao: Selo;
+  tecnico: Selo; causaFalha: string | null; causaCurta: string | null; achados: Achados; publicacao: Selo;
+  isolamento: Selo; oraculo: Selo; envio: Selo;
+  /** Do `pacote/run.json` (usage), quando medido; null = desconhecido (nunca 0). */
+  duracaoS: number | null; custoUsd: number | null;
   pontuacao: Selo & { fonte: Fonte | null };
   analise: string | null; caminho: string;
 }
@@ -299,7 +363,74 @@ function revisaoQueCobre(analises: Analise[], e: EntradaIndice): { an: Analise; 
   return null;
 }
 
-export function linhaExecucao(arquivo: string, lida: EntradaLida & { entrada: EntradaIndice }, analises: Analise[]): LinhaExecucao {
+function lerRun(arquivo: string, e: EntradaIndice): Run | null {
+  if (e.estado.arquivo === "sem-pacote") return null;
+  const p = join(arquivo, e.caminho, "pacote", "run.json");
+  if (!existsSync(p)) return null;
+  const r = tentarJson<Run>(p);
+  return r.ok ? r.valor : null;
+}
+
+/**
+ * Id curto de cada execução, único dentro da campanha: o slot (`p01-sem`) quando é um id legível;
+ * senão `par-braço-rN` (repetição do run.json). Slot repetido (nova tentativa) ganha `-t1`, `-t2`… na
+ * ordem do disparo. O runId completo continua na página da execução.
+ */
+export function idsCurtos(arquivo: string, entradas: EntradaIndice[]): Map<string, string> {
+  const ids = new Map<string, string>();
+  const porCampanha = new Map<string, EntradaIndice[]>();
+  for (const e of entradas) if (e.tipo === "execucao") porCampanha.set(e.campanha, [...(porCampanha.get(e.campanha) ?? []), e]);
+  for (const xs of porCampanha.values()) {
+    const ordem = [...xs].sort((a, b) => a.dataUtc.localeCompare(b.dataUtc) || a.chave.localeCompare(b.chave));
+    const base = (e: EntradaIndice): string => {
+      if (e.slot && ID.test(e.slot) && e.slot.length <= 32) return e.slot;
+      const rep = lerRun(arquivo, e)?.repetition;
+      return `${e.par ?? "avulsa"}-${e.braco ?? "braco"}-r${typeof rep === "number" ? rep : 1}`;
+    };
+    const grupos = new Map<string, EntradaIndice[]>();
+    for (const e of ordem) { const b = base(e); grupos.set(b, [...(grupos.get(b) ?? []), e]); }
+    const usados = new Set<string>();
+    for (const [b, gs] of grupos) {
+      gs.forEach((e, i) => {
+        let id = gs.length === 1 ? b : `${b}-t${i + 1}`;
+        if (usados.has(id) || !ID.test(id)) id = ID.test(`${id}-${e.chave.slice(-6)}`) ? `${id}-${e.chave.slice(-6)}` : e.chave;
+        usados.add(id);
+        ids.set(e.chave, id);
+      });
+    }
+  }
+  return ids;
+}
+
+/** A chave (runId) do id curto `id` na campanha, ou null. */
+export function chaveDoId(arquivo: string, campanha: string, id: string): string | null {
+  if (!ID.test(campanha) || !ID.test(id)) return null;
+  const es = lerIndice(arquivo).map(l => l.entrada).filter((e): e is EntradaIndice => Boolean(e) && e!.campanha === campanha);
+  for (const [chave, i] of idsCurtos(arquivo, es)) if (i === id) return chave;
+  return null;
+}
+
+const ISOLAMENTO: Record<string, Selo> = {
+  passed: { estado: "ok", texto: "isolamento conferido" },
+  failed: { estado: "falha", texto: "isolamento violado" },
+  unverified: { estado: "aviso", texto: "isolamento não verificado" },
+};
+const ORACULO: Record<string, Selo> = {
+  "absent-verified": { estado: "ok", texto: "sem oráculo (conferido)" },
+  "used-adherent": { estado: "ok", texto: "oráculo usado" },
+  "available-unused": { estado: "aviso", texto: "oráculo disponível, não usado" },
+  "used-with-errors": { estado: "pendente", texto: "oráculo usado com erros" },
+  unverified: { estado: "aviso", texto: "uso do oráculo não verificado" },
+  "not-applicable": { estado: "nao-se-aplica", texto: "oráculo: não se aplica" },
+};
+const ENVIO: Record<string, Selo> = {
+  accepted: { estado: "ok", texto: "relatório aceito" },
+  refused: { estado: "falha", texto: "relatório recusado" },
+  none: { estado: "falha", texto: "nenhum relatório enviado" },
+};
+const seloDe = (m: Record<string, Selo>, v: string | null, nulo: string): Selo => v ? m[v] ?? { estado: "aviso", texto: v } : { estado: "nao-se-aplica", texto: nulo };
+
+export function linhaExecucao(arquivo: string, lida: EntradaLida & { entrada: EntradaIndice }, analises: Analise[], ids?: Map<string, string>): LinhaExecucao {
   const e = lida.entrada;
   const tec = e.estado.tecnico;
   const tecnico: Selo = e.estado.arquivo === "sem-pacote"
@@ -317,36 +448,89 @@ export function linhaExecucao(arquivo: string, lida: EntradaLida & { entrada: En
   } else {
     pontuacao = { estado: "sem-analise", texto: "sem análise no arquivo", fonte: null };
   }
+  const run = lerRun(arquivo, e);
+  const medido = (k: keyof Run["usage"]): number | null => {
+    const m = run?.usage?.[k];
+    return m && m.status === "measured" && typeof m.value === "number" ? m.value : null;
+  };
+  const id = (ids ?? idsCurtos(arquivo, [e])).get(e.chave) ?? e.chave;
   return {
-    chave: e.chave, arquivoEntrada: lida.arquivoEntrada, natureza: e.natureza, campanha: e.campanha, par: e.par, slot: e.slot, tela: e.tela,
-    braco: e.braco, modelo: e.modelo, esforco: e.esforco, dataUtc: e.dataUtc, dataLocal: dataLocal(e.dataUtc), tecnico,
-    causaFalha: e.motivo, achados, publicacao: seloPublicacao(e), pontuacao,
-    analise: cobre?.an.id ?? null, caminho: e.caminho,
+    chave: e.chave, id, idQualificado: id, url: `/execucao/${encodeURIComponent(e.campanha)}/${encodeURIComponent(id)}`,
+    arquivoEntrada: lida.arquivoEntrada, natureza: e.natureza, campanha: e.campanha, par: e.par, slot: e.slot,
+    tentativa: typeof run?.attempt === "number" ? run.attempt : null, repeticao: typeof run?.repetition === "number" ? run.repetition : null,
+    tela: e.tela, braco: e.braco, modelo: e.modelo, esforco: e.esforco, dataUtc: e.dataUtc, dataLocal: dataLocal(e.dataUtc), tecnico,
+    causaFalha: e.motivo, causaCurta: e.motivo ? frase(e.motivo, 160) : null, achados, publicacao: seloPublicacao(e),
+    isolamento: seloDe(ISOLAMENTO, e.estado.isolamento, "isolamento: sem registro"),
+    oraculo: seloDe(ORACULO, e.estado.oraculo, "oráculo: sem registro"),
+    envio: e.estado.arquivo === "sem-pacote" ? { estado: "nao-se-aplica", texto: "sem pacote" } : seloDe(ENVIO, e.estado.submissao, "envio: sem registro"),
+    duracaoS: medido("wallClockSeconds"), custoUsd: medido("estimatedCostUsd"),
+    pontuacao, analise: cobre?.an.id ?? null, caminho: e.caminho,
   };
 }
 
 export interface VistaExecucoes {
   fixture: boolean; execucoes: LinhaExecucao[]; linhasDeBase: EntradaIndice[]; ilegiveis: { arquivo: string; erro: string }[];
   pares: VistaParResumo[];
+  /** Campanhas do arquivo, a de execução mais recente primeiro. */
+  campanhas: InfoCampanha[];
+  /** O Git desta máquina converteu os finais de linha do clone (ver cloneComCrlf). */
+  crlf: boolean;
 }
+
+/** Números de um braço na revisão atual: SÓ valores de summary.json. */
+export interface ResultadoBraco {
+  runId: string; id: string | null; confirmadas: number | null; total: number | null; recall: number | null; precisao: number | null;
+  incorretas: number | null; novas: number | null; pendentes: number | null; achados: number | null; maturidade: string;
+  segundos: number | null; custoUsd: number | null;
+}
+export interface ResultadoPar {
+  revisao: string; fonte: string; geradoEm: string; estado: string | null; disponivel: boolean; motivo: string | null; nota: string;
+  bracos: Partial<Record<Arm, ResultadoBraco>>; diferencaUnidades: number | null; diferencaRecall: number | null; pendentes: number;
+}
+
+export function resultadoDaRevisao(rv: Revisao, ids: Map<string, string> = new Map()): ResultadoPar | null {
+  const c = rv.resumo.comparacao;
+  if (rv.resumo.analise.estado !== "pronta") return null;
+  const medido = (m: { estado: string; valor: number | null } | undefined): number | null => (m && m.estado === "medido" && typeof m.valor === "number" ? m.valor : null);
+  const bracos: ResultadoPar["bracos"] = {};
+  for (const e of rv.resumo.execucoes) {
+    const m = e.pontuacao.metricas;
+    bracos[e.braco] = { runId: e.runId, id: ids.get(e.runId) ?? null, confirmadas: m.confirmedReferenceUnits, total: m.referenceUnits, recall: m.recall,
+      precisao: m.precision, incorretas: m.incorrectClaims, novas: m.newCorrect, pendentes: m.pending, achados: e.achados ? e.achados.total : null,
+      maturidade: e.pontuacao.estado, segundos: medido(e.custoTempo?.wallClockSeconds), custoUsd: medido(e.custoTempo?.estimatedCostUsd) };
+  }
+  return { revisao: rv.nome, fonte: `${rv.rel}/summary.json`, geradoEm: rv.resumo.geradoEm, estado: c?.estado ?? null, disponivel: Boolean(c?.disponivel),
+    motivo: c?.motivo ?? null, nota: c?.nota ?? "análise de uma execução só: não há comparação",
+    bracos, diferencaUnidades: c?.diferencaUnidadesConfirmadas ?? null, diferencaRecall: c?.diferencaRecall ?? null,
+    pendentes: rv.resumo.revisaoSemantica?.pendentes ?? 0 };
+}
+
 export interface VistaParResumo {
   campanha: string; par: string; tela: string; modelo: string | null; dataUtc: string; bracos: Arm[]; faltando: Arm[];
-  analise: string | null; selo: Selo;
+  /** O braço que falta não está no desenho da campanha (ex.: prova de um braço só): não é par incompleto. */
+  porDesenho: boolean;
+  execucoes: { id: string; chave: string; braco: Arm | null; url: string }[];
+  analise: string | null; selo: Selo; avisos: string[]; resultado: ResultadoPar | null;
 }
 
 export function vistaExecucoes(arquivo: string): VistaExecucoes {
   const lidas = lerIndice(arquivo);
   const analises = listarAnalises(arquivo);
   const validas = lidas.filter((l): l is EntradaLida & { entrada: EntradaIndice } => l.entrada !== null);
-  const execucoes = validas.filter(l => l.entrada.tipo === "execucao").map(l => linhaExecucao(arquivo, l, analises))
+  const ids = idsCurtos(arquivo, validas.map(l => l.entrada));
+  const execucoes = validas.filter(l => l.entrada.tipo === "execucao").map(l => linhaExecucao(arquivo, l, analises, ids))
     .sort((a, b) => b.dataUtc.localeCompare(a.dataUtc) || a.chave.localeCompare(b.chave));
+  for (const x of execucoes) if (execucoes.some(y => y.id === x.id && y.campanha !== x.campanha)) x.idQualificado = `${x.id} (${x.campanha})`;
   const linhasDeBase = validas.filter(l => l.entrada.tipo === "linha-de-base").map(l => l.entrada)
     .sort((a, b) => b.dataUtc.localeCompare(a.dataUtc));
+  const ordemCampanhas = [...new Set([...execucoes.map(x => x.campanha), ...linhasDeBase.map(e => e.campanha)])];
+  const campanhas = ordemCampanhas.map(c => infoCampanha(arquivo, c, execucoes.filter(x => x.campanha === c).map(x => x.natureza)));
   return { fixture: ehFixture(arquivo, lidas), execucoes, linhasDeBase,
-    ilegiveis: lidas.filter(l => l.erro).map(l => ({ arquivo: l.arquivoEntrada, erro: l.erro! })), pares: resumoPares(execucoes, analises) };
+    ilegiveis: lidas.filter(l => l.erro).map(l => ({ arquivo: l.arquivoEntrada, erro: l.erro! })), pares: resumoPares(execucoes, analises, campanhas, ids),
+    campanhas, crlf: cloneComCrlf(arquivo) };
 }
 
-function resumoPares(execucoes: LinhaExecucao[], analises: Analise[]): VistaParResumo[] {
+function resumoPares(execucoes: LinhaExecucao[], analises: Analise[], campanhas: InfoCampanha[], ids: Map<string, string>): VistaParResumo[] {
   const grupos = new Map<string, LinhaExecucao[]>();
   for (const x of execucoes) {
     if (!x.par) continue;
@@ -357,10 +541,13 @@ function resumoPares(execucoes: LinhaExecucao[], analises: Analise[]): VistaParR
     const [campanha, par] = k.split("/");
     const bracos = ARMS.filter(a => xs.some(x => x.braco === a));
     const faltando = ARMS.filter(a => !bracos.includes(a));
+    const desenho = campanhas.find(c => c.id === campanha)?.bracos ?? null;
+    const porDesenho = faltando.length > 0 && Boolean(desenho) && faltando.every(a => !desenho!.includes(a));
     const an = analises.find(a => a.campanha === campanha && a.alvo === par) ?? null;
     const comp = an?.atual?.resumo.comparacao ?? null;
     let selo: Selo;
-    if (faltando.length) selo = { estado: "par-incompleto", texto: `par incompleto: falta o braço ${faltando.join(" e ")}` };
+    if (porDesenho) selo = { estado: "nao-se-aplica", texto: "um braço só, pelo desenho da campanha: sem comparação" };
+    else if (faltando.length) selo = { estado: "par-incompleto", texto: `par incompleto: falta o braço ${faltando.join(" e ")}` };
     else if (!an) selo = { estado: "sem-analise", texto: "sem análise no arquivo" };
     else if (!an.atual) selo = { estado: "falha", texto: "análise sem versão íntegra" };
     else if (an.atual.resumo.analise.estado === "bloqueada") selo = { estado: "bloqueada", texto: "análise bloqueada" };
@@ -368,7 +555,10 @@ function resumoPares(execucoes: LinhaExecucao[], analises: Analise[]): VistaParR
     else if (comp?.estado === "final") selo = { estado: "final", texto: "comparação final" };
     else selo = { estado: "pendente", texto: "comparação provisória (revisão aberta)" };
     const recente = [...xs].sort((a, b) => b.dataUtc.localeCompare(a.dataUtc))[0];
-    return { campanha, par, tela: recente.tela, modelo: recente.modelo, dataUtc: recente.dataUtc, bracos, faltando, analise: an?.id ?? null, selo };
+    const ordenadas = [...xs].sort((a, b) => ARMS.indexOf(a.braco ?? "sem") - ARMS.indexOf(b.braco ?? "sem") || a.dataUtc.localeCompare(b.dataUtc));
+    return { campanha, par, tela: recente.tela, modelo: recente.modelo, dataUtc: recente.dataUtc, bracos, faltando, porDesenho,
+      execucoes: ordenadas.map(x => ({ id: x.id, chave: x.chave, braco: x.braco, url: x.url })),
+      analise: an?.id ?? null, selo, avisos: an?.avisos ?? [], resultado: an?.atual ? resultadoDaRevisao(an.atual, ids) : null };
   }).sort((a, b) => b.dataUtc.localeCompare(a.dataUtc) || a.par.localeCompare(b.par));
 }
 
@@ -384,6 +574,7 @@ export interface VistaPar {
     unidades: NonNullable<Resumo["comparacao"]>["unidades"]; fonte: Fonte } | null;
   achadosPorBraco: Partial<Record<Arm, { total: number; itens: { seletor: string; regra: string | null; observado: string }[] } | null>>;
   revisaoAberta: boolean;
+  campanhaInfo: InfoCampanha; porDesenho: boolean; resultado: ResultadoPar | null; avisosArquivo: { crlf: boolean };
 }
 
 const pct = (v: number | null): string => v === null ? "indisponível" : `${(v * 100).toFixed(1).replace(".", ",")}%`;
@@ -432,6 +623,9 @@ export function vistaPar(arquivo: string, campanha: string, par: string): VistaP
   const bracos: VistaPar["bracos"] = {};
   for (const a of ARMS) { const l = xs.filter(x => x.braco === a); if (l.length) bracos[a] = l; }
   const faltando = ARMS.filter(a => !bracos[a]);
+  const resumo = v.pares.find(p => p.campanha === campanha && p.par === par) ?? null;
+  const campanhaInfo = v.campanhas.find(c => c.id === campanha) ?? infoCampanha(arquivo, campanha);
+  const ids = new Map(v.execucoes.map(x => [x.chave, x.id] as [string, string]));
   const rv = an?.atual ?? null;
   let comparacao: VistaPar["comparacao"] = null;
   if (rv?.resumo.comparacao) {
@@ -448,14 +642,15 @@ export function vistaPar(arquivo: string, campanha: string, par: string): VistaP
   if (rv) for (const e of rv.resumo.execucoes) achadosPorBraco[e.braco] = e.achados;
   const revisaoAberta = Boolean(rv && rv.resumo.execucoes.some(e => e.pontuacao.estado === "pending-review" || e.pontuacao.estado === "provisional"));
   return { fixture: v.fixture, campanha, par, bracos, faltando, analise: an, metricas: rv && rv.resumo.analise.estado === "pronta" ? metricasDaRevisao(rv) : null,
-    comparacao, achadosPorBraco, revisaoAberta };
+    comparacao, achadosPorBraco, revisaoAberta, campanhaInfo, porDesenho: resumo?.porDesenho ?? false,
+    resultado: rv ? resultadoDaRevisao(rv, ids) : null, avisosArquivo: { crlf: v.crlf } };
 }
 
 // ───────────────────────────────────────────────────────────────── execução (resumo técnico)
 
 export interface LinhaTecnica { rotulo: string; valor: Valor }
 export interface VistaExecucao {
-  fixture: boolean; linha: LinhaExecucao; entrada: EntradaIndice;
+  fixture: boolean; linha: LinhaExecucao; entrada: EntradaIndice; campanhaInfo: InfoCampanha;
   origem: "analise" | "pacote" | "sem-pacote";
   tecnico: LinhaTecnica[]; custo: LinhaTecnica[]; isolamento: LinhaTecnica[];
   despacho: { motivo: string | null; fonte: string } | null;
@@ -475,7 +670,8 @@ export function vistaExecucao(arquivo: string, chave: string): VistaExecucao | n
   if (!lida?.entrada) return null;
   const e = lida.entrada;
   const analises = listarAnalises(arquivo);
-  const linha = linhaExecucao(arquivo, lida as EntradaLida & { entrada: EntradaIndice }, analises);
+  const ids = idsCurtos(arquivo, lidas.map(l => l.entrada).filter((x): x is EntradaIndice => Boolean(x) && x!.campanha === e.campanha));
+  const linha = linhaExecucao(arquivo, lida as EntradaLida & { entrada: EntradaIndice }, analises, ids);
   const cobre = revisaoQueCobre(analises, e);
   const rv = cobre?.an.atual ?? null;
   const ex = rv?.resumo.execucoes.find(x => x.runId === chave) ?? null;
@@ -531,7 +727,8 @@ export function vistaExecucao(arquivo: string, chave: string): VistaExecucao | n
       tecnico.push(T("Status técnico", null, `pacote/run.json ${r ? "ilegível" : "ausente"} no arquivo`, f("—")));
     }
   }
-  return { fixture: ehFixture(arquivo, lidas), linha, entrada: e, origem, tecnico, custo, isolamento, despacho, analise: cobre?.an ?? null };
+  const naturezas = lidas.filter(l => l.entrada?.tipo === "execucao" && l.entrada.campanha === e.campanha).map(l => l.entrada!.natureza);
+  return { fixture: ehFixture(arquivo, lidas), linha, entrada: e, campanhaInfo: infoCampanha(arquivo, e.campanha, naturezas), origem, tecnico, custo, isolamento, despacho, analise: cobre?.an ?? null };
 }
 
 // ───────────────────────────────────────────────────────────────── revisão atual: pacote e decisões

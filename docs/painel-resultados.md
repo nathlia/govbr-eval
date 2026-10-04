@@ -6,7 +6,9 @@ tem pontuação e a comparação sem/com. Nele você também revisa os cartões 
 Ele não chama modelo e não mostra o gabarito. A única saída para a internet é baixar, com o `gh`, um
 anexo de evidências que ainda não esteja na máquina (desligue com `--sem-download`).
 
-Plano e decisões: `thesis-workspace/planejamento/atual/plano-t8a-painel-2026-10-03.md`. Workflow e
+Plano e decisões: `thesis-workspace/planejamento/atual/plano-t8a-painel-2026-10-03.md` e, para o redesenho
+(ids curtos, avisos de uma frase, comparação com × sem, guia em diagramas, porta),
+`plano-t8a2-painel-redesenho-2026-10-03.md`. Workflow e
 arquivo: [`pipeline-isolado.md`](pipeline-isolado.md). De onde vêm os números:
 [`analise-execucao.md`](analise-execucao.md).
 
@@ -21,9 +23,15 @@ npm run painel:fixture -- ../painel-fixture        # monta numa pasta nova (uns 
 npm run painel:resultados -- --arquivo ../painel-fixture
 ```
 
-Abra **http://127.0.0.1:4610/** no navegador. Se a 4610 estiver ocupada, o terminal mostra a porta
-que foi usada. Para encerrar, use Ctrl+C no terminal. Para recomeçar do zero, apague a pasta e rode
-o primeiro comando de novo.
+Abra **http://127.0.0.1:4610/** no navegador. Para encerrar, use Ctrl+C no terminal. Para recomeçar do
+zero, apague a pasta e rode o primeiro comando de novo.
+
+> **Porta ocupada.** Se já houver **outro painel** na 4610, o novo **não sobe**: o terminal mostra, num
+> quadro, qual arquivo o outro está servindo. Feche o outro (Ctrl+C no terminal dele) ou abra este ao
+> lado com `--porta 4611`. Se a 4610 estiver ocupada por **outro programa** (ou se você deu `--porta`
+> e ela estava ocupada), o painel sobe na próxima livre e o terminal mostra **em destaque** o endereço
+> certo. Em toda página, logo abaixo do título do painel, aparece o caminho do arquivo aberto: confira
+> antes de ler qualquer número.
 
 O que tem na fixture:
 
@@ -56,15 +64,37 @@ cd ../govbr-eval
 npm run painel:resultados -- --arquivo ../govbr-resultados
 ```
 
-- **Execuções e pares** é a página inicial. Os pares aparecem no topo e as execuções embaixo, cada
-  uma com o status técnico, os achados, a pontuação, a publicação e a causa da falha.
-- Clique na **data** de uma execução para abrir o **resumo técnico**. Ele existe mesmo sem
-  pontuação, porque é lido direto do `run.json` arquivado.
-- Clique no **par** para ver a comparação. Abaixo de cada número aparecem o arquivo e o campo de onde
-  ele veio. Os números vêm só do `summary.json` da análise (T6); o painel não recalcula nada por
-  conta própria.
+- **Estado das execuções** é a página inicial. Cada execução tem um **id curto**: o slot da campanha
+  (`p01-sem` = par 1, braço sem). É o mesmo id nos quadros do topo, nos avisos, nas listas, no
+  endereço (`/execucao/<campanha>/<id>`) e no título do resumo técnico. Sem slot legível, o id é
+  `<par>-<braço>-r<repetição>`; um slot disparado de novo vira `<slot>-t1`, `<slot>-t2`… O runId
+  completo fica em “Identificadores completos”, na página da execução.
+- Os **quadros do topo** dizem, pelos ids, quais execuções falharam, quais terminaram com 0 achados,
+  quais pares estão incompletos, quais estão prontos para preparar, aguardando revisão ou com
+  comparação final. Ensaios não entram nos quadros quando há campanhas reais.
+- **Avisos**: cada um é uma frase, `<id>: o que aconteceu — o que fazer`, com o link “Como resolver”.
+  Log e stack nunca vão para a tela; o texto inteiro fica no `erro.json` ou no detalhe da execução.
+- Depois vêm as **campanhas**, a mais recente primeiro, cada uma com o rótulo do que ela é:
+  **calibração (D-67) — não é resultado** (piloto com o modelo real), **campanha formal**, ou
+  **ensaio** (dublê/roteiro/fixture; ficam dobrados no fim quando há campanhas reais). Dentro de cada
+  campanha, os pares, e em cada par uma linha por execução: id, braço, estados (o que está bem aparece
+  discreto, com ✓; o que pede atenção vira pílula), achados e duração.
+- Um par a que falta um braço que a campanha **não planejou** (a prova do cliente, só braço com)
+  aparece como “um braço só, pelo desenho da campanha”, não como par incompleto.
+- Clique no **par** para ver a comparação com × sem, na mesma linguagem da página Resultados do painel
+  do TCC: uma faixa **PROVISÓRIO** (revisão aberta, com quantos cartões faltam) ou **FINAL**, um cartão
+  por braço com o número grande (defeitos da referência confirmados, de N), barras lado a lado
+  (confirmados, achados, tempo, custo) e a diferença com − sem, sempre com “n = 1 par”. A tabela
+  completa, com o arquivo e o campo de cada número, fica em “Resultado por braço”. Os números vêm só do
+  `summary.json` da análise (T6); o painel não recalcula nada por conta própria, e nunca soma pares.
+- Quando uma campanha tem pares com revisão **fechada**, a página inicial mostra a comparação de cada
+  um, lado a lado, com n dito — nunca somados (D-69).
 - “indisponível” quer dizer que o número ainda não existe. Isso acontece com a revisão aberta ou a
   análise bloqueada. Não quer dizer zero.
+- **Guia em diagramas** (`/guia`): três figuras para quem chega agora — como um disparo anda, as
+  paredes da execução e de um achado ao número. É um deck reveal.js (versão fixada no `package.json`,
+  servido de `node_modules`, sem internet); no celular vira uma página que rola. Os SVG ficam em
+  `docs/diagramas/`, para o deck da defesa reaproveitar.
 
 ## 3a. Preparar a primeira análise (T8a.1)
 
@@ -92,6 +122,19 @@ página dela: **Preparar a análise desta execução (individual)**.
 
 Tela com referência que navega (a tela B) aparece como **“fora do alcance da análise”**, sem botão:
 a análise ainda não aceita esse caso (D-69, NAT-51). As execuções e o resumo técnico continuam ali.
+
+**“hash divergente” em tudo, logo de cara?** É quase sempre o Git do Windows trocando os finais de linha
+do clone (`core.autocrlf=true`): nenhum arquivo de texto tem mais o sha256 que o workflow registrou. O
+painel detecta isso, avisa no topo da página inicial e não prepara nada (a conferência continua byte a
+byte). Corrija o clone **uma vez**, dentro da pasta do `govbr-resultados`:
+
+```sh
+git config core.autocrlf false
+git rm --cached -r -q .
+git reset --hard
+```
+
+As pastas que o painel cria (`analises/`, `restauracoes/`, `anexos/`) não são do Git e ficam como estão.
 
 Sem `gh` (ou com `--sem-download`), baixe o anexo pela página da Release e coloque o arquivo em
 `anexos/<release>/` dentro do clone, ou abra o painel com `--anexos <pasta onde ele está>`.
@@ -170,8 +213,8 @@ Só dentro do arquivo aberto, e só em três pastas:
   e aparecem como “não dá para preparar”, com o motivo.
 - Um braço com mais de uma tentativa arquivada é recusado com motivo: escolher a tentativa pela
   política da campanha ainda não é feito pelo painel.
-- Sem filtros, gráficos, hospedagem nem controle de acesso. Isso fica para o T8b e para a decisão de
-  hospedagem.
+- Sem filtros, lista de defeitos entre campanhas, hospedagem nem controle de acesso. Isso fica para o
+  T8b e para a decisão de hospedagem.
 - Referência que navega (tela B) ainda é recusada pela análise (D-69).
 
 ## Testes
@@ -182,3 +225,6 @@ Num segundo arquivo, montado pelo código do job arquivar e sem análise, confer
 análise**: pronto para preparar, fora do alcance (referência que navega), anexo ausente e hash
 divergente como falhas com etapa, o caminho completo até “aguardando revisão”, a análise individual,
 o 404 da referência, do site, da campanha e das restaurações, e o cache adulterado refeito do anexo.
+Do redesenho (T8a.2): o id curto em toda página e na URL (e ausente da fila cega), avisos de uma frase
+sem stack, a porta ocupada (outro painel recusa e diz o arquivo; outro programa → porta ao lado com
+aviso), o `/guia` servido sem rede, ensaio que não vira “fixture” e o clone com CRLF.

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="diagrama d3" viewBox="0 0 1000 560" role="img" aria-labelledby="d3-titulo d3-desc" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title id="d3-titulo">De um achado ao número</title>
+  <desc id="d3-desc">O relatório do agente vira cartões, um por alegação. A revisora decide cada cartão às cegas. O recálculo transforma as decisões em defeitos confirmados, de um total conhecido. A comparação com menos sem é feita por par, com n dito e sem somar pares.</desc>
+  <style>
+    .d3 .caixa { fill: var(--d-papel, #ffffff); stroke: var(--d-linha, #c3ccd8); stroke-width: 2; }
+    .d3 .humano { stroke: var(--d-acento, #1351b4); stroke-width: 3; }
+    .d3 .t { fill: var(--d-texto, #16181d); font-size: 22px; font-weight: 700; }
+    .d3 .s { fill: var(--d-suave, #555d69); font-size: 17px; }
+    .d3 .r { fill: var(--d-suave, #555d69); font-size: 16px; font-weight: 700; letter-spacing: .06em; }
+    .d3 .seta { stroke: var(--d-texto, #16181d); stroke-width: 2.5; fill: none; marker-end: url(#d3-ponta); }
+    .d3 .ponta { fill: var(--d-texto, #16181d); }
+    .d3 .cartao { fill: var(--d-acento-fraco, #e9effa); stroke: var(--d-acento, #1351b4); stroke-width: 1.5; }
+    .d3 .barra-com { fill: var(--d-com, #2a6fd0); }
+    .d3 .barra-sem { fill: var(--d-sem, #c4561f); }
+    .d3 .trilha { fill: var(--d-muro, #eceff2); }
+    .d3 .ok { fill: var(--d-ok, #0d6b4a); font-size: 17px; font-weight: 700; }
+    .d3 .no { fill: var(--d-erro, #b3261e); font-size: 17px; font-weight: 700; }
+  </style>
+  <defs><marker id="d3-ponta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="ponta" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+
+  <rect class="caixa" x="20" y="40" width="210" height="200" rx="10"/>
+  <text class="t" x="40" y="76">relatório</text>
+  <text class="s" x="40" y="106">o que o agente alega:</text>
+  <text class="s" x="40" y="128">“este botão está fora</text>
+  <text class="s" x="40" y="150">do padrão”, com o</text>
+  <text class="s" x="40" y="172">elemento e a evidência</text>
+
+  <rect class="caixa" x="270" y="40" width="210" height="200" rx="10"/>
+  <text class="t" x="290" y="76">cartões</text>
+  <text class="s" x="290" y="106">um por alegação; sem o</text>
+  <text class="s" x="290" y="128">braço e sem o nome da</text>
+  <text class="s" x="290" y="150">execução</text>
+  <rect class="cartao" x="290" y="170" width="54" height="50" rx="5"/>
+  <rect class="cartao" x="352" y="170" width="54" height="50" rx="5"/>
+  <rect class="cartao" x="414" y="170" width="54" height="50" rx="5"/>
+
+  <rect class="caixa humano" x="520" y="40" width="220" height="200" rx="10"/>
+  <text class="t" x="540" y="76">revisão cega</text>
+  <text class="s" x="540" y="106">a revisora decide:</text>
+  <text class="ok" x="540" y="136">✓ defeito do gabarito</text>
+  <text class="ok" x="540" y="160">✓ defeito novo correto</text>
+  <text class="no" x="540" y="184">✕ incorreta</text>
+  <text class="s" x="540" y="208">duplicada · evidência</text>
+  <text class="s" x="540" y="228">insuficiente</text>
+
+  <rect class="caixa" x="780" y="40" width="200" height="200" rx="10"/>
+  <text class="t" x="800" y="76">recalcular</text>
+  <text class="s" x="800" y="106">as decisões viram</text>
+  <text class="s" x="800" y="128">defeitos confirmados,</text>
+  <text class="s" x="800" y="150">de um total conhecido</text>
+  <text class="s" x="800" y="172">(ex.: 9 de 14)</text>
+
+  <path class="seta" d="M230 140 L266 140"/>
+  <path class="seta" d="M480 140 L516 140"/>
+  <path class="seta" d="M740 140 L776 140"/>
+  <path class="seta" d="M880 240 C 880 290, 500 270, 500 306"/>
+
+  <rect class="caixa" x="120" y="310" width="760" height="220" rx="10"/>
+  <text class="t" x="140" y="346">comparação com × sem, por par</text>
+  <text class="s" x="140" y="374">mesma tela, mesmo modelo; só muda o oráculo. O número é provisório até a revisão fechar.</text>
+  <text class="s" x="140" y="404">com oráculo</text>
+  <rect class="trilha" x="260" y="388" width="560" height="24" rx="4"/>
+  <rect class="barra-com" x="260" y="388" width="360" height="24" rx="4"/>
+  <text class="s" x="140" y="446">sem oráculo</text>
+  <rect class="trilha" x="260" y="430" width="560" height="24" rx="4"/>
+  <rect class="barra-sem" x="260" y="430" width="200" height="24" rx="4"/>
+  <text class="r" x="140" y="500">N SEMPRE DITO · PARES NUNCA SOMADOS · BARRAS ILUSTRATIVAS</text>
+</svg>
