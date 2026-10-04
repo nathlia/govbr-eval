@@ -15,6 +15,7 @@ import { analisar, ESPELHO_CLI, regiaoDoCli, seguro, type OpcoesAnalise, type Re
 import { ROOT } from "./adjudication";
 import { construirFixture, FIXTURE_DIR, FINDINGS_PADRAO, type OpcoesFixture } from "./fixtures/analise/construir";
 import { analysisIdentity } from "./collection-manifest";
+import { FLOW_SCORING_VERSION } from "./instrument";
 import type { RawReviews, SemanticPackage } from "./semantic-flow";
 
 const work = mkdtempSync(join(tmpdir(), "teste-analisar-"));
@@ -340,6 +341,21 @@ async function main(): Promise<void> {
       const r3 = await analisar(opcoes(h));
       assert.equal(r3.estado, "recusada");
       assert.match(r3.motivo!, /artifact-manifest/);
+    });
+
+    await test("campanha congelada com outro scorer: recusada em uma frase, nada calculado; com o atual, segue", async () => {
+      const f = fixture();
+      const camp = readJson<{ campaignId: string; fixed: { scorerVersion: string } }>(f.campanha);
+      assert.equal(camp.fixed.scorerVersion, FLOW_SCORING_VERSION);
+      const ok = await analisar(opcoes(f));
+      assert.notEqual(ok.estado, "recusada");
+      assert.ok(!ok.resumo.analise.avisos.some(a => /scorerVersion/.test(a)));
+      camp.fixed.scorerVersion = "flow-semantic-1.4.0";
+      writeFileSync(f.campanha, JSON.stringify(camp, null, 2));
+      const r = await analisar(opcoes(f));
+      assert.equal(r.estado, "recusada");
+      assert.equal(r.motivo, `a campanha ${camp.campaignId} foi congelada com flow-semantic-1.4.0; o scorer atual é ${FLOW_SCORING_VERSION} — análise recusada para não misturar versões`);
+      assert.deepEqual(readdirSync(r.saida).sort(), ["summary.json", "summary.md"]);
     });
 
     await test("pasta de saída existente é recusada antes de qualquer leitura (nada sobrescrito)", async () => {

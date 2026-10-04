@@ -38,7 +38,7 @@ import { openPage, preparePage, resolveOnPage, resolveStatesOnPage, resolveWithE
 import { combinePredicate, measurePredicate, type PredicateResult } from "./acceptance-predicates";
 import { analysisIdentity, cenasDoPlano, compareIdentities, statePlanOf, statePlanSha256 } from "./collection-manifest";
 import type { EvidenceIndex } from "./flow-contract";
-import { FLOW_INSTRUMENT_VERSION } from "./instrument";
+import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION } from "./instrument";
 import { REGRA_IDS_GERADOS, mapearDecisoes, normalizarIdsGerados, presenteNoSite, type IdGerado, type MapaCartoes } from "./identidade-cartoes";
 import { createSiteServer, loadSite, type LoadedSite } from "./measurement-surface";
 import { READABLE_BASELINE_VERSIONS, type FlowBaselines } from "./run-baselines-flow";
@@ -618,6 +618,15 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   const campaign = contrato(lerJson<unknown>(resolve(o.campanha), "campanha"), "campaign.v1", "campanha") as Campaign;
   const campaignSha = sha(campaignBytes);
   if (campaign.fixture !== fixture) recusar("fixture misturada com dado real (campanha × pacote)");
+  // A campanha congela a versão do scorer (fixed.scorerVersion). Analisar com outra misturaria versões
+  // de pontuação dentro de uma campanha: recusa, sem revisão nova. Campanha que não a declara segue,
+  // com aviso (o contrato campaign.v1 a exige; isto só cobre um documento fora dele).
+  const scorerCongelado = (campaign.fixed as { scorerVersion?: unknown }).scorerVersion;
+  const avisoScorer = typeof scorerCongelado === "string" && scorerCongelado.trim() ? null
+    : `a campanha ${campaign.campaignId} não declara fixed.scorerVersion; analisada com o scorer atual ${FLOW_SCORING_VERSION} sem conferência`;
+  if (!avisoScorer && scorerCongelado !== FLOW_SCORING_VERSION) {
+    recusar(`a campanha ${campaign.campaignId} foi congelada com ${String(scorerCongelado)}; o scorer atual é ${FLOW_SCORING_VERSION} — análise recusada para não misturar versões`);
+  }
   for (const { run } of pacotes) {
     if (run.campaignId !== campaign.campaignId) recusar(`${run.runId} é da campanha ${run.campaignId}, não de ${campaign.campaignId}`);
     if (!campaign.design.screens.some(s => s.id === run.screen.id && s.version === run.screen.version)) recusar(`tela ${run.screen.id}@${run.screen.version} fora do desenho da campanha`);
@@ -707,7 +716,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     status, blockedReason, scoreStatus, metrics,
   });
 
-  const avisos: string[] = [];
+  const avisos: string[] = avisoScorer ? [avisoScorer] : [];
   let bloqueada: string | null = lb.binding.mode === "blocked" ? `linha de base: ${lb.binding.detail}` : null;
   if (par) {
     const provisorios = pacotes.map(p => ({ run: p.run, binding: bindingDe(p, "ready", null, "not-prepared", METRICAS_NULAS) }));

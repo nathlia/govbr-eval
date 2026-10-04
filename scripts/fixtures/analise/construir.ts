@@ -18,7 +18,7 @@ import type { AgentFinding, ArtifactManifest, Baseline, Campaign, Findings, Isol
 import type { FlowGroundTruth } from "../../../types";
 import { statePlanOf, statePlanSha256 } from "../../collection-manifest";
 import { BASELINE_VERSION, UNGUIDED_POLICY, type FlowBaselines } from "../../run-baselines-flow";
-import { FLOW_INSTRUMENT_VERSION } from "../../instrument";
+import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION } from "../../instrument";
 import { SURFACE_VERSION } from "../../measurement-surface";
 
 export const FIXTURE_DIR = dirname(fileURLToPath(import.meta.url));
@@ -114,7 +114,7 @@ function campanha(o: OpcoesFixture): Campaign {
       effort: "medium", repetitions: 1, order: "sequencial", seed: null },
     fixed: { protocolSha256: "c".repeat(64), client: { name: "cliente-fixture", version: "0.0.0" },
       provider: { name: "provedor-fixture", authMethod: "unknown" }, browser: { name: "chromium", version: "0.0.0-fixture" },
-      playwrightMcp: "0.0.0-fixture", isolationPolicyVersion: "isolamento-fixture-1", oracle: ORACULO, scorerVersion: "flow-semantic-1.4.0" },
+      playwrightMcp: "0.0.0-fixture", isolationPolicyVersion: "isolamento-fixture-1", oracle: ORACULO, scorerVersion: FLOW_SCORING_VERSION },
     limits: { timeoutSeconds: 1800, maxTurns: null, maxBudgetUsd: null },
     retryPolicy: { maxAttemptsPerSlot: 1, campaignAttemptCeiling: 2, retryOn: [], attemptSelection: "primeira tentativa; nenhuma repetição" },
     failurePolicy: "Falha fica registrada no slot; nada é repetido automaticamente.",

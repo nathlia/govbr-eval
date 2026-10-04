@@ -1,4 +1,4 @@
-# Pontuação semântica e revisão finita — flow-semantic-1.4.0
+# Pontuação semântica e revisão finita — flow-semantic-1.5.0
 
 ## As três filas, e qual delas fecha a bateria (fatia 5)
 
@@ -93,6 +93,43 @@ pontuação publica a comparação agente × linha de base por unidade. A prepar
 manifesto de coleta, a linha de base e o site congelado exatos da bateria. Política
 `aceitacao-semantica-1.2.0`. Nenhum pacote 1.1.0 tinha decisão registrada.
 
+**1.5.0 (piloto-01, 03/10): o sujeito dentro de um participante toca a unidade.** Até 1.4.0 uma
+unidade só era candidata (e só ancorava a decisão) quando a chave de um sujeito ou relacionado era
+EXATAMENTE a de um participante. No par-02 do piloto-01, a alegação "ao fechar o diálogo o foco vai
+para o `<body>` em vez de voltar ao Cancelar" — exatamente a A-01 — citava como relacionado um botão
+DENTRO do diálogo, e o participante da A-01 é o próprio diálogo: nenhuma candidata, e a revisora não
+podia nomear a A-01. No par-01 a mesma alegação apontava o diálogo e era creditável. O crédito
+dependia de como o agente redigiu a evidência.
+
+Agora a chave toca o participante quando é ele ou um **descendente** dele (`tocaParticipante` em
+`semantic-flow.ts`). As chaves são as canônicas de `anchors.ts` (`tag[:nth-of-type(n)]` desde
+`body`, `>` entre pai e filho, ` >>> ` ao entrar no shadow root aberto de um host), então
+descendência é prefixo seguido de separador: `P>…` ou `P >>> …`. O separador explícito impede a
+colisão de prefixo (`div:nth-of-type(1)` não toca `div:nth-of-type(10)`). O conteúdo do shadow root
+de um host conta como dentro dele. O inverso **não** toca: uma chave ancestral do participante (um
+`body`, um `main`) ofereceria a página inteira. A mesma regra vale para a oferta de candidatas
+(inclusive por segmento, nos cartões `a-decidir`) e para a ancoragem que valida a decisão e monta o
+emparelhamento — oferecer o que não se pode nomear, ou aceitar nomear o que não foi oferecido, seria
+incoerente. Continua sendo só oferta: nada é creditado sem a decisão da autora. Política
+`aceitacao-semantica-1.5.0`. Como todo scorer novo, muda `SCORER_FILES`: pacotes e decisões 1.4.0 não
+são transpostos (`identidade-cartoes.ts` recusa scorer diferente) — a análise é refeita.
+
+Dois limites ficam ditos. (1) O `scoreFlow` legado (`units-flow.ts`, `score:fluxo:legacy`) continua
+casando por igualdade EXATA, de propósito: ele credita automaticamente, sem revisora, e alargar o
+casamento ali seria crédito sem decisão — além de mudar os números v01 que ele existe para reproduzir.
+(2) Uma unidade cujo participante é um HOST (o `br-header` da `privacidade`, por exemplo) passa a ser
+oferecida para toda alegação sobre qualquer elemento dentro dele, inclusive no shadow root. A oferta
+fica mais larga; a decisão não: a revisora ainda confere que a alegação é o defeito DAQUELA unidade,
+e não outro defeito que só mora no mesmo componente.
+
+**A campanha congela o scorer.** `fixed.scorerVersion` da campanha é conferido na análise
+(`analisar-execucao.ts`, que o Recalcular/Preparar do painel chamam): versão diferente da atual é
+recusada em uma frase ("a campanha piloto-01 foi congelada com flow-semantic-1.4.0; o scorer atual é
+flow-semantic-1.5.0 — análise recusada para não misturar versões"), registrada em
+`revisoes/falhas/` como as outras recusas, sem revisão nova; a revisão atual continua valendo. Uma
+campanha sem a versão segue com aviso (o contrato `campaign.v1` a exige, então isso só cobre documento
+fora do contrato). Analisar o piloto-01 sob 1.5.0 exige, portanto, decisão registrada sobre a campanha.
+
 ## Contrato do achado e evidência da execução (fluxo-1.3.0)
 
 Cada achado separa o que foi constatado do que deveria valer e diz em que estado e com que evidência:
@@ -147,7 +184,8 @@ contratos de coleta.
 
 ## Garantias e limites
 
-- Seletor e norma apenas sugerem candidatos. **Nenhum texto recebe TP automaticamente.**
+- Seletor e norma apenas sugerem candidatos (sujeito igual ao participante da unidade, ou dentro dele
+  — desde 1.5.0). **Nenhum texto recebe TP automaticamente.**
 - A autora decide a correspondência semântica e a evidência, como já faz. Não há exigência de outra revisora.
 - Todas as alegações da bateria entram no pacote, inclusive as que o scorer antigo considerava TP.
 - A revisão decompõe alegações compostas em átomos; cláusulas falsas continuam cobradas.

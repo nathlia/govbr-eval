@@ -35,7 +35,7 @@ import { explicarExcecao, recalcular, salvarDecisao, vistaFila } from "./painel/
 import { criarPainel, escutar } from "./painel/servidor";
 import { digest, type SemanticPackage } from "./semantic-flow";
 
-const SCORER_SHA = "ae135c34ceeb3aa03942d90623a39bc609a0ea2d89822bb7d5938ca1c04132df";
+const SCORER_SHA = "7ceb07e3eca5944fa57392cd059a59239867ea8f153cdb2883b23eada433d146";
 const manter = process.argv.includes("--manter");
 const TMP = mkdtempSync(join(tmpdir(), "painel-teste-"));
 const resultados: { nome: string; ok: boolean }[] = [];
@@ -305,6 +305,26 @@ await teste("recálculo que falha: registro em falhas/, versão anterior continu
     assert.equal(p.analise.revisoes.length, 1);
     assert.ok(p.analise.avisos.some((a: string) => /falhou/.test(a) && /rev-001/.test(a)));
   } finally { renameSync(`${pac}.fora`, pac); }
+});
+
+await teste("campanha congelada com outro scorer: Recalcular recusa em uma frase, nenhuma revisão nova, a atual continua", async () => {
+  const rc = ler(`analises/${C}/par-04/receita.json`);
+  const campPath = join(arquivo, rc.entradas.campanha);
+  const original = readFileSync(campPath);
+  const camp = JSON.parse(original.toString("utf8"));
+  camp.fixed.scorerVersion = "flow-semantic-1.4.0";
+  writeFileSync(campPath, JSON.stringify(camp, null, 2));
+  try {
+    const antes = await getJson(`/api/par/${C}/par-04`);
+    const r = await postJson(`/api/recalcular/${C}/par-04`, {});
+    assert.equal(r.ok, false);
+    assert.ok(r.erro.includes(`a campanha ${camp.campaignId} foi congelada com flow-semantic-1.4.0; o scorer atual é ${analysisIdentity().scoringVersion} — análise recusada para não misturar versões`), r.erro);
+    assert.match(r.falha, /revisoes\/falhas\//);
+    const p = await getJson(`/api/par/${C}/par-04`);
+    assert.equal(p.analise.atual, antes.analise.atual);
+    assert.equal(p.analise.revisoes.length, antes.analise.revisoes.length);
+    assert.ok(p.analise.avisos.some((a: string) => /falhou/.test(a)));
+  } finally { writeFileSync(campPath, original); }
 });
 
 await teste("botão Recalcular com navegador que não abre (NAT-52): frase legível na resposta, log cru só no erro.json", async () => {

@@ -303,6 +303,22 @@ function sceneOfClaim(f: NormalizedFinding, raw: unknown, kind: RunKind, scenes:
     ...(segmentada ? { segmentos: daJanela(scene.viewport) } : {}) };
 }
 
+/**
+ * A chave `key` toca a unidade cujo participante é `participant`: é o mesmo elemento ou um
+ * DESCENDENTE dele (flow-semantic-1.5.0). As chaves são canônicas (anchors.ts `keyOf`): a cadeia
+ * `tag[:nth-of-type(n)]` desde `body`, `>` entre pai e filho e ` >>> ` ao entrar no shadow root
+ * aberto de um host. Ser descendente é, então, ter o participante como prefixo seguido de um
+ * desses dois separadores — o separador explícito impede que `div:nth-of-type(1)` case com
+ * `div:nth-of-type(10)`, ou `br-button` com `br-button-x`. O conteúdo do shadow root de um host
+ * conta como dentro dele (é o que a página desenha dentro do host). O inverso — a chave ser
+ * ANCESTRAL do participante (um `body`) — não toca: largo demais. Tocar só OFERECE a unidade como
+ * candidata e permite que a revisora a nomeie; nada é creditado sem decisão.
+ */
+export function tocaParticipante(key: string, participant: string): boolean {
+  return key === participant || key.startsWith(`${participant}>`) || key.startsWith(`${participant} >>> `);
+}
+const tocaAlguma = (keys: readonly string[], participant: string): boolean => keys.some(k => tocaParticipante(k, participant));
+
 /** Sujeitos e relacionados de um seletor numa cena. */
 function subjectsIn(res: Resolution, selector: string, relatedSelectors: string[]) {
   const resolved = res.bySelector.get(selector);
@@ -393,7 +409,7 @@ export function prepareSemanticPackage(
           rejectedFile: data.collector.rejectedFile, parseable: data.collector.parseable, filled: data.collector.filled } } : {}),
       };
       const candidatesIn = (scene: string, ks: string[], rel: string[]) => semanticUnits.filter(u => u.scene === scene &&
-        u.participants.some(k => ks.includes(k) || rel.includes(k)));
+        u.participants.some(p => tocaAlguma(ks, p) || tocaAlguma(rel, p)));
       const segmentos = aDecidir?.map(({ s, keys: ks, relatedKeys: rel }) => ({
         scene: s.id, estado: s.segmento?.estado ?? s.id, path: s.segmento?.path ?? null, relatedKeys: rel,
         candidateUnitIds: candidatesIn(s.id, ks, rel).map(u => u.id) }));
@@ -618,8 +634,9 @@ function anchored(subject: ReviewCard["subjects"][number], card: ReviewCard, uni
   // Num cartão com `segmentos` (D-60) cada sujeito diz a sua cena, e os relacionados são os dela.
   const scene = subject.scene ?? card.scene;
   const related = subject.scene ? card.segmentos?.find(o => o.scene === subject.scene)?.relatedKeys ?? [] : card.relatedKeys;
-  return subject.key !== null && scene === unit.scene && (unit.participants.includes(subject.key)
-    || unit.participants.some(k => related.includes(k)));
+  const key = subject.key;
+  return key !== null && scene === unit.scene && (unit.participants.some(p => tocaParticipante(key, p))
+    || unit.participants.some(p => tocaAlguma(related, p)));
 }
 
 function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<string, SemanticUnit>): void {

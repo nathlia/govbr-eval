@@ -9,7 +9,7 @@ import type { FlowUnit } from "./units-flow";
 import type { PredicateResult } from "./acceptance-predicates";
 import { renderReview } from "./semantic-flow-render";
 import {
-  SCORER_FILES, digest, maximumMatching, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, validatePackage,
+  SCORER_FILES, digest, maximumMatching, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, tocaParticipante, validatePackage,
   type SemanticDecision, type SemanticPackage, type SemanticReviews, type ReviewAtom, type PrepareRun, type SceneResolution,
 } from "./semantic-flow";
 
@@ -134,6 +134,69 @@ test("explicit relational participants permit reviewed credit", () => {
   const ds = reviews(pkg, [decision(pkg.cards[0].id, [atom(pkg, ["A"], { subjects: [other.key] })])]);
   assert.equal(scoreSemanticPackage(pkg, ds).scores[0].counts.detectedUnits, 1);
 });
+// 1.5.0 (piloto-01 par-02): a chave dentro de um participante toca a unidade; ancestral e irmão de prefixo não.
+{
+  const dialogo = { key: "body>div:nth-of-type(1)>div", id: "E-dialogo", label: "<div> diálogo", hidden: null };
+  const dentro = { key: "body>div:nth-of-type(1)>div>div:nth-of-type(3)>button:nth-of-type(1)", id: "E-dentro", label: "<button> Cancelar", hidden: null };
+  const sombra = { key: "body>div:nth-of-type(1)>div >>> header>button", id: "E-sombra", label: "<button> [shadow]", hidden: null };
+  const irmao = { key: "body>div:nth-of-type(10)>div", id: "E-irmao", label: "<div>", hidden: null };
+  const corpo = { key: "body", id: "E-body", label: "<body>", hidden: null };
+  const fora = { key: "body>form>button", id: "E-fora", label: "<button> Cancelar (form)", hidden: null };
+  const els = [dialogo, dentro, sombra, irmao, corpo, fora];
+  const res: Resolution = { url: "http://fixture/dialogo.html", byKey: new Map(els.map(e => [e.key, e])),
+    bySelector: new Map(els.map(e => [`#${e.id}`, { selector: `#${e.id}`, ok: true, error: null, keys: [e.key] }])) };
+  const foco: FlowUnit[] = [{ specId: "A-01", element: dialogo, participants: [dialogo.key], rules: ["wcag:2.4.3"], categories: ["focus"],
+    description: "Focus returns to the trigger when the dialog closes", state: "aberto", states: ["aberto"], conditional: false }];
+  const pacote = (selector: string, related: string[] = []) => prepareSemanticPackage(context, foco, res,
+    [{ id: "r1", data: { model: "fixture", timestamp: "fixed", appUrl: res.url,
+      findings: [{ selector, rule: "wcag:2.4.3", description: "Focus goes to body on close", relatedSelectors: related }] } }]);
+  const unidade = (pkg: SemanticPackage) => pkg.units[0].id;
+
+  test("1.5.0: tocaParticipante is equality or descent by explicit separator, never ancestry or prefix collision", () => {
+    assert.ok(tocaParticipante(dialogo.key, dialogo.key));
+    assert.ok(tocaParticipante(dentro.key, dialogo.key));
+    assert.ok(tocaParticipante(sombra.key, dialogo.key));
+    assert.ok(!tocaParticipante(corpo.key, dialogo.key));
+    assert.ok(!tocaParticipante(irmao.key, "body>div:nth-of-type(1)"));
+    assert.ok(!tocaParticipante("body>div:nth-of-type(10)>div", "body>div:nth-of-type(1)"));
+    assert.ok(!tocaParticipante("body>br-button-x", "body>br-button"));
+    assert.ok(!tocaParticipante(fora.key, dialogo.key));
+  });
+  test("1.5.0: exact participant still offers the unit", () => {
+    const pkg = pacote(`#${dialogo.id}`);
+    assert.deepEqual(pkg.cards[0].candidateUnitIds, [unidade(pkg)]);
+  });
+  test("1.5.0: a related key inside the participant offers the unit, and the reviewer can credit it", () => {
+    const pkg = pacote(`#${fora.id}`, [`#${dentro.id}`]);
+    const card = pkg.cards[0];
+    assert.deepEqual(card.candidateUnitIds, [unidade(pkg)]);
+    // Offer is not credit: a pending card earns nothing.
+    assert.equal(scoreSemanticPackage(pkg, scopeReviews(pkg)).scores[0].counts.detectedUnits, 0);
+    const ds = reviews(pkg, [decision(card.id, [{ id: "a", text: "Focus lost on close", subjects: [fora.key], verdict: "reference",
+      unitIds: [unidade(pkg)], citation: "supported" }])]);
+    assert.equal(scoreSemanticPackage(pkg, ds).scores[0].counts.detectedUnits, 1);
+  });
+  test("1.5.0: a subject inside the participant (light or shadow tree) offers the unit", () => {
+    for (const e of [dentro, sombra]) {
+      const pkg = pacote(`#${e.id}`);
+      assert.deepEqual(pkg.cards[0].candidateUnitIds, [unidade(pkg)], e.key);
+    }
+  });
+  test("1.5.0: a RELATED key that is an ancestor of the participant offers nothing", () => {
+    const pkg = pacote(`#${fora.id}`, [`#${corpo.id}`]);
+    assert.deepEqual(pkg.cards[0].candidateUnitIds, []);
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [decision(pkg.cards[0].id, [{ id: "a", text: "t",
+      subjects: [fora.key], verdict: "reference", unitIds: [unidade(pkg)], citation: "supported" }])])), /Unanchored/);
+  });
+  test("1.5.0: an ancestor or a prefix-colliding sibling offers nothing and cannot be credited", () => {
+    for (const e of [corpo, irmao]) {
+      const pkg = pacote(`#${e.id}`);
+      assert.deepEqual(pkg.cards[0].candidateUnitIds, [], e.key);
+      assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [decision(pkg.cards[0].id, [{ id: "a", text: "t",
+        subjects: [e.key], verdict: "reference", unitIds: [unidade(pkg)], citation: "supported" }])])), /Unanchored/);
+    }
+  });
+}
 test("composition and redundant valid claims neither multiply TP nor become FP", () => {
   const us = [{ ...units[0], participants: [element.key, other.key] }];
   const pkg = prepare([finding("List semantics missing", ".both")], us);
@@ -572,6 +635,23 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
     // Pending: the floor is the smallest segment group, never the union.
     const pendente = scoreSemanticPackage(pkg, reviews(pkg, [])).scores[0];
     assert.equal(pendente.assertions.filter(a => a.cardId === b.id).length, 1);
+  });
+
+  test("1.5.0: on the segment path (a-decidir), a subject inside a participant offers that segment's unit", () => {
+    const span = { key: "body>main>button>span", id: "E-span", label: "<span>", hidden: null };
+    const comSpan = (r: Resolution): Resolution => ({ ...r, byKey: new Map([...r.byKey, [span.key, span]]),
+      bySelector: new Map([...r.bySelector, ["span", { selector: "span", ok: true, error: null, keys: [span.key] }]]) });
+    const cenas = segScenes.map(c => ({ ...c, resolution: comSpan(c.resolution) }));
+    const p2 = prepareSemanticPackage(context, segUnits, cenas,
+      [{ id: "r1", data: run([claim("span")] as FlowAgentResults["findings"]) }], { stateOrder: ["lista", "detalhe"] });
+    const id = (specId: string) => p2.units.find(x => x.specId === specId)!.id;
+    const c = p2.cards[0];
+    assert.equal(c.scene, "a-decidir:1280x900");
+    assert.deepEqual(c.segmentos!.map(o => [o.scene, o.candidateUnitIds]), [["1280x900@lista", [id("LB")]], ["1280x900@detalhe", [id("D")]]]);
+    assert.deepEqual([...c.candidateUnitIds].sort(), [id("LB"), id("D")].sort());
+    const s = scoreSemanticPackage(p2, reviews(p2, [{ ...decision(c.id, [{ id: "a", text: "t", subjects: [`1280x900@detalhe|${span.key}`],
+      verdict: "reference", unitIds: [id("D")], citation: "supported" }]), cena: "1280x900@detalhe" }])).scores[0];
+    assert.deepEqual(s.matched.map(m => m.unitId), [id("D")]);
   });
 
   test("D-60: review.md says the plan navigates and lists the subjects per scene to choose from", () => {
