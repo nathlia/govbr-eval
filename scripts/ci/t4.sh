@@ -168,7 +168,9 @@ case "$fase" in
     echo "push falhou 5 vezes"; exit 1
     ;;
   resumo-arquivo)
-    tsx scripts/pipeline-t4.ts resumo-arquivo --saida-json "$TMP/arquivamento.json" --arquivo "$WS/govbr-resultados"
+    args=(--saida-json "$TMP/arquivamento.json" --arquivo "$WS/govbr-resultados")
+    [ -f "$TMP/entrada/pacote/execucao/run.json" ] && args+=(--pacote "$TMP/entrada/pacote/execucao")
+    tsx scripts/pipeline-t4.ts resumo-arquivo "${args[@]}"
     ;;
   *)
     echo "fase desconhecida: $fase" >&2; exit 2 ;;

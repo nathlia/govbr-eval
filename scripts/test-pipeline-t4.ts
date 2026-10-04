@@ -20,7 +20,7 @@ import { join } from "node:path";
 import yaml from "js-yaml";
 import { validateContract, type Run } from "../contracts/index";
 import { avaliar, interpolar, type Workflow } from "./ci/emular-workflow";
-import { conferirAmbienteDosConteineres, conferirCheckouts, conferirEntradas, conferirImagens, resumoArquivo } from "./pipeline-t4";
+import { cartaoSaude, conferirAmbienteDosConteineres, conferirCheckouts, conferirEntradas, conferirImagens, resumoArquivo, situacaoDoPar } from "./pipeline-t4";
 import { buildIsolatedManifest, documentoDaCampanha, isolatedManifestProblems, problemasDaCampanha, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import {
   caminhoCampanha, caminhoSite, conjuntoDeSnapshots, criarTarGz, garantirGitattributes, gravarEntrada, gravarImutavel, lerTarGz, listagemDoCommit, listarArquivos, problemasDoPacote, Recusa,
@@ -516,6 +516,97 @@ await teste("restauração: só com o arquivo + anexo, todos os hashes conferem;
   writeFileSync(join(copia, e.caminho, "pacote", "run.json"), "{}\n");
   assert.match(restaurar(copia, chaveRun, anexoPath, join(TMP, "restaurado-3")).problemas.join(), /cópia no repositório ≠ anexo/);
   assert.ok(!restaurar(arquivo, "nao-existe", null, join(TMP, "restaurado-4")).ok);
+});
+
+// ───────────────────────────────────────────────────────────────── cartão de saúde do resumo (NAT-58)
+
+const PACOTE_FIX = join(ROOT, "scripts", "fixtures", "analise", "gerado", "pacotes", "sem");
+/** Roda o passo do resumo como o job roda (CLI + GITHUB_STEP_SUMMARY) e devolve o arquivo do resumo. */
+function resumoDoPasso(args: string[], env: Record<string, string> = {}): string {
+  const f = join(TMP, `resumo-${Math.random().toString(36).slice(2)}.md`);
+  try {
+    execFileSync(process.execPath, ["--import", "tsx", join(ROOT, "scripts", "pipeline-t4.ts"), ...args], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"],
+      env: { ...process.env, GITHUB_STEP_SUMMARY: f, ...env } });
+  } catch (e) { if (!existsSync(f)) throw e; }
+  return readFileSync(f, "utf8");
+}
+const SEM_GABARITO = /referencia|refer[êe]ncia|gabarito|ground-truth|unidade/i;
+
+await teste("resumo: execução limpa → cartão ✅ no topo (identidade, números, próximo passo) e tabelas dobradas", () => {
+  const t = resumoDoPasso(["resumo-coleta", "--pacote", PACOTE_FIX], { SLOT: "ignorado-o-run-manda", ETAPAS: "coleta+linha-de-base" });
+  const [card, resto] = t.split("<details>");
+  assert.match(t.split("\n")[0], /^### ✅ slot-02: execução limpa$/, "a primeira linha do resumo é a saúde");
+  assert.match(card, /\*\*tela-fixture-analise\*\* · braço sem \(sem oráculo\) · modelo-fixture · esforço medium · ENSAIO/);
+  assert.match(card, /duração do agente: 10 min · custo estimado pelo cliente: desconhecido · \d+ achados? enviados? · isolamento conferido/);
+  assert.ok(!/chamadas ao oráculo/.test(card), "braço sem não fala de oráculo");
+  assert.ok(!/US\$ 0/.test(card), "custo desconhecido nunca vira 0");
+  assert.match(card, /\*\*Próximo passo:\*\* aguarde o job arquivar; depois atualize o clone \(git pull\) e abra o painel/);
+  assert.match(resto ?? "", /^<summary>Detalhes técnicos<\/summary>[\s\S]*\| Técnico \| \*\*passed\*\*[\s\S]*<\/details>/, "as tabelas de antes, dobradas");
+  assert.ok(!SEM_GABARITO.test(card), "nada da referência no cartão");
+});
+
+await teste("resumo: execução que falhou → ❌ com a causa em uma frase (sem stack), custo como estimativa, nova tentativa", () => {
+  const dir = join(TMP, "pacote-falhou");
+  cpSync(PACOTE_FIX, dir, { recursive: true });
+  const run = JSON.parse(readFileSync(join(dir, "run.json"), "utf8")) as Run;
+  run.arm = "com";
+  run.status.technical = "failed";
+  run.failure = { stage: "running", reason: "timeout", detail: "\nError: o agente passou do limite de 90 min\n    at esperar (runner/run-once.ts:120:5)\n    at main (x.ts:1:1)" } as Run["failure"];
+  run.usage.estimatedCostUsd = { value: 1.234, status: "measured", source: "cliente" } as Run["usage"]["estimatedCostUsd"];
+  writeFileSync(join(dir, "run.json"), JSON.stringify(run, null, 2) + "\n");
+  const t = resumoDoPasso(["resumo-coleta", "--pacote", dir]);
+  const card = t.split("<details>")[0];
+  assert.match(t.split("\n")[0], /^### ❌ slot-02: falhou na execução do agente — Error: o agente passou do limite de 90 min$/);
+  assert.ok(!/\bat esperar|run-once\.ts/.test(card), "nada de stack no cartão");
+  assert.match(card, /braço com \(com oráculo\)/);
+  assert.match(card, /custo estimado pelo cliente: US\$ 1,23 \(estimativa, não fatura\)/);
+  assert.match(card, /chamadas ao oráculo: 0/);
+  assert.match(card, /\*\*Próximo passo:\*\* nova tentativa do slot slot-02 \(tentativa 2\) — só por falha técnica \(D-67\)/);
+  // sem pacote: o cartão sai das entradas do disparo, sem inventar número
+  const sem = resumoDoPasso(["resumo-coleta", "--pacote", join(TMP, "nao-existe")], { SLOT: "p03-com", TELA: "solicitacao", BRACO: "com", MODELO: "claude-x", ESFORCO: "high", TENTATIVA: "1" });
+  assert.match(sem.split("\n")[0], /^### ❌ p03-com: interrompida sem pacote/);
+  assert.match(sem, /\*\*solicitacao\*\* · braço com \(com oráculo\) · claude-x · esforço high/);
+  assert.ok(!/duração do agente/.test(sem.split("<details>")[0]), "sem run.json não há números");
+  assert.match(sem, /nova tentativa do slot p03-com \(tentativa 2\)/);
+});
+
+await teste("resumo do arquivar: próximo passo pelo par no índice (falta braço / completo) e 'repita o job arquivar'", () => {
+  const arq = join(TMP, "arquivo-cartao");
+  mkdirSync(join(arq, "indice", "entradas"), { recursive: true });
+  const entrada = (chave: string, braco: "sem" | "com", tecnico: string): void => writeFileSync(join(arq, "indice", "entradas", `${chave}.json`), JSON.stringify({
+    chave, tipo: "execucao", natureza: "formal", campanha: "c1", slot: `p01-${braco}`, par: "par-01", tela: "solicitacao", braco, dataUtc: `2026-10-03T1${braco === "sem" ? 0 : 1}:00:00Z`,
+    caminho: `execucoes/c1/${chave}`, estado: { arquivo: "arquivado", tecnico }, evidencias: null }));
+  entrada("r-sem", "sem", "passed");
+  const run = JSON.parse(readFileSync(join(PACOTE_FIX, "run.json"), "utf8")) as Run;
+  const info = { concluido: true, pendentes: [], arquivo: arq };
+  assert.match(cartaoSaude(PACOTE_FIX, {}, info), /\*\*Próximo passo:\*\* falta o braço com do par-01 \(dispare o slot dele\)/, "o par é o do run.json, na campanha do run.json");
+  assert.equal(situacaoDoPar(arq, "c1", "par-01", "sem"), "falta o braço com do par-01 (dispare o slot dele)");
+  entrada("r-com", "com", "failed");
+  assert.match(situacaoDoPar(arq, "c1", "par-01", "sem"), /o braço com do par-01 falhou na última tentativa/);
+  entrada("r-com-2", "com", "passed");
+  assert.equal(situacaoDoPar(arq, "c1", "par-01", "sem"), "par-01 completo → atualize o clone (git pull) e clique em Preparar análise no painel");
+  // o cartão do arquivar usa o par do run.json; anexo pendente manda repetir o job antes de tudo
+  mkdirSync(join(arq, "indice", "entradas"), { recursive: true });
+  for (const e of ["r-sem", "r-com", "r-com-2"]) {
+    const p = join(arq, "indice", "entradas", `${e}.json`);
+    writeFileSync(p, readFileSync(p, "utf8").replace(/"c1"/, JSON.stringify(run.campaignId)));
+  }
+  assert.match(cartaoSaude(PACOTE_FIX, {}, info), /\*\*Próximo passo:\*\* par-01 completo → atualize o clone/);
+  assert.match(cartaoSaude(PACOTE_FIX, {}, { ...info, pendentes: ["x: anexo pendente"] }), /\*\*Próximo passo:\*\* repita o job arquivar \(Re-run failed jobs\) — o anexo de evidências não foi confirmado/);
+  assert.match(cartaoSaude(null, { slot: "p01-sem", etapas: "so-coleta" }, { concluido: false, pendentes: [], arquivo: null }), /^### ❌ p01-sem: interrompida sem pacote[\s\S]*repita o job arquivar[\s\S]*nada foi gravado/);
+  // passo real do job (CLI): cartão no topo, tabela do arquivamento dobrada
+  const saidaJson = join(TMP, "arquivamento-cartao.json");
+  writeFileSync(saidaJson, JSON.stringify({ gravacoes: [] }));
+  const t = resumoDoPasso(["resumo-arquivo", "--saida-json", saidaJson, "--arquivo", arq, "--pacote", PACOTE_FIX]);
+  assert.match(t.split("\n")[0], /^### ✅ slot-02: execução limpa$/);
+  assert.match(t, /Próximo passo:\*\* par-01 completo[\s\S]*<details><summary>Detalhes técnicos<\/summary>[\s\S]*### Arquivamento/);
+});
+
+await teste("resumo da linha de base: uma linha de saúde e a tabela dobrada", () => {
+  const t = resumoDoPasso(["resumo-linha-de-base", "--dir", lbDir]);
+  assert.match(t.split("\n")[0], /^### ✅ Linha de base \S+: registrada e utilizável pela análise$/);
+  assert.match(t, /<details><summary>Detalhes técnicos<\/summary>[\s\S]*### Linha de base/);
+  assert.match(resumoDoPasso(["resumo-linha-de-base", "--dir", join(TMP, "nao-existe")]).split("\n")[0], /^### ❌ Linha de base: não produziu registro/);
 });
 
 // ───────────────────────────────────────────────────────────────── fim

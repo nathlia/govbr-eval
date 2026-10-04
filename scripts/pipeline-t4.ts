@@ -5,15 +5,19 @@
  *   tsx scripts/pipeline-t4.ts entradas                  ENTRADAS = toJSON(inputs); grava em GITHUB_OUTPUT
  *   tsx scripts/pipeline-t4.ts conferir-imagens --travado ARQ --construido ARQ --imagens agent,screens,...
  *   tsx scripts/pipeline-t4.ts conferir-ambiente [--pacote DIR] [--checkouts DIR,DIR] [--credencial-permitida NOME]
- *   tsx scripts/pipeline-t4.ts resumo-coleta --pacote DIR | resumo-linha-de-base --dir DIR | resumo-arquivo --saida-json ARQ
+ *   tsx scripts/pipeline-t4.ts resumo-coleta --pacote DIR | resumo-linha-de-base --dir DIR | resumo-arquivo --saida-json ARQ [--arquivo DIR] [--pacote DIR]
+ *
+ * Os resumos começam por um cartão de saúde (NAT-58): ✅/❌ do slot, identidade, números e o próximo passo;
+ * as tabelas técnicas ficam dobradas em "Detalhes técnicos". Entradas do cartão por env (CAMPANHA, SLOT, ...).
  *
  * Entradas sempre por variável de ambiente, nunca interpoladas no shell pelo YAML.
  */
-import { appendFileSync, existsSync, readFileSync } from "node:fs";
+import { appendFileSync, existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { EFFORT_LEVELS, CREDENTIAL_ENV } from "../runner/cliente-claude";
 import type { Run } from "../contracts/index";
+import type { EntradaIndice } from "./arquivo-resultados";
 import { MODELO_ENSAIO } from "./manifesto-coleta-isolada";
 
 const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
@@ -164,6 +168,143 @@ export function resumoArquivo(path: string, arquivo: string | null): { texto: st
   return { texto: L.join("\n") + "\n", pendentes };
 }
 
+// ───────────────────────────────────────────────────────────────── cartão de saúde (NAT-58)
+
+/**
+ * O que o disparo sabe dele mesmo, pelas entradas (env do passo). Serve quando não há run.json.
+ * Nada da referência entra aqui: a coleta não a tem, e o cartão só lê run.json, findings.json e o índice.
+ */
+export interface ContextoCartao { campanha?: string; slot?: string; par?: string; tela?: string; braco?: string; modelo?: string; esforco?: string; tentativa?: string; etapas?: string }
+/** O que só o job arquivar sabe: se gravou, se o anexo foi confirmado, e o clone do govbr-resultados (para ver o par). */
+export interface InfoArquivamento { concluido: boolean; pendentes: string[]; arquivo: string | null }
+
+/** Primeira linha útil de um texto, sem stack nem log (a mesma ideia do `frase()` do painel). */
+export function umaFrase(texto: string | null | undefined, max = 200): string {
+  const linha = String(texto ?? "").split(/\r?\n/).map((l) => l.trim()).find((l) => l && !/^at\s/.test(l)) ?? "";
+  const limpa = linha.replace(/\s+/g, " ").replace(/\|/g, "/");
+  return limpa.length > max ? `${limpa.slice(0, max - 1).trimEnd()}…` : limpa;
+}
+const medido = (m: { value: number | null; status: string } | undefined): number | null => (m && m.status === "measured" && typeof m.value === "number" ? m.value : null);
+function duracaoTexto(s: number | null): string {
+  if (s === null) return "desconhecida";
+  const m = Math.floor(s / 60), r = Math.round(s % 60);
+  return m ? `${m} min${r ? ` ${r} s` : ""}` : `${r} s`;
+}
+const BRACO_TXT: Record<string, string> = { sem: "braço sem (sem oráculo)", com: "braço com (com oráculo)" };
+const ETAPA_TXT: Record<string, string> = { preparing: "preparação", preflight: "conferência prévia", running: "execução do agente", collecting: "coleta do relatório", archiving: "gravação do pacote" };
+const ISOL_TXT: Record<string, string> = { passed: "isolamento conferido", failed: "isolamento VIOLADO", unverified: "isolamento não verificado" };
+
+function lerRunSeguro(dir: string | null): Run | null {
+  if (!dir || !existsSync(join(dir, "run.json"))) return null;
+  try { return JSON.parse(readFileSync(join(dir, "run.json"), "utf8")) as Run; } catch { return null; }
+}
+function achadosTexto(dir: string, r: Run): string {
+  if (r.submission.status === "refused") return "relatório recusado pelo coletor (não é 0 achados)";
+  if (r.submission.status !== "accepted" || !r.submission.findings) return "nenhum relatório enviado (não é 0 achados)";
+  try {
+    const n = (JSON.parse(readFileSync(join(dir, r.submission.findings), "utf8")) as { report?: { findings?: unknown[] } }).report?.findings?.length;
+    if (typeof n !== "number") return "achados ilegíveis no pacote";
+    return n === 0 ? "0 achados (lista vazia aceita)" : `${n} achado${n === 1 ? "" : "s"} enviado${n === 1 ? "" : "s"}`;
+  } catch { return "achados ilegíveis no pacote"; }
+}
+
+/** Situação do par no clone do arquivo: só o índice e o desenho da campanha (nunca a referência). */
+export function situacaoDoPar(arquivo: string, campanha: string, par: string, braco: string): string {
+  const dir = join(arquivo, "indice", "entradas");
+  if (!existsSync(dir)) return "abra o painel (o clone do arquivo não tem índice)";
+  const es: EntradaIndice[] = [];
+  for (const f of readdirSync(dir).filter((n) => n.endsWith(".json")).sort()) {
+    try {
+      const e = JSON.parse(readFileSync(join(dir, f), "utf8")) as EntradaIndice;
+      if (e.tipo === "execucao" && e.campanha === campanha && e.par === par) es.push(e);
+    } catch { /* entrada ilegível: o painel avisa */ }
+  }
+  let desenho: string[] | null = null;
+  const cdir = join(arquivo, "campanhas", campanha);
+  if (existsSync(cdir)) {
+    for (const s of readdirSync(cdir).sort()) {
+      const c = join(cdir, s, "campaign.json");
+      try { if (existsSync(c)) desenho = (JSON.parse(readFileSync(c, "utf8")) as { design?: { arms?: string[] } }).design?.arms ?? desenho; } catch { /* sem desenho */ }
+    }
+  }
+  const outro = braco === "sem" ? "com" : "sem";
+  if (desenho && !desenho.includes(outro)) return `campanha de um braço só (pelo desenho) → atualize o clone (git pull) e prepare a análise da execução no painel`;
+  const doOutro = es.filter((e) => e.braco === outro).sort((a, b) => b.dataUtc.localeCompare(a.dataUtc));
+  if (!doOutro.length) return `falta o braço ${outro} do ${par} (dispare o slot dele)`;
+  const ultimo = doOutro[0];
+  if (ultimo.estado.arquivo === "sem-pacote" || ultimo.estado.tecnico !== "passed") return `o braço ${outro} do ${par} falhou na última tentativa → nova tentativa do slot dele`;
+  return `${par} completo → atualize o clone (git pull) e clique em Preparar análise no painel`;
+}
+
+/**
+ * O cartão do topo do resumo: uma linha de saúde, uma de identidade, uma de números e o próximo passo.
+ * As tabelas técnicas vão dobradas logo abaixo (`detalhes`). Valor não medido fica "desconhecido", nunca 0.
+ */
+export function cartaoSaude(pacote: string | null, ctx: ContextoCartao, arq: InfoArquivamento | null = null): string {
+  const r = lerRunSeguro(pacote);
+  const slot = r?.slotId ?? ctx.slot ?? "slot desconhecido";
+  const par = r?.pairId ?? ctx.par ?? null;
+  const campanha = r?.campaignId ?? ctx.campanha ?? null;
+  const braco = r?.arm ?? ctx.braco ?? "";
+  const tentativa = r?.attempt ?? (Number(ctx.tentativa) || null);
+  const soLinhaDeBase = !r && ctx.etapas === "so-linha-de-base";
+  let causa: string | null = null;
+  if (soLinhaDeBase) causa = null;
+  else if (!r) causa = "interrompida sem pacote — o run.json não foi produzido";
+  else if (r.status.technical !== "passed") {
+    const motivo = r.failure ? umaFrase(r.failure.detail) || r.failure.reason : "";
+    const como = r.status.technical === "not-run" ? "o modelo não foi chamado" : r.status.technical === "interrupted" ? "interrompida" : "falhou";
+    causa = `${como}${r.failure ? ` na ${ETAPA_TXT[r.failure.stage] ?? `etapa ${r.failure.stage}`}` : ""}${motivo ? ` — ${motivo}` : ""}`;
+  } else if (r.status.isolation === "failed") causa = "isolamento violado — a execução não serve para análise";
+  else if (r.submission.status !== "accepted") causa = r.submission.status === "refused" ? "o coletor recusou o relatório do agente (não é 0 achados)" : "o agente terminou sem enviar relatório (não é 0 achados)";
+
+  const L: string[] = [soLinhaDeBase ? `### ➖ ${slot}: só linha de base neste disparo (sem coleta)` : causa ? `### ❌ ${slot}: ${umaFrase(causa, 240)}` : `### ✅ ${slot}: execução limpa`];
+  L.push("", `**${r?.screen.id ?? ctx.tela ?? "tela desconhecida"}** · ${BRACO_TXT[braco] ?? "braço desconhecido"} · ${r?.model.requested ?? ctx.modelo ?? "modelo desconhecido"} · esforço ${r?.effort ?? ctx.esforco ?? "desconhecido"}${r?.fixture ? " · ENSAIO (não é dado)" : ""}`);
+  if (r && pacote) {
+    const custo = medido(r.usage.estimatedCostUsd);
+    L.push("", [
+      `duração do agente: ${duracaoTexto(medido(r.usage.wallClockSeconds))}`,
+      `custo estimado pelo cliente: ${custo === null ? "desconhecido" : `US$ ${custo.toFixed(2).replace(".", ",")} (estimativa, não fatura)`}`,
+      achadosTexto(pacote, r),
+      ...(r.arm === "com" ? [`chamadas ao oráculo: ${medido(r.usage.oracleCalls) ?? "desconhecido"}`] : []),
+      ISOL_TXT[r.status.isolation] ?? `isolamento: ${r.status.isolation}`,
+    ].join(" · "));
+  }
+  let proximo: string;
+  if (arq && (!arq.concluido || arq.pendentes.length)) {
+    proximo = `repita o job arquivar (Re-run failed jobs) — ${arq.concluido ? "o anexo de evidências não foi confirmado" : "nada foi gravado no govbr-resultados"}; o modelo não é chamado de novo`;
+  } else if (soLinhaDeBase) proximo = arq ? "a linha de base está no arquivo; abra o painel" : "aguarde o job arquivar e abra o painel";
+  else if (causa) {
+    proximo = !r || r.status.technical !== "passed" || r.status.isolation === "failed"
+      ? `nova tentativa do slot ${slot}${tentativa ? ` (tentativa ${tentativa + 1})` : ""} — só por falha técnica (D-67)`
+      : "abra a execução no painel para ver por que o relatório não foi aceito";
+  } else if (arq?.arquivo && par && campanha) proximo = situacaoDoPar(arq.arquivo, campanha, par, braco);
+  else proximo = "aguarde o job arquivar; depois atualize o clone (git pull) e abra o painel";
+  L.push("", `**Próximo passo:** ${proximo}`);
+  return L.join("\n") + "\n";
+}
+
+/** Tabelas técnicas dobradas sob o cartão. */
+export const detalhes = (texto: string): string => `\n<details><summary>Detalhes técnicos</summary>\n\n${texto.trim()}\n\n</details>\n`;
+
+/** Cabeçalho de uma linha do job da linha de base (ele não sabe da coleta). */
+export function cartaoLinhaDeBase(dir: string): string {
+  const refazer = "**Próximo passo:** repita só a linha de base (etapas = so-linha-de-base) — o modelo não é chamado.\n";
+  const reg = join(dir, "baseline.json");
+  if (!existsSync(reg)) return `### ❌ Linha de base: não produziu registro (baseline.json)\n\n${refazer}`;
+  const b = JSON.parse(readFileSync(reg, "utf8")) as { baselineId: string; status: string; error: string | null };
+  const prob = existsSync(join(dir, "problemas.json")) ? JSON.parse(readFileSync(join(dir, "problemas.json"), "utf8")) as string[] : [];
+  if (b.status === "complete" && !prob.length) return `### ✅ Linha de base ${b.baselineId}: registrada e utilizável pela análise\n`;
+  return `### ❌ Linha de base ${b.baselineId}: ${umaFrase(b.error ?? prob[0] ?? b.status, 200)}\n\n${refazer}`;
+}
+
+/** Entradas do disparo pelo env do passo; vazio = não informado. */
+export const contextoDoAmbiente = (env: NodeJS.ProcessEnv = process.env): ContextoCartao => {
+  const v = (k: string): string | undefined => env[k]?.trim() || undefined;
+  return { campanha: v("CAMPANHA"), slot: v("SLOT"), par: v("PAR"), tela: v("TELA"), braco: v("BRACO"), modelo: v("MODELO"), esforco: v("ESFORCO"),
+    tentativa: v("TENTATIVA"), etapas: v("ETAPAS") };
+};
+
 function saida(texto: string): void {
   process.stdout.write(texto);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, texto + "\n");
@@ -216,11 +357,18 @@ function main(): number {
       console.log(`ambiente conferido: nenhuma credencial de GitHub/publicação no passo, nos checkouts (${checkouts.length}) nem nos contêineres`);
       return 0;
     }
-    case "resumo-coleta": saida(resumoColeta(resolve(need("--pacote")))); return 0;
-    case "resumo-linha-de-base": saida(resumoLinhaDeBase(resolve(need("--dir")))); return 0;
+    case "resumo-coleta": {
+      const pacote = resolve(need("--pacote"));
+      saida(cartaoSaude(pacote, contextoDoAmbiente()) + detalhes(resumoColeta(pacote)));
+      return 0;
+    }
+    case "resumo-linha-de-base": { const dir = resolve(need("--dir")); saida(cartaoLinhaDeBase(dir) + detalhes(resumoLinhaDeBase(dir))); return 0; }
     case "resumo-arquivo": {
-      const r = resumoArquivo(resolve(need("--saida-json")), val("--arquivo") ? resolve(val("--arquivo")!) : null);
-      saida(r.texto);
+      const saidaJson = resolve(need("--saida-json"));
+      const arquivo = val("--arquivo") ? resolve(val("--arquivo")!) : null;
+      const r = resumoArquivo(saidaJson, arquivo);
+      const pacote = val("--pacote") ? resolve(val("--pacote")!) : null;
+      saida(cartaoSaude(pacote, contextoDoAmbiente(), { concluido: existsSync(saidaJson), pendentes: r.pendentes, arquivo }) + detalhes(r.texto));
       return r.pendentes.length ? 1 : 0;
     }
     default:

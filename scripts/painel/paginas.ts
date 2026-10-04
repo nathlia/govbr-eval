@@ -12,7 +12,7 @@
 import type { Arm } from "../../contracts/index";
 import type { EntradaIndice } from "../arquivo-resultados";
 import {
-  dataLocal, frase, type Fonte, type InfoCampanha, type LinhaExecucao, type ResultadoBraco, type ResultadoPar, type Selo, type Valor,
+  campanhasDoPlacar, dataLocal, frase, placarDaCampanha, type Fonte, type Placar, type InfoCampanha, type LinhaExecucao, type ResultadoBraco, type ResultadoPar, type Selo, type Valor,
   type VistaExecucao, type VistaExecucoes, type VistaPar, type VistaParResumo,
 } from "./modelo";
 import { DICA_CRLF, rotuloEtapa, type Diagnostico } from "./preparar";
@@ -127,6 +127,48 @@ function listaAvisos(xs: Aviso[]): string {
   return `<ul class="avisos">${xs.map(a => `<li class="${a.nivel}"><b class="alvo">${esc(a.alvo)}</b>: ${esc(a.texto)}${a.ajuda ? ` <a href="${esc(a.ajuda)}">Como resolver</a>` : ""}</li>`).join("")}</ul>`;
 }
 
+// ───────────────────────────────────────────────────────────────── placar (NAT-58): resultados de relance
+
+const SELO_PLACAR: Record<string, Selo["estado"]> = { final: "final", provisorio: "provisoria", indisponivel: "nao-se-aplica", "sem-analise": "sem-analise", "um-braco": "nao-se-aplica" };
+
+function cartaoPlacar(p: Placar, preparoLink: (par: string) => string): string {
+  const c = p.info;
+  const n = (v: number | null) => v === null ? "—" : String(v);
+  const numeros = !p.total ? `<p class="placar-nada">Campanha de um braço só (pelo desenho): não há comparação com × sem.</p>`
+    : `<p class="placar-numeros"><span class="n com">com <b>${esc(n(p.somaCom))}</b></span><span class="x" aria-hidden="true">×</span><span class="n sem">sem <b>${esc(n(p.somaSem))}</b></span></p>
+<p class="pequeno">unidades da referência confirmadas · <strong>pares finais: ${p.finais} de ${p.total}</strong>${p.finais ? ` · soma só dos finais (n = ${p.finais})${p.somaTotal !== null ? `, de ${p.somaTotal}` : ""}` : " · nenhum par final ainda, sem soma"}</p>`;
+  const comNumeros = p.linhas.filter(l => l.resultado && (l.selo === "final" || l.selo === "provisorio"));
+  const barras = comNumeros.length ? `<div class="placar-pares">${comNumeros.map(l => `<a class="placar-par" href="/par/${u(c.id)}/${u(l.par)}">${barrasPar(l.resultado!, { titulo: `${l.par} · ${l.selo === "final" ? "FINAL" : "PROVISÓRIO"}` })}</a>`).join("")}</div>` : "";
+  const faltas = p.linhas.filter(l => l.falta);
+  return `<article class="placar" aria-labelledby="pl-${esc(c.id)}">
+<h3 id="pl-${esc(c.id)}"><span class="mono">${esc(c.id)}</span> ${selo({ estado: c.natureza === "formal" ? "ok" : c.natureza === "calibracao" ? "aviso" : "nao-se-aplica", texto: c.natureza === "calibracao" ? "calibração — não é resultado (D-67)" : c.rotulo })}</h3>
+${numeros}${barras}
+${p.linhas.length ? `<ul class="placar-selos">${p.linhas.map(l => `<li><a href="/par/${u(c.id)}/${u(l.par)}">${esc(l.par)}</a> ${selo({ estado: SELO_PLACAR[l.selo], texto: l.seloTexto })}</li>`).join("")}</ul>` : ""}
+${faltas.length ? `<div class="placar-falta"><h4>O que falta</h4><ul>${faltas.map(l => `<li><a href="${l.falta === "pronto para preparar" ? preparoLink(l.par) : `/par/${u(c.id)}/${u(l.par)}`}">${esc(l.par)}</a>: ${esc(l.falta)}</li>`).join("")}</ul></div>` : ""}
+</article>`;
+}
+
+/** O placar do topo da página inicial: uma ficha por campanha que não é ensaio, e o botão do RESULTADOS.md. */
+function placares(v: VistaExecucoes, preparo: Record<string, Diagnostico>): string {
+  if (!v.execucoes.length) return "";
+  const { mostradas } = campanhasDoPlacar(v);
+  return `<section class="placares" aria-labelledby="t-placar"><h2 id="t-placar">Resultados de relance</h2>
+<p class="pequeno suave">Unidades da referência confirmadas na revisão cega, por campanha. Só os pares FINAIS entram na soma; o n está dito. Números de summary.json da revisão atual de cada par.</p>
+<div class="placar-grade">${mostradas.map(c => cartaoPlacar(placarDaCampanha(c, v.pares, preparo), par => `/par/${u(c.id)}/${u(par)}#preparar`)).join("")}</div>
+<div class="botoes"><button type="button" class="sec" data-resumo>Atualizar RESULTADOS.md</button></div>
+<p class="msg" id="msg-resumo" role="status" aria-live="polite"></p></section>`;
+}
+
+const SCRIPT_RESUMO = `
+document.querySelectorAll("[data-resumo]").forEach(function(b){b.addEventListener("click",async function(){
+  var msg=document.getElementById("msg-resumo"); b.disabled=true; msg.className="msg"; msg.textContent="Gravando RESULTADOS.md…";
+  try{ var r=await fetch("/api/resumo",{method:"POST",headers:{"content-type":"application/json"},body:"{}"}); var j=await r.json();
+    if(j.ok){ msg.className="msg ok"; msg.textContent="RESULTADOS.md gravado na raiz do clone ("+j.campanhas+" campanha"+(j.campanhas===1?"":"s")+"). O commit fica com você."; }
+    else { msg.className="msg erro"; msg.textContent="Não gravado: "+String(j.erro).split("\\n")[0]; }
+  }catch(e){ msg.className="msg erro"; msg.textContent="Sem resposta do painel: "+e; }
+  b.disabled=false;
+});});`;
+
 // ───────────────────────────────────────────────────────────────── página inicial: estado das execuções
 
 /** Os quadros do topo. Com campanhas reais no arquivo, ensaios ficam fora (eles têm a seção dobrada deles). */
@@ -183,15 +225,6 @@ function barrasPar(r: ResultadoPar, o: { titulo?: string } = {}): string {
   return `<figure class="figura"><figcaption>${esc(o.titulo ?? "Defeitos da referência confirmados")}</figcaption><div class="barras">${linha("com")}${linha("sem")}</div></figure>`;
 }
 
-function resumoCampanha(c: InfoCampanha, pares: VistaParResumo[]): string {
-  const revisados = pares.filter(p => p.resultado?.disponivel && p.resultado.estado === "final");
-  if (!revisados.length) return "";
-  return `<section aria-labelledby="rc-${esc(c.id)}"><h3 id="rc-${esc(c.id)}">Comparação com × sem dos pares com revisão fechada</h3>
-<p class="pequeno suave">n = ${revisados.length} par${revisados.length === 1 ? "" : "es"}, cada um pela sua análise revisada. A página não soma pares: a análise também não soma (D-69).${c.natureza !== "formal" ? ` Esta campanha é ${esc(c.rotulo)}.` : ""}</p>
-<div class="mini-pares">${revisados.map(p => `<div>${barrasPar(p.resultado!, { titulo: `${p.par} · defeitos confirmados` })}
-<p class="pequeno">Diferença com − sem: <strong>${esc(sinal(p.resultado!.diferencaUnidades))}</strong> defeito(s) · recall ${esc(pp(p.resultado!.diferencaRecall))} · <a href="/par/${u(p.campanha)}/${u(p.par)}">abrir ${esc(p.par)}</a></p></div>`).join("")}</div></section>`;
-}
-
 function blocoCampanha(c: InfoCampanha, v: VistaExecucoes, preparo: Record<string, Diagnostico>): string {
   const pares = v.pares.filter(p => p.campanha === c.id);
   const execs = v.execucoes.filter(x => x.campanha === c.id);
@@ -199,7 +232,6 @@ function blocoCampanha(c: InfoCampanha, v: VistaExecucoes, preparo: Record<strin
   return `<section class="campanha" aria-labelledby="camp-${esc(c.id)}">
 <h2 id="camp-${esc(c.id)}"><span class="mono">${esc(c.id)}</span> ${selo({ estado: c.natureza === "formal" ? "ok" : c.natureza === "calibracao" ? "aviso" : "nao-se-aplica", texto: c.rotulo })}</h2>
 ${c.titulo ? `<p class="titulo-campanha">${esc(c.titulo)}</p>` : ""}<p class="pequeno suave">${esc(c.explicacao)}</p>
-${resumoCampanha(c, pares)}
 ${pares.map(p => blocoPar(p, execs.filter(x => x.par === p.par), preparo[`${p.campanha}/${p.par}`])).join("")}
 ${avulsas.length ? `<article class="par-bloco"><div class="par-topo"><h3>Execuções sem par</h3></div><ul class="execs">${avulsas.map(linhaExec).join("")}</ul></article>` : ""}
 ${!pares.length && !avulsas.length ? `<p class="suave">Só linhas de base desta campanha no arquivo.</p>` : ""}
@@ -224,6 +256,7 @@ ${dobrarEnsaios ? `<details class="ensaios"><summary>Ensaios — dublê, roteiro
   return pagina({ titulo: "Estado das execuções", ativo: "execucoes", ctx, corpo: `
 <header class="capa"><h1>Estado das execuções</h1>
 <p>O que está no arquivo de resultados, por campanha e por par, do mais recente para o mais antigo. Cada execução tem um id curto (o slot da campanha, como <span class="mono">p01-sem</span>), o mesmo em todo lugar do painel.</p></header>
+${placares(v, preparo)}
 ${tiles(v, preparo)}
 ${principais.length ? `<section aria-labelledby="t-avisos"><h2 id="t-avisos">Avisos (${principais.length})</h2>${listaAvisos(principais)}</section>` : ""}
 ${deEnsaio.length ? `<details><summary>Avisos de ensaios (${deEnsaio.length}) — não afetam resultado</summary>${listaAvisos(deEnsaio)}</details>` : ""}
@@ -242,7 +275,7 @@ ${lbs}
 <li>${selo({ estado: "publicacao-indisponivel", texto: "anexo de evidências não publicado" })} — o pacote está no arquivo, mas o anexo da Release não foi confirmado. Veja “Como usar”.</li>
 <li>${selo({ estado: "sem-analise", texto: "sem análise: pronta para preparar" })} — o par chegou do workflow e ainda não foi analisado. Abra o par e clique em <strong>Preparar análise</strong>.</li>
 <li>${selo({ estado: "aviso", texto: "calibração (D-67) — não é resultado" })} — piloto com o modelo real para calibrar o instrumento; os números dele não entram na tese como resultado.</li>
-</ul></details>` });
+</ul></details>`, script: SCRIPT_RESUMO });
 }
 
 // ───────────────────────────────────────────────────────────────── Preparar análise (T8a.1)

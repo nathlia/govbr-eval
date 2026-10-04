@@ -274,8 +274,19 @@ jobs:
         env:
           MODO: ${{ inputs.modo }}
         run: bash govbr-eval/scripts/ci/t4.sh conferir-ambiente-pacote
+      # Cartão de saúde no topo (NAT-58); as tabelas técnicas ficam dobradas.
       - name: Resumo da coleta
         if: always()
+        env:
+          CAMPANHA: ${{ inputs.campanha }}
+          SLOT: ${{ inputs.slot }}
+          PAR: ${{ inputs.par }}
+          TENTATIVA: ${{ inputs.tentativa }}
+          TELA: ${{ inputs.tela }}
+          BRACO: ${{ inputs.braco }}
+          MODELO: ${{ needs.preparar.outputs.modelo }}
+          ESFORCO: ${{ needs.preparar.outputs.esforco }}
+          ETAPAS: ${{ inputs.etapas }}
         run: bash govbr-eval/scripts/ci/t4.sh resumo-coleta
       - name: Subir o pacote (também em falha)
         if: always()
@@ -434,4 +445,14 @@ jobs:
         run: bash govbr-eval/scripts/ci/t4.sh publicar
       - name: Resumo do arquivamento
         if: always()
+        env:
+          CAMPANHA: ${{ inputs.campanha }}
+          SLOT: ${{ inputs.slot }}
+          PAR: ${{ inputs.par }}
+          TENTATIVA: ${{ inputs.tentativa }}
+          TELA: ${{ inputs.tela }}
+          BRACO: ${{ inputs.braco }}
+          MODELO: ${{ needs.preparar.outputs.modelo }}
+          ESFORCO: ${{ needs.preparar.outputs.esforco }}
+          ETAPAS: ${{ inputs.etapas }}
         run: bash govbr-eval/scripts/ci/t4.sh resumo-arquivo

@@ -261,3 +261,26 @@ img.cena { max-width: 100%; height: auto; border: 1px solid var(--linha); border
 .diagrama { --d-texto: var(--texto); --d-suave: var(--suave); --d-papel: var(--papel); --d-linha: var(--linha-forte);
   --d-acento: var(--acento); --d-acento-fraco: var(--acento-fraco); --d-com: var(--serie-com); --d-sem: var(--serie-sem);
   --d-ok: var(--ok); --d-ok-fraco: var(--ok-fraco); --d-erro: var(--erro); --d-erro-fraco: var(--erro-fraco); --d-muro: var(--neutro-fraco); }
+
+/* Placar do topo (NAT-58): resultados de relance por campanha. */
+.placares { margin: 1.2rem 0 .4rem; }
+.placares > h2 { margin-bottom: .2rem; }
+.placar-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: .9rem; margin-top: .8rem; }
+.placar { background: var(--papel); border: 1px solid var(--linha); border-radius: 10px; padding: .9rem 1.1rem 1rem; box-shadow: var(--sombra); min-width: 0; }
+.placar h3 { margin: 0 0 .5rem; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; font-size: 1.05rem; }
+.placar-numeros { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .8rem; margin: .2rem 0 0; font-size: 1rem; color: var(--suave); }
+.placar-numeros .n b { font-size: 2.4rem; font-weight: 650; line-height: 1.1; font-variant-numeric: tabular-nums; margin-left: .2rem; }
+.placar-numeros .n.com b { color: var(--serie-com); }
+.placar-numeros .n.sem b { color: var(--serie-sem); }
+.placar-numeros .x { font-size: 1.4rem; color: var(--tenue); }
+.placar-nada { margin: .2rem 0; color: var(--suave); }
+.placar-pares { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: .5rem; margin: .7rem 0 .2rem; }
+.placar-par { text-decoration: none; color: inherit; display: block; }
+.placar-par:hover figure.figura { border-color: var(--linha-forte); }
+.placar-par figure.figura { padding: .55rem .75rem; }
+.placar-selos { list-style: none; padding: 0; margin: .6rem 0 0; display: flex; flex-wrap: wrap; gap: .35rem .9rem; font-size: .9rem; }
+.placar-selos a { font-family: var(--mono); margin-right: .25rem; }
+.placar-falta { margin-top: .7rem; border-top: 1px solid var(--linha); padding-top: .5rem; }
+.placar-falta h4 { margin: 0 0 .2rem; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--suave); }
+.placar-falta ul { margin: 0; padding-left: 1.1rem; font-size: .92rem; }
+.placar-falta a { font-family: var(--mono); }

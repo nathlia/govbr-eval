@@ -563,6 +563,67 @@ function resumoPares(execucoes: LinhaExecucao[], analises: Analise[], campanhas:
   }).sort((a, b) => b.dataUtc.localeCompare(a.dataUtc) || a.par.localeCompare(b.par));
 }
 
+// ───────────────────────────────────────────────────────────────── placar por campanha (NAT-58)
+
+/** Selo de um par no placar: só quatro, e FINAL só com a comparação fechada. */
+export type SeloPlacar = "final" | "provisorio" | "indisponivel" | "sem-analise" | "um-braco";
+export interface LinhaPlacar {
+  par: string; tela: string; modelo: string | null; selo: SeloPlacar;
+  /** Texto curto do selo, igual na página e no RESULTADOS.md. */
+  seloTexto: string;
+  /** Números da revisão atual (só summary.json); null = sem análise pronta. */
+  resultado: ResultadoPar | null;
+  /** O que falta para este par chegar ao FINAL, numa frase; null = nada. */
+  falta: string | null;
+}
+export interface Placar {
+  info: InfoCampanha; linhas: LinhaPlacar[];
+  /** Pares que pedem comparação (sem os de um braço só pelo desenho). */
+  total: number; finais: number;
+  /** Somas de unidades confirmadas SÓ sobre os pares FINAIS (n = finais); null sem par final. */
+  somaSem: number | null; somaCom: number | null; somaTotal: number | null;
+}
+
+/**
+ * O placar de uma campanha: o selo e o que falta de cada par, e as somas só dos pares finais (com n).
+ * `preparo` (opcional) diz quais pares sem análise já podem ser preparados.
+ */
+export function placarDaCampanha(info: InfoCampanha, pares: VistaParResumo[], preparo: Record<string, { pode: boolean }> = {}): Placar {
+  const linhas: LinhaPlacar[] = pares.filter(p => p.campanha === info.id).sort((a, b) => a.par.localeCompare(b.par)).map(p => {
+    const r = p.resultado;
+    let selo: SeloPlacar, seloTexto: string, falta: string | null = null;
+    if (p.porDesenho) { selo = "um-braco"; seloTexto = "um braço só (desenho da campanha)"; }
+    else if (r && r.disponivel && r.estado === "final") { selo = "final"; seloTexto = "FINAL"; }
+    else if (r && r.disponivel) {
+      selo = "provisorio"; seloTexto = `PROVISÓRIO com ${r.pendentes} cartõ${r.pendentes === 1 ? "ão" : "es"} pendente${r.pendentes === 1 ? "" : "s"}`;
+      falta = `${r.pendentes} cartõ${r.pendentes === 1 ? "ão" : "es"} pendente${r.pendentes === 1 ? "" : "s"} — aguardando a revisão cega`;
+    } else if (r) { selo = "indisponivel"; seloTexto = "comparação indisponível"; falta = "comparação indisponível — abra o par para ver por quê"; }
+    else {
+      selo = "sem-analise"; seloTexto = "sem análise";
+      if (p.faltando.length) falta = `falta o braço ${p.faltando.join(" e ")}`;
+      else if (!p.analise) falta = preparo[`${p.campanha}/${p.par}`]?.pode ? "pronto para preparar" : "sem análise — abra o par para ver por quê";
+      else falta = `${p.selo.texto} — abra o par`;
+    }
+    return { par: p.par, tela: p.tela, modelo: p.modelo, selo, seloTexto, resultado: r, falta };
+  });
+  const comparaveis = linhas.filter(l => l.selo !== "um-braco");
+  const finais = comparaveis.filter(l => l.selo === "final");
+  const soma = (f: (l: LinhaPlacar) => number | null | undefined): number | null => {
+    if (!finais.length) return null;
+    const vs = finais.map(f);
+    return vs.every((v): v is number => typeof v === "number") ? vs.reduce((a, b) => a + b, 0) : null;
+  };
+  return { info, linhas, total: comparaveis.length, finais: finais.length,
+    somaSem: soma(l => l.resultado?.bracos.sem?.confirmadas), somaCom: soma(l => l.resultado?.bracos.com?.confirmadas),
+    somaTotal: soma(l => l.resultado?.bracos.sem?.total ?? l.resultado?.bracos.com?.total) };
+}
+
+/** Campanhas que entram no placar: as que não são ensaio; num arquivo só de ensaios (a fixture), todas. */
+export function campanhasDoPlacar(v: VistaExecucoes): { mostradas: InfoCampanha[]; ensaios: InfoCampanha[] } {
+  const reais = v.campanhas.filter(c => c.natureza !== "ensaio");
+  return reais.length ? { mostradas: reais, ensaios: v.campanhas.filter(c => c.natureza === "ensaio") } : { mostradas: v.campanhas, ensaios: [] };
+}
+
 // ───────────────────────────────────────────────────────────────── par
 
 export interface LinhaMetrica { rotulo: string; valores: Partial<Record<Arm, Valor>> }

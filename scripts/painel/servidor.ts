@@ -4,6 +4,7 @@
  *   npm run painel:resultados -- --arquivo <clone do govbr-resultados> [--porta 4610] [--revisora Nome] [--telas <clone do govbr-telas>]
  *   npm run painel:resultados -- recalcular --arquivo <clone> --analise <campanha>/<par ou runId> [--telas DIR]
  *   npm run painel:resultados -- preparar --arquivo <clone> (--par <campanha>/<par> | --execucao <runId>) [--anexos DIR] [--sem-download]
+ *   npm run painel:resultados -- resumo --arquivo <clone>     grava <clone>/RESULTADOS.md (NAT-58; também POST /api/resumo)
  *
  * T8a.1: "Preparar análise" (preparar.ts) cria a PRIMEIRA análise de um par/execução arquivados pelo T4,
  * restaurando os pacotes dos anexos (conferidos por sha256). O anexo que faltar em `anexos/<release>/`
@@ -28,6 +29,7 @@ import {
 } from "./modelo";
 import { paginaAjuda, paginaErro, paginaExecucao, paginaExecucoes, paginaFila, paginaGuia, paginaPar, type Contexto, type Diagrama } from "./paginas";
 import { baixarComGh, diagnosticoPreparo, prepararAnalise, preparoDaExecucao, preparoDosPares, type Diagnostico, type OpcoesPreparo } from "./preparar";
+import { gravarResultados } from "./resultados";
 import { arquivoDeEvidencia, imagemDaCena, recalcular, salvarDecisao, vistaFila, type PedidoDecisao } from "./revisao";
 
 export interface OpcoesPainel {
@@ -162,6 +164,11 @@ export function criarPainel(o: OpcoesPainel): Server {
         if (seg[0] === "api" && seg[1] === "recalcular" && seg.length === 4 && ids(seg.slice(2))) {
           if (!lerAnalise(arquivo, seg[2], seg[3])) return nao(true);
           return json(200, await recalcular(arquivo, seg[2], seg[3], { telas: o.telas ?? null }));
+        }
+        // NAT-58: RESULTADOS.md na raiz do clone (só números de summary.json; nunca a referência)
+        if (seg[0] === "api" && seg[1] === "resumo" && seg.length === 2) {
+          const r = gravarResultados(arquivo);
+          return json(200, { ok: true, arquivo: "RESULTADOS.md", campanhas: r.campanhas });
         }
         // T8a.1: primeira análise de um par ou de uma execução arquivados pelo T4
         if (seg[0] === "api" && seg[1] === "preparar" && seg[2] === "par" && seg.length === 5 && ids(seg.slice(3))) {
@@ -333,11 +340,15 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const uso = "Uso: npm run painel:resultados -- --arquivo <clone do govbr-resultados> [--porta 4610] [--revisora Nome] [--telas <clone do govbr-telas>]\n" +
     "                                       [--anexos <pasta com anexos baixados>] [--sem-download]\n" +
     "     npm run painel:resultados -- recalcular --arquivo <clone> --analise <campanha>/<par ou runId> [--telas DIR]\n" +
-    "     npm run painel:resultados -- preparar --arquivo <clone> (--par <campanha>/<par> | --execucao <runId>) [--anexos DIR] [--sem-download]";
+    "     npm run painel:resultados -- preparar --arquivo <clone> (--par <campanha>/<par> | --execucao <runId>) [--anexos DIR] [--sem-download]\n" +
+    "     npm run painel:resultados -- resumo --arquivo <clone>   (grava <clone>/RESULTADOS.md)";
   const anexos = val("anexos") ? [resolve(val("anexos")!)] : [];
   const baixarAnexos = !args.includes("--sem-download");
   if (!arquivo || !existsSync(arquivo)) { console.error(uso); process.exitCode = 1; }
-  else if (args[0] === "preparar") {
+  else if (args[0] === "resumo") {
+    const r = gravarResultados(resolve(arquivo));
+    console.log(`RESULTADOS.md gravado: ${r.caminho} (${r.campanhas} campanha${r.campanhas === 1 ? "" : "s"}). Confira e faça o commit no clone quando quiser.`);
+  } else if (args[0] === "preparar") {
     const [c, p] = (val("par") ?? "").split("/");
     const alvo = val("execucao") ? { tipo: "individual" as const, runId: val("execucao")! } : { tipo: "par" as const, campanha: c ?? "", par: p ?? "" };
     prepararAnalise(resolve(arquivo), alvo, { anexos, baixar: baixarAnexos ? baixarComGh : null }).then(r => {

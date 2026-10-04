@@ -56,6 +56,20 @@ Na página da execução no GitHub, os quatro jobs aparecem em ordem: `preparar`
 `linhas-de-base` → `arquivar`. O resumo de cada job aparece no fim da página. O `arquivar` roda
 mesmo quando algo antes dele falha, para que a falha também fique registrada no arquivo.
 
+O resumo começa por um **cartão de saúde** (NAT-58), o mesmo na coleta e no arquivar:
+
+- ✅ `<slot>: execução limpa` ou ❌ `<slot>: <a causa em uma frase>` (sem stack nem log);
+- tela · braço (com/sem oráculo) · modelo · esforço;
+- duração do agente · custo **estimado** pelo cliente (o que não foi medido fica “desconhecido”, nunca 0)
+  · achados enviados · chamadas ao oráculo (braço com) · isolamento;
+- **Próximo passo**. Na coleta, que não vê o arquivo, é “aguarde o job arquivar… e abra o painel” ou
+  “nova tentativa do slot”. No arquivar, que vê o índice, ele diz se o par está completo
+  (“par-01 completo → Preparar análise no painel”), se falta o outro braço, ou “repita o job arquivar”
+  quando o anexo não foi confirmado.
+
+As tabelas de antes ficam dobradas logo abaixo, em **Detalhes técnicos**. O job da linha de base tem
+uma linha de saúde própria. Nada da referência entra no resumo: a coleta nem a tem.
+
 ## 3. Abrir os resultados no painel
 
 ```sh
@@ -64,6 +78,19 @@ cd ../govbr-eval
 npm run painel:resultados -- --arquivo ../govbr-resultados
 ```
 
+- No topo da página inicial, **Resultados de relance** (NAT-58): uma ficha por campanha que não é
+  ensaio, com o número grande “com X × sem Y unidades confirmadas”, somado **só nos pares FINAIS**
+  e com o n dito (“pares finais: 1 de 2”); as barras de cada par com números (FINAL ou PROVISÓRIO);
+  o selo de cada par; e **O que falta** (“par-02: 31 cartões pendentes”, “par-03: falta o braço com”,
+  “par-04: pronto para preparar”). A soma é descritiva, sem inferência; par provisório nunca entra.
+- O botão **Atualizar RESULTADOS.md** (ou `npm run painel:resultados -- resumo --arquivo <clone>`)
+  grava `RESULTADOS.md` na raiz do clone: por campanha (a mais recente primeiro; ensaios só citados;
+  piloto rotulado “calibração — não é resultado (D-67)”), uma tabela por par — sem e com
+  (confirmadas/total, recall), diferença, defeitos novos corretos, incorretas e o selo (FINAL /
+  PROVISÓRIO com N cartões pendentes / sem análise) — e a linha da campanha (pares finais e as somas
+  só dos finais, com n). Os números vêm só do `summary.json` da revisão atual de cada par, e o
+  arquivo exato aparece abaixo da tabela. Nunca texto da referência, de cartão nem seletor. A mesma
+  entrada dá os mesmos bytes, menos a linha “Gerado em”. O commit fica com você.
 - **Estado das execuções** é a página inicial. Cada execução tem um **id curto**: o slot da campanha
   (`p01-sem` = par 1, braço sem). É o mesmo id nos quadros do topo, nos avisos, nas listas, no
   endereço (`/execucao/<campanha>/<id>`) e no título do resumo técnico. Sem slot legível, o id é
@@ -86,9 +113,7 @@ npm run painel:resultados -- --arquivo ../govbr-resultados
   por braço com o número grande (defeitos da referência confirmados, de N), barras lado a lado
   (confirmados, achados, tempo, custo) e a diferença com − sem, sempre com “n = 1 par”. A tabela
   completa, com o arquivo e o campo de cada número, fica em “Resultado por braço”. Os números vêm só do
-  `summary.json` da análise (T6); o painel não recalcula nada por conta própria, e nunca soma pares.
-- Quando uma campanha tem pares com revisão **fechada**, a página inicial mostra a comparação de cada
-  um, lado a lado, com n dito — nunca somados (D-69).
+  `summary.json` da análise (T6); o painel não recalcula nada por conta própria, e a única soma é a do placar (só pares FINAIS, com n).
 - “indisponível” quer dizer que o número ainda não existe. Isso acontece com a revisão aberta ou a
   análise bloqueada. Não quer dizer zero.
 - **Guia em diagramas** (`/guia`): três figuras para quem chega agora — como um disparo anda, as
@@ -213,7 +238,7 @@ visível como falha, e uma nova tentativa é um novo disparo.
 
 ## Onde o painel grava
 
-Só dentro do arquivo aberto, e só em três pastas:
+Só dentro do arquivo aberto: em três pastas e no `RESULTADOS.md` da raiz (só quando você pede):
 
 | Pasta | O quê |
 |---|---|

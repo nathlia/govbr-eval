@@ -822,6 +822,75 @@ await teste("decisões gravadas com ids do HTML cru (adaptador 1.0.0) são trans
   assert.equal(lerIds(`${revDir("par-02", "rev-003")}/summary.json`).comparacao.estado, "final");
 });
 
+// ───────────────────────────────────────────────────────────────── NAT-58: resultados de relance
+
+await teste("NAT-58: RESULTADOS.md (POST /api/resumo e CLI) — números só do summary.json atual, selos, fontes, nada da referência, determinístico", async () => {
+  // mesmas regras dos outros POSTs
+  assert.equal((await req("/api/resumo", { metodo: "POST", corpo: "{}", cab: { origin: "http://evil.example" } })).status, 403);
+  assert.equal((await req("/api/resumo", { metodo: "POST", corpo: "x", cab: { "content-type": "text/plain" } })).status, 415);
+  assert.ok(!existsSync(join(arquivo, "RESULTADOS.md")), "POST recusado não grava");
+  const r = await postJson<{ ok: boolean; arquivo: string; campanhas: number }>("/api/resumo", {});
+  assert.ok(r.ok && r.arquivo === "RESULTADOS.md" && r.campanhas === 1, JSON.stringify(r));
+  const md = readFileSync(join(arquivo, "RESULTADOS.md"), "utf8");
+  assert.match(md, /^# Resultados de relance\n/);
+  assert.match(md, /FIXTURE SINTÉTICA/);
+  assert.match(md, new RegExp(`## ${C} — ensaio — não é dado científico`));
+  // cada par com análise: a linha usa a revisão ATUAL e os números são os do summary.json dela
+  const pares = ["par-01", "par-02", "par-03", "par-04", "par-05"];
+  for (const par of pares) {
+    const linha = md.split("\n").find(l => l.startsWith(`| ${par} |`));
+    assert.ok(linha, `linha do ${par}`);
+    const an = lerAnalise(arquivo, C, par);
+    if (!an?.atual || an.atual.resumo.analise.estado !== "pronta") { assert.match(linha!, /\*\*(sem análise|um braço só)/, `${par} sem análise`); continue; }
+    const s = ler(`${an.atual.rel}/summary.json`);
+    assert.ok(md.includes(`- ${par}: \`${an.atual.rel}/summary.json\``), `fonte do ${par} = revisão atual ${an.atual.nome}`);
+    for (const e of s.execucoes) {
+      const m = e.pontuacao.metricas;
+      if (m.confirmedReferenceUnits !== null) assert.ok(linha!.includes(`${m.confirmedReferenceUnits}/${m.referenceUnits}`), `${par} ${e.braco}: ${linha}`);
+    }
+    const c = s.comparacao;
+    if (c?.disponivel && c.estado === "final") assert.match(linha!, /\*\*FINAL\*\* \|$/);
+    else if (c?.disponivel) assert.match(linha!, new RegExp(`\\*\\*PROVISÓRIO com ${s.revisaoSemantica.pendentes} cart`));
+  }
+  // linha da campanha: soma só dos FINAIS, com n
+  const finais = pares.map(p => lerAnalise(arquivo, C, p)?.atual).filter(rv => rv && rv.resumo.comparacao?.disponivel && rv.resumo.comparacao.estado === "final");
+  assert.ok(md.includes(`Pares finais: **${finais.length} de 5**`), md.split("\n").find(l => l.startsWith("Pares finais")));
+  if (finais.length) {
+    const soma = (arm: string) => finais.reduce((n, rv) => n + rv!.resumo.execucoes.find(e => e.braco === arm)!.pontuacao.metricas.confirmedReferenceUnits!, 0);
+    assert.ok(md.includes(`(n = ${finais.length}): **sem ${soma("sem")} · com ${soma("com")}**`));
+  }
+  // nada da referência, de cartão ou de seletor
+  const ref = JSON.parse(readFileSync(join(process.cwd(), "scripts", "fixtures", "analise", "referencia-fixture.json"), "utf8"));
+  for (const v of ref.violations) for (const t of [v.description, v.anchor, ...v.rules]) assert.ok(!md.includes(t), `texto da referência no RESULTADOS.md: ${t}`);
+  assert.ok(!/#fx-|selector|seletor:|fixture:campo/.test(md));
+  const pkg = JSON.parse(readFileSync(join(arquivo, revDir("par-02", lerAnalise(arquivo, C, "par-02")!.atual!.nome), "revisao", "package.json"), "utf8")) as SemanticPackage;
+  for (const card of pkg.cards) for (const t of [card.selector, card.description, card.observed]) if (t && t.length > 8) assert.ok(!md.includes(t), `texto ou seletor de cartão no RESULTADOS.md: ${t}`);
+  // determinístico: mesma entrada → mesmos bytes, menos a linha da data; a CLI grava o mesmo
+  const { gerarResultados, LINHA_DATA } = await import("./painel/resultados");
+  const semData = (t: string) => t.replace(LINHA_DATA, "Gerado em: —");
+  assert.equal(semData(gerarResultados(arquivo, new Date("2020-01-01T00:00:00Z"))), semData(md));
+  assert.equal(gerarResultados(arquivo, new Date("2020-01-01T00:00:00Z")), gerarResultados(arquivo, new Date("2020-01-01T00:00:00Z")));
+  const { execFileSync } = await import("node:child_process");
+  rmSync(join(arquivo, "RESULTADOS.md"));
+  execFileSync(process.execPath, ["--import", "tsx", join("scripts", "painel", "servidor.ts"), "resumo", "--arquivo", arquivo], { cwd: process.cwd(), stdio: "pipe" });
+  assert.equal(semData(readFileSync(join(arquivo, "RESULTADOS.md"), "utf8")), semData(md), "CLI = botão");
+});
+
+await teste("NAT-58: placar no topo da página inicial — com × sem dos finais (n dito), selos por par, o que falta, botão", async () => {
+  const html = (await req("/")).corpo.toString("utf8");
+  const i = html.indexOf('id="t-placar"');
+  assert.ok(i > 0 && i < html.indexOf('class="tiles"'), "o placar vem antes dos quadros");
+  const placar = html.slice(i, html.indexOf("</section>", i));
+  assert.match(placar, /unidades da referência confirmadas · <strong>pares finais: \d+ de 5<\/strong>/);
+  assert.match(placar, /class="n com">com <b>\d+<\/b>[\s\S]*class="n sem">sem <b>\d+<\/b>/);
+  assert.match(placar, /O que falta/);
+  assert.match(placar, /par-03<\/a>: falta o braço com/);
+  assert.match(placar, /par-05<\/a>: falta o braço sem/);
+  assert.match(placar, /par-04<\/a>: comparação indisponível/);
+  assert.match(placar, /data-resumo>Atualizar RESULTADOS.md<\/button>/);
+  assert.ok(!/#fx-|Defeito sintético/.test(placar), "nada da referência no placar");
+});
+
 await teste("hash de SCORER_FILES intacto", () => {
   assert.equal(analysisIdentity().scorerSha256, SCORER_SHA);
 });
