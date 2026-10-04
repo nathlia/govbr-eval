@@ -1,0 +1,254 @@
+{
+  "contract": "agenda.v1",
+  "generator": "agenda-campanha-1.0.0",
+  "campaignId": "t7-tela-a-01",
+  "campaign": {
+    "path": "campanhas/t7-tela-a-01/campaign.json",
+    "sha256": "214c2a7872d48272eaf9cf404a06c3237a3bf9b6cf35de475b5d38e7452d23ae"
+  },
+  "seed": {
+    "commit": "0d30fbc15e18f8672d84a3d5cffb9c0aa8a9239a",
+    "rule": "chave(par) = sha256(semente + \"|ordem|\" + par); pares em ordem ascendente da chave; os ⌊N/2⌋ primeiros começam pelo sem, os demais pelo com (N ímpar: o par a mais começa pelo com)"
+  },
+  "pairs": 10,
+  "draw": [
+    {
+      "pairId": "p03",
+      "key": "145f096d1cb28c1e1bfc6d61ebccc125a913c44356df38f195bdd2e4002d05b3",
+      "firstArm": "sem"
+    },
+    {
+      "pairId": "p06",
+      "key": "28d8ec521141aafb81f75f4401763ed7bd38fccf3a1bd3ad417e88758dc62699",
+      "firstArm": "sem"
+    },
+    {
+      "pairId": "p01",
+      "key": "29d8a61b442032aaccbe8ebb4b169b05dc36bf5f1e01ec3d8d320b41131e488f",
+      "firstArm": "sem"
+    },
+    {
+      "pairId": "p09",
+      "key": "38bff62186c383dcd56f89e074e49dcd64dc982cb358793e469ea4d547abc6a5",
+      "firstArm": "sem"
+    },
+    {
+      "pairId": "p08",
+      "key": "3cb3ecf5994a466576f99e7d16221c42c68f20b31134a2a0a7590722e8e18122",
+      "firstArm": "sem"
+    },
+    {
+      "pairId": "p04",
+      "key": "7939992d0aa98eacb0be187816a52113bf8bf42720fa0a8a52a48308913cfd98",
+      "firstArm": "com"
+    },
+    {
+      "pairId": "p07",
+      "key": "84385bdf9c7b33da9aad66884d2d338103711500ebcf351ac0822d09ed189726",
+      "firstArm": "com"
+    },
+    {
+      "pairId": "p10",
+      "key": "8df8b745a2f6fb2da825dc4e45a824c95a0c278de8fd2a2817de65a0a2a1aff4",
+      "firstArm": "com"
+    },
+    {
+      "pairId": "p05",
+      "key": "d0d86da746807ff45c8e07a4c50aab3905f68ee9e7b03e956929b5a6dc01217a",
+      "firstArm": "com"
+    },
+    {
+      "pairId": "p02",
+      "key": "e676f5190c6bd19e868992fccdbb49368b7090c0f15378fa4ca271d9ac6ef824",
+      "firstArm": "com"
+    }
+  ],
+  "windows": null,
+  "slots": [
+    {
+      "slotId": "p01-sem",
+      "pairId": "p01",
+      "arm": "sem",
+      "positionInPair": 1,
+      "repetition": 1,
+      "order": 1,
+      "window": null
+    },
+    {
+      "slotId": "p01-com",
+      "pairId": "p01",
+      "arm": "com",
+      "positionInPair": 2,
+      "repetition": 1,
+      "order": 2,
+      "window": null
+    },
+    {
+      "slotId": "p02-com",
+      "pairId": "p02",
+      "arm": "com",
+      "positionInPair": 1,
+      "repetition": 2,
+      "order": 3,
+      "window": null
+    },
+    {
+      "slotId": "p02-sem",
+      "pairId": "p02",
+      "arm": "sem",
+      "positionInPair": 2,
+      "repetition": 2,
+      "order": 4,
+      "window": null
+    },
+    {
+      "slotId": "p03-sem",
+      "pairId": "p03",
+      "arm": "sem",
+      "positionInPair": 1,
+      "repetition": 3,
+      "order": 5,
+      "window": null
+    },
+    {
+      "slotId": "p03-com",
+      "pairId": "p03",
+      "arm": "com",
+      "positionInPair": 2,
+      "repetition": 3,
+      "order": 6,
+      "window": null
+    },
+    {
+      "slotId": "p04-com",
+      "pairId": "p04",
+      "arm": "com",
+      "positionInPair": 1,
+      "repetition": 4,
+      "order": 7,
+      "window": null
+    },
+    {
+      "slotId": "p04-sem",
+      "pairId": "p04",
+      "arm": "sem",
+      "positionInPair": 2,
+      "repetition": 4,
+      "order": 8,
+      "window": null
+    },
+    {
+      "slotId": "p05-com",
+      "pairId": "p05",
+      "arm": "com",
+      "positionInPair": 1,
+      "repetition": 5,
+      "order": 9,
+      "window": null
+    },
+    {
+      "slotId": "p05-sem",
+      "pairId": "p05",
+      "arm": "sem",
+      "positionInPair": 2,
+      "repetition": 5,
+      "order": 10,
+      "window": null
+    },
+    {
+      "slotId": "p06-sem",
+      "pairId": "p06",
+      "arm": "sem",
+      "positionInPair": 1,
+      "repetition": 6,
+      "order": 11,
+      "window": null
+    },
+    {
+      "slotId": "p06-com",
+      "pairId": "p06",
+      "arm": "com",
+      "positionInPair": 2,
+      "repetition": 6,
+      "order": 12,
+      "window": null
+    },
+    {
+      "slotId": "p07-com",
+      "pairId": "p07",
+      "arm": "com",
+      "positionInPair": 1,
+      "repetition": 7,
+      "order": 13,
+      "window": null
+    },
+    {
+      "slotId": "p07-sem",
+      "pairId": "p07",
+      "arm": "sem",
+      "positionInPair": 2,
+      "repetition": 7,
+      "order": 14,
+      "window": null
+    },
+    {
+      "slotId": "p08-sem",
+      "pairId": "p08",
+      "arm": "sem",
+      "positionInPair": 1,
+      "repetition": 8,
+      "order": 15,
+      "window": null
+    },
+    {
+      "slotId": "p08-com",
+      "pairId": "p08",
+      "arm": "com",
+      "positionInPair": 2,
+      "repetition": 8,
+      "order": 16,
+      "window": null
+    },
+    {
+      "slotId": "p09-sem",
+      "pairId": "p09",
+      "arm": "sem",
+      "positionInPair": 1,
+      "repetition": 9,
+      "order": 17,
+      "window": null
+    },
+    {
+      "slotId": "p09-com",
+      "pairId": "p09",
+      "arm": "com",
+      "positionInPair": 2,
+      "repetition": 9,
+      "order": 18,
+      "window": null
+    },
+    {
+      "slotId": "p10-com",
+      "pairId": "p10",
+      "arm": "com",
+      "positionInPair": 1,
+      "repetition": 10,
+      "order": 19,
+      "window": null
+    },
+    {
+      "slotId": "p10-sem",
+      "pairId": "p10",
+      "arm": "sem",
+      "positionInPair": 2,
+      "repetition": 10,
+      "order": 20,
+      "window": null
+    }
+  ],
+  "retry": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 24,
+    "extraAttempts": 4
+  }
+}
