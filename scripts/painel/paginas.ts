@@ -565,7 +565,8 @@ export function paginaFila(f: VistaFila, ctx: Contexto, revisoraPadrao: string):
   return pagina({ titulo: `Revisão ${an.alvo} (${an.campanha})`, ctx, corpo: `
 <p class="migalha"><a href="/">Estado das execuções</a> › <span class="mono">${esc(an.campanha)}</span> › <a href="/par/${u(an.campanha)}/${u(an.alvo)}">par ${esc(an.alvo)}</a> › fila de revisão</p>
 <header class="capa"><h1>Fila de revisão — <span class="id">${esc(an.alvo)}</span></h1>
-<p>${f.cartoes.length} cartões · ${pend.length} pendente(s) · ${feitos.length} decidido(s). Revisão cega: o braço, o id da execução e o nome dos arquivos de evidência não aparecem aqui.</p></header>
+<p>${f.cartoes.length} cartões · ${pend.length} pendente(s) · ${feitos.length} decidido(s). Revisão cega: o braço, o id da execução e o nome dos arquivos de evidência não aparecem aqui.</p>
+<p class="pequeno suave">${f.mascara.citavam} cartão(ões) citavam ids de regra do oráculo; mascarados como “[regra citada]” só nesta vista (o pacote guarda o texto original). Texto que denuncia o braço: ${f.mascara.vazamentosDeBraco} cartão(ões) no pacote inteiro, ${f.mascara.aposMascara} ainda visível(is) aqui após a máscara.</p></header>
 ${an.avisos.length ? listaAvisos(an.avisos.map(a => ({ alvo: an.alvo, texto: a.replace(new RegExp(`^${an.alvo.replace(/[.]/g, "\\.")}:\\s*`), ""), ajuda: "/ajuda#recalcular", nivel: "falha", ensaio: false }))) : ""}
 ${f.naoIncorporadas ? `<div class="aviso" role="status"><p><strong>${f.naoIncorporadas} decisão(ões) salva(s) depois do último cálculo (${esc(rv.nome)}).</strong> A pontuação só muda quando você clicar em Recalcular.</p></div>` : ""}
 <div class="campo"><label class="rot" for="revisora">Seu nome (assina cada decisão)</label><input type="text" id="revisora" autocomplete="name" value="${esc(revisoraPadrao)}"></div>

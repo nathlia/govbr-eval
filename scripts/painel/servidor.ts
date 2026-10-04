@@ -244,7 +244,7 @@ export function criarPainel(o: OpcoesPainel): Server {
         if (seg[1] === "fila" && seg.length === 4 && ids(seg.slice(2))) {
           const f = vistaFila(arquivo, seg[2], seg[3]);
           return f ? json(200, { analise: f.analise.id, revisao: f.revisao.nome, cartoes: f.cartoes, versaoDecisoes: f.versaoDecisoes,
-            pendentesAtivos: f.pendentesAtivos, decididos: f.decididos, naoIncorporadas: f.naoIncorporadas }) : nao(true);
+            pendentesAtivos: f.pendentesAtivos, decididos: f.decididos, naoIncorporadas: f.naoIncorporadas, mascara: f.mascara }) : nao(true);
         }
       }
       return nao(seg[0] === "api");

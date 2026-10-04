@@ -186,6 +186,28 @@ abrir o painel sobre ele.
    - **Evidência insuficiente**: não dá para decidir com o que está no cartão.
 4. Escreva a **justificativa**, que é obrigatória, e clique em **Salvar decisão**.
 
+**Ids de regra do oráculo mascarados (NAT-60).** O braço com oráculo cita regras pelo esquema de ids
+do oráculo, que o braço sem não tem como conhecer; um id desses no cartão denunciaria o braço. Na
+fila (página e `/api/fila`), o texto que o cartão mostra (regra declarada, observado, esperado,
+elementos alegados, sinais, e o resumo de cada cartão no seletor de duplicata) troca esses ids por
+`[regra citada]`. As expressões, em `scripts/painel/mascara.ts`, saíram dos pacotes do `piloto-01`
+(par-01 e par-02), sem abrir o código do validador:
+
+- `/\bds[-:][a-z][a-z0-9]*(?:-[a-z0-9]+)*/g`: `ds-page-header`, `ds-page-footer`, `ds-token-color`,
+  `ds-structure-button-tag` e as mesmas com `ds:`. É preciso uma letra minúscula logo após o
+  separador, por isso a prosa “do DS: ícone…” continua visível.
+- `/\bgovbr-\d+(?:\.\d+)*(?:-[A-Za-z0-9]+)*/g`: `govbr-3.7.0-foundation-global-…`,
+  `govbr-3.7.0-accessibility-global-…`, `govbr-3.7.0-component-message-…`.
+
+As referências públicas, que os dois braços podem citar sem o oráculo, ficam como estão: `wcag:2.4.3`,
+“WCAG 2.4.3”, `emag:2.2`, “e-MAG 2.1”, `axe:label` e os nomes de regra do axe (`aria-hidden-focus`,
+`button-name`). A máscara vale só para a vista. O `package.json` da revisão, as decisões e a
+pontuação não mudam. O `.tar.gz` da revisão, baixado na página do par e não na fila, guarda o texto
+original. O topo da fila mostra três números: quantos cartões citavam esses ids, o
+`vazamentosDeBraco` da análise (`armLeaks` sobre o texto inteiro do pacote) e quantos cartões ainda
+denunciam o braço no que a fila mostra depois da máscara. No piloto-01, 9 de 27 cartões (par-01) e
+9 de 31 (par-02) citavam esses ids, e depois da máscara nenhum cartão denuncia o braço.
+
 Cada vez que você salva, o painel grava um arquivo novo
 (`analises/.../decisoes/decisoes-NNNN.json`) e não apaga nada. O histórico aparece no fim da página.
 Para mudar uma decisão, decida o cartão de novo: a mudança vira uma versão nova. Se duas janelas

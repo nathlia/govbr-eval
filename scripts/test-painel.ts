@@ -939,6 +939,48 @@ await teste("camada de página (D-83): par e RESULTADOS.md mostram sorteadas × 
   assert.ok(!/#fx-|Defeito sintético/.test(md), "nada além de números e prefixos");
 });
 
+// ───────────────────────────────────────────────────────────────── NAT-60: ids de regra do oráculo mascarados na fila
+
+await teste("fila cega mascara ids de regra do oráculo (ds-*, ds:*, govbr-<versão>-*) só na vista; wcag fica; pacote e .tar.gz intactos", async () => {
+  const arqM = join(TMP, "arquivo-mascara");
+  cpSync(arquivo, arqM, { recursive: true });
+  const rv = lerAnalise(arqM, C, "par-02")!.atual!;
+  const pkgPath = join(rv.dir, "revisao", "package.json");
+  const pkg = JSON.parse(readFileSync(pkgPath, "utf8")) as SemanticPackage;
+  const alvo = pkg.cards.find(c => c.contract === "achado-2")!;
+  alvo.rule = "ds-page-footer";
+  alvo.observed = "Rodapé fora do padrão (govbr-3.7.0-x); ver também ds:page-header.";
+  alvo.expected = "Rodapé conforme wcag:2.4.3 e WCAG 2.4.3.";
+  writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
+  const bytes = readFileSync(pkgPath);
+  const s = criarPainel({ arquivo: arqM, revisora: "" });
+  const pM = await escutar(s, 0);
+  const get = (caminho: string): Promise<{ status: number; corpo: Buffer }> => new Promise((ok, falha) => {
+    request({ host: "127.0.0.1", port: pM, path: caminho }, r => { const b: Buffer[] = []; r.on("data", d => b.push(d)); r.on("end", () => ok({ status: r.statusCode!, corpo: Buffer.concat(b) })); }).on("error", falha).end();
+  });
+  try {
+    const html = (await get(`/revisao/${C}/par-02`)).corpo.toString("utf8");
+    const api = (await get(`/api/fila/${C}/par-02`)).corpo.toString("utf8");
+    for (const t of [html, api]) {
+      for (const proibido of ["ds-page-footer", "govbr-3.7.0", "ds:page-header"]) assert.ok(!t.includes(proibido), `vazou ${proibido}`);
+      assert.ok(t.includes("wcag:2.4.3") && t.includes("WCAG 2.4.3"), "referência pública fica visível");
+    }
+    assert.match(html, /<pre>\[regra citada\]<\/pre>/, "coluna da regra mascarada");
+    assert.match(html, /Rodapé fora do padrão \(\[regra citada\]\); ver também \[regra citada\]\./);
+    const f = JSON.parse(api);
+    assert.equal(f.mascara.citavam, 1);
+    assert.equal(f.mascara.aposMascara, 0);
+    assert.match(html, /1 cartão\(ões\) citavam ids de regra do oráculo; mascarados/);
+    assert.deepEqual(readFileSync(pkgPath), bytes, "o pacote não é tocado pela vista");
+    // o .tar.gz é o registro (fica na página do par, fora da fila cega): leva o texto original
+    const tar = await get(`/baixar/analise/${C}/par-02/${rv.nome}.tar.gz`);
+    assert.equal(tar.status, 200);
+    const noTar = lerTarGz(tar.corpo).find(x => x.path.endsWith("/revisao/package.json"))!;
+    assert.deepEqual(noTar.body, bytes);
+    assert.ok(!/\/baixar\//.test(html), "a fila não linka o download");
+  } finally { s.close(); }
+});
+
 await teste("hash de SCORER_FILES intacto", () => {
   assert.equal(analysisIdentity().scorerSha256, SCORER_SHA);
 });

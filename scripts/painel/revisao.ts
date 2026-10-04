@@ -20,13 +20,14 @@ import { extname, join } from "node:path";
 import type { Arm } from "../../contracts/index";
 import { analisar } from "../analisar-execucao";
 import {
-  DECISOES, canonical, digest, normalizeReviews, reviewQueue, scoreSemanticPackage,
+  DECISOES, armLeaks, canonical, digest, normalizeReviews, reviewQueue, scoreSemanticPackage,
   type ReviewCard, type SemanticPackage, type SemanticUnit,
 } from "../semantic-flow";
 import {
   ARMS, DECISOES_VERSAO, dentroDoArquivo, decisoesEmVigor, existeDiretorio, lerAnalise, pacoteDaRevisao,
   type Analise, type MetaDecisao, type Revisao,
 } from "./modelo";
+import { contarMascara, mascarar, type TextoVisivel } from "./mascara";
 
 // ───────────────────────────────────────────────────────────────── vista cega
 
@@ -67,6 +68,13 @@ function duplicataElegivel(pkg: SemanticPackage, c: ReviewCard, alvo: ReviewCard
 export interface VistaFila {
   analise: Analise; revisao: Revisao; cartoes: VistaCartao[]; versaoDecisoes: number; origemDecisoes: string;
   pendentesAtivos: number; decididos: number; naoIncorporadas: number; vocabulario: string[];
+  /**
+   * NAT-60. `citavam`: cartões cujo texto visível citava um id de regra do oráculo (mascarados como
+   * "[regra citada]", ver mascara.ts). `vazamentosDeBraco`: o número publicado pela análise
+   * (`armLeaks` sobre o texto inteiro do pacote). `aposMascara`: cartões cujo texto que a fila
+   * mostra ainda denuncia o braço depois da máscara.
+   */
+  mascara: { citavam: number; vazamentosDeBraco: number; aposMascara: number };
 }
 
 export function vistaFila(arquivo: string, campanha: string, alvo: string): VistaFila | null {
@@ -87,11 +95,11 @@ export function vistaFila(arquivo: string, campanha: string, alvo: string): Vist
     const legado = c.contract !== "achado-2" && c.contract !== "deterministico";
     const cena = capture.scenes.findIndex(s => s.id === c.scene);
     return {
-      id: c.id, origem: c.origin === "agente" ? "execução de agente" : "linha de base determinística", cena: c.scene, regra: c.rule,
-      observado: legado ? null : c.observed, esperado: legado ? null : c.expected,
+      id: c.id, origem: c.origin === "agente" ? "execução de agente" : "linha de base determinística", cena: c.scene, regra: mascarar(c.rule),
+      observado: legado ? null : mascarar(c.observed), esperado: legado ? null : mascarar(c.expected),
       janela: c.state ? `${c.state.viewport.width}×${c.state.viewport.height} · ${c.state.steps.join(" → ") || "sem interações"}` : "não declarada",
-      sinais: c.flags,
-      sujeitos: c.subjects.map(s => ({ id: s.id, rotulo: s.label, oculto: s.hidden })),
+      sinais: c.flags.map(f => mascarar(f)),
+      sujeitos: c.subjects.map(s => ({ id: s.id, rotulo: mascarar(s.label), oculto: mascarar(s.hidden) })),
       candidatas: c.candidateUnitIds.map(id => unidade(units.get(id)!)),
       duplicataDe: pkg.cards.filter(alvoC => duplicataElegivel(pkg, c, alvoC)).map(x => x.id),
       evidencias: c.evidence.map((e, i) => ({ n: i + 1, status: e.status, sha256: e.sha256?.slice(0, 12) ?? null,
@@ -106,12 +114,19 @@ export function vistaFila(arquivo: string, campanha: string, alvo: string): Vist
       segmentado: Boolean(c.segmentos?.length),
     };
   });
+  // Máscara só na vista (NAT-60): o pacote não é tocado. Contagem antes/depois sobre o mesmo recorte de texto.
+  const visivel = (id: string, regra: string | null, obs: string | null, esp: string | null, extras: (string | null)[]): TextoVisivel =>
+    ({ id, regra, observado: obs, esperado: esp, extras: extras.filter((x): x is string => x !== null) });
+  const antes = ordenados.map(c => { const leg = c.contract !== "achado-2" && c.contract !== "deterministico";
+    return visivel(c.id, c.rule, leg ? null : c.observed, leg ? null : c.expected, [...c.flags, ...c.subjects.flatMap(s => [s.label, s.hidden])]); });
+  const depois = cartoes.map(c => visivel(c.id, c.regra, c.observado, c.esperado, [...c.sinais, ...c.sujeitos.flatMap(s => [s.rotulo, s.oculto])]));
+  const mascara = { ...contarMascara(antes, depois), vazamentosDeBraco: armLeaks(pkg).length };
   const fila = reviewQueue(pkg, normalizeReviews(structuredClone(vigor.raw)));
   const decididos = vigor.raw.decisions.filter(d => d.status === "reviewed" && pkg.cards.some(c => c.id === d.cardId)).length;
   // gravações feitas depois que a revisão atual foi calculada: ainda fora da pontuação até Recalcular
   const naoIncorporadas = an.decisoes.filter(v => (v.meta?.salvoEm ?? "") > rv.resumo.geradoEm).length;
   return { analise: an, revisao: rv, cartoes, versaoDecisoes: vigor.versao, origemDecisoes: vigor.origem,
-    pendentesAtivos: fila.ativa.cartoes, decididos, naoIncorporadas, vocabulario: Object.keys(DECISOES) };
+    pendentesAtivos: fila.ativa.cartoes, decididos, naoIncorporadas, vocabulario: Object.keys(DECISOES), mascara };
 }
 
 // ───────────────────────────────────────────────────────────────── arquivos servíveis (por id, nunca por caminho)
