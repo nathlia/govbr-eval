@@ -1,0 +1,47 @@
+{
+  "contract": "agenda.v1",
+  "generator": "agenda-campanha-1.0.0",
+  "campaignId": "ensaio-agenda-01",
+  "campaign": {
+    "path": "campanhas/ensaio-agenda-01/campaign.json",
+    "sha256": "614a4f7a5fa610e49b323302b1651a3612ad95b1ae02dcf768673c4547139f31"
+  },
+  "seed": {
+    "commit": "efdaea7568fcc59178cc791e073edb74451d7f61",
+    "rule": "chave(par) = sha256(semente + \"|ordem|\" + par); pares em ordem ascendente da chave; os ⌊N/2⌋ primeiros começam pelo sem, os demais pelo com (N ímpar: o par a mais começa pelo com)"
+  },
+  "pairs": 1,
+  "draw": [
+    {
+      "pairId": "p01",
+      "key": "c11aec597231691cfc99b51d392a6adbe8202f3a867809c8086860a3847c07f1",
+      "firstArm": "com"
+    }
+  ],
+  "windows": null,
+  "slots": [
+    {
+      "slotId": "p01-com",
+      "pairId": "p01",
+      "arm": "com",
+      "positionInPair": 1,
+      "repetition": 1,
+      "order": 1,
+      "window": null
+    },
+    {
+      "slotId": "p01-sem",
+      "pairId": "p01",
+      "arm": "sem",
+      "positionInPair": 2,
+      "repetition": 1,
+      "order": 2,
+      "window": null
+    }
+  ],
+  "retry": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 4,
+    "extraAttempts": 2
+  }
+}
