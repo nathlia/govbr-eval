@@ -80,13 +80,17 @@ function semPacote(arquivo: string, o: { par: string; braco: "sem" | "com"; dia:
   const caminho = `ensaios/${CAMPANHA_ID}/${o.dia}__tela-fixture-analise__${o.braco}__${chave}`;
   const motivo = "execução sem pacote: jobs {\"preparar\":\"success\",\"coleta\":\"cancelled\",\"linhas-de-base\":\"success\"} (FIXTURE: VM perdida, simulada)";
   gravarImutavel(join(arquivo, caminho, "despacho.json"), json({ arquivo: ARCHIVE_VERSION, estado: "interrompida-sem-pacote", motivo, fixture: true, nota: AVISO }));
+  // o preparar concluiu (VM perdida depois): há manifesto de coleta — sem ele seria recusa no preflight, que não é tentativa
+  const manifesto = json({ fixture: true, nota: `${AVISO} Manifesto de coleta simulado do slot ${o.par}-${o.braco}.` });
+  const mcaminho = `coletas/${CAMPANHA_ID}/${sha(manifesto)}/manifesto-coleta.json`;
+  gravarImutavel(join(arquivo, mcaminho), manifesto);
   gravarEntrada(arquivo, {
     indice: ARCHIVE_VERSION, chave, tipo: "execucao", natureza: "ensaio", campanha: CAMPANHA_ID, slot: `slot-${o.par}-${o.braco}`, par: o.par,
     tela: "tela-fixture-analise", braco: o.braco, modelo: "modelo-fixture", esforco: "medium", modo: "fixture",
     dataUtc: `${o.dia}T00:00:00Z`, caminho,
     estado: { arquivo: "sem-pacote", tecnico: "interrupted", isolamento: null, oraculo: null, submissao: null, pontuacao: null, linhaDeBase: null },
     motivo, pacote: null, evidencias: { estado: "nao-se-aplica", release: null, anexo: null, sha256: null, bytes: null, url: null },
-    github: null, manifestoColeta: null,
+    github: null, manifestoColeta: { sha256: sha(manifesto), caminho: mcaminho },
   });
 }
 

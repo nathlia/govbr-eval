@@ -25,7 +25,9 @@
  *   indice/indice.json, INDICE.md          projeções reconstruídas de indice/entradas a cada gravação
  *
  * <pasta> = <plannedAt UTC>__<tela>__<família>__<braço>__rep-NN__<runId>; sem pacote:
- * <data>__<tela>__<braço>__sem-pacote__gh-<runId>-<tentativa>.
+ * <data>__<tela>__<braço>__sem-pacote-gh-<runId> (braço desconhecido: `sem-braco`). Todo caminho
+ * gravado tem de ser válido no Windows (nada de `<>:"\|?*`, controle, ponto/espaço no fim): o
+ * `gravarImutavel` recusa o que não for.
  *
  * Nada é sobrescrito: arquivo existente com bytes diferentes é recusado; com bytes iguais é a mesma
  * gravação repetida (reenvio idempotente do mesmo pacote).
@@ -136,8 +138,45 @@ export class Recusa extends Error {
   constructor(message: string) { super(message); this.name = "Recusa"; }
 }
 
+/**
+ * Caminhos que o Windows (NTFS) não aceita. O arquivo é clonado no Windows pela autora: um único nome
+ * inválido (`?` de um braço desconhecido, 2026-10-04) faz o `git pull` do clone inteiro falhar.
+ */
+const NTFS_PROIBIDO = /[<>:"/\\|?*\u0000-\u001f]/;
+const NTFS_RESERVADO = /^(con|prn|aux|nul|com[1-9]|lpt[1-9])(\..*)?$/i;
+
+/** Por que este segmento (um nome, sem barras) é inválido no Windows. null = válido. */
+export function problemaDeSegmentoWindows(s: string): string | null {
+  if (!s) return "segmento vazio";
+  if (NTFS_PROIBIDO.test(s)) return `caractere proibido no Windows em "${s}"`;
+  if (/[. ]$/.test(s)) return `"${s}" termina em ponto ou espaço`;
+  if (NTFS_RESERVADO.test(s)) return `"${s}" é nome reservado do Windows`;
+  return null;
+}
+
+/** Problemas de um caminho relativo do arquivo (separado por `/`) no Windows. [] = válido. */
+export function problemasDeCaminhoWindows(rel: string): string[] {
+  return rel.split("/").map(problemaDeSegmentoWindows).filter((p): p is string => p !== null);
+}
+
+/** Um segmento válido no Windows: troca cada caractere proibido por `x`, tira ponto/espaço do fim. */
+export function segmentoSeguro(s: string, vazio = "x"): string {
+  let r = [...s].map((ch) => (NTFS_PROIBIDO.test(ch) ? "x" : ch)).join("").replace(/[. ]+$/, "");
+  if (!r) r = vazio;
+  if (NTFS_RESERVADO.test(r)) r = `_${r}`;
+  return r;
+}
+
+/** Caminho absoluto: confere os segmentos (menos a letra de unidade do Windows, `C:`). */
+function conferirCaminhoWindows(path: string): void {
+  const segs = path.split(/[\\/]+/).filter(Boolean);
+  const p = segs.filter((s, i) => !(i === 0 && /^[A-Za-z]:$/.test(s)) && s !== "." && s !== "..").map(problemaDeSegmentoWindows).filter(Boolean);
+  if (p.length) throw new Recusa(`caminho inválido no Windows, nada gravado (${path}): ${p.join("; ")}`);
+}
+
 /** Grava `bytes` em `path` se não existir; se existir, só aceita bytes idênticos. Devolve se gravou. */
 export function gravarImutavel(path: string, bytes: Buffer | string): "gravado" | "ja-arquivado" {
+  conferirCaminhoWindows(path);
   const body = typeof bytes === "string" ? Buffer.from(bytes, "utf8") : bytes;
   if (existsSync(path)) {
     if (sha(readFileSync(path)) === sha(body)) return "ja-arquivado";
@@ -375,6 +414,8 @@ export function entradaExistente(arquivo: string, chave: string): EntradaIndice 
  */
 export function gravarEntrada(arquivo: string, e: EntradaIndice): "gravado" | "ja-arquivado" | "atualizado" {
   const path = join(arquivo, "indice", "entradas", `${e.chave}.json`);
+  const pc = problemasDeCaminhoWindows(e.caminho);
+  if (pc.length) throw new Recusa(`a entrada ${e.chave} aponta um caminho inválido no Windows (${e.caminho}): ${pc.join("; ")}`);
   if (!existsSync(path)) return gravarImutavel(path, json(e));
   const antes = JSON.parse(readFileSync(path, "utf8")) as EntradaIndice;
   const semEntrega = (x: EntradaIndice) => canonical({ ...x, evidencias: x.evidencias ? { ...x.evidencias, estado: null, url: null } : null });

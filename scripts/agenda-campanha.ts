@@ -177,13 +177,21 @@ export function lerEntradasDoIndice(arquivo: string): EntradaIndice[] {
   return readdirSync(dir).filter(f => f.endsWith(".json")).sort().map(f => JSON.parse(readFileSync(join(dir, f), "utf8")) as EntradaIndice);
 }
 
+/**
+ * Disparo recusado no preflight: sem pacote e sem manifesto de coleta (o job preparar não o gravou),
+ * então nenhum modelo foi chamado. Não é tentativa do slot, não consome o teto da campanha e não faz
+ * o slot parecer "falhou" (painel, resumo do par).
+ */
+export const recusadoNoPreflight = (e: Pick<EntradaIndice, "estado" | "manifestoColeta">): boolean =>
+  e.estado.arquivo === "sem-pacote" && !e.manifestoColeta;
+
 /** Classe de uma entrada do índice para a política de tentativas. */
 export function classificarTentativa(e: EntradaIndice, c: Campaign): Tentativa {
   const base = { chave: e.chave, dataUtc: e.dataUtc };
   const prefixo = (e.motivo ?? "").split(":")[0].trim();
   const razao = RAZOES.includes(prefixo) ? prefixo : null;
   const pode = (r: string): boolean => r !== "timeout" && (c.retryPolicy.retryOn as string[]).includes(r);
-  if (e.estado.arquivo === "sem-pacote" && !e.manifestoColeta) {
+  if (recusadoNoPreflight(e)) {
     return { ...base, classe: "nao-conta", razao: null, motivo: "disparo recusado antes do manifesto de coleta: nenhum modelo chamado, não é tentativa" };
   }
   if (e.estado.arquivo === "sem-pacote") {

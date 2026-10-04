@@ -158,6 +158,32 @@ await teste("teto global: as extras vão para quem precisa primeiro; esgotado �
   assert.equal(tentativaSelecionada(ts)!.chave, ent[1].chave, "a primeira elegível, não a primeira tentativa");
 });
 
+await teste("recusa no preflight (sem pacote, sem manifesto) nunca é tentativa: não abre a 2ª, não consome o teto, não pinta o slot de falha", () => {
+  const recusa = (slot: string) => entrada(slot, { semPacote: true, semManifesto: true, tecnico: "interrupted", isolamento: null, submissao: null,
+    motivo: "disparo recusado no preflight (sem manifesto de coleta; nenhum modelo chamado, não é tentativa do slot): jobs {}" });
+  // várias recusas antes do primeiro disparo legítimo: ainda é a tentativa 1
+  const d1 = proximaTentativa(A, C, [recusa(s1), recusa(s1), recusa(s1)], s1);
+  assert.ok(d1.ok && d1.tentativa === 1 && d1.anteriores.length === 0);
+  // falha técnica real depois de recusas: a 2ª cabe, e só a técnica conta como extra
+  const d2 = proximaTentativa(A, C, [recusa(s1), tecnica(s1), recusa(s1)], s1);
+  assert.ok(d2.ok && d2.tentativa === 2 && d2.extrasUsadas === 0, JSON.stringify(d2));
+  // teto: campanha com 1 extra; recusas em todos os slots não o consomem, uma falha técnica real sim
+  const c = campanha({}, { campaignAttemptCeiling: 2 * N + 1 });
+  const recusas = A.slots.flatMap(x => [recusa(x.slotId), recusa(x.slotId)]);
+  const d3 = proximaTentativa(A, c, [...recusas, tecnica(s2)], s2);
+  assert.ok(d3.ok && d3.tentativa === 2 && d3.extrasUsadas === 0 && d3.extrasLimite === 1, JSON.stringify(d3));
+  assert.match((proximaTentativa(A, c, [...recusas, tecnica(s1), tecnica(s1), tecnica(s2)], s2) as { motivo: string }).motivo, /teto da campanha esgotado: 1 de 1/,
+    "só a tentativa técnica real consome a extra");
+  // situação: o slot só com recusas segue "nao-iniciado", nunca "perdido" nem "aguarda"
+  const sit = situacaoDaAgenda(A, C, recusas, () => null);
+  assert.equal(sit.naoIniciados, 2 * N);
+  assert.equal(sit.tentativas, 0);
+  assert.equal(sit.extrasUsadas, 0);
+  assert.deepEqual(sit.foraDaAgenda, []);
+  // sem pacote COM manifesto = o preparar concluiu e a execução se perdeu depois: é tentativa técnica
+  assert.equal(classificarTentativa(entrada(s1, { semPacote: true, tecnico: "interrupted" }), C).classe, "tecnica");
+});
+
 await teste("planejado × executado: contado pela agenda (não iniciados visíveis), perdas por braço, risco de seleção, intervalo entre inícios", () => {
   const ent = [entrada(s1), entrada(s2), tecnica(s3), entrada(A.slots[3].slotId, { tecnico: "interrupted", submissao: "absent", motivo: "timeout: 1800 s" }),
     entrada("fora-01"), entrada(s1, { semPacote: true, semManifesto: true })];

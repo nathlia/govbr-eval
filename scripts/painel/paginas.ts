@@ -207,7 +207,8 @@ function tiles(v: VistaExecucoes, preparo: Record<string, Diagnostico>): string 
   const varias = new Set([...execs.map(x => x.campanha), ...pares.map(p => p.campanha)]).size > 1;
   const linkPar = (p: VistaParResumo) => `<a href="/par/${u(p.campanha)}/${u(p.par)}">${esc(varias ? `${p.campanha} · ${p.par}` : p.par)}</a>`;
   const linkExec = (x: LinhaExecucao) => `<a href="${esc(x.url)}">${esc(x.idQualificado)}</a>`;
-  const falharam = execs.filter(x => x.tecnico.estado !== "ok" || x.envio.estado === "falha");
+  // recusa no preflight (nao-se-aplica) não é tentativa: não entra em "Falharam"
+  const falharam = execs.filter(x => x.tecnico.estado === "falha" || x.envio.estado === "falha");
   const vazios = execs.filter(x => x.achados.estado === "vazia");
   const incompletos = pares.filter(p => p.faltando.length && !p.porDesenho);
   const revisar = pares.filter(p => p.selo.estado === "pendente");
@@ -509,7 +510,7 @@ ${faixaCampanha(v.campanhaInfo)}
 ${x.tecnico.estado !== "ok" && x.causaFalha && v.origem !== "sem-pacote" ? `<div class="aviso falha" role="alert"><p><strong>${esc(x.id)}:</strong> ${esc(frase(x.causaFalha, 400))}</p></div>` : ""}
 ${v.origem === "pacote" ? `<div class="aviso info"><p>Esta execução ainda não tem análise. O resumo abaixo vem direto do <span class="mono">run.json</span> arquivado: estado, falha e consumo, sem pontuação.${x.par && !preparo ? ` A análise é feita no <a href="/par/${u(x.campanha)}/${u(x.par)}#preparar">par ${esc(x.par)}</a>.` : ""}</p></div>` : ""}
 ${preparo ? blocoPreparo(preparo, `/api/preparar/execucao/${u(x.chave)}`, "desta execução (individual)") : ""}
-${v.origem === "sem-pacote" ? `<div class="aviso falha"><p><strong>${esc(x.id)}: interrompida sem pacote.</strong> ${esc(frase(v.despacho?.motivo ?? x.causaFalha ?? "", 400))}</p><p class="pequeno">Fonte: <span class="mono">${esc(v.despacho?.fonte ?? "")}</span>. Nenhum resultado foi inventado; o slot fica visível.</p></div>` : ""}
+${v.origem === "sem-pacote" ? `<div class="aviso ${x.tecnico.estado === "falha" ? "falha" : "info"}"><p><strong>${esc(x.id)}: ${x.tecnico.estado === "falha" ? "interrompida sem pacote." : "recusado no preflight — nenhum modelo chamado, não é tentativa do slot."}</strong> ${esc(frase(v.despacho?.motivo ?? x.causaFalha ?? "", 400))}</p><p class="pequeno">Fonte: <span class="mono">${esc(v.despacho?.fonte ?? "")}</span>. Nenhum resultado foi inventado; o slot fica visível.</p></div>` : ""}
 ${tabelaTecnica("Estado", v.tecnico)}
 ${tabelaTecnica("MCP e isolamento", v.isolamento)}
 ${tabelaTecnica("Custo e tempo", v.custo)}

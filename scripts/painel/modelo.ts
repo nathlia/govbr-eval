@@ -18,6 +18,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { isAbsolute, join, relative, resolve, sep } from "node:path";
 import type { AnalysisBinding, Arm, Findings, Run } from "../../contracts/index";
 import type { EntradaIndice } from "../arquivo-resultados";
+import { recusadoNoPreflight } from "../agenda-campanha";
 import type { Resumo } from "../analisar-execucao";
 import { mapearDecisoes } from "../identidade-cartoes";
 import { pendingDecision, type RawReviews, type SemanticPackage } from "../semantic-flow";
@@ -318,6 +319,7 @@ export const seloPontuacao = (s: string): Selo => PONTUACAO[s] ?? { estado: "avi
 export function seloPublicacao(e: EntradaIndice): Selo {
   if (e.estado.arquivo === "retido-segredo") return { estado: "publicacao-indisponivel", texto: "retida: credencial no pacote, nada publicado" };
   if (e.estado.arquivo === "pacote-invalido") return { estado: "publicacao-indisponivel", texto: "pacote arquivado com problemas" };
+  if (recusadoNoPreflight(e)) return { estado: "nao-se-aplica", texto: "nada a publicar (recusado no preflight)" };
   if (e.estado.arquivo === "sem-pacote") return { estado: "falha", texto: "sem pacote (execução interrompida)" };
   const ev = e.evidencias;
   if (!ev || ev.estado === "nao-se-aplica") return { estado: "ok", texto: "arquivada" };
@@ -443,7 +445,10 @@ const seloDe = (m: Record<string, Selo>, v: string | null, nulo: string): Selo =
 export function linhaExecucao(arquivo: string, lida: EntradaLida & { entrada: EntradaIndice }, analises: Analise[], ids?: Map<string, string>): LinhaExecucao {
   const e = lida.entrada;
   const tec = e.estado.tecnico;
-  const tecnico: Selo = e.estado.arquivo === "sem-pacote"
+  // recusa no preflight (sem manifesto): nenhum modelo chamado, não é tentativa — não pinta o slot de falha
+  const tecnico: Selo = recusadoNoPreflight(e)
+    ? { estado: "nao-se-aplica", texto: "recusado no preflight (não é tentativa)" }
+    : e.estado.arquivo === "sem-pacote"
     ? { estado: "falha", texto: "interrompida, sem pacote" }
     : { estado: tec === "passed" ? "ok" : "falha", texto: rotuloTecnico(tec) };
   const achados = achadosDe(arquivo, e);

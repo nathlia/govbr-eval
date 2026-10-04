@@ -24,9 +24,10 @@ import { cartaoSaude, conferirAmbienteDosConteineres, conferirCheckouts, conferi
 import { buildIsolatedManifest, documentoDaCampanha, isolatedManifestProblems, problemasDaCampanha, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import {
   caminhoCampanha, caminhoSite, conjuntoDeSnapshots, criarTarGz, garantirGitattributes, gravarEntrada, gravarImutavel, lerTarGz, listagemDoCommit, listarArquivos, problemasDoPacote, Recusa,
-  registrarLinhaDeBase, restaurar, sha, type EntradaIndice,
+  problemaDeSegmentoWindows, problemasDeCaminhoWindows, registrarLinhaDeBase, restaurar, segmentoSeguro, sha, type EntradaIndice,
 } from "./arquivo-resultados";
 import { arquivarExecucao, confirmarEvidencias } from "./arquivar-execucao";
+import { aplicarReparo, planejarReparo } from "./ci/reparar-caminho-invalido";
 import { loadSite, verifyServedSite } from "./measurement-surface";
 import { ROOT } from "./adjudication";
 import { BASELINE_VERSION, type FlowBaselines } from "./run-baselines-flow";
@@ -526,6 +527,103 @@ await teste("arquivo: execução interrompida sem pacote fica visível no índic
   assert.match(readFileSync(join(arquivo, "INDICE.md"), "utf8"), /sem-pacote/);
 });
 
+await teste("arquivo: recusa no preflight (sem manifesto) — braço e par vêm da agenda, caminho válido no Windows, motivo diz que não é tentativa", () => {
+  // 2026-10-04: braco "da-agenda" virou "?" no caminho e o git pull do clone no Windows falhou
+  const r = arquivarExecucao({ arquivo, evidenciasSaida: join(TMP, "anexos-recusa"), pacote: null, manifesto: null, linhaDeBase: null, segredos: [],
+    entradas: { ...ENT, campanha: "ensaio-agenda-01", slot: "p01-com", braco: "da-agenda", par: "", etapas: "so-coleta" },
+    jobs: { preparar: { result: "failure", outputs: {} }, coleta: { result: "skipped" }, "linhas-de-base": { result: "skipped" } } });
+  const g = r.gravacoes.find((x) => x.estado === "sem-pacote")!;
+  const e = JSON.parse(readFileSync(join(arquivo, "indice", "entradas", `${g.chave}.json`), "utf8")) as EntradaIndice;
+  assert.equal(e.slot, "p01-com");
+  assert.equal(e.braco, "com", "o braço do slot na agenda commitada");
+  assert.equal(e.par, "p01");
+  assert.ok(!e.caminho.includes("?"), e.caminho);
+  assert.match(e.caminho, /__com__sem-pacote-gh-/);
+  assert.deepEqual(problemasDeCaminhoWindows(e.caminho), []);
+  assert.equal(e.manifestoColeta, null);
+  assert.match(e.motivo!, /recusado no preflight.*não é tentativa/);
+});
+
+await teste("arquivo: braço desconhecido vira 'sem-braco' (nunca '?'); o que o preparar resolveu vale quando não há agenda", () => {
+  const prev = process.env.GITHUB_RUN_ID, prevRepo = process.env.GITHUB_REPOSITORY;
+  try {
+    process.env.GITHUB_REPOSITORY = "x/y";
+    process.env.GITHUB_RUN_ID = "900001";
+    const r1 = arquivarExecucao({ arquivo, evidenciasSaida: join(TMP, "anexos-sb"), pacote: null, manifesto: null, linhaDeBase: null, segredos: [],
+      entradas: { ...ENT, campanha: "sem-agenda-xyz", slot: "s-01", braco: "da-agenda", etapas: "so-coleta" }, jobs: { preparar: { result: "failure" } } });
+    const c1 = r1.gravacoes.find((x) => x.estado === "sem-pacote")!.caminho;
+    assert.match(c1, /__sem-braco__sem-pacote-gh-900001$/);
+    assert.deepEqual(problemasDeCaminhoWindows(c1), []);
+    process.env.GITHUB_RUN_ID = "900002";
+    const r2 = arquivarExecucao({ arquivo, evidenciasSaida: join(TMP, "anexos-sb2"), pacote: null, manifesto: null, linhaDeBase: null, segredos: [],
+      entradas: { ...ENT, campanha: "sem-agenda-xyz", slot: "s-02", braco: "da-agenda", etapas: "so-coleta" }, jobs: { preparar: { result: "failure", outputs: { braco: "sem", par: "p07" } } } });
+    const e2 = JSON.parse(readFileSync(join(arquivo, "indice", "entradas", "sem-pacote-gh-900002.json"), "utf8")) as EntradaIndice;
+    assert.equal(e2.braco, "sem");
+    assert.equal(e2.par, "p07");
+    assert.match(r2.gravacoes[0].caminho, /__sem__sem-pacote-gh-900002$/);
+  } finally {
+    if (prev === undefined) delete process.env.GITHUB_RUN_ID; else process.env.GITHUB_RUN_ID = prev;
+    if (prevRepo === undefined) delete process.env.GITHUB_REPOSITORY; else process.env.GITHUB_REPOSITORY = prevRepo;
+  }
+});
+
+await teste("arquivo: guarda do Windows — nenhum caminho com <>:\"|?*, controle, ponto/espaço no fim ou nome reservado é gravado", () => {
+  for (const ruim of ["a?b", "a<b", "a>b", "a:b", 'a"b', "a|b", "a*b", "ab", "fim.", "fim ", "CON", "nul.txt", "com1"]) {
+    assert.ok(problemaDeSegmentoWindows(ruim), ruim);
+    assert.throws(() => gravarImutavel(join(arquivo, "ensaios", "guarda", ruim, "x.json"), "{}"), Recusa, ruim);
+    assert.equal(problemaDeSegmentoWindows(segmentoSeguro(ruim)), null, `${ruim} → ${segmentoSeguro(ruim)}`);
+  }
+  assert.ok(!existsSync(join(arquivo, "ensaios", "guarda")), "nada gravado");
+  assert.equal(segmentoSeguro("2026-10-04__solicitacao__?__sem-pacote-gh-1"), "2026-10-04__solicitacao__x__sem-pacote-gh-1");
+  assert.equal(segmentoSeguro("..."), "x");
+  assert.deepEqual(problemasDeCaminhoWindows("ensaios/c/2026-10-04T10-00-00Z__solicitacao__opus__com__rep-01__r1/pacote/run.json"), []);
+  const e = JSON.parse(readFileSync(join(arquivo, "indice", "entradas", "sem-pacote-gh-900001.json"), "utf8")) as EntradaIndice;
+  assert.throws(() => gravarEntrada(arquivo, { ...e, chave: "guarda-caminho", caminho: "ensaios/c/a?b" }), /inválido no Windows/);
+});
+
+await teste("reparo: caminho com '?' no git (só no índice, como no Linux) é movido pelo mesmo blob; entrada, indice.json e INDICE.md corrigidos; commit", () => {
+  const repo = join(TMP, "reparo-arquivo");
+  mkdirSync(repo, { recursive: true });
+  const g = (...a: string[]): string => execFileSync("git", ["-C", repo, ...a], { encoding: "utf8" }).trim();
+  g("init", "-q", "-b", "main");
+  g("config", "user.name", "teste"); g("config", "user.email", "teste@exemplo");
+  g("config", "core.protectNTFS", "false"); // o Git do Windows recusa o caminho por padrão; no Linux ele entra
+  const ruim = "ensaios/ensaio-agenda-01/2026-10-04__solicitacao__?__sem-pacote-gh-37175915079";
+  const blob = execFileSync("git", ["-C", repo, "hash-object", "-w", "--stdin"], { input: '{"estado":"interrompida-sem-pacote"}\n', encoding: "utf8" }).trim();
+  g("update-index", "--add", "--cacheinfo", `100644,${blob},${ruim}/despacho.json`);
+  const ent = { indice: "arquivo-resultados-1.0.0", chave: "sem-pacote-gh-37175915079", tipo: "execucao", natureza: "ensaio", campanha: "ensaio-agenda-01", slot: "p01-com", par: null,
+    tela: "solicitacao", braco: null, modelo: null, esforco: null, modo: "roteirizado", dataUtc: "2026-10-04T05:00:00Z", caminho: ruim,
+    estado: { arquivo: "sem-pacote", tecnico: "interrupted", isolamento: null, oraculo: null, submissao: null, pontuacao: null, linhaDeBase: null },
+    motivo: "execução sem pacote", pacote: null, evidencias: null, github: null, manifestoColeta: null };
+  mkdirSync(join(repo, "indice", "entradas"), { recursive: true });
+  writeFileSync(join(repo, "indice", "entradas", `${ent.chave}.json`), JSON.stringify(ent, null, 2) + "\n");
+  writeFileSync(join(repo, "indice", "indice.json"), JSON.stringify({ indice: "arquivo-resultados-1.0.0", entradas: [ent] }, null, 2) + "\n");
+  writeFileSync(join(repo, "INDICE.md"), `| 2026-10-04 | ensaio | ensaio-agenda-01 | solicitacao | — | — | sem-pacote | ${ruim} |\n`);
+  // a agenda arquivada diz o braço do slot (p01-com → com)
+  const agenda = readFileSync(join(ROOT, "campanhas", "ensaio-agenda-01", "agenda.json"));
+  mkdirSync(join(repo, "campanhas", "ensaio-agenda-01", "agendas", sha(agenda)), { recursive: true });
+  writeFileSync(join(repo, "campanhas", "ensaio-agenda-01", "agendas", sha(agenda), "agenda.json"), agenda);
+  g("add", "indice", "INDICE.md", "campanhas");
+  g("commit", "-q", "-m", "estado com caminho inválido");
+  const plano = planejarReparo(repo);
+  const bom = "ensaios/ensaio-agenda-01/2026-10-04__solicitacao__com__sem-pacote-gh-37175915079";
+  assert.deepEqual(plano.pastas, [{ de: ruim, para: bom }]);
+  aplicarReparo(repo, plano);
+  const arquivos = g("ls-files").split("\n");
+  assert.deepEqual(arquivos.filter((f) => problemasDeCaminhoWindows(f).length), []);
+  assert.ok(arquivos.includes(`${bom}/despacho.json`));
+  assert.equal(g("rev-parse", `HEAD:${bom}/despacho.json`), blob, "mesmo blob, só o nome muda");
+  const e = JSON.parse(g("show", `HEAD:indice/entradas/${ent.chave}.json`)) as EntradaIndice;
+  assert.equal(e.caminho, bom);
+  assert.equal(e.braco, "com");
+  assert.equal(e.par, "p01");
+  assert.ok(!g("show", "HEAD:INDICE.md").includes("?"));
+  assert.equal((JSON.parse(g("show", "HEAD:indice/indice.json")) as { entradas: EntradaIndice[] }).entradas[0].caminho, bom);
+  assert.match(g("log", "-1", "--format=%s"), /^reparo: caminhos inválidos/);
+  assert.equal(g("status", "--porcelain"), "", "nada pendente depois do commit");
+  assert.equal(planejarReparo(repo).movimentos.length, 0, "idempotente: nada mais a reparar");
+});
+
 await teste("restauração: só com o arquivo + anexo, todos os hashes conferem; anexo ou cópia adulterados são pegos", () => {
   const ok = restaurar(arquivo, chaveRun, anexoPath, join(TMP, "restaurado"));
   assert.ok(ok.ok, ok.problemas.join("; "));
@@ -613,6 +711,12 @@ await teste("resumo do arquivar: próximo passo pelo par no índice (falta braç
   assert.match(situacaoDoPar(arq, "c1", "par-01", "sem"), /o braço com do par-01 falhou na última tentativa/);
   entrada("r-com-2", "com", "passed");
   assert.equal(situacaoDoPar(arq, "c1", "par-01", "sem"), "par-01 completo → atualize o clone (git pull) e clique em Preparar análise no painel");
+  // NAT-65: um disparo do slot recusado no preflight depois (sem pacote, sem manifesto) não é tentativa: o par segue completo
+  writeFileSync(join(arq, "indice", "entradas", "sem-pacote-gh-1.json"), JSON.stringify({ chave: "sem-pacote-gh-1", tipo: "execucao", natureza: "formal", campanha: "c1",
+    slot: "p01-com", par: "par-01", tela: "solicitacao", braco: "com", dataUtc: "2026-10-03T12:00:00Z", caminho: "execucoes/c1/x", estado: { arquivo: "sem-pacote", tecnico: "interrupted" },
+    evidencias: null, manifestoColeta: null }));
+  assert.equal(situacaoDoPar(arq, "c1", "par-01", "sem"), "par-01 completo → atualize o clone (git pull) e clique em Preparar análise no painel");
+  rmSync(join(arq, "indice", "entradas", "sem-pacote-gh-1.json"));
   // o cartão do arquivar usa o par do run.json; anexo pendente manda repetir o job antes de tudo
   mkdirSync(join(arq, "indice", "entradas"), { recursive: true });
   for (const e of ["r-sem", "r-com", "r-com-2"]) {

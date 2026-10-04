@@ -17,7 +17,7 @@ import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { EFFORT_LEVELS, CREDENTIAL_ENV } from "../runner/cliente-claude";
 import type { Campaign, Run } from "../contracts/index";
-import { caminhoAgenda, type Agenda } from "./agenda-campanha";
+import { caminhoAgenda, recusadoNoPreflight, type Agenda } from "./agenda-campanha";
 import type { EntradaIndice } from "./arquivo-resultados";
 import { MODELO_ENSAIO } from "./manifesto-coleta-isolada";
 
@@ -272,7 +272,8 @@ export function situacaoDoPar(arquivo: string, campanha: string, par: string, br
   for (const f of readdirSync(dir).filter((n) => n.endsWith(".json")).sort()) {
     try {
       const e = JSON.parse(readFileSync(join(dir, f), "utf8")) as EntradaIndice;
-      if (e.tipo === "execucao" && e.campanha === campanha && e.par === par) es.push(e);
+      // recusa no preflight não é tentativa: não faz o braço parecer "falhou" (NAT-65)
+      if (e.tipo === "execucao" && e.campanha === campanha && e.par === par && !recusadoNoPreflight(e)) es.push(e);
     } catch { /* entrada ilegível: o painel avisa */ }
   }
   let desenho: string[] | null = null;

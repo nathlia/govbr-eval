@@ -26,10 +26,10 @@ import { basename, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ROOT } from "./adjudication";
 import { documentoDaCampanha, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
-import { documentoDaAgenda } from "./agenda-campanha";
+import { caminhoAgenda, documentoDaAgenda, lerAgenda } from "./agenda-campanha";
 import {
   ARCHIVE_VERSION, Recusa, arquivarSite, caminhoAgendaArquivada, caminhoCampanha, entradaExistente, caminhoLinhaDeBase, caminhoManifesto, caminhoPlano, caminhoReferencia, conjuntoDeSnapshots, criarTarGz,
-  garantirGitattributes, gravarEntrada, gravarImutavel, listagemDoCommit, listarArquivos, pastaDaExecucao, problemasDaLinhaDeBase, problemasDeVinculo, problemasDoPacote,
+  garantirGitattributes, gravarEntrada, gravarImutavel, listagemDoCommit, listarArquivos, pastaDaExecucao, segmentoSeguro, problemasDaLinhaDeBase, problemasDeVinculo, problemasDoPacote,
   reconstruirIndice, registrarLinhaDeBase, segredosNoPacote, sha, type EntradaIndice,
 } from "./arquivo-resultados";
 import { canonical } from "./semantic-flow";
@@ -99,14 +99,40 @@ function arquivarManifestoESnapshots(arquivo: string, manifestoPath: string, m: 
   return { caminho, conjunto };
 }
 
-function entradaBase(m: IsolatedCollectionManifest | null, ent: Record<string, string>): Pick<EntradaIndice, "campanha" | "slot" | "par" | "tela" | "braco" | "modelo" | "esforco" | "modo" | "natureza"> {
+type Jobs = Record<string, { result?: string; outputs?: Record<string, string> } | undefined>;
+
+/**
+ * Par e braço do slot quando não há manifesto (disparo recusado no preflight): da agenda commitada
+ * neste checkout (o mesmo commit do disparo), senão do que o job preparar já resolveu, senão do
+ * digitado (sem/com). Nunca um marcador: desconhecido fica null.
+ */
+export function slotSemManifesto(campanha: string, slot: string, ent: Record<string, string>, jobs: Jobs, raiz = ROOT): { par: string | null; braco: "sem" | "com" | null } {
+  const arm = (v: unknown): "sem" | "com" | null => (v === "sem" || v === "com" ? v : null);
+  const par = (v: unknown): string | null => (typeof v === "string" && ID.test(v) ? v : null);
+  if (ID.test(campanha) && ID.test(slot)) {
+    try {
+      const path = join(raiz, caminhoAgenda(campanha));
+      if (existsSync(path)) {
+        const s = lerAgenda(path).slots.find((x) => x.slotId === slot);
+        if (s && arm(s.arm)) return { par: par(s.pairId), braco: arm(s.arm) };
+      }
+    } catch { /* agenda ilegível: segue para o que o preparar resolveu */ }
+  }
+  const out = jobs.preparar?.outputs ?? {};
+  return { par: par(out.par) ?? par(ent.par), braco: arm(out.braco) ?? arm(ent.braco) };
+}
+
+function entradaBase(m: IsolatedCollectionManifest | null, ent: Record<string, string>, jobs: Jobs = {}): Pick<EntradaIndice, "campanha" | "slot" | "par" | "tela" | "braco" | "modelo" | "esforco" | "modo" | "natureza"> {
   const modo = m?.dispatch.mode ?? ent.modo ?? null;
   const id = (v: string | undefined, f: string): string => (v && ID.test(v) ? v : f);
+  const campanha = m?.dispatch.campaignId ?? id(ent.campanha, "campanha-invalida"), slot = m?.dispatch.slotId ?? id(ent.slot, "slot-invalido");
+  // NAT-65: sem manifesto, par e braço vêm da agenda (o digitado pode ser "da-agenda" ou vazio)
+  const sm = m ? null : slotSemManifesto(campanha, slot, ent, jobs);
   return {
-    campanha: m?.dispatch.campaignId ?? id(ent.campanha, "campanha-invalida"), slot: m?.dispatch.slotId ?? id(ent.slot, "slot-invalido"),
-    // par vazio (campanha com agenda, recusada antes do manifesto): sem par, nunca um "par-invalido" no painel
-    par: m?.dispatch.pairId ?? (ent.par ? id(ent.par, "par-invalido") : null), tela: m?.dispatch.screenId ?? id(ent.tela, "tela-invalida"),
-    braco: (m?.dispatch.arm ?? (ent.braco === "sem" || ent.braco === "com" ? ent.braco : null)) as "sem" | "com" | null,
+    campanha, slot,
+    // par desconhecido (campanha com agenda, recusada antes do manifesto): sem par, nunca um "par-invalido" no painel
+    par: m?.dispatch.pairId ?? sm!.par, tela: m?.dispatch.screenId ?? id(ent.tela, "tela-invalida"),
+    braco: (m?.dispatch.arm ?? sm!.braco) as "sem" | "com" | null,
     modelo: m?.dispatch.model ?? (ent.modelo || null), esforco: m?.dispatch.effort ?? (ent.esforco || null), modo,
     natureza: modo === "real" ? "formal" : "ensaio",
   };
@@ -114,7 +140,7 @@ function entradaBase(m: IsolatedCollectionManifest | null, ent: Record<string, s
 
 export function arquivarExecucao(o: {
   arquivo: string; evidenciasSaida: string; pacote: string | null; manifesto: string | null; linhaDeBase: string | null;
-  segredos: string[]; entradas: Record<string, string>; jobs: Record<string, { result?: string }>;
+  segredos: string[]; entradas: Record<string, string>; jobs: Jobs;
   /** Checkout do govbr-telas no SHA do disparo (site-manifest.json + site/), para arquivar o site (T8a.1). */
   telas?: string | null;
 }): { gravacoes: Gravacao[]; problemas: string[] } {
@@ -130,7 +156,7 @@ export function arquivarExecucao(o: {
     mcaminho = r.caminho; conjunto = r.conjunto;
     problemas.push(...arquivarEntradasDaAnalise(o.arquivo, m, o.telas ?? null));
   } else problemas.push("manifesto de coleta ausente: o job preparar não concluiu");
-  const base = entradaBase(m, o.entradas);
+  const base = entradaBase(m, o.entradas, o.jobs);
   const raiz = base.natureza === "formal" ? "execucoes" : "ensaios";
   const releaseTag = `${base.natureza === "formal" ? "campanha" : "ensaios"}-${base.campanha}`;
   const jobsResumo = Object.fromEntries(Object.entries(o.jobs).map(([k, v]) => [k, v?.result ?? "desconhecido"]));
@@ -176,8 +202,11 @@ export function arquivarExecucao(o: {
       return { gravacoes, problemas };
     }
     const quando = new Date().toISOString().replace(/\.\d+Z$/, "Z");
-    const caminho = `${raiz}/${base.campanha}/${quando.slice(0, 10)}__${base.tela}__${base.braco ?? "?"}__${chave}`;
-    const motivo = `execução sem pacote: jobs ${JSON.stringify(jobsResumo)}`;
+    // cada segmento válido no Windows (o clone da autora): braço desconhecido é "sem-braco", nunca "?"
+    const caminho = [raiz, base.campanha, `${quando.slice(0, 10)}__${base.tela}__${base.braco ?? "sem-braco"}__${chave}`].map((x) => segmentoSeguro(x)).join("/");
+    // sem manifesto = recusado no preflight: nenhum modelo chamado, não é tentativa (agenda-campanha.ts, protocolo §7)
+    const motivo = m ? `execução sem pacote: jobs ${JSON.stringify(jobsResumo)}`
+      : `disparo recusado no preflight (sem manifesto de coleta; nenhum modelo chamado, não é tentativa do slot): jobs ${JSON.stringify(jobsResumo)}`;
     gravarImutavel(join(o.arquivo, caminho, "despacho.json"), json({ arquivo: ARCHIVE_VERSION, estado: "interrompida-sem-pacote", motivo, github: gh, entradas: o.entradas, jobs: jobsResumo, manifestoColeta: msha }));
     const e: EntradaIndice = {
       indice: ARCHIVE_VERSION, chave, tipo: "execucao", ...base, dataUtc: quando, caminho,
@@ -296,7 +325,7 @@ function main(): number {
       linhaDeBase: val("--linha-de-base") ? resolve(val("--linha-de-base")!) : null,
       telas: val("--telas") ? resolve(val("--telas")!) : null,
       segredos: (val("--segredos") ?? "").split(",").filter(Boolean),
-      entradas: JSON.parse(process.env.ENTRADAS ?? "{}") as Record<string, string>, jobs: JSON.parse(process.env.JOBS ?? "{}") as Record<string, { result?: string }>,
+      entradas: JSON.parse(process.env.ENTRADAS ?? "{}") as Record<string, string>, jobs: JSON.parse(process.env.JOBS ?? "{}") as Jobs,
     });
     const out = val("--saida-json");
     if (out) writeFileSync(resolve(out), json(r));
