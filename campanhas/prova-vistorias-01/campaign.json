@@ -1,0 +1,108 @@
+{
+  "contract": "campaign.v1",
+  "fixture": false,
+  "campaignId": "prova-vistorias-01",
+  "kind": "pilot",
+  "title": "Prova de tempo e custo da tela B (Vistorias) — braço com, Opus high, 1 execução fora do resultado",
+  "objective": "Antes de congelar o protocolo da campanha da tela B (D-100, NAT-66 2A): medir uma vez, com o cliente real e Opus high, a duração e o custo de uma execução na Vistorias (SPA maior, 102 unidades), para fixar o tempo limite e a agenda. O dublê (ensaio-vistorias-01, 2026-10-05) já provou cliente, oráculo, coletor e isolamento nesta tela. Esta execução não entra na coleta nem na análise.",
+  "hypotheses": [
+    "Prova técnica: nenhuma hipótese sobre desempenho. Passa se técnico e isolamento passam; mede duração e custo estimado."
+  ],
+  "createdAt": "2026-10-05T14:00:00Z",
+  "frozenAt": "2026-10-05T14:00:00Z",
+  "design": {
+    "screens": [
+      {
+        "id": "vistorias",
+        "label": "Vistorias PROPESC (PNIP)",
+        "version": "govbr-telas-site-1a6e8daf3cdb"
+      }
+    ],
+    "arms": [
+      "com"
+    ],
+    "models": [
+      {
+        "family": "Opus",
+        "requested": "claude-opus-5-5"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 1,
+    "order": "sequencial",
+    "seed": null
+  },
+  "fixed": {
+    "protocolSha256": "61d94cc16de2a53c3dd9b2633194d7faebba19f18a7c232904c0b6d5765faac4",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "anthropic",
+      "authMethod": "oauth-subscription"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracle": {
+      "package": "govbr-ds-validator-server",
+      "version": "2.7.0",
+      "distSha256": "31749c29b0dd2c0378b5955c1ba4c3804c66edd38cf90958c0de8196f11652f2",
+      "dataSha256": "ade4f658553e2a6cc13b3f6118bfaf95e5dd9b05d18d22d8c113e456420c5162",
+      "profile": "combined"
+    },
+    "scorerVersion": "flow-semantic-1.5.0"
+  },
+  "limits": {
+    "timeoutSeconds": 5400,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 2,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Vale a primeira tentativa sem falha técnica. Nada desta campanha entra na análise."
+  },
+  "failurePolicy": "Nova tentativa só por falha técnica (D-67). Tempo esgotado no teto de 15 min não é falha da prova se o provedor respondeu: o caminho de envio ao coletor já foi provado pelo dublê. Falha de isolamento ou host fora da lista para tudo antes do piloto.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Técnico: autenticação OAuth aceita, mensagens trocadas com o provedor real (tokens > 0), isolamento passed, hosts abertos pelo proxy do provedor dentro da allowlist.",
+    "secondaryOutcomes": [
+      "Uso do oráculo e envio ao coletor, se couberem nos 15 min."
+    ],
+    "uncertaintyMethod": null,
+    "exclusionRules": "A campanha inteira fica fora de qualquer análise e de qualquer número da tese."
+  },
+  "budget": {
+    "approved": true,
+    "amount": 10,
+    "currency": "USD",
+    "approvedBy": "Nath (NAT-66, opção 2A: o tempo limite da tela B sai de 1 execução real de prova) — estimativa do cliente, não fatura",
+    "approvedAt": "2026-10-05T14:00:00Z"
+  },
+  "pendingDecisions": []
+}
