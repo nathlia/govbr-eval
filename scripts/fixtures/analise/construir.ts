@@ -16,10 +16,10 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import type { AgentFinding, ArtifactManifest, Baseline, Campaign, Findings, Isolation, Run, SnapshotManifest } from "../../../contracts/index";
 import type { FlowGroundTruth } from "../../../types";
-import { statePlanOf, statePlanSha256 } from "../../collection-manifest";
+import { cenasDoPlano, statePlanOf, statePlanSha256 } from "../../collection-manifest";
 import { BASELINE_VERSION, UNGUIDED_POLICY, type FlowBaselines } from "../../run-baselines-flow";
 import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION } from "../../instrument";
-import { SURFACE_VERSION } from "../../measurement-surface";
+import { SURFACE_VERSION, loadSite } from "../../measurement-surface";
 
 export const FIXTURE_DIR = dirname(fileURLToPath(import.meta.url));
 export const PAGINA = "fixture-analise.html";
@@ -61,7 +61,19 @@ export interface OpcoesFixture {
    * Mesmas âncoras; só os ids mudam. Padrão desligado — os bytes de `gerado/` não mudam.
    */
   camadaPagina?: boolean;
+  /**
+   * NAT-51: troca a página e a referência inventadas por um site congelado e uma referência que existem
+   * (ex.: govbr-telas + ground-truth-vistorias.json, que NAVEGA — D-60). Os dois são só LIDOS: o site é
+   * servido da pasta original (não é copiado) e a referência é copiada byte a byte. Execuções, achados,
+   * campanha e linha de base continuam sintéticos e `fixture: true`; a tela recebe id próprio de fixture.
+   */
+  telaReal?: TelaReal;
 }
+export interface TelaReal { site: string; referencia: string; achados: Record<"sem" | "com", AgentFinding[]>;
+  /** Por cena do plano (id da cena): achados sintéticos do axe na linha de base. */
+  axePorCena?: Record<string, { rule: string; target: string }[]> }
+interface Contexto { tela: { id: string; label: string; version: string }; appUrl: string }
+const CONTEXTO_PADRAO: Contexto = { tela: TELA, appUrl: `http://127.0.0.1:3100/${PAGINA}` };
 const IDS_CAMADA: Record<string, string> = { "FX-01": "A-01", "FX-02": "A-02", "FX-03": "P-01" };
 const idDaSpec = (o: OpcoesFixture, id: string): string => (o.camadaPagina ? IDS_CAMADA[id] ?? id : id);
 export interface IdentidadeFixture { par: string; sufixo: string; dia: string; slots: { sem: string; com: string } }
@@ -110,14 +122,14 @@ function metric(value: number | null, source: string) {
 }
 function notApplicable() { return { value: null, status: "not-applicable" as const }; }
 
-function campanha(o: OpcoesFixture): Campaign {
+function campanha(o: OpcoesFixture, cx: Contexto = CONTEXTO_PADRAO): Campaign {
   return {
     contract: "campaign.v1", fixture: true, campaignId: CAMPANHA_ID, kind: "pilot",
     title: "Campanha fixture da análise (FIXTURE SINTÉTICA — não é dado científico)",
     objective: "Exercitar a análise determinística (T6) sem nenhuma chamada de modelo.",
     hypotheses: ["Hipótese sintética de fixture."],
     createdAt: "2026-01-01T00:00:00Z", frozenAt: "2026-01-02T00:00:00Z",
-    design: { screens: [TELA], arms: ["sem", "com"], models: [{ family: "familia-fixture", requested: "modelo-fixture" }],
+    design: { screens: [cx.tela], arms: ["sem", "com"], models: [{ family: "familia-fixture", requested: "modelo-fixture" }],
       effort: "medium", repetitions: 1, order: "sequencial", seed: null },
     fixed: { protocolSha256: "c".repeat(64), client: { name: "cliente-fixture", version: "0.0.0" },
       provider: { name: "provedor-fixture", authMethod: "unknown" }, browser: { name: "chromium", version: "0.0.0-fixture" },
@@ -127,14 +139,15 @@ function campanha(o: OpcoesFixture): Campaign {
     failurePolicy: "Falha fica registrada no slot; nada é repetido automaticamente.",
     baselinePolicy: { required: true, comparable: ["linha-de-base/validator-nao-guiada", "linha-de-base/axe"],
       diagnosticOnly: ["linha-de-base/validator-guiada"],
-      plannedAbsences: o.ausenciaPlanejada ? [{ screenId: TELA.id, analysisPath: "individual",
+      plannedAbsences: o.ausenciaPlanejada ? [{ screenId: cx.tela.id, analysisPath: "individual",
         justification: "Ausência sintética declarada antes da coleta para exercitar o caminho individual.", declaredAt: "2026-01-01T12:00:00Z" }] : [] },
     analysisPlan: { primaryOutcome: "Desfecho sintético.", secondaryOutcomes: [], uncertaintyMethod: null, exclusionRules: "Nenhuma exclusão." },
     budget: { approved: false, amount: null, currency: null, approvedBy: null, approvedAt: null },
   };
 }
 
-function runDoc(arm: "sem" | "com", submissao: Submissao, siteManifestSha256: string, divergente: boolean, id: IdentidadeFixture): Run {
+function runDoc(arm: "sem" | "com", submissao: Submissao, siteManifestSha256: string, divergente: boolean, id: IdentidadeFixture,
+  cx: Contexto = CONTEXTO_PADRAO): Run {
   const com = arm === "com";
   const naoExecutada = submissao === "nao-executada";
   const slot = id.slots[arm];
@@ -143,7 +156,7 @@ function runDoc(arm: "sem" | "com", submissao: Submissao, siteManifestSha256: st
   const base: Run = {
     contract: "run.v1", fixture: true, campaignId: CAMPANHA_ID, slotId: slot, pairId: id.par,
     runId: `fixture-analise-run-${arm}-${id.sufixo}`, attempt: 1, idempotencyKey: `${CAMPANHA_ID}/${slot}/1`,
-    screen: TELA, arm, repetition: 1,
+    screen: cx.tela, arm, repetition: 1,
     model: { family: "familia-fixture", requested: "modelo-fixture", resolved: "unknown", resolvedSource: "unknown", resolvedEvidence: null },
     provider: { name: "provedor-fixture", authMethod: "unknown" }, effort: "medium",
     client: { name: "cliente-fixture", version: "0.0.0" },
@@ -219,9 +232,10 @@ function toolEvents(arm: "sem" | "com"): string {
 
 const MEDIA: Record<string, string> = { ".json": "application/json", ".ndjson": "application/x-ndjson", ".png": "image/png", ".txt": "text/plain" };
 
-function pacote(dir: string, arm: "sem" | "com", o: OpcoesBraco, siteSha: string, divergente: boolean, id: IdentidadeFixture): void {
+function pacote(dir: string, arm: "sem" | "com", o: OpcoesBraco, siteSha: string, divergente: boolean, id: IdentidadeFixture,
+  cx: Contexto = CONTEXTO_PADRAO): void {
   const submissao = o.submissao ?? "aceita";
-  const run = runDoc(arm, submissao, siteSha, divergente, id);
+  const run = runDoc(arm, submissao, siteSha, divergente, id, cx);
   const files: { path: string; role: ArtifactManifest["files"][number]["role"]; body: string | Buffer }[] = [];
   files.push({ path: "run.json", role: "run", body: json(run) });
   if (submissao === "aceita") {
@@ -230,7 +244,7 @@ function pacote(dir: string, arm: "sem" | "com", o: OpcoesBraco, siteSha: string
       receivedAt: `${id.dia}${arm === "com" ? "T00:10:30Z" : "T00:29:30Z"}`, receipt: `recibo-fixture-${arm}-${id.sufixo}`,
       findingContract: "achado-2",
       report: { timestamp: `${id.dia}${arm === "com" ? "T00:10:29Z" : "T00:29:29Z"}`, model: "modelo-fixture",
-        appUrl: `http://127.0.0.1:3100/${PAGINA}`, scope: ["tela fixture inteira"], notes: "FIXTURE SINTÉTICA — não é dado científico",
+        appUrl: cx.appUrl, scope: ["tela fixture inteira"], notes: "FIXTURE SINTÉTICA — não é dado científico",
         findings: o.findings ?? FINDINGS_PADRAO[arm] },
     };
     files.push({ path: "findings.json", role: "findings", body: json(findings) });
@@ -253,13 +267,15 @@ function pacote(dir: string, arm: "sem" | "com", o: OpcoesBraco, siteSha: string
   writeFileSync(join(dir, "artifact-manifest.json"), json(manifest));
 }
 
-function bruto(o: OpcoesFixture, identity: Baseline["identity"], coleta: { path: string; sha256: string }): FlowBaselines {
+function bruto(o: OpcoesFixture, identity: Baseline["identity"], coleta: { path: string; sha256: string },
+  cx: Contexto = CONTEXTO_PADRAO, gt?: FlowGroundTruth): FlowBaselines {
   const viewport = { width: 1280, height: 900 };
   const falha = o.linhaDeBase === "falha";
+  if (o.telaReal && gt && !falha) return brutoTelaReal(o.telaReal, identity, coleta, cx, gt);
   return {
     baselineVersion: BASELINE_VERSION, status: falha ? "failed" : "complete",
     error: falha ? "falha sintética da linha de base: validator não respondeu" : null,
-    scope: "bateria", timestamp: "2026-01-03T01:00:00Z", appUrl: `http://127.0.0.1:3100/${PAGINA}`,
+    scope: "bateria", timestamp: "2026-01-03T01:00:00Z", appUrl: cx.appUrl,
     state: { setup: [], waitFor: null },
     provenance: { collectionManifest: coleta, identity, corpus: { commit: null, dirty: null }, validatorVersion: null,
       tools: { axe: null, playwright: null } },
@@ -280,6 +296,34 @@ function bruto(o: OpcoesFixture, identity: Baseline["identity"], coleta: { path:
   };
 }
 
+/** Linha de base sintética de uma tela real: uma passada por cena do plano (por segmento, se navega — D-60). */
+function brutoTelaReal(t: TelaReal, identity: Baseline["identity"], coleta: { path: string; sha256: string }, cx: Contexto,
+  gt: FlowGroundTruth): FlowBaselines {
+  const cenas = cenasDoPlano(gt);
+  return {
+    baselineVersion: BASELINE_VERSION, status: "complete", error: null,
+    scope: "bateria", timestamp: "2026-01-03T01:00:00Z", appUrl: cx.appUrl,
+    state: { setup: gt._meta.setup ?? [], waitFor: gt._meta.waitFor ?? null },
+    provenance: { collectionManifest: coleta, identity, corpus: { commit: null, dirty: null }, validatorVersion: null,
+      tools: { axe: null, playwright: null } },
+    passes: cenas.map(c => {
+      const axe = (t.axePorCena?.[c.id] ?? []).map(f => ({ rule: f.rule, impact: "serious", description: "Achado sintético do axe (fixture).", target: f.target }));
+      return {
+        id: c.id, viewport: c.viewport, specs: c.specIds, startedAt: "2026-01-03T01:00:01Z", seconds: 1,
+        axe: { violations: axe.length, passes: 0, incomplete: [], seconds: 1, findings: axe },
+        validator: { guided: null, unguided: { mode: "nao-guiada", policy: UNGUIDED_POLICY,
+          request: { selectors: null, checks: ["tokens", "structure", "page"], viewport: c.viewport, actions: 0 },
+          stateFingerprint: "sha256:fixture", coverage: null, seconds: 0, findings: [] } },
+        ...(c.segmento ? { segmento: { ...c.segmento, entradaDireta: null } } : {}),
+        resolution: { bySelector: {}, labels: {} },
+      };
+    }),
+    coverageCheck: [], eslint: null, eslintAusente: "fixture de tela real sem fontes declaradas",
+    cost: { wallClockSeconds: cenas.length, apiUsd: 0, platform: "fixture", passes: cenas.map(c => ({ id: c.id, seconds: 1 })) },
+    legacy: null,
+  } as FlowBaselines;
+}
+
 /** Constrói a fixture em `out` (pasta nova). Devolve os caminhos que `analisar` recebe. */
 export function construirFixture(out: string, o: OpcoesFixture = {}) {
   if (existsSync(out)) throw new Error(`Pasta já existe: ${out}`);
@@ -290,22 +334,34 @@ export function construirFixture(out: string, o: OpcoesFixture = {}) {
     return { sha256: sha(body), bytes: Buffer.byteLength(body) };
   };
 
-  // Site congelado no formato de measurement-surface.ts (site-manifest.json + site/).
-  const original = readFileSync(join(FIXTURE_DIR, "pagina", PAGINA));
-  const html = o.idsGerados ? Buffer.from(original.toString("utf8").replace("</main>", COMBO_COM_ID_SORTEADO + "</main>"), "utf8") : original;
-  w(`site/site/${PAGINA}`, html);
-  const siteManifest = json({ version: SURFACE_VERSION, entry: `/${PAGINA}`, sourceDist: "fixture-sintetica",
-    corpusCommit: null, corpusDirty: null, files: { [`/${PAGINA}`]: sha(html) } });
-  const site = w("site/site-manifest.json", siteManifest);
+  // Site congelado no formato de measurement-surface.ts (site-manifest.json + site/). Tela real: lido
+  // da pasta original, sem cópia; o sha256 é o que `loadSite` confere.
+  let site: { sha256: string; bytes: number };
+  if (o.telaReal) {
+    const carregado = loadSite(o.telaReal.site);
+    site = { sha256: carregado.manifestSha256, bytes: readFileSync(join(o.telaReal.site, "site-manifest.json")).length };
+  } else {
+    const original = readFileSync(join(FIXTURE_DIR, "pagina", PAGINA));
+    const html = o.idsGerados ? Buffer.from(original.toString("utf8").replace("</main>", COMBO_COM_ID_SORTEADO + "</main>"), "utf8") : original;
+    w(`site/site/${PAGINA}`, html);
+    const siteManifest = json({ version: SURFACE_VERSION, entry: `/${PAGINA}`, sourceDist: "fixture-sintetica",
+      corpusCommit: null, corpusDirty: null, files: { [`/${PAGINA}`]: sha(html) } });
+    site = w("site/site-manifest.json", siteManifest);
+  }
 
-  const refOriginal = readFileSync(join(FIXTURE_DIR, "referencia-fixture.json"));
+  const refOriginal = readFileSync(o.telaReal ? o.telaReal.referencia : join(FIXTURE_DIR, "referencia-fixture.json"));
   const refBytes = o.camadaPagina ? Buffer.from(refOriginal.toString("utf8").replace(/"id": "(FX-0\d)"/g, (_m, id: string) => `"id": "${idDaSpec(o, id)}"`), "utf8") : refOriginal;
   const ref = w("referencia.json", refBytes);
-  const plan = statePlanOf(JSON.parse(refBytes.toString("utf8")) as FlowGroundTruth);
+  const gt = JSON.parse(refBytes.toString("utf8")) as FlowGroundTruth;
+  const plan = statePlanOf(gt);
+  const cx: Contexto = o.telaReal
+    ? { tela: { id: "tela-fixture-real", label: `fixture sobre ${gt._meta.page} (execuções sintéticas)`, version: String(gt._meta.version) },
+      appUrl: new URL(gt._meta.url, "http://127.0.0.1:3100").toString() }
+    : CONTEXTO_PADRAO;
   const planSha = statePlanSha256(plan)!;
   const planFile = w("plano-estados.json", json(plan));
 
-  const camp = w("campanha.json", json(campanha(o)));
+  const camp = w("campanha.json", json(campanha(o, cx)));
 
   const snapshots: SnapshotManifest = {
     contract: "snapshot-manifest.v1", fixture: true, snapshotSetId: "fixture-analise-snapshots-01", createdAt: "2026-01-02T12:00:00Z",
@@ -313,7 +369,7 @@ export function construirFixture(out: string, o: OpcoesFixture = {}) {
       { id: "site", kind: "site", description: "Site congelado sintético (sha256 = do site-manifest.json).", sha256: site.sha256,
         bytes: site.bytes, location: { kind: "package-path", path: "site/site-manifest.json" }, immutable: true, exposedToAgent: false },
       { id: "referencia", kind: "reference", description: "Referência sintética (nenhum conteúdo de gabarito real).", sha256: ref.sha256,
-        bytes: ref.bytes, location: { kind: "package-path", path: "referencia.json" }, immutable: true, exposedToAgent: false, version: TELA.version },
+        bytes: ref.bytes, location: { kind: "package-path", path: "referencia.json" }, immutable: true, exposedToAgent: false, version: cx.tela.version },
       { id: "plano-estados", kind: "state-plan", description: "Plano de estados/janelas da referência sintética (sha256 = statePlanSha256).",
         sha256: planSha, bytes: planFile.bytes, location: { kind: "package-path", path: "plano-estados.json" }, immutable: true, exposedToAgent: false },
       { id: "instrumento", kind: "instrument", description: "Código do instrumento no commit sintético.", sha256: "0".repeat(64), bytes: 1,
@@ -327,10 +383,10 @@ export function construirFixture(out: string, o: OpcoesFixture = {}) {
   const divergente = o.linhaDeBase === "identidade-divergente";
   const identity: Baseline["identity"] = { collection: FLOW_INSTRUMENT_VERSION, referenceSha256: divergente ? "0".repeat(64) : ref.sha256,
     siteManifestSha256: site.sha256, oracleDistSha256: ORACULO.distSha256, oracleDataSha256: ORACULO.dataSha256, statePlanSha256: planSha };
-  const raw = w("linha-de-base/bruta.json", json(bruto(o, identity, { path: "linha-de-base/manifesto-coleta.json", sha256: coleta.sha256 })));
+  const raw = w("linha-de-base/bruta.json", json(bruto(o, identity, { path: "linha-de-base/manifesto-coleta.json", sha256: coleta.sha256 }, cx, gt)));
   const falha = o.linhaDeBase === "falha";
   const registro: Baseline = {
-    contract: "baseline.v1", fixture: true, baselineId: "fixture-analise-linha-de-base-01", campaignId: CAMPANHA_ID, screen: TELA,
+    contract: "baseline.v1", fixture: true, baselineId: "fixture-analise-linha-de-base-01", campaignId: CAMPANHA_ID, screen: cx.tela,
     attempt: 1, rerunOf: null, rerunReason: null,
     producer: { script: "scripts/run-baselines-flow.ts", baselineVersion: BASELINE_VERSION },
     scope: "bateria", status: falha ? "failed" : "complete", error: falha ? "falha sintética da linha de base: validator não respondeu" : null,
@@ -349,12 +405,13 @@ export function construirFixture(out: string, o: OpcoesFixture = {}) {
   w("linha-de-base/registro.json", json(registro));
 
   const id: IdentidadeFixture = { ...IDENTIDADE_PADRAO, ...o.identidade, slots: { ...IDENTIDADE_PADRAO.slots, ...o.identidade?.slots } };
-  pacote(join(out, "pacotes", "sem"), "sem", o.sem ?? {}, site.sha256, Boolean(o.divergenciaForaDoDesenho), id);
-  pacote(join(out, "pacotes", "com"), "com", o.com ?? {}, site.sha256, Boolean(o.divergenciaForaDoDesenho), id);
+  const braco = (arm: "sem" | "com"): OpcoesBraco => ({ ...(o.telaReal ? { findings: o.telaReal.achados[arm] } : {}), ...o[arm] });
+  pacote(join(out, "pacotes", "sem"), "sem", braco("sem"), site.sha256, Boolean(o.divergenciaForaDoDesenho), id, cx);
+  pacote(join(out, "pacotes", "com"), "com", braco("com"), site.sha256, Boolean(o.divergenciaForaDoDesenho), id, cx);
 
   return {
     dir: out, campanha: join(out, "campanha.json"), campanhaSha256: camp.sha256, snapshots: join(out, "snapshots.json"),
-    referencia: join(out, "referencia.json"), site: join(out, "site"), linhaDeBase: join(out, "linha-de-base", "registro.json"),
+    referencia: join(out, "referencia.json"), site: o.telaReal ? o.telaReal.site : join(out, "site"), linhaDeBase: join(out, "linha-de-base", "registro.json"),
     sem: join(out, "pacotes", "sem"), com: join(out, "pacotes", "com"),
   };
 }

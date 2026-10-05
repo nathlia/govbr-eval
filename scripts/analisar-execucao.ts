@@ -10,10 +10,11 @@
  * Depois, um ADAPTADOR converte os pacotes novos na entrada que o scorer existente já entende
  * (findings.v1 → FlowAgentResults/achado-2; FlowBaselines → execuções de linha de base) e chama as
  * funções de scripts/semantic-flow.ts sem mudar nada nelas: prepareSemanticPackage, scopeReviews,
- * scoreSemanticPackage, reviewQueue, renderReview. A captura da página congelada é a mesma do ramo
- * sem navegação de `semantic-flow-cli.ts prepare` (aquele código não é exportado, e mudá-lo mudaria o
- * hash do scorer — então o ramo é espelhado aqui, linha a linha). Referência que navega (D-60) é
- * recusada com motivo explícito: o ramo segmentado não foi espelhado.
+ * scoreSemanticPackage, reviewQueue, renderReview. A captura da página congelada usa os dois ramos de
+ * `semantic-flow-cli.ts prepare` — sem navegação (uma cena por janela) e com navegação (D-60, uma cena
+ * por segmento) —, importados de scripts/preparo-cenas.ts (NAT-51: cópia texto a texto com guarda de
+ * deriva, porque mexer no CLI mudaria o hash do scorer e, por ele, os ids de cartão das campanhas
+ * congeladas).
  *
  * Saídas: analysis-binding.<braço>.json (contrato v1), summary.json, summary.md (PT-BR), pacote de
  * revisão em revisao/, score.json e cópias das entradas pequenas em entradas/. O pacote bruto nunca é
@@ -34,22 +35,21 @@ import {
 } from "../contracts/index";
 import type { FlowAgentResults, FlowGroundTruth, RunConfig } from "../types";
 import { ROOT } from "./adjudication";
-import { openPage, preparePage, resolveOnPage, resolveStatesOnPage, resolveWithExcept, type Resolution } from "./anchors";
-import { combinePredicate, measurePredicate, type PredicateResult } from "./acceptance-predicates";
 import { analysisIdentity, cenasDoPlano, compareIdentities, statePlanOf, statePlanSha256 } from "./collection-manifest";
 import type { EvidenceIndex } from "./flow-contract";
 import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION } from "./instrument";
 import { divergenciasDaCampanha, identidadeDoRun } from "./identidade-campanha";
 import { REGRA_IDS_GERADOS, mapearDecisoes, normalizarIdsGerados, presenteNoSite, type IdGerado, type MapaCartoes } from "./identidade-cartoes";
 import { createSiteServer, loadSite, type LoadedSite } from "./measurement-surface";
+import { baselineRuns, prepararCenas, type CenaPreparada } from "./preparo-cenas";
 import { READABLE_BASELINE_VERSIONS, type FlowBaselines } from "./run-baselines-flow";
 import { renderReview } from "./semantic-flow-render";
 import {
-  digest, historicalPending, normalizeReviews, prepareSemanticPackage, reviewEffort, reviewQueue, sceneIdOf, scopeReviews,
-  scoreSemanticPackage, armLeaks, type PrepareRun, type RawReviews, type ReviewEffort, type ReviewQueue, type SceneResolution,
+  digest, historicalPending, normalizeReviews, prepareSemanticPackage, reviewEffort, reviewQueue, scopeReviews,
+  scoreSemanticPackage, armLeaks, type PrepareRun, type RawReviews, type ReviewEffort, type ReviewQueue,
   type SemanticPackage, type SemanticReviews, type SemanticRunScore, type BaselineComparison,
 } from "./semantic-flow";
-import { buildFlowUnits, measureStatePresence, selectorsOfGroundTruth, selectorsOfRuns, statesOfGroundTruth, type FlowUnit } from "./units-flow";
+import { selectorsOfGroundTruth, selectorsOfRuns, statesOfGroundTruth } from "./units-flow";
 
 export const RESUMO_VERSAO = "resumo-analise-1.0.0";
 /**
@@ -244,66 +244,18 @@ export function adaptarExecucao(p: PacoteLido): PrepareRun {
   return { id: run.runId, data, evidence, kind: "agente" };
 }
 
-/**
- * Guarda contra deriva do espelho. As regiões de semantic-flow-cli.ts que este arquivo espelha
- * (`baselineRuns` e o ramo sem navegação de `prepare`) são delimitadas por âncoras e conferidas por
- * hash em `npm run test:analisar`. SE ESTE TESTE FALHAR, O semantic-flow-cli.ts MUDOU: ressincronize o
- * espelho (baselineRuns / prepararPacote abaixo) e atualize o hash.
- */
-export const ESPELHO_CLI = [
-  { nome: "baselineRuns", inicio: "function baselineRuns(", fim: "\n}\n",
-    sha256: "8799290fe381172a4466a5eb8ec5ee0fff932fab013b94efc5100f3e9b61c365" },
-  { nome: "prepare (ramo sem navegação)", inicio: "    for (const p of plan.paradas ? [] : planned) {", fim: "      await context.close();\n    }\n",
-    sha256: "e18a907b7aa3b852739e181d9644bf9c458c95e034e3c245263ae2c93ee39065" },
-] as const;
-
-/** Texto exato de uma região espelhada (fim de linha normalizado para LF). Âncora ausente = erro. */
-export function regiaoDoCli(src: string, r: { nome: string; inicio: string; fim: string }): string {
-  const texto = src.replace(/\r\n/g, "\n");
-  const i = texto.indexOf(r.inicio);
-  if (i < 0 || texto.indexOf(r.inicio, i + 1) >= 0) throw new Error(`âncora de início de "${r.nome}" ausente ou repetida em semantic-flow-cli.ts`);
-  const j = texto.indexOf(r.fim, i);
-  if (j < 0) throw new Error(`âncora de fim de "${r.nome}" ausente em semantic-flow-cli.ts`);
-  return texto.slice(i, j + r.fim.length);
-}
-
-/**
- * Espelho de `baselineRuns` em semantic-flow-cli.ts (não exportado; mudá-lo mudaria SCORER_FILES):
- * as varreduras comparáveis viram execuções do pacote, revisadas com a mesma contabilidade.
- */
-function baselineRuns(baseline: FlowBaselines, build: string, steps: string[]): PrepareRun[] {
-  const config = (tool: string) => ({ instrumentVersion: FLOW_INSTRUMENT_VERSION,
-    protocolVersion: `${baseline.baselineVersion}:${tool}`, siteManifestSha256: build });
-  const run = (id: string, tool: string, findings: unknown[], seconds: number): PrepareRun => ({
-    id, kind: "linha-de-base", tool,
-    data: { model: tool, timestamp: baseline.timestamp, appUrl: baseline.appUrl, findings: findings as FlowAgentResults["findings"],
-      config: config(tool) as FlowAgentResults["config"],
-      cost: { wallClockSeconds: seconds, totalCostUsd: 0 } as unknown as FlowAgentResults["cost"] },
-  });
-  const pass = (p: FlowBaselines["passes"][number]) => ({ scene: p.id, viewport: p.viewport,
-    steps: p.segmento ? [`setup do plano de estados até ${p.segmento.estado} (${p.segmento.afterStep} passo(s))`] : steps });
-  return [
-    run("linha-de-base/validator-nao-guiada", "govbr-ds-validator scan-page (não guiada)",
-      baseline.passes.flatMap(p => p.validator.unguided.findings.map(f => ({ selector: f.target, rule: f.rule,
-        observed: f.description, expected: f.expected, ...pass(p) }))),
-      baseline.passes.reduce((n, p) => n + p.validator.unguided.seconds, 0)),
-    run("linha-de-base/axe", "axe-core",
-      baseline.passes.flatMap(p => p.axe.findings.map(f => ({ selector: f.target, rule: `axe:${f.rule}`,
-        observed: f.description, expected: null, ...pass(p) }))),
-      baseline.passes.reduce((n, p) => n + p.axe.seconds, 0)),
-  ];
-}
 
 interface PacotePreparado {
   pkg: SemanticPackage; reviews: SemanticReviews; result: ReturnType<typeof scoreSemanticPackage>; fila: ReviewQueue;
-  esforco: ReviewEffort; scenes: (SceneResolution & { html: string; image: Buffer })[]; url: string; sceneHash: string;
+  esforco: ReviewEffort; scenes: CenaPreparada[]; url: string; sceneHash: string;
   idsGerados: IdGerado[][]; mapa: MapaCartoes | null;
 }
 
 /**
- * Captura da página congelada e montagem do pacote — espelho do ramo SEM navegação de
- * `semantic-flow-cli.ts prepare` (uma página nova por janela planejada, levada ao estado da
- * referência; seletores, unidades e capturas da cena vêm dessa mesma página).
+ * Captura da página congelada e montagem do pacote, com os ramos de `semantic-flow-cli.ts prepare`
+ * (preparo-cenas.ts): sem navegação, uma página nova por janela planejada, levada ao estado da
+ * referência; com navegação (D-60), uma página por janela varrendo as paradas, e uma cena por segmento
+ * capturada na última parada dele. Seletores, unidades e capturas de uma cena vêm da mesma página.
  */
 async function prepararPacote(a: {
   gt: FlowGroundTruth; site: LoadedSite; agentes: PrepareRun[]; baseline: FlowBaselines | null; provenance: unknown;
@@ -327,58 +279,17 @@ async function prepararPacote(a: {
     if (a.baseline) allRuns.push(...baselineRuns(a.baseline, a.site.manifestSha256, [`setup do plano de estados (${plan.setup.length} passo(s))`]));
     const baselineSelectors = a.baseline ? a.baseline.passes.flatMap(p => [...p.validator.unguided.findings, ...p.axe.findings].map(f => f.target)) : [];
     const selectors = [...selectorsOfGroundTruth(gt), ...selectorsOfRuns(a.agentes.map(r => r.data)), ...baselineSelectors];
-    const planned = cenas.map(c => ({ viewport: c.viewport, specIds: c.specIds }));
-    const scenes: (SceneResolution & { html: string; image: Buffer })[] = [];
-    const units: (FlowUnit & { scene: string })[] = [];
-    for (const p of planned) {
-      const context = await browser.newContext({ viewport: p.viewport });
-      const page = await context.newPage();
-      const id = sceneIdOf(p.viewport);
-      const checkpoints = statesOfGroundTruth(gt);
-      let resolution: Resolution;
-      let presence: ReturnType<typeof measureStatePresence>["presence"] | undefined;
-      const aceitacao = new Map<string, PredicateResult[]>();
-      if (checkpoints) {
-        await openPage(page, url, { waitFor: gt._meta.waitFor });
-        const across = await resolveStatesOnPage(page, url, selectors, {
-          setup: gt._meta.setup, states: checkpoints,
-          onState: async (state, res, pg) => {
-            for (const spec of gt.violations) {
-              if (!spec.acceptance || !p.specIds.includes(spec.id)) continue;
-              const keys = resolveWithExcept(res, spec.anchor, spec.except);
-              if (keys.length === 0) continue;
-              aceitacao.set(spec.id, [...(aceitacao.get(spec.id) ?? []), await measurePredicate(pg, spec.anchor, keys, spec.acceptance, state)]);
-            }
-          },
-        });
-        const medida = measureStatePresence(across);
-        if (medida.defects.length) throw new Error(JSON.stringify({ scene: id, defects: medida.defects }));
-        presence = medida.presence;
-        resolution = across.byState.get(across.order[across.order.length - 1])!;
-      } else {
-        await preparePage(page, url, { waitFor: gt._meta.waitFor, setup: gt._meta.setup });
-        resolution = { url, ...await resolveOnPage(page, selectors) };
-      }
-      const built = buildFlowUnits({ ...gt, violations: gt.violations.filter(v => p.specIds.includes(v.id)) }, resolution, presence);
-      if (built.defects.length) throw new Error(JSON.stringify({ scene: id, defects: built.defects }));
-      const desmentidas = built.units
-        .map(u => ({ u, r: combinePredicate(aceitacao.get(u.specId) ?? []) }))
-        .filter(({ r }) => r.outcome === "refuta" || r.outcome === "nao-replicavel");
-      if (desmentidas.length) {
-        throw new Error(JSON.stringify({ scene: id, defects: desmentidas.map(({ u, r }) => ({
-          specId: u.specId, problem: `predicado de aceitação ${r.outcome}: ${r.reason}` })) }));
-      }
-      for (const u of built.units) u.acceptance = combinePredicate(aceitacao.get(u.specId) ?? []);
-      units.push(...built.units.map(u => ({ ...u, scene: id })));
-      scenes.push({ id, viewport: p.viewport, specIds: p.specIds, resolution,
-        html: await page.content(), image: await page.screenshot({ fullPage: true }) });
-      await context.close();
-    }
+    const claimSelectors = [...selectorsOfRuns(a.agentes.map(r => r.data)), ...baselineSelectors];
+    // Os dois ramos (sem navegação; cenas por segmento, D-60) são os de semantic-flow-cli.ts prepare,
+    // importados de preparo-cenas.ts (cópia com guarda de deriva; ver o cabeçalho de lá — NAT-51).
+    const { scenes, units } = await prepararCenas({ browser, gt, url, cenas, selectors, claimSelectors });
     // Ids sorteados em tempo de execução (br-select do DS: list-4946 → list-3370) não entram no hash:
     // sem isso cada recálculo muda todos os ids de cartão (identidade-cartoes.ts).
     const noSite = presenteNoSite(a.site.files.values());
     const normalizadas = scenes.map(s => normalizarIdsGerados(s.html, noSite));
+    // Como no CLI: o segmento entra no hash só quando existe (sem navegação, o hash não muda).
     const sceneHash = digest({ setup: gt._meta.setup ?? [], scenes: scenes.map((s, i) => ({
+      ...(s.segmento ? { segmento: s.segmento } : {}),
       id: s.id, viewport: s.viewport, html: normalizadas[i].html, image: s.image.toString("base64") })) });
     const scorerHash = analysisIdentity().scorerSha256;
     const montar = (carriedOverPending: string[]): SemanticPackage => prepareSemanticPackage(
@@ -685,10 +596,6 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   const gt = JSON.parse(referenceBytes.toString("utf8")) as FlowGroundTruth;
   if (refItem.version && refItem.version !== gt._meta.version) recusar(`versão da referência ${String(gt._meta.version)} difere da do snapshot ${refItem.version}`);
   const plan = statePlanOf(gt);
-  if (plan.paradas) {
-    recusar("a referência navega (D-60, cenas por segmento); o adaptador T6 espelha só o ramo sem navegação de semantic-flow-cli.ts. " +
-      "Exportar o ramo segmentado muda SCORER_FILES e exige decisão registrada.");
-  }
   const planSha = statePlanSha256(plan)!;
   if (planSha !== planItem.sha256) recusar("o plano de estados da referência não é o do conjunto de snapshots");
   let site: LoadedSite;
@@ -871,7 +778,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
       kind: "reconstrução no momento da análise do site congelado do conjunto de snapshots; não é evidência original da execução",
       sceneHashIgnora: REGRA_IDS_GERADOS,
       scenes: prep.scenes.map((s, i) => ({ id: s.id, viewport: s.viewport, specIds: s.specIds, html: `scene-${i}.html`, image: `scene-${i}.png`,
-        idsGerados: prep!.idsGerados[i] })) }));
+        idsGerados: prep!.idsGerados[i], ...(s.segmento ? { segmento: s.segmento, entradaDireta: s.entrada ?? null } : {}) })) }));
     if (prep.mapa) put("revisao/mapa-cartoes.json", json(prep.mapa));
     prep.scenes.forEach((s, i) => {
       put(`revisao/resolution-${i}.json`, json({ scene: s.id, url: new URL(s.resolution.url).pathname,

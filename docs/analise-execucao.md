@@ -3,7 +3,8 @@
 `npm run analisar` pega **um** pacote de execução do benchmark isolado, ou **um** par sem/com, confere
 tudo o que chega, monta a fila de revisão com o scorer que já existe e escreve um resumo que dá para
 ler sem abrir JSON. Não chama modelo nenhum. O navegador roda headless: é a mesma reconstrução da
-página congelada que `semantic-flow-cli.ts prepare` faz.
+página congelada que `semantic-flow-cli.ts prepare` faz, nos dois ramos — sem navegação (uma cena por
+janela) e com navegação (D-60, uma cena por segmento; a tela B `vistorias`).
 
 Os contratos que ele lê estão em [`contratos-benchmark.md`](contratos-benchmark.md). A pontuação, os
 cartões e o vocabulário das decisões estão em [`semantic-scoring.md`](semantic-scoring.md). Este
@@ -51,8 +52,9 @@ de uso.
 2. **Campanha.** Mesmo `campaignId`. Tela, braço e modelo pedido estão no desenho. Fixture e dado real
    nunca se misturam.
 3. **Snapshots, referência e site.** Os três coincidem por hash entre si e com o `run.json`. A página
-   avaliada (`report.appUrl`) é a da referência. **Uma referência que navega (D-60) é recusada.**
-   Veja "Limites".
+   avaliada (`report.appUrl`, só o pathname) é a da referência. Uma referência que navega (D-60) é
+   aceita desde o NAT-51: o pacote tem uma cena por segmento (`1280x900@<última parada>`), e
+   `revisao/capture.json` diz, por cena, o segmento e a entrada direta usada (se houve).
 4. **Linha de base.** Aplica a política abaixo.
 5. **Par.** Os dois pacotes passam por `checkAggregation` (a chave de comparação de M0) e precisam ter o
    mesmo `pairId`. Qualquer diferença fora do desenho bloqueia a análise e o resumo diz qual campo
@@ -180,15 +182,27 @@ outras fontes, a captura pode mudar, e aí mudam os ids de cartão (é a mesma p
 
 ## Limites
 
-- **Referência que navega (D-60) é recusada por enquanto.** O ramo de cenas por segmento do
-  `semantic-flow-cli.ts` não é exportado, e hoje a tela B (`vistorias`) navega; a tela A
-  (`solicitacao`) não. A correção planejada, registrada pelo orquestrador, é exportar o ramo
-  segmentado do CLI sob uma decisão nova. Para conferir, os pacotes das baterias fechadas são
-  preparados de novo e têm de dar pontuações idênticas. Depois disso o espelho daqui é apagado.
-- **O espelho é vigiado.** `baselineRuns` e o ramo sem navegação de `prepare` existem em cópia neste
-  arquivo. `npm run test:analisar` delimita essas regiões no `semantic-flow-cli.ts` por âncoras e
-  confere o hash delas contra o valor fixado em `ESPELHO_CLI` (`analisar-execucao.ts`). Se o teste
-  falhar, o CLI mudou: ressincronize o espelho e atualize o hash.
+- **Os dois ramos vêm de `scripts/preparo-cenas.ts`, que é uma cópia do CLI (NAT-51).** O ramo sem
+  navegação, o ramo segmentado (`janelasSegmentadas`, `prepararJanelaSegmentada`) e `baselineRuns`
+  foram copiados texto a texto de `semantic-flow-cli.ts prepare` para um módulo que a análise importa.
+  O CLI **não** foi tocado, de propósito: ele está em `SCORER_FILES`, o hash do scorer entra no
+  contexto do pacote e, por ele, no id de todo cartão, e `mapearDecisoes` recusa transpor decisões
+  entre scorers diferentes. Mover o código para fora do CLI deixaria as campanhas congeladas
+  (`t7-tela-a-01`, rev-002 final) sem recálculo: todos os cartões voltariam pendentes. Com o CLI
+  intacto, o hash continua `7ceb07e3…d146` e a versão continua `flow-semantic-1.5.0`. O
+  `preparo-cenas.ts` não entra no hash, porque não decide o que um pacote significa: unidades,
+  cartões e pontuação continuam em arquivos do hash.
+- **A cópia é vigiada.** `npm run test:analisar` recorta as regiões de `REGIOES_DO_CLI` nos dois
+  arquivos, por âncoras e sem indentação, e exige texto igual. Se falhar, o CLI mudou: ressincronize o
+  `preparo-cenas.ts`. Na próxima mudança de versão do scorer, que muda o hash de qualquer jeito, o CLI
+  passa a importar o módulo e a guarda sai.
+- **Prova de que nada mudou para a tela A** (feita numa cópia do `govbr-resultados`). Recalculados
+  os 10 pares da `t7-tela-a-01`, o código antigo e o novo deram `package.json`, `reviews.json`,
+  `score.json`, bindings e `summary.json` iguais, a menos dos carimbos de hora. O `scene-0.html` e o
+  `capture.json` diferem só pelos ids sorteados do `br-select`, que o `sceneHash` já normaliza. O
+  `piloto-01` está congelado na 1.4.0 e é recusado pelos dois códigos (trava do D-84).
+- **Tela B no painel.** O painel ainda mostra a tela que navega como "fora do alcance"
+  (`scripts/painel/preparar.ts`). A análise já a aceita. Liberar o botão é um passo à parte.
 - **Na composta, só se liga o manifesto de análise** (hash e cópia). As regras de composição de
   `scripts/analysis-manifest.ts` falam de baterias antigas. Para pacotes novos, a compatibilidade é
   o `checkAggregation`.
@@ -204,6 +218,14 @@ monta site congelado, campanha, snapshots, linha de base (registro + bruto) e os
 `npm run fixture:analise -- PASTA_NOVA` reconstrói tudo. A cópia em `gerado/` é conferida contra uma
 reconstrução em `npm run test:analisar`. Todo documento grava `fixture: true` e nunca entra em
 campanha científica.
+
+Com a opção `telaReal` (NAT-51), o construtor troca a página e a referência inventadas por um site
+congelado e uma referência reais, que são só lidos. O site é servido da pasta original e a referência
+é copiada byte a byte. Execuções, achados, campanha e linha de base continuam sintéticos, sob uma tela
+de id próprio de fixture. O teste da referência que navega usa o `govbr-telas`, clonado ao lado do
+`govbr-eval`, com a `ground-truth-vistorias.json` 1.0.0 sem alteração. O teste confere uma cena por
+segmento, na ordem do plano (3 cenas e 102 unidades), o segmento em `capture.json` e uma linha de
+base por segmento. Sem o clone, o caso é pulado e aparece como PULADO na saída.
 
 ```bash
 F=scripts/fixtures/analise/gerado

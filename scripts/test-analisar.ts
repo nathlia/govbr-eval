@@ -11,7 +11,10 @@ import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, w
 import { tmpdir } from "node:os";
 import { join, relative } from "node:path";
 import { validateContract, type AnalysisBinding, type ArtifactManifest } from "../contracts/index";
-import { analisar, ESPELHO_CLI, regiaoDoCli, seguro, type OpcoesAnalise, type Resumo } from "./analisar-execucao";
+import { analisar, seguro, type OpcoesAnalise, type Resumo } from "./analisar-execucao";
+import { REGIOES_DO_CLI, regiaoDe } from "./preparo-cenas";
+import { cenasDoPlano } from "./collection-manifest";
+import type { FlowGroundTruth } from "../types";
 import { ROOT } from "./adjudication";
 import { construirFixture, FIXTURE_DIR, FINDINGS_PADRAO, type OpcoesFixture } from "./fixtures/analise/construir";
 import { analysisIdentity } from "./collection-manifest";
@@ -391,14 +394,59 @@ async function main(): Promise<void> {
       await assert.rejects(analisar({ ...opcoes(fx), saida: primeira }), /já existe/);
     });
 
-    await test("espelho do CLI: regiões de semantic-flow-cli.ts têm o hash fixado (senão, ressincronize o espelho)", () => {
-      const src = readFileSync(join(ROOT, "scripts", "semantic-flow-cli.ts"), "utf8");
-      for (const r of ESPELHO_CLI) {
-        assert.equal(sha(regiaoDoCli(src, r)), r.sha256,
-          `semantic-flow-cli.ts mudou em "${r.nome}": ressincronize o espelho em analisar-execucao.ts e atualize o hash`);
+    await test("preparo-cenas.ts tem as regiões de semantic-flow-cli.ts texto a texto (os dois ramos de prepare + baselineRuns)", () => {
+      const cli = readFileSync(join(ROOT, "scripts", "semantic-flow-cli.ts"), "utf8");
+      const mod = readFileSync(join(ROOT, "scripts", "preparo-cenas.ts"), "utf8");
+      for (const r of REGIOES_DO_CLI) {
+        assert.equal(regiaoDe(mod, r, "preparo-cenas.ts"), regiaoDe(cli, r, "semantic-flow-cli.ts"),
+          `"${r.nome}" difere entre semantic-flow-cli.ts e preparo-cenas.ts: ressincronize a cópia (NAT-51)`);
       }
-      assert.throws(() => regiaoDoCli("sem âncora", ESPELHO_CLI[0]), /âncora de início/);
+      assert.throws(() => regiaoDe("sem âncora", REGIOES_DO_CLI[0], "x"), /âncora de início/);
+      // analisar-execucao.ts não guarda mais nenhum espelho próprio
+      const analisarSrc = readFileSync(join(ROOT, "scripts", "analisar-execucao.ts"), "utf8");
+      assert.ok(!/function baselineRuns\(|for \(const p of planned\)/.test(analisarSrc));
     });
+
+    // ── referência que navega (D-60, NAT-51) ─────────────────────────────────
+    const telas = join(ROOT, "..", "govbr-telas");
+    if (!existsSync(join(telas, "site-manifest.json"))) {
+      console.log(`PULADO referência que navega: ${telas} ausente (clone o govbr-telas ao lado do govbr-eval)`);
+    } else {
+      await test("referência que navega (Vistorias 1.0.0 sobre o site do govbr-telas): uma cena por segmento, par analisado", async () => {
+        const referencia = join(ROOT, "ground-truth-vistorias.json");
+        const refAntes = sha(readFileSync(referencia));
+        const gtV = readJson<FlowGroundTruth>(referencia);
+        const cenasV = cenasDoPlano(gtV);
+        assert.ok(cenasV.length > 1 && cenasV.every(c => c.segmento), "a Vistorias navega: cenas por segmento");
+        const estado = (passos: string) => ({ viewport: { width: 1280, height: 900 }, steps: [passos] });
+        const cenaModal = cenasV.find(c => c.segmento!.estado === "modal")!.id;
+        const f = fixture({ telaReal: { site: telas, referencia,
+          achados: {
+            sem: [{ selector: "pnip-propesc-vistorias table input[type=checkbox]", rule: null, observed: "Caixa de seleção sem nome (sintético).",
+              expected: "Nome acessível (sintético).", state: estado("lista inicial"), evidence: [] }],
+            com: [{ selector: "pnip-propesc-vistorias table input[type=checkbox]", rule: null, observed: "Caixa de seleção sem nome (sintético).",
+              expected: "Nome acessível (sintético).", state: estado("lista inicial"), evidence: [] },
+            { selector: "pnip-propesc-trocar-embarcacao .br-modal", rule: null, observed: "O foco sai do diálogo aberto (sintético).",
+              expected: "Foco preso no diálogo (sintético).", state: estado("setup até o modal de troca de embarcação"), evidence: [] }],
+          },
+          axePorCena: { [cenaModal]: [{ rule: "aria-dialog-name", target: "pnip-propesc-trocar-embarcacao .br-modal" }] } } });
+        const r = await analisar(opcoes(f));
+        assert.equal(r.estado, "pronta", r.motivo ?? "");
+        assert.equal(sha(readFileSync(referencia)), refAntes, "a referência congelada não foi tocada");
+        const pkg = readJson<SemanticPackage>(join(r.saida, "revisao", "package.json"));
+        assert.deepEqual(pkg.scenes.map(s => s.id), cenasV.map(c => c.id), "uma cena por segmento, na ordem do plano");
+        assert.deepEqual(pkg.scenes.map(s => s.segmento?.estado), cenasV.map(c => c.segmento!.estado));
+        assert.equal(pkg.units.length, 102, "102 unidades da 1.0.0");
+        const capture = readJson<{ scenes: { id: string; segmento?: unknown; entradaDireta?: unknown }[] }>(join(r.saida, "revisao", "capture.json"));
+        assert.ok(capture.scenes.every(s => s.segmento && "entradaDireta" in s));
+        assert.equal(readdirSync(join(r.saida, "revisao")).filter(x => /^scene-\d+\.html$/.test(x)).length, cenasV.length);
+        assert.ok(pkg.runs.some(x => x.id === "linha-de-base/axe"), "linha de base por segmento entra no pacote");
+        const s = readJson<Resumo>(join(r.saida, "summary.json"));
+        assert.equal(s.revisaoSemantica!.cartoes, pkg.cards.length);
+        assert.equal(execDe(s, "sem").pontuacao.metricas.referenceUnits, 102);
+        console.log(`   Vistorias: ${pkg.scenes.length} cenas (${pkg.scenes.map(x => x.id).join(", ")}), ${pkg.units.length} unidades, ${pkg.cards.length} cartões`);
+      });
+    }
 
     // ── fixture versionada ───────────────────────────────────────────────────
     await test("a cópia versionada em scripts/fixtures/analise/gerado/ é idêntica a uma reconstrução", () => {
