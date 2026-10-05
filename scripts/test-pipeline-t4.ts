@@ -23,10 +23,12 @@ import { avaliar, interpolar, type Workflow } from "./ci/emular-workflow";
 import { cartaoSaude, conferirAmbienteDosConteineres, conferirCheckouts, conferirEntradas, conferirImagens, resumoArquivo, situacaoDoPar } from "./pipeline-t4";
 import { buildIsolatedManifest, documentoDaCampanha, isolatedManifestProblems, problemasDaCampanha, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import {
-  caminhoCampanha, caminhoSite, conjuntoDeSnapshots, criarTarGz, garantirGitattributes, gravarEntrada, gravarImutavel, lerTarGz, listagemDoCommit, listarArquivos, problemasDoPacote, Recusa,
+  caminhoCampanha, caminhoConjunto, caminhoConjuntoReparado, caminhoManifesto, caminhoReparoConjunto, caminhoSite, conjuntoDeSnapshots, idDoConjunto, resolverConjunto, criarTarGz, garantirGitattributes, gravarEntrada, gravarImutavel, lerTarGz, listagemDoCommit, listarArquivos, problemasDoPacote, Recusa,
   problemaDeSegmentoWindows, problemasDeCaminhoWindows, registrarLinhaDeBase, restaurar, segmentoSeguro, sha, type EntradaIndice,
 } from "./arquivo-resultados";
-import { arquivarExecucao, confirmarEvidencias } from "./arquivar-execucao";
+import { arquivarExecucao, arquivarManifestoESnapshots, confirmarEvidencias } from "./arquivar-execucao";
+import { aplicarReparoConjunto, planejarReparoConjunto } from "./ci/reparar-conjunto-fixture";
+import { canonical } from "./semantic-flow";
 import { aplicarReparo, planejarReparo } from "./ci/reparar-caminho-invalido";
 import { loadSite, verifyServedSite } from "./measurement-surface";
 import { ROOT } from "./adjudication";
@@ -314,6 +316,67 @@ await teste("snapshots: conjunto válido e o MESMO id nos dois braços (a análi
   const v = validateContract(a);
   assert.ok(v.valid, JSON.stringify(v.errors));
   assert.equal(a.snapshotSetId, b.snapshotSetId);
+});
+
+/** O mesmo disparo, como se fosse formal (fixture: false): mesmos itens, outra natureza. */
+const mshaT = sha(readFileSync(manifestoPath)); // msha ainda não existe aqui (definido mais abaixo, junto da linha de base)
+const comoReal = (m: IsolatedCollectionManifest): IsolatedCollectionManifest => {
+  const r = JSON.parse(JSON.stringify(m)) as IsolatedCollectionManifest;
+  r.fixture = false;
+  r.dispatch.mode = "real";
+  return r;
+};
+
+await teste("snapshots: ensaio e real com os MESMOS itens nunca dividem arquivo (id do ensaio inclui a natureza; o real não muda)", () => {
+  const ensaio = conjuntoDeSnapshots(manifestoSem, instrumento), real = conjuntoDeSnapshots(comoReal(manifestoSem), instrumento);
+  assert.equal(canonical(ensaio.items), canonical(real.items));
+  assert.notEqual(ensaio.snapshotSetId, real.snapshotSetId);
+  assert.equal(real.snapshotSetId, `snapshots-${sha(canonical(real.items)).slice(0, 16)}`, "o id real é o de sempre: os já arquivados continuam resolvendo");
+  assert.equal(ensaio.snapshotSetId, idDoConjunto(ensaio.items, true));
+  const arq = repoDeArquivo("arquivo-natureza");
+  const e = arquivarManifestoESnapshots(arq, manifestoPath, manifestoSem, mshaT).conjunto;
+  const r = arquivarManifestoESnapshots(arq, manifestoPath, comoReal(manifestoSem), mshaT).conjunto;
+  assert.equal(JSON.parse(readFileSync(join(arq, caminhoConjunto(e.snapshotSetId)), "utf8")).fixture, true);
+  assert.equal(JSON.parse(readFileSync(join(arq, caminhoConjunto(r.snapshotSetId)), "utf8")).fixture, false);
+});
+
+await teste("snapshots: colisão de 2026-10-04 (ensaio gravou o id antes, real com itens iguais depois) — recusada no arquivamento; reparo registrado resolve sem reescrever", () => {
+  const arq = repoDeArquivo("arquivo-colisao");
+  // o arquivamento antigo: id = hash só dos itens, gravado por um ensaio
+  const ensaio = conjuntoDeSnapshots(manifestoSem, instrumento);
+  const id = idDoConjunto(ensaio.items, false);
+  const legado = { ...ensaio, snapshotSetId: id };
+  gravarImutavel(join(arq, caminhoConjunto(id)), JSON.stringify(legado, null, 2) + "\n");
+  const original = sha(readFileSync(join(arq, caminhoConjunto(id))));
+  // o real chega ao MESMO id e não pode reaproveitar o arquivo do ensaio
+  const real = comoReal(manifestoSem);
+  assert.equal(conjuntoDeSnapshots(real, instrumento).snapshotSetId, id);
+  assert.throws(() => arquivarManifestoESnapshots(arq, manifestoPath, real, mshaT), (e: Error) => e instanceof Recusa && /ensaio \(fixture: true\).+real \(fixture: false\).+não há reparo registrado/.test(e.message));
+  assert.throws(() => resolverConjunto(arq, id, false), Recusa);
+  // o que o p01 deixou no arquivo: despacho e run real apontando o id do ensaio
+  const caminho = "execucoes/t4-teste/real-sem";
+  gravarImutavel(join(arq, caminho, "despacho.json"), JSON.stringify({ snapshots: id }));
+  gravarImutavel(join(arq, caminho, "pacote", "run.json"), JSON.stringify({ fixture: false }));
+  gravarImutavel(join(arq, "indice", "entradas", "real-sem.json"), JSON.stringify({ chave: "real-sem", tipo: "execucao", caminho, dataUtc: "2026-10-04T04:07:51Z",
+    manifestoColeta: { sha256: mshaT, caminho: caminhoManifesto(manifestoSem.dispatch.campaignId, mshaT) } }));
+  const plano = planejarReparoConjunto(arq, id)!;
+  assert.ok(plano, "há o que reparar");
+  assert.equal(plano.reparado.fixture, false);
+  assert.equal(plano.reparado.snapshotSetId, id, "mesmo id: é o que o despacho e a linha de base registram");
+  assert.equal(canonical(plano.reparado.items), canonical(legado.items));
+  assert.equal(plano.registro.original.sha256, original);
+  aplicarReparoConjunto(arq, plano, false);
+  assert.equal(sha(readFileSync(join(arq, caminhoConjunto(id)))), original, "o original fica intocado");
+  assert.deepEqual(resolverConjunto(arq, id, false), { caminho: caminhoConjuntoReparado(id), reparo: caminhoReparoConjunto(id) });
+  assert.deepEqual(resolverConjunto(arq, id, true), { caminho: caminhoConjunto(id), reparo: null }, "o ensaio continua no original");
+  assert.equal(planejarReparoConjunto(arq, id)!.registro.reparado.sha256, plano.registro.reparado.sha256, "plano determinístico");
+  // reenvio do disparo real depois do reparo: passa (itens conferidos contra a cópia)
+  assert.doesNotThrow(() => arquivarManifestoESnapshots(arq, manifestoPath, real, mshaT));
+  // cópia adulterada: o reparo não confere e nada resolve
+  const rep = join(arq, caminhoConjuntoReparado(id));
+  const bytes = readFileSync(rep);
+  writeFileSync(rep, bytes.toString("utf8").replace("\"fixture\": false", "\"fixture\": false "));
+  try { assert.throws(() => resolverConjunto(arq, id, false), /não confere/); } finally { writeFileSync(rep, bytes); }
 });
 
 // ───────────────────────────────────────────────────────────────── linha de base

@@ -142,6 +142,19 @@ não é o que o workflow registrou) ou “linha de base ausente”. Nada parcial
 causa e clique em **Tentar de novo**. O registro de cada tentativa fica em
 `analises/<campanha>/<par>/preparacao/falhas/`.
 
+**“fixture misturada com dado real (snapshots × pacote)” no par p01 da `t7-tela-a-01`?** Um ensaio
+gravou antes o conjunto de snapshots com o mesmo id (ver “Real e ensaio nunca dividem um conjunto de
+snapshots” em `docs/pipeline-isolado.md`). O painel escolhe o conjunto pela natureza da campanha: o
+arquivo principal, ou a cópia real em `snapshots/conjuntos/reparados/` quando há um registro em
+`reparos/conjuntos-de-snapshots/` que confere. Sem reparo, para na etapa “snapshots” e diz qual script
+rodar. A receita registra a cópia usada (`entradas.snapshots`) e a nota diz que veio de um reparo.
+
+Uma receita gravada cujo primeiro cálculo falhou (nenhuma revisão em `revisoes/`) não é análise. Ao
+preparar de novo, ela vai para `preparacao/receitas-sem-calculo/<carimbo>.json` (nada é apagado), e a
+preparação refaz tudo a partir do arquivo. Recalcular repetiria as entradas que ela congelou, inclusive
+a que causou a falha. Com qualquer revisão gravada, a preparação continua recusando (“use
+Recalcular”).
+
 Uma execução sem par completo (o outro braço falhou sem pacote, por exemplo) tem o mesmo botão na
 página dela: **Preparar a análise desta execução (individual)**.
 

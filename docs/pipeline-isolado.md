@@ -70,7 +70,8 @@ gera os mesmos bytes, é aceito como reenvio e a entrega passa a `confirmado`. O
 | `ensaios/<campanha>/…` | o mesmo, para os modos sem modelo |
 | `linhas-de-base/<campanha>/<tela>/<baselineId>/` | `baseline.json` (registro) + `bruta.json` |
 | `coletas/<campanha>/<sha256>/manifesto-coleta.json` | manifesto do disparo (por conteúdo) |
-| `snapshots/…` | referência e plano de estados (por conteúdo) e o conjunto `snapshot-manifest.v1` (id derivado do conteúdo: igual nos dois braços de um par) |
+| `snapshots/…` | referência e plano de estados (por conteúdo) e o conjunto `snapshot-manifest.v1` em `snapshots/conjuntos/<id>.json` (id derivado do conteúdo: igual nos dois braços de um par; num ensaio, `fixture: true`, o id inclui também a natureza — ver abaixo) |
+| `snapshots/conjuntos/reparados/<id>.json` + `reparos/conjuntos-de-snapshots/<id>.json` | cópia real de um conjunto que um ensaio gravou antes com o mesmo id, e o registro do reparo que a autoriza (só o `snapshots-520e43f9433f78ac`, par p01 da `t7-tela-a-01`) |
 | `campanhas/<campanha>/<sha256>/campaign.json` | a campanha que o manifesto de coleta 1.1.0 registra (T8a.1, por conteúdo) |
 | `sites/<sha256 do site-manifest>/` | o site congelado servido às execuções: `site-manifest.json` + só os arquivos que ele lista, cada um conferido (T8a.1, por conteúdo; ~23 MB / ~15 MB comprimidos por versão do site, gravados uma vez) |
 | Release `campanha-<id>` / `ensaios-<id>` | anexo `<pasta>.tar.gz` com o pacote **inteiro** (inclusive `evidence/`) |
@@ -78,6 +79,33 @@ gera os mesmos bytes, é aceito como reenvio e a entrega passa a `confirmado`. O
 Nada é sobrescrito: arquivo existente com outros bytes é recusado. Execução sem pacote (VM perdida,
 cancelamento) entra no índice como `sem-pacote`. Pacote com valor de credencial não é publicado
 (`retido-segredo`).
+
+**Real e ensaio nunca dividem um conjunto de snapshots.** Até 2026-10-04 o id era só o hash dos itens
+(site, referência, plano, instrumento). O dublê da `ensaio-agenda-01` gravou
+`snapshots-520e43f9433f78ac` com `fixture: true`; o par p01 real da `t7-tela-a-01`, disparado no mesmo
+commit, calculou os mesmos itens, e o arquivamento manteve o arquivo do ensaio. A análise do p01 então
+recusava: “fixture misturada com dado real (snapshots × pacote)”. Agora:
+
+- o id de um conjunto **real** continua o hash dos itens (os já arquivados, como o
+  `snapshots-3effb497dc1c3c1a` dos pares p02–p10, não mudam);
+- o id de um **ensaio** é o hash dos itens junto com `fixture: true`, então não coincide mais com o de
+  um real;
+- se o arquivo já existe com a outra natureza, o arquivamento **recusa**, a não ser que um reparo
+  registrado exista (abaixo). Nunca reaproveita o arquivo do outro lado.
+
+O caso já arquivado se conserta sem reescrever nada, com `scripts/ci/reparar-conjunto-fixture.ts`. O
+script grava a cópia real ao lado (`snapshots/conjuntos/reparados/<id>.json`). Ela tem os mesmos
+itens, o mesmo id (é o que o despacho e a linha de base já registram) e `fixture: false`. O
+`createdAt` vem do manifesto do primeiro disparo real. O script grava também o registro
+`reparos/conjuntos-de-snapshots/<id>.json`, com o quê e o porquê, o sha256 do original e da cópia, o
+sha256 dos itens (iguais nos dois) e quem aponta o conjunto. O original fica intocado e continua
+servindo ao ensaio. O painel e o arquivamento só leem a cópia quando o registro confere byte a byte.
+Sem `--aplicar`, o script só mostra o que faria. Com `--aplicar`, grava e faz um commit, sem push.
+
+```sh
+npx tsx scripts/ci/reparar-conjunto-fixture.ts --arquivo ../govbr-resultados --conjunto snapshots-520e43f9433f78ac
+npx tsx scripts/ci/reparar-conjunto-fixture.ts --arquivo ../govbr-resultados --conjunto snapshots-520e43f9433f78ac --aplicar
+```
 
 ## Restaurar (cópia local, D-67)
 

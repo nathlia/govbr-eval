@@ -652,8 +652,14 @@ await teste("T8a.1: hash divergente — anexo adulterado e referência adulterad
 
 await teste("T8a.1: de ponta a ponta — Preparar análise restaura, confere e cai em “aguardando revisão”", async () => {
   for (const run of [t4.pares[0].sem, t4.pares[0].com]) cpSync(join(t4.anexos, anexoDe(run)), join(anexosPainel, anexoDe(run)));
+  // receita de uma preparação cujo primeiro cálculo falhou (nenhuma revisão): não bloqueia; é guardada, não apagada
+  mkdirSync(analiseT4("par-t4"), { recursive: true });
+  writeFileSync(join(analiseT4("par-t4"), "receita.json"), "{\"formato\":\"receita-que-nao-calculou\"}\n");
   const r = await prepararT4("par-t4");
   assert.equal(r.ok, true, r.erro);
+  const guardadas = readdirSync(join(analiseT4("par-t4"), "preparacao", "receitas-sem-calculo"));
+  assert.equal(guardadas.length, 1, "a receita sem cálculo vai para preparacao/receitas-sem-calculo/");
+  assert.match(readFileSync(join(analiseT4("par-t4"), "preparacao", "receitas-sem-calculo", guardadas[0]), "utf8"), /receita-que-nao-calculou/);
   assert.equal(r.estado, "pronta");
   assert.match(r.revisao, /par-t4\/revisoes\/rev-001$/);
   const rc = JSON.parse(readFileSync(join(analiseT4("par-t4"), "receita.json"), "utf8"));

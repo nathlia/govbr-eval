@@ -23,7 +23,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, w
 import { basename, join } from "node:path";
 import { validateContract, type Arm, type Campaign, type SnapshotManifest } from "../../contracts/index";
 import {
-  REPOS, caminhoCampanha, caminhoReferencia, caminhoSite, problemasDoPacote, restaurar, sha, type EntradaIndice,
+  REPOS, Recusa, caminhoCampanha, caminhoReferencia, caminhoSite, problemasDoPacote, resolverConjunto, restaurar, sha, type EntradaIndice,
 } from "../arquivo-resultados";
 import { readIsolatedManifest, type IsolatedCollectionManifest } from "../manifesto-coleta-isolada";
 import { loadSite } from "../measurement-surface";
@@ -208,7 +208,7 @@ export function diagnosticoPreparo(arquivo: string, alvo: AlvoPreparo): Diagnost
   }
   const execucoes = Object.fromEntries(ARMS.filter(a => r.entradas[a]).map(a => [a, r.entradas[a]!.chave])) as Diagnostico["execucoes"];
   const d: Diagnostico = { ...vazio, campanha: r.campanha, alvo: r.alvo, execucoes, ultimaFalha: ultimaFalhaDePreparo(arquivo, r.campanha, r.alvo) };
-  if (lerAnalise(arquivo, r.campanha, r.alvo)) return { ...d, selo: { estado: "ok", texto: "análise já preparada" }, motivo: "já existe análise para este alvo" };
+  if (lerAnalise(arquivo, r.campanha, r.alvo)?.revisoes.length) return { ...d, selo: { estado: "ok", texto: "análise já preparada" }, motivo: "já existe análise para este alvo" };
   try {
     for (const arm of ARMS) {
       const e = r.entradas[arm];
@@ -319,7 +319,7 @@ function conjuntoDoDespacho(arquivo: string, e: EntradaIndice): string {
   let id: unknown = null;
   try { id = (JSON.parse(readFileSync(d, "utf8")) as { snapshots?: unknown }).snapshots; } catch { /* abaixo */ }
   if (typeof id !== "string" || !ID.test(id)) return falhar("snapshots", `o despacho de ${e.chave} não registra o conjunto de snapshots`);
-  return `snapshots/conjuntos/${id}.json`;
+  return id;
 }
 
 interface Escolha { linhaDeBase: string | null; semLinhaDeBase: boolean; nota: string }
@@ -353,10 +353,19 @@ export async function prepararAnalise(arquivo: string, alvo: AlvoPreparo, o: Opc
     return { ok: false, etapa: e instanceof ErroPreparo ? e.etapa : "entradas", erro: (e as Error).message, falha: null };
   }
   const chave = `${r.campanha}/${r.alvo}`;
-  if (lerAnalise(arquivo, r.campanha, r.alvo)) return { ok: false, etapa: "receita", erro: "já existe análise para este alvo: use Recalcular", falha: null };
+  const existente = lerAnalise(arquivo, r.campanha, r.alvo);
+  if (existente && existente.revisoes.length) return { ok: false, etapa: "receita", erro: "já existe análise para este alvo: use Recalcular", falha: null };
   if (emAndamento.has(chave)) return { ok: false, etapa: "receita", erro: "já existe uma preparação deste alvo em andamento", falha: null };
   emAndamento.add(chave);
   try {
+    // receita gravada cujo primeiro cálculo falhou (nenhuma revisão): não é análise. Ela vai para
+    // preparacao/receitas-sem-calculo/ (registro, nada apagado) e a preparação refaz tudo do arquivo —
+    // recalcular repetiria as entradas que ela congelou, inclusive a que causou a falha.
+    if (existente) {
+      const dir = dirAnalise(arquivo, r.campanha, r.alvo), guarda = join(dir, "preparacao", "receitas-sem-calculo");
+      mkdirSync(guarda, { recursive: true });
+      renameSync(join(dir, "receita.json"), join(guarda, `${carimbo()}.json`));
+    }
     const arms = ARMS.filter(a => r.entradas[a]);
     const lidos = Object.fromEntries(arms.map(a => [a, lerManifesto(arquivo, r.entradas[a]!)])) as Partial<Record<Arm, ManifestoLido>>;
     for (const a of arms) { const fora = motivoForaDeAlcance(lidos[a]!.manifest); if (fora) falhar("referencia", fora); }
@@ -375,9 +384,14 @@ export async function prepararAnalise(arquivo: string, alvo: AlvoPreparo, o: Opc
 
     const conjuntos = [...new Set(arms.map(a => conjuntoDoDespacho(arquivo, r.entradas[a]!)))];
     if (conjuntos.length !== 1) falhar("snapshots", `os braços apontam conjuntos de snapshots diferentes: ${conjuntos.join(", ")}`);
-    const snapsRel = conjuntos[0];
+    // o conjunto da natureza da campanha: o arquivo principal, ou a cópia real autorizada por um reparo
+    // registrado (reparos/conjuntos-de-snapshots/), quando um ensaio gravou antes o mesmo id
+    let snapsRel = "", reparoSnaps: string | null = null;
+    try { ({ caminho: snapsRel, reparo: reparoSnaps } = resolverConjunto(arquivo, conjuntos[0], campanha.fixture)); } catch (e) {
+      if (e instanceof Recusa) falhar("snapshots", e.message);
+      throw e;
+    }
     const snapsAbs = dentroDoArquivo(arquivo, snapsRel);
-    if (!existsSync(snapsAbs)) falhar("snapshots", `conjunto de snapshots ausente do arquivo: ${snapsRel}`);
     const snaps = JSON.parse(readFileSync(snapsAbs, "utf8")) as SnapshotManifest;
     if (!validateContract(snaps).valid) falhar("snapshots", `${snapsRel} fora do contrato snapshot-manifest.v1`);
     const item = (kind: string) => snaps.items.find(i => i.kind === kind);
@@ -407,7 +421,7 @@ export async function prepararAnalise(arquivo: string, alvo: AlvoPreparo, o: Opc
       execucoes: Object.fromEntries(arms.map(a => [a, r.entradas[a]!.chave])), pacotes,
       entradas: { campanha: campanhaRel, snapshots: snapsRel, referencia: refRel, site: siteRel, linhaDeBase: lb.linhaDeBase, semLinhaDeBase: lb.semLinhaDeBase },
       criadaEm: new Date().toISOString(),
-      nota: `preparada pelo painel a partir do arquivo T4 (T8a.1); ${lb.nota}`,
+      nota: `preparada pelo painel a partir do arquivo T4 (T8a.1); ${lb.nota}${reparoSnaps ? `; conjunto de snapshots pela cópia reparada (${reparoSnaps})` : ""}`,
       preparo: {
         por: "painel (Preparar análise)",
         manifestosColeta: Object.fromEntries(arms.map(a => [a, lidos[a]!.sha256])),

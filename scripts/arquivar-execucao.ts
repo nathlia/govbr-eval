@@ -28,9 +28,9 @@ import { ROOT } from "./adjudication";
 import { documentoDaCampanha, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import { caminhoAgenda, documentoDaAgenda, lerAgenda } from "./agenda-campanha";
 import {
-  ARCHIVE_VERSION, Recusa, arquivarSite, caminhoAgendaArquivada, caminhoCampanha, entradaExistente, caminhoLinhaDeBase, caminhoManifesto, caminhoPlano, caminhoReferencia, conjuntoDeSnapshots, criarTarGz,
+  ARCHIVE_VERSION, Recusa, arquivarSite, caminhoAgendaArquivada, caminhoCampanha, caminhoConjunto, entradaExistente, caminhoLinhaDeBase, caminhoManifesto, caminhoPlano, caminhoReferencia, conjuntoDeSnapshots, criarTarGz,
   garantirGitattributes, gravarEntrada, gravarImutavel, listagemDoCommit, listarArquivos, pastaDaExecucao, segmentoSeguro, problemasDaLinhaDeBase, problemasDeVinculo, problemasDoPacote,
-  reconstruirIndice, registrarLinhaDeBase, segredosNoPacote, sha, type EntradaIndice,
+  reconstruirIndice, registrarLinhaDeBase, resolverConjunto, segredosNoPacote, sha, type EntradaIndice,
 } from "./arquivo-resultados";
 import { canonical } from "./semantic-flow";
 import type { Baseline, Run, SnapshotManifest } from "../contracts/index";
@@ -79,7 +79,7 @@ function arquivarEntradasDaAnalise(arquivo: string, m: IsolatedCollectionManifes
 }
 
 /** Grava manifesto de coleta e snapshots (por conteúdo). Devolve onde o manifesto ficou. */
-function arquivarManifestoESnapshots(arquivo: string, manifestoPath: string, m: IsolatedCollectionManifest, msha: string): { caminho: string; conjunto: SnapshotManifest } {
+export function arquivarManifestoESnapshots(arquivo: string, manifestoPath: string, m: IsolatedCollectionManifest, msha: string): { caminho: string; conjunto: SnapshotManifest } {
   const bytes = readFileSync(manifestoPath);
   const caminho = caminhoManifesto(m.dispatch.campaignId, msha);
   gravarImutavel(join(arquivo, caminho), bytes);
@@ -90,11 +90,14 @@ function arquivarManifestoESnapshots(arquivo: string, manifestoPath: string, m: 
   gravarImutavel(join(arquivo, caminhoReferencia(m.reference.sha256)), refBytes);
   gravarImutavel(join(arquivo, caminhoPlano(m.identity.statePlanSha256!)), json(m.statePlan));
   const conjunto = conjuntoDeSnapshots(m, listagemDoCommit(ROOT, evalCommit));
-  const cpath = join(arquivo, "snapshots", "conjuntos", `${conjunto.snapshotSetId}.json`);
+  const cpath = join(arquivo, caminhoConjunto(conjunto.snapshotSetId));
   if (existsSync(cpath)) {
-    // mesmo id = mesmo conteúdo (o id é o hash dos itens); só a data da primeira gravação difere
-    const antes = JSON.parse(readFileSync(cpath, "utf8")) as SnapshotManifest;
-    if (canonical(antes.items) !== canonical(conjunto.items)) throw new Recusa(`snapshots/conjuntos/${conjunto.snapshotSetId}.json diverge do conteúdo calculado`);
+    // mesmo id = mesmos itens e mesma natureza (o id de um ensaio inclui `fixture`); só a data da
+    // primeira gravação difere. Natureza divergente só passa por um reparo registrado (o de 2026-10-04),
+    // nunca reaproveitando o arquivo do outro lado.
+    const { caminho: existente } = resolverConjunto(arquivo, conjunto.snapshotSetId, conjunto.fixture);
+    const antes = JSON.parse(readFileSync(join(arquivo, existente), "utf8")) as SnapshotManifest;
+    if (canonical(antes.items) !== canonical(conjunto.items)) throw new Recusa(`${existente} diverge do conteúdo calculado`);
   } else gravarImutavel(cpath, json(conjunto));
   return { caminho, conjunto };
 }

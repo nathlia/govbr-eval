@@ -15,7 +15,12 @@
  *   coletas/<campanha>/<sha256>/manifesto-coleta.json      (por conteúdo)
  *   snapshots/referencia/<sha256>/referencia.json          (por conteúdo; nunca exposto ao agente)
  *   snapshots/plano-de-estados/<sha256>/plano-estados.json
- *   snapshots/conjuntos/<snapshotSetId>.json               (snapshot-manifest.v1; id derivado do conteúdo)
+ *   snapshots/conjuntos/<snapshotSetId>.json               (snapshot-manifest.v1; id derivado do conteúdo e,
+ *                                          num ensaio, também da natureza: real e ensaio nunca dividem arquivo)
+ *   snapshots/conjuntos/reparados/<snapshotSetId>.json     cópia real de um conjunto que um ensaio gravou
+ *                                          antes com o mesmo id; só vale com o registro abaixo
+ *   reparos/conjuntos-de-snapshots/<snapshotSetId>.json    registro do reparo (o quê, por quê, sha256 de
+ *                                          original e cópia, prova de itens iguais)
  *   campanhas/<campanha>/<sha256>/campaign.json            (T8a.1; por conteúdo; a que o manifesto registra)
  *   campanhas/<campanha>/agendas/<sha256>/agenda.json      (NAT-65; por conteúdo; a agenda congelada, manifesto 1.3.0)
  *   sites/<sha256 do site-manifest>/{site-manifest.json, site/…}   (T8a.1; o site congelado, por conteúdo:
@@ -241,7 +246,70 @@ export function conjuntoDeSnapshots(m: IsolatedCollectionManifest, instrumento: 
       sha256: instrumento.sha256, bytes: instrumento.bytes, immutable: true, exposedToAgent: false,
       location: { kind: "git-commit-path", repo: REPOS.eval, commit: m.repos["govbr-eval"].commit!, path: ".", note: "árvore inteira do commit; sha256 = listagem git ls-tree -r --full-tree" } },
   ];
-  return { contract: "snapshot-manifest.v1", fixture: m.fixture, snapshotSetId: `snapshots-${sha(canonical(items)).slice(0, 16)}`, createdAt: m.generatedAt, items };
+  return { contract: "snapshot-manifest.v1", fixture: m.fixture, snapshotSetId: idDoConjunto(items, m.fixture), createdAt: m.generatedAt, items };
+}
+
+/**
+ * Id do conjunto: hash dos itens; num ensaio (`fixture: true`), hash dos itens COM a natureza. Real e
+ * ensaio nunca dividem um arquivo (2026-10-04: o dublê da ensaio-agenda-01 gravou
+ * `snapshots-520e43f9433f78ac` com `fixture: true`, e o par p01 real da t7-tela-a-01, com os mesmos
+ * itens, ficou apontando para ele). O id de um conjunto real não muda (os já arquivados continuam
+ * resolvendo); só ensaios novos ganham id próprio.
+ */
+export function idDoConjunto(items: SnapshotManifest["items"], fixture: boolean): string {
+  return `snapshots-${sha(fixture ? canonical({ fixture: true, items }) : canonical(items)).slice(0, 16)}`;
+}
+
+export const caminhoConjunto = (id: string): string => `snapshots/conjuntos/${id}.json`;
+/** Cópia real (fixture: false, itens idênticos) de um conjunto que um ensaio gravou antes com o mesmo id. */
+export const caminhoConjuntoReparado = (id: string): string => `snapshots/conjuntos/reparados/${id}.json`;
+/** Registro do reparo que autoriza ler `caminhoConjuntoReparado(id)` no lugar de `caminhoConjunto(id)`. */
+export const caminhoReparoConjunto = (id: string): string => `reparos/conjuntos-de-snapshots/${id}.json`;
+export const REPARO_CONJUNTO_VERSAO = "reparo-conjunto-fixture-1.0.0";
+
+export interface ReparoConjunto {
+  formato: typeof REPARO_CONJUNTO_VERSAO;
+  snapshotSetId: string;
+  motivo: string;
+  original: { caminho: string; sha256: string; fixture: boolean };
+  reparado: { caminho: string; sha256: string; fixture: boolean };
+  /** sha256 da forma canônica dos itens: o mesmo nos dois (é a prova de que só a natureza difere). */
+  itensSha256: string;
+  referenciadoPor: { chave: string; caminho: string; tipo: string; fixture: boolean }[];
+  feitoEm: string;
+  script: string;
+}
+
+/**
+ * Onde está o conjunto `id` com a natureza pedida. O arquivo principal, se a natureza bate; senão a
+ * cópia reparada, só quando um registro em `reparos/` a autoriza e tudo confere (sha256 do original e
+ * da cópia, mesmo id, mesmos itens, natureza pedida). Lança `Recusa` com o motivo em qualquer outro caso.
+ */
+export function resolverConjunto(arquivo: string, id: string, fixture: boolean): { caminho: string; reparo: string | null } {
+  if (!ID.test(id)) throw new Recusa(`id de conjunto de snapshots inválido: ${id}`);
+  const rel = caminhoConjunto(id);
+  if (!existsSync(join(arquivo, rel))) throw new Recusa(`conjunto de snapshots ausente do arquivo: ${rel}`);
+  const bytes = readFileSync(join(arquivo, rel));
+  const doc = JSON.parse(bytes.toString("utf8")) as SnapshotManifest;
+  if (doc.fixture === fixture) return { caminho: rel, reparo: null };
+  const recRel = caminhoReparoConjunto(id), repRel = caminhoConjuntoReparado(id);
+  const natureza = (f: boolean) => (f ? "ensaio (fixture: true)" : "real (fixture: false)");
+  if (!existsSync(join(arquivo, recRel)) || !existsSync(join(arquivo, repRel))) {
+    throw new Recusa(`${rel} é ${natureza(doc.fixture)}, mas quem o aponta é ${natureza(fixture)}, e não há reparo registrado (${recRel}; ver scripts/ci/reparar-conjunto-fixture.ts)`);
+  }
+  const rec = JSON.parse(readFileSync(join(arquivo, recRel), "utf8")) as ReparoConjunto;
+  const repBytes = readFileSync(join(arquivo, repRel));
+  const rep = JSON.parse(repBytes.toString("utf8")) as SnapshotManifest;
+  const p: string[] = [];
+  if (rec.formato !== REPARO_CONJUNTO_VERSAO) p.push(`formato ${String(rec.formato)}`);
+  if (rec.snapshotSetId !== id || rep.snapshotSetId !== id) p.push("id diverge");
+  if (rec.original?.caminho !== rel || rec.original.sha256 !== sha(bytes)) p.push("o original não é o que o reparo registrou");
+  if (rec.reparado?.caminho !== repRel || rec.reparado.sha256 !== sha(repBytes)) p.push("a cópia reparada não é a que o reparo registrou");
+  if (rep.fixture !== fixture || rec.reparado.fixture !== fixture) p.push(`a cópia reparada não é ${natureza(fixture)}`);
+  if (canonical(rep.items) !== canonical(doc.items) || rec.itensSha256 !== sha(canonical(doc.items))) p.push("os itens da cópia diferem dos do original");
+  if (!validateContract(rep).valid) p.push("cópia fora do contrato snapshot-manifest.v1");
+  if (p.length) throw new Recusa(`reparo do conjunto ${id} não confere: ${p.join("; ")}`);
+  return { caminho: repRel, reparo: recRel };
 }
 
 // ───────────────────────────────────────────────────────────────── linha de base
