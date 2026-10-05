@@ -117,7 +117,7 @@ export function avisosDoArquivo(v: VistaExecucoes, preparo: Record<string, Diagn
     const d = preparo[`${p.campanha}/${p.par}`];
     if (d?.ultimaFalha && d.pode) {
       out.push({ alvo: parQ(p), nivel: "atencao", ensaio: e, ajuda: "/ajuda#preparar", texto: `a preparação parou na etapa “${rotuloEtapa(d.ultimaFalha.etapa)}” (${frase(semDicaCrlf(d.ultimaFalha.motivo), 160).replace(/[.]$/, "")}) — resolva a causa e clique em Tentar de novo no par.` });
-    } else if (d && !d.pode && !d.foraDeAlcance && d.motivo && !/já existe análise/.test(d.motivo)) {
+    } else if (d && !d.pode && d.motivo && !/já existe análise/.test(d.motivo)) {
       out.push({ alvo: parQ(p), nivel: "atencao", ensaio: e, ajuda: "/ajuda#preparar", texto: `não dá para preparar a análise (${frase(semDicaCrlf(d.motivo), 160).replace(/[.]$/, "")})${d.motivo.includes(DICA_CRLF) ? " — a causa provável é a dos finais de linha, no primeiro aviso" : " — veja o motivo completo na página do par"}.` });
     }
   }
@@ -310,10 +310,6 @@ ${lbs}
 // ───────────────────────────────────────────────────────────────── Preparar análise (T8a.1)
 
 function blocoPreparo(d: Diagnostico, api: string, oQue: string): string {
-  if (d.foraDeAlcance) {
-    return `<div class="aviso info" role="status" id="preparar"><p><strong>Fora do alcance da análise.</strong> ${esc(d.motivo)}</p>
-<p class="pequeno">As execuções e o resumo técnico continuam disponíveis; a pontuação dessa tela espera a decisão registrada no NAT-51.</p></div>`;
-  }
   if (!d.pode) return `<div class="aviso info" role="status" id="preparar"><p><strong>Não dá para preparar a análise ${esc(oQue)}.</strong> ${esc(d.motivo)}</p>${d.motivo?.includes(DICA_CRLF) ? `<p class="pequeno"><a href="/ajuda#finais-de-linha">Como corrigir os finais de linha do clone</a></p>` : ""}</div>`;
   const f = d.ultimaFalha;
   return `<section aria-labelledby="t-preparar" id="preparar"><h2 id="t-preparar">Preparar a análise ${esc(oQue)}</h2>
@@ -566,12 +562,16 @@ ${campo("Evidência da execução", c.evidencias.length ? `<ul>${c.evidencias.ma
 ${c.imagemCena ? `<details><summary>Reconstrução da cena (não é evidência da execução)</summary><img class="cena" loading="lazy" src="${esc(c.imagemCena)}" alt="Captura da página congelada na cena ${esc(c.cena)}, refeita no momento da análise"></details>` : ""}
 ${campo("Retido na cegueira", `<p class="pequeno suave">${esc(c.retido)}</p>`)}
 ${c.decisao.status === "decidido" ? `<div class="aviso info"><p>Decidido por ${esc(c.decisao.revisora ?? "?")}: <strong>${esc(c.decisao.decisao)}</strong> — “${esc(c.decisao.justificativa)}”. Para mudar, decida de novo abaixo: a nova decisão vira uma versão nova, a anterior fica no histórico.</p></div>` : ""}
-<form class="decidir" data-card="${esc(c.id)}" novalidate>
+<form class="decidir" data-card="${esc(c.id)}"${c.cenas ? " data-segmentado" : ""} novalidate>
+${c.cenas ? `<fieldset><legend>De qual cena a alegação fala (obrigatório)</legend>
+<p class="pequeno suave">O elemento existe em mais de um segmento da navegação, e a alegação não diz a rota. Só os elementos e as unidades da cena escolhida contam.</p>
+${c.cenas.map((o, i) => `<div class="opcao"><input type="radio" name="${nome("cena")}" id="${nome("cena")}-${i}" value="${esc(o.id)}"${c.decisao.cena === o.id ? " checked" : ""}><label for="${nome("cena")}-${i}"><strong>${esc(o.estado)}</strong>${o.caminho ? ` · <span class="mono">${esc(o.caminho)}</span>` : ""} · ${o.sujeitos.length} elemento(s)${o.candidatas.length ? ` · candidatas: ${esc(c.candidatas.filter(un => o.candidatas.includes(un.id)).map(un => un.specId).join(", "))}` : " · sem unidade candidata"}</label></div>`).join("")}
+</fieldset>` : ""}
 <fieldset><legend>Decisão</legend>
 ${OPCOES.map(([v, rot, exp]) => `<div class="opcao"><input type="radio" name="${nome("d")}" id="${nome(v)}" value="${v}"${c.decisao.decisao === v ? " checked" : ""}><label for="${nome(v)}"><strong>${esc(rot)}</strong> — ${esc(exp)}</label></div>`).join("")}
 </fieldset>
 <fieldset class="so-gabarito oculto"><legend>Qual unidade a alegação acertou</legend>
-${c.candidatas.length ? c.candidatas.map(un => `<div class="opcao"><input type="checkbox" name="${nome("u")}" id="${nome("u")}-${esc(un.id.slice(2, 12))}" value="${esc(un.id)}"${c.decisao.unidades.includes(un.id) ? " checked" : ""}><label for="${nome("u")}-${esc(un.id.slice(2, 12))}">${esc(un.specId)} · ${esc(un.estado)}</label></div>`).join("") : `<p class="nota-erro">Este cartão não tem unidade candidata: o scorer recusará “defeito do gabarito”.</p>`}
+${c.candidatas.length ? c.candidatas.map(un => `<div class="opcao"><input type="checkbox" name="${nome("u")}" id="${nome("u")}-${esc(un.id.slice(2, 12))}" value="${esc(un.id)}"${c.decisao.unidades.includes(un.id) ? " checked" : ""}><label for="${nome("u")}-${esc(un.id.slice(2, 12))}">${esc(un.specId)} · ${esc(un.estado)}${c.cenas ? ` · cena ${esc(un.cena)}` : ""}</label></div>`).join("") : `<p class="nota-erro">Este cartão não tem unidade candidata: o scorer recusará “defeito do gabarito”.</p>`}
 </fieldset>
 <div class="campo so-duplicada oculto"><label class="rot" for="${nome("dup")}">Duplicata de qual cartão</label>
 ${decididos.length ? `<select id="${nome("dup")}" name="dup">${decididos.map(o => `<option value="${esc(o.id)}">${esc(o.id.slice(0, 14))}… — ${esc((o.observado ?? "").slice(0, 60))}</option>`).join("")}</select>`
@@ -631,7 +631,7 @@ var rv=document.getElementById("revisora");
 try{ if(!rv.value){ rv.value=localStorage.getItem("painel-revisora")||""; } }catch(e){}
 rv.addEventListener("change",function(){ try{ localStorage.setItem("painel-revisora",rv.value.trim()); }catch(e){} });
 document.querySelectorAll("form.decidir").forEach(function(f){
-  function mostra(){ var d=(f.querySelector("input[type=radio]:checked")||{}).value;
+  function mostra(){ var d=(f.querySelector("input[name^='d-']:checked")||{}).value;
     f.querySelector(".so-gabarito").classList.toggle("oculto", d!=="defeito-do-gabarito");
     f.querySelector(".so-duplicada").classList.toggle("oculto", d!=="duplicada");
     var cx=f.querySelectorAll(".so-gabarito input[type=checkbox]");
@@ -639,15 +639,17 @@ document.querySelectorAll("form.decidir").forEach(function(f){
   f.addEventListener("change",mostra); mostra();
   f.addEventListener("submit",async function(ev){ ev.preventDefault();
     var msg=f.querySelector(".retorno"); msg.className="msg retorno erro";
-    var d=(f.querySelector("input[type=radio]:checked")||{}).value;
+    var d=(f.querySelector("input[name^='d-']:checked")||{}).value;
     var j=f.querySelector("textarea").value.trim();
     var nome=rv.value.trim();
     if(!nome){ msg.textContent="Escreva seu nome no campo do topo da página."; rv.focus(); return; }
+    var cena=f.hasAttribute("data-segmentado")?(f.querySelector("input[name^='cena-']:checked")||{}).value:null;
+    if(f.hasAttribute("data-segmentado") && !cena){ msg.textContent="Escolha de qual cena a alegação fala."; return; }
     if(!d){ msg.textContent="Escolha uma das cinco decisões."; return; }
     if(!j){ msg.textContent="A justificativa é obrigatória."; f.querySelector("textarea").focus(); return; }
     var unid=[].slice.call(f.querySelectorAll(".so-gabarito input:checked")).map(function(i){return i.value});
     var dup=f.querySelector(".so-duplicada select");
-    var corpo={cardId:f.getAttribute("data-card"),decisao:d,unitIds:unid,duplicadaDe:dup?dup.value:null,
+    var corpo={cardId:f.getAttribute("data-card"),decisao:d,unitIds:unid,duplicadaDe:dup?dup.value:null,cena:cena,
       citacao:f.querySelector("select[name=cit]").value,justificativa:j,
       consultado:f.querySelector("input[name=ev]").value.split(";").map(function(s){return s.trim()}).filter(Boolean),revisora:nome,base:BASE};
     var botao=f.querySelector("button[type=submit]"); botao.disabled=true; msg.className="msg retorno"; msg.textContent="Salvando…";
@@ -681,7 +683,7 @@ export function paginaAjuda(ctx: Contexto): string {
 <ol><li>Depois de um disparo, atualize o clone do arquivo (<span class="mono">git pull</span>) e recarregue. O par novo aparece como “sem análise: pronta para preparar”.</li>
 <li>Abra o par e clique em <strong>Preparar análise</strong>. O painel confere tudo pelo sha256 que o workflow registrou, restaura o pacote de cada braço do anexo de evidências (baixando-o da Release com o <span class="mono">gh</span>, se ainda não estiver em <span class="mono">anexos/</span>) e abre a fila de revisão.</li>
 <li>Se algo faltar (anexo ausente, hash divergente, linha de base ausente), a página diz em que etapa parou e por quê. Nada parcial vira análise; resolva e clique em <strong>Tentar de novo</strong>.</li>
-<li>Tela com referência que navega (tela B) aparece como “fora do alcance da análise”: a análise ainda não a aceita (NAT-51).</li></ol>
+<li>Tela com referência que navega (tela B, Vistorias) se prepara do mesmo jeito (D-98): a análise reconstrói uma cena por segmento da navegação. Na fila, um cartão cujo elemento existe em mais de um segmento pede que você escolha de qual cena a alegação fala.</li></ol>
 <h2 id="finais-de-linha">Finais de linha (hash divergente em tudo)</h2>
 <p>No Windows, o Git costuma vir com <span class="mono">core.autocrlf=true</span>. Ele troca os finais de linha dos arquivos de texto do clone (LF → CRLF) e, com isso, nenhum arquivo tem mais o sha256 que o workflow registrou: a preparação recusa a análise com “hash divergente”. O conteúdo é o mesmo, mas o painel confere byte a byte e não aceita nada diferente. Corrija o clone uma vez, no terminal, dentro da pasta do <span class="mono">govbr-resultados</span>:</p>
 <pre class="mono">git config core.autocrlf false

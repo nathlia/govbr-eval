@@ -15,6 +15,7 @@ import { analisar, seguro, type OpcoesAnalise, type Resumo } from "./analisar-ex
 import { REGIOES_DO_CLI, regiaoDe } from "./preparo-cenas";
 import { normalizarIdsGerados, presenteNoSite } from "./identidade-cartoes";
 import { cenasDoPlano } from "./collection-manifest";
+import { alvoDoAxe } from "./run-baselines-flow";
 import type { FlowGroundTruth } from "../types";
 import { ROOT } from "./adjudication";
 import { construirFixture, FIXTURE_DIR, FINDINGS_PADRAO, type OpcoesFixture } from "./fixtures/analise/construir";
@@ -468,6 +469,20 @@ async function main(): Promise<void> {
         assert.ok(cenasV.length > 1 && cenasV.every(c => c.segmento), "a Vistorias navega: cenas por segmento");
         const estado = (passos: string) => ({ viewport: { width: 1280, height: 900 }, steps: [passos] });
         const cenaModal = cenasV.find(c => c.segmento!.estado === "modal")!.id;
+        const cenaInicial = cenasV[0].id;
+        // NAT-34: alvos REAIS do axe na cena inicial (medidos no site do govbr-telas), um nó dentro de shadow
+        // root por regra. Na forma da linha de base 2.2.0 (`host >>> interno`, alvoDoAxe) e na da 2.1.0
+        // (target.flat().join(" ")), que não resolve nada e deixa o nó sem unidade candidata.
+        const olhoHost = 'tr:nth-child(1) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon="eye"][type="secondary"]';
+        const olhoInterno = '.secondary.middle[aria-label=""]';
+        const dataHost = "br-input:nth-child(2)", dataInterno = "#br-input-8";
+        assert.equal(alvoDoAxe([[olhoHost, olhoInterno]]), `${olhoHost} >>> ${olhoInterno}`);
+        assert.equal(alvoDoAxe(["#a", "#b"]), "#a #b", "salto de iframe sem shadow: igual à 2.1.0");
+        const axeInicial = [
+          { rule: "button-name", target: alvoDoAxe([[olhoHost, olhoInterno]]) },
+          { rule: "label", target: alvoDoAxe([[dataHost, dataInterno]]) },
+          { rule: "button-name", target: [[olhoHost, olhoInterno]].flat().join(" ") },
+        ];
         const f = fixture({ telaReal: { site: telas, referencia,
           achados: {
             sem: [{ selector: "pnip-propesc-vistorias table input[type=checkbox]", rule: null, observed: "Caixa de seleção sem nome (sintético).",
@@ -477,7 +492,7 @@ async function main(): Promise<void> {
             { selector: "pnip-propesc-trocar-embarcacao .br-modal", rule: null, observed: "O foco sai do diálogo aberto (sintético).",
               expected: "Foco preso no diálogo (sintético).", state: estado("setup até o modal de troca de embarcação"), evidence: [] }],
           },
-          axePorCena: { [cenaModal]: [{ rule: "aria-dialog-name", target: "pnip-propesc-trocar-embarcacao .br-modal" }] } } });
+          axePorCena: { [cenaModal]: [{ rule: "aria-dialog-name", target: "pnip-propesc-trocar-embarcacao .br-modal" }], [cenaInicial]: axeInicial } } });
         const r = await analisar(opcoes(f));
         assert.equal(r.estado, "pronta", r.motivo ?? "");
         assert.equal(sha(readFileSync(referencia)), refAntes, "a referência congelada não foi tocada");
@@ -489,6 +504,18 @@ async function main(): Promise<void> {
         assert.ok(capture.scenes.every(s => s.segmento && "entradaDireta" in s));
         assert.equal(readdirSync(join(r.saida, "revisao")).filter(x => /^scene-\d+\.html$/.test(x)).length, cenasV.length);
         assert.ok(pkg.runs.some(x => x.id === "linha-de-base/axe"), "linha de base por segmento entra no pacote");
+        const specDe = (id: string) => pkg.units.find(u => u.id === id)!.specId;
+        const cartaoAxe = (sel: string) => pkg.cards.find(c => c.origin === "linha-de-base" && c.selector === sel && c.scene === cenaInicial);
+        for (const [alvo, spec] of [[axeInicial[0].target, "B-07"], [axeInicial[1].target, "B-05"]] as const) {
+          const c = cartaoAxe(alvo);
+          assert.ok(c, `cartão do axe para ${alvo}`);
+          assert.ok(c!.subjects.every(x => x.key !== null), `${alvo} resolve`);
+          assert.ok(c!.candidateUnitIds.map(specDe).includes(spec), `${alvo} oferece ${spec} (NAT-34): ${c!.candidateUnitIds.join(", ")}`);
+        }
+        const achatado = cartaoAxe(axeInicial[2].target);
+        assert.ok(achatado, "cartão do alvo achatado (2.1.0)");
+        assert.ok(achatado!.subjects.every(x => x.key === null) && achatado!.candidateUnitIds.length === 0,
+          "forma 2.1.0 (achatada) não resolve e não tem candidata — o defeito que o NAT-34 corrige");
         const s = readJson<Resumo>(join(r.saida, "summary.json"));
         assert.equal(s.revisaoSemantica!.cartoes, pkg.cards.length);
         assert.equal(execDe(s, "sem").pontuacao.metricas.referenceUnits, 102);

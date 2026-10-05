@@ -28,6 +28,7 @@ import { join } from "node:path";
 import { lerTarGz, sha as sha256 } from "./arquivo-resultados";
 import { analysisIdentity } from "./collection-manifest";
 import { CAMPANHA_ID } from "./fixtures/analise/construir";
+import { ROOT } from "./adjudication";
 import { construirArquivoFixture, construirArquivoT4 } from "./painel/fixture";
 import { lerAnalise, lerRevisao, metricasDaRevisao } from "./painel/modelo";
 import { chromium } from "playwright";
@@ -559,7 +560,11 @@ await teste("T8a.2: entradas de ensaio não fazem o arquivo inteiro virar FIXTUR
 
 // Arquivo montado pelo MESMO código do job arquivar (arquivarExecucao), sem análise nenhuma; os anexos
 // da "Release" ficam fora dele. O painel procura anexos numa pasta que começa vazia.
-const t4 = construirArquivoT4(join(TMP, "arquivo-t4"), { navega: true });
+// Vistorias (tela B, referência que navega) entra quando o clone do govbr-telas está ao lado (só lido).
+const TELAS_CLONE = join(ROOT, "..", "govbr-telas");
+const VISTORIAS = existsSync(join(TELAS_CLONE, "site-manifest.json"));
+if (!VISTORIAS) console.log(`PULADO par Vistorias: ${TELAS_CLONE} ausente (clone o govbr-telas ao lado do govbr-eval)`);
+const t4 = construirArquivoT4(join(TMP, "arquivo-t4"), { vistorias: VISTORIAS ? TELAS_CLONE : null });
 const anexosPainel = join(TMP, "anexos-baixados");
 mkdirSync(anexosPainel, { recursive: true });
 const servidorT4: Server = criarPainel({ arquivo: t4.arquivo, revisora: "", anexos: [anexosPainel], baixarAnexos: false });
@@ -580,30 +585,26 @@ const prepararT4 = async (par: string): Promise<any> => JSON.parse((await reqT4(
 const analiseT4 = (par: string) => join(t4.arquivo, "analises", C, par);
 const anexoDe = (runId: string): string => readdirSync(t4.anexos).find(f => f.endsWith(`__${runId}.tar.gz`))!;
 
-await teste("T8a.1: par do T4 sem análise aparece pronto para preparar; tela que navega fica fora do alcance", async () => {
+await teste("T8a.1: par do T4 sem análise aparece pronto para preparar; a tela que navega (Vistorias) também (D-98)", async () => {
   const v = await getT4("/api/execucoes");
-  assert.equal(v.execucoes.length, 4);
+  assert.equal(v.execucoes.length, 2 * t4.pares.length);
   assert.ok(v.execucoes.every((x: any) => x.pontuacao.estado === "sem-analise"));
   const d = v.preparo[`${C}/par-t4`];
   assert.equal(d.pode, true);
   assert.equal(d.selo.estado, "sem-analise");
   assert.deepEqual(d.execucoes, { sem: t4.pares[0].sem, com: t4.pares[0].com });
-  const nav = v.preparo[`${C}/par-nav`];
-  assert.equal(nav.pode, false);
-  assert.equal(nav.foraDeAlcance, true);
-  assert.match(nav.motivo, /navega.*NAT-51/);
+  assert.ok(!("foraDeAlcance" in d), "o estado “fora do alcance” não existe mais");
   const html = (await reqT4(`/par/${C}/par-t4`)).corpo.toString("utf8");
   assert.match(html, new RegExp(`data-preparar="/api/preparar/par/${C}/par-t4"`));
   assert.match(html, />Preparar análise</);
-  const htmlNav = (await reqT4(`/par/${C}/par-nav`)).corpo.toString("utf8");
-  assert.match(htmlNav, /Fora do alcance da análise/);
-  assert.ok(!/data-preparar=/.test(htmlNav), "tela que navega não tem botão");
   assert.match((await reqT4("/")).corpo.toString("utf8"), /sem análise: pronta para preparar/);
-  // e a recusa também vale pela API, sem gravar receita
-  const r = await prepararT4("par-nav");
-  assert.equal(r.ok, false);
-  assert.equal(r.etapa, "referencia");
-  assert.ok(!existsSync(join(analiseT4("par-nav"), "receita.json")));
+  if (!VISTORIAS) return;
+  const vist = v.preparo[`${C}/par-vist`];
+  assert.equal(vist.pode, true, vist.motivo ?? "");
+  assert.equal(vist.selo.estado, "sem-analise");
+  const htmlVist = (await reqT4(`/par/${C}/par-vist`)).corpo.toString("utf8");
+  assert.ok(!/Fora do alcance da análise/.test(htmlVist));
+  assert.match(htmlVist, new RegExp(`data-preparar="/api/preparar/par/${C}/par-vist"`));
 });
 
 await teste("T8a.1: anexo ausente → falha com etapa e motivo; nada vira análise nem pacote restaurado", async () => {
@@ -709,7 +710,7 @@ await teste("T8a.1: o arquivo do T4 continua fechado — referência, site, camp
 });
 
 await teste("T8a.1: cache de restauração adulterado é refeito do anexo, nunca usado", async () => {
-  // uma execução avulsa do par que navega não serve (fora do alcance); usa a lib direto sobre o par-t4 já restaurado
+  // usa a lib direto sobre o par-t4 já restaurado
   const rc = JSON.parse(readFileSync(join(analiseT4("par-t4"), "receita.json"), "utf8"));
   const pac = join(t4.arquivo, rc.pacotes.sem);
   writeFileSync(join(pac, "run.json"), "{}\n");
@@ -719,6 +720,44 @@ await teste("T8a.1: cache de restauração adulterado é refeito do anexo, nunca
   assert.equal(r.ok, true, r.ok ? "" : r.erro);
   assert.notEqual(readFileSync(join(pac, "run.json"), "utf8"), "{}\n", "restaurado de novo do anexo");
   assert.ok(readdirSync(join(t4.arquivo, "restauracoes", rc.execucoes.sem)).some(n => n.includes(".invalido-")), "a cópia ruim fica ao lado, para inspeção");
+});
+
+await teste("T8a.1 + D-98: par Vistorias (referência que navega) — Preparar análise, fila com cenas por segmento, decisão com cena; alvo do axe em shadow root oferece B-07 (NAT-34)", async () => {
+  if (!VISTORIAS) { console.log("   (pulado: sem govbr-telas)"); return; }
+  const par = t4.pares.find(p => p.vistorias)!;
+  for (const run of [par.sem, par.com]) cpSync(join(t4.anexos, anexoDe(run)), join(anexosPainel, anexoDe(run)));
+  const r = await prepararT4("par-vist");
+  assert.equal(r.ok, true, r.erro);
+  assert.equal(r.estado, "pronta");
+  const pkg = JSON.parse(readFileSync(join(analiseT4("par-vist"), "revisoes", "rev-001", "revisao", "package.json"), "utf8")) as SemanticPackage;
+  assert.ok(pkg.scenes.length > 1 && pkg.scenes.every(x => x.segmento), "uma cena por segmento");
+  assert.equal(pkg.units.length, 102, "Vistorias 1.0.0: 102 unidades");
+  const fila = await getT4(`/api/fila/${C}/par-vist`);
+  assert.ok(fila.cartoes.length > 0);
+  const htmlFila = (await reqT4(`/revisao/${C}/par-vist`)).corpo.toString("utf8");
+  // cartão segmentado (o cabeçalho existe em todos os segmentos): sem cena é recusado; com cena, gravado
+  const seg = fila.cartoes.find((c: any) => c.cenas && c.cenas.length > 1);
+  assert.ok(seg, "algum cartão resolve em mais de um segmento");
+  assert.match(htmlFila, /De qual cena a alegação fala/);
+  const corpo = { cardId: seg.id, decisao: "incorreta", justificativa: "teste (fixture)", consultado: ["cartão"], revisora: "Revisora Teste", base: fila.versaoDecisoes };
+  const semCena = JSON.parse((await reqT4(`/api/decisao/${C}/par-vist`, { metodo: "POST", corpo: JSON.stringify(corpo) })).corpo.toString("utf8"));
+  assert.equal(semCena.ok, false);
+  assert.match(semCena.erro, /escolha de qual cena/);
+  const comCena = JSON.parse((await reqT4(`/api/decisao/${C}/par-vist`, { metodo: "POST", corpo: JSON.stringify({ ...corpo, cena: seg.cenas[0].id }) })).corpo.toString("utf8"));
+  assert.equal(comCena.ok, true, comCena.erro);
+  // linha de base 2.2.0: o nó do axe dentro do shadow root do br-button resolve e oferece B-07; a decisão credita
+  const olho = fila.cartoes.find((c: any) => c.origem === "linha de base determinística" && c.candidatas.some((u: any) => u.specId === "B-07"));
+  assert.ok(olho, "cartão do axe (button-name em shadow root) com B-07 candidata");
+  const b07 = olho.candidatas.find((u: any) => u.specId === "B-07").id;
+  const dec = JSON.parse((await reqT4(`/api/decisao/${C}/par-vist`, { metodo: "POST", corpo: JSON.stringify({ cardId: olho.id, decisao: "defeito-do-gabarito",
+    unitIds: [b07], ...(olho.cenas ? { cena: olho.cenas.find((o: any) => o.candidatas.includes(b07)).id } : {}),
+    justificativa: "teste (fixture)", consultado: ["cartão"], revisora: "Revisora Teste", base: comCena.versao }) })).corpo.toString("utf8"));
+  assert.equal(dec.ok, true, dec.erro);
+  const depois = await getT4(`/api/fila/${C}/par-vist`);
+  assert.equal(depois.cartoes.find((c: any) => c.id === seg.id).decisao.cena, seg.cenas[0].id);
+  const re = await recalcular(t4.arquivo, C, "par-vist");
+  assert.equal(re.ok, true, re.ok ? "" : re.erro);
+  console.log(`   Vistorias no painel: ${pkg.scenes.length} cenas, ${fila.cartoes.length} cartões, ${fila.cartoes.filter((c: any) => c.cenas).length} segmentado(s)`);
 });
 
 await teste("T8a.1: análise individual de uma execução (mesmo caminho, alvo = runId)", async () => {

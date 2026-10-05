@@ -2,6 +2,7 @@
 # Prova local do T4: "roda a partir de checkout limpo em Linux, sem o computador da autora".
 #
 #   bash scripts/ci/ensaio-linux.sh            (no host: Git Bash no Windows, ou Linux com Docker)
+#   ENSAIO_TELA=vistorias bash scripts/ci/ensaio-linux.sh   (a mesma prova na tela B; padrão: solicitacao)
 #
 # Monta um Linux de verdade ao lado do Docker local: um Docker Engine nativo (docker:28-dind, como o
 # do runner do GitHub) e um controlador Debian com Node 24.21.0 (a base das imagens) rodando como
@@ -9,7 +10,7 @@
 # controlador: `git clone` dos repositórios locais (o govbr-eval com as mudanças ainda não commitadas
 # aplicadas num commit SÓ do clone), um govbr-resultados "remoto" vazio (repositório bare) e o
 # emulador (scripts/ci/emular-workflow.ts), que roda os passos do PRÓPRIO workflow, job a job, cada um
-# numa pasta nova: modo `roteirizado` (sem modelo), tela A, braço sem, coleta + linha de base +
+# numa pasta nova: modo `roteirizado` (sem modelo), tela A (ou a de ENSAIO_TELA), braço sem, coleta + linha de base +
 # arquivamento + anexo (dublê do `gh`) + push. Depois restaura do arquivo e procura os tokens.
 #
 # Nada sai daqui: sem GitHub, sem provedor, tokens falsos. Volumes e contêineres criados são
@@ -40,7 +41,7 @@ if [ "${1:-host}" = "host" ]; then
   monta=()
   for r in govbr-eval govbr-telas govbr-ds-validator govbr-corpus; do monta+=(-v "$(win "$aqui/$r"):/host/$r:ro"); done
   docker run --rm --name t4-controlador --network container:t4-dind -v t4-work:/work "${monta[@]}" \
-    -e DOCKER_HOST=tcp://127.0.0.1:2375 "$BASE" bash /work/ensaio-linux.sh controlador
+    -e DOCKER_HOST=tcp://127.0.0.1:2375 -e ENSAIO_TELA="${ENSAIO_TELA:-solicitacao}" "$BASE" bash /work/ensaio-linux.sh controlador
   exit $?
 fi
 
@@ -53,7 +54,7 @@ if [ "$1" = "controlador" ]; then
   echo 'runner ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/runner
   chown -R 1001:1001 /work
   echo "controlador: $(node --version), $(git --version), Docker $(docker version --format '{{.Server.Version}} ({{.Server.Os}})'), usuário runner uid 1001"
-  exec runuser -u runner -- env DOCKER_HOST="$DOCKER_HOST" HOME=/home/runner PATH="$PATH" bash /work/ensaio-linux.sh runner
+  exec runuser -u runner -- env DOCKER_HOST="$DOCKER_HOST" ENSAIO_TELA="${ENSAIO_TELA:-solicitacao}" HOME=/home/runner PATH="$PATH" bash /work/ensaio-linux.sh runner
 fi
 
 # ───────────────────────────────────────────────── como `runner` (uid 1001)
@@ -96,7 +97,7 @@ const [sha, f, telas, val, l, e] = process.argv.slice(1);
 const cfg = { workflow: "/work/emulador/govbr-eval/.github/workflows/execucao-isolada.yml", raiz: "/work/emul", self: "nathlia/govbr-eval", sha,
   fontes: { "nathlia/govbr-eval": f + "/govbr-eval", "nathlia/govbr-telas": f + "/govbr-telas", "nathlia/govbr-ds-validator": f + "/govbr-ds-validator",
     "nathlia/govbr-corpus": f + "/govbr-corpus", "nathlia/govbr-resultados": f + "/govbr-resultados.git" },
-  inputs: { modo: "roteirizado", tela: "solicitacao", braco: "sem", modelo: "", esforco: "high", limite_min: "10", campanha: "t4-ensaio-linux", slot: "slot-01",
+  inputs: { modo: "roteirizado", tela: process.env.ENSAIO_TELA || "solicitacao", braco: "sem", modelo: "", esforco: "high", limite_min: "10", campanha: "t4-ensaio-linux", slot: "slot-01",
     par: "par-01", tentativa: "1", repeticao: "1", telas_sha: telas, validator_sha: val, etapas: "coleta+linha-de-base", refazer_linha_de_base_de: "", motivo_refazer: "" },
   secrets: { GOVBR_LEITURA_TOKEN: l, GOVBR_RESULTADOS_TOKEN: e }, saida: "/work/relatorio-emulacao.json" };
 require("fs").writeFileSync("/work/config.json", JSON.stringify(cfg, null, 2));

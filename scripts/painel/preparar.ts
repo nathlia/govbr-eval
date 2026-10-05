@@ -16,7 +16,8 @@
  *
  * Qualquer falta para a preparação ANTES da receita, com etapa e motivo em
  * `analises/<campanha>/<alvo>/preparacao/falhas/<carimbo>/erro.json`; nada parcial vira análise.
- * Referência que navega (tela B, D-60) é recusada antes de qualquer trabalho (D-69, NAT-51).
+ * Referência que navega (tela B, D-60) segue o mesmo caminho desde o D-98: a análise monta uma cena por
+ * segmento (scripts/preparo-cenas.ts).
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
@@ -48,11 +49,10 @@ export interface FalhaPreparo { em: string; etapa: string; motivo: string; rel: 
 export interface Diagnostico {
   /** campanha/alvo da pasta da análise (alvo = id do par ou runId). */
   campanha: string | null; alvo: string | null; tipo: "par" | "individual";
-  /** O botão aparece? (sem análise ainda, entradas arquivadas, manifesto 1.1.0, referência que não navega) */
+  /** O botão aparece? (sem análise ainda, entradas arquivadas, manifesto 1.1.0) */
   pode: boolean;
   selo: Selo;
   motivo: string | null;
-  foraDeAlcance: boolean;
   ultimaFalha: FalhaPreparo | null;
   execucoes: Partial<Record<Arm, string>>;
 }
@@ -147,13 +147,6 @@ function lerManifesto(arquivo: string, e: EntradaIndice): ManifestoLido {
   return { manifest: lido.manifest, sha256: lido.sha256 };
 }
 
-/** Referência que navega (D-60): a análise T6 recusa (D-69, NAT-51). Medido no plano de estados do manifesto. */
-export function motivoForaDeAlcance(m: IsolatedCollectionManifest): string | null {
-  return m.statePlan?.paradas?.length
-    ? `a tela ${m.dispatch.screenId} tem referência que navega (${m.statePlan.paradas.length} paradas, D-60); a análise T6 ainda recusa esse caso (D-69, NAT-51). Nada foi preparado, e as execuções continuam no arquivo.`
-    : null;
-}
-
 /**
  * Hash divergente num clone cujo Git converteu os finais de linha (core.autocrlf=true): a causa não é
  * adulteração, e a correção é uma vez só, no clone. A conferência continua byte a byte (nada é aceito).
@@ -199,7 +192,7 @@ export const rotuloEtapa = (e: string): string => ROTULO_ETAPA[e] ?? e;
 
 export function diagnosticoPreparo(arquivo: string, alvo: AlvoPreparo): Diagnostico {
   const base = alvo.tipo === "par" ? { campanha: alvo.campanha, alvo: alvo.par } : { campanha: null as string | null, alvo: alvo.runId };
-  const vazio: Diagnostico = { ...base, tipo: alvo.tipo, pode: false, selo: { estado: "nao-se-aplica", texto: "" }, motivo: null, foraDeAlcance: false, ultimaFalha: null, execucoes: {} };
+  const vazio: Diagnostico = { ...base, tipo: alvo.tipo, pode: false, selo: { estado: "nao-se-aplica", texto: "" }, motivo: null, ultimaFalha: null, execucoes: {} };
   let r: AlvoResolvido;
   try { r = resolverAlvo(arquivo, alvo); } catch (e) {
     const motivo = (e as Error).message;
@@ -210,11 +203,11 @@ export function diagnosticoPreparo(arquivo: string, alvo: AlvoPreparo): Diagnost
   const d: Diagnostico = { ...vazio, campanha: r.campanha, alvo: r.alvo, execucoes, ultimaFalha: ultimaFalhaDePreparo(arquivo, r.campanha, r.alvo) };
   if (lerAnalise(arquivo, r.campanha, r.alvo)?.revisoes.length) return { ...d, selo: { estado: "ok", texto: "análise já preparada" }, motivo: "já existe análise para este alvo" };
   try {
+    // cada manifesto de coleta legível e conferido pelo sha256 do índice; senão não há o que preparar
     for (const arm of ARMS) {
       const e = r.entradas[arm];
       if (!e) continue;
-      const fora = motivoForaDeAlcance(lerManifesto(arquivo, e).manifest);
-      if (fora) return { ...d, foraDeAlcance: true, motivo: fora, selo: { estado: "nao-se-aplica", texto: "fora do alcance da análise (referência que navega)" } };
+      lerManifesto(arquivo, e);
     }
   } catch (e) {
     return { ...d, motivo: comDicaCrlf(arquivo, (e as Error).message), selo: { estado: "nao-se-aplica", texto: "não dá para preparar a análise" } };
@@ -368,7 +361,6 @@ export async function prepararAnalise(arquivo: string, alvo: AlvoPreparo, o: Opc
     }
     const arms = ARMS.filter(a => r.entradas[a]);
     const lidos = Object.fromEntries(arms.map(a => [a, lerManifesto(arquivo, r.entradas[a]!)])) as Partial<Record<Arm, ManifestoLido>>;
-    for (const a of arms) { const fora = motivoForaDeAlcance(lidos[a]!.manifest); if (fora) falhar("referencia", fora); }
     const m0 = lidos[arms[0]]!.manifest;
     // os dois braços de um par vêm da MESMA campanha, referência, plano e site (a análise recusa o resto, aqui com motivo claro)
     for (const a of arms.slice(1)) {

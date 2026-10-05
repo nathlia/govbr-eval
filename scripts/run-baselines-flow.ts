@@ -60,8 +60,26 @@ const execFileAsync = promisify(execFile);
  * cada varredura grava os seus `checks`, então o arquivo diz por si o que rodou. Linhas de base
  * 2.0.0 de baterias fechadas continuam legíveis (READABLE_BASELINE_VERSIONS) e não são regravadas.
  */
-export const BASELINE_VERSION = "linha-de-base-fluxo-2.1.0";
-export const READABLE_BASELINE_VERSIONS: readonly string[] = ["linha-de-base-fluxo-2.0.0", BASELINE_VERSION];
+/**
+ * 2.2.0 (NAT-34): o alvo de um nó do axe dentro de shadow root passa a juntar os trechos com ` >>> `
+ * (`host >>> interno`), o mesmo separador do oráculo e das chaves canônicas (`anchors.ts`). Até a
+ * 2.1.0 o alvo era `target.flat().join(" ")`, que para um nó em shadow root vira um seletor de
+ * descendente que não alcança nada — o nó ficava sem unidade candidata (Vistorias: 12 nós, B-07 e
+ * B-05). Nó fora de shadow root sai byte a byte igual ao da 2.1.0. Política e checks não mudaram.
+ * Linhas de base 2.0.0 e 2.1.0 continuam legíveis e não são regravadas: a análise relê o `target`
+ * gravado no arquivo, nunca o refaz.
+ */
+export const BASELINE_VERSION = "linha-de-base-fluxo-2.2.0";
+export const READABLE_BASELINE_VERSIONS: readonly string[] = ["linha-de-base-fluxo-2.0.0", "linha-de-base-fluxo-2.1.0", BASELINE_VERSION];
+
+/**
+ * Alvo de um nó do axe como seletor que o resolvedor (`anchors.ts`) entende. O `target` do axe é uma
+ * lista de saltos de iframe; cada salto é um seletor ou, quando o nó está em shadow root, a lista dos
+ * seletores de cada árvore atravessada (host no documento, depois dentro de cada shadow root).
+ */
+export function alvoDoAxe(target: ReadonlyArray<string | ReadonlyArray<string>>): string {
+  return target.map(salto => typeof salto === "string" ? salto : salto.join(" >>> ")).join(" ");
+}
 /** Checks pedidos ao validator nas duas passadas. Fixos e independentes da tela. */
 export const BASELINE_CHECKS = ["tokens", "structure", "page"] as const;
 /** Política da varredura comparável. Fixa e independente da tela. */
@@ -342,7 +360,7 @@ async function main(): Promise<number> {
         const axe = await new AxeBuilder({ page }).analyze();
         const axeSeconds = seconds(axeStarted);
         const axeFindings: AxeFindingRef[] = axe.violations.flatMap(v => v.nodes.map(n => ({
-          rule: v.id, impact: v.impact ?? null, description: v.help ?? v.description, target: n.target.flat().join(" "),
+          rule: v.id, impact: v.impact ?? null, description: v.help ?? v.description, target: alvoDoAxe(n.target as unknown as ReadonlyArray<string | ReadonlyArray<string>>),
         })));
         const anchors = scene.specs.map(spec => spec.anchor);
         // Entrada direta (D-60): antes de o scanner varrer, a árvore que ela alcança é conferida contra

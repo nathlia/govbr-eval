@@ -158,8 +158,10 @@ Recalcular”).
 Uma execução sem par completo (o outro braço falhou sem pacote, por exemplo) tem o mesmo botão na
 página dela: **Preparar a análise desta execução (individual)**.
 
-Tela com referência que navega (a tela B) aparece como **“fora do alcance da análise”**, sem botão:
-a análise ainda não aceita esse caso (D-69, NAT-51). As execuções e o resumo técnico continuam ali.
+Tela com referência que navega (a tela B, Vistorias) se prepara pelo mesmo botão desde o D-98: a
+análise reconstrói uma cena por segmento da navegação. Na fila, um cartão cujo elemento existe em mais
+de um segmento traz **“De qual cena a alegação fala (obrigatório)”**: escolha a cena; só os elementos e
+as unidades candidatas dela contam, e sem ela a gravação é recusada.
 
 **“hash divergente” em tudo, logo de cara?** É quase sempre o Git do Windows trocando os finais de linha
 do clone (`core.autocrlf=true`): nenhum arquivo de texto tem mais o sha256 que o workflow registrou. O
@@ -363,14 +365,15 @@ elegível → a preparação para com o motivo. Sem agenda, nada muda: tentativa
   política da campanha ainda não é feito pelo painel.
 - Sem filtros, lista de defeitos entre campanhas, hospedagem nem controle de acesso. Isso fica para o
   T8b e para a decisão de hospedagem.
-- Referência que navega (tela B) ainda é recusada pela análise (D-69).
 
 ## Testes
 
 `npm run test:painel` monta a fixture, sobe o painel numa porta livre e confere os estados, os números
 contra `summary.json`/`score.json`, as gravações versionadas, o recálculo, o download e o isolamento.
 Num segundo arquivo, montado pelo código do job arquivar e sem análise, confere o **Preparar
-análise**: pronto para preparar, fora do alcance (referência que navega), anexo ausente e hash
+análise**: pronto para preparar (também o par da Vistorias, referência que navega: preparo, fila com
+cartão segmentado, decisão recusada sem cena e gravada com ela, alvo do axe em shadow root oferecendo
+B-07 — pulado sem o clone do `govbr-telas` ao lado), anexo ausente e hash
 divergente como falhas com etapa, o caminho completo até “aguardando revisão”, a análise individual,
 o 404 da referência, do site, da campanha e das restaurações, e o cache adulterado refeito do anexo.
 Do redesenho (T8a.2): o id curto em toda página e na URL (e ausente da fila cega), avisos de uma frase

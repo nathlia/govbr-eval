@@ -31,7 +31,7 @@ import { contarMascara, mascarar, type TextoVisivel } from "./mascara";
 
 // ───────────────────────────────────────────────────────────────── vista cega
 
-export interface VistaUnidade { id: string; specId: string; estado: string; descricao: string; predicado: string }
+export interface VistaUnidade { id: string; specId: string; estado: string; cena: string; descricao: string; predicado: string }
 export interface VistaCartao {
   id: string; origem: "execução de agente" | "linha de base determinística"; cena: string; regra: string | null;
   observado: string | null; esperado: string | null; janela: string; sinais: string[];
@@ -41,15 +41,21 @@ export interface VistaCartao {
   evidencias: { n: number; status: string; url: string | null; sha256: string | null }[];
   imagemCena: string | null;
   retido: string;
-  decisao: { status: "pendente" | "decidido"; decisao: string | null; justificativa: string | null; revisora: string | null; unidades: string[] } ;
+  decisao: { status: "pendente" | "decidido"; decisao: string | null; justificativa: string | null; revisora: string | null; unidades: string[]; cena: string | null } ;
   segmentado: boolean;
+  /**
+   * Só em cartão com cenas por segmento (D-60, tela B): o seletor resolve em mais de um segmento e a
+   * revisora diz de qual a alegação fala. Cada opção traz os sujeitos e as unidades candidatas DAQUELA
+   * cena; só elas contam (a validação é a do scorer).
+   */
+  cenas: { id: string; estado: string; caminho: string | null; sujeitos: string[]; candidatas: string[] }[] | null;
 }
 
 export const tokenEvidencia = (an: Analise, rv: Revisao, cardId: string, i: number): string =>
   digest(["painel-evidencia", an.id, rv.nome, cardId, i]).slice(0, 24);
 
 function unidade(u: SemanticUnit): VistaUnidade {
-  return { id: u.id, specId: u.specId, estado: u.state, descricao: u.description,
+  return { id: u.id, specId: u.specId, estado: u.state, cena: u.scene, descricao: u.description,
     predicado: u.acceptance.outcome === "nao-implementado"
       ? "predicado não implementado: nada foi verificado por máquina; a decisão é sua"
       : `${u.acceptance.kind ?? ""} ${u.acceptance.outcome} — ${u.acceptance.expected}` };
@@ -109,9 +115,11 @@ export function vistaFila(arquivo: string, campanha: string, alvo: string): Vist
         : "retidos por cegueira: a narrativa livre da execução, o nome dos arquivos de evidência e o braço",
       decisao: d && d.status === "reviewed"
         ? { status: "decidido", decisao: (d.atoms[0] as { decisao?: string })?.decisao ?? d.atoms[0]?.verdict ?? null, justificativa: d.rationale,
-          revisora: d.reviewer, unidades: d.atoms.flatMap(a => a.unitIds) }
-        : { status: "pendente", decisao: null, justificativa: null, revisora: null, unidades: [] },
+          revisora: d.reviewer, unidades: d.atoms.flatMap(a => a.unitIds), cena: d.cena ?? null }
+        : { status: "pendente", decisao: null, justificativa: null, revisora: null, unidades: [], cena: null },
       segmentado: Boolean(c.segmentos?.length),
+      cenas: c.segmentos?.length ? c.segmentos.map(o => ({ id: o.scene, estado: o.estado, caminho: o.path,
+        sujeitos: c.subjects.filter(s => s.scene === o.scene).map(s => mascarar(s.label)), candidatas: o.candidateUnitIds })) : null,
     };
   });
   // Máscara só na vista (NAT-60): o pacote não é tocado. Contagem antes/depois sobre o mesmo recorte de texto.
@@ -175,6 +183,8 @@ export function imagemDaCena(arquivo: string, campanha: string, alvo: string, n:
 
 export interface PedidoDecisao {
   cardId: string; decisao: string; unitIds?: string[]; duplicadaDe?: string | null;
+  /** Cartão com cenas por segmento (D-60): de qual cena a alegação fala. Obrigatório nele, proibido nos outros. */
+  cena?: string | null;
   citacao?: "supported" | "unsupported" | "uncertain"; justificativa: string; consultado?: string[]; revisora: string; base: number;
 }
 export type ResultadoGravacao = { ok: true; versao: number; arquivo: string } | { ok: false; erro: string; conflito?: boolean };
@@ -197,7 +207,14 @@ export function salvarDecisao(arquivo: string, campanha: string, alvo: string, p
   if (!consultado.length) return { ok: false, erro: "diga o que você consultou (por exemplo: cartão; reconstrução da cena)" };
   const card = pkg.cards.find(c => c.id === p.cardId);
   if (!card) return { ok: false, erro: "cartão desconhecido nesta revisão" };
-  if (card.segmentos?.length) return { ok: false, erro: "cartão com cenas por segmento: esta versão do painel não decide esse caso (a análise T6 ainda recusa referência que navega)" };
+  // Cena por segmento (D-60): a alegação diz a janela e os passos em texto livre, nunca a rota; quem
+  // decide diz de qual segmento ela fala, e só os sujeitos e as candidatas dessa cena contam.
+  const cena = p.cena ? String(p.cena) : null;
+  const segmento = card.segmentos?.length ? card.segmentos.find(o => o.scene === cena) : undefined;
+  if (card.segmentos?.length && !segmento) return { ok: false, erro: `escolha de qual cena a alegação fala: o elemento existe em mais de um segmento (${card.segmentos.map(o => o.estado).join(", ")})` };
+  if (!card.segmentos?.length && cena) return { ok: false, erro: "este cartão não tem cenas por segmento para escolher" };
+  const candidatas = segmento ? segmento.candidateUnitIds : card.candidateUnitIds;
+  const sujeitos = (segmento ? card.subjects.filter(s => s.scene === segmento.scene) : card.subjects).map(s => s.id);
   const raw = structuredClone(vigor.raw);
   const dec = raw.decisions.find(d => d.cardId === card.id);
   if (!dec) return { ok: false, erro: "cartão fora das decisões deste pacote" };
@@ -206,7 +223,7 @@ export function salvarDecisao(arquivo: string, campanha: string, alvo: string, p
   if (p.decisao === "defeito-do-gabarito") {
     unitIds = [...new Set(p.unitIds ?? [])];
     if (!unitIds.length) return { ok: false, erro: "escolha qual unidade a alegação acertou" };
-    if (!unitIds.every(u => card.candidateUnitIds.includes(u))) return { ok: false, erro: "só unidades candidatas deste cartão podem ser escolhidas" };
+    if (!unitIds.every(u => candidatas.includes(u))) return { ok: false, erro: segmento ? "só unidades candidatas da cena escolhida podem ser escolhidas" : "só unidades candidatas deste cartão podem ser escolhidas" };
   } else if (p.decisao === "duplicada") {
     const alvoC = pkg.cards.find(c => c.id === p.duplicadaDe);
     if (!alvoC || !duplicataElegivel(pkg, card, alvoC)) return { ok: false, erro: "“duplicada” só vale para outro cartão da MESMA execução, com os mesmos elementos e o mesmo estado" };
@@ -216,8 +233,8 @@ export function salvarDecisao(arquivo: string, campanha: string, alvo: string, p
     duplicateOf = { cardId: alvoC.id, atomId: dAlvo.atoms[0]?.id ?? "a1" };
   }
   Object.assign(dec, {
-    status: "reviewed", reviewer: revisora, rationale: justificativa, complete: true, evidenceRefs: consultado,
-    atoms: [{ id: "a1", text: card.observed ?? card.description, subjects: card.subjects.map(s => s.id), unitIds,
+    status: "reviewed", reviewer: revisora, rationale: justificativa, complete: true, evidenceRefs: consultado, ...(segmento ? { cena: segmento.scene } : {}),
+    atoms: [{ id: "a1", text: card.observed ?? card.description, subjects: sujeitos, unitIds,
       citation: p.citacao ?? "uncertain", decisao: p.decisao as keyof typeof DECISOES, ...(duplicateOf ? { duplicateOf } : {}) }],
   });
   try {

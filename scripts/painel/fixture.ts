@@ -27,6 +27,8 @@ import {
 } from "../arquivo-resultados";
 import { statePlanSha256, type StatePlan } from "../collection-manifest";
 import { CAMPANHA_ID, ORACULO, construirFixture, type OpcoesFixture } from "../fixtures/analise/construir";
+import { cenasDoPlano } from "../collection-manifest";
+import type { FlowGroundTruth } from "../../types";
 import { ISOLATED_MANIFEST_VERSION, documentoDaCampanha, type IsolatedCollectionManifest } from "../manifesto-coleta-isolada";
 import type { FlowBaselines } from "../run-baselines-flow";
 import { resumoColeta } from "../pipeline-t4";
@@ -200,14 +202,11 @@ const COMMIT_FIXTURE = { telas: "e".repeat(40), validator: "d".repeat(40) };
  * Manifesto de coleta 1.1.0 SINTÉTICO para um braço da fixture da análise, como o `preparar` do T4
  * gravaria (modo roteirizado). A referência é a fixture versionada dentro do govbr-eval, como no T4.
  */
-function manifestoDaFixture(fx: ReturnType<typeof construirFixture>, run: Run, opcoes: { navega?: boolean } = {}): IsolatedCollectionManifest {
+function manifestoDaFixture(fx: ReturnType<typeof construirFixture>, run: Run, refRel = "scripts/fixtures/analise/referencia-fixture.json"): IsolatedCollectionManifest {
   const registro = JSON.parse(readFileSync(fx.linhaDeBase, "utf8")) as Baseline;
-  const refRel = "scripts/fixtures/analise/referencia-fixture.json";
   const refBytes = readFileSync(join(ROOT, refRel));
   if (sha(refBytes) !== registro.identity.referenceSha256) throw new Error("fixture: referência versionada ≠ a da fixture construída");
-  let statePlan = JSON.parse(readFileSync(join(fx.dir, "plano-estados.json"), "utf8")) as StatePlan;
-  // tela que navega (D-60), só para o estado "fora do alcance": paradas no plano, hash do plano recalculado
-  if (opcoes.navega) statePlan = { ...statePlan, paradas: [{ id: "lista", afterStep: 0, path: "/fixture-analise.html" }, { id: "detalhe", afterStep: 1, path: "/fixture-detalhe" }] };
+  const statePlan = JSON.parse(readFileSync(join(fx.dir, "plano-estados.json"), "utf8")) as StatePlan;
   const siteText = readFileSync(join(fx.site, "site-manifest.json"));
   const head = execFileSync("git", ["-C", ROOT, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();
   const base: Omit<IsolatedCollectionManifest, "campaign"> = {
@@ -233,16 +232,39 @@ export interface ArquivoT4 {
   /** O que o job arquivar subiria como anexos da Release (fica FORA do arquivo, como na Release). */
   anexos: string;
   campanha: string;
-  pares: { par: string; sem: string; com: string; navega: boolean }[];
+  pares: { par: string; sem: string; com: string; vistorias: boolean }[];
+}
+
+/**
+ * Par `par-vist`: a referência que NAVEGA (D-60) de verdade — Vistorias 1.0.0 (`ground-truth-vistorias.json`,
+ * só lida) sobre o site do govbr-telas (só lido; o arquivamento copia o site para `sites/`). Execuções,
+ * achados e linha de base continuam sintéticos (`fixture: true`). Os alvos do axe são os medidos na cena
+ * inicial, na forma da linha de base 2.2.0 (`host >>> interno`, NAT-34).
+ */
+function fixtureVistorias(telas: string): NonNullable<OpcoesFixture["telaReal"]> {
+  const referencia = join(ROOT, "ground-truth-vistorias.json");
+  const gt = JSON.parse(readFileSync(referencia, "utf8")) as FlowGroundTruth;
+  const cenas = cenasDoPlano(gt);
+  const estado = (passos: string) => ({ viewport: { width: 1280, height: 900 }, steps: [passos] });
+  // o cabeçalho existe em todos os segmentos: o seletor resolve em mais de uma cena e a revisora escolhe (cartão segmentado)
+  const cabecalho = { selector: "pnip-root br-header", rule: null, observed: "Cabeçalho sem o padrão do DS (sintético).",
+    expected: "Header do DS (sintético).", state: estado("lista inicial"), evidence: [] };
+  const caixa = { selector: "pnip-propesc-vistorias table input[type=checkbox]", rule: null, observed: "Caixa de seleção sem nome (sintético).",
+    expected: "Nome acessível (sintético).", state: estado("lista inicial"), evidence: [] };
+  return { site: telas, referencia, achados: { sem: [caixa], com: [caixa, cabecalho] },
+    axePorCena: { [cenas[0].id]: [
+      { rule: "button-name", target: 'tr:nth-child(1) > td:nth-child(9) > .d-flex > div:nth-child(2) > br-button[icon="eye"][type="secondary"] >>> .secondary.middle[aria-label=""]' },
+      { rule: "label", target: "br-input:nth-child(2) >>> #br-input-8" },
+    ] } };
 }
 
 /**
  * Arquivo SINTÉTICO montado pelo MESMO caminho do job arquivar do T4 (`arquivarExecucao`, linha de
  * base por `registrarLinhaDeBase`, entrega por `confirmarEvidencias`), sem nenhuma análise: o ponto de
- * partida do botão "Preparar análise". Pares: `par-t4` (tela que não navega) e, com `navega`, `par-nav`
- * (o plano de estados declara paradas: fora do alcance do T6).
+ * partida do botão "Preparar análise". Pares: `par-t4` (tela que não navega) e, com `vistorias` (clone do
+ * govbr-telas), `par-vist` (Vistorias, referência que navega — no alcance da análise desde o D-98).
  */
-export function construirArquivoT4(out: string, o: { navega?: boolean } = {}): ArquivoT4 {
+export function construirArquivoT4(out: string, o: { vistorias?: string | null } = {}): ArquivoT4 {
   const arquivo = resolve(out);
   if (existsSync(arquivo)) throw new Error(`Pasta já existe: ${out}. O arquivo é montado sempre numa pasta nova.`);
   mkdirSync(arquivo, { recursive: true });
@@ -254,39 +276,37 @@ export function construirArquivoT4(out: string, o: { navega?: boolean } = {}): A
   try {
     writeFileSync(join(arquivo, "FIXTURE-SINTETICA.md"), `# ${AVISO}\n\nArquivo no layout do T4 montado por \`construirArquivoT4\` (govbr-eval, scripts/painel/fixture.ts),\n` +
       "pelo mesmo código do job arquivar, para testar \"Preparar análise\". Nada aqui é resultado científico.\n");
-    const casos = [{ par: "par-t4", sufixo: "t4", dia: "2026-02-01", navega: false }, ...(o.navega ? [{ par: "par-nav", sufixo: "nav", dia: "2026-02-03", navega: true }] : [])];
+    const casos = [{ par: "par-t4", sufixo: "t4", dia: "2026-02-01", vistorias: false }, ...(o.vistorias ? [{ par: "par-vist", sufixo: "vist", dia: "2026-02-03", vistorias: true }] : [])];
     for (const c of casos) {
-      const fx = construirFixture(join(trabalho, c.par), { identidade: { par: c.par, sufixo: c.sufixo, dia: c.dia, slots: { sem: `slot-${c.sufixo}-sem`, com: `slot-${c.sufixo}-com` } } });
+      const fx = construirFixture(join(trabalho, c.par), { identidade: { par: c.par, sufixo: c.sufixo, dia: c.dia, slots: { sem: `slot-${c.sufixo}-sem`, com: `slot-${c.sufixo}-com` } },
+        ...(c.vistorias ? { telaReal: fixtureVistorias(o.vistorias!) } : {}) });
       const runs: Partial<Record<"sem" | "com", string>> = {};
       for (const arm of ["sem", "com"] as const) {
         const dir = fx[arm];
         const run = JSON.parse(readFileSync(join(dir, "run.json"), "utf8")) as Run;
-        const m = manifestoDaFixture(fx, run, { navega: c.navega });
+        const m = manifestoDaFixture(fx, run, c.vistorias ? "ground-truth-vistorias.json" : undefined);
         const mPath = join(trabalho, `${c.par}-${arm}-manifesto-coleta.json`);
         writeFileSync(mPath, JSON.stringify(m, null, 2) + "\n");
         const mBytes = readFileSync(mPath);
         // job linhas-de-base: o bruto mede ESTE disparo (vínculo pelo sha256 do manifesto)
-        let lbDir: string | null = null;
-        if (!c.navega) {
-          lbDir = join(trabalho, `${c.par}-${arm}-linha-de-base`);
-          mkdirSync(lbDir, { recursive: true });
-          const bruto = JSON.parse(readFileSync(join(fx.dir, "linha-de-base", "bruta.json"), "utf8")) as FlowBaselines;
-          bruto.provenance = { ...bruto.provenance, collectionManifest: { path: mPath, sha256: sha(mBytes) } };
-          bruto.timestamp = `${c.dia}T01:00:0${arm === "sem" ? 0 : 5}Z`;
-          writeFileSync(join(lbDir, "bruta.json"), JSON.stringify(bruto, null, 2) + "\n");
-          const reg = registrarLinhaDeBase({ bruta: join(lbDir, "bruta.json"), manifest: m, manifestSha256: sha(mBytes), manifestBytes: mBytes.length, instrumento });
-          if (reg.problemas.length) throw new Error(`fixture T4: linha de base não utilizável: ${reg.problemas.join("; ")}`);
-          writeFileSync(join(lbDir, "baseline.json"), JSON.stringify(reg.registro, null, 2) + "\n");
-        }
+        const lbDir = join(trabalho, `${c.par}-${arm}-linha-de-base`);
+        mkdirSync(lbDir, { recursive: true });
+        const bruto = JSON.parse(readFileSync(join(fx.dir, "linha-de-base", "bruta.json"), "utf8")) as FlowBaselines;
+        bruto.provenance = { ...bruto.provenance, collectionManifest: { path: mPath, sha256: sha(mBytes) } };
+        bruto.timestamp = `${c.dia}T01:00:0${arm === "sem" ? 0 : 5}Z`;
+        writeFileSync(join(lbDir, "bruta.json"), JSON.stringify(bruto, null, 2) + "\n");
+        const reg = registrarLinhaDeBase({ bruta: join(lbDir, "bruta.json"), manifest: m, manifestSha256: sha(mBytes), manifestBytes: mBytes.length, instrumento });
+        if (reg.problemas.length) throw new Error(`fixture T4: linha de base não utilizável: ${reg.problemas.join("; ")}`);
+        writeFileSync(join(lbDir, "baseline.json"), JSON.stringify(reg.registro, null, 2) + "\n");
         const r = arquivarExecucao({ arquivo, evidenciasSaida: anexos, pacote: dir, manifesto: mPath, linhaDeBase: lbDir, segredos: [], telas: fx.site,
-          entradas: { modo: "roteirizado", etapas: lbDir ? "coleta+linha-de-base" : "so-coleta", campanha: run.campaignId, slot: run.slotId, par: run.pairId, tela: run.screen.id, braco: arm },
-          jobs: { preparar: { result: "success" }, coleta: { result: "success" }, "linhas-de-base": { result: lbDir ? "success" : "skipped" } } });
+          entradas: { modo: "roteirizado", etapas: "coleta+linha-de-base", campanha: run.campaignId, slot: run.slotId, par: run.pairId, tela: run.screen.id, braco: arm },
+          jobs: { preparar: { result: "success" }, coleta: { result: "success" }, "linhas-de-base": { result: "success" } } });
         const g = r.gravacoes.find(x => x.tipo === "execucao");
         if (!g?.anexoLocal || g.estado !== "arquivado") throw new Error(`fixture T4: ${run.runId} não foi arquivado: ${JSON.stringify(r)}`);
         confirmarEvidencias(arquivo, run.runId, { baixado: g.anexoLocal, url: `fixture://${g.release}/${basename(g.anexoLocal)}` });
         runs[arm] = run.runId;
       }
-      pares.push({ par: c.par, sem: runs.sem!, com: runs.com!, navega: c.navega });
+      pares.push({ par: c.par, sem: runs.sem!, com: runs.com!, vistorias: c.vistorias });
     }
     return { arquivo, anexos, campanha: CAMPANHA_ID, pares };
   } finally {
@@ -299,7 +319,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const out = process.argv[t4 ? 3 : 2];
   if (!out) { console.error("Uso: npm run painel:fixture -- [--t4] <pasta-nova>"); process.exitCode = 1; }
   else if (t4) {
-    const r = construirArquivoT4(out, { navega: true });
+    const telas = join(ROOT, "..", "govbr-telas");
+    const r = construirArquivoT4(out, { vistorias: existsSync(join(telas, "site-manifest.json")) ? telas : null });
     console.log(`Arquivo sintético no layout do T4 em ${relative(process.cwd(), r.arquivo) || "."} (${AVISO}); nenhuma análise ainda.`);
     console.log(`Anexos da "Release" em ${relative(process.cwd(), r.anexos)}.`);
     console.log(`Abra com: npm run painel:resultados -- --arquivo ${out} --anexos ${relative(process.cwd(), r.anexos)} --sem-download`);

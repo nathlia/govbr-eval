@@ -61,6 +61,22 @@ Repetir só a linha de base (falha técnica): `etapas = so-linha-de-base`,
 Anexo não confirmado (Release indisponível): *Re-run failed jobs* refaz só `arquivar`; o mesmo pacote
 gera os mesmos bytes, é aceito como reenvio e a entrega passa a `confirmado`. O modelo não é chamado.
 
+**Tela B (`tela = vistorias`).** O workflow, o `t4.sh`, o manifesto, o `run-once` e o arquivo são
+os mesmos; nada no caminho supõe a tela A. Para um ensaio (dublê ou roteirizado) basta:
+
+- `tela = vistorias`, uma `campanha` NOVA (sem `campanhas/<id>/campaign.json` commitado, a de ensaio é
+  gerada do disparo com `design.screens = [vistorias@govbr-telas-site-<sha12>]`; uma campanha
+  commitada só serve se trouxer `vistorias` com a versão do site — a `ensaio-agenda-01` e a
+  `t7-tela-a-01` são da tela A e são recusadas no `preparar`), `slot` e `par` livres, `braco` `sem`
+  ou `com` (sem agenda) e `limite_min`;
+- `telas_sha`: commit do `govbr-telas` cujo `site-manifest.json` declara `vistorias` e tem o sha256
+  travado em `runner/images.lock.json` (`versions.telas.manifestSha256`); `validator_sha`: o do
+  oráculo travado no mesmo lock;
+- a linha de base sai na `linha-de-base-fluxo-2.2.0` (NAT-34) e o ESLint não roda (a tela não declara
+  fonte; `eslintAusente` diz por quê).
+
+A campanha real da tela B precisa do próprio `campaign.json` (e agenda) commitados antes da coleta.
+
 ## Onde fica cada coisa no `govbr-resultados`
 
 | Caminho | Conteúdo |
@@ -230,7 +246,8 @@ npm run campanha:agenda -- conferir --campanha <id>       # regenera da semente 
 - `npm run ensaio:t4-linux` (`bash scripts/ci/ensaio-linux.sh`) — o workflow inteiro num Linux de verdade (Docker Engine em
   contêiner, controlador não-root com Node 24.21.0), a partir de `git clone` limpo, pelos passos do
   próprio YAML (`scripts/ci/emular-workflow.ts`), em modo `roteirizado`, com push num `govbr-resultados`
-  local e restauração no fim. ~4 GB temporários, removidos ao final.
+  local e restauração no fim. ~4 GB temporários, removidos ao final. `ENSAIO_TELA=vistorias` faz a
+  mesma prova na tela B (padrão: `solicitacao`).
 
 ## Custo
 

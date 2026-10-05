@@ -237,8 +237,15 @@ outras fontes, a captura pode mudar, e aí mudam os ids de cartão (é a mesma p
   (os dois códigos rodaram no mesmo dia; entre dias diferia também o dia marcado no calendário, ver
   "Determinismo" e NAT-67). O
   `piloto-01` está congelado na 1.4.0 e é recusado pelos dois códigos (trava do D-84).
-- **Tela B no painel.** O painel ainda mostra a tela que navega como "fora do alcance"
-  (`scripts/painel/preparar.ts`). A análise já a aceita. Liberar o botão é um passo à parte.
+- **Tela B no painel.** Liberada: o painel prepara o par da tela que navega como qualquer outro, e a
+  fila pede a cena num cartão segmentado (`docs/painel-resultados.md`).
+- **Linha de base da tela B (NAT-34).** Na Vistorias o axe acha nós dentro de shadow roots dos web
+  components do DS (cena inicial: 12 de 41 nós, `button-name` do `br-button` de olho e `label` do
+  `br-input` de data). Até a `linha-de-base-fluxo-2.1.0` o alvo era `target.flat().join(" ")`, um
+  seletor de descendente que não atravessa o shadow root: 0 dos 12 resolviam e nenhum oferecia unidade
+  candidata (B-07, B-05). A 2.2.0 junta os trechos com ` >>> ` (`alvoDoAxe`), o separador que o
+  resolvedor (`anchors.ts`) e o oráculo já usam: 12 de 12 resolvem. Nó fora de shadow root sai igual
+  (na tela A, 2 de 2 nós idênticos), e o `scan_page` do validator já escreve ` >>> ` nos locators.
 - **Na composta, só se liga o manifesto de análise** (hash e cópia). As regras de composição de
   `scripts/analysis-manifest.ts` falam de baterias antigas. Para pacotes novos, a compatibilidade é
   o `checkAggregation`.
