@@ -13,6 +13,7 @@ import { join, relative } from "node:path";
 import { validateContract, type AnalysisBinding, type ArtifactManifest } from "../contracts/index";
 import { analisar, seguro, type OpcoesAnalise, type Resumo } from "./analisar-execucao";
 import { REGIOES_DO_CLI, regiaoDe } from "./preparo-cenas";
+import { normalizarIdsGerados, presenteNoSite } from "./identidade-cartoes";
 import { cenasDoPlano } from "./collection-manifest";
 import type { FlowGroundTruth } from "../types";
 import { ROOT } from "./adjudication";
@@ -394,6 +395,53 @@ async function main(): Promise<void> {
       await assert.rejects(analisar({ ...opcoes(fx), saida: primeira }), /já existe/);
     });
 
+    // ── identidade da cena entre recálculos (NAT-67) ─────────────────────────
+    await test("id gerado curto que também aparece como texto no site (list-1 dentro de .fa-list-1-2) continua normalizado", () => {
+      // O br-select sorteia list-${0..9999}; o CSS do Font Awesome da tela A tem `.fa-list-1-2`.
+      const site = [{ body: Buffer.from(".fa-list-1-2:before{content:\"\"}.fa-list-ol{x:1}") },
+        { body: Buffer.from("n.setAttribute(`id`,`list-${Math.floor(Math.random()*1e4)}`)") }];
+      const cena = (id: string) => `<button aria-controls="${id}"></button><ul id="${id}" role="listbox"></ul>`;
+      const noSite = presenteNoSite(site);
+      assert.equal(noSite("list-1"), false, "list-1 só aparece colado em fa-…-2: não é token do site");
+      const a = normalizarIdsGerados(cena("list-1"), noSite), b = normalizarIdsGerados(cena("list-4946"), noSite);
+      assert.equal(a.html, b.html, "o sorteio de list-1 dá o mesmo HTML normalizado que qualquer outro sorteio");
+      assert.deepEqual(a.ids, [{ id: "list-1", como: "list-#g1" }]);
+      // Id que o site escreve de verdade (atributo, seletor CSS, string JS) continua presente e não é renomeado.
+      for (const corpo of ['<ul id="list-1">', "#list-1{color:red}", 'document.getElementById("list-1")', "list-1"]) {
+        const fixo = presenteNoSite([{ body: Buffer.from(corpo) }]);
+        assert.equal(fixo("list-1"), true, corpo);
+        assert.deepEqual(normalizarIdsGerados(cena("list-1"), fixo).ids, [], corpo);
+      }
+      assert.equal(presenteNoSite([{ body: Buffer.from("list-12 xlist-1 list-1_a") }])("list-1"), false);
+    });
+
+    await test("APP_ID sorteado pelo Angular (_ngcontent-XXX-cN, _nghost-XXX-cN, também no CSS dos <style>) sai do hash; o resto continua contando", () => {
+      const cena = (app: string, texto = "Vistorias") =>
+        `<style>.x[_ngcontent-${app}-c16]{color:red}</style><pnip-header _nghost-${app}-c16=""><h1 _ngcontent-${app}-c16="">${texto}</h1></pnip-header>`;
+      const nada = () => false;
+      const a = normalizarIdsGerados(cena("baa"), nada), b = normalizarIdsGerados(cena("ksf"), nada);
+      assert.equal(a.html, b.html);
+      assert.match(a.html, /_nghost-#a1-c16=""/);
+      assert.deepEqual(a.ids, [{ id: "_ngcontent/_nghost-baa-c*", como: "_ngcontent/_nghost-#a1-c*" }]);
+      assert.notEqual(normalizarIdsGerados(cena("baa", "Outra"), nada).html, a.html, "texto diferente continua mudando o hash");
+    });
+
+    await test("página que mostra a data de hoje: o relógio da captura é o createdAt do conjunto de snapshots, e duas preparações dão o mesmo sceneHash", async () => {
+      const f = fixture({ hojeNaPagina: true });
+      const criado = readJson<{ createdAt: string }>(f.snapshots).createdAt;
+      const esperado = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(criado));
+      const r1 = await analisar(opcoes(f)), r2 = await analisar(opcoes(f));
+      const cap = (saida: string) => readJson<{ sceneHash: string; relogio: { instante: string; fuso: string; origem: string } }>(join(saida, "revisao", "capture.json"));
+      const html = readFileSync(join(r1.saida, "revisao", "scene-0.html"), "utf8");
+      assert.match(html, new RegExp(`Hoje: ${esperado}`), "a página vê o dia do conjunto de snapshots, não o do recálculo");
+      assert.equal(cap(r1.saida).sceneHash, cap(r2.saida).sceneHash);
+      assert.deepEqual(readJson<SemanticPackage>(join(r2.saida, "revisao", "package.json")).cards.map(c => c.id),
+        readJson<SemanticPackage>(join(r1.saida, "revisao", "package.json")).cards.map(c => c.id));
+      assert.equal(cap(r1.saida).relogio.instante, criado);
+      assert.equal(cap(r1.saida).relogio.fuso, "America/Sao_Paulo");
+      assert.equal(readJson<Resumo>(join(r1.saida, "summary.json")).versoes?.adaptador, "adaptador-benchmark-1.2.0");
+    });
+
     await test("preparo-cenas.ts tem as regiões de semantic-flow-cli.ts texto a texto (os dois ramos de prepare + baselineRuns)", () => {
       const cli = readFileSync(join(ROOT, "scripts", "semantic-flow-cli.ts"), "utf8");
       const mod = readFileSync(join(ROOT, "scripts", "preparo-cenas.ts"), "utf8");
@@ -412,7 +460,7 @@ async function main(): Promise<void> {
     if (!existsSync(join(telas, "site-manifest.json"))) {
       console.log(`PULADO referência que navega: ${telas} ausente (clone o govbr-telas ao lado do govbr-eval)`);
     } else {
-      await test("referência que navega (Vistorias 1.0.0 sobre o site do govbr-telas): uma cena por segmento, par analisado", async () => {
+      await test("referência que navega (Vistorias 1.0.0 sobre o site do govbr-telas): uma cena por segmento, par analisado; duas preparações dão o mesmo sceneHash (NAT-67)", async () => {
         const referencia = join(ROOT, "ground-truth-vistorias.json");
         const refAntes = sha(readFileSync(referencia));
         const gtV = readJson<FlowGroundTruth>(referencia);
@@ -444,7 +492,15 @@ async function main(): Promise<void> {
         const s = readJson<Resumo>(join(r.saida, "summary.json"));
         assert.equal(s.revisaoSemantica!.cartoes, pkg.cards.length);
         assert.equal(execDe(s, "sem").pontuacao.metricas.referenceUnits, 102);
-        console.log(`   Vistorias: ${pkg.scenes.length} cenas (${pkg.scenes.map(x => x.id).join(", ")}), ${pkg.units.length} unidades, ${pkg.cards.length} cartões`);
+        // NAT-67: duas preparações seguidas da tela que navega (Angular + web components, relógio do mock)
+        // dão o mesmo sceneHash e os mesmos cartões — nada sorteado ou datado escapa da normalização.
+        const r2 = await analisar(opcoes(f));
+        assert.equal(r2.estado, "pronta", r2.motivo ?? "");
+        const cap = (saida: string) => readJson<{ sceneHash: string; relogio: { instante: string; fuso: string } }>(join(saida, "revisao", "capture.json"));
+        assert.equal(cap(r2.saida).sceneHash, cap(r.saida).sceneHash, "segunda preparação da Vistorias com outro sceneHash");
+        assert.deepEqual(readJson<SemanticPackage>(join(r2.saida, "revisao", "package.json")).cards.map(c => c.id), pkg.cards.map(c => c.id));
+        assert.deepEqual(cap(r.saida).relogio, { ...cap(r.saida).relogio, instante: readJson<{ createdAt: string }>(f.snapshots).createdAt, fuso: "America/Sao_Paulo" });
+        console.log(`   Vistorias: ${pkg.scenes.length} cenas (${pkg.scenes.map(x => x.id).join(", ")}), ${pkg.units.length} unidades, ${pkg.cards.length} cartões; sceneHash ${cap(r.saida).sceneHash.slice(0, 12)} nas duas preparações`);
       });
     }
 

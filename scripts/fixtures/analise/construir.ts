@@ -57,6 +57,11 @@ export interface OpcoesFixture {
    */
   idsGerados?: boolean;
   /**
+   * NAT-67: a página escreve a data de HOJE (relógio da página, fuso dela) num parágrafo e marca o dia
+   * com uma classe, como o calendário (flatpickr) da tela A. Muda o site congelado.
+   */
+  hojeNaPagina?: boolean;
+  /**
    * Referência com camada de página (D-83): FX-01/FX-02 viram A-01/A-02 (sorteadas) e FX-03 vira P-01 (página).
    * Mesmas âncoras; só os ids mudam. Padrão desligado — os bytes de `gerado/` não mudam.
    */
@@ -80,6 +85,17 @@ export interface IdentidadeFixture { par: string; sufixo: string; dia: string; s
 const IDENTIDADE_PADRAO: IdentidadeFixture = { par: "par-01", sufixo: "01", dia: "2026-01-03", slots: { sem: "slot-02", com: "slot-01" } };
 
 /** Combobox cujo id é sorteado a cada carga (o PNG não muda; o HTML sim). Fora de toda âncora e de todo achado. */
+const HOJE_NA_PAGINA = `  <p class="fx-hoje" aria-current="date"></p>
+  <script>
+    (function () {
+      var d = new Date(), dois = function (n) { return (n < 10 ? "0" : "") + n; };
+      var p = document.querySelector(".fx-hoje");
+      p.textContent = "Hoje: " + d.getFullYear() + "-" + dois(d.getMonth() + 1) + "-" + dois(d.getDate());
+      p.className = "fx-hoje fx-dia-" + d.getDay();
+    })();
+  </script>
+`;
+
 const COMBO_COM_ID_SORTEADO = `  <div class="fx-combo" role="combobox" aria-expanded="false" aria-label="lista sintética"></div>
   <script>
     (function () {
@@ -342,7 +358,8 @@ export function construirFixture(out: string, o: OpcoesFixture = {}) {
     site = { sha256: carregado.manifestSha256, bytes: readFileSync(join(o.telaReal.site, "site-manifest.json")).length };
   } else {
     const original = readFileSync(join(FIXTURE_DIR, "pagina", PAGINA));
-    const html = o.idsGerados ? Buffer.from(original.toString("utf8").replace("</main>", COMBO_COM_ID_SORTEADO + "</main>"), "utf8") : original;
+    const extra = (o.idsGerados ? COMBO_COM_ID_SORTEADO : "") + (o.hojeNaPagina ? HOJE_NA_PAGINA : "");
+    const html = extra ? Buffer.from(original.toString("utf8").replace("</main>", extra + "</main>"), "utf8") : original;
     w(`site/site/${PAGINA}`, html);
     const siteManifest = json({ version: SURFACE_VERSION, entry: `/${PAGINA}`, sourceDist: "fixture-sintetica",
       corpusCommit: null, corpusDirty: null, files: { [`/${PAGINA}`]: sha(html) } });

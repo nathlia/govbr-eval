@@ -39,7 +39,10 @@ import { analysisIdentity, cenasDoPlano, compareIdentities, statePlanOf, statePl
 import type { EvidenceIndex } from "./flow-contract";
 import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION } from "./instrument";
 import { divergenciasDaCampanha, identidadeDoRun } from "./identidade-campanha";
-import { REGRA_IDS_GERADOS, mapearDecisoes, normalizarIdsGerados, presenteNoSite, type IdGerado, type MapaCartoes } from "./identidade-cartoes";
+import {
+  FUSO_DA_CAPTURA, REGRA_IDS_GERADOS, REGRA_RELOGIO, mapearDecisoes, navegadorComRelogio, normalizarIdsGerados, presenteNoSite,
+  type IdGerado, type MapaCartoes, type RelogioDaCaptura,
+} from "./identidade-cartoes";
 import { createSiteServer, loadSite, type LoadedSite } from "./measurement-surface";
 import { baselineRuns, prepararCenas, type CenaPreparada } from "./preparo-cenas";
 import { READABLE_BASELINE_VERSIONS, type FlowBaselines } from "./run-baselines-flow";
@@ -56,8 +59,11 @@ export const RESUMO_VERSAO = "resumo-analise-1.0.0";
  * 1.1.0: o `sceneHash` é calculado sobre o HTML com os ids gerados em tempo de execução normalizados
  * (identidade-cartoes.ts) e decisões de outro pacote são transpostas por corpo idêntico
  * (`revisao/mapa-cartoes.json`). Pontuação e conteúdo dos cartões não mudam.
+ * 1.2.0 (NAT-67): a captura roda com fuso fixo e o relógio da página instalado no `createdAt` do conjunto
+ * de snapshots (o calendário da tela A marca "hoje"; recapturar noutro dia mudava o `sceneHash` e o
+ * cartão de `.flatpickr-day.today`), e um id só conta como presente no site como token inteiro.
  */
-export const ADAPTADOR_VERSAO = "adaptador-benchmark-1.1.0";
+export const ADAPTADOR_VERSAO = "adaptador-benchmark-1.2.0";
 
 type Arm = "sem" | "com";
 const sha = (data: string | Buffer): string => createHash("sha256").update(data).digest("hex");
@@ -248,7 +254,7 @@ export function adaptarExecucao(p: PacoteLido): PrepareRun {
 interface PacotePreparado {
   pkg: SemanticPackage; reviews: SemanticReviews; result: ReturnType<typeof scoreSemanticPackage>; fila: ReviewQueue;
   esforco: ReviewEffort; scenes: CenaPreparada[]; url: string; sceneHash: string;
-  idsGerados: IdGerado[][]; mapa: MapaCartoes | null;
+  idsGerados: IdGerado[][]; mapa: MapaCartoes | null; relogio: RelogioDaCaptura;
 }
 
 /**
@@ -260,6 +266,8 @@ interface PacotePreparado {
 async function prepararPacote(a: {
   gt: FlowGroundTruth; site: LoadedSite; agentes: PrepareRun[]; baseline: FlowBaselines | null; provenance: unknown;
   anterior?: SemanticReviews; orcamento?: string;
+  /** Fuso e instante em que o relógio da página começa em toda captura (NAT-67; identidade-cartoes.ts). */
+  relogio: RelogioDaCaptura;
   /** Pacote contra o qual `anterior` foi gravado (para transpor decisões por corpo idêntico) e de onde veio. */
   pacoteAnterior?: { pkg: SemanticPackage | null; origem: string };
 }): Promise<PacotePreparado> {
@@ -282,7 +290,9 @@ async function prepararPacote(a: {
     const claimSelectors = [...selectorsOfRuns(a.agentes.map(r => r.data)), ...baselineSelectors];
     // Os dois ramos (sem navegação; cenas por segmento, D-60) são os de semantic-flow-cli.ts prepare,
     // importados de preparo-cenas.ts (cópia com guarda de deriva; ver o cabeçalho de lá — NAT-51).
-    const { scenes, units } = await prepararCenas({ browser, gt, url, cenas, selectors, claimSelectors });
+    // Todo contexto que o preparo abre (inclusive a entrada direta do D-60) nasce com o fuso e o relógio
+    // declarados: "hoje" na página não depende do dia do recálculo (NAT-67).
+    const { scenes, units } = await prepararCenas({ browser: navegadorComRelogio(browser, a.relogio), gt, url, cenas, selectors, claimSelectors });
     // Ids sorteados em tempo de execução (br-select do DS: list-4946 → list-3370) não entram no hash:
     // sem isso cada recálculo muda todos os ids de cartão (identidade-cartoes.ts).
     const noSite = presenteNoSite(a.site.files.values());
@@ -304,7 +314,7 @@ async function prepararPacote(a: {
     const reviews = scopeReviews(pkg, transposto.reviews);
     const result = scoreSemanticPackage(pkg, reviews);
     return { pkg, reviews, result, fila: reviewQueue(pkg, reviews), esforco: reviewEffort(pkg), scenes, url, sceneHash,
-      idsGerados: normalizadas.map(n => n.ids), mapa: transposto.mapa };
+      idsGerados: normalizadas.map(n => n.ids), mapa: transposto.mapa, relogio: a.relogio };
   } finally {
     try { await browser?.close(); } finally {
       await new Promise<void>(done => {
@@ -693,6 +703,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
       : o.anterior && existsSync(join(resolve(o.anterior), "revisao", "package.json")) ? join(resolve(o.anterior), "revisao", "package.json") : null;
     prep = await prepararPacote({ gt, site, agentes: pacotes.filter(pontuavel).map(adaptarExecucao),
       baseline: lb.binding.mode === "used" ? lb.bruto : null, provenance, anterior: decisoes, orcamento: o.orcamentoRevisao,
+      relogio: { instante: snapshots.createdAt, fuso: FUSO_DA_CAPTURA, origem: `createdAt do conjunto de snapshots ${snapshots.snapshotSetId}` },
       pacoteAnterior: decisoes ? {
         pkg: pacoteDecisoes && existsSync(pacoteDecisoes) ? lerJson<SemanticPackage>(pacoteDecisoes, "pacote das decisões") : null,
         origem: pacoteDecisoes ? relDe(saida, pacoteDecisoes) : "nenhum (sem --pacote-decisoes e --anterior sem revisao/package.json)",
@@ -776,7 +787,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     put("revisao/esforco-revisao.json", json(prep.esforco));
     put("revisao/capture.json", json({ capturedAt: new Date().toISOString(), url: new URL(prep.url).pathname, sceneHash: prep.sceneHash,
       kind: "reconstrução no momento da análise do site congelado do conjunto de snapshots; não é evidência original da execução",
-      sceneHashIgnora: REGRA_IDS_GERADOS,
+      sceneHashIgnora: REGRA_IDS_GERADOS, relogio: { ...prep.relogio, regra: REGRA_RELOGIO },
       scenes: prep.scenes.map((s, i) => ({ id: s.id, viewport: s.viewport, specIds: s.specIds, html: `scene-${i}.html`, image: `scene-${i}.png`,
         idsGerados: prep!.idsGerados[i], ...(s.segmento ? { segmento: s.segmento, entradaDireta: s.entrada ?? null } : {}) })) }));
     if (prep.mapa) put("revisao/mapa-cartoes.json", json(prep.mapa));

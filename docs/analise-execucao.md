@@ -180,6 +180,40 @@ confere isso. O `sceneHash` inclui a captura da página. Em outra máquina, com 
 outras fontes, a captura pode mudar, e aí mudam os ids de cartão (é a mesma propriedade do
 `semantic-flow-cli.ts`).
 
+**O que a captura fixa para o hash não depender do dia nem da carga** (adaptador 1.2.0, NAT-67;
+`scripts/identidade-cartoes.ts`, fora de `SCORER_FILES`):
+
+- **Relógio.** Todo contexto do navegador do preparo (inclusive a entrada direta do D-60) abre no
+  fuso `America/Sao_Paulo`, com o relógio da página instalado no `createdAt` do conjunto de snapshots
+  (`clock.install`: corre em tempo real a partir dali, então temporizadores e `debounceTime`
+  continuam funcionando). Motivo: o calendário (flatpickr) da tela A marca o dia de hoje
+  (`<span class="flatpickr-day today" aria-current="date">`). Até o 1.1.0, recalcular em 05/10 os
+  pares p02–p09 da `t7-tela-a-01`, capturados em 04/10, trocava o dia marcado. Com isso mudavam o
+  `sceneHash` e todos os ids de cartão. Em p02 e p06, o cartão que aponta `.flatpickr-day.today`
+  passava a resolver outro dia, ficava com corpo diferente e voltava pendente. O p01 e o p10 só
+  reproduziam porque a `rev-002` deles foi capturada depois da meia-noite. `capture.json → relogio`
+  registra o instante, o fuso, a origem e a regra.
+- **Ids gerados.** Um id terminado em dígitos é tratado como gerado quando não aparece no site
+  congelado como **token inteiro**. O `br-select` sorteia `list-${0..9999}`, e `list-1` aparece dentro
+  de `.fa-list-1-2` no CSS do Font Awesome: com a busca por substring, a carga que sorteasse
+  `list-1` deixaria o id cru no hash.
+- **APP_ID do Angular (tela B).** Com encapsulamento emulado, o Angular 15 sorteia um APP_ID de 3
+  letras a cada carga. Ele aparece no nome dos atributos (`_ngcontent-baa-c16`, `_nghost-baa-c16`) e
+  no CSS dos `<style>` gerados. É renomeado para `#a1`. Duas preparações seguidas da Vistorias
+  diferiam só nisso, e agora dão o mesmo `sceneHash` (o teste confere).
+
+**A `t7-tela-a-01` com o 1.2.0** (recálculo dos 10 pares numa cópia do `govbr-resultados`):
+- p02–p09 reproduzem a `rev-002` com o mesmo `sceneHash` (`d61fc365…`) e os mesmos ids de cartão;
+  o `summary.json` é igual, a menos da versão do adaptador, dos hashes que a contêm e dos carimbos.
+- O p01 e o p10 voltam ao `sceneHash` da `rev-001` (`d61fc365…`, contra o qual as decisões deles
+  foram gravadas). Com isso, as decisões se aplicam sem transposição. Partindo da `rev-002` deles
+  (`ef016931…`), `mapearDecisoes` transpõe 29/29 e 28/28 por corpo idêntico.
+- Resultado: 0 pendentes, comparação final nos 10 pares; D por par 0, +2, 0, +1, −1, 0, −1, −2,
+  +1, 0; A-* 85/140 nos dois braços; P-* 0/20 sem e 17/20 com.
+- **Limite.** A página reconstruída vê o dia do conjunto de snapshots, não o dia de cada execução.
+  Se uma campanha atravessar uma virada de data ou de mês, a alegação de um agente sobre "hoje" pode
+  resolver outro dia na reconstrução. Isso não é silencioso: o cartão mostra o elemento resolvido.
+
 ## Limites
 
 - **Os dois ramos vêm de `scripts/preparo-cenas.ts`, que é uma cópia do CLI (NAT-51).** O ramo sem
@@ -199,7 +233,9 @@ outras fontes, a captura pode mudar, e aí mudam os ids de cartão (é a mesma p
 - **Prova de que nada mudou para a tela A** (feita numa cópia do `govbr-resultados`). Recalculados
   os 10 pares da `t7-tela-a-01`, o código antigo e o novo deram `package.json`, `reviews.json`,
   `score.json`, bindings e `summary.json` iguais, a menos dos carimbos de hora. O `scene-0.html` e o
-  `capture.json` diferem só pelos ids sorteados do `br-select`, que o `sceneHash` já normaliza. O
+  `capture.json` diferem só pelos ids sorteados do `br-select`, que o `sceneHash` já normaliza
+  (os dois códigos rodaram no mesmo dia; entre dias diferia também o dia marcado no calendário, ver
+  "Determinismo" e NAT-67). O
   `piloto-01` está congelado na 1.4.0 e é recusado pelos dois códigos (trava do D-84).
 - **Tela B no painel.** O painel ainda mostra a tela que navega como "fora do alcance"
   (`scripts/painel/preparar.ts`). A análise já a aceita. Liberar o botão é um passo à parte.

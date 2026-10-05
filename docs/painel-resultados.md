@@ -242,11 +242,20 @@ adaptador 1.0.0 esse HTML cru entrava no `sceneHash`, que entra no id de todo ca
 trocava todos os ids e as decisões salvas ficavam órfãs (piloto-01, par-01). Desde o 1.1.0
 (`scripts/identidade-cartoes.ts`, fora de `SCORER_FILES`):
 
-- o `sceneHash` ignora só o **id gerado**: termina em dígitos e não aparece, como texto, em nenhum
-  arquivo do site congelado. Ele é renomeado pela ordem em que aparece (`list-#g1`), também onde é
-  citado (`for`, `aria-controls`, `aria-labelledby`… e `href="#…"`). Qualquer outra mudança na página
-  continua mudando o hash. `revisao/capture.json` lista o que foi renomeado em cada cena
-  (`idsGerados`) e a regra (`sceneHashIgnora`); `scene-N.html` continua sendo o HTML cru;
+- o `sceneHash` ignora só o **id gerado**: termina em dígitos e não aparece, como texto (token
+  inteiro, desde o 1.2.0), em nenhum arquivo do site congelado. Ele é renomeado pela ordem em que
+  aparece (`list-#g1`), também onde é citado (`for`, `aria-controls`, `aria-labelledby`… e
+  `href="#…"`). Desde o 1.2.0 também sai do hash o APP_ID que o Angular sorteia a cada carga
+  (`_ngcontent-baa-c16` → `_ngcontent-#a1-c16`, tela B). Qualquer outra mudança na página continua
+  mudando o hash. `revisao/capture.json` lista o que foi renomeado em cada cena (`idsGerados`) e a
+  regra (`sceneHashIgnora`); `scene-N.html` continua sendo o HTML cru;
+- **a página vê sempre o mesmo dia (1.2.0, NAT-67).** O calendário da tela A marca o dia de hoje
+  (`flatpickr-day today`). Até o 1.1.0 a captura usava o relógio da máquina: recalcular noutro dia
+  mudava o `sceneHash` (todos os ids) e o cartão que aponta `.flatpickr-day.today` passava a
+  resolver outro dia, então voltava pendente (p02 e p06 da `t7-tela-a-01`, recalculados em
+  05/10). Agora toda captura roda no fuso `America/Sao_Paulo`, com o relógio da página começando no
+  `createdAt` do conjunto de snapshots e correndo a partir dali. `capture.json → relogio` registra o
+  instante, o fuso e a regra;
 - uma decisão salva com o id de outro pacote só passa para o id novo quando o cartão é **idêntico
   em tudo menos o id**: mesmo corpo, mesmas unidades, mesma referência e mesmo scorer. A regra
   compara com o pacote da revisão em que a decisão foi salva. Se o corpo mudou, o cartão fica pendente.
