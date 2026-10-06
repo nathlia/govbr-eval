@@ -7,7 +7,9 @@
  *     esgotado por braço, com o aviso de risco de seleção; intervalo entre os inícios dos dois braços;
  *   - o desfecho principal sobre os pares FINAIS e elegíveis: D = confirmadas_com − confirmadas_sem só nas
  *     unidades sorteadas (A-*; a camada de página P-* é secundária, D-85), com a estatística pareada
- *     (`estatistica-pareada.ts`) e os secundários por braço. "provisório" até cada par planejado estar
+ *     (`estatistica-pareada.ts`) e os secundários por braço. Nas campanhas de `CAMPANHAS_D_POR_SPEC` (D-102,
+ *     tela B), D conta SPECS confirmadas (≥ 1 unidade confirmada) e as unidades viram secundário.
+ *     "provisório" até cada par planejado estar
  *     final ou declaradamente perdido. Achados e unidades nunca viram repetições: a unidade é o par.
  *
  * Só leitura; nenhum número novo de pontuação é calculado aqui (as confirmadas vêm de summary.json via
@@ -57,14 +59,50 @@ export function vistaAgenda(arquivo: string, campanha: string, entradas: Entrada
 
 // ───────────────────────────────────────────────────────────────── desfecho principal
 
+/**
+ * Em que D conta (D-102). `unidade`: confirmadas por unidade da referência (A-* quando há camadas) — a T7 e
+ * toda campanha não listada abaixo. `spec`: specs confirmadas, uma spec conta quando pelo menos 1 das suas
+ * unidades está confirmada pelo scorer; as unidades viram secundário.
+ */
+export type ModoDesfecho = "unidade" | "spec";
+
+/**
+ * O ÚNICO lugar que declara as campanhas com D por spec, e a decisão que as pôs aqui. Não se infere da tela
+ * nem da forma da referência: cada campanha nova com D por spec entra nesta lista com a sua decisão.
+ */
+export const CAMPANHAS_D_POR_SPEC: Readonly<Record<string, string>> = {
+  "t7-tela-b-01": "D-102 (NAT-69, opção A; protocolo §2)",
+};
+/** Como o desfecho principal congelado no campaign.json declara D por spec (texto do analysisPlan). */
+const DECLARA_D_POR_SPEC = /specs_confirmadas_com\s*[−-]\s*specs_confirmadas_sem/;
+
+/**
+ * O modo do desfecho da campanha: a lista acima, conferida contra o `analysisPlan.primaryOutcome` congelado.
+ * Se os dois discordam, `problema` diz por quê, e o agregado fica provisório (o modo da lista vale).
+ */
+export function modoDoDesfecho(c: Campaign): { modo: ModoDesfecho; decisao: string | null; problema: string | null } {
+  const decisao = CAMPANHAS_D_POR_SPEC[c.campaignId] ?? null;
+  const modo: ModoDesfecho = decisao ? "spec" : "unidade";
+  const textoSpec = DECLARA_D_POR_SPEC.test(c.analysisPlan?.primaryOutcome ?? "");
+  const problema = textoSpec === (modo === "spec") ? null
+    : modo === "spec" ? `${c.campaignId} está na lista de D por spec, mas o desfecho principal do campaign.json não declara specs_confirmadas_com − specs_confirmadas_sem`
+    : `o desfecho principal do campaign.json de ${c.campaignId} declara D por spec, mas a campanha não está na lista de D por spec (agenda-painel.ts): D foi contado por unidade`;
+  return { modo, decisao, problema };
+}
+
 export interface ParAgregado {
+  /** sem/com/d: no modo `spec`, specs confirmadas; no modo `unidade`, unidades (A-* quando há camadas). */
   pairId: string; sem: number; com: number; d: number;
   /** Camada de página (P-*), secundária; null sem camada na referência. */
   paginaSem: number | null; paginaCom: number | null; intervaloMin: number | null;
+  /** Só no modo `spec`: as unidades confirmadas de cada braço (todas as da referência), secundárias. */
+  unidadesSem?: number; unidadesCom?: number;
 }
 export interface SecundarioBraco {
   n: number; precisoes: (number | null)[]; precisaoMedia: number | null; incorretas: number | null; novas: number | null;
   pagina: { confirmadas: number; total: number } | null;
+  /** Só no modo `spec`: unidades confirmadas somadas sobre os pares usados, e o total delas (n × unidades da referência). */
+  unidades?: { confirmadas: number; total: number } | null;
 }
 export interface AgregadoCampanha {
   estado: "provisorio" | "final"; motivoProvisorio: string | null;
@@ -76,17 +114,43 @@ export interface AgregadoCampanha {
   estatistica: AnalisePareada;
   sementeOrigem: string;
   secundarios: Record<Arm, SecundarioBraco>;
+  /**
+   * Só no modo `spec` (D-102): D conta specs. `specs` = specs da referência (das unidades do summary.json;
+   * null sem par usado), `unidades` = unidades da referência por par. Ausente no modo `unidade` (saída igual à de antes).
+   */
+  porSpec?: { decisao: string; specs: number | null; unidades: number | null };
 }
 
 const sorteadas = (b: ResultadoBraco | undefined): number | null => (b ? (b.camadas ? b.camadas.sorteadas.confirmadas : b.confirmadas) : null);
 const pagina = (b: ResultadoBraco | undefined): number | null => (b?.camadas ? b.camadas.pagina.confirmadas : null);
 
+/**
+ * D-102: specs confirmadas por braço, das unidades do par (summary.json → comparacao.unidades): uma spec conta
+ * quando pelo menos 1 das suas unidades está confirmada. Conta de leitura, o scorer não muda. Confere que as
+ * unidades listadas batem com as confirmadas do braço; senão, `problema`.
+ */
+export function specsDoPar(r: NonNullable<LinhaPlacar["resultado"]>): { sem: number; com: number; specs: number; unidades: number; unidadesSem: number; unidadesCom: number } | { problema: string } {
+  const u = r.unidades;
+  if (!u) return { problema: "summary.json sem as unidades do par (comparacao.unidades): D por spec indisponível" };
+  const confirmadas = { sem: [...u.soSem, ...u.ambos], com: [...u.soCom, ...u.ambos] };
+  for (const a of ["sem", "com"] as Arm[]) {
+    const n = r.bracos[a]?.confirmadas;
+    if (n !== confirmadas[a].length) return { problema: `unidades do par não batem com as confirmadas do braço ${a} (${confirmadas[a].length} listadas, ${n ?? "nenhuma"} no summary.json)` };
+  }
+  const specs = (xs: { specId: string }[]) => new Set(xs.map(x => x.specId)).size;
+  const todas = [...u.soSem, ...u.soCom, ...u.ambos, ...u.nenhum];
+  return { sem: specs(confirmadas.sem), com: specs(confirmadas.com), specs: specs(todas), unidades: todas.length,
+    unidadesSem: confirmadas.sem.length, unidadesCom: confirmadas.com.length };
+}
+
 /** O desfecho principal da campanha sobre os pares finais e elegíveis da agenda. */
 export function agregadoDaCampanha(va: VistaAgenda, linhas: LinhaPlacar[]): AgregadoCampanha {
   const { situacao: s } = va;
+  const modo = modoDoDesfecho(va.campanha);
   const pares: ParAgregado[] = [], fora: AgregadoCampanha["foraDaAnalise"] = [], usados: { pairId: string; r: NonNullable<LinhaPlacar["resultado"]> }[] = [];
   let pendentes = 0;
   let soSorteadas = true;
+  const totaisSpec = new Set<string>();
   for (const p of s.pares) {
     const l = linhas.find(x => x.par === p.pairId);
     const r = l?.resultado ?? null;
@@ -106,28 +170,45 @@ export function agregadoDaCampanha(va: VistaAgenda, linhas: LinhaPlacar[]): Agre
     }
     const [x, y] = [sorteadas(r!.bracos.sem), sorteadas(r!.bracos.com)];
     if (x === null || y === null) { fora.push({ pairId: p.pairId, motivo: "summary.json sem as confirmadas de um braço" }); pendentes++; continue; }
+    if (modo.modo === "spec") {
+      const sp = specsDoPar(r!);
+      if ("problema" in sp) { fora.push({ pairId: p.pairId, motivo: sp.problema }); pendentes++; continue; }
+      if (!r!.bracos.sem?.camadas || !r!.bracos.com?.camadas) soSorteadas = false;
+      totaisSpec.add(`${sp.specs}/${sp.unidades}`);
+      pares.push({ pairId: p.pairId, sem: sp.sem, com: sp.com, d: sp.com - sp.sem, paginaSem: pagina(r!.bracos.sem), paginaCom: pagina(r!.bracos.com),
+        intervaloMin: p.intervaloMin, unidadesSem: sp.unidadesSem, unidadesCom: sp.unidadesCom });
+      usados.push({ pairId: p.pairId, r: r! });
+      continue;
+    }
     if (!r!.bracos.sem?.camadas || !r!.bracos.com?.camadas) soSorteadas = false;
     pares.push({ pairId: p.pairId, sem: x, com: y, d: y - x, paginaSem: pagina(r!.bracos.sem), paginaCom: pagina(r!.bracos.com), intervaloMin: p.intervaloMin });
     usados.push({ pairId: p.pairId, r: r! });
   }
+  const [specsRef, unidadesRef] = totaisSpec.size === 1 ? [...totaisSpec][0].split("/").map(Number) : [null, null];
   const sec = (arm: Arm): SecundarioBraco => {
     const bs = usados.map(u => u.r.bracos[arm]).filter((b): b is ResultadoBraco => Boolean(b));
     const soma = (f: (b: ResultadoBraco) => number | null): number | null => (bs.length && bs.every(b => typeof f(b) === "number") ? bs.reduce((a, b) => a + f(b)!, 0) : null);
     const precisoes = bs.map(b => b.precisao);
     const validas = precisoes.filter((v): v is number => typeof v === "number");
     const comPagina = bs.filter(b => b.camadas && b.camadas.pagina.confirmadas !== null && b.camadas.pagina.total !== null);
-    return { n: bs.length, precisoes, precisaoMedia: validas.length ? validas.reduce((a, b) => a + b, 0) / validas.length : null,
+    const base: SecundarioBraco = { n: bs.length, precisoes, precisaoMedia: validas.length ? validas.reduce((a, b) => a + b, 0) / validas.length : null,
       incorretas: soma(b => b.incorretas), novas: soma(b => b.novas),
       pagina: comPagina.length && comPagina.length === bs.length ? { confirmadas: comPagina.reduce((a, b) => a + b.camadas!.pagina.confirmadas!, 0), total: comPagina.reduce((a, b) => a + b.camadas!.pagina.total!, 0) } : null };
+    if (modo.modo !== "spec") return base;
+    const confirmadas = soma(b => b.confirmadas), total = soma(b => b.total);
+    return { ...base, unidades: confirmadas !== null && total !== null ? { confirmadas, total } : null };
   };
   const motivos: string[] = [];
   if (pendentes) motivos.push(`${pendentes} par(es) planejado(s) ainda não final(is) nem perdido(s)`);
   if (va.problemas.length) motivos.push(`agenda com problema: ${va.problemas.join("; ")}`);
+  if (modo.problema) motivos.push(`modo do desfecho: ${modo.problema}`);
+  if (totaisSpec.size > 1) motivos.push(`os pares usados não têm o mesmo conjunto de specs e unidades da referência (${[...totaisSpec].join(", ")} specs/unidades)`);
   const sementeOrigem = va.agenda.seed.commit;
   return {
     estado: motivos.length ? "provisorio" : "final", motivoProvisorio: motivos.length ? motivos.join("; ") : null,
     nPlanejado: va.agenda.pairs, nEfetivo: pares.length, soSorteadas, pares, foraDaAnalise: fora,
     estatistica: analisePareada(pares.map(p => p.d), sementeOrigem), sementeOrigem, secundarios: { sem: sec("sem"), com: sec("com") },
+    ...(modo.modo === "spec" ? { porSpec: { decisao: modo.decisao!, specs: specsRef, unidades: unidadesRef } } : {}),
   };
 }
 
@@ -153,9 +234,13 @@ export const ESTADO_SLOT_TXT: Record<string, string> = {
 /** Linhas de texto (sem HTML nem Markdown) do desfecho: as mesmas na página e no RESULTADOS.md. */
 export function linhasDoDesfecho(g: AgregadoCampanha): { titulo: string; itens: string[] } {
   const e = g.estatistica, ic = e.ic, w = e.robustez.wilcoxon, sg = e.robustez.sinal;
-  const titulo = `${g.estado === "final" ? "FINAL" : "PROVISÓRIO"} — D = confirmadas com − sem${g.soSorteadas ? " nas unidades sorteadas (A-*)" : " (referência sem camada de página: todas as unidades)"}; n efetivo ${g.nEfetivo} de ${g.nPlanejado} pares planejados`;
+  const ps = g.porSpec;
+  const unidadeD = ps
+    ? `D = specs confirmadas com − sem, ${ps.specs === null ? "nas specs da referência" : `nas ${ps.specs} specs da referência`} (spec confirmada = pelo menos 1 unidade confirmada; ${ps.decisao})`
+    : `D = confirmadas com − sem${g.soSorteadas ? " nas unidades sorteadas (A-*)" : " (referência sem camada de página: todas as unidades)"}`;
+  const titulo = `${g.estado === "final" ? "FINAL" : "PROVISÓRIO"} — ${unidadeD}; n efetivo ${g.nEfetivo} de ${g.nPlanejado} pares planejados`;
   const itens = [
-    `D por par: ${g.pares.length ? g.pares.map(p => `${p.pairId} ${sinal(p.d)}`).join(" · ") : "nenhum par final ainda"}`,
+    `D por par${ps ? " (em specs)" : ""}: ${g.pares.length ? g.pares.map(p => `${p.pairId} ${sinal(p.d)}`).join(" · ") : "nenhum par final ainda"}`,
     `média ${num(e.media)} · mediana ${num(e.mediana)} · desvio-padrão ${num(e.desvioPadrao)}`,
     `IC 95% da média: ${ic.disponivel ? `${num(ic.inferior)} a ${num(ic.superior)}` : ic.motivo} (bootstrap percentil sobre pares, ${ic.reamostragens} reamostragens, gerador ${ic.gerador}, semente ${ic.semente} de sha256(${ic.sementeOrigem.slice(0, 12)}…|bootstrap))`,
     `teste principal — permutação exata por troca de sinal sobre a média, bicaudal: p = ${pValor(e.principal.p)}${e.principal.nota ? ` (${e.principal.nota})` : ""}`,
@@ -169,11 +254,23 @@ export function linhasDoDesfecho(g: AgregadoCampanha): { titulo: string; itens: 
 
 /** Os secundários por braço, como texto: nunca somados ao principal. */
 export function linhasSecundarias(g: AgregadoCampanha): string[] {
-  return (["sem", "com"] as Arm[]).map(a => {
+  const L = (["sem", "com"] as Arm[]).map(a => {
     const s = g.secundarios[a];
-    return `${a}: precisão média das afirmações ${pctTxt(s.precisaoMedia)} · incorretas ${num(s.incorretas)} · defeitos novos corretos ${num(s.novas)} · página (P-*) ${s.pagina ? `${s.pagina.confirmadas}/${s.pagina.total}` : "indisponível"} (n = ${s.n})`;
+    const unidades = g.porSpec ? `unidades confirmadas ${s.unidades ? `${s.unidades.confirmadas}/${s.unidades.total}` : "indisponível"} · ` : "";
+    return `${a}: ${unidades}precisão média das afirmações ${pctTxt(s.precisaoMedia)} · incorretas ${num(s.incorretas)} · defeitos novos corretos ${num(s.novas)} · página (P-*) ${s.pagina ? `${s.pagina.confirmadas}/${s.pagina.total}` : "indisponível"} (n = ${s.n})`;
   });
+  if (g.porSpec) {
+    const de = g.porSpec.unidades === null ? "" : ` (das ${g.porSpec.unidades})`;
+    L.unshift(`unidades confirmadas por par${de}, sem → com: ${g.pares.length ? g.pares.map(p => `${p.pairId} ${p.unidadesSem} → ${p.unidadesCom} (${sinal(p.unidadesCom! - p.unidadesSem!)})`).join(" · ") : "nenhum par final ainda"}`);
+  }
+  return L;
 }
+
+/** Cabeçalho da coluna de D na tabela dos pares planejados (página e RESULTADOS.md). */
+export const colunaD = (g: AgregadoCampanha): string => (g.porSpec ? "D (specs)" : "D (sorteadas)");
+/** O que vai entre parênteses depois do D de um par: as contagens de cada braço. */
+export const detalheD = (g: AgregadoCampanha, p: ParAgregado): string =>
+  g.porSpec ? `(specs ${p.sem} → ${p.com}; unidades ${p.unidadesSem} → ${p.unidadesCom})` : `(${p.sem} → ${p.com})`;
 
 /** O planejado × executado, como texto. */
 export function linhasDaAgenda(va: VistaAgenda): string[] {

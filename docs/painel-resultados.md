@@ -341,8 +341,22 @@ manifesto 1.3.0), a ficha da campanha no topo da página inicial e o `RESULTADOS
      por enumeração; teste do sinal exato com os zeros fora e contados.
 
    O bloco diz **PROVISÓRIO** até cada par planejado estar FINAL ou declaradamente perdido, e diz por quê.
+
+   **D por spec (D-102, tela B).** As campanhas listadas em `CAMPANHAS_D_POR_SPEC`
+   (`scripts/painel/agenda-painel.ts`, hoje só `t7-tela-b-01`) contam
+   `D = specs_confirmadas_com − specs_confirmadas_sem`: uma spec conta quando pelo menos 1 das suas
+   unidades está confirmada. É conta de leitura sobre `summary.json` → `comparacao.unidades` (cada
+   unidade com a sua `specId`); o scorer não muda. A lista é o único lugar que escolhe o modo, e
+   `modoDoDesfecho` a confere contra o `analysisPlan.primaryOutcome` congelado: se um declara D por
+   spec e o outro não, o bloco fica PROVISÓRIO e diz por quê. Par sem `comparacao.unidades`, ou com
+   unidades que não batem com as confirmadas de um braço, fica fora com o motivo. A estatística é a
+   mesma, sobre os D por spec. O título diz "specs confirmadas", a tabela dos pares tem a coluna
+   "D (specs)" com specs e unidades de cada braço, e as unidades confirmadas (por par e somadas por
+   braço) vão para os secundários. As outras campanhas (tela A) seguem por unidade, com saída igual
+   à de antes byte a byte.
 2. **Secundários por braço**, nunca somados ao principal: precisão média das afirmações, incorretas,
-   defeitos novos corretos e unidades de página (`P-*`).
+   defeitos novos corretos e unidades de página (`P-*`); no modo por spec, também as unidades
+   confirmadas.
 3. **Planejado × executado, contado pela agenda** e não pelos pares encontrados: slots planejados, não
    iniciados, válidos, à espera de nova tentativa e perdidos; tentativas e extras usadas/limite; pares
    completos e perdidos; perdas e tempo esgotado **por braço**, com **ATENÇÃO — risco de seleção**

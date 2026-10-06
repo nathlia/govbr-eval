@@ -507,6 +507,12 @@ export interface ResultadoPar {
   /** NAT-63: false = par inelegível — não conta, nunca final (comparacao.elegivel === false no summary.json). */
   elegivel: boolean;
   bracos: Partial<Record<Arm, ResultadoBraco>>; diferencaUnidades: number | null; diferencaRecall: number | null; pendentes: number;
+  /**
+   * D-102: as unidades da referência por desfecho do par (só com, só sem, ambos, nenhum), cada uma com a sua spec,
+   * de summary.json → comparacao.unidades. Ausente quando a comparação não as traz (indisponível, resumo antigo).
+   * O agregado por spec da campanha é uma conta de leitura sobre esta lista.
+   */
+  unidades?: NonNullable<NonNullable<Resumo["comparacao"]>["unidades"]>;
 }
 
 export function resultadoDaRevisao(rv: Revisao, ids: Map<string, string> = new Map()): ResultadoPar | null {
@@ -524,7 +530,7 @@ export function resultadoDaRevisao(rv: Revisao, ids: Map<string, string> = new M
   return { revisao: rv.nome, fonte: `${rv.rel}/summary.json`, geradoEm: rv.resumo.geradoEm, estado: c?.estado ?? null, disponivel: Boolean(c?.disponivel),
     elegivel: c?.elegivel !== false, motivo: c?.motivo ?? null, nota: c?.nota ?? "análise de uma execução só: não há comparação",
     bracos, diferencaUnidades: c?.diferencaUnidadesConfirmadas ?? null, diferencaRecall: c?.diferencaRecall ?? null,
-    pendentes: rv.resumo.revisaoSemantica?.pendentes ?? 0 };
+    pendentes: rv.resumo.revisaoSemantica?.pendentes ?? 0, ...(c?.unidades ? { unidades: c.unidades } : {}) };
 }
 
 export interface VistaParResumo {

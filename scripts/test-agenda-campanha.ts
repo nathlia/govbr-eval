@@ -20,7 +20,10 @@ import {
 import type { EntradaIndice } from "./arquivo-resultados";
 import { agendaDoDisparo, buildIsolatedManifest, documentoDaCampanha, isolatedManifestProblems, type CampaignRecord } from "./manifesto-coleta-isolada";
 import { conferirEntradas } from "./pipeline-t4";
-import { agregadoDaCampanha, vistaAgenda } from "./painel/agenda-painel";
+import {
+  agregadoDaCampanha, CAMPANHAS_D_POR_SPEC, colunaD, detalheD, linhasDoDesfecho, linhasSecundarias, modoDoDesfecho, vistaAgenda,
+} from "./painel/agenda-painel";
+import { analisePareada } from "./estatistica-pareada";
 import { placarDaCampanha, vistaExecucoes, type LinhaPlacar, type ResultadoBraco, type ResultadoPar } from "./painel/modelo";
 import { gerarResultados } from "./painel/resultados";
 import { paginaExecucoes } from "./painel/paginas";
@@ -391,6 +394,99 @@ await teste("desfecho FINAL quando todo par planejado está final ou perdido; p�
   assert.match(html, /Planejado × executado \(pela agenda\)/);
   const pl = placarDaCampanha(v.campanhas.find(c => c.id === "agenda-teste")!, v.pares, {}, v.agendas["agenda-teste"]);
   assert.equal(pl.agenda!.agregado.nPlanejado, 10);
+});
+
+// ───────────────────────────────────────────────────────────────── D-102: desfecho por spec (tela B)
+
+const campanhaReal = (id: string): Campaign => JSON.parse(readFileSync(join(ROOT, "campanhas", id, "campaign.json"), "utf8")) as Campaign;
+
+await teste("D-102: o modo do desfecho vem da lista declarada, conferida contra o campaign.json congelado", () => {
+  const b = modoDoDesfecho(campanhaReal("t7-tela-b-01"));
+  assert.equal(b.modo, "spec");
+  assert.match(b.decisao!, /D-102/);
+  assert.equal(b.problema, null, "o campaign.json da tela B declara specs_confirmadas_com − specs_confirmadas_sem");
+  for (const id of ["t7-tela-a-01", "t7b-sonnet-tela-a-01", "piloto-01"]) {
+    assert.deepEqual(modoDoDesfecho(campanhaReal(id)), { modo: "unidade", decisao: null, problema: null }, id);
+  }
+  // lista e texto discordam → problema (o agregado fica provisório)
+  assert.match(modoDoDesfecho({ ...campanhaReal("t7-tela-b-01"), campaignId: "outra-tela-b" }).problema!, /declara D por spec, mas a campanha não está na lista/);
+  const semTexto = { ...campanhaReal("t7-tela-b-01"), analysisPlan: campanhaReal("t7-tela-a-01").analysisPlan };
+  assert.match(modoDoDesfecho(semTexto).problema!, /não declara specs_confirmadas/);
+});
+
+/**
+ * Referência sintética: S-1 `todos` com 5 unidades, S-2 e S-3 `unico`, S-4 `todos` com 2 → 4 specs, 10 unidades.
+ * `confirmadas[arm]` = ids das unidades confirmadas naquele braço.
+ */
+const REF_UNIDADES = ["S-1#1", "S-1#2", "S-1#3", "S-1#4", "S-1#5", "S-2#1", "S-3#1", "S-4#1", "S-4#2", "S-4#3"].map(unitId => ({ unitId, specId: unitId.split("#")[0], elemento: `#${unitId}` }));
+function linhaSpec(pairId: string, sem: string[], com: string[], o: { semUnidades?: boolean; confirmadasSem?: number } = {}): LinhaPlacar {
+  const sel = (arm: Arm) => entradasPainel.find(e => e.slot === `${pairId}-${arm}`)!.chave;
+  const b = (runId: string, n: number): ResultadoBraco => ({ runId, id: null, confirmadas: n, total: REF_UNIDADES.length, recall: n / REF_UNIDADES.length, precisao: 0.5,
+    incorretas: 2, novas: 1, pendentes: 0, achados: 6, maturidade: "final", segundos: 600, custoUsd: null });
+  const pega = (f: (u: string) => boolean) => REF_UNIDADES.filter(u => f(u.unitId));
+  const r: ResultadoPar = { revisao: "rev-001", fonte: "x", geradoEm: "", estado: "final", disponivel: true, motivo: null, nota: "", elegivel: true,
+    bracos: { sem: b(sel("sem"), o.confirmadasSem ?? sem.length), com: b(sel("com"), com.length) }, diferencaUnidades: com.length - sem.length, diferencaRecall: null, pendentes: 0,
+    ...(o.semUnidades ? {} : { unidades: { soCom: pega(u => com.includes(u) && !sem.includes(u)), soSem: pega(u => sem.includes(u) && !com.includes(u)),
+      ambos: pega(u => sem.includes(u) && com.includes(u)), nenhum: pega(u => !sem.includes(u) && !com.includes(u)) } }) };
+  return { par: pairId, tela: "vistorias", modelo: "m", selo: "final", seloTexto: "FINAL", resultado: r, falta: null };
+}
+
+await teste("D-102: D por spec — uma alegação que confirma 3 unidades de uma spec `todos` conta 1 spec; D por unidade e por spec divergem", () => {
+  const vaA = vistaAgenda(arqPainel, "agenda-teste", entradasPainel, () => null)!;
+  const vaB: typeof vaA = { ...vaA, campanha: { ...campanhaReal("t7-tela-b-01") } };
+  const linhas = [
+    // p01: sem acha S-2 e S-3 (2 unidades, 2 specs); com acha S-1#1..#3 numa alegação só (3 unidades, 1 spec) → D unidade +1, D spec −1
+    linhaSpec("p01", ["S-2#1", "S-3#1"], ["S-1#1", "S-1#2", "S-1#3"]),
+    // p02: sem S-1 inteira (5 unidades, 1 spec); com S-1#1 + S-2 + S-4#1 (3 unidades, 3 specs) → unidade −2, spec +2
+    linhaSpec("p02", ["S-1#1", "S-1#2", "S-1#3", "S-1#4", "S-1#5"], ["S-1#1", "S-2#1", "S-4#1"]),
+    // p03: iguais → 0 nos dois
+    linhaSpec("p03", ["S-2#1"], ["S-2#1"]),
+    // p04: sem nada; com S-4 inteira (3 unidades, 1 spec) → unidade +3, spec +1
+    linhaSpec("p04", [], ["S-4#1", "S-4#2", "S-4#3"]),
+    // p05: com perde uma spec → −1 nos dois
+    linhaSpec("p05", ["S-2#1", "S-3#1"], ["S-3#1"]),
+  ];
+  const g = agregadoDaCampanha(vaB, linhas);
+  assert.deepEqual(g.pares.map(p => p.d), [-1, 2, 0, 1, -1], "D em specs");
+  assert.deepEqual(g.pares.map(p => [p.sem, p.com]), [[2, 1], [1, 3], [1, 1], [0, 1], [2, 1]]);
+  assert.deepEqual(g.pares.map(p => p.unidadesCom! - p.unidadesSem!), [1, -2, 0, 3, -1], "D em unidades, secundário");
+  assert.deepEqual(g.porSpec, { decisao: CAMPANHAS_D_POR_SPEC["t7-tela-b-01"], specs: 4, unidades: 10 });
+  // mesma estatística do módulo (nada reimplementado), sobre os D por spec, com a semente da agenda
+  assert.deepEqual(g.estatistica, analisePareada([-1, 2, 0, 1, -1], SEMENTE));
+  assert.equal(g.estatistica.ic.reamostragens, 10_000);
+  assert.deepEqual(g.secundarios.sem.unidades, { confirmadas: 2 + 5 + 1 + 0 + 2, total: 50 });
+  assert.deepEqual(g.secundarios.com.unidades, { confirmadas: 3 + 3 + 1 + 3 + 1, total: 50 });
+  assert.equal(g.estado, "provisorio", "5 pares planejados ainda não finais");
+  assert.doesNotMatch(g.motivoProvisorio!, /modo do desfecho/);
+  // os mesmos pares numa campanha por unidade: D por unidade, sem porSpec
+  const u = agregadoDaCampanha(vaA, linhas);
+  assert.deepEqual(u.pares.map(p => p.d), [1, -2, 0, 3, -1]);
+  assert.equal(u.porSpec, undefined);
+  assert.equal(u.secundarios.sem.unidades, undefined);
+  // textos: o título diz que D conta specs; secundário traz as unidades
+  const d = linhasDoDesfecho(g);
+  assert.match(d.titulo, /^PROVISÓRIO — D = specs confirmadas com − sem, nas 4 specs da referência \(spec confirmada = pelo menos 1 unidade confirmada; D-102/);
+  assert.match(d.itens.find(i => i.startsWith("D por par"))!, /^D por par \(em specs\): p01 −1 · p02 \+2 · p03 0 · p04 \+1 · p05 −1$/);
+  const sec = linhasSecundarias(g);
+  assert.equal(sec[0], "unidades confirmadas por par (das 10), sem → com: p01 2 → 3 (+1) · p02 5 → 3 (−2) · p03 1 → 1 (0) · p04 0 → 3 (+3) · p05 2 → 1 (−1)");
+  assert.match(sec[1], /^sem: unidades confirmadas 10\/50 · precisão média/);
+  assert.equal(colunaD(g), "D (specs)");
+  assert.equal(detalheD(g, g.pares[0]), "(specs 2 → 1; unidades 2 → 3)");
+  assert.equal(colunaD(u), "D (sorteadas)");
+  assert.equal(detalheD(u, u.pares[0]), "(2 → 3)");
+  assert.doesNotMatch(linhasDoDesfecho(u).titulo, /specs/);
+});
+
+await teste("D-102: sem as unidades do par, ou com unidades que não batem com as confirmadas, o par fica fora com motivo", () => {
+  const vaA = vistaAgenda(arqPainel, "agenda-teste", entradasPainel, () => null)!;
+  const vaB: typeof vaA = { ...vaA, campanha: campanhaReal("t7-tela-b-01") };
+  const g = agregadoDaCampanha(vaB, [linhaSpec("p01", ["S-2#1"], ["S-1#1"], { semUnidades: true }), linhaSpec("p02", ["S-2#1"], ["S-1#1"], { confirmadasSem: 4 }), linhaSpec("p03", ["S-2#1"], ["S-1#1"])]);
+  assert.equal(g.nEfetivo, 1);
+  assert.match(g.foraDaAnalise.find(f => f.pairId === "p01")!.motivo, /sem as unidades do par/);
+  assert.match(g.foraDaAnalise.find(f => f.pairId === "p02")!.motivo, /não batem com as confirmadas do braço sem \(1 listadas, 4 no summary\.json\)/);
+  // a campanha listada sem o texto do D por spec no campaign.json: provisório, e diz por quê
+  const errada = agregadoDaCampanha({ ...vaB, campanha: { ...vaB.campanha, analysisPlan: campanhaReal("t7-tela-a-01").analysisPlan } }, [linhaSpec("p03", ["S-2#1"], ["S-1#1"])]);
+  assert.match(errada.motivoProvisorio!, /modo do desfecho: .*não declara specs_confirmadas/);
 });
 
 console.log(`\n${ok} ok, ${falhas} falha(s)`);

@@ -10,7 +10,7 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { campanhasDoPlacar, dataLocal, placarDaCampanha, vistaExecucoes, type InfoCampanha, type LinhaPlacar, type Placar, type ResultadoBraco } from "./modelo";
-import { ESTADO_SLOT_TXT, linhasDaAgenda, linhasDoDesfecho, linhasSecundarias, minTxt, sinal as sinalD } from "./agenda-painel";
+import { colunaD, detalheD, ESTADO_SLOT_TXT, linhasDaAgenda, linhasDoDesfecho, linhasSecundarias, minTxt, sinal as sinalD } from "./agenda-painel";
 
 export const LINHA_DATA = /^Gerado em: .*$/m;
 
@@ -69,11 +69,11 @@ function secaoAgenda(p: Placar): string[] {
   const L = [`### Desfecho principal — **${md(d.titulo)}**`, "", ...d.itens.map(i => `- ${md(i)}`), "",
     "Secundários, por braço (nunca somados ao principal):", "", ...linhasSecundarias(g).map(i => `- ${md(i)}`), "",
     "### Planejado × executado (pela agenda)", "", ...linhasDaAgenda(va).map(i => `- ${md(i)}`), "",
-    "| Par | Abre com | Slot sem | Slot com | Intervalo entre inícios | D (sorteadas) |", "|---|---|---|---|---|---|"];
+    `| Par | Abre com | Slot sem | Slot com | Intervalo entre inícios | ${colunaD(g)} |`, "|---|---|---|---|---|---|"];
   for (const x of va.situacao.pares) {
     const ag = g.pares.find(q => q.pairId === x.pairId), fora = g.foraDaAnalise.find(q => q.pairId === x.pairId);
     const slot = (a: "sem" | "com") => { const z = x.slots[a]; return `${z.slot.slotId}: ${ESTADO_SLOT_TXT[z.estado]}${z.tentativas.length > 1 ? ` (${z.tentativas.length} tentativas)` : ""}${z.motivo ? ` — ${z.motivo}` : ""}`; };
-    L.push(`| ${md(x.pairId)} | ${x.firstArm} | ${md(slot("sem"))} | ${md(slot("com"))} | ${minTxt(x.intervaloMin)} | ${ag ? `**${sinalD(ag.d)}** (${ag.sem} → ${ag.com})` : md(fora?.motivo ?? "—")} |`);
+    L.push(`| ${md(x.pairId)} | ${x.firstArm} | ${md(slot("sem"))} | ${md(slot("com"))} | ${minTxt(x.intervaloMin)} | ${ag ? `**${sinalD(ag.d)}** ${md(detalheD(g, ag))}` : md(fora?.motivo ?? "—")} |`);
   }
   L.push("");
   return L;

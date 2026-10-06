@@ -17,7 +17,7 @@ import {
 } from "./modelo";
 import { DICA_CRLF, rotuloEtapa, type Diagnostico } from "./preparar";
 import type { VistaCartao, VistaFila } from "./revisao";
-import { ESTADO_SLOT_TXT, linhasDaAgenda, linhasDoDesfecho, linhasSecundarias, minTxt } from "./agenda-painel";
+import { colunaD, detalheD, ESTADO_SLOT_TXT, linhasDaAgenda, linhasDoDesfecho, linhasSecundarias, minTxt } from "./agenda-painel";
 
 export const esc = (s: unknown): string => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
 const u = (s: string): string => encodeURIComponent(s);
@@ -150,7 +150,7 @@ ${faltas.length ? `<div class="placar-falta"><h4>O que falta</h4><ul>${faltas.ma
 }
 
 /**
- * NAT-65: campanha com agenda — o desfecho principal (D nas sorteadas, estatística pareada), os secundários
+ * NAT-65: campanha com agenda — o desfecho principal (D nas sorteadas, ou em specs pelo D-102; estatística pareada), os secundários
  * por braço e o planejado × executado contado pela agenda, com cada par planejado e os slots que faltam.
  */
 function blocoAgenda(p: Placar): string {
@@ -161,7 +161,7 @@ function blocoAgenda(p: Placar): string {
     const ag = g.pares.find(q => q.pairId === x.pairId), fora = g.foraDaAnalise.find(q => q.pairId === x.pairId);
     const slot = (a: Arm) => { const z = x.slots[a]; return `${esc(z.slot.slotId)}: ${esc(ESTADO_SLOT_TXT[z.estado])}${z.tentativas.length > 1 ? ` (${z.tentativas.length} tentativas)` : ""}${z.motivo ? ` — ${esc(z.motivo)}` : ""}`; };
     return `<tr><th scope="row"><a href="/par/${u(p.info.id)}/${u(x.pairId)}">${esc(x.pairId)}</a></th><td>${esc(x.firstArm)} primeiro</td><td>${slot("sem")}</td><td>${slot("com")}</td>
-<td>${esc(minTxt(x.intervaloMin))}</td><td>${ag ? `<b>${esc(sinal(ag.d))}</b> (${ag.sem} → ${ag.com})` : `<span class="suave">${esc(fora?.motivo ?? "—")}</span>`}</td></tr>`;
+<td>${esc(minTxt(x.intervaloMin))}</td><td>${ag ? `<b>${esc(sinal(ag.d))}</b> ${esc(detalheD(g, ag))}` : `<span class="suave">${esc(fora?.motivo ?? "—")}</span>`}</td></tr>`;
   };
   return `<div class="placar-agenda">
 <p class="${g.estado === "final" ? "" : "aviso-provisorio"}"><strong>${esc(d.titulo)}</strong></p>
@@ -171,7 +171,7 @@ function blocoAgenda(p: Placar): string {
 <p class="pequeno"><strong>Planejado × executado (pela agenda):</strong></p>
 <ul class="pequeno">${linhasDaAgenda(va).map(i => `<li${i.startsWith("ATENÇÃO") ? ` class="falha"` : ""}>${esc(i)}</li>`).join("")}</ul>
 <details><summary>Os ${va.agenda.pairs} pares planejados</summary>
-<table class="tabela-agenda"><thead><tr><th scope="col">Par</th><th scope="col">Ordem</th><th scope="col">Slot sem</th><th scope="col">Slot com</th><th scope="col">Intervalo entre inícios</th><th scope="col">D (sorteadas)</th></tr></thead>
+<table class="tabela-agenda"><thead><tr><th scope="col">Par</th><th scope="col">Ordem</th><th scope="col">Slot sem</th><th scope="col">Slot com</th><th scope="col">Intervalo entre inícios</th><th scope="col">${esc(colunaD(g))}</th></tr></thead>
 <tbody>${s.pares.map(linhaPar).join("")}</tbody></table></details>
 </div>`;
 }
