@@ -1,0 +1,112 @@
+{
+  "contract": "campaign.v1",
+  "fixture": false,
+  "campaignId": "t7-tela-b-01",
+  "kind": "formal",
+  "title": "Campanha T7c — tela B (Vistorias PROPESC), referência 1.0.0, Opus 5.5 high, 10 pares sem/com em ordem contrabalançada",
+  "objective": "Estimar, na tela B, com Opus 5.5 high, o efeito de disponibilizar o oráculo MCP (pacote inteiro) sobre as specs da referência confirmadas pelo agente, por par, conforme o protocolo congelado em campanhas/t7-tela-b-01/protocolo.md (semente 2a0b661; NAT-66 2A, NAT-69 A). Nunca somada às campanhas da tela A; comparação entre telas só descritiva.",
+  "hypotheses": [
+    "H0: as diferenças pareadas D (specs confirmadas com − sem, 29 specs; spec confirmada = ≥ 1 unidade confirmada) são simétricas em torno de 0 (rótulos trocáveis no par).",
+    "H1 (bicaudal): a média de D é diferente de 0. Exploratório, sem promessa de poder; ausência de significância não estabelece equivalência."
+  ],
+  "createdAt": "2026-10-06T00:45:00Z",
+  "frozenAt": "2026-10-06T00:45:00Z",
+  "design": {
+    "screens": [
+      {
+        "id": "vistorias",
+        "label": "Vistorias PROPESC (PNIP)",
+        "version": "govbr-telas-site-1a6e8daf3cdb"
+      }
+    ],
+    "arms": [
+      "sem",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "Opus",
+        "requested": "claude-opus-5-5"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 10,
+    "order": "balanceado",
+    "seed": null
+  },
+  "fixed": {
+    "protocolSha256": "61d94cc16de2a53c3dd9b2633194d7faebba19f18a7c232904c0b6d5765faac4",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "anthropic",
+      "authMethod": "oauth-subscription"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracle": {
+      "package": "govbr-ds-validator-server",
+      "version": "2.7.0",
+      "distSha256": "31749c29b0dd2c0378b5955c1ba4c3804c66edd38cf90958c0de8196f11652f2",
+      "dataSha256": "ade4f658553e2a6cc13b3f6118bfaf95e5dd9b05d18d22d8c113e456420c5162",
+      "profile": "combined"
+    },
+    "scorerVersion": "flow-semantic-1.5.0"
+  },
+  "limits": {
+    "timeoutSeconds": 2400,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 24,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Entra na análise a primeira tentativa elegível de cada slot (D-88). Nova tentativa só por falha técnica, no máximo 1 por slot e 4 na campanha (teto 24 = 20 planejadas + 4), prioridade pela ordem da agenda; teto esgotado = slot perdido, par incompleto. Timeout (interrupted) não ganha nova tentativa e é inelegível."
+  },
+  "failurePolicy": "Protocolo §7: nova tentativa só por falha técnica (429, queda, modelo indisponível, erro do harness ou do arquivo); timeout de 40 min, envio vazio, malformado, recusado ou ausente ficam registrados e não se repetem; timeout é inelegível (não vira zero achados). Falha de isolamento põe a execução em quarentena e para a coleta até a causa ser entendida. Mudança do modelo efetivo ou da versão do cliente para a coleta.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Por par final e elegível: D = specs_confirmadas_com − specs_confirmadas_sem nas 29 specs da referência ground-truth-vistorias.json 1.0.0 (spec confirmada = pelo menos 1 unidade confirmada pelo scorer; D-102), revisão cega fechada. Teste principal: permutação exata por troca de sinais sobre a média de D, bicaudal, α = 0,05. Protocolo: campanhas/t7-tela-b-01/protocolo.md.",
+    "secondaryOutcomes": [
+      "Robustez: Wilcoxon (Pratt, postos médios, p exato) e teste do sinal exato.",
+      "Unidades confirmadas (das 102), relatadas à parte.",
+      "Precisão das afirmações, incorretas, novos corretos, tempo, custo estimado, uso do oráculo, perdas por braço."
+    ],
+    "uncertaintyMethod": "IC 95% da média de D por bootstrap percentil, 10.000 reamostragens de pares, gerador mulberry32 com semente derivada da semente da campanha; indisponível se n efetivo < 5 ou D todos iguais.",
+    "exclusionRules": "Fora da comparação principal: execução inelegível (D-88: técnico, isolamento, submissão, identidade, tentativa) e par incompleto; listados com motivo, perdas por braço, alerta de risco de seleção."
+  },
+  "budget": {
+    "approved": true,
+    "amount": 110,
+    "currency": "USD",
+    "approvedBy": "Nath (NAT-66, opção 2A: desenho da T7 na tela B; tempo limite e orçamento pela prova prova-vistorias-01) — estimativa do cliente, não fatura: 20 × US$ 3,6–4,5 + reserva de 4 tentativas",
+    "approvedAt": "2026-10-06T00:45:00Z"
+  },
+  "pendingDecisions": []
+}
