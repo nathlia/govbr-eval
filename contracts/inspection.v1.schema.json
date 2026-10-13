@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/inspection.v1.schema.json",
+  "title": "inspection.v1 — registro de inspeção declarado pelo agente (NAT-81)",
+  "description": "Registro comum aos dois braços, enviado pelo agente em `report.inspection` de um envelope findings.v2. Tudo aqui é DECLARAÇÃO do agente: regiões que ele mesmo descobriu, estados que diz ter alcançado, itens que diz ter inspecionado, candidatos e decisões. Comprovação por evento de ferramenta é feita depois, pelo harness (scripts/inspection-ledger.ts), e nunca é escrita pelo agente. Cobertura calculada a partir destas regiões é cobertura do inventário que o próprio agente montou — nunca da página inteira. Este schema não tem campo `contract`: a versão é escolhida pelo harness e registrada no envelope (`inspectionContract`). Regras que o schema não expressa (ids únicos, referências íntegras a estados, regiões e índices de achado, receita que começa no carregamento, completo sem lacunas) estão em contracts/inspection-ledger.mjs.",
+  "type": "object",
+  "required": ["completion", "regions", "states", "items", "candidates", "limitations"],
+  "properties": {
+    "completion": {
+      "description": "Declaração do agente sobre o próprio percurso. `complete` não pode coexistir com região não inspecionada/parcial nem com estado não alcançado.",
+      "enum": ["complete", "partial"]
+    },
+    "regions": { "type": "array", "items": { "$ref": "#/$defs/region" } },
+    "states": { "type": "array", "items": { "$ref": "#/$defs/state" } },
+    "items": { "type": "array", "items": { "$ref": "#/$defs/item" } },
+    "candidates": { "type": "array", "items": { "$ref": "#/$defs/candidate" } },
+    "limitations": { "type": "array", "items": { "$ref": "#/$defs/limitation" } }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "localId": {
+      "description": "Id local, escolhido pelo agente, único dentro da sua lista.",
+      "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "text": { "type": "string", "minLength": 1, "maxLength": 2000, "pattern": "\\S" },
+    "refs": { "type": "array", "maxItems": 50, "items": { "$ref": "#/$defs/text" } },
+    "origin": {
+      "description": "De onde veio a informação: a inspeção do próprio agente pelo navegador, ou o retorno de uma ferramenta de validação. Os dois valores existem nos dois braços; o que cada braço consegue usar depende das ferramentas que ele tem.",
+      "enum": ["browser", "validation-tool"]
+    },
+    "region": {
+      "type": "object",
+      "required": ["id", "description", "origin", "status", "states"],
+      "properties": {
+        "id": { "$ref": "#/$defs/localId" },
+        "description": { "$ref": "#/$defs/text" },
+        "selector": { "$ref": "#/$defs/text" },
+        "origin": { "$ref": "#/$defs/origin" },
+        "originRef": { "description": "Identificador devolvido pela ferramenta que apontou a região.", "$ref": "#/$defs/text" },
+        "status": { "enum": ["inspected", "partial", "not-inspected"] },
+        "reason": { "$ref": "#/$defs/text" },
+        "states": { "description": "Ids de `states` em que a região foi vista.", "type": "array", "items": { "$ref": "#/$defs/localId" } }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        { "if": { "properties": { "status": { "enum": ["partial", "not-inspected"] } }, "required": ["status"] }, "then": { "required": ["reason"] } },
+        { "if": { "properties": { "origin": { "const": "validation-tool" } }, "required": ["origin"] }, "then": { "required": ["originRef"] } }
+      ]
+    },
+    "step": {
+      "description": "Passo tipado da receita, desde o carregamento.",
+      "type": "object",
+      "required": ["action"],
+      "properties": {
+        "action": { "enum": ["load", "navigate", "click", "fill", "press", "select", "hover", "focus", "scroll", "wait", "other"] },
+        "target": { "$ref": "#/$defs/text" },
+        "value": { "type": "string", "maxLength": 2000 },
+        "note": { "$ref": "#/$defs/text" }
+      },
+      "additionalProperties": false
+    },
+    "viewport": {
+      "type": "object",
+      "required": ["width", "height"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "state": {
+      "type": "object",
+      "required": ["id", "url", "viewport", "recipe", "arrival", "evidence"],
+      "properties": {
+        "id": { "$ref": "#/$defs/localId" },
+        "url": { "description": "URL ou caminho em que o estado foi observado.", "$ref": "#/$defs/text" },
+        "viewport": { "description": "Largura e altura efetivas medidas no estado.", "$ref": "#/$defs/viewport" },
+        "recipe": { "description": "Passos desde o carregamento; o primeiro é `load`.", "type": "array", "minItems": 1, "maxItems": 50, "items": { "$ref": "#/$defs/step" } },
+        "arrival": {
+          "type": "object",
+          "required": ["status", "observables"],
+          "properties": {
+            "status": {
+              "description": "`confirmed` exige `originRef`: o identificador devolvido por uma ferramenta que mostra a chegada. Sem isso, `declared`.",
+              "enum": ["confirmed", "declared", "not-reached"]
+            },
+            "observables": { "description": "O que, na interface, mostra que o estado foi alcançado.", "$ref": "#/$defs/refs" },
+            "originRef": { "$ref": "#/$defs/text" },
+            "reason": { "$ref": "#/$defs/text" }
+          },
+          "additionalProperties": false,
+          "allOf": [
+            { "if": { "properties": { "status": { "const": "confirmed" } }, "required": ["status"] }, "then": { "required": ["originRef"] } },
+            { "if": { "properties": { "status": { "const": "not-reached" } }, "required": ["status"] }, "then": { "required": ["reason"] } }
+          ]
+        },
+        "evidence": { "$ref": "#/$defs/refs" }
+      },
+      "additionalProperties": false
+    },
+    "item": {
+      "description": "Algo inspecionado num estado (elemento, controle, relação) e o resultado da inspeção.",
+      "type": "object",
+      "required": ["id", "state", "subject", "check", "status", "evidence"],
+      "properties": {
+        "id": { "$ref": "#/$defs/localId" },
+        "state": { "$ref": "#/$defs/localId" },
+        "region": { "$ref": "#/$defs/localId" },
+        "subject": { "$ref": "#/$defs/text" },
+        "check": { "$ref": "#/$defs/text" },
+        "status": { "enum": ["completed", "failed", "not-available", "omitted"] },
+        "reason": { "$ref": "#/$defs/text" },
+        "evidence": { "$ref": "#/$defs/refs" }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        { "if": { "properties": { "status": { "enum": ["failed", "not-available", "omitted"] } }, "required": ["status"] }, "then": { "required": ["reason"] } }
+      ]
+    },
+    "candidate": {
+      "type": "object",
+      "required": ["id", "state", "origin", "subject", "observation", "decision", "evidence"],
+      "properties": {
+        "id": { "$ref": "#/$defs/localId" },
+        "state": { "$ref": "#/$defs/localId" },
+        "origin": { "$ref": "#/$defs/origin" },
+        "originRef": { "description": "Identificador do candidato na ferramenta que o devolveu.", "$ref": "#/$defs/text" },
+        "subject": { "$ref": "#/$defs/text" },
+        "observation": { "$ref": "#/$defs/text" },
+        "decision": { "enum": ["accepted", "rejected", "uncertain"] },
+        "reason": { "$ref": "#/$defs/text" },
+        "findings": {
+          "description": "Índices (base 0) em `report.findings` dos achados que este candidato originou. Obrigatório só quando `accepted` (com pelo menos um); opcional nos demais, como a skill diz. O achado-2 não muda.",
+          "type": "array", "items": { "type": "integer", "minimum": 0 }
+        },
+        "evidence": { "$ref": "#/$defs/refs" }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        { "if": { "properties": { "decision": { "enum": ["rejected", "uncertain"] } }, "required": ["decision"] }, "then": { "required": ["reason"] } },
+        { "if": { "properties": { "decision": { "const": "accepted" } }, "required": ["decision"] }, "then": { "required": ["findings"] } },
+        { "if": { "properties": { "origin": { "const": "validation-tool" } }, "required": ["origin"] }, "then": { "required": ["originRef"] } }
+      ]
+    },
+    "limitation": {
+      "type": "object",
+      "required": ["kind", "detail"],
+      "properties": {
+        "kind": { "enum": ["budget", "tool-failure", "unreachable", "truncated", "out-of-scope", "other"] },
+        "detail": { "$ref": "#/$defs/text" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

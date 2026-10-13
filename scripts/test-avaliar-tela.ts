@@ -5,8 +5,9 @@
  *   1. paridade: sem e com, com as mesmas entradas, produzem o MESMO texto byte a byte, mesmo com
  *      run id, credencial do coletor e perfil do oráculo diferentes (allowlist, canal lateral);
  *   2. qualquer diferença fora da allowlist falha; campo desconhecido nas entradas é recusado;
- *   3. o exemplo JSON da skill valida em `validateFlowReport` e, envelopado, em `findings.v1`;
- *      `rule` é null; a variante `findings: []` também valida;
+ *   3. o exemplo JSON da skill valida em `validateFlowReport` e, envelopado, em `findings.v2` (NAT-81:
+ *      traz o registro de inspeção, que o envelope v1 recusa); `rule` é null; a variante parcial por
+ *      orçamento com `findings: []` também valida;
  *   4. vocabulário: a skill e o texto renderizado não trazem contexto de pesquisa, gabarito, contagem,
  *      ids normativos, marca do DS, valores de token, oráculo ou ferramentas dele; cada padrão pega
  *      uma amostra plantada; seletores, caminhos e estados dos gabaritos não aparecem na skill;
@@ -68,6 +69,8 @@ test("paridade: sem × com com entradas idênticas → texto idêntico byte a by
     assert.equal(a.promptSha256, sha256(a.prompt));
     assert.equal(a.promptSha256, b.promptSha256);
     assert.equal(a.templateSha256, b.templateSha256);
+    // NAT-81: o registro de inspeção é o mesmo texto nos dois braços (nenhuma linha específica de braço).
+    for (const p of [a.prompt, b.prompt]) assert.ok(p.includes("## Registro de inspeção") && p.includes('"inspection"'));
     // O que difere viaja fora do texto.
     assert.notDeepEqual(a.channel, b.channel);
     // (o rótulo do braço, "sem"/"com", é palavra comum do português e não é procurado por substring)
@@ -127,21 +130,33 @@ test("texto renderizado: sem frontmatter nem marcador; hash do template independ
 
 const fenced = [...normalizeNewlines(template).matchAll(/```json\n([\s\S]*?)\n```/g)].map((m) => m[1]);
 
-test("exemplo JSON da skill: validateFlowReport e findings.v1, com rule null", () => {
+test("exemplo JSON da skill: validateFlowReport e findings.v2 (com registro de inspeção), com rule null", () => {
   assert.equal(fenced.length, 1, "um único exemplo de relatório");
-  const report = JSON.parse(fenced[0]) as { findings: { rule: unknown }[] };
+  const report = JSON.parse(fenced[0]) as { findings: { rule: unknown }[]; inspection?: Record<string, unknown> };
   assert.deepEqual(validateFlowReport(report), []);
   assert.ok(report.findings.length >= 1);
   for (const f of report.findings) assert.equal(f.rule, null);
-  const envelope = (r: unknown) => ({
-    contract: "findings.v1", fixture: true, campaignId: "fixture-avaliar-tela", runId: "fixture-run-01",
-    receivedAt: "2026-01-01T00:00:00Z", receipt: "recibo-fixture", findingContract: "achado-2", report: r,
+  assert.ok(report.inspection, "o exemplo traz o registro de inspeção");
+  const envelope = (r: unknown, contract: "findings.v1" | "findings.v2" = "findings.v2") => ({
+    contract, fixture: true, campaignId: "fixture-avaliar-tela", runId: "fixture-run-01",
+    receivedAt: "2026-01-01T00:00:00Z", receipt: "recibo-fixture", findingContract: "achado-2",
+    ...(contract === "findings.v2" ? { inspectionContract: "inspection.v1",
+      inspectionStatus: (r as { inspection?: unknown }).inspection === undefined ? "absent" : "valid" } : {}), report: r,
   });
   const res = validateContract(envelope(report));
   assert.ok(res.valid, JSON.stringify(res.errors));
-  const empty = { ...report, findings: [] };
-  assert.deepEqual(validateFlowReport(empty), []);
-  assert.ok(validateContract(envelope(empty)).valid);
+  // O coletor armado em v1 recusaria o registro: por isso o harness tem de armar v2 para esta skill.
+  assert.equal(validateContract(envelope(report, "findings.v1")).valid, false);
+  // Orçamento esgotado: parcial, sem candidatos aceitos, findings vazio — válido.
+  const partial = { ...report, findings: [], inspection: { ...report.inspection, completion: "partial", candidates: [],
+    limitations: [{ kind: "budget", detail: "tempo esgotado" }] } };
+  assert.deepEqual(validateFlowReport(partial), []);
+  const rp = validateContract(envelope(partial));
+  assert.ok(rp.valid, JSON.stringify(rp.errors));
+  // O exemplo sem o registro continua aceito nos dois envelopes (registro ausente ≠ cobertura zero).
+  const { inspection: _i, ...semRegistro } = report;
+  assert.ok(validateContract(envelope(semRegistro)).valid);
+  assert.ok(validateContract(envelope({ ...semRegistro, findings: [] }, "findings.v1")).valid);
 });
 
 test("vocabulário: skill e texto renderizado limpos; cada padrão pega a sua amostra", () => {
@@ -190,6 +205,14 @@ test("gabaritos: nenhum seletor, caminho, estado ou id de spec aparece na skill"
   for (const f of files) visit(JSON.parse(readFileSync(join(ROOT, f), "utf8")), "");
   const hits = [...needles].filter((n) => body.includes(n));
   assert.deepEqual(hits, [], `trechos de gabarito na skill: ${hits.join(", ")}`);
+  // NAT-81: o texto renderizado dos DOIS braços (skill + entradas, com o registro de inspeção) também não leva nada da referência.
+  for (const arm of ["sem", "com"] as const) {
+    for (const task of [EXAMPLE_INPUTS, VISTORIAS_LIKE]) {
+      const prompt = renderRun(template, run(arm, clone(task))).prompt;
+      const leaked = [...needles].filter((n) => prompt.includes(n) && !task.url.includes(n));
+      assert.deepEqual(leaked, [], `${arm}: trechos de gabarito no texto renderizado: ${leaked.join(", ")}`);
+    }
+  }
   console.log(`   ${needles.size} seletores/caminhos/estados/ids de ${files.length} gabaritos conferidos`);
 });
 

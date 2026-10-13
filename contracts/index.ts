@@ -10,18 +10,24 @@
  * O que NÃO está aqui: nenhum runner, painel ou scorer. A unidade de avaliação continua a do scorer
  * (scripts/semantic-flow.ts); `findings.v1` só envelopa o relatório que scripts/flow-contract.ts já
  * aceita. Método em docs/contratos-benchmark.md.
+ *
+ * NAT-81: `findings.v2` acrescenta o registro de inspeção (`report.inspection`, inspection.v1) sem mudar o
+ * achado-2, e `artifact-manifest.v2` existe só porque o v1 trava `findings.v1`. Os leitores aceitam as duas
+ * versões; os pacotes históricos continuam v1 e válidos. As regras do registro que o schema não expressa
+ * moram em inspection-ledger.mjs (o coletor usa a mesma cópia).
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 import type { ErrorObject, ValidateFunction } from "ajv";
+import { inspectionLedgerErrors } from "./inspection-ledger.mjs";
 
 export const CONTRACTS_DIR = dirname(fileURLToPath(import.meta.url));
 export const SCHEMA_BASE = "https://govbr-eval.invalid/contracts/";
 
 export const CONTRACT_NAMES = [
-  "campaign.v1", "run.v1", "findings.v1", "isolation.v1", "artifact-manifest.v1",
+  "campaign.v1", "run.v1", "findings.v1", "findings.v2", "isolation.v1", "artifact-manifest.v1", "artifact-manifest.v2",
   "baseline.v1", "snapshot-manifest.v1", "analysis-binding.v1",
 ] as const;
 export type ContractName = typeof CONTRACT_NAMES[number];
@@ -126,6 +132,49 @@ export interface Findings extends Doc<"findings.v1"> {
   report: { timestamp: string; model: string; appUrl: string; scope?: string[]; notes?: string; findings: AgentFinding[] };
 }
 
+/**
+ * NAT-81 — registro de inspeção (inspection.v1.schema.json), DECLARADO pelo agente e comum aos dois
+ * braços. Não é documento com `contract` próprio: a versão vem do envelope (`inspectionContract`), que
+ * o harness escolhe. Comprovação por evento de ferramenta é derivada depois (scripts/inspection-ledger.ts).
+ */
+export type InspectionOrigin = "browser" | "validation-tool";
+export interface InspectionStep {
+  action: "load" | "navigate" | "click" | "fill" | "press" | "select" | "hover" | "focus" | "scroll" | "wait" | "other";
+  target?: string; value?: string; note?: string;
+}
+export interface InspectionLedger {
+  completion: "complete" | "partial";
+  regions: { id: string; description: string; selector?: string; origin: InspectionOrigin; originRef?: string;
+    status: "inspected" | "partial" | "not-inspected"; reason?: string; states: string[] }[];
+  states: { id: string; url: string; viewport: { width: number; height: number }; recipe: InspectionStep[];
+    arrival: { status: "confirmed" | "declared" | "not-reached"; observables: string[]; originRef?: string; reason?: string };
+    evidence: string[] }[];
+  items: { id: string; state: string; region?: string; subject: string; check: string;
+    status: "completed" | "failed" | "not-available" | "omitted"; reason?: string; evidence: string[] }[];
+  candidates: { id: string; state: string; origin: InspectionOrigin; originRef?: string; subject: string; observation: string;
+    decision: "accepted" | "rejected" | "uncertain"; reason?: string; findings?: number[]; evidence: string[] }[];
+  limitations: { kind: "budget" | "tool-failure" | "unreachable" | "truncated" | "out-of-scope" | "other"; detail: string }[];
+}
+export const INSPECTION_CONTRACT = "inspection.v1" as const;
+
+/** findings.v2 (NAT-81): o envelope de findings.v1 + `report.inspection` opcional. O achado é o mesmo achado-2. */
+export interface FindingsV2 extends Doc<"findings.v2"> {
+  campaignId: string; runId: string; receivedAt: UtcTimestamp; receipt: string; findingContract: "achado-2";
+  inspectionContract: typeof INSPECTION_CONTRACT;
+  /**
+   * Escrito pelo coletor. `invalid`: o registro falhou no contrato, saiu de `report` e ficou em
+   * `inspectionRaw` com `inspectionErrors`; os achados foram aceitos assim mesmo.
+   */
+  inspectionStatus: "valid" | "invalid" | "absent";
+  inspectionErrors?: string[];
+  inspectionRaw?: unknown;
+  report: Findings["report"] & { inspection?: InspectionLedger };
+}
+/** Qualquer envelope de achados que os leitores aceitam (v1 histórico, v2 novo). */
+export type AnyFindings = Findings | FindingsV2;
+export const FINDINGS_CONTRACTS = ["findings.v1", "findings.v2"] as const;
+export type FindingsContract = typeof FINDINGS_CONTRACTS[number];
+
 export interface Isolation extends Doc<"isolation.v1"> {
   campaignId: string; runId: string; policyVersion: string; producedBy: "harness"; producedAt: UtcTimestamp;
   result: IsolationStatus;
@@ -142,6 +191,16 @@ export interface ArtifactManifest extends Doc<"artifact-manifest.v1"> {
   files: { path: PackagePath; bytes: number; sha256: Sha256; mediaType: string;
     role: "run" | "findings" | "isolation" | "tool-events" | "evidence" | "summary" | "log" | "refusal" | "model-identity" | "other" }[];
 }
+/** artifact-manifest.v2 (NAT-81): só existe porque v1 trava `findings.v1`. Escrito quando o envelope é findings.v2. */
+export interface ArtifactManifestV2 extends Doc<"artifact-manifest.v2"> {
+  campaignId: string; runId: string; producedBy: string; producedAt: UtcTimestamp;
+  schemaVersions: { run: "run.v1"; findings: "findings.v2"; inspection?: typeof INSPECTION_CONTRACT; isolation?: "isolation.v1" };
+  /** Igual ao `inspectionStatus` de findings.json (registro inválido fica visível sem abrir o envelope). */
+  inspectionStatus: FindingsV2["inspectionStatus"];
+  files: ArtifactManifest["files"];
+}
+export type AnyArtifactManifest = ArtifactManifest | ArtifactManifestV2;
+export const ARTIFACT_MANIFEST_CONTRACTS = ["artifact-manifest.v1", "artifact-manifest.v2"] as const;
 
 export interface SnapshotLink { snapshotSetId: string; itemId: string; sha256: Sha256 }
 /** Envelope de arquivo de um FlowBaselines (scripts/run-baselines-flow.ts). */
@@ -183,7 +242,7 @@ export interface AnalysisBinding extends Doc<"analysis-binding.v1"> {
   status: "ready" | "blocked"; blockedReason: string | null; scoreStatus: ScoreStatus; metrics: AnalysisMetrics;
 }
 
-export type ContractDocument = Campaign | Run | Findings | Isolation | ArtifactManifest | Baseline | SnapshotManifest | AnalysisBinding;
+export type ContractDocument = Campaign | Run | Findings | FindingsV2 | Isolation | ArtifactManifest | ArtifactManifestV2 | Baseline | SnapshotManifest | AnalysisBinding;
 
 // ───────────────────────────────────────────────────────────────── validador
 
@@ -228,7 +287,12 @@ function semanticErrors(doc: ContractDocument): ContractError[] {
   };
   switch (doc.contract) {
     case "artifact-manifest.v1":
+    case "artifact-manifest.v2":
       duplicates(doc.files.map(f => f.path), i => `/files/${i}/path`, "caminho");
+      break;
+    case "findings.v2":
+      // Registro inválido já saiu de `report` (fica em inspectionRaw); as regras valem para o registro aceito.
+      errors.push(...inspectionLedgerErrors(doc.report, "/report"));
       break;
     case "snapshot-manifest.v1":
       duplicates(doc.items.map(i => i.id), i => `/items/${i}/id`, "id de item");
@@ -294,8 +358,33 @@ export function assertContract<T extends ContractDocument>(doc: unknown, expecte
 
 // ───────────────────────────────────────────────────────────────── regras entre documentos
 
+/**
+ * artifact-manifest × findings.json do mesmo pacote (NAT-81): o envelope tem de ser o que o manifesto
+ * declara, e `inspection` só é declarado quando o relatório aceito traz o registro.
+ */
+export function crossCheckManifest(manifest: AnyArtifactManifest, findings: AnyFindings | null): ContractError[] {
+  const errors: ContractError[] = [];
+  const declared = manifest.schemaVersions.findings ?? null;
+  if (findings && declared !== findings.contract) {
+    errors.push({ path: "/schemaVersions/findings", keyword: "x-findings-version", message: `manifesto declara ${declared ?? "nenhum"}, findings.json é ${findings.contract}` });
+  }
+  if (!findings && declared) {
+    errors.push({ path: "/schemaVersions/findings", keyword: "x-findings-version", message: `manifesto declara ${declared} sem findings.json` });
+  }
+  if (manifest.contract === "artifact-manifest.v2" && findings?.contract === "findings.v2" && manifest.inspectionStatus !== findings.inspectionStatus) {
+    errors.push({ path: "/inspectionStatus", keyword: "x-inspection-status", message: `manifesto diz ${manifest.inspectionStatus}, findings.json diz ${findings.inspectionStatus}` });
+  }
+  const hasLedger = findings?.contract === "findings.v2" && findings.report.inspection !== undefined;
+  const declaresLedger = manifest.contract === "artifact-manifest.v2" && manifest.schemaVersions.inspection !== undefined;
+  if (hasLedger !== declaresLedger) {
+    errors.push({ path: "/schemaVersions/inspection", keyword: "x-inspection-version",
+      message: hasLedger ? "findings.json traz registro de inspeção que o manifesto não declara" : "manifesto declara registro de inspeção ausente de findings.json" });
+  }
+  return errors;
+}
+
 /** run.json × findings.json × isolation.json do mesmo pacote. */
-export function crossCheckRun(run: Run, findings: Findings | null, isolation: Isolation | null): ContractError[] {
+export function crossCheckRun(run: Run, findings: AnyFindings | null, isolation: Isolation | null): ContractError[] {
   const errors: ContractError[] = [];
   if (run.submission.status === "accepted" && !findings) {
     errors.push({ path: "/submission", keyword: "x-missing-findings", message: "submissão aceita sem findings.json" });

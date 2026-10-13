@@ -38,6 +38,34 @@ tem a versão no nome (`run.v1.schema.json`). Uma mudança que torne um document
 mude o significado de um campo cria `v2` ao lado do `v1`; o `v1` não é editado depois que houver
 dado real gravado nele.
 
+**NAT-81 — registro de inspeção.** `findings.v2` é o envelope de `findings.v1` mais `report.inspection`
+opcional (`inspection.v1.schema.json`: regiões e origem, estados com receita tipada desde `load`,
+chegada, itens, candidatos ligados a achados por índice, limitações). O achado continua o mesmo
+`achado-2` (referência direta a `findings.v1#/$defs/finding`). `artifact-manifest.v2` existe só porque o
+v1 trava `findings.v1`; o runner escreve v2 apenas quando o envelope aceito é `findings.v2`. Regras que o
+schema não expressa (ids únicos, estado/região/achado inexistente, aceito sem achado, rejeitado com
+achado, receita fora de `load`, `complete` com lacunas) estão em `contracts/inspection-ledger.mjs`, a
+mesma cópia que o coletor carrega. Quem escolhe o envelope é o harness: `run-once` lê o rótulo
+`govbr.collector.findings-contracts` da imagem travada do coletor e passa `COLLECTOR_FINDINGS_CONTRACT`;
+sem o rótulo (imagem anterior), `findings.v1`, e o agente real não parte (a skill pede o registro).
+Tudo no registro é declaração do agente; `scripts/inspection-ledger.ts` separa a comprovação por
+evento de ferramenta, e a cobertura é sempre do inventário que o próprio agente descobriu — a da página
+fica desconhecida. Pacote v1 aparece como "registro indisponível", nunca como zero cobertura. Nada
+disso pontua, decide elegibilidade ou exclui execução. Testes: `test:contracts`, `test:inspecao`.
+
+Registro com erro de contrato nunca derruba achados: o coletor tira o registro de `report`, guarda-o
+como veio em `inspectionRaw` com `inspectionErrors` e grava `inspectionStatus: "invalid"` (copiado no
+manifesto v2); os achados são aceitos com o mesmo recibo mínimo, sem falha técnica nem inelegibilidade.
+Só erro no próprio achado recusa o relatório, como antes. A comprovação por evento lê o formato real da
+ponte (`args`/`result` = `{ text, truncated }`) e casa o identificador como token inteiro, sem tamanho
+mínimo (ref curto do navegador e id do validador valem igual); identificador não achado quando algum
+texto foi cortado pela ponte é `nao-verificavel`, nunca "não encontrado".
+
+**Limite de leitura (process measures).** Todas as contagens do registro são medidas de processo, não
+desfecho: `porOrigem.validation-tool` é 0 no braço sem por construção (não há ferramenta de validação),
+e o custo de escrever o registro cresce com o número de candidatos — provavelmente custa mais ao braço
+com. Reportar ao lado do resultado; nunca comparar braços pelas contagens do registro como desfecho.
+
 ## Os contratos, um por um
 
 ### `campaign.json` — a campanha

@@ -10,8 +10,8 @@ import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import {
-  CONTRACTS_DIR, CONTRACT_NAMES, checkAggregation, checkPlannedAbsence, comparisonKeyOf, crossCheckRun, validateContract,
-  type AnalysisBinding, type Campaign, type ContractError, type Findings, type Isolation, type Run,
+  CONTRACTS_DIR, CONTRACT_NAMES, checkAggregation, checkPlannedAbsence, comparisonKeyOf, crossCheckManifest, crossCheckRun, validateContract,
+  type AnalysisBinding, type ArtifactManifest, type ArtifactManifestV2, type Campaign, type ContractError, type Findings, type FindingsV2, type Isolation, type Run,
 } from "../contracts/index";
 import { normalizeFinding, validateFlowReport, FINDING_CONTRACT } from "./flow-contract";
 import { ROOT } from "./adjudication";
@@ -54,6 +54,15 @@ const EXPECTED: Record<string, { path: string; keyword: string; missingProperty?
   "analysis-binding--blocked-metric-zero.json": { path: "/metrics/recall", keyword: "type" },
   "analysis-binding--blocked-baseline-but-ready.json": { path: "/status", keyword: "const" },
   "campaign--formal-not-frozen.json": { path: "/frozenAt", keyword: "type" },
+  // NAT-81 — registro de inspeção (findings.v2 / inspection.v1) e manifesto v2
+  "findings--v2-duplicate-id.json": { path: "/report/inspection/candidates/1/id", keyword: "x-unique" },
+  "findings--v2-unknown-state.json": { path: "/report/inspection/items/0/state", keyword: "x-unknown-state" },
+  "findings--v2-unknown-finding.json": { path: "/report/inspection/candidates/0/findings/0", keyword: "x-unknown-finding" },
+  "findings--v2-confirmed-without-origin.json": { path: "/report/inspection/states/0/arrival", keyword: "required", missingProperty: "originRef" },
+  "findings--v2-rejected-without-reason.json": { path: "/report/inspection/candidates/2", keyword: "required", missingProperty: "reason" },
+  "findings--v2-complete-with-gaps.json": { path: "/report/inspection/completion", keyword: "x-complete-with-gaps" },
+  "findings--v2-recipe-not-from-load.json": { path: "/report/inspection/states/1/recipe/0/action", keyword: "x-recipe-from-load" },
+  "artifact-manifest--v1-declares-findings-v2.json": { path: "/schemaVersions/findings", keyword: "const" },
 };
 
 const show = (errors: ContractError[]): string => errors.map(e => `${e.path || "/"} ${e.keyword}${e.missingProperty ? `(${e.missingProperty})` : ""}`).join("; ");
@@ -130,6 +139,90 @@ test("findings.v1: zero achados é válido; o relatório inválido para o coleto
   assert.equal(validateContract(broken).valid, false);
   const nullRule = read<Findings>("valid", "findings--com.json").report.findings.find(x => x.rule === null);
   assert.ok(nullRule, "o exemplo precisa exercitar rule: null");
+});
+
+// ───────────────────────────────────────────────────────────────── NAT-81: findings.v2 / inspection.v1
+
+test("findings.v2: mesmo achado-2 de v1; inspeção parcial e zero achados por orçamento são aceitos", () => {
+  const v1 = read<Findings>("valid", "findings--com.json");
+  const v2 = read<FindingsV2>("valid", "findings--v2-com-inspecao-parcial.json");
+  assert.deepEqual(v2.report.findings, v1.report.findings, "o achado não muda entre v1 e v2");
+  assert.equal(v2.findingContract, "achado-2");
+  assert.equal(v2.report.inspection!.completion, "partial");
+  const zero = read<FindingsV2>("valid", "findings--v2-sem-zero-findings-orcamento.json");
+  assert.deepEqual(zero.report.findings, []);
+  assert.ok(zero.report.inspection!.limitations.some(l => l.kind === "budget"));
+  // registro ausente continua válido (não enviado ≠ cobertura zero): o achado nunca é perdido por causa do registro
+  const { inspection: _i, ...semRegistro } = v2.report;
+  assert.ok(validateContract({ ...clone(v2), inspectionStatus: "absent", report: semRegistro }).valid);
+  // status e conteúdo têm de concordar
+  assert.equal(validateContract({ ...clone(v2), report: semRegistro }).valid, false, "valid sem registro");
+  assert.equal(validateContract({ ...clone(v2), inspectionStatus: "absent" }).valid, false, "absent com registro");
+  // registro inválido: guardado à parte, achados intactos, envelope válido
+  const inv = read<FindingsV2>("valid", "findings--v2-registro-invalido.json");
+  assert.equal(inv.inspectionStatus, "invalid");
+  assert.deepEqual(inv.report.findings, v1.report.findings);
+  assert.equal(inv.report.inspection, undefined);
+  assert.equal(validateContract({ ...clone(inv), inspectionErrors: undefined }).valid, false, "invalid sem lista de erros");
+  // v1 não aceita o registro: o envelope é escolha do harness, não do agente
+  assert.equal(validateContract({ ...clone(v1), report: { ...clone(v1.report), inspection: v2.report.inspection } }).valid, false);
+});
+
+test("findings.v2: regras do registro valem também no schema (motivos, origem de ferramenta, tipos)", () => {
+  const v2 = read<FindingsV2>("valid", "findings--v2-com-inspecao-parcial.json");
+  const mut = (f: (d: FindingsV2) => void) => { const d = clone(v2); f(d); return validateContract(d); };
+  const kw = (r: ReturnType<typeof validateContract>) => r.errors.map(e => `${e.path} ${e.keyword}${e.missingProperty ? `(${e.missingProperty})` : ""}`);
+  assert.ok(kw(mut(d => { delete d.report.inspection!.regions[1].reason; })).includes("/report/inspection/regions/1 required(reason)"));
+  assert.ok(kw(mut(d => { delete d.report.inspection!.regions[1].originRef; })).includes("/report/inspection/regions/1 required(originRef)"));
+  assert.ok(kw(mut(d => { delete d.report.inspection!.states[2].arrival.reason; })).includes("/report/inspection/states/2/arrival required(reason)"));
+  assert.ok(kw(mut(d => { d.report.inspection!.candidates[0].findings = []; })).includes("/report/inspection/candidates/0/findings x-accepted-without-finding"));
+  assert.ok(kw(mut(d => { d.report.inspection!.candidates[2].findings = [0]; })).includes("/report/inspection/candidates/2/findings x-rejected-with-finding"));
+  // como a skill diz: `findings` só é obrigatório quando `accepted`
+  assert.ok(mut(d => { delete d.report.inspection!.candidates[2].findings; delete d.report.inspection!.candidates[1].findings; }).valid, "rejeitado/incerto sem findings");
+  assert.ok(kw(mut(d => { delete d.report.inspection!.candidates[0].findings; })).includes("/report/inspection/candidates/0 required(findings)"));
+  assert.ok(kw(mut(d => { d.report.inspection!.items[0].region = "r9"; })).includes("/report/inspection/items/0/region x-unknown-region"));
+  assert.ok(kw(mut(d => { d.report.inspection!.regions[0].states = ["s9"]; })).includes("/report/inspection/regions/0/states/0 x-unknown-state"));
+  assert.ok(kw(mut(d => { (d.report.inspection as unknown as Record<string, unknown>).coverage = "100%"; })).some(k => k.endsWith("additionalProperties")),
+    "o agente não declara cobertura da página");
+  // incerto pode apontar achado enviado; aceito sem região alguma também é registro válido
+  assert.ok(mut(d => { d.report.inspection!.regions = []; d.report.inspection!.items[0].region = undefined as unknown as string; delete d.report.inspection!.items[0].region; }).valid);
+});
+
+test("manifesto: v1 e v2 coerentes com o envelope; v2 declara o registro só quando ele existe", () => {
+  const m1 = read<ArtifactManifest>("valid", "artifact-manifest--com.json");
+  const m2 = read<ArtifactManifestV2>("valid", "artifact-manifest--v2-com-inspecao.json");
+  const f1 = read<Findings>("valid", "findings--com.json");
+  const f2 = read<FindingsV2>("valid", "findings--v2-com-inspecao-parcial.json");
+  assert.deepEqual(crossCheckManifest(m1, f1), []);
+  assert.deepEqual(crossCheckManifest(m2, f2), []);
+  assert.ok(crossCheckManifest(m1, f2).some(e => e.keyword === "x-findings-version"));
+  assert.ok(crossCheckManifest(m2, f1).some(e => e.keyword === "x-findings-version"));
+  const semRegistro = clone(f2);
+  delete semRegistro.report.inspection;
+  assert.ok(crossCheckManifest(m2, semRegistro).some(e => e.keyword === "x-inspection-version"));
+  semRegistro.inspectionStatus = "absent";
+  const m2sem = clone(m2);
+  delete m2sem.schemaVersions.inspection;
+  m2sem.inspectionStatus = "absent";
+  assert.deepEqual(crossCheckManifest(m2sem, semRegistro), []);
+  assert.ok(crossCheckManifest(m2, { ...clone(f2), inspectionStatus: "invalid" }).some(e => e.keyword === "x-inspection-status"));
+  assert.ok(crossCheckManifest(m2sem, f2).some(e => e.keyword === "x-inspection-version"));
+});
+
+test("fronteira: nenhum schema que o agente preenche tem campo de referência/gabarito", () => {
+  for (const f of ["findings.v1.schema.json", "findings.v2.schema.json", "inspection.v1.schema.json"]) {
+    const keys = new Set<string>();
+    const walk = (v: unknown): void => {
+      if (Array.isArray(v)) v.forEach(walk);
+      else if (v && typeof v === "object") for (const [k, x] of Object.entries(v)) {
+        if (k === "properties" && x && typeof x === "object") for (const p of Object.keys(x)) keys.add(p);
+        walk(x);
+      }
+    };
+    walk(JSON.parse(readFileSync(join(CONTRACTS_DIR, f), "utf8")));
+    const proibidas = [...keys].filter(k => /^(specs?(Id)?|units?(Id)?|reference|referencia|gabarito|groundTruth|expectedDetection|answerKey)$/i.test(k));
+    assert.deepEqual(proibidas, [], `${f}: ${proibidas.join(", ")}`);
+  }
 });
 
 // ───────────────────────────────────────────────────────────────── regras entre documentos

@@ -1,0 +1,34 @@
+{
+  "contract": "findings.v2",
+  "fixture": true,
+  "campaignId": "fixture-campanha-01",
+  "runId": "fixture-run-sem-01",
+  "receivedAt": "2026-01-03T00:10:30Z",
+  "receipt": "recibo-fixture-02",
+  "findingContract": "achado-2",
+  "report": {
+    "timestamp": "2026-01-03T00:10:29Z",
+    "model": "modelo-fixture",
+    "appUrl": "http://127.0.0.1:3100/fixture.html",
+    "scope": [
+      "tela fixture inteira"
+    ],
+    "notes": "FIXTURE SINTÉTICA — não é dado científico",
+    "findings": [],
+    "inspection": {
+      "completion": "partial",
+      "regions": [],
+      "states": [],
+      "items": [],
+      "candidates": [],
+      "limitations": [
+        {
+          "kind": "budget",
+          "detail": "tempo esgotado antes de descobrir regiões"
+        }
+      ]
+    }
+  },
+  "inspectionContract": "inspection.v1",
+  "inspectionStatus": "valid"
+}

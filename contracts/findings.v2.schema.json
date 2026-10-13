@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/findings.v2.schema.json",
+  "title": "findings.json — relatório aceito do agente com registro de inspeção, v2 (NAT-81)",
+  "description": "Mesmo envelope de findings.v1, escrito pelo COLETOR, mais o registro de inspeção opcional em `report.inspection` (inspection.v1). O achado é o MESMO `achado-2` de findings.v1 (referência direta a findings.v1#/$defs/finding): a unidade do scorer não muda. O harness escolhe a versão do envelope ao armar o coletor; o agente nunca escolhe contrato nem campanha. `findings: []` continua válido, inclusive com inspeção parcial por orçamento esgotado. Registro ausente (`inspectionStatus: absent`) é registro não enviado; registro inválido (`invalid`) é guardado à parte e não derruba os achados — nunca cobertura zero nem completa. Regras que o schema não expressa ficam em contracts/inspection-ledger.mjs, aplicadas pelo coletor e por contracts/index.ts.",
+  "type": "object",
+  "required": [
+    "contract",
+    "fixture",
+    "campaignId",
+    "runId",
+    "receivedAt",
+    "receipt",
+    "findingContract",
+    "inspectionContract",
+    "inspectionStatus",
+    "report"
+  ],
+  "properties": {
+    "contract": {
+      "const": "findings.v2"
+    },
+    "fixture": {
+      "$ref": "common.v1.schema.json#/$defs/fixture"
+    },
+    "campaignId": {
+      "$ref": "common.v1.schema.json#/$defs/id"
+    },
+    "runId": {
+      "$ref": "common.v1.schema.json#/$defs/id"
+    },
+    "receivedAt": {
+      "$ref": "common.v1.schema.json#/$defs/utcTimestamp"
+    },
+    "receipt": {
+      "description": "Recibo mínimo que o coletor devolveu ao agente.",
+      "$ref": "common.v1.schema.json#/$defs/id"
+    },
+    "findingContract": {
+      "description": "Rótulo do contrato do achado em scripts/flow-contract.ts — o mesmo de findings.v1.",
+      "const": "achado-2"
+    },
+    "inspectionContract": {
+      "description": "Versão do registro de inspeção que o harness armou.",
+      "const": "inspection.v1"
+    },
+    "inspectionStatus": {
+      "description": "Escrito pelo COLETOR: `valid` = registro em report.inspection passou no contrato; `absent` = o agente não enviou registro; `invalid` = o registro falhou no contrato e foi retirado de `report` — os achados foram aceitos mesmo assim (erro no registro nunca derruba achado, nunca vira falha técnica nem exclusão).",
+      "enum": [
+        "valid",
+        "invalid",
+        "absent"
+      ]
+    },
+    "inspectionErrors": {
+      "description": "Erros de contrato do registro (só com inspectionStatus invalid).",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "common.v1.schema.json#/$defs/text"
+      }
+    },
+    "inspectionRaw": {
+      "description": "O registro como o agente o enviou, sem validação — dado não confiável, preservado para revisão (só com inspectionStatus invalid)."
+    },
+    "report": {
+      "description": "Campos declarados pelo agente. `model` aqui é o que o agente ESCREVEU, dado não confiável; a identidade do modelo vem de run.json.",
+      "type": "object",
+      "required": [
+        "timestamp",
+        "model",
+        "appUrl",
+        "findings"
+      ],
+      "properties": {
+        "timestamp": {
+          "$ref": "common.v1.schema.json#/$defs/text"
+        },
+        "model": {
+          "$ref": "common.v1.schema.json#/$defs/text"
+        },
+        "appUrl": {
+          "$ref": "common.v1.schema.json#/$defs/text"
+        },
+        "scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "findings.v1.schema.json#/$defs/finding"
+          }
+        },
+        "inspection": {
+          "$ref": "inspection.v1.schema.json"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "inspectionStatus": {
+            "const": "invalid"
+          }
+        },
+        "required": [
+          "inspectionStatus"
+        ]
+      },
+      "then": {
+        "required": [
+          "inspectionErrors",
+          "inspectionRaw"
+        ],
+        "properties": {
+          "report": {
+            "not": {
+              "required": [
+                "inspection"
+              ]
+            }
+          }
+        }
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "inspectionErrors"
+              ]
+            },
+            {
+              "required": [
+                "inspectionRaw"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "inspectionStatus": {
+            "const": "valid"
+          }
+        },
+        "required": [
+          "inspectionStatus"
+        ]
+      },
+      "then": {
+        "properties": {
+          "report": {
+            "required": [
+              "inspection"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "inspectionStatus": {
+            "const": "absent"
+          }
+        },
+        "required": [
+          "inspectionStatus"
+        ]
+      },
+      "then": {
+        "properties": {
+          "report": {
+            "not": {
+              "required": [
+                "inspection"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

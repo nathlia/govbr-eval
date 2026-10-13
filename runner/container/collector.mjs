@@ -15,10 +15,16 @@
 // x-govbr-run-id diferente do run armado → 409; relatório idêntico ao aceito → 200 duplicate (recibo
 // igual); diferente do aceito → 409 (sem sobrescrita); fora do schema ou JSON inválido → 400, corpo
 // arquivado em refused/. Recibo mínimo: { ok, receipt }.
+//
+// NAT-81: o HARNESS escolhe o envelope por COLLECTOR_FINDINGS_CONTRACT (findings.v1 | findings.v2;
+// ausente = findings.v1, o mesmo envelope de antes). findings.v2 aceita `report.inspection`
+// (inspection.v1) e aplica as regras de inspection-ledger.mjs, copiado junto com os schemas. O agente
+// não escolhe contrato: o mesmo texto de tarefa vale nos dois braços e o envelope é o do run armado.
 import { createServer } from "node:http";
 import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 
 const RUN_ID = process.env.COLLECTOR_RUN_ID ?? "";
@@ -28,15 +34,23 @@ const OUT = process.env.COLLECTOR_OUT ?? "/out";
 const MAX_BYTES = Number(process.env.COLLECTOR_MAX_BYTES ?? 2 * 1024 * 1024);
 const PORT = Number(process.env.COLLECTOR_PORT ?? 8080);
 const SCHEMAS = process.env.COLLECTOR_SCHEMAS ?? "/opt/collector/schemas";
+const CONTRACT = process.env.COLLECTOR_FINDINGS_CONTRACT || "findings.v1";
 const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
 if (!ID.test(RUN_ID) || !ID.test(CAMPAIGN_ID)) {
   console.error("COLLECTOR_RUN_ID e COLLECTOR_CAMPAIGN_ID obrigatórios");
   process.exit(2);
 }
+if (CONTRACT !== "findings.v1" && CONTRACT !== "findings.v2") {
+  console.error(`COLLECTOR_FINDINGS_CONTRACT desconhecido: ${CONTRACT}`);
+  process.exit(2);
+}
+const V2 = CONTRACT === "findings.v2";
 
 const ajv = new Ajv2020({ allErrors: true, strict: true, strictTypes: false, strictRequired: false, allowUnionTypes: true });
-for (const f of ["common.v1.schema.json", "findings.v1.schema.json"]) ajv.addSchema(JSON.parse(readFileSync(join(SCHEMAS, f), "utf8")));
-const validateFindings = ajv.getSchema("https://govbr-eval.invalid/contracts/findings.v1.schema.json");
+const SCHEMA_FILES = ["common.v1.schema.json", "findings.v1.schema.json", ...(V2 ? ["inspection.v1.schema.json", "findings.v2.schema.json"] : [])];
+for (const f of SCHEMA_FILES) ajv.addSchema(JSON.parse(readFileSync(join(SCHEMAS, f), "utf8")));
+const validateFindings = ajv.getSchema(`https://govbr-eval.invalid/contracts/${CONTRACT}.schema.json`);
+const ledgerErrors = V2 ? (await import(pathToFileURL(join(SCHEMAS, "inspection-ledger.mjs")).href)).inspectionLedgerErrors : () => [];
 
 mkdirSync(join(OUT, "refused"), { recursive: true });
 const sha256 = (s) => createHash("sha256").update(s).digest("hex");
@@ -161,12 +175,26 @@ createServer(async (req, res) => {
     return send(res, 409, { ok: false, error: "esta execução já tem um relatório aceito" });
   }
   const receipt = `r-${sha.slice(0, 16)}`;
-  const envelope = {
-    contract: "findings.v1", fixture: FIXTURE, campaignId: CAMPAIGN_ID, runId: RUN_ID,
-    receivedAt: new Date().toISOString().replace(/\.\d+Z$/, "Z"), receipt, findingContract: "achado-2", report,
+  const head = {
+    contract: CONTRACT, fixture: FIXTURE, campaignId: CAMPAIGN_ID, runId: RUN_ID,
+    receivedAt: new Date().toISOString().replace(/\.\d+Z$/, "Z"), receipt, findingContract: "achado-2",
   };
-  if (!validateFindings(envelope)) {
-    const errors = (validateFindings.errors ?? []).slice(0, 10).map((e) => `${e.instancePath || "/"} ${e.message}`);
+  let envelope = V2 ? { ...head, inspectionContract: "inspection.v1", inspectionStatus: report?.inspection === undefined ? "absent" : "valid", report } : { ...head, report };
+  let errors = validateFindings(envelope) ? ledgerErrors(report, "/report").map((e) => `${e.path || "/"} ${e.keyword}: ${e.message}`)
+    : (validateFindings.errors ?? []).map((e) => `${e.instancePath || "/"} ${e.message}`);
+  // NAT-81: erro SÓ no registro de inspeção nunca derruba os achados. O registro sai de `report`, fica
+  // guardado como veio em `inspectionRaw` com os erros, `inspectionStatus: "invalid"`, e os achados são
+  // validados e aceitos como sempre. O recibo ao agente continua mínimo e igual (não há segunda chance
+  // nem resposta diferente por braço). Erro em qualquer outro lugar recusa o relatório, como antes.
+  if (V2 && errors.length && report && typeof report === "object" && "inspection" in report &&
+    errors.every((e) => e.startsWith("/report/inspection"))) {
+    const { inspection: raw, ...rest } = report;
+    const ledgerIssues = errors.slice(0, 50);
+    envelope = { ...head, inspectionContract: "inspection.v1", inspectionStatus: "invalid", inspectionErrors: ledgerIssues, inspectionRaw: raw ?? null, report: rest };
+    errors = validateFindings(envelope) ? [] : (validateFindings.errors ?? []).map((e) => `${e.instancePath || "/"} ${e.message}`);
+  }
+  errors = errors.slice(0, 10);
+  if (errors.length) {
     const file = refuse(`contrato: ${errors.join("; ")}`, body);
     event({ ...base, status: 400, reason: "contrato", refused: file });
     return send(res, 400, { ok: false, errors });
@@ -178,10 +206,11 @@ createServer(async (req, res) => {
   writeFileSync(FINDINGS, JSON.stringify(envelope, null, 2) + "\n", { flag: "wx" });
   writeFileSync(join(OUT, "accepted-raw.txt"), body, { flag: "wx" });
   accepted = { sha, receipt };
-  event({ ...base, status: 200, reason: "aceito", receipt, findings: Array.isArray(report.findings) ? report.findings.length : null });
+  event({ ...base, status: 200, reason: "aceito", receipt, contract: CONTRACT, findings: Array.isArray(report.findings) ? report.findings.length : null,
+    ...(V2 ? { inspection: envelope.inspectionStatus } : {}) });
   return send(res, 200, { ok: true, receipt });
 }).listen(PORT, "0.0.0.0", () => {
-  event({ method: "-", path: "-", status: null, reason: "start" });
+  event({ method: "-", path: "-", status: null, reason: "start", contract: CONTRACT });
   console.log(`coletor armado em :${PORT}`);
 });
 for (const s of ["SIGINT", "SIGTERM"]) process.on(s, () => process.exit(0));

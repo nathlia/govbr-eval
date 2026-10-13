@@ -29,10 +29,11 @@ import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 import { chromium, type Browser } from "playwright";
 import {
-  assertContract, checkAggregation, checkPlannedAbsence, crossCheckRun, validateContract,
-  type AnalysisBinding, type AnalysisMetrics, type ArtifactManifest, type Baseline, type BaselineBinding, type Campaign,
-  type Findings, type Isolation, type Location, type Run, type ContractName, type ScoreStatus, type SnapshotManifest,
+  assertContract, checkAggregation, checkPlannedAbsence, crossCheckManifest, crossCheckRun, validateContract,
+  type AnalysisBinding, type AnalysisMetrics, type AnyArtifactManifest, type AnyFindings, type ArtifactManifest, type Baseline, type BaselineBinding, type Campaign,
+  type Isolation, type Location, type Run, type ContractName, type ScoreStatus, type SnapshotManifest,
 } from "../contracts/index";
+import { resumirInspecao, type ResumoInspecao } from "./inspection-ledger";
 import type { FlowAgentResults, FlowGroundTruth, RunConfig } from "../types";
 import { ROOT } from "./adjudication";
 import { analysisIdentity, cenasDoPlano, compareIdentities, statePlanOf, statePlanSha256 } from "./collection-manifest";
@@ -115,11 +116,11 @@ export interface ResultadoAnalise { estado: EstadoAnalise; motivo: string | null
 
 interface PacoteLido {
   dir: string;
-  manifest: ArtifactManifest;
+  manifest: AnyArtifactManifest;
   manifestBytes: Buffer;
   run: Run;
   runBytes: Buffer;
-  findings: Findings | null;
+  findings: AnyFindings | null;
   isolation: Isolation | null;
   toolEvents: string | null;
 }
@@ -157,7 +158,10 @@ export function lerPacote(dirArg: string): PacoteLido {
   const manifestPath = join(dir, "artifact-manifest.json");
   if (!existsSync(manifestPath)) recusar(`pacote sem artifact-manifest.json: ${dirArg}`);
   const manifestBytes = readFileSync(manifestPath);
-  const manifest = contrato(lerJson<unknown>(manifestPath, "artifact-manifest.json"), "artifact-manifest.v1", `artifact-manifest.json de ${dirArg}`) as ArtifactManifest;
+  // NAT-81: v1 (histórico, e todo pacote sem findings.v2) ou v2; o discriminador decide, nunca o conteúdo.
+  const manifestDoc = lerJson<unknown>(manifestPath, "artifact-manifest.json");
+  const manifestNome = (manifestDoc as { contract?: unknown })?.contract === "artifact-manifest.v2" ? "artifact-manifest.v2" : "artifact-manifest.v1";
+  const manifest = contrato(manifestDoc, manifestNome, `artifact-manifest.json de ${dirArg}`) as AnyArtifactManifest;
 
   const declarados = new Map(manifest.files.map(f => [f.path, f]));
   for (const rel of listarArquivos(dir)) {
@@ -203,7 +207,9 @@ export function lerPacote(dirArg: string): PacoteLido {
   const findingsFiles = doPapel("findings");
   if (findingsFiles.length > 1) recusar("mais de um findings no manifesto");
   const findings = findingsFiles.length
-    ? contrato(parse(findingsFiles[0].path, "findings.json"), "findings.v1", `findings.json de ${dirArg}`) as Findings : null;
+    ? contrato(parse(findingsFiles[0].path, "findings.json"), manifest.schemaVersions.findings ?? "findings.v1", `findings.json de ${dirArg}`) as AnyFindings : null;
+  const doManifesto = crossCheckManifest(manifest, findings);
+  if (doManifesto.length) recusar(`artifact-manifest × findings: ${doManifesto.map(e => `${e.path} ${e.keyword}: ${e.message}`).join("; ")}`);
   const isolation = run.isolation
     ? contrato(parse(run.isolation, "isolation.json"), "isolation.v1", `isolation.json de ${dirArg}`) as Isolation : null;
   const cruzados = crossCheckRun(run, findings, isolation);
@@ -231,6 +237,7 @@ export function adaptarExecucao(p: PacoteLido): PrepareRun {
       .sort((a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : 0),
     integrity: { indexSha256: manifestSha },
   };
+  // O registro de inspeção (findings.v2) NÃO vai ao scorer: só os campos de sempre, achado-2 inalterado.
   const r = findings.report;
   const config: RunConfig & { evidenceIndexSha256: string } = {
     client: run.client.name, clientVersion: run.client.version, reasoningEffort: run.effort,
@@ -451,6 +458,12 @@ export interface ExecucaoResumo {
    * Ausente em resumos gerados antes desta regra.
    */
   elegibilidade?: { elegivel: boolean; motivos: string[] };
+  /**
+   * NAT-81: registro de inspeção (scripts/inspection-ledger.ts). Declaração do agente × comprovação por
+   * evento; não pontua. Pacote findings.v1 → `indisponivel` ("registro indisponível", nunca zero cobertura).
+   * Ausente em resumos gerados antes do NAT-81.
+   */
+  inspecao?: ResumoInspecao;
   links: Record<string, string | string[] | null>;
   binding: string;
 }
@@ -868,6 +881,7 @@ function execucaoResumo(p: PacoteLido, saida: string, b: AnalysisBinding, s: Sem
       recusa: link(run.submission.refusal?.archivedBody ?? null) },
     binding: `analysis-binding.${run.arm}.json`,
     elegibilidade: { elegivel: inelegibilidade.length === 0, motivos: inelegibilidade },
+    inspecao: resumirInspecao(findings, p.toolEvents),
   };
 }
 
@@ -909,7 +923,9 @@ export function conteudoCientifico(r: Omit<Resumo, "hashes"> | Resumo): unknown 
   return {
     formato: r.formato, fixture: r.fixture, analise: r.analise, linhaDeBase: r.linhaDeBase, comparacao: r.comparacao, versoes: r.versoes,
     revisaoSemantica: r.revisaoSemantica,
-    execucoes: r.execucoes.map(({ links: _l, ...e }) => e),
+    // NAT-81: registro indisponível (pacote v1) não entra no hash — re-análises de pacotes históricos
+    // mantêm o mesmo conteúdo científico; registro presente (ou não enviado) entra.
+    execucoes: r.execucoes.map(({ links: _l, inspecao, ...e }) => inspecao && inspecao.estado !== "indisponivel" ? { ...e, inspecao } : e),
   };
 }
 
@@ -1083,7 +1099,9 @@ export function renderResumo(r: Resumo): string {
   L.push(`| Erros de ferramenta | ${col(e => e.mcpIsolamento.errosDeFerramenta.estado === "medido" ? `${e.mcpIsolamento.errosDeFerramenta.valor} (${seguro(e.mcpIsolamento.errosDeFerramenta.fonte, 80)})` : `desconhecido (${seguro(e.mcpIsolamento.errosDeFerramenta.fonte, 80)})`)} |`);
   L.push(`| Checks negativos | ${col(e => e.mcpIsolamento.checks ? `${e.mcpIsolamento.checks.aprovados} aprovado(s); falhos: ${seguro(e.mcpIsolamento.checks.falhos.join("; ") || "nenhum", 300)}; não exercitados: ${seguro(e.mcpIsolamento.checks.naoExercitados.join(", ") || "nenhum", 200)}` : "sem isolation.json")} |`);
   L.push(`| Controles positivos | ${col(e => e.mcpIsolamento.controlesPositivos ? `${e.mcpIsolamento.controlesPositivos.aprovados} aprovado(s); falhos: ${seguro(e.mcpIsolamento.controlesPositivos.falhos.join(", ") || "nenhum")}` : "—")} |`);
-  L.push(`| Limitações declaradas | ${col(e => seguro(e.mcpIsolamento.limitacoes.join("; ") || "nenhuma", 300))} |`, "");
+  L.push(`| Limitações declaradas | ${col(e => seguro(e.mcpIsolamento.limitacoes.join("; ") || "nenhuma", 300))} |`);
+  L.push(`| Registro de inspeção | ${col(e => seguro(e.inspecao?.texto ?? "registro indisponível (resumo anterior ao registro)", 400))} |`, "");
+  L.push("O registro de inspeção é declaração do agente sobre o inventário que ele mesmo descobriu; “com evento de ferramenta” só diz que o identificador citado aparece num evento gravado. Não pontua nem decide elegibilidade, e a cobertura da página continua desconhecida.", "");
   L.push("Contagem de chamadas não prova causa: o resumo mostra uso e resultado lado a lado, sem atribuir efeito.", "");
 
   // 6. custo e tempo

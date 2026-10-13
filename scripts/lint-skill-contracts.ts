@@ -60,12 +60,16 @@ requireText("avaliar-tela", avaliar, [
   "declare as incertezas",
   // O alvo da avaliação é escopo da tarefa, igual nos dois braços: nomes das normas e formatos de id.
   "gov.br Design System", "e-MAG e WCAG 2.2", "`emag:<seção>`", "`wcag:<critério>`", "`ds:<regra>`",
+  // NAT-81: registro de inspeção comum aos braços; declaração não é comprovação; parcial por orçamento.
+  "## Registro de inspeção", '"inspection"', "afirme ter coberto o que não chegou a descobrir", "`confirmed` somente com `originRef`",
+  '"completion": "partial"', "a limitação `budget`",
 ]);
 for (const forbidden of ["../_shared/", "evaluation-protocol.md", "leia o arquivo", "Antes de agir, leia"]) {
   if (avaliar.includes(forbidden)) failures.push(`avaliar-tela: não pode pedir leitura de arquivo ('${forbidden}')`);
 }
 const avaliarWords = words(avaliar);
-if (avaliarWords < 800 || avaliarWords > 1100) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1100`);
+// NAT-81: o registro de inspeção (seção + exemplo) acrescentou ~250 palavras, iguais nos dois braços; meta 1100 → 1250.
+if (avaliarWords < 800 || avaliarWords > 1250) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1250`);
 
 const screenWords = words(shared) + words(screen);
 if (screenWords < 600 || screenWords > 800) failures.push(`evaluate-screen: ${screenWords} palavras combinadas; meta 600–800`);

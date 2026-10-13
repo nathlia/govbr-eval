@@ -22,6 +22,8 @@ import {
 } from "./lib";
 
 type Name = keyof ImagesLock["images"];
+/** Arquivos de contrato embutidos no coletor (NAT-81: + findings.v2, inspection.v1 e as regras do registro). */
+export const COLLECTOR_CONTRACT_FILES = ["common.v1.schema.json", "findings.v1.schema.json", "findings.v2.schema.json", "inspection.v1.schema.json", "inspection-ledger.mjs"];
 const ORDER: Name[] = ["agent", "screens", "collector", "egress", "oracle"];
 
 export function telasIdentity(telasDir: string): { siteSha256: string; manifestSha256: string; version: string } {
@@ -50,7 +52,7 @@ function stage(name: Name, telasDir: string, validatorDir: string): string {
       for (const f of ["package.json", "package-lock.json"]) cpSync(join(img, f), join(ctx, f));
       cpSync(join(container, "collector.mjs"), join(ctx, "collector.mjs"));
       mkdirSync(join(ctx, "schemas"));
-      for (const f of ["common.v1.schema.json", "findings.v1.schema.json"]) cpSync(join(EVAL_ROOT, "contracts", f), join(ctx, "schemas", f));
+      for (const f of COLLECTOR_CONTRACT_FILES) cpSync(join(EVAL_ROOT, "contracts", f), join(ctx, "schemas", f));
       break;
     case "egress":
       for (const f of ["egress.mjs", "stub.mjs"]) cpSync(join(container, f), join(ctx, f));
@@ -96,7 +98,11 @@ async function main(): Promise<void> {
   const labels: Record<Name, Record<string, string>> = {
     agent: { "govbr.playwright-mcp": PLAYWRIGHT_MCP_VERSION, "govbr.claude-code": CLAUDE_CODE_VERSION },
     screens: { "govbr.telas.site-sha256": telas.siteSha256, "govbr.telas.manifest-sha256": telas.manifestSha256 },
-    collector: { "govbr.collector.schemas": sha256(readFileSync(join(EVAL_ROOT, "contracts", "findings.v1.schema.json"))) },
+    // NAT-81: `findings-contracts` diz ao run-once que envelopes esta imagem sabe armar; imagem antiga
+    // (sem o rótulo) só conhece findings.v1. `schemas` continua o hash do findings.v1 (rótulo histórico).
+    collector: { "govbr.collector.schemas": sha256(readFileSync(join(EVAL_ROOT, "contracts", "findings.v1.schema.json"))),
+      "govbr.collector.findings-contracts": "findings.v1,findings.v2",
+      "govbr.collector.contracts-sha256": sha256(COLLECTOR_CONTRACT_FILES.map((f) => `${f}:${sha256(readFileSync(join(EVAL_ROOT, "contracts", f)))}`).join("\n")) },
     egress: {},
     oracle: oracle && oraclePkg ? { "govbr.oracle.package": oraclePkg.name, "govbr.oracle.version": oraclePkg.version, "govbr.oracle.dist-sha256": oracle.distSha256!, "govbr.oracle.data-sha256": oracle.dataSha256! } : {},
   };

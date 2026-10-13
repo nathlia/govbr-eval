@@ -351,6 +351,18 @@ function achadosDe(arquivo: string, e: EntradaIndice): Achados {
     : { estado: "lista", total: n, texto: `${n} achado(s) enviado(s)`, fonte: fRel };
 }
 
+/** NAT-81: o que o pacote diz do registro de inspeção, sem análise. findings.v1 → indisponível, nunca zero. */
+function registroDoPacote(arquivo: string, caminho: string): string {
+  const fPath = join(arquivo, `${caminho}/pacote/findings.json`);
+  if (!existsSync(fPath)) return "registro indisponível (sem submissão aceita)";
+  const f = tentarJson<{ contract?: string; inspectionStatus?: string; inspectionErrors?: string[]; report?: { inspection?: { completion?: string } } }>(fPath);
+  if (!f.ok) return "registro indisponível (findings.json ilegível)";
+  if (f.valor.contract !== "findings.v2") return "registro indisponível (pacote anterior ao registro de inspeção) — não é zero cobertura";
+  if (f.valor.inspectionStatus === "invalid") return `registro inválido (${f.valor.inspectionErrors?.length ?? 0} erro(s) de contrato; guardado à parte) — achados aceitos normalmente`;
+  const c = f.valor.report?.inspection?.completion;
+  return c ? `registro enviado (${c === "complete" ? "declarado completo" : "parcial"}); detalhes depois da análise` : "registro não enviado pelo agente — não é zero cobertura";
+}
+
 export interface LinhaExecucao {
   chave: string;
   /** Id curto (T8a.2): o slot da campanha (`p01-sem`), o mesmo em toda tabela, aviso, cartão e URL. */
@@ -803,6 +815,8 @@ export function vistaExecucao(arquivo: string, chave: string): VistaExecucao | n
     tecnico.push(T("Submissão", ex.tecnico.submissao, `${ex.tecnico.submissao}${ex.tecnico.motivoRecusa ? ` (${ex.tecnico.motivoRecusa})` : ""}`, f("tecnico.submissao")));
     tecnico.push(T("Achados enviados", ex.achados?.total ?? null, ex.achados ? (ex.achados.total === 0 ? "0 — lista vazia aceita" : String(ex.achados.total)) : "nenhuma submissão aceita", f("achados.total")));
     tecnico.push(T("Pontuação", ex.pontuacao.estado, seloPontuacao(ex.pontuacao.estado).texto + (ex.pontuacao.motivo ? ` — ${ex.pontuacao.motivo}` : ""), f("pontuacao.estado")));
+    // NAT-81: só o texto do resumo; nenhum número de registro vira nota, nem conta como cobertura da página.
+    tecnico.push(T("Registro de inspeção", ex.inspecao?.estado ?? null, ex.inspecao?.texto ?? "registro indisponível (resumo anterior ao registro de inspeção)", f("inspecao")));
     for (const [k, rot] of USO_ROTULO) {
       const m = ex.custoTempo[k];
       custo.push(T(rot, m.valor, m.estado === "medido" ? `${m.valor}` : m.estado === "indisponivel" ? "desconhecido" : "não se aplica", f(`custoTempo.${k}`)));
@@ -825,6 +839,7 @@ export function vistaExecucao(arquivo: string, chave: string): VistaExecucao | n
       tecnico.push(T("Submissão", run.submission.status, run.submission.status, f("submission.status")));
       tecnico.push(T("Achados enviados", linha.achados.total, linha.achados.texto, { ...f("report.findings"), arquivo: linha.achados.fonte ?? rRel }));
       tecnico.push(T("Pontuação", null, "sem análise no arquivo: os números aparecem depois que a análise (T6) roda", f("status.score")));
+      tecnico.push(T("Registro de inspeção", null, registroDoPacote(arquivo, e.caminho), { ...f("report.inspection"), arquivo: linha.achados.fonte ?? rRel }));
       for (const [k, rot] of USO_ROTULO) {
         const m = run.usage[k];
         custo.push(T(rot, m.value, m.status === "measured" ? String(m.value) : m.status === "unavailable" ? "desconhecido" : "não se aplica", f(`usage.${k}`)));

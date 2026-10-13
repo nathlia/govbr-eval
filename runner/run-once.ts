@@ -28,7 +28,8 @@ import { fileURLToPath } from "node:url";
 import { randomBytes } from "node:crypto";
 import {
   assertContract, crossCheckRun, validateContract,
-  type ArtifactManifest, type Findings, type Isolation, type Metric, type Run,
+  crossCheckManifest,
+  type AnyArtifactManifest, type AnyFindings, type ArtifactManifest, type FindingsContract, type Isolation, type Metric, type Run,
 } from "../contracts/index";
 import { gitState, oracleIdentity } from "../scripts/collection-manifest";
 import {
@@ -43,6 +44,15 @@ import {
 } from "./lib";
 
 // ───────────────────────────────────────────────────────────────── política
+
+/**
+ * NAT-81: envelope que o harness arma no coletor, pelo rótulo da imagem travada. Sem rótulo (imagem
+ * anterior ao NAT-81) → só findings.v1. Nunca depende do braço nem do texto do agente.
+ */
+export function collectorFindingsContract(labels: Record<string, string> | undefined): { contracts: string[]; armed: FindingsContract } {
+  const contracts = (labels?.["govbr.collector.findings-contracts"] ?? "findings.v1").split(",").map((c) => c.trim()).filter(Boolean);
+  return { contracts, armed: contracts.includes("findings.v2") ? "findings.v2" : "findings.v1" };
+}
 
 /**
  * Destinos que o PROCESSO DO AGENTE alcança pelo proxy do provedor (CONNECT, 443). Nada mais sai.
@@ -289,6 +299,15 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       integ(`imagem-${n}`, `${lock.images[n].tag} = ${lock.images[n].id.slice(0, 19)}…`, live === lock.images[n].id, live ?? "ausente");
     }
   }
+  // NAT-81: o envelope de achados é escolha do HARNESS, nunca do agente nem do texto da tarefa: o mais novo
+  // que a imagem travada do coletor declara saber armar. Imagem sem o rótulo (construída antes do NAT-81)
+  // só conhece findings.v1. O agente real recebe a skill que pede o registro de inspeção; um coletor que
+  // recusaria esse registro não pode partir (o modelo pagaria por recusas). O agente roteirizado não lê a skill.
+  const { contracts: collectorContracts, armed: findingsContract } = collectorFindingsContract(lock?.images.collector.labels);
+  if (opts.agente === "claude") {
+    integ("coletor-registro-de-inspecao", "a imagem travada do coletor arma findings.v2 (registro de inspeção que a skill pede); reconstrua as imagens se não",
+      findingsContract === "findings.v2", `${lock?.images.collector.tag ?? "sem lock"}: ${collectorContracts.join(", ")}`);
+  }
   const telasManifestText = existsSync(join(opts.telasDir, "site-manifest.json")) ? readFileSync(join(opts.telasDir, "site-manifest.json")) : Buffer.from("");
   const telasManifestSha = sha256(telasManifestText);
   if (lock) integ("site-manifest", "site-manifest.json do govbr-telas = conteúdo embutido na imagem das telas", telasManifestSha === lock.versions.telas.manifestSha256 && lock.images.screens.labels["govbr.telas.manifest-sha256"] === telasManifestSha, `${telasManifestSha} × ${lock.versions.telas.manifestSha256}`);
@@ -433,7 +452,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       };
       const egressImage = L.images.egress.id;
       create("screens", L.images.screens.id, [[net.site, "screens"]], [], [], null);
-      create("collector", L.images.collector.id, [[net.site, "collector"]], ["-e", `COLLECTOR_RUN_ID=${runId}`, "-e", `COLLECTOR_CAMPAIGN_ID=${opts.campanha}`, "-e", `COLLECTOR_FIXTURE=${fixture ? "1" : "0"}`], [], "collector");
+      create("collector", L.images.collector.id, [[net.site, "collector"]], ["-e", `COLLECTOR_RUN_ID=${runId}`, "-e", `COLLECTOR_CAMPAIGN_ID=${opts.campanha}`, "-e", `COLLECTOR_FIXTURE=${fixture ? "1" : "0"}`, "-e", `COLLECTOR_FINDINGS_CONTRACT=${findingsContract}`], [], "collector");
       create("egress-site", egressImage, [[net.site, "egress-site"], [net.browse, "egress-site"]],
         ["-e", "EGRESS_NAME=egress-site", "-e", `EGRESS_ALLOW_HTTP=${SITE_ALLOW.join(",")}`, "-e", "EGRESS_ALLOW_CONNECT=", "-e", "EGRESS_LOG=/out/egress.ndjson"], [], "egress-site");
       create("egress-provider", egressImage, [[net.egress, "egress"], [net.up, "egress-up"]],
@@ -672,7 +691,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     }
 
     // submissão
-    const findingsRaw = readJson<Findings>(rawPath("collector", "findings.json"));
+    const findingsRaw = readJson<AnyFindings>(rawPath("collector", "findings.json"));
     const refused = listFiles(join(raw, "collector", "refused"));
     for (const f of refused) { mkdirSync(join(runDir, "refused"), { recursive: true }); cpSync(join(raw, "collector", "refused", f), join(runDir, "refused", f)); }
     if (findingsRaw) writeFileSync(join(runDir, "findings.json"), json(findingsRaw));
@@ -783,11 +802,21 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       const body = readFileSync(join(runDir, p));
       return { path: p, bytes: body.length, sha256: sha256(body), mediaType: mediaOf(p), role: roleOf(p) };
     });
-    const manifest: ArtifactManifest = {
-      contract: "artifact-manifest.v1", fixture, campaignId: opts.campanha, runId, producedBy: RUNNER_VERSION, producedAt: iso(),
-      schemaVersions: { run: "run.v1", ...(findingsRaw ? { findings: "findings.v1" as const } : {}), ...(isolationDoc ? { isolation: "isolation.v1" as const } : {}) },
-      files,
-    };
+    // NAT-81: artifact-manifest.v2 só quando o envelope aceito é findings.v2 (o v1 trava findings.v1);
+    // sem submissão ou com findings.v1, o manifesto continua v1 como antes.
+    const manifest: AnyArtifactManifest = findingsRaw?.contract === "findings.v2"
+      ? {
+        contract: "artifact-manifest.v2", fixture, campaignId: opts.campanha, runId, producedBy: RUNNER_VERSION, producedAt: iso(),
+        schemaVersions: { run: "run.v1", findings: "findings.v2", ...(findingsRaw.report.inspection !== undefined ? { inspection: "inspection.v1" as const } : {}),
+          ...(isolationDoc ? { isolation: "isolation.v1" as const } : {}) },
+        inspectionStatus: findingsRaw.inspectionStatus,
+        files,
+      }
+      : {
+        contract: "artifact-manifest.v1", fixture, campaignId: opts.campanha, runId, producedBy: RUNNER_VERSION, producedAt: iso(),
+        schemaVersions: { run: "run.v1", ...(findingsRaw ? { findings: "findings.v1" as const } : {}), ...(isolationDoc ? { isolation: "isolation.v1" as const } : {}) },
+        files,
+      };
     writeFileSync(join(runDir, "artifact-manifest.json"), json(manifest));
 
     // validação de fronteira
@@ -798,6 +827,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     }
     if (!problems.length) {
       for (const e of crossCheckRun(assertContract<Run>(run, "run.v1"), findingsRaw, isolationDoc)) problems.push(`crossCheckRun: ${e.path} ${e.message}`);
+      for (const e of crossCheckManifest(manifest, findingsRaw)) problems.push(`crossCheckManifest: ${e.path} ${e.message}`);
     }
     if (problems.length) log(`PACOTE INVÁLIDO:\n  ${problems.join("\n  ")}`);
     log(`pacote em ${runDir}: técnico=${technical} isolamento=${run.status.isolation} oráculo=${oracleUsage} submissão=${submission.status}`);

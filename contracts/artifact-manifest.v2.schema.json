@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/artifact-manifest.v2.schema.json",
+  "title": "artifact-manifest.json — inventário do pacote de uma execução, v2 (NAT-81)",
+  "description": "Igual a artifact-manifest.v1, exceto pelo discriminador do envelope de achados: v2 existe porque v1 só admite `findings.v1`. Declara `findings: findings.v2` e, quando o relatório aceito traz registro de inspeção, `inspection: inspection.v1` (o registro mora dentro de findings.json, em report.inspection, e é coberto pelo hash desse arquivo). O runner continua escrevendo v1 quando o envelope é findings.v1 ou não há submissão aceita — pacotes antigos e leitores v1 seguem válidos. Caminho que escapa do pacote, absoluto, ou arquivo de referência/revisão invalidam o manifesto, como em v1.",
+  "type": "object",
+  "required": [
+    "contract",
+    "fixture",
+    "campaignId",
+    "runId",
+    "producedBy",
+    "producedAt",
+    "schemaVersions",
+    "inspectionStatus",
+    "files"
+  ],
+  "properties": {
+    "contract": {
+      "const": "artifact-manifest.v2"
+    },
+    "fixture": {
+      "$ref": "common.v1.schema.json#/$defs/fixture"
+    },
+    "campaignId": {
+      "$ref": "common.v1.schema.json#/$defs/id"
+    },
+    "runId": {
+      "$ref": "common.v1.schema.json#/$defs/id"
+    },
+    "producedBy": {
+      "$ref": "common.v1.schema.json#/$defs/text"
+    },
+    "producedAt": {
+      "$ref": "common.v1.schema.json#/$defs/utcTimestamp"
+    },
+    "schemaVersions": {
+      "type": "object",
+      "required": [
+        "run",
+        "findings"
+      ],
+      "properties": {
+        "run": {
+          "const": "run.v1"
+        },
+        "findings": {
+          "const": "findings.v2"
+        },
+        "inspection": {
+          "const": "inspection.v1"
+        },
+        "isolation": {
+          "const": "isolation.v1"
+        }
+      },
+      "additionalProperties": false
+    },
+    "inspectionStatus": {
+      "description": "Cópia do `inspectionStatus` que o coletor escreveu em findings.json: valid | invalid (registro guardado à parte, achados aceitos) | absent.",
+      "enum": [
+        "valid",
+        "invalid",
+        "absent"
+      ]
+    },
+    "files": {
+      "$ref": "artifact-manifest.v1.schema.json#/properties/files"
+    }
+  },
+  "additionalProperties": false
+}

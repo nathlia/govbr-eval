@@ -1,0 +1,227 @@
+{
+  "contract": "findings.v2",
+  "fixture": true,
+  "campaignId": "fixture-campanha-01",
+  "runId": "fixture-run-com-01",
+  "receivedAt": "2026-01-03T00:10:30Z",
+  "receipt": "recibo-fixture-01",
+  "findingContract": "achado-2",
+  "report": {
+    "timestamp": "2026-01-03T00:10:29Z",
+    "model": "modelo-fixture",
+    "appUrl": "http://127.0.0.1:3100/fixture.html",
+    "scope": [
+      "tela fixture inteira"
+    ],
+    "notes": "FIXTURE SINTÉTICA — não é dado científico",
+    "findings": [
+      {
+        "selector": "#fixture-alvo",
+        "relatedSelectors": [
+          "#fixture-participante"
+        ],
+        "rule": null,
+        "observed": "Valor sintético observado na fixture.",
+        "expected": "Condição sintética esperada na fixture.",
+        "state": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "steps": []
+        },
+        "evidence": [
+          "fixture-evidencia-01.png"
+        ]
+      },
+      {
+        "selector": ".fixture-outro",
+        "rule": "fixture:regra-sintetica",
+        "observed": "Outro valor sintético.",
+        "expected": "Outra condição sintética.",
+        "state": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "steps": [
+            "clicar em .fixture-acao"
+          ]
+        },
+        "evidence": []
+      }
+    ],
+    "inspection": {
+      "completion": "partial",
+      "regions": [
+        {
+          "id": "r1",
+          "description": "Formulário sintético da fixture",
+          "selector": "#fixture-form",
+          "origin": "browser",
+          "status": "inspected",
+          "states": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "id": "r2",
+          "description": "Painel sintético apontado pela ferramenta",
+          "origin": "validation-tool",
+          "originRef": "fixture-id-ferramenta-01",
+          "status": "not-inspected",
+          "reason": "tempo esgotado antes da região",
+          "states": []
+        }
+      ],
+      "states": [
+        {
+          "id": "s1",
+          "url": "http://127.0.0.1:3100/fixture.html",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "recipe": [
+            {
+              "action": "load",
+              "target": "http://127.0.0.1:3100/fixture.html"
+            }
+          ],
+          "arrival": {
+            "status": "confirmed",
+            "observables": [
+              "formulário sintético visível"
+            ],
+            "originRef": "fixture-instantaneo-01.yml"
+          },
+          "evidence": [
+            "fixture-instantaneo-01.yml"
+          ]
+        },
+        {
+          "id": "s2",
+          "url": "/fixture.html",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "recipe": [
+            {
+              "action": "load",
+              "target": "/fixture.html"
+            },
+            {
+              "action": "click",
+              "target": ".fixture-acao"
+            }
+          ],
+          "arrival": {
+            "status": "declared",
+            "observables": [
+              "mensagem sintética exibida"
+            ]
+          },
+          "evidence": []
+        },
+        {
+          "id": "s3",
+          "url": "/fixture.html",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "recipe": [
+            {
+              "action": "load",
+              "target": "/fixture.html"
+            },
+            {
+              "action": "press",
+              "target": "#fixture-alvo",
+              "value": "Escape"
+            }
+          ],
+          "arrival": {
+            "status": "not-reached",
+            "observables": [],
+            "reason": "o controle sintético não respondeu"
+          },
+          "evidence": []
+        }
+      ],
+      "items": [
+        {
+          "id": "i1",
+          "state": "s1",
+          "region": "r1",
+          "subject": "#fixture-alvo",
+          "check": "nome e papel sintéticos",
+          "status": "completed",
+          "evidence": [
+            "fixture-instantaneo-01.yml"
+          ]
+        },
+        {
+          "id": "i2",
+          "state": "s2",
+          "subject": ".fixture-outro",
+          "check": "verificação sintética por ferramenta",
+          "status": "failed",
+          "reason": "a ferramenta sintética devolveu erro",
+          "evidence": []
+        }
+      ],
+      "candidates": [
+        {
+          "id": "c1",
+          "state": "s1",
+          "origin": "browser",
+          "subject": "#fixture-alvo",
+          "observation": "Valor sintético observado na fixture.",
+          "decision": "accepted",
+          "findings": [
+            0
+          ],
+          "evidence": [
+            "fixture-evidencia-01.png"
+          ]
+        },
+        {
+          "id": "c2",
+          "state": "s2",
+          "origin": "validation-tool",
+          "originRef": "fixture-id-ferramenta-02",
+          "subject": ".fixture-outro",
+          "observation": "Outro valor sintético.",
+          "decision": "uncertain",
+          "reason": "atribuição incerta",
+          "findings": [
+            1
+          ],
+          "evidence": []
+        },
+        {
+          "id": "c3",
+          "state": "s1",
+          "origin": "validation-tool",
+          "originRef": "fixture-id-ferramenta-03",
+          "subject": "#fixture-participante",
+          "observation": "Candidato sintético descartado.",
+          "decision": "rejected",
+          "findings": [],
+          "evidence": []
+        }
+      ],
+      "limitations": [
+        {
+          "kind": "budget",
+          "detail": "tempo esgotado; região r2 não inspecionada"
+        }
+      ]
+    }
+  },
+  "inspectionContract": "inspection.v1",
+  "inspectionStatus": "valid"
+}

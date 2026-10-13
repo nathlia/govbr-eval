@@ -32,8 +32,8 @@ projeto a consultar.
 3. Opere a tela: use mouse e teclado, preencha e envie formulários, abra e feche componentes,
    confira foco, nomes, papéis, mensagens e mudanças de estado. Anote cada interação, em ordem,
    desde o carregamento.
-4. Mantenha um registro curto por estado: estado, elemento, observação, critério candidato,
-   evidência coletada e situação `aceito`, `rejeitado` ou `incerto`.
+4. Mantenha o registro de inspeção (seção abaixo) enquanto percorre: regiões, estados com a receita
+   desde o carregamento, itens inspecionados, candidatos com a decisão e limitações.
 5. Se houver ferramentas de validação, use-as em cada estado relevante. Quando uma delas abrir o
    próprio navegador, ele não compartilha o estado do seu: reproduza nela as interações que levaram
    ao estado avaliado. Guarde os identificadores que ela devolver; são evidência. Continue uma
@@ -74,11 +74,33 @@ outro critério.
 - `state.steps`: as interações desde o carregamento, em ordem; lista vazia se não houve interação.
 - `evidence`: caminhos ou identificadores devolvidos pelas ferramentas que sustentam a observação.
 
+## Registro de inspeção
+
+O campo `inspection` do relatório registra o percurso. Ele descreve só o que você descobriu: não
+afirme ter coberto o que não chegou a descobrir. Ids são curtos e únicos em cada lista.
+
+- `completion`: `complete` só se toda região registrada foi inspecionada e todo estado registrado
+  foi alcançado; senão `partial`.
+- `regions`: `id`, `description`, `origin` (`browser` se você a encontrou inspecionando;
+  `validation-tool` se uma ferramenta a apontou, com `originRef`), `status` (`inspected`, `partial`
+  ou `not-inspected`, os dois últimos com `reason`) e os `states` em que apareceu.
+- `states`: `id`, `url`, `viewport` medido, `recipe` (passos `action`, `target`, `value`, o
+  primeiro `load`), `arrival` e `evidence`. Em `arrival`, `observables` diz o que mostra o estado;
+  `status` é `confirmed` somente com `originRef` devolvido por uma ferramenta, `declared` sem ele e
+  `not-reached` com `reason`.
+- `items`: `state`, `region` quando houver, `subject`, `check`, `status` (`completed`, `failed`,
+  `not-available` ou `omitted`, com `reason` fora de `completed`) e `evidence`.
+- `candidates`: `state`, `origin`, `subject`, `observation`, `decision` (`accepted`, `rejected` ou
+  `uncertain`, os dois últimos com `reason`), `evidence` e `findings`: as posições, a partir de 0,
+  dos achados enviados que o candidato originou; obrigatório quando `accepted`.
+- `limitations`: `kind` (`budget`, `tool-failure`, `unreachable`, `truncated`, `out-of-scope` ou
+  `other`) e `detail`.
+
 O relatório tem este formato. Os valores do exemplo são marcadores: substitua todos pelo que você
 observou e mediu.
 
 ```json
-{"timestamp":"momento do envio, ISO 8601","model":"seu modelo","appUrl":"URL avaliada","scope":["o que foi percorrido"],"notes":"interações, limitações e incertezas","findings":[{"selector":"#sujeito","relatedSelectors":["#participante"],"rule":null,"observed":"o que foi constatado","expected":"a condição que deveria valer","state":{"viewport":{"width":1,"height":1},"steps":["interação"]},"evidence":["identificador devolvido por uma ferramenta"]}]}
+{"timestamp":"momento do envio, ISO 8601","model":"seu modelo","appUrl":"URL avaliada","scope":["o que foi percorrido"],"notes":"interações, limitações e incertezas","findings":[{"selector":"#sujeito","relatedSelectors":["#participante"],"rule":null,"observed":"o que foi constatado","expected":"a condição que deveria valer","state":{"viewport":{"width":1,"height":1},"steps":["interação"]},"evidence":["identificador devolvido por uma ferramenta"]}],"inspection":{"completion":"partial","regions":[{"id":"r1","description":"região observada","origin":"browser","status":"inspected","states":["s1"]}],"states":[{"id":"s1","url":"URL do estado","viewport":{"width":1,"height":1},"recipe":[{"action":"load","target":"URL avaliada"},{"action":"click","target":"#controle"}],"arrival":{"status":"declared","observables":["o que mostra o estado"]},"evidence":[]}],"items":[{"id":"i1","state":"s1","region":"r1","subject":"#sujeito","check":"o que foi conferido","status":"completed","evidence":[]}],"candidates":[{"id":"c1","state":"s1","origin":"browser","subject":"#sujeito","observation":"o que foi constatado","decision":"accepted","findings":[0],"evidence":[]}],"limitations":[{"kind":"budget","detail":"o que ficou de fora e por quê"}]}}
 ```
 
 ## Envio
@@ -87,7 +109,8 @@ observou e mediu.
 que ficou fora do escopo e as incertezas.
 
 O envio é obrigatório e é o último passo, inclusive sem achados: nesse caso o corpo leva
-`"findings": []`, e o escopo limpo é o resultado. Terminar sem enviar é execução perdida. Envie
+`"findings": []`, e o escopo limpo é o resultado. Se o tempo acabar, envie o que tem com
+`"completion": "partial"` e a limitação `budget`, mesmo com `"findings": []`. Terminar sem enviar é execução perdida. Envie
 conforme as Entradas, com `Content-Type: application/json` e o relatório como corpo. Depois
 imprima uma linha por achado, com seletor, critério e resumo.
 
