@@ -34,9 +34,10 @@ import { lerAnalise, lerRevisao, metricasDaRevisao } from "./painel/modelo";
 import { chromium } from "playwright";
 import { explicarExcecao, recalcular, salvarDecisao, vistaFila } from "./painel/revisao";
 import { criarPainel, escutar } from "./painel/servidor";
-import { digest, type SemanticPackage } from "./semantic-flow";
+import { cartaoDoVinculo, digest, type SemanticPackage } from "./semantic-flow";
 
-const SCORER_SHA = "7ceb07e3eca5944fa57392cd059a59239867ea8f153cdb2883b23eada433d146";
+// NAT-72 (flow-semantic-1.6.0): semantic-flow.ts, instrument.ts e instrument.json mudaram de propósito; antes 7ceb07e3…d146 (1.5.0).
+const SCORER_SHA = "0006158ce721502c60cc520aa262bde8a1314aa8a4d8c12d0fafde474079e4fd";
 const manter = process.argv.includes("--manter");
 const TMP = mkdtempSync(join(tmpdir(), "painel-teste-"));
 const resultados: { nome: string; ok: boolean }[] = [];
@@ -1024,6 +1025,139 @@ await teste("fila cega mascara ids de regra do oráculo (ds-*, ds:*, govbr-<vers
     assert.deepEqual(noTar.body, bytes);
     assert.ok(!/\/baixar\//.test(html), "a fila não linka o download");
   } finally { s.close(); }
+});
+
+// ───────────────────────────────────────────────────────────────── NAT-72: partes e vínculo de revisão pela API
+const arquivoNat72 = join(TMP, "arquivo-nat72");
+await construirArquivoFixture(arquivoNat72);
+await teste("NAT-72: fila cega oferece as outras unidades da cena; API grava partes e vínculo assinados, numa decisão versionada", async () => {
+  const f0 = vistaFila(arquivoNat72, C, "par-02")!;
+  const pkg = JSON.parse(readFileSync(join(arquivoNat72, revDir("par-02", "rev-001"), "revisao", "package.json"), "utf8")) as SemanticPackage;
+  const unidade = (spec: string) => pkg.units.find(u => u.specId === spec)!;
+  // Card about <p>: correct claim with no candidate. The other units of the scene are searchable, not credited.
+  const p = pkg.cards.find(c => c.origin === "agente" && c.candidateUnitIds.length === 0)!;
+  const vp = f0.cartoes.find(c => c.id === p.id)!;
+  assert.equal(vp.aceitaVinculo, true);
+  assert.deepEqual(vp.unidadesDaCena.map(u => u.specId).sort(), pkg.units.map(u => u.specId).sort());
+  // Blind: the view still carries no arm, run id or evidence path, and the order does not follow the arm.
+  const texto = JSON.stringify(f0.cartoes);
+  for (const proibido of ["fixture-analise-run-", "sem-01.png", "com-01.png", "reportedEvidence", "\"sem\"", "\"com\"", "pacote:", "runScope"]) {
+    assert.ok(!texto.includes(proibido), `vazou ${proibido}`);
+  }
+  const ordem = [...pkg.cards].sort((a, b) => a.scene.localeCompare(b.scene) || (a.rule ?? "~").localeCompare(b.rule ?? "~") ||
+    (a.subjects[0]?.key ?? "").localeCompare(b.subjects[0]?.key ?? "") || a.id.localeCompare(b.id)).map(c => c.id);
+  assert.deepEqual(f0.cartoes.map(c => c.id), ordem, "ordem por cena/regra/elemento/id, nunca por braço");
+
+  const fx03 = unidade("FX-03");
+  const base = { cardId: p.id, justificativa: "o parágrafo é a instrução do link FX-03", consultado: ["cartão", "medição"], revisora: "Revisora Teste" };
+  const semVinculo = salvarDecisao(arquivoNat72, C, "par-02", { ...base, decisao: "defeito-do-gabarito", unitIds: [fx03.id], base: 0 });
+  assert.equal(semVinculo.ok, false);
+  assert.match((semVinculo as { erro: string }).erro, /COM vínculo de revisão/);
+  const vinculo = { unitId: fx03.id, relacao: "participante-relacionado", estado: fx03.state, evidencia: `DOM: p descreve o link ${fx03.participants[0]}; aria-describedby ausente`,
+    justificativa: "o parágrafo é o texto que o link deveria referenciar" };
+  for (const [mudar, re] of [[{ relacao: "" }, /relação/], [{ evidencia: " " }, /evidência/], [{ justificativa: "" }, /justificativa/],
+    [{ estado: "outro-estado" }, /estado/], [{ unitId: "U-inventada" }, /não existe/]] as const) {
+    const r = salvarDecisao(arquivoNat72, C, "par-02", { ...base, decisao: "defeito-do-gabarito", unitIds: [fx03.id], vinculos: [{ ...vinculo, ...mudar }], base: 0 });
+    assert.equal(r.ok, false); assert.match((r as { erro: string }).erro, re);
+  }
+  const decDir72 = join(arquivoNat72, "analises", C, "par-02", "decisoes");
+  assert.ok(!existsSync(decDir72), "nada gravado nas recusas");
+  const ok = salvarDecisao(arquivoNat72, C, "par-02", { ...base, decisao: "defeito-do-gabarito", unitIds: [fx03.id], vinculos: [vinculo], base: 0 });
+  assert.equal(ok.ok, true, (ok as { erro?: string }).erro);
+  const d1 = JSON.parse(readFileSync(join(decDir72, "decisoes-0001.json"), "utf8"));
+  assert.equal(d1._painel.formato, "decisoes-painel-1.1.0");
+  assert.equal(d1._painel.vinculos, 1);
+  const link = d1.decisions.find((d: any) => d.cardId === p.id).atoms[0].links[0];
+  assert.deepEqual({ ...link, evidence: undefined }, { contrato: "vinculo-revisao-1.0.0", unitId: fx03.id, subjects: [p.subjects[0].id], scene: p.scene,
+    state: fx03.state, relation: "participante-relacionado", evidence: undefined, justification: vinculo.justificativa, reviewer: "Revisora Teste",
+    binding: { build: p.binding.build, runScope: p.binding.runScope, card: cartaoDoVinculo(p) } });
+
+  // One linked element cannot be split into several reference parts to reach several units.
+  const fx02 = unidade("FX-02");
+  const multi = salvarDecisao(arquivoNat72, C, "par-02", { ...base, base: 1, atomos: [
+    { texto: "a", sujeitos: [p.subjects[0].id], decisao: "defeito-do-gabarito", unitIds: [fx03.id], vinculos: [vinculo] },
+    { texto: "b", sujeitos: [p.subjects[0].id], decisao: "defeito-do-gabarito", unitIds: [fx02.id],
+      vinculos: [{ ...vinculo, unitId: fx02.id, evidencia: `cita ${fx02.participants[0]}` }] }] });
+  assert.equal(multi.ok, false); assert.match((multi as { erro: string }).erro, /só pode estar em uma parte/);
+  // Decomposition: no subject is assigned by omission; each part names its own elements.
+  const campo = pkg.cards.find(c => c.origin === "agente" && c.candidateUnitIds.length === 1)!;
+  const sujeito = campo.subjects[0].id;
+  const fx01 = campo.candidateUnitIds[0];
+  const pb = { cardId: campo.id, justificativa: "campo sem rótulo; a parte do aviso é falsa", consultado: ["cartão"], revisora: "Revisora Teste" };
+  const semSujeito = salvarDecisao(arquivoNat72, C, "par-02", { ...pb, atomos: [{ texto: "sem rótulo", sujeitos: [], decisao: "defeito-do-gabarito", unitIds: [fx01] }], base: 1 });
+  assert.equal(semSujeito.ok, false); assert.match((semSujeito as { erro: string }).erro, /nenhum é atribuído por omissão/);
+  const ambos = salvarDecisao(arquivoNat72, C, "par-02", { ...pb, decisao: "incorreta", atomos: [], base: 1 });
+  assert.equal(ambos.ok, false); assert.match((ambos as { erro: string }).erro, /OU as partes/);
+  const partes = salvarDecisao(arquivoNat72, C, "par-02", { ...pb, base: 1, atomos: [
+    { texto: "o campo não tem rótulo", sujeitos: [sujeito], decisao: "defeito-do-gabarito", unitIds: [fx01], citacao: "supported" },
+    { texto: "e toca música", sujeitos: [sujeito], decisao: "incorreta", citacao: "unsupported" }] });
+  assert.equal(partes.ok, true, (partes as { erro?: string }).erro);
+  const d2 = JSON.parse(readFileSync(join(decDir72, "decisoes-0002.json"), "utf8"));
+  assert.equal(d2._painel.partes, 2);
+  assert.match(d2._painel.decisao, /^partes: defeito-do-gabarito \+ incorreta$/);
+  assert.deepEqual(d2.decisions.find((d: any) => d.cardId === campo.id).atoms.map((a: any) => [a.id, a.subjects, a.decisao]),
+    [["a1", [sujeito], "defeito-do-gabarito"], ["a2", [sujeito], "incorreta"]]);
+  const f2 = vistaFila(arquivoNat72, C, "par-02")!;
+  assert.deepEqual(f2.cartoes.find(c => c.id === campo.id)!.decisao.partes.map(x => [x.decisao, x.unidades]), [["defeito-do-gabarito", ["FX-01"]], ["incorreta", []]]);
+  assert.deepEqual(f2.cartoes.find(c => c.id === p.id)!.decisao.partes[0].vinculos, ["participante-relacionado"]);
+  // The page offers the decomposition and the link form.
+  const html = (await req(`/revisao/${C}/par-02`)).corpo.toString("utf8");
+  assert.match(html, /Decidir por partes/);
+  assert.match(html, /Vínculo de revisão/);
+});
+
+await teste("NAT-72: a página (navegador headless) decide por partes e grava vínculo pelo formulário, sem erro de script", async () => {
+  const s72 = criarPainel({ arquivo: arquivoNat72, revisora: "Revisora UI" });
+  const p72 = await escutar(s72, 0);
+  const browser = await chromium.launch();
+  try {
+    const page = await browser.newPage();
+    const erros: string[] = [];
+    page.on("pageerror", e => erros.push(String(e)));
+    await page.goto(`http://127.0.0.1:${p72}/revisao/${C}/par-02`);
+    const pkg = JSON.parse(readFileSync(join(arquivoNat72, revDir("par-02", "rev-001"), "revisao", "package.json"), "utf8")) as SemanticPackage;
+    // h1 card: no candidate, decided by the whole-card form with another unit of the scene + link.
+    const h1 = pkg.cards.find(c => c.origin === "agente" && c.candidateUnitIds.length === 0 && /h1/.test(c.subjects[0].key ?? ""))!;
+    const f = page.locator(`form.decidir[data-card="${h1.id}"]`);
+    await f.locator("input[value=defeito-do-gabarito]").check();
+    await f.locator("details.outras summary").click();
+    const fx02 = pkg.units.find(u => u.specId === "FX-02")!;
+    await f.locator(`.so-gabarito input[data-vinculo][value="${fx02.id}"]`).check();
+    await f.locator(".so-gabarito .vinculo [data-v=relacao]").selectOption("participante-relacionado");
+    await f.locator(".so-gabarito .vinculo [data-v=estado]").selectOption(fx02.state);
+    await f.locator(".so-gabarito .vinculo [data-v=evidencia]").fill(`medição: h1 rotula o botão ${fx02.participants[0]}`);
+    await f.locator(".so-gabarito .vinculo [data-v=justificativa]").fill("o título é o nome que falta ao botão");
+    await f.locator("textarea[name=j]").fill("correta, FX-02 por vínculo");
+    await Promise.all([page.waitForEvent("load"), f.locator("button[type=submit]").click()]);
+    // Composite card through the parts form.
+    const campo = pkg.cards.find(c => c.origin === "agente" && c.candidateUnitIds.length === 1)!;
+    const g = page.locator(`form.decidir[data-card="${campo.id}"]`);
+    await page.locator("summary", { hasText: /^Já decididos/ }).click();
+    await g.locator("details.decompor summary").click();
+    await g.locator("[data-modo-partes]").check();
+    const p1 = g.locator(".parte[data-parte='1']"), p2 = g.locator(".parte[data-parte='2']");
+    await p1.locator("[data-p=texto]").fill("o campo não tem rótulo");
+    await p1.locator("[data-p=sujeito]").check();
+    await p1.locator("[data-p=decisao]").selectOption("defeito-do-gabarito");
+    await p1.locator("[data-p=unidade]").selectOption(campo.candidateUnitIds[0]);
+    await p2.locator("[data-p=texto]").fill("e o aviso some");
+    await p2.locator("[data-p=sujeito]").check();
+    await p2.locator("[data-p=decisao]").selectOption("incorreta");
+    await g.locator("textarea[name=j]").fill("parte certa e parte falsa");
+    await Promise.all([page.waitForEvent("load"), g.locator("button[type=submit]").click()]);
+    assert.deepEqual(erros, []);
+    const dir = join(arquivoNat72, "analises", C, "par-02", "decisoes");
+    const ultimo = readdirSync(dir).sort().pop()!;
+    const d = JSON.parse(readFileSync(join(dir, ultimo), "utf8"));
+    const dh1 = d.decisions.find((x: any) => x.cardId === h1.id);
+    assert.equal(dh1.atoms[0].links[0].relation, "participante-relacionado");
+    assert.equal(dh1.atoms[0].links[0].reviewer, "Revisora UI");
+    const dc = d.decisions.find((x: any) => x.cardId === campo.id);
+    assert.deepEqual(dc.atoms.map((a: any) => a.decisao), ["defeito-do-gabarito", "incorreta"]);
+  } finally {
+    await browser.close();
+    s72.close();
+  }
 });
 
 await teste("hash de SCORER_FILES intacto", () => {

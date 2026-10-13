@@ -1,4 +1,4 @@
-# Pontuação semântica e revisão finita — flow-semantic-1.5.0
+# Pontuação semântica e revisão finita — flow-semantic-1.6.0
 
 ## As três filas, e qual delas fecha a bateria (fatia 5)
 
@@ -129,6 +129,64 @@ flow-semantic-1.5.0 — análise recusada para não misturar versões"), registr
 `revisoes/falhas/` como as outras recusas, sem revisão nova; a revisão atual continua valendo. Uma
 campanha sem a versão segue com aviso (o contrato `campaign.v1` a exige, então isso só cobre documento
 fora do contrato). Analisar o piloto-01 sob 1.5.0 exige, portanto, decisão registrada sobre a campanha.
+
+### Vínculo de revisão e decomposição real (flow-semantic-1.6.0, NAT-72)
+
+Nas campanhas T7 (D-97, D-111, D-112) alegações corretas terminavam `defeito-novo-correto` porque a
+unidade certa não era oferecida: o cartão "sem cabeçalho/rodapé do DS" ancorado em `<html>` (chave
+`""`, ancestral dos participantes de P-01/P-02), o foco que cai no `body` ao fechar o diálogo (A-01),
+o salto para o conteúdo (B-01), o host `br-input` no lugar do `input` interno do shadow root. E a
+alegação composta não se dividia: o átomo único cobria todos os sujeitos, e o sujeito extra fazia o
+scorer recusar ("Unsupported subject").
+
+**Vínculo (`vinculo-revisao-1.0.0`).** Um átomo `reference` pode trazer `links`:
+
+```json
+{"contrato":"vinculo-revisao-1.0.0","unitId":"U-…","subjects":[""],"scene":"1280x900","state":"inicial",
+ "relation":"ausencia-global","evidence":["medição headless: nenhum br-header no documento"],
+ "justification":"…","reviewer":"<quem decidiu>","binding":{"build":"<o do cartão>","runScope":"<o do cartão>"}}
+```
+
+A ancoragem estrita (`anchored`) continua o caminho normal e as candidatas continuam sugestão. O
+vínculo é a exceção declarada e só vale se: a unidade existe e está entre as `unitIds` do átomo; a cena
+declarada é a da unidade e a de cada sujeito; o estado declarado está entre os estados MEDIDOS da
+unidade (sem plano de estados, o rótulo dela); a relação é uma de `ausencia-global`, `host-interno`,
+`participante-relacionado`, `transicao` e cabe na árvore medida (`ausencia-global`: o sujeito é o
+documento ou ancestral de um participante; `host-interno`: sujeito e participante separados por uma
+fronteira de shadow root aberto; as outras duas não têm relação de árvore conferível); há evidência e
+justificativa; a assinatura é a de quem decidiu; e a amarração (`build`, `runScope`) é a do cartão — um
+vínculo copiado de outra execução não pega carona.
+
+Endurecido depois da revisão do diff: (1) `ausencia-global` só para unidade com participante DE PÁGINA
+(documento, `body`, filho direto do `body` — o contêiner raiz da aplicação —, `header`/`footer`/
+`main`/`nav`), porque as referências não têm campo "ausência" (só `description` livre); (2)
+`participante-relacionado` e `transicao` exigem que a evidência cite por extenso a chave medida de
+um participante da unidade (as referências não codificam elementos relacionados nem de transição);
+(3) `state` tem de ser o estado DECLARADO da unidade (e existir no segmento da cena); (4) `binding.card`
+é o digest do conteúdo do cartão (sem o id, que muda com o contexto), então um vínculo copiado de um
+cartão irmão é recusado; (5) um sujeito chega por vínculo a no máximo UMA unidade por cartão, e um
+sujeito vinculado não pode estar em dois átomos `reference` — dividir "<html> sem lang" em N átomos
+vinculados não vale N unidades. A assinatura (`reviewer` = o da decisão) é conferência de coerência:
+quem grava os dois é o mesmo servidor, então ela não autentica ninguém. Sujeito não resolvido não se vincula. Nada no código
+cria vínculo (nem regex, nem id de regra, nem candidata). O crédito que só existe pelo vínculo sai
+marcado em `matched[].vinculo`.
+
+**Partes.** O painel (`POST /api/decisao`, campo `atomos`) e a bancada recebem a decomposição feita pela
+revisora: cada parte com texto, os PRÓPRIOS elementos, decisão, citação, unidade e vínculos. Nenhum
+elemento vai para uma parte por omissão, e todo elemento alegado precisa estar em alguma. A parte da
+unidade certa não empresta crédito ao elemento extra: ele é julgado na outra parte (incorreta, novo
+correto, evidência insuficiente). `decisoes-painel-1.1.0` registra quantas partes e vínculos a gravação
+trouxe. A fila cega mostra também as outras unidades da mesma cena, para a revisora pesquisar; o braço,
+o id da execução e os caminhos continuam fora dela, e a ordem continua cena/regra/elemento/id.
+
+**Legado.** `scoring.semanticLegacy` (`instrument.json`) lista as versões cujos pacotes e decisões
+continuam pontuáveis pelo caminho delas: hoje `flow-semantic-1.5.0`. O resultado sai com a versão do
+pacote e reproduz o `score.json` arquivado byte a byte; vínculo num pacote legado é recusado, e
+decisões de outra versão nunca migram (`scopeReviews` recusa). Reanálise com vínculo é análise NOVA
+(NAT-74), nunca reescrita das campanhas. A versão do scorer já está na chave de comparação
+(`contracts/index.ts comparisonKeyOf`: `scorer.version`, `scorer.scorerSha256`,
+`scorer.acceptancePolicy`), então uma análise 1.6.0 nunca se agrega com uma 1.5.0; dentro da 1.6.0, usar
+ou não um vínculo é decisão da revisora, que entra no `reviewHash`, não configuração.
 
 ## Contrato do achado e evidência da execução (fluxo-1.3.0)
 

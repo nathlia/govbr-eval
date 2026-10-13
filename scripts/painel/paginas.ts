@@ -543,8 +543,46 @@ const OPCOES: [string, string, string][] = [
   ["evidencia-insuficiente", "Evidência insuficiente", "não dá para decidir com o que está aqui"],
 ];
 
+const RELACOES: [string, string][] = [
+  ["ausencia-global", "ausência global — a parte obrigatória falta no documento (alegação ancorada em <html>/body ou num ancestral)"],
+  ["host-interno", "host / interno — o host do componente no lugar do controle dentro do shadow root (ou o inverso)"],
+  ["participante-relacionado", "participante relacionado — outro elemento que participa da mesma função (rótulo, cabeçalho de coluna…)"],
+  ["transicao", "transição — o efeito de uma interação (o foco que cai no body ao fechar o diálogo)"],
+];
+
+/**
+ * NAT-72: campos de um vínculo de revisão. Só aparecem em pacote que aceita vínculo; quem decide
+ * declara relação, estado medido, evidência e justificativa — nada é preenchido por regra.
+ */
+function camposVinculo(prefixo: string, estados: string[]): string {
+  return `<fieldset class="vinculo"><legend>Vínculo de revisão (obrigatório para unidade fora das candidatas)</legend>
+<p class="pequeno suave">A ancoragem automática não ofereceu esta unidade. Diga por que a alegação é dela: a relação, o estado em que você mediu, o que você mediu e por quê. O vínculo é assinado com o seu nome.</p>
+<div class="campo"><label class="rot" for="${prefixo}-rel">Relação</label><select id="${prefixo}-rel" data-v="relacao"><option value="">escolha…</option>${RELACOES.map(([v, r]) => `<option value="${v}">${esc(r)}</option>`).join("")}</select></div>
+<div class="campo"><label class="rot" for="${prefixo}-est">Estado medido</label><select id="${prefixo}-est" data-v="estado"><option value="">escolha…</option>${estados.map(e => `<option value="${esc(e)}">${esc(e)}</option>`).join("")}</select></div>
+<div class="campo"><label class="rot" for="${prefixo}-ev">Evidência da relação (separe com ;)</label><input type="text" id="${prefixo}-ev" data-v="evidencia"></div>
+<div class="campo"><label class="rot" for="${prefixo}-j">Justificativa do vínculo</label><textarea id="${prefixo}-j" rows="2" data-v="justificativa"></textarea></div>
+</fieldset>`;
+}
+
+/** Uma parte da decomposição: o que afirma, de quais elementos fala, a decisão, a unidade e o vínculo. */
+function parteRevisao(c: VistaCartao, prefixo: string, i: number, estados: string[]): string {
+  const p = `${prefixo}-p${i}`;
+  const unidades = [...c.candidatas.map(un => ({ un, cand: true })), ...c.unidadesDaCena.map(un => ({ un, cand: false }))];
+  return `<fieldset class="parte${i > 2 ? " oculto" : ""}" data-parte="${i}"><legend>Parte ${i}</legend>
+<div class="campo"><label class="rot" for="${p}-t">O que esta parte afirma</label><textarea id="${p}-t" rows="2" data-p="texto"></textarea></div>
+<div class="campo"><span class="rot">Elementos de que ela fala</span>${c.sujeitos.map((s, k) => `<div class="opcao"><input type="checkbox" id="${p}-s${k}" data-p="sujeito" value="${esc(s.id)}"><label for="${p}-s${k}" class="mono">${esc(s.rotulo)}</label></div>`).join("")}</div>
+<div class="campo"><label class="rot" for="${p}-d">Decisão desta parte</label><select id="${p}-d" data-p="decisao"><option value="">escolha…</option>${OPCOES.filter(([v]) => v !== "duplicada").map(([v, rot]) => `<option value="${v}">${esc(rot)}</option>`).join("")}</select></div>
+<div class="campo"><label class="rot" for="${p}-u">Unidade acertada (só “defeito do gabarito”)</label><select id="${p}-u" data-p="unidade"><option value="">nenhuma</option>${unidades.map(({ un, cand }) => `<option value="${esc(un.id)}" data-candidata="${cand ? "1" : "0"}">${esc(un.specId)} · ${esc(un.estado)}${cand ? " (candidata)" : " (exige vínculo)"}</option>`).join("")}</select></div>
+<div class="campo"><label class="rot" for="${p}-c">A regra citada sustenta esta parte?</label><select id="${p}-c" data-p="citacao"><option value="uncertain">incerto</option><option value="supported">sim</option><option value="unsupported">não</option></select></div>
+${c.aceitaVinculo ? camposVinculo(`${p}-v`, estados) : ""}
+</fieldset>`;
+}
+
 function cartaoRevisao(c: VistaCartao, n: number, total: number, todos: VistaCartao[]): string {
   const id = c.id.slice(2, 14);
+  // O estado do vínculo é o estado DECLARADO do defeito na unidade.
+  const estados = [...new Set([...c.candidatas, ...c.unidadesDaCena].map(un => un.estado))];
+  const maxPartes = Math.min(6, Math.max(2, c.sujeitos.length));
   const decididos = todos.filter(o => c.duplicataDe.includes(o.id) && o.decisao.status === "decidido");
   const campo = (rot: string, html: string) => `<div class="campo"><span class="rot">${esc(rot)}</span>${html}</div>`;
   const nome = (s: string) => `${s}-${id}`;
@@ -561,7 +599,7 @@ ${campo("Unidades candidatas (sugestão, não crédito)", c.candidatas.length ? 
 ${campo("Evidência da execução", c.evidencias.length ? `<ul>${c.evidencias.map(ev => `<li>${ev.url ? `<a href="${esc(ev.url)}" target="_blank" rel="noopener">Evidência ${ev.n}</a>` : `Evidência ${ev.n}`} · ${esc(ev.status)}${ev.sha256 ? ` · sha256 <span class="mono">${esc(ev.sha256)}</span>` : ""}</li>`).join("")}</ul>` : `<p class="suave">Nenhuma referência declarada.</p>`)}
 ${c.imagemCena ? `<details><summary>Reconstrução da cena (não é evidência da execução)</summary><img class="cena" loading="lazy" src="${esc(c.imagemCena)}" alt="Captura da página congelada na cena ${esc(c.cena)}, refeita no momento da análise"></details>` : ""}
 ${campo("Retido na cegueira", `<p class="pequeno suave">${esc(c.retido)}</p>`)}
-${c.decisao.status === "decidido" ? `<div class="aviso info"><p>Decidido por ${esc(c.decisao.revisora ?? "?")}: <strong>${esc(c.decisao.decisao)}</strong> — “${esc(c.decisao.justificativa)}”. Para mudar, decida de novo abaixo: a nova decisão vira uma versão nova, a anterior fica no histórico.</p></div>` : ""}
+${c.decisao.status === "decidido" ? `<div class="aviso info"><p>Decidido por ${esc(c.decisao.revisora ?? "?")}: <strong>${esc(c.decisao.decisao)}</strong> — “${esc(c.decisao.justificativa)}”. Para mudar, decida de novo abaixo: a nova decisão vira uma versão nova, a anterior fica no histórico.</p>${c.decisao.partes.length > 1 || c.decisao.partes.some(pt => pt.vinculos.length) ? `<ul>${c.decisao.partes.map((pt, k) => `<li>parte ${k + 1}: ${esc(pt.decisao ?? "?")} · ${pt.sujeitos} elemento(s)${pt.unidades.length ? ` · ${esc(pt.unidades.join(", "))}` : ""}${pt.vinculos.length ? ` · vínculo: ${esc(pt.vinculos.join(", "))}` : ""}</li>`).join("")}</ul>` : ""}</div>` : ""}
 <form class="decidir" data-card="${esc(c.id)}"${c.cenas ? " data-segmentado" : ""} novalidate>
 ${c.cenas ? `<fieldset><legend>De qual cena a alegação fala (obrigatório)</legend>
 <p class="pequeno suave">O elemento existe em mais de um segmento da navegação, e a alegação não diz a rota. Só os elementos e as unidades da cena escolhida contam.</p>
@@ -571,11 +609,21 @@ ${c.cenas.map((o, i) => `<div class="opcao"><input type="radio" name="${nome("ce
 ${OPCOES.map(([v, rot, exp]) => `<div class="opcao"><input type="radio" name="${nome("d")}" id="${nome(v)}" value="${v}"${c.decisao.decisao === v ? " checked" : ""}><label for="${nome(v)}"><strong>${esc(rot)}</strong> — ${esc(exp)}</label></div>`).join("")}
 </fieldset>
 <fieldset class="so-gabarito oculto"><legend>Qual unidade a alegação acertou</legend>
-${c.candidatas.length ? c.candidatas.map(un => `<div class="opcao"><input type="checkbox" name="${nome("u")}" id="${nome("u")}-${esc(un.id.slice(2, 12))}" value="${esc(un.id)}"${c.decisao.unidades.includes(un.id) ? " checked" : ""}><label for="${nome("u")}-${esc(un.id.slice(2, 12))}">${esc(un.specId)} · ${esc(un.estado)}${c.cenas ? ` · cena ${esc(un.cena)}` : ""}</label></div>`).join("") : `<p class="nota-erro">Este cartão não tem unidade candidata: o scorer recusará “defeito do gabarito”.</p>`}
+${c.candidatas.length ? c.candidatas.map(un => `<div class="opcao"><input type="checkbox" name="${nome("u")}" id="${nome("u")}-${esc(un.id.slice(2, 12))}" value="${esc(un.id)}"${c.decisao.unidades.includes(un.id) ? " checked" : ""}><label for="${nome("u")}-${esc(un.id.slice(2, 12))}">${esc(un.specId)} · ${esc(un.estado)}${c.cenas ? ` · cena ${esc(un.cena)}` : ""}</label></div>`).join("") : `<p class="${c.aceitaVinculo ? "suave" : "nota-erro"}">Este cartão não tem unidade candidata${c.aceitaVinculo ? ": só uma unidade com vínculo de revisão pode ser escolhida." : ": o scorer recusará “defeito do gabarito”."}</p>`}
+${c.aceitaVinculo && c.unidadesDaCena.length ? `<details class="outras"><summary>Outra unidade da mesma cena (exige vínculo de revisão)</summary>
+${c.unidadesDaCena.map(un => `<div class="opcao"><input type="checkbox" name="${nome("u")}" data-vinculo="1" id="${nome("o")}-${esc(un.id.slice(2, 12))}" value="${esc(un.id)}"${c.decisao.unidades.includes(un.id) ? " checked" : ""}><label for="${nome("o")}-${esc(un.id.slice(2, 12))}"><strong>${esc(un.specId)}</strong> · medida em ${esc(un.estados.join(", "))}${c.cenas ? ` · cena ${esc(un.cena)}` : ""}<br><span class="pequeno">${esc(un.descricao)}</span></label></div>`).join("")}
+${camposVinculo(nome("v"), estados)}
+</details>` : ""}
 </fieldset>
 <div class="campo so-duplicada oculto"><label class="rot" for="${nome("dup")}">Duplicata de qual cartão</label>
 ${decididos.length ? `<select id="${nome("dup")}" name="dup">${decididos.map(o => `<option value="${esc(o.id)}">${esc(o.id.slice(0, 14))}… — ${esc((o.observado ?? "").slice(0, 60))}</option>`).join("")}</select>`
     : `<p class="nota-erro">Nenhum cartão elegível já decidido (duplicata só vale dentro da mesma execução, com os mesmos elementos e estado).</p>`}</div>
+<details class="decompor"><summary>Decidir por partes (alegação composta)</summary>
+<div class="opcao"><input type="checkbox" id="${nome("partes")}" data-modo-partes><label for="${nome("partes")}">Esta alegação junta afirmações diferentes: decidir cada parte separadamente (a decisão acima é ignorada)</label></div>
+<p class="pequeno suave">Cada parte diz de quais elementos fala; todo elemento alegado precisa estar em alguma parte. A parte certa não empresta crédito ao elemento que só aparece na outra.</p>
+${Array.from({ length: maxPartes }, (_, k) => parteRevisao(c, nome("pt"), k + 1, estados)).join("")}
+${maxPartes > 2 ? `<div class="botoes"><button type="button" class="sec" data-mais-parte>Adicionar parte</button></div>` : ""}
+</details>
 <div class="campo"><label class="rot" for="${nome("cit")}">A regra citada sustenta a alegação?</label>
 <select id="${nome("cit")}" name="cit"><option value="uncertain">incerto</option><option value="supported">sim, a citação sustenta</option><option value="unsupported">não, citação errada</option></select></div>
 <div class="campo"><label class="rot" for="${nome("j")}">Justificativa (obrigatória)</label><textarea id="${nome("j")}" name="j" rows="2" required aria-required="true"></textarea></div>
@@ -634,24 +682,43 @@ document.querySelectorAll("form.decidir").forEach(function(f){
   function mostra(){ var d=(f.querySelector("input[name^='d-']:checked")||{}).value;
     f.querySelector(".so-gabarito").classList.toggle("oculto", d!=="defeito-do-gabarito");
     f.querySelector(".so-duplicada").classList.toggle("oculto", d!=="duplicada");
-    var cx=f.querySelectorAll(".so-gabarito input[type=checkbox]");
+    var cx=f.querySelectorAll(".so-gabarito input[type=checkbox]:not([data-vinculo])");
     if(d==="defeito-do-gabarito" && cx.length===1 && !cx[0].checked) cx[0].checked=true; }
   f.addEventListener("change",mostra); mostra();
+  var mais=f.querySelector("[data-mais-parte]");
+  if(mais) mais.addEventListener("click",function(){ var o=f.querySelector(".parte.oculto"); if(o){ o.classList.remove("oculto"); } if(!f.querySelector(".parte.oculto")) mais.disabled=true; });
+  // NAT-72: campos de um vínculo de revisão; nada é preenchido por regra.
+  function vinculo(box){ if(!box) return null; var v={}; [].slice.call(box.querySelectorAll("[data-v]")).forEach(function(x){ v[x.getAttribute("data-v")]=x.value.trim(); });
+    v.evidencia=(v.evidencia||"").split(";").map(function(s){return s.trim()}).filter(Boolean); return v; }
+  function partes(){ return [].slice.call(f.querySelectorAll(".parte:not(.oculto)")).map(function(p){
+    var u=p.querySelector("[data-p=unidade]"); var opt=u.options[u.selectedIndex];
+    var a={texto:p.querySelector("[data-p=texto]").value.trim(),
+      sujeitos:[].slice.call(p.querySelectorAll("[data-p=sujeito]:checked")).map(function(i){return i.value}),
+      decisao:p.querySelector("[data-p=decisao]").value, citacao:p.querySelector("[data-p=citacao]").value,
+      unitIds:u.value?[u.value]:[]};
+    if(u.value && opt.getAttribute("data-candidata")!=="1"){ var v=vinculo(p.querySelector(".vinculo")); if(v){ v.unitId=u.value; a.vinculos=[v]; } }
+    return a; }); }
   f.addEventListener("submit",async function(ev){ ev.preventDefault();
     var msg=f.querySelector(".retorno"); msg.className="msg retorno erro";
+    var porPartes=!!(f.querySelector("[data-modo-partes]")||{}).checked;
     var d=(f.querySelector("input[name^='d-']:checked")||{}).value;
-    var j=f.querySelector("textarea").value.trim();
+    var jt=f.querySelector("textarea[name=j]"); var j=jt.value.trim();
     var nome=rv.value.trim();
     if(!nome){ msg.textContent="Escreva seu nome no campo do topo da página."; rv.focus(); return; }
     var cena=f.hasAttribute("data-segmentado")?(f.querySelector("input[name^='cena-']:checked")||{}).value:null;
     if(f.hasAttribute("data-segmentado") && !cena){ msg.textContent="Escolha de qual cena a alegação fala."; return; }
-    if(!d){ msg.textContent="Escolha uma das cinco decisões."; return; }
-    if(!j){ msg.textContent="A justificativa é obrigatória."; f.querySelector("textarea").focus(); return; }
+    if(!d && !porPartes){ msg.textContent="Escolha uma das cinco decisões."; return; }
+    if(!j){ msg.textContent="A justificativa é obrigatória."; jt.focus(); return; }
     var unid=[].slice.call(f.querySelectorAll(".so-gabarito input:checked")).map(function(i){return i.value});
+    var outras=[].slice.call(f.querySelectorAll(".so-gabarito input[data-vinculo]:checked")).map(function(i){return i.value});
     var dup=f.querySelector(".so-duplicada select");
-    var corpo={cardId:f.getAttribute("data-card"),decisao:d,unitIds:unid,duplicadaDe:dup?dup.value:null,cena:cena,
+    var corpo={cardId:f.getAttribute("data-card"),cena:cena,
       citacao:f.querySelector("select[name=cit]").value,justificativa:j,
       consultado:f.querySelector("input[name=ev]").value.split(";").map(function(s){return s.trim()}).filter(Boolean),revisora:nome,base:BASE};
+    if(porPartes){ corpo.atomos=partes(); }
+    else { corpo.decisao=d; corpo.unitIds=unid; corpo.duplicadaDe=dup?dup.value:null;
+      if(d==="defeito-do-gabarito" && outras.length){ var v=vinculo(f.querySelector(".so-gabarito .vinculo"));
+        corpo.vinculos=outras.map(function(u){ var c=JSON.parse(JSON.stringify(v)); c.unitId=u; return c; }); } }
     var botao=f.querySelector("button[type=submit]"); botao.disabled=true; msg.className="msg retorno"; msg.textContent="Salvando…";
     try{ var r=await fetch("/api/decisao/"+ALVO,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(corpo)}); var res=await r.json();
       if(res.ok){ msg.className="msg retorno ok"; msg.textContent="Salvo como versão "+res.versao+". Atualizando a fila…";

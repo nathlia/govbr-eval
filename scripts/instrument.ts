@@ -21,6 +21,7 @@ interface InstrumentFile {
     fluxo: string;
     legacy: string;
     legacyCollection: string;
+    semanticLegacy: string[];
     note: string;
     provenance: { acceptancePolicy: string; nota: string };
   };
@@ -38,6 +39,13 @@ export const FLOW_INSTRUMENT_VERSION = file.fluxo;
 
 /** Scoring semantics can change without pretending an archived collection was rerun. */
 export const FLOW_SCORING_VERSION = file.scoring.fluxo;
+
+/**
+ * Versões ANTERIORES da pontuação semântica cujos pacotes e decisões continuam pontuáveis pelo
+ * caminho delas (NAT-72): o resultado reproduz o arquivado byte a byte, e nada do contrato novo
+ * (vínculo de revisão) se aplica retroativamente a elas.
+ */
+export const FLOW_SCORING_LEGACY_VERSIONS: readonly string[] = Object.freeze([...(file.scoring.semanticLegacy ?? [])]);
 
 /** Coleta que o scorer legado de citação sabe pontuar; ela não sobe junto com a coleta vigente. */
 export const FLOW_LEGACY_COLLECTION_VERSION = file.scoring.legacyCollection;

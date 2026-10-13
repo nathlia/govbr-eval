@@ -9,9 +9,10 @@ import type { FlowUnit } from "./units-flow";
 import type { PredicateResult } from "./acceptance-predicates";
 import { renderReview } from "./semantic-flow-render";
 import {
-  SCORER_FILES, digest, maximumMatching, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, tocaParticipante, validatePackage,
-  type SemanticDecision, type SemanticPackage, type SemanticReviews, type ReviewAtom, type PrepareRun, type SceneResolution,
+  SCORER_FILES, SEMANTIC_LEGACY_VERSIONS, aceitaVinculos, cartaoDoVinculo, participanteDePagina, SEMANTIC_SCORING_VERSION, VINCULO_CONTRATO, digest, maximumMatching, normalizeReviews, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, tocaParticipante, validatePackage,
+  type RawReviewAtom, type SemanticDecision, type SemanticPackage, type SemanticReviews, type ReviewAtom, type ReviewLink, type PrepareRun, type SceneResolution,
 } from "./semantic-flow";
+import { montarAtomos, montarVinculos } from "./decisao-atomos";
 
 const context = { referenceHash: "reference-v1", sceneHash: "scene-v1", scorerHash: "scorer-v1" };
 const element = { key: "body>input", id: "E-input", label: "CPF", hidden: null };
@@ -660,6 +661,295 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
     assert.match(md, /Cena `1280x900@detalhe` \(\/app\/detalhe\) — escolha com `"cena": "1280x900@detalhe"`/);
     // Without segments, review.md does not mention them.
     assert.doesNotMatch(renderReview(prepare(), reviews(prepare(), [])), /Este plano navega|"cena"/);
+  });
+}
+
+// ── NAT-72: vínculo de revisão explícito e átomos ────────────────────────────
+{
+  const doc = { key: "", id: "E-html", label: "<html>", hidden: null };
+  const corpo = { key: "body", id: "E-body", label: "<body>", hidden: null };
+  const cabecalho = { key: "body>div>header", id: "E-header", label: "<header>", hidden: null };
+  const botao = { key: "body>div>main>button", id: "E-botao", label: "<button> Enviar", hidden: null };
+  const host = { key: "body>div>main>br-input", id: "E-host", label: "<br-input>", hidden: null };
+  const interno = { key: "body>div>main>br-input >>> div>input", id: "E-interno", label: "<input> [shadow]", hidden: null };
+  const th = { key: "body>div>main>table>thead>tr>th:nth-of-type(2)", id: "E-th", label: "<th> Data", hidden: null };
+  const dialogo = { key: "body>div>div:nth-of-type(2)", id: "E-dialogo", label: "<div> diálogo", hidden: null };
+  const caixa = { key: "body>div>main>div", id: "E-caixa", label: "<div>", hidden: null };
+  const els = [doc, corpo, cabecalho, botao, host, interno, th, dialogo, caixa];
+  const sel: Resolution["bySelector"] = new Map(els.map(e => [`#${e.id}`, { selector: `#${e.id}`, ok: true, error: null, keys: [e.key] }]));
+  sel.set("#composto", { selector: "#composto", ok: true, error: null, keys: [interno.key, th.key] });
+  sel.set("#host-e-interno", { selector: "#host-e-interno", ok: true, error: null, keys: [host.key, interno.key] });
+  sel.set("#ausente", { selector: "#ausente", ok: false, error: "no match", keys: [] });
+  const res: Resolution = { url: "http://fixture/tela.html", byKey: new Map(els.map(e => [e.key, e])), bySelector: sel };
+  const un = (specId: string, el: { key: string }, states: string[], participants = [el.key]): FlowUnit => ({ specId, element: el as FlowUnit["element"],
+    participants, rules: ["wcag:x"], categories: ["x"], description: specId, state: states[0], states, conditional: false });
+  const refUnits = [
+    un("P-01", cabecalho, ["inicial", "aberto"]),
+    un("B-04", interno, ["inicial"]),
+    un("A-01", dialogo, ["aberto"]),
+    un("A-02", botao, ["inicial"]),
+  ];
+  const claim = (selector: string, observed = `sobre ${selector}`) => ({ selector, rule: null, observed, expected: "e",
+    state: { viewport: { width: 1280, height: 900 }, steps: [] }, evidence: [] });
+  const pacote = (selectors: string[], runId = "r1") => prepareSemanticPackage(context, refUnits, res,
+    [{ id: runId, data: run(selectors.map(s => claim(s)) as FlowAgentResults["findings"]) }]);
+  const uid = (pkg: SemanticPackage, specId: string) => pkg.units.find(u => u.specId === specId)!.id;
+  const cardOf = (pkg: SemanticPackage, selector: string) => pkg.cards.find(c => c.selector === selector)!;
+  const link = (card: SemanticPackage["cards"][number], unitId: string, subjects: string[], o: Partial<ReviewLink> = {}): ReviewLink => ({
+    contrato: VINCULO_CONTRATO, unitId, subjects, scene: card.scene, state: "inicial", relation: "ausencia-global",
+    evidence: ["medição headless: nenhum <header> do DS no documento"], justification: "a parte obrigatória falta na página inteira",
+    reviewer: "author", binding: { build: card.binding.build, runScope: card.binding.runScope, card: cartaoDoVinculo(card) }, ...o });
+  const ref = (subjects: string[], unitIds: string[], links?: ReviewLink[], o: Partial<ReviewAtom> = {}): ReviewAtom => ({
+    id: "a1", text: "parte", subjects, verdict: "reference", unitIds, citation: "uncertain", ...(links ? { links } : {}), ...o });
+  const pontua = (pkg: SemanticPackage, ds: SemanticDecision[]) => scoreSemanticPackage(pkg, reviews(pkg, ds)).scores[0];
+
+  test("NAT-72 html×body: correct absence claim linked manually, no automatic generic ancestor", () => {
+    const pkg = pacote(["#E-html", "#E-body"]);
+    const html = cardOf(pkg, "#E-html"), body = cardOf(pkg, "#E-body");
+    // The automatic path still offers nothing for an ancestor: candidates are suggestions only.
+    assert.deepEqual(html.candidateUnitIds, []);
+    assert.deepEqual(body.candidateUnitIds, []);
+    assert.ok(pkg.cards.every(c => !("links" in c)), "preparation never creates a link");
+    const p01 = uid(pkg, "P-01");
+    assert.throws(() => pontua(pkg, [decision(html.id, [ref([""], [p01])])]), /Unanchored/);
+    const s = pontua(pkg, [decision(html.id, [ref([""], [p01], [link(html, p01, [""])])])]);
+    assert.deepEqual(s.matched.map(m => [m.unitId, m.vinculo]), [[p01, "ausencia-global"]]);
+    // A link on one card does not enable ancestors elsewhere: the body card still cannot name A-02 unlinked.
+    assert.throws(() => pontua(pkg, [decision(html.id, [ref([""], [p01], [link(html, p01, [""])])]),
+      decision(body.id, [ref(["body"], [uid(pkg, "A-02")])])]), /Unanchored/);
+    // "ausencia-global" must fit the measured tree: a sibling element is no ancestor of the header.
+    const bt = pacote(["#E-botao"]);
+    const btc = cardOf(bt, "#E-botao");
+    assert.throws(() => pontua(bt, [decision(btc.id, [ref([botao.key], [uid(bt, "P-01")], [link(btc, uid(bt, "P-01"), [botao.key])])])]),
+      /does not fit the measured structure/);
+  });
+
+  test("NAT-72 host×shadow-internal: link only across an open shadow boundary, with evidence of which subject does the job", () => {
+    const pkg = pacote(["#E-host", "#E-caixa"]);
+    const h = cardOf(pkg, "#E-host");
+    const b04 = uid(pkg, "B-04");
+    assert.deepEqual(h.candidateUnitIds, [], "the host is an ancestor of the internal control: not offered");
+    const hostLink = link(h, b04, [host.key], { relation: "host-interno",
+      evidence: ["árvore de acessibilidade: o input interno do shadow root é o controle sem nome"] });
+    assert.equal(pontua(pkg, [decision(h.id, [ref([host.key], [b04], [hostLink])])]).matched[0].vinculo, "host-interno");
+    assert.throws(() => pontua(pkg, [decision(h.id, [ref([host.key], [b04], [{ ...hostLink, evidence: [] }])])]), /without evidence/);
+    // No shadow boundary between a light-DOM ancestor and the unit: the relation does not fit.
+    const cx = cardOf(pkg, "#E-caixa");
+    assert.throws(() => pontua(pkg, [decision(cx.id, [ref([caixa.key], [uid(pkg, "A-02")],
+      [link(cx, uid(pkg, "A-02"), [caixa.key], { relation: "host-interno" })])])]), /does not fit/);
+  });
+
+  test("NAT-72 focus on body after closing the dialog: transition link in the measured state only", () => {
+    const pkg = pacote(["#E-body"]);
+    const c = cardOf(pkg, "#E-body");
+    const a01 = uid(pkg, "A-01");
+    const t = link(c, a01, ["body"], { relation: "transicao", state: "aberto",
+      evidence: [`Tab real: ao fechar o diálogo ${dialogo.key}, document.activeElement = body`] });
+    assert.equal(pontua(pkg, [decision(c.id, [ref(["body"], [a01], [t])])]).matched[0].vinculo, "transicao");
+    // A-01 is declared in "aberto": a link declaring "inicial" is refused.
+    assert.throws(() => pontua(pkg, [decision(c.id, [ref(["body"], [a01], [{ ...t, state: "inicial" }])])]), /not the declared state/);
+    // Without citing the measured participant key, a transition has nothing structural behind it.
+    assert.throws(() => pontua(pkg, [decision(c.id, [ref(["body"], [a01], [{ ...t, evidence: ["foco foi para o body"] }])])]), /does not fit/);
+  });
+
+  test("NAT-72 review fix: one <html> card split into N linked atoms cannot earn N units", () => {
+    const pkg = pacote(["#E-html"]);
+    const html = cardOf(pkg, "#E-html");
+    const [p01, a01, a02, b04] = ["P-01", "A-01", "A-02", "B-04"].map(s => uid(pkg, s));
+    // "ausencia-global" only for page-level participants: a control or dialog unit is no global absence.
+    assert.ok(participanteDePagina("body>div>header") && participanteDePagina("") && participanteDePagina("body>pnip-root"));
+    assert.ok(!participanteDePagina(botao.key) && !participanteDePagina(interno.key));
+    for (const [u, state] of [[a02, "inicial"], [b04, "inicial"]] as const) {
+      assert.throws(() => pontua(pkg, [decision(html.id, [ref([""], [u], [link(html, u, [""], { state })])])]), /does not fit/);
+    }
+    // The reviewer's scenario: "no lang" split into a1..aN, each linked (one-word evidence) to another unit.
+    const cita = (k: string) => [`medido ${k}`];
+    const atomos = [
+      ref([""], [p01], [link(html, p01, [""])], { id: "a1" }),
+      ref([""], [a01], [link(html, a01, [""], { relation: "transicao", state: "aberto", evidence: cita(dialogo.key) })], { id: "a2" }),
+      ref([""], [a02], [link(html, a02, [""], { relation: "participante-relacionado", evidence: cita(botao.key) })], { id: "a3" }),
+    ];
+    assert.throws(() => pontua(pkg, [decision(html.id, atomos)]), /more than one reference atom/);
+    // Same subject, one atom, several link-only units: refused too (not just "matching takes one").
+    assert.throws(() => pontua(pkg, [decision(html.id, [ref([""], [p01, a01], [link(html, p01, [""]),
+      link(html, a01, [""], { relation: "transicao", state: "aberto", evidence: cita(dialogo.key) })])])]), /at most one unit/);
+    // The legitimate absence (P-01 header missing, anchored on <html>) is accepted: exactly one unit.
+    assert.equal(pontua(pkg, [decision(html.id, [atomos[0]])]).counts.detectedUnits, 1);
+  });
+
+  test("NAT-72 review fix: B-01 skip-link absence on the app root is a legit global absence; sibling-card link copies fail", () => {
+    const raiz = { key: "body>pnip-root", id: "E-raiz", label: "<pnip-root>", hidden: null };
+    const r2: Resolution = { url: res.url, byKey: new Map([...res.byKey, [raiz.key, raiz]]),
+      bySelector: new Map([...res.bySelector, ["#E-raiz", { selector: "#E-raiz", ok: true, error: null, keys: [raiz.key] }]]) };
+    const b01 = un("B-01", raiz, ["inicial"]);
+    const pkg = prepareSemanticPackage(context, [...refUnits, b01], r2,
+      [{ id: "r1", data: run([claim("#E-body"), claim("#E-html")] as FlowAgentResults["findings"]) }]);
+    const body = cardOf(pkg, "#E-body"), html = cardOf(pkg, "#E-html");
+    const u = uid(pkg, "B-01");
+    assert.deepEqual(body.candidateUnitIds, []);
+    assert.equal(pontua(pkg, [decision(body.id, [ref(["body"], [u], [link(body, u, ["body"])])])]).matched[0].vinculo, "ausencia-global");
+    // A link written for the sibling <html> card does not ride on the body card (binding.card differs).
+    assert.throws(() => pontua(pkg, [decision(body.id, [ref(["body"], [u], [{ ...link(body, u, ["body"]), binding: link(html, u, [""]).binding }])])]),
+      /another card/);
+  });
+
+  test("NAT-72 review fix: links exist from flow-semantic-1.6.0 on (semver), never before", () => {
+    assert.ok(aceitaVinculos("flow-semantic-1.6.0") && aceitaVinculos("flow-semantic-1.7.2") && aceitaVinculos("flow-semantic-2.0.0"));
+    assert.ok(!aceitaVinculos("flow-semantic-1.5.0") && !aceitaVinculos("flow-semantic-1.10") && !aceitaVinculos("outra-1.9.0"));
+  });
+
+  test("NAT-72 composite 'unnamed control + another with text': parts judged apart, no borrowed credit", () => {
+    const pkg = pacote(["#composto"]);
+    const c = cardOf(pkg, "#composto");
+    const b04 = uid(pkg, "B-04");
+    assert.deepEqual(c.candidateUnitIds, [b04]);
+    // One atom over both subjects: the extra subject cannot ride on the correct unit.
+    assert.throws(() => pontua(pkg, [decision(c.id, [ref([interno.key, th.key], [b04])])]), /Unsupported subject/);
+    const parts = (outro: ReviewAtom["verdict"]) => [ref([interno.key], [b04]),
+      { id: "a2", text: "th Data tem texto", subjects: [th.key], verdict: outro, unitIds: [], citation: "unsupported" as const }];
+    for (const outro of ["false", "novel", "unresolved"] as const) {
+      const s = pontua(pkg, [decision(c.id, parts(outro))]);
+      assert.equal(s.counts.detectedUnits, 1, outro);
+      assert.equal(s.counts.falseAssertions, outro === "false" ? 1 : 0);
+      assert.equal(s.counts.novelAssertions, outro === "novel" ? 1 : 0);
+      assert.equal(s.counts.unresolvedAssertions, outro === "unresolved" ? 1 : 0);
+      assert.equal(s.status, outro === "unresolved" ? "provisional" : "complete");
+      assert.deepEqual(s.assertions.filter(a => a.cardId === c.id).map(a => a.subjectId).sort(), [interno.key, th.key].sort());
+    }
+    // Every claimed subject must be covered by some atom.
+    assert.throws(() => pontua(pkg, [decision(c.id, [ref([interno.key], [b04])])]), /omitted a subject/);
+    // The request builder (painel/bench) never assigns a subject by omission.
+    const sujeitos = c.subjects.map(s => s.id);
+    const so = (pedidos: Parameters<typeof montarAtomos>[6]) => montarAtomos(pkg, c, null, "author", sujeitos, c.candidateUnitIds, pedidos);
+    const faltou = so([{ texto: "sem nome", sujeitos: [interno.key], decisao: "defeito-do-gabarito", unitIds: [b04] }]);
+    assert.equal(faltou.ok, false);
+    assert.match((faltou as { erro: string }).erro, /não estão em nenhuma parte/);
+    const montado = so([{ texto: "sem nome", sujeitos: [interno.key], decisao: "defeito-do-gabarito", unitIds: [b04] },
+      { texto: "th Data tem texto", sujeitos: [th.key], decisao: "incorreta" }]);
+    assert.ok(montado.ok);
+    const atoms = normalizeReviews({ version: pkg.version, decisions: [{ ...decision(c.id, []), atoms: (montado as { atoms: RawReviewAtom[] }).atoms }] }).decisions[0].atoms;
+    assert.deepEqual(atoms.map(a => [a.subjects, a.verdict]), [[[interno.key], "reference"], [[th.key], "false"]]);
+    const s = pontua(pkg, [decision(c.id, atoms)]);
+    assert.equal(s.counts.detectedUnits, 1);
+    assert.equal(s.counts.falseAssertions, 1);
+  });
+
+  test("NAT-72 other state or route is refused; unknown subject or scope does not ride along", () => {
+    // Same family in another route (segment scene): a link cannot cross scenes.
+    const lista = { ...res, url: "http://fixture/app/lista" }, detalhe = { ...res, url: "http://fixture/app/detalhe" };
+    const cenas: SceneResolution[] = [
+      { id: "1280x900@lista", viewport: wide, specIds: ["P-01"], resolution: lista, segmento: { numero: 0, estado: "inicial", path: "/app/lista", estados: ["inicial"] } },
+      { id: "1280x900@detalhe", viewport: wide, specIds: ["P-01"], resolution: detalhe, segmento: { numero: 1, estado: "aberto", path: "/app/detalhe", estados: ["aberto"] } },
+    ];
+    const seg = prepareSemanticPackage(context, [{ ...refUnits[0], states: ["inicial"], scene: "1280x900@lista" },
+      { ...refUnits[0], state: "aberto", states: ["aberto"], scene: "1280x900@detalhe" }], cenas,
+      [{ id: "r1", data: run([claim("#E-html")] as FlowAgentResults["findings"]) }], { stateOrder: ["inicial", "aberto"] });
+    const c = seg.cards[0];
+    assert.equal(c.scene, "a-decidir:1280x900");
+    const daCena = (cena: string) => seg.units.find(u => u.scene === cena)!.id;
+    const sujeito = "1280x900@lista|";
+    const l = (cena: string, state: string): ReviewLink => ({ ...link(c, daCena(cena), [sujeito], { scene: cena, state }) });
+    const em = (links: ReviewLink[], unitId: string) => ({ ...decision(c.id, [ref([sujeito], [unitId], links)]), cena: "1280x900@lista" });
+    assert.equal(scoreSemanticPackage(seg, reviews(seg, [em([l("1280x900@lista", "inicial")], daCena("1280x900@lista"))])).scores[0].counts.detectedUnits, 1);
+    assert.throws(() => scoreSemanticPackage(seg, reviews(seg, [em([l("1280x900@detalhe", "aberto")], daCena("1280x900@detalhe"))])), /crosses scenes/);
+    assert.throws(() => scoreSemanticPackage(seg, reviews(seg, [em([{ ...l("1280x900@detalhe", "aberto"), scene: "1280x900@lista" }],
+      daCena("1280x900@detalhe"))])), /not the unit's scene/);
+    // Same scene, other state: refused.
+    const pkg = pacote(["#E-html", "#ausente"]);
+    const html = cardOf(pkg, "#E-html");
+    assert.throws(() => pontua(pkg, [decision(html.id, [ref([""], [uid(pkg, "P-01")], [link(html, uid(pkg, "P-01"), [""], { state: "envio" })])])]), /not the declared state/);
+    // Unresolved selector: there is no subject to link.
+    const aus = cardOf(pkg, "#ausente");
+    const fantasma = aus.subjects[0].id;
+    assert.throws(() => pontua(pkg, [decision(aus.id, [ref([fantasma], [uid(pkg, "P-01")], [link(aus, uid(pkg, "P-01"), [fantasma])])])]), /Unresolved subject cannot be linked/);
+    // A subject the card does not have, and a subject outside its atom.
+    assert.throws(() => pontua(pkg, [decision(html.id, [ref(["body>nada"], [uid(pkg, "P-01")], [link(html, uid(pkg, "P-01"), ["body>nada"])])])]), /Unknown subject/);
+    assert.throws(() => pontua(pkg, [decision(html.id, [ref([""], [uid(pkg, "P-01")], [link(html, uid(pkg, "P-01"), ["", "body"])])])]), /outside its atom/);
+    // A window outside the plan has no scene to link into.
+    const fora = prepareSemanticPackage(context, refUnits, [{ id: "1280x900", viewport: wide, specIds: ["P-01"], resolution: res }],
+      [{ id: "r1", data: run([{ ...claim("#E-html"), state: { viewport: { width: 375, height: 800 }, steps: [] } }] as FlowAgentResults["findings"]) }]);
+    const fc = fora.cards[0];
+    assert.match(fc.scene, /^fora-do-plano/);
+    assert.throws(() => scoreSemanticPackage(fora, reviews(fora, [decision(fc.id, [ref([""], [uid(fora, "P-01")], [link(fc, uid(fora, "P-01"), [""], { scene: "1280x900" })])])])), /crosses scenes/);
+  });
+
+  test("NAT-72 negative controls: no evidence/context, invented unit, other build/execution, contradicted claim, unsigned", () => {
+    const pkg = pacote(["#E-html"]);
+    const html = cardOf(pkg, "#E-html");
+    const p01 = uid(pkg, "P-01");
+    const ok = link(html, p01, [""]);
+    const tenta = (l: Partial<ReviewLink> | ReviewLink, atomo: Partial<ReviewAtom> = {}, unitIds = [p01]) =>
+      pontua(pkg, [decision(html.id, [ref([""], unitIds, [{ ...ok, ...l } as ReviewLink], atomo)])]);
+    assert.equal(tenta({}).counts.detectedUnits, 1);
+    assert.throws(() => tenta({ evidence: [] }), /without evidence/);
+    assert.throws(() => tenta({ evidence: ["  "] }), /without evidence/);
+    assert.throws(() => tenta({ justification: " " }), /without justification/);
+    assert.throws(() => tenta({ relation: "parece-certo" as never }), /without a declared relation/);
+    assert.throws(() => tenta({ contrato: "vinculo-0" as never }), /Unknown review link contract/);
+    assert.throws(() => tenta({ unitId: "U-inventada" }, {}, [p01, "U-inventada"]), /unknown unit/);
+    assert.throws(() => tenta({ unitId: uid(pkg, "A-02") }), /does not name/);
+    assert.throws(() => tenta({ reviewer: "outra pessoa" }), /not signed by the deciding reviewer/);
+    assert.throws(() => tenta({ binding: { ...ok.binding, build: "b".repeat(64) } }), /another build\/execution/);
+    // The same claim in another execution has another runScope: its link does not transfer.
+    const outra = pacote(["#E-html"], "r2");
+    const outroCard = cardOf(outra, "#E-html");
+    assert.notEqual(outroCard.binding.runScope, html.binding.runScope);
+    assert.throws(() => tenta({ binding: { build: outroCard.binding.build, runScope: outroCard.binding.runScope, card: cartaoDoVinculo(outroCard) } }), /another build\/execution/);
+    // Contradicted (false), novel or unresolved claims never carry a link.
+    for (const verdict of ["false", "novel", "unresolved"] as const) {
+      assert.throws(() => tenta({}, { verdict, unitIds: [] }, []), /non-reference atom/);
+    }
+    assert.throws(() => pontua(pkg, [decision(html.id, [ref([""], [p01], [])])]), /Empty review link list/);
+  });
+
+  test("NAT-72 legacy path: a 1.5.0 package scores as before, refuses links, and gets none retroactively", () => {
+    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.6.0");
+    assert.deepEqual([...SEMANTIC_LEGACY_VERSIONS], ["flow-semantic-1.5.0"]);
+    const atual = pacote(["#E-html", "#E-header"]);
+    const { packageHash: _h, ...corpo } = { ...atual, version: "flow-semantic-1.5.0" };
+    const legado: SemanticPackage = { ...corpo, packageHash: digest(corpo) };
+    validatePackage(legado);
+    const hd = cardOf(legado, "#E-header"), html = cardOf(legado, "#E-html");
+    const p01 = uid(legado, "P-01");
+    const ds = [decision(hd.id, [ref([cabecalho.key], [p01])]),
+      decision(html.id, [{ id: "a1", text: "sem cabeçalho", subjects: [""], verdict: "novel", unitIds: [], citation: "uncertain" }])];
+    const rev = { version: "flow-semantic-1.5.0", decisions: scopeReviews(legado).decisions.map(d => ds.find(x => x.cardId === d.cardId) ?? d) };
+    const r = scoreSemanticPackage(legado, rev);
+    assert.equal(r.version, "flow-semantic-1.5.0", "the result keeps the package's version");
+    // Same decisions on the current package: identical scores, only the version label differs.
+    const now = scoreSemanticPackage(atual, { ...rev, version: atual.version });
+    assert.deepEqual(r.scores, now.scores);
+    assert.ok(r.scores[0].matched.every(m => !("vinculo" in m)), "no link marker without links");
+    // A link on a legacy decision is refused; reviews of another version are refused, never migrated.
+    const comVinculo = { ...rev, decisions: rev.decisions.map(d => d.cardId !== html.id ? d
+      : decision(html.id, [ref([""], [p01], [link(html, p01, [""])])])) };
+    assert.throws(() => scoreSemanticPackage(legado, comVinculo), /no retroactive link/);
+    assert.throws(() => scoreSemanticPackage(legado, { ...rev, version: SEMANTIC_SCORING_VERSION }), /Incompatible review version/);
+    assert.throws(() => scopeReviews(atual, rev), /Incompatible review version/);
+    assert.throws(() => validatePackage({ ...legado, version: "flow-semantic-1.4.0" }), /Incompatible semantic scoring version/);
+    // The request builder refuses too, and the legacy review.md does not teach links.
+    const m = montarVinculos(legado, html, null, "author", [""], [p01], [{ unitId: p01, estado: "inicial", relacao: "ausencia-global", evidencia: ["x"], justificativa: "y" }]);
+    assert.equal(m.ok, false);
+    assert.match((m as { erro: string }).erro, /vínculo retroativo/);
+    assert.doesNotMatch(renderReview(legado, rev), /Vínculo de revisão/);
+    assert.match(renderReview(atual, scopeReviews(atual)), /Vínculo de revisão/);
+  });
+
+  test("NAT-72 maximum matching stays order-invariant with links", () => {
+    const pkg = pacote(["#E-html", "#E-header"]);
+    const html = cardOf(pkg, "#E-html"), hd = cardOf(pkg, "#E-header");
+    const p01 = uid(pkg, "P-01");
+    const ds = [decision(html.id, [ref([""], [p01], [link(html, p01, [""])])]), decision(hd.id, [ref([cabecalho.key], [p01])])];
+    const a = scoreSemanticPackage(pkg, reviews(pkg, ds));
+    const b = scoreSemanticPackage(pkg, reviews(pkg, [...ds].reverse()));
+    assert.deepEqual(a.scores, b.scores);
+    assert.equal(a.scores[0].counts.detectedUnits, 1);
+    assert.equal(a.scores[0].counts.redundantReferenceAssertions, 1);
+    // Link order inside an atom does not matter either.
+    const two = [link(html, p01, [""]), link(html, p01, [""], { relation: "participante-relacionado", evidence: [`header medido: ${cabecalho.key}`] })];
+    const x = scoreSemanticPackage(pkg, reviews(pkg, [decision(html.id, [ref([""], [p01], two)])]));
+    const y = scoreSemanticPackage(pkg, reviews(pkg, [decision(html.id, [ref([""], [p01], [...two].reverse())])]));
+    assert.deepEqual(x.scores[0].counts, y.scores[0].counts);
   });
 }
 

@@ -8,13 +8,20 @@ import type { FlowAgentResults, FlowFindingState, FlowViewport } from "../types"
 import type { Resolution } from "./anchors";
 import type { FlowUnit } from "./units-flow";
 import { NAO_IMPLEMENTADO, type PredicateResult } from "./acceptance-predicates";
-import { FLOW_SCORING_VERSION } from "./instrument";
+import { FLOW_SCORING_LEGACY_VERSIONS, FLOW_SCORING_VERSION } from "./instrument";
 import {
   DETERMINISTIC_FINDING_CONTRACT, normalizeFinding, resolveEvidence, reviewableFindings,
   type EvidenceIndex, type FindingContract, type NormalizedFinding, type ResolvedEvidence,
 } from "./flow-contract";
 
 export const SEMANTIC_SCORING_VERSION = FLOW_SCORING_VERSION;
+/**
+ * Versões anteriores que continuam pontuáveis pelo caminho delas (NAT-72): o pacote e as decisões
+ * dizem a versão, e o resultado sai com ela. Nenhum contrato novo (vínculo de revisão) vale ali.
+ */
+export const SEMANTIC_LEGACY_VERSIONS = FLOW_SCORING_LEGACY_VERSIONS;
+export const versaoPontuavel = (version: unknown): boolean =>
+  version === SEMANTIC_SCORING_VERSION || (typeof version === "string" && SEMANTIC_LEGACY_VERSIONS.includes(version));
 
 /** Code, vocabulary and contract that decide what a package means; a different fingerprint refuses it. */
 export const SCORER_FILES = ["scripts/semantic-flow.ts", "scripts/semantic-flow-cli.ts", "scripts/flow-contract.ts",
@@ -115,7 +122,7 @@ export interface SemanticRun {
   evidenceIndex: EvidenceIndex | null;
 }
 export interface SemanticPackage {
-  version: typeof SEMANTIC_SCORING_VERSION;
+  version: string;
   context: { referenceHash: string; sceneHash: string; scorerHash: string };
   /**
    * Collection, baseline and analysis identities this package was prepared from. Part of the
@@ -139,6 +146,47 @@ export interface SemanticPackage {
   queue: { carriedOverPending: string[]; reviewBudget: string | null };
   packageHash: string;
 }
+/**
+ * Vínculo de revisão (NAT-72): a revisora liga, por escrito e assinado, sujeitos do cartão a uma
+ * unidade que a ancoragem automática não oferece — a ausência global ancorada em `<html>`/`body`, o
+ * host no lugar do controle interno do shadow root, o participante relacionado, a transição de foco.
+ *
+ * Nada no código cria um vínculo: nem regex de justificativa, nem id de regra, nem a lista de
+ * candidatas. As candidatas automáticas continuam sendo só sugestão (`candidateUnitIds`), e a
+ * ancoragem estrita (`anchored`) continua sendo o caminho normal. O vínculo é a exceção declarada,
+ * e só vale se a unidade existir, estiver na cena e no estado declarados, a relação for uma das
+ * previstas e compatível com a estrutura medida, houver evidência e justificativa, a assinatura for
+ * a de quem decidiu e a amarração (build/execução) for a do próprio cartão.
+ */
+export const VINCULO_CONTRATO = "vinculo-revisao-1.0.0";
+export const RELACOES_VINCULO = ["ausencia-global", "host-interno", "participante-relacionado", "transicao"] as const;
+export type RelacaoVinculo = typeof RELACOES_VINCULO[number];
+/** O pacote (e as decisões dele) aceita vínculo de revisão? Só na versão que o introduziu em diante. */
+/** Vínculo de revisão existe de flow-semantic-1.6.0 em diante (comparação semver, não igualdade). */
+export const aceitaVinculos = (version: string): boolean => {
+  const m = /^flow-semantic-(\d+)\.(\d+)\.(\d+)$/.exec(version);
+  if (!m) return false;
+  const [ma, mi] = [Number(m[1]), Number(m[2])];
+  return ma > 1 || (ma === 1 && mi >= 6);
+};
+export interface ReviewLink {
+  contrato: typeof VINCULO_CONTRATO;
+  unitId: string;
+  /** Ids dos sujeitos do cartão que este vínculo cobre (subconjunto dos sujeitos do átomo). */
+  subjects: string[];
+  /** Cena declarada; tem de ser a da unidade e a de cada sujeito. */
+  scene: string;
+  /** Estado declarado; tem de estar entre os estados MEDIDOS da unidade. */
+  state: string;
+  relation: RelacaoVinculo;
+  /** O que a revisora consultou e que mostra a relação (não vazio). */
+  evidence: string[];
+  justification: string;
+  /** Assinatura: tem de ser a mesma revisora da decisão. */
+  reviewer: string;
+  /** Amarração ao build e à execução do cartão; um vínculo copiado de outro cartão não pega carona. */
+  binding: { build: string | null; runScope: string | null; card: string };
+}
 export interface ReviewAtom {
   id: string;
   /** Author's decomposition of the original claim; never inferred by rule regex. */
@@ -152,6 +200,8 @@ export interface ReviewAtom {
   duplicateOf?: { cardId: string; atomId: string };
   /** O que a autora escreveu, preservado ao lado do veredito contábil que dele resultou. */
   decisao?: DecisaoSimples;
+  /** Vínculos de revisão explícitos (NAT-72); só em átomo `reference`, só em pacote que os aceita. */
+  links?: ReviewLink[];
 }
 export interface SemanticDecision {
   cardId: string;
@@ -179,7 +229,7 @@ export interface SemanticDecision {
   cena?: string;
 }
 export interface SemanticReviews {
-  version: typeof SEMANTIC_SCORING_VERSION;
+  version: string;
   decisions: SemanticDecision[];
 }
 
@@ -209,7 +259,7 @@ export interface RawReviewAtom extends Omit<ReviewAtom, "verdict"> {
   verdict?: ReviewAtom["verdict"];
 }
 export interface RawReviews {
-  version: typeof SEMANTIC_SCORING_VERSION;
+  version: string;
   decisions: (Omit<SemanticDecision, "atoms"> & { atoms: RawReviewAtom[] })[];
 }
 
@@ -486,7 +536,7 @@ function deterministicFinding(raw: unknown): NormalizedFinding {
 }
 
 export function validatePackage(pkg: SemanticPackage): void {
-  requireThat(pkg.version === SEMANTIC_SCORING_VERSION, "Incompatible semantic scoring version");
+  requireThat(versaoPontuavel(pkg.version), `Incompatible semantic scoring version: ${String(pkg.version)}`);
   const { packageHash, ...body } = pkg;
   requireThat(digest(body) === packageHash, "Review package changed; prepare a new package");
   const cards = new Set(pkg.cards.map(c => c.id));
@@ -618,13 +668,14 @@ export function armLeaks(pkg: SemanticPackage): { cardId: string; termos: string
 /** Reuses only content/context-addressed cards. Other batteries never create work here. */
 export function scopeReviews(pkg: SemanticPackage, old?: SemanticReviews): SemanticReviews {
   validatePackage(pkg);
-  if (old) requireThat(old.version === SEMANTIC_SCORING_VERSION, "Incompatible review version");
+  // Decisões de outra versão não migram em silêncio: um pacote novo começa pendente (NAT-72: sem vínculo retroativo).
+  if (old) requireThat(old.version === pkg.version, "Incompatible review version");
   const byId = new Map<string, SemanticDecision>();
   for (const d of old?.decisions ?? []) {
     requireThat(!byId.has(d.cardId), `Duplicate decision ${d.cardId}`);
     byId.set(d.cardId, d);
   }
-  return structuredClone({ version: SEMANTIC_SCORING_VERSION,
+  return structuredClone({ version: pkg.version,
     decisions: pkg.cards.map(c => byId.get(c.id) ?? pendingDecision(c.id)) });
 }
 
@@ -639,7 +690,108 @@ function anchored(subject: ReviewCard["subjects"][number], card: ReviewCard, uni
     || unit.participants.some(p => tocaAlguma(related, p)));
 }
 
-function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<string, SemanticUnit>): void {
+/** `inner` está dentro de `outer` atravessando ao menos uma fronteira de shadow root aberto. */
+const atravessaSombra = (outer: string, inner: string): boolean =>
+  inner !== outer && tocaParticipante(inner, outer) && inner.slice(outer.length).includes(" >>> ");
+
+/**
+ * Participante "de página": o documento (`""`), o `body`, um filho direto do `body` (o contêiner raiz
+ * da aplicação, como `pnip-root` da B-01) ou um marco de região (`header`, `footer`, `main`, `nav`).
+ * As referências NÃO codificam um campo "defeito de ausência" (só `description` em texto livre, que
+ * não se lê por regex); a ausência de uma parte obrigatória (P-01/P-02, B-01) é, por construção,
+ * ancorada nesses elementos de página. Unidade de controle (campo, botão, diálogo) não é ausência global.
+ */
+export function participanteDePagina(p: string): boolean {
+  if (p === "" || p === "body") return true;
+  if (p.includes(" >>> ")) return false;
+  const partes = p.split(">");
+  const tag = partes[partes.length - 1].replace(/:nth-of-type\(\d+\)$/, "");
+  return (partes.length === 2 && partes[0] === "body") || ["header", "footer", "main", "nav"].includes(tag);
+}
+
+/** A evidência cita, por extenso, a chave canônica medida de um participante da unidade. */
+const evidenciaCitaParticipante = (evidence: string[], unit: SemanticUnit): boolean =>
+  unit.participants.some(p => p !== "" && evidence.some(e => e.includes(p)));
+
+/**
+ * Compatibilidade ESTRUTURAL de uma relação declarada com as chaves medidas. É piso, não prova.
+ * - `ausencia-global`: unidade com participante de página, e o sujeito é o documento ou um ancestral
+ *   (ou o próprio) desse participante.
+ * - `host-interno`: sujeito e participante separados por uma fronteira de shadow root aberto.
+ * - `participante-relacionado` / `transicao`: as referências não codificam elementos relacionados nem
+ *   de transição (só `participants`), então não há árvore conferível; exige-se que a evidência cite
+ *   por extenso a chave medida de um participante da unidade (além de cena e estado iguais).
+ */
+function relacaoCompativel(relation: RelacaoVinculo, key: string, unit: SemanticUnit, evidence: string[]): boolean {
+  switch (relation) {
+    case "ausencia-global": return unit.participants.some(p => participanteDePagina(p) && (key === "" || tocaParticipante(p, key)));
+    case "host-interno": return unit.participants.some(p => atravessaSombra(key, p) || atravessaSombra(p, key));
+    case "participante-relacionado":
+    case "transicao": return evidenciaCitaParticipante(evidence, unit);
+  }
+}
+
+/** Identidade do CONTEÚDO do cartão (sem o id, que muda com o contexto): um vínculo copiado de outro cartão não confere. */
+export const cartaoDoVinculo = (card: ReviewCard): string => { const { id: _id, ...body } = card; return digest(body); };
+
+/**
+ * Estados em que a unidade foi MEDIDA. Referência sem plano de estados (`_meta.states` ausente) não
+ * mede nenhum: aí o único estado é o rótulo declarado da unidade.
+ */
+export const estadosDaUnidade = (u: Pick<SemanticUnit, "state" | "states">): string[] => u.states.length ? u.states : [u.state];
+
+/** O sujeito chega à unidade pela ancoragem estrita OU por um vínculo explícito do próprio átomo. */
+function viaVinculo(atom: ReviewAtom, subjectId: string, unitId: string): ReviewLink | undefined {
+  return atom.links?.find(l => l.unitId === unitId && l.subjects.includes(subjectId));
+}
+function sustenta(atom: ReviewAtom, subject: ReviewCard["subjects"][number], card: ReviewCard, unit: SemanticUnit): boolean {
+  return anchored(subject, card, unit) || viaVinculo(atom, subject.id, unit.id) !== undefined;
+}
+
+function validateLinks(d: SemanticDecision, a: ReviewAtom, card: ReviewCard, units: Map<string, SemanticUnit>, linksAllowed: boolean,
+  devidos: ReviewCard["subjects"], scenes?: Map<string, SemanticScene>): void {
+  if (a.links === undefined) return;
+  requireThat(linksAllowed, `Review links are not part of this package version; a legacy decision gets no retroactive link: ${a.id}`);
+  requireThat(Array.isArray(a.links) && a.links.length > 0, `Empty review link list: ${a.id}`);
+  requireThat(a.verdict === "reference", `Review link on a non-reference atom earns nothing and is refused: ${a.id}`);
+  for (const l of a.links) {
+    requireThat(l && l.contrato === VINCULO_CONTRATO, `Unknown review link contract in ${a.id}: ${String(l?.contrato)}`);
+    requireThat((RELACOES_VINCULO as readonly string[]).includes(l.relation),
+      `Review link without a declared relation (${RELACOES_VINCULO.join(" | ")}): ${a.id}`);
+    const unit = units.get(l.unitId);
+    requireThat(unit, `Review link to an unknown unit: ${l.unitId}`);
+    requireThat(a.unitIds.includes(l.unitId), `Review link to a unit the atom does not name: ${l.unitId}`);
+    requireThat(Array.isArray(l.evidence) && l.evidence.length > 0 && l.evidence.every(e => typeof e === "string" && e.trim()),
+      `Review link without evidence: ${a.id}`);
+    requireThat(typeof l.justification === "string" && l.justification.trim(), `Review link without justification: ${a.id}`);
+    requireThat(typeof l.reviewer === "string" && l.reviewer.trim() && l.reviewer.trim() === d.reviewer.trim(),
+      `Review link not signed by the deciding reviewer: ${a.id}`);
+    requireThat(l.binding && l.binding.build === card.binding.build && l.binding.runScope === card.binding.runScope,
+      `Review link bound to another build/execution: ${a.id}`);
+    requireThat(l.binding.card === cartaoDoVinculo(card), `Review link bound to another card: ${a.id}`);
+    requireThat(l.scene === unit.scene, `Review link scene ${l.scene} is not the unit's scene ${unit.scene}: ${a.id}`);
+    // O estado do vínculo é o estado DECLARADO do defeito na unidade (não qualquer estado em que ela foi
+    // medida), e numa cena por segmento a unidade tem de existir no estado daquele segmento.
+    requireThat(typeof l.state === "string" && l.state === unit.state,
+      `Review link state ${String(l.state)} is not the declared state of unit ${unit.specId} (${unit.state}): ${a.id}`);
+    const seg = scenes?.get(l.scene)?.segmento;
+    requireThat(!seg || unit.state === "sempre" || seg.estados.includes(unit.state),
+      `Review link state ${unit.state} is not a state of segment ${l.scene}: ${a.id}`);
+    requireThat(Array.isArray(l.subjects) && l.subjects.length > 0 && unique(l.subjects).length === l.subjects.length,
+      `Review link without subjects: ${a.id}`);
+    for (const id of l.subjects) {
+      requireThat(a.subjects.includes(id), `Review link subject outside its atom: ${id}`);
+      const s = devidos.find(x => x.id === id)!;
+      requireThat(s.key !== null, `Unresolved subject cannot be linked: ${id}`);
+      requireThat((s.scene ?? card.scene) === l.scene, `Review link crosses scenes (${s.scene ?? card.scene} → ${l.scene}): ${id}`);
+      requireThat(relacaoCompativel(l.relation, s.key!, unit, l.evidence),
+        `Relation ${l.relation} does not fit the measured structure of ${id} and unit ${unit.specId}`);
+    }
+  }
+}
+
+function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<string, SemanticUnit>, linksAllowed: boolean,
+  scenes?: Map<string, SemanticScene>): void {
   requireThat(d.status === "pending" || d.status === "reviewed", `Invalid status: ${card.id}`);
   if (d.status === "pending") {
     requireThat(!d.complete && d.atoms.length === 0 && d.cena === undefined, `Pending decision carries effects: ${card.id}`);
@@ -675,15 +827,28 @@ function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<stri
       covered.add(id);
       return s;
     });
+    validateLinks(d, a, card, units, linksAllowed, devidos, scenes);
     for (const id of a.unitIds) {
       const u = units.get(id);
-      requireThat(u && subjects.some(s => anchored(s, card, u)), `Unanchored/unknown unit: ${id}`);
+      requireThat(u && subjects.some(s => sustenta(a, s, card, u)), `Unanchored/unknown unit: ${id}`);
     }
     if (a.verdict === "reference") for (const s of subjects) {
-      requireThat(a.unitIds.some(id => anchored(s, card, units.get(id)!)), `Unsupported subject: ${s.id}`);
+      requireThat(a.unitIds.some(id => sustenta(a, s, card, units.get(id)!)), `Unsupported subject: ${s.id}`);
     }
   }
   requireThat(devidos.every(s => covered.has(s.id)), `Review omitted a subject: ${card.id}`);
+
+  // Vínculo não multiplica crédito (NAT-72, revisão do diff): um sujeito que só chega a uma unidade por
+  // vínculo chega a NO MÁXIMO uma unidade no cartão, e um sujeito vinculado não pode reaparecer em outro
+  // átomo `reference` (dividir "<html> sem lang" em N átomos, cada um vinculado a uma unidade, daria N).
+  const refs = d.atoms.filter(a => a.verdict === "reference");
+  for (const s of devidos) {
+    const comS = refs.filter(a => a.subjects.includes(s.id));
+    if (comS.length > 1) requireThat(!comS.some(a => a.links?.length),
+      `Linked subject in more than one reference atom: ${s.id}`);
+    const soPorVinculo = new Set(comS.flatMap(a => a.unitIds.filter(uid => !anchored(s, card, units.get(uid)!) && viaVinculo(a, s.id, uid))));
+    requireThat(soPorVinculo.size <= 1, `A subject reaches at most one unit only through review links: ${s.id}`);
+  }
 
   // O caminho automático só existe onde a máquina de fato verificou alguma coisa. Um predicado que
   // este avaliador não implementa não vira crédito nem recusa: a alegação fica sem resolver, e a
@@ -723,7 +888,8 @@ export function maximumMatching(edges: Map<string, string[]>): Map<string, strin
 export interface SemanticRunScore {
   runId: string;
   status: "complete" | "provisional";
-  matched: { unitId: string; instanceId: string; cardId: string; atomId: string; citation: string }[];
+  /** `vinculo`: só quando a aresta creditada existe apenas pelo vínculo de revisão (NAT-72). */
+  matched: { unitId: string; instanceId: string; cardId: string; atomId: string; citation: string; vinculo?: RelacaoVinculo }[];
   missedUnitIds: string[];
   pendingCardIds: string[];
   assertions: { instanceId: string; cardId: string; atomId: string | null; subjectId: string;
@@ -791,7 +957,9 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
   comparisons: BaselineComparison[];
 } {
   validatePackage(pkg);
-  requireThat(reviews.version === SEMANTIC_SCORING_VERSION, "Incompatible review version");
+  requireThat(reviews.version === pkg.version, "Incompatible review version");
+  const linksAllowed = aceitaVinculos(pkg.version);
+  const scenes = new Map(pkg.scenes.map(s => [s.id, s]));
   const units = new Map(pkg.units.map(u => [u.id, u]));
   const cards = new Map(pkg.cards.map(c => [c.id, c]));
   const decisions = new Map<string, SemanticDecision>();
@@ -799,7 +967,7 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
     requireThat(!decisions.has(d.cardId), `Duplicate decision: ${d.cardId}`);
     const card = cards.get(d.cardId);
     requireThat(card, `Decision outside this package: ${d.cardId}; use scopeReviews for reuse`);
-    validateDecision(d, card, units);
+    validateDecision(d, card, units, linksAllowed, scenes);
     decisions.set(d.cardId, d);
   }
   const scores = pkg.runs.map(run => {
@@ -825,6 +993,7 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
     };
     const edges = new Map<string, string[]>();
     const sources = new Map<string, { cardId: string; atomId: string; citation: string }>();
+    const linkedEdges = new Map<string, RelacaoVinculo>();
     const pendingCardIds: string[] = [];
     const assertions: SemanticRunScore["assertions"] = [];
     let novel = 0, incorrect = 0, unresolved = 0, citationKnown = 0, citationSupported = 0, duplicates = 0;
@@ -853,9 +1022,14 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
             duplicates++;
           } else if (atom.verdict === "reference") {
             const subject = card.subjects.find(s => s.id === subjectId)!;
-            edges.set(instanceId, atom.unitIds.filter(uid => anchored(subject, card, units.get(uid)!)));
+            edges.set(instanceId, atom.unitIds.filter(uid => sustenta(atom, subject, card, units.get(uid)!)));
             assertion.eligibleUnitIds = unique(edges.get(instanceId)!);
             sources.set(instanceId, { cardId: id, atomId: atom.id, citation: atom.citation });
+            // Aresta que só existe pelo vínculo explícito: o crédito diz por qual relação veio (NAT-72).
+            for (const uid of edges.get(instanceId)!) {
+              const l = anchored(subject, card, units.get(uid)!) ? undefined : viaVinculo(atom, subjectId, uid);
+              if (l) linkedEdges.set(canonical([instanceId, uid]), l.relation);
+            }
           } else if (atom.verdict === "novel") novel++;
           else if (atom.verdict === "false") incorrect++;
           else { unresolved++; if (!pendingCardIds.includes(id)) pendingCardIds.push(id); }
@@ -873,8 +1047,11 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
       if (a.matchedUnitId === null) a.verdict = "redundant-reference";
     }
     const detected = new Set(matches.values());
-    const matched = [...matches].map(([instanceId, unitId]) => ({ unitId, instanceId, ...sources.get(instanceId)! }))
-      .sort((a, b) => compare(a.unitId, b.unitId));
+    const matched = [...matches].map(([instanceId, unitId]) => {
+      // Só presente quando o crédito veio por vínculo: pontuações sem vínculo saem byte a byte iguais.
+      const vinculo = linkedEdges.get(canonical([instanceId, unitId]));
+      return { unitId, instanceId, ...sources.get(instanceId)!, ...(vinculo ? { vinculo } : {}) };
+    }).sort((a, b) => compare(a.unitId, b.unitId));
     const families = unique(pkg.units.map(u => u.specId)).map(specId => {
       const us = pkg.units.filter(u => u.specId === specId);
       return { specId, detected: us.filter(u => detected.has(u.id)).length, total: us.length };
@@ -900,7 +1077,8 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
       families,
     };
   });
-  return { version: SEMANTIC_SCORING_VERSION, packageHash: pkg.packageHash,
+  // A versão do resultado é a do pacote: um pacote legado sai pelo caminho dele, byte a byte igual.
+  return { version: pkg.version, packageHash: pkg.packageHash,
     reviewHash: digest([...reviews.decisions].sort((a, b) => compare(a.cardId, b.cardId))), scores,
     comparisons: compareRuns(pkg, scores) };
 }

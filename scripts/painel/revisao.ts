@@ -20,9 +20,10 @@ import { extname, join } from "node:path";
 import type { Arm } from "../../contracts/index";
 import { analisar } from "../analisar-execucao";
 import {
-  DECISOES, armLeaks, canonical, digest, normalizeReviews, reviewQueue, scoreSemanticPackage,
-  type ReviewCard, type SemanticPackage, type SemanticUnit,
+  DECISOES, aceitaVinculos, armLeaks, estadosDaUnidade, canonical, digest, normalizeReviews, reviewQueue, scoreSemanticPackage,
+  type RawReviewAtom, type ReviewCard, type SemanticPackage, type SemanticUnit,
 } from "../semantic-flow";
+import { montarAtomos, montarVinculos, type PedidoAtomo, type PedidoVinculo } from "../decisao-atomos";
 import {
   ARMS, DECISOES_VERSAO, dentroDoArquivo, decisoesEmVigor, existeDiretorio, lerAnalise, pacoteDaRevisao,
   type Analise, type MetaDecisao, type Revisao,
@@ -31,17 +32,28 @@ import { contarMascara, mascarar, type TextoVisivel } from "./mascara";
 
 // ───────────────────────────────────────────────────────────────── vista cega
 
-export interface VistaUnidade { id: string; specId: string; estado: string; cena: string; descricao: string; predicado: string }
+export interface VistaUnidade { id: string; specId: string; estado: string; estados: string[]; cena: string; descricao: string; predicado: string }
 export interface VistaCartao {
   id: string; origem: "execução de agente" | "linha de base determinística"; cena: string; regra: string | null;
   observado: string | null; esperado: string | null; janela: string; sinais: string[];
   sujeitos: { id: string; rotulo: string; oculto: string | null }[];
   candidatas: VistaUnidade[];
+  /**
+   * NAT-72: as OUTRAS unidades da mesma cena (das cenas do cartão, se segmentado), para a revisora
+   * pesquisar quando a alegação está certa e a ancoragem automática não a ofereceu. Escolher uma delas
+   * exige vínculo de revisão (relação, estado, evidência, justificativa). Vazio em pacote que não
+   * aceita vínculo: decisões antigas não recebem vínculo retroativo.
+   */
+  unidadesDaCena: VistaUnidade[];
+  /** O pacote aceita vínculo de revisão (NAT-72)? */
+  aceitaVinculo: boolean;
   duplicataDe: string[];
   evidencias: { n: number; status: string; url: string | null; sha256: string | null }[];
   imagemCena: string | null;
   retido: string;
-  decisao: { status: "pendente" | "decidido"; decisao: string | null; justificativa: string | null; revisora: string | null; unidades: string[]; cena: string | null } ;
+  decisao: { status: "pendente" | "decidido"; decisao: string | null; justificativa: string | null; revisora: string | null; unidades: string[]; cena: string | null;
+    /** Uma linha por átomo gravado: decisão, quantos elementos, unidades (specId) e relações de vínculo. */
+    partes: { decisao: string | null; sujeitos: number; unidades: string[]; vinculos: string[] }[] };
   segmentado: boolean;
   /**
    * Só em cartão com cenas por segmento (D-60, tela B): o seletor resolve em mais de um segmento e a
@@ -55,7 +67,7 @@ export const tokenEvidencia = (an: Analise, rv: Revisao, cardId: string, i: numb
   digest(["painel-evidencia", an.id, rv.nome, cardId, i]).slice(0, 24);
 
 function unidade(u: SemanticUnit): VistaUnidade {
-  return { id: u.id, specId: u.specId, estado: u.state, cena: u.scene, descricao: u.description,
+  return { id: u.id, specId: u.specId, estado: u.state, estados: estadosDaUnidade(u), cena: u.scene, descricao: u.description,
     predicado: u.acceptance.outcome === "nao-implementado"
       ? "predicado não implementado: nada foi verificado por máquina; a decisão é sua"
       : `${u.acceptance.kind ?? ""} ${u.acceptance.outcome} — ${u.acceptance.expected}` };
@@ -107,6 +119,9 @@ export function vistaFila(arquivo: string, campanha: string, alvo: string): Vist
       sinais: c.flags.map(f => mascarar(f)),
       sujeitos: c.subjects.map(s => ({ id: s.id, rotulo: mascarar(s.label), oculto: mascarar(s.hidden) })),
       candidatas: c.candidateUnitIds.map(id => unidade(units.get(id)!)),
+      unidadesDaCena: aceitaVinculos(pkg.version) ? pkg.units.filter(u => !c.candidateUnitIds.includes(u.id) &&
+        (c.segmentos ? c.segmentos.some(o => o.scene === u.scene) : u.scene === c.scene)).map(unidade) : [],
+      aceitaVinculo: aceitaVinculos(pkg.version),
       duplicataDe: pkg.cards.filter(alvoC => duplicataElegivel(pkg, c, alvoC)).map(x => x.id),
       evidencias: c.evidence.map((e, i) => ({ n: i + 1, status: e.status, sha256: e.sha256?.slice(0, 12) ?? null,
         url: e.path && e.sha256 ? `/evidencia/${encodeURIComponent(an.campanha)}/${encodeURIComponent(an.alvo)}/${tokenEvidencia(an, rv, c.id, i)}` : null })),
@@ -115,8 +130,10 @@ export function vistaFila(arquivo: string, campanha: string, alvo: string): Vist
         : "retidos por cegueira: a narrativa livre da execução, o nome dos arquivos de evidência e o braço",
       decisao: d && d.status === "reviewed"
         ? { status: "decidido", decisao: (d.atoms[0] as { decisao?: string })?.decisao ?? d.atoms[0]?.verdict ?? null, justificativa: d.rationale,
-          revisora: d.reviewer, unidades: d.atoms.flatMap(a => a.unitIds), cena: d.cena ?? null }
-        : { status: "pendente", decisao: null, justificativa: null, revisora: null, unidades: [], cena: null },
+          revisora: d.reviewer, unidades: d.atoms.flatMap(a => a.unitIds), cena: d.cena ?? null,
+          partes: d.atoms.map(a => ({ decisao: (a as { decisao?: string }).decisao ?? a.verdict ?? null, sujeitos: a.subjects.length,
+            unidades: a.unitIds.map(id => units.get(id)?.specId ?? "?"), vinculos: (a.links ?? []).map(l => l.relation) })) }
+        : { status: "pendente", decisao: null, justificativa: null, revisora: null, unidades: [], cena: null, partes: [] },
       segmentado: Boolean(c.segmentos?.length),
       cenas: c.segmentos?.length ? c.segmentos.map(o => ({ id: o.scene, estado: o.estado, caminho: o.path,
         sujeitos: c.subjects.filter(s => s.scene === o.scene).map(s => mascarar(s.label)), candidatas: o.candidateUnitIds })) : null,
@@ -182,7 +199,13 @@ export function imagemDaCena(arquivo: string, campanha: string, alvo: string, n:
 // ───────────────────────────────────────────────────────────────── gravação versionada
 
 export interface PedidoDecisao {
-  cardId: string; decisao: string; unitIds?: string[]; duplicadaDe?: string | null;
+  /**
+   * Decisão do cartão inteiro (`decisao`) OU decomposição em partes (`atomos`, NAT-72): cada parte diz
+   * os seus elementos, a sua decisão, as unidades e os vínculos; nada é atribuído por omissão.
+   * `vinculos` (só com `decisao`): vínculo de revisão para unidade que não está entre as candidatas.
+   */
+  cardId: string; decisao?: string; unitIds?: string[]; duplicadaDe?: string | null;
+  atomos?: PedidoAtomo[]; vinculos?: PedidoVinculo[];
   /** Cartão com cenas por segmento (D-60): de qual cena a alegação fala. Obrigatório nele, proibido nos outros. */
   cena?: string | null;
   citacao?: "supported" | "unsupported" | "uncertain"; justificativa: string; consultado?: string[]; revisora: string; base: number;
@@ -202,7 +225,9 @@ export function salvarDecisao(arquivo: string, campanha: string, alvo: string, p
   const justificativa = String(p.justificativa ?? "").trim();
   const consultado = (p.consultado ?? []).map(s => String(s).trim()).filter(Boolean);
   if (!revisora) return { ok: false, erro: "informe o nome da revisora: a decisão é assinada por quem a tomou" };
-  if (!(p.decisao in DECISOES)) return { ok: false, erro: `decisão desconhecida; use uma destas: ${Object.keys(DECISOES).join(", ")}` };
+  const decompoe = Array.isArray(p.atomos);
+  if (decompoe && p.decisao) return { ok: false, erro: "envie a decisão do cartão inteiro OU as partes, não as duas" };
+  if (!decompoe && !(String(p.decisao) in DECISOES)) return { ok: false, erro: `decisão desconhecida; use uma destas: ${Object.keys(DECISOES).join(", ")}` };
   if (!justificativa) return { ok: false, erro: "a justificativa é obrigatória" };
   if (!consultado.length) return { ok: false, erro: "diga o que você consultou (por exemplo: cartão; reconstrução da cena)" };
   const card = pkg.cards.find(c => c.id === p.cardId);
@@ -218,24 +243,50 @@ export function salvarDecisao(arquivo: string, campanha: string, alvo: string, p
   const raw = structuredClone(vigor.raw);
   const dec = raw.decisions.find(d => d.cardId === card.id);
   if (!dec) return { ok: false, erro: "cartão fora das decisões deste pacote" };
-  let unitIds: string[] = [];
-  let duplicateOf: { cardId: string; atomId: string } | undefined;
-  if (p.decisao === "defeito-do-gabarito") {
-    unitIds = [...new Set(p.unitIds ?? [])];
-    if (!unitIds.length) return { ok: false, erro: "escolha qual unidade a alegação acertou" };
-    if (!unitIds.every(u => candidatas.includes(u))) return { ok: false, erro: segmento ? "só unidades candidatas da cena escolhida podem ser escolhidas" : "só unidades candidatas deste cartão podem ser escolhidas" };
-  } else if (p.decisao === "duplicada") {
-    const alvoC = pkg.cards.find(c => c.id === p.duplicadaDe);
-    if (!alvoC || !duplicataElegivel(pkg, card, alvoC)) return { ok: false, erro: "“duplicada” só vale para outro cartão da MESMA execução, com os mesmos elementos e o mesmo estado" };
-    const dAlvo = raw.decisions.find(d => d.cardId === alvoC.id);
-    if (dAlvo?.status !== "reviewed") return { ok: false, erro: "decida primeiro o cartão do qual esta é duplicata" };
-    unitIds = [...(dAlvo.atoms[0]?.unitIds ?? [])];
-    duplicateOf = { cardId: alvoC.id, atomId: dAlvo.atoms[0]?.id ?? "a1" };
+  let atoms: RawReviewAtom[];
+  let vinculos = 0;
+  if (decompoe) {
+    // NAT-72: decomposição real. Cada parte traz os próprios elementos; a unidade fora das candidatas
+    // só entra com vínculo explícito. A validação final é a do scorer, logo abaixo.
+    const m = montarAtomos(pkg, card, segmento?.scene ?? null, revisora, sujeitos, candidatas, p.atomos!);
+    if (!m.ok) return { ok: false, erro: m.erro };
+    atoms = m.atoms;
+    vinculos = m.vinculos;
+  } else {
+    let unitIds: string[] = [];
+    let duplicateOf: { cardId: string; atomId: string } | undefined;
+    let links: RawReviewAtom["links"];
+    if (p.decisao === "defeito-do-gabarito") {
+      unitIds = [...new Set(p.unitIds ?? [])];
+      if (!unitIds.length) return { ok: false, erro: "escolha qual unidade a alegação acertou" };
+      const v = montarVinculos(pkg, card, segmento?.scene ?? null, revisora, sujeitos, unitIds, p.vinculos);
+      if (!v.ok) return { ok: false, erro: v.erro };
+      if (!unitIds.every(u => candidatas.includes(u) || v.links.some(l => l.unitId === u))) {
+        return { ok: false, erro: (segmento ? "só unidades candidatas da cena escolhida podem ser escolhidas" : "só unidades candidatas deste cartão podem ser escolhidas") +
+          (aceitaVinculos(pkg.version) ? ", ou outra unidade da mesma cena COM vínculo de revisão (relação, estado, evidência e justificativa)" : "") };
+      }
+      if (v.links.length) { links = v.links; vinculos = v.links.length; }
+    } else if (p.vinculos?.length) {
+      return { ok: false, erro: "vínculo de revisão só acompanha “defeito do gabarito”" };
+    } else if (p.decisao === "duplicada") {
+      const alvoC = pkg.cards.find(c => c.id === p.duplicadaDe);
+      if (!alvoC || !duplicataElegivel(pkg, card, alvoC)) return { ok: false, erro: "“duplicada” só vale para outro cartão da MESMA execução, com os mesmos elementos e o mesmo estado" };
+      const dAlvo = raw.decisions.find(d => d.cardId === alvoC.id);
+      if (dAlvo?.status !== "reviewed") return { ok: false, erro: "decida primeiro o cartão do qual esta é duplicata" };
+      if (dAlvo.atoms.length !== 1 || dAlvo.atoms[0].links?.length) {
+        return { ok: false, erro: "o cartão apontado foi decomposto em partes ou tem vínculo de revisão: decida este cartão diretamente" };
+      }
+      unitIds = [...(dAlvo.atoms[0]?.unitIds ?? [])];
+      duplicateOf = { cardId: alvoC.id, atomId: dAlvo.atoms[0]?.id ?? "a1" };
+    }
+    // Decisão do cartão inteiro: um átomo com todos os elementos, por escolha explícita da revisora.
+    atoms = [{ id: "a1", text: card.observed ?? card.description, subjects: sujeitos, unitIds,
+      citation: p.citacao ?? "uncertain", decisao: p.decisao as keyof typeof DECISOES, ...(duplicateOf ? { duplicateOf } : {}),
+      ...(links ? { links } : {}) }];
   }
   Object.assign(dec, {
     status: "reviewed", reviewer: revisora, rationale: justificativa, complete: true, evidenceRefs: consultado, ...(segmento ? { cena: segmento.scene } : {}),
-    atoms: [{ id: "a1", text: card.observed ?? card.description, subjects: sujeitos, unitIds,
-      citation: p.citacao ?? "uncertain", decisao: p.decisao as keyof typeof DECISOES, ...(duplicateOf ? { duplicateOf } : {}) }],
+    atoms,
   });
   try {
     scoreSemanticPackage(pkg, normalizeReviews(structuredClone(raw)));
@@ -244,8 +295,9 @@ export function salvarDecisao(arquivo: string, campanha: string, alvo: string, p
   }
   const versao = vigor.versao + 1;
   const nome = `decisoes-${String(versao).padStart(4, "0")}.json`;
-  const meta: MetaDecisao = { formato: DECISOES_VERSAO, versao, salvoEm: new Date().toISOString(), revisora, cartao: card.id, decisao: p.decisao,
-    justificativa, baseadaEm: { revisao: an.atual.nome, decisoes: an.decisoes[0]?.nome ?? null } };
+  const meta: MetaDecisao = { formato: DECISOES_VERSAO, versao, salvoEm: new Date().toISOString(), revisora, cartao: card.id,
+    decisao: decompoe ? `partes: ${atoms.map(a => a.decisao).join(" + ")}` : String(p.decisao),
+    justificativa, baseadaEm: { revisao: an.atual.nome, decisoes: an.decisoes[0]?.nome ?? null }, partes: atoms.length, vinculos };
   mkdirSync(join(an.dir, "decisoes"), { recursive: true });
   try {
     writeFileSync(join(an.dir, "decisoes", nome), JSON.stringify({ ...raw, _painel: meta }, null, 2) + "\n", { flag: "wx" });

@@ -28,8 +28,9 @@ import { ROOT } from "./adjudication";
 import { verifyArchivedEvidence } from "./evidence-integrity";
 import {
   DECISOES, SCORER_FILES, canonical, digest, normalizeReviews, reviewEffort, reviewQueue, scoreSemanticPackage, validatePackage,
-  type RawReviews, type ReviewCard, type SemanticPackage, type SemanticUnit,
+  type RawReviewAtom, type RawReviews, type ReviewCard, type SemanticPackage, type SemanticUnit,
 } from "./semantic-flow";
+import { montarAtomos, type PedidoAtomo } from "./decisao-atomos";
 
 /**
  * O mesmo hash que o CLI confere: a bancada recusa um pacote preparado por outra versão do scorer.
@@ -458,12 +459,17 @@ const server = createServer((req, res) => {
       // Alegação composta: o scorer credita UMA unidade por (átomo × sujeito), então duas afirmações
       // num mesmo cartão só valem duas unidades como dois átomos. `atomos` chega pronto de quem
       // decide — a bancada não divide nada por conta própria — e passa pelo mesmo scorer ao gravar.
-      const compostos = (payload as unknown as { atomos?: { texto: string; decisao: keyof typeof DECISOES; unitIds?: string[]; citacao: string }[] }).atomos;
-      const atoms = !compostos?.length ? [atom] : compostos.map((a, n) => ({
-        id: `a${n + 1}`, text: a.texto, subjects: sujeitos,
-        unitIds: a.decisao === "defeito-do-gabarito" ? [...(a.unitIds ?? [])] : [],
-        citation: a.citacao as "supported" | "unsupported" | "uncertain", decisao: a.decisao,
-      }));
+      // NAT-72: cada parte diz os PRÓPRIOS sujeitos (antes todas recebiam todos, e a parte certa
+      // emprestava crédito ao sujeito extra); vínculo de revisão só com relação, estado e evidência.
+      const compostos = (payload as unknown as { atomos?: PedidoAtomo[] }).atomos;
+      let atoms: RawReviewAtom[] = [atom];
+      if (compostos?.length) {
+        const segmento = card.segmentos?.find(o => o.scene === String(payload.cena));
+        const m = montarAtomos(pkg, card, segmento?.scene ?? null, reviewer, sujeitos,
+          segmento ? segmento.candidateUnitIds : card.candidateUnitIds, compostos);
+        if (!m.ok) return json(200, { ok: false, error: m.erro });
+        atoms = m.atoms;
+      }
       const next: RawReviews = {
         ...reviews,
         decisions: reviews.decisions.map(d => d.cardId !== card.id ? d : {

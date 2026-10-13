@@ -23,7 +23,7 @@ import {
   COLLECTION_PLAN_VERSION, archiveCollection, buildCollectionManifest, manifestProblems, sha256, sha256File, type CollectionManifest,
 } from "./collection-manifest";
 import type { FlowBaselines } from "./run-baselines-flow";
-import type { SemanticPackage, SemanticReviews } from "./semantic-flow";
+import { tocaParticipante, type SemanticPackage, type SemanticReviews } from "./semantic-flow";
 import { FLOW_INSTRUMENT_VERSION } from "./instrument";
 
 const TSX = join(ROOT, "node_modules", "tsx", "dist", "cli.mjs");
@@ -291,7 +291,9 @@ async function main(): Promise<void> {
       const unguidedCard = pkg.cards.find(c => c.origin === "linha-de-base" && c.candidateUnitIds.length > 0);
       if (unguidedCard) {
         const unit = pkg.units.find(u => u.id === unguidedCard.candidateUnitIds[0])!;
-        const anchoredSubjects = unguidedCard.subjects.filter(s => s.key && unit.participants.includes(s.key)).map(s => s.id);
+        // 1.5.0: a subject inside a participant anchors too (tocaParticipante); exact equality only held by
+        // accident of which card sorted first, and card ids move whenever SCORER_FILES change (NAT-72).
+        const anchoredSubjects = unguidedCard.subjects.filter(s => s.key !== null && unit.participants.some(p => tocaParticipante(s.key!, p))).map(s => s.id);
         const rest = unguidedCard.subjects.map(s => s.id).filter(s => !anchoredSubjects.includes(s));
         const decision = reviews.decisions.find(d => d.cardId === unguidedCard.id)!;
         decision.atoms = [{ id: "ref", text: "fixture", subjects: anchoredSubjects, verdict: "reference", unitIds: [unit.id], citation: "supported" },

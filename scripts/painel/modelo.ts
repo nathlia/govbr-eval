@@ -26,7 +26,8 @@ import { agregadoDaCampanha, vistaAgenda, type AgregadoCampanha, type VistaAgend
 
 export const PAINEL_VERSAO = "painel-resultados-1.1.0";
 export const RECEITA_VERSAO = "receita-analise-1.0.0";
-export const DECISOES_VERSAO = "decisoes-painel-1.0.0";
+/** 1.1.0 (NAT-72): o registro diz quantas partes (átomos) e quantos vínculos de revisão a gravação trouxe. 1.0.0 continua legível. */
+export const DECISOES_VERSAO = "decisoes-painel-1.1.0";
 export const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
 export const ARMS: Arm[] = ["sem", "com"];
 
@@ -139,8 +140,10 @@ export interface Revisao {
 export interface Falha { carimbo: string; em: string; motivo: string; rel: string }
 export interface VersaoDecisoes { numero: number; nome: string; rel: string; meta: MetaDecisao | null }
 export interface MetaDecisao {
-  formato: typeof DECISOES_VERSAO; versao: number; salvoEm: string; revisora: string; cartao: string; decisao: string;
+  formato: typeof DECISOES_VERSAO | "decisoes-painel-1.0.0"; versao: number; salvoEm: string; revisora: string; cartao: string; decisao: string;
   justificativa: string; baseadaEm: { revisao: string; decisoes: string | null };
+  /** 1.1.0: partes (átomos) gravadas e vínculos de revisão declarados nesta gravação. */
+  partes?: number; vinculos?: number;
 }
 
 export interface Analise {

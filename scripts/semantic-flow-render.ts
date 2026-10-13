@@ -1,6 +1,6 @@
 /** Human-readable review cards. Renders a package and its decisions; never scores or decides. */
 import {
-  armLeaks, reviewEffort, reviewQueue, scoreSemanticPackage,
+  RELACOES_VINCULO, VINCULO_CONTRATO, aceitaVinculos, armLeaks, reviewEffort, reviewQueue, scoreSemanticPackage,
   type ReviewCard, type SemanticPackage, type SemanticReviews,
 } from "./semantic-flow";
 
@@ -113,7 +113,15 @@ export function renderReview(pkg: SemanticPackage, reviews: SemanticReviews, opt
         "Só os sujeitos dessa cena contam; os dos outros segmentos não são alegação.", ""] : []),
     "Um átomo = um defeito. subjects identifica cada elemento alegado; unitIds contém somente alternativas semanticamente aceitas.",
     "Cada átomo/elemento vale no máximo uma detecção. Divida alegações compostas; contabilize também as partes falsas.",
-    'Duplicatas revisadas: no átomo repetido, acrescente duplicateOf: { "cardId": "C-...", "atomId": "..." }. A citação continua avaliada separadamente.', ""];
+    'Duplicatas revisadas: no átomo repetido, acrescente duplicateOf: { "cardId": "C-...", "atomId": "..." }. A citação continua avaliada separadamente.', "",
+    // NAT-72: só em pacote que aceita vínculo; num pacote legado o texto é o de sempre.
+    ...(aceitaVinculos(pkg.version) ? [
+      "**Vínculo de revisão (exceção declarada):** quando a alegação está certa sobre uma unidade que a ancoragem não ofereceu " +
+        "(ausência global ancorada em <html>/body, host no lugar do controle interno, participante relacionado, transição), " +
+        `acrescente ao átomo \`"links"\`: [{ "contrato": "${VINCULO_CONTRATO}", "unitId", "subjects", "scene", "state" (estado medido), ` +
+        `"relation" (${RELACOES_VINCULO.join(" | ")}), "evidence", "justification", "reviewer" (você), "binding" (o do cartão) }]. ` +
+        "Nada cria vínculo por você; o scorer recusa outra cena, estado não medido, relação que não cabe na árvore medida, falta de evidência.", ""] : []),
+  ];
   for (const c of pkg.cards) {
     const d = decisions.get(c.id);
     lines.push(`## ${c.id}`, "", `Estado: ${pending.has(c.id) ? "pendente" : "concluído"}`, "", ...claim(c, cego),
