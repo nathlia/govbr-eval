@@ -29,9 +29,10 @@ import { randomBytes } from "node:crypto";
 import {
   assertContract, crossCheckRun, validateContract,
   crossCheckManifest,
-  type AnyArtifactManifest, type AnyFindings, type ArtifactManifest, type FindingsContract, type Isolation, type Metric, type Run,
+  type AnyArtifactManifest, type AnyFindings, type ArtifactManifest, type ArtifactManifestV2, type FindingsContract, type Isolation, type Metric, type Run,
 } from "../contracts/index";
 import { gitState, oracleIdentity } from "../scripts/collection-manifest";
+import { TOOL_PAYLOAD_PATH, rebaseToolPayloads, verifyToolPayloads } from "../scripts/tool-payloads";
 import {
   CREDENTIAL_ENV, EFFORT_LEVELS, FAKE_CREDENTIAL, ORACLE_SERVER_NAME, STUB_SCENARIOS,
   claudeCommand, clientFailure, oracleAdherence, parseClientStream, stubRoteiro, summarizeStub, type StubRoteiro,
@@ -583,8 +584,9 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     rmSync(work, { recursive: true, force: true });
     const rawPath = (r: string, f: string): string => join(raw, r, f);
 
-    const browserEvents = readNdjson(rawPath("browser", "tool-events.ndjson"));
-    const oracleEvents = readNdjson(rawPath("oracle", "tool-events.ndjson"));
+    // NAT-82: a ponte cita o payload integral relativo ao próprio /out; no pacote, o caminho é o da cópia bruta
+    const browserEvents = readNdjson(rawPath("browser", "tool-events.ndjson")).map((e) => rebaseToolPayloads(e, "evidence/raw/browser"));
+    const oracleEvents = readNdjson(rawPath("oracle", "tool-events.ndjson")).map((e) => rebaseToolPayloads(e, "evidence/raw/oracle"));
     const toolEvents = [...browserEvents, ...oracleEvents].sort((a, b) => String(a.at).localeCompare(String(b.at)));
     writeFileSync(join(runDir, "tool-events.ndjson"), toolEvents.map((e) => JSON.stringify(e)).join("\n") + (toolEvents.length ? "\n" : ""));
     const browserInv = readJson<{ exposed: string[]; hidden: string[] }>(rawPath("browser", "inventory.json"));
@@ -794,8 +796,11 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     writeFileSync(join(runDir, "run.json"), json(run));
 
     // manifesto de artefatos (tudo menos ele mesmo)
-    const roleOf = (p: string): ArtifactManifest["files"][number]["role"] =>
-      p === "run.json" ? "run" : p === "findings.json" ? "findings" : p === "isolation.json" ? "isolation" : p === "tool-events.ndjson" ? "tool-events"
+    // NAT-82: no v2, o texto integral que a ponte gravou tem papel próprio (`tool-payload`) e não entra na lista
+    // de evidência do scorer; o v1 não muda (o mesmo arquivo continua `evidence`, como toda a cópia bruta).
+    const manifestV2 = findingsRaw?.contract === "findings.v2";
+    const roleOf = (p: string): ArtifactManifestV2["files"][number]["role"] =>
+      manifestV2 && TOOL_PAYLOAD_PATH.test(p) ? "tool-payload" : p === "run.json" ? "run" : p === "findings.json" ? "findings" : p === "isolation.json" ? "isolation" : p === "tool-events.ndjson" ? "tool-events"
         : p.startsWith("refused/") ? "refusal" : p.startsWith("evidence/logs/") ? "log" : p.startsWith("evidence/") ? "evidence" : "other";
     const mediaOf = (p: string): string => p.endsWith(".json") ? "application/json" : p.endsWith(".ndjson") ? "application/x-ndjson" : p.endsWith(".md") ? "text/markdown" : "text/plain";
     const files = listFiles(runDir).filter((p) => p !== "artifact-manifest.json").sort().map((p) => {
@@ -804,7 +809,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     });
     // NAT-81: artifact-manifest.v2 só quando o envelope aceito é findings.v2 (o v1 trava findings.v1);
     // sem submissão ou com findings.v1, o manifesto continua v1 como antes.
-    const manifest: AnyArtifactManifest = findingsRaw?.contract === "findings.v2"
+    const manifest: AnyArtifactManifest = manifestV2 && findingsRaw?.contract === "findings.v2"
       ? {
         contract: "artifact-manifest.v2", fixture, campaignId: opts.campanha, runId, producedBy: RUNNER_VERSION, producedAt: iso(),
         schemaVersions: { run: "run.v1", findings: "findings.v2", ...(findingsRaw.report.inspection !== undefined ? { inspection: "inspection.v1" as const } : {}),
@@ -815,7 +820,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       : {
         contract: "artifact-manifest.v1", fixture, campaignId: opts.campanha, runId, producedBy: RUNNER_VERSION, producedAt: iso(),
         schemaVersions: { run: "run.v1", ...(findingsRaw ? { findings: "findings.v1" as const } : {}), ...(isolationDoc ? { isolation: "isolation.v1" as const } : {}) },
-        files,
+        files: files as ArtifactManifest["files"],
       };
     writeFileSync(join(runDir, "artifact-manifest.json"), json(manifest));
 
@@ -828,6 +833,10 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     if (!problems.length) {
       for (const e of crossCheckRun(assertContract<Run>(run, "run.v1"), findingsRaw, isolationDoc)) problems.push(`crossCheckRun: ${e.path} ${e.message}`);
       for (const e of crossCheckManifest(manifest, findingsRaw)) problems.push(`crossCheckManifest: ${e.path} ${e.message}`);
+      try {
+        verifyToolPayloads(readFileSync(join(runDir, "tool-events.ndjson"), "utf8"), (p) => existsSync(join(runDir, p)) ? readFileSync(join(runDir, p)) : null,
+          manifest.files, manifest.contract === "artifact-manifest.v2");
+      } catch (e) { problems.push(`payloads da ponte: ${e instanceof Error ? e.message : String(e)}`); }
     }
     if (problems.length) log(`PACOTE INVÁLIDO:\n  ${problems.join("\n  ")}`);
     log(`pacote em ${runDir}: técnico=${technical} isolamento=${run.status.isolation} oráculo=${oracleUsage} submissão=${submission.status}`);

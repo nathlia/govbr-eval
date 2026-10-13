@@ -63,6 +63,7 @@ const EXPECTED: Record<string, { path: string; keyword: string; missingProperty?
   "findings--v2-complete-with-gaps.json": { path: "/report/inspection/completion", keyword: "x-complete-with-gaps" },
   "findings--v2-recipe-not-from-load.json": { path: "/report/inspection/states/1/recipe/0/action", keyword: "x-recipe-from-load" },
   "artifact-manifest--v1-declares-findings-v2.json": { path: "/schemaVersions/findings", keyword: "const" },
+  "artifact-manifest--v1-tool-payload-role.json": { path: "/files/6/role", keyword: "enum" },
 };
 
 const show = (errors: ContractError[]): string => errors.map(e => `${e.path || "/"} ${e.keyword}${e.missingProperty ? `(${e.missingProperty})` : ""}`).join("; ");

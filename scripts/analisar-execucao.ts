@@ -34,6 +34,7 @@ import {
   type Isolation, type Location, type Run, type ContractName, type ScoreStatus, type SnapshotManifest,
 } from "../contracts/index";
 import { resumirInspecao, type ResumoInspecao } from "./inspection-ledger";
+import { verifyToolPayloads } from "./tool-payloads";
 import type { FlowAgentResults, FlowGroundTruth, RunConfig } from "../types";
 import { ROOT } from "./adjudication";
 import { analysisIdentity, cenasDoPlano, compareIdentities, statePlanOf, statePlanSha256 } from "./collection-manifest";
@@ -123,6 +124,8 @@ interface PacoteLido {
   findings: AnyFindings | null;
   isolation: Isolation | null;
   toolEvents: string | null;
+  /** Texto integral conferido de cada payload que a ponte gravou (NAT-82), por caminho no pacote. */
+  toolPayloads: Map<string, string>;
 }
 
 function listarArquivos(root: string, prefix = ""): string[] {
@@ -216,7 +219,16 @@ export function lerPacote(dirArg: string): PacoteLido {
   if (cruzados.length) recusar(`run × findings × isolation: ${cruzados.map(e => `${e.path} ${e.keyword}: ${e.message}`).join("; ")}`);
   for (const d of [manifest, findings, isolation]) if (d && d.fixture !== run.fixture) recusar("fixture misturada com dado real dentro do mesmo pacote");
   const te = doPapel("tool-events")[0];
-  return { dir, manifest, manifestBytes, run, runBytes, findings, isolation, toolEvents: te ? bytesDe.get(te.path)!.toString("utf8") : null };
+  const toolEvents = te ? bytesDe.get(te.path)!.toString("utf8") : null;
+  // NAT-82: payload integral citado por evento, conferido contra o arquivo, o manifesto e o hash da chamada.
+  // Pacote anterior (eventos sem `payload`) passa sem nada a conferir; nada é reconstruído.
+  let toolPayloads: Map<string, string>;
+  try {
+    toolPayloads = verifyToolPayloads(toolEvents, path => bytesDe.get(path) ?? null, manifest.files, manifest.contract === "artifact-manifest.v2").texts;
+  } catch (e) {
+    return recusar(`payloads da ponte em ${dirArg}: ${e instanceof Error ? e.message : String(e)}`);
+  }
+  return { dir, manifest, manifestBytes, run, runBytes, findings, isolation, toolEvents, toolPayloads };
 }
 
 // ───────────────────────────────────────────────────────────────── adaptador: pacote novo → scorer existente
@@ -881,7 +893,7 @@ function execucaoResumo(p: PacoteLido, saida: string, b: AnalysisBinding, s: Sem
       recusa: link(run.submission.refusal?.archivedBody ?? null) },
     binding: `analysis-binding.${run.arm}.json`,
     elegibilidade: { elegivel: inelegibilidade.length === 0, motivos: inelegibilidade },
-    inspecao: resumirInspecao(findings, p.toolEvents),
+    inspecao: resumirInspecao(findings, p.toolEvents, p.toolPayloads),
   };
 }
 

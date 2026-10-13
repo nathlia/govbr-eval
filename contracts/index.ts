@@ -197,7 +197,8 @@ export interface ArtifactManifestV2 extends Doc<"artifact-manifest.v2"> {
   schemaVersions: { run: "run.v1"; findings: "findings.v2"; inspection?: typeof INSPECTION_CONTRACT; isolation?: "isolation.v1" };
   /** Igual ao `inspectionStatus` de findings.json (registro inválido fica visível sem abrir o envelope). */
   inspectionStatus: FindingsV2["inspectionStatus"];
-  files: ArtifactManifest["files"];
+  /** Como v1, mais `tool-payload` (NAT-82): texto integral de um lado de chamada cortado na projeção da ponte. */
+  files: (Omit<ArtifactManifest["files"][number], "role"> & { role: ArtifactManifest["files"][number]["role"] | "tool-payload" })[];
 }
 export type AnyArtifactManifest = ArtifactManifest | ArtifactManifestV2;
 export const ARTIFACT_MANIFEST_CONTRACTS = ["artifact-manifest.v1", "artifact-manifest.v2"] as const;

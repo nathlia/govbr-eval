@@ -23,7 +23,8 @@
 // navegador de tamanho fixo; a ferramenta declarada `browser_select_window` troca a instância ativa.
 import { createServer } from "node:http";
 import { createHash } from "node:crypto";
-import { appendFileSync, writeFileSync } from "node:fs";
+import { appendFileSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
@@ -31,6 +32,8 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 
 export const BRIDGE_VERSION = "bridge-1.0.0";
+/** Política de payload integral (NAT-82). Fica no inventário e no evento `start`; a versão anunciada ao agente não muda. */
+export const PAYLOAD_POLICY = "tool-payload-1.0.0";
 
 /** Ferramentas do Playwright MCP que o agente recebe. Qualquer outra fica oculta (inclusive as de versões futuras). */
 export const PLAYWRIGHT_ALLOWED = [
@@ -67,6 +70,50 @@ if (IS_PLAYWRIGHT && windows.length === 0) throw new Error("playwright exige --w
 const sha256 = (s) => createHash("sha256").update(s).digest("hex");
 let seq = 0;
 const cap = (s, n) => (s.length > n ? { text: s.slice(0, n), truncated: true } : { text: s, truncated: false });
+
+// ───────────────────────────────────────── payload integral (NAT-82)
+// O evento continua levando a projeção `{ text, truncated }` de até PROJECTION_CHARS caracteres (D-116 lê esse
+// formato). Quando a projeção corta, o texto INTEIRO vai para um arquivo ao lado de tool-events.ndjson
+// (`payloads/`), e o lado do evento ganha `payload` = { status, path, mediaType, bytes, sha256, totalBytes,
+// limitBytes }. Limite declarado, igual para as duas pontes (Playwright e oráculo) e para os dois braços:
+//   - PAYLOAD_LIMIT_BYTES por lado de chamada (2 MiB ≈ 12× o maior resultado medido nas baterias até
+//     2026-10-12, 174 KB): acima disso grava-se só o prefixo, `status: "truncated"`;
+//   - PAYLOAD_BUDGET_BYTES por processo de ponte (64 MiB ≈ 70× a maior soma de resultados de uma execução,
+//     0,9 MB): esgotado, nada é gravado, `status: "over-budget"`;
+//   - falha de escrita = `status: "failed"`. Truncado/sem orçamento/falha é limitação declarada; nunca payload completo.
+// A gravação é síncrona, depois da chamada, e não toca no resultado devolvido ao agente. O arquivo fica no
+// /out da ponte (contêiner do navegador ou do oráculo), que o contêiner do agente não monta.
+export const PROJECTION_CHARS = 4000;
+export const PAYLOAD_LIMIT_BYTES = 2 * 1024 * 1024;
+export const PAYLOAD_BUDGET_BYTES = 64 * 1024 * 1024;
+const PAYLOAD_DIR = EVENTS ? join(dirname(EVENTS), "payloads") : null;
+let payloadSpent = 0;
+let payloadSeq = 0;
+/** `kind` = "args" (JSON) | "result" (texto). Devolve o lado do evento: projeção + payload quando cortada. */
+function side(text, kind) {
+  const projection = cap(text, PROJECTION_CHARS);
+  if (!projection.truncated || !PAYLOAD_DIR) return projection;
+  const full = Buffer.from(text, "utf8");
+  const limitBytes = PAYLOAD_LIMIT_BYTES;
+  if (payloadSpent >= PAYLOAD_BUDGET_BYTES) {
+    return { ...projection, payload: { status: "over-budget", path: null, totalBytes: full.length, limitBytes, budgetBytes: PAYLOAD_BUDGET_BYTES } };
+  }
+  const stored = full.length > limitBytes ? full.subarray(0, limitBytes) : full;
+  const complete = stored.length === full.length;
+  const name = `${NAME}-${String(payloadSeq++).padStart(6, "0")}-${kind}${complete && kind === "args" ? ".json" : ".txt"}`;
+  const rel = `payloads/${name}`;
+  try {
+    mkdirSync(PAYLOAD_DIR, { recursive: true });
+    writeFileSync(join(PAYLOAD_DIR, name), stored, { flag: "wx" });
+    payloadSpent += stored.length;
+  } catch (error) {
+    try { if (error?.code !== "EEXIST") rmSync(join(PAYLOAD_DIR, name), { force: true }); } catch { /* nada a limpar */ }
+    return { ...projection, payload: { status: "failed", path: null, totalBytes: full.length, limitBytes, detail: String(error?.message ?? error).slice(0, 200) } };
+  }
+  return { ...projection, payload: { status: complete ? "complete" : "truncated", path: rel,
+    mediaType: complete && kind === "args" ? "application/json" : "text/plain",
+    bytes: stored.length, sha256: sha256(stored), totalBytes: full.length, limitBytes } };
+}
 function log(e) {
   const line = { seq: seq++, at: new Date().toISOString(), server: NAME, ...e };
   if (EVENTS) appendFileSync(EVENTS, JSON.stringify(line) + "\n");
@@ -104,9 +151,10 @@ const hidden = childTools.map((t) => t.name).filter((n) => !allowed.has(n));
 const inventory = {
   bridge: BRIDGE_VERSION, server: NAME, childTools: childTools.map((t) => t.name), exposed: exposedTools.map((t) => t.name),
   hidden, windows, resizePattern: IS_PLAYWRIGHT ? RESIZE_PATTERN.source : null, startedAt: new Date().toISOString(),
+  payloads: { policy: PAYLOAD_POLICY, projectionChars: PROJECTION_CHARS, limitBytes: PAYLOAD_LIMIT_BYTES, budgetBytes: PAYLOAD_BUDGET_BYTES, dir: PAYLOAD_DIR ? "payloads" : null },
 };
 if (INVENTORY) writeFileSync(INVENTORY, JSON.stringify(inventory, null, 2) + "\n");
-log({ kind: "start", exposed: inventory.exposed, hidden });
+log({ kind: "start", exposed: inventory.exposed, hidden, payloads: inventory.payloads });
 
 const textOf = (r) => (r?.content ?? []).map((c) => (c.type === "text" ? c.text : `[${c.type}]`)).join("\n");
 const refusal = (msg) => ({ content: [{ type: "text", text: `Recusado pela política desta execução: ${msg}` }], isError: true });
@@ -150,20 +198,24 @@ function policyCheck(name, args) {
 
 async function handleCall(name, args) {
   const argsText = JSON.stringify(args ?? {});
-  const base = { tool: name, argsSha256: sha256(argsText), args: cap(argsText, 4000), window: children[active].window };
+  // `args` (e o arquivo do payload) só é produzido no mesmo bloco síncrono que grava o evento: uma chamada
+  // interrompida no meio não deixa payload sem evento que o cite.
+  const head = { tool: name, argsSha256: sha256(argsText) };
+  const window0 = children[active].window;
+  const base = () => ({ ...head, args: side(argsText, "args"), window: window0 });
   const denied = policyCheck(name, args);
   if (denied) {
-    log({ kind: "refused", ...base, reason: denied.reason });
+    log({ kind: "refused", ...base(), reason: denied.reason });
     return refusal(denied.msg);
   }
   if (name === SELECT_WINDOW) {
     const idx = windows.findIndex((w) => w.width === Number(args?.width));
     if (idx < 0) {
-      log({ kind: "refused", ...base, reason: "largura-nao-declarada" });
+      log({ kind: "refused", ...base(), reason: "largura-nao-declarada" });
       return refusal("largura não declarada");
     }
     active = idx;
-    log({ kind: "call", ...base, window: windows[idx], isError: false, outcome: "ok", durationMs: 0 });
+    log({ kind: "call", ...base(), window: windows[idx], isError: false, outcome: "ok", durationMs: 0 });
     return { content: [{ type: "text", text: `Navegador ativo: ${windows[idx].width}×${windows[idx].height} (navegador próprio, sem estado compartilhado).` }] };
   }
   const child = children[active];
@@ -172,7 +224,7 @@ async function handleCall(name, args) {
   try {
     result = await child.client.callTool({ name, arguments: args ?? {} }, undefined, { timeout: 120_000 });
   } catch (error) {
-    log({ kind: "call", ...base, isError: true, outcome: "transport-error", detail: String(error?.message ?? error).slice(0, 500), durationMs: Date.now() - t0 });
+    log({ kind: "call", ...base(), isError: true, outcome: "transport-error", detail: String(error?.message ?? error).slice(0, 500), durationMs: Date.now() - t0 });
     return refusal(`falha de transporte: ${String(error?.message ?? error).slice(0, 200)}`);
   }
   const text = textOf(result);
@@ -180,8 +232,8 @@ async function handleCall(name, args) {
   if (IS_PLAYWRIGHT && (name === "browser_navigate" || name === "browser_tabs") && !result.isError) child.pageOpened = true;
   if (IS_PLAYWRIGHT && name === "browser_close") child.pageOpened = false;
   const vp = await probeViewport(child);
-  log({ kind: "call", ...base, isError: Boolean(result.isError), outcome, durationMs: Date.now() - t0, resultBytes: Buffer.byteLength(text),
-    resultSha256: sha256(text), result: cap(text, 4000), viewportAfter: vp });
+  log({ kind: "call", ...base(), isError: Boolean(result.isError), outcome, durationMs: Date.now() - t0, resultBytes: Buffer.byteLength(text),
+    resultSha256: sha256(text), result: side(text, "result"), viewportAfter: vp });
   if (vp && child.window && (vp.width !== child.window.width || vp.height !== child.window.height)) {
     log({ kind: "drift", tool: name, expected: child.window, observed: vp });
   }

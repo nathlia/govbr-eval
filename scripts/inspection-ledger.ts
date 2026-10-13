@@ -19,9 +19,13 @@
  * entrada ou de resultado de alguma chamada sem erro em tool-events.ndjson, no formato que a ponte grava
  * (`args`/`result` = `{ text, truncated }`, bridge.mjs `cap`). Token inteiro, sem tamanho mínimo: um ref
  * curto do navegador (`e12`) e um id do validador valem igual, nos dois braços; `e12` não casa dentro de
- * `e123`. A ponte guarda até 4.000 caracteres de cada lado: identificador não achado quando ALGUMA
- * chamada teve o texto cortado é `nao-verificavel`, nunca "não encontrado" (payload íntegro é o NAT-82);
- * `nao-encontrado` só quando todo texto gravado estava inteiro.
+ * `e123`. A projeção do evento guarda até 4.000 caracteres de cada lado. Desde o NAT-82, quando a ponte
+ * gravou o payload integral (`payload.status: "complete"`) e o leitor do pacote o conferiu
+ * (evidence-integrity `verifyToolPayloads`), a busca usa o texto inteiro e o lado deixa de contar como
+ * cortado. Payload `truncated` (acima do limite declarado) dá um prefixo maior, mas continua cortado;
+ * `over-budget`/`failed`, evento antigo sem payload, ou payload não fornecido pelo leitor ficam na projeção.
+ * Identificador não achado quando ALGUM lado ficou cortado é `nao-verificavel`, nunca "não encontrado";
+ * `nao-encontrado` só quando todo texto lido estava inteiro.
  */
 import type { AnyFindings, InspectionLedger } from "../contracts/index";
 
@@ -65,12 +69,17 @@ export interface ResumoInspecao {
 }
 
 /** Lado de um evento como a ponte grava: `{ text, truncated }`. Texto puro também é lido, por robustez. */
-type Lado = { text?: unknown; truncated?: unknown } | string | undefined | null;
+type Lado = { text?: unknown; truncated?: unknown; payload?: { status?: unknown; path?: unknown } | null } | string | undefined | null;
 interface ToolEvent { kind?: string; isError?: boolean; args?: Lado; result?: Lado }
-const lado = (x: Lado): { text: string; truncated: boolean } =>
-  typeof x === "string" ? { text: x, truncated: false }
-    : x && typeof x === "object" ? { text: typeof x.text === "string" ? x.text : "", truncated: x.truncated === true }
-      : { text: "", truncated: false };
+/** `payloads` = textos já conferidos (path → texto). Sem payload conferido, vale a projeção do evento. */
+const lado = (x: Lado, payloads?: ReadonlyMap<string, string>): { text: string; truncated: boolean } => {
+  if (typeof x === "string") return { text: x, truncated: false };
+  if (!x || typeof x !== "object") return { text: "", truncated: false };
+  const p = x.payload;
+  const integral = p && typeof p.path === "string" ? payloads?.get(p.path) : undefined;
+  if (integral !== undefined) return { text: integral, truncated: p!.status !== "complete" };
+  return { text: typeof x.text === "string" ? x.text : "", truncated: x.truncated === true };
+};
 const escapar = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /** O identificador como token inteiro: nada de letra, dígito, `_` ou `-` colado antes ou depois. */
 const token = (ref: string): RegExp => new RegExp(`(?<![A-Za-z0-9_-])${escapar(ref)}(?![A-Za-z0-9_-])`);
@@ -86,10 +95,13 @@ function eventos(text: string | null): ToolEvent[] | null {
 
 const contar = <T extends string>(xs: T[]): Record<string, number> => xs.reduce<Record<string, number>>((a, x) => ({ ...a, [x]: (a[x] ?? 0) + 1 }), {});
 
-const LIMITE = "a ponte guarda até 4.000 caracteres de entrada e de resultado por chamada: com algum texto cortado, identificador não achado é não verificável, não falso (NAT-82)";
+const LIMITE = "a projeção do evento guarda até 4.000 caracteres de entrada e de resultado por chamada; quando a ponte gravou o payload integral conferido, a busca usa o texto inteiro (NAT-82). Com algum lado ainda cortado (acima do limite declarado, sem orçamento, falha de escrita ou pacote anterior), identificador não achado é não verificável, não falso";
 
-/** Resumo do registro de inspeção de um pacote. `toolEvents` = conteúdo de tool-events.ndjson (ou null). */
-export function resumirInspecao(findings: AnyFindings | null, toolEvents: string | null): ResumoInspecao {
+/**
+ * Resumo do registro de inspeção de um pacote. `toolEvents` = conteúdo de tool-events.ndjson (ou null).
+ * `payloads` = payloads integrais JÁ CONFERIDOS pelo leitor do pacote (verifyToolPayloads), por caminho.
+ */
+export function resumirInspecao(findings: AnyFindings | null, toolEvents: string | null, payloads?: ReadonlyMap<string, string>): ResumoInspecao {
   const vazio = { formato: INSPECTION_SUMMARY_VERSION, contrato: null, declarado: null, comprovacao: null } as const;
   if (!findings) return { ...vazio, estado: "indisponivel", texto: "registro indisponível (sem submissão aceita)" };
   if (findings.contract === "findings.v1") {
@@ -128,7 +140,7 @@ export function resumirInspecao(findings: AnyFindings | null, toolEvents: string
     comprovacao = { estado: "sem-eventos", fonte: toolEvents === null ? "sem tool-events no pacote" : "tool-events.ndjson em formato não reconhecido",
       chegadasComprovadas: null, chegadas: null, referencias: { citadas: 0, comprovadas: null, naoVerificaveis: null, naoEncontradas: null }, limite: LIMITE };
   } else {
-    const lados = evs.filter(e => e.kind === "call" && e.isError !== true).flatMap(e => [lado(e.args), lado(e.result)]);
+    const lados = evs.filter(e => e.kind === "call" && e.isError !== true).flatMap(e => [lado(e.args, payloads), lado(e.result, payloads)]);
     const algumCortado = lados.some(x => x.truncated);
     const verificar = (ref: string): Verificacao => {
       const r = ref.trim();
@@ -143,7 +155,7 @@ export function resumirInspecao(findings: AnyFindings | null, toolEvents: string
       ...l.regions.flatMap(r => r.originRef ? [r.originRef] : []),
     ].map(r => r.trim()).filter(Boolean))];
     const v = refs.map(verificar);
-    comprovacao = { estado: "medido", fonte: "tool-events.ndjson (chamadas sem erro: args.text e result.text, token inteiro)",
+    comprovacao = { estado: "medido", fonte: `tool-events.ndjson (chamadas sem erro: args e result, token inteiro; ${payloads?.size ?? 0} payload(s) integral(is) conferido(s))`,
       chegadasComprovadas: chegadas.comprovado.length, chegadas,
       referencias: { citadas: refs.length, comprovadas: v.filter(x => x === "comprovado").length,
         naoVerificaveis: v.filter(x => x === "nao-verificavel").length, naoEncontradas: v.filter(x => x === "nao-encontrado").length },

@@ -14,7 +14,7 @@
 import assert from "node:assert/strict";
 import { spawn, type ChildProcess } from "node:child_process";
 import { createHash } from "node:crypto";
-import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -271,6 +271,52 @@ await test("comprovação: texto cortado pela ponte e ref ausente → não verif
   assert.match(r.texto, /não verificável/);
   const inteiro = resumirInspecao(ledgerCom("e77", ["e77"]), evento("playwright", "browser_snapshot", "{}", SNAPSHOT));
   assert.deepEqual(inteiro.comprovacao!.referencias, { citadas: 1, comprovadas: 0, naoVerificaveis: 0, naoEncontradas: 1 });
+});
+
+await test("NAT-82: com o payload integral conferido, ref depois dos 4.000 caracteres é comprovado; sem ele, continua não verificável", () => {
+  const longo = `${"- generic [ref=e1]\n".repeat(400)}  - dialog "Fixture" [ref=e777]\n`;
+  assert.ok(longo.indexOf("e777") > 4000);
+  const payload = { status: "complete", path: "evidence/raw/browser/payloads/playwright-000000-result.txt", mediaType: "text/plain",
+    bytes: Buffer.byteLength(longo), sha256: sha(longo), totalBytes: Buffer.byteLength(longo), limitBytes: 2 * 1024 * 1024 };
+  const ev = JSON.parse(evento("playwright", "browser_snapshot", "{}", longo.slice(0, 4000), { truncated: true })) as Record<string, { payload?: unknown }>;
+  ev.resultSha256 = sha(longo) as never;
+  ev.resultBytes = Buffer.byteLength(longo) as never;
+  ev.result.payload = payload;
+  const linha = JSON.stringify(ev);
+  // leitor sem payload (pacote antigo ou payload não fornecido) → igual ao D-116
+  assert.deepEqual(resumirInspecao(ledgerCom("e777", []), linha).comprovacao!.chegadas!["nao-verificavel"], ["s1"]);
+  // com o payload conferido → comprovado; ref inexistente agora é não encontrado (nada mais está cortado)
+  const integral = new Map([[payload.path, longo]]);
+  assert.equal(resumirInspecao(ledgerCom("e777", []), linha, integral).comprovacao!.chegadasComprovadas, 1);
+  assert.deepEqual(resumirInspecao(ledgerCom("e778", []), linha, integral).comprovacao!.chegadas!["nao-encontrado"], ["s1"]);
+  // payload truncado (acima do limite declarado) continua cortado: ref ausente segue não verificável
+  const trunc = JSON.stringify({ ...ev, result: { ...ev.result, payload: { ...payload, status: "truncated" } } });
+  assert.deepEqual(resumirInspecao(ledgerCom("e778", []), trunc, integral).comprovacao!.chegadas!["nao-verificavel"], ["s1"]);
+
+  // pacote: lerPacote confere o payload e o entrega ao resumo; adulteração recusa o pacote
+  const dest = join(TMP, "pacote-v2-payload");
+  pacoteV2(dest, (m) => {
+    const files = m.files as { path: string; bytes: number; sha256: string; mediaType: string; role: string }[];
+    const te = files.find(f => f.role === "tool-events")!;
+    const body = readFileSync(join(dest, te.path), "utf8") + linha + "\n";
+    writeFileSync(join(dest, te.path), body);
+    te.bytes = Buffer.byteLength(body); te.sha256 = sha(body);
+    mkdirSync(join(dest, "evidence/raw/browser/payloads"), { recursive: true });
+    writeFileSync(join(dest, payload.path), longo);
+    files.push({ path: payload.path, bytes: payload.bytes, sha256: payload.sha256, mediaType: "text/plain", role: "tool-payload" });
+  });
+  const lido = lerPacote(dest);
+  assert.equal(lido.toolPayloads.get(payload.path), longo);
+  writeFileSync(join(dest, payload.path), longo.replace("e777", "e778"));
+  assert.throws(() => lerPacote(dest), /hash ou tamanho diverge do manifesto/);
+  // manifesto "consertado" para o arquivo adulterado: o evento ainda cita o hash original → recusado
+  const mPath = join(dest, "artifact-manifest.json");
+  const m = readJson<{ files: { path: string; sha256: string }[] }>(mPath);
+  m.files.find(f => f.path === payload.path)!.sha256 = sha(longo.replace("e777", "e778"));
+  writeFileSync(mPath, JSON.stringify(m, null, 2) + "\n");
+  assert.throws(() => lerPacote(dest), /payloads da ponte.*diverge do manifesto/);
+  // pacote legado (sem payload) continua lido, sem nada reconstruído
+  assert.equal(lerPacote(PACOTE_V1).toolPayloads.size, 0);
 });
 
 await test("resumo: declaração separada da comprovação por evento; cobertura da página sempre desconhecida", () => {
