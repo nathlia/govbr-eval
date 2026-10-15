@@ -21,7 +21,8 @@ import { join } from "node:path";
 import { CONTRACTS_DIR, type Findings, type FindingsV2, type InspectionLedger } from "../contracts/index";
 import { collectorFindingsContract } from "../runner/run-once";
 import { ROOT } from "./adjudication";
-import { adaptarExecucao, lerPacote, renderResumo, type Resumo } from "./analisar-execucao";
+import { adaptarExecucao, conteudoCientifico, lerPacote, renderResumo, type Resumo } from "./analisar-execucao";
+import { auditarPacote } from "./auditar-inspecao";
 import { resumirInspecao } from "./inspection-ledger";
 
 let tests = 0;
@@ -196,6 +197,19 @@ await test("pacote v2: lido e adaptado; o scorer recebe a MESMA entrada que o v1
   assert.ok(!("inspection" in a2.data), "o registro não vai ao scorer");
 });
 
+await test("NAT-84: auditoria do pacote lê o relatório do coletor; v2 auditado, v1 legado sem reconstrução; scorer intocado", () => {
+  const dest = join(TMP, "pacote-v2-auditoria");
+  pacoteV2(dest);
+  const a2 = auditarPacote(dest);
+  assert.equal(a2.registro, "registrado");
+  assert.equal(a2.fonteDoRelatorio, "coletor");
+  assert.ok(a2.parcial.motivos.includes("limitacao:budget"));
+  const a1 = auditarPacote(PACOTE_V1);
+  assert.equal(a1.registro, "indisponivel");
+  assert.ok(a1.membros.every(m => m.destino === null));
+  assert.ok(!("inspection" in adaptarExecucao(lerPacote(dest)).data), "a auditoria não vai ao scorer");
+});
+
 await test("pacote: manifesto v1 com findings.v2, ou v2 sem declarar o registro, é recusado", () => {
   const d1 = join(TMP, "pacote-v1-com-v2");
   pacoteV2(d1, (m) => { m.contract = "artifact-manifest.v1"; delete m.inspectionStatus; m.schemaVersions = { ...m.schemaVersions as object, findings: "findings.v1" }; delete (m.schemaVersions as Record<string, unknown>).inspection; });
@@ -354,6 +368,21 @@ await test("summary.md: execução legada mostra “registro indisponível”", 
   const md = renderResumo(resumo);
   assert.match(md, /\| Registro de inspeção \| registro indisponível/);
   assert.doesNotMatch(md, /cobertura: 0/);
+});
+
+await test("NAT-84: a auditoria (texto, versão, contagens) fica fora do hash científico; o registro continua dentro", () => {
+  const dest = join(TMP, "pacote-v2-hash");
+  pacoteV2(dest);
+  const base = resumirInspecao(lerPacote(dest).findings, null);
+  const auditoria = { versao: "auditoria-inspecao-1.0.0", texto: "a", destinos: { accepted: 0, rejected: 0, uncertain: 0, "not-examined": 0, semRegistro: 0 },
+    naoRecebidos: 0, parcial: { parcial: false, motivos: [], candidatosRecebidos: 0, candidatosConhecidos: 0, candidatosConhecidosNaoRevisados: 0 }, sinalizadas: {} };
+  const resumo = (inspecao: unknown) => ({ formato: "f", fixture: true, analise: null, linhaDeBase: null, comparacao: null, versoes: null, revisaoSemantica: null,
+    execucoes: [{ runId: "r", links: {}, inspecao }] }) as unknown as Resumo;
+  const h = (x: unknown) => sha(JSON.stringify(conteudoCientifico(resumo(x))));
+  const h1 = h({ ...base, auditoria });
+  assert.equal(h({ ...base, auditoria: { ...auditoria, versao: "auditoria-inspecao-9.9.9", texto: "outro texto", naoRecebidos: 7, sinalizadas: { x: 1 } } }), h1);
+  assert.equal(h(base), h1, "sem auditoria = mesmo hash");
+  assert.notEqual(h({ ...base, texto: "registro diferente", auditoria }), h1, "o registro em si continua no hash");
 });
 
 rmSync(TMP, { recursive: true, force: true });

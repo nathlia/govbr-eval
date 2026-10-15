@@ -54,6 +54,8 @@
     "test:export-telas": "tsx scripts/test-export-telas.ts",
     "test:avaliar-tela": "tsx scripts/test-avaliar-tela.ts",
     "test:inspecao": "tsx scripts/test-inspecao.ts",
+    "auditar:inspecao": "tsx scripts/auditar-inspecao.ts",
+    "test:auditoria": "tsx scripts/test-auditoria-inspecao.ts",
     "runner:imagens": "tsx runner/build-images.ts",
     "run-once": "tsx runner/run-once.ts",
     "test:runner": "tsx scripts/test-runner.ts",

@@ -1,0 +1,516 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/inspection-audit.v1.schema.json",
+  "title": "inspection-audit.v1 — destino de cada candidato de ferramenta e auditoria final (NAT-84)",
+  "description": "Escrito pelo HARNESS (scripts/inspection-audit.ts) depois da coleta, a partir do relatório que o COLETOR gravou (nunca de save_report), dos eventos das pontes e dos payloads integrais conferidos. Lista cada candidato equivalente (cópias do mesmo achado em reescaneamentos reunidas pela identidade ou pela posição na família) que a ferramenta de validação entregou ao agente (cada membro de cada família; cada item de página plana nas versões sem família) com o destino que o registro de inspeção do agente lhe dá, e as verificações de consistência. É relatório de processo: não entra na pontuação, na elegibilidade nem em exclusão (`efeito`). Os três campos de D-122 ficam separados: `acceptedByAgent` (deste livro), `ruleApplicable` e `confirmedByGate` (do oráculo). Regras entre campos (contagens, destino nulo só sem registro, nada sinalizável fora das verificações) estão em contracts/index.ts (inspectionAuditErrors).",
+  "type": "object",
+  "required": [
+    "contract",
+    "fixture",
+    "campaignId",
+    "runId",
+    "producedBy",
+    "auditVersion",
+    "efeito",
+    "fonteDoRelatorio",
+    "registro",
+    "texto",
+    "oraculo",
+    "destinos",
+    "membros",
+    "verificacoes",
+    "parcial"
+  ],
+  "properties": {
+    "contract": {
+      "const": "inspection-audit.v1"
+    },
+    "fixture": {
+      "type": "boolean"
+    },
+    "campaignId": {
+      "$ref": "common.v1.schema.json#/$defs/id"
+    },
+    "runId": {
+      "$ref": "common.v1.schema.json#/$defs/id"
+    },
+    "producedBy": {
+      "const": "harness"
+    },
+    "auditVersion": {
+      "type": "string",
+      "pattern": "^auditoria-inspecao-\\d+\\.\\d+\\.\\d+$"
+    },
+    "efeito": {
+      "const": "relatorio-de-processo: nao entra na pontuacao, na elegibilidade nem em exclusao"
+    },
+    "fonteDoRelatorio": {
+      "description": "O relatório auditado é o que o coletor gravou (findings.json).",
+      "const": "coletor"
+    },
+    "registro": {
+      "enum": [
+        "registrado",
+        "nao-enviado",
+        "invalido",
+        "indisponivel",
+        "sem-submissao"
+      ]
+    },
+    "texto": {
+      "type": "string",
+      "minLength": 1
+    },
+    "oraculo": {
+      "type": "object",
+      "required": [
+        "respostas",
+        "respostasNaoLegiveis",
+        "chamadasSaveReport",
+        "familias",
+        "lotes",
+        "naoRecebidos"
+      ],
+      "properties": {
+        "respostas": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "respostasNaoLegiveis": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "chamadasSaveReport": {
+          "description": "Informativo: o relatório vem do coletor; save_report não faz parte do perfil de avaliação.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "familias": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "familyId",
+              "scanIds",
+              "contagem",
+              "recebidos",
+              "naoRecebidos"
+            ],
+            "properties": {
+              "familyId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scanIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "contagem": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "recebidos": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "naoRecebidos": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "lotes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "scanIds",
+              "stateFingerprint",
+              "visao",
+              "totalAchados",
+              "naoRecebidos"
+            ],
+            "properties": {
+              "scanIds": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "stateFingerprint": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "visao": {
+                "enum": [
+                  "familias",
+                  "achados"
+                ]
+              },
+              "totalAchados": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "naoRecebidos": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "naoRecebidos": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "destinos": {
+      "type": "object",
+      "required": [
+        "accepted",
+        "rejected",
+        "uncertain",
+        "not-examined",
+        "semRegistro"
+      ],
+      "properties": {
+        "accepted": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rejected": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "uncertain": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "not-examined": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "semRegistro": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "membros": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/membro"
+      }
+    },
+    "verificacoes": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "$ref": "#/$defs/verificacao"
+      }
+    },
+    "parcial": {
+      "type": "object",
+      "required": [
+        "parcial",
+        "motivos",
+        "candidatosRecebidos",
+        "candidatosConhecidos",
+        "candidatosConhecidosNaoRevisados"
+      ],
+      "properties": {
+        "parcial": {
+          "type": "boolean"
+        },
+        "motivos": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "candidatosRecebidos": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "candidatosConhecidos": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "candidatosConhecidosNaoRevisados": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "membro": {
+      "type": "object",
+      "required": [
+        "memberId",
+        "memberIds",
+        "familyId",
+        "identity",
+        "equivalencia",
+        "scanIds",
+        "destino",
+        "base",
+        "conflito",
+        "candidatos",
+        "achados",
+        "motivo",
+        "evidencia",
+        "acceptedByAgent",
+        "ruleApplicable",
+        "confirmedByGate",
+        "gateVerdict"
+      ],
+      "properties": {
+        "memberId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "memberIds": {
+          "description": "Ids de todas as cópias equivalentes (o mesmo achado em reescaneamentos tem id novo por lote).",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "familyId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "identity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "equivalencia": {
+          "description": "Como as cópias foram reunidas: identidade do achado (página de membros), posição na família (mesma chave de conteúdo e estado) ou o próprio id (página plana).",
+          "enum": [
+            "identidade",
+            "posicao-na-familia",
+            "id"
+          ]
+        },
+        "scanIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "destino": {
+          "description": "null só quando não há registro válido (legado, ausente, inválido): nada é reconstruído.",
+          "enum": [
+            "accepted",
+            "rejected",
+            "uncertain",
+            "not-examined",
+            null
+          ]
+        },
+        "base": {
+          "enum": [
+            "candidato-membro",
+            "candidato-familia",
+            "achado",
+            "nenhum",
+            "sem-registro"
+          ]
+        },
+        "conflito": {
+          "type": "boolean"
+        },
+        "candidatos": {
+          "description": "Ids dos candidatos do registro que deram o destino.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "achados": {
+          "description": "Índices em report.findings dos achados finais ligados ao membro.",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "motivo": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidencia": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "acceptedByAgent": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "ruleApplicable": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "confirmedByGate": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "gateVerdict": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "destino": {
+                "const": null
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "base": {
+                "const": "sem-registro"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "destino": {
+                "const": "not-examined"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "base": {
+                "const": "nenhum"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "verificacao": {
+      "type": "object",
+      "required": [
+        "id",
+        "escopo",
+        "descricao",
+        "aplica",
+        "ocorrencias",
+        "exemplos"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "regiao-nao-percorrida",
+            "reproducao-nao-comprovada",
+            "candidato-sem-destino",
+            "aceito-sem-achado",
+            "evidencia-nao-resolvida",
+            "cursor-nao-consumido",
+            "resposta-nao-legivel",
+            "destino-contraditorio"
+          ]
+        },
+        "escopo": {
+          "description": "`oraculo`: só existe onde houve ferramenta de validação; no braço sem sai `aplica: false`, sem exigência.",
+          "enum": [
+            "ambos",
+            "oraculo"
+          ]
+        },
+        "descricao": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aplica": {
+          "type": "boolean"
+        },
+        "motivoNaoAplica": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ocorrencias": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "exemplos": {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "aplica": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "motivoNaoAplica"
+            ],
+            "properties": {
+              "ocorrencias": {
+                "const": 0
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

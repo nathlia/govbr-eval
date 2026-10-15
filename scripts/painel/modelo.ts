@@ -816,7 +816,7 @@ export function vistaExecucao(arquivo: string, chave: string): VistaExecucao | n
     tecnico.push(T("Achados enviados", ex.achados?.total ?? null, ex.achados ? (ex.achados.total === 0 ? "0 — lista vazia aceita" : String(ex.achados.total)) : "nenhuma submissão aceita", f("achados.total")));
     tecnico.push(T("Pontuação", ex.pontuacao.estado, seloPontuacao(ex.pontuacao.estado).texto + (ex.pontuacao.motivo ? ` — ${ex.pontuacao.motivo}` : ""), f("pontuacao.estado")));
     // NAT-81: só o texto do resumo; nenhum número de registro vira nota, nem conta como cobertura da página.
-    tecnico.push(T("Registro de inspeção", ex.inspecao?.estado ?? null, ex.inspecao?.texto ?? "registro indisponível (resumo anterior ao registro de inspeção)", f("inspecao")));
+    tecnico.push(T("Registro de inspeção", ex.inspecao?.estado ?? null, (ex.inspecao?.texto ?? "registro indisponível (resumo anterior ao registro de inspeção)") + (ex.inspecao?.auditoria ? ` Auditoria (processo, não pontua): ${ex.inspecao.auditoria.texto}` : ""), f("inspecao")));
     for (const [k, rot] of USO_ROTULO) {
       const m = ex.custoTempo[k];
       custo.push(T(rot, m.valor, m.estado === "medido" ? `${m.valor}` : m.estado === "indisponivel" ? "desconhecido" : "não se aplica", f(`custoTempo.${k}`)));

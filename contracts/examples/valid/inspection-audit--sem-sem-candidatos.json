@@ -1,0 +1,105 @@
+{
+  "contract": "inspection-audit.v1",
+  "fixture": true,
+  "campaignId": "fixture-campanha-01",
+  "runId": "fixture-run-sem-01",
+  "producedBy": "harness",
+  "auditVersion": "auditoria-inspecao-1.0.0",
+  "efeito": "relatorio-de-processo: nao entra na pontuacao, na elegibilidade nem em exclusao",
+  "fonteDoRelatorio": "coletor",
+  "registro": "registrado",
+  "texto": "registro registrado; 0 candidato(s) de ferramenta recebido(s); auditoria: nada sinalizado. Relatório de processo: não pontua nem exclui.",
+  "oraculo": {
+    "respostas": 0,
+    "respostasNaoLegiveis": 0,
+    "chamadasSaveReport": 0,
+    "familias": [],
+    "lotes": [],
+    "naoRecebidos": 0
+  },
+  "destinos": {
+    "accepted": 0,
+    "rejected": 0,
+    "uncertain": 0,
+    "not-examined": 0,
+    "semRegistro": 0
+  },
+  "membros": [],
+  "verificacoes": [
+    {
+      "id": "regiao-nao-percorrida",
+      "escopo": "ambos",
+      "descricao": "região que o próprio agente declarou e não percorreu inteira (status partial/not-inspected)",
+      "aplica": true,
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "reproducao-nao-comprovada",
+      "escopo": "ambos",
+      "descricao": "estado com receita além do carregamento cuja chegada não foi comprovada por evento de ferramenta — limitação de estado, não erro",
+      "aplica": true,
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "candidato-sem-destino",
+      "escopo": "oraculo",
+      "descricao": "candidato entregue pela ferramenta de validação sem decisão do agente (nem por membro, nem pela família, nem por achado)",
+      "aplica": false,
+      "motivoNaoAplica": "nenhum candidato de ferramenta de validação recebido neste pacote",
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "aceito-sem-achado",
+      "escopo": "ambos",
+      "descricao": "aceito sem achado enviado que o carregue",
+      "aplica": true,
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "evidencia-nao-resolvida",
+      "escopo": "ambos",
+      "descricao": "identificador citado no registro que não aparece em nenhuma chamada sem erro (não encontrado, ou não verificável por corte)",
+      "aplica": true,
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "cursor-nao-consumido",
+      "escopo": "oraculo",
+      "descricao": "a ferramenta anunciou mais candidatos do que o agente chegou a receber (cursor de membros ou de página não percorrido)",
+      "aplica": false,
+      "motivoNaoAplica": "nenhum candidato de ferramenta de validação recebido neste pacote",
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "resposta-nao-legivel",
+      "escopo": "oraculo",
+      "descricao": "resposta da ferramenta de validação que não pôde ser lida inteira (projeção cortada sem payload integral): os candidatos dela são desconhecidos",
+      "aplica": false,
+      "motivoNaoAplica": "nenhum candidato de ferramenta de validação recebido neste pacote",
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "destino-contraditorio",
+      "escopo": "oraculo",
+      "descricao": "o mesmo candidato recebeu decisões diferentes no mesmo nível do registro",
+      "aplica": false,
+      "motivoNaoAplica": "nenhum candidato de ferramenta de validação recebido neste pacote",
+      "ocorrencias": 0,
+      "exemplos": []
+    }
+  ],
+  "parcial": {
+    "parcial": false,
+    "motivos": [],
+    "candidatosRecebidos": 0,
+    "candidatosConhecidos": 0,
+    "candidatosConhecidosNaoRevisados": 0
+  }
+}

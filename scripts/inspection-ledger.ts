@@ -66,13 +66,25 @@ export interface ResumoInspecao {
     referencias: { citadas: number; comprovadas: number | null; naoVerificaveis: number | null; naoEncontradas: number | null };
     limite: string;
   } | null;
+  /**
+   * NAT-84: resumo da auditoria final (scripts/inspection-audit.ts), preenchido pelo leitor do pacote
+   * (analisar). Relatório de processo; não pontua nem exclui.
+   */
+  auditoria?: {
+    versao: string;
+    texto: string;
+    destinos: Record<"accepted" | "rejected" | "uncertain" | "not-examined" | "semRegistro", number>;
+    naoRecebidos: number;
+    parcial: { parcial: boolean; motivos: string[]; candidatosRecebidos: number; candidatosConhecidos: number; candidatosConhecidosNaoRevisados: number };
+    sinalizadas: Record<string, number>;
+  };
 }
 
 /** Lado de um evento como a ponte grava: `{ text, truncated }`. Texto puro também é lido, por robustez. */
-type Lado = { text?: unknown; truncated?: unknown; payload?: { status?: unknown; path?: unknown } | null } | string | undefined | null;
-interface ToolEvent { kind?: string; isError?: boolean; args?: Lado; result?: Lado }
+export type Lado = { text?: unknown; truncated?: unknown; payload?: { status?: unknown; path?: unknown } | null } | string | undefined | null;
+export interface ToolEvent { kind?: string; isError?: boolean; server?: string; tool?: string; seq?: number; args?: Lado; result?: Lado }
 /** `payloads` = textos já conferidos (path → texto). Sem payload conferido, vale a projeção do evento. */
-const lado = (x: Lado, payloads?: ReadonlyMap<string, string>): { text: string; truncated: boolean } => {
+export const lado = (x: Lado, payloads?: ReadonlyMap<string, string>): { text: string; truncated: boolean } => {
   if (typeof x === "string") return { text: x, truncated: false };
   if (!x || typeof x !== "object") return { text: "", truncated: false };
   const p = x.payload;
@@ -82,15 +94,30 @@ const lado = (x: Lado, payloads?: ReadonlyMap<string, string>): { text: string; 
 };
 const escapar = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /** O identificador como token inteiro: nada de letra, dígito, `_` ou `-` colado antes ou depois. */
-const token = (ref: string): RegExp => new RegExp(`(?<![A-Za-z0-9_-])${escapar(ref)}(?![A-Za-z0-9_-])`);
+export const token = (ref: string): RegExp => new RegExp(`(?<![A-Za-z0-9_-])${escapar(ref)}(?![A-Za-z0-9_-])`);
 
-function eventos(text: string | null): ToolEvent[] | null {
+export function eventos(text: string | null): ToolEvent[] | null {
   if (text === null) return null;
   const out: ToolEvent[] = [];
   for (const line of text.split(/\r?\n/).filter(l => l.trim())) {
     try { out.push(JSON.parse(line) as ToolEvent); } catch { return null; }
   }
   return out;
+}
+
+/**
+ * A regra de comprovação acima, isolada para a auditoria final (NAT-84, scripts/inspection-audit.ts): um
+ * identificador é `comprovado` quando aparece como token inteiro no texto de entrada ou de resultado de uma
+ * chamada sem erro; senão `nao-verificavel` se algum lado lido ficou cortado, `nao-encontrado` se não.
+ */
+export function verificadorDeReferencias(evs: ToolEvent[], payloads?: ReadonlyMap<string, string>): (ref: string) => Verificacao {
+  const lados = evs.filter(e => e.kind === "call" && e.isError !== true).flatMap(e => [lado(e.args, payloads), lado(e.result, payloads)]);
+  const algumCortado = lados.some(x => x.truncated);
+  return (ref: string): Verificacao => {
+    const r = ref.trim();
+    if (r && lados.some(x => token(r).test(x.text))) return "comprovado";
+    return algumCortado ? "nao-verificavel" : "nao-encontrado";
+  };
 }
 
 const contar = <T extends string>(xs: T[]): Record<string, number> => xs.reduce<Record<string, number>>((a, x) => ({ ...a, [x]: (a[x] ?? 0) + 1 }), {});
@@ -140,13 +167,7 @@ export function resumirInspecao(findings: AnyFindings | null, toolEvents: string
     comprovacao = { estado: "sem-eventos", fonte: toolEvents === null ? "sem tool-events no pacote" : "tool-events.ndjson em formato não reconhecido",
       chegadasComprovadas: null, chegadas: null, referencias: { citadas: 0, comprovadas: null, naoVerificaveis: null, naoEncontradas: null }, limite: LIMITE };
   } else {
-    const lados = evs.filter(e => e.kind === "call" && e.isError !== true).flatMap(e => [lado(e.args, payloads), lado(e.result, payloads)]);
-    const algumCortado = lados.some(x => x.truncated);
-    const verificar = (ref: string): Verificacao => {
-      const r = ref.trim();
-      if (r && lados.some(x => token(r).test(x.text))) return "comprovado";
-      return algumCortado ? "nao-verificavel" : "nao-encontrado";
-    };
+    const verificar = verificadorDeReferencias(evs, payloads);
     const chegadas: Record<Verificacao, string[]> = { comprovado: [], "nao-verificavel": [], "nao-encontrado": [] };
     for (const s of l.states.filter(x => x.arrival.status === "confirmed")) chegadas[verificar(s.arrival.originRef ?? "")].push(s.id);
     const refs = [...new Set([

@@ -64,6 +64,8 @@ const EXPECTED: Record<string, { path: string; keyword: string; missingProperty?
   "findings--v2-recipe-not-from-load.json": { path: "/report/inspection/states/1/recipe/0/action", keyword: "x-recipe-from-load" },
   "artifact-manifest--v1-declares-findings-v2.json": { path: "/schemaVersions/findings", keyword: "const" },
   "artifact-manifest--v1-tool-payload-role.json": { path: "/files/6/role", keyword: "enum" },
+  // NAT-84 — auditoria final: nada sinalizável fica fora das verificações
+  "inspection-audit--cursor-hidden.json": { path: "/verificacoes/5/ocorrencias", keyword: "x-audit-unflagged" },
 };
 
 const show = (errors: ContractError[]): string => errors.map(e => `${e.path || "/"} ${e.keyword}${e.missingProperty ? `(${e.missingProperty})` : ""}`).join("; ");

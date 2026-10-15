@@ -1,0 +1,801 @@
+{
+  "contract": "inspection-audit.v1",
+  "fixture": true,
+  "campaignId": "fixture-campanha-01",
+  "runId": "fixture-run-com-01",
+  "producedBy": "harness",
+  "auditVersion": "auditoria-inspecao-1.0.0",
+  "efeito": "relatorio-de-processo: nao entra na pontuacao, na elegibilidade nem em exclusao",
+  "fonteDoRelatorio": "coletor",
+  "registro": "registrado",
+  "texto": "registro registrado; 25 candidato(s) de ferramenta recebido(s) — aceitos 25, rejeitados 0, incertos 0, não examinados 0; 15 anunciado(s) e não recebido(s); auditoria: aceito-sem-achado 1, cursor-nao-consumido 1 · parcial (candidatos-nao-recebidos; 15 conhecido(s) não revisado(s)). Relatório de processo: não pontua nem exclui.",
+  "oraculo": {
+    "respostas": 1,
+    "respostasNaoLegiveis": 0,
+    "chamadasSaveReport": 0,
+    "familias": [
+      {
+        "familyId": "FAM-0123456789ab",
+        "scanIds": [
+          "S-page-001"
+        ],
+        "contagem": 40,
+        "recebidos": 25,
+        "naoRecebidos": 15
+      }
+    ],
+    "lotes": [
+      {
+        "scanIds": [
+          "S-page-001"
+        ],
+        "stateFingerprint": "fp-fixture",
+        "visao": "familias",
+        "totalAchados": 40,
+        "naoRecebidos": 0
+      }
+    ],
+    "naoRecebidos": 15
+  },
+  "destinos": {
+    "accepted": 25,
+    "rejected": 0,
+    "uncertain": 0,
+    "not-examined": 0,
+    "semRegistro": 0
+  },
+  "membros": [
+    {
+      "memberId": "ds-token-dia-01",
+      "memberIds": [
+        "ds-token-dia-01"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-02",
+      "memberIds": [
+        "ds-token-dia-02"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-03",
+      "memberIds": [
+        "ds-token-dia-03"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-04",
+      "memberIds": [
+        "ds-token-dia-04"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-05",
+      "memberIds": [
+        "ds-token-dia-05"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-06",
+      "memberIds": [
+        "ds-token-dia-06"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-07",
+      "memberIds": [
+        "ds-token-dia-07"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-08",
+      "memberIds": [
+        "ds-token-dia-08"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-09",
+      "memberIds": [
+        "ds-token-dia-09"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-10",
+      "memberIds": [
+        "ds-token-dia-10"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-11",
+      "memberIds": [
+        "ds-token-dia-11"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-12",
+      "memberIds": [
+        "ds-token-dia-12"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-13",
+      "memberIds": [
+        "ds-token-dia-13"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-14",
+      "memberIds": [
+        "ds-token-dia-14"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-15",
+      "memberIds": [
+        "ds-token-dia-15"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-16",
+      "memberIds": [
+        "ds-token-dia-16"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-17",
+      "memberIds": [
+        "ds-token-dia-17"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-18",
+      "memberIds": [
+        "ds-token-dia-18"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-19",
+      "memberIds": [
+        "ds-token-dia-19"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-20",
+      "memberIds": [
+        "ds-token-dia-20"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-21",
+      "memberIds": [
+        "ds-token-dia-21"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-22",
+      "memberIds": [
+        "ds-token-dia-22"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-23",
+      "memberIds": [
+        "ds-token-dia-23"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-24",
+      "memberIds": [
+        "ds-token-dia-24"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    },
+    {
+      "memberId": "ds-token-dia-25",
+      "memberIds": [
+        "ds-token-dia-25"
+      ],
+      "familyId": "FAM-0123456789ab",
+      "identity": null,
+      "equivalencia": "posicao-na-familia",
+      "scanIds": [
+        "S-page-001"
+      ],
+      "acceptedByAgent": true,
+      "ruleApplicable": null,
+      "confirmedByGate": null,
+      "gateVerdict": null,
+      "destino": "accepted",
+      "base": "candidato-familia",
+      "conflito": false,
+      "candidatos": [
+        "c1"
+      ],
+      "achados": [],
+      "motivo": null,
+      "evidencia": [
+        "FAM-0123456789ab"
+      ]
+    }
+  ],
+  "verificacoes": [
+    {
+      "id": "regiao-nao-percorrida",
+      "escopo": "ambos",
+      "descricao": "região que o próprio agente declarou e não percorreu inteira (status partial/not-inspected)",
+      "aplica": true,
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "reproducao-nao-comprovada",
+      "escopo": "ambos",
+      "descricao": "estado com receita além do carregamento cuja chegada não foi comprovada por evento de ferramenta — limitação de estado, não erro",
+      "aplica": true,
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "candidato-sem-destino",
+      "escopo": "oraculo",
+      "descricao": "candidato entregue pela ferramenta de validação sem decisão do agente (nem por membro, nem pela família, nem por achado)",
+      "aplica": true,
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "aceito-sem-achado",
+      "escopo": "ambos",
+      "descricao": "aceito sem achado enviado que o carregue",
+      "aplica": true,
+      "ocorrencias": 1,
+      "exemplos": [
+        "candidato c1 (25 membro(s): ds-token-dia-01, ds-token-dia-02, ds-token-dia-03, …)"
+      ]
+    },
+    {
+      "id": "evidencia-nao-resolvida",
+      "escopo": "ambos",
+      "descricao": "identificador citado no registro que não aparece em nenhuma chamada sem erro (não encontrado, ou não verificável por corte)",
+      "aplica": true,
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "cursor-nao-consumido",
+      "escopo": "oraculo",
+      "descricao": "a ferramenta anunciou mais candidatos do que o agente chegou a receber (cursor de membros ou de página não percorrido)",
+      "aplica": true,
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "resposta-nao-legivel",
+      "escopo": "oraculo",
+      "descricao": "resposta da ferramenta de validação que não pôde ser lida inteira (projeção cortada sem payload integral): os candidatos dela são desconhecidos",
+      "aplica": true,
+      "ocorrencias": 0,
+      "exemplos": []
+    },
+    {
+      "id": "destino-contraditorio",
+      "escopo": "oraculo",
+      "descricao": "o mesmo candidato recebeu decisões diferentes no mesmo nível do registro",
+      "aplica": true,
+      "ocorrencias": 0,
+      "exemplos": []
+    }
+  ],
+  "parcial": {
+    "parcial": true,
+    "motivos": [
+      "candidatos-nao-recebidos"
+    ],
+    "candidatosRecebidos": 25,
+    "candidatosConhecidos": 40,
+    "candidatosConhecidosNaoRevisados": 15
+  }
+}

@@ -90,9 +90,13 @@ afirme ter coberto o que não chegou a descobrir. Ids são curtos e únicos em c
   `not-reached` com `reason`.
 - `items`: `state`, `region` quando houver, `subject`, `check`, `status` (`completed`, `failed`,
   `not-available` ou `omitted`, com `reason` fora de `completed`) e `evidence`.
-- `candidates`: `state`, `origin`, `subject`, `observation`, `decision` (`accepted`, `rejected` ou
+- `candidates`: `state`, `origin` (com `originRef` quando `validation-tool`: o identificador que a
+  ferramenta devolveu), `subject`, `observation`, `decision` (`accepted`, `rejected` ou
   `uncertain`, os dois últimos com `reason`), `evidence` e `findings`: as posições, a partir de 0,
-  dos achados enviados que o candidato originou; obrigatório quando `accepted`.
+  dos achados enviados que o candidato originou; obrigatório quando `accepted`. Quando uma
+  ferramenta agrupar candidatos idênticos, um candidato com o identificador do grupo vale para cada
+  membro recebido; um membro com decisão diferente ganha candidato próprio, com o identificador
+  dele. Membros anunciados e não recebidos entram em `limitations`.
 - `limitations`: `kind` (`budget`, `tool-failure`, `unreachable`, `truncated`, `out-of-scope` ou
   `other`) e `detail`.
 

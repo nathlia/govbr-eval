@@ -33,6 +33,7 @@ import {
   type AnalysisBinding, type AnalysisMetrics, type AnyArtifactManifest, type AnyFindings, type ArtifactManifest, type Baseline, type BaselineBinding, type Campaign,
   type Isolation, type Location, type Run, type ContractName, type ScoreStatus, type SnapshotManifest,
 } from "../contracts/index";
+import { auditarInspecao } from "./inspection-audit";
 import { resumirInspecao, type ResumoInspecao } from "./inspection-ledger";
 import { verifyToolPayloads } from "./tool-payloads";
 import type { FlowAgentResults, FlowGroundTruth, RunConfig } from "../types";
@@ -893,8 +894,21 @@ function execucaoResumo(p: PacoteLido, saida: string, b: AnalysisBinding, s: Sem
       recusa: link(run.submission.refusal?.archivedBody ?? null) },
     binding: `analysis-binding.${run.arm}.json`,
     elegibilidade: { elegivel: inelegibilidade.length === 0, motivos: inelegibilidade },
-    inspecao: resumirInspecao(findings, p.toolEvents, p.toolPayloads),
+    inspecao: comAuditoria(resumirInspecao(findings, p.toolEvents, p.toolPayloads), p, findings),
   };
+}
+
+/**
+ * NAT-84: a auditoria final (scripts/inspection-audit.ts) entra no resumo do registro como texto e contagens.
+ * Só pacotes com registro (findings.v2); legado fica como estava (`indisponivel`, sem auditoria). Não pontua.
+ */
+function comAuditoria(resumo: ResumoInspecao, p: PacoteLido, findings: AnyFindings | null): ResumoInspecao {
+  if (resumo.estado === "indisponivel") return resumo;
+  const a = auditarInspecao({ campaignId: p.run.campaignId, runId: p.run.runId, fixture: p.run.fixture, findings,
+    toolEvents: p.toolEvents, payloads: p.toolPayloads, falha: p.run.failure });
+  return { ...resumo,
+    auditoria: { versao: a.auditVersion, texto: a.texto, destinos: a.destinos, naoRecebidos: a.oraculo.naoRecebidos, parcial: a.parcial,
+      sinalizadas: Object.fromEntries(a.verificacoes.filter(v => v.aplica && v.ocorrencias > 0).map(v => [v.id, v.ocorrencias])) } };
 }
 
 function compararPar(exec: ExecucaoResumo[], prep: PacotePreparado | null, unidades: Map<string, UnidadeResumo>, bloqueada: string | null): ComparacaoResumo {
@@ -937,7 +951,12 @@ export function conteudoCientifico(r: Omit<Resumo, "hashes"> | Resumo): unknown 
     revisaoSemantica: r.revisaoSemantica,
     // NAT-81: registro indisponível (pacote v1) não entra no hash — re-análises de pacotes históricos
     // mantêm o mesmo conteúdo científico; registro presente (ou não enviado) entra.
-    execucoes: r.execucoes.map(({ links: _l, inspecao, ...e }) => inspecao && inspecao.estado !== "indisponivel" ? { ...e, inspecao } : e),
+    // NAT-84: a auditoria final é relatório de processo (`efeito` constante) e fica fora do hash.
+    execucoes: r.execucoes.map(({ links: _l, inspecao, ...e }) => {
+      if (!inspecao || inspecao.estado === "indisponivel") return e;
+      const { auditoria: _a, ...registro } = inspecao;
+      return { ...e, inspecao: registro };
+    }),
   };
 }
 
@@ -1112,7 +1131,10 @@ export function renderResumo(r: Resumo): string {
   L.push(`| Checks negativos | ${col(e => e.mcpIsolamento.checks ? `${e.mcpIsolamento.checks.aprovados} aprovado(s); falhos: ${seguro(e.mcpIsolamento.checks.falhos.join("; ") || "nenhum", 300)}; não exercitados: ${seguro(e.mcpIsolamento.checks.naoExercitados.join(", ") || "nenhum", 200)}` : "sem isolation.json")} |`);
   L.push(`| Controles positivos | ${col(e => e.mcpIsolamento.controlesPositivos ? `${e.mcpIsolamento.controlesPositivos.aprovados} aprovado(s); falhos: ${seguro(e.mcpIsolamento.controlesPositivos.falhos.join(", ") || "nenhum")}` : "—")} |`);
   L.push(`| Limitações declaradas | ${col(e => seguro(e.mcpIsolamento.limitacoes.join("; ") || "nenhuma", 300))} |`);
-  L.push(`| Registro de inspeção | ${col(e => seguro(e.inspecao?.texto ?? "registro indisponível (resumo anterior ao registro)", 400))} |`, "");
+  L.push(`| Registro de inspeção | ${col(e => seguro(e.inspecao?.texto ?? "registro indisponível (resumo anterior ao registro)", 400))} |`);
+  // NAT-84: a linha só aparece quando alguma execução tem auditoria (resumos de pacotes v1 ficam iguais).
+  if (execs.some(e => e.inspecao?.auditoria)) L.push(`| Auditoria do registro (processo, não pontua) | ${col(e => seguro(e.inspecao?.auditoria?.texto ?? "—", 400))} |`);
+  L.push("");
   L.push("O registro de inspeção é declaração do agente sobre o inventário que ele mesmo descobriu; “com evento de ferramenta” só diz que o identificador citado aparece num evento gravado. Não pontua nem decide elegibilidade, e a cobertura da página continua desconhecida.", "");
   L.push("Contagem de chamadas não prova causa: o resumo mostra uso e resultado lado a lado, sem atribuir efeito.", "");
 

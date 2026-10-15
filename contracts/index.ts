@@ -28,7 +28,7 @@ export const SCHEMA_BASE = "https://govbr-eval.invalid/contracts/";
 
 export const CONTRACT_NAMES = [
   "campaign.v1", "run.v1", "findings.v1", "findings.v2", "isolation.v1", "artifact-manifest.v1", "artifact-manifest.v2",
-  "baseline.v1", "snapshot-manifest.v1", "analysis-binding.v1",
+  "baseline.v1", "snapshot-manifest.v1", "analysis-binding.v1", "inspection-audit.v1",
 ] as const;
 export type ContractName = typeof CONTRACT_NAMES[number];
 
@@ -170,6 +170,45 @@ export interface FindingsV2 extends Doc<"findings.v2"> {
   inspectionRaw?: unknown;
   report: Findings["report"] & { inspection?: InspectionLedger };
 }
+/**
+ * NAT-84 — auditoria final do registro de inspeção (inspection-audit.v1.schema.json). Escrita pelo HARNESS
+ * (scripts/inspection-audit.ts) a partir do relatório que o coletor gravou e dos eventos/payloads das pontes.
+ * Relatório de processo: não pontua, não decide elegibilidade, não exclui (`efeito` constante).
+ */
+export interface InspectionAuditMember {
+  /** Primeiro id recebido; `memberIds` = ids de todas as cópias equivalentes (reescaneamentos dão ids novos). */
+  memberId: string; memberIds: string[]; familyId: string | null; identity: string | null;
+  equivalencia: "identidade" | "posicao-na-familia" | "id"; scanIds: string[];
+  /** null = registro indisponível (legado, ausente ou inválido): nada é reconstruído. */
+  destino: "accepted" | "rejected" | "uncertain" | "not-examined" | null;
+  base: "candidato-membro" | "candidato-familia" | "achado" | "nenhum" | "sem-registro";
+  conflito: boolean; candidatos: string[]; achados: number[]; motivo: string | null; evidencia: string[];
+  /** Os três campos separados de D-122: decisão do agente (este livro), aplicabilidade e veredito do portão (oráculo). */
+  acceptedByAgent: boolean | null; ruleApplicable: string | null; confirmedByGate: boolean | null; gateVerdict: string | null;
+}
+export interface InspectionAuditCheck {
+  id: "regiao-nao-percorrida" | "reproducao-nao-comprovada" | "candidato-sem-destino" | "aceito-sem-achado" | "evidencia-nao-resolvida"
+    | "cursor-nao-consumido" | "resposta-nao-legivel" | "destino-contraditorio";
+  escopo: "ambos" | "oraculo"; descricao: string; aplica: boolean; motivoNaoAplica?: string; ocorrencias: number; exemplos: string[];
+}
+export interface InspectionAudit extends Doc<"inspection-audit.v1"> {
+  campaignId: string; runId: string; producedBy: "harness"; auditVersion: string;
+  efeito: "relatorio-de-processo: nao entra na pontuacao, na elegibilidade nem em exclusao";
+  fonteDoRelatorio: "coletor";
+  registro: "registrado" | "nao-enviado" | "invalido" | "indisponivel" | "sem-submissao";
+  texto: string;
+  oraculo: {
+    respostas: number; respostasNaoLegiveis: number; chamadasSaveReport: number;
+    familias: { familyId: string; scanIds: string[]; contagem: number; recebidos: number; naoRecebidos: number }[];
+    /** Lotes agrupados pelo estado (fingerprint); sem fingerprint, um grupo por lote. */
+    lotes: { scanIds: string[]; stateFingerprint: string | null; visao: "familias" | "achados"; totalAchados: number | null; naoRecebidos: number | null }[];
+    naoRecebidos: number;
+  };
+  destinos: { accepted: number; rejected: number; uncertain: number; "not-examined": number; semRegistro: number };
+  membros: InspectionAuditMember[];
+  verificacoes: InspectionAuditCheck[];
+  parcial: { parcial: boolean; motivos: string[]; candidatosRecebidos: number; candidatosConhecidos: number; candidatosConhecidosNaoRevisados: number };
+}
 /** Qualquer envelope de achados que os leitores aceitam (v1 histórico, v2 novo). */
 export type AnyFindings = Findings | FindingsV2;
 export const FINDINGS_CONTRACTS = ["findings.v1", "findings.v2"] as const;
@@ -243,7 +282,7 @@ export interface AnalysisBinding extends Doc<"analysis-binding.v1"> {
   status: "ready" | "blocked"; blockedReason: string | null; scoreStatus: ScoreStatus; metrics: AnalysisMetrics;
 }
 
-export type ContractDocument = Campaign | Run | Findings | FindingsV2 | Isolation | ArtifactManifest | ArtifactManifestV2 | Baseline | SnapshotManifest | AnalysisBinding;
+export type ContractDocument = Campaign | Run | Findings | FindingsV2 | Isolation | ArtifactManifest | ArtifactManifestV2 | Baseline | SnapshotManifest | AnalysisBinding | InspectionAudit;
 
 // ───────────────────────────────────────────────────────────────── validador
 
@@ -276,6 +315,50 @@ const fromAjv = (errors: ErrorObject[] | null | undefined): ContractError[] =>
 
 const isRecord = (v: unknown): v is Record<string, unknown> => Boolean(v) && typeof v === "object" && !Array.isArray(v);
 
+/**
+ * NAT-84 — regras da auditoria que o schema não expressa: as contagens batem com os membros, o destino só é
+ * nulo sem registro, a decisão do agente não se confunde com o portão, e nada sinalizável fica fora das
+ * verificações (nenhuma exclusão silenciosa).
+ */
+function inspectionAuditErrors(doc: InspectionAudit): ContractError[] {
+  const errors: ContractError[] = [];
+  const m = doc.membros;
+  const n = (d: InspectionAuditMember["destino"]) => m.filter(x => x.destino === d).length;
+  const tally = { accepted: n("accepted"), rejected: n("rejected"), uncertain: n("uncertain"), "not-examined": n("not-examined"), semRegistro: n(null) };
+  for (const [k, v] of Object.entries(tally) as [keyof typeof tally, number][]) {
+    if (doc.destinos[k] !== v) errors.push({ path: `/destinos/${k}`, keyword: "x-audit-count", message: `destinos.${k}=${doc.destinos[k]}, membros dizem ${v}` });
+  }
+  const comRegistro = doc.registro === "registrado";
+  m.forEach((x, i) => {
+    if ((x.destino === null) === comRegistro) {
+      errors.push({ path: `/membros/${i}/destino`, keyword: "x-audit-destino-registro", message: comRegistro ? "com registro, todo membro tem destino" : "sem registro, o destino não é reconstruído" });
+    }
+    const esperado = x.destino === "accepted" ? true : x.destino === "rejected" ? false : null;
+    if (x.acceptedByAgent !== esperado) errors.push({ path: `/membros/${i}/acceptedByAgent`, keyword: "x-audit-accepted-by-agent", message: "acceptedByAgent vem só do destino declarado pelo agente" });
+  });
+  const ocorr = (id: InspectionAuditCheck["id"]) => doc.verificacoes.find(v => v.id === id);
+  const exige = (id: InspectionAuditCheck["id"], minimo: number) => {
+    const v = ocorr(id);
+    const i = doc.verificacoes.findIndex(x => x.id === id);
+    if (minimo > 0 && (!v || !v.aplica || v.ocorrencias < minimo)) {
+      errors.push({ path: i < 0 ? "/verificacoes" : `/verificacoes/${i}/ocorrencias`, keyword: "x-audit-unflagged", message: `${id}: ${minimo} ocorrência(s) nos membros e não sinalizadas` });
+    }
+  };
+  if (comRegistro) {
+    exige("candidato-sem-destino", tally["not-examined"]);
+    exige("aceito-sem-achado", m.some(x => x.destino === "accepted" && x.achados.length === 0) ? 1 : 0);
+    exige("destino-contraditorio", m.filter(x => x.conflito).length);
+  }
+  exige("cursor-nao-consumido", doc.oraculo.familias.filter(f => f.naoRecebidos > 0).length);
+  const p = doc.parcial;
+  if (p.parcial !== p.motivos.length > 0) errors.push({ path: "/parcial/parcial", keyword: "x-audit-partial", message: "parcial só com motivo declarado" });
+  if (p.candidatosRecebidos !== m.length || p.candidatosConhecidos !== m.length + doc.oraculo.naoRecebidos ||
+      p.candidatosConhecidosNaoRevisados !== tally["not-examined"] + tally.semRegistro + doc.oraculo.naoRecebidos) {
+    errors.push({ path: "/parcial", keyword: "x-audit-partial", message: "contagem de candidatos conhecidos/não revisados não confere com membros e não recebidos" });
+  }
+  return errors;
+}
+
 /** Regras que o schema não expressa. Só rodam sobre documento já válido no schema. */
 function semanticErrors(doc: ContractDocument): ContractError[] {
   const errors: ContractError[] = [];
@@ -297,6 +380,9 @@ function semanticErrors(doc: ContractDocument): ContractError[] {
       break;
     case "snapshot-manifest.v1":
       duplicates(doc.items.map(i => i.id), i => `/items/${i}/id`, "id de item");
+      break;
+    case "inspection-audit.v1":
+      errors.push(...inspectionAuditErrors(doc));
       break;
     case "baseline.v1": {
       const pairs: [keyof Baseline["links"], keyof Baseline["identity"]][] = [
