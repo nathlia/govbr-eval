@@ -11,6 +11,8 @@ import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import type { AgentFinding, AgentResults, GroundTruth, RuleId } from "../types";
 import { ROOT, applyRecord, findingId, type AdjudicationIndex } from "./adjudication";
+import { FLOW_KB_ALIASES_FILE, LEGACY_KB_ALIASES_FILE } from "./instrument";
+import { expandWith, loadKbAliasVocabulary, type KbAliasVocabulary } from "./kb-aliases";
 
 export function loadJson<T>(relPath: string): T | null {
   const abs = join(ROOT, relPath);
@@ -23,7 +25,15 @@ if (!gt) {
   console.error("Missing ground-truth.json");
   process.exit(1);
 }
-const kbAliases = loadJson<{ _meta: unknown; aliases: Record<string, string[]> }>("kb-aliases.json");
+/**
+ * Vocabulários de aliases da KB (scripts/kb-aliases.ts). O PADRÃO de toda função abaixo é o legado
+ * congelado (kb-aliases.json): é o da pontuação por citação (TC-*, score:fluxo:legacy, adjudicação)
+ * e o de todas as campanhas arquivadas, que assim não mudam por construção. Quem prepara pelo
+ * scorer vigente passa `KB_ALIASES_VIGENTE` explicitamente (semantic-flow-cli, preparo-cenas,
+ * check-reference), e esse é o arquivo que vai para a identidade da análise.
+ */
+export const KB_ALIASES_LEGADO: KbAliasVocabulary = loadKbAliasVocabulary(ROOT, LEGACY_KB_ALIASES_FILE);
+export const KB_ALIASES_VIGENTE: KbAliasVocabulary = loadKbAliasVocabulary(ROOT, FLOW_KB_ALIASES_FILE);
 
 export const groundTruth = gt;
 export const cases = gt.cases;
@@ -43,13 +53,8 @@ export function normalizeRuleId(raw: string): RuleId {
  * matches a gabarito unit that lists the alias — and vice versa, because the
  * expansion is applied to expected units AND findings alike.
  */
-export function expandWithKbAliases(rules: RuleId[]): RuleId[] {
-  if (!kbAliases) return rules;
-  const out = new Set(rules);
-  for (const r of rules) {
-    for (const alias of kbAliases.aliases[r] ?? []) out.add(alias);
-  }
-  return [...out];
+export function expandWithKbAliases(rules: RuleId[], vocab: KbAliasVocabulary = KB_ALIASES_LEGADO): RuleId[] {
+  return expandWith(vocab, rules);
 }
 
 /** Parse normative rule ids out of a free-text finding (legacy string format). */
@@ -62,7 +67,8 @@ export function parseRulesFromText(text: string): RuleId[] {
     for (const m of t.matchAll(/\b([0-9]+\.[0-9]+\.[0-9]+)\b/g)) rules.add(`wcag:${m[1]}`);
   }
   // KB deterministic ids cited inline (e.g. "govbr-3.7.0-accessibility-button-efd2d9e7c3c6")
-  for (const m of t.matchAll(/\bgovbr-[0-9]+\.[0-9]+\.[0-9]+-[a-z-]+-[a-f0-9]{12}\b/g)) rules.add(m[0]);
+  // Sufixo -2/-3: ids literais distintos com o mesmo hash (KB 3.7.0-literal). Nenhum id da KB 3.7.0 o tem.
+  for (const m of t.matchAll(/\bgovbr-[0-9]+\.[0-9]+\.[0-9]+-[a-z-]+-[a-f0-9]{12}(?:-\d+)?\b/g)) rules.add(m[0]);
 
   // DS-specific rule heuristics (pt-BR + en signals)
   const dsContext = /token|paleta|ds gov|do ds|spec do/i.test(text);
@@ -77,14 +83,14 @@ export function parseRulesFromText(text: string): RuleId[] {
   return [...rules];
 }
 
-export function rulesOfFinding(f: AgentFinding): { rules: RuleId[]; description: string; structured: boolean } {
+export function rulesOfFinding(f: AgentFinding, vocab: KbAliasVocabulary = KB_ALIASES_LEGADO): { rules: RuleId[]; description: string; structured: boolean } {
   if (typeof f === "string") {
-    return { rules: expandWithKbAliases(parseRulesFromText(f)), description: f, structured: false };
+    return { rules: expandWithKbAliases(parseRulesFromText(f), vocab), description: f, structured: false };
   }
   const declared = normalizeRuleId(f.rule);
   // Also parse the description so aliases in the text still count
   const parsed = parseRulesFromText(f.description);
-  return { rules: expandWithKbAliases([...new Set([declared, ...parsed])]), description: f.description, structured: true };
+  return { rules: expandWithKbAliases([...new Set([declared, ...parsed])], vocab), description: f.description, structured: true };
 }
 
 // ── Expected units (element × rule) ──────────────────────────────────────────
@@ -120,8 +126,8 @@ export function expandWithCheckerGrounding(rules: RuleId[]): RuleId[] {
 }
 
 /** Regras de uma unidade ESPERADA: ponte do verificador (D-37), depois aliases da KB. */
-export function expandSpecRules(rules: string[]): RuleId[] {
-  return expandWithKbAliases(expandWithCheckerGrounding(rules.map(normalizeRuleId)));
+export function expandSpecRules(rules: string[], vocab: KbAliasVocabulary = KB_ALIASES_LEGADO): RuleId[] {
+  return expandWithKbAliases(expandWithCheckerGrounding(rules.map(normalizeRuleId)), vocab);
 }
 
 export interface ExpectedUnit {
@@ -206,7 +212,7 @@ export function scoreUnits(raw: AgentResults | null, adj?: AdjudicationIndex): U
   for (const [caseId, c] of Object.entries(cases)) {
     const verdict = raw.verdicts[caseId];
     const rawFindings = verdict?.detected ? verdict.violations_found : [];
-    const findings = rawFindings.map(rulesOfFinding);
+    const findings = rawFindings.map(f => rulesOfFinding(f));
     const used = new Set<number>();
     const units = expectedUnits.filter(u => u.caseId === caseId);
 

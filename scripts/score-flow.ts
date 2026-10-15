@@ -22,7 +22,8 @@ import {
   summarizeFlowFamilies,
   type FlowScore, type FlowUnit,
 } from "./units-flow";
-import { normalizeRuleId } from "./units";
+import { KB_ALIASES_LEGADO, normalizeRuleId } from "./units";
+import { rotuloDoVocabulario } from "./kb-aliases";
 import { FLOW_LEGACY_COLLECTION_VERSION } from "./instrument";
 
 const APP_URL = process.env.APP_URL ?? "http://localhost:3000";
@@ -306,7 +307,9 @@ async function main(): Promise<void> {
       `${c?.oracleProfile ?? (r.arm === "sem-oraculo" ? "none" : "perfil não rotulado")} | ` +
       `${c?.instrumentVersion ?? "instrumento legado/não rotulado"} | gabarito ${gabaritoVersion} | ` +
       `${c?.protocolVersion ?? "protocolo não versionado"} | ` +
-      `${c?.validatorVersion ?? (r.arm === "com-oraculo" ? "validator não versionado" : "sem validator")}`;
+      `${c?.validatorVersion ?? (r.arm === "com-oraculo" ? "validator não versionado" : "sem validator")} | ` +
+      // Vocabulário da KB aplicado ao casamento por regra (kb-aliases-2.0.0): sempre o legado congelado aqui.
+      `${rotuloDoVocabulario(KB_ALIASES_LEGADO)}`;
     if (!groups.has(key)) groups.set(key, []);
     groups.get(key)!.push(r);
   }

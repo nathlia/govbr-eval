@@ -14,6 +14,7 @@ import {
   buildFlowUnits, buildFlowUnitsAcross, measureStatePresence, selectorsOfGroundTruth, selectorsOfRuns,
   specMedidaNoEstado, statesOfGroundTruth, type FlowUnit,
 } from "./units-flow";
+import { KB_ALIASES_VIGENTE } from "./units";
 import { verifyArchivedEvidence } from "./evidence-integrity";
 import { renderReview } from "./semantic-flow-render";
 import {
@@ -176,7 +177,7 @@ async function prepararJanelaSegmentada(
     const id = sceneIdOf(janela.viewport);
     const medida = measureStatePresence(across);
     if (medida.defects.length) throw new Error(JSON.stringify({ scene: id, defects: medida.defects }));
-    const built = buildFlowUnitsAcross({ ...gt, violations: gt.violations.filter(v => specIds.includes(v.id)) }, across, medida.presence);
+    const built = buildFlowUnitsAcross({ ...gt, violations: gt.violations.filter(v => specIds.includes(v.id)) }, across, medida.presence, KB_ALIASES_VIGENTE);
     if (built.defects.length) throw new Error(JSON.stringify({ scene: id, defects: built.defects }));
     const desmentidas = built.units
       .map(u => ({ u, r: combinePredicate(aceitacao.get(u.specId) ?? []) }))
@@ -367,7 +368,7 @@ async function prepare(): Promise<void> {
         await preparePage(page, url, { waitFor: gt._meta.waitFor, setup: gt._meta.setup });
         resolution = { url, ...await resolveOnPage(page, selectors) };
       }
-      const built = buildFlowUnits({ ...gt, violations: gt.violations.filter(v => p.specIds.includes(v.id)) }, resolution, presence);
+      const built = buildFlowUnits({ ...gt, violations: gt.violations.filter(v => p.specIds.includes(v.id)) }, resolution, presence, KB_ALIASES_VIGENTE);
       if (built.defects.length) throw new Error(JSON.stringify({ scene: id, defects: built.defects }));
 
       // O predicado declarado tem de SUSTENTAR na página. Quando não sustenta, o gabarito está

@@ -36,8 +36,9 @@ import { explicarExcecao, recalcular, salvarDecisao, vistaFila } from "./painel/
 import { criarPainel, escutar } from "./painel/servidor";
 import { cartaoDoVinculo, digest, type SemanticPackage } from "./semantic-flow";
 
-// NAT-72 (flow-semantic-1.6.0): semantic-flow.ts, instrument.ts e instrument.json mudaram de propósito; antes 7ceb07e3…d146 (1.5.0).
-const SCORER_SHA = "0006158ce721502c60cc520aa262bde8a1314aa8a4d8c12d0fafde474079e4fd";
+// flow-semantic-1.7.0 (kb-aliases-2.0.0): instrument.*, units*.ts, semantic-flow.ts e os dois arquivos de aliases mudaram/entraram
+// de propósito; antes 0006158c…e4fd (1.6.0, NAT-72) e 7ceb07e3…d146 (1.5.0). Muda de novo se kb-aliases-v2.json for regenerado.
+const SCORER_SHA = "82c9b2ef8d0e8775e2258faa5eb9e983fe7e980a1210a2d4307dba3d217ac84c";
 const manter = process.argv.includes("--manter");
 const TMP = mkdtempSync(join(tmpdir(), "painel-teste-"));
 const resultados: { nome: string; ok: boolean }[] = [];
@@ -1035,7 +1036,9 @@ await teste("NAT-72: fila cega oferece as outras unidades da cena; API grava par
   const pkg = JSON.parse(readFileSync(join(arquivoNat72, revDir("par-02", "rev-001"), "revisao", "package.json"), "utf8")) as SemanticPackage;
   const unidade = (spec: string) => pkg.units.find(u => u.specId === spec)!;
   // Card about <p>: correct claim with no candidate. The other units of the scene are searchable, not credited.
-  const p = pkg.cards.find(c => c.origin === "agente" && c.candidateUnitIds.length === 0)!;
+  // Escolhido pelo sujeito, não pela posição: os ids dos cartões são hashes (mudam com o scorer), e o cartão
+  // do <h1> fica para o teste da página abaixo — decidido aqui, ele sairia da fila visível.
+  const p = pkg.cards.find(c => c.origin === "agente" && c.candidateUnitIds.length === 0 && !/h1/.test(c.subjects[0].key ?? ""))!;
   const vp = f0.cartoes.find(c => c.id === p.id)!;
   assert.equal(vp.aceitaVinculo, true);
   assert.deepEqual(vp.unidadesDaCena.map(u => u.specId).sort(), pkg.units.map(u => u.specId).sort());
@@ -1098,7 +1101,8 @@ await teste("NAT-72: fila cega oferece as outras unidades da cena; API grava par
   assert.deepEqual(d2.decisions.find((d: any) => d.cardId === campo.id).atoms.map((a: any) => [a.id, a.subjects, a.decisao]),
     [["a1", [sujeito], "defeito-do-gabarito"], ["a2", [sujeito], "incorreta"]]);
   const f2 = vistaFila(arquivoNat72, C, "par-02")!;
-  assert.deepEqual(f2.cartoes.find(c => c.id === campo.id)!.decisao.partes.map(x => [x.decisao, x.unidades]), [["defeito-do-gabarito", ["FX-01"]], ["incorreta", []]]);
+  assert.deepEqual(f2.cartoes.find(c => c.id === campo.id)!.decisao.partes.map(x => [x.decisao, x.unidades]), // A spec vem da unidade escolhida acima (o primeiro cartão de 1 candidata depende da ordem dos ids-hash).
+    [["defeito-do-gabarito", [pkg.units.find(u => u.id === fx01)!.specId]], ["incorreta", []]]);
   assert.deepEqual(f2.cartoes.find(c => c.id === p.id)!.decisao.partes[0].vinculos, ["participante-relacionado"]);
   // The page offers the decomposition and the link form.
   const html = (await req(`/revisao/${C}/par-02`)).corpo.toString("utf8");

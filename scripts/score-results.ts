@@ -22,9 +22,10 @@ import { join } from "path";
 import type { AgentResults, AxeResults, EslintResults, OrganicGroundTruth, ToolKey } from "../types";
 import { ROOT, RUN_DIRS, loadAdjudications } from "./adjudication";
 import {
-  cases, expandWithKbAliases, expectedUnits, loadJson, normalizeRuleId, rulesOfFinding,
+  KB_ALIASES_LEGADO, cases, expandWithKbAliases, expectedUnits, loadJson, normalizeRuleId, rulesOfFinding,
   scoreUnits, type FalseFinding, type UnitScore,
 } from "./units";
+import { rotuloDoVocabulario } from "./kb-aliases";
 
 const VERBOSE = process.argv.includes("--verbose");
 const JSON_OUT = process.argv.includes("--json");
@@ -204,7 +205,7 @@ function scoreOrganic(): OrganicScore | null {
     const c = organicGt.cases[caseId];
     const expectedRules = c.violations.flatMap(v => expandWithKbAliases(v.rules.map(normalizeRuleId)));
     const verdict = agentRaw?.verdicts?.[caseId];
-    const findings = (verdict?.detected ? verdict.violations_found : []).map(rulesOfFinding);
+    const findings = (verdict?.detected ? verdict.violations_found : []).map(f => rulesOfFinding(f));
     const matched = findings.filter(f => f.rules.some(r => expectedRules.includes(r)));
     const detected = Boolean(verdict?.detected);
     if (detected && c.violations.length > 0) agentFP += findings.length - Math.min(matched.length, c.violations.length);
@@ -387,7 +388,10 @@ function loadRuns(): RunSummary[] {
           // pela quarta vez. Execução sem rótulo não é assumida comparável: vira grupo próprio.
           configKey:
             `${arm} | ${raw.model} | ${coveredCases}/${gabaritoCases} casos | ` +
-            `${label ?? "sem label"} | ${client} | ${reasoning} | ${raw.config?.oracleProfile ?? (arm === "sem-oraculo" ? "none" : "perfil não rotulado")} | ${protocol} | ${validator}`,
+            `${label ?? "sem label"} | ${client} | ${reasoning} | ${raw.config?.oracleProfile ?? (arm === "sem-oraculo" ? "none" : "perfil não rotulado")} | ${protocol} | ${validator} | ` +
+            // O vocabulário de aliases da KB decide o casamento por regra: com outro arquivo, a mesma
+            // execução casa outras unidades. Entra na chave como validator e protocolo (kb-aliases-2.0.0).
+            `${rotuloDoVocabulario(KB_ALIASES_LEGADO)}`,
           ...prf(score.floor.TP, score.floor.FP, score.floor.FN),
           FP: score.floor.FP,
           ...(() => {

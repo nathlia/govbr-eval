@@ -44,6 +44,7 @@
     "test:pipeline": "pwsh -NoProfile -File pipeline/test-runner-support.ps1",
     "test:flow": "tsx scripts/test-flow-units.ts",
     "test:semantic": "tsx scripts/test-semantic-flow.ts",
+    "test:kb-aliases": "tsx scripts/test-kb-aliases.ts",
     "flow:review": "tsx scripts/semantic-flow-cli.ts",
     "adjudicate": "tsx scripts/adjudicate-all.ts",
     "pacote:revisao": "tsx scripts/gerar-pacote-revisao.ts",

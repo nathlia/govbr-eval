@@ -22,6 +22,7 @@ interface InstrumentFile {
     legacy: string;
     legacyCollection: string;
     semanticLegacy: string[];
+    kbAliases: { vigente: string; legado: string; nota: string };
     note: string;
     provenance: { acceptancePolicy: string; nota: string };
   };
@@ -30,8 +31,8 @@ interface InstrumentFile {
 
 const file = JSON.parse(readFileSync(join(ROOT, "instrument.json"), "utf8")) as InstrumentFile;
 // Sem valor padrão: uma política ou referência ausente é erro de configuração, não "a de sempre".
-if (!file.scoring.provenance?.acceptancePolicy || !file.reference?.file) {
-  throw new Error("instrument.json precisa declarar scoring.provenance.acceptancePolicy e reference.file");
+if (!file.scoring.provenance?.acceptancePolicy || !file.reference?.file || !file.scoring.kbAliases?.vigente || !file.scoring.kbAliases?.legado) {
+  throw new Error("instrument.json precisa declarar scoring.provenance.acceptancePolicy, scoring.kbAliases.{vigente,legado} e reference.file");
 }
 
 /** Contrato de medida da suíte de fluxo, ex.: `fluxo-1.1.0`. Gate de compatibilidade. */
@@ -58,3 +59,15 @@ export const FLOW_ACCEPTANCE_POLICY_VERSION = file.scoring.provenance.acceptance
 
 /** Arquivo do gabarito vigente. A VERSÃO mora nele (`_meta.version`), nunca aqui (D-31). */
 export const FLOW_REFERENCE_FILE = file.reference.file;
+
+/**
+ * Arquivo de aliases da KB por versão de pontuação (kb-aliases-2.0.0). A versão vigente
+ * (`FLOW_SCORING_VERSION`) usa `vigente`; toda outra versão — semântica legada e a pontuação por
+ * citação (`scoring.legacy`) — usa o arquivo congelado `legado`, com que as campanhas arquivadas
+ * foram preparadas e pontuadas.
+ */
+export const FLOW_KB_ALIASES_FILE = file.scoring.kbAliases.vigente;
+export const LEGACY_KB_ALIASES_FILE = file.scoring.kbAliases.legado;
+export function kbAliasesFileFor(scoringVersion: string): string {
+  return scoringVersion === FLOW_SCORING_VERSION ? FLOW_KB_ALIASES_FILE : LEGACY_KB_ALIASES_FILE;
+}

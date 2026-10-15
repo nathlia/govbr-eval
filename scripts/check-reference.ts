@@ -22,6 +22,7 @@ import { openPage, resolveStatesOnPage, resolveWithExcept, segmentoApos, temNave
 import { statePlanOf } from "./collection-manifest";
 import { combinePredicate, describePredicate, measurePredicate, validatePredicate, type PredicateResult } from "./acceptance-predicates";
 import { buildFlowUnitsAcross, measureStatePresence, selectorsOfGroundTruth, specMedidaNoEstado, statesOfGroundTruth } from "./units-flow";
+import { KB_ALIASES_VIGENTE } from "./units";
 import { referenciaDe, telaFromArgs } from "./telas";
 import type { FlowGroundTruth } from "../types";
 
@@ -64,7 +65,7 @@ async function main(): Promise<number> {
     });
     const medida = measureStatePresence(across);
     problems.push(...medida.defects.map(d => `${d.specId}: ${d.problem}`));
-    const built = buildFlowUnitsAcross(gt, across, medida.presence);
+    const built = buildFlowUnitsAcross(gt, across, medida.presence, KB_ALIASES_VIGENTE);
     problems.push(...built.defects.map(d => `${d.specId}: ${d.problem}`));
 
     console.log(`${tela.nome} · ${referencia} ${String(gt._meta.version)} · ${url}`);

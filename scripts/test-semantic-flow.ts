@@ -903,8 +903,8 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
   });
 
   test("NAT-72 legacy path: a 1.5.0 package scores as before, refuses links, and gets none retroactively", () => {
-    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.6.0");
-    assert.deepEqual([...SEMANTIC_LEGACY_VERSIONS], ["flow-semantic-1.5.0"]);
+    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.7.0");
+    assert.deepEqual([...SEMANTIC_LEGACY_VERSIONS], ["flow-semantic-1.5.0", "flow-semantic-1.6.0"]);
     const atual = pacote(["#E-html", "#E-header"]);
     const { packageHash: _h, ...corpo } = { ...atual, version: "flow-semantic-1.5.0" };
     const legado: SemanticPackage = { ...corpo, packageHash: digest(corpo) };

@@ -27,7 +27,7 @@ export const versaoPontuavel = (version: unknown): boolean =>
 export const SCORER_FILES = ["scripts/semantic-flow.ts", "scripts/semantic-flow-cli.ts", "scripts/flow-contract.ts",
   "scripts/evidence-integrity.ts", "scripts/acceptance-predicates.ts",
   "scripts/units-flow.ts", "scripts/units.ts", "scripts/anchors.ts", "scripts/instrument.ts", "instrument.json",
-  "types.ts", "checker-aliases.json", "kb-aliases.json"];
+  "types.ts", "checker-aliases.json", "kb-aliases.json", "scripts/kb-aliases.ts", "kb-aliases-v2.json"];
 
 /** Stable across object insertion order; array order is retained deliberately. */
 export function canonical(value: unknown): string {

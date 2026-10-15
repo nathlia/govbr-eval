@@ -18,7 +18,8 @@ import type {
 import type { ElementRef, Resolution, StateCheckpoint, StateResolutions } from "./anchors";
 import type { PredicateResult } from "./acceptance-predicates";
 import { elementId, resolveWithExcept } from "./anchors";
-import { expandSpecRules, normalizeRuleId, rulesOfFinding } from "./units";
+import { KB_ALIASES_LEGADO, expandSpecRules, normalizeRuleId, rulesOfFinding } from "./units";
+import type { KbAliasVocabulary } from "./kb-aliases";
 import { normalizeFinding } from "./flow-contract";
 import { applyRecord, findingId, type AdjudicationIndex } from "./adjudication";
 
@@ -298,9 +299,10 @@ export function specMedidaNoEstado(
  * último estado do segmento a que pertence (`sempre`, no último estado de todos), na ordem das
  * specs, para que a saída continue na ordem do gabarito.
  */
-export function buildFlowUnitsAcross(gt: FlowGroundTruth, res: StateResolutions, presence: StatePresence): FlowUnitsBuild {
+export function buildFlowUnitsAcross(gt: FlowGroundTruth, res: StateResolutions, presence: StatePresence,
+  kbAliases: KbAliasVocabulary = KB_ALIASES_LEGADO): FlowUnitsBuild {
   const ultimo = res.byState.get(res.order[res.order.length - 1])!;
-  if (!haSegmentos(presence)) return buildFlowUnits(gt, ultimo, presence);
+  if (!haSegmentos(presence)) return buildFlowUnits(gt, ultimo, presence, kbAliases);
   const fimDoSegmento = new Map<number, string>();
   for (const e of res.order) fimDoSegmento.set(segmentoDe(presence, e), e);
   const units: FlowUnit[] = [];
@@ -310,14 +312,19 @@ export function buildFlowUnitsAcross(gt: FlowGroundTruth, res: StateResolutions,
     const alvo = declarado !== ESTADO_SEMPRE && presence.segmentOf!.has(declarado)
       ? res.byState.get(fimDoSegmento.get(segmentoDe(presence, declarado))!)!
       : ultimo;
-    const built = buildFlowUnits({ ...gt, violations: [spec] }, alvo, presence);
+    const built = buildFlowUnits({ ...gt, violations: [spec] }, alvo, presence, kbAliases);
     units.push(...built.units);
     defects.push(...built.defects);
   }
   return { units, defects };
 }
 
-export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution, presence?: StatePresence): FlowUnitsBuild {
+/**
+ * `kbAliases`: vocabulário da KB aplicado às regras da spec. Padrão = o legado congelado (pontuação
+ * por citação e campanhas arquivadas); a preparação pelo scorer vigente passa `KB_ALIASES_VIGENTE`.
+ */
+export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution, presence?: StatePresence,
+  kbAliases: KbAliasVocabulary = KB_ALIASES_LEGADO): FlowUnitsBuild {
   const units: FlowUnit[] = [];
   const defects: GabaritoDefect[] = [];
 
@@ -338,7 +345,7 @@ export function buildFlowUnits(gt: FlowGroundTruth, res: Resolution, presence?: 
     }
 
     // Ponte do verificador (D-37) + aliases da KB, só do lado esperado — o mesmo que a suíte TC-*.
-    const rules = expandSpecRules(spec.rules);
+    const rules = expandSpecRules(spec.rules, kbAliases);
 
     // `composicao` (D-33): o defeito é propriedade do conjunto, então a âncora resolve para os N
     // participantes e a spec vale UMA unidade. É o que separa "quantos elementos participam" de
@@ -493,13 +500,13 @@ interface Candidate {
   used: boolean;
 }
 
-function candidatesOf(findings: FlowFinding[], res: Resolution): Candidate[] {
+function candidatesOf(findings: FlowFinding[], res: Resolution, kbAliases: KbAliasVocabulary): Candidate[] {
   const out: Candidate[] = [];
   for (const raw of findings) {
     // O casamento legado lê regra e texto. Um achado do contrato novo chega normalizado (observado e
     // esperado no texto, regra incerta como vazia); o legado passa idêntico, e os números não mudam.
     const f = normalizeFinding(raw);
-    const { rules, description } = rulesOfFinding({ rule: f.rule ?? "", description: f.description });
+    const { rules, description } = rulesOfFinding({ rule: f.rule ?? "", description: f.description }, kbAliases);
     const resolved = res.bySelector.get(f.selector);
     const keys = resolved?.ok ? resolved.keys : [];
     const relatedKeys = new Set(
@@ -546,8 +553,10 @@ export function scoreFlow(
   units: FlowUnit[],
   res: Resolution,
   adj?: AdjudicationIndex,
+  /** O MESMO vocabulário com que as unidades foram construídas (padrão: o legado congelado). */
+  kbAliases: KbAliasVocabulary = KB_ALIASES_LEGADO,
 ): FlowScore {
-  const candidates = candidatesOf(run.findings ?? [], res);
+  const candidates = candidatesOf(run.findings ?? [], res, kbAliases);
   const outcomes: FlowOutcome[] = [];
 
   // Passo 1 — casamento verificado por regra, no mesmo elemento.

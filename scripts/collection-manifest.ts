@@ -29,7 +29,8 @@ import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { ROOT } from "./adjudication";
-import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION, FLOW_ACCEPTANCE_POLICY_VERSION, FLOW_REFERENCE_FILE } from "./instrument";
+import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION, FLOW_ACCEPTANCE_POLICY_VERSION, FLOW_REFERENCE_FILE, FLOW_KB_ALIASES_FILE } from "./instrument";
+import { loadKbAliasVocabulary } from "./kb-aliases";
 import { referenciaDe, telaFromArgs } from "./telas";
 import { SCORER_FILES, digest, sceneIdOf, sceneIdOfSegment } from "./semantic-flow";
 import { VIEWPORT_PADRAO, problemasDaSequencia, segmentosDasParadas, temNavegacao, type StateCheckpoint } from "./anchors";
@@ -262,13 +263,20 @@ export function oracleIdentity(root = VALIDATOR_ROOT, builtInPreflight = false):
 
 /** Código e vocabulário que decidem o que um pacote significa — o mesmo conjunto que o pacote confere. */
 export function analysisIdentity(): { scoringVersion: string; acceptancePolicy: string; scorerSha256: string;
-  checkerAliasesSha256: string | null; kbAliasesSha256: string | null } {
+  checkerAliasesSha256: string | null; kbAliasesSha256: string | null;
+  /**
+   * Vocabulário da KB que a versão de pontuação vigente APLICA (kb-aliases-2.0.0). `kbAliasesSha256`
+   * continua sendo o do arquivo congelado kb-aliases.json, como nos manifestos já gravados. Opcional
+   * no tipo: manifestos anteriores não o têm.
+   */
+  kbAliasesApplied?: { version: string; file: string; sha256: string } } {
   return {
     scoringVersion: FLOW_SCORING_VERSION,
     acceptancePolicy: FLOW_ACCEPTANCE_POLICY_VERSION,
     scorerSha256: digest(SCORER_FILES.map(path => [path, readFileSync(join(ROOT, path), "utf8")])),
     checkerAliasesSha256: sha256File(join(ROOT, "checker-aliases.json")),
     kbAliasesSha256: sha256File(join(ROOT, "kb-aliases.json")),
+    kbAliasesApplied: (({ version, file, sha256 }) => ({ version, file, sha256 }))(loadKbAliasVocabulary(ROOT, FLOW_KB_ALIASES_FILE)),
   };
 }
 
