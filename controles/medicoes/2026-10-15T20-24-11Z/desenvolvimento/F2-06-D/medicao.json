@@ -1,0 +1,93 @@
+{
+  "gemeo": "F2-06-D",
+  "caso": "F2-06",
+  "papel": "defeituoso-oculto",
+  "pagina": {
+    "id": "c-7253f09173",
+    "caminho": "/controles/a/c-7253f09173.html",
+    "sha256": "c2b9d1fbe8ada0f95a61e0a3b5cfb732cc6b209c06b4a8fa5c69e5aeb941b39e",
+    "js": "/controles/a/c-7253f09173.js",
+    "jsSha256": "5c84fe023520e1123bae2daebddcae84f0d9380018aaae2a908f19aef51f603c"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": null,
+  "fatos": [
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.querySelector('bib-texto').shadowRoot",
+      "op": "igual",
+      "valor": null,
+      "nota": "raiz fechada: o DOM serializado não alcança a parte",
+      "medido": null,
+      "ok": true
+    },
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.getElementById('aviso-horario').textContent.trim()",
+      "op": "igual",
+      "valor": "",
+      "nota": "o DOM leve não traz texto",
+      "medido": "",
+      "ok": true
+    },
+    {
+      "captura": "inicial",
+      "tipo": "ax",
+      "alvo": "bib-texto >>> .message-body",
+      "prop": "textoProfundo",
+      "op": "igual",
+      "valor": "",
+      "nota": "verdade (CDP, fora do pacote): sem texto",
+      "medido": "",
+      "ok": true,
+      "papel": "none",
+      "nome": ""
+    }
+  ],
+  "pacote": {
+    "tipo": "so-dom",
+    "pagina": "/controles/a/c-7253f09173.html",
+    "hashBuild": "d89d92fa4aa33b99a80b4fba241c3afb24244fc01a91f4e089584415717a0f8b",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "capturar",
+        "nome": "inicial",
+        "soDom": true
+      }
+    ],
+    "capturas": {
+      "inicial": {
+        "passo": 1,
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Horários e avisos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Horários e avisos</h1>\n<div class=\"br-message info\" id=\"aviso-horario\">\n  <div class=\"icon\"><i class=\"fas fa-info-circle fa-lg\" aria-hidden=\"true\"></i></div>\n  <div class=\"content\"><bib-texto></bib-texto></div>\n</div>\n<div class=\"secao\">\n  <h2>Horário de funcionamento</h2>\n  <p>Terça a sexta, das 9h às 18h. Sábado, das 9h às 13h.</p>\n  <h2>Endereço</h2>\n  <p>Rua das Acácias, 120 – Centro, Santa Aurora.</p>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script src=\"c-7253f09173.js\"></script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        }
+      }
+    }
+  },
+  "verificacoesPacote": [
+    {
+      "o_que": "o pacote não traz E-AX",
+      "ok": true
+    }
+  ],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

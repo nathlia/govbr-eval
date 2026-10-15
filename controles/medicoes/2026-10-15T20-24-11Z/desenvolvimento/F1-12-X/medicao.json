@@ -1,0 +1,207 @@
+{
+  "gemeo": "F1-12-X",
+  "caso": "F1-12",
+  "papel": "excecao",
+  "pagina": {
+    "id": "c-053ab98d84",
+    "caminho": "/controles/a/c-053ab98d84.html",
+    "sha256": "da8d33220f5bc8fca4a439d9074c907b50f9ccf2e9a8bf549a1a05250cadc725"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": {
+    "de": "F1-12-D",
+    "paginaDe": "/controles/a/c-6dccbf7343.html",
+    "trocas": 2,
+    "ok": true,
+    "erros": []
+  },
+  "fatos": [
+    {
+      "captura": "apos-enviar",
+      "tipo": "foco",
+      "alvo": "#resumo-erros",
+      "medido": {
+        "tag": "div",
+        "id": "resumo-erros",
+        "classe": "mb-3",
+        "texto": "2 campos precisam de correção. Revise os campos marcados aba"
+      },
+      "ok": true
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "ax",
+      "alvo": "#resumo-erros",
+      "prop": "live",
+      "op": "ausente",
+      "medido": null,
+      "ok": true,
+      "papel": "generic",
+      "nome": "2 campos precisam de correção. Revise os campos marcados abaixo."
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "ax",
+      "alvo": "#resumo-erros",
+      "prop": "papel",
+      "op": "em",
+      "valor": [
+        "generic",
+        "none",
+        "Section",
+        "GenericContainer"
+      ],
+      "medido": "generic",
+      "ok": true,
+      "papel": "generic",
+      "nome": "2 campos precisam de correção. Revise os campos marcados abaixo."
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/a/c-053ab98d84.html",
+    "hashBuild": "da8d33220f5bc8fca4a439d9074c907b50f9ccf2e9a8bf549a1a05250cadc725",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "preencher",
+        "alvo": "#cartao",
+        "valor": "12"
+      },
+      {
+        "acao": "preencher",
+        "alvo": "#email",
+        "valor": "ana@"
+      },
+      {
+        "acao": "focar",
+        "alvo": "#form-reserva button[type=submit]"
+      },
+      {
+        "acao": "tecla",
+        "tecla": "Enter"
+      },
+      {
+        "acao": "capturar",
+        "nome": "apos-enviar"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "preencher",
+        "alvo": "#cartao",
+        "foco": {
+          "tag": "input",
+          "id": "cartao",
+          "classe": null,
+          "texto": ""
+        }
+      },
+      {
+        "passo": 2,
+        "acao": "preencher",
+        "alvo": "#email",
+        "foco": {
+          "tag": "input",
+          "id": "email",
+          "classe": null,
+          "texto": ""
+        }
+      },
+      {
+        "passo": 3,
+        "acao": "focar",
+        "alvo": "#form-reserva button[type=submit]",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button primary",
+          "texto": "Reservar"
+        }
+      },
+      {
+        "passo": 4,
+        "acao": "tecla",
+        "tecla": "Enter",
+        "foco": {
+          "tag": "div",
+          "id": "resumo-erros",
+          "classe": "mb-3",
+          "texto": "2 campos precisam de correção. Revise os campos marcados aba"
+        }
+      },
+      {
+        "passo": 5,
+        "acao": "capturar",
+        "nome": "apos-enviar",
+        "foco": {
+          "tag": "div",
+          "id": "resumo-erros",
+          "classe": "mb-3",
+          "texto": "2 campos precisam de correção. Revise os campos marcados aba"
+        }
+      }
+    ],
+    "capturas": {
+      "apos-enviar": {
+        "passo": 5,
+        "foco": {
+          "tag": "div",
+          "id": "resumo-erros",
+          "classe": "mb-3",
+          "texto": "2 campos precisam de correção. Revise os campos marcados aba"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Reservar livro – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<div class=\"row\">\n  <div class=\"col-md-8 col-lg-6\">\n    <h1>Reservar livro</h1>\n    <p><strong>Vidas secas</strong>, de Graciliano Ramos. Avisaremos por e-mail quando o exemplar estiver separado.</p>\n    <div id=\"resumo-erros\" class=\"mb-3\" tabindex=\"-1\"><div class=\"br-message danger\"><div class=\"icon\"><i class=\"fas fa-times-circle fa-lg\" aria-hidden=\"true\"></i></div><div class=\"content\"><span class=\"message-title\">2 campos precisam de correção.</span><span class=\"message-body\"> Revise os campos marcados abaixo.</span></div></div></div>\n    <form id=\"form-reserva\" novalidate=\"\">\n<div class=\"br-input mb-3 danger\">\n  <label for=\"cartao\">Número do cartão</label>\n  <input id=\"cartao\" name=\"cartao\" type=\"text\" inputmode=\"numeric\" autocomplete=\"off\" aria-invalid=\"true\" aria-describedby=\"cartao-erro\">\n<span class=\"feedback danger\" id=\"cartao-erro\"><i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>Informe os 8 dígitos impressos no cartão.</span></div>\n<div class=\"br-input mb-3 danger\">\n  <label for=\"email\">E-mail para aviso</label>\n  <input id=\"email\" name=\"email\" type=\"email\" autocomplete=\"email\" aria-invalid=\"true\" aria-describedby=\"email-erro\">\n<span class=\"feedback danger\" id=\"email-erro\"><i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>Use o formato nome@provedor.com.br.</span></div>\n      <button class=\"br-button primary\" type=\"submit\">Reservar</button>\n    </form>\n    <div id=\"resultado\" class=\"mt-4\" role=\"status\"></div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\nconst formulario = document.getElementById('form-reserva');\nconst resumo = document.getElementById('resumo-erros');\nconst resultado = document.getElementById('resultado');\nconst campos = [\n  { el: document.getElementById('cartao'), ok: (v) => /^\\d{8}$/.test(v), texto: 'Informe os 8 dígitos impressos no cartão.' },\n  { el: document.getElementById('email'), ok: (v) => /^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(v), texto: 'Use o formato nome@provedor.com.br.' },\n];\nformulario.addEventListener('submit', (evento) => {\n  evento.preventDefault();\n  resumo.innerHTML = '';\n  resultado.innerHTML = '';\n  let erros = 0;\n  campos.forEach(({ el, ok, texto }) => {\n    const caixa = el.closest('.br-input');\n    const anterior = document.getElementById(el.id + '-erro');\n    if (anterior) anterior.remove();\n    caixa.classList.remove('danger');\n    el.removeAttribute('aria-invalid');\n    el.removeAttribute('aria-describedby');\n    if (ok(el.value.trim())) return;\n    erros += 1;\n    caixa.classList.add('danger');\n    const mensagem = document.createElement('span');\n    mensagem.className = 'feedback danger';\n    mensagem.id = el.id + '-erro';\n    mensagem.innerHTML = '<i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>' + texto;\n    caixa.appendChild(mensagem);\n    el.setAttribute('aria-invalid', 'true');\n    el.setAttribute('aria-describedby', mensagem.id);\n  });\n  if (erros > 0) {\n    resumo.innerHTML = '<div class=\"br-message danger\"><div class=\"icon\"><i class=\"fas fa-times-circle fa-lg\" aria-hidden=\"true\"></i></div>' +\n      '<div class=\"content\"><span class=\"message-title\">' + erros + (erros === 1 ? ' campo precisa' : ' campos precisam') +\n      ' de correção.</span><span class=\"message-body\"> Revise os campos marcados abaixo.</span></div></div>';\n    resumo.focus();\n    return;\n  }\n  resultado.textContent = 'Reserva registrada.';\n});\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": [
+          {
+            "tipo": "ax",
+            "alvo": "#resumo-erros",
+            "prop": "live",
+            "op": "ausente",
+            "medido": null,
+            "ok": true,
+            "papel": "generic",
+            "nome": "2 campos precisam de correção. Revise os campos marcados abaixo."
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#resumo-erros",
+            "prop": "papel",
+            "op": "em",
+            "valor": [
+              "generic",
+              "none",
+              "Section",
+              "GenericContainer"
+            ],
+            "medido": "generic",
+            "ok": true,
+            "papel": "generic",
+            "nome": "2 campos precisam de correção. Revise os campos marcados abaixo."
+          }
+        ]
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

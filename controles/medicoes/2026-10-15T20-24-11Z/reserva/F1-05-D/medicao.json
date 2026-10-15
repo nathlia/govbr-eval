@@ -1,0 +1,101 @@
+{
+  "gemeo": "F1-05-D",
+  "caso": "F1-05",
+  "papel": "defeituoso-oculto",
+  "pagina": {
+    "id": "c-1901715d1b",
+    "caminho": "/controles/b/c-1901715d1b.html",
+    "sha256": "0f92e31e1190223b16b601364e2d77ba67cc2d5134dd61eb4dffa1857fd86211",
+    "js": "/controles/b/c-1901715d1b.js",
+    "jsSha256": "7702cee9aa6131590c5e7f88ac092aeeaa12261cc97a0cc3f8b128272296d9d8"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": null,
+  "fatos": [
+    {
+      "captura": "apos-enviar",
+      "tipo": "dom",
+      "expr": "document.querySelector('bib-campo').shadowRoot",
+      "op": "igual",
+      "valor": null,
+      "nota": "raiz fechada",
+      "medido": null,
+      "ok": true
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "dom",
+      "expr": "document.querySelectorAll('input').length",
+      "op": "igual",
+      "valor": 0,
+      "nota": "o DOM serializado não mostra o campo",
+      "medido": 0,
+      "ok": true
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "ax",
+      "alvo": "bib-campo >>> #campo",
+      "prop": "descricao",
+      "op": "vazio",
+      "nota": "verdade (CDP, fora do pacote): violação",
+      "medido": "",
+      "ok": true,
+      "papel": "textbox",
+      "nome": "Número do cartão"
+    }
+  ],
+  "pacote": {
+    "tipo": "so-dom",
+    "pagina": "/controles/b/c-1901715d1b.html",
+    "hashBuild": "263bdcaab6974fee8016bdffa4eabf8822a0622d2321727363b3ca06eb3a867d",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "preencher",
+        "alvo": "bib-campo >>> #campo",
+        "valor": "12"
+      },
+      {
+        "acao": "clicar",
+        "alvo": "#form-renovacao button[type=submit]"
+      },
+      {
+        "acao": "capturar",
+        "nome": "apos-enviar",
+        "soDom": true
+      }
+    ],
+    "capturas": {
+      "apos-enviar": {
+        "passo": 3,
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Renovar empréstimos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<div class=\"row\">\n  <div class=\"col-md-8 col-lg-6\">\n    <h1>Renovar empréstimos</h1>\n    <p>Informe o número do seu cartão da biblioteca para ver os livros que podem ser renovados.</p>\n    <form id=\"form-renovacao\" novalidate=\"\">\n      <bib-campo class=\"d-block mb-3\"></bib-campo><span class=\"feedback danger\" id=\"cartao-erro\"><i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>Valor inválido.</span>\n      <button class=\"br-button primary\" type=\"submit\">Consultar empréstimos</button>\n    </form>\n    <div id=\"resultado\" class=\"mt-4\" role=\"status\"></div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script src=\"c-1901715d1b.js\"></script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        }
+      }
+    }
+  },
+  "verificacoesPacote": [
+    {
+      "o_que": "o pacote não traz E-AX",
+      "ok": true
+    }
+  ],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

@@ -71,7 +71,9 @@
     "painel:resultados": "tsx scripts/painel/servidor.ts",
     "painel:fixture": "tsx scripts/painel/fixture.ts",
     "test:painel": "tsx scripts/test-painel.ts",
-    "relatorio:fluxo": "tsx scripts/report-flow.ts"
+    "relatorio:fluxo": "tsx scripts/report-flow.ts",
+    "controles:construir": "node controles/construir.mjs",
+    "controles:medir": "node controles/medir.mjs"
   },
   "dependencies": {
     "@axe-core/playwright": "4.11.1",

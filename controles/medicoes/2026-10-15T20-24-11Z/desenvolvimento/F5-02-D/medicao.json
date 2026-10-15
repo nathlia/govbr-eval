@@ -1,0 +1,123 @@
+{
+  "gemeo": "F5-02-D",
+  "caso": "F5-02",
+  "papel": "defeituoso",
+  "pagina": {
+    "id": "c-fe6a4f5cba",
+    "caminho": "/controles/a/c-fe6a4f5cba.html",
+    "sha256": "e975285cff1d1fbd63eb91b6c224d1263b7c3bad69257cd82ed67196973f16de"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": null,
+  "fatos": [
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.getElementById('renovar').innerText.trim()",
+      "op": "igual",
+      "valor": "Renovar",
+      "nota": "rótulo visível",
+      "medido": "Renovar",
+      "ok": true
+    },
+    {
+      "captura": "inicial",
+      "tipo": "ax",
+      "alvo": "#renovar",
+      "prop": "nome",
+      "op": "igual",
+      "valor": "Confirmar operação",
+      "medido": "Confirmar operação",
+      "ok": true,
+      "papel": "button",
+      "nome": "Confirmar operação"
+    },
+    {
+      "captura": "inicial",
+      "tipo": "ax",
+      "alvo": "#renovar",
+      "prop": "nome",
+      "op": "naoContem",
+      "valor": "Renovar",
+      "medido": "Confirmar operação",
+      "ok": true,
+      "papel": "button",
+      "nome": "Confirmar operação"
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/a/c-fe6a4f5cba.html",
+    "hashBuild": "e975285cff1d1fbd63eb91b6c224d1263b7c3bad69257cd82ed67196973f16de",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "capturar",
+        "nome": "inicial"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "capturar",
+        "nome": "inicial",
+        "foco": {
+          "tag": "body"
+        }
+      }
+    ],
+    "capturas": {
+      "inicial": {
+        "passo": 1,
+        "foco": {
+          "tag": "body"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Dom Casmurro – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Dom Casmurro</h1>\n<p>Machado de Assis · Romance · Exemplar 2 de 3</p>\n<p>Devolução atual: 18/10/2026. Se renovar agora, a nova data será 01/11/2026.</p>\n<div class=\"acoes\">\n  <button class=\"br-button primary\" type=\"button\" id=\"renovar\" aria-label=\"Confirmar operação\">Renovar</button>\n  <a class=\"br-button secondary\" href=\"#\">Voltar</a>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": [
+          {
+            "tipo": "ax",
+            "alvo": "#renovar",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Confirmar operação",
+            "medido": "Confirmar operação",
+            "ok": true,
+            "papel": "button",
+            "nome": "Confirmar operação"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#renovar",
+            "prop": "nome",
+            "op": "naoContem",
+            "valor": "Renovar",
+            "medido": "Confirmar operação",
+            "ok": true,
+            "papel": "button",
+            "nome": "Confirmar operação"
+          }
+        ]
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

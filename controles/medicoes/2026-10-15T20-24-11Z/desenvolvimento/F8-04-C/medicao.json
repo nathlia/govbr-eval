@@ -1,0 +1,81 @@
+{
+  "gemeo": "F8-04-C",
+  "caso": "F8-04",
+  "papel": "sem-fonte",
+  "pagina": {
+    "id": "c-61f8e0b0b2",
+    "caminho": "/controles/a/c-61f8e0b0b2.html",
+    "sha256": "fa8b5a3dba83d72b103f304b0f4e47d59fc12f5711d52352d8fd58cd651fb8d8"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": {
+    "de": "F8-04-U",
+    "paginaDe": "/controles/a/c-4d1aaae94f.html",
+    "trocas": 1,
+    "ok": true,
+    "erros": []
+  },
+  "fatos": [
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "getComputedStyle(document.querySelector('.cartao-emprestimo')).paddingTop",
+      "op": "igual",
+      "valor": "16px",
+      "medido": "16px",
+      "ok": true
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/a/c-61f8e0b0b2.html",
+    "hashBuild": "fa8b5a3dba83d72b103f304b0f4e47d59fc12f5711d52352d8fd58cd651fb8d8",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "capturar",
+        "nome": "inicial"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "capturar",
+        "nome": "inicial",
+        "foco": {
+          "tag": "body"
+        }
+      }
+    ],
+    "capturas": {
+      "inicial": {
+        "passo": 1,
+        "foco": {
+          "tag": "body"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Meus empréstimos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n<style>\n.cartao-emprestimo {\n  border: 1px solid var(--border-color);\n  border-radius: var(--surface-rounder-md);\n  height: 100%;\n  padding: var(--spacing-scale-2x);\n}\n</style>\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Meus empréstimos</h1>\n<div class=\"row\">\n  <div class=\"col-md-4 mb-3\">\n    <div class=\"cartao-emprestimo\">\n      <p class=\"titulo-livro mb-1\">Dom Casmurro</p>\n      <p class=\"mb-0\">Machado de Assis<br>Devolução até 18/10/2026</p>\n    </div>\n  </div>\n  <div class=\"col-md-4 mb-3\">\n    <div class=\"cartao-emprestimo\">\n      <p class=\"titulo-livro mb-1\">Vidas secas</p>\n      <p class=\"mb-0\">Graciliano Ramos<br>Devolução até 21/10/2026</p>\n    </div>\n  </div>\n  <div class=\"col-md-4 mb-3\">\n    <div class=\"cartao-emprestimo\">\n      <p class=\"titulo-livro mb-1\">Quarto de despejo</p>\n      <p class=\"mb-0\">Carolina Maria de Jesus<br>Devolução até 25/10/2026</p>\n    </div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

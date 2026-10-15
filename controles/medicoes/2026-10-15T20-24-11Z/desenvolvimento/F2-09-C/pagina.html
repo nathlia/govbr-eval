@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Empréstimos – Biblioteca Municipal</title>
+<link rel="stylesheet" href="../recursos/core.min.css">
+<link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+<link rel="stylesheet" href="../recursos/biblioteca.css">
+</head>
+<body>
+<nav class="br-skiplink" aria-label="Atalhos de teclado"><a class="br-item" href="#conteudo">Ir para o conteúdo</a></nav>
+<header class="br-header" id="topo">
+  <div class="container-lg">
+    <div class="header-top">
+      <div class="header-logo"><img src="../recursos/logo.svg" alt="" width="40" height="40"><span class="br-divider vertical"></span><div class="header-sign">Prefeitura de Santa Aurora</div></div>
+    </div>
+    <div class="header-bottom">
+      <div class="header-menu">
+        <div class="header-info">
+          <div class="header-title">Biblioteca Municipal</div>
+          <div class="header-subtitle">Reservas e renovação de empréstimos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main id="conteudo" class="container-lg">
+<h1>Empréstimos</h1>
+<p>O prazo padrão de empréstimo é de 14 dias. Leitores com cartão ativo podem ter até 5 livros ao mesmo tempo.</p>
+<button class="br-button secondary" type="button" id="ver-regras">Ver regras de empréstimo</button>
+<div class="secao">
+  <h2>Seus empréstimos</h2>
+  <div class="br-list lista-livros">
+<div class="br-item">
+    <div class="row align-items-center">
+      <div class="col">
+        <p class="titulo-livro mb-0">Dom Casmurro</p>
+        <p class="detalhe-livro mb-0">Machado de Assis · devolução até 18/10/2026</p>
+      </div>
+    </div>
+  </div>
+<div class="br-item">
+    <div class="row align-items-center">
+      <div class="col">
+        <p class="titulo-livro mb-0">Vidas secas</p>
+        <p class="detalhe-livro mb-0">Graciliano Ramos · devolução até 21/10/2026</p>
+      </div>
+    </div>
+  </div>
+<div class="br-item">
+    <div class="row align-items-center">
+      <div class="col">
+        <p class="titulo-livro mb-0">Quarto de despejo</p>
+        <p class="detalhe-livro mb-0">Carolina Maria de Jesus · devolução até 25/10/2026</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</main>
+<footer class="br-footer" id="rodape">
+  <div class="container-lg">
+    <nav class="links-rodape" aria-label="Links do rodapé">
+      <a href="#">Acervo</a>
+      <a href="#">Horários e endereço</a>
+      <a href="#">Regulamento de empréstimos</a>
+    </nav>
+    <p class="texto-rodape">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>
+  </div>
+</footer>
+<script>
+(function () {
+  const abrir = document.getElementById('ver-regras');
+  let origem = null;
+  let scrim = null;
+  function fecharJanela() {
+    scrim.remove();
+    scrim = null;
+    origem.focus();
+  }
+  abrir.addEventListener('click', () => {
+    origem = document.activeElement;
+    scrim = document.createElement('div');
+    scrim.className = 'br-scrim-util foco active';
+    scrim.innerHTML = '<div class="br-modal medium" id="regras" role="dialog" aria-modal="true" aria-labelledby="regras-titulo" data-tipo="informativa">' +
+      '<div class="br-modal-header"><div class="modal-title" id="regras-titulo">Regras de empréstimo</div>' +
+      '<button class="br-button close circle" type="button" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i></button></div>' +
+      '<div class="br-modal-body"><ul><li>Prazo de 14 dias para cada livro.</li><li>Até duas renovações, se não houver reserva.</li><li>Multa de R$ 0,50 por dia de atraso.</li></ul></div>' +
+      '<div class="br-modal-footer justify-content-end"><button class="br-button primary" type="button">Entendi</button></div>' +
+      '</div>';
+    document.body.appendChild(scrim);
+    const janela = scrim.querySelector('.br-modal');
+    const fechar = janela.querySelector('.close');
+    janela.querySelectorAll('.close, .br-modal-footer .br-button').forEach((b) => b.addEventListener('click', fecharJanela));
+    janela.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') fecharJanela();
+      if (e.key === 'Tab') {
+        const lista = Array.from(janela.querySelectorAll('button'));
+        const primeiro = lista[0];
+        const ultimo = lista[lista.length - 1];
+        if (e.shiftKey && document.activeElement === primeiro) {
+          e.preventDefault();
+          ultimo.focus();
+        } else if (!e.shiftKey && document.activeElement === ultimo) {
+          e.preventDefault();
+          primeiro.focus();
+        }
+      }
+    });
+    fechar.focus();
+  });
+})();
+</script>
+</body>
+</html>

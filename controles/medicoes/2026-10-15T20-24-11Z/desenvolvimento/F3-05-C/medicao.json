@@ -1,0 +1,308 @@
+{
+  "gemeo": "F3-05-C",
+  "caso": "F3-05",
+  "papel": "conforme",
+  "pagina": {
+    "id": "c-15d9f56e91",
+    "caminho": "/controles/a/c-15d9f56e91.html",
+    "sha256": "d119b7042af03d1f5a462ac4ff0d31071b07208831175ee5ac5c91e6219386f4"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": {
+    "de": "F3-05-D",
+    "paginaDe": "/controles/a/c-92c8cbbd4b.html",
+    "trocas": 2,
+    "ok": true,
+    "erros": []
+  },
+  "fatos": [
+    {
+      "captura": "apos-abrir",
+      "tipo": "dom",
+      "expr": "(() => { const el = document.getElementById('renovar'); return !!el && el.getBoundingClientRect().height > 0; })()",
+      "op": "igual",
+      "valor": true,
+      "nota": "diálogo aberto",
+      "medido": true,
+      "ok": true
+    },
+    {
+      "captura": "apos-abrir",
+      "tipo": "foco",
+      "alvo": "#renovar .br-modal-footer .primary",
+      "medido": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button primary",
+        "texto": "Renovar"
+      },
+      "ok": true
+    },
+    {
+      "captura": "apos-tab",
+      "tipo": "dom",
+      "expr": "(() => { const el = document.getElementById('renovar'); return !!el && el.getBoundingClientRect().height > 0; })()",
+      "op": "igual",
+      "valor": true,
+      "nota": "diálogo aberto",
+      "medido": true,
+      "ok": true
+    },
+    {
+      "captura": "apos-tab",
+      "tipo": "foco",
+      "alvo": "#renovar .br-modal-header .close",
+      "nota": "Tab volta para o X",
+      "medido": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button close circle",
+        "texto": "Fechar"
+      },
+      "ok": true
+    },
+    {
+      "captura": "apos-esc",
+      "tipo": "dom",
+      "expr": "document.getElementById('scrim-renovar').classList.contains('active')",
+      "op": "igual",
+      "valor": false,
+      "nota": "diálogo fechado",
+      "medido": false,
+      "ok": true
+    },
+    {
+      "captura": "apos-esc",
+      "tipo": "foco",
+      "alvo": "#abrir-renovacao",
+      "nota": "Esc fecha: sem armadilha",
+      "medido": {
+        "tag": "button",
+        "id": "abrir-renovacao",
+        "classe": "br-button primary",
+        "texto": "Renovar empréstimo"
+      },
+      "ok": true
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/a/c-15d9f56e91.html",
+    "hashBuild": "d119b7042af03d1f5a462ac4ff0d31071b07208831175ee5ac5c91e6219386f4",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "focar",
+        "alvo": "#abrir-renovacao"
+      },
+      {
+        "acao": "tecla",
+        "tecla": "Enter"
+      },
+      {
+        "acao": "capturar",
+        "nome": "apos-abrir"
+      },
+      {
+        "acao": "focar",
+        "alvo": "#renovar .br-modal-footer .secondary"
+      },
+      {
+        "acao": "capturar",
+        "nome": "no-ultimo"
+      },
+      {
+        "acao": "tecla",
+        "tecla": "Tab"
+      },
+      {
+        "acao": "capturar",
+        "nome": "apos-tab"
+      },
+      {
+        "acao": "tecla",
+        "tecla": "Escape"
+      },
+      {
+        "acao": "capturar",
+        "nome": "apos-esc"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "focar",
+        "alvo": "#abrir-renovacao",
+        "foco": {
+          "tag": "button",
+          "id": "abrir-renovacao",
+          "classe": "br-button primary",
+          "texto": "Renovar empréstimo"
+        }
+      },
+      {
+        "passo": 2,
+        "acao": "tecla",
+        "tecla": "Enter",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button primary",
+          "texto": "Renovar"
+        }
+      },
+      {
+        "passo": 3,
+        "acao": "capturar",
+        "nome": "apos-abrir",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button primary",
+          "texto": "Renovar"
+        }
+      },
+      {
+        "passo": 4,
+        "acao": "focar",
+        "alvo": "#renovar .br-modal-footer .secondary",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button secondary ml-2",
+          "texto": "Cancelar"
+        }
+      },
+      {
+        "passo": 5,
+        "acao": "capturar",
+        "nome": "no-ultimo",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button secondary ml-2",
+          "texto": "Cancelar"
+        }
+      },
+      {
+        "passo": 6,
+        "acao": "tecla",
+        "tecla": "Tab",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button close circle",
+          "texto": "Fechar"
+        }
+      },
+      {
+        "passo": 7,
+        "acao": "capturar",
+        "nome": "apos-tab",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button close circle",
+          "texto": "Fechar"
+        }
+      },
+      {
+        "passo": 8,
+        "acao": "tecla",
+        "tecla": "Escape",
+        "foco": {
+          "tag": "button",
+          "id": "abrir-renovacao",
+          "classe": "br-button primary",
+          "texto": "Renovar empréstimo"
+        }
+      },
+      {
+        "passo": 9,
+        "acao": "capturar",
+        "nome": "apos-esc",
+        "foco": {
+          "tag": "button",
+          "id": "abrir-renovacao",
+          "classe": "br-button primary",
+          "texto": "Renovar empréstimo"
+        }
+      }
+    ],
+    "capturas": {
+      "apos-abrir": {
+        "passo": 3,
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button primary",
+          "texto": "Renovar"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Dom Casmurro – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Dom Casmurro</h1>\n<p>Machado de Assis · Romance · Exemplar 2 de 3</p>\n<p>Devolução atual: 18/10/2026. Se renovar agora, a nova data será 01/11/2026.</p>\n<div class=\"acoes\">\n  <button class=\"br-button primary\" type=\"button\" id=\"abrir-renovacao\">Renovar empréstimo</button>\n  <a class=\"br-button secondary\" href=\"#\">Voltar para meus empréstimos</a>\n</div>\n<div class=\"br-scrim-util foco active\" id=\"scrim-renovar\">\n  <div class=\"br-modal medium\" id=\"renovar\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"renovar-titulo\" data-tipo=\"acao\">\n    <div class=\"br-modal-header\">\n      <div class=\"modal-title\" id=\"renovar-titulo\">Renovar empréstimo?</div>\n      <button class=\"br-button close circle\" type=\"button\" aria-label=\"Fechar\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div class=\"br-modal-body\">\n      <p>Dom Casmurro ficará com você até 01/11/2026. Você ainda poderá renovar mais uma vez.</p>\n    </div>\n    <div class=\"br-modal-footer justify-content-end\">\n      <button class=\"br-button primary\" type=\"button\">Renovar</button>\n      <button class=\"br-button secondary ml-2\" type=\"button\">Cancelar</button>\n    </div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\n(function () {\n  const scrim = document.getElementById('scrim-renovar');\n  const janela = document.getElementById('renovar');\n  const abrir = document.getElementById('abrir-renovacao');\n  const fechar = janela.querySelector('.br-modal-header .close');\n  let origem = null;\n  function focaveis() {\n    return Array.from(janela.querySelectorAll('button, [href], input, select, textarea')).filter((el) => !el.disabled);\n  }\n  function abrirJanela() {\n    origem = document.activeElement;\n    scrim.classList.add('active');\n    janela.querySelector('.br-modal-footer .primary').focus();\n  }\n  function fecharJanela() {\n    scrim.classList.remove('active');\n    origem.focus();\n  }\n  abrir.addEventListener('click', abrirJanela);\n  if (fechar) fechar.addEventListener('click', fecharJanela);\n  janela.querySelectorAll('.br-modal-footer .secondary').forEach((b) => b.addEventListener('click', fecharJanela));\n  janela.addEventListener('keydown', (e) => {\n    if (e.key === 'Escape') {\n      fecharJanela();\n    }\n    if (e.key === 'Tab') {\n      const lista = focaveis();\n      const primeiro = lista[0];\n      const ultimo = lista[lista.length - 1];\n      if (e.shiftKey && document.activeElement === primeiro) {\n        e.preventDefault();\n        ultimo.focus();\n      } else if (!e.shiftKey && document.activeElement === ultimo) {\n        e.preventDefault();\n        primeiro.focus();\n      }\n    }\n  });\n})();\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      },
+      "no-ultimo": {
+        "passo": 5,
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button secondary ml-2",
+          "texto": "Cancelar"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Dom Casmurro – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Dom Casmurro</h1>\n<p>Machado de Assis · Romance · Exemplar 2 de 3</p>\n<p>Devolução atual: 18/10/2026. Se renovar agora, a nova data será 01/11/2026.</p>\n<div class=\"acoes\">\n  <button class=\"br-button primary\" type=\"button\" id=\"abrir-renovacao\">Renovar empréstimo</button>\n  <a class=\"br-button secondary\" href=\"#\">Voltar para meus empréstimos</a>\n</div>\n<div class=\"br-scrim-util foco active\" id=\"scrim-renovar\">\n  <div class=\"br-modal medium\" id=\"renovar\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"renovar-titulo\" data-tipo=\"acao\">\n    <div class=\"br-modal-header\">\n      <div class=\"modal-title\" id=\"renovar-titulo\">Renovar empréstimo?</div>\n      <button class=\"br-button close circle\" type=\"button\" aria-label=\"Fechar\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div class=\"br-modal-body\">\n      <p>Dom Casmurro ficará com você até 01/11/2026. Você ainda poderá renovar mais uma vez.</p>\n    </div>\n    <div class=\"br-modal-footer justify-content-end\">\n      <button class=\"br-button primary\" type=\"button\">Renovar</button>\n      <button class=\"br-button secondary ml-2\" type=\"button\">Cancelar</button>\n    </div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\n(function () {\n  const scrim = document.getElementById('scrim-renovar');\n  const janela = document.getElementById('renovar');\n  const abrir = document.getElementById('abrir-renovacao');\n  const fechar = janela.querySelector('.br-modal-header .close');\n  let origem = null;\n  function focaveis() {\n    return Array.from(janela.querySelectorAll('button, [href], input, select, textarea')).filter((el) => !el.disabled);\n  }\n  function abrirJanela() {\n    origem = document.activeElement;\n    scrim.classList.add('active');\n    janela.querySelector('.br-modal-footer .primary').focus();\n  }\n  function fecharJanela() {\n    scrim.classList.remove('active');\n    origem.focus();\n  }\n  abrir.addEventListener('click', abrirJanela);\n  if (fechar) fechar.addEventListener('click', fecharJanela);\n  janela.querySelectorAll('.br-modal-footer .secondary').forEach((b) => b.addEventListener('click', fecharJanela));\n  janela.addEventListener('keydown', (e) => {\n    if (e.key === 'Escape') {\n      fecharJanela();\n    }\n    if (e.key === 'Tab') {\n      const lista = focaveis();\n      const primeiro = lista[0];\n      const ultimo = lista[lista.length - 1];\n      if (e.shiftKey && document.activeElement === primeiro) {\n        e.preventDefault();\n        ultimo.focus();\n      } else if (!e.shiftKey && document.activeElement === ultimo) {\n        e.preventDefault();\n        primeiro.focus();\n      }\n    }\n  });\n})();\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      },
+      "apos-tab": {
+        "passo": 7,
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button close circle",
+          "texto": "Fechar"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Dom Casmurro – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Dom Casmurro</h1>\n<p>Machado de Assis · Romance · Exemplar 2 de 3</p>\n<p>Devolução atual: 18/10/2026. Se renovar agora, a nova data será 01/11/2026.</p>\n<div class=\"acoes\">\n  <button class=\"br-button primary\" type=\"button\" id=\"abrir-renovacao\">Renovar empréstimo</button>\n  <a class=\"br-button secondary\" href=\"#\">Voltar para meus empréstimos</a>\n</div>\n<div class=\"br-scrim-util foco active\" id=\"scrim-renovar\">\n  <div class=\"br-modal medium\" id=\"renovar\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"renovar-titulo\" data-tipo=\"acao\">\n    <div class=\"br-modal-header\">\n      <div class=\"modal-title\" id=\"renovar-titulo\">Renovar empréstimo?</div>\n      <button class=\"br-button close circle\" type=\"button\" aria-label=\"Fechar\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div class=\"br-modal-body\">\n      <p>Dom Casmurro ficará com você até 01/11/2026. Você ainda poderá renovar mais uma vez.</p>\n    </div>\n    <div class=\"br-modal-footer justify-content-end\">\n      <button class=\"br-button primary\" type=\"button\">Renovar</button>\n      <button class=\"br-button secondary ml-2\" type=\"button\">Cancelar</button>\n    </div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\n(function () {\n  const scrim = document.getElementById('scrim-renovar');\n  const janela = document.getElementById('renovar');\n  const abrir = document.getElementById('abrir-renovacao');\n  const fechar = janela.querySelector('.br-modal-header .close');\n  let origem = null;\n  function focaveis() {\n    return Array.from(janela.querySelectorAll('button, [href], input, select, textarea')).filter((el) => !el.disabled);\n  }\n  function abrirJanela() {\n    origem = document.activeElement;\n    scrim.classList.add('active');\n    janela.querySelector('.br-modal-footer .primary').focus();\n  }\n  function fecharJanela() {\n    scrim.classList.remove('active');\n    origem.focus();\n  }\n  abrir.addEventListener('click', abrirJanela);\n  if (fechar) fechar.addEventListener('click', fecharJanela);\n  janela.querySelectorAll('.br-modal-footer .secondary').forEach((b) => b.addEventListener('click', fecharJanela));\n  janela.addEventListener('keydown', (e) => {\n    if (e.key === 'Escape') {\n      fecharJanela();\n    }\n    if (e.key === 'Tab') {\n      const lista = focaveis();\n      const primeiro = lista[0];\n      const ultimo = lista[lista.length - 1];\n      if (e.shiftKey && document.activeElement === primeiro) {\n        e.preventDefault();\n        ultimo.focus();\n      } else if (!e.shiftKey && document.activeElement === ultimo) {\n        e.preventDefault();\n        primeiro.focus();\n      }\n    }\n  });\n})();\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      },
+      "apos-esc": {
+        "passo": 9,
+        "foco": {
+          "tag": "button",
+          "id": "abrir-renovacao",
+          "classe": "br-button primary",
+          "texto": "Renovar empréstimo"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Dom Casmurro – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Dom Casmurro</h1>\n<p>Machado de Assis · Romance · Exemplar 2 de 3</p>\n<p>Devolução atual: 18/10/2026. Se renovar agora, a nova data será 01/11/2026.</p>\n<div class=\"acoes\">\n  <button class=\"br-button primary\" type=\"button\" id=\"abrir-renovacao\">Renovar empréstimo</button>\n  <a class=\"br-button secondary\" href=\"#\">Voltar para meus empréstimos</a>\n</div>\n<div class=\"br-scrim-util foco\" id=\"scrim-renovar\">\n  <div class=\"br-modal medium\" id=\"renovar\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"renovar-titulo\" data-tipo=\"acao\">\n    <div class=\"br-modal-header\">\n      <div class=\"modal-title\" id=\"renovar-titulo\">Renovar empréstimo?</div>\n      <button class=\"br-button close circle\" type=\"button\" aria-label=\"Fechar\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div class=\"br-modal-body\">\n      <p>Dom Casmurro ficará com você até 01/11/2026. Você ainda poderá renovar mais uma vez.</p>\n    </div>\n    <div class=\"br-modal-footer justify-content-end\">\n      <button class=\"br-button primary\" type=\"button\">Renovar</button>\n      <button class=\"br-button secondary ml-2\" type=\"button\">Cancelar</button>\n    </div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\n(function () {\n  const scrim = document.getElementById('scrim-renovar');\n  const janela = document.getElementById('renovar');\n  const abrir = document.getElementById('abrir-renovacao');\n  const fechar = janela.querySelector('.br-modal-header .close');\n  let origem = null;\n  function focaveis() {\n    return Array.from(janela.querySelectorAll('button, [href], input, select, textarea')).filter((el) => !el.disabled);\n  }\n  function abrirJanela() {\n    origem = document.activeElement;\n    scrim.classList.add('active');\n    janela.querySelector('.br-modal-footer .primary').focus();\n  }\n  function fecharJanela() {\n    scrim.classList.remove('active');\n    origem.focus();\n  }\n  abrir.addEventListener('click', abrirJanela);\n  if (fechar) fechar.addEventListener('click', fecharJanela);\n  janela.querySelectorAll('.br-modal-footer .secondary').forEach((b) => b.addEventListener('click', fecharJanela));\n  janela.addEventListener('keydown', (e) => {\n    if (e.key === 'Escape') {\n      fecharJanela();\n    }\n    if (e.key === 'Tab') {\n      const lista = focaveis();\n      const primeiro = lista[0];\n      const ultimo = lista[lista.length - 1];\n      if (e.shiftKey && document.activeElement === primeiro) {\n        e.preventDefault();\n        ultimo.focus();\n      } else if (!e.shiftKey && document.activeElement === ultimo) {\n        e.preventDefault();\n        primeiro.focus();\n      }\n    }\n  });\n})();\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

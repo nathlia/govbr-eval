@@ -104,6 +104,16 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
     em `tela-a/` (inventário, elegibilidade, sorteio, registro da construção, conferência sem
     modelo). Não edite specs à mão: a referência só muda por descarte previsto no procedimento ou por decisão
     registrada (D-83, procedimento §6).
+- **Controles do catálogo (NAT-85 P1 / NAT-77, `controles/`).** Páginas da "Biblioteca Municipal"
+  geradas por `npm run controles:construir` a partir do catálogo
+  (`thesis-workspace/planejamento/atual/catalogo-controles-2026-10-15/catalogo.json`) e publicadas em
+  `govbr-corpus/public/controles/` com nomes opacos (`a/` = desenvolvimento, `b/` = reserva; o mapa
+  id opaco → gêmeo só existe aqui). `controles/expectativas.json` (desenvolvimento) e
+  `controles/reserva/expectativas.json` (**reserva: 19 casos; nenhum detector roda nelas antes de
+  congelado**) trazem, por gêmeo, células do catálogo, receita, fatos e a mudança controlada como
+  trocas literais. `npm run controles:medir` (depois do `npm run build` do corpus) mede tudo sem
+  oráculo (CDP/AX, foco profundo, DOM/CSS, recortes, axe) e arquiva em `controles/medicoes/<carimbo>/`
+  com manifesto sha256. Divergência corrige a página, nunca a expectativa.
 - `adjudications.json` — human verdicts on findings that matched no expected unit (D-21).
   `npm run adjudicate` (`--emit` semeia stubs, `--blind` julga sem ver o braço). Um veredito sem
   `rationale` não é aplicado. `npm run score` imprime **piso** e **adjudicado**, nunca um no lugar

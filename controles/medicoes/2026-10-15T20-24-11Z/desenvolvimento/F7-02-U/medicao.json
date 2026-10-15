@@ -1,0 +1,201 @@
+{
+  "gemeo": "F7-02-U",
+  "caso": "F7-02",
+  "papel": "sem-fonte",
+  "pagina": {
+    "id": "c-02cf28d4b6",
+    "caminho": "/controles/a/c-02cf28d4b6.html",
+    "sha256": "9098ba3107a158c6f295fa12e69d8d29b511ae4c2fe11ecf3e84d1aaa5dc80aa"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": null,
+  "fatos": [
+    {
+      "captura": "antes",
+      "tipo": "dom",
+      "expr": "document.getElementById(document.getElementById('filtros').getAttribute('aria-controls'))",
+      "op": "igual",
+      "valor": null,
+      "nota": "IDREF de aria-controls não resolve",
+      "medido": null,
+      "ok": true
+    },
+    {
+      "captura": "antes",
+      "tipo": "ax",
+      "alvo": "#filtros",
+      "prop": "expandido",
+      "op": "igual",
+      "valor": false,
+      "medido": false,
+      "ok": true,
+      "papel": "button",
+      "nome": "Mostrar filtros"
+    },
+    {
+      "captura": "depois",
+      "tipo": "dom",
+      "expr": "document.getElementById('painel-filtros').hidden",
+      "op": "igual",
+      "valor": false,
+      "nota": "painel aberto",
+      "medido": false,
+      "ok": true
+    },
+    {
+      "captura": "depois",
+      "tipo": "ax",
+      "alvo": "#filtros",
+      "prop": "controla",
+      "op": "vazio",
+      "nota": "com o painel visível, a relação continua vazia",
+      "medido": [],
+      "ok": true,
+      "papel": "button",
+      "nome": "Mostrar filtros"
+    },
+    {
+      "captura": "depois",
+      "tipo": "ax",
+      "alvo": "#filtros",
+      "prop": "expandido",
+      "op": "igual",
+      "valor": true,
+      "medido": true,
+      "ok": true,
+      "papel": "button",
+      "nome": "Mostrar filtros"
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/a/c-02cf28d4b6.html",
+    "hashBuild": "9098ba3107a158c6f295fa12e69d8d29b511ae4c2fe11ecf3e84d1aaa5dc80aa",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "capturar",
+        "nome": "antes"
+      },
+      {
+        "acao": "clicar",
+        "alvo": "#filtros"
+      },
+      {
+        "acao": "capturar",
+        "nome": "depois"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "capturar",
+        "nome": "antes",
+        "foco": {
+          "tag": "body"
+        }
+      },
+      {
+        "passo": 2,
+        "acao": "clicar",
+        "alvo": "#filtros",
+        "foco": {
+          "tag": "button",
+          "id": "filtros",
+          "classe": "br-button secondary",
+          "texto": "Mostrar filtros"
+        }
+      },
+      {
+        "passo": 3,
+        "acao": "capturar",
+        "nome": "depois",
+        "foco": {
+          "tag": "button",
+          "id": "filtros",
+          "classe": "br-button secondary",
+          "texto": "Mostrar filtros"
+        }
+      }
+    ],
+    "capturas": {
+      "antes": {
+        "passo": 1,
+        "foco": {
+          "tag": "body"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Resultados da busca – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Resultados para \"Machado de Assis\"</h1>\n<p>12 títulos encontrados no acervo.</p>\n<button class=\"br-button secondary\" type=\"button\" id=\"filtros\" aria-expanded=\"false\" aria-controls=\"painel-filtro\"><i class=\"fas fa-filter mr-1\" aria-hidden=\"true\"></i><span class=\"texto\">Mostrar filtros</span></button>\n<div class=\"painel-filtros\" id=\"painel-filtros\" hidden=\"\">\n  <div class=\"br-checkbox\"><input id=\"f-disponivel\" name=\"f-disponivel\" type=\"checkbox\"><label for=\"f-disponivel\">Disponível agora</label></div>\n  <div class=\"br-checkbox\"><input id=\"f-digital\" name=\"f-digital\" type=\"checkbox\"><label for=\"f-digital\">Livro digital</label></div>\n</div>\n<div class=\"secao\">\n  <div class=\"br-list lista-livros\">\n    <div class=\"br-item\"><p class=\"titulo-livro mb-0\">Dom Casmurro</p><p class=\"detalhe-livro mb-0\">Romance, 1899</p></div>\n    <div class=\"br-item\"><p class=\"titulo-livro mb-0\">Memórias póstumas de Brás Cubas</p><p class=\"detalhe-livro mb-0\">Romance, 1881</p></div>\n    <div class=\"br-item\"><p class=\"titulo-livro mb-0\">Quincas Borba</p><p class=\"detalhe-livro mb-0\">Romance, 1891</p></div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\nconst botao = document.getElementById('filtros');\nconst painel = document.getElementById('painel-filtros');\nbotao.addEventListener('click', () => {\n  painel.hidden = !painel.hidden;\n  botao.setAttribute('aria-expanded', String(!painel.hidden));\n});\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": [
+          {
+            "tipo": "ax",
+            "alvo": "#filtros",
+            "prop": "expandido",
+            "op": "igual",
+            "valor": false,
+            "medido": false,
+            "ok": true,
+            "papel": "button",
+            "nome": "Mostrar filtros"
+          }
+        ]
+      },
+      "depois": {
+        "passo": 3,
+        "foco": {
+          "tag": "button",
+          "id": "filtros",
+          "classe": "br-button secondary",
+          "texto": "Mostrar filtros"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Resultados da busca – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Resultados para \"Machado de Assis\"</h1>\n<p>12 títulos encontrados no acervo.</p>\n<button class=\"br-button secondary\" type=\"button\" id=\"filtros\" aria-expanded=\"true\" aria-controls=\"painel-filtro\"><i class=\"fas fa-filter mr-1\" aria-hidden=\"true\"></i><span class=\"texto\">Mostrar filtros</span></button>\n<div class=\"painel-filtros\" id=\"painel-filtros\">\n  <div class=\"br-checkbox\"><input id=\"f-disponivel\" name=\"f-disponivel\" type=\"checkbox\"><label for=\"f-disponivel\">Disponível agora</label></div>\n  <div class=\"br-checkbox\"><input id=\"f-digital\" name=\"f-digital\" type=\"checkbox\"><label for=\"f-digital\">Livro digital</label></div>\n</div>\n<div class=\"secao\">\n  <div class=\"br-list lista-livros\">\n    <div class=\"br-item\"><p class=\"titulo-livro mb-0\">Dom Casmurro</p><p class=\"detalhe-livro mb-0\">Romance, 1899</p></div>\n    <div class=\"br-item\"><p class=\"titulo-livro mb-0\">Memórias póstumas de Brás Cubas</p><p class=\"detalhe-livro mb-0\">Romance, 1881</p></div>\n    <div class=\"br-item\"><p class=\"titulo-livro mb-0\">Quincas Borba</p><p class=\"detalhe-livro mb-0\">Romance, 1891</p></div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\nconst botao = document.getElementById('filtros');\nconst painel = document.getElementById('painel-filtros');\nbotao.addEventListener('click', () => {\n  painel.hidden = !painel.hidden;\n  botao.setAttribute('aria-expanded', String(!painel.hidden));\n});\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": [
+          {
+            "tipo": "ax",
+            "alvo": "#filtros",
+            "prop": "controla",
+            "op": "vazio",
+            "nota": "com o painel visível, a relação continua vazia",
+            "medido": [],
+            "ok": true,
+            "papel": "button",
+            "nome": "Mostrar filtros"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#filtros",
+            "prop": "expandido",
+            "op": "igual",
+            "valor": true,
+            "medido": true,
+            "ok": true,
+            "papel": "button",
+            "nome": "Mostrar filtros"
+          }
+        ]
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

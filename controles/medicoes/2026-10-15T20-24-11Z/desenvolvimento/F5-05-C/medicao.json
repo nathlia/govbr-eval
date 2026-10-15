@@ -1,0 +1,96 @@
+{
+  "gemeo": "F5-05-C",
+  "caso": "F5-05",
+  "papel": "conforme",
+  "pagina": {
+    "id": "c-271a598b0a",
+    "caminho": "/controles/a/c-271a598b0a.html",
+    "sha256": "4df4310ae316c4219114552aa0bc6a4ad39cbf8bf832a3bf3f964f8e7dc46ccb"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": {
+    "de": "F5-05-D",
+    "paginaDe": "/controles/a/c-4aa4041b08.html",
+    "trocas": 1,
+    "ok": true,
+    "erros": []
+  },
+  "fatos": [
+    {
+      "captura": "inicial",
+      "tipo": "ax",
+      "alvo": "#logo",
+      "prop": "nome",
+      "op": "igual",
+      "valor": "Biblioteca Municipal – página inicial",
+      "medido": "Biblioteca Municipal – página inicial",
+      "ok": true,
+      "papel": "link",
+      "nome": "Biblioteca Municipal – página inicial"
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/a/c-271a598b0a.html",
+    "hashBuild": "4df4310ae316c4219114552aa0bc6a4ad39cbf8bf832a3bf3f964f8e7dc46ccb",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "capturar",
+        "nome": "inicial"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "capturar",
+        "nome": "inicial",
+        "foco": {
+          "tag": "body"
+        }
+      }
+    ],
+    "capturas": {
+      "inicial": {
+        "passo": 1,
+        "foco": {
+          "tag": "body"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Início – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><a id=\"logo\" href=\"#\"><img src=\"../recursos/logo.svg\" width=\"40\" height=\"40\" alt=\"Biblioteca Municipal – página inicial\"></a><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Bem-vindo à Biblioteca Municipal</h1>\n<p>Consulte o acervo, renove empréstimos e acompanhe suas reservas sem sair de casa.</p>\n<div class=\"secao\">\n  <h2>Serviços</h2>\n  <ul>\n    <li><a href=\"#\">Renovar empréstimos</a></li>\n    <li><a href=\"#\">Minhas reservas</a></li>\n    <li><a href=\"#\">Acervo digital</a></li>\n  </ul>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": [
+          {
+            "tipo": "ax",
+            "alvo": "#logo",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Biblioteca Municipal – página inicial",
+            "medido": "Biblioteca Municipal – página inicial",
+            "ok": true,
+            "papel": "link",
+            "nome": "Biblioteca Municipal – página inicial"
+          }
+        ]
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

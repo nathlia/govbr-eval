@@ -1,0 +1,99 @@
+{
+  "tipo": "completo",
+  "pagina": "/controles/b/c-3c25456b36.html",
+  "hashBuild": "afd1561555bb0c4520ca4fa2db6e9447e63c31a86dbd71864494370e46dd0015",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "eProv": "pagina",
+  "receita": [
+    {
+      "acao": "capturar",
+      "nome": "inicial"
+    },
+    {
+      "acao": "focar",
+      "alvo": "#ver-aviso"
+    },
+    {
+      "acao": "tecla",
+      "tecla": "Enter"
+    },
+    {
+      "acao": "capturar",
+      "nome": "modal-aberta"
+    }
+  ],
+  "tracoFoco": [
+    {
+      "passo": 1,
+      "acao": "capturar",
+      "nome": "inicial",
+      "foco": {
+        "tag": "body"
+      }
+    },
+    {
+      "passo": 2,
+      "acao": "focar",
+      "alvo": "#ver-aviso",
+      "foco": {
+        "tag": "button",
+        "id": "ver-aviso",
+        "classe": "br-button secondary",
+        "texto": "Ver aviso sobre multas"
+      }
+    },
+    {
+      "passo": 3,
+      "acao": "tecla",
+      "tecla": "Enter",
+      "foco": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button primary",
+        "texto": "Entendi"
+      }
+    },
+    {
+      "passo": 4,
+      "acao": "capturar",
+      "nome": "modal-aberta",
+      "foco": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button primary",
+        "texto": "Entendi"
+      }
+    }
+  ],
+  "capturas": {
+    "inicial": {
+      "passo": 1,
+      "foco": {
+        "tag": "body"
+      },
+      "dom": {
+        "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Avisos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Avisos</h1>\n<div class=\"br-message info\" id=\"info\">\n  <div class=\"content\">A biblioteca estará fechada em 2 de novembro, feriado de Finados.</div>\n</div>\n<p>Leitores com livros em atraso têm o empréstimo bloqueado até a regularização.</p>\n<button class=\"br-button secondary\" type=\"button\" id=\"ver-aviso\">Ver aviso sobre multas</button>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<div class=\"br-scrim-util foco\" id=\"scrim-alerta\">\n  <div class=\"br-modal small\" id=\"alerta\" role=\"dialog\" aria-modal=\"true\" aria-label=\"Aviso sobre multas\" data-tipo=\"alerta\">\n    <div class=\"br-modal-body\">\n      <p>A partir de 1º de novembro, a multa por atraso passa a ser de R$ 0,60 por dia, por livro.</p>\n    </div>\n    <div class=\"br-modal-footer justify-content-end\">\n      <button class=\"br-button primary\" type=\"button\">Entendi</button>\n    </div>\n  </div>\n</div>\n<script>\n(function () {\n  const scrim = document.getElementById('scrim-alerta');\n  const janela = document.getElementById('alerta');\n  const abrir = document.getElementById('ver-aviso');\n  const fechar = janela.querySelector('.br-modal-header .close');\n  let origem = null;\n  function focaveis() {\n    return Array.from(janela.querySelectorAll('button, [href], input, select, textarea')).filter((el) => !el.disabled);\n  }\n  function abrirJanela() {\n    origem = document.activeElement;\n    scrim.classList.add('active');\n    janela.querySelector('.br-modal-footer .primary').focus();\n  }\n  function fecharJanela() {\n    scrim.classList.remove('active');\n    origem.focus();\n  }\n  abrir.addEventListener('click', abrirJanela);\n  if (fechar) fechar.addEventListener('click', fecharJanela);\n  janela.querySelectorAll('.br-modal-footer .br-button').forEach((b) => b.addEventListener('click', fecharJanela));\n  janela.addEventListener('keydown', (e) => {\n    if (e.key === 'Escape') {\n      fecharJanela();\n    }\n    if (e.key === 'Tab') {\n      const lista = focaveis();\n      const primeiro = lista[0];\n      const ultimo = lista[lista.length - 1];\n      if (e.shiftKey && document.activeElement === primeiro) {\n        e.preventDefault();\n        ultimo.focus();\n      } else if (!e.shiftKey && document.activeElement === ultimo) {\n        e.preventDefault();\n        primeiro.focus();\n      }\n    }\n  });\n})();\n</script>\n\n\n</body></html>",
+        "raizesAbertas": []
+      },
+      "ax": []
+    },
+    "modal-aberta": {
+      "passo": 4,
+      "foco": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button primary",
+        "texto": "Entendi"
+      },
+      "dom": {
+        "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Avisos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Avisos</h1>\n<div class=\"br-message info\" id=\"info\">\n  <div class=\"content\">A biblioteca estará fechada em 2 de novembro, feriado de Finados.</div>\n</div>\n<p>Leitores com livros em atraso têm o empréstimo bloqueado até a regularização.</p>\n<button class=\"br-button secondary\" type=\"button\" id=\"ver-aviso\">Ver aviso sobre multas</button>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<div class=\"br-scrim-util foco active\" id=\"scrim-alerta\">\n  <div class=\"br-modal small\" id=\"alerta\" role=\"dialog\" aria-modal=\"true\" aria-label=\"Aviso sobre multas\" data-tipo=\"alerta\">\n    <div class=\"br-modal-body\">\n      <p>A partir de 1º de novembro, a multa por atraso passa a ser de R$ 0,60 por dia, por livro.</p>\n    </div>\n    <div class=\"br-modal-footer justify-content-end\">\n      <button class=\"br-button primary\" type=\"button\">Entendi</button>\n    </div>\n  </div>\n</div>\n<script>\n(function () {\n  const scrim = document.getElementById('scrim-alerta');\n  const janela = document.getElementById('alerta');\n  const abrir = document.getElementById('ver-aviso');\n  const fechar = janela.querySelector('.br-modal-header .close');\n  let origem = null;\n  function focaveis() {\n    return Array.from(janela.querySelectorAll('button, [href], input, select, textarea')).filter((el) => !el.disabled);\n  }\n  function abrirJanela() {\n    origem = document.activeElement;\n    scrim.classList.add('active');\n    janela.querySelector('.br-modal-footer .primary').focus();\n  }\n  function fecharJanela() {\n    scrim.classList.remove('active');\n    origem.focus();\n  }\n  abrir.addEventListener('click', abrirJanela);\n  if (fechar) fechar.addEventListener('click', fecharJanela);\n  janela.querySelectorAll('.br-modal-footer .br-button').forEach((b) => b.addEventListener('click', fecharJanela));\n  janela.addEventListener('keydown', (e) => {\n    if (e.key === 'Escape') {\n      fecharJanela();\n    }\n    if (e.key === 'Tab') {\n      const lista = focaveis();\n      const primeiro = lista[0];\n      const ultimo = lista[lista.length - 1];\n      if (e.shiftKey && document.activeElement === primeiro) {\n        e.preventDefault();\n        ultimo.focus();\n      } else if (!e.shiftKey && document.activeElement === ultimo) {\n        e.preventDefault();\n        primeiro.focus();\n      }\n    }\n  });\n})();\n</script>\n\n\n</body></html>",
+        "raizesAbertas": []
+      },
+      "ax": []
+    }
+  }
+}

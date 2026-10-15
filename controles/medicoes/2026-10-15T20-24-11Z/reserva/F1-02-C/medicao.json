@@ -1,0 +1,181 @@
+{
+  "gemeo": "F1-02-C",
+  "caso": "F1-02",
+  "papel": "conforme",
+  "pagina": {
+    "id": "c-be6665a534",
+    "caminho": "/controles/b/c-be6665a534.html",
+    "sha256": "fb7b615181a7302effb40cb25b2b260ba1180acfd157e53a3a31552733282932"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": {
+    "de": "F1-02-A",
+    "paginaDe": "/controles/b/c-844dc98fdd.html",
+    "trocas": 3,
+    "ok": true,
+    "erros": []
+  },
+  "fatos": [
+    {
+      "captura": "apos-enviar",
+      "tipo": "dom",
+      "expr": "(document.getElementById('cartao-erro') || {}).textContent.trim()",
+      "op": "igual",
+      "valor": "Número do cartão: informe 8 dígitos.",
+      "medido": "Número do cartão: informe 8 dígitos.",
+      "ok": true
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "ax",
+      "alvo": "#cartao",
+      "prop": "invalido",
+      "op": "igual",
+      "valor": false,
+      "medido": false,
+      "ok": true,
+      "papel": "textbox",
+      "nome": "Número do cartão"
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "dom",
+      "expr": "document.getElementById('cartao').closest('.br-input').contains(document.getElementById('cartao-erro'))",
+      "op": "igual",
+      "valor": true,
+      "nota": "logo abaixo do campo",
+      "medido": true,
+      "ok": true
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/b/c-be6665a534.html",
+    "hashBuild": "fb7b615181a7302effb40cb25b2b260ba1180acfd157e53a3a31552733282932",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "preencher",
+        "alvo": "#cartao",
+        "valor": "12"
+      },
+      {
+        "acao": "capturar",
+        "nome": "antes-de-enviar"
+      },
+      {
+        "acao": "clicar",
+        "alvo": "#form-renovacao button[type=submit]"
+      },
+      {
+        "acao": "capturar",
+        "nome": "apos-enviar"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "preencher",
+        "alvo": "#cartao",
+        "foco": {
+          "tag": "input",
+          "id": "cartao",
+          "classe": null,
+          "texto": ""
+        }
+      },
+      {
+        "passo": 2,
+        "acao": "capturar",
+        "nome": "antes-de-enviar",
+        "foco": {
+          "tag": "input",
+          "id": "cartao",
+          "classe": null,
+          "texto": ""
+        }
+      },
+      {
+        "passo": 3,
+        "acao": "clicar",
+        "alvo": "#form-renovacao button[type=submit]",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button primary",
+          "texto": "Consultar empréstimos"
+        }
+      },
+      {
+        "passo": 4,
+        "acao": "capturar",
+        "nome": "apos-enviar",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button primary",
+          "texto": "Consultar empréstimos"
+        }
+      }
+    ],
+    "capturas": {
+      "antes-de-enviar": {
+        "passo": 2,
+        "foco": {
+          "tag": "input",
+          "id": "cartao",
+          "classe": null,
+          "texto": ""
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Renovar empréstimos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<div class=\"row\">\n  <div class=\"col-md-8 col-lg-6\">\n    <h1>Renovar empréstimos</h1>\n    <p>Informe o número do seu cartão da biblioteca para ver os livros que podem ser renovados.</p>\n    <form id=\"form-renovacao\" novalidate=\"\">\n<div class=\"br-input mb-3\">\n  <label for=\"cartao\">Número do cartão</label>\n  <input id=\"cartao\" name=\"cartao\" type=\"text\" inputmode=\"numeric\" autocomplete=\"off\">\n</div>\n      <button class=\"br-button primary\" type=\"submit\">Consultar empréstimos</button>\n    </form>\n    <div id=\"resultado\" class=\"mt-4\" role=\"status\"></div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\nconst formulario = document.getElementById('form-renovacao');\nconst campo = document.getElementById('cartao');\nconst caixa = campo.closest('.br-input');\nconst resultado = document.getElementById('resultado');\nformulario.addEventListener('submit', (evento) => {\n  evento.preventDefault();\n  const anterior = document.getElementById('cartao-erro');\n  if (anterior) anterior.remove();\n  caixa.classList.remove('danger');\n  resultado.innerHTML = '';\n  if (!/^\\d{8}$/.test(campo.value.trim())) {\n    caixa.classList.add('danger');\n    const mensagem = document.createElement('span');\n    mensagem.className = 'feedback danger';\n    mensagem.id = 'cartao-erro';\n    mensagem.innerHTML = '<i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>Número do cartão: informe 8 dígitos.';\n    caixa.appendChild(mensagem);\n    return;\n  }\n  resultado.innerHTML = '<div class=\"br-message success\"><div class=\"icon\"><i class=\"fas fa-check-circle fa-lg\" aria-hidden=\"true\"></i></div><div class=\"content\"><span class=\"message-title\">Cartão encontrado.</span><span class=\"message-body\"> Você tem 2 livros que podem ser renovados.</span></div></div>';\n});\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      },
+      "apos-enviar": {
+        "passo": 4,
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button primary",
+          "texto": "Consultar empréstimos"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Renovar empréstimos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<div class=\"row\">\n  <div class=\"col-md-8 col-lg-6\">\n    <h1>Renovar empréstimos</h1>\n    <p>Informe o número do seu cartão da biblioteca para ver os livros que podem ser renovados.</p>\n    <form id=\"form-renovacao\" novalidate=\"\">\n<div class=\"br-input mb-3 danger\">\n  <label for=\"cartao\">Número do cartão</label>\n  <input id=\"cartao\" name=\"cartao\" type=\"text\" inputmode=\"numeric\" autocomplete=\"off\">\n<span class=\"feedback danger\" id=\"cartao-erro\"><i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>Número do cartão: informe 8 dígitos.</span></div>\n      <button class=\"br-button primary\" type=\"submit\">Consultar empréstimos</button>\n    </form>\n    <div id=\"resultado\" class=\"mt-4\" role=\"status\"></div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\nconst formulario = document.getElementById('form-renovacao');\nconst campo = document.getElementById('cartao');\nconst caixa = campo.closest('.br-input');\nconst resultado = document.getElementById('resultado');\nformulario.addEventListener('submit', (evento) => {\n  evento.preventDefault();\n  const anterior = document.getElementById('cartao-erro');\n  if (anterior) anterior.remove();\n  caixa.classList.remove('danger');\n  resultado.innerHTML = '';\n  if (!/^\\d{8}$/.test(campo.value.trim())) {\n    caixa.classList.add('danger');\n    const mensagem = document.createElement('span');\n    mensagem.className = 'feedback danger';\n    mensagem.id = 'cartao-erro';\n    mensagem.innerHTML = '<i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>Número do cartão: informe 8 dígitos.';\n    caixa.appendChild(mensagem);\n    return;\n  }\n  resultado.innerHTML = '<div class=\"br-message success\"><div class=\"icon\"><i class=\"fas fa-check-circle fa-lg\" aria-hidden=\"true\"></i></div><div class=\"content\"><span class=\"message-title\">Cartão encontrado.</span><span class=\"message-body\"> Você tem 2 livros que podem ser renovados.</span></div></div>';\n});\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": [
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "invalido",
+            "op": "igual",
+            "valor": false,
+            "medido": false,
+            "ok": true,
+            "papel": "textbox",
+            "nome": "Número do cartão"
+          }
+        ]
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

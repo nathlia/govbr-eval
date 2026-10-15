@@ -1,0 +1,325 @@
+{
+  "gemeo": "F1-08-D",
+  "caso": "F1-08",
+  "papel": "defeituoso",
+  "pagina": {
+    "id": "c-f195c4ff85",
+    "caminho": "/controles/a/c-f195c4ff85.html",
+    "sha256": "c5dc9f4ad0bee9be6a822128ff05683be28f9ca97bd583985cc50c60fb69a516"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": null,
+  "fatos": [
+    {
+      "captura": "apos-enviar",
+      "tipo": "ax",
+      "alvo": "#cartao",
+      "prop": "invalido",
+      "op": "igual",
+      "valor": true,
+      "medido": true,
+      "ok": true,
+      "papel": "textbox",
+      "nome": "Número do cartão"
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "ax",
+      "alvo": "#cartao",
+      "prop": "descricao",
+      "op": "naoVazio",
+      "medido": "Informe os 8 dígitos impressos no cartão.",
+      "ok": true,
+      "papel": "textbox",
+      "nome": "Número do cartão"
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "ax",
+      "alvo": "#email",
+      "prop": "invalido",
+      "op": "igual",
+      "valor": true,
+      "medido": true,
+      "ok": true,
+      "papel": "textbox",
+      "nome": "E-mail"
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "ax",
+      "alvo": "#email",
+      "prop": "descricao",
+      "op": "naoVazio",
+      "medido": "Use o formato nome@provedor.com.br.",
+      "ok": true,
+      "papel": "textbox",
+      "nome": "E-mail"
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "dom",
+      "expr": "document.getElementById('telefone-erro').textContent.trim()",
+      "op": "igual",
+      "valor": "Valor inválido.",
+      "medido": "Valor inválido.",
+      "ok": true
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "dom",
+      "expr": "/telefone/i.test(document.getElementById('telefone-erro').textContent)",
+      "op": "igual",
+      "valor": false,
+      "nota": "a mensagem não nomeia o campo",
+      "medido": false,
+      "ok": true
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "ax",
+      "alvo": "#telefone",
+      "prop": "invalido",
+      "op": "igual",
+      "valor": false,
+      "medido": false,
+      "ok": true,
+      "papel": "textbox",
+      "nome": "Telefone"
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "ax",
+      "alvo": "#telefone",
+      "prop": "descricao",
+      "op": "vazio",
+      "medido": "",
+      "ok": true,
+      "papel": "textbox",
+      "nome": "Telefone"
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "dom",
+      "expr": "getComputedStyle(document.getElementById('telefone')).borderTopColor",
+      "op": "diferenteDaCaptura",
+      "valor": "antes-de-enviar",
+      "medido": "rgb(229, 34, 7)",
+      "ok": true
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/a/c-f195c4ff85.html",
+    "hashBuild": "c5dc9f4ad0bee9be6a822128ff05683be28f9ca97bd583985cc50c60fb69a516",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "preencher",
+        "alvo": "#cartao",
+        "valor": "12"
+      },
+      {
+        "acao": "preencher",
+        "alvo": "#email",
+        "valor": "ana@"
+      },
+      {
+        "acao": "preencher",
+        "alvo": "#telefone",
+        "valor": "123"
+      },
+      {
+        "acao": "capturar",
+        "nome": "antes-de-enviar"
+      },
+      {
+        "acao": "clicar",
+        "alvo": "#form-contato button[type=submit]"
+      },
+      {
+        "acao": "capturar",
+        "nome": "apos-enviar"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "preencher",
+        "alvo": "#cartao",
+        "foco": {
+          "tag": "input",
+          "id": "cartao",
+          "classe": null,
+          "texto": ""
+        }
+      },
+      {
+        "passo": 2,
+        "acao": "preencher",
+        "alvo": "#email",
+        "foco": {
+          "tag": "input",
+          "id": "email",
+          "classe": null,
+          "texto": ""
+        }
+      },
+      {
+        "passo": 3,
+        "acao": "preencher",
+        "alvo": "#telefone",
+        "foco": {
+          "tag": "input",
+          "id": "telefone",
+          "classe": null,
+          "texto": ""
+        }
+      },
+      {
+        "passo": 4,
+        "acao": "capturar",
+        "nome": "antes-de-enviar",
+        "foco": {
+          "tag": "input",
+          "id": "telefone",
+          "classe": null,
+          "texto": ""
+        }
+      },
+      {
+        "passo": 5,
+        "acao": "clicar",
+        "alvo": "#form-contato button[type=submit]",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button primary",
+          "texto": "Salvar dados"
+        }
+      },
+      {
+        "passo": 6,
+        "acao": "capturar",
+        "nome": "apos-enviar",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button primary",
+          "texto": "Salvar dados"
+        }
+      }
+    ],
+    "capturas": {
+      "antes-de-enviar": {
+        "passo": 4,
+        "foco": {
+          "tag": "input",
+          "id": "telefone",
+          "classe": null,
+          "texto": ""
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Atualizar dados de contato – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<div class=\"row\">\n  <div class=\"col-md-8 col-lg-6\">\n    <h1>Atualizar dados de contato</h1>\n    <p>Mantenha seus dados em dia para receber os avisos de devolução e de reservas disponíveis.</p>\n    <form id=\"form-contato\" novalidate=\"\">\n<div class=\"br-input mb-3\">\n  <label for=\"cartao\">Número do cartão</label>\n  <input id=\"cartao\" name=\"cartao\" type=\"text\" inputmode=\"numeric\" autocomplete=\"off\">\n</div>\n<div class=\"br-input mb-3\">\n  <label for=\"email\">E-mail</label>\n  <input id=\"email\" name=\"email\" type=\"email\" autocomplete=\"email\">\n</div>\n<div class=\"br-input mb-3\">\n  <label for=\"telefone\">Telefone</label>\n  <input id=\"telefone\" name=\"telefone\" type=\"tel\" autocomplete=\"tel\">\n</div>\n      <button class=\"br-button primary\" type=\"submit\">Salvar dados</button>\n    </form>\n    <div id=\"resultado\" class=\"mt-4\" role=\"status\"></div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\nconst formulario = document.getElementById('form-contato');\nconst cartao = document.getElementById('cartao');\nconst email = document.getElementById('email');\nconst telefone = document.getElementById('telefone');\nconst resultado = document.getElementById('resultado');\nfunction marcar(campo, texto) {\n  const caixa = campo.closest('.br-input');\n  caixa.classList.add('danger');\n  const mensagem = document.createElement('span');\n  mensagem.className = 'feedback danger';\n  mensagem.id = campo.id + '-erro';\n  mensagem.innerHTML = '<i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>' + texto;\n  caixa.appendChild(mensagem);\n}\nformulario.addEventListener('submit', (evento) => {\n  evento.preventDefault();\n  resultado.innerHTML = '';\n  [cartao, email, telefone].forEach((campo) => {\n    campo.closest('.br-input').classList.remove('danger');\n    campo.removeAttribute('aria-invalid');\n    campo.removeAttribute('aria-describedby');\n    const anterior = document.getElementById(campo.id + '-erro');\n    if (anterior) anterior.remove();\n  });\n  let erros = 0;\n  if (!/^\\d{8}$/.test(cartao.value.trim())) {\n    marcar(cartao, 'Informe os 8 dígitos impressos no cartão.');\n    cartao.setAttribute('aria-invalid', 'true');\n    cartao.setAttribute('aria-describedby', 'cartao-erro');\n    erros += 1;\n  }\n  if (!/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(email.value.trim())) {\n    marcar(email, 'Use o formato nome@provedor.com.br.');\n    email.setAttribute('aria-invalid', 'true');\n    email.setAttribute('aria-describedby', 'email-erro');\n    erros += 1;\n  }\n  if (!/^\\d{10,11}$/.test(telefone.value.replace(/\\D/g, ''))) {\n    marcar(telefone, 'Valor inválido.');\n    erros += 1;\n  }\n  if (erros === 0) {\n    resultado.textContent = 'Dados atualizados.';\n  }\n});\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      },
+      "apos-enviar": {
+        "passo": 6,
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button primary",
+          "texto": "Salvar dados"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Atualizar dados de contato – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<div class=\"row\">\n  <div class=\"col-md-8 col-lg-6\">\n    <h1>Atualizar dados de contato</h1>\n    <p>Mantenha seus dados em dia para receber os avisos de devolução e de reservas disponíveis.</p>\n    <form id=\"form-contato\" novalidate=\"\">\n<div class=\"br-input mb-3 danger\">\n  <label for=\"cartao\">Número do cartão</label>\n  <input id=\"cartao\" name=\"cartao\" type=\"text\" inputmode=\"numeric\" autocomplete=\"off\" aria-invalid=\"true\" aria-describedby=\"cartao-erro\">\n<span class=\"feedback danger\" id=\"cartao-erro\"><i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>Informe os 8 dígitos impressos no cartão.</span></div>\n<div class=\"br-input mb-3 danger\">\n  <label for=\"email\">E-mail</label>\n  <input id=\"email\" name=\"email\" type=\"email\" autocomplete=\"email\" aria-invalid=\"true\" aria-describedby=\"email-erro\">\n<span class=\"feedback danger\" id=\"email-erro\"><i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>Use o formato nome@provedor.com.br.</span></div>\n<div class=\"br-input mb-3 danger\">\n  <label for=\"telefone\">Telefone</label>\n  <input id=\"telefone\" name=\"telefone\" type=\"tel\" autocomplete=\"tel\">\n<span class=\"feedback danger\" id=\"telefone-erro\"><i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>Valor inválido.</span></div>\n      <button class=\"br-button primary\" type=\"submit\">Salvar dados</button>\n    </form>\n    <div id=\"resultado\" class=\"mt-4\" role=\"status\"></div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\nconst formulario = document.getElementById('form-contato');\nconst cartao = document.getElementById('cartao');\nconst email = document.getElementById('email');\nconst telefone = document.getElementById('telefone');\nconst resultado = document.getElementById('resultado');\nfunction marcar(campo, texto) {\n  const caixa = campo.closest('.br-input');\n  caixa.classList.add('danger');\n  const mensagem = document.createElement('span');\n  mensagem.className = 'feedback danger';\n  mensagem.id = campo.id + '-erro';\n  mensagem.innerHTML = '<i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>' + texto;\n  caixa.appendChild(mensagem);\n}\nformulario.addEventListener('submit', (evento) => {\n  evento.preventDefault();\n  resultado.innerHTML = '';\n  [cartao, email, telefone].forEach((campo) => {\n    campo.closest('.br-input').classList.remove('danger');\n    campo.removeAttribute('aria-invalid');\n    campo.removeAttribute('aria-describedby');\n    const anterior = document.getElementById(campo.id + '-erro');\n    if (anterior) anterior.remove();\n  });\n  let erros = 0;\n  if (!/^\\d{8}$/.test(cartao.value.trim())) {\n    marcar(cartao, 'Informe os 8 dígitos impressos no cartão.');\n    cartao.setAttribute('aria-invalid', 'true');\n    cartao.setAttribute('aria-describedby', 'cartao-erro');\n    erros += 1;\n  }\n  if (!/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(email.value.trim())) {\n    marcar(email, 'Use o formato nome@provedor.com.br.');\n    email.setAttribute('aria-invalid', 'true');\n    email.setAttribute('aria-describedby', 'email-erro');\n    erros += 1;\n  }\n  if (!/^\\d{10,11}$/.test(telefone.value.replace(/\\D/g, ''))) {\n    marcar(telefone, 'Valor inválido.');\n    erros += 1;\n  }\n  if (erros === 0) {\n    resultado.textContent = 'Dados atualizados.';\n  }\n});\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": [
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "invalido",
+            "op": "igual",
+            "valor": true,
+            "medido": true,
+            "ok": true,
+            "papel": "textbox",
+            "nome": "Número do cartão"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "descricao",
+            "op": "naoVazio",
+            "medido": "Informe os 8 dígitos impressos no cartão.",
+            "ok": true,
+            "papel": "textbox",
+            "nome": "Número do cartão"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#email",
+            "prop": "invalido",
+            "op": "igual",
+            "valor": true,
+            "medido": true,
+            "ok": true,
+            "papel": "textbox",
+            "nome": "E-mail"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#email",
+            "prop": "descricao",
+            "op": "naoVazio",
+            "medido": "Use o formato nome@provedor.com.br.",
+            "ok": true,
+            "papel": "textbox",
+            "nome": "E-mail"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#telefone",
+            "prop": "invalido",
+            "op": "igual",
+            "valor": false,
+            "medido": false,
+            "ok": true,
+            "papel": "textbox",
+            "nome": "Telefone"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#telefone",
+            "prop": "descricao",
+            "op": "vazio",
+            "medido": "",
+            "ok": true,
+            "papel": "textbox",
+            "nome": "Telefone"
+          }
+        ]
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

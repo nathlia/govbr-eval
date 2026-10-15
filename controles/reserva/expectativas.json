@@ -1,0 +1,3750 @@
+{
+  "_meta": {
+    "o_que_e": "RESERVA do catálogo de controles: expectativas e medição independente. Nenhum detector roda nestas páginas até ser congelado (commit registrado); rodam uma vez. Ajuste feito depois de ver a reserva a converte em desenvolvimento (registro no log de decisões).",
+    "catalogo": {
+      "versao": "catalogo-controles-1.0.0",
+      "arquivo": "thesis-workspace/planejamento/atual/catalogo-controles-2026-10-15/catalogo.json",
+      "sha256": "188809e95973e26552b31e19c9cb9b91755654bcfb916990ee476334a281a7ef"
+    },
+    "divisao": "reservado",
+    "split": {
+      "seed": "nat85-nat77-catalogo-controles-2026-10-15",
+      "manifestoSha256": "0bc712ecf5e6ef2fd3440a9dea6b912c314a778cf70312d86c089c1666b79d8a",
+      "casos": [
+        "F1-02",
+        "F1-04",
+        "F1-05",
+        "F1-06",
+        "F2-02",
+        "F2-04",
+        "F2-05",
+        "F3-06",
+        "F3-08",
+        "F3-09",
+        "F3-11",
+        "F4-01",
+        "F4-06",
+        "F5-01",
+        "F5-04",
+        "F6-03",
+        "F7-01",
+        "F8-01",
+        "F8-02"
+      ]
+    },
+    "corpus": {
+      "ala": "/controles/b/",
+      "manifesto": "public/controles/b/manifesto.json",
+      "recursos": "public/controles/recursos/manifesto.json",
+      "recursosSha256": "eb4016748ff6750e769345246cd49ae8d0941aa40ce1275b7fa97194730afc8d",
+      "alaManifestoSha256": "6f5f65146db084d249fb770d261490db7f8142df55c21a917bfa95542435b0a7"
+    },
+    "construcao": "node controles/construir.mjs (gera corpus + este arquivo); medição: node controles/medir.mjs",
+    "decisoes": "Q1 a (medição independente basta), Q2 a (mecanismo equivalente conta como conforme), Q3 a (F3-02-Q: violação do DS pela letra) — decisoes-do-assistente.md, 2026-10-15"
+  },
+  "gemeos": [
+    {
+      "gemeo": "F1-02-A",
+      "caso": "F1-02",
+      "familia": "F1",
+      "papel": "conforme",
+      "descricaoCatalogo": "aria-invalid='true' + aria-errormessage='cartao-erro'.",
+      "celulas": [
+        {
+          "sujeito": "input#cartao",
+          "normas": [
+            "wcag:3.3.1",
+            "emag:6.6"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-844dc98fdd",
+        "caminho": "/controles/b/c-844dc98fdd.html",
+        "sha256": "350796ff13c83bba34dab385f599e2c0c16c075cb67e50cd411c7d158a2a082e"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "preencher",
+          "alvo": "#cartao",
+          "valor": "12"
+        },
+        {
+          "acao": "capturar",
+          "nome": "antes-de-enviar"
+        },
+        {
+          "acao": "clicar",
+          "alvo": "#form-renovacao button[type=submit]"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-enviar"
+        }
+      ],
+      "fatos": {
+        "apos-enviar": [
+          {
+            "tipo": "dom",
+            "expr": "(document.getElementById('cartao-erro') || {}).textContent.trim()",
+            "op": "igual",
+            "valor": "Valor inválido."
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "invalido",
+            "op": "igual",
+            "valor": true
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "mensagemDeErro",
+            "op": "igual",
+            "valor": [
+              "cartao-erro"
+            ],
+            "nota": "aria-errormessage exposto"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F1-02-B",
+      "caso": "F1-02",
+      "familia": "F1",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "Igual a F1-02-A, mas SEM aria-invalid (aria-errormessage não é exposto); mensagem genérica 'Valor inválido.'; borda vermelha.",
+      "celulas": [
+        {
+          "sujeito": "input#cartao",
+          "normas": [
+            "wcag:3.3.1",
+            "emag:6.6"
+          ],
+          "esperado": "confirmed",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-30cf10024e",
+        "caminho": "/controles/b/c-30cf10024e.html",
+        "sha256": "12e095fb96086ad678004c0f3be5173d5d5499647e81da78aa7073ed06633508"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "preencher",
+          "alvo": "#cartao",
+          "valor": "12"
+        },
+        {
+          "acao": "capturar",
+          "nome": "antes-de-enviar"
+        },
+        {
+          "acao": "clicar",
+          "alvo": "#form-renovacao button[type=submit]"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-enviar"
+        }
+      ],
+      "fatos": {
+        "apos-enviar": [
+          {
+            "tipo": "dom",
+            "expr": "(document.getElementById('cartao-erro') || {}).textContent.trim()",
+            "op": "igual",
+            "valor": "Valor inválido."
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('cartao').getAttribute('aria-errormessage')",
+            "op": "igual",
+            "valor": "cartao-erro"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "invalido",
+            "op": "igual",
+            "valor": false
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "mensagemDeErro",
+            "op": "vazio",
+            "nota": "sem aria-invalid, aria-errormessage não é exposto"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "descricao",
+            "op": "vazio"
+          },
+          {
+            "tipo": "dom",
+            "expr": "getComputedStyle(document.getElementById('cartao')).borderTopColor",
+            "op": "diferenteDaCaptura",
+            "valor": "antes-de-enviar"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F1-02-A",
+        "paginaDe": "/controles/b/c-844dc98fdd.html",
+        "mudanca": "remove só aria-invalid",
+        "trocas": [
+          [
+            "  campo.removeAttribute('aria-invalid');\n",
+            ""
+          ],
+          [
+            "    campo.setAttribute('aria-invalid', 'true');\n",
+            ""
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F1-02-C",
+      "caso": "F1-02",
+      "familia": "F1",
+      "papel": "conforme",
+      "descricaoCatalogo": "Sem ARIA; mensagem 'Número do cartão: informe 8 dígitos.' logo abaixo.",
+      "celulas": [
+        {
+          "sujeito": "input#cartao",
+          "normas": [
+            "wcag:3.3.1",
+            "emag:6.6"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-be6665a534",
+        "caminho": "/controles/b/c-be6665a534.html",
+        "sha256": "fb7b615181a7302effb40cb25b2b260ba1180acfd157e53a3a31552733282932"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "preencher",
+          "alvo": "#cartao",
+          "valor": "12"
+        },
+        {
+          "acao": "capturar",
+          "nome": "antes-de-enviar"
+        },
+        {
+          "acao": "clicar",
+          "alvo": "#form-renovacao button[type=submit]"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-enviar"
+        }
+      ],
+      "fatos": {
+        "apos-enviar": [
+          {
+            "tipo": "dom",
+            "expr": "(document.getElementById('cartao-erro') || {}).textContent.trim()",
+            "op": "igual",
+            "valor": "Número do cartão: informe 8 dígitos."
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "invalido",
+            "op": "igual",
+            "valor": false
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('cartao').closest('.br-input').contains(document.getElementById('cartao-erro'))",
+            "op": "igual",
+            "valor": true,
+            "nota": "logo abaixo do campo"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F1-02-A",
+        "paginaDe": "/controles/b/c-844dc98fdd.html",
+        "mudanca": "sem ARIA; a mensagem nomeia o campo",
+        "trocas": [
+          [
+            "  campo.removeAttribute('aria-invalid');\n  campo.removeAttribute('aria-errormessage');\n",
+            ""
+          ],
+          [
+            "    campo.setAttribute('aria-invalid', 'true');\n    campo.setAttribute('aria-errormessage', 'cartao-erro');\n",
+            ""
+          ],
+          [
+            "Valor inválido.';",
+            "Número do cartão: informe 8 dígitos.';"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F1-02-E",
+      "caso": "F1-02",
+      "familia": "F1",
+      "papel": "conforme",
+      "descricaoCatalogo": "aria-invalid='true' + mensagem genérica adjacente, sem IDREF.",
+      "celulas": [
+        {
+          "sujeito": "input#cartao",
+          "normas": [
+            "wcag:3.3.1",
+            "emag:6.6"
+          ],
+          "esperado": "conforme",
+          "nota": "ARIA21 identifica o item; o erro está descrito em texto"
+        },
+        {
+          "sujeito": "input#cartao",
+          "normas": [
+            "wcag:1.3.1"
+          ],
+          "esperado": "unsupported",
+          "nota": "vínculo programático mensagem↔campo: nenhuma fonte obrigatória específica o exige quando o item já é identificado; coleta/revisão"
+        },
+        {
+          "sujeito": "input#cartao",
+          "normas": [
+            "ds:input-2a9e95371c51"
+          ],
+          "esperado": "nao-aplicavel",
+          "nota": "recomendado + condicional"
+        }
+      ],
+      "alegacoes": [
+        {
+          "gemeo": "F1-02-E",
+          "texto": "Falta aria-describedby ligando a mensagem (regra do DS para input)",
+          "sujeito": "input#cartao",
+          "norma": "ds:input-2a9e95371c51",
+          "classeEsperada": "erro-normativo"
+        }
+      ],
+      "pagina": {
+        "id": "c-3beadaacb4",
+        "caminho": "/controles/b/c-3beadaacb4.html",
+        "sha256": "9dbc5bcb3fc3283a2d96e3909618dea875fe0fbf4eafd93485706d3815ee9ea5"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "preencher",
+          "alvo": "#cartao",
+          "valor": "12"
+        },
+        {
+          "acao": "capturar",
+          "nome": "antes-de-enviar"
+        },
+        {
+          "acao": "clicar",
+          "alvo": "#form-renovacao button[type=submit]"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-enviar"
+        }
+      ],
+      "fatos": {
+        "apos-enviar": [
+          {
+            "tipo": "dom",
+            "expr": "(document.getElementById('cartao-erro') || {}).textContent.trim()",
+            "op": "igual",
+            "valor": "Valor inválido."
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "invalido",
+            "op": "igual",
+            "valor": true
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "descricao",
+            "op": "vazio"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "mensagemDeErro",
+            "op": "vazio"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('cartao').nextElementSibling === document.getElementById('cartao-erro')",
+            "op": "igual",
+            "valor": true,
+            "nota": "mensagem adjacente"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F1-02-A",
+        "paginaDe": "/controles/b/c-844dc98fdd.html",
+        "mudanca": "aria-invalid + mensagem genérica adjacente, sem IDREF",
+        "trocas": [
+          [
+            "  campo.removeAttribute('aria-errormessage');\n",
+            ""
+          ],
+          [
+            "    campo.setAttribute('aria-errormessage', 'cartao-erro');\n",
+            ""
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F1-04-D",
+      "caso": "F1-04",
+      "familia": "F1",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "Input dentro do shadow root aberto; a mensagem fica no light DOM, irmã do host, com o id referenciado.",
+      "celulas": [
+        {
+          "sujeito": "bib-campo::input",
+          "normas": [
+            "wcag:3.3.1",
+            "emag:6.6"
+          ],
+          "esperado": "confirmed",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-cd4decf910",
+        "caminho": "/controles/b/c-cd4decf910.html",
+        "sha256": "2845c3b8776b7e42a469c3cabc53afbf5702d180c12647b4d0ca92137e1acd66"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "preencher",
+          "alvo": "bib-campo >>> #campo",
+          "valor": "12"
+        },
+        {
+          "acao": "clicar",
+          "alvo": "#form-renovacao button[type=submit]"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-enviar"
+        }
+      ],
+      "fatos": {
+        "apos-enviar": [
+          {
+            "tipo": "dom",
+            "expr": "!!document.querySelector('bib-campo').shadowRoot",
+            "op": "igual",
+            "valor": true,
+            "nota": "raiz aberta"
+          },
+          {
+            "tipo": "dom",
+            "expr": "(document.getElementById('cartao-erro') || {}).textContent.trim()",
+            "op": "igual",
+            "valor": "Valor inválido.",
+            "nota": "mensagem no light DOM, irmã do host"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('bib-campo').shadowRoot.getElementById('campo').getAttribute('aria-describedby')",
+            "op": "igual",
+            "valor": "cartao-erro"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "bib-campo >>> #campo",
+            "prop": "descricao",
+            "op": "vazio"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "bib-campo >>> #campo",
+            "prop": "invalido",
+            "op": "igual",
+            "valor": false
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F1-04-C",
+      "caso": "F1-04",
+      "familia": "F1",
+      "papel": "conforme",
+      "descricaoCatalogo": "A mesma mensagem movida para dentro do mesmo shadow root.",
+      "celulas": [
+        {
+          "sujeito": "bib-campo::input",
+          "normas": [
+            "wcag:3.3.1",
+            "emag:6.6"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-743450c892",
+        "caminho": "/controles/b/c-743450c892.html",
+        "sha256": "95772c2a260c023534b8470b299c45a43660be067eee62664a3f3b2030ab6325"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "preencher",
+          "alvo": "bib-campo >>> #campo",
+          "valor": "12"
+        },
+        {
+          "acao": "clicar",
+          "alvo": "#form-renovacao button[type=submit]"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-enviar"
+        }
+      ],
+      "fatos": {
+        "apos-enviar": [
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('cartao-erro')",
+            "op": "igual",
+            "valor": null
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('bib-campo').shadowRoot.getElementById('cartao-erro').textContent.trim()",
+            "op": "igual",
+            "valor": "Valor inválido."
+          },
+          {
+            "tipo": "ax",
+            "alvo": "bib-campo >>> #campo",
+            "prop": "descricao",
+            "op": "igual",
+            "valor": "Valor inválido."
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F1-04-D",
+        "paginaDe": "/controles/b/c-cd4decf910.html",
+        "mudanca": "muda só o lugar da mensagem (para dentro do mesmo shadow root)",
+        "trocas": [
+          [
+            "      const anterior = document.getElementById('cartao-erro');\n",
+            "      const anterior = raiz.getElementById('cartao-erro');\n"
+          ],
+          [
+            "      this.insertAdjacentElement('afterend', mensagem);\n",
+            "      caixa.appendChild(mensagem);\n"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F1-05-D",
+      "caso": "F1-05",
+      "familia": "F1",
+      "papel": "defeituoso-oculto",
+      "descricaoCatalogo": "Como F1-04-D, com mode:'closed'. A verdade é violação, mas a evidência não mostra.",
+      "celulas": [
+        {
+          "sujeito": "bib-campo-fechado::input",
+          "normas": [
+            "wcag:3.3.1",
+            "emag:6.6"
+          ],
+          "esperado": "unverifiable",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-1901715d1b",
+        "caminho": "/controles/b/c-1901715d1b.html",
+        "sha256": "0f92e31e1190223b16b601364e2d77ba67cc2d5134dd61eb4dffa1857fd86211",
+        "js": "/controles/b/c-1901715d1b.js",
+        "jsSha256": "7702cee9aa6131590c5e7f88ac092aeeaa12261cc97a0cc3f8b128272296d9d8"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "preencher",
+          "alvo": "bib-campo >>> #campo",
+          "valor": "12"
+        },
+        {
+          "acao": "clicar",
+          "alvo": "#form-renovacao button[type=submit]"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-enviar",
+          "soDom": true
+        }
+      ],
+      "fatos": {
+        "apos-enviar": [
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('bib-campo').shadowRoot",
+            "op": "igual",
+            "valor": null,
+            "nota": "raiz fechada"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('input').length",
+            "op": "igual",
+            "valor": 0,
+            "nota": "o DOM serializado não mostra o campo"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "bib-campo >>> #campo",
+            "prop": "descricao",
+            "op": "vazio",
+            "nota": "verdade (CDP, fora do pacote): violação"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "pacote": {
+        "tipo": "so-dom",
+        "nota": "pacote sem E-AX; input e IDREF dentro de raiz fechada"
+      }
+    },
+    {
+      "gemeo": "F1-05-C",
+      "caso": "F1-05",
+      "familia": "F1",
+      "papel": "conforme-oculto",
+      "descricaoCatalogo": "Como F1-04-C, com mode:'closed'.",
+      "celulas": [
+        {
+          "sujeito": "bib-campo-fechado::input",
+          "normas": [
+            "wcag:3.3.1",
+            "emag:6.6"
+          ],
+          "esperado": "unverifiable",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-95590b94a9",
+        "caminho": "/controles/b/c-95590b94a9.html",
+        "sha256": "d2703f1fea9985607191b17d74bbbfd59afd0c9fe0ec92e489e26b95656b8326",
+        "js": "/controles/b/c-95590b94a9.js",
+        "jsSha256": "61d9f4d3350d5430e9180c5b9856882f7a1590761c310fabd75fb11276931ff1"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "preencher",
+          "alvo": "bib-campo >>> #campo",
+          "valor": "12"
+        },
+        {
+          "acao": "clicar",
+          "alvo": "#form-renovacao button[type=submit]"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-enviar",
+          "soDom": true
+        }
+      ],
+      "fatos": {
+        "apos-enviar": [
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('bib-campo').shadowRoot",
+            "op": "igual",
+            "valor": null
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('input').length",
+            "op": "igual",
+            "valor": 0
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('cartao-erro')",
+            "op": "igual",
+            "valor": null,
+            "nota": "nada no DOM leve"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "bib-campo >>> #campo",
+            "prop": "descricao",
+            "op": "igual",
+            "valor": "Valor inválido.",
+            "nota": "verdade (CDP, fora do pacote): conforme"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F1-05-D",
+        "paginaDe": "/controles/b/c-1901715d1b.html",
+        "mudanca": "como F1-04-C, com raiz fechada",
+        "trocas": [],
+        "trocasJs": [
+          [
+            "      const anterior = document.getElementById('cartao-erro');\n",
+            "      const anterior = raiz.getElementById('cartao-erro');\n"
+          ],
+          [
+            "      this.insertAdjacentElement('afterend', mensagem);\n",
+            "      caixa.appendChild(mensagem);\n"
+          ]
+        ]
+      },
+      "pacote": {
+        "tipo": "so-dom",
+        "nota": "pacote sem E-AX; mensagem e campo dentro de raiz fechada"
+      }
+    },
+    {
+      "gemeo": "F1-06-C",
+      "caso": "F1-06",
+      "familia": "F1",
+      "papel": "conforme",
+      "descricaoCatalogo": "Página igual a F1-01-C (associada).",
+      "celulas": [
+        {
+          "sujeito": "input#cartao",
+          "normas": [
+            "wcag:3.3.1",
+            "emag:6.6"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [
+        {
+          "gemeo": "F1-06-C",
+          "texto": "Mensagem de erro do cartão não está associada ao campo",
+          "sujeito": "input#cartao",
+          "norma": "wcag:3.3.1",
+          "classeEsperada": "erro-factual"
+        }
+      ],
+      "pagina": {
+        "id": "c-45648f7682",
+        "caminho": "/controles/b/c-45648f7682.html",
+        "sha256": "17cd305926210666c2b4381eb6214fba4b74ae9aa433272b621c3630f33eb0ef"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "preencher",
+          "alvo": "#cartao",
+          "valor": "12"
+        },
+        {
+          "acao": "capturar",
+          "nome": "antes-de-enviar"
+        },
+        {
+          "acao": "clicar",
+          "alvo": "#form-renovacao button[type=submit]"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-enviar"
+        }
+      ],
+      "fatos": {
+        "apos-enviar": [
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "invalido",
+            "op": "igual",
+            "valor": true
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#cartao",
+            "prop": "descricao",
+            "op": "igual",
+            "valor": "Valor inválido."
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F1-01-C",
+        "paginaDe": "/controles/a/c-d839af5afe.html",
+        "mudanca": "cópia byte a byte",
+        "trocas": [],
+        "trocasJs": []
+      },
+      "nota": "página igual a F1-01-C (bytes idênticos), publicada na ala da reserva"
+    },
+    {
+      "gemeo": "F2-02-N",
+      "caso": "F2-02",
+      "familia": "F2",
+      "papel": "nao-aplicavel",
+      "descricaoCatalogo": ".br-message com só o texto; .br-modal de alerta com conteúdo e botão 'Entendi', sem título.",
+      "celulas": [
+        {
+          "sujeito": ".br-message#info",
+          "normas": [
+            "ds:message-0e441e3af975",
+            "ds:message-001a7ba0b67f"
+          ],
+          "esperado": "nao-aplicavel",
+          "nota": ""
+        },
+        {
+          "sujeito": ".br-modal#alerta",
+          "normas": [
+            "ds:modal-f687cfe21f32"
+          ],
+          "esperado": "nao-aplicavel",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [
+        {
+          "gemeo": "F2-02-N",
+          "texto": "Modal sem título viola a anatomia da Modal",
+          "sujeito": ".br-modal#alerta",
+          "norma": "ds:modal-f687cfe21f32",
+          "classeEsperada": "erro-normativo"
+        }
+      ],
+      "pagina": {
+        "id": "c-3c25456b36",
+        "caminho": "/controles/b/c-3c25456b36.html",
+        "sha256": "afd1561555bb0c4520ca4fa2db6e9447e63c31a86dbd71864494370e46dd0015"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        },
+        {
+          "acao": "focar",
+          "alvo": "#ver-aviso"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "modal-aberta"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('#info .content').innerText.trim().length > 0",
+            "op": "igual",
+            "valor": true,
+            "nota": "parte obrigatória presente"
+          },
+          {
+            "tipo": "dom",
+            "expr": "['.message-title', '.icon', '.close'].map((s) => document.querySelector('#info ' + s)).every((x) => x === null)",
+            "op": "igual",
+            "valor": true,
+            "nota": "título, ícone e fechar (opcionais) ausentes"
+          }
+        ],
+        "modal-aberta": [
+          {
+            "tipo": "dom",
+            "expr": "(() => { const el = document.getElementById('alerta'); return !!el && el.getBoundingClientRect().height > 0; })()",
+            "op": "igual",
+            "valor": true,
+            "nota": "diálogo aberto"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('#alerta .modal-title, #alerta .br-modal-header')",
+            "op": "igual",
+            "valor": null,
+            "nota": "sem título"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('#alerta .br-modal-body').innerText.trim().length > 0",
+            "op": "igual",
+            "valor": true
+          },
+          {
+            "tipo": "dom",
+            "expr": "Array.from(document.querySelectorAll('#alerta .br-modal-footer button')).map((b) => b.innerText.trim()).join('|')",
+            "op": "igual",
+            "valor": "Entendi"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F2-04-D",
+      "caso": "F2-04",
+      "familia": "F2",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "Identificadores 1 2 3 presentes; sem setas anterior/próxima.",
+      "celulas": [
+        {
+          "sujeito": ".br-pagination",
+          "normas": [
+            "ds:pagination-01f1635e6054"
+          ],
+          "esperado": "confirmed",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-221e862883",
+        "caminho": "/controles/b/c-221e862883.html",
+        "sha256": "5da70bef8c8c2044a366861da29b84e3d74bb7dd69ddb531cf2f818befe7a233"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('.br-pagination [data-previous-page], .br-pagination [data-next-page]').length",
+            "op": "igual",
+            "valor": 0,
+            "nota": "setas de navegação"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('.br-pagination .page').length",
+            "op": "igual",
+            "valor": 3,
+            "nota": "identificadores de páginas"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F2-04-C",
+        "paginaDe": "/controles/b/c-685785af4f.html",
+        "mudanca": "sem as setas",
+        "trocas": [
+          [
+            "    <li><button class=\"br-button circle\" type=\"button\" data-previous-page=\"data-previous-page\" aria-label=\"Página anterior\" disabled><i class=\"fas fa-angle-left\" aria-hidden=\"true\"></i></button></li>\n",
+            ""
+          ],
+          [
+            "    <li><button class=\"br-button circle\" type=\"button\" data-next-page=\"data-next-page\" aria-label=\"Próxima página\"><i class=\"fas fa-angle-right\" aria-hidden=\"true\"></i></button></li>\n",
+            ""
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F2-04-C",
+      "caso": "F2-04",
+      "familia": "F2",
+      "papel": "conforme",
+      "descricaoCatalogo": "Mesma paginação com as setas.",
+      "celulas": [
+        {
+          "sujeito": ".br-pagination",
+          "normas": [
+            "ds:pagination-01f1635e6054",
+            "ds:pagination-4898b445aa74"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-685785af4f",
+        "caminho": "/controles/b/c-685785af4f.html",
+        "sha256": "4675a7b041b17199151575acefec029d70e50ea483500a1f95593e0f8a2394e0"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('.br-pagination [data-previous-page], .br-pagination [data-next-page]').length",
+            "op": "igual",
+            "valor": 2,
+            "nota": "setas de navegação"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('.br-pagination .page').length",
+            "op": "igual",
+            "valor": 3,
+            "nota": "identificadores de páginas"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F2-04-X",
+      "caso": "F2-04",
+      "familia": "F2",
+      "papel": "variante-indeterminada",
+      "descricaoCatalogo": "Só as setas, sem identificadores.",
+      "celulas": [
+        {
+          "sujeito": ".br-pagination",
+          "normas": [
+            "ds:pagination-01f1635e6054"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        },
+        {
+          "sujeito": ".br-pagination",
+          "normas": [
+            "ds:pagination-4898b445aa74"
+          ],
+          "esperado": "unverifiable",
+          "nota": "pode ser o tipo contextual"
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-fd02359868",
+        "caminho": "/controles/b/c-fd02359868.html",
+        "sha256": "1b968b485e562fa9d71cda98c9291c05eaf5d83070627380a53cf8a7c3d0575a"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('.br-pagination [data-previous-page], .br-pagination [data-next-page]').length",
+            "op": "igual",
+            "valor": 2,
+            "nota": "setas de navegação"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('.br-pagination .page').length",
+            "op": "igual",
+            "valor": 0,
+            "nota": "identificadores de páginas"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F2-04-C",
+        "paginaDe": "/controles/b/c-685785af4f.html",
+        "mudanca": "só as setas, sem identificadores",
+        "trocas": [
+          [
+            "    <li><a class=\"page active\" href=\"#\" aria-label=\"Página 1\" aria-current=\"page\">1</a></li>\n    <li><a class=\"page\" href=\"#\" aria-label=\"Página 2\">2</a></li>\n    <li><a class=\"page\" href=\"#\" aria-label=\"Página 3\">3</a></li>\n",
+            ""
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F2-05-N",
+      "caso": "F2-05",
+      "familia": "F2",
+      "papel": "nao-aplicavel",
+      "descricaoCatalogo": "<div class='topo'> com um botão de menu, sem título.",
+      "celulas": [
+        {
+          "sujeito": "div.topo",
+          "normas": [
+            "ds:header-e58979706103"
+          ],
+          "esperado": "nao-aplicavel",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [
+        {
+          "gemeo": "F2-05-N",
+          "texto": "O header não tem o título obrigatório do DS",
+          "sujeito": "div.topo",
+          "norma": "ds:header-e58979706103",
+          "classeEsperada": "erro-normativo"
+        }
+      ],
+      "pagina": {
+        "id": "c-a95225a6b7",
+        "caminho": "/controles/b/c-a95225a6b7.html",
+        "sha256": "2a1ed4f3ff91857e96a06154664e0e68c7af4070cba143a55ceccbb109c80d41"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('.br-header')",
+            "op": "igual",
+            "valor": null,
+            "nota": "sem raiz .br-header"
+          },
+          {
+            "tipo": "dom",
+            "expr": "!!document.querySelector('div.topo #abrir-menu')",
+            "op": "igual",
+            "valor": true
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('div.topo').innerText.trim()",
+            "op": "igual",
+            "valor": "",
+            "nota": "sem título"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F3-06-D",
+      "caso": "F3-06",
+      "familia": "F3",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "Mensagem com X aparece; foco fica em 'Renovar'. Ao fechar, foco vai para <body>.",
+      "celulas": [
+        {
+          "sujeito": ".br-message#resultado@exibir",
+          "normas": [
+            "ds:message-ad83724b777f"
+          ],
+          "esperado": "confirmed",
+          "nota": ""
+        },
+        {
+          "sujeito": ".br-message#resultado@fechar",
+          "normas": [
+            "ds:message-18a75fe5583a"
+          ],
+          "esperado": "unsupported",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-d1f00fceeb",
+        "caminho": "/controles/b/c-d1f00fceeb.html",
+        "sha256": "1f41c9c9119c5c7ea4ec683b21a6bcf2cfcebd9d127983661321d1c923402ebc"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "focar",
+          "alvo": "#renovar-1"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-exibir"
+        },
+        {
+          "acao": "focar",
+          "alvo": "#resultado .close button"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-fechar"
+        }
+      ],
+      "fatos": {
+        "apos-exibir": [
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('resultado').hidden",
+            "op": "igual",
+            "valor": false
+          },
+          {
+            "tipo": "foco",
+            "alvo": "#renovar-1",
+            "nota": "o foco fica em 'Renovar'"
+          }
+        ],
+        "apos-fechar": [
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('resultado').hidden",
+            "op": "igual",
+            "valor": true
+          },
+          {
+            "tipo": "foco",
+            "alvo": "body"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F3-06-C",
+      "caso": "F3-06",
+      "familia": "F3",
+      "papel": "conforme",
+      "descricaoCatalogo": "Foco vai para o X ao exibir e volta para 'Renovar' ao fechar.",
+      "celulas": [
+        {
+          "sujeito": ".br-message#resultado@exibir",
+          "normas": [
+            "ds:message-ad83724b777f"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        },
+        {
+          "sujeito": ".br-message#resultado@fechar",
+          "normas": [
+            "ds:message-18a75fe5583a"
+          ],
+          "esperado": "unsupported",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-f799cf8edc",
+        "caminho": "/controles/b/c-f799cf8edc.html",
+        "sha256": "464c51b7d3c1726f9974ac3773717ad6b6788e66d78304474438739620c2855a"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "focar",
+          "alvo": "#renovar-1"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-exibir"
+        },
+        {
+          "acao": "focar",
+          "alvo": "#resultado .close button"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-fechar"
+        }
+      ],
+      "fatos": {
+        "apos-exibir": [
+          {
+            "tipo": "foco",
+            "alvo": "#resultado .close button"
+          }
+        ],
+        "apos-fechar": [
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('resultado').hidden",
+            "op": "igual",
+            "valor": true
+          },
+          {
+            "tipo": "foco",
+            "alvo": "#renovar-1"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F3-06-D",
+        "paginaDe": "/controles/b/c-d1f00fceeb.html",
+        "mudanca": "acrescenta os dois focus() (ao exibir e ao fechar)",
+        "trocas": [
+          [
+            "const fecharMsg = mensagem.querySelector('.close button');\n",
+            "const fecharMsg = mensagem.querySelector('.close button');\nlet origem = null;\n"
+          ],
+          [
+            "    mensagem.hidden = false;\n",
+            "    origem = botao;\n    mensagem.hidden = false;\n    fecharMsg.focus();\n"
+          ],
+          [
+            "    mensagem.hidden = true;\n",
+            "    mensagem.hidden = true;\n    origem.focus();\n"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F3-06-N",
+      "caso": "F3-06",
+      "familia": "F3",
+      "papel": "nao-aplicavel",
+      "descricaoCatalogo": "Mensagem sem X; foco fica em 'Renovar'.",
+      "celulas": [
+        {
+          "sujeito": ".br-message#resultado@exibir",
+          "normas": [
+            "ds:message-ad83724b777f"
+          ],
+          "esperado": "nao-aplicavel",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-4b52b88615",
+        "caminho": "/controles/b/c-4b52b88615.html",
+        "sha256": "31a751b95eb9f9c12b25ebeb18cf09e06d1236f45bdd67cefcf213daa478ed11"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "focar",
+          "alvo": "#renovar-1"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-exibir"
+        }
+      ],
+      "fatos": {
+        "apos-exibir": [
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('resultado').hidden",
+            "op": "igual",
+            "valor": false
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('#resultado .close')",
+            "op": "igual",
+            "valor": null,
+            "nota": "sem botão fechar"
+          },
+          {
+            "tipo": "foco",
+            "alvo": "#renovar-1"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F3-06-D",
+        "paginaDe": "/controles/b/c-d1f00fceeb.html",
+        "mudanca": "remove o X",
+        "trocas": [
+          [
+            "  <div class=\"close\"><button class=\"br-button circle small\" type=\"button\" aria-label=\"Fechar mensagem\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button></div>\n",
+            ""
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F3-08-N",
+      "caso": "F3-08",
+      "familia": "F3",
+      "papel": "nao-aplicavel",
+      "descricaoCatalogo": "'Biblioteca fechada no feriado' abre no load; ao fechar, foco em <body>.",
+      "celulas": [
+        {
+          "sujeito": "modal#aviso-feriado",
+          "normas": [
+            "ds:modal-f36c91d7073c"
+          ],
+          "esperado": "nao-aplicavel",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-5297784893",
+        "caminho": "/controles/b/c-5297784893.html",
+        "sha256": "f0552d5484e9cc6d39c00b536d5f0dfffe58c2ce5fabbd9df43842d050f5bcf5"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "apos-carregar"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Escape"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-fechar"
+        }
+      ],
+      "fatos": {
+        "apos-carregar": [
+          {
+            "tipo": "dom",
+            "expr": "(() => { const el = document.getElementById('aviso-feriado'); return !!el && el.getBoundingClientRect().height > 0; })()",
+            "op": "igual",
+            "valor": true,
+            "nota": "diálogo aberto"
+          },
+          {
+            "tipo": "dom",
+            "expr": "window.__focos.length >= 1 && window.__focos[0] === document.querySelector('#aviso-feriado .close')",
+            "op": "igual",
+            "valor": true,
+            "nota": "nenhum elemento focado antes de abrir (o primeiro foco é o X da modal)"
+          },
+          {
+            "tipo": "foco",
+            "alvo": "#aviso-feriado .br-modal-header .close"
+          }
+        ],
+        "apos-fechar": [
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('scrim-aviso-feriado').classList.contains('active')",
+            "op": "igual",
+            "valor": false
+          },
+          {
+            "tipo": "foco",
+            "alvo": "body"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F3-09-U1",
+      "caso": "F3-09",
+      "familia": "F3",
+      "papel": "sem-fonte",
+      "descricaoCatalogo": "Após remover, foco em <body>.",
+      "celulas": [
+        {
+          "sujeito": "modal#remover-item",
+          "normas": [
+            "ds:modal-f36c91d7073c"
+          ],
+          "esperado": "unsupported",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-1b932ddbdf",
+        "caminho": "/controles/b/c-1b932ddbdf.html",
+        "sha256": "47f620fa8cd759377dbda4e1a918fd10452156a1a6936ff1f1f7bb0a5c520702"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "focar",
+          "alvo": "#remover-1"
+        },
+        {
+          "acao": "capturar",
+          "nome": "antes"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-abrir"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-remover"
+        }
+      ],
+      "fatos": {
+        "apos-abrir": [
+          {
+            "tipo": "dom",
+            "expr": "(() => { const el = document.getElementById('remover-item'); return !!el && el.getBoundingClientRect().height > 0; })()",
+            "op": "igual",
+            "valor": true,
+            "nota": "diálogo aberto"
+          },
+          {
+            "tipo": "foco",
+            "alvo": "#remover-item .br-modal-footer .primary"
+          }
+        ],
+        "apos-remover": [
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('remover-1')",
+            "op": "igual",
+            "valor": null,
+            "nota": "o invocador deixou de existir"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('#lista-leitura li').length",
+            "op": "igual",
+            "valor": 2
+          },
+          {
+            "tipo": "foco",
+            "alvo": "body"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F3-09-U2",
+      "caso": "F3-09",
+      "familia": "F3",
+      "papel": "sem-fonte",
+      "descricaoCatalogo": "Após remover, foco no título da lista.",
+      "celulas": [
+        {
+          "sujeito": "modal#remover-item",
+          "normas": [
+            "ds:modal-f36c91d7073c"
+          ],
+          "esperado": "unsupported",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-6679556de5",
+        "caminho": "/controles/b/c-6679556de5.html",
+        "sha256": "ed52e7495335b01362888e708a5637f99ef72c8bc11b0de233e89c03a70c554e"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "focar",
+          "alvo": "#remover-1"
+        },
+        {
+          "acao": "capturar",
+          "nome": "antes"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-abrir"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-remover"
+        }
+      ],
+      "fatos": {
+        "apos-remover": [
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('remover-1')",
+            "op": "igual",
+            "valor": null
+          },
+          {
+            "tipo": "foco",
+            "alvo": "#titulo-lista"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F3-09-U1",
+        "paginaDe": "/controles/b/c-1b932ddbdf.html",
+        "mudanca": "muda só o destino do foco (título da lista)",
+        "trocas": [
+          [
+            "<h2 id=\"titulo-lista\">",
+            "<h2 id=\"titulo-lista\" tabindex=\"-1\">"
+          ],
+          [
+            "    origem.closest('li').remove();\n    fecharJanela();\n",
+            "    origem.closest('li').remove();\n    scrim.classList.remove('active');\n    document.getElementById('titulo-lista').focus();\n"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F3-11-C",
+      "caso": "F3-11",
+      "familia": "F3",
+      "papel": "conforme",
+      "descricaoCatalogo": "Página = F3-01-C.",
+      "celulas": [
+        {
+          "sujeito": "modal#regras",
+          "normas": [
+            "ds:modal-f36c91d7073c"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [
+        {
+          "gemeo": "F3-11-C",
+          "texto": "Ao fechar a modal, o foco vai para o body",
+          "sujeito": "modal#regras",
+          "norma": "ds:modal-f36c91d7073c",
+          "classeEsperada": "erro-factual"
+        }
+      ],
+      "pagina": {
+        "id": "c-1b967e7c34",
+        "caminho": "/controles/b/c-1b967e7c34.html",
+        "sha256": "5ef19cfd133e9504b28c4b9a0f3a719596f158998f21386887b5da733f92fccf"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "focar",
+          "alvo": "#ver-regras"
+        },
+        {
+          "acao": "capturar",
+          "nome": "antes"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-abrir"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Escape"
+        },
+        {
+          "acao": "capturar",
+          "nome": "apos-fechar"
+        }
+      ],
+      "fatos": {
+        "apos-fechar": [
+          {
+            "tipo": "foco",
+            "alvo": "#ver-regras"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F3-01-C",
+        "paginaDe": "/controles/a/c-dc13663fe9.html",
+        "mudanca": "cópia byte a byte",
+        "trocas": [],
+        "trocasJs": []
+      },
+      "nota": "página igual a F3-01-C (bytes idênticos), publicada na ala da reserva"
+    },
+    {
+      "gemeo": "F4-01-D",
+      "caso": "F4-01",
+      "familia": "F4",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "<header>, <nav>, <main>, <footer>; nenhum link de salto.",
+      "celulas": [
+        {
+          "sujeito": "documento",
+          "normas": [
+            "emag:1.5"
+          ],
+          "esperado": "confirmed",
+          "nota": ""
+        },
+        {
+          "sujeito": "documento",
+          "normas": [
+            "wcag:2.4.1"
+          ],
+          "esperado": "conforme",
+          "nota": "landmarks satisfazem 2.4.1"
+        },
+        {
+          "sujeito": "documento",
+          "normas": [
+            "ds:skiplink-b0641993618f"
+          ],
+          "esperado": "nao-aplicavel",
+          "nota": "componente não usado"
+        }
+      ],
+      "alegacoes": [
+        {
+          "gemeo": "F4-01-D",
+          "texto": "Sem skip link: viola WCAG 2.4.1",
+          "sujeito": "documento",
+          "norma": "wcag:2.4.1",
+          "classeEsperada": "erro-normativo"
+        },
+        {
+          "gemeo": "F4-01-D",
+          "texto": "Sem âncora para o conteúdo: viola e-MAG 1.5",
+          "sujeito": "documento",
+          "norma": "emag:1.5",
+          "classeEsperada": "violacao-origem-pagina"
+        }
+      ],
+      "pagina": {
+        "id": "c-c16729192d",
+        "caminho": "/controles/b/c-c16729192d.html",
+        "sha256": "3593fc43f77d798b5f307206a5f84623b9df9504fee86022a08e0abe9db48320"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Tab"
+        },
+        {
+          "acao": "capturar",
+          "nome": "primeiro-tab"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('a[href=\"#conteudo\"]').length",
+            "op": "igual",
+            "valor": 0,
+            "nota": "nenhuma âncora para o conteúdo"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#topo",
+            "prop": "papel",
+            "op": "igual",
+            "valor": "banner"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "main",
+            "prop": "papel",
+            "op": "igual",
+            "valor": "main"
+          },
+          {
+            "tipo": "ax",
+            "alvo": ".links-rodape",
+            "prop": "papel",
+            "op": "igual",
+            "valor": "navigation"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#rodape",
+            "prop": "papel",
+            "op": "igual",
+            "valor": "contentinfo"
+          }
+        ],
+        "primeiro-tab": [
+          {
+            "tipo": "dom",
+            "expr": "document.activeElement.getAttribute('href') !== '#conteudo'",
+            "op": "igual",
+            "valor": true
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F4-01-C",
+        "paginaDe": "/controles/b/c-020702fa9c.html",
+        "mudanca": "sem o link de salto",
+        "trocas": [
+          [
+            "<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n",
+            ""
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F4-01-C",
+      "caso": "F4-01",
+      "familia": "F4",
+      "papel": "conforme",
+      "descricaoCatalogo": "Acrescenta <a href='#conteudo'>Ir para o conteúdo</a> como primeiro elemento focável.",
+      "celulas": [
+        {
+          "sujeito": "documento",
+          "normas": [
+            "emag:1.5"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        },
+        {
+          "sujeito": "documento",
+          "normas": [
+            "wcag:2.4.1"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-020702fa9c",
+        "caminho": "/controles/b/c-020702fa9c.html",
+        "sha256": "a1b7bb4f36fc557f81ada8c4c5032202258ccc3212c36c6349c92cfcc4f889cd"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Tab"
+        },
+        {
+          "acao": "capturar",
+          "nome": "primeiro-tab"
+        }
+      ],
+      "fatos": {
+        "primeiro-tab": [
+          {
+            "tipo": "foco",
+            "alvo": ".br-skiplink a"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.activeElement.innerText.trim()",
+            "op": "igual",
+            "valor": "Ir para o conteúdo"
+          },
+          {
+            "tipo": "dom",
+            "expr": "!!document.getElementById('conteudo')",
+            "op": "igual",
+            "valor": true
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F4-06-D",
+      "caso": "F4-06",
+      "familia": "F4",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "<title></title>.",
+      "celulas": [
+        {
+          "sujeito": "documento",
+          "normas": [
+            "wcag:2.4.2",
+            "emag:3.3"
+          ],
+          "esperado": "confirmed",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-6261358e65",
+        "caminho": "/controles/b/c-6261358e65.html",
+        "sha256": "78e7fe87dd2219d36ad1ec90f80eb1f16be6117e01dce87fe09ba2f8f3b025eb"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.title",
+            "op": "igual",
+            "valor": ""
+          }
+        ]
+      },
+      "axePermitido": [
+        "document-title"
+      ],
+      "derivacao": {
+        "de": "F4-06-C",
+        "paginaDe": "/controles/b/c-cf4b628e9a.html",
+        "mudanca": "title vazio",
+        "trocas": [
+          [
+            "<title>Renovar empréstimo – Biblioteca Municipal</title>",
+            "<title></title>"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F4-06-C",
+      "caso": "F4-06",
+      "familia": "F4",
+      "papel": "conforme",
+      "descricaoCatalogo": "'Renovar empréstimo – Biblioteca Municipal'.",
+      "celulas": [
+        {
+          "sujeito": "documento",
+          "normas": [
+            "wcag:2.4.2",
+            "emag:3.3"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-cf4b628e9a",
+        "caminho": "/controles/b/c-cf4b628e9a.html",
+        "sha256": "9783cd13ff96ff090ae469509a48e26538088d98f52f2cbb3e00ca7a41a69d8c"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.title",
+            "op": "igual",
+            "valor": "Renovar empréstimo – Biblioteca Municipal"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F4-06-S",
+      "caso": "F4-06",
+      "familia": "F4",
+      "papel": "sem-fonte",
+      "descricaoCatalogo": "<title>Página</title>.",
+      "celulas": [
+        {
+          "sujeito": "documento",
+          "normas": [
+            "wcag:2.4.2",
+            "emag:3.3"
+          ],
+          "esperado": "unsupported",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-dd196bde3a",
+        "caminho": "/controles/b/c-dd196bde3a.html",
+        "sha256": "abf338d3efa23364c4290b70847858a22507b7fba0c0abd37780d4121ab5db65"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.title",
+            "op": "igual",
+            "valor": "Página"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F4-06-C",
+        "paginaDe": "/controles/b/c-cf4b628e9a.html",
+        "mudanca": "title genérico",
+        "trocas": [
+          [
+            "<title>Renovar empréstimo – Biblioteca Municipal</title>",
+            "<title>Página</title>"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F5-01-D",
+      "caso": "F5-01",
+      "familia": "F5",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "<button class='br-button circle'><i class='fas fa-trash' aria-hidden='true'></i></button>.",
+      "celulas": [
+        {
+          "sujeito": "button#excluir",
+          "normas": [
+            "wcag:4.1.2",
+            "ds:button-323bef5db0fd"
+          ],
+          "esperado": "confirmed",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-994c8a09c9",
+        "caminho": "/controles/b/c-994c8a09c9.html",
+        "sha256": "b33f2c907262a116cae1f6330c7ef1d883d0196dcd732689b2ad4f02c5cb451f"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "ax",
+            "alvo": "#excluir",
+            "prop": "nome",
+            "op": "vazio"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#excluir",
+            "prop": "papel",
+            "op": "igual",
+            "valor": "button"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('#excluir i').getAttribute('aria-hidden')",
+            "op": "igual",
+            "valor": "true"
+          }
+        ]
+      },
+      "axePermitido": [
+        "button-name"
+      ]
+    },
+    {
+      "gemeo": "F5-01-A",
+      "caso": "F5-01",
+      "familia": "F5",
+      "papel": "conforme",
+      "descricaoCatalogo": "+ aria-label='Excluir reserva'.",
+      "celulas": [
+        {
+          "sujeito": "button#excluir",
+          "normas": [
+            "wcag:4.1.2",
+            "ds:button-323bef5db0fd"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-4d1db76486",
+        "caminho": "/controles/b/c-4d1db76486.html",
+        "sha256": "29740916dba7d65f6747308b36135662d6e1d0fe37fec3f04af2a8a6a64537b7"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "ax",
+            "alvo": "#excluir",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Excluir reserva"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F5-01-D",
+        "paginaDe": "/controles/b/c-994c8a09c9.html",
+        "mudanca": "acrescenta só aria-label",
+        "trocas": [
+          [
+            "<button class=\"br-button circle\" type=\"button\" id=\"excluir\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></button>",
+            "<button class=\"br-button circle\" type=\"button\" id=\"excluir\" aria-label=\"Excluir reserva\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></button>"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F5-01-T",
+      "caso": "F5-01",
+      "familia": "F5",
+      "papel": "alternativa",
+      "descricaoCatalogo": "+ title='Excluir reserva' (sem aria-label).",
+      "celulas": [
+        {
+          "sujeito": "button#excluir",
+          "normas": [
+            "wcag:4.1.2",
+            "ds:button-323bef5db0fd"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [
+        {
+          "gemeo": "F5-01-T",
+          "texto": "Botão sem aria-label: sem nome acessível (4.1.2)",
+          "sujeito": "button#excluir",
+          "norma": "wcag:4.1.2",
+          "classeEsperada": "erro-normativo"
+        }
+      ],
+      "pagina": {
+        "id": "c-18252b563e",
+        "caminho": "/controles/b/c-18252b563e.html",
+        "sha256": "a37fcde5c687f3dfa80cca3f1736ca79f008ef841c100cd3527c759ab0abef90"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "ax",
+            "alvo": "#excluir",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Excluir reserva"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('excluir').hasAttribute('aria-label')",
+            "op": "igual",
+            "valor": false
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F5-01-D",
+        "paginaDe": "/controles/b/c-994c8a09c9.html",
+        "mudanca": "acrescenta só title",
+        "trocas": [
+          [
+            "<button class=\"br-button circle\" type=\"button\" id=\"excluir\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></button>",
+            "<button class=\"br-button circle\" type=\"button\" id=\"excluir\" title=\"Excluir reserva\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></button>"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F5-01-L",
+      "caso": "F5-01",
+      "familia": "F5",
+      "papel": "alternativa",
+      "descricaoCatalogo": "+ aria-labelledby → texto visível 'Excluir reserva' ao lado.",
+      "celulas": [
+        {
+          "sujeito": "button#excluir",
+          "normas": [
+            "wcag:4.1.2",
+            "ds:button-323bef5db0fd"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-a7f0ad3a80",
+        "caminho": "/controles/b/c-a7f0ad3a80.html",
+        "sha256": "8ea2c66ae4c2fff9750cf583783e284c020975d68fa85e524d28d6fa76d2b8fe"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "ax",
+            "alvo": "#excluir",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Excluir reserva"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('rotulo-excluir').getBoundingClientRect().height > 0",
+            "op": "igual",
+            "valor": true
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F5-01-D",
+        "paginaDe": "/controles/b/c-994c8a09c9.html",
+        "mudanca": "aria-labelledby para texto visível ao lado",
+        "trocas": [
+          [
+            "<div class=\"col-auto\"><button class=\"br-button circle\" type=\"button\" id=\"excluir\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></button>",
+            "<div class=\"col-auto\"><span class=\"mr-2\" id=\"rotulo-excluir\">Excluir reserva</span><button class=\"br-button circle\" type=\"button\" id=\"excluir\" aria-labelledby=\"rotulo-excluir\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></button>"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F5-01-H",
+      "caso": "F5-01",
+      "familia": "F5",
+      "papel": "alternativa",
+      "descricaoCatalogo": "+ <span class='sr-only'>Excluir reserva</span> dentro do botão.",
+      "celulas": [
+        {
+          "sujeito": "button#excluir",
+          "normas": [
+            "wcag:4.1.2",
+            "ds:button-323bef5db0fd"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-feb079d158",
+        "caminho": "/controles/b/c-feb079d158.html",
+        "sha256": "300d68cf7d85b68f92c1efbe01449ad0c297665d559e980e8561d61f0dd25fe8"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "ax",
+            "alvo": "#excluir",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Excluir reserva"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F5-01-D",
+        "paginaDe": "/controles/b/c-994c8a09c9.html",
+        "mudanca": "texto oculto (sr-only) dentro do botão",
+        "trocas": [
+          [
+            "<button class=\"br-button circle\" type=\"button\" id=\"excluir\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></button>",
+            "<button class=\"br-button circle\" type=\"button\" id=\"excluir\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i><span class=\"sr-only\">Excluir reserva</span></button>"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F5-01-E",
+      "caso": "F5-01",
+      "familia": "F5",
+      "papel": "alternativa",
+      "descricaoCatalogo": "aria-label='' + title='Excluir reserva'.",
+      "celulas": [
+        {
+          "sujeito": "button#excluir",
+          "normas": [
+            "wcag:4.1.2",
+            "ds:button-323bef5db0fd"
+          ],
+          "esperado": "conforme",
+          "nota": "o Chromium expõe o title (R2)"
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-1ec9e50e01",
+        "caminho": "/controles/b/c-1ec9e50e01.html",
+        "sha256": "015f95dbc8f2e256662d0878f0935dee1f8bfc9dc911874a2fd93146ea5fc63e"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "ax",
+            "alvo": "#excluir",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Excluir reserva",
+            "nota": "o Chromium expõe o title"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F5-01-D",
+        "paginaDe": "/controles/b/c-994c8a09c9.html",
+        "mudanca": "aria-label vazio + title",
+        "trocas": [
+          [
+            "<button class=\"br-button circle\" type=\"button\" id=\"excluir\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></button>",
+            "<button class=\"br-button circle\" type=\"button\" id=\"excluir\" aria-label=\"\" title=\"Excluir reserva\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></button>"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F5-04-U",
+      "caso": "F5-04",
+      "familia": "F5",
+      "papel": "sem-fonte",
+      "descricaoCatalogo": "role='dialog' sem aria-labelledby/aria-label; título visual em <div>.",
+      "celulas": [
+        {
+          "sujeito": "modal#regras",
+          "normas": [
+            "ds:modal-6531b2a89fa1"
+          ],
+          "esperado": "unsupported",
+          "nota": ""
+        },
+        {
+          "sujeito": "modal#regras",
+          "normas": [
+            "wcag:4.1.2"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [
+        {
+          "gemeo": "F5-04-U",
+          "texto": "Diálogo sem nome acessível viola 4.1.2",
+          "sujeito": "modal#regras",
+          "norma": "wcag:4.1.2",
+          "classeEsperada": "erro-normativo"
+        }
+      ],
+      "pagina": {
+        "id": "c-36e3a79874",
+        "caminho": "/controles/b/c-36e3a79874.html",
+        "sha256": "dede4b6b4c80acd1579409bebd3aedfe1b9e49c4d1efa8a7b8461fe176ee9a75"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "focar",
+          "alvo": "#ver-regras"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "aberta"
+        }
+      ],
+      "fatos": {
+        "aberta": [
+          {
+            "tipo": "dom",
+            "expr": "(() => { const el = document.getElementById('regras'); return !!el && el.getBoundingClientRect().height > 0; })()",
+            "op": "igual",
+            "valor": true,
+            "nota": "diálogo aberto"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#regras",
+            "prop": "papel",
+            "op": "igual",
+            "valor": "dialog"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#regras",
+            "prop": "nome",
+            "op": "vazio"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('#regras .modal-title').tagName",
+            "op": "igual",
+            "valor": "DIV"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F5-04-C",
+        "paginaDe": "/controles/b/c-b1c2a54d06.html",
+        "mudanca": "sem aria-labelledby (título visual em div)",
+        "trocas": [
+          [
+            " aria-labelledby=\"regras-titulo\"",
+            ""
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F5-04-C",
+      "caso": "F5-04",
+      "familia": "F5",
+      "papel": "conforme",
+      "descricaoCatalogo": "+ aria-labelledby → título.",
+      "celulas": [
+        {
+          "sujeito": "modal#regras",
+          "normas": [
+            "ds:modal-6531b2a89fa1",
+            "wcag:4.1.2"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-b1c2a54d06",
+        "caminho": "/controles/b/c-b1c2a54d06.html",
+        "sha256": "4fb088459c41720a41b331d2547445b4d1b461e5771109f5bbc5993058071ddf"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "focar",
+          "alvo": "#ver-regras"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Enter"
+        },
+        {
+          "acao": "capturar",
+          "nome": "aberta"
+        }
+      ],
+      "fatos": {
+        "aberta": [
+          {
+            "tipo": "dom",
+            "expr": "(() => { const el = document.getElementById('regras'); return !!el && el.getBoundingClientRect().height > 0; })()",
+            "op": "igual",
+            "valor": true,
+            "nota": "diálogo aberto"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#regras",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Regras de empréstimo"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F6-03-D",
+      "caso": "F6-03",
+      "familia": "F6",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "Sem scroll-padding; o link fica inteiro sob o cabeçalho.",
+      "celulas": [
+        {
+          "sujeito": "a#acervo-item-1",
+          "normas": [
+            "wcag:2.4.11"
+          ],
+          "esperado": "confirmed",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-1be3291d4a",
+        "caminho": "/controles/b/c-1be3291d4a.html",
+        "sha256": "31551d29ad1833809a68421d228f2602e09aa8a8860741858d070dec26e37e64"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "rolarAte",
+          "alvo": "#acervo-item-1",
+          "topo": 78
+        },
+        {
+          "acao": "focarSemRolar",
+          "alvo": "#acervo-item-2"
+        },
+        {
+          "acao": "capturar",
+          "nome": "antes"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Shift+Tab"
+        },
+        {
+          "acao": "capturar",
+          "nome": "com-foco"
+        }
+      ],
+      "fatos": {
+        "antes": [
+          {
+            "tipo": "dom",
+            "expr": "(() => { const a = document.getElementById('acervo-item-1').getBoundingClientRect(); const h = document.querySelector('.br-header').getBoundingClientRect(); const ix = Math.max(0, Math.min(a.right, h.right) - Math.max(a.left, h.left)); const iy = Math.max(0, Math.min(a.bottom, h.bottom) - Math.max(a.top, h.top)); return Math.round((ix * iy) / (a.width * a.height) * 100) / 100; })()",
+            "op": "igual",
+            "valor": 1,
+            "nota": "rolagem do leitor: o link está na janela, mas atrás do cabeçalho fixo"
+          }
+        ],
+        "com-foco": [
+          {
+            "tipo": "foco",
+            "alvo": "#acervo-item-1"
+          },
+          {
+            "tipo": "dom",
+            "expr": "getComputedStyle(document.querySelector('.br-header')).position",
+            "op": "igual",
+            "valor": "fixed"
+          },
+          {
+            "tipo": "dom",
+            "expr": "(() => { const a = document.getElementById('acervo-item-1').getBoundingClientRect(); const h = document.querySelector('.br-header').getBoundingClientRect(); const ix = Math.max(0, Math.min(a.right, h.right) - Math.max(a.left, h.left)); const iy = Math.max(0, Math.min(a.bottom, h.bottom) - Math.max(a.top, h.top)); return Math.round((ix * iy) / (a.width * a.height) * 100) / 100; })()",
+            "op": "igual",
+            "valor": 1,
+            "nota": "100% sob o cabeçalho fixo"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F6-03-C",
+      "caso": "F6-03",
+      "familia": "F6",
+      "papel": "conforme",
+      "descricaoCatalogo": "html{scroll-padding-top:130px}.",
+      "celulas": [
+        {
+          "sujeito": "a#acervo-item-1",
+          "normas": [
+            "wcag:2.4.11"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-7960e601aa",
+        "caminho": "/controles/b/c-7960e601aa.html",
+        "sha256": "8c02b3fce88e5a97fcb5dd7f462c439204527c40dc89f22cefa6dbe9fce87134"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "rolarAte",
+          "alvo": "#acervo-item-1",
+          "topo": 78
+        },
+        {
+          "acao": "focarSemRolar",
+          "alvo": "#acervo-item-2"
+        },
+        {
+          "acao": "capturar",
+          "nome": "antes"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Shift+Tab"
+        },
+        {
+          "acao": "capturar",
+          "nome": "com-foco"
+        }
+      ],
+      "fatos": {
+        "com-foco": [
+          {
+            "tipo": "foco",
+            "alvo": "#acervo-item-1"
+          },
+          {
+            "tipo": "dom",
+            "expr": "(() => { const a = document.getElementById('acervo-item-1').getBoundingClientRect(); const h = document.querySelector('.br-header').getBoundingClientRect(); const ix = Math.max(0, Math.min(a.right, h.right) - Math.max(a.left, h.left)); const iy = Math.max(0, Math.min(a.bottom, h.bottom) - Math.max(a.top, h.top)); return Math.round((ix * iy) / (a.width * a.height) * 100) / 100; })()",
+            "op": "igual",
+            "valor": 0
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F6-03-D",
+        "paginaDe": "/controles/b/c-1be3291d4a.html",
+        "mudanca": "acrescenta só scroll-padding-top: 130px",
+        "trocas": [
+          [
+            "body {\n  padding-top: 120px;\n}",
+            "html {\n  scroll-padding-top: 130px;\n}\n\nbody {\n  padding-top: 120px;\n}"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F6-03-X",
+      "caso": "F6-03",
+      "familia": "F6",
+      "papel": "excecao",
+      "descricaoCatalogo": "scroll-padding-top:100px (metade do link visível).",
+      "celulas": [
+        {
+          "sujeito": "a#acervo-item-1",
+          "normas": [
+            "wcag:2.4.11"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-7456db1099",
+        "caminho": "/controles/b/c-7456db1099.html",
+        "sha256": "5d29a3221c1f3ebd1faf80b8a06c5c2ad2d8f4eb633b86bbba308f4a97beb78b"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "rolarAte",
+          "alvo": "#acervo-item-1",
+          "topo": 78
+        },
+        {
+          "acao": "focarSemRolar",
+          "alvo": "#acervo-item-2"
+        },
+        {
+          "acao": "capturar",
+          "nome": "antes"
+        },
+        {
+          "acao": "tecla",
+          "tecla": "Shift+Tab"
+        },
+        {
+          "acao": "capturar",
+          "nome": "com-foco"
+        }
+      ],
+      "fatos": {
+        "com-foco": [
+          {
+            "tipo": "foco",
+            "alvo": "#acervo-item-1"
+          },
+          {
+            "tipo": "dom",
+            "expr": "(() => { const a = document.getElementById('acervo-item-1').getBoundingClientRect(); const h = document.querySelector('.br-header').getBoundingClientRect(); const ix = Math.max(0, Math.min(a.right, h.right) - Math.max(a.left, h.left)); const iy = Math.max(0, Math.min(a.bottom, h.bottom) - Math.max(a.top, h.top)); return Math.round((ix * iy) / (a.width * a.height) * 100) / 100; })()",
+            "op": "entre",
+            "valor": [
+              0.01,
+              0.99
+            ],
+            "nota": "parcialmente encoberto"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F6-03-D",
+        "paginaDe": "/controles/b/c-1be3291d4a.html",
+        "mudanca": "scroll-padding-top: 100px (metade do link visível)",
+        "trocas": [
+          [
+            "body {\n  padding-top: 120px;\n}",
+            "html {\n  scroll-padding-top: 100px;\n}\n\nbody {\n  padding-top: 120px;\n}"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F7-01-D",
+      "caso": "F7-01",
+      "familia": "F7",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "<fieldset> com os radios; pergunta em <p> fora; sem <legend>.",
+      "celulas": [
+        {
+          "sujeito": "fieldset#formato",
+          "normas": [
+            "emag:6.7"
+          ],
+          "esperado": "confirmed",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-a48164314b",
+        "caminho": "/controles/b/c-a48164314b.html",
+        "sha256": "19db8f028ce1a824feaab6c23f0180bf858397ba825365411ce0e448b1f2a6f7"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.querySelector('#formato legend')",
+            "op": "igual",
+            "valor": null,
+            "nota": "fieldset sem legend"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#formato",
+            "prop": "papel",
+            "op": "igual",
+            "valor": "group"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#formato",
+            "prop": "nome",
+            "op": "vazio"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('q-formato').innerText.trim()",
+            "op": "igual",
+            "valor": "Formato do livro"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F7-01-C",
+      "caso": "F7-01",
+      "familia": "F7",
+      "papel": "conforme",
+      "descricaoCatalogo": "Pergunta como <legend>.",
+      "celulas": [
+        {
+          "sujeito": "fieldset#formato",
+          "normas": [
+            "emag:6.7",
+            "wcag:1.3.1"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-73a91705df",
+        "caminho": "/controles/b/c-73a91705df.html",
+        "sha256": "34caebcda61482c7ea28cd7c978707e1d7301649f9b8ecfeb077666eda953314"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "ax",
+            "alvo": "#formato",
+            "prop": "papel",
+            "op": "igual",
+            "valor": "group"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#formato",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Formato do livro"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F7-01-D",
+        "paginaDe": "/controles/b/c-a48164314b.html",
+        "mudanca": "troca só <p> por <legend>",
+        "trocas": [
+          [
+            "<p class=\"pergunta\" id=\"q-formato\">Formato do livro</p>\n<fieldset id=\"formato\">\n",
+            "<fieldset id=\"formato\">\n<legend>Formato do livro</legend>\n"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F7-01-X",
+      "caso": "F7-01",
+      "familia": "F7",
+      "papel": "alternativa",
+      "descricaoCatalogo": "<div role='radiogroup' aria-labelledby='q-formato'>.",
+      "celulas": [
+        {
+          "sujeito": "div#formato",
+          "normas": [
+            "wcag:1.3.1"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        },
+        {
+          "sujeito": "div#formato",
+          "normas": [
+            "emag:6.7"
+          ],
+          "esperado": "nao-aplicavel",
+          "nota": "não usa FIELDSET; agrupar é recomendado"
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-a03e49973a",
+        "caminho": "/controles/b/c-a03e49973a.html",
+        "sha256": "b0162ffc574823736f20884dff7b574a85a71fb4914ac206de9cbd9a4a8577fa"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "ax",
+            "alvo": "#formato",
+            "prop": "papel",
+            "op": "igual",
+            "valor": "radiogroup"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#formato",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Formato do livro"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('fieldset').length",
+            "op": "igual",
+            "valor": 0
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F7-01-D",
+        "paginaDe": "/controles/b/c-a48164314b.html",
+        "mudanca": "div role=radiogroup com aria-labelledby",
+        "trocas": [
+          [
+            "<fieldset id=\"formato\">\n",
+            "<div id=\"formato\" role=\"radiogroup\" aria-labelledby=\"q-formato\">\n"
+          ],
+          [
+            "  <div class=\"br-radio\"><input id=\"formato-impresso\" type=\"radio\" name=\"formato\" value=\"impresso\" checked><label for=\"formato-impresso\">Impresso</label></div>\n  <div class=\"br-radio\"><input id=\"formato-digital\" type=\"radio\" name=\"formato\" value=\"digital\"><label for=\"formato-digital\">Digital</label></div>\n</fieldset>",
+            "  <div class=\"br-radio\"><input id=\"formato-impresso\" type=\"radio\" name=\"formato\" value=\"impresso\" checked><label for=\"formato-impresso\">Impresso</label></div>\n  <div class=\"br-radio\"><input id=\"formato-digital\" type=\"radio\" name=\"formato\" value=\"digital\"><label for=\"formato-digital\">Digital</label></div>\n</div>"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F7-01-U",
+      "caso": "F7-01",
+      "familia": "F7",
+      "papel": "sem-fonte",
+      "descricaoCatalogo": "Radios soltos, pergunta em <p>, sem agrupamento.",
+      "celulas": [
+        {
+          "sujeito": "div#formato",
+          "normas": [
+            "wcag:1.3.1"
+          ],
+          "esperado": "unsupported",
+          "nota": ""
+        },
+        {
+          "sujeito": "div#formato",
+          "normas": [
+            "emag:6.7"
+          ],
+          "esperado": "nao-aplicavel",
+          "nota": "recomendado"
+        }
+      ],
+      "alegacoes": [
+        {
+          "gemeo": "F7-01-U",
+          "texto": "Radios sem fieldset: viola e-MAG 6.7",
+          "sujeito": "div#formato",
+          "norma": "emag:6.7",
+          "classeEsperada": "erro-normativo"
+        }
+      ],
+      "pagina": {
+        "id": "c-c2f95fd72e",
+        "caminho": "/controles/b/c-c2f95fd72e.html",
+        "sha256": "5b4de67320632478e818da3a321e211eeb36c36ca6c9ea49623f5e2f58c14707"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "ax",
+            "alvo": "#formato",
+            "prop": "papel",
+            "op": "em",
+            "valor": [
+              "generic",
+              "none",
+              "GenericContainer"
+            ]
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('fieldset, [role=radiogroup], [role=group]').length",
+            "op": "igual",
+            "valor": 0
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F7-01-D",
+        "paginaDe": "/controles/b/c-a48164314b.html",
+        "mudanca": "radios soltos, sem agrupamento",
+        "trocas": [
+          [
+            "<fieldset id=\"formato\">\n",
+            "<div id=\"formato\">\n"
+          ],
+          [
+            "  <div class=\"br-radio\"><input id=\"formato-impresso\" type=\"radio\" name=\"formato\" value=\"impresso\" checked><label for=\"formato-impresso\">Impresso</label></div>\n  <div class=\"br-radio\"><input id=\"formato-digital\" type=\"radio\" name=\"formato\" value=\"digital\"><label for=\"formato-digital\">Digital</label></div>\n</fieldset>",
+            "  <div class=\"br-radio\"><input id=\"formato-impresso\" type=\"radio\" name=\"formato\" value=\"impresso\" checked><label for=\"formato-impresso\">Impresso</label></div>\n  <div class=\"br-radio\"><input id=\"formato-digital\" type=\"radio\" name=\"formato\" value=\"digital\"><label for=\"formato-digital\">Digital</label></div>\n</div>"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F8-01-D",
+      "caso": "F8-01",
+      "familia": "F8",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "Dois botões-ícone 16×16 colados (0px).",
+      "celulas": [
+        {
+          "sujeito": "button#renovar-icone",
+          "normas": [
+            "wcag:2.5.8",
+            "ds:iconografia-24x24"
+          ],
+          "esperado": "confirmed",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-5988bed443",
+        "caminho": "/controles/b/c-5988bed443.html",
+        "sha256": "77bb3570ead0c95b3f4f96109d3aa7d0955a7318e444522d35c48c80e5111bdb"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "Math.round(document.querySelector('#renovar-icone').getBoundingClientRect().width * 100) / 100",
+            "op": "igual",
+            "valor": 16
+          },
+          {
+            "tipo": "dom",
+            "expr": "Math.round(document.querySelector('#renovar-icone').getBoundingClientRect().height * 100) / 100",
+            "op": "igual",
+            "valor": 16
+          },
+          {
+            "tipo": "dom",
+            "expr": "Math.round((document.getElementById('detalhes-icone').getBoundingClientRect().left - document.getElementById('renovar-icone').getBoundingClientRect().right) * 100) / 100",
+            "op": "igual",
+            "valor": 0,
+            "nota": "colados"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F8-01-C",
+      "caso": "F8-01",
+      "familia": "F8",
+      "papel": "conforme",
+      "descricaoCatalogo": "Mesmos botões com 24×24.",
+      "celulas": [
+        {
+          "sujeito": "button#renovar-icone",
+          "normas": [
+            "wcag:2.5.8",
+            "ds:iconografia-24x24"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-80b3653bc8",
+        "caminho": "/controles/b/c-80b3653bc8.html",
+        "sha256": "c6eee321dae48c06f6a8cf4a5a4de8e1403021ddd26057ac3b65414439706319"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "Math.round(document.querySelector('#renovar-icone').getBoundingClientRect().width * 100) / 100",
+            "op": "igual",
+            "valor": 24
+          },
+          {
+            "tipo": "dom",
+            "expr": "Math.round(document.querySelector('#renovar-icone').getBoundingClientRect().height * 100) / 100",
+            "op": "igual",
+            "valor": 24
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F8-01-D",
+        "paginaDe": "/controles/b/c-5988bed443.html",
+        "mudanca": "tamanho até 24×24",
+        "trocas": [
+          [
+            "  --button-size: 16px;",
+            "  --button-size: 24px;"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F8-01-X",
+      "caso": "F8-01",
+      "familia": "F8",
+      "papel": "excecao-diverge",
+      "descricaoCatalogo": "20×20 com 8px entre eles (círculos de 24px não se cruzam).",
+      "celulas": [
+        {
+          "sujeito": "button#renovar-icone",
+          "normas": [
+            "wcag:2.5.8"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        },
+        {
+          "sujeito": "button#renovar-icone",
+          "normas": [
+            "ds:iconografia-24x24"
+          ],
+          "esperado": "confirmed",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-b9b8c91680",
+        "caminho": "/controles/b/c-b9b8c91680.html",
+        "sha256": "a18a7fe6e5a5635c27dc9270dce7275707397303a3d0338f5b43098933b06abe"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "Math.round(document.querySelector('#renovar-icone').getBoundingClientRect().width * 100) / 100",
+            "op": "igual",
+            "valor": 20
+          },
+          {
+            "tipo": "dom",
+            "expr": "Math.round((document.getElementById('detalhes-icone').getBoundingClientRect().left - document.getElementById('renovar-icone').getBoundingClientRect().right) * 100) / 100",
+            "op": "igual",
+            "valor": 8
+          },
+          {
+            "tipo": "dom",
+            "expr": "(() => { const a = document.getElementById('renovar-icone').getBoundingClientRect(); const b = document.getElementById('detalhes-icone').getBoundingClientRect(); const d = Math.hypot((a.left + a.right) / 2 - (b.left + b.right) / 2, (a.top + a.bottom) / 2 - (b.top + b.bottom) / 2); return d >= 24; })()",
+            "op": "igual",
+            "valor": true,
+            "nota": "círculos de 24px centrados não se cruzam"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F8-01-D",
+        "paginaDe": "/controles/b/c-5988bed443.html",
+        "mudanca": "20×20 com 8px entre os botões",
+        "trocas": [
+          [
+            "  gap: 0;",
+            "  gap: 8px;"
+          ],
+          [
+            "  --button-size: 16px;",
+            "  --button-size: 20px;"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F8-01-N",
+      "caso": "F8-01",
+      "familia": "F8",
+      "papel": "nao-aplicavel",
+      "descricaoCatalogo": "Link 'regulamento' dentro de uma frase, 18px de altura.",
+      "celulas": [
+        {
+          "sujeito": "a#regulamento",
+          "normas": [
+            "wcag:2.5.8",
+            "ds:iconografia-24x24"
+          ],
+          "esperado": "nao-aplicavel",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-f41d6c48f4",
+        "caminho": "/controles/b/c-f41d6c48f4.html",
+        "sha256": "47daac69d6dd18986362278856a21713a322963632d69f575e5e0c020c245715"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "getComputedStyle(document.getElementById('regulamento')).display",
+            "op": "igual",
+            "valor": "inline",
+            "nota": "link em linha, dentro da frase"
+          },
+          {
+            "tipo": "dom",
+            "expr": "Math.round(document.querySelector('#regulamento').getBoundingClientRect().height * 100) / 100",
+            "op": "menorQue",
+            "valor": 24
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F8-01-C",
+        "paginaDe": "/controles/b/c-80b3653bc8.html",
+        "mudanca": "acrescenta o link 'regulamento' dentro de uma frase",
+        "trocas": [
+          [
+            "<h1>Meus empréstimos</h1>\n",
+            "<h1>Meus empréstimos</h1>\n<p>Antes de renovar, confira o <a href=\"#\" id=\"regulamento\">regulamento</a> de empréstimos da biblioteca.</p>\n"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F8-02-D",
+      "caso": "F8-02",
+      "familia": "F8",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "Botão-ícone 32×32 em 375px com toque.",
+      "celulas": [
+        {
+          "sujeito": "button#excluir-movel",
+          "normas": [
+            "ds:iconografia-48x48"
+          ],
+          "esperado": "confirmed",
+          "nota": ""
+        },
+        {
+          "sujeito": "button#excluir-movel",
+          "normas": [
+            "wcag:2.5.8"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-1fadf65242",
+        "caminho": "/controles/b/c-1fadf65242.html",
+        "sha256": "25aaa322034e1af398aeba046db9eeba5a69429dcf2305d7400214498ffde1d6"
+      },
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "toque": true,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "Math.round(document.querySelector('#excluir-movel').getBoundingClientRect().width * 100) / 100",
+            "op": "igual",
+            "valor": 32
+          },
+          {
+            "tipo": "dom",
+            "expr": "Math.round(document.querySelector('#excluir-movel').getBoundingClientRect().height * 100) / 100",
+            "op": "igual",
+            "valor": 32
+          },
+          {
+            "tipo": "dom",
+            "expr": "matchMedia('(pointer: coarse)').matches",
+            "op": "igual",
+            "valor": true,
+            "nota": "entrada por toque"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F8-02-C",
+      "caso": "F8-02",
+      "familia": "F8",
+      "papel": "conforme",
+      "descricaoCatalogo": "48×48.",
+      "celulas": [
+        {
+          "sujeito": "button#excluir-movel",
+          "normas": [
+            "ds:iconografia-48x48",
+            "wcag:2.5.8"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-4c6a128927",
+        "caminho": "/controles/b/c-4c6a128927.html",
+        "sha256": "12e2b65ebf3a52376964176d8f8ce1a37017f9dc8ea586040c1b1c0dc1fb6595"
+      },
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "toque": true,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "Math.round(document.querySelector('#excluir-movel').getBoundingClientRect().width * 100) / 100",
+            "op": "igual",
+            "valor": 48
+          },
+          {
+            "tipo": "dom",
+            "expr": "Math.round(document.querySelector('#excluir-movel').getBoundingClientRect().height * 100) / 100",
+            "op": "igual",
+            "valor": 48
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F8-02-D",
+        "paginaDe": "/controles/b/c-1fadf65242.html",
+        "mudanca": "48×48",
+        "trocas": [
+          [
+            "<button class=\"br-button circle small\" type=\"button\" id=\"excluir-movel\"",
+            "<button class=\"br-button circle large\" type=\"button\" id=\"excluir-movel\""
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F8-02-N",
+      "caso": "F8-02",
+      "familia": "F8",
+      "papel": "nao-aplicavel",
+      "descricaoCatalogo": "Página de F8-02-D a 1280px sem toque.",
+      "celulas": [
+        {
+          "sujeito": "button#excluir-movel",
+          "normas": [
+            "ds:iconografia-48x48"
+          ],
+          "esperado": "nao-aplicavel",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-1fadf65242",
+        "caminho": "/controles/b/c-1fadf65242.html",
+        "sha256": "25aaa322034e1af398aeba046db9eeba5a69429dcf2305d7400214498ffde1d6",
+        "mesmaPaginaDe": "F8-02-D"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "matchMedia('(pointer: fine)').matches",
+            "op": "igual",
+            "valor": true,
+            "nota": "ponteiro fino, sem toque"
+          },
+          {
+            "tipo": "dom",
+            "expr": "Math.round(document.querySelector('#excluir-movel').getBoundingClientRect().width * 100) / 100",
+            "op": "igual",
+            "valor": 32
+          }
+        ]
+      },
+      "axePermitido": []
+    }
+  ]
+}

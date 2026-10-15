@@ -1,0 +1,130 @@
+{
+  "gemeo": "F7-01-D",
+  "caso": "F7-01",
+  "papel": "defeituoso",
+  "pagina": {
+    "id": "c-a48164314b",
+    "caminho": "/controles/b/c-a48164314b.html",
+    "sha256": "19db8f028ce1a824feaab6c23f0180bf858397ba825365411ce0e448b1f2a6f7"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": null,
+  "fatos": [
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.querySelector('#formato legend')",
+      "op": "igual",
+      "valor": null,
+      "nota": "fieldset sem legend",
+      "medido": null,
+      "ok": true
+    },
+    {
+      "captura": "inicial",
+      "tipo": "ax",
+      "alvo": "#formato",
+      "prop": "papel",
+      "op": "igual",
+      "valor": "group",
+      "medido": "group",
+      "ok": true,
+      "papel": "group",
+      "nome": ""
+    },
+    {
+      "captura": "inicial",
+      "tipo": "ax",
+      "alvo": "#formato",
+      "prop": "nome",
+      "op": "vazio",
+      "medido": "",
+      "ok": true,
+      "papel": "group",
+      "nome": ""
+    },
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.getElementById('q-formato').innerText.trim()",
+      "op": "igual",
+      "valor": "Formato do livro",
+      "medido": "Formato do livro",
+      "ok": true
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/b/c-a48164314b.html",
+    "hashBuild": "19db8f028ce1a824feaab6c23f0180bf858397ba825365411ce0e448b1f2a6f7",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "capturar",
+        "nome": "inicial"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "capturar",
+        "nome": "inicial",
+        "foco": {
+          "tag": "body"
+        }
+      }
+    ],
+    "capturas": {
+      "inicial": {
+        "passo": 1,
+        "foco": {
+          "tag": "body"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Reservar livro – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Reservar livro</h1>\n<p><strong>Ensaio sobre a cegueira</strong>, de José Saramago. Disponível nos dois formatos.</p>\n<form id=\"form-reserva\" novalidate=\"\">\n<p class=\"pergunta\" id=\"q-formato\">Formato do livro</p>\n<fieldset id=\"formato\">\n  <div class=\"br-radio\"><input id=\"formato-impresso\" type=\"radio\" name=\"formato\" value=\"impresso\" checked=\"\"><label for=\"formato-impresso\">Impresso</label></div>\n  <div class=\"br-radio\"><input id=\"formato-digital\" type=\"radio\" name=\"formato\" value=\"digital\"><label for=\"formato-digital\">Digital</label></div>\n</fieldset>\n<button class=\"br-button primary mt-3\" type=\"button\">Reservar</button>\n</form>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": [
+          {
+            "tipo": "ax",
+            "alvo": "#formato",
+            "prop": "papel",
+            "op": "igual",
+            "valor": "group",
+            "medido": "group",
+            "ok": true,
+            "papel": "group",
+            "nome": ""
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#formato",
+            "prop": "nome",
+            "op": "vazio",
+            "medido": "",
+            "ok": true,
+            "papel": "group",
+            "nome": ""
+          }
+        ]
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

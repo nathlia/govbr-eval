@@ -1,0 +1,181 @@
+{
+  "gemeo": "F6-01-X",
+  "caso": "F6-01",
+  "papel": "alternativa",
+  "pagina": {
+    "id": "c-777bde088b",
+    "caminho": "/controles/a/c-777bde088b.html",
+    "sha256": "24e49f50b58f5705f920d1d218f39e1846d53240b63c9c8943a1b471165c419f"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": {
+    "de": "F6-01-D",
+    "paginaDe": "/controles/a/c-b073d5cdf9.html",
+    "trocas": 1,
+    "ok": true,
+    "erros": []
+  },
+  "fatos": [
+    {
+      "captura": "com-foco",
+      "tipo": "foco",
+      "alvo": "#renovar",
+      "medido": {
+        "tag": "button",
+        "id": "renovar",
+        "classe": "br-button primary",
+        "texto": "Renovar empréstimo"
+      },
+      "ok": true
+    },
+    {
+      "captura": "com-foco",
+      "tipo": "dom",
+      "expr": "getComputedStyle(document.getElementById('renovar')).outlineStyle",
+      "op": "diferente",
+      "valor": "none",
+      "medido": "dashed",
+      "ok": true
+    },
+    {
+      "captura": "com-foco",
+      "tipo": "recortes",
+      "a": "sem-foco",
+      "b": "com-foco",
+      "iguais": false,
+      "medido": {
+        "a": "877da6ccf95f248b4e31b36a40abbd5ff93afa07f8da5bc622c6882123a6e0f9",
+        "b": "0f8566a8a8ec7f443628f53a902261385dcc191475ab2a4cc03f3eb67c757f89"
+      },
+      "ok": true
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/a/c-777bde088b.html",
+    "hashBuild": "24e49f50b58f5705f920d1d218f39e1846d53240b63c9c8943a1b471165c419f",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "focar",
+        "alvo": "#link-regulamento"
+      },
+      {
+        "acao": "recortar",
+        "nome": "sem-foco",
+        "alvo": "#renovar",
+        "margem": 10
+      },
+      {
+        "acao": "tecla",
+        "tecla": "Tab"
+      },
+      {
+        "acao": "recortar",
+        "nome": "com-foco",
+        "alvo": "#renovar",
+        "margem": 10
+      },
+      {
+        "acao": "capturar",
+        "nome": "com-foco"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "focar",
+        "alvo": "#link-regulamento",
+        "foco": {
+          "tag": "a",
+          "id": "link-regulamento",
+          "classe": null,
+          "texto": "regulamento de empréstimos"
+        }
+      },
+      {
+        "passo": 2,
+        "acao": "recortar",
+        "nome": "sem-foco",
+        "recorte": {
+          "sha256": "877da6ccf95f248b4e31b36a40abbd5ff93afa07f8da5bc622c6882123a6e0f9",
+          "clip": {
+            "x": 50,
+            "y": 330.109375,
+            "width": 233.328125,
+            "height": 60
+          }
+        }
+      },
+      {
+        "passo": 3,
+        "acao": "tecla",
+        "tecla": "Tab",
+        "foco": {
+          "tag": "button",
+          "id": "renovar",
+          "classe": "br-button primary",
+          "texto": "Renovar empréstimo"
+        }
+      },
+      {
+        "passo": 4,
+        "acao": "recortar",
+        "nome": "com-foco",
+        "recorte": {
+          "sha256": "0f8566a8a8ec7f443628f53a902261385dcc191475ab2a4cc03f3eb67c757f89",
+          "clip": {
+            "x": 50,
+            "y": 330.109375,
+            "width": 233.328125,
+            "height": 60
+          }
+        }
+      },
+      {
+        "passo": 5,
+        "acao": "capturar",
+        "nome": "com-foco",
+        "foco": {
+          "tag": "button",
+          "id": "renovar",
+          "classe": "br-button primary",
+          "texto": "Renovar empréstimo"
+        }
+      }
+    ],
+    "capturas": {
+      "com-foco": {
+        "passo": 5,
+        "foco": {
+          "tag": "button",
+          "id": "renovar",
+          "classe": "br-button primary",
+          "texto": "Renovar empréstimo"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Dom Casmurro – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n<style>\n.acoes-emprestimo .br-button:focus:not(:focus-visible) {\n  outline: none;\n}\n</style>\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Dom Casmurro</h1>\n<p>Machado de Assis · Romance · Exemplar 2 de 3</p>\n<p>Devolução atual: 18/10/2026. Antes de renovar, leia o <a href=\"#\" id=\"link-regulamento\">regulamento de empréstimos</a>.</p>\n<div class=\"acoes acoes-emprestimo\">\n  <button class=\"br-button primary\" type=\"button\" id=\"renovar\">Renovar empréstimo</button>\n  <a href=\"#\" class=\"voltar\">Voltar para meus empréstimos</a>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

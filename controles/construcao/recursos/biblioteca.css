@@ -1,0 +1,91 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto;
+  padding-bottom: var(--spacing-scale-8x);
+  padding-top: var(--spacing-scale-4x);
+}
+
+.br-header .header-logo img {
+  height: 40px;
+  width: 40px;
+}
+
+.links-rodape {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-scale-3x);
+  padding-top: var(--spacing-scale-3x);
+}
+
+.texto-rodape {
+  padding-bottom: var(--spacing-scale-3x);
+  padding-top: var(--spacing-scale-2x);
+}
+
+.titulo-livro {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.secao {
+  margin-top: var(--spacing-scale-5x);
+}
+
+.lista-livros {
+  border-top: 1px solid var(--border-color);
+}
+
+.lista-livros .br-item {
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--spacing-scale-2x) 0;
+}
+
+.br-message[hidden] {
+  display: none;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+legend,
+.pergunta {
+  font-weight: var(--font-weight-semi-bold);
+  margin-bottom: var(--spacing-scale-base);
+  padding: 0;
+}
+
+.painel-filtros {
+  background: var(--gray-2);
+  margin-top: var(--spacing-scale-2x);
+  padding: var(--spacing-scale-2x);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.rotulo {
+  display: block;
+  font-weight: var(--font-weight-semi-bold);
+  margin-bottom: var(--spacing-scale-half);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-scale-2x);
+  margin-top: var(--spacing-scale-3x);
+}
+
+.br-scrim-util.foco .br-modal {
+  max-width: calc(100vw - 2 * var(--spacing-scale-2x));
+  width: 560px;
+}

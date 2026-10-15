@@ -1,0 +1,134 @@
+{
+  "gemeo": "F7-03-D",
+  "caso": "F7-03",
+  "papel": "defeituoso",
+  "pagina": {
+    "id": "c-34f403af67",
+    "caminho": "/controles/a/c-34f403af67.html",
+    "sha256": "3686f1a3ba9f3de55ffe143a4b1a539c9c8de972ccf46c03e78c750bbdd179b2"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": null,
+  "fatos": [
+    {
+      "captura": "inicial",
+      "tipo": "ax",
+      "alvo": "#email",
+      "prop": "nome",
+      "op": "igual",
+      "valor": "E-mail",
+      "medido": "E-mail",
+      "ok": true,
+      "papel": "textbox",
+      "nome": "E-mail"
+    },
+    {
+      "captura": "inicial",
+      "tipo": "ax",
+      "alvo": "#telefone",
+      "prop": "nome",
+      "op": "igual",
+      "valor": "E-mail",
+      "nota": "o campo Telefone recebe o nome do rótulo E-mail",
+      "medido": "E-mail",
+      "ok": true,
+      "papel": "textbox",
+      "nome": "E-mail"
+    },
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.getElementById('telefone').labels.length",
+      "op": "igual",
+      "valor": 0,
+      "medido": 0,
+      "ok": true
+    },
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.getElementById('telefone').closest('.br-input').querySelector('label').innerText.trim()",
+      "op": "igual",
+      "valor": "Telefone",
+      "nota": "rótulo visível junto do campo",
+      "medido": "Telefone",
+      "ok": true
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/a/c-34f403af67.html",
+    "hashBuild": "3686f1a3ba9f3de55ffe143a4b1a539c9c8de972ccf46c03e78c750bbdd179b2",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "capturar",
+        "nome": "inicial"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "capturar",
+        "nome": "inicial",
+        "foco": {
+          "tag": "body"
+        }
+      }
+    ],
+    "capturas": {
+      "inicial": {
+        "passo": 1,
+        "foco": {
+          "tag": "body"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Dados de contato – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<div class=\"row\">\n  <div class=\"col-md-8 col-lg-6\">\n    <h1>Dados de contato</h1>\n    <p>Usamos estes dados só para avisos de devolução e de reservas disponíveis.</p>\n    <form id=\"form-contato\" novalidate=\"\">\n<div class=\"br-input mb-3\">\n  <label for=\"email\" id=\"rotulo-email\">E-mail</label>\n  <input id=\"email\" name=\"email\" type=\"email\" autocomplete=\"email\">\n</div>\n<div class=\"br-input mb-3\">\n  <label id=\"rotulo-telefone\">Telefone</label>\n  <input id=\"telefone\" name=\"telefone\" type=\"tel\" autocomplete=\"tel\" aria-labelledby=\"rotulo-email\">\n</div>\n      <button class=\"br-button primary\" type=\"button\">Salvar</button>\n    </form>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": [
+          {
+            "tipo": "ax",
+            "alvo": "#email",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "E-mail",
+            "medido": "E-mail",
+            "ok": true,
+            "papel": "textbox",
+            "nome": "E-mail"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#telefone",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "E-mail",
+            "nota": "o campo Telefone recebe o nome do rótulo E-mail",
+            "medido": "E-mail",
+            "ok": true,
+            "papel": "textbox",
+            "nome": "E-mail"
+          }
+        ]
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

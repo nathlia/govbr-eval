@@ -1,0 +1,149 @@
+{
+  "tipo": "completo",
+  "pagina": "/controles/b/c-6679556de5.html",
+  "hashBuild": "ed52e7495335b01362888e708a5637f99ef72c8bc11b0de233e89c03a70c554e",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "eProv": "pagina",
+  "receita": [
+    {
+      "acao": "focar",
+      "alvo": "#remover-1"
+    },
+    {
+      "acao": "capturar",
+      "nome": "antes"
+    },
+    {
+      "acao": "tecla",
+      "tecla": "Enter"
+    },
+    {
+      "acao": "capturar",
+      "nome": "apos-abrir"
+    },
+    {
+      "acao": "tecla",
+      "tecla": "Enter"
+    },
+    {
+      "acao": "capturar",
+      "nome": "apos-remover"
+    }
+  ],
+  "tracoFoco": [
+    {
+      "passo": 1,
+      "acao": "focar",
+      "alvo": "#remover-1",
+      "foco": {
+        "tag": "button",
+        "id": "remover-1",
+        "classe": "br-button secondary small remover",
+        "texto": "Remover da lista"
+      }
+    },
+    {
+      "passo": 2,
+      "acao": "capturar",
+      "nome": "antes",
+      "foco": {
+        "tag": "button",
+        "id": "remover-1",
+        "classe": "br-button secondary small remover",
+        "texto": "Remover da lista"
+      }
+    },
+    {
+      "passo": 3,
+      "acao": "tecla",
+      "tecla": "Enter",
+      "foco": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button primary ml-2",
+        "texto": "Remover"
+      }
+    },
+    {
+      "passo": 4,
+      "acao": "capturar",
+      "nome": "apos-abrir",
+      "foco": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button primary ml-2",
+        "texto": "Remover"
+      }
+    },
+    {
+      "passo": 5,
+      "acao": "tecla",
+      "tecla": "Enter",
+      "foco": {
+        "tag": "h2",
+        "id": "titulo-lista",
+        "classe": null,
+        "texto": "Clube de leitura de outubro"
+      }
+    },
+    {
+      "passo": 6,
+      "acao": "capturar",
+      "nome": "apos-remover",
+      "foco": {
+        "tag": "h2",
+        "id": "titulo-lista",
+        "classe": null,
+        "texto": "Clube de leitura de outubro"
+      }
+    }
+  ],
+  "capturas": {
+    "antes": {
+      "passo": 2,
+      "foco": {
+        "tag": "button",
+        "id": "remover-1",
+        "classe": "br-button secondary small remover",
+        "texto": "Remover da lista"
+      },
+      "dom": {
+        "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Minha lista de leitura – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Minha lista de leitura</h1>\n<p>Livros que você guardou para pegar emprestado depois.</p>\n<h2 id=\"titulo-lista\" tabindex=\"-1\">Clube de leitura de outubro</h2>\n<ul class=\"br-list lista-livros\" id=\"lista-leitura\">\n  <li class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\"><p class=\"titulo-livro mb-0\">Vidas secas</p><p class=\"detalhe-livro mb-0\">Graciliano Ramos</p></div>\n      <div class=\"col-auto\"><button class=\"br-button secondary small remover\" type=\"button\" id=\"remover-1\" data-titulo=\"Vidas secas\">Remover da lista</button></div>\n    </div>\n  </li>\n  <li class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\"><p class=\"titulo-livro mb-0\">Dom Casmurro</p><p class=\"detalhe-livro mb-0\">Machado de Assis</p></div>\n      <div class=\"col-auto\"><button class=\"br-button secondary small remover\" type=\"button\" id=\"remover-2\" data-titulo=\"Dom Casmurro\">Remover da lista</button></div>\n    </div>\n  </li>\n  <li class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\"><p class=\"titulo-livro mb-0\">Quarto de despejo</p><p class=\"detalhe-livro mb-0\">Carolina Maria de Jesus</p></div>\n      <div class=\"col-auto\"><button class=\"br-button secondary small remover\" type=\"button\" id=\"remover-3\" data-titulo=\"Quarto de despejo\">Remover da lista</button></div>\n    </div>\n  </li>\n</ul>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<div class=\"br-scrim-util foco\" id=\"scrim-remover-item\">\n  <div class=\"br-modal medium\" id=\"remover-item\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"remover-item-titulo\" data-tipo=\"acao\">\n    <div class=\"br-modal-header\">\n      <div class=\"modal-title\" id=\"remover-item-titulo\">Remover da lista?</div>\n      <button class=\"br-button close circle\" type=\"button\" aria-label=\"Fechar\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div class=\"br-modal-body\">\n      <p id=\"remover-texto\">O livro sairá da sua lista de leitura. Você pode adicioná-lo de novo quando quiser.</p>\n    </div>\n    <div class=\"br-modal-footer justify-content-end\">\n      <button class=\"br-button secondary\" type=\"button\">Cancelar</button>\n      <button class=\"br-button primary ml-2\" type=\"button\">Remover</button>\n    </div>\n  </div>\n</div>\n<script>\n(function () {\n  const scrim = document.getElementById('scrim-remover-item');\n  const janela = document.getElementById('remover-item');\n  const texto = document.getElementById('remover-texto');\n  const confirmar = janela.querySelector('.br-modal-footer .primary');\n  const cancelar = janela.querySelector('.br-modal-footer .secondary');\n  const fechar = janela.querySelector('.br-modal-header .close');\n  let origem = null;\n  function abrirJanela(botao) {\n    origem = botao;\n    texto.textContent = botao.dataset.titulo + ' sairá da sua lista de leitura. Você pode adicioná-lo de novo quando quiser.';\n    scrim.classList.add('active');\n    confirmar.focus();\n  }\n  function fecharJanela() {\n    scrim.classList.remove('active');\n    origem.focus();\n  }\n  document.querySelectorAll('.remover').forEach((botao) => botao.addEventListener('click', () => abrirJanela(botao)));\n  cancelar.addEventListener('click', fecharJanela);\n  fechar.addEventListener('click', fecharJanela);\n  confirmar.addEventListener('click', () => {\n    origem.closest('li').remove();\n    scrim.classList.remove('active');\n    document.getElementById('titulo-lista').focus();\n  });\n  janela.addEventListener('keydown', (e) => {\n    if (e.key === 'Escape') fecharJanela();\n    if (e.key === 'Tab') {\n      const lista = Array.from(janela.querySelectorAll('button'));\n      if (e.shiftKey && document.activeElement === lista[0]) {\n        e.preventDefault();\n        lista[lista.length - 1].focus();\n      } else if (!e.shiftKey && document.activeElement === lista[lista.length - 1]) {\n        e.preventDefault();\n        lista[0].focus();\n      }\n    }\n  });\n})();\n</script>\n\n\n</body></html>",
+        "raizesAbertas": []
+      },
+      "ax": []
+    },
+    "apos-abrir": {
+      "passo": 4,
+      "foco": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button primary ml-2",
+        "texto": "Remover"
+      },
+      "dom": {
+        "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Minha lista de leitura – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Minha lista de leitura</h1>\n<p>Livros que você guardou para pegar emprestado depois.</p>\n<h2 id=\"titulo-lista\" tabindex=\"-1\">Clube de leitura de outubro</h2>\n<ul class=\"br-list lista-livros\" id=\"lista-leitura\">\n  <li class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\"><p class=\"titulo-livro mb-0\">Vidas secas</p><p class=\"detalhe-livro mb-0\">Graciliano Ramos</p></div>\n      <div class=\"col-auto\"><button class=\"br-button secondary small remover\" type=\"button\" id=\"remover-1\" data-titulo=\"Vidas secas\">Remover da lista</button></div>\n    </div>\n  </li>\n  <li class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\"><p class=\"titulo-livro mb-0\">Dom Casmurro</p><p class=\"detalhe-livro mb-0\">Machado de Assis</p></div>\n      <div class=\"col-auto\"><button class=\"br-button secondary small remover\" type=\"button\" id=\"remover-2\" data-titulo=\"Dom Casmurro\">Remover da lista</button></div>\n    </div>\n  </li>\n  <li class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\"><p class=\"titulo-livro mb-0\">Quarto de despejo</p><p class=\"detalhe-livro mb-0\">Carolina Maria de Jesus</p></div>\n      <div class=\"col-auto\"><button class=\"br-button secondary small remover\" type=\"button\" id=\"remover-3\" data-titulo=\"Quarto de despejo\">Remover da lista</button></div>\n    </div>\n  </li>\n</ul>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<div class=\"br-scrim-util foco active\" id=\"scrim-remover-item\">\n  <div class=\"br-modal medium\" id=\"remover-item\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"remover-item-titulo\" data-tipo=\"acao\">\n    <div class=\"br-modal-header\">\n      <div class=\"modal-title\" id=\"remover-item-titulo\">Remover da lista?</div>\n      <button class=\"br-button close circle\" type=\"button\" aria-label=\"Fechar\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div class=\"br-modal-body\">\n      <p id=\"remover-texto\">Vidas secas sairá da sua lista de leitura. Você pode adicioná-lo de novo quando quiser.</p>\n    </div>\n    <div class=\"br-modal-footer justify-content-end\">\n      <button class=\"br-button secondary\" type=\"button\">Cancelar</button>\n      <button class=\"br-button primary ml-2\" type=\"button\">Remover</button>\n    </div>\n  </div>\n</div>\n<script>\n(function () {\n  const scrim = document.getElementById('scrim-remover-item');\n  const janela = document.getElementById('remover-item');\n  const texto = document.getElementById('remover-texto');\n  const confirmar = janela.querySelector('.br-modal-footer .primary');\n  const cancelar = janela.querySelector('.br-modal-footer .secondary');\n  const fechar = janela.querySelector('.br-modal-header .close');\n  let origem = null;\n  function abrirJanela(botao) {\n    origem = botao;\n    texto.textContent = botao.dataset.titulo + ' sairá da sua lista de leitura. Você pode adicioná-lo de novo quando quiser.';\n    scrim.classList.add('active');\n    confirmar.focus();\n  }\n  function fecharJanela() {\n    scrim.classList.remove('active');\n    origem.focus();\n  }\n  document.querySelectorAll('.remover').forEach((botao) => botao.addEventListener('click', () => abrirJanela(botao)));\n  cancelar.addEventListener('click', fecharJanela);\n  fechar.addEventListener('click', fecharJanela);\n  confirmar.addEventListener('click', () => {\n    origem.closest('li').remove();\n    scrim.classList.remove('active');\n    document.getElementById('titulo-lista').focus();\n  });\n  janela.addEventListener('keydown', (e) => {\n    if (e.key === 'Escape') fecharJanela();\n    if (e.key === 'Tab') {\n      const lista = Array.from(janela.querySelectorAll('button'));\n      if (e.shiftKey && document.activeElement === lista[0]) {\n        e.preventDefault();\n        lista[lista.length - 1].focus();\n      } else if (!e.shiftKey && document.activeElement === lista[lista.length - 1]) {\n        e.preventDefault();\n        lista[0].focus();\n      }\n    }\n  });\n})();\n</script>\n\n\n</body></html>",
+        "raizesAbertas": []
+      },
+      "ax": []
+    },
+    "apos-remover": {
+      "passo": 6,
+      "foco": {
+        "tag": "h2",
+        "id": "titulo-lista",
+        "classe": null,
+        "texto": "Clube de leitura de outubro"
+      },
+      "dom": {
+        "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Minha lista de leitura – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Minha lista de leitura</h1>\n<p>Livros que você guardou para pegar emprestado depois.</p>\n<h2 id=\"titulo-lista\" tabindex=\"-1\">Clube de leitura de outubro</h2>\n<ul class=\"br-list lista-livros\" id=\"lista-leitura\">\n  \n  <li class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\"><p class=\"titulo-livro mb-0\">Dom Casmurro</p><p class=\"detalhe-livro mb-0\">Machado de Assis</p></div>\n      <div class=\"col-auto\"><button class=\"br-button secondary small remover\" type=\"button\" id=\"remover-2\" data-titulo=\"Dom Casmurro\">Remover da lista</button></div>\n    </div>\n  </li>\n  <li class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\"><p class=\"titulo-livro mb-0\">Quarto de despejo</p><p class=\"detalhe-livro mb-0\">Carolina Maria de Jesus</p></div>\n      <div class=\"col-auto\"><button class=\"br-button secondary small remover\" type=\"button\" id=\"remover-3\" data-titulo=\"Quarto de despejo\">Remover da lista</button></div>\n    </div>\n  </li>\n</ul>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<div class=\"br-scrim-util foco\" id=\"scrim-remover-item\">\n  <div class=\"br-modal medium\" id=\"remover-item\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"remover-item-titulo\" data-tipo=\"acao\">\n    <div class=\"br-modal-header\">\n      <div class=\"modal-title\" id=\"remover-item-titulo\">Remover da lista?</div>\n      <button class=\"br-button close circle\" type=\"button\" aria-label=\"Fechar\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div class=\"br-modal-body\">\n      <p id=\"remover-texto\">Vidas secas sairá da sua lista de leitura. Você pode adicioná-lo de novo quando quiser.</p>\n    </div>\n    <div class=\"br-modal-footer justify-content-end\">\n      <button class=\"br-button secondary\" type=\"button\">Cancelar</button>\n      <button class=\"br-button primary ml-2\" type=\"button\">Remover</button>\n    </div>\n  </div>\n</div>\n<script>\n(function () {\n  const scrim = document.getElementById('scrim-remover-item');\n  const janela = document.getElementById('remover-item');\n  const texto = document.getElementById('remover-texto');\n  const confirmar = janela.querySelector('.br-modal-footer .primary');\n  const cancelar = janela.querySelector('.br-modal-footer .secondary');\n  const fechar = janela.querySelector('.br-modal-header .close');\n  let origem = null;\n  function abrirJanela(botao) {\n    origem = botao;\n    texto.textContent = botao.dataset.titulo + ' sairá da sua lista de leitura. Você pode adicioná-lo de novo quando quiser.';\n    scrim.classList.add('active');\n    confirmar.focus();\n  }\n  function fecharJanela() {\n    scrim.classList.remove('active');\n    origem.focus();\n  }\n  document.querySelectorAll('.remover').forEach((botao) => botao.addEventListener('click', () => abrirJanela(botao)));\n  cancelar.addEventListener('click', fecharJanela);\n  fechar.addEventListener('click', fecharJanela);\n  confirmar.addEventListener('click', () => {\n    origem.closest('li').remove();\n    scrim.classList.remove('active');\n    document.getElementById('titulo-lista').focus();\n  });\n  janela.addEventListener('keydown', (e) => {\n    if (e.key === 'Escape') fecharJanela();\n    if (e.key === 'Tab') {\n      const lista = Array.from(janela.querySelectorAll('button'));\n      if (e.shiftKey && document.activeElement === lista[0]) {\n        e.preventDefault();\n        lista[lista.length - 1].focus();\n      } else if (!e.shiftKey && document.activeElement === lista[lista.length - 1]) {\n        e.preventDefault();\n        lista[0].focus();\n      }\n    }\n  });\n})();\n</script>\n\n\n</body></html>",
+        "raizesAbertas": []
+      },
+      "ax": []
+    }
+  }
+}

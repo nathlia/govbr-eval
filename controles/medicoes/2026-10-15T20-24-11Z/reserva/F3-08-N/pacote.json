@@ -1,0 +1,81 @@
+{
+  "tipo": "completo",
+  "pagina": "/controles/b/c-5297784893.html",
+  "hashBuild": "f0552d5484e9cc6d39c00b536d5f0dfffe58c2ce5fabbd9df43842d050f5bcf5",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "eProv": "pagina",
+  "receita": [
+    {
+      "acao": "capturar",
+      "nome": "apos-carregar"
+    },
+    {
+      "acao": "tecla",
+      "tecla": "Escape"
+    },
+    {
+      "acao": "capturar",
+      "nome": "apos-fechar"
+    }
+  ],
+  "tracoFoco": [
+    {
+      "passo": 1,
+      "acao": "capturar",
+      "nome": "apos-carregar",
+      "foco": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button close circle",
+        "texto": "Fechar"
+      }
+    },
+    {
+      "passo": 2,
+      "acao": "tecla",
+      "tecla": "Escape",
+      "foco": {
+        "tag": "body"
+      }
+    },
+    {
+      "passo": 3,
+      "acao": "capturar",
+      "nome": "apos-fechar",
+      "foco": {
+        "tag": "body"
+      }
+    }
+  ],
+  "capturas": {
+    "apos-carregar": {
+      "passo": 1,
+      "foco": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button close circle",
+        "texto": "Fechar"
+      },
+      "dom": {
+        "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Empréstimos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Empréstimos</h1>\n<p>O prazo padrão de empréstimo é de 14 dias. Leitores com cartão ativo podem ter até 5 livros ao mesmo tempo.</p>\n<div class=\"secao\">\n  <h2>Seus empréstimos</h2>\n  <div class=\"br-list lista-livros\">\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Dom Casmurro</p>\n        <p class=\"detalhe-livro mb-0\">Machado de Assis · devolução até 18/10/2026</p>\n      </div>\n    </div>\n  </div>\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Vidas secas</p>\n        <p class=\"detalhe-livro mb-0\">Graciliano Ramos · devolução até 21/10/2026</p>\n      </div>\n    </div>\n  </div>\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Quarto de despejo</p>\n        <p class=\"detalhe-livro mb-0\">Carolina Maria de Jesus · devolução até 25/10/2026</p>\n      </div>\n    </div>\n  </div>\n</div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<div class=\"br-scrim-util foco active\" id=\"scrim-aviso-feriado\">\n  <div class=\"br-modal medium\" id=\"aviso-feriado\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"aviso-feriado-titulo\" data-tipo=\"informativa\">\n    <div class=\"br-modal-header\">\n      <div class=\"modal-title\" id=\"aviso-feriado-titulo\">Biblioteca fechada no feriado</div>\n      <button class=\"br-button close circle\" type=\"button\" aria-label=\"Fechar\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div class=\"br-modal-body\">\n      <p>No dia 2 de novembro, feriado de Finados, a biblioteca não abre. Devoluções previstas para esse dia podem ser feitas até 3 de novembro, sem multa.</p>\n    </div>\n    <div class=\"br-modal-footer justify-content-end\">\n      <button class=\"br-button primary\" type=\"button\">Entendi</button>\n    </div>\n  </div>\n</div>\n<script>\n(function () {\n  const scrim = document.getElementById('scrim-aviso-feriado');\n  const janela = document.getElementById('aviso-feriado');\n  const fechar = janela.querySelector('.br-modal-header .close');\n  let origem = null;\n  function focaveis() {\n    return Array.from(janela.querySelectorAll('button, [href], input, select, textarea')).filter((el) => !el.disabled);\n  }\n  function abrirJanela() {\n    origem = document.activeElement;\n    scrim.classList.add('active');\n    fechar.focus();\n  }\n  function fecharJanela() {\n    scrim.classList.remove('active');\n    origem.focus();\n  }\n  abrirJanela();\n  if (fechar) fechar.addEventListener('click', fecharJanela);\n  janela.querySelectorAll('.br-modal-footer .br-button').forEach((b) => b.addEventListener('click', fecharJanela));\n  janela.addEventListener('keydown', (e) => {\n    if (e.key === 'Escape') {\n      fecharJanela();\n    }\n    if (e.key === 'Tab') {\n      const lista = focaveis();\n      const primeiro = lista[0];\n      const ultimo = lista[lista.length - 1];\n      if (e.shiftKey && document.activeElement === primeiro) {\n        e.preventDefault();\n        ultimo.focus();\n      } else if (!e.shiftKey && document.activeElement === ultimo) {\n        e.preventDefault();\n        primeiro.focus();\n      }\n    }\n  });\n})();\n</script>\n\n\n</body></html>",
+        "raizesAbertas": []
+      },
+      "ax": []
+    },
+    "apos-fechar": {
+      "passo": 3,
+      "foco": {
+        "tag": "body"
+      },
+      "dom": {
+        "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Empréstimos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Empréstimos</h1>\n<p>O prazo padrão de empréstimo é de 14 dias. Leitores com cartão ativo podem ter até 5 livros ao mesmo tempo.</p>\n<div class=\"secao\">\n  <h2>Seus empréstimos</h2>\n  <div class=\"br-list lista-livros\">\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Dom Casmurro</p>\n        <p class=\"detalhe-livro mb-0\">Machado de Assis · devolução até 18/10/2026</p>\n      </div>\n    </div>\n  </div>\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Vidas secas</p>\n        <p class=\"detalhe-livro mb-0\">Graciliano Ramos · devolução até 21/10/2026</p>\n      </div>\n    </div>\n  </div>\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Quarto de despejo</p>\n        <p class=\"detalhe-livro mb-0\">Carolina Maria de Jesus · devolução até 25/10/2026</p>\n      </div>\n    </div>\n  </div>\n</div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<div class=\"br-scrim-util foco\" id=\"scrim-aviso-feriado\">\n  <div class=\"br-modal medium\" id=\"aviso-feriado\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"aviso-feriado-titulo\" data-tipo=\"informativa\">\n    <div class=\"br-modal-header\">\n      <div class=\"modal-title\" id=\"aviso-feriado-titulo\">Biblioteca fechada no feriado</div>\n      <button class=\"br-button close circle\" type=\"button\" aria-label=\"Fechar\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div class=\"br-modal-body\">\n      <p>No dia 2 de novembro, feriado de Finados, a biblioteca não abre. Devoluções previstas para esse dia podem ser feitas até 3 de novembro, sem multa.</p>\n    </div>\n    <div class=\"br-modal-footer justify-content-end\">\n      <button class=\"br-button primary\" type=\"button\">Entendi</button>\n    </div>\n  </div>\n</div>\n<script>\n(function () {\n  const scrim = document.getElementById('scrim-aviso-feriado');\n  const janela = document.getElementById('aviso-feriado');\n  const fechar = janela.querySelector('.br-modal-header .close');\n  let origem = null;\n  function focaveis() {\n    return Array.from(janela.querySelectorAll('button, [href], input, select, textarea')).filter((el) => !el.disabled);\n  }\n  function abrirJanela() {\n    origem = document.activeElement;\n    scrim.classList.add('active');\n    fechar.focus();\n  }\n  function fecharJanela() {\n    scrim.classList.remove('active');\n    origem.focus();\n  }\n  abrirJanela();\n  if (fechar) fechar.addEventListener('click', fecharJanela);\n  janela.querySelectorAll('.br-modal-footer .br-button').forEach((b) => b.addEventListener('click', fecharJanela));\n  janela.addEventListener('keydown', (e) => {\n    if (e.key === 'Escape') {\n      fecharJanela();\n    }\n    if (e.key === 'Tab') {\n      const lista = focaveis();\n      const primeiro = lista[0];\n      const ultimo = lista[lista.length - 1];\n      if (e.shiftKey && document.activeElement === primeiro) {\n        e.preventDefault();\n        ultimo.focus();\n      } else if (!e.shiftKey && document.activeElement === ultimo) {\n        e.preventDefault();\n        primeiro.focus();\n      }\n    }\n  });\n})();\n</script>\n\n\n</body></html>",
+        "raizesAbertas": []
+      },
+      "ax": []
+    }
+  }
+}

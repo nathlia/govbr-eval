@@ -1,0 +1,127 @@
+{
+  "gemeo": "F2-01-D",
+  "caso": "F2-01",
+  "papel": "defeituoso",
+  "pagina": {
+    "id": "c-32919e6ea3",
+    "caminho": "/controles/a/c-32919e6ea3.html",
+    "sha256": "19d2b3e8faa15906fd967826c47e56892a938b450527d6e978dc739a88227eb8"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": null,
+  "fatos": [
+    {
+      "captura": "apos-renovar",
+      "tipo": "dom",
+      "expr": "(() => { const el = document.querySelector('#aviso-renovacao'); return !!el && el.getBoundingClientRect().height > 0; })()",
+      "op": "igual",
+      "valor": true,
+      "nota": "raiz .br-message exibida",
+      "medido": true,
+      "ok": true
+    },
+    {
+      "captura": "apos-renovar",
+      "tipo": "dom",
+      "expr": "document.querySelector('#aviso-renovacao .content').textContent.trim()",
+      "op": "igual",
+      "valor": "",
+      "nota": "parte 'Mensagem' sem texto",
+      "medido": "",
+      "ok": true
+    },
+    {
+      "captura": "apos-renovar",
+      "tipo": "dom",
+      "expr": "!!document.querySelector('#aviso-renovacao .icon i') && !!document.querySelector('#aviso-renovacao .close button')",
+      "op": "igual",
+      "valor": true,
+      "nota": "ícone e fechar presentes",
+      "medido": true,
+      "ok": true
+    },
+    {
+      "captura": "apos-renovar",
+      "tipo": "dom",
+      "expr": "document.querySelector('#aviso-renovacao .message-title')",
+      "op": "igual",
+      "valor": null,
+      "nota": "título (opcional) ausente",
+      "medido": null,
+      "ok": true
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/a/c-32919e6ea3.html",
+    "hashBuild": "19d2b3e8faa15906fd967826c47e56892a938b450527d6e978dc739a88227eb8",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "clicar",
+        "alvo": "#renovar-1"
+      },
+      {
+        "acao": "capturar",
+        "nome": "apos-renovar"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "clicar",
+        "alvo": "#renovar-1",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button circle small",
+          "texto": "Fechar mensagem"
+        }
+      },
+      {
+        "passo": 2,
+        "acao": "capturar",
+        "nome": "apos-renovar",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button circle small",
+          "texto": "Fechar mensagem"
+        }
+      }
+    ],
+    "capturas": {
+      "apos-renovar": {
+        "passo": 2,
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button circle small",
+          "texto": "Fechar mensagem"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Meus empréstimos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Meus empréstimos</h1>\n<p>Você pode renovar cada empréstimo até duas vezes, desde que o livro não tenha reserva de outro leitor.</p>\n<div class=\"br-message danger\" id=\"aviso-renovacao\">\n  <div class=\"icon\"><i class=\"fas fa-times-circle fa-lg\" aria-hidden=\"true\"></i></div>\n  <div class=\"content\" role=\"alert\"></div>\n  <div class=\"close\"><button class=\"br-button circle small\" type=\"button\" aria-label=\"Fechar mensagem\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button></div>\n</div>\n<div class=\"br-list lista-livros\">\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Dom Casmurro</p>\n        <p class=\"detalhe-livro mb-0\">Machado de Assis · devolução até 18/10/2026</p>\n      </div>\n      <div class=\"col-auto\"><button class=\"br-button secondary small renovar\" type=\"button\" id=\"renovar-1\">Renovar</button></div>\n    </div>\n  </div>\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Vidas secas</p>\n        <p class=\"detalhe-livro mb-0\">Graciliano Ramos · devolução até 21/10/2026</p>\n      </div>\n      <div class=\"col-auto\"><button class=\"br-button secondary small renovar\" type=\"button\" id=\"renovar-2\">Renovar</button></div>\n    </div>\n  </div>\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Quarto de despejo</p>\n        <p class=\"detalhe-livro mb-0\">Carolina Maria de Jesus · devolução até 25/10/2026</p>\n      </div>\n      <div class=\"col-auto\"><button class=\"br-button secondary small renovar\" type=\"button\" id=\"renovar-3\">Renovar</button></div>\n    </div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\nconst aviso = document.getElementById('aviso-renovacao');\nconst fecharAviso = aviso.querySelector('.close button');\nlet origem = null;\ndocument.querySelectorAll('.renovar').forEach((botao) => {\n  botao.addEventListener('click', () => {\n    origem = botao;\n    aviso.hidden = false;\n    fecharAviso.focus();\n  });\n});\nfecharAviso.addEventListener('click', () => {\n  aviso.hidden = true;\n  if (origem) origem.focus();\n});\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

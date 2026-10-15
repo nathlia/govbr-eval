@@ -1,0 +1,102 @@
+{
+  "gemeo": "F2-07-D",
+  "caso": "F2-07",
+  "papel": "defeituoso",
+  "pagina": {
+    "id": "c-a05088c9e4",
+    "caminho": "/controles/a/c-a05088c9e4.html",
+    "sha256": "1619b625ec35467a4b57fc8dd937350cb0f06c932fa2d5cea492b643fc003d97"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": null,
+  "fatos": [
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.querySelectorAll('.br-message').length",
+      "op": "igual",
+      "valor": 3,
+      "medido": 3,
+      "ok": true
+    },
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.querySelector('#m1 .content').innerText.trim().length > 0",
+      "op": "igual",
+      "valor": true,
+      "medido": true,
+      "ok": true
+    },
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.querySelector('#m2 .content').innerText.trim().length > 0",
+      "op": "igual",
+      "valor": true,
+      "medido": true,
+      "ok": true
+    },
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.querySelector('#m3 .content').textContent.trim()",
+      "op": "igual",
+      "valor": "",
+      "medido": "",
+      "ok": true
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/a/c-a05088c9e4.html",
+    "hashBuild": "1619b625ec35467a4b57fc8dd937350cb0f06c932fa2d5cea492b643fc003d97",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "capturar",
+        "nome": "inicial"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "capturar",
+        "nome": "inicial",
+        "foco": {
+          "tag": "body"
+        }
+      }
+    ],
+    "capturas": {
+      "inicial": {
+        "passo": 1,
+        "foco": {
+          "tag": "body"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Minha conta – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Minha conta</h1>\n<div class=\"br-message info\" id=\"m1\">\n  <div class=\"icon\"><i class=\"fas fa-info-circle fa-lg\" aria-hidden=\"true\"></i></div>\n  <div class=\"content\"><span class=\"message-body\">Você tem 3 empréstimos ativos.</span></div>\n</div>\n<div class=\"br-message warning\" id=\"m2\">\n  <div class=\"icon\"><i class=\"fas fa-exclamation-triangle fa-lg\" aria-hidden=\"true\"></i></div>\n  <div class=\"content\"><span class=\"message-body\">A devolução de Dom Casmurro vence em 18/10/2026.</span></div>\n</div>\n<div class=\"br-message success\" id=\"m3\">\n  <div class=\"icon\"><i class=\"fas fa-check-circle fa-lg\" aria-hidden=\"true\"></i></div>\n  <div class=\"content\"><span class=\"message-body\"></span></div>\n</div>\n<div class=\"secao\">\n  <h2>Empréstimos</h2>\n  <div class=\"br-list lista-livros\">\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Dom Casmurro</p>\n        <p class=\"detalhe-livro mb-0\">Machado de Assis · devolução até 18/10/2026</p>\n      </div>\n    </div>\n  </div>\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Vidas secas</p>\n        <p class=\"detalhe-livro mb-0\">Graciliano Ramos · devolução até 21/10/2026</p>\n      </div>\n    </div>\n  </div>\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Quarto de despejo</p>\n        <p class=\"detalhe-livro mb-0\">Carolina Maria de Jesus · devolução até 25/10/2026</p>\n      </div>\n    </div>\n  </div>\n</div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

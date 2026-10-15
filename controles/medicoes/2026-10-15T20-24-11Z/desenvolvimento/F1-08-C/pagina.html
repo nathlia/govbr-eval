@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atualizar dados de contato – Biblioteca Municipal</title>
+<link rel="stylesheet" href="../recursos/core.min.css">
+<link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+<link rel="stylesheet" href="../recursos/biblioteca.css">
+</head>
+<body>
+<nav class="br-skiplink" aria-label="Atalhos de teclado"><a class="br-item" href="#conteudo">Ir para o conteúdo</a></nav>
+<header class="br-header" id="topo">
+  <div class="container-lg">
+    <div class="header-top">
+      <div class="header-logo"><img src="../recursos/logo.svg" alt="" width="40" height="40"><span class="br-divider vertical"></span><div class="header-sign">Prefeitura de Santa Aurora</div></div>
+    </div>
+    <div class="header-bottom">
+      <div class="header-menu">
+        <div class="header-info">
+          <div class="header-title">Biblioteca Municipal</div>
+          <div class="header-subtitle">Reservas e renovação de empréstimos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main id="conteudo" class="container-lg">
+<div class="row">
+  <div class="col-md-8 col-lg-6">
+    <h1>Atualizar dados de contato</h1>
+    <p>Mantenha seus dados em dia para receber os avisos de devolução e de reservas disponíveis.</p>
+    <form id="form-contato" novalidate>
+<div class="br-input mb-3">
+  <label for="cartao">Número do cartão</label>
+  <input id="cartao" name="cartao" type="text" inputmode="numeric" autocomplete="off">
+</div>
+<div class="br-input mb-3">
+  <label for="email">E-mail</label>
+  <input id="email" name="email" type="email" autocomplete="email">
+</div>
+<div class="br-input mb-3">
+  <label for="telefone">Telefone</label>
+  <input id="telefone" name="telefone" type="tel" autocomplete="tel">
+</div>
+      <button class="br-button primary" type="submit">Salvar dados</button>
+    </form>
+    <div id="resultado" class="mt-4" role="status"></div>
+  </div>
+</div>
+</main>
+<footer class="br-footer" id="rodape">
+  <div class="container-lg">
+    <nav class="links-rodape" aria-label="Links do rodapé">
+      <a href="#">Acervo</a>
+      <a href="#">Horários e endereço</a>
+      <a href="#">Regulamento de empréstimos</a>
+    </nav>
+    <p class="texto-rodape">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>
+  </div>
+</footer>
+<script>
+const formulario = document.getElementById('form-contato');
+const cartao = document.getElementById('cartao');
+const email = document.getElementById('email');
+const telefone = document.getElementById('telefone');
+const resultado = document.getElementById('resultado');
+function marcar(campo, texto) {
+  const caixa = campo.closest('.br-input');
+  caixa.classList.add('danger');
+  const mensagem = document.createElement('span');
+  mensagem.className = 'feedback danger';
+  mensagem.id = campo.id + '-erro';
+  mensagem.innerHTML = '<i class="fas fa-times-circle" aria-hidden="true"></i>' + texto;
+  caixa.appendChild(mensagem);
+}
+formulario.addEventListener('submit', (evento) => {
+  evento.preventDefault();
+  resultado.innerHTML = '';
+  [cartao, email, telefone].forEach((campo) => {
+    campo.closest('.br-input').classList.remove('danger');
+    campo.removeAttribute('aria-invalid');
+    campo.removeAttribute('aria-describedby');
+    const anterior = document.getElementById(campo.id + '-erro');
+    if (anterior) anterior.remove();
+  });
+  let erros = 0;
+  if (!/^\d{8}$/.test(cartao.value.trim())) {
+    marcar(cartao, 'Informe os 8 dígitos impressos no cartão.');
+    cartao.setAttribute('aria-invalid', 'true');
+    cartao.setAttribute('aria-describedby', 'cartao-erro');
+    erros += 1;
+  }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.value.trim())) {
+    marcar(email, 'Use o formato nome@provedor.com.br.');
+    email.setAttribute('aria-invalid', 'true');
+    email.setAttribute('aria-describedby', 'email-erro');
+    erros += 1;
+  }
+  if (!/^\d{10,11}$/.test(telefone.value.replace(/\D/g, ''))) {
+    marcar(telefone, 'Valor inválido.');
+    telefone.setAttribute('aria-invalid', 'true');
+    telefone.setAttribute('aria-describedby', 'telefone-erro');
+    erros += 1;
+  }
+  if (erros === 0) {
+    resultado.textContent = 'Dados atualizados.';
+  }
+});
+</script>
+</body>
+</html>

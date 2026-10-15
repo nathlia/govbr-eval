@@ -1,0 +1,104 @@
+{
+  "tipo": "completo",
+  "pagina": "/controles/b/c-cd4decf910.html",
+  "hashBuild": "2845c3b8776b7e42a469c3cabc53afbf5702d180c12647b4d0ca92137e1acd66",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "eProv": "pagina",
+  "receita": [
+    {
+      "acao": "preencher",
+      "alvo": "bib-campo >>> #campo",
+      "valor": "12"
+    },
+    {
+      "acao": "clicar",
+      "alvo": "#form-renovacao button[type=submit]"
+    },
+    {
+      "acao": "capturar",
+      "nome": "apos-enviar"
+    }
+  ],
+  "tracoFoco": [
+    {
+      "passo": 1,
+      "acao": "preencher",
+      "alvo": "bib-campo >>> #campo",
+      "foco": {
+        "tag": "input",
+        "id": "campo",
+        "classe": null,
+        "texto": ""
+      }
+    },
+    {
+      "passo": 2,
+      "acao": "clicar",
+      "alvo": "#form-renovacao button[type=submit]",
+      "foco": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button primary",
+        "texto": "Consultar empréstimos"
+      }
+    },
+    {
+      "passo": 3,
+      "acao": "capturar",
+      "nome": "apos-enviar",
+      "foco": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button primary",
+        "texto": "Consultar empréstimos"
+      }
+    }
+  ],
+  "capturas": {
+    "apos-enviar": {
+      "passo": 3,
+      "foco": {
+        "tag": "button",
+        "id": null,
+        "classe": "br-button primary",
+        "texto": "Consultar empréstimos"
+      },
+      "dom": {
+        "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Renovar empréstimos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<div class=\"row\">\n  <div class=\"col-md-8 col-lg-6\">\n    <h1>Renovar empréstimos</h1>\n    <p>Informe o número do seu cartão da biblioteca para ver os livros que podem ser renovados.</p>\n    <form id=\"form-renovacao\" novalidate=\"\">\n      <bib-campo class=\"d-block mb-3\"></bib-campo><span class=\"feedback danger\" id=\"cartao-erro\"><i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>Valor inválido.</span>\n      <button class=\"br-button primary\" type=\"submit\">Consultar empréstimos</button>\n    </form>\n    <div id=\"resultado\" class=\"mt-4\" role=\"status\"></div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\n(function () {\n  const raizes = new WeakMap();\n  class BibCampo extends HTMLElement {\n    constructor() {\n      super();\n      const raiz = this.attachShadow({ mode: 'open' });\n      raizes.set(this, raiz);\n      raiz.innerHTML = '<link rel=\"stylesheet\" href=\"../recursos/core.min.css\"><link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">' +\n        '<div class=\"br-input\"><label for=\"campo\">Número do cartão</label><input id=\"campo\" name=\"cartao\" type=\"text\" inputmode=\"numeric\" autocomplete=\"off\"></div>';\n    }\n    get valor() {\n      return raizes.get(this).getElementById('campo').value;\n    }\n    limpar() {\n      const raiz = raizes.get(this);\n      const anterior = document.getElementById('cartao-erro');\n      if (anterior) anterior.remove();\n      raiz.querySelector('.br-input').classList.remove('danger');\n      raiz.getElementById('campo').removeAttribute('aria-describedby');\n    }\n    mostrarErro(texto) {\n      const raiz = raizes.get(this);\n      const caixa = raiz.querySelector('.br-input');\n      caixa.classList.add('danger');\n      const mensagem = document.createElement('span');\n      mensagem.className = 'feedback danger';\n      mensagem.id = 'cartao-erro';\n      mensagem.innerHTML = '<i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>' + texto;\n      this.insertAdjacentElement('afterend', mensagem);\n      raiz.getElementById('campo').setAttribute('aria-describedby', 'cartao-erro');\n    }\n  }\n  customElements.define('bib-campo', BibCampo);\n  const formulario = document.getElementById('form-renovacao');\n  const entrada = formulario.querySelector('bib-campo');\n  const resultado = document.getElementById('resultado');\n  formulario.addEventListener('submit', (evento) => {\n    evento.preventDefault();\n    entrada.limpar();\n    resultado.textContent = '';\n    if (!/^\\d{8}$/.test(entrada.valor.trim())) {\n      entrada.mostrarErro('Valor inválido.');\n      return;\n    }\n    resultado.textContent = 'Cartão encontrado. Você tem 2 livros que podem ser renovados.';\n  });\n})();\n</script>\n\n\n</body></html>",
+        "raizesAbertas": [
+          {
+            "host": "document > bib-campo",
+            "html": "<link rel=\"stylesheet\" href=\"../recursos/core.min.css\"><link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\"><div class=\"br-input danger\"><label for=\"campo\">Número do cartão</label><input id=\"campo\" name=\"cartao\" type=\"text\" inputmode=\"numeric\" autocomplete=\"off\" aria-describedby=\"cartao-erro\"></div>"
+          }
+        ]
+      },
+      "ax": [
+        {
+          "tipo": "ax",
+          "alvo": "bib-campo >>> #campo",
+          "prop": "descricao",
+          "op": "vazio",
+          "medido": "",
+          "ok": true,
+          "papel": "textbox",
+          "nome": "Número do cartão"
+        },
+        {
+          "tipo": "ax",
+          "alvo": "bib-campo >>> #campo",
+          "prop": "invalido",
+          "op": "igual",
+          "valor": false,
+          "medido": false,
+          "ok": true,
+          "papel": "textbox",
+          "nome": "Número do cartão"
+        }
+      ]
+    }
+  }
+}

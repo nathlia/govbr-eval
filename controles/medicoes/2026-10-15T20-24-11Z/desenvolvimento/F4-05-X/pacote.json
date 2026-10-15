@@ -1,0 +1,63 @@
+{
+  "tipo": "completo",
+  "pagina": "/controles/a/c-6a7437cccf.html",
+  "hashBuild": "75b0c24c60d989650d54ce69f3a0cab9719e43cadf01570766a580d6d710b6c7",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "eProv": "pagina",
+  "receita": [
+    {
+      "acao": "capturar",
+      "nome": "inicial"
+    }
+  ],
+  "tracoFoco": [
+    {
+      "passo": 1,
+      "acao": "capturar",
+      "nome": "inicial",
+      "foco": {
+        "tag": "body"
+      }
+    }
+  ],
+  "capturas": {
+    "inicial": {
+      "passo": 1,
+      "foco": {
+        "tag": "body"
+      },
+      "dom": {
+        "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Acervo digital – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n\n<main id=\"conteudo\">\n<header class=\"br-header\" id=\"topo\" role=\"banner\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<div class=\"container-lg\">\n<h1>Acervo digital</h1>\n<p>Livros digitais podem ser lidos no navegador por até 21 dias, sem fila de espera para títulos de domínio público.</p>\n<div class=\"secao\">\n  <h2>Coleções</h2>\n  <ul>\n    <li><a href=\"#\">Literatura brasileira em domínio público</a></li>\n    <li><a href=\"#\">História de Santa Aurora</a></li>\n    <li><a href=\"#\">Livros infantis ilustrados</a></li>\n  </ul>\n</div>\n</div>\n<footer class=\"br-footer\" id=\"rodape\" role=\"contentinfo\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n</main>\n\n\n\n</body></html>",
+        "raizesAbertas": []
+      },
+      "ax": [
+        {
+          "tipo": "ax",
+          "alvo": "#topo",
+          "prop": "papel",
+          "op": "igual",
+          "valor": "banner",
+          "medido": "banner",
+          "ok": true,
+          "papel": "banner",
+          "nome": ""
+        },
+        {
+          "tipo": "ax",
+          "alvo": "#rodape",
+          "prop": "papel",
+          "op": "igual",
+          "valor": "contentinfo",
+          "medido": "contentinfo",
+          "ok": true,
+          "papel": "contentinfo",
+          "nome": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "tipo": "completo",
+  "pagina": "/controles/a/c-2291957c99.html",
+  "hashBuild": "321f20a577b70eaedb6c0db9e3efbed1a27970af8082e91e16b1af15f90f9da8",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "eProv": "pagina",
+  "receita": [
+    {
+      "acao": "capturar",
+      "nome": "inicial"
+    }
+  ],
+  "tracoFoco": [
+    {
+      "passo": 1,
+      "acao": "capturar",
+      "nome": "inicial",
+      "foco": {
+        "tag": "body"
+      }
+    }
+  ],
+  "capturas": {
+    "inicial": {
+      "passo": 1,
+      "foco": {
+        "tag": "body"
+      },
+      "dom": {
+        "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Renovar empréstimo – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<nav class=\"br-breadcrumb\" aria-label=\"Você está aqui\">\n  <ol class=\"crumb-list\">\n    <li class=\"crumb home\"><a class=\"br-button circle\" href=\"#\"><span class=\"sr-only\">Início</span><i class=\"fas fa-home\" aria-hidden=\"true\"></i></a></li>\n    <li class=\"crumb\"><i class=\"icon fas fa-chevron-right\" aria-hidden=\"true\"></i><a href=\"#\">Acervo</a></li>\n    <li class=\"crumb\"><i class=\"icon fas fa-chevron-right\" aria-hidden=\"true\"></i><a href=\"#\">Empréstimos</a></li>\n  </ol>\n</nav>\n<h1>Renovar empréstimo</h1>\n<p><strong>Dom Casmurro</strong>, de Machado de Assis. Devolução atual: 18/10/2026. Nova data, se renovado: 01/11/2026.</p>\n<div class=\"acoes\">\n  <button class=\"br-button primary\" type=\"button\">Renovar</button>\n  <a class=\"br-button secondary\" href=\"#\">Voltar</a>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n\n\n</body></html>",
+        "raizesAbertas": []
+      },
+      "ax": [
+        {
+          "tipo": "ax",
+          "alvo": ".br-breadcrumb li:last-child a",
+          "prop": "papel",
+          "op": "igual",
+          "valor": "link",
+          "medido": "link",
+          "ok": true,
+          "papel": "link",
+          "nome": "Empréstimos"
+        }
+      ]
+    }
+  }
+}

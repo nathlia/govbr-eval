@@ -1,0 +1,146 @@
+{
+  "gemeo": "F1-09-A",
+  "caso": "F1-09",
+  "papel": "estado-diferente",
+  "pagina": {
+    "id": "c-5b8c954cc5",
+    "caminho": "/controles/a/c-5b8c954cc5.html",
+    "sha256": "f2d55777add34ba498616301ca2bf66e79dd1ebf3423d60b2725cd1cf7ab7838",
+    "mesmaPaginaDe": "F1-01-D"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": null,
+  "fatos": [
+    {
+      "captura": "antes-de-enviar",
+      "tipo": "dom",
+      "expr": "document.getElementById('cartao-erro')",
+      "op": "igual",
+      "valor": null,
+      "nota": "a mensagem não existe no estado entregue",
+      "medido": null,
+      "ok": true
+    },
+    {
+      "captura": "apos-enviar",
+      "tipo": "dom",
+      "expr": "(document.getElementById('cartao-erro') || {}).textContent.trim()",
+      "op": "igual",
+      "valor": "Valor inválido.",
+      "nota": "o estado declarado existe, mas não é o entregue",
+      "medido": "Valor inválido.",
+      "ok": true
+    }
+  ],
+  "pacote": {
+    "tipo": "estado-diferente",
+    "pagina": "/controles/a/c-5b8c954cc5.html",
+    "hashBuild": "f2d55777add34ba498616301ca2bf66e79dd1ebf3423d60b2725cd1cf7ab7838",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "preencher",
+        "alvo": "#cartao",
+        "valor": "12"
+      },
+      {
+        "acao": "capturar",
+        "nome": "antes-de-enviar"
+      },
+      {
+        "acao": "clicar",
+        "alvo": "#form-renovacao button[type=submit]"
+      },
+      {
+        "acao": "capturar",
+        "nome": "apos-enviar"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "preencher",
+        "alvo": "#cartao",
+        "foco": {
+          "tag": "input",
+          "id": "cartao",
+          "classe": null,
+          "texto": ""
+        }
+      },
+      {
+        "passo": 2,
+        "acao": "capturar",
+        "nome": "antes-de-enviar",
+        "foco": {
+          "tag": "input",
+          "id": "cartao",
+          "classe": null,
+          "texto": ""
+        }
+      },
+      {
+        "passo": 3,
+        "acao": "clicar",
+        "alvo": "#form-renovacao button[type=submit]",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button primary",
+          "texto": "Consultar empréstimos"
+        }
+      },
+      {
+        "passo": 4,
+        "acao": "capturar",
+        "nome": "apos-enviar",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button primary",
+          "texto": "Consultar empréstimos"
+        }
+      }
+    ],
+    "capturas": {
+      "antes-de-enviar": {
+        "passo": 2,
+        "foco": {
+          "tag": "input",
+          "id": "cartao",
+          "classe": null,
+          "texto": ""
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Renovar empréstimos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<div class=\"row\">\n  <div class=\"col-md-8 col-lg-6\">\n    <h1>Renovar empréstimos</h1>\n    <p>Informe o número do seu cartão da biblioteca para ver os livros que podem ser renovados.</p>\n    <form id=\"form-renovacao\" novalidate=\"\">\n<div class=\"br-input mb-3\">\n  <label for=\"cartao\">Número do cartão</label>\n  <input id=\"cartao\" name=\"cartao\" type=\"text\" inputmode=\"numeric\" autocomplete=\"off\">\n</div>\n      <button class=\"br-button primary\" type=\"submit\">Consultar empréstimos</button>\n    </form>\n    <div id=\"resultado\" class=\"mt-4\" role=\"status\"></div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\nconst formulario = document.getElementById('form-renovacao');\nconst campo = document.getElementById('cartao');\nconst caixa = campo.closest('.br-input');\nconst resultado = document.getElementById('resultado');\nformulario.addEventListener('submit', (evento) => {\n  evento.preventDefault();\n  const anterior = document.getElementById('cartao-erro');\n  if (anterior) anterior.remove();\n  caixa.classList.remove('danger');\n  resultado.innerHTML = '';\n  if (!/^\\d{8}$/.test(campo.value.trim())) {\n    caixa.classList.add('danger');\n    const mensagem = document.createElement('span');\n    mensagem.className = 'feedback danger';\n    mensagem.id = 'cartao-erro';\n    mensagem.innerHTML = '<i class=\"fas fa-times-circle\" aria-hidden=\"true\"></i>Valor inválido.';\n    caixa.appendChild(mensagem);\n    return;\n  }\n  resultado.innerHTML = '<div class=\"br-message success\"><div class=\"icon\"><i class=\"fas fa-check-circle fa-lg\" aria-hidden=\"true\"></i></div><div class=\"content\"><span class=\"message-title\">Cartão encontrado.</span><span class=\"message-body\"> Você tem 2 livros que podem ser renovados.</span></div></div>';\n});\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      }
+    },
+    "estadoDeclarado": "apos-enviar",
+    "estadoEntregue": "antes-de-enviar"
+  },
+  "verificacoesPacote": [
+    {
+      "o_que": "o pacote traz só um estado, diferente do declarado",
+      "ok": true
+    }
+  ],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

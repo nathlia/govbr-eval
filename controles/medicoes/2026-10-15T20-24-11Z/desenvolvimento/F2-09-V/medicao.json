@@ -1,0 +1,137 @@
+{
+  "gemeo": "F2-09-V",
+  "caso": "F2-09",
+  "papel": "estado-diferente",
+  "pagina": {
+    "id": "c-d07043b67f",
+    "caminho": "/controles/a/c-d07043b67f.html",
+    "sha256": "f5c14f2cb549b5497fccf61f70017be266849d2234d6b401b5823715a9185d6a",
+    "mesmaPaginaDe": "F2-09-D"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": null,
+  "fatos": [
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.getElementById('regras')",
+      "op": "igual",
+      "valor": null,
+      "medido": null,
+      "ok": true
+    },
+    {
+      "captura": "modal-aberta",
+      "tipo": "dom",
+      "expr": "document.querySelectorAll('#regras .br-modal-footer button').length",
+      "op": "igual",
+      "valor": 0,
+      "medido": 0,
+      "ok": true
+    }
+  ],
+  "pacote": {
+    "tipo": "estado-diferente",
+    "pagina": "/controles/a/c-d07043b67f.html",
+    "hashBuild": "f5c14f2cb549b5497fccf61f70017be266849d2234d6b401b5823715a9185d6a",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "capturar",
+        "nome": "inicial"
+      },
+      {
+        "acao": "focar",
+        "alvo": "#ver-regras"
+      },
+      {
+        "acao": "tecla",
+        "tecla": "Enter"
+      },
+      {
+        "acao": "capturar",
+        "nome": "modal-aberta"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "capturar",
+        "nome": "inicial",
+        "foco": {
+          "tag": "body"
+        }
+      },
+      {
+        "passo": 2,
+        "acao": "focar",
+        "alvo": "#ver-regras",
+        "foco": {
+          "tag": "button",
+          "id": "ver-regras",
+          "classe": "br-button secondary",
+          "texto": "Ver regras de empréstimo"
+        }
+      },
+      {
+        "passo": 3,
+        "acao": "tecla",
+        "tecla": "Enter",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button close circle",
+          "texto": "Fechar"
+        }
+      },
+      {
+        "passo": 4,
+        "acao": "capturar",
+        "nome": "modal-aberta",
+        "foco": {
+          "tag": "button",
+          "id": null,
+          "classe": "br-button close circle",
+          "texto": "Fechar"
+        }
+      }
+    ],
+    "capturas": {
+      "inicial": {
+        "passo": 1,
+        "foco": {
+          "tag": "body"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Empréstimos – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Empréstimos</h1>\n<p>O prazo padrão de empréstimo é de 14 dias. Leitores com cartão ativo podem ter até 5 livros ao mesmo tempo.</p>\n<button class=\"br-button secondary\" type=\"button\" id=\"ver-regras\">Ver regras de empréstimo</button>\n<div class=\"secao\">\n  <h2>Seus empréstimos</h2>\n  <div class=\"br-list lista-livros\">\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Dom Casmurro</p>\n        <p class=\"detalhe-livro mb-0\">Machado de Assis · devolução até 18/10/2026</p>\n      </div>\n    </div>\n  </div>\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Vidas secas</p>\n        <p class=\"detalhe-livro mb-0\">Graciliano Ramos · devolução até 21/10/2026</p>\n      </div>\n    </div>\n  </div>\n<div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\">\n        <p class=\"titulo-livro mb-0\">Quarto de despejo</p>\n        <p class=\"detalhe-livro mb-0\">Carolina Maria de Jesus · devolução até 25/10/2026</p>\n      </div>\n    </div>\n  </div>\n</div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<script>\n(function () {\n  const abrir = document.getElementById('ver-regras');\n  let origem = null;\n  let scrim = null;\n  function fecharJanela() {\n    scrim.remove();\n    scrim = null;\n    origem.focus();\n  }\n  abrir.addEventListener('click', () => {\n    origem = document.activeElement;\n    scrim = document.createElement('div');\n    scrim.className = 'br-scrim-util foco active';\n    scrim.innerHTML = '<div class=\"br-modal medium\" id=\"regras\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"regras-titulo\" data-tipo=\"informativa\">' +\n      '<div class=\"br-modal-header\"><div class=\"modal-title\" id=\"regras-titulo\">Regras de empréstimo</div>' +\n      '<button class=\"br-button close circle\" type=\"button\" aria-label=\"Fechar\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button></div>' +\n      '<div class=\"br-modal-body\"><ul><li>Prazo de 14 dias para cada livro.</li><li>Até duas renovações, se não houver reserva.</li><li>Multa de R$ 0,50 por dia de atraso.</li></ul></div>' +\n      '</div>';\n    document.body.appendChild(scrim);\n    const janela = scrim.querySelector('.br-modal');\n    const fechar = janela.querySelector('.close');\n    janela.querySelectorAll('.close, .br-modal-footer .br-button').forEach((b) => b.addEventListener('click', fecharJanela));\n    janela.addEventListener('keydown', (e) => {\n      if (e.key === 'Escape') fecharJanela();\n      if (e.key === 'Tab') {\n        const lista = Array.from(janela.querySelectorAll('button'));\n        const primeiro = lista[0];\n        const ultimo = lista[lista.length - 1];\n        if (e.shiftKey && document.activeElement === primeiro) {\n          e.preventDefault();\n          ultimo.focus();\n        } else if (!e.shiftKey && document.activeElement === ultimo) {\n          e.preventDefault();\n          primeiro.focus();\n        }\n      }\n    });\n    fechar.focus();\n  });\n})();\n</script>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      }
+    },
+    "estadoDeclarado": "modal-aberta",
+    "estadoEntregue": "inicial"
+  },
+  "verificacoesPacote": [
+    {
+      "o_que": "o pacote traz só um estado, diferente do declarado",
+      "ok": true
+    }
+  ],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

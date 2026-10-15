@@ -1,0 +1,52 @@
+{
+  "tipo": "completo",
+  "pagina": "/controles/b/c-feb079d158.html",
+  "hashBuild": "300d68cf7d85b68f92c1efbe01449ad0c297665d559e980e8561d61f0dd25fe8",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "eProv": "pagina",
+  "receita": [
+    {
+      "acao": "capturar",
+      "nome": "inicial"
+    }
+  ],
+  "tracoFoco": [
+    {
+      "passo": 1,
+      "acao": "capturar",
+      "nome": "inicial",
+      "foco": {
+        "tag": "body"
+      }
+    }
+  ],
+  "capturas": {
+    "inicial": {
+      "passo": 1,
+      "foco": {
+        "tag": "body"
+      },
+      "dom": {
+        "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Minhas reservas – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Minhas reservas</h1>\n<p>Quando o exemplar estiver separado, você terá 3 dias para retirá-lo no balcão.</p>\n<div class=\"br-list lista-livros\">\n  <div class=\"br-item\">\n    <div class=\"row align-items-center\">\n      <div class=\"col\"><p class=\"titulo-livro mb-0\">Torto arado</p><p class=\"detalhe-livro mb-0\">Itamar Vieira Junior · reserva feita em 08/10/2026 · posição 3 na fila</p></div>\n      <div class=\"col-auto\"><button class=\"br-button circle\" type=\"button\" id=\"excluir\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i><span class=\"sr-only\">Excluir reserva</span></button></div>\n    </div>\n  </div>\n</div>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n\n\n</body></html>",
+        "raizesAbertas": []
+      },
+      "ax": [
+        {
+          "tipo": "ax",
+          "alvo": "#excluir",
+          "prop": "nome",
+          "op": "igual",
+          "valor": "Excluir reserva",
+          "medido": "Excluir reserva",
+          "ok": true,
+          "papel": "button",
+          "nome": "Excluir reserva"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resultados da busca – Biblioteca Municipal</title>
+<link rel="stylesheet" href="../recursos/core.min.css">
+<link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+<link rel="stylesheet" href="../recursos/biblioteca.css">
+</head>
+<body>
+<nav class="br-skiplink" aria-label="Atalhos de teclado"><a class="br-item" href="#conteudo">Ir para o conteúdo</a></nav>
+<header class="br-header" id="topo">
+  <div class="container-lg">
+    <div class="header-top">
+      <div class="header-logo"><img src="../recursos/logo.svg" alt="" width="40" height="40"><span class="br-divider vertical"></span><div class="header-sign">Prefeitura de Santa Aurora</div></div>
+    </div>
+    <div class="header-bottom">
+      <div class="header-menu">
+        <div class="header-info">
+          <div class="header-title">Biblioteca Municipal</div>
+          <div class="header-subtitle">Reservas e renovação de empréstimos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main id="conteudo" class="container-lg">
+<h1>Resultados para "Machado de Assis"</h1>
+<p>12 títulos encontrados no acervo.</p>
+<button class="br-button secondary" type="button" id="filtros"><i class="fas fa-filter mr-1" aria-hidden="true"></i><span class="texto">Mostrar filtros</span></button>
+<div class="painel-filtros" id="painel-filtros" hidden>
+  <div class="br-checkbox"><input id="f-disponivel" name="f-disponivel" type="checkbox"><label for="f-disponivel">Disponível agora</label></div>
+  <div class="br-checkbox"><input id="f-digital" name="f-digital" type="checkbox"><label for="f-digital">Livro digital</label></div>
+</div>
+<div class="secao">
+  <div class="br-list lista-livros">
+    <div class="br-item"><p class="titulo-livro mb-0">Dom Casmurro</p><p class="detalhe-livro mb-0">Romance, 1899</p></div>
+    <div class="br-item"><p class="titulo-livro mb-0">Memórias póstumas de Brás Cubas</p><p class="detalhe-livro mb-0">Romance, 1881</p></div>
+    <div class="br-item"><p class="titulo-livro mb-0">Quincas Borba</p><p class="detalhe-livro mb-0">Romance, 1891</p></div>
+  </div>
+</div>
+</main>
+<footer class="br-footer" id="rodape">
+  <div class="container-lg">
+    <nav class="links-rodape" aria-label="Links do rodapé">
+      <a href="#">Acervo</a>
+      <a href="#">Horários e endereço</a>
+      <a href="#">Regulamento de empréstimos</a>
+    </nav>
+    <p class="texto-rodape">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>
+  </div>
+</footer>
+<script>
+const botao = document.getElementById('filtros');
+const painel = document.getElementById('painel-filtros');
+botao.addEventListener('click', () => {
+  painel.hidden = !painel.hidden;
+  botao.querySelector('.texto').textContent = painel.hidden ? 'Mostrar filtros' : 'Ocultar filtros';
+});
+</script>
+</body>
+</html>

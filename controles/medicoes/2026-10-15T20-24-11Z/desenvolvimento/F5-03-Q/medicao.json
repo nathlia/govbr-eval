@@ -1,0 +1,115 @@
+{
+  "gemeo": "F5-03-Q",
+  "caso": "F5-03",
+  "papel": "depende-autora",
+  "pagina": {
+    "id": "c-2d1bcb181f",
+    "caminho": "/controles/a/c-2d1bcb181f.html",
+    "sha256": "d515c586285ed191634305d9e442398a48d21c90221cf887871fd14767963e43"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "derivacao": {
+    "de": "F5-03-D",
+    "paginaDe": "/controles/a/c-14b9484153.html",
+    "trocas": 2,
+    "ok": true,
+    "erros": []
+  },
+  "fatos": [
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.getElementById('busca-titulo').labels.length",
+      "op": "igual",
+      "valor": 0,
+      "medido": 0,
+      "ok": true
+    },
+    {
+      "captura": "inicial",
+      "tipo": "dom",
+      "expr": "document.getElementById('rotulo-busca').getBoundingClientRect().height > 0",
+      "op": "igual",
+      "valor": true,
+      "nota": "rótulo visível",
+      "medido": true,
+      "ok": true
+    },
+    {
+      "captura": "inicial",
+      "tipo": "ax",
+      "alvo": "#busca-titulo",
+      "prop": "nome",
+      "op": "igual",
+      "valor": "Título do livro",
+      "medido": "Título do livro",
+      "ok": true,
+      "papel": "searchbox",
+      "nome": "Título do livro"
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/a/c-2d1bcb181f.html",
+    "hashBuild": "d515c586285ed191634305d9e442398a48d21c90221cf887871fd14767963e43",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "capturar",
+        "nome": "inicial"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "capturar",
+        "nome": "inicial",
+        "foco": {
+          "tag": "body"
+        }
+      }
+    ],
+    "capturas": {
+      "inicial": {
+        "passo": 1,
+        "foco": {
+          "tag": "body"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Buscar no acervo – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Buscar no acervo</h1>\n<p>Pesquise pelo título. Para buscar por autor ou assunto, use a busca avançada.</p>\n<form id=\"busca\" role=\"search\" onsubmit=\"return false\">\n  <div class=\"br-input mb-3\">\n    <span class=\"rotulo\" id=\"rotulo-busca\">Título do livro</span>\n    <input id=\"busca-titulo\" name=\"busca-titulo\" type=\"search\" placeholder=\"Título do livro\" aria-labelledby=\"rotulo-busca\">\n  </div>\n  <button class=\"br-button primary\" type=\"submit\">Buscar</button>\n</form>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": [
+          {
+            "tipo": "ax",
+            "alvo": "#busca-titulo",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Título do livro",
+            "medido": "Título do livro",
+            "ok": true,
+            "papel": "searchbox",
+            "nome": "Título do livro"
+          }
+        ]
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}

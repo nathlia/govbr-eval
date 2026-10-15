@@ -1,0 +1,40 @@
+{
+  "tipo": "completo",
+  "pagina": "/controles/b/c-a95225a6b7.html",
+  "hashBuild": "2a1ed4f3ff91857e96a06154664e0e68c7af4070cba143a55ceccbb109c80d41",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "toque": false,
+  "eProv": "pagina",
+  "receita": [
+    {
+      "acao": "capturar",
+      "nome": "inicial"
+    }
+  ],
+  "tracoFoco": [
+    {
+      "passo": 1,
+      "acao": "capturar",
+      "nome": "inicial",
+      "foco": {
+        "tag": "body"
+      }
+    }
+  ],
+  "capturas": {
+    "inicial": {
+      "passo": 1,
+      "foco": {
+        "tag": "body"
+      },
+      "dom": {
+        "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Início – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n<style>\n.topo {\n  align-items: center;\n  background: var(--background);\n  box-shadow: var(--surface-shadow-sm);\n  display: flex;\n  padding: var(--spacing-scale-2x) var(--spacing-scale-3x);\n}\n</style>\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<div class=\"topo\">\n  <button class=\"br-button small circle\" type=\"button\" id=\"abrir-menu\" aria-label=\"Abrir menu\" aria-expanded=\"false\" aria-controls=\"menu-principal\"><i class=\"fas fa-bars\" aria-hidden=\"true\"></i></button>\n</div>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Bem-vindo à Biblioteca Municipal</h1>\n<p>Consulte o acervo, renove empréstimos e acompanhe suas reservas sem sair de casa.</p>\n<ul>\n  <li><a href=\"#\">Renovar empréstimos</a></li>\n  <li><a href=\"#\">Minhas reservas</a></li>\n</ul>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n<div class=\"br-menu\" id=\"menu-principal\">\n  <div class=\"menu-container\">\n    <div class=\"menu-panel\">\n      <div class=\"menu-header\">\n        <div class=\"menu-title\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"32\" height=\"32\"><span>Biblioteca Municipal</span></div>\n        <div class=\"menu-close\">\n          <button class=\"br-button circle\" type=\"button\" aria-label=\"Fechar o menu\"><i class=\"fas fa-times\" aria-hidden=\"true\"></i></button>\n        </div>\n      </div>\n      <nav class=\"menu-body\" aria-label=\"Menu principal\">\n        <a class=\"menu-item\" href=\"#\"><span class=\"icon\"><i class=\"fas fa-home\" aria-hidden=\"true\"></i></span><span class=\"content\">Início</span></a>\n        <a class=\"menu-item\" href=\"#\"><span class=\"icon\"><i class=\"fas fa-book\" aria-hidden=\"true\"></i></span><span class=\"content\">Acervo</span></a>\n        <a class=\"menu-item\" href=\"#\"><span class=\"icon\"><i class=\"fas fa-bookmark\" aria-hidden=\"true\"></i></span><span class=\"content\">Minhas reservas</span></a>\n        <a class=\"menu-item\" href=\"#\"><span class=\"icon\"><i class=\"fas fa-redo\" aria-hidden=\"true\"></i></span><span class=\"content\">Renovar empréstimos</span></a>\n        <a class=\"menu-item\" href=\"#\"><span class=\"icon\"><i class=\"fas fa-clock\" aria-hidden=\"true\"></i></span><span class=\"content\">Horários e endereço</span></a>\n      </nav>\n    </div>\n    <div class=\"menu-scrim\"></div>\n  </div>\n</div>\n<script>\n(function () {\n  const menu = document.getElementById('menu-principal');\n  const botao = document.getElementById('abrir-menu');\n  const fechar = menu.querySelector('.menu-close button');\n  function abrirMenu() {\n    menu.classList.add('active');\n    botao.setAttribute('aria-expanded', 'true');\n    fechar.focus();\n  }\n  function fecharMenu() {\n    menu.classList.remove('active');\n    botao.setAttribute('aria-expanded', 'false');\n    botao.focus();\n  }\n  botao.addEventListener('click', abrirMenu);\n  if (fechar) fechar.addEventListener('click', fecharMenu);\n  menu.querySelector('.menu-scrim').addEventListener('click', fecharMenu);\n  document.addEventListener('keydown', (e) => {\n    if (e.key === 'Escape' && menu.classList.contains('active')) fecharMenu();\n  });\n})();\n</script>\n\n\n</body></html>",
+        "raizesAbertas": []
+      },
+      "ax": []
+    }
+  }
+}

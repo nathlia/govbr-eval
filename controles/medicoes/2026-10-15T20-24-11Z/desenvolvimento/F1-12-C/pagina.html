@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reservar livro – Biblioteca Municipal</title>
+<link rel="stylesheet" href="../recursos/core.min.css">
+<link rel="stylesheet" href="../recursos/fontawesome/css/all.min.css">
+<link rel="stylesheet" href="../recursos/biblioteca.css">
+</head>
+<body>
+<nav class="br-skiplink" aria-label="Atalhos de teclado"><a class="br-item" href="#conteudo">Ir para o conteúdo</a></nav>
+<header class="br-header" id="topo">
+  <div class="container-lg">
+    <div class="header-top">
+      <div class="header-logo"><img src="../recursos/logo.svg" alt="" width="40" height="40"><span class="br-divider vertical"></span><div class="header-sign">Prefeitura de Santa Aurora</div></div>
+    </div>
+    <div class="header-bottom">
+      <div class="header-menu">
+        <div class="header-info">
+          <div class="header-title">Biblioteca Municipal</div>
+          <div class="header-subtitle">Reservas e renovação de empréstimos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main id="conteudo" class="container-lg">
+<div class="row">
+  <div class="col-md-8 col-lg-6">
+    <h1>Reservar livro</h1>
+    <p><strong>Vidas secas</strong>, de Graciliano Ramos. Avisaremos por e-mail quando o exemplar estiver separado.</p>
+    <div id="resumo-erros" class="mb-3" role="alert"></div>
+    <form id="form-reserva" novalidate>
+<div class="br-input mb-3">
+  <label for="cartao">Número do cartão</label>
+  <input id="cartao" name="cartao" type="text" inputmode="numeric" autocomplete="off">
+</div>
+<div class="br-input mb-3">
+  <label for="email">E-mail para aviso</label>
+  <input id="email" name="email" type="email" autocomplete="email">
+</div>
+      <button class="br-button primary" type="submit">Reservar</button>
+    </form>
+    <div id="resultado" class="mt-4" role="status"></div>
+  </div>
+</div>
+</main>
+<footer class="br-footer" id="rodape">
+  <div class="container-lg">
+    <nav class="links-rodape" aria-label="Links do rodapé">
+      <a href="#">Acervo</a>
+      <a href="#">Horários e endereço</a>
+      <a href="#">Regulamento de empréstimos</a>
+    </nav>
+    <p class="texto-rodape">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>
+  </div>
+</footer>
+<script>
+const formulario = document.getElementById('form-reserva');
+const resumo = document.getElementById('resumo-erros');
+const resultado = document.getElementById('resultado');
+const campos = [
+  { el: document.getElementById('cartao'), ok: (v) => /^\d{8}$/.test(v), texto: 'Informe os 8 dígitos impressos no cartão.' },
+  { el: document.getElementById('email'), ok: (v) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v), texto: 'Use o formato nome@provedor.com.br.' },
+];
+formulario.addEventListener('submit', (evento) => {
+  evento.preventDefault();
+  resumo.innerHTML = '';
+  resultado.innerHTML = '';
+  let erros = 0;
+  campos.forEach(({ el, ok, texto }) => {
+    const caixa = el.closest('.br-input');
+    const anterior = document.getElementById(el.id + '-erro');
+    if (anterior) anterior.remove();
+    caixa.classList.remove('danger');
+    el.removeAttribute('aria-invalid');
+    el.removeAttribute('aria-describedby');
+    if (ok(el.value.trim())) return;
+    erros += 1;
+    caixa.classList.add('danger');
+    const mensagem = document.createElement('span');
+    mensagem.className = 'feedback danger';
+    mensagem.id = el.id + '-erro';
+    mensagem.innerHTML = '<i class="fas fa-times-circle" aria-hidden="true"></i>' + texto;
+    caixa.appendChild(mensagem);
+    el.setAttribute('aria-invalid', 'true');
+    el.setAttribute('aria-describedby', mensagem.id);
+  });
+  if (erros > 0) {
+    resumo.innerHTML = '<div class="br-message danger"><div class="icon"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i></div>' +
+      '<div class="content"><span class="message-title">' + erros + (erros === 1 ? ' campo precisa' : ' campos precisam') +
+      ' de correção.</span><span class="message-body"> Revise os campos marcados abaixo.</span></div></div>';
+    return;
+  }
+  resultado.textContent = 'Reserva registrada.';
+});
+</script>
+</body>
+</html>

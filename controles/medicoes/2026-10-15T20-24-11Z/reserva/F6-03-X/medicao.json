@@ -1,0 +1,175 @@
+{
+  "gemeo": "F6-03-X",
+  "caso": "F6-03",
+  "papel": "excecao",
+  "pagina": {
+    "id": "c-7456db1099",
+    "caminho": "/controles/b/c-7456db1099.html",
+    "sha256": "5d29a3221c1f3ebd1faf80b8a06c5c2ad2d8f4eb633b86bbba308f4a97beb78b"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "toque": false,
+  "derivacao": {
+    "de": "F6-03-D",
+    "paginaDe": "/controles/b/c-1be3291d4a.html",
+    "trocas": 1,
+    "ok": true,
+    "erros": []
+  },
+  "fatos": [
+    {
+      "captura": "com-foco",
+      "tipo": "foco",
+      "alvo": "#acervo-item-1",
+      "medido": {
+        "tag": "a",
+        "id": "acervo-item-1",
+        "classe": null,
+        "texto": "Torto arado"
+      },
+      "ok": true
+    },
+    {
+      "captura": "com-foco",
+      "tipo": "dom",
+      "expr": "(() => { const a = document.getElementById('acervo-item-1').getBoundingClientRect(); const h = document.querySelector('.br-header').getBoundingClientRect(); const ix = Math.max(0, Math.min(a.right, h.right) - Math.max(a.left, h.left)); const iy = Math.max(0, Math.min(a.bottom, h.bottom) - Math.max(a.top, h.top)); return Math.round((ix * iy) / (a.width * a.height) * 100) / 100; })()",
+      "op": "entre",
+      "valor": [
+        0.01,
+        0.99
+      ],
+      "nota": "parcialmente encoberto",
+      "medido": 0.49,
+      "ok": true
+    }
+  ],
+  "pacote": {
+    "tipo": "completo",
+    "pagina": "/controles/b/c-7456db1099.html",
+    "hashBuild": "5d29a3221c1f3ebd1faf80b8a06c5c2ad2d8f4eb633b86bbba308f4a97beb78b",
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "toque": false,
+    "eProv": "pagina",
+    "receita": [
+      {
+        "acao": "rolarAte",
+        "alvo": "#acervo-item-1",
+        "topo": 78
+      },
+      {
+        "acao": "focarSemRolar",
+        "alvo": "#acervo-item-2"
+      },
+      {
+        "acao": "capturar",
+        "nome": "antes"
+      },
+      {
+        "acao": "tecla",
+        "tecla": "Shift+Tab"
+      },
+      {
+        "acao": "capturar",
+        "nome": "com-foco"
+      }
+    ],
+    "tracoFoco": [
+      {
+        "passo": 1,
+        "acao": "rolarAte",
+        "alvo": "#acervo-item-1",
+        "foco": {
+          "tag": "body"
+        }
+      },
+      {
+        "passo": 2,
+        "acao": "focarSemRolar",
+        "alvo": "#acervo-item-2",
+        "foco": {
+          "tag": "a",
+          "id": "acervo-item-2",
+          "classe": null,
+          "texto": "Capitães da areia"
+        }
+      },
+      {
+        "passo": 3,
+        "acao": "capturar",
+        "nome": "antes",
+        "foco": {
+          "tag": "a",
+          "id": "acervo-item-2",
+          "classe": null,
+          "texto": "Capitães da areia"
+        }
+      },
+      {
+        "passo": 4,
+        "acao": "tecla",
+        "tecla": "Shift+Tab",
+        "foco": {
+          "tag": "a",
+          "id": "acervo-item-1",
+          "classe": null,
+          "texto": "Torto arado"
+        }
+      },
+      {
+        "passo": 5,
+        "acao": "capturar",
+        "nome": "com-foco",
+        "foco": {
+          "tag": "a",
+          "id": "acervo-item-1",
+          "classe": null,
+          "texto": "Torto arado"
+        }
+      }
+    ],
+    "capturas": {
+      "antes": {
+        "passo": 3,
+        "foco": {
+          "tag": "a",
+          "id": "acervo-item-2",
+          "classe": null,
+          "texto": "Capitães da areia"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Acervo – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n<style>\n.br-header {\n  height: 120px;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n  z-index: 900;\n}\n\nhtml {\n  scroll-padding-top: 100px;\n}\n\nbody {\n  padding-top: 120px;\n}\n\n.lista-acervo a {\n  display: block;\n  height: 40px;\n  line-height: 40px;\n}\n</style>\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Acervo</h1>\n<p>Títulos mais procurados nesta semana. Selecione um título para ver os exemplares disponíveis.</p>\n<ul class=\"lista-acervo\">\n  <li><a href=\"#\" id=\"acervo-item-1\">Torto arado</a></li>\n  <li><a href=\"#\" id=\"acervo-item-2\">Capitães da areia</a></li>\n  <li><a href=\"#\" id=\"acervo-item-3\">A hora da estrela</a></li>\n  <li><a href=\"#\" id=\"acervo-item-4\">Vidas secas</a></li>\n  <li><a href=\"#\" id=\"acervo-item-5\">Dom Casmurro</a></li>\n  <li><a href=\"#\" id=\"acervo-item-6\">O cortiço</a></li>\n  <li><a href=\"#\" id=\"acervo-item-7\">Quarto de despejo</a></li>\n  <li><a href=\"#\" id=\"acervo-item-8\">Grande sertão: veredas</a></li>\n  <li><a href=\"#\" id=\"acervo-item-9\">Macunaíma</a></li>\n  <li><a href=\"#\" id=\"acervo-item-10\">Iracema</a></li>\n  <li><a href=\"#\" id=\"acervo-item-11\">O quinze</a></li>\n  <li><a href=\"#\" id=\"acervo-item-12\">Memórias póstumas de Brás Cubas</a></li>\n  <li><a href=\"#\" id=\"acervo-item-13\">Mayombe</a></li>\n  <li><a href=\"#\" id=\"acervo-item-14\">Ensaio sobre a cegueira</a></li>\n  <li><a href=\"#\" id=\"acervo-item-15\">Cem anos de solidão</a></li>\n  <li><a href=\"#\" id=\"acervo-item-16\">O avesso da pele</a></li>\n  <li><a href=\"#\" id=\"acervo-item-17\">Tudo é rio</a></li>\n  <li><a href=\"#\" id=\"acervo-item-18\">Olhos d'água</a></li>\n  <li><a href=\"#\" id=\"acervo-item-19\">Becos da memória</a></li>\n  <li><a href=\"#\" id=\"acervo-item-20\">Ponciá Vicêncio</a></li>\n</ul>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      },
+      "com-foco": {
+        "passo": 5,
+        "foco": {
+          "tag": "a",
+          "id": "acervo-item-1",
+          "classe": null,
+          "texto": "Torto arado"
+        },
+        "dom": {
+          "html": "<html lang=\"pt-BR\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Acervo – Biblioteca Municipal</title>\n<link rel=\"stylesheet\" href=\"../recursos/core.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/fontawesome/css/all.min.css\">\n<link rel=\"stylesheet\" href=\"../recursos/biblioteca.css\">\n<style>\n.br-header {\n  height: 120px;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n  z-index: 900;\n}\n\nhtml {\n  scroll-padding-top: 100px;\n}\n\nbody {\n  padding-top: 120px;\n}\n\n.lista-acervo a {\n  display: block;\n  height: 40px;\n  line-height: 40px;\n}\n</style>\n</head>\n<body>\n<nav class=\"br-skiplink\" aria-label=\"Atalhos de teclado\"><a class=\"br-item\" href=\"#conteudo\">Ir para o conteúdo</a></nav>\n<header class=\"br-header\" id=\"topo\">\n  <div class=\"container-lg\">\n    <div class=\"header-top\">\n      <div class=\"header-logo\"><img src=\"../recursos/logo.svg\" alt=\"\" width=\"40\" height=\"40\"><span class=\"br-divider vertical\"></span><div class=\"header-sign\">Prefeitura de Santa Aurora</div></div>\n    </div>\n    <div class=\"header-bottom\">\n      <div class=\"header-menu\">\n        <div class=\"header-info\">\n          <div class=\"header-title\">Biblioteca Municipal</div>\n          <div class=\"header-subtitle\">Reservas e renovação de empréstimos</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>\n<main id=\"conteudo\" class=\"container-lg\">\n<h1>Acervo</h1>\n<p>Títulos mais procurados nesta semana. Selecione um título para ver os exemplares disponíveis.</p>\n<ul class=\"lista-acervo\">\n  <li><a href=\"#\" id=\"acervo-item-1\">Torto arado</a></li>\n  <li><a href=\"#\" id=\"acervo-item-2\">Capitães da areia</a></li>\n  <li><a href=\"#\" id=\"acervo-item-3\">A hora da estrela</a></li>\n  <li><a href=\"#\" id=\"acervo-item-4\">Vidas secas</a></li>\n  <li><a href=\"#\" id=\"acervo-item-5\">Dom Casmurro</a></li>\n  <li><a href=\"#\" id=\"acervo-item-6\">O cortiço</a></li>\n  <li><a href=\"#\" id=\"acervo-item-7\">Quarto de despejo</a></li>\n  <li><a href=\"#\" id=\"acervo-item-8\">Grande sertão: veredas</a></li>\n  <li><a href=\"#\" id=\"acervo-item-9\">Macunaíma</a></li>\n  <li><a href=\"#\" id=\"acervo-item-10\">Iracema</a></li>\n  <li><a href=\"#\" id=\"acervo-item-11\">O quinze</a></li>\n  <li><a href=\"#\" id=\"acervo-item-12\">Memórias póstumas de Brás Cubas</a></li>\n  <li><a href=\"#\" id=\"acervo-item-13\">Mayombe</a></li>\n  <li><a href=\"#\" id=\"acervo-item-14\">Ensaio sobre a cegueira</a></li>\n  <li><a href=\"#\" id=\"acervo-item-15\">Cem anos de solidão</a></li>\n  <li><a href=\"#\" id=\"acervo-item-16\">O avesso da pele</a></li>\n  <li><a href=\"#\" id=\"acervo-item-17\">Tudo é rio</a></li>\n  <li><a href=\"#\" id=\"acervo-item-18\">Olhos d'água</a></li>\n  <li><a href=\"#\" id=\"acervo-item-19\">Becos da memória</a></li>\n  <li><a href=\"#\" id=\"acervo-item-20\">Ponciá Vicêncio</a></li>\n</ul>\n</main>\n<footer class=\"br-footer\" id=\"rodape\">\n  <div class=\"container-lg\">\n    <nav class=\"links-rodape\" aria-label=\"Links do rodapé\">\n      <a href=\"#\">Acervo</a>\n      <a href=\"#\">Horários e endereço</a>\n      <a href=\"#\">Regulamento de empréstimos</a>\n    </nav>\n    <p class=\"texto-rodape\">Biblioteca Municipal de Santa Aurora · Rua das Acácias, 120 · Terça a sábado, das 9h às 18h</p>\n  </div>\n</footer>\n\n\n</body></html>",
+          "raizesAbertas": []
+        },
+        "ax": []
+      }
+    }
+  },
+  "verificacoesPacote": [],
+  "tentativas": 1,
+  "axe": {
+    "violacoes": [],
+    "permitido": []
+  },
+  "problemas": [],
+  "ok": true
+}
