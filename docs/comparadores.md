@@ -3,7 +3,7 @@
 Dois comparadores sem modelo e sem oráculo, rodados sobre bytes congelados: **L** (Stylelint com
 configuração normativa) e **V** (regressão visual contra o gêmeo conforme). O desenho, as versões,
 a configuração congelada e os desvios estão no plano
-`thesis-workspace/planejamento/atual/plano-nat76-comparadores-2026-10-16.md`; este arquivo é só o
+`thesis-workspace/planejamento/concluido/planos/plano-nat76-comparadores-2026-10-16.md`; este arquivo é só o
 método de uso.
 
 ## Uso

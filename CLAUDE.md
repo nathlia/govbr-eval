@@ -118,7 +118,7 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
   escala tipográfica, N3 contorno de foco; H1–H7 higiene à parte) e regressão visual contra o gêmeo
   `-C`, sem modelo, sobre os controles de desenvolvimento e (só o lint) as telas A e B congeladas.
   `npm run comparadores`, `npm run test:comparadores`. A reserva só com `--portao-nat86`. Plano e
-  desvios: `thesis-workspace/planejamento/atual/plano-nat76-comparadores-2026-10-16.md`; método em
+  desvios: `thesis-workspace/planejamento/concluido/planos/plano-nat76-comparadores-2026-10-16.md`; método em
   `docs/comparadores.md`.
 - `adjudications.json` — human verdicts on findings that matched no expected unit (D-21).
   `npm run adjudicate` (`--emit` semeia stubs, `--blind` julga sem ver o braço). Um veredito sem
