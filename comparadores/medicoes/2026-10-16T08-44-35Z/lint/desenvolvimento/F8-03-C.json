@@ -1,0 +1,56 @@
+{
+  "comparador": "lint",
+  "gemeo": "F8-03-C",
+  "caso": "F8-03",
+  "familia": "F8",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": true,
+    "categoria": "toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-b1a5372504.html",
+    "sha256": "97ed15ac7210f8169404abfae635e1c7d8b33f798e5d0734dae241eafa5707b0"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-b1a5372504.html",
+      "sha256": "97ed15ac7210f8169404abfae635e1c7d8b33f798e5d0734dae241eafa5707b0",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "p.aviso-prazo": [
+          "body>main>p"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "p.aviso-prazo",
+      "normas": [
+        "ds:tipografia-21fb08664799"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

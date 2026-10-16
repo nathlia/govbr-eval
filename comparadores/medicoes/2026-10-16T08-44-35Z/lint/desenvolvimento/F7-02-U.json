@@ -1,0 +1,77 @@
+{
+  "comparador": "lint",
+  "gemeo": "F7-02-U",
+  "caso": "F7-02",
+  "familia": "F7",
+  "papel": "sem-fonte",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-02cf28d4b6.html",
+    "sha256": "9098ba3107a158c6f295fa12e69d8d29b511ae4c2fe11ecf3e84d1aaa5dc80aa"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-02cf28d4b6.html",
+      "sha256": "9098ba3107a158c6f295fa12e69d8d29b511ae4c2fe11ecf3e84d1aaa5dc80aa",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "antes",
+      "sujeitos": {
+        "button#filtros": [
+          "body>main>button"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "depois",
+      "sujeitos": {
+        "button#filtros": [
+          "body>main>button"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#filtros",
+      "normas": [
+        "aria:controls"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "button#filtros",
+      "normas": [
+        "wcag:4.1.2"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

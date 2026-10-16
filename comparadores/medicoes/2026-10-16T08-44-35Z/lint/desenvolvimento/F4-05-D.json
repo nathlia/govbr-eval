@@ -1,0 +1,88 @@
+{
+  "comparador": "lint",
+  "gemeo": "F4-05-D",
+  "caso": "F4-05",
+  "familia": "F4",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-d9c5b0fb4c.html",
+    "sha256": "13f0719e382b4f27fa24a83d1c9055374d702336bc1652da222a2d949380ccc7"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-d9c5b0fb4c.html",
+      "sha256": "13f0719e382b4f27fa24a83d1c9055374d702336bc1652da222a2d949380ccc7",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "header#topo": [
+          "body>main>header"
+        ],
+        "footer#rodape": [
+          "body>main>footer"
+        ],
+        "documento": [
+          ""
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "header#topo",
+      "normas": [
+        "emag:1.8"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "footer#rodape",
+      "normas": [
+        "emag:1.8"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "documento",
+      "normas": [
+        "emag:1.8-main"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

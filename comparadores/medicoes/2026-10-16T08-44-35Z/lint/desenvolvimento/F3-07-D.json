@@ -1,0 +1,84 @@
+{
+  "comparador": "lint",
+  "gemeo": "F3-07-D",
+  "caso": "F3-07",
+  "familia": "F3",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-b3e873e019.html",
+    "sha256": "273ff2c0079be88338b8889e10e1c088156d0fb5dc1ae682a6a94ff425cf5afe"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-b3e873e019.html",
+      "sha256": "273ff2c0079be88338b8889e10e1c088156d0fb5dc1ae682a6a94ff425cf5afe",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "antes",
+      "sujeitos": {
+        "menu#principal@abrir": [],
+        "menu#principal@fechar": []
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-abrir",
+      "sujeitos": {
+        "menu#principal@abrir": [],
+        "menu#principal@fechar": []
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-fechar",
+      "sujeitos": {
+        "menu#principal@abrir": [],
+        "menu#principal@fechar": []
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "menu#principal@abrir",
+      "normas": [
+        "ds:menu-a3be6788bdea"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "menu#principal@fechar",
+      "normas": [
+        "sem-fonte"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

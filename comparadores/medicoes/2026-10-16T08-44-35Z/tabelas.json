@@ -1,0 +1,1251 @@
+{
+  "lint": {
+    "porGemeo": [
+      {
+        "familia": "F1",
+        "defeituosos": 5,
+        "defeituososSinalizados": 0,
+        "defeituososNoSujeito": 0,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 7,
+        "conformesSinalizados": 0,
+        "outros": 3,
+        "outrosSinalizados": 0,
+        "referencias": 0,
+        "foraDeAlcance": 2
+      },
+      {
+        "familia": "F2",
+        "defeituosos": 7,
+        "defeituososSinalizados": 0,
+        "defeituososNoSujeito": 0,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 7,
+        "conformesSinalizados": 0,
+        "outros": 0,
+        "outrosSinalizados": 0,
+        "referencias": 0,
+        "foraDeAlcance": 1
+      },
+      {
+        "familia": "F3",
+        "defeituosos": 6,
+        "defeituososSinalizados": 0,
+        "defeituososNoSujeito": 0,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 7,
+        "conformesSinalizados": 0,
+        "outros": 3,
+        "outrosSinalizados": 0,
+        "referencias": 0,
+        "foraDeAlcance": 2
+      },
+      {
+        "familia": "F4",
+        "defeituosos": 4,
+        "defeituososSinalizados": 0,
+        "defeituososNoSujeito": 0,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 5,
+        "conformesSinalizados": 0,
+        "outros": 2,
+        "outrosSinalizados": 0,
+        "referencias": 0,
+        "foraDeAlcance": 0
+      },
+      {
+        "familia": "F5",
+        "defeituosos": 3,
+        "defeituososSinalizados": 0,
+        "defeituososNoSujeito": 0,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 4,
+        "conformesSinalizados": 0,
+        "outros": 1,
+        "outrosSinalizados": 0,
+        "referencias": 0,
+        "foraDeAlcance": 0
+      },
+      {
+        "familia": "F6",
+        "defeituosos": 2,
+        "defeituososSinalizados": 1,
+        "defeituososNoSujeito": 1,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 4,
+        "conformesSinalizados": 1,
+        "outros": 0,
+        "outrosSinalizados": 0,
+        "referencias": 0,
+        "foraDeAlcance": 0
+      },
+      {
+        "familia": "F7",
+        "defeituosos": 1,
+        "defeituososSinalizados": 0,
+        "defeituososNoSujeito": 0,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 2,
+        "conformesSinalizados": 0,
+        "outros": 1,
+        "outrosSinalizados": 0,
+        "referencias": 0,
+        "foraDeAlcance": 0
+      },
+      {
+        "familia": "F8",
+        "defeituosos": 1,
+        "defeituososSinalizados": 1,
+        "defeituososNoSujeito": 1,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 2,
+        "conformesSinalizados": 1,
+        "outros": 2,
+        "outrosSinalizados": 0,
+        "referencias": 0,
+        "foraDeAlcance": 0
+      },
+      {
+        "familia": "T",
+        "defeituosos": 2,
+        "defeituososSinalizados": 2,
+        "defeituososNoSujeito": 2,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 0,
+        "conformesSinalizados": 0,
+        "outros": 0,
+        "outrosSinalizados": 0,
+        "referencias": 0,
+        "foraDeAlcance": 0
+      },
+      {
+        "familia": "total",
+        "defeituosos": 31,
+        "defeituososSinalizados": 4,
+        "defeituososNoSujeito": 4,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 38,
+        "conformesSinalizados": 2,
+        "outros": 12,
+        "outrosSinalizados": 0,
+        "referencias": 0,
+        "foraDeAlcance": 5
+      }
+    ],
+    "porCelula": [
+      {
+        "familia": "F1",
+        "positivos": 6,
+        "TP": 0,
+        "FN": 6,
+        "FNforaDeAlcance": 6,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 14,
+        "FP": 0,
+        "TN": 14,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 3,
+        "referencia": 0
+      },
+      {
+        "familia": "F2",
+        "positivos": 6,
+        "TP": 0,
+        "FN": 6,
+        "FNforaDeAlcance": 6,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 14,
+        "FP": 0,
+        "TN": 14,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 3,
+        "referencia": 0
+      },
+      {
+        "familia": "F3",
+        "positivos": 7,
+        "TP": 0,
+        "FN": 7,
+        "FNforaDeAlcance": 7,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 12,
+        "FP": 0,
+        "TN": 12,
+        "TNsujeitoNaoResolvido": 2,
+        "aparte": 7,
+        "referencia": 0
+      },
+      {
+        "familia": "F4",
+        "positivos": 5,
+        "TP": 0,
+        "FN": 5,
+        "FNforaDeAlcance": 5,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 8,
+        "FP": 0,
+        "TN": 8,
+        "TNsujeitoNaoResolvido": 2,
+        "aparte": 5,
+        "referencia": 0
+      },
+      {
+        "familia": "F5",
+        "positivos": 3,
+        "TP": 0,
+        "FN": 3,
+        "FNforaDeAlcance": 3,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 8,
+        "FP": 0,
+        "TN": 8,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 1,
+        "referencia": 0
+      },
+      {
+        "familia": "F6",
+        "positivos": 2,
+        "TP": 1,
+        "FN": 1,
+        "FNforaDeAlcance": 1,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 4,
+        "FP": 1,
+        "TN": 3,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 0,
+        "referencia": 0
+      },
+      {
+        "familia": "F7",
+        "positivos": 1,
+        "TP": 0,
+        "FN": 1,
+        "FNforaDeAlcance": 1,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 5,
+        "FP": 0,
+        "TN": 5,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 1,
+        "referencia": 0
+      },
+      {
+        "familia": "F8",
+        "positivos": 1,
+        "TP": 1,
+        "FN": 0,
+        "FNforaDeAlcance": 0,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 2,
+        "FP": 1,
+        "TN": 1,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 2,
+        "referencia": 0
+      },
+      {
+        "familia": "T",
+        "positivos": 4,
+        "TP": 2,
+        "FN": 2,
+        "FNforaDeAlcance": 0,
+        "FNsemMudancaDeclarada": 2,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 0,
+        "FP": 0,
+        "TN": 0,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 0,
+        "referencia": 0
+      },
+      {
+        "familia": "total",
+        "positivos": 35,
+        "TP": 4,
+        "FN": 31,
+        "FNforaDeAlcance": 29,
+        "FNsemMudancaDeclarada": 2,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 67,
+        "FP": 2,
+        "TN": 65,
+        "TNsujeitoNaoResolvido": 4,
+        "aparte": 22,
+        "referencia": 0
+      }
+    ]
+  },
+  "visual": {
+    "porGemeo": [
+      {
+        "familia": "F1",
+        "defeituosos": 5,
+        "defeituososSinalizados": 1,
+        "defeituososNoSujeito": 1,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 1,
+        "conformesSinalizados": 1,
+        "outros": 1,
+        "outrosSinalizados": 1,
+        "referencias": 6,
+        "foraDeAlcance": 4
+      },
+      {
+        "familia": "F2",
+        "defeituosos": 7,
+        "defeituososSinalizados": 7,
+        "defeituososNoSujeito": 6,
+        "defeituososTambemEmSujeitoConforme": 2,
+        "conformes": 1,
+        "conformesSinalizados": 1,
+        "outros": 0,
+        "outrosSinalizados": 0,
+        "referencias": 6,
+        "foraDeAlcance": 1
+      },
+      {
+        "familia": "F3",
+        "defeituosos": 6,
+        "defeituososSinalizados": 6,
+        "defeituososNoSujeito": 3,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 0,
+        "conformesSinalizados": 0,
+        "outros": 3,
+        "outrosSinalizados": 3,
+        "referencias": 7,
+        "foraDeAlcance": 2
+      },
+      {
+        "familia": "F4",
+        "defeituosos": 4,
+        "defeituososSinalizados": 4,
+        "defeituososNoSujeito": 2,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 1,
+        "conformesSinalizados": 1,
+        "outros": 2,
+        "outrosSinalizados": 2,
+        "referencias": 4,
+        "foraDeAlcance": 0
+      },
+      {
+        "familia": "F5",
+        "defeituosos": 3,
+        "defeituososSinalizados": 1,
+        "defeituososNoSujeito": 1,
+        "defeituososTambemEmSujeitoConforme": 1,
+        "conformes": 1,
+        "conformesSinalizados": 1,
+        "outros": 1,
+        "outrosSinalizados": 0,
+        "referencias": 3,
+        "foraDeAlcance": 0
+      },
+      {
+        "familia": "F6",
+        "defeituosos": 2,
+        "defeituososSinalizados": 1,
+        "defeituososNoSujeito": 1,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 2,
+        "conformesSinalizados": 2,
+        "outros": 0,
+        "outrosSinalizados": 0,
+        "referencias": 2,
+        "foraDeAlcance": 0
+      },
+      {
+        "familia": "F7",
+        "defeituosos": 1,
+        "defeituososSinalizados": 0,
+        "defeituososNoSujeito": 0,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 0,
+        "conformesSinalizados": 0,
+        "outros": 1,
+        "outrosSinalizados": 0,
+        "referencias": 2,
+        "foraDeAlcance": 0
+      },
+      {
+        "familia": "F8",
+        "defeituosos": 1,
+        "defeituososSinalizados": 1,
+        "defeituososNoSujeito": 1,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 1,
+        "conformesSinalizados": 1,
+        "outros": 1,
+        "outrosSinalizados": 1,
+        "referencias": 2,
+        "foraDeAlcance": 0
+      },
+      {
+        "familia": "T",
+        "defeituosos": 0,
+        "defeituososSinalizados": 0,
+        "defeituososNoSujeito": 0,
+        "defeituososTambemEmSujeitoConforme": 0,
+        "conformes": 0,
+        "conformesSinalizados": 0,
+        "outros": 0,
+        "outrosSinalizados": 0,
+        "referencias": 0,
+        "foraDeAlcance": 2
+      },
+      {
+        "familia": "total",
+        "defeituosos": 29,
+        "defeituososSinalizados": 21,
+        "defeituososNoSujeito": 15,
+        "defeituososTambemEmSujeitoConforme": 3,
+        "conformes": 7,
+        "conformesSinalizados": 7,
+        "outros": 9,
+        "outrosSinalizados": 7,
+        "referencias": 32,
+        "foraDeAlcance": 9
+      }
+    ],
+    "porCelula": [
+      {
+        "familia": "F1",
+        "positivos": 6,
+        "TP": 1,
+        "FN": 5,
+        "FNforaDeAlcance": 0,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 4,
+        "negativos": 4,
+        "FP": 2,
+        "TN": 2,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 5,
+        "referencia": 8
+      },
+      {
+        "familia": "F2",
+        "positivos": 6,
+        "TP": 6,
+        "FN": 0,
+        "FNforaDeAlcance": 0,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 5,
+        "FP": 3,
+        "TN": 2,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 2,
+        "referencia": 10
+      },
+      {
+        "familia": "F3",
+        "positivos": 7,
+        "TP": 3,
+        "FN": 4,
+        "FNforaDeAlcance": 0,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 2,
+        "FNcontextoAria": 1,
+        "negativos": 3,
+        "FP": 1,
+        "TN": 2,
+        "TNsujeitoNaoResolvido": 1,
+        "aparte": 5,
+        "referencia": 11
+      },
+      {
+        "familia": "F4",
+        "positivos": 5,
+        "TP": 3,
+        "FN": 2,
+        "FNforaDeAlcance": 0,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 2,
+        "FNcontextoAria": 1,
+        "negativos": 3,
+        "FP": 3,
+        "TN": 0,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 4,
+        "referencia": 6
+      },
+      {
+        "familia": "F5",
+        "positivos": 3,
+        "TP": 1,
+        "FN": 2,
+        "FNforaDeAlcance": 0,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 1,
+        "negativos": 5,
+        "FP": 3,
+        "TN": 2,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 1,
+        "referencia": 3
+      },
+      {
+        "familia": "F6",
+        "positivos": 2,
+        "TP": 1,
+        "FN": 1,
+        "FNforaDeAlcance": 0,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 2,
+        "FP": 2,
+        "TN": 0,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 0,
+        "referencia": 2
+      },
+      {
+        "familia": "F7",
+        "positivos": 1,
+        "TP": 0,
+        "FN": 1,
+        "FNforaDeAlcance": 0,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 2,
+        "FP": 0,
+        "TN": 2,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 1,
+        "referencia": 3
+      },
+      {
+        "familia": "F8",
+        "positivos": 1,
+        "TP": 1,
+        "FN": 0,
+        "FNforaDeAlcance": 0,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 1,
+        "FP": 1,
+        "TN": 0,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 1,
+        "referencia": 2
+      },
+      {
+        "familia": "T",
+        "positivos": 4,
+        "TP": 0,
+        "FN": 4,
+        "FNforaDeAlcance": 4,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 0,
+        "FNcontextoAria": 0,
+        "negativos": 0,
+        "FP": 0,
+        "TN": 0,
+        "TNsujeitoNaoResolvido": 0,
+        "aparte": 0,
+        "referencia": 0
+      },
+      {
+        "familia": "total",
+        "positivos": 35,
+        "TP": 16,
+        "FN": 19,
+        "FNforaDeAlcance": 4,
+        "FNsemMudancaDeclarada": 0,
+        "FNsujeitoNaoResolvido": 4,
+        "FNcontextoAria": 7,
+        "negativos": 25,
+        "FP": 15,
+        "TN": 10,
+        "TNsujeitoNaoResolvido": 1,
+        "aparte": 19,
+        "referencia": 45
+      }
+    ],
+    "semD1": {
+      "porGemeo": [
+        {
+          "familia": "F1",
+          "defeituosos": 5,
+          "defeituososSinalizados": 1,
+          "defeituososNoSujeito": 1,
+          "defeituososTambemEmSujeitoConforme": 0,
+          "conformes": 1,
+          "conformesSinalizados": 1,
+          "outros": 1,
+          "outrosSinalizados": 1,
+          "referencias": 6,
+          "foraDeAlcance": 4
+        },
+        {
+          "familia": "F2",
+          "defeituosos": 7,
+          "defeituososSinalizados": 7,
+          "defeituososNoSujeito": 5,
+          "defeituososTambemEmSujeitoConforme": 2,
+          "conformes": 1,
+          "conformesSinalizados": 1,
+          "outros": 0,
+          "outrosSinalizados": 0,
+          "referencias": 6,
+          "foraDeAlcance": 1
+        },
+        {
+          "familia": "F3",
+          "defeituosos": 6,
+          "defeituososSinalizados": 6,
+          "defeituososNoSujeito": 3,
+          "defeituososTambemEmSujeitoConforme": 0,
+          "conformes": 0,
+          "conformesSinalizados": 0,
+          "outros": 3,
+          "outrosSinalizados": 3,
+          "referencias": 7,
+          "foraDeAlcance": 2
+        },
+        {
+          "familia": "F4",
+          "defeituosos": 4,
+          "defeituososSinalizados": 4,
+          "defeituososNoSujeito": 2,
+          "defeituososTambemEmSujeitoConforme": 0,
+          "conformes": 1,
+          "conformesSinalizados": 1,
+          "outros": 2,
+          "outrosSinalizados": 2,
+          "referencias": 4,
+          "foraDeAlcance": 0
+        },
+        {
+          "familia": "F5",
+          "defeituosos": 3,
+          "defeituososSinalizados": 1,
+          "defeituososNoSujeito": 1,
+          "defeituososTambemEmSujeitoConforme": 1,
+          "conformes": 1,
+          "conformesSinalizados": 1,
+          "outros": 1,
+          "outrosSinalizados": 0,
+          "referencias": 3,
+          "foraDeAlcance": 0
+        },
+        {
+          "familia": "F6",
+          "defeituosos": 2,
+          "defeituososSinalizados": 1,
+          "defeituososNoSujeito": 1,
+          "defeituososTambemEmSujeitoConforme": 0,
+          "conformes": 2,
+          "conformesSinalizados": 2,
+          "outros": 0,
+          "outrosSinalizados": 0,
+          "referencias": 2,
+          "foraDeAlcance": 0
+        },
+        {
+          "familia": "F7",
+          "defeituosos": 1,
+          "defeituososSinalizados": 0,
+          "defeituososNoSujeito": 0,
+          "defeituososTambemEmSujeitoConforme": 0,
+          "conformes": 0,
+          "conformesSinalizados": 0,
+          "outros": 1,
+          "outrosSinalizados": 0,
+          "referencias": 2,
+          "foraDeAlcance": 0
+        },
+        {
+          "familia": "F8",
+          "defeituosos": 1,
+          "defeituososSinalizados": 1,
+          "defeituososNoSujeito": 1,
+          "defeituososTambemEmSujeitoConforme": 0,
+          "conformes": 1,
+          "conformesSinalizados": 1,
+          "outros": 1,
+          "outrosSinalizados": 1,
+          "referencias": 2,
+          "foraDeAlcance": 0
+        },
+        {
+          "familia": "T",
+          "defeituosos": 0,
+          "defeituososSinalizados": 0,
+          "defeituososNoSujeito": 0,
+          "defeituososTambemEmSujeitoConforme": 0,
+          "conformes": 0,
+          "conformesSinalizados": 0,
+          "outros": 0,
+          "outrosSinalizados": 0,
+          "referencias": 0,
+          "foraDeAlcance": 2
+        },
+        {
+          "familia": "total",
+          "defeituosos": 29,
+          "defeituososSinalizados": 21,
+          "defeituososNoSujeito": 14,
+          "defeituososTambemEmSujeitoConforme": 3,
+          "conformes": 7,
+          "conformesSinalizados": 7,
+          "outros": 9,
+          "outrosSinalizados": 7,
+          "referencias": 32,
+          "foraDeAlcance": 9
+        }
+      ],
+      "porCelula": [
+        {
+          "familia": "F1",
+          "positivos": 6,
+          "TP": 1,
+          "FN": 5,
+          "FNforaDeAlcance": 0,
+          "FNsemMudancaDeclarada": 0,
+          "FNsujeitoNaoResolvido": 0,
+          "FNcontextoAria": 4,
+          "negativos": 4,
+          "FP": 2,
+          "TN": 2,
+          "TNsujeitoNaoResolvido": 0,
+          "aparte": 5,
+          "referencia": 8
+        },
+        {
+          "familia": "F2",
+          "positivos": 6,
+          "TP": 5,
+          "FN": 1,
+          "FNforaDeAlcance": 0,
+          "FNsemMudancaDeclarada": 0,
+          "FNsujeitoNaoResolvido": 0,
+          "FNcontextoAria": 0,
+          "negativos": 5,
+          "FP": 3,
+          "TN": 2,
+          "TNsujeitoNaoResolvido": 0,
+          "aparte": 2,
+          "referencia": 10
+        },
+        {
+          "familia": "F3",
+          "positivos": 7,
+          "TP": 3,
+          "FN": 4,
+          "FNforaDeAlcance": 0,
+          "FNsemMudancaDeclarada": 0,
+          "FNsujeitoNaoResolvido": 2,
+          "FNcontextoAria": 1,
+          "negativos": 3,
+          "FP": 1,
+          "TN": 2,
+          "TNsujeitoNaoResolvido": 1,
+          "aparte": 5,
+          "referencia": 11
+        },
+        {
+          "familia": "F4",
+          "positivos": 5,
+          "TP": 3,
+          "FN": 2,
+          "FNforaDeAlcance": 0,
+          "FNsemMudancaDeclarada": 0,
+          "FNsujeitoNaoResolvido": 2,
+          "FNcontextoAria": 1,
+          "negativos": 3,
+          "FP": 3,
+          "TN": 0,
+          "TNsujeitoNaoResolvido": 0,
+          "aparte": 4,
+          "referencia": 6
+        },
+        {
+          "familia": "F5",
+          "positivos": 3,
+          "TP": 1,
+          "FN": 2,
+          "FNforaDeAlcance": 0,
+          "FNsemMudancaDeclarada": 0,
+          "FNsujeitoNaoResolvido": 0,
+          "FNcontextoAria": 1,
+          "negativos": 5,
+          "FP": 3,
+          "TN": 2,
+          "TNsujeitoNaoResolvido": 0,
+          "aparte": 1,
+          "referencia": 3
+        },
+        {
+          "familia": "F6",
+          "positivos": 2,
+          "TP": 1,
+          "FN": 1,
+          "FNforaDeAlcance": 0,
+          "FNsemMudancaDeclarada": 0,
+          "FNsujeitoNaoResolvido": 0,
+          "FNcontextoAria": 0,
+          "negativos": 2,
+          "FP": 2,
+          "TN": 0,
+          "TNsujeitoNaoResolvido": 0,
+          "aparte": 0,
+          "referencia": 2
+        },
+        {
+          "familia": "F7",
+          "positivos": 1,
+          "TP": 0,
+          "FN": 1,
+          "FNforaDeAlcance": 0,
+          "FNsemMudancaDeclarada": 0,
+          "FNsujeitoNaoResolvido": 0,
+          "FNcontextoAria": 0,
+          "negativos": 2,
+          "FP": 0,
+          "TN": 2,
+          "TNsujeitoNaoResolvido": 0,
+          "aparte": 1,
+          "referencia": 3
+        },
+        {
+          "familia": "F8",
+          "positivos": 1,
+          "TP": 1,
+          "FN": 0,
+          "FNforaDeAlcance": 0,
+          "FNsemMudancaDeclarada": 0,
+          "FNsujeitoNaoResolvido": 0,
+          "FNcontextoAria": 0,
+          "negativos": 1,
+          "FP": 1,
+          "TN": 0,
+          "TNsujeitoNaoResolvido": 0,
+          "aparte": 1,
+          "referencia": 2
+        },
+        {
+          "familia": "T",
+          "positivos": 4,
+          "TP": 0,
+          "FN": 4,
+          "FNforaDeAlcance": 4,
+          "FNsemMudancaDeclarada": 0,
+          "FNsujeitoNaoResolvido": 0,
+          "FNcontextoAria": 0,
+          "negativos": 0,
+          "FP": 0,
+          "TN": 0,
+          "TNsujeitoNaoResolvido": 0,
+          "aparte": 0,
+          "referencia": 0
+        },
+        {
+          "familia": "total",
+          "positivos": 35,
+          "TP": 15,
+          "FN": 20,
+          "FNforaDeAlcance": 4,
+          "FNsemMudancaDeclarada": 0,
+          "FNsujeitoNaoResolvido": 4,
+          "FNcontextoAria": 7,
+          "negativos": 25,
+          "FP": 15,
+          "TN": 10,
+          "TNsujeitoNaoResolvido": 1,
+          "aparte": 19,
+          "referencia": 45
+        }
+      ]
+    },
+    "deltaD1": {
+      "TP": 1,
+      "FP": 0,
+      "FN": -1,
+      "TN": 0,
+      "celulas": [
+        {
+          "gemeo": "F2-08-D",
+          "sujeito": ".br-breadcrumb",
+          "semD1": "FN",
+          "comD1": "TP"
+        }
+      ]
+    }
+  },
+  "telas": [
+    {
+      "tela": "solicitacao",
+      "contagem": {
+        "normativoPagina": 5,
+        "normativoDs": 139,
+        "higienePagina": 18,
+        "higieneDs": 2555,
+        "normativoDsValorDiferente": 0,
+        "normativoDsSemValor": 25,
+        "normativoPaginaPorBiblioteca": {
+          "aplicação/outros": 5
+        }
+      },
+      "foraDeAlcance": [
+        "estilo inline do React (style={{}}) vai no JS, não numa folha",
+        "regressão visual: não há build conforme anterior à injeção (plano §7)"
+      ],
+      "specs": [
+        {
+          "spec": "A-01",
+          "estado": "dialogo-aberto",
+          "atribuidos": 1,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "A-02",
+          "estado": "sempre",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "A-03",
+          "estado": "dialogo-aberto",
+          "atribuidos": 1,
+          "creditados": 1,
+          "regrasDoLint": [
+            "N1"
+          ]
+        },
+        {
+          "spec": "A-04",
+          "estado": "sempre",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "A-05",
+          "estado": "sempre",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "A-06",
+          "estado": "apos-envio-vazio",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "A-07",
+          "estado": "sempre",
+          "atribuidos": 2,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "A-08",
+          "estado": "apos-envio-vazio",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "A-09",
+          "estado": "sempre",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "A-10",
+          "estado": "sempre",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "A-11",
+          "estado": "apos-envio-vazio",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "A-12",
+          "estado": "sempre",
+          "atribuidos": 2,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "P-01",
+          "estado": "sempre",
+          "atribuidos": 1,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "P-02",
+          "estado": "sempre",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        }
+      ]
+    },
+    {
+      "tela": "vistorias",
+      "contagem": {
+        "normativoPagina": 102,
+        "normativoDs": 90,
+        "higienePagina": 108,
+        "higieneDs": 2555,
+        "normativoDsValorDiferente": 0,
+        "normativoDsSemValor": 23,
+        "normativoPaginaPorBiblioteca": {
+          "Summernote": 96,
+          "SweetAlert2": 3,
+          "aplicação/outros": 3
+        }
+      },
+      "foraDeAlcance": [
+        "estilos de componente do Angular vão como texto dentro dos chunks JS: não são folha servida (sem fonte: sources vazio)",
+        "regressão visual: aplicação real sem versão conforme (plano §7)"
+      ],
+      "specs": [
+        {
+          "spec": "B-01",
+          "estado": "sempre",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-02",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-03",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-04",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-05",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-06",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-07",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-08",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-09",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-10",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-11",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-12",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-13",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-14",
+          "estado": "sempre",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-15",
+          "estado": "detalhe-menu",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-16",
+          "estado": "detalhe-menu",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-17",
+          "estado": "detalhe-menu",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-18",
+          "estado": "detalhe-menu",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-19",
+          "estado": "detalhe-menu",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-20",
+          "estado": "detalhe-menu",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-21",
+          "estado": "detalhe",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-22",
+          "estado": "detalhe",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-23",
+          "estado": "detalhe",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-24",
+          "estado": "modal",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-25",
+          "estado": "sempre",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-26",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-27",
+          "estado": "modal",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-28",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        },
+        {
+          "spec": "B-29",
+          "estado": "inicial",
+          "atribuidos": 0,
+          "creditados": 0,
+          "regrasDoLint": []
+        }
+      ]
+    }
+  ]
+}

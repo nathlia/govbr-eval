@@ -1,0 +1,156 @@
+{
+  "comparador": "visual",
+  "gemeo": "F2-07-C",
+  "caso": "F2-07",
+  "familia": "F2",
+  "papel": "conforme",
+  "pagina": {
+    "caminho": "/controles/a/c-958f4be129.html",
+    "sha256": "ee05ef59d6c252638bfc6c856c00f100561d719b46c4045c22e6ba3beb1f99ad"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F2-07-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/a/c-958f4be129.html",
+    "sha256": "ee05ef59d6c252638bfc6c856c00f100561d719b46c4045c22e6ba3beb1f99ad"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "inicial",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "inicial",
+      "png": {
+        "gemeo": "0e494f739eda2e067070b9595ae33a0e337e852e7385dc2584c480d54579ca16",
+        "referencia": "0e494f739eda2e067070b9595ae33a0e337e852e7385dc2584c480d54579ca16"
+      },
+      "tamanhos": null,
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {},
+      "pixelsNoSujeitoSemD1": {},
+      "caixas": {
+        ".br-message#m1": {
+          "gemeo": [
+            {
+              "x": 60,
+              "y": 251.421875,
+              "width": 1160,
+              "height": 72.34375
+            }
+          ],
+          "referencia": [
+            {
+              "x": 60,
+              "y": 251.421875,
+              "width": 1160,
+              "height": 72.34375
+            }
+          ]
+        },
+        ".br-message#m2": {
+          "gemeo": [
+            {
+              "x": 60,
+              "y": 339.765625,
+              "width": 1160,
+              "height": 72.34375
+            }
+          ],
+          "referencia": [
+            {
+              "x": 60,
+              "y": 339.765625,
+              "width": 1160,
+              "height": 72.34375
+            }
+          ]
+        },
+        ".br-message#m3": {
+          "gemeo": [
+            {
+              "x": 60,
+              "y": 428.109375,
+              "width": 1160,
+              "height": 72.34375
+            }
+          ],
+          "referencia": [
+            {
+              "x": 60,
+              "y": 428.109375,
+              "width": 1160,
+              "height": 72.34375
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": ".br-message#m1",
+      "normas": [
+        "ds:message-d0c7ed3f91af"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "referencia",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": ".br-message#m2",
+      "normas": [
+        "ds:message-d0c7ed3f91af"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "referencia",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": ".br-message#m3",
+      "normas": [
+        "ds:message-d0c7ed3f91af"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "referencia",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

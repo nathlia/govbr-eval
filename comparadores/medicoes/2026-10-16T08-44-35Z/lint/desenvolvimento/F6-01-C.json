@@ -1,0 +1,75 @@
+{
+  "comparador": "lint",
+  "gemeo": "F6-01-C",
+  "caso": "F6-01",
+  "familia": "F6",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": true,
+    "categoria": "toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-55c8a15c4c.html",
+    "sha256": "70cc77436bd3c3a1e4881c9b4fb07ce3bc8b64960437919f36182a1e8023869f"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-55c8a15c4c.html",
+      "sha256": "70cc77436bd3c3a1e4881c9b4fb07ce3bc8b64960437919f36182a1e8023869f",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "recorte:sem-foco",
+      "sujeitos": {
+        "button#renovar": [
+          "body>main>div>button"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "recorte:com-foco",
+      "sujeitos": {
+        "button#renovar": [
+          "body>main>div>button"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "com-foco",
+      "sujeitos": {
+        "button#renovar": [
+          "body>main>div>button"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#renovar",
+      "normas": [
+        "wcag:2.4.7",
+        "emag:4.4"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

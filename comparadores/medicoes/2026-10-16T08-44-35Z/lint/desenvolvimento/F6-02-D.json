@@ -1,0 +1,66 @@
+{
+  "comparador": "lint",
+  "gemeo": "F6-02-D",
+  "caso": "F6-02",
+  "familia": "F6",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-c732624d99.html",
+    "sha256": "5d20804f97f1ca2fc903de073c718ebb3495e516034971b365b09688e6131179"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-c732624d99.html",
+      "sha256": "5d20804f97f1ca2fc903de073c718ebb3495e516034971b365b09688e6131179",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "antes",
+      "sujeitos": {
+        "button#filtros": [
+          "body>main>button"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "depois",
+      "sujeitos": {
+        "button#filtros": [
+          "body>main>button"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#filtros",
+      "normas": [
+        "wcag:4.1.2"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

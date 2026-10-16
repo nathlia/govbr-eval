@@ -1,0 +1,58 @@
+{
+  "comparador": "lint",
+  "gemeo": "F2-08-D",
+  "caso": "F2-08",
+  "familia": "F2",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-2291957c99.html",
+    "sha256": "321f20a577b70eaedb6c0db9e3efbed1a27970af8082e91e16b1af15f90f9da8"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-2291957c99.html",
+      "sha256": "321f20a577b70eaedb6c0db9e3efbed1a27970af8082e91e16b1af15f90f9da8",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        ".br-breadcrumb": [
+          "body>main>nav"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": ".br-breadcrumb",
+      "normas": [
+        "ds:breadcrumb-478cffdbb111",
+        "ds:breadcrumb-660169599b49"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

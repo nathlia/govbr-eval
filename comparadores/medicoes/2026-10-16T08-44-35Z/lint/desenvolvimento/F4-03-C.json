@@ -1,0 +1,79 @@
+{
+  "comparador": "lint",
+  "gemeo": "F4-03-C",
+  "caso": "F4-03",
+  "familia": "F4",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-28ddf394fd.html",
+    "sha256": "8e40455f7265929b5083822de8e9cecfb6fc42c6d6edb83c8a87984757584d72"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-28ddf394fd.html",
+      "sha256": "8e40455f7265929b5083822de8e9cecfb6fc42c6d6edb83c8a87984757584d72",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "primeiro-tab",
+      "sujeitos": {
+        "a.skip": [],
+        "main#conteudo": [
+          "body>main"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-ativar",
+      "sujeitos": {
+        "a.skip": [],
+        "main#conteudo": [
+          "body>main"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "a.skip",
+      "normas": [
+        "emag:1.5"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "main#conteudo",
+      "normas": [
+        "emag:1.5-name-id"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

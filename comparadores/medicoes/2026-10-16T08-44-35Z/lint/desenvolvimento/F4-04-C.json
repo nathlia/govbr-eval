@@ -1,0 +1,56 @@
+{
+  "comparador": "lint",
+  "gemeo": "F4-04-C",
+  "caso": "F4-04",
+  "familia": "F4",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-485f52b2c4.html",
+    "sha256": "81cf384c1c68c238478e569c5d17710d3dab4f70ac2d4fd671688c47e2da28fe"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-485f52b2c4.html",
+      "sha256": "81cf384c1c68c238478e569c5d17710d3dab4f70ac2d4fd671688c47e2da28fe",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "h2 Seus empréstimos": [
+          "body>main>section>h2"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "h2 Seus empréstimos",
+      "normas": [
+        "emag:1.3"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

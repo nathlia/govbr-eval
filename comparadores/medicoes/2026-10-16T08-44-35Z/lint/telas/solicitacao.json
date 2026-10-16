@@ -1,0 +1,1966 @@
+{
+  "comparador": "lint",
+  "tela": "solicitacao",
+  "site": {
+    "item": "govbr-telas-site-1a6e8daf3cdb",
+    "sha256": "1a6e8daf3cdb02da4f03cc3e39f52c0a1f44063b8270238ac5caf78eae39d11a"
+  },
+  "entrada": "solicitacao.html",
+  "referencia": {
+    "arquivo": "ground-truth-solicitacao.json",
+    "versao": "2.0.0"
+  },
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "dsDeOrigem": {
+    "pacote": "@govbr-ds/core 3.7.0",
+    "sha256": "80c6baf9bf13852dbcef8266e3b14497a660e02e591695b92a314a473f33ef91"
+  },
+  "arquivos": [
+    {
+      "caminho": "assets/jsx-runtime-B-RTDNcS.css",
+      "sha256": "8983e886541e5f0e5b06437d056c7bca24d280b93b15d9d0ee16de612f20e06e",
+      "lido": true
+    },
+    {
+      "caminho": "assets/solicitacao-D9ODjg1O.css",
+      "sha256": "d0fb2f8dcade3bf0744908fb7a3a3196d85b1f362710ecea53e8b0f2d2488125",
+      "lido": true
+    },
+    {
+      "caminho": "assets/all-D-ZQRcNM.css",
+      "sha256": "33e012f23db346bff314198c5797df18fa5dd575afe30191bde308a3c98e2899",
+      "lido": false,
+      "motivo": "fornecedor: Font Awesome"
+    }
+  ],
+  "foraDeAlcance": [
+    "estilo inline do React (style={{}}) vai no JS, não numa folha",
+    "regressão visual: não há build conforme anterior à injeção (plano §7)"
+  ],
+  "achados": [
+    {
+      "id": "L-2695",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 41,
+      "seletor": ":root",
+      "propriedade": "--tela-borda",
+      "valor": "#dee2e6",
+      "texto": "Cor fora das pré-definidas do DS: \"#dee2e6\" (#dee2e6) em \"--tela-borda\" (govbr-eval/cor-pre-definida)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2696",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 334,
+      "seletor": ".barra-superior",
+      "propriedade": "padding",
+      "valor": "8px 16px",
+      "texto": "Disallowed value \"8px 16px\" for property \"padding\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2697",
+      "regraId": "N2",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21fb08664799",
+        "ds:tipografia-21fb08664799"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 402,
+      "seletor": ".marca-govbr",
+      "propriedade": "font-size",
+      "valor": "24px",
+      "texto": "Disallowed value \"24px\" for property \"font-size\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2698",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 498,
+      "seletor": ".trilha-servico",
+      "propriedade": "padding",
+      "valor": "8px 16px 0",
+      "texto": "Disallowed value \"8px 16px 0\" for property \"padding\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2699",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 565,
+      "seletor": ".area-solicitacao",
+      "propriedade": "padding",
+      "valor": "16px",
+      "texto": "Disallowed value \"16px\" for property \"padding\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2700",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 597,
+      "seletor": ".titulo-solicitacao",
+      "propriedade": "margin",
+      "valor": "8px 0",
+      "texto": "Disallowed value \"8px 0\" for property \"margin\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2701",
+      "regraId": "N2",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21fb08664799",
+        "ds:tipografia-21fb08664799"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 613,
+      "seletor": ".titulo-solicitacao",
+      "propriedade": "font-size",
+      "valor": "32px",
+      "texto": "Disallowed value \"32px\" for property \"font-size\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2702",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 660,
+      "seletor": ".apoio-solicitacao",
+      "propriedade": "margin",
+      "valor": "0 0 24px",
+      "texto": "Disallowed value \"0 0 24px\" for property \"margin\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2703",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 758,
+      "seletor": ".formulario-solicitacao",
+      "propriedade": "padding",
+      "valor": "24px",
+      "texto": "Disallowed value \"24px\" for property \"padding\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2704",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 804,
+      "seletor": ".retorno-envio:not(:empty)",
+      "propriedade": "margin-bottom",
+      "valor": "24px",
+      "texto": "Disallowed value \"24px\" for property \"margin-bottom\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2705",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 842,
+      "seletor": ".linha-campos",
+      "propriedade": "gap",
+      "valor": "24px",
+      "texto": "Disallowed value \"24px\" for property \"gap\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2706",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 927,
+      "seletor": ".campo",
+      "propriedade": "margin",
+      "valor": "0 0 24px",
+      "texto": "Disallowed value \"0 0 24px\" for property \"margin\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2707",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 1306,
+      "seletor": ".grupo-forma legend,.grupo-recursos legend",
+      "propriedade": "margin-bottom",
+      "valor": "8px",
+      "texto": "Disallowed value \"8px\" for property \"margin-bottom\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2708",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 1417,
+      "seletor": ".grupo-forma .br-radio,.grupo-recursos .br-checkbox",
+      "propriedade": "margin-bottom",
+      "valor": "8px",
+      "texto": "Disallowed value \"8px\" for property \"margin-bottom\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2709",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 1555,
+      "seletor": ".campo-declaracao",
+      "propriedade": "padding-top",
+      "valor": "8px",
+      "texto": "Disallowed value \"8px\" for property \"padding-top\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2710",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 1598,
+      "seletor": ".campo-declaracao .feedback",
+      "propriedade": "margin-top",
+      "valor": "8px",
+      "texto": "Disallowed value \"8px\" for property \"margin-top\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2711",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 1670,
+      "seletor": ".acoes-formulario",
+      "propriedade": "gap",
+      "valor": "16px",
+      "texto": "Disallowed value \"16px\" for property \"gap\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2712",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 1754,
+      "seletor": ".historico",
+      "propriedade": "margin-top",
+      "valor": "40px",
+      "texto": "Disallowed value \"40px\" for property \"margin-top\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2713",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 1784,
+      "seletor": ".titulo-historico",
+      "propriedade": "margin",
+      "valor": "0 0 16px",
+      "texto": "Disallowed value \"0 0 16px\" for property \"margin\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2714",
+      "regraId": "N2",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21fb08664799",
+        "ds:tipografia-21fb08664799"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 1803,
+      "seletor": ".titulo-historico",
+      "propriedade": "font-size",
+      "valor": "24px",
+      "texto": "Disallowed value \"24px\" for property \"font-size\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2715",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 1928,
+      "seletor": ".paginacao-anteriores",
+      "propriedade": "gap",
+      "valor": "8px",
+      "texto": "Disallowed value \"8px\" for property \"gap\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2716",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 1940,
+      "seletor": ".paginacao-anteriores",
+      "propriedade": "padding",
+      "valor": "8px 0",
+      "texto": "Disallowed value \"8px 0\" for property \"padding\" (declaration-property-value-allowed-list)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-2717",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/solicitacao-D9ODjg1O.css",
+      "linha": 1,
+      "coluna": 1983,
+      "seletor": ".dialogo-descarte",
+      "propriedade": "color",
+      "valor": "#334333",
+      "texto": "Cor fora das pré-definidas do DS: \"#334333\" (#334333) em \"color\" (govbr-eval/cor-pre-definida)",
+      "origem": "pagina",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-001",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 386,
+      "seletor": ".flatpickr-calendar",
+      "propriedade": "box-shadow",
+      "valor": "1px 0 #e6e6e6,-1px 0 #e6e6e6,0 1px #e6e6e6,0 -1px #e6e6e6,0 3px 13px #00000014",
+      "texto": "Cor fora das pré-definidas do DS: \"#00000014\" (#00000014) em \"box-shadow\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-002",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 1628,
+      "seletor": ".flatpickr-calendar:after,.flatpickr-calendar:before",
+      "propriedade": "border",
+      "valor": "solid #0000",
+      "texto": "Cor fora das pré-definidas do DS: \"#0000\" (#00000000) em \"border\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-003",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 2009,
+      "seletor": ".flatpickr-calendar:before",
+      "propriedade": "margin",
+      "valor": "0 -5px",
+      "texto": "Disallowed value \"0 -5px\" for property \"margin\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-004",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 2066,
+      "seletor": ".flatpickr-calendar:after",
+      "propriedade": "margin",
+      "valor": "0 -4px",
+      "texto": "Disallowed value \"0 -4px\" for property \"margin\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-005",
+      "regraId": "N3",
+      "regra": "govbr-eval/sem-remover-contorno-de-foco",
+      "perfil": "normativo",
+      "normas": [
+        "emag:4.4",
+        "wcag:2.4.7",
+        "govbr-3.7.0-accessibility-global-5f3ebabe87e6",
+        "govbr-3.7.0-accessibility-global-bc492500708d",
+        "govbr-3.7.0-accessibility-global-21fbcc2fe37b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 2490,
+      "seletor": ".flatpickr-calendar:focus",
+      "propriedade": null,
+      "valor": null,
+      "texto": "Unexpected using \"outline\" property in .flatpickr-calendar:focus (govbr-eval/sem-remover-contorno-de-foco)",
+      "origem": "ds",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-006",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 2858,
+      "seletor": ".flatpickr-months .flatpickr-month,.flatpickr-months .flatpickr-next-month,.flatpickr-months .flatpickr-prev-month",
+      "propriedade": "fill",
+      "valor": "#000000e6",
+      "texto": "Cor fora das pré-definidas do DS: \"#000000e6\" (#000000e6) em \"fill\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-007",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 2874,
+      "seletor": ".flatpickr-months .flatpickr-month,.flatpickr-months .flatpickr-next-month,.flatpickr-months .flatpickr-prev-month",
+      "propriedade": "color",
+      "valor": "#000000e6",
+      "texto": "Cor fora das pré-definidas do DS: \"#000000e6\" (#000000e6) em \"color\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-008",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 3051,
+      "seletor": ".flatpickr-months .flatpickr-next-month,.flatpickr-months .flatpickr-prev-month",
+      "propriedade": "padding",
+      "valor": "10px",
+      "texto": "Disallowed value \"10px\" for property \"padding\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-009",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 3691,
+      "seletor": ".flatpickr-months .flatpickr-next-month:hover,.flatpickr-months .flatpickr-prev-month:hover",
+      "propriedade": "color",
+      "valor": "#959ea9",
+      "texto": "Cor fora das pré-definidas do DS: \"#959ea9\" (#959ea9) em \"color\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-010",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 3804,
+      "seletor": ".flatpickr-months .flatpickr-next-month:hover svg,.flatpickr-months .flatpickr-prev-month:hover svg",
+      "propriedade": "fill",
+      "valor": "#f64747",
+      "texto": "Cor fora das pré-definidas do DS: \"#f64747\" (#f64747) em \"fill\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-011",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 4500,
+      "seletor": ".numInputWrapper span",
+      "propriedade": "border",
+      "valor": "1px solid #39393926",
+      "texto": "Cor fora das pré-definidas do DS: \"#39393926\" (#39393926) em \"border\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-012",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 4540,
+      "seletor": ".numInputWrapper span",
+      "propriedade": "padding",
+      "valor": "0 4px 0 2px",
+      "texto": "Disallowed value \"0 4px 0 2px\" for property \"padding\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-013",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 4633,
+      "seletor": ".numInputWrapper span:hover",
+      "propriedade": "background",
+      "valor": "#0000001a",
+      "texto": "Cor fora das pré-definidas do DS: \"#0000001a\" (#0000001a) em \"background\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-014",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 4683,
+      "seletor": ".numInputWrapper span:active",
+      "propriedade": "background",
+      "valor": "#0003",
+      "texto": "Cor fora das pré-definidas do DS: \"#0003\" (#00000033) em \"background\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-015",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 4872,
+      "seletor": ".numInputWrapper span.arrowUp:after",
+      "propriedade": "border-bottom",
+      "valor": "4px solid #39393999",
+      "texto": "Cor fora das pré-definidas do DS: \"#39393999\" (#39393999) em \"border-bottom\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-016",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 4904,
+      "seletor": ".numInputWrapper span.arrowUp:after",
+      "propriedade": "border-left",
+      "valor": "4px solid #0000",
+      "texto": "Cor fora das pré-definidas do DS: \"#0000\" (#00000000) em \"border-left\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-017",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 4933,
+      "seletor": ".numInputWrapper span.arrowUp:after",
+      "propriedade": "border-right",
+      "valor": "4px solid #0000",
+      "texto": "Cor fora das pré-definidas do DS: \"#0000\" (#00000000) em \"border-right\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-018",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5046,
+      "seletor": ".numInputWrapper span.arrowDown:after",
+      "propriedade": "border-top",
+      "valor": "4px solid #39393999",
+      "texto": "Cor fora das pré-definidas do DS: \"#39393999\" (#39393999) em \"border-top\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-019",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5078,
+      "seletor": ".numInputWrapper span.arrowDown:after",
+      "propriedade": "border-left",
+      "valor": "4px solid #0000",
+      "texto": "Cor fora das pré-definidas do DS: \"#0000\" (#00000000) em \"border-left\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-020",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5107,
+      "seletor": ".numInputWrapper span.arrowDown:after",
+      "propriedade": "border-right",
+      "valor": "4px solid #0000",
+      "texto": "Cor fora das pré-definidas do DS: \"#0000\" (#00000000) em \"border-right\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-021",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5209,
+      "seletor": ".numInputWrapper span svg path",
+      "propriedade": "fill",
+      "valor": "#00000080",
+      "texto": "Cor fora das pré-definidas do DS: \"#00000080\" (#00000080) em \"fill\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-022",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5253,
+      "seletor": ".numInputWrapper:hover",
+      "propriedade": "background",
+      "valor": "#0000000d",
+      "texto": "Cor fora das pré-definidas do DS: \"#0000000d\" (#0000000d) em \"background\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-023",
+      "regraId": "N2",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21fb08664799",
+        "ds:tipografia-21fb08664799"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5362,
+      "seletor": ".flatpickr-current-month",
+      "propriedade": "font-size",
+      "valor": "135%",
+      "texto": "Disallowed value \"135%\" for property \"font-size\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-024",
+      "regraId": "H6",
+      "regra": "declaration-block-no-duplicate-properties",
+      "perfil": "higiene",
+      "normas": [],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5383,
+      "seletor": ".flatpickr-current-month",
+      "propriedade": "line-height",
+      "valor": "inherit",
+      "texto": "Duplicate property \"line-height\" (declaration-block-no-duplicate-properties)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-025",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5439,
+      "seletor": ".flatpickr-current-month",
+      "propriedade": "padding",
+      "valor": "7.48px 0 0",
+      "texto": "Disallowed value \"7.48px 0 0\" for property \"padding\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-026",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5604,
+      "seletor": ".flatpickr-current-month span.cur-month",
+      "propriedade": "margin-left",
+      "valor": ".5ch",
+      "texto": "Disallowed value \".5ch\" for property \"margin-left\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-027",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5733,
+      "seletor": ".flatpickr-current-month span.cur-month:hover",
+      "propriedade": "background",
+      "valor": "#0000000d",
+      "texto": "Cor fora das pré-definidas do DS: \"#0000000d\" (#0000000d) em \"background\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-028",
+      "regraId": "H4",
+      "regra": "unit-no-unknown",
+      "perfil": "higiene",
+      "normas": [],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5802,
+      "seletor": ".flatpickr-current-month .numInputWrapper",
+      "propriedade": "width",
+      "valor": "7ch�",
+      "texto": "Unknown unit \"ch�\" (unit-no-unknown)",
+      "origem": "ds",
+      "valorConfereComDs": false
+    },
+    {
+      "id": "L-029",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5908,
+      "seletor": ".flatpickr-current-month .numInputWrapper span.arrowUp:after",
+      "propriedade": "border-bottom-color",
+      "valor": "#000000e6",
+      "texto": "Cor fora das pré-definidas do DS: \"#000000e6\" (#000000e6) em \"border-bottom-color\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-030",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 5998,
+      "seletor": ".flatpickr-current-month .numInputWrapper span.arrowDown:after",
+      "propriedade": "border-top-color",
+      "valor": "#000000e6",
+      "texto": "Cor fora das pré-definidas do DS: \"#000000e6\" (#000000e6) em \"border-top-color\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-031",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 6283,
+      "seletor": ".flatpickr-current-month input.cur-year",
+      "propriedade": "padding",
+      "valor": "0 0 0 .5ch",
+      "texto": "Disallowed value \"0 0 0 .5ch\" for property \"padding\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-032",
+      "regraId": "N3",
+      "regra": "govbr-eval/sem-remover-contorno-de-foco",
+      "perfil": "normativo",
+      "normas": [
+        "emag:4.4",
+        "wcag:2.4.7",
+        "govbr-3.7.0-accessibility-global-5f3ebabe87e6",
+        "govbr-3.7.0-accessibility-global-bc492500708d",
+        "govbr-3.7.0-accessibility-global-21fbcc2fe37b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 6315,
+      "seletor": ".flatpickr-current-month input.cur-year:focus",
+      "propriedade": null,
+      "valor": null,
+      "texto": "Unexpected using \"outline\" property in .flatpickr-current-month input.cur-year:focus (govbr-eval/sem-remover-contorno-de-foco)",
+      "origem": "ds",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-033",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 6483,
+      "seletor": ".flatpickr-current-month input.cur-year[disabled],.flatpickr-current-month input.cur-year[disabled]:hover",
+      "propriedade": "color",
+      "valor": "#00000080",
+      "texto": "Cor fora das pré-definidas do DS: \"#00000080\" (#00000080) em \"color\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-034",
+      "regraId": "N2",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21fb08664799",
+        "ds:tipografia-21fb08664799"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 6538,
+      "seletor": ".flatpickr-current-month input.cur-year[disabled],.flatpickr-current-month input.cur-year[disabled]:hover",
+      "propriedade": "font-size",
+      "valor": "100%",
+      "texto": "Disallowed value \"100%\" for property \"font-size\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-035",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 6854,
+      "seletor": ".flatpickr-current-month .flatpickr-monthDropdown-months",
+      "propriedade": "margin",
+      "valor": "-1px 0 0",
+      "texto": "Disallowed value \"-1px 0 0\" for property \"margin\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-036",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 6871,
+      "seletor": ".flatpickr-current-month .flatpickr-monthDropdown-months",
+      "propriedade": "padding",
+      "valor": "0 0 0 .5ch",
+      "texto": "Disallowed value \"0 0 0 .5ch\" for property \"padding\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-037",
+      "regraId": "N3",
+      "regra": "govbr-eval/sem-remover-contorno-de-foco",
+      "perfil": "normativo",
+      "normas": [
+        "emag:4.4",
+        "wcag:2.4.7",
+        "govbr-3.7.0-accessibility-global-5f3ebabe87e6",
+        "govbr-3.7.0-accessibility-global-bc492500708d",
+        "govbr-3.7.0-accessibility-global-21fbcc2fe37b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 6900,
+      "seletor": ".flatpickr-current-month .flatpickr-monthDropdown-months:active,.flatpickr-current-month .flatpickr-monthDropdown-months:focus",
+      "propriedade": null,
+      "valor": null,
+      "texto": "Unexpected using \"outline\" property in .flatpickr-current-month .flatpickr-monthDropdown-months:active,.flatpickr-current-month .flatpickr-monthDropdown-months:focus (govbr-eval/sem-remover-contorno-de-foco)",
+      "origem": "ds",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-038",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 7114,
+      "seletor": ".flatpickr-current-month .flatpickr-monthDropdown-months:hover",
+      "propriedade": "background",
+      "valor": "#0000000d",
+      "texto": "Cor fora das pré-definidas do DS: \"#0000000d\" (#0000000d) em \"background\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-039",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 7229,
+      "seletor": ".flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month",
+      "propriedade": "background-color",
+      "valor": "#0000",
+      "texto": "Cor fora das pré-definidas do DS: \"#0000\" (#00000000) em \"background-color\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-040",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 7557,
+      "seletor": "span.flatpickr-weekday",
+      "propriedade": "color",
+      "valor": "#0000008a",
+      "texto": "Cor fora das pré-definidas do DS: \"#0000008a\" (#0000008a) em \"color\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-041",
+      "regraId": "N2",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21fb08664799",
+        "ds:tipografia-21fb08664799"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 7634,
+      "seletor": "span.flatpickr-weekday",
+      "propriedade": "font-size",
+      "valor": "90%",
+      "texto": "Disallowed value \"90%\" for property \"font-size\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-042",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 7724,
+      "seletor": ".dayContainer,.flatpickr-weeks",
+      "propriedade": "padding",
+      "valor": "1px 0 0",
+      "texto": "Disallowed value \"1px 0 0\" for property \"padding\" (declaration-property-value-allowed-list)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-043",
+      "regraId": "N3",
+      "regra": "govbr-eval/sem-remover-contorno-de-foco",
+      "perfil": "normativo",
+      "normas": [
+        "emag:4.4",
+        "wcag:2.4.7",
+        "govbr-3.7.0-accessibility-global-5f3ebabe87e6",
+        "govbr-3.7.0-accessibility-global-bc492500708d",
+        "govbr-3.7.0-accessibility-global-21fbcc2fe37b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 7834,
+      "seletor": ".flatpickr-days:focus",
+      "propriedade": null,
+      "valor": null,
+      "texto": "Unexpected using \"outline\" property in .flatpickr-days:focus (govbr-eval/sem-remover-contorno-de-foco)",
+      "origem": "ds",
+      "valorConfereComDs": null
+    },
+    {
+      "id": "L-044",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 8182,
+      "seletor": ".flatpickr-day",
+      "propriedade": "color",
+      "valor": "#393939",
+      "texto": "Cor fora das pré-definidas do DS: \"#393939\" (#393939) em \"color\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-045",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 8255,
+      "seletor": ".flatpickr-day",
+      "propriedade": "border",
+      "valor": "1px solid #0000",
+      "texto": "Cor fora das pré-definidas do DS: \"#0000\" (#00000000) em \"border\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-046",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 8932,
+      "seletor": ".flatpickr-day.today",
+      "propriedade": "border-color",
+      "valor": "#959ea9",
+      "texto": "Cor fora das pré-definidas do DS: \"#959ea9\" (#959ea9) em \"border-color\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-047",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 9016,
+      "seletor": ".flatpickr-day.today:focus,.flatpickr-day.today:hover",
+      "propriedade": "background",
+      "valor": "#959ea9",
+      "texto": "Cor fora das pré-definidas do DS: \"#959ea9\" (#959ea9) em \"background\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-048",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 9037,
+      "seletor": ".flatpickr-day.today:focus,.flatpickr-day.today:hover",
+      "propriedade": "border-color",
+      "valor": "#959ea9",
+      "texto": "Cor fora das pré-definidas do DS: \"#959ea9\" (#959ea9) em \"border-color\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-049",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 9689,
+      "seletor": ".flatpickr-day.endRange,.flatpickr-day.endRange.inRange,.flatpickr-day.endRange.nextMonthDay,.flatpickr-day.endRange.prevMonthDay,.flatpickr-day.endRange:focus,.flatpickr-day.endRange:hover,.flatpickr-day.selected,.flatpickr-day.selected.inRange,.flatpickr-day.selected.nextMonthDay,.flatpickr-day.selected.prevMonthDay,.flatpickr-day.selected:focus,.flatpickr-day.selected:hover,.flatpickr-day.startRange,.flatpickr-day.startRange.inRange,.flatpickr-day.startRange.nextMonthDay,.flatpickr-day.startRange.prevMonthDay,.flatpickr-day.startRange:focus,.flatpickr-day.startRange:hover",
+      "propriedade": "background",
+      "valor": "#569ff7",
+      "texto": "Cor fora das pré-definidas do DS: \"#569ff7\" (#569ff7) em \"background\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    },
+    {
+      "id": "L-050",
+      "regraId": "N1",
+      "regra": "govbr-eval/cor-pre-definida",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "arquivo": "assets/jsx-runtime-B-RTDNcS.css",
+      "linha": 1,
+      "coluna": 9710,
+      "seletor": ".flatpickr-day.endRange,.flatpickr-day.endRange.inRange,.flatpickr-day.endRange.nextMonthDay,.flatpickr-day.endRange.prevMonthDay,.flatpickr-day.endRange:focus,.flatpickr-day.endRange:hover,.flatpickr-day.selected,.flatpickr-day.selected.inRange,.flatpickr-day.selected.nextMonthDay,.flatpickr-day.selected.prevMonthDay,.flatpickr-day.selected:focus,.flatpickr-day.selected:hover,.flatpickr-day.startRange,.flatpickr-day.startRange.inRange,.flatpickr-day.startRange.nextMonthDay,.flatpickr-day.startRange.prevMonthDay,.flatpickr-day.startRange:focus,.flatpickr-day.startRange:hover",
+      "propriedade": "border-color",
+      "valor": "#569ff7",
+      "texto": "Cor fora das pré-definidas do DS: \"#569ff7\" (#569ff7) em \"border-color\" (govbr-eval/cor-pre-definida)",
+      "origem": "ds",
+      "valorConfereComDs": true
+    }
+  ],
+  "contagem": {
+    "normativoPagina": 5,
+    "normativoDs": 139,
+    "higienePagina": 18,
+    "higieneDs": 2555,
+    "normativoDsValorDiferente": 0,
+    "normativoDsSemValor": 25,
+    "normativoPaginaPorBiblioteca": {
+      "aplicação/outros": 5
+    }
+  },
+  "resolucao": [
+    {
+      "estado": "inicial",
+      "achados": {
+        "L-2695": [
+          ""
+        ],
+        "L-2696": [
+          "body>div:nth-of-type(1)>div>header"
+        ],
+        "L-2697": [
+          "body>div:nth-of-type(1)>div>header>a"
+        ],
+        "L-2698": [
+          "body>div:nth-of-type(1)>div>nav:nth-of-type(2)"
+        ],
+        "L-2699": [
+          "body>div:nth-of-type(1)>div>main"
+        ],
+        "L-2700": [
+          "body>div:nth-of-type(1)>div>main>h1"
+        ],
+        "L-2701": [
+          "body>div:nth-of-type(1)>div>main>h1"
+        ],
+        "L-2702": [
+          "body>div:nth-of-type(1)>div>main>p"
+        ],
+        "L-2703": [
+          "body>div:nth-of-type(1)>div>main>form"
+        ],
+        "L-2704": [],
+        "L-2705": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)"
+        ],
+        "L-2706": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)>div",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(5)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(7)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(2)"
+        ],
+        "L-2707": [
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>legend",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(2)>legend"
+        ],
+        "L-2708": [
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(3)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(2)>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(2)>div:nth-of-type(2)"
+        ],
+        "L-2709": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(7)"
+        ],
+        "L-2710": [],
+        "L-2711": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(8)"
+        ],
+        "L-2712": [
+          "body>div:nth-of-type(1)>div>main>section"
+        ],
+        "L-2713": [
+          "body>div:nth-of-type(1)>div>main>section>h2"
+        ],
+        "L-2714": [
+          "body>div:nth-of-type(1)>div>main>section>h2"
+        ],
+        "L-2715": [
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav"
+        ],
+        "L-2716": [
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav"
+        ],
+        "L-2717": []
+      },
+      "specs": {
+        "A-01": [],
+        "A-02": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+        ],
+        "A-03": [],
+        "A-04": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+        ],
+        "A-05": [
+          "body>div:nth-of-type(1)>div>main>section>div",
+          "body>div:nth-of-type(1)>div>main>section>div>table"
+        ],
+        "A-06": [],
+        "A-07": [
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(3)"
+        ],
+        "A-08": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+        ],
+        "A-09": [
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>label"
+        ],
+        "A-10": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>p"
+        ],
+        "A-11": [],
+        "A-12": [
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(3)"
+        ],
+        "P-01": [
+          "body>div:nth-of-type(1)>div>header"
+        ],
+        "P-02": [
+          "body"
+        ]
+      }
+    },
+    {
+      "estado": "apos-envio-vazio",
+      "achados": {
+        "L-2695": [
+          ""
+        ],
+        "L-2696": [
+          "body>div:nth-of-type(1)>div>header"
+        ],
+        "L-2697": [
+          "body>div:nth-of-type(1)>div>header>a"
+        ],
+        "L-2698": [
+          "body>div:nth-of-type(1)>div>nav:nth-of-type(2)"
+        ],
+        "L-2699": [
+          "body>div:nth-of-type(1)>div>main"
+        ],
+        "L-2700": [
+          "body>div:nth-of-type(1)>div>main>h1"
+        ],
+        "L-2701": [
+          "body>div:nth-of-type(1)>div>main>h1"
+        ],
+        "L-2702": [
+          "body>div:nth-of-type(1)>div>main>p"
+        ],
+        "L-2703": [
+          "body>div:nth-of-type(1)>div>main>form"
+        ],
+        "L-2704": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)"
+        ],
+        "L-2705": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)"
+        ],
+        "L-2706": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)>div",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(5)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(7)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(2)"
+        ],
+        "L-2707": [
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>legend",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(2)>legend"
+        ],
+        "L-2708": [
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(3)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(2)>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(2)>div:nth-of-type(2)"
+        ],
+        "L-2709": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(7)"
+        ],
+        "L-2710": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(7)>span"
+        ],
+        "L-2711": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(8)"
+        ],
+        "L-2712": [
+          "body>div:nth-of-type(1)>div>main>section"
+        ],
+        "L-2713": [
+          "body>div:nth-of-type(1)>div>main>section>h2"
+        ],
+        "L-2714": [
+          "body>div:nth-of-type(1)>div>main>section>h2"
+        ],
+        "L-2715": [
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav"
+        ],
+        "L-2716": [
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav"
+        ],
+        "L-2717": []
+      },
+      "specs": {
+        "A-01": [],
+        "A-02": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+        ],
+        "A-03": [],
+        "A-04": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+        ],
+        "A-05": [
+          "body>div:nth-of-type(1)>div>main>section>div",
+          "body>div:nth-of-type(1)>div>main>section>div>table"
+        ],
+        "A-06": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div"
+        ],
+        "A-07": [
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(3)"
+        ],
+        "A-08": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+        ],
+        "A-09": [
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>label"
+        ],
+        "A-10": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>p"
+        ],
+        "A-11": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(3)"
+        ],
+        "A-12": [
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(3)"
+        ],
+        "P-01": [
+          "body>div:nth-of-type(1)>div>header"
+        ],
+        "P-02": [
+          "body"
+        ]
+      }
+    },
+    {
+      "estado": "dialogo-aberto",
+      "achados": {
+        "L-2695": [
+          ""
+        ],
+        "L-2696": [
+          "body>div:nth-of-type(1)>div>header"
+        ],
+        "L-2697": [
+          "body>div:nth-of-type(1)>div>header>a"
+        ],
+        "L-2698": [
+          "body>div:nth-of-type(1)>div>nav:nth-of-type(2)"
+        ],
+        "L-2699": [
+          "body>div:nth-of-type(1)>div>main"
+        ],
+        "L-2700": [
+          "body>div:nth-of-type(1)>div>main>h1"
+        ],
+        "L-2701": [
+          "body>div:nth-of-type(1)>div>main>h1"
+        ],
+        "L-2702": [
+          "body>div:nth-of-type(1)>div>main>p"
+        ],
+        "L-2703": [
+          "body>div:nth-of-type(1)>div>main>form"
+        ],
+        "L-2704": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)"
+        ],
+        "L-2705": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)"
+        ],
+        "L-2706": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(2)>div:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(4)>div",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(5)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(7)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(2)"
+        ],
+        "L-2707": [
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>legend",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(2)>legend"
+        ],
+        "L-2708": [
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(3)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(2)>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(2)>div:nth-of-type(2)"
+        ],
+        "L-2709": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(7)"
+        ],
+        "L-2710": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(7)>span"
+        ],
+        "L-2711": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(8)"
+        ],
+        "L-2712": [
+          "body>div:nth-of-type(1)>div>main>section"
+        ],
+        "L-2713": [
+          "body>div:nth-of-type(1)>div>main>section>h2"
+        ],
+        "L-2714": [
+          "body>div:nth-of-type(1)>div>main>section>h2"
+        ],
+        "L-2715": [
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav"
+        ],
+        "L-2716": [
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav"
+        ],
+        "L-2717": [
+          "body>div:nth-of-type(1)>div>div>div"
+        ]
+      },
+      "specs": {
+        "A-01": [
+          "body>div:nth-of-type(1)>div>div>div"
+        ],
+        "A-02": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div>button"
+        ],
+        "A-03": [
+          "body>div:nth-of-type(1)>div>div>div"
+        ],
+        "A-04": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+        ],
+        "A-05": [
+          "body>div:nth-of-type(1)>div>main>section>div",
+          "body>div:nth-of-type(1)>div>main>section>div>table"
+        ],
+        "A-06": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)>div"
+        ],
+        "A-07": [
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(3)"
+        ],
+        "A-08": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(1)>div>div:nth-of-type(1)>div>input",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(3)>div:nth-of-type(2)>div>div:nth-of-type(1)>div>input"
+        ],
+        "A-09": [
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>input",
+          "body>div:nth-of-type(1)>div>main>form>fieldset:nth-of-type(1)>div:nth-of-type(1)>label"
+        ],
+        "A-10": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>div",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(6)>p"
+        ],
+        "A-11": [
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>form>div:nth-of-type(1)>div>div:nth-of-type(3)"
+        ],
+        "A-12": [
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(1)",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(2)",
+          "body>div:nth-of-type(1)>div>main>section>div>div:nth-of-type(2)>nav>a:nth-of-type(3)"
+        ],
+        "P-01": [
+          "body>div:nth-of-type(1)>div>header"
+        ],
+        "P-02": [
+          "body"
+        ]
+      }
+    }
+  ],
+  "specs": [
+    {
+      "id": "A-01",
+      "estado": "dialogo-aberto",
+      "regras": [
+        "govbr-3.7.0-accessibility-global-5be1f553cc03",
+        "emag:1.9",
+        "wcag:3.2.5"
+      ],
+      "atribuidos": [
+        "L-2717"
+      ],
+      "creditados": []
+    },
+    {
+      "id": "A-02",
+      "estado": "sempre",
+      "regras": [
+        "govbr-3.7.0-accessibility-global-79db88c7f55d",
+        "emag:1.4",
+        "wcag:1.3.2",
+        "wcag:2.4.3",
+        "govbr-3.7.0-accessibility-global-e101928665cc",
+        "emag:6.3",
+        "govbr-3.7.0-accessibility-global-cb56ad444da2"
+      ],
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "id": "A-03",
+      "estado": "dialogo-aberto",
+      "regras": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+      ],
+      "atribuidos": [
+        "L-2717"
+      ],
+      "creditados": [
+        "L-2717"
+      ]
+    },
+    {
+      "id": "A-04",
+      "estado": "sempre",
+      "regras": [
+        "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+        "emag:4.4",
+        "wcag:2.4.7"
+      ],
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "id": "A-05",
+      "estado": "sempre",
+      "regras": [
+        "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+        "emag:3.9",
+        "wcag:1.3.1"
+      ],
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "id": "A-06",
+      "estado": "apos-envio-vazio",
+      "regras": [
+        "govbr-3.7.0-accessibility-global-1cb2c878824b",
+        "emag:1.2",
+        "wcag:1.3.1",
+        "govbr-3.7.0-accessibility-global-2f22b7245ef9"
+      ],
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "id": "A-07",
+      "estado": "sempre",
+      "regras": [
+        "govbr-3.7.0-accessibility-global-cf61b3eb3c71",
+        "emag:1.7",
+        "wcag:1.3.1"
+      ],
+      "atribuidos": [
+        "L-2715",
+        "L-2716"
+      ],
+      "creditados": []
+    },
+    {
+      "id": "A-08",
+      "estado": "apos-envio-vazio",
+      "regras": [
+        "govbr-3.7.0-accessibility-global-cc837bbaf713",
+        "emag:6.6",
+        "wcag:3.3.1"
+      ],
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "id": "A-09",
+      "estado": "sempre",
+      "regras": [
+        "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+        "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+        "emag:6.2",
+        "wcag:1.3.1"
+      ],
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "id": "A-10",
+      "estado": "sempre",
+      "regras": [
+        "govbr-3.7.0-component-upload-985fd2775586"
+      ],
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "id": "A-11",
+      "estado": "apos-envio-vazio",
+      "regras": [
+        "govbr-3.7.0-component-message-66b01a712e67"
+      ],
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "id": "A-12",
+      "estado": "sempre",
+      "regras": [
+        "govbr-3.7.0-accessibility-global-e038367bd7d6"
+      ],
+      "atribuidos": [
+        "L-2715",
+        "L-2716"
+      ],
+      "creditados": []
+    },
+    {
+      "id": "P-01",
+      "estado": "sempre",
+      "regras": [],
+      "atribuidos": [
+        "L-2696"
+      ],
+      "creditados": []
+    },
+    {
+      "id": "P-02",
+      "estado": "sempre",
+      "regras": [],
+      "atribuidos": [],
+      "creditados": []
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "comparador": "visual",
+  "gemeo": "F5-03-Q",
+  "caso": "F5-03",
+  "familia": "F5",
+  "papel": "depende-autora",
+  "pagina": {
+    "caminho": "/controles/a/c-2d1bcb181f.html",
+    "sha256": "d515c586285ed191634305d9e442398a48d21c90221cf887871fd14767963e43"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F5-03-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/a/c-1a86700d53.html",
+    "sha256": "c60a067bf141aef87d8f7c1cc2454299224938e5059b61465eb5983802b8e10a"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "inicial",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "inicial",
+      "png": {
+        "gemeo": "8a6adb4f34b336ba68a0c290f0054a4402ffa3b3e3a7833df6032fbcf1825dca",
+        "referencia": "8a6adb4f34b336ba68a0c290f0054a4402ffa3b3e3a7833df6032fbcf1825dca"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {
+        "input#busca-titulo": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "input#busca-titulo": 0
+      },
+      "caixas": {
+        "input#busca-titulo": {
+          "gemeo": [
+            {
+              "x": 60,
+              "y": 316.0625,
+              "width": 1160,
+              "height": 40
+            }
+          ],
+          "referencia": [
+            {
+              "x": 60,
+              "y": 316.0625,
+              "width": 1160,
+              "height": 40
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "input#busca-titulo",
+      "normas": [
+        "wcag:4.1.2",
+        "wcag:3.3.2"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "resultadoSemD1": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "input#busca-titulo",
+      "normas": [
+        "emag:6.2"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "resultadoSemD1": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

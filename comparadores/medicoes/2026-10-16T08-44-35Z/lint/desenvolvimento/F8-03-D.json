@@ -1,0 +1,83 @@
+{
+  "comparador": "lint",
+  "gemeo": "F8-03-D",
+  "caso": "F8-03",
+  "familia": "F8",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": true,
+    "categoria": "toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-ed778e2cfc.html",
+    "sha256": "690d4c7b07598160eb2b4992be8c64fb275be45f386df68a3d5851e213bdacac"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-ed778e2cfc.html",
+      "sha256": "690d4c7b07598160eb2b4992be8c64fb275be45f386df68a3d5851e213bdacac",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [
+    {
+      "id": "L-001",
+      "regraId": "N2",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21fb08664799",
+        "ds:tipografia-21fb08664799"
+      ],
+      "arquivo": "/controles/a/c-ed778e2cfc.html",
+      "linha": 12,
+      "coluna": 14,
+      "seletor": ".aviso-prazo",
+      "propriedade": "font-size",
+      "valor": "15px",
+      "texto": "Disallowed value \"15px\" for property \"font-size\" (declaration-property-value-allowed-list)",
+      "origem": "pagina"
+    }
+  ],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "p.aviso-prazo": [
+          "body>main>p"
+        ]
+      },
+      "achados": {
+        "L-001": [
+          "body>main>p"
+        ]
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "p.aviso-prazo",
+      "normas": [
+        "ds:tipografia-21fb08664799"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "TP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "L-001"
+      ],
+      "creditados": [
+        "L-001"
+      ]
+    }
+  ],
+  "sinalizada": true
+}

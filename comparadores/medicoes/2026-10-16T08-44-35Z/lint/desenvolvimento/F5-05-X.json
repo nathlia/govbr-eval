@@ -1,0 +1,59 @@
+{
+  "comparador": "lint",
+  "gemeo": "F5-05-X",
+  "caso": "F5-05",
+  "familia": "F5",
+  "papel": "alternativa",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-46444bce53.html",
+    "sha256": "7d66dd7bf6216f742d76bfec677665c08cd91ad000740ab8da6f4271698c7e63"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-46444bce53.html",
+      "sha256": "7d66dd7bf6216f742d76bfec677665c08cd91ad000740ab8da6f4271698c7e63",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "a#logo": [
+          "body>header>div>div:nth-of-type(1)>div>a"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "a#logo",
+      "normas": [
+        "wcag:1.1.1",
+        "wcag:2.4.4",
+        "wcag:4.1.2",
+        "emag:3.6"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

@@ -1,0 +1,34 @@
+{
+  "comparador": "lint",
+  "gemeo": "F1-09-A",
+  "caso": "F1-09",
+  "familia": "F1",
+  "papel": "estado-diferente",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "sem-mudanca-declarada"
+  },
+  "foraDeAlcance": "papel de evidência: o que muda é o pacote, que o lint não lê",
+  "pagina": null,
+  "arquivos": [],
+  "achados": [],
+  "resolucao": [],
+  "celulas": [
+    {
+      "sujeito": "input#cartao",
+      "normas": [
+        "wcag:3.3.1",
+        "emag:6.6"
+      ],
+      "esperado": "unverifiable",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "foraDeAlcance": "papel de evidência",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

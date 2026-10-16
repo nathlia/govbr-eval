@@ -1,0 +1,105 @@
+{
+  "comparador": "lint",
+  "gemeo": "F8-03-X",
+  "caso": "F8-03",
+  "familia": "F8",
+  "papel": "excecao",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": true,
+    "categoria": "toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-3a0401ec2a.html",
+    "sha256": "61c76fa092df8624bd717de2d7a5a107acdef76016b9a2668546e0d4c8fb2006"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-3a0401ec2a.html",
+      "sha256": "61c76fa092df8624bd717de2d7a5a107acdef76016b9a2668546e0d4c8fb2006",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [
+    {
+      "id": "L-001",
+      "regraId": "N2",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21fb08664799",
+        "ds:tipografia-21fb08664799"
+      ],
+      "arquivo": "/controles/a/c-3a0401ec2a.html",
+      "linha": 13,
+      "coluna": 14,
+      "seletor": "html,\nbody",
+      "propriedade": "font-size",
+      "valor": "15px",
+      "texto": "Disallowed value \"15px\" for property \"font-size\" (declaration-property-value-allowed-list)",
+      "origem": "pagina"
+    },
+    {
+      "id": "L-002",
+      "regraId": "N2",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "normativo",
+      "normas": [
+        "govbr-3.7.0-foundation-global-21fb08664799",
+        "ds:tipografia-21fb08664799"
+      ],
+      "arquivo": "/controles/a/c-3a0401ec2a.html",
+      "linha": 17,
+      "coluna": 14,
+      "seletor": ".aviso-prazo",
+      "propriedade": "font-size",
+      "valor": "18px",
+      "texto": "Disallowed value \"18px\" for property \"font-size\" (declaration-property-value-allowed-list)",
+      "origem": "pagina"
+    }
+  ],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "p.aviso-prazo": [
+          "body>main>p"
+        ]
+      },
+      "achados": {
+        "L-001": [
+          "",
+          "body"
+        ],
+        "L-002": [
+          "body>main>p"
+        ]
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "p.aviso-prazo",
+      "normas": [
+        "ds:tipografia-21fb08664799"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "FP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "L-002"
+      ],
+      "creditados": [
+        "L-002"
+      ]
+    }
+  ],
+  "sinalizada": true
+}

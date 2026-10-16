@@ -1,0 +1,134 @@
+{
+  "comparador": "lint",
+  "gemeo": "T-01-P",
+  "caso": "T-01",
+  "familia": "T",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "sem-mudanca-declarada"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-da9f6154ad.html",
+    "sha256": "197055f63af68031bee0ba830bf11a535eadbd95194893aada7ec718a0a2ed79"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-da9f6154ad.html",
+      "sha256": "197055f63af68031bee0ba830bf11a535eadbd95194893aada7ec718a0a2ed79",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [
+    {
+      "id": "L-001",
+      "regraId": "N3",
+      "regra": "govbr-eval/sem-remover-contorno-de-foco",
+      "perfil": "normativo",
+      "normas": [
+        "emag:4.4",
+        "wcag:2.4.7",
+        "govbr-3.7.0-accessibility-global-5f3ebabe87e6",
+        "govbr-3.7.0-accessibility-global-bc492500708d",
+        "govbr-3.7.0-accessibility-global-21fbcc2fe37b"
+      ],
+      "arquivo": "/controles/a/c-da9f6154ad.html",
+      "linha": 11,
+      "coluna": 1,
+      "seletor": ".acoes-emprestimo .br-button:focus",
+      "propriedade": null,
+      "valor": null,
+      "texto": "Unexpected using \"outline\" property in .acoes-emprestimo .br-button:focus (govbr-eval/sem-remover-contorno-de-foco)",
+      "origem": "pagina"
+    }
+  ],
+  "resolucao": [
+    {
+      "ponto": "recorte:sem-foco",
+      "sujeitos": {
+        "button#renovar": [
+          "body>main>div:nth-of-type(1)>button"
+        ],
+        "button#excluir": [
+          "body>main>div:nth-of-type(2)>div>div>div>div:nth-of-type(2)>button"
+        ]
+      },
+      "achados": {
+        "L-001": [
+          "body>main>div:nth-of-type(1)>button"
+        ]
+      }
+    },
+    {
+      "ponto": "recorte:com-foco",
+      "sujeitos": {
+        "button#renovar": [
+          "body>main>div:nth-of-type(1)>button"
+        ],
+        "button#excluir": [
+          "body>main>div:nth-of-type(2)>div>div>div>div:nth-of-type(2)>button"
+        ]
+      },
+      "achados": {
+        "L-001": [
+          "body>main>div:nth-of-type(1)>button"
+        ]
+      }
+    },
+    {
+      "ponto": "com-foco",
+      "sujeitos": {
+        "button#renovar": [
+          "body>main>div:nth-of-type(1)>button"
+        ],
+        "button#excluir": [
+          "body>main>div:nth-of-type(2)>div>div>div>div:nth-of-type(2)>button"
+        ]
+      },
+      "achados": {
+        "L-001": [
+          "body>main>div:nth-of-type(1)>button"
+        ]
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#renovar",
+      "normas": [
+        "wcag:2.4.7"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "TP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "L-001"
+      ],
+      "creditados": [
+        "L-001"
+      ]
+    },
+    {
+      "sujeito": "button#excluir",
+      "normas": [
+        "wcag:4.1.2"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "sem mudança declarada no caso",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": true
+}

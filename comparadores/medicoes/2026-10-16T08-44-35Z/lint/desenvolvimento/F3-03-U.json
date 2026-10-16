@@ -1,0 +1,77 @@
+{
+  "comparador": "lint",
+  "gemeo": "F3-03-U",
+  "caso": "F3-03",
+  "familia": "F3",
+  "papel": "sem-forca",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-6d67db3a24.html",
+    "sha256": "63005288d9795889118c15b9905f657f2b0da4ee6cea973090b104974e9c8ee6"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-6d67db3a24.html",
+      "sha256": "63005288d9795889118c15b9905f657f2b0da4ee6cea973090b104974e9c8ee6",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "antes",
+      "sujeitos": {
+        "modal#excluir-lista": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-abrir",
+      "sujeitos": {
+        "modal#excluir-lista": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "modal#excluir-lista",
+      "normas": [
+        "corpus:modal-destrutiva"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "modal#excluir-lista",
+      "normas": [
+        "ds:modal-6f984d79466a"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

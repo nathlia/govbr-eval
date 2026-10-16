@@ -1,0 +1,68 @@
+{
+  "comparador": "lint",
+  "gemeo": "F1-07-U",
+  "caso": "F1-07",
+  "familia": "F1",
+  "papel": "sem-fonte",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-fb15819e16.html",
+    "sha256": "b734033bf7cc7bdcd7216354a150a9ebb6fb4c50b68e3d3efc19cf48554aa9bc"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-fb15819e16.html",
+      "sha256": "b734033bf7cc7bdcd7216354a150a9ebb6fb4c50b68e3d3efc19cf48554aa9bc",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "textarea#observacoes": [
+          "body>main>div>div>form>div>textarea"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "textarea#observacoes",
+      "normas": [
+        "wcag:1.3.1"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "textarea#observacoes",
+      "normas": [
+        "ds:input-2a9e95371c51"
+      ],
+      "esperado": "nao-aplicavel",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

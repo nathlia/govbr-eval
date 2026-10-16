@@ -1,0 +1,62 @@
+{
+  "comparador": "lint",
+  "gemeo": "F3-02-Q",
+  "caso": "F3-02",
+  "familia": "F3",
+  "papel": "depende-autora",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-af4448b670.html",
+    "sha256": "980c118c6d9d0432aee746d5116cf520a151452ec263b424f13d3f02a72e9590"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-af4448b670.html",
+      "sha256": "980c118c6d9d0432aee746d5116cf520a151452ec263b424f13d3f02a72e9590",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "antes",
+      "sujeitos": {
+        "modal#renovar-data": []
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-abrir",
+      "sujeitos": {
+        "modal#renovar-data": []
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "modal#renovar-data",
+      "normas": [
+        "ds:modal-6f984d79466a"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

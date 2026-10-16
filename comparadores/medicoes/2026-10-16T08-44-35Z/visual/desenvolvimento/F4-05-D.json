@@ -1,0 +1,186 @@
+{
+  "comparador": "visual",
+  "gemeo": "F4-05-D",
+  "caso": "F4-05",
+  "familia": "F4",
+  "papel": "defeituoso",
+  "pagina": {
+    "caminho": "/controles/a/c-d9c5b0fb4c.html",
+    "sha256": "13f0719e382b4f27fa24a83d1c9055374d702336bc1652da222a2d949380ccc7"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F4-05-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/a/c-90f86828c7.html",
+    "sha256": "25a0c8a626ae0656a359084987ecf319a2b8c87a6263201209db691d03d211ab"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "inicial",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "inicial",
+      "png": {
+        "gemeo": "9f898500808bda8985fdbf598949dae7da6310aa551ab06ad51eb37a7b6516dd",
+        "referencia": "07f54fd7fa8972beca58a003051c72f51b40d02404db47631f1b1433a7a8f7d4"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 417501,
+      "caixaDaDiferenca": {
+        "x": 0,
+        "y": 16,
+        "width": 1280,
+        "height": 884
+      },
+      "diff": "F4-05/F4-05-D__inicial__diff.png",
+      "pixelsNoSujeito": {
+        "header#topo": 5293,
+        "footer#rodape": 412208,
+        "documento": 417501
+      },
+      "pixelsNoSujeitoSemD1": {
+        "header#topo": 5129,
+        "footer#rodape": 195224,
+        "documento": 417501
+      },
+      "caixas": {
+        "header#topo": {
+          "gemeo": [
+            {
+              "x": 0,
+              "y": 32,
+              "width": 1280,
+              "height": 139.359375
+            }
+          ],
+          "referencia": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 139.359375
+            }
+          ]
+        },
+        "footer#rodape": {
+          "gemeo": [
+            {
+              "x": 0,
+              "y": 472.703125,
+              "width": 1280,
+              "height": 157.640625
+            }
+          ],
+          "referencia": [
+            {
+              "x": 0,
+              "y": 726.359375,
+              "width": 1280,
+              "height": 173.640625
+            }
+          ]
+        },
+        "documento": {
+          "gemeo": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 900
+            }
+          ],
+          "referencia": []
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "header#topo",
+      "normas": [
+        "emag:1.8"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "TP",
+      "resultadoSemD1": "TP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "inicial"
+      ],
+      "creditados": [
+        "inicial"
+      ]
+    },
+    {
+      "sujeito": "footer#rodape",
+      "normas": [
+        "emag:1.8"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "TP",
+      "resultadoSemD1": "TP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "inicial"
+      ],
+      "creditados": [
+        "inicial"
+      ]
+    },
+    {
+      "sujeito": "documento",
+      "normas": [
+        "emag:1.8-main"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "resultadoSemD1": "aparte",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "inicial"
+      ],
+      "creditados": [
+        "inicial"
+      ]
+    }
+  ],
+  "sinalizada": true
+}

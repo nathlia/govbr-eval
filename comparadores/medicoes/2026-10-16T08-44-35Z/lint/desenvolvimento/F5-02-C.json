@@ -1,0 +1,56 @@
+{
+  "comparador": "lint",
+  "gemeo": "F5-02-C",
+  "caso": "F5-02",
+  "familia": "F5",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-59d073d41d.html",
+    "sha256": "e9c18b44c06e74192664219ce9d11f847b045994e997579d3084c5abbb2e53e4"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-59d073d41d.html",
+      "sha256": "e9c18b44c06e74192664219ce9d11f847b045994e997579d3084c5abbb2e53e4",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "button#renovar": [
+          "body>main>div>button"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#renovar",
+      "normas": [
+        "wcag:2.5.3"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

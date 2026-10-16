@@ -1,0 +1,62 @@
+{
+  "comparador": "lint",
+  "gemeo": "F4-03-D",
+  "caso": "F4-03",
+  "familia": "F4",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-582d181223.html",
+    "sha256": "ed37b32911b3f3851f7e38919949180c8fa8d57ee6b0b1f454805b5d44347cf2"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-582d181223.html",
+      "sha256": "ed37b32911b3f3851f7e38919949180c8fa8d57ee6b0b1f454805b5d44347cf2",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "primeiro-tab",
+      "sujeitos": {
+        "a.skip": []
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-ativar",
+      "sujeitos": {
+        "a.skip": []
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "a.skip",
+      "normas": [
+        "emag:1.5"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

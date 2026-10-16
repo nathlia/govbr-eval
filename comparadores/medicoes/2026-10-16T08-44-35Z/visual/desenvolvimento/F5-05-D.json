@@ -1,0 +1,113 @@
+{
+  "comparador": "visual",
+  "gemeo": "F5-05-D",
+  "caso": "F5-05",
+  "familia": "F5",
+  "papel": "defeituoso",
+  "pagina": {
+    "caminho": "/controles/a/c-4aa4041b08.html",
+    "sha256": "76e4aa2f65c9f24b5c330ab92bae9d134d21f5f734613a155a3d67ebff75977c"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F5-05-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/a/c-271a598b0a.html",
+    "sha256": "4df4310ae316c4219114552aa0bc6a4ad39cbf8bf832a3bf3f964f8e7dc46ccb"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "inicial",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "inicial",
+      "png": {
+        "gemeo": "9cf5f962b9c7794f5f55fea652fa0875ae927824dcc6530cf132e06119c081d6",
+        "referencia": "9cf5f962b9c7794f5f55fea652fa0875ae927824dcc6530cf132e06119c081d6"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {
+        "a#logo": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "a#logo": 0
+      },
+      "caixas": {
+        "a#logo": {
+          "gemeo": [
+            {
+              "x": 60,
+              "y": 16,
+              "width": 40,
+              "height": 40
+            }
+          ],
+          "referencia": [
+            {
+              "x": 60,
+              "y": 16,
+              "width": 40,
+              "height": 40
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "a#logo",
+      "normas": [
+        "wcag:1.1.1",
+        "wcag:2.4.4",
+        "wcag:4.1.2",
+        "emag:3.6"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "resultadoSemD1": "FN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

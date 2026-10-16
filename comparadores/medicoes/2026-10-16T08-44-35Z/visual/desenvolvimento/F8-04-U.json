@@ -1,0 +1,143 @@
+{
+  "comparador": "visual",
+  "gemeo": "F8-04-U",
+  "caso": "F8-04",
+  "familia": "F8",
+  "papel": "sem-fonte",
+  "pagina": {
+    "caminho": "/controles/a/c-4d1aaae94f.html",
+    "sha256": "dc7a9c6c4d97c46281f9b51dd19dac5e28c68a16c80dd82924e8efe21734b45a"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F8-04-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/a/c-61f8e0b0b2.html",
+    "sha256": "fa8b5a3dba83d72b103f304b0f4e47d59fc12f5711d52352d8fd58cd651fb8d8"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "inicial",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "inicial",
+      "png": {
+        "gemeo": "19989aa7af35a146d5348019cf505f8cf6ffde9d3e1059411ec4cf2b9225681b",
+        "referencia": "dd7489d26df62e9f13e44bf92de18da52c88357e4457d428a3ebe04d88b3ea79"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 9103,
+      "caixaDaDiferenca": {
+        "x": 60,
+        "y": 272,
+        "width": 1160,
+        "height": 90
+      },
+      "diff": "F8-04/F8-04-U__inicial__diff.png",
+      "pixelsNoSujeito": {
+        "div.cartao-emprestimo": 9103
+      },
+      "pixelsNoSujeitoSemD1": {
+        "div.cartao-emprestimo": 9103
+      },
+      "caixas": {
+        "div.cartao-emprestimo": {
+          "gemeo": [
+            {
+              "x": 60,
+              "y": 251.421875,
+              "width": 370.65625,
+              "height": 105.03125
+            },
+            {
+              "x": 454.65625,
+              "y": 251.421875,
+              "width": 370.65625,
+              "height": 105.03125
+            },
+            {
+              "x": 849.3125,
+              "y": 251.421875,
+              "width": 370.65625,
+              "height": 105.03125
+            }
+          ],
+          "referencia": [
+            {
+              "x": 60,
+              "y": 251.421875,
+              "width": 370.65625,
+              "height": 111.03125
+            },
+            {
+              "x": 454.65625,
+              "y": 251.421875,
+              "width": 370.65625,
+              "height": 111.03125
+            },
+            {
+              "x": 849.3125,
+              "y": 251.421875,
+              "width": 370.65625,
+              "height": 111.03125
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "div.cartao-emprestimo",
+      "normas": [
+        "ds:token-spacing"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "resultadoSemD1": "aparte",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "inicial"
+      ],
+      "creditados": [
+        "inicial"
+      ]
+    }
+  ],
+  "sinalizada": true
+}

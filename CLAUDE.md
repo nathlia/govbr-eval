@@ -114,6 +114,12 @@ Evaluation harness: ground truth + baselines + scoring + results dashboard. Node
   trocas literais. `npm run controles:medir` (depois do `npm run build` do corpus) mede tudo sem
   oráculo (CDP/AX, foco profundo, DOM/CSS, recortes, axe) e arquiva em `controles/medicoes/<carimbo>/`
   com manifesto sha256. Divergência corrige a página, nunca a expectativa.
+- **Comparadores do OE5 (NAT-76, `comparadores/`).** Stylelint normativo (N1 cor pré-definida, N2
+  escala tipográfica, N3 contorno de foco; H1–H7 higiene à parte) e regressão visual contra o gêmeo
+  `-C`, sem modelo, sobre os controles de desenvolvimento e (só o lint) as telas A e B congeladas.
+  `npm run comparadores`, `npm run test:comparadores`. A reserva só com `--portao-nat86`. Plano e
+  desvios: `thesis-workspace/planejamento/atual/plano-nat76-comparadores-2026-10-16.md`; método em
+  `docs/comparadores.md`.
 - `adjudications.json` — human verdicts on findings that matched no expected unit (D-21).
   `npm run adjudicate` (`--emit` semeia stubs, `--blind` julga sem ver o braço). Um veredito sem
   `rationale` não é aplicado. `npm run score` imprime **piso** e **adjudicado**, nunca um no lugar

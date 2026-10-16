@@ -1,0 +1,119 @@
+{
+  "comparador": "visual",
+  "gemeo": "F2-03-X",
+  "caso": "F2-03",
+  "familia": "F2",
+  "papel": "alternativa",
+  "pagina": {
+    "caminho": "/controles/a/c-7cb163ad71.html",
+    "sha256": "5c34bca7eb304895bae746118b21ee86802dc4d42de7aa98ca8531fe497ee7f9"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F2-03-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/a/c-d53ad79f2f.html",
+    "sha256": "38bdfd60967332cd008cb8636633cb0fc68fc90d5b2d79c4771e8b9dca91d7c0"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "inicial",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "inicial",
+      "png": {
+        "gemeo": "8362ff84e46070c112a330bce01fe659ce3fea5cfbee45fa59e96f4ceac591a9",
+        "referencia": "eebc7dbaf75e37ee31994285a862516750d09a6265dabe9383b8a26e099bdfbc"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 24562,
+      "caixaDaDiferenca": {
+        "x": 60,
+        "y": 17,
+        "width": 1160,
+        "height": 567
+      },
+      "diff": "F2-03/F2-03-X__inicial__diff.png",
+      "pixelsNoSujeito": {
+        ".br-header": 1805
+      },
+      "pixelsNoSujeitoSemD1": {
+        ".br-header": 1805
+      },
+      "caixas": {
+        ".br-header": {
+          "gemeo": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 115
+            }
+          ],
+          "referencia": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 75.0625
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": ".br-header",
+      "normas": [
+        "ds:header-e58979706103"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "FP",
+      "resultadoSemD1": "FP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "inicial"
+      ],
+      "creditados": [
+        "inicial"
+      ]
+    }
+  ],
+  "sinalizada": true
+}

@@ -1,0 +1,161 @@
+{
+  "comparador": "visual",
+  "gemeo": "F6-02-D",
+  "caso": "F6-02",
+  "familia": "F6",
+  "papel": "defeituoso",
+  "pagina": {
+    "caminho": "/controles/a/c-c732624d99.html",
+    "sha256": "5d20804f97f1ca2fc903de073c718ebb3495e516034971b365b09688e6131179"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F6-02-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/a/c-85c1642c7f.html",
+    "sha256": "4c465b92ab1fdd533ab6086e3435322b7220cbf634c0302a3a83fbea3dcd76d4"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "antes",
+      "pixels": 0
+    },
+    {
+      "ponto": "depois",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "antes",
+      "png": {
+        "gemeo": "708414081b4120dbcb803e6e1ec4ebe44311b87a5d88a09d21ed2301fc3ed10c",
+        "referencia": "708414081b4120dbcb803e6e1ec4ebe44311b87a5d88a09d21ed2301fc3ed10c"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {
+        "button#filtros": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "button#filtros": 0
+      },
+      "caixas": {
+        "button#filtros": {
+          "gemeo": [
+            {
+              "x": 60,
+              "y": 291.765625,
+              "width": 187.5,
+              "height": 40
+            }
+          ],
+          "referencia": [
+            {
+              "x": 60,
+              "y": 291.765625,
+              "width": 187.5,
+              "height": 40
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ponto": "depois",
+      "png": {
+        "gemeo": "e0b48c2cd4f20734ae2bb6d76bee142f1cdf41d6dbb1365e3eb16818cb078db2",
+        "referencia": "e0b48c2cd4f20734ae2bb6d76bee142f1cdf41d6dbb1365e3eb16818cb078db2"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          959
+        ],
+        "referencia": [
+          1280,
+          959
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {
+        "button#filtros": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "button#filtros": 0
+      },
+      "caixas": {
+        "button#filtros": {
+          "gemeo": [
+            {
+              "x": 60,
+              "y": 291.765625,
+              "width": 187.5,
+              "height": 40
+            }
+          ],
+          "referencia": [
+            {
+              "x": 60,
+              "y": 291.765625,
+              "width": 187.5,
+              "height": 40
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#filtros",
+      "normas": [
+        "wcag:4.1.2"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "resultadoSemD1": "FN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

@@ -1,0 +1,84 @@
+{
+  "comparador": "lint",
+  "gemeo": "F8-04-U",
+  "caso": "F8-04",
+  "familia": "F8",
+  "papel": "sem-fonte",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": true,
+    "categoria": "toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-4d1aaae94f.html",
+    "sha256": "dc7a9c6c4d97c46281f9b51dd19dac5e28c68a16c80dd82924e8efe21734b45a"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-4d1aaae94f.html",
+      "sha256": "dc7a9c6c4d97c46281f9b51dd19dac5e28c68a16c80dd82924e8efe21734b45a",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [
+    {
+      "id": "L-001",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "/controles/a/c-4d1aaae94f.html",
+      "linha": 15,
+      "coluna": 12,
+      "seletor": ".cartao-emprestimo",
+      "propriedade": "padding",
+      "valor": "13px",
+      "texto": "Disallowed value \"13px\" for property \"padding\" (declaration-property-value-allowed-list)",
+      "origem": "pagina"
+    }
+  ],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "div.cartao-emprestimo": [
+          "body>main>div>div:nth-of-type(1)>div",
+          "body>main>div>div:nth-of-type(2)>div",
+          "body>main>div>div:nth-of-type(3)>div"
+        ]
+      },
+      "achados": {
+        "L-001": [
+          "body>main>div>div:nth-of-type(1)>div",
+          "body>main>div>div:nth-of-type(2)>div",
+          "body>main>div>div:nth-of-type(3)>div"
+        ]
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "div.cartao-emprestimo",
+      "normas": [
+        "ds:token-spacing"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "L-001"
+      ],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

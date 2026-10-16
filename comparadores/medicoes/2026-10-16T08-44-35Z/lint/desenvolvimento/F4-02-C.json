@@ -1,0 +1,62 @@
+{
+  "comparador": "lint",
+  "gemeo": "F4-02-C",
+  "caso": "F4-02",
+  "familia": "F4",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-8dd1cc4b51.html",
+    "sha256": "e6b68d9081a76cfb2627f9b2e7afe4f202b31dcb1147e4a0b467241327dc8448"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-8dd1cc4b51.html",
+      "sha256": "e6b68d9081a76cfb2627f9b2e7afe4f202b31dcb1147e4a0b467241327dc8448",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "a.skip": []
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "primeiro-tab",
+      "sujeitos": {
+        "a.skip": []
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "a.skip",
+      "normas": [
+        "emag:1.5",
+        "ds:skiplink-b0641993618f"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

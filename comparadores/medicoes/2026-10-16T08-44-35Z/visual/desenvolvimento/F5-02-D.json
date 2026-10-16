@@ -1,0 +1,111 @@
+{
+  "comparador": "visual",
+  "gemeo": "F5-02-D",
+  "caso": "F5-02",
+  "familia": "F5",
+  "papel": "defeituoso",
+  "pagina": {
+    "caminho": "/controles/a/c-fe6a4f5cba.html",
+    "sha256": "e975285cff1d1fbd63eb91b6c224d1263b7c3bad69257cd82ed67196973f16de"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": true
+  },
+  "referencia": "F5-02-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/a/c-59d073d41d.html",
+    "sha256": "e9c18b44c06e74192664219ce9d11f847b045994e997579d3084c5abbb2e53e4"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "inicial",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "inicial",
+      "png": {
+        "gemeo": "126cfbe5edcdd39215219ccd0f562d6f729553258a4d0c89167021d0870e060c",
+        "referencia": "126cfbe5edcdd39215219ccd0f562d6f729553258a4d0c89167021d0870e060c"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {
+        "button#renovar": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "button#renovar": 0
+      },
+      "caixas": {
+        "button#renovar": {
+          "gemeo": [
+            {
+              "x": 60,
+              "y": 340.109375,
+              "width": 113.265625,
+              "height": 40
+            }
+          ],
+          "referencia": [
+            {
+              "x": 60,
+              "y": 340.109375,
+              "width": 113.265625,
+              "height": 40
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#renovar",
+      "normas": [
+        "wcag:2.5.3"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "resultadoSemD1": "FN",
+      "marca": "contexto-aria",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

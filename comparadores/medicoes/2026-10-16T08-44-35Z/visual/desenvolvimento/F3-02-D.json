@@ -1,0 +1,156 @@
+{
+  "comparador": "visual",
+  "gemeo": "F3-02-D",
+  "caso": "F3-02",
+  "familia": "F3",
+  "papel": "defeituoso",
+  "pagina": {
+    "caminho": "/controles/a/c-6999c76938.html",
+    "sha256": "44b05c983ad42d5f9d972dc4e77bf9b8403c92e701a58b8a3c46058886bd75a4"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F3-02-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/a/c-4778093880.html",
+    "sha256": "72058b7a6bc503a6c84f501a2abcb8c02448f6b9fc731357f5ba12e68dffe855"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "antes",
+      "pixels": 0
+    },
+    {
+      "ponto": "apos-abrir",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "antes",
+      "png": {
+        "gemeo": "9747eb226ce740d0f070a3979b1612065b246c4dc263f1d153833f17c90201d6",
+        "referencia": "9747eb226ce740d0f070a3979b1612065b246c4dc263f1d153833f17c90201d6"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {
+        "modal#renovar": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "modal#renovar": 0
+      },
+      "caixas": {
+        "modal#renovar": {
+          "gemeo": [],
+          "referencia": []
+        }
+      }
+    },
+    {
+      "ponto": "apos-abrir",
+      "png": {
+        "gemeo": "c24619b5a9b41938346d7cd8663cba670b8fe285dd125fa94d570d2af012cc53",
+        "referencia": "ea29ad7395c89523372e02e2da8731ca6d0be27cfe2d2029d80fdadc1599f69d"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 1622,
+      "caixaDaDiferenca": {
+        "x": 53,
+        "y": 332,
+        "width": 858,
+        "height": 210
+      },
+      "diff": "F3-02/F3-02-D__apos-abrir__diff.png",
+      "pixelsNoSujeito": {
+        "modal#renovar": 539
+      },
+      "pixelsNoSujeitoSemD1": {
+        "modal#renovar": 539
+      },
+      "caixas": {
+        "modal#renovar": {
+          "gemeo": [
+            {
+              "x": 360,
+              "y": 349.484375,
+              "width": 560,
+              "height": 201.03125
+            }
+          ],
+          "referencia": [
+            {
+              "x": 360,
+              "y": 349.484375,
+              "width": 560,
+              "height": 201.03125
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "modal#renovar",
+      "normas": [
+        "ds:modal-6f984d79466a"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "TP",
+      "resultadoSemD1": "TP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "apos-abrir"
+      ],
+      "creditados": [
+        "apos-abrir"
+      ]
+    }
+  ],
+  "sinalizada": true
+}

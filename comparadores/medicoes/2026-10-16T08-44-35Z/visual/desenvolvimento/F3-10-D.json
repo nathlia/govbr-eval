@@ -1,0 +1,363 @@
+{
+  "comparador": "visual",
+  "gemeo": "F3-10-D",
+  "caso": "F3-10",
+  "familia": "F3",
+  "papel": "defeituoso",
+  "pagina": {
+    "caminho": "/controles/a/c-04d17ba5c7.html",
+    "sha256": "7c21e407f79c023c8acc5bb1fa49590da016a001f2378f13d10b9fbedf8b6cd4"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F3-10-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/a/c-577993428a.html",
+    "sha256": "f6e69f6e8f929bcf360cf361eb6ecff82a4834cffc9009621206389499012ebd"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "antes-regras",
+      "pixels": 0
+    },
+    {
+      "ponto": "regras-aberta",
+      "pixels": 0
+    },
+    {
+      "ponto": "regras-fechada",
+      "pixels": 0
+    },
+    {
+      "ponto": "antes-multas",
+      "pixels": 0
+    },
+    {
+      "ponto": "multas-aberta",
+      "pixels": 0
+    },
+    {
+      "ponto": "multas-fechada",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "antes-regras",
+      "png": {
+        "gemeo": "45a38e2074e71e0dbe4642b7ccf3abf5acfd3c54c309e503f06bb19dc94ebcc0",
+        "referencia": "45a38e2074e71e0dbe4642b7ccf3abf5acfd3c54c309e503f06bb19dc94ebcc0"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          944
+        ],
+        "referencia": [
+          1280,
+          944
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {
+        "modal#regras": 0,
+        "modal#multas": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "modal#regras": 0,
+        "modal#multas": 0
+      },
+      "caixas": {
+        "modal#regras": {
+          "gemeo": [],
+          "referencia": []
+        },
+        "modal#multas": {
+          "gemeo": [],
+          "referencia": []
+        }
+      }
+    },
+    {
+      "ponto": "regras-aberta",
+      "png": {
+        "gemeo": "38c8a9e2eb212a846a4268342f4d077c935e0cb78c4bfc9d197beb8d5ca6446e",
+        "referencia": "38c8a9e2eb212a846a4268342f4d077c935e0cb78c4bfc9d197beb8d5ca6446e"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          944
+        ],
+        "referencia": [
+          1280,
+          944
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {
+        "modal#regras": 0,
+        "modal#multas": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "modal#regras": 0,
+        "modal#multas": 0
+      },
+      "caixas": {
+        "modal#regras": {
+          "gemeo": [
+            {
+              "x": 360,
+              "y": 343.3828125,
+              "width": 560,
+              "height": 213.234375
+            }
+          ],
+          "referencia": [
+            {
+              "x": 360,
+              "y": 343.3828125,
+              "width": 560,
+              "height": 213.234375
+            }
+          ]
+        },
+        "modal#multas": {
+          "gemeo": [],
+          "referencia": []
+        }
+      }
+    },
+    {
+      "ponto": "regras-fechada",
+      "png": {
+        "gemeo": "45a38e2074e71e0dbe4642b7ccf3abf5acfd3c54c309e503f06bb19dc94ebcc0",
+        "referencia": "45a38e2074e71e0dbe4642b7ccf3abf5acfd3c54c309e503f06bb19dc94ebcc0"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          944
+        ],
+        "referencia": [
+          1280,
+          944
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {
+        "modal#regras": 0,
+        "modal#multas": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "modal#regras": 0,
+        "modal#multas": 0
+      },
+      "caixas": {
+        "modal#regras": {
+          "gemeo": [],
+          "referencia": []
+        },
+        "modal#multas": {
+          "gemeo": [],
+          "referencia": []
+        }
+      }
+    },
+    {
+      "ponto": "antes-multas",
+      "png": {
+        "gemeo": "4e22eccbeb89497108b42882dcfdd7902a9a2bdfb8d655b65be8ff82824ec616",
+        "referencia": "4e22eccbeb89497108b42882dcfdd7902a9a2bdfb8d655b65be8ff82824ec616"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          944
+        ],
+        "referencia": [
+          1280,
+          944
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {
+        "modal#regras": 0,
+        "modal#multas": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "modal#regras": 0,
+        "modal#multas": 0
+      },
+      "caixas": {
+        "modal#regras": {
+          "gemeo": [],
+          "referencia": []
+        },
+        "modal#multas": {
+          "gemeo": [],
+          "referencia": []
+        }
+      }
+    },
+    {
+      "ponto": "multas-aberta",
+      "png": {
+        "gemeo": "81efe46aff3290124cbb111fcfc0ece63bd68cd2bf1d492e9e2d902292d7fa44",
+        "referencia": "81efe46aff3290124cbb111fcfc0ece63bd68cd2bf1d492e9e2d902292d7fa44"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          944
+        ],
+        "referencia": [
+          1280,
+          944
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {
+        "modal#regras": 0,
+        "modal#multas": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "modal#regras": 0,
+        "modal#multas": 0
+      },
+      "caixas": {
+        "modal#regras": {
+          "gemeo": [],
+          "referencia": []
+        },
+        "modal#multas": {
+          "gemeo": [
+            {
+              "x": 360,
+              "y": 349.484375,
+              "width": 560,
+              "height": 201.03125
+            }
+          ],
+          "referencia": [
+            {
+              "x": 360,
+              "y": 349.484375,
+              "width": 560,
+              "height": 201.03125
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ponto": "multas-fechada",
+      "png": {
+        "gemeo": "e857f078a425643cdb78946fc3e317c3f98983e21c97bd032e0f0ac4464bf528",
+        "referencia": "4e22eccbeb89497108b42882dcfdd7902a9a2bdfb8d655b65be8ff82824ec616"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          944
+        ],
+        "referencia": [
+          1280,
+          944
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 1238,
+      "caixaDaDiferenca": {
+        "x": 325,
+        "y": 292,
+        "width": 260,
+        "height": 56
+      },
+      "diff": "F3-10/F3-10-D__multas-fechada__diff.png",
+      "pixelsNoSujeito": {
+        "modal#regras": 0,
+        "modal#multas": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "modal#regras": 0,
+        "modal#multas": 0
+      },
+      "caixas": {
+        "modal#regras": {
+          "gemeo": [],
+          "referencia": []
+        },
+        "modal#multas": {
+          "gemeo": [],
+          "referencia": []
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "modal#regras",
+      "normas": [
+        "ds:modal-f36c91d7073c"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "resultadoSemD1": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "modal#multas",
+      "normas": [
+        "ds:modal-f36c91d7073c"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "resultadoSemD1": "FN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": true
+}

@@ -1,0 +1,113 @@
+{
+  "comparador": "lint",
+  "gemeo": "F6-01-D",
+  "caso": "F6-01",
+  "familia": "F6",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": true,
+    "categoria": "toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-b073d5cdf9.html",
+    "sha256": "f7a1f88c492bb9653a61aad910533d754eee4a96bf75ac69aeadc4249b7a50c2"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-b073d5cdf9.html",
+      "sha256": "f7a1f88c492bb9653a61aad910533d754eee4a96bf75ac69aeadc4249b7a50c2",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [
+    {
+      "id": "L-001",
+      "regraId": "N3",
+      "regra": "govbr-eval/sem-remover-contorno-de-foco",
+      "perfil": "normativo",
+      "normas": [
+        "emag:4.4",
+        "wcag:2.4.7",
+        "govbr-3.7.0-accessibility-global-5f3ebabe87e6",
+        "govbr-3.7.0-accessibility-global-bc492500708d",
+        "govbr-3.7.0-accessibility-global-21fbcc2fe37b"
+      ],
+      "arquivo": "/controles/a/c-b073d5cdf9.html",
+      "linha": 11,
+      "coluna": 1,
+      "seletor": ".acoes-emprestimo .br-button:focus",
+      "propriedade": null,
+      "valor": null,
+      "texto": "Unexpected using \"outline\" property in .acoes-emprestimo .br-button:focus (govbr-eval/sem-remover-contorno-de-foco)",
+      "origem": "pagina"
+    }
+  ],
+  "resolucao": [
+    {
+      "ponto": "recorte:sem-foco",
+      "sujeitos": {
+        "button#renovar": [
+          "body>main>div>button"
+        ]
+      },
+      "achados": {
+        "L-001": [
+          "body>main>div>button"
+        ]
+      }
+    },
+    {
+      "ponto": "recorte:com-foco",
+      "sujeitos": {
+        "button#renovar": [
+          "body>main>div>button"
+        ]
+      },
+      "achados": {
+        "L-001": [
+          "body>main>div>button"
+        ]
+      }
+    },
+    {
+      "ponto": "com-foco",
+      "sujeitos": {
+        "button#renovar": [
+          "body>main>div>button"
+        ]
+      },
+      "achados": {
+        "L-001": [
+          "body>main>div>button"
+        ]
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#renovar",
+      "normas": [
+        "wcag:2.4.7",
+        "emag:4.4"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "TP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "L-001"
+      ],
+      "creditados": [
+        "L-001"
+      ]
+    }
+  ],
+  "sinalizada": true
+}

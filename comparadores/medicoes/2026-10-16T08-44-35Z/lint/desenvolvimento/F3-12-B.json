@@ -1,0 +1,33 @@
+{
+  "comparador": "lint",
+  "gemeo": "F3-12-B",
+  "caso": "F3-12",
+  "familia": "F3",
+  "papel": "evidencia-velha",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "sem-mudanca-declarada"
+  },
+  "foraDeAlcance": "papel de evidência: o que muda é o pacote, que o lint não lê",
+  "pagina": null,
+  "arquivos": [],
+  "achados": [],
+  "resolucao": [],
+  "celulas": [
+    {
+      "sujeito": "modal#regras",
+      "normas": [
+        "ds:modal-f36c91d7073c"
+      ],
+      "esperado": "unverifiable",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "foraDeAlcance": "papel de evidência",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

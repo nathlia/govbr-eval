@@ -1,0 +1,95 @@
+{
+  "comparador": "lint",
+  "gemeo": "F3-05-C",
+  "caso": "F3-05",
+  "familia": "F3",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-15d9f56e91.html",
+    "sha256": "d119b7042af03d1f5a462ac4ff0d31071b07208831175ee5ac5c91e6219386f4"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-15d9f56e91.html",
+      "sha256": "d119b7042af03d1f5a462ac4ff0d31071b07208831175ee5ac5c91e6219386f4",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "apos-abrir",
+      "sujeitos": {
+        "modal#renovar": [
+          "body>main>div:nth-of-type(2)>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "no-ultimo",
+      "sujeitos": {
+        "modal#renovar": [
+          "body>main>div:nth-of-type(2)>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-tab",
+      "sujeitos": {
+        "modal#renovar": [
+          "body>main>div:nth-of-type(2)>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-esc",
+      "sujeitos": {
+        "modal#renovar": [
+          "body>main>div:nth-of-type(2)>div"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "modal#renovar",
+      "normas": [
+        "ds:modal-744f67e17bec"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "modal#renovar",
+      "normas": [
+        "wcag:2.1.2"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

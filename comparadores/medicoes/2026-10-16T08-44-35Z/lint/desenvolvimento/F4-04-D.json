@@ -1,0 +1,69 @@
+{
+  "comparador": "lint",
+  "gemeo": "F4-04-D",
+  "caso": "F4-04",
+  "familia": "F4",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-3b1e3e5790.html",
+    "sha256": "7d1b1c632deca0ca97f9769798474d800f86e584032f5b6a85c5f443b966d4bc"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-3b1e3e5790.html",
+      "sha256": "7d1b1c632deca0ca97f9769798474d800f86e584032f5b6a85c5f443b966d4bc",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "h3 Seus empréstimos": [
+          "body>main>section>h3"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "h3 Seus empréstimos",
+      "normas": [
+        "emag:1.3"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "h3 Seus empréstimos",
+      "normas": [
+        "wcag:1.3.1"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

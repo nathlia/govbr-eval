@@ -1,0 +1,67 @@
+{
+  "comparador": "visual",
+  "gemeo": "T-01-S",
+  "caso": "T-01",
+  "familia": "T",
+  "papel": "defeituoso",
+  "pagina": {
+    "caminho": "/controles/a/c-da9f6154ad.html",
+    "sha256": "197055f63af68031bee0ba830bf11a535eadbd95194893aada7ec718a0a2ed79"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": null,
+  "foraDeAlcance": "sem referência: o caso não tem gêmeo -C",
+  "paginaReferencia": null,
+  "pisoDeRuido": null,
+  "instavel": false,
+  "pontos": [],
+  "celulas": [
+    {
+      "sujeito": "button#renovar",
+      "normas": [
+        "wcag:2.4.7"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "sem referência: o caso não tem gêmeo -C",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "button#excluir",
+      "normas": [
+        "wcag:4.1.2"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "sem referência: o caso não tem gêmeo -C",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

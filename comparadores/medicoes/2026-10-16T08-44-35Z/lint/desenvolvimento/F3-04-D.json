@@ -1,0 +1,66 @@
+{
+  "comparador": "lint",
+  "gemeo": "F3-04-D",
+  "caso": "F3-04",
+  "familia": "F3",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-8a485ba373.html",
+    "sha256": "25decbb80c8453153364ca3adce1b0a9f88f64313fb845eb47ef83112fbea36f"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-8a485ba373.html",
+      "sha256": "25decbb80c8453153364ca3adce1b0a9f88f64313fb845eb47ef83112fbea36f",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "antes",
+      "sujeitos": {
+        "modal#horario": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-abrir",
+      "sujeitos": {
+        "modal#horario": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "modal#horario",
+      "normas": [
+        "ds:modal-e0ce4b474163"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

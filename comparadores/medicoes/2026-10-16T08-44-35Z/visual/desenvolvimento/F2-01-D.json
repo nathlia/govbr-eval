@@ -1,0 +1,136 @@
+{
+  "comparador": "visual",
+  "gemeo": "F2-01-D",
+  "caso": "F2-01",
+  "familia": "F2",
+  "papel": "defeituoso",
+  "pagina": {
+    "caminho": "/controles/a/c-32919e6ea3.html",
+    "sha256": "19d2b3e8faa15906fd967826c47e56892a938b450527d6e978dc739a88227eb8"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": true
+  },
+  "referencia": "F2-01-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/a/c-c949f58e93.html",
+    "sha256": "e64920c1b2a7993534f0d54d9026d1a31f861ad5b2ba8892c7920363102afa1f"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "apos-renovar",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "apos-renovar",
+      "png": {
+        "gemeo": "0f95353fbc4666b49bc169744b7565ae35d32f6bc20224c16d91ed7ba1ded28c",
+        "referencia": "6cc18ed82c843eee91f251c1c6b1d1ea50a9f2c7bd5f20683e11468897621c7d"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 45168,
+      "caixaDaDiferenca": {
+        "x": 60,
+        "y": 306,
+        "width": 1160,
+        "height": 320
+      },
+      "diff": "F2-01/F2-01-D__apos-renovar__diff.png",
+      "pixelsNoSujeito": {
+        ".br-message#aviso-renovacao": 28661
+      },
+      "pixelsNoSujeitoSemD1": {
+        ".br-message#aviso-renovacao": 11261
+      },
+      "caixas": {
+        ".br-message#aviso-renovacao": {
+          "gemeo": [
+            {
+              "x": 60,
+              "y": 291.765625,
+              "width": 1160,
+              "height": 48
+            }
+          ],
+          "referencia": [
+            {
+              "x": 60,
+              "y": 291.765625,
+              "width": 1160,
+              "height": 72.34375
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": ".br-message#aviso-renovacao",
+      "normas": [
+        "ds:message-d0c7ed3f91af"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "TP",
+      "resultadoSemD1": "TP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "apos-renovar"
+      ],
+      "creditados": [
+        "apos-renovar"
+      ]
+    },
+    {
+      "sujeito": ".br-message#aviso-renovacao",
+      "normas": [
+        "ds:message-0e441e3af975"
+      ],
+      "esperado": "nao-aplicavel",
+      "classe": "negativo",
+      "resultado": "FP",
+      "resultadoSemD1": "FP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "apos-renovar"
+      ],
+      "creditados": [
+        "apos-renovar"
+      ]
+    }
+  ],
+  "sinalizada": true
+}

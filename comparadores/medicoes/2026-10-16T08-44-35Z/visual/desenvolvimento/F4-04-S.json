@@ -1,0 +1,112 @@
+{
+  "comparador": "visual",
+  "gemeo": "F4-04-S",
+  "caso": "F4-04",
+  "familia": "F4",
+  "papel": "sem-fonte",
+  "pagina": {
+    "caminho": "/controles/a/c-2fee68c291.html",
+    "sha256": "5b21618a44865cf588264db97d165dbef02882ab8c25949b3e9d961c65ac0584"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F4-04-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/a/c-485f52b2c4.html",
+    "sha256": "81cf384c1c68c238478e569c5d17710d3dab4f70ac2d4fd671688c47e2da28fe"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "inicial",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "inicial",
+      "png": {
+        "gemeo": "0e426a635081d3c084cecd6429746f2f88136899392aebe3ee6ffaa76fd2133a",
+        "referencia": "70a766f0d8abae5f842848772ad0048e9c495fae02dd75e352027934f5e8e96b"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          1012
+        ],
+        "referencia": [
+          1280,
+          1023
+        ]
+      },
+      "tamanhoDiferente": true,
+      "pixelsDiferentes": 52425,
+      "caixaDaDiferenca": {
+        "x": 0,
+        "y": 410,
+        "width": 1280,
+        "height": 613
+      },
+      "diff": "F4-04/F4-04-S__inicial__diff.png",
+      "pixelsNoSujeito": {
+        "h4 Em dia": 569
+      },
+      "pixelsNoSujeitoSemD1": {
+        "h4 Em dia": 569
+      },
+      "caixas": {
+        "h4 Em dia": {
+          "gemeo": [
+            {
+              "x": 60,
+              "y": 403.8125,
+              "width": 1160,
+              "height": 27.8125
+            }
+          ],
+          "referencia": []
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "h4 Em dia",
+      "normas": [
+        "emag:1.3"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "resultadoSemD1": "aparte",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "inicial"
+      ],
+      "creditados": [
+        "inicial"
+      ]
+    }
+  ],
+  "sinalizada": true
+}

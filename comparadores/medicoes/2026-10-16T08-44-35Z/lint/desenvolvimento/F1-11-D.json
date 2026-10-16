@@ -1,0 +1,68 @@
+{
+  "comparador": "lint",
+  "gemeo": "F1-11-D",
+  "caso": "F1-11",
+  "familia": "F1",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-497336abe7.html",
+    "sha256": "e6405789d579af2986cebc0e09afef9e71e3abd371af31eb9a1fd83bcb2c9523"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-497336abe7.html",
+      "sha256": "e6405789d579af2986cebc0e09afef9e71e3abd371af31eb9a1fd83bcb2c9523",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "antes-de-enviar",
+      "sujeitos": {
+        "input#cartao": [
+          "body>main>div>div>form>div>input"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-enviar",
+      "sujeitos": {
+        "input#cartao": [
+          "body>main>div>div>form>div>input"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "input#cartao",
+      "normas": [
+        "wcag:3.3.1",
+        "emag:6.6",
+        "wcag:1.4.1"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

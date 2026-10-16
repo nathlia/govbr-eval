@@ -1,0 +1,65 @@
+{
+  "comparador": "lint",
+  "gemeo": "F7-02-C",
+  "caso": "F7-02",
+  "familia": "F7",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-879bde9a75.html",
+    "sha256": "d6366f1cedc8788b1c360e58dd8fb9398753d7c7d26883b4d96dca9a299a2a04"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-879bde9a75.html",
+      "sha256": "d6366f1cedc8788b1c360e58dd8fb9398753d7c7d26883b4d96dca9a299a2a04",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "antes",
+      "sujeitos": {
+        "button#filtros": [
+          "body>main>button"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "depois",
+      "sujeitos": {
+        "button#filtros": [
+          "body>main>button"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#filtros",
+      "normas": [
+        "wcag:4.1.2"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

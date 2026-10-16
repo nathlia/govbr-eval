@@ -1,0 +1,132 @@
+{
+  "comparador": "lint",
+  "gemeo": "F3-10-D",
+  "caso": "F3-10",
+  "familia": "F3",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-04d17ba5c7.html",
+    "sha256": "7c21e407f79c023c8acc5bb1fa49590da016a001f2378f13d10b9fbedf8b6cd4"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-04d17ba5c7.html",
+      "sha256": "7c21e407f79c023c8acc5bb1fa49590da016a001f2378f13d10b9fbedf8b6cd4",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "antes-regras",
+      "sujeitos": {
+        "modal#regras": [
+          "body>div:nth-of-type(1)>div"
+        ],
+        "modal#multas": [
+          "body>div:nth-of-type(2)>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "regras-aberta",
+      "sujeitos": {
+        "modal#regras": [
+          "body>div:nth-of-type(1)>div"
+        ],
+        "modal#multas": [
+          "body>div:nth-of-type(2)>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "regras-fechada",
+      "sujeitos": {
+        "modal#regras": [
+          "body>div:nth-of-type(1)>div"
+        ],
+        "modal#multas": [
+          "body>div:nth-of-type(2)>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "antes-multas",
+      "sujeitos": {
+        "modal#regras": [
+          "body>div:nth-of-type(1)>div"
+        ],
+        "modal#multas": [
+          "body>div:nth-of-type(2)>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "multas-aberta",
+      "sujeitos": {
+        "modal#regras": [
+          "body>div:nth-of-type(1)>div"
+        ],
+        "modal#multas": [
+          "body>div:nth-of-type(2)>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "multas-fechada",
+      "sujeitos": {
+        "modal#regras": [
+          "body>div:nth-of-type(1)>div"
+        ],
+        "modal#multas": [
+          "body>div:nth-of-type(2)>div"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "modal#regras",
+      "normas": [
+        "ds:modal-f36c91d7073c"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "modal#multas",
+      "normas": [
+        "ds:modal-f36c91d7073c"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

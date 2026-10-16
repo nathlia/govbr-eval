@@ -1,0 +1,86 @@
+{
+  "comparador": "lint",
+  "gemeo": "F2-07-C",
+  "caso": "F2-07",
+  "familia": "F2",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-958f4be129.html",
+    "sha256": "ee05ef59d6c252638bfc6c856c00f100561d719b46c4045c22e6ba3beb1f99ad"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-958f4be129.html",
+      "sha256": "ee05ef59d6c252638bfc6c856c00f100561d719b46c4045c22e6ba3beb1f99ad",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        ".br-message#m1": [
+          "body>main>div:nth-of-type(1)"
+        ],
+        ".br-message#m2": [
+          "body>main>div:nth-of-type(2)"
+        ],
+        ".br-message#m3": [
+          "body>main>div:nth-of-type(3)"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": ".br-message#m1",
+      "normas": [
+        "ds:message-d0c7ed3f91af"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": ".br-message#m2",
+      "normas": [
+        "ds:message-d0c7ed3f91af"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": ".br-message#m3",
+      "normas": [
+        "ds:message-d0c7ed3f91af"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

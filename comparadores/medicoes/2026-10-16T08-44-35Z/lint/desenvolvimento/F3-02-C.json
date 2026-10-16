@@ -1,0 +1,65 @@
+{
+  "comparador": "lint",
+  "gemeo": "F3-02-C",
+  "caso": "F3-02",
+  "familia": "F3",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-4778093880.html",
+    "sha256": "72058b7a6bc503a6c84f501a2abcb8c02448f6b9fc731357f5ba12e68dffe855"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-4778093880.html",
+      "sha256": "72058b7a6bc503a6c84f501a2abcb8c02448f6b9fc731357f5ba12e68dffe855",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "antes",
+      "sujeitos": {
+        "modal#renovar": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-abrir",
+      "sujeitos": {
+        "modal#renovar": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "modal#renovar",
+      "normas": [
+        "ds:modal-6f984d79466a"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

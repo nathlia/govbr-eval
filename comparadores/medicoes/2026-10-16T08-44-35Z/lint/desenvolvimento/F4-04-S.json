@@ -1,0 +1,56 @@
+{
+  "comparador": "lint",
+  "gemeo": "F4-04-S",
+  "caso": "F4-04",
+  "familia": "F4",
+  "papel": "sem-fonte",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-2fee68c291.html",
+    "sha256": "5b21618a44865cf588264db97d165dbef02882ab8c25949b3e9d961c65ac0584"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-2fee68c291.html",
+      "sha256": "5b21618a44865cf588264db97d165dbef02882ab8c25949b3e9d961c65ac0584",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "h4 Em dia": [
+          "body>main>section>h4:nth-of-type(1)"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "h4 Em dia",
+      "normas": [
+        "emag:1.3"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

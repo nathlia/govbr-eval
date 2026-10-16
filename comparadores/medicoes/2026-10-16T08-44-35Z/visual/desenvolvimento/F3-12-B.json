@@ -1,0 +1,54 @@
+{
+  "comparador": "visual",
+  "gemeo": "F3-12-B",
+  "caso": "F3-12",
+  "familia": "F3",
+  "papel": "evidencia-velha",
+  "pagina": {
+    "caminho": "/controles/a/c-dc13663fe9.html",
+    "sha256": "5ef19cfd133e9504b28c4b9a0f3a719596f158998f21386887b5da733f92fccf"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": null,
+  "foraDeAlcance": "papel de evidência: a página é a de outro gêmeo; o que muda é o pacote",
+  "paginaReferencia": null,
+  "pisoDeRuido": null,
+  "instavel": false,
+  "pontos": [],
+  "celulas": [
+    {
+      "sujeito": "modal#regras",
+      "normas": [
+        "ds:modal-f36c91d7073c"
+      ],
+      "esperado": "unverifiable",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "foraDeAlcance": "papel de evidência: a página é a de outro gêmeo; o que muda é o pacote",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

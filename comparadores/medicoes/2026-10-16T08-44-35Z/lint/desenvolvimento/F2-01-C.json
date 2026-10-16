@@ -1,0 +1,68 @@
+{
+  "comparador": "lint",
+  "gemeo": "F2-01-C",
+  "caso": "F2-01",
+  "familia": "F2",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/a/c-c949f58e93.html",
+    "sha256": "e64920c1b2a7993534f0d54d9026d1a31f861ad5b2ba8892c7920363102afa1f"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/a/c-c949f58e93.html",
+      "sha256": "e64920c1b2a7993534f0d54d9026d1a31f861ad5b2ba8892c7920363102afa1f",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "apos-renovar",
+      "sujeitos": {
+        ".br-message#aviso-renovacao": [
+          "body>main>div:nth-of-type(1)"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": ".br-message#aviso-renovacao",
+      "normas": [
+        "ds:message-d0c7ed3f91af"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": ".br-message#aviso-renovacao",
+      "normas": [
+        "ds:message-0e441e3af975"
+      ],
+      "esperado": "nao-aplicavel",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}
