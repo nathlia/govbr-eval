@@ -280,6 +280,8 @@ export interface AnalysisBinding extends Doc<"analysis-binding.v1"> {
   baseline: BaselineBinding;
   compatibility: { source: "scripts/analysis-manifest.ts"; analysisManifest: RecoverableObject | null };
   status: "ready" | "blocked"; blockedReason: string | null; scoreStatus: ScoreStatus; metrics: AnalysisMetrics;
+  /** NAT-74: só em derivado retrospectivo (saída sob derivados/). */
+  retrospective?: { retrospective: true; derivado: string; originalScorerVersion: string; manifestSha256: Sha256 };
 }
 
 export type ContractDocument = Campaign | Run | Findings | FindingsV2 | Isolation | ArtifactManifest | ArtifactManifestV2 | Baseline | SnapshotManifest | AnalysisBinding | InspectionAudit;

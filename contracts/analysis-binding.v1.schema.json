@@ -10,6 +10,18 @@
   ],
   "properties": {
     "contract": { "const": "analysis-binding.v1" },
+    "retrospective": {
+      "description": "Opcional (NAT-74). Só em derivado retrospectivo (analisar --derivado-retrospectivo, saída sob derivados/): a campanha foi congelada com outro scorer e o pacote foi repreparado com o vigente. Nunca aparece numa análise oficial.",
+      "type": "object",
+      "required": ["retrospective", "derivado", "originalScorerVersion", "manifestSha256"],
+      "properties": {
+        "retrospective": { "const": true },
+        "derivado": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "originalScorerVersion": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "manifestSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
     "fixture": { "$ref": "common.v1.schema.json#/$defs/fixture" },
     "analysisId": { "$ref": "common.v1.schema.json#/$defs/id" },
     "campaignId": { "$ref": "common.v1.schema.json#/$defs/id" },

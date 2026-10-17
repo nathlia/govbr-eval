@@ -109,6 +109,31 @@ export interface OpcoesAnalise {
   /** Também grava review-completo.md (sem cegueira). O padrão é só a renderização cega. */
   revisaoCompleta?: boolean;
   saida: string;
+  /**
+   * NAT-74: manifesto do derivado retrospectivo (`derivado-retrospectivo-1.0.0`). Só com ele a análise
+   * aceita campanha congelada em outra versão do scorer, e só quando a saída fica sob uma pasta
+   * `derivados/`. O binding grava `retrospective` com a versão original; os carimbos de tempo saem do
+   * `instante` do manifesto (saída determinística).
+   */
+  derivadoRetrospectivo?: string;
+}
+
+export const DERIVADO_RETROSPECTIVO_VERSAO = "derivado-retrospectivo-1.0.0";
+export interface ManifestoDerivado { formato: typeof DERIVADO_RETROSPECTIVO_VERSAO; derivado: string; instante: string; motivo: string }
+interface Derivado { manifesto: ManifestoDerivado; sha256: string }
+
+function lerDerivado(o: OpcoesAnalise, saida: string): Derivado | null {
+  if (!o.derivadoRetrospectivo) return null;
+  const bytes = readFileSync(resolve(o.derivadoRetrospectivo));
+  const m = JSON.parse(bytes.toString("utf8")) as ManifestoDerivado;
+  if (m.formato !== DERIVADO_RETROSPECTIVO_VERSAO) throw new Error(`--derivado-retrospectivo: formato ${String(m.formato)} ≠ ${DERIVADO_RETROSPECTIVO_VERSAO}`);
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(m.instante ?? "")) throw new Error("--derivado-retrospectivo: instante precisa ser UTC sem fração (AAAA-MM-DDTHH:MM:SSZ)");
+  if (!m.derivado?.trim() || !m.motivo?.trim()) throw new Error("--derivado-retrospectivo: faltam derivado e motivo");
+  // [mudança revisão L1] exige o par de segmentos govbr-resultados/derivados, não qualquer pasta "derivados".
+  const segs = resolve(saida).split(/[\\/]+/);
+  if (!segs.some((s, i) => s === "govbr-resultados" && segs[i + 1] === "derivados" && i + 2 < segs.length))
+    throw new Error("--derivado-retrospectivo só grava sob govbr-resultados/derivados/ (a análise oficial nunca é retrospectiva)");
+  return { manifesto: m, sha256: sha(bytes) };
 }
 
 export type EstadoAnalise = "pronta" | "bloqueada" | "recusada";
@@ -553,9 +578,10 @@ export async function analisar(o: OpcoesAnalise): Promise<ResultadoAnalise> {
     throw new Error("Análise composta exige --manifesto-analise, --bateria-designada e --justificativa");
   }
   const decisoes = o.decisoes ? normalizeReviews(lerJson<RawReviews>(resolve(o.decisoes), "decisões")) : undefined;
+  const derivado = lerDerivado(o, saida);
 
   try {
-    return await analisarValidado(o, saida, par, tipo, decisoes);
+    return await analisarValidado(o, saida, par, tipo, decisoes, derivado);
   } catch (e) {
     if (!(e instanceof RecusaDeEntrada)) throw e;
     const resumo = resumoDeRecusa(e.message, o, saida);
@@ -578,7 +604,8 @@ function resumoDeRecusa(motivo: string, o: OpcoesAnalise, saida: string): Resumo
 }
 
 async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, tipo: "individual" | "composta",
-  decisoes: SemanticReviews | undefined): Promise<ResultadoAnalise> {
+  decisoes: SemanticReviews | undefined, derivado: Derivado | null = null): Promise<ResultadoAnalise> {
+  const agora = (): string => derivado ? derivado.manifesto.instante : new Date().toISOString();
   // ── pacotes ───────────────────────────────────────────────────────────────
   const pacotes: PacoteLido[] = par ? [lerPacote(o.sem!), lerPacote(o.com!)] : [lerPacote(o.pacote!)];
   if (par) {
@@ -596,10 +623,14 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   // A campanha congela a versão do scorer (fixed.scorerVersion). Analisar com outra misturaria versões
   // de pontuação dentro de uma campanha: recusa, sem revisão nova. Campanha que não a declara segue,
   // com aviso (o contrato campaign.v1 a exige; isto só cobre um documento fora dele).
+  const avisos0: string[] = [];
   const scorerCongelado = (campaign.fixed as { scorerVersion?: unknown }).scorerVersion;
   const avisoScorer = typeof scorerCongelado === "string" && scorerCongelado.trim() ? null
     : `a campanha ${campaign.campaignId} não declara fixed.scorerVersion; analisada com o scorer atual ${FLOW_SCORING_VERSION} sem conferência`;
-  if (!avisoScorer && scorerCongelado !== FLOW_SCORING_VERSION) {
+  const retrospectiva = derivado && !avisoScorer && scorerCongelado !== FLOW_SCORING_VERSION
+    ? { derivado: derivado.manifesto.derivado, originalScorerVersion: String(scorerCongelado), manifestSha256: derivado.sha256 } : null;
+  if (retrospectiva) avisos0.push(`derivado retrospectivo ${retrospectiva.derivado}: campanha congelada com ${retrospectiva.originalScorerVersion}, repreparada com ${FLOW_SCORING_VERSION} (não substitui a análise oficial)`);
+  if (!avisoScorer && scorerCongelado !== FLOW_SCORING_VERSION && !retrospectiva) {
     recusar(`a campanha ${campaign.campaignId} foi congelada com ${String(scorerCongelado)}; o scorer atual é ${FLOW_SCORING_VERSION} — análise recusada para não misturar versões`);
   }
   for (const { run } of pacotes) {
@@ -680,7 +711,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   const analysisBase = `analise-${digest({ entradasHash, tipo, scorer }).slice(0, 16)}`;
   const bindingDe = (p: PacoteLido, status: AnalysisBinding["status"], blockedReason: string | null, scoreStatus: ScoreStatus, metrics: AnalysisMetrics): AnalysisBinding => ({
     contract: "analysis-binding.v1", fixture, analysisId: `${analysisBase}-${p.run.arm}`, campaignId: campaign.campaignId,
-    createdAt: new Date().toISOString().replace(/\.\d+Z$/, "Z"), kind: tipo === "composta" ? "composite" : "individual", screen: p.run.screen,
+    createdAt: agora().replace(/\.\d+Z$/, "Z"), kind: tipo === "composta" ? "composite" : "individual", screen: p.run.screen,
     runs: [{ runId: p.run.runId, arm: p.run.arm, artifactManifest: { sha256: sha(p.manifestBytes), bytes: p.manifestBytes.length,
       location: { kind: "package-path", path: `entradas/${p.run.arm}/artifact-manifest.json`, note: `cópia do manifesto do pacote ${p.run.runId}` } } }],
     collectionStartedAt,
@@ -690,9 +721,10 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     compatibility: { source: "scripts/analysis-manifest.ts", analysisManifest: manifestoAnaliseBytes
       ? { sha256: sha(manifestoAnaliseBytes), bytes: manifestoAnaliseBytes.length, location: { kind: "package-path", path: "entradas/manifesto-analise.json" } } : null },
     status, blockedReason, scoreStatus, metrics,
+    ...(retrospectiva ? { retrospective: { retrospective: true as const, ...retrospectiva } } : {}),
   });
 
-  const avisos: string[] = avisoScorer ? [avisoScorer] : [];
+  const avisos: string[] = [...(avisoScorer ? [avisoScorer] : []), ...avisos0];
   let bloqueada: string | null = lb.binding.mode === "blocked" ? `linha de base: ${lb.binding.detail}` : null;
   if (par) {
     const provisorios = pacotes.map(p => ({ run: p.run, binding: bindingDe(p, "ready", null, "not-prepared", METRICAS_NULAS) }));
@@ -771,7 +803,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   }
   const pendentes = prep ? prep.fila.ativa.cartoes : 0;
   const resumoSemHash: Omit<Resumo, "hashes"> = {
-    formato: RESUMO_VERSAO, fixture, geradoEm: new Date().toISOString(), revisao: { numero, anterior },
+    formato: RESUMO_VERSAO, fixture, geradoEm: agora(), revisao: { numero, anterior },
     analise: { estado: bloqueada ? "bloqueada" : "pronta", motivo: bloqueada, tipo, avisos },
     linhaDeBase: { modo: lb.binding.mode, causa: lb.binding.mode === "blocked" ? lb.binding.cause : null,
       detalhe: lb.binding.mode === "blocked" ? lb.binding.detail : lb.binding.mode === "planned-absence" ? lb.binding.justification : null,
@@ -811,7 +843,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     put("revisao/review.md", renderReview(prep.pkg, prep.reviews, { cego: true }));
     if (o.revisaoCompleta) put("revisao/review-completo.md", renderReview(prep.pkg, prep.reviews, { cego: false }));
     put("revisao/esforco-revisao.json", json(prep.esforco));
-    put("revisao/capture.json", json({ capturedAt: new Date().toISOString(), url: new URL(prep.url).pathname, sceneHash: prep.sceneHash,
+    put("revisao/capture.json", json({ capturedAt: agora(), url: new URL(prep.url).pathname, sceneHash: prep.sceneHash,
       kind: "reconstrução no momento da análise do site congelado do conjunto de snapshots; não é evidência original da execução",
       sceneHashIgnora: REGRA_IDS_GERADOS, relogio: { ...prep.relogio, regra: REGRA_RELOGIO },
       scenes: prep.scenes.map((s, i) => ({ id: s.id, viewport: s.viewport, specIds: s.specIds, html: `scene-${i}.html`, image: `scene-${i}.png`,
@@ -1198,13 +1230,15 @@ function lerArgs(argv: string[]): OpcoesAnalise {
     tipo: tipo as OpcoesAnalise["tipo"], manifestoAnalise: val("manifesto-analise"), bateriaDesignada: val("bateria-designada"),
     justificativa: val("justificativa"), arquivo: val("arquivo"), decisoes: val("decisoes"), pacoteDecisoes: val("pacote-decisoes"), anterior: val("anterior"),
     orcamentoRevisao: val("orcamento-revisao"), revisaoCompleta: argv.includes("--revisao-completa"), saida: req("saida"),
+    derivadoRetrospectivo: val("derivado-retrospectivo"),
   };
 }
 
 const USO_CLI = `Uso: npm run analisar -- (--pacote DIR | --sem DIR --com DIR) --campanha campaign.json --snapshots snapshot-manifest.json
          --referencia referencia.json --site DIR_SITE (--linha-de-base baseline.json | --sem-linha-de-base) --saida PASTA_NOVA
          [--tipo individual|composta --manifesto-analise F --bateria-designada ID --justificativa TEXTO] [--arquivo RAIZ_DO_ARQUIVO]
-         [--decisoes reviews.json [--pacote-decisoes package.json]] [--anterior PASTA_DA_REVISAO_ANTERIOR] [--orcamento-revisao TEXTO] [--revisao-completa]`;
+         [--decisoes reviews.json [--pacote-decisoes package.json]] [--anterior PASTA_DA_REVISAO_ANTERIOR] [--orcamento-revisao TEXTO] [--revisao-completa]
+         [--derivado-retrospectivo manifesto.json]  (NAT-74: só sob derivados/; aceita campanha de outro scorer)`;
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   (async () => {

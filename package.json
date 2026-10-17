@@ -71,6 +71,8 @@
     "painel:resultados": "tsx scripts/painel/servidor.ts",
     "painel:fixture": "tsx scripts/painel/fixture.ts",
     "test:painel": "tsx scripts/test-painel.ts",
+    "reanalise:nat74": "tsx scripts/reanalise-nat74/pipeline.ts",
+    "test:reanalise-nat74": "tsx scripts/reanalise-nat74/test-reanalise-nat74.ts",
     "relatorio:fluxo": "tsx scripts/report-flow.ts",
     "controles:construir": "node controles/construir.mjs",
     "controles:medir": "node controles/medir.mjs",
