@@ -30,7 +30,7 @@ import { inventarioDeAtomos, type AtomoArquivado, type Inventario } from "./e1";
 import { contagemDoRun, OFICIAL, portaoG0, runsDosBracos, sementeDaCampanha, type ContagemBraco } from "./g0";
 import { dirParDerivado } from "./e3";
 import { g1DoPar, mapaRetrospectivo, tradutor, type MapaRetrospectivo } from "./mapa";
-import { contador, limitesDoPar, type BracoLimite, type LimitesDoPar } from "./limites";
+import { NOTA_LIMITES, TIPO_LIMITES, contador, estadoDaVariante, limitesDoPar, type BracoLimite, type LimitesDoPar } from "./limites";
 import { CAMINHO_MEDIDAS_T2, vereditoT2, type MedidasT2 } from "./t2";
 import { FORMATO_JULGAMENTOS } from "./e14-comum";
 import type { VereditoAtomo } from "./vereditos";
@@ -117,7 +117,8 @@ function e0(raiz: string, x: EntradasV110): { hashes: Record<string, { bytes: nu
   const naoRastreados = linhas(git(RESULTADOS, "status", "--porcelain", "--untracked-files=all")).filter(l => l.startsWith("??")).map(l => l.slice(3))
     .filter(p => !p.startsWith(filaT3) && !p.startsWith(`${CAMINHO_DERIVADO_110}/`) && (saidaRel.startsWith("..") || !p.startsWith(`${saidaRel}/`)));
   if (naoRastreados.length) throw new Portao("E0", { motivo: "arquivos não rastreados fora da saída da 1.1.0 e da fila T3 da 1.0.0", arquivos: naoRastreados });
-  const extra = [...x.pacotes, ...x.julgamentos.flatMap(j => [j, join(dirname(j), "lotes", "manifesto.json"), join(dirname(j), "chave", "fila-t3-chave.json")]), x.medidasT2];
+  const extra = [...x.pacotes, ...x.julgamentos.flatMap(j => [j, join(dirname(j), "lotes", "manifesto.json"), join(dirname(j), "chave", "fila-t3-chave.json"),
+    ...trilhaDoJulgamento(j).filter(f => existsSync(f))]), x.medidasT2];
   const rels = [...new Set([...arquivosLidos(), ...extra.map(a => posix(relative(TCC, a)))])].sort();
   const hashes = hashesDe(rels);
   gravarJson(raiz, "verificacao/hashes-antes.json", { formato: "nat74-hashes-1.0.0", resultados: { commit: head, tree: git(RESULTADOS, "rev-parse", "HEAD^{tree}") },
@@ -147,6 +148,30 @@ function e0(raiz: string, x: EntradasV110): { hashes: Record<string, { bytes: nu
     node: process.version, playwright: pw.version, chromium: chromium ? { revision: chromium.revision, versao: chromium.browserVersion ?? null } : null, axeCore: axe.version,
     politica: { principal: POLITICA_PRINCIPAL, sensibilidade: POLITICA_SENSIBILIDADE, sha256: hashes[posix(relative(TCC, join(NAT73, "politica-normativa-v1.md")))].sha256 } });
   return { hashes };
+}
+
+/** Sinal residual de braço num cartão de agente (mesma regra do relato de e14-cegueira.ts): regra da base do DS ou id do axe. */
+function sinalResidualDeBraco(card: { origin: string; rule: string | null }): boolean {
+  const r = card.rule ?? "";
+  return card.origin === "agente" && !!r && !/^(?:wcag|emag):/.test(r);
+}
+
+/** Arquivos da trilha do julgamento ao lado de um julgamentos.json: 1ª passada, adjudicação (sobrescritas) e materiais. */
+const trilhaDoJulgamento = (j: string): string[] => [join(dirname(j), "julgamentos-1a-passada.json"), join(dirname(j), "desempate", "sobrescritas.json"), join(dirname(j), "materiais.json")];
+
+/** Resumo da trilha do julgamento para as páginas (adjudicação informada e materiais), com sha256. */
+function resumoDoJulgamento(arqs: string[]): Record<string, unknown>[] {
+  return arqs.map(j => {
+    const [p1, sob, mat] = trilhaDoJulgamento(j);
+    const rel = (f: string) => posix(relative(TCC, f));
+    const s = existsSync(sob) ? lerJson<{ totais?: Record<string, number>; segundasLeituras?: { lote: string; resolvida: boolean; sensibilidade?: { membrosQueCreditam: Record<string, number>; total: number } }[] }>(sob) : null;
+    const m = existsSync(mat) ? lerJson<{ contagem: Record<string, number> }>(mat) : null;
+    return { julgamentos: { arquivo: rel(j), sha256: shaArquivo(j) },
+      primeiraPassada: existsSync(p1) ? { arquivo: rel(p1), sha256: shaArquivo(p1) } : null,
+      adjudicacao: s ? { arquivo: rel(sob), sha256: shaArquivo(sob), totais: s.totais ?? null,
+        segundasLeituras: (s.segundasLeituras ?? []).map(x => ({ lote: x.lote, resolvida: x.resolvida, sensibilidade: x.sensibilidade ?? null })) } : null,
+      materiais: m ? { arquivo: rel(mat), sha256: shaArquivo(mat), contagem: m.contagem } : null };
+  });
 }
 
 /** Julgamentos da fila T3 (um ou mais arquivos do e14-ingerir); o posterior vale sobre o anterior no mesmo átomo. */
@@ -313,7 +338,7 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
   const fonteT2 = `${posix(relative(TCC, medidasT2Abs))}#${shaArquivo(medidasT2Abs)}`;
   const t2 = { vereditos: new Map<string, VereditoAtomo>(), pendente: new Map<string, string>(), porResultado: {} as Record<string, number> };
   for (const a of inv.atomos) {
-    if (a.grupo !== "nao-credito-fora" || !FAMILIAS_T2.has(a.familia) || ver.porChave.has(a.chave)) continue;
+    if (a.tela !== "B" || a.grupo !== "nao-credito-fora" || !FAMILIAS_T2.has(a.familia) || ver.porChave.has(a.chave)) continue;
     const card = inv.pares.find(p => p.campanha === a.campanha && p.par === a.par)!.pkg.cards.find(c => c.id === a.cardIdOriginal)!;
     const r = vereditoT2({ regra: card.rule, seletor: card.selector, observado: card.observed ?? card.description, sujeitos: a.sujeitos, familia: a.familia,
       cenas: [card.scene, ...card.subjects.map(s => s.scene ?? "")].filter(Boolean) }, medidasT2, fonteT2);
@@ -465,12 +490,17 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
         const b = braco(a.chave);
         const P = ((precisao[v] ??= {})[c] ??= {});
         const M = ((maturidade[v] ??= {})[c] ??= {});
-        const mat = (M[b] ??= { pendentes: 0, porJuiz: {} as Record<string, number> }) as { pendentes: number; porJuiz: Record<string, number> };
+        const mat = (M[b] ??= { pendentes: 0, porJuiz: {} as Record<string, number>, porTipo: { triagem: 0, decisaoIndisponivel: 0, recusaMontagem: 0 } }) as
+          { pendentes: number; porJuiz: Record<string, number>; porTipo: Record<"triagem" | "decisaoIndisponivel" | "recusaMontagem", number> };
         mat.porJuiz[cls.juiz] = (mat.porJuiz[cls.juiz] ?? 0) + 1;
         // Pendente = decisão pendente na montagem OU cartão que o scorer deixa pendente (átomo `unresolved`: evidência indisponível, R9).
         const novoId = pd.mapa.cartoes.find(x => x.de === a.cardIdOriginal)!.para;
         const cardPendente = m.pendentes.includes(novoId) || k.score.scores.some(s => s.pendingCardIds.includes(novoId));
-        if (cardPendente) mat.pendentes++;
+        if (cardPendente) {
+          mat.pendentes++;
+          // tipo: átomo ainda na triagem (fila T2/T3 ou classe pendente) · decisão do scorer `unresolved` (evidência indisponível, R9) · recusa da montagem/barreira do scorer
+          mat.porTipo[["T2", "T3", "pendente"].includes(cls.tratamento) ? "triagem" : m.pendentes.includes(novoId) ? "recusaMontagem" : "decisaoIndisponivel"]++;
+        }
         for (const parte of cls.partes) {
           for (const an of ["I", "II", "I-S6"] as const) {
             const el = cardPendente ? "pendente" : elegibilidade(parte.classe, an === "II" ? "II" : "I", an === "I-S6" || v === "S6");
@@ -484,6 +514,19 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
     porVariante[v] = Object.fromEntries(Object.entries(porCamp).map(([c, x]) => [c, x]));
   }
   log(`E8–E10 ok: ${VARIANTES.length} variantes pontuadas`);
+
+  // [revisão independente M1] Créditos (mudança de crédito) decididos SÓ por LLM, por juiz e braço de agente, e quantos estão em
+  // cartões com sinal residual de braço (mesma regra do relato de cegueira da fila T3, e14-cegueira.ts).
+  const LLM = ["revisor-novo", "llm-t3"];
+  const soLLM: Record<string, Record<string, Record<string, number>>> = {};
+  for (const l of trilha) {
+    if (l.variante !== "principal" || !l.mudouCredito || !LLM.includes(l.juiz as string) || (l.braco !== "sem" && l.braco !== "com")) continue;
+    const a = inv.atomos.find(x => x.chave === l.chave)!;
+    const card = inv.pares.find(p => p.campanha === a.campanha && p.par === a.par)!.pkg.cards.find(x => x.id === a.cardIdOriginal)!;
+    const x = ((soLLM[a.campanha] ??= {})[l.braco as string] ??= { "revisor-novo": 0, "llm-t3": 0, comSinalResidual: 0 });
+    x[l.juiz as string]++;
+    if (sinalResidualDeBraco(card)) x.comSinalResidual++;
+  }
 
   // E11 — agregação pela agenda original
   const resultados: Record<string, unknown> = {};
@@ -500,13 +543,17 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
         pendentes: t.pendentes, ...metrica(t.tp, t.fp, t.pendentes) }]));
       const soma = (k: "sem" | "com", f: string) => x.pares.reduce((n, p) => n + Number((p[k] as Record<string, unknown>)[f] ?? 0), 0);
       const somaP = (k: "sem" | "com") => x.pares.reduce((n, p) => n + (((p[k] as { pagina: { confirmadas: number } | null }).pagina?.confirmadas) ?? 0), 0);
-      const mat = (b: string) => M[b] ? { estado: M[b].pendentes ? "PROVISORIO" : "FINAL-DERIVADO", pendentes: M[b].pendentes, porJuiz: M[b].porJuiz } : null;
-      const estado = mat("sem")?.estado === "PROVISORIO" || mat("com")?.estado === "PROVISORIO" ? "PROVISORIO" : "FINAL-DERIVADO";
+      const mat = (b: string) => M[b] ? { estado: M[b].pendentes ? "PROVISORIO" : "FINAL-DERIVADO", pendentes: M[b].pendentes, porJuiz: M[b].porJuiz,
+        pendentesPorTipo: (M[b] as unknown as { porTipo: Record<string, number> }).porTipo } : null;
+      const { estado, temPontual } = estadoDaVariante(mat("sem")?.pendentes ?? 0, mat("com")?.pendentes ?? 0);
       const media = (xs: number[]) => (xs.length ? r4(xs.reduce((a, b) => a + b, 0) / xs.length) : null);
       const ic = (e: typeof est) => ({ inferior: e.ic.inferior, superior: e.ic.superior });
+      // [revisão independente L1] FINAL ⇒ a envoltória colapsou em D em todos os pares.
+      if (estado === "FINAL-DERIVADO" && x.d.some((d, i) => x.dMin[i] !== d || x.dMax[i] !== d))
+        throw new Error(`E11: ${c}/${v} FINAL-DERIVADO com envoltória que não colapsa em D (${JSON.stringify({ d: x.d, min: x.dMin, max: x.dMax })})`);
       variantes[v] = { descricao: DESCRICAO_VARIANTE[v], estado,
         // FINAL (sem pendente nos braços): D pontual, com IC e p; senão os limites verdadeiros e os cenários.
-        pontual: estado === "FINAL-DERIVADO" ? { d: x.d, media: est.media, mediana: est.mediana, dp: est.desvioPadrao, ic95: ic(est), p: est.principal.p,
+        pontual: temPontual ? { d: x.d, media: est.media, mediana: est.mediana, dp: est.desvioPadrao, ic95: ic(est), p: est.principal.p,
           wilcoxonP: est.robustez.wilcoxon.p, sinalP: est.robustez.sinal.p } : null, politica: v === "S1" ? "1.1.0" : "1.2.0", modo: MODO_D[c], nEfetivo: x.d.length, nPlanejado: 10,
         d: x.d, media: est.media, mediana: est.mediana, dp: est.desvioPadrao, ic95: { inferior: est.ic.inferior, superior: est.ic.superior, semente: est.ic.semente },
         permutacao: est.principal, wilcoxon: est.robustez.wilcoxon, sinal: est.robustez.sinal, leitura: est.leitura,
@@ -517,7 +564,7 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
           precisaoI: prec("I"), precisaoII: prec("II"), precisaoI_indeterminadaComoPagina: prec("I-S6") },
         maturidade: { sem: mat("sem"), com: mat("com"), lbAxe: mat("lb-axe"), lbValidator: mat("lb-validator") },
         // [mudança revisão H1] D em limites enquanto PROVISÓRIO: média/IC/p não são manchete até a E14.
-        limites: { estado, nota: "limites verdadeiros por par (limites.ts): Dmin = com_min − sem_max, Dmax = com_max − sem_min; máximo de um braço = confirmado + tudo o que os pendentes dele podem creditar (ancoragem ∪ arquivo ∪ spec indicada pelo juiz); colapsam em D sem pendente",
+        limites: { estado, tipo: TIPO_LIMITES, nota: NOTA_LIMITES,
           inferior: { d: x.dMin, media: media(x.dMin) }, superior: { d: x.dMax, media: media(x.dMax) } },
         cenarios: { nota: "cenários, NÃO limites (mudam os dois braços ao mesmo tempo): média, IC e p não interpretáveis enquanto PROVISÓRIO",
           semCreditoPendente: { d: x.d, media: est.media, ic95: ic(est), p: est.principal.p },
@@ -528,6 +575,8 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
       aviso: "mudança de medida, não melhora do detector; o resultado oficial não muda (D-21)",
       oficial: { fonte: of.fonte, d: of.d, media: of.media, mediana: of.mediana, ic95: of.ic, p: of.p, wilcoxonP: of.wilcoxonP, sinalP: of.sinalP },
       variantes,
+      creditoSoLLM: { nota: "átomos dos braços de agente cujo crédito (em relação ao arquivo) mudou por veredito SÓ de LLM, por juiz; comSinalResidual = cartão com sinal residual de braço (regra DS mascarada ou id de regra do axe no cartão do agente, como no relato de cegueira da fila T3). A S4 (só humano) é a checagem de viés.",
+        porBraco: soLLM[c] ?? {}, S4: { estado: (variantes.S4 as { estado: string }).estado, media: (variantes.S4 as { media: number | null }).media } },
       semEvidencia: { nota: "S7: átomos julgados na T3 com cartão sem-evidencia (sem evidência resolvida nem fato medido) e fato verdadeiro só inferido, tratados como pendentes (R9)",
         afetadosPorBraco: afetadosS7[c] ?? {}, principal: { estado: (variantes.principal as { estado: string }).estado, d: (variantes.principal as { d: number[] }).d,
           limites: (variantes.principal as { limites: unknown }).limites },
@@ -560,9 +609,10 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
   gravarJson(raiz, "resultados/linhas-de-base.json", lbs);
   const aut = autoraJson(ver, porVariante);
   gravarJson(raiz, "resultados/autora.json", aut);
-  gravar(raiz, "RESULTADOS-DERIVADO.md", paginaResultados(resultados, lbs, res.filas as never));
-  gravar(raiz, "LEIA-ME.md", leiaMe({ julgamentos: julg.info, rejulgados: julg.sobrescritos.length, t2: t2.porResultado, resultados }));
-  gravarJson(raiz, "painel-bloco.json", blocoPainel(resultados, lbs));
+  const trilhaJ = resumoDoJulgamento(julgamentosArqs);
+  gravar(raiz, "RESULTADOS-DERIVADO.md", paginaResultados(resultados, lbs, res.filas as never, trilhaJ));
+  gravar(raiz, "LEIA-ME.md", leiaMe({ julgamentos: julg.info, rejulgados: julg.sobrescritos.length, t2: t2.porResultado, resultados, trilha: trilhaJ }));
+  gravarJson(raiz, "painel-bloco.json", blocoPainel(resultados, lbs, trilhaJ));
   log("E12 ok");
 
   // E13 — verificar
@@ -724,7 +774,7 @@ type Ic = { inferior: number | null; superior: number | null };
 type VarR = { d: number[]; descricao: string; estado: string; limites: { inferior: Lim; superior: Lim };
   cenarios: { semCreditoPendente: Lim & { ic95: Ic; p: number | null }; comCreditoArquivadoRestaurado: Lim & { ic95: Ic; p: number | null } };
   pontual: null | { d: number[]; media: number | null; ic95: Ic; p: number | null; wilcoxonP: number | null; sinalP: number | null };
-  maturidade: { sem: { estado: string; pendentes: number }; com: { estado: string; pendentes: number } } };
+  maturidade: Record<"sem" | "com", { estado: string; pendentes: number; pendentesPorTipo: Record<string, number> }> };
 type R = { oficial: { media: number; ic95: [number, number]; p: number }; variantes: Record<string, VarR> };
 type FilasRelatorio = { porCampanhaBraco: Record<string, Record<string, Record<string, number>>>;
   pendentesCreditadosNoArquivo: Record<string, Record<string, { total: number; motivos: Record<string, number> }>>; m1: Record<string, Record<string, Record<string, number>>> };
@@ -732,20 +782,60 @@ type FilasRelatorio = { porCampanhaBraco: Record<string, Record<string, Record<s
 /** D por par para leitura: o valor, ou [mín, máx] quando os limites não colapsam. */
 const dLegivel = (v: VarR): string => v.limites.inferior.d.map((a, i) => (a === v.limites.superior.d[i] ? `${a}` : `[${a}, ${v.limites.superior.d[i]}]`)).join(", ");
 
-function paginaResultados(resultados: Record<string, unknown>, lbs: Record<string, unknown>, filas: FilasRelatorio): string {
+/** Texto da trilha do julgamento T3 (1ª passada cega + adjudicação informada) e dos materiais. */
+function textoDaTrilha(trilha: Record<string, unknown>[]): string[] {
+  const L: string[] = [];
+  for (const t of trilha as { julgamentos: { arquivo: string; sha256: string }; primeiraPassada: { arquivo: string; sha256: string } | null;
+    adjudicacao: { arquivo: string; sha256: string; totais: Record<string, number> | null; segundasLeituras: { lote: string; resolvida: boolean; sensibilidade: { membrosQueCreditam: Record<string, number>; total: number } | null }[] } | null;
+    materiais: { arquivo: string; sha256: string; contagem: Record<string, number> } | null }[]) {
+    const tt = t.adjudicacao?.totais;
+    L.push(`- Fila T3 = **primeira passada cega** (juízes LLM, um por lote${t.primeiraPassada ? `; \`${t.primeiraPassada.arquivo}\` sha256 \`${t.primeiraPassada.sha256.slice(0, 12)}…\`` : ""})`
+      + (t.adjudicacao ? ` + **adjudicação informada** (${tt?.sobrescritos ?? "?"} respostas sobrescritas; classe mudou em ${tt?.mudouClasse ?? "?"}, crédito em ${tt?.mudouCredito ?? "?"}; \`${t.adjudicacao.arquivo}\` sha256 \`${t.adjudicacao.sha256.slice(0, 12)}…\`)` : "")
+      + ` → \`${t.julgamentos.arquivo}\` sha256 \`${t.julgamentos.sha256.slice(0, 12)}…\`.`);
+    for (const s of t.adjudicacao?.segundasLeituras ?? []) L.push(`- Segunda leitura ${s.lote}: ${s.resolvida ? "resolvida" : "não resolvida (leituras plausíveis incompatíveis): os membros ficam incerta (evidência indisponível)"}`
+      + (s.sensibilidade ? `; sensibilidade: creditam ${s.sensibilidade.membrosQueCreditam.seAplica ?? "?"}/${s.sensibilidade.total} se a regra se aplica, ${s.sensibilidade.membrosQueCreditam.seNaoAplica ?? "?"}/${s.sensibilidade.total} se não se aplica` : "") + ".");
+    if (t.materiais) { const m = t.materiais.contagem;
+      L.push(`- Materiais (P5 a; unidade na tela A, spec na B): ${m.materiais} átomos decidem crédito não confirmado de outro jeito; **${m.paraAutora} selecionados para a autora, ainda NÃO revistos por ela**; ${m.julgadoSoPorLLM} \"julgado só por LLM\" (\`${t.materiais.arquivo}\` sha256 \`${t.materiais.sha256.slice(0, 12)}…\`).`); }
+  }
+  L.push("- **FINAL-DERIVADO** quer dizer só que a pontuação daquela variante está completa (nenhum pendente nos braços). Não é validação humana nem de especialista: os vereditos novos são sobretudo de LLM.");
+  return L;
+}
+
+function paginaResultados(resultados: Record<string, unknown>, lbs: Record<string, unknown>, filas: FilasRelatorio, trilha: Record<string, unknown>[]): string {
   const L: string[] = [`# Reanálise retrospectiva NAT-74 — derivado ${DERIVADO_VERSAO}`, "",
     "> **Retrospectiva · exploratória · mudança de medida.** O resultado oficial não muda: [RESULTADOS.md](../../../RESULTADOS.md), D-97, D-111 e D-112 (D-21).",
     "> Toda mudança de precisão aqui é mudança de medida, não melhora do detector. Política principal `politica-normativa-1.2.0`; a 1.1.0 vai ao lado (S1).",
-    "> Os vereditos novos da fila T3 são de LLM (assistente, subagentes cegos por lote; D-130), salvo os materiais revistos pela autora.", "",
+    "> **Reanálise histórica limitada.** A evidência principal é a avaliação nova; este derivado não a substitui.", "",
+    "## Como os vereditos foram obtidos", "", ...textoDaTrilha(trilha), "",
     "## Variante principal, por campanha", "",
-    "FINAL-DERIVADO: sem pendente nos braços; D é pontual, com IC 95% e p. PROVISÓRIO: D sai como **limites verdadeiros** por par ([mín, máx]: o",
-    "mínimo do braço com contra o máximo do braço sem, e vice-versa); média, IC e p não são manchete.", "",
+    "FINAL-DERIVADO: pontuação completa nos braços (nenhum pendente); D é pontual, com IC 95% e p. PROVISÓRIO: D sai como **envoltória conservadora**",
+    "por par ([mín, máx]: o mínimo do braço com contra o máximo do braço sem, e vice-versa), feita da união das candidatas admissíveis dos pendentes;",
+    "**não** são os extremos exatos atingíveis (ex.: A Opus p01, braço com, um sujeito não resolvido abre no máximo +1). Média, IC e p não são manchete.", "",
     "| Campanha | Estado | D por par | Média | IC 95% | p (permutação) | Oficial (média · IC · p) | Pendentes sem / com |", "|---|---|---|---|---|---|---|---|"];
   for (const c of CAMPANHAS) {
     const r = resultados[c] as R, v = r.variantes.principal, of = `${fmt(r.oficial.media)} · ${fmt(r.oficial.ic95[0])} a ${fmt(r.oficial.ic95[1])} · ${fmt(r.oficial.p, 4)}`;
     const pend = `${v.maturidade.sem.pendentes} / ${v.maturidade.com.pendentes}`;
     if (v.pontual) L.push(`| ${ROTULO[c]} (\`${c}\`, ${MODO_D[c]}) | ${v.estado} | ${v.pontual.d.join(", ")} | ${fmt(v.pontual.media)} | ${fmt(v.pontual.ic95.inferior)} a ${fmt(v.pontual.ic95.superior)} | ${fmt(v.pontual.p, 4)} | ${of} | ${pend} |`);
     else L.push(`| ${ROTULO[c]} (\`${c}\`, ${MODO_D[c]}) | ${v.estado} | ${dLegivel(v)} | ${fmt(v.limites.inferior.media)} a ${fmt(v.limites.superior.media)} | — | — | ${of} | ${pend} |`);
+  }
+  for (const c of CAMPANHAS) {
+    const r = resultados[c] as R, p = r.variantes.principal, s7 = r.variantes.S7;
+    if (s7 && p.estado !== s7.estado) L.push("", `**${ROTULO[c]}: ${p.estado} na principal, mas ${s7.estado} na S7** (sem-evidencia → pendente): ${s7.pontual ? `média ${fmt(s7.pontual.media)}` : `envoltória da média ${fmt(s7.limites.inferior.media)} a ${fmt(s7.limites.superior.media)}`}. O D pontual da principal depende de fatos só de texto julgados verdadeiros por inferência.`);
+  }
+  L.push("", "### Créditos decididos só por LLM (checagem de viés: S4)", "",
+    "Átomos dos braços de agente cujo crédito mudou em relação ao arquivo por veredito **só de LLM**, por juiz; \"com sinal\" = cartão com sinal residual de braço (regra da base do DS mascarada ou id de regra do axe no cartão do agente). A **S4 (só humano)** reverte esses vereditos ao arquivo e é a checagem de viés.", "",
+    "| Campanha | Braço | revisor novo (NAT-73, LLM) | T3 (LLM) | em cartão com sinal residual | S4 (só humano) |", "|---|---|---|---|---|---|");
+  for (const c of CAMPANHAS) {
+    const r = resultados[c] as R & { creditoSoLLM: { porBraco: Record<string, Record<string, number>>; S4: { estado: string; media: number | null } } };
+    for (const b of ["sem", "com"]) { const x = r.creditoSoLLM.porBraco[b] ?? { "revisor-novo": 0, "llm-t3": 0, comSinalResidual: 0 };
+      L.push(`| ${ROTULO[c]} | ${b} | ${x["revisor-novo"]} | ${x["llm-t3"]} | ${x.comSinalResidual} | ${b === "sem" ? `${r.creditoSoLLM.S4.estado}, média ${fmt(r.creditoSoLLM.S4.media)}` : ""} |`); }
+  }
+  L.push("", "### Pendências da maturidade, por tipo (átomos)", "",
+    "Cada tipo é contado à parte e **não se soma**: a fila residual (abaixo) conta átomos que voltam a juízes; a decisão indisponível conta átomos que o scorer deixa `unresolved` (evidência indisponível, R9: julgados, mas sem fato decidível); a recusa conta átomos de cartões que a montagem ou a barreira do scorer recusou (lista de cartões em `trilha/recusas-do-scorer.json`).", "",
+    "| Campanha | Braço | Triagem (fila T2/T3) | Decisão indisponível (unresolved) | Recusa da montagem/scorer |", "|---|---|---|---|---|");
+  for (const c of CAMPANHAS) for (const b of ["sem", "com"] as const) {
+    const t = (resultados[c] as R).variantes.principal.maturidade[b].pendentesPorTipo;
+    L.push(`| ${ROTULO[c]} | ${b} | ${t.triagem} | ${t.decisaoIndisponivel} | ${t.recusaMontagem} |`);
   }
   L.push("", "### Átomos creditados no arquivo e ainda pendentes, por braço", "", "| Campanha | Braço | Pendentes creditados no arquivo | Motivos |", "|---|---|---|---|");
   for (const c of CAMPANHAS) for (const [b, x] of Object.entries(filas.pendentesCreditadosNoArquivo[c] ?? {}).sort())
@@ -768,7 +858,9 @@ function paginaResultados(resultados: Record<string, unknown>, lbs: Record<strin
     const r = resultados[c] as R & { semEvidencia: { afetadosPorBraco: Record<string, number> } };
     L.push(`| ${ROTULO[c]} | ${Object.entries(r.semEvidencia.afetadosPorBraco).sort().map(([b, n]) => `${b} ${n}`).join(", ") || "0"} | ${r.variantes.principal.pontual ? r.variantes.principal.pontual.d.join(", ") : dLegivel(r.variantes.principal)} | ${r.variantes.S7.pontual ? r.variantes.S7.pontual.d.join(", ") : dLegivel(r.variantes.S7)} |`);
   }
-  L.push("", "## Fila T3 residual desta versão (E6)", "", "| Campanha | Braço | T1 | julgado | T2 | T3 | pendente |", "|---|---|---|---|---|---|---|");
+  L.push("", "## Fila T3 residual desta versão (E6)", "",
+    "Átomos que voltam a juízes (coluna T3); é o tipo \"triagem\" da tabela de pendências acima. Decisões indisponíveis e recusas não entram aqui.", "",
+    "| Campanha | Braço | T1 | julgado | T2 | T3 | pendente |", "|---|---|---|---|---|---|---|");
   for (const [c, bs] of Object.entries(filas.porCampanhaBraco)) for (const [b, f] of Object.entries(bs).sort()) L.push(`| ${ROTULO[c as Campanha]} | ${b} | ${f.T1} | ${f.julgado} | ${f.T2} | ${f.T3} | ${f.pendente} |`);
   const b16 = (lbs as { b16: { leitura: string; confirmadaEm: number } }).b16;
   L.push("", "## Linhas de base", "", `B-16 (axe image-alt, tela B): confirmada em ${b16.confirmadaEm}/10 pares. ${b16.leitura}.`, "", "<details><summary>Sensibilidades (S1–S6)</summary>", "");
@@ -783,17 +875,18 @@ function paginaResultados(resultados: Record<string, unknown>, lbs: Record<strin
   return L.join("\n");
 }
 
-function leiaMe(x: { julgamentos: Record<string, unknown>[]; rejulgados: number; t2: Record<string, number>; resultados: Record<string, unknown> }): string {
+function leiaMe(x: { julgamentos: Record<string, unknown>[]; rejulgados: number; t2: Record<string, number>; resultados: Record<string, unknown>; trilha: Record<string, unknown>[] }): string {
   const estados = CAMPANHAS.map(c => `${ROTULO[c]}: ${((x.resultados[c] as R).variantes.principal).estado}`).join(" · ");
   return [`# ${DERIVADO_VERSAO}`, "", "**Retrospectiva · exploratória · mudança de medida.** Derivado da NAT-74. Não substitui o resultado oficial",
     "(`govbr-resultados/RESULTADOS.md`; D-97, D-111, D-112). Versão nova = pasta irmã, nunca sobrescrita; a 1.0.0 fica como está.", "",
-    `Estado (variante principal): ${estados}.`, "",
+    `Estado (variante principal): ${estados}. FINAL-DERIVADO = pontuação completa da variante, não validação humana nem de especialista.`, "",
+    "**Reanálise histórica limitada**: a evidência principal é a avaliação nova.", "", ...textoDaTrilha(x.trilha), "",
     "- Plano: `thesis-workspace/planejamento/atual/plano-nat74-reanalise-2026-10-16.md` (E14 = fila T3).",
     "- Política: `politica-normativa-1.2.0` (sha256 em `entradas/ferramenta.json`), 1.1.0 ao lado (S1).",
     `- Entradas fixadas (E0): arquivo original em \`${COMMIT_RESULTADOS}\` (fora de derivados/, idêntico), derivado 1.0.0 em \`${COMMIT_DERIVADO_100}\` (pacotes flow-semantic-1.7.0 reutilizados, não repreparados), julgamentos e medidas da T2 por sha256 (\`entradas/ferramenta.json\`).`,
     `- Julgamentos da fila T3 (LLM cego por lote, D-130): ${x.julgamentos.length ? x.julgamentos.map(j => `\`${j.arquivo}\` (${j.julgados}/${j.total}${j.completo ? ", completo" : ""})`).join("; ") : "nenhum"}${x.rejulgados ? `; ${x.rejulgados} átomo(s) rejulgado(s) pela fila residual` : ""}.`,
     `- Medidas da T2 (\`medidas/t2/medidas-t2.json\`): ${Object.entries(x.t2).sort().map(([k, n]) => `${k} (${n})`).join("; ")}.`,
-    "- D: pontual (com IC e p) quando não há pendente; senão limites verdadeiros por par. Os antigos \"limite inferior/superior\" da 1.0.0 eram cenários e saem com esse nome.", "",
+    "- D: pontual (com IC e p) quando não há pendente; senão **envoltória conservadora** por par (união das candidatas admissíveis, não os extremos exatos atingíveis). Os antigos \"limite inferior/superior\" da 1.0.0 eram cenários e saem com esse nome.", "",
     "## Errata da política (P17)", "", "O texto 1.2.0 foi congelado como está. Dois deslizes: o §5 ainda diz \"aplicar a v1.1\"; o exemplo da R15 lista R-04 como",
     "B-02, mas R-04 é a B-26 (`empty-table-header`). Corrigir o texto = 1.2.1 e o derivado roda de novo.", "",
     "## Desvios desta versão", "", "- E3 não reprepara: os 30 pacotes 1.7.0 são os da 1.0.0 (sha256 em `verificacao/hashes-antes.json`).",
@@ -801,12 +894,14 @@ function leiaMe(x: { julgamentos: Record<string, unknown>[]; rejulgados: number;
     "- O bloco do painel sai em `painel-bloco.json` (o gerador do painel não foi editado nesta etapa).", ""].join("\n");
 }
 
-function blocoPainel(resultados: Record<string, unknown>, lbs: Record<string, unknown>) {
-  return { formato: "nat74-painel-1.1.0", titulo: "Reanálise retrospectiva (NAT-74)", derivado: DERIVADO_VERSAO, politica: POLITICA_PRINCIPAL, original: "govbr-resultados/RESULTADOS.md",
-    nota: "FINAL-DERIVADO: D pontual com IC e p; PROVISÓRIO: limites verdadeiros por par (cenários à parte, não interpretáveis)",
+function blocoPainel(resultados: Record<string, unknown>, lbs: Record<string, unknown>, trilha: Record<string, unknown>[]) {
+  return { formato: "nat74-painel-1.1.0", titulo: "Reanálise retrospectiva (NAT-74) — histórica, limitada", derivado: DERIVADO_VERSAO, politica: POLITICA_PRINCIPAL, original: "govbr-resultados/RESULTADOS.md",
+    nota: "Reanálise histórica limitada; a evidência principal é a avaliação nova. FINAL-DERIVADO = pontuação completa da variante (não validação humana); D pontual com IC e p. PROVISÓRIO: envoltória conservadora por par (união das candidatas admissíveis, não os extremos exatos); cenários à parte, não interpretáveis",
+    trilhaDoJulgamento: trilha, limites: { tipo: TIPO_LIMITES, nota: NOTA_LIMITES },
     campanhas: CAMPANHAS.map(c => { const r = resultados[c] as R; const v = r.variantes.principal;
       return { campanha: c, rotulo: ROTULO[c], principal: { estado: v.estado, pontual: v.pontual, limites: v.pontual ? null : { inferior: v.limites.inferior, superior: v.limites.superior },
-        maturidade: v.maturidade }, oficial: r.oficial }; }),
+        maturidade: v.maturidade }, s7: r.variantes.S7 ? { estado: r.variantes.S7.estado, pontual: r.variantes.S7.pontual,
+          envoltoria: r.variantes.S7.pontual ? null : { inferior: r.variantes.S7.limites.inferior, superior: r.variantes.S7.limites.superior } } : null, oficial: r.oficial }; }),
     b16: (lbs as { b16: unknown }).b16 };
 }
 

@@ -51,7 +51,7 @@ t("não se aplica → erro normativo (R11a); com sugestão válida → observaç
   assert.equal(derivarClasse(resp({ norma: nao, sugestao: sugestao("invalida") }), ctx()).classe, "erro-normativo");
   const ok = derivarClasse(resp({ norma: nao, sugestao: sugestao("valida") }), ctx());
   assert.equal(ok.classe, "observacao-norma-errada"); assert.equal(ok.regraDaPolitica, "R11d"); assert.equal(ok.spec, null);
-  assert.equal(derivarClasse(resp({ norma: nao, sugestao: sugestao("indeterminada") }), ctx()).classe, "erro-normativo");
+  assert.equal(derivarClasse(resp({ norma: nao, sugestao: sugestao("indeterminada") }), ctx()).classe, "pendente"); // L3: qualidade indeterminada → pendente (R9)
 });
 t("norma mais fraca aplicável e violada: com vínculo credita (R15); sem vínculo é erro normativo (R13)", () => {
   const fraca = { id: "citada", forca: "boa-pratica", aplicabilidade: "aplica", violada: "sim" } as const;

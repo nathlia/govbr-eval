@@ -229,8 +229,10 @@ function derivarPrincipal(r: Resposta, c: ContextoDerivacao): Omit<Derivado, "s5
   const qualidade = r.sugestao === NAO_PERGUNTADO ? null : r.sugestao.qualidade;
   const spec = typeof r.vinculo === "object" ? r.vinculo.spec : null;
   if (r.vinculo === "indeterminado") pend.push("vínculo indeterminado");
-  if (qualidade === "indeterminada") pend.push("qualidade da sugestão indeterminada (conta como erro normativo)");
+  // [revisão independente L3] qualidade indeterminada → pendente (R9), como já se faz na linha de base (politica.ts).
+  if (qualidade === "indeterminada") pend.push("qualidade da sugestão indeterminada: pendente (R9)");
   if (c.tipo === "qualidade") {
+    if (qualidade === "indeterminada") return { classe: "pendente", regraDaPolitica: "R9", spec: null, qualidadeDaSugestao: qualidade, pendencias: pend, fundamentacao: null };
     return { classe: qualidade === "valida" ? "observacao-norma-errada" : "erro-normativo", regraDaPolitica: qualidade === "valida" ? "R11d" : "R11",
       spec: null, qualidadeDaSugestao: qualidade, pendencias: pend, fundamentacao: null };
   }
@@ -245,6 +247,7 @@ function derivarPrincipal(r: Resposta, c: ContextoDerivacao): Omit<Derivado, "s5
     case "observacao": return { classe: pre, regraDaPolitica: "R11b", spec, qualidadeDaSugestao: null, pendencias: pend, fundamentacao: null };
     case "erro-normativo": {
       const fraca = r.norma !== NAO_PERGUNTADO && r.norma.aplicabilidade === "aplica" && r.norma.violada === "sim";
+      if (qualidade === "indeterminada") return { classe: "pendente", regraDaPolitica: "R9", spec: null, qualidadeDaSugestao: qualidade, pendencias: pend, fundamentacao: null };
       return { classe: qualidade === "valida" ? "observacao-norma-errada" : "erro-normativo", regraDaPolitica: qualidade === "valida" ? "R11d" : fraca ? "R13" : "R11",
         spec: null, qualidadeDaSugestao: qualidade, pendencias: pend, fundamentacao: null };
     }

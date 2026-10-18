@@ -187,7 +187,8 @@ export function classificar(e: AtomoEntrada, variante: Variante): AtomoClassific
       const origem = ehViolacao(p.classe) ? (origemFonte ? classeDaOrigem(origemFonte) : "indeterminada") : null;
       const qualidade: Qualidade = p.classe === "erro-normativo"
         ? (a.origemCartao === "linha-de-base" ? (e.sugestaoLinhaDeBase === "indeterminada" ? "pendente" : e.sugestaoLinhaDeBase)
-          : (variante !== "S4" && e.t3?.derivado.qualidadeDaSugestao ? e.t3.derivado.qualidadeDaSugestao as Qualidade : "pendente")) : null;
+          // [L3] qualidade indeterminada do agente → pendente (R9), como na linha de base.
+          : (variante !== "S4" && e.t3?.derivado.qualidadeDaSugestao && e.t3.derivado.qualidadeDaSugestao !== "indeterminada" ? e.t3.derivado.qualidadeDaSugestao as Qualidade : "pendente")) : null;
       let classe = classeDaParte(p, origem, qualidade, politica);
       let spec = ehViolacao(p.classe) ? p.vinculo?.unidade ?? null : null;
       let credito: ParteClassificada["credito"] = spec && classe !== "violacao-ds" ? "unidade" : null;
@@ -282,6 +283,8 @@ export function classificarVariante(e: AtomoEntrada, variante: Variante): AtomoC
 function classificarT3(e: AtomoEntrada, variante: Variante, base: Pick<AtomoClassificado, "chave" | "aposRevelacao" | "aposOrientacao" | "fontes" | "divergencias">): AtomoClassificado {
   const a = e.atomo, j = e.t3!, d = j.derivado, r = j.resposta;
   let classe = (variante === "S5" ? d.s5.classe : d.classe) as Classe;
+  // [L3] julgamentos ingeridos antes da regra: erro normativo com qualidade indeterminada → pendente (R9).
+  if (d.qualidadeDaSugestao === "indeterminada" && (classe === "erro-normativo" || classe === "observacao-norma-errada")) classe = "pendente";
   let spec = variante === "S5" ? d.s5.spec : d.spec;
   const norma = r.norma === "nao-perguntado" ? null : r.norma;
   const q1 = norma?.forca === "nenhuma", r15 = !!norma && !q1 && norma.forca !== "obrigatorio";

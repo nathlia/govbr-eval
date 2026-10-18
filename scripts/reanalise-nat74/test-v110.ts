@@ -13,7 +13,7 @@ import { inventarioDeAtomos, familiaDaRegra, type AtomoArquivado } from "./e1";
 import { FORMATO_RESPOSTAS, NAO_PERGUNTADO, derivarClasse, type CartaoCego, type ContextoDerivacao, type Resposta } from "./e14-comum";
 import { ingerir } from "./e14-ingerir";
 import { prepararFila } from "./e14-preparar";
-import { contador, limitesDoPar } from "./limites";
+import { contador, estadoDaVariante, limitesDoPar } from "./limites";
 import { compararExecucoes, executar } from "./pipeline";
 import { classificar, classificarVariante, type AtomoEntrada, type JulgamentoT3 } from "./politica";
 import { CAMINHO_MEDIDAS_T2, nomeUtil, vereditoT2, type MedidasT2 } from "./t2";
@@ -42,6 +42,14 @@ await t("pendente nos dois braços: o cenário 'arquivo restaurado nos dois' fic
   assert.ok(r.dMin <= dRestaurado && dRestaurado <= r.dMax && r.dMin <= dSemPendente && dSemPendente <= r.dMax);
   assert.ok(dRestaurado < dSemPendente);
   assert.deepEqual([r.dMin, r.dMax], [2 - 3, 3 - 1]);
+});
+await t("estado da variante: 1 pendente só no sem OU só no com (espelhado) → PROVISÓRIO e sem D pontual; nenhum → FINAL com pontual", () => {
+  for (const [s, c] of [[1, 0], [0, 1]]) assert.deepEqual(estadoDaVariante(s, c), { estado: "PROVISORIO", temPontual: false });
+  assert.deepEqual(estadoDaVariante(0, 0), { estado: "FINAL-DERIVADO", temPontual: true });
+  // o mesmo pendente unresolved no braço com, espelhado: envoltória abre para cima e não colapsa
+  const sem = { confirmadas: S("u1"), admissiveis: S() }, com = { confirmadas: S("u1"), admissiveis: S("u2") };
+  const a = limitesDoPar({ sem, com }, porSpec), b = limitesDoPar({ sem: com, com: sem }, porSpec);
+  assert.deepEqual([a.dMin, a.dMax], [0, 1]); assert.deepEqual([b.dMin, b.dMax], [-1, 0]);
 });
 await t("troca de braços inverte e espelha os limites; unidade repetida conta uma vez; modo unidade conta só A-xx", () => {
   const x = { sem: { confirmadas: S("u1"), admissiveis: S("u2") }, com: { confirmadas: S("u1", "u3"), admissiveis: S("u3", "u2") } };
@@ -141,6 +149,17 @@ await t("S7 sem-evidencia → pendente: só cartão sem-evidencia com fato verda
   assert.equal(classificar({ ...e, t3: julgT3(resp({ verdadeFactual: "falsa" })) }, "S7").tratamento, "julgado");
 });
 
+await t("L3: qualidade da sugestão indeterminada → pendente (R9) no caminho do agente (T3), como na linha de base", () => {
+  const q = ctxT3({ tipo: "qualidade", classeRegistrada: "erro-normativo" });
+  const r = resp({ verdadeFactual: NAO_PERGUNTADO, norma: NAO_PERGUNTADO, vinculo: NAO_PERGUNTADO,
+    sugestao: { trataOFato: "incerto", especificaDoSujeito: "sim", naoViolaNormaObrigatoria: "sim", qualidade: "indeterminada" } });
+  assert.equal(derivarClasse(r, q).classe, "pendente");
+  const nao = resp({ norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "nao-aplica", violada: "nao" }, vinculo: "nenhum",
+    sugestao: { trataOFato: "incerto", especificaDoSujeito: "sim", naoViolaNormaObrigatoria: "sim", qualidade: "indeterminada" } });
+  const c = classificar(entrada(atomo(), julgT3(nao)), "principal");
+  assert.equal(c.partes[0].classe, "pendente"); assert.equal(c.tratamento, "T3");
+});
+
 if (process.argv.includes("--rapido")) { console.log(`\n${n - falhas}/${n} testes da 1.1.0 passaram (só unidade)`); process.exit(falhas ? 1 : 0); }
 
 // ───────────────────────────────────────────────────────────────── ponta a ponta (pastas temporárias, julgamentos sintéticos)
@@ -200,7 +219,9 @@ try {
     for (const c of CAMPS) assert.equal(resultado(raiz, c).estado, "PROVISORIO");
     const p = prepararFila({ raiz, inv });
     assert.deepEqual(p.extracao.diferencas, []);
-    assert.equal(p.cartoes.length, 285 - 34 + 6); // qualidade indeterminada conta como erro normativo (não volta)
+    // L3: qualidade indeterminada → pendente (R9) e volta à fila; só as de qualidade "ausente" (cartão sem texto esperado) não voltam
+    const ausentes = lerJson<{ julgamentos: { derivado: { qualidadeDaSugestao: string | null } }[] }>(j).julgamentos.filter(x => x.derivado.qualidadeDaSugestao === "ausente").length;
+    assert.equal(p.cartoes.length, 285 - ausentes + 6);
     assert.deepEqual(p.cegueira.falhas, []);
   });
   let raizC = "", jC: string[] = [];
@@ -223,8 +244,12 @@ try {
     }
     const sonnet = resultado(raiz, "t7b-sonnet-tela-a-01");
     assert.equal(sonnet.estado, "FINAL-DERIVADO"); assert.ok(sonnet.pontual && sonnet.pontual.p !== null);
-    const opus = lerJson<{ variantes: { principal: { estado: string; pontual: unknown; maturidade: { sem: { pendentes: number }; com: { pendentes: number } } } } }>(join(raiz, "resultados", "t7-tela-a-01.json")).variantes.principal;
-    assert.ok(opus.estado === "FINAL-DERIVADO" || opus.maturidade.sem.pendentes + opus.maturidade.com.pendentes === 1, `A Opus: ${JSON.stringify(opus.maturidade)}`);
+    // A Opus: o átomo `unresolved` (evidência indisponível da NAT-73, braço sem) mantém PROVISÓRIO, exatamente 1 pendente, sem D pontual.
+    const opus = lerJson<{ variantes: { principal: { estado: string; pontual: unknown; maturidade: Record<"sem" | "com", { pendentes: number; pendentesPorTipo: Record<string, number> }> } } }>(join(raiz, "resultados", "t7-tela-a-01.json")).variantes.principal;
+    assert.equal(opus.estado, "PROVISORIO");
+    assert.equal(opus.maturidade.sem.pendentes + opus.maturidade.com.pendentes, 1, JSON.stringify(opus.maturidade));
+    assert.equal(opus.pontual, null);
+    assert.equal(opus.maturidade.sem.pendentesPorTipo.decisaoIndisponivel, 1);
     // Tela B: nenhum átomo na T2/T3; o que resta pendente nos braços são vínculos que a barreira do scorer recusa
     // (sujeito numa cena, unidade "sempre" da B-01 na última: "Review link crosses scenes"), já presentes na 1.0.0.
     const f = lerJson<{ porCampanhaBraco: Record<string, Record<string, { T2: number; T3: number; pendente: number }>> }>(join(raiz, "fila-t3", "filas-e6.json")).porCampanhaBraco["t7-tela-b-01"];
