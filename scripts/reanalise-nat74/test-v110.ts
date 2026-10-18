@@ -255,11 +255,28 @@ try {
     const f = lerJson<{ porCampanhaBraco: Record<string, Record<string, { T2: number; T3: number; pendente: number }>> }>(join(raiz, "fila-t3", "filas-e6.json")).porCampanhaBraco["t7-tela-b-01"];
     for (const b of ["sem", "com"]) assert.deepEqual([f[b].T2, f[b].T3, f[b].pendente], [0, 0, 0], b);
     const rec = lerJson<{ recusas: { campanha: string; motivo: string }[] }>(join(raiz, "trilha", "recusas-do-scorer.json")).recusas.filter(x => x.campanha === "t7-tela-b-01");
-    assert.ok(rec.length > 0 && rec.every(x => /^nenhuma unidade da B-(01|25) na cena/.test(x.motivo)), rec.map(x => x.motivo).slice(0, 3).join(" | "));
+    // Desde o scorer 1.8.x (domínio provado) a barreira também recusa o vínculo cujo sujeito não cabe no predicado medido
+    // na cena: o juiz sintético vincula cegamente à 1ª candidata, e para a B-01 isso inclui o <br-header> ou um <div> do
+    // cabeçalho, que não são o documento nem ancestral do participante de página medido. Esses ficam pendentes (P8).
+    const barreira = /^recusado pelo scorer: Relation \S+ does not fit the predicate \((ausencia-global|documento): [^)]+\) measured in \S+ for .* and unit B-(01|25)$/;
+    assert.ok(rec.length > 0 && rec.every(x => /^nenhuma unidade da B-(01|25) na cena/.test(x.motivo) || barreira.test(x.motivo)),
+      rec.map(x => x.motivo).slice(0, 3).join(" | "));
+    // A recusa é do sujeito, não do defeito: nenhum sujeito de página legítimo (documento, <body>, contêiner raiz) é recusado
+    // para a B-01 ...
+    const sujeitoDe = (m: string) => / for (.*) and unit B-01$/.exec(m)?.[1]?.split("|").pop();
+    const DE_PAGINA = ["", "body", "body>pnip-root"];
+    for (const x of rec.filter(x => barreira.test(x.motivo) && / unit B-01$/.test(x.motivo)))
+      assert.ok(!DE_PAGINA.includes(sujeitoDe(x.motivo)!), `B-01 recusada com sujeito de página: ${x.motivo}`);
+    // ... e todo crédito da B-01 por vínculo que o scorer aceitou tem sujeito de página.
+    const linhasB = lerJson<{ linhas: { campanha: string; variante: string; sujeitos: string; vinculoSpec: string | null; vinculoRelacao: string | null; vinculoAceitoPeloScorer: boolean | null }[] }>(
+      join(raiz, "trilha", "trilha-atomos.json")).linhas.filter(x => x.campanha === "t7-tela-b-01" && x.vinculoSpec === "B-01" && x.vinculoAceitoPeloScorer === true);
+    for (const x of linhasB) assert.ok(String(x.sujeitos).split(";").every(s => DE_PAGINA.includes(s.split("|").pop()!)), `B-01 aceita com sujeito fora da página: ${x.sujeitos}`);
     for (const c of CAMPS) { const r = lerJson<{ semEvidencia: { afetadosPorBraco: Record<string, number>; S7: { d: number[] } }; variantes: Record<string, unknown> }>(join(raiz, "resultados", `${c}.json`));
       assert.ok("S7" in r.variantes && r.semEvidencia && Array.isArray(r.semEvidencia.S7.d), `${c}: S7 publicada`); }
     const vb = resultado(raiz, "t7-tela-b-01");
     vb.d.forEach((d, i) => assert.ok(vb.limites.inferior.d[i] <= d && d <= vb.limites.superior.d[i]));
+    // Recusa pendente não se força: a tela B não fecha como FINAL com cartões recusados pela barreira.
+    assert.equal(vb.estado, "PROVISORIO", "tela B com recusas do scorer pendentes");
     raizC = raiz;
   });
   await t("determinismo: duas execuções com as mesmas entradas dão saídas idênticas byte a byte", async () => {
