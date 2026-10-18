@@ -1,0 +1,30 @@
+{
+ "id": "C-07",
+ "ancora": "pnip-header .br-avatar .content",
+ "estado": "sempre",
+ "normas": [
+  "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+  "emag:4.1",
+  "wcag:1.4.3"
+ ],
+ "medidas": {
+  "contraste": [
+   {
+    "parada": "inicial",
+    "texto": "U",
+    "cor": "rgb(255, 255, 255)",
+    "fundo": "rgb(255, 140, 0)",
+    "fonte": "24.192px 700",
+    "razao": 2.33
+   },
+   {
+    "parada": "lista-usuarios",
+    "texto": "U",
+    "cor": "rgb(255, 255, 255)",
+    "fundo": "rgb(255, 140, 0)",
+    "fonte": "24.192px 700",
+    "razao": 2.33
+   }
+  ]
+ }
+}

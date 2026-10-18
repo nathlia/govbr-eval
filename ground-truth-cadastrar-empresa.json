@@ -1,0 +1,442 @@
+{
+  "_meta": {
+    "version": "1.0.0-candidata",
+    "status": "CANDIDATA — 2026-10-18. Auditoria cega por medição (passada 1). Faltam: re-medida do segundo agente, decisões da autora sobre a lista escalada (tela-c/auditoria.md § 8; tela-c/recomendacoes-escaladas.md) e — a referência está ABAIXO DO PISO (auditoria.md § 11) — a decisão L2 da autora (rota nº 5 ou derrubar a tela C). telas.json › cadastrar-empresa.reference continua null.",
+    "version_note": "1.0.0-candidata (2026-10-18): referência auditada e incompleta, construída antes de qualquer execução e de qualquer detector na tela C (D-134; regra de reserva do protocolo NAT-78 § 3.5). Método: tela-b/metodo-auditoria.md @ 5838702 + adendo da B @ 9406aed + tela-c/metodo-auditoria-adendo-cadastrar-empresa.md (final, sha256 42b2246a4cf745f64abb752263a3ad0c28dfed483e2075fa6e7a0f849e53838c). Universo normativo: a base normalizada 3.7.0 de 186 regras (ds-rules/06, rules.jsonl sha256 5cac5fee9a6871bed9283d8c9714a2480adb50225aaa0d304f0ec337b80a2c56) + e-MAG 3.1; WCAG só como alias. Recall nesta tela é \"contra a referência auditada\".",
+    "page": "Cadastrar empresa do portal de administração do PNIP — tela C do estudo complementar (NAT-78, D-134), aplicação real em modo mock",
+    "url": "/pnip-c/portal-admin/empresas/cadastrar-empresa?mock-perfil=admin",
+    "waitFor": "main br-checkbox",
+    "suite": "cadastrar-empresa",
+    "ds": "gov.br Design System 3.7.0 como norma; a página usa @govbr-ds/core 3.4.1 + @govbr-ds/webcomponents 1.16.0 (tratamento de versão: método § 1)",
+    "unit_of_evaluation": "(elemento × defeito), no estado aplicável — a mesma unidade da tela de fluxo, da tela A e da tela B.",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "setup": [
+      {
+        "action": "click",
+        "selector": "br-select-pnip input#idUsuario"
+      },
+      {
+        "action": "wait",
+        "selector": "br-select-pnip .br-list .br-item"
+      }
+    ],
+    "setup_rationale": "Escolha gulosa do adendo da C § B, feita por cobertura de tipos ANTES de procurar defeito (tela-c/selecionar-estados.mjs → selecao.json, fase 1): um segmento (uma tela = uma rota, sem navigate); parada inicial (primeiro paint depois das três listas do carregamento) e lista-usuarios (clique no campo do seletor \"Selecione o usuário\": a lista abre e traz item, list e radio, que nenhuma outra vista elegível traz). Pré-condições medidas sem referência na fase 1: 47/47 (tela-c/conferir-paradas.mjs).",
+    "states": [
+      {
+        "id": "inicial",
+        "afterStep": 0,
+        "path": "/pnip-c/portal-admin/empresas/cadastrar-empresa",
+        "note": "formulário vazio, aba padrão \"Usuário Existente\" — primeiro paint depois das três listas do carregamento"
+      },
+      {
+        "id": "lista-usuarios",
+        "afterStep": 2,
+        "path": "/pnip-c/portal-admin/empresas/cadastrar-empresa",
+        "note": "lista do seletor \"Selecione o usuário\" aberta (três usuários fictícios) — última parada"
+      }
+    ],
+    "conformes": {
+      "note": "Controles conformes (plano da C § 6; protocolo NAT-78 § 5.2): denominador da taxa de falso alarme do agente. Arquivo irmão com sha256; re-medidos em tela-c/conferir-auditoria.mjs. Alegação sobre eles é adjudicada como qualquer outra fora da referência (D-48).",
+      "arquivo": "tela-c/conformes.json",
+      "sha256": "09210fbb950fc30951a60ef6b453f5f9ccbf853b1a7b77388f5f7292da8b9118",
+      "itens": [
+        {
+          "id": "K-01",
+          "state": "inicial",
+          "selector": "pnip-admin-form-empresa br-breadcrumb >>> a",
+          "count": 2,
+          "rules": [
+            "govbr-3.7.0-accessibility-breadcrumb-992f162ca821"
+          ],
+          "medida": "links \"Home\" e \"Empresa\" do <br-breadcrumb>: tabIndex 0, alcançados por Tab real."
+        },
+        {
+          "id": "K-02",
+          "state": "inicial",
+          "selector": "pnip-admin-form-empresa br-breadcrumb >>> li",
+          "count": 3,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-cf61b3eb3c71",
+            "emag:1.7"
+          ],
+          "medida": "cada item do breadcrumb (Home, Empresa, Cadastrar empresa) é um <li> próprio; os links adjacentes não são separados só por espaço."
+        },
+        {
+          "id": "K-03",
+          "state": "inicial",
+          "selector": "pnip-admin-form-empresa h2",
+          "count": 2,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+            "emag:4.1",
+            "wcag:1.4.3"
+          ],
+          "medida": "h2 \"Cadastrar empresa\" e \"Usuários\": #005ea2 sobre #fff = 6,72:1 (≥ 4,5:1; a norma tem a unidade C-07)."
+        },
+        {
+          "id": "K-04",
+          "state": "inicial",
+          "selector": "pnip-admin-form-empresa br-input >>> label",
+          "count": 12,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+            "emag:4.1",
+            "wcag:1.4.3"
+          ],
+          "medida": "rótulos dos 12 campos: #333 sobre #fff = 12,63:1."
+        },
+        {
+          "id": "K-05",
+          "state": "inicial",
+          "selector": "pnip-admin-form-empresa br-checkbox >>> input",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+            "emag:4.4",
+            "wcag:2.4.7"
+          ],
+          "medida": "com foco por Tab, o ::before do rótulo ganha box-shadow 0 0 0 2px rgb(194,133,12)."
+        },
+        {
+          "id": "K-06",
+          "state": "inicial",
+          "selector": "pnip-admin-form-empresa .br-tab button",
+          "count": 2,
+          "rules": [
+            "govbr-3.7.0-accessibility-tab-f1807d71dc5f"
+          ],
+          "medida": "as duas abas são <button> tabIndex 0; Enter ≡ clique (3/3, teste de estados)."
+        },
+        {
+          "id": "K-07",
+          "state": "inicial",
+          "selector": "pnip-admin-form-empresa br-divider",
+          "count": 2,
+          "rules": [
+            "govbr-3.7.0-accessibility-divider-30bbcbf3a17c"
+          ],
+          "medida": "<br-divider> fora do Tab (tabIndex < 0) e span interno com papel none na árvore do Chromium."
+        },
+        {
+          "id": "K-08",
+          "state": "inicial",
+          "selector": "pnip-admin-form-empresa .br-message .icon",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-component-message-66b01a712e67"
+          ],
+          "medida": "ícone semântico (fa-info-circle) à esquerda do conteúdo da br-message."
+        },
+        {
+          "id": "K-09",
+          "state": "inicial",
+          "selector": "pnip-admin-form-empresa button.br-button.primary",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-component-button-4d7b5f978df1"
+          ],
+          "medida": "\"Adicionar\": rótulo visível no próprio botão."
+        },
+        {
+          "id": "K-10",
+          "state": "lista-usuarios",
+          "selector": "br-select-pnip .br-radio input[type=radio]",
+          "count": 3,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+            "emag:6.2",
+            "wcag:1.3.1",
+            "govbr-3.7.0-accessibility-global-b5fad7ce076d"
+          ],
+          "medida": "os 3 rádios da lista com <label for> associado (labels.length = 1)."
+        },
+        {
+          "id": "K-11",
+          "state": "lista-usuarios",
+          "selector": "br-select-pnip .br-item",
+          "count": 3,
+          "rules": [
+            "govbr-3.7.0-component-item-a6d29ea54434"
+          ],
+          "medida": "hover aplica gradiente em toda a superfície do br-item; clique perto da borda do item (fora do texto) escolhe a opção."
+        },
+        {
+          "id": "K-12",
+          "state": "lista-usuarios",
+          "selector": "br-select-pnip .br-item",
+          "count": 3,
+          "rules": [
+            "govbr-3.7.0-component-item-a10751502b98"
+          ],
+          "medida": "padding computado 16px (--spacing-scale-2x) nos três br-item."
+        }
+      ]
+    },
+    "fundo": "Condições que o autor da tela não escreveu (método § 5, adendo da C § C), que não são unidades — alegação correta sobre elas entra como descoberta: (1) código do DS 3.4.1/1.16.0: botão de busca do CEP com aria-label=\"\" e 32×32 (renderizado no shadow do web component br-input, que não recebe rótulo para ele), alt=\"logo\" fixo no logo do <br-header>, item atual do <br-breadcrumb> sem aria-current, texto visualmente oculto \"Home\" do breadcrumb, Menu e Home 32×32 dos web components, regra `.br-select .br-list:focus{outline:none}` do core (a lista do seletor não mostra foco), grid de 24 px do core (E-08); (2) interno de bibliotecas de terceiros (SweetAlert2, ngx-mask) — nenhum visível nas paradas; (3) isolamento/mock: nenhuma perda medida (fontes e ícones locais, 0 externos, 0 escritas, 0 chamadas sem fixture); os links do breadcrumb apontam para /portal-admin… sem /pnip-c/ e recarregam o documento (artefato do base href); \"Coordenadas\" vazio porque o stub do mapa não responde.",
+    "fora_de_escopo": "Vistas excluídas pela regra de escolha (adendo da C § B; tela-c/selecao.json): painel \"Cadastrar Usuário\" (troca de painel no lugar, não aditiva); mensagens de validação ao sair dos campos (regra 5: nenhum componente do DS novo); os dois SweetAlert2 (\"Adicionar\" sem usuário, \"Salvar\" incompleto: diálogo sem componente do DS novo); menu do avatar (nada novo); breadcrumb (recarga, artefato do base href); \"Cancelar\" (navega); tabela de usuários com br-switch (só depois de \"Adicionar\", não aditiva, ou na rota editar/:uuid). Também fora: outras janelas e zoom, linguagem e microcopy (salvo decisão da autora), conteúdo das fixtures (módulos, usuários, CEP/CNPJ/CPF), regras só da base literal (E-0, plano § 4). Alegação correta sobre o que está fora vira descoberta e não muda o denominador.",
+    "nunca_agregar_com": "ground-truth-fluxo.json, ground-truth-solicitacao.json (tela A), ground-truth-vistorias.json (tela B), ground-truth.json (suíte TC-*), organic-ground-truth.json, ground-truth-privacidade.json e ground-truth-pnip-login.json — instrumentos ou páginas diferentes (D-13, D-49). Os números desta tela nunca se somam, se promediam nem formam série com os de outra.",
+    "baselines": "MEDIDAS sob o carimbo de cada bateria; nenhuma expectativa de detecção por ferramenta é declarada aqui (D-06).",
+    "exposto": {
+      "nota": "Adendo da C § E: unidade que coincide com achado registrado do casco (tela B e D-54..D-56) leva a marca; o recall é dado com e sem elas, e o piso conta sem elas.",
+      "specs": [
+        "C-04",
+        "C-05",
+        "C-06",
+        "C-07"
+      ]
+    },
+    "classes": {
+      "nota": "Proposta do auditor (passada 1), pré-registrada antes de qualquer execução; definições da NAT-71 § 3.1 (classe) e § 3.2 (automatizabilidade). O protocolo NAT-78 § 5.3 pede dois classificadores cegos + a autora nos desacordos: esta é a 1ª classificação, não a final. O nível a (implementado e testado em ferramenta) não é verificável pelo auditor cego, que não pode abrir detectores: o nível dado é b ou c, e a pode substituir b depois.",
+      "porSpec": {
+        "C-01": {
+          "classe": "contextual/relacional",
+          "nivel": "b",
+          "porque": "relaciona rótulo e campo (e a unicidade do id no documento)"
+        },
+        "C-02": {
+          "classe": "contextual/relacional",
+          "nivel": "b",
+          "porque": "observa a sequência de foco (um ponto a mais entre dois elementos) e a resposta a teclas"
+        },
+        "C-03": {
+          "classe": "contextual/relacional",
+          "nivel": "b",
+          "porque": "relaciona a regra de validação do campo (obrigatório) com o rótulo/instrução; a presença de marca textual é decidível por regra fechada sobre o texto do rótulo"
+        },
+        "C-04": {
+          "classe": "contextual/relacional",
+          "nivel": "b",
+          "porque": "ausência global na página"
+        },
+        "C-05": {
+          "classe": "contextual/relacional",
+          "nivel": "b",
+          "porque": "hierarquia de títulos na página"
+        },
+        "C-06": {
+          "classe": "semântico",
+          "nivel": "c",
+          "porque": "o <title> existe; a unidade cobra que ele represente o conteúdo principal (adequação)"
+        },
+        "C-07": {
+          "classe": "layout/visual",
+          "nivel": "b",
+          "porque": "contraste por cor computada"
+        }
+      }
+    },
+    "evidencia": {
+      "C-01": {
+        "arquivo": "tela-c/evidencia/C-01.json",
+        "sha256": "a93aed3c091016a5fbd5dc75d66a8279e572fc5ce63cef670849488eec6bbd62"
+      },
+      "C-02": {
+        "arquivo": "tela-c/evidencia/C-02.json",
+        "sha256": "c61521d7dd6a4edd6bd361d71bcb332536ef229b4b13b1b8dce82824378ef3be"
+      },
+      "C-03": {
+        "arquivo": "tela-c/evidencia/C-03.json",
+        "sha256": "9f2ba1367a5fe32d7cd3491b2cb79dd973970485f210a30c880401e8b662fe6e"
+      },
+      "C-04": {
+        "arquivo": "tela-c/evidencia/C-04.json",
+        "sha256": "363d696c4ee793e900cca735addf6352bf88920283ccaa91acf39a13be450d9e"
+      },
+      "C-05": {
+        "arquivo": "tela-c/evidencia/C-05.json",
+        "sha256": "cd3caf7ef7e7b15559380c5060499ecd4bdd0d60bc4a35cc515c8d1c7ebb3c67"
+      },
+      "C-06": {
+        "arquivo": "tela-c/evidencia/C-06.json",
+        "sha256": "9f6e0b55d5c965b1f6c88668c3409d6de24c9a643914315822f2fc00c036a4d5"
+      },
+      "C-07": {
+        "arquivo": "tela-c/evidencia/C-07.json",
+        "sha256": "d8c9c386d7c888f673818f1d03fa405a1546e5f2722b42e7bef9cb2a1a08851b"
+      },
+      "K-01": {
+        "arquivo": "tela-c/evidencia/K-01.json",
+        "sha256": "34db961244219a1fea3c46d4e95baf5276fae9a6bc2964217c72ae7bc6e9d878"
+      },
+      "K-02": {
+        "arquivo": "tela-c/evidencia/K-02.json",
+        "sha256": "6ab2a5903b8ae8b7af4b0ed98460315f1cdf0062e2b7b7de99f9f4b629996635"
+      },
+      "K-03": {
+        "arquivo": "tela-c/evidencia/K-03.json",
+        "sha256": "fdfbf7b09ff28e457d97cfd7aeaa0c54d4d6b55f3f83c40ab091e5f063a5b003"
+      },
+      "K-04": {
+        "arquivo": "tela-c/evidencia/K-04.json",
+        "sha256": "afa830b491d693229609f11994fe9e0bac361b7d62b3755a8151f7da9553bfb0"
+      },
+      "K-05": {
+        "arquivo": "tela-c/evidencia/K-05.json",
+        "sha256": "4f452127aaa4410af05b7cb660b21953b19cf6aa263f4ef4715e9c1ce9e69fbf"
+      },
+      "K-06": {
+        "arquivo": "tela-c/evidencia/K-06.json",
+        "sha256": "92a7077f0b9a63d6812fa703ce07f34149cef7e384580d937b58a96fa3b0dab5"
+      },
+      "K-07": {
+        "arquivo": "tela-c/evidencia/K-07.json",
+        "sha256": "4b6a427da89eb8424f434199c07393b13a65732902d0ccf50114f3f7720a11a0"
+      },
+      "K-08": {
+        "arquivo": "tela-c/evidencia/K-08.json",
+        "sha256": "865720ca45c1b91b865e1a176ac50525f56176c45960d8c042c2b69f35287e15"
+      },
+      "K-09": {
+        "arquivo": "tela-c/evidencia/K-09.json",
+        "sha256": "827fe4d66ef42edb92435934f44b64cb4dd3896cf91361df1908088f91c2a7ac"
+      },
+      "K-10": {
+        "arquivo": "tela-c/evidencia/K-10.json",
+        "sha256": "f32069e18f4e7037d5ab29208850e94acda731c1c33323b594b6a3613a234c56"
+      },
+      "K-11": {
+        "arquivo": "tela-c/evidencia/K-11.json",
+        "sha256": "88cdef0cebc1cb042bfea35bea65c9e90c49f12be487051cade78d184512b3b3"
+      },
+      "K-12": {
+        "arquivo": "tela-c/evidencia/K-12.json",
+        "sha256": "2c5c8060fdc4823ca43323699d0c75e38544245037dd60657a52c641b004d401"
+      }
+    },
+    "escaladas": {
+      "fonte": "tela-c/auditoria.md § 8 (E-01…E-11); recomendação em tela-c/recomendacoes-escaladas.md; decisão da autora pendente"
+    },
+    "auditoria": "tela-c/auditoria.md · decisoes.json · inventario.json · estados.json · selecao.json · conformes.json · evidencia/ · conferência sem modelo: node tela-c/conferir-auditoria.mjs"
+  },
+  "violations": [
+    {
+      "id": "C-01",
+      "anchor": "br-select-pnip input[type=text]",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+        "emag:6.2",
+        "wcag:1.3.1",
+        "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+        "govbr-3.7.0-accessibility-global-7e6420514860",
+        "emag:1.1",
+        "wcag:4.1.1"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "description": "Campo do seletor \"Selecione o usuário\" (aba \"Usuário Existente\"): o <input> tem id=\"idUsuario\", o mesmo id do hospedeiro <br-select-pnip id=\"idUsuario\">; o <label for=\"idUsuario\"> resolve para o hospedeiro (primeiro elemento com o id, não rotulável), e o campo fica com labels.length = 0, sem aria-label nem aria-labelledby. Na árvore do Chromium o nome acessível é o placeholder \"Selecione\", não o rótulo visível. Os 12 campos br-input e os 3 rádios da lista têm rótulo associado. Sem predicado na referência; medido em tela-c/conferir-auditoria.mjs."
+    },
+    {
+      "id": "C-02",
+      "anchor": "pnip-admin-form-empresa br-button[label=Cancelar]",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-79db88c7f55d",
+        "emag:1.4",
+        "wcag:2.4.3",
+        "govbr-3.7.0-accessibility-global-7e6420514860",
+        "emag:1.1",
+        "wcag:4.1.2"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "Hospedeiro <br-button label=\"Cancelar\" tabindex=\"0\">: o tabindex no hospedeiro (o \"Salvar\", ao lado, não o tem) cria um ponto de Tab a mais, antes do <button> interno, que já é focável. Nesse ponto o papel é generic e o nome acessível é \"\" (árvore do Chromium), e Enter e Espaço não fazem nada (endereço inalterado; 0/3 no teste de estados), enquanto Enter no botão interno navega. Sequência de Tab medida: … Adicionar → br-button (hospedeiro) → button \"Cancelar\" → button \"Salvar\". Sem predicado na referência; medido em tela-c/conferir-auditoria.mjs."
+    },
+    {
+      "id": "C-03",
+      "anchor": "pnip-admin-form-empresa br-input[formcontrolname]:not([formcontrolname=validadeRgp]):not([formcontrolname=complemento]):not([formcontrolname=cep]) >>> input",
+      "scope": "todos",
+      "expectedCount": 8,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-01b1806c30e9",
+        "emag:6.5",
+        "wcag:3.3.2"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "description": "Oito campos obrigatórios sem indicação de obrigatoriedade: Razão Social, Nome Fantasia, CNPJ, RGP, Rua, Número, Município e UF. O formulário os rejeita vazios (classe ng-invalid no primeiro paint; ao sair de cada um aparece \"Campo obrigatório\", 3/3), e \"Validade do RGP\" e \"Complemento\" são opcionais. Nada distingue uns dos outros antes do erro: o texto dos rótulos não tem marca, não há instrução no formulário e os campos não têm required nem aria-required (árvore: required=false). A KB 3.7.0 (6.5) espera \"Campos obrigatórios são indicados textualmente\". Sem predicado na referência; medido em tela-c/conferir-auditoria.mjs."
+    },
+    {
+      "id": "C-04",
+      "anchor": "pnip-root",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-7d2b85f81c52",
+        "emag:1.5",
+        "wcag:2.4.1"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "Defeito de ausência, ancorado no contêiner raiz da aplicação (método § 5). Nas duas paradas não há salto para o conteúdo: nenhuma âncora \"#…\" nem .br-skiplink, e o primeiro ponto de Tab é o botão Menu do cabeçalho. Casco da aplicação (marca exposto, adendo § E; a mesma unidade que a B-01 da tela B). Sem predicado na referência; medido em tela-c/conferir-auditoria.mjs."
+    },
+    {
+      "id": "C-05",
+      "anchor": "pnip-admin-form-empresa > div > div.row > h2",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-3ac0aaa53900",
+        "emag:1.3",
+        "wcag:1.3.1"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "description": "Os títulos da página são <h2> \"Cadastrar empresa\", <h3> \"Módulos disponíveis\" e <h2> \"Usuários\"; não há nenhum <h1> (light DOM e shadow roots). A hierarquia começa no nível 2. Ordem de títulos do casco (marca exposto, adendo § E; a mesma família de defeito da B-02). Sem predicado na referência; medido em tela-c/conferir-auditoria.mjs."
+    },
+    {
+      "id": "C-06",
+      "anchor": "head > title",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-5d5a5f21d94b",
+        "emag:3.3",
+        "wcag:2.4.2"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "O <title> é \"PNIP\" nas duas paradas: nomeia só o sistema e não representa o conteúdo principal (\"Cadastrar empresa\"). Âncora não renderizada por natureza (elemento do <head>). Casco (marca exposto; a mesma unidade que a B-25, decidida pela autora no D-61). Sem predicado na referência; medido em tela-c/conferir-auditoria.mjs."
+    },
+    {
+      "id": "C-07",
+      "anchor": "pnip-header .br-avatar .content",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "categories": [
+        "acessibilidade",
+        "token"
+      ],
+      "description": "Inicial do avatar no cabeçalho do app (span.content bg-orange-vivid-30 text-pure-0): \"U\" branco sobre #ff8c00, 24,2 px peso 700 — contraste 2,33:1 (abaixo também de 3:1). Presente nas duas paradas. Casco (marca exposto; a mesma unidade que a B-14). Sem predicado na referência; medido em tela-c/conferir-auditoria.mjs."
+    }
+  ]
+}

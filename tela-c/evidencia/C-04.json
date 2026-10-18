@@ -1,0 +1,28 @@
+{
+ "id": "C-04",
+ "ancora": "pnip-root",
+ "estado": "sempre",
+ "normas": [
+  "govbr-3.7.0-accessibility-global-7d2b85f81c52",
+  "emag:1.5",
+  "wcag:2.4.1"
+ ],
+ "medidas": {
+  "paradas": [
+   {
+    "parada": "inicial",
+    "ancorasHash": 0,
+    "skiplink": 0
+   },
+   {
+    "parada": "lista-usuarios",
+    "ancorasHash": 0,
+    "skiplink": 0
+   }
+  ],
+  "primeiroTab": {
+   "tag": "button",
+   "chave": "er>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button"
+  }
+ }
+}

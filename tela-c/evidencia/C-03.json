@@ -1,0 +1,99 @@
+{
+ "id": "C-03",
+ "ancora": "pnip-admin-form-empresa br-input[formcontrolname]:not([formcontrolname=validadeRgp]):not([formcontrolname=complemento]):not([formcontrolname=cep]) >>> input",
+ "estado": "inicial",
+ "normas": [
+  "govbr-3.7.0-accessibility-global-01b1806c30e9",
+  "emag:6.5",
+  "wcag:3.3.2"
+ ],
+ "medidas": {
+  "campos": [
+   {
+    "chave": "body>pnip-root>main>pnip-admin>pnip-admin-form-empresa>div>form>div:nth-of-type(1)>div:nth-of-type(1)>br-input >>> div>input",
+    "rotulo": "Razão Social da empresa",
+    "required": false,
+    "ariaRequired": null,
+    "axRequired": false
+   },
+   {
+    "chave": "body>pnip-root>main>pnip-admin>pnip-admin-form-empresa>div>form>div:nth-of-type(1)>div:nth-of-type(2)>br-input >>> div>input",
+    "rotulo": "Nome Fantasia da empresa",
+    "required": false,
+    "ariaRequired": null,
+    "axRequired": false
+   },
+   {
+    "chave": "body>pnip-root>main>pnip-admin>pnip-admin-form-empresa>div>form>div:nth-of-type(2)>div:nth-of-type(1)>br-input >>> div>input",
+    "rotulo": "CNPJ da empresa",
+    "required": false,
+    "ariaRequired": null,
+    "axRequired": false
+   },
+   {
+    "chave": "body>pnip-root>main>pnip-admin>pnip-admin-form-empresa>div>form>div:nth-of-type(2)>div:nth-of-type(2)>br-input >>> div>input",
+    "rotulo": "RGP da empresa",
+    "required": false,
+    "ariaRequired": null,
+    "axRequired": false
+   },
+   {
+    "chave": "body>pnip-root>main>pnip-admin>pnip-admin-form-empresa>div>form>div:nth-of-type(3)>div:nth-of-type(2)>br-input >>> div>input",
+    "rotulo": "Rua",
+    "required": false,
+    "ariaRequired": null,
+    "axRequired": false
+   },
+   {
+    "chave": "body>pnip-root>main>pnip-admin>pnip-admin-form-empresa>div>form>div:nth-of-type(3)>div:nth-of-type(3)>br-input >>> div>input",
+    "rotulo": "Número",
+    "required": false,
+    "ariaRequired": null,
+    "axRequired": false
+   },
+   {
+    "chave": "body>pnip-root>main>pnip-admin>pnip-admin-form-empresa>div>form>div:nth-of-type(4)>div:nth-of-type(2)>div>div>br-input >>> div>input",
+    "rotulo": "Município",
+    "required": false,
+    "ariaRequired": null,
+    "axRequired": false
+   },
+   {
+    "chave": "body>pnip-root>main>pnip-admin>pnip-admin-form-empresa>div>form>div:nth-of-type(4)>div:nth-of-type(3)>div>br-input >>> div>input",
+    "rotulo": "UF",
+    "required": false,
+    "ariaRequired": null,
+    "axRequired": false
+   }
+  ],
+  "marcasDeObrigatorioNoFormulario": [],
+  "mensagemAoSair": {
+   "razaoSocial": [
+    "Campo obrigatório"
+   ],
+   "nomeFantasia": [
+    "Campo obrigatório"
+   ],
+   "cnpj": [
+    "Campo obrigatório"
+   ],
+   "rgp": [
+    "Campo obrigatório"
+   ],
+   "rua": [
+    "Campo obrigatório"
+   ],
+   "numero": [
+    "Campo obrigatório"
+   ],
+   "cidade": [
+    "Campo obrigatório"
+   ],
+   "uf": [
+    "Campo obrigatório"
+   ],
+   "validadeRgp": [],
+   "complemento": []
+  }
+ }
+}

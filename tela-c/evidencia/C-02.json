@@ -1,0 +1,55 @@
+{
+ "id": "C-02",
+ "ancora": "pnip-admin-form-empresa br-button[label=Cancelar]",
+ "estado": "inicial",
+ "normas": [
+  "govbr-3.7.0-accessibility-global-79db88c7f55d",
+  "emag:1.4",
+  "wcag:2.4.3",
+  "govbr-3.7.0-accessibility-global-7e6420514860",
+  "emag:1.1",
+  "wcag:4.1.2"
+ ],
+ "medidas": {
+  "hospedeiro": {
+   "chave": "body>pnip-root>main>pnip-admin>pnip-admin-form-empresa>div>div:nth-of-type(5)>br-button:nth-of-type(1)",
+   "tabindexAttr": "0",
+   "tabIndex": 0,
+   "ax": {
+    "papel": "generic",
+    "nome": ""
+   }
+  },
+  "sequenciaTab": [
+   {
+    "tag": "button",
+    "texto": "Adicionar",
+    "chave": "-admin>pnip-admin-form-empresa>div>div:nth-of-type(3)>button"
+   },
+   {
+    "tag": "br-button",
+    "texto": "",
+    "chave": "form-empresa>div>div:nth-of-type(5)>br-button:nth-of-type(1)"
+   },
+   {
+    "tag": "button",
+    "texto": "Cancelar",
+    "chave": "a>div>div:nth-of-type(5)>br-button:nth-of-type(1) >>> button"
+   },
+   {
+    "tag": "button",
+    "texto": "Salvar",
+    "chave": "a>div>div:nth-of-type(5)>br-button:nth-of-type(2) >>> button"
+   }
+  ],
+  "hospedeiroEnter": {
+   "path": "/pnip-c/portal-admin/empresas/cadastrar-empresa",
+   "mais": 0
+  },
+  "hospedeiroSpace": {
+   "path": "/pnip-c/portal-admin/empresas/cadastrar-empresa",
+   "mais": 0
+  },
+  "botaoInternoEnter": "/pnip-c/portal-admin/empresas"
+ }
+}

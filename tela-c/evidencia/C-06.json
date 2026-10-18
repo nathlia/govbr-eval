@@ -1,0 +1,22 @@
+{
+ "id": "C-06",
+ "ancora": "head > title",
+ "estado": "sempre",
+ "normas": [
+  "govbr-3.7.0-accessibility-global-5d5a5f21d94b",
+  "emag:3.3",
+  "wcag:2.4.2"
+ ],
+ "medidas": {
+  "titulo": [
+   {
+    "parada": "inicial",
+    "titulo": "PNIP"
+   },
+   {
+    "parada": "lista-usuarios",
+    "titulo": "PNIP"
+   }
+  ]
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "id": "K-02",
+ "ancora": "pnip-admin-form-empresa br-breadcrumb >>> li",
+ "estado": "inicial",
+ "normas": [
+  "govbr-3.7.0-accessibility-global-cf61b3eb3c71",
+  "emag:1.7"
+ ],
+ "medidas": {
+  "breadcrumb-li": [
+   {
+    "tag": "li",
+    "texto": "Home"
+   },
+   {
+    "tag": "li",
+    "texto": "Empresa"
+   },
+   {
+    "tag": "li",
+    "texto": "Cadastrar empresa"
+   }
+  ]
+ }
+}

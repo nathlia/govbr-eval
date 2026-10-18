@@ -1,0 +1,22 @@
+{
+ "id": "K-06",
+ "ancora": "pnip-admin-form-empresa .br-tab button",
+ "estado": "inicial",
+ "normas": [
+  "govbr-3.7.0-accessibility-tab-f1807d71dc5f"
+ ],
+ "medidas": {
+  "abas-teclado": [
+   {
+    "texto": "Usuário Existente",
+    "tag": "button",
+    "tabIndex": 0
+   },
+   {
+    "texto": "Cadastrar Usuário",
+    "tag": "button",
+    "tabIndex": 0
+   }
+  ]
+ }
+}

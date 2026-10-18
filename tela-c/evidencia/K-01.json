@@ -1,0 +1,23 @@
+{
+ "id": "K-01",
+ "ancora": "pnip-admin-form-empresa br-breadcrumb >>> a",
+ "estado": "inicial",
+ "normas": [
+  "govbr-3.7.0-accessibility-breadcrumb-992f162ca821"
+ ],
+ "medidas": {
+  "breadcrumb-tab": {
+   "links": [
+    {
+     "texto": "Home",
+     "tabIndex": 0
+    },
+    {
+     "texto": "Empresa",
+     "tabIndex": 0
+    }
+   ],
+   "alcancadosPorTab": 2
+  }
+ }
+}
