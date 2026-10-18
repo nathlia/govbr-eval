@@ -6,13 +6,14 @@
     "fonteSha256": "5cac5fee9a6871bed9283d8c9714a2480adb50225aaa0d304f0ec337b80a2c56",
     "estados": "inicial · lista-exibir (tela-d/sequencia.mjs)",
     "familias": "F1 componente presente · F2 Template Base/regras de página · F3 fundamentos (cor, tipografia, espaçamento, iconografia) · F4 e-MAG · global = regra global da KB fora das quatro",
+    "decisoes": "escaladas decididas pela autora em 2026-10-18 (D-135, NAT-92): E-03 fora (D-09 removida); E-01, E-02, E-04, E-05, E-08 fora; E-06 mantém; E-07 precedentes do D-61. Linhas não-mensurável mantêm o veredito e citam a escalada; a decisão está em ground-truth-processos.json › _meta.escaladas",
     "destinos": "unidade (viola autoral) · escalada (não-mensurável → lista da autora, auditoria.md § 8) · registro · observacao · nenhum",
     "contagem": {
       "conforme": 35,
       "observação": 31,
       "não-aplicável": 49,
-      "não-mensurável": 11,
-      "viola": 17,
+      "não-mensurável": 12,
+      "viola": 16,
       "não normatiza": 43
     }
   },
@@ -261,7 +262,7 @@
       "norma": "A ação interna padrão do Input deve usar Button terciário circular de alta densidade, com ícone representando a ação.",
       "veredito": "conforme",
       "destino": "registro",
-      "medida": "ação interna do campo de pesquisa (\"Buscar\"): button.br-button só com ícone de lupa, sem primary/secondary (terciário), 32×32, border-radius 50% computado (o core 3.4.1 desenha .br-input .br-button circular) — a marcação autoral não tem as classes circle/small, mas o computado é o da regra. O tamanho do alvo → D-09."
+      "medida": "ação interna do campo de pesquisa (\"Buscar\"): button.br-button só com ícone de lupa, sem primary/secondary (terciário), 32×32, border-radius 50% computado (o core 3.4.1 desenha .br-input .br-button circular) — a marcação autoral não tem as classes circle/small, mas o computado é o da regra. O tamanho do alvo (32×32, também do core) → E-03, fora (D-135)."
     },
     {
       "id": "govbr-3.7.0-component-list-8f67e7cc7677",
@@ -560,12 +561,10 @@
       "emag": [],
       "wcag": [],
       "norma": "Ícones interativos devem possuir área de toque de 48 × 48 px.",
-      "veredito": "viola",
-      "destino": "unidade",
-      "unidades": [
-        "D-09"
-      ],
-      "medida": "ícones interativos autorais de 32×32: \"Buscar\" (button do pnip-search-table-utils) e os dois \"Exibir lista\" dos seletores da paginação (br-select-pnip) — precedente do D-61 (B-28/B-29: alvos de ícone autorais de 32×32 viram unidade). Os alvos de 40 px de altura (ícones das linhas 72×40; Página anterior/seguinte 40×40, desabilitados) → E-02. Menu e Home 32×32 são dos web components (fundo)."
+      "veredito": "não-mensurável",
+      "destino": "escalada",
+      "escalada": "E-02/E-03",
+      "medida": "ícones interativos abaixo de 48×48: \"Buscar\" e os dois \"Exibir lista\" (32×32) recebem tamanho e raio da regra .br-input .br-button do core 3.4.1 — **decidido fora pela autora (E-03, D-135)**: estilo do DS, fundo; os de 40 px (ícones das linhas 72×40, Página anterior/seguinte 40×40) são a densidade padrão do Button — **fora (E-02, D-135)**. Menu e Home 32×32 são dos web components (fundo). Na candidata (288fd5d) esta linha era a unidade D-09, removida."
     },
     {
       "id": "govbr-3.7.0-page-global-f6e03bce515b",

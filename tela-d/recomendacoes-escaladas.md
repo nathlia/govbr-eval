@@ -1,5 +1,10 @@
 # Tela D (Processos): o que a autora decide — 8 itens
 
+> **Decidido em 2026-10-18 (D-135, NAT-92):** E-03 **fora** (D-09 removida: os alvos de 32×32 recebem
+> tamanho e raio do core 3.4.1); E-01, E-02, E-04, E-05, E-08 fora; E-06 mantém; E-07 precedentes do
+> D-61. A tela ficou com 2 famílias (F1, F4) — desvio do piso aceito pela autora antes de qualquer
+> execução. Aplicado em `ground-truth-processos.json` 1.0.0. O texto abaixo é a proposta como foi.
+
 Nada aqui foi aplicado à referência (`ground-truth-processos.json` `1.0.0-candidata`). Cada item tem a
 medida, a pergunta e a recomendação do assistente. **"Aceito tudo"** é resposta válida; para recusar um
 item, basta citar o número. Critério da recomendação (o mesmo da B e da C): vira unidade só o que tem

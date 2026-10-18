@@ -78,7 +78,7 @@
   "processos": {
     "titulo": "tela D — processos do portal MPA do PNIP (aplicação real em modo mock, estudo complementar NAT-78; substituta da tela C, que ficou abaixo do piso)",
     "entry": "pnip-d/portal-mpa/processos?mock-perfil=mpa",
-    "reference": null,
+    "reference": "ground-truth-processos.json",
     "sources": [],
     "runs": {
       "com": "results/runs-processos",
@@ -86,7 +86,7 @@
       "smoke": "results/runs-processos-smoke"
     },
     "review": "results/semantic-review-processos",
-    "nota": "Tela D (rota nº 5 do README-MOCK § 7), ainda SEM referência (reference: null). Regra de reserva (protocolo NAT-78 § 3.5): nenhum detector — validator, axe, linha de base, nem o test:isolation, que fala com o oráculo pela configuração MCP — roda nesta tela antes de a referência 1.0.0 congelar. Build do modo mock do PNIP na ala própria govbr-corpus/public/pnip-d/ (base href /pnip-d/), para não mudar um byte das telas B e C: comparado aos builds congelados delas, só main.*.js (manipulador só-leitura da listagem de processos, dados inventados) e index.html (base href) diferem; os 188 demais arquivos, inclusive o chunk lazy de processos, são idênticos. O `?mock-perfil=mpa` escolhe a sessão fictícia de coordenadora já logada com o vínculo que o login e a página inicial gravariam (README-MOCK § 1), e o próprio app o retira da barra de endereço. Não é entrada Vite: sources vazio. Preparação sem detector em tela-d/.",
+    "nota": "Tela D (rota nº 5 do README-MOCK § 7), caso principal da coleta nova (D-135). Referência ground-truth-processos.json 1.0.0 congelada em 2026-10-18 (D-135: 13 specs, 57 unidades; auditoria cega 288fd5d, re-medida 87c13de). Regra de reserva (protocolo NAT-78 § 3.5): nenhum detector rodou nesta tela antes do congelamento. Build do modo mock do PNIP na ala própria govbr-corpus/public/pnip-d/ (base href /pnip-d/), para não mudar um byte das telas B e C: comparado aos builds congelados delas, só main.*.js (manipulador só-leitura da listagem de processos, dados inventados) e index.html (base href) diferem; os 188 demais arquivos, inclusive o chunk lazy de processos, são idênticos. O `?mock-perfil=mpa` escolhe a sessão fictícia de coordenadora já logada com o vínculo que o login e a página inicial gravariam (README-MOCK § 1), e o próprio app o retira da barra de endereço. Não é entrada Vite: sources vazio. Preparação sem detector em tela-d/.",
     "isolamento": {
       "texto": "Processos",
       "alvo": "br-tab",

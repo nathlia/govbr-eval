@@ -1,5 +1,8 @@
 # Tela D (Processos do portal MPA) — auditoria por medição (passada 1)
 
+> **Congelada como 1.0.0 em 2026-10-18 (D-135, NAT-92) — ver § 13.** As seções 0–12 são o registro da
+> passada 1 (candidata, eval `288fd5d`) e não foram reescritas; o que mudou está na § 13.
+
 **Método:** `tela-b/metodo-auditoria.md` (`5838702`) + adendo da B (`9406aed`) + adendo da D
 `tela-d/metodo-auditoria-adendo-processos.md`, final e commitado sozinho antes desta auditoria
 (`24a45fb`), **sha256 `d9989b5348ce18da9307fad7cec2eef67952c30f3640170ffb6d9749dda2b513`** (conferido
@@ -197,3 +200,32 @@ erro; Template Base e grid são casco/versão). Nenhuma unidade foi criada para 
 5. `tela-d/inventario.json` foi regravado pela re-medida na árvore congelada (§ 4).
 6. Nada commitado (instrução do orquestrador). Na árvore de trabalho há mudanças que não são desta
    auditoria (`runner/images.lock.json`, `portao-nat86/medicoes/…`): não foram tocadas.
+
+## 13. Decisões da autora e congelamento (D-135, 2026-10-18)
+
+**Re-medida independente:** eval `87c13de` (`tela-d/remedida/`, código próprio): 14/14 specs, 60/60
+unidades, 12/12 controles, **0 divergências**, 2 execuções idênticas.
+
+**Decisões (NAT-92, D-135):** **E-03 fora** → a **D-09 sai**: a revisão do Codex
+(`testing/nat92-target-css-review.json`) mostrou que os três alvos de 32×32 ("Buscar", "Exibir lista"
+×2) recebem tamanho e raio da regra `.br-input .br-button` do core 3.4.1 — estilo do DS, que o adendo
+exclui (fundo). E-01, E-02, E-04, E-05 e E-08 **fora**; E-06 **mantém** (D-01 com 18 unidades); E-07
+aplica os precedentes do D-61. Registro por item em `ground-truth-processos.json › _meta.escaladas`;
+`decisoes.json` regenerado (a linha foundation-global-1c0146e93d2e deixa de ser `viola` e cita
+E-02/E-03: viola 16 · não-mensurável 12); `evidencia/D-09.json` removido.
+
+**Referência 1.0.0:** **13 specs / 57 unidades**; sem as expostas **9 specs / 53 unidades**, famílias
+**F1** (D-01) e **F4** (D-02…D-08, D-10), 4 tipos do DS (button, tag, table, input), 12 conformes.
+Classes: sintático 4 · contextual/relacional 5 · layout/visual 3 · semântico 1 (sem as expostas:
+sintático 4 · contextual 3 · layout 2).
+
+**Desvio do piso (declarado):** o piso pré-registrado pedia ≥ 3 famílias; a D tem 2. A autora aceitou
+2 famílias para a tela D (D-135), **antes de qualquer execução de agente na tela** — não pode favorecer
+braço nenhum. Entra como limite de validade externa no texto. Gravado em `_meta.piso`.
+
+**Portões:** `node tela-d/conferir-auditoria.mjs` **124/124**, 3×, sha256 do conjunto
+`evidencia/*.json` idêntico nas três (as 25 evidências restantes são byte a byte as da candidata);
+`APP_URL=http://127.0.0.1:3218 npm run conferir:referencia -- --tela processos` (servidor
+`node tela-d/servir.mjs`, árvore congelada conferida contra o manifesto) **passa: 13/13 specs, 57
+unidades, estados e contagens sustentam**. `telas.json › processos.reference` =
+`ground-truth-processos.json`. Nenhum detector rodou na tela antes deste congelamento.

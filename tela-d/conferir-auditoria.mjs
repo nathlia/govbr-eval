@@ -13,7 +13,7 @@
  *    escrita (rede + registro do mock), nenhum externo, nenhuma chamada sem fixture; resolve as âncoras
  *    e confere contagem e visibilidade; entre as paradas (um segmento) atributos e texto próprio de
  *    cada âncora não mudam (fora `class` e `data-focus-visible-added`, marca do polyfill de foco);
- * 5. re-mede cada unidade (D-01…D-14) e cada par conforme elegível (os 12 K sorteados e os demais),
+ * 5. re-mede cada unidade (D-01…D-14, sem a D-09, removida na 1.0.0 — D-135) e cada par conforme elegível (os 12 K sorteados e os demais),
  *    mais as linhas `conforme` de decisoes.json medidas na página; gestos e Tab em cargas auxiliares.
  *    O Tab real espera, depois de cada tecla, 300 ms e a lista presente (`WAIT_FOR`): sair do campo de
  *    pesquisa vazio refaz a consulta e a tabela some por um instante (E-04) — sem a espera, o Tab que
@@ -233,11 +233,8 @@ try {
     ev("D-08", "th", { texto: x.texto, scope: x.attrs.scope ?? null, ax: { papel: ax?.papel, nome: ax?.nome } });
     ok("D-08 th da coluna de ações vazio (columnheader sem nome)", x.texto === "" && ax?.papel === "columnheader" && ax?.nome === "", `texto "${x.texto}" · AX ${ax?.papel} "${ax?.nome}"`);
   }
-  {
-    const xs = M("inicial", sp("D-09").anchor);
-    ev("D-09", "alvos", xs.map(x => ({ ariaLabel: x.attrs["aria-label"], caixa: x.caixa.slice(2), texto: x.texto })));
-    ok("D-09 3 alvos de ícone autorais de 32×32 (Buscar, Exibir lista ×2)", xs.length === 3 && xs.every(x => x.caixa[2] === 32 && x.caixa[3] === 32 && x.texto === "") && JSON.stringify(xs.map(x => x.attrs["aria-label"])) === JSON.stringify(["Buscar", "Exibir lista", "Exibir lista"]), xs.map(x => `${x.attrs["aria-label"]} ${x.caixa[2]}×${x.caixa[3]}`).join(" · "));
-  }
+  // D-09 (alvos 32×32) saiu na 1.0.0: E-03 fora (D-135) — tamanho e raio vêm do core 3.4.1.
+  ok("D-09 removida da 1.0.0 (D-135)", !sp("D-09") && GT._meta.version === "1.0.0", GT._meta.version);
   {
     const g = G("inicial").iframe; const ax = AX(sp("D-10").anchor)[0]; const x = M("inicial", sp("D-10").anchor)[0];
     ev("D-10", "iframe", { ...g, caixa: x.caixa.slice(2), ax: { papel: ax?.papel, nome: ax?.nome } });

@@ -45,7 +45,7 @@ const D = {
   "component-avatar-81c7524692f0": OK(".br-avatar .content do cabeçalho: 40×40 px, border-radius 50% (casco da aplicação; não entra como controle)."),
   "component-button-4d7b5f978df1": V(["D-01"], "inicial: os 18 botões de ação das linhas da tabela \"Ver processo\" (9) e \"Desassociar processo do analista responsável\" (9, 8 deles desabilitados) são <br-button> sem `label` e sem `circle`: o <button> interno (br-button middle) tem 72×40 px, raio 1680 px (pílula, não círculo), nenhum texto visível — só o ícone br-icon-base projetado — e o nome vem só do `title`. O \"Assinar\" (3), \"Exportar\", \"Voltar\" e \"Limpar filtros\" têm rótulo visível; os circulares (Página anterior/seguinte, Home, Menu) estão na exceção."),
   "component-checkbox-6923ae0af84f": OK("os checkboxes da tabela servem à seleção de uma ou mais linhas (seleção múltipla; um no cabeçalho). O rótulo deles → D-04."),
-  "component-input-3788829b08fe": OK("ação interna do campo de pesquisa (\"Buscar\"): button.br-button só com ícone de lupa, sem primary/secondary (terciário), 32×32, border-radius 50% computado (o core 3.4.1 desenha .br-input .br-button circular) — a marcação autoral não tem as classes circle/small, mas o computado é o da regra. O tamanho do alvo → D-09."),
+  "component-input-3788829b08fe": OK("ação interna do campo de pesquisa (\"Buscar\"): button.br-button só com ícone de lupa, sem primary/secondary (terciário), 32×32, border-radius 50% computado (o core 3.4.1 desenha .br-input .br-button circular) — a marcação autoral não tem as classes circle/small, mas o computado é o da regra. O tamanho do alvo (32×32, também do core) → E-03, fora (D-135)."),
   "component-list-8f67e7cc7677": OK("lista-exibir: os quatro br-item da lista do seletor têm o mesmo padding computado (16px 16px) e alturas 53/53/53/52 px."),
   "component-signin-2752fd23bbe8": OK("o Sign-in (\"U Olá, Usuária de Teste, SUPERVISOR\") ocupa uma linha: 392×40 px (casco)."),
   "component-table-7c605ca2f85e": OK("a tabela tem 9 colunas (9 th no thead, 9 td por linha)."),
@@ -73,7 +73,7 @@ const D = {
   // ---------- globais: fundamentos (F3)
   "foundation-global-0578aa6c2828": NM("E-08", "colunas (.row > .col-*) com o padding do grid do core 3.4.1 congelado (24 px entre colunas), não CSS autoral; a KB 3.7.0 diz 40 px. Valor que difere só entre a versão da página e a da norma (método § 1.4; como a E-08 da B e da C)."),
   "foundation-global-21b1a2733f7b": OK("cores computadas (texto, fundo, bordas) de todo elemento visível nas 2 paradas — 15 na inicial, 17 na lista-exibir, inclusive os fundos dos status (#e66f0e orange-vivid-40, #8289ff indigo-vivid-40, #888888 secondary-06, indigo-vivid-60) — todas presentes em tokens/colors.json 3.7.0; nenhuma fora da paleta. O contraste das combinações → D-06."),
-  "foundation-global-1c0146e93d2e": V(["D-09"], "ícones interativos autorais de 32×32: \"Buscar\" (button do pnip-search-table-utils) e os dois \"Exibir lista\" dos seletores da paginação (br-select-pnip) — precedente do D-61 (B-28/B-29: alvos de ícone autorais de 32×32 viram unidade). Os alvos de 40 px de altura (ícones das linhas 72×40; Página anterior/seguinte 40×40, desabilitados) → E-02. Menu e Home 32×32 são dos web components (fundo)."),
+  "foundation-global-1c0146e93d2e": NM("E-02/E-03", "ícones interativos abaixo de 48×48: \"Buscar\" e os dois \"Exibir lista\" (32×32) recebem tamanho e raio da regra .br-input .br-button do core 3.4.1 — **decidido fora pela autora (E-03, D-135)**: estilo do DS, fundo; os de 40 px (ícones das linhas 72×40, Página anterior/seguinte 40×40) são a densidade padrão do Button — **fora (E-02, D-135)**. Menu e Home 32×32 são dos web components (fundo). Na candidata (288fd5d) esta linha era a unidade D-09, removida."),
   // ---------- globais: página, padrões, templates (F2)
   "page-global-f6e03bce515b": NA("regra-guarda sem observável próprio: é medida pelas demais linhas desta tabela"),
   "pattern-global-eb8c1606a52e": NA("a lista tem dados nas 2 paradas (9 linhas): não há estado vazio a informar"),
@@ -207,6 +207,7 @@ if (process.argv[1] && process.argv[1].endsWith("montar-decisoes.mjs")) {
       fonteSha256: createHash("sha256").update(textoKB).digest("hex"),
       estados: "inicial · lista-exibir (tela-d/sequencia.mjs)",
       familias: "F1 componente presente · F2 Template Base/regras de página · F3 fundamentos (cor, tipografia, espaçamento, iconografia) · F4 e-MAG · global = regra global da KB fora das quatro",
+      decisoes: "escaladas decididas pela autora em 2026-10-18 (D-135, NAT-92): E-03 fora (D-09 removida); E-01, E-02, E-04, E-05, E-08 fora; E-06 mantém; E-07 precedentes do D-61. Linhas não-mensurável mantêm o veredito e citam a escalada; a decisão está em ground-truth-processos.json › _meta.escaladas",
       destinos: "unidade (viola autoral) · escalada (não-mensurável → lista da autora, auditoria.md § 8) · registro · observacao · nenhum",
       contagem,
     },

@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "version": "1.0.0-candidata",
-    "status": "CANDIDATA — 2026-10-18. Auditoria cega por medição (passada 1). Faltam, nesta ordem (adendo da D § F): re-medida do segundo agente, `npm run conferir:referencia -- --tela processos`, decisões da autora sobre a lista escalada (tela-d/auditoria.md § 8; tela-d/recomendacoes-escaladas.md). Acima do piso sem as expostas (auditoria.md § 11), com a F3 dependendo do precedente do D-61 (E-03). telas.json › processos.reference continua null.",
-    "version_note": "1.0.0-candidata (2026-10-18): referência auditada e incompleta, construída antes de qualquer execução e de qualquer detector na tela D (substituta da C abaixo do piso; protocolo NAT-78 § 3.5). Método: tela-b/metodo-auditoria.md @ 5838702 + adendo da B @ 9406aed + tela-d/metodo-auditoria-adendo-processos.md (final, sha256 d9989b5348ce18da9307fad7cec2eef67952c30f3640170ffb6d9749dda2b513). Universo normativo: a base normalizada 3.7.0 de 186 regras (ds-rules/06, rules.jsonl sha256 5cac5fee9a6871bed9283d8c9714a2480adb50225aaa0d304f0ec337b80a2c56) + e-MAG 3.1; WCAG só como alias. Recall nesta tela é \"contra a referência auditada\".",
+    "version": "1.0.0",
+    "status": "1.0.0 congelada — 2026-10-18 (D-135, NAT-92): escaladas decididas pela autora (E-03 fora → D-09 removida; demais conforme a recomendação), re-medida independente sem divergência (govbr-eval 87c13de: 14/14 specs, 60/60 unidades, 12/12 controles, sobre a candidata 288fd5d), portões repassados. 13 specs / 57 unidades; sem as expostas 9 specs / 53 unidades, famílias F1 e F4 (desvio do piso declarado, ver piso).",
+    "version_note": "1.0.0 (2026-10-18): candidata 1.0.0-candidata (eval 288fd5d) + decisões da autora (D-135). referência auditada e incompleta, construída antes de qualquer execução e de qualquer detector na tela D (substituta da C abaixo do piso; protocolo NAT-78 § 3.5). Método: tela-b/metodo-auditoria.md @ 5838702 + adendo da B @ 9406aed + tela-d/metodo-auditoria-adendo-processos.md (final, sha256 d9989b5348ce18da9307fad7cec2eef67952c30f3640170ffb6d9749dda2b513). Universo normativo: a base normalizada 3.7.0 de 186 regras (ds-rules/06, rules.jsonl sha256 5cac5fee9a6871bed9283d8c9714a2480adb50225aaa0d304f0ec337b80a2c56) + e-MAG 3.1; WCAG só como alias. Recall nesta tela é \"contra a referência auditada\".",
     "page": "Processos do portal MPA do PNIP — tela D do estudo complementar (NAT-78; substituta da tela C), aplicação real em modo mock",
     "url": "/pnip-d/portal-mpa/processos?mock-perfil=mpa",
     "waitFor": "main .br-table tbody tr",
@@ -177,7 +177,7 @@
         }
       ]
     },
-    "fundo": "Condições que o autor da tela não escreveu (método § 5, adendo da D § C), que não são unidades — alegação correta sobre elas entra como descoberta: (1) código do DS 3.4.1/1.16.0: aria-label das abas = id do br-tab-item quando a prop aria-label falta (\"AGUARDANDO_ANALISE\", \"TRAMITANDO\", \"HISTORICO\" — a escolha do id é autoral, o recurso é do web component; sem norma no universo, auditoria.md § 6), alt=\"logo\" fixo no logo do <br-header>, aria-label=\"\" no botão interno de todo br-button e no botão Home do breadcrumb, item atual do breadcrumb sem aria-current, texto visualmente oculto \"Home\", Menu e Home 32×32 dos web components, regra `.br-select .br-list:focus{outline:none}` do core (a lista do seletor não mostra foco), grid de 24 px do core (E-08), aba ativa sem aria-selected; (2) interno de bibliotecas de terceiros — nenhum visível nas paradas; (3) isolamento/mock: nenhuma perda medida (fontes e ícones locais, 0 externos, 0 escritas, 0 chamadas sem fixture); o link do breadcrumb aponta para /portal-mpa/ sem /pnip-d/ e recarrega (artefato do base href); os números de processo das linhas 1, 5 e 8 recarregam em /login (destino do mock); o conteúdo da lista, dos status e das opções dos filtros vem do manipulador só-leitura; \"Aberto há\" deriva do relógio congelado.",
+    "fundo": "Condições que o autor da tela não escreveu (método § 5, adendo da D § C), que não são unidades — alegação correta sobre elas entra como descoberta: (1) código do DS 3.4.1/1.16.0: tamanho 32×32 e raio dos alvos \"Buscar\" e \"Exibir lista\" (regra .br-input .br-button do core; E-03, D-135), aria-label das abas = id do br-tab-item quando a prop aria-label falta (\"AGUARDANDO_ANALISE\", \"TRAMITANDO\", \"HISTORICO\" — a escolha do id é autoral, o recurso é do web component; sem norma no universo, auditoria.md § 6), alt=\"logo\" fixo no logo do <br-header>, aria-label=\"\" no botão interno de todo br-button e no botão Home do breadcrumb, item atual do breadcrumb sem aria-current, texto visualmente oculto \"Home\", Menu e Home 32×32 dos web components, regra `.br-select .br-list:focus{outline:none}` do core (a lista do seletor não mostra foco), grid de 24 px do core (E-08), aba ativa sem aria-selected; (2) interno de bibliotecas de terceiros — nenhum visível nas paradas; (3) isolamento/mock: nenhuma perda medida (fontes e ícones locais, 0 externos, 0 escritas, 0 chamadas sem fixture); o link do breadcrumb aponta para /portal-mpa/ sem /pnip-d/ e recarrega (artefato do base href); os números de processo das linhas 1, 5 e 8 recarregam em /login (destino do mock); o conteúdo da lista, dos status e das opções dos filtros vem do manipulador só-leitura; \"Aberto há\" deriva do relógio congelado.",
     "fora_de_escopo": "Vistas excluídas pela regra de escolha (adendo da D § B; tela-d/selecao.json): abas \"Aguardando análise\"/\"Concluídos\", \"Meus processos\", filtros aplicados e troca de página (recarregam a lista no lugar: não aditivas), \"Exportar\", \"Ver processo\", números de processo, breadcrumb, \"Voltar\" (navegam ou recarregam), os dois SweetAlert2 (\"Desassociar\", \"Assinar\": diálogo sem componente do DS novo), menu do avatar (nada novo), listas abertas dos filtros (não eram gatilho pelo seletor congelado). Também fora: outras janelas e zoom, linguagem e microcopy (salvo decisão da autora), conteúdo das fixtures (processos, nomes, números, datas, status, opções), regras só da base literal. Alegação correta sobre o que está fora vira descoberta e não muda o denominador.",
     "nunca_agregar_com": "ground-truth-fluxo.json, ground-truth-solicitacao.json (tela A), ground-truth-vistorias.json (tela B), ground-truth-cadastrar-empresa.json (tela C), ground-truth.json (suíte TC-*), organic-ground-truth.json, ground-truth-privacidade.json e ground-truth-pnip-login.json — instrumentos ou páginas diferentes (D-13, D-49). Os números desta tela nunca se somam, se promediam nem formam série com os de outra.",
     "baselines": "MEDIDAS sob o carimbo de cada bateria; nenhuma expectativa de detecção por ferramenta é declarada aqui (D-06).",
@@ -233,11 +233,6 @@
           "nivel": "b",
           "porque": "th sem texto — um elemento"
         },
-        "D-09": {
-          "classe": "layout/visual",
-          "nivel": "b",
-          "porque": "geometria (caixa de 32×32 contra 48×48)"
-        },
         "D-10": {
           "classe": "layout/visual",
           "nivel": "b",
@@ -264,7 +259,7 @@
           "porque": "contraste por cor computada"
         }
       },
-      "resumo": "sintático 4 · contextual/relacional 5 · layout/visual 4 · semântico 1"
+      "resumo": "sintático 4 · contextual/relacional 5 · layout/visual 3 · semântico 1"
     },
     "evidencia": {
       "D-01": {
@@ -298,10 +293,6 @@
       "D-08": {
         "arquivo": "tela-d/evidencia/D-08.json",
         "sha256": "138cf66aa2bbebc3bc89dfc295551d57b3ddcb07043024b3cd8c73ceccb2a7c9"
-      },
-      "D-09": {
-        "arquivo": "tela-d/evidencia/D-09.json",
-        "sha256": "d09c40c95980a3f164f8353a61577368ed2bd99f38916d01a8eaa3bea2fc4fac"
       },
       "D-10": {
         "arquivo": "tela-d/evidencia/D-10.json",
@@ -373,9 +364,38 @@
       }
     },
     "escaladas": {
-      "fonte": "tela-d/auditoria.md § 8 (E-01…E-08); recomendação em tela-d/recomendacoes-escaladas.md; decisão da autora pendente"
+      "fonte": "tela-d/auditoria.md § 8 (E-01…E-08); proposta em tela-d/recomendacoes-escaladas.md; decisão da autora em 2026-10-18 (D-135, NAT-92)",
+      "removida": {
+        "E-03": "D-09 sai: os três alvos de 32×32 (Buscar, Exibir lista ×2) recebem tamanho e raio da regra `.br-input .br-button` do @govbr-ds/core 3.4.1 (revisão em testing/nat92-target-css-review.json); o adendo da D exclui estilo do DS (fundo)"
+      },
+      "manter": {
+        "E-06": "os 8 \"Desassociar\" desabilitados continuam na D-01 (regra de anatomia; visíveis) — D-01 com 18 unidades"
+      },
+      "fora": {
+        "E-01": "o ciclo iframe↔body não é aprisionamento: Shift+Tab sai; o ciclo vem do navegador sem interface. O iframe segue na D-10",
+        "E-02": "alvos de 40 px = densidade padrão do Button do DS",
+        "E-04": "recarregar a lista ao sair do campo de pesquisa não é mudança de contexto",
+        "E-05": "seletor da paginação reproduz o exemplo oficial do Select (mesma decisão da C)",
+        "E-08": "grid difere entre 3.4.1 e 3.7.0 (método § 1.4)"
+      },
+      "precedentes": {
+        "E-07": "D-61 aplicado: rodapé/contentinfo, Menu sem efeito, abreviaturas, ajuda, aba ativa só por classe — fora / não-aplicável"
+      }
     },
-    "auditoria": "tela-d/auditoria.md · decisoes.json · inventario.json · estados.json · selecao.json · conformes.json · evidencia/ · conferência sem modelo: node tela-d/conferir-auditoria.mjs"
+    "auditoria": "tela-d/auditoria.md · decisoes.json · inventario.json · estados.json · selecao.json · conformes.json · evidencia/ · conferência sem modelo: node tela-d/conferir-auditoria.mjs · decisões: D-135 · re-medida: tela-d/remedida/ (87c13de)",
+    "metodo": {
+      "adendo": "tela-d/metodo-auditoria-adendo-processos.md",
+      "adendoSha256": "d9989b5348ce18da9307fad7cec2eef67952c30f3640170ffb6d9749dda2b513",
+      "adendoCommit": "24a45fb",
+      "auditoriaCandidata": "288fd5d",
+      "remedida": "87c13de (tela-d/remedida/: código próprio, 0 divergências)",
+      "decisao": "D-135 (thesis-workspace/tcc2-decisions-log.md; NAT-92)"
+    },
+    "piso": {
+      "preRegistrado": "adendo § A: ≥ 8 specs, ≥ 3 das 4 famílias, ≥ 3 tipos de componente do DS, ≥ 4 conformes — sem as unidades exposto",
+      "medido": "9 specs não expostas (53 unidades), 2 famílias (F1: D-01; F4: D-02…D-08, D-10), 4 tipos do DS (button, tag, table, input), 12 conformes",
+      "desvio": "D-135: sem a D-09 (E-03 fora) a tela fica com 2 famílias; a autora aceitou 2 famílias para a tela D, decidido ANTES de qualquer execução de agente na tela (não pode favorecer braço nenhum). A variedade menor de famílias entra como limite de validade externa no texto (Metodologia e Resultados)."
+    }
   },
   "violations": [
     {
@@ -524,20 +544,6 @@
         "acessibilidade"
       ],
       "description": "Cabeçalho da coluna de ações (Ver processo / Desassociar / Assinar): <th scope=\"col\"> vazio, columnheader sem nome na árvore — as células de ação ficam sem cabeçalho identificável. Precedente B-26 (D-61). Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
-    },
-    {
-      "id": "D-09",
-      "anchor": "pnip-mpa-processos button.br-button:not(.circle)[aria-label]",
-      "scope": "todos",
-      "expectedCount": 3,
-      "state": "inicial",
-      "rules": [
-        "govbr-3.7.0-foundation-global-1c0146e93d2e"
-      ],
-      "categories": [
-        "estrutura"
-      ],
-      "description": "Alvos de ícone autorais de 32×32 px (abaixo de 48×48): o \"Buscar\" do campo de pesquisa (button.br-button só com ícone de lupa, marcação do pnip-search-table-utils) e os dois \"Exibir lista\" dos seletores \"Exibir\" e \"Página\" da paginação (br-select-pnip). Precedente B-28/B-29 (D-61: alvos de ícone autorais de 32×32 viram unidade); ver E-03 sobre a recomendação pendente da C para o mesmo \"Exibir lista\". Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
     },
     {
       "id": "D-10",
