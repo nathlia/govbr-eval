@@ -29,3 +29,5 @@ scripts/vazamento/*.ts text eol=lf
 # NAT-61: o kb-aliases v2 também entra no hash do scorer (a regra de cima só cobria o v1); numa worktree nova
 # no Windows ele saía em CRLF e o painel acusava SCORER_FILES alterado.
 kb-aliases-v2.json text eol=lf
+# scripts/*.ts não alcança subpastas (reanalise-nat74/, painel/, vazamento/): também entram no hash do engine ou em sha congelados.
+scripts/**/*.ts text eol=lf
