@@ -48,6 +48,9 @@ test("vocabulários: vigente é o v2 do instrumento; legado é o kb-aliases.json
   assert.equal(KB_ALIASES_VIGENTE.version, "kb-aliases-2.0.0");
   assert.equal(kbAliasesFileFor(FLOW_SCORING_VERSION), "kb-aliases-v2.json");
   for (const v of ["flow-semantic-1.6.0", "flow-semantic-1.5.0", "citation-matching-D37"]) assert.equal(kbAliasesFileFor(v), "kb-aliases.json");
+  // 1.7.0 virou legado com a 1.8.0, mas foi preparada com o vocabulário vigente: continua com ele.
+  assert.equal(kbAliasesFileFor("flow-semantic-1.7.0"), "kb-aliases-v2.json");
+  assert.equal(kbAliasesFileFor("flow-semantic-1.9.0"), "kb-aliases.json", "versão desconhecida (nem vigente nem legado declarado) não ganha o vocabulário novo");
   assert.equal(KB_ALIASES_LEGADO.sha256, "e3d79270490f7f18ad0bcd3c9655526d8b15a1f2016c0f7753af581ce01dc656");
   assert.deepEqual(analysisIdentity().kbAliasesApplied, { version: KB_ALIASES_VIGENTE.version, file: "kb-aliases-v2.json", sha256: KB_ALIASES_VIGENTE.sha256 });
   assert.match(rotuloDoVocabulario(KB_ALIASES_VIGENTE), /^kb-aliases-2\.0\.0@[0-9a-f]{12}$/);

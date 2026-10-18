@@ -1,4 +1,4 @@
-# Pontuação semântica e revisão finita — flow-semantic-1.6.0
+# Pontuação semântica e revisão finita — flow-semantic-1.8.0
 
 ## As três filas, e qual delas fecha a bateria (fatia 5)
 
@@ -180,13 +180,36 @@ trouxe. A fila cega mostra também as outras unidades da mesma cena, para a revi
 o id da execução e os caminhos continuam fora dela, e a ordem continua cena/regra/elemento/id.
 
 **Legado.** `scoring.semanticLegacy` (`instrument.json`) lista as versões cujos pacotes e decisões
-continuam pontuáveis pelo caminho delas: hoje `flow-semantic-1.5.0`. O resultado sai com a versão do
+continuam pontuáveis pelo caminho delas: hoje `flow-semantic-1.5.0`, `1.6.0` e `1.7.0`. O resultado sai com a versão do
 pacote e reproduz o `score.json` arquivado byte a byte; vínculo num pacote legado é recusado, e
 decisões de outra versão nunca migram (`scopeReviews` recusa). Reanálise com vínculo é análise NOVA
 (NAT-74), nunca reescrita das campanhas. A versão do scorer já está na chave de comparação
 (`contracts/index.ts comparisonKeyOf`: `scorer.version`, `scorer.scorerSha256`,
 `scorer.acceptancePolicy`), então uma análise 1.6.0 nunca se agrega com uma 1.5.0; dentro da 1.6.0, usar
 ou não um vínculo é decisão da revisora, que entra no `reviewHash`, não configuração.
+
+### Domínio de aplicabilidade provado (flow-semantic-1.8.0, NAT-74)
+
+Com cenas por segmento (D-60), uma spec `sempre` vira UMA unidade, construída no último segmento. Um
+cartão julgado noutra rota (a lista, o outro detalhe) não alcançava essa unidade: o vínculo era recusado
+por atravessar cena, mesmo quando o defeito foi medido ali. A 1.8.0 resolve sem criar unidade por cena:
+
+- a unidade mantém a cena **canônica** (onde a ancoragem estrita vale) e pode trazer `domain`: as cenas do
+  plano em que o defeito foi MEDIDO, cada uma com as paradas, o predicado próprio (`ausencia-global`,
+  `elemento` ou `documento`), os participantes resolvidos NAQUELA cena e o sha256 da referência, do build
+  e da evidência. O domínio entra no hash do pacote e é conferido na preparação e na pontuação; sem
+  `domain`, nada muda;
+- o vínculo nomeia a cena em que o cartão foi julgado. Fora da cena canônica ele só passa se essa cena está
+  no domínio e no plano, se o domínio foi medido no build do cartão e se a relação é a do predicado medido
+  ali: `ausencia-global` (sujeito = documento ou ancestral do participante de página medido na cena),
+  `elemento` (`participante-relacionado`, sujeito = o elemento medido na cena ou algo dentro dele),
+  `documento` (idem, e o próprio documento `""` também; nunca `body` nem um irmão). `transicao` e
+  `host-interno` não atravessam cena. Assinatura, amarração ao cartão/build/execução e barreiras de sujeito
+  continuam; a unidade é creditada no máximo uma vez;
+- nenhuma chave é transportada de uma rota a outra: estado/rota sem medida segue recusado;
+- `aplicarDominio` eleva um pacote 1.7.0 já preparado (reanálise: nada repreparado; ids de cartão e hash
+  recalculados, origem em `provenance.derivadoDe`). Pacotes 1.5.0–1.7.0 continuam pelo caminho deles e
+  recusam `domain`; 1.7.0 segue com `kb-aliases-v2.json`.
 
 ## Contrato do achado e evidência da execução (fluxo-1.3.0)
 

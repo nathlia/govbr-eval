@@ -1,5 +1,5 @@
 /**
- * E8 (plano §5, P3, P8): monta as decisões 1.7.0 de um par a partir dos átomos classificados e pontua
+ * E8 (plano §5, P3, P8): monta as decisões (1.7.0; 1.8.0 com domínio provado no derivado 1.2.0) de um par a partir dos átomos classificados e pontua
  * com o `scoreSemanticPackage` vigente. Vínculos traduzidos mecanicamente pela árvore medida (P8);
  * decisão recusada pelas barreiras do scorer fica PENDENTE e listada — nunca forçada.
  */
@@ -33,6 +33,12 @@ export function relacaoMedida(key: string, u: Unit): { relacao: ReviewLink["rela
   }
   const p = [...u.participants].sort((a, b) => prefixoComum(b, key) - prefixoComum(a, key) || (a < b ? -1 : 1))[0] ?? "";
   return { relacao: "participante-relacionado", participante: p };
+}
+
+/** [1.2.0] Relação pelo predicado medido na cena do domínio: a do próprio defeito, com o participante medido NESTA cena. */
+export function relacaoNoDominioMedido(key: string, e: NonNullable<Unit["domain"]>[number]): { relacao: ReviewLink["relation"]; participante: string } {
+  if (e.kind === "ausencia-global") return { relacao: "ausencia-global", participante: e.participants.find(p => participanteDePagina(p) && (key === "" || tocaParticipante(p, key))) ?? e.participants[0] };
+  return { relacao: "participante-relacionado", participante: e.participants.find(p => p !== "" && (tocaParticipante(key, p) || (e.kind === "documento" && key === ""))) ?? e.participants[0] };
 }
 
 /** Id do átomo montado para a parte `k` do átomo arquivado `id` (a parte 0 mantém o id arquivado). */
@@ -116,16 +122,23 @@ export function montarDecisoes(a: {
         const cena = s.scene ?? card.scene;
         const naCena = daSpec.filter(u => u.scene === cena);
         const prefer = naCena.filter(u => anc.includes(u.id));
-        const pool = prefer.length ? prefer : naCena;
-        if (!pool.length) { falhou = `nenhuma unidade da ${p.spec} na cena ${cena}`; return; }
+        // [1.2.0] Fora da cena canônica, só a unidade da spec decidida (p.spec) cujo domínio PROVADO contém
+        // a cena em que o cartão foi julgado; nunca a de prefixo mais longo noutra rota.
+        const noDominio = naCena.length ? [] : daSpec.filter(u => u.domain?.some(e => e.scene === cena));
+        if (noDominio.length > 1) { falhou = `${noDominio.length} unidades da ${p.spec} com a cena ${cena} no domínio provado: ambíguo`; return; }
+        const pool = prefer.length ? prefer : naCena.length ? naCena : noDominio;
+        if (!pool.length) { falhou = `nenhuma unidade da ${p.spec} na cena ${cena} nem com ela no domínio provado`; return; }
+        // Prefixo comum só desempata unidades da MESMA cena (spec `todos`), nunca através de rotas.
         const u = [...pool].sort((x, y) => {
           const px = Math.max(...x.participants.map(q => prefixoComum(q, s.key!)), 0), py = Math.max(...y.participants.map(q => prefixoComum(q, s.key!)), 0);
           return py - px || (x.id < y.id ? -1 : 1);
         })[0];
-        const r = relacaoMedida(s.key, u);
-        links.push({ contrato: VINCULO_CONTRATO, unitId: u.id, subjects: [s.id], scene: u.scene, state: u.state, relation: r.relacao,
-          evidence: [`chave medida do sujeito: ${s.key}`, `participante da unidade ${u.specId}: ${r.participante}`, ...cls.flatMap(c => c.fontes).slice(0, 2)],
-          justification: `${p.motivo} (P8: relação ${r.relacao} pela árvore medida)`, reviewer,
+        const entrada = u.scene === cena ? null : u.domain!.find(e => e.scene === cena)!;
+        const r = entrada ? relacaoNoDominioMedido(s.key, entrada) : relacaoMedida(s.key, u);
+        links.push({ contrato: VINCULO_CONTRATO, unitId: u.id, subjects: [s.id], scene: cena, state: u.state, relation: r.relacao,
+          evidence: [`chave medida do sujeito: ${s.key}`, `participante da unidade ${u.specId}${entrada ? ` medido em ${cena}` : ""}: ${r.participante}`,
+            ...(entrada ? entrada.evidence.map(e => `${e.source} sha256:${e.sha256}`) : []), ...cls.flatMap(c => c.fontes).slice(0, 2)],
+          justification: `${p.motivo} (P8: relação ${r.relacao} pela árvore medida${entrada ? `; domínio provado ${entrada.kind}: ${entrada.predicate} em ${cena}` : ""})`, reviewer,
           binding: { build: card.binding.build, runScope: card.binding.runScope, card: cartaoDoVinculo(card) } });
         vinculos.push({ cardIdOriginal: dOld.cardId, cardId, atomoId: old.id, parte: k, spec: p.spec!, unitId: u.id, subject: s.id, relacao: r.relacao, aceito: true });
       }

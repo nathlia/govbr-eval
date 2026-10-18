@@ -133,7 +133,7 @@ export function renderReview(pkg: SemanticPackage, reviews: SemanticReviews, opt
       "### Unidades candidatas (não são crédito)", "");
     for (const id of c.candidateUnitIds) {
       const u = pkg.units.find(u => u.id === id)!;
-      lines.push(`- ${id} — ${u.specId} · ${u.state} · cena ${u.scene} · ${u.element.label}: ${u.description}`);
+      lines.push(`- ${id} — ${u.specId} · ${u.state} · cena ${u.scene}${u.domain ? ` (domínio provado: ${u.domain.map(e => `${e.scene} ${e.kind}`).join(", ")})` : ""} · ${u.element.label}: ${u.description}`);
       // O estado MEDIDO e o predicado MEDIDO são fatos sobre a página, e é por isto que eles
       // existem: chegar a quem decide. Nenhum dos dois é veredito sobre a alegação.
       lines.push(`  - estados em que a unidade existe: ${u.states.length ? u.states.join(", ") : "não medido"}`);

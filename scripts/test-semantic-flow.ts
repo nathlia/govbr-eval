@@ -9,7 +9,7 @@ import type { FlowUnit } from "./units-flow";
 import type { PredicateResult } from "./acceptance-predicates";
 import { renderReview } from "./semantic-flow-render";
 import {
-  SCORER_FILES, SEMANTIC_LEGACY_VERSIONS, aceitaVinculos, cartaoDoVinculo, participanteDePagina, SEMANTIC_SCORING_VERSION, VINCULO_CONTRATO, digest, maximumMatching, normalizeReviews, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, tocaParticipante, validatePackage,
+  SCORER_FILES, SEMANTIC_LEGACY_VERSIONS, aceitaDominio, aceitaVinculos, aplicarDominio, cartaoDoVinculo, participanteDePagina, SEMANTIC_SCORING_VERSION, VINCULO_CONTRATO, digest, maximumMatching, normalizeReviews, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, tocaParticipante, validatePackage,
   type RawReviewAtom, type SemanticDecision, type SemanticPackage, type SemanticReviews, type ReviewAtom, type ReviewLink, type PrepareRun, type SceneResolution,
 } from "./semantic-flow";
 import { montarAtomos, montarVinculos } from "./decisao-atomos";
@@ -903,8 +903,8 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
   });
 
   test("NAT-72 legacy path: a 1.5.0 package scores as before, refuses links, and gets none retroactively", () => {
-    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.7.0");
-    assert.deepEqual([...SEMANTIC_LEGACY_VERSIONS], ["flow-semantic-1.5.0", "flow-semantic-1.6.0"]);
+    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.8.0");
+    assert.deepEqual([...SEMANTIC_LEGACY_VERSIONS], ["flow-semantic-1.5.0", "flow-semantic-1.6.0", "flow-semantic-1.7.0"]);
     const atual = pacote(["#E-html", "#E-header"]);
     const { packageHash: _h, ...corpo } = { ...atual, version: "flow-semantic-1.5.0" };
     const legado: SemanticPackage = { ...corpo, packageHash: digest(corpo) };
@@ -950,6 +950,315 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
     const x = scoreSemanticPackage(pkg, reviews(pkg, [decision(html.id, [ref([""], [p01], two)])]));
     const y = scoreSemanticPackage(pkg, reviews(pkg, [decision(html.id, [ref([""], [p01], [...two].reverse())])]));
     assert.deepEqual(x.scores[0].counts, y.scores[0].counts);
+  });
+}
+
+
+// ── flow-semantic-1.8.0: domínio de aplicabilidade provado (NAT-74, decisão 59019ac) ──
+{
+  const B = "b".repeat(64), REF = "e".repeat(64), OUTRO_BUILD = "c".repeat(64);
+  const ev = (s: string) => [{ source: `tela-b/vistorias/medida.json#${s}`, sha256: "a".repeat(64) }];
+  const el = (key: string, label: string) => ({ key, id: `E-${label}`, label, hidden: null });
+  const raiz = el("body>pnip-root", "<pnip-root>");
+  const titulo = el("head>title", "<title>");
+  const h3 = el("body>pnip-root>main>pnip-propesc-agendar-vistoria>div>h3", "<h3>");
+  const botao = el("body>pnip-root>pnip-header>button", "<button> Menu");
+  const doc = el("", "<html>");
+  const corpo = el("body", "<body>");
+  const resDe = (url: string, xs: { key: string }[]): Resolution => {
+    const byKey = new Map(xs.map(x => [x.key, x as ReturnType<typeof el>]));
+    const sel = new Map<string, { selector: string; ok: boolean; error: string | null; keys: string[] }>();
+    const por: Record<string, string> = { "pnip-root": raiz.key, "head > title": titulo.key, "h3": h3.key, "header button": botao.key, "html": doc.key, "body": corpo.key };
+    for (const [s, k] of Object.entries(por)) sel.set(s, { selector: s, ok: true, error: null, keys: byKey.has(k) ? [k] : [] });
+    sel.set("#nada", { selector: "#nada", ok: false, error: "no match", keys: [] });
+    return { url, byKey, bySelector: sel } as Resolution;
+  };
+  const LISTA = "1280x900@inicial", MENU = "1280x900@detalhe-menu", MODAL = "1280x900@modal";
+  const cenas: SceneResolution[] = [
+    { id: LISTA, viewport: wide, specIds: [], resolution: resDe("http://f/pnip/vistorias", [doc, corpo, raiz, titulo, botao]),
+      segmento: { numero: 0, estado: "inicial", path: "/pnip/vistorias", estados: ["inicial"] } },
+    { id: MENU, viewport: wide, specIds: [], resolution: resDe("http://f/pnip/vistorias/3046", [doc, corpo, raiz, titulo, botao, h3]),
+      segmento: { numero: 1, estado: "detalhe-menu", path: "/pnip/vistorias/3046", estados: ["detalhe-menu"] } },
+    { id: MODAL, viewport: wide, specIds: ["B-01", "B-21", "B-25", "C-X"], resolution: resDe("http://f/pnip/vistorias/3038", [doc, corpo, raiz, titulo, botao, h3]),
+      segmento: { numero: 2, estado: "modal", path: "/pnip/vistorias/3038", estados: ["detalhe", "modal"] } },
+  ];
+  type Entrada = Parameters<typeof prepareSemanticPackage>[1][number];
+  const dom = (scene: string, states: string[], kind: "ausencia-global" | "elemento" | "documento", predicate: string, participants: string[], build = B) =>
+    ({ scene, states, kind, predicate, participants, reference: REF, build, evidence: ev(`${predicate}@${scene}`) });
+  const unidade = (specId: string, e: { key: string }, state: string, states: string[], domain?: Entrada["domain"]): Entrada => ({
+    specId, element: e as FlowUnit["element"], participants: [e.key], rules: ["wcag:x"], categories: ["x"], description: specId,
+    state, states, conditional: false, scene: MODAL, ...(domain ? { domain } : {}) });
+  const todas = ["inicial", "detalhe-menu", "detalhe", "modal"];
+  const b01Dominio = (cenasB01 = [LISTA, MENU, MODAL]) => cenasB01.map(c => dom(c,
+    c === LISTA ? ["inicial"] : c === MENU ? ["detalhe-menu"] : ["detalhe", "modal"], "ausencia-global", "sem-salto-para-conteudo", [raiz.key]));
+  const refUnits = (o: { b01?: string[]; b01Build?: string } = {}): Entrada[] => [
+    unidade("B-01", raiz, "sempre", todas, (o.b01 ? b01Dominio(o.b01) : b01Dominio()).map(e => ({ ...e, build: o.b01Build ?? B }))),
+    unidade("B-25", titulo, "sempre", todas, [LISTA, MENU, MODAL].map(c => dom(c, c === LISTA ? ["inicial"] : c === MENU ? ["detalhe-menu"] : ["detalhe", "modal"],
+      "documento", "titulo-inadequado", [titulo.key]))),
+    unidade("B-21", h3, "detalhe", ["detalhe", "modal"], [dom(MODAL, ["detalhe"], "documento", "hierarquia-comeca-em-h3", [h3.key]),
+      dom(MENU, ["detalhe-menu"], "documento", "hierarquia-comeca-em-h3", [h3.key])]),
+    // Controle de estado `sempre`, sem domínio medido: não ganha a exceção por ser `sempre`.
+    unidade("C-X", botao, "sempre", todas),
+  ];
+  const cfg = (build: string) => ({ siteManifestSha256: build, instrumentVersion: "fluxo-1.3.0", protocolVersion: "fixture-protocol" }) as FlowAgentResults["config"];
+  const alegacao = (selector: string, rule: string | null = null, viewport = wide) => ({ selector, rule, observed: `sobre ${selector}`, expected: "e",
+    state: { viewport, steps: ["navegou"] }, evidence: [] });
+  const agente = (id: string, selectors: string[], build = B, viewport = wide): PrepareRun => ({ id, data: { ...run(selectors.map(s => alegacao(s, null, viewport)) as FlowAgentResults["findings"]), config: cfg(build) } });
+  const prep = (runs: PrepareRun[], us = refUnits()) => prepareSemanticPackage(context, us, cenas, runs, { stateOrder: todas });
+  const uid = (pkg: SemanticPackage, specId: string) => pkg.units.find(u => u.specId === specId)!.id;
+  const vinc = (card: SemanticPackage["cards"][number], unitId: string, subject: string, scene: string, o: Partial<ReviewLink> = {}): ReviewLink => ({
+    contrato: VINCULO_CONTRATO, unitId, subjects: [subject], scene, state: "sempre", relation: "ausencia-global",
+    evidence: [`medida headless em ${scene}: nenhum .br-skiplink nem âncora # (participante ${raiz.key})`], justification: "falta o salto para o conteúdo nesta rota",
+    reviewer: "author", binding: { build: card.binding.build, runScope: card.binding.runScope, card: cartaoDoVinculo(card) }, ...o });
+  const credito = (pkg: SemanticPackage, card: SemanticPackage["cards"][number], cena: string | undefined, subject: string, unitId: string, link: ReviewLink): SemanticDecision => ({
+    ...decision(card.id, [{ id: "a1", text: "parte", subjects: [subject], verdict: "reference", unitIds: [unitId], citation: "uncertain", links: [link] }]),
+    ...(cena ? { cena } : {}) });
+  const sj = (cena: string, key: string) => `${cena}|${key}`;
+
+  test("1.8.0: version, domain in the package hash, one unit per spec", () => {
+    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.8.0");
+    assert.ok(aceitaDominio("flow-semantic-1.8.0") && aceitaDominio("flow-semantic-2.0.0"));
+    assert.ok(!aceitaDominio("flow-semantic-1.7.0") && !aceitaDominio("flow-semantic-1.6.0"));
+    const pkg = prep([agente("r1", ["pnip-root"])]);
+    assert.equal(pkg.units.filter(u => u.specId === "B-01").length, 1, "no per-segment unit");
+    assert.equal(pkg.units.find(u => u.specId === "B-01")!.scene, MODAL, "canonical scene stays the last segment");
+    assert.deepEqual(pkg.units.find(u => u.specId === "B-01")!.domain!.map(e => e.scene), [MENU, LISTA, MODAL].sort());
+    assert.equal(pkg.units.find(u => u.specId === "C-X")!.domain, undefined);
+    const semDominio = prep([agente("r1", ["pnip-root"])], refUnits().map(u => ({ ...u, domain: undefined })));
+    assert.notEqual(semDominio.packageHash, pkg.packageHash);
+  });
+
+  test("1.8.0: B-01 credited from the authorized list and detail scenes, and only once", () => {
+    const pkg = prep([agente("r1", ["pnip-root", "body"])]);
+    const b01 = uid(pkg, "B-01");
+    const raizCard = pkg.cards.find(c => c.selector === "pnip-root")!, corpoCard = pkg.cards.find(c => c.selector === "body")!;
+    assert.equal(raizCard.scene, "a-decidir:1280x900");
+    // Lista (rota /vistorias): o participante medido NESTA cena é o próprio sujeito.
+    const naLista = credito(pkg, raizCard, LISTA, sj(LISTA, raiz.key), b01, vinc(raizCard, b01, sj(LISTA, raiz.key), LISTA));
+    const s1 = scoreSemanticPackage(pkg, reviews(pkg, [naLista])).scores[0];
+    assert.deepEqual(s1.matched.map(m => [m.unitId, m.vinculo]), [[b01, "ausencia-global"]]);
+    // Detalhe (rota /3046) com <body> como sujeito: ancestral do participante medido ali.
+    const noDetalhe = credito(pkg, corpoCard, MENU, sj(MENU, "body"), b01, vinc(corpoCard, b01, sj(MENU, "body"), MENU));
+    const s2 = scoreSemanticPackage(pkg, reviews(pkg, [noDetalhe])).scores[0];
+    assert.deepEqual(s2.matched.map(m => m.unitId), [b01]);
+    // As duas no mesmo run: a unidade é creditada uma vez; a outra afirmação é redundante.
+    const s3 = scoreSemanticPackage(pkg, reviews(pkg, [naLista, noDetalhe])).scores[0];
+    assert.equal(s3.counts.detectedUnits, 1);
+    assert.equal(s3.counts.redundantReferenceAssertions, 1);
+    assert.equal(s3.counts.referenceUnits, pkg.units.length, "denominator unchanged");
+  });
+
+  test("1.8.0: a route where the skip link exists is not in the domain and earns nothing", () => {
+    const pkg = prep([agente("r1", ["pnip-root"])], refUnits({ b01: [LISTA, MODAL] }));
+    const b01 = uid(pkg, "B-01");
+    const c = pkg.cards[0];
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, c, MENU, sj(MENU, raiz.key), b01, vinc(c, b01, sj(MENU, raiz.key), MENU))])),
+      /outside its proven domain/);
+    assert.equal(scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, c, LISTA, sj(LISTA, raiz.key), b01, vinc(c, b01, sj(LISTA, raiz.key), LISTA))])).scores[0].counts.detectedUnits, 1);
+  });
+
+  test("1.8.0: absence measured only in another scene, other build, other window: refused", () => {
+    // Domínio só na cena canônica: nada atravessa.
+    const so = prep([agente("r1", ["pnip-root"])], refUnits({ b01: [MODAL] }));
+    const c = so.cards[0];
+    assert.throws(() => scoreSemanticPackage(so, reviews(so, [credito(so, c, LISTA, sj(LISTA, raiz.key), uid(so, "B-01"), vinc(c, uid(so, "B-01"), sj(LISTA, raiz.key), LISTA))])),
+      /outside its proven domain/);
+    // Outro build: o domínio foi medido no build B; o cartão vem de outro.
+    const ob = prep([agente("r1", ["pnip-root"], OUTRO_BUILD)]);
+    const oc = ob.cards[0];
+    assert.throws(() => scoreSemanticPackage(ob, reviews(ob, [credito(ob, oc, LISTA, sj(LISTA, raiz.key), uid(ob, "B-01"), vinc(oc, uid(ob, "B-01"), sj(LISTA, raiz.key), LISTA))])),
+      /measured on another build/);
+    // Outra janela: fora do plano, sem cena para vincular.
+    const oj = prep([agente("r1", ["pnip-root"], B, { width: 375, height: 800 })]);
+    const jc = oj.cards[0];
+    assert.match(jc.scene, /^fora-do-plano/);
+    assert.throws(() => scoreSemanticPackage(oj, reviews(oj, [credito(oj, jc, undefined, raiz.key, uid(oj, "B-01"), vinc(jc, uid(oj, "B-01"), raiz.key, LISTA))])), /crosses scenes/);
+    assert.throws(() => scoreSemanticPackage(oj, reviews(oj, [credito(oj, jc, undefined, raiz.key, uid(oj, "B-01"), vinc(jc, uid(oj, "B-01"), raiz.key, jc.scene))])),
+      /outside its proven domain/);
+  });
+
+  test("1.8.0: nonexistent subject, button/sibling, link without evidence, bare 2.4.1 citation: never B-01", () => {
+    const pkg = prep([agente("r1", ["pnip-root", "header button", "#nada"])]);
+    const b01 = uid(pkg, "B-01");
+    const bt = pkg.cards.find(c => c.selector === "header button")!;
+    // Um botão qualquer não é documento nem ancestral do participante de página medido na cena.
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, bt, LISTA, sj(LISTA, botao.key), b01, vinc(bt, b01, sj(LISTA, botao.key), LISTA))])),
+      /does not fit the predicate/);
+    const c = pkg.cards.find(x => x.selector === "pnip-root")!;
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, c, LISTA, sj(LISTA, raiz.key), b01, vinc(c, b01, sj(LISTA, raiz.key), LISTA, { evidence: [] }))])),
+      /without evidence/);
+    // Sujeito inexistente (seletor não resolvido) e citação nua de 2.4.1: nada a vincular.
+    const nada = pkg.cards.find(x => x.selector === "#nada")!;
+    assert.equal(nada.subjects[0].key, null);
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, nada, undefined, nada.subjects[0].id, b01, vinc(nada, b01, nada.subjects[0].id, nada.scene))])),
+      /Unresolved subject cannot be linked|outside its proven domain/);
+    const citacao = prepareSemanticPackage(context, refUnits(), cenas, [{ id: "r1", data: { ...run([alegacao("#nada", "wcag:2.4.1")] as FlowAgentResults["findings"]), config: cfg(B) } }], { stateOrder: todas });
+    const cc = citacao.cards[0];
+    assert.deepEqual(cc.candidateUnitIds, []);
+    assert.throws(() => scoreSemanticPackage(citacao, reviews(citacao, [decision(cc.id, [{ id: "a1", text: "sem 2.4.1", subjects: [cc.subjects[0].id], verdict: "reference",
+      unitIds: [uid(citacao, "B-01")], citation: "supported" }])])), /Unanchored/);
+    // Sujeito de outra cena do cartão: o vínculo nomeia a cena em que o cartão foi julgado.
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, c, LISTA, sj(LISTA, raiz.key), b01, vinc(c, b01, sj(LISTA, raiz.key), MENU))])), /crosses scenes/);
+    // A cena escolhida não pode emprestar o sujeito de outra.
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, c, MENU, sj(LISTA, raiz.key), b01, vinc(c, b01, sj(LISTA, raiz.key), LISTA))])), /outside the chosen scene/);
+  });
+
+  test("1.8.0: B-25 follows its own predicate (inadequate title), never global absence", () => {
+    const pkg = prep([agente("r1", ["head > title", "body"])]);
+    const b25 = uid(pkg, "B-25");
+    const t = pkg.cards.find(c => c.selector === "head > title")!;
+    const porTitulo = vinc(t, b25, sj(LISTA, titulo.key), LISTA, { relation: "participante-relacionado",
+      evidence: [`document.title = "PNIP" em /pnip/vistorias (${titulo.key})`] });
+    assert.deepEqual(scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, t, LISTA, sj(LISTA, titulo.key), b25, porTitulo)])).scores[0].matched.map(m => [m.unitId, m.vinculo]),
+      [[b25, "participante-relacionado"]]);
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, t, LISTA, sj(LISTA, titulo.key), b25, { ...porTitulo, relation: "ausencia-global" })])), /does not fit the predicate/);
+    const corpoCard = pkg.cards.find(c => c.selector === "body")!;
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, corpoCard, LISTA, sj(LISTA, "body"), b25, vinc(corpoCard, b25, sj(LISTA, "body"), LISTA))])), /does not fit the predicate/);
+    // O documento (<html>) é sujeito legítimo de uma propriedade do documento; um contêiner como <body>, não.
+    const html = prep([agente("r1", ["html"])]);
+    const hc = html.cards[0];
+    const viaDoc = vinc(hc, uid(html, "B-25"), sj(LISTA, ""), LISTA, { relation: "participante-relacionado", evidence: [`document.title = "PNIP" (${titulo.key})`] });
+    assert.equal(scoreSemanticPackage(html, reviews(html, [credito(html, hc, LISTA, sj(LISTA, ""), uid(html, "B-25"), viaDoc)])).scores[0].counts.detectedUnits, 1);
+    // Evidência que não cita a chave medida do <title>: não basta.
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, t, LISTA, sj(LISTA, titulo.key), b25, { ...porTitulo, evidence: ["o título é ruim"] })])), /does not fit the predicate/);
+  });
+
+  test("1.8.0: B-21 by its own predicate in the measured detail route; not in the list; declared state only", () => {
+    const pkg = prep([agente("r1", ["h3", "body"])]);
+    const b21 = uid(pkg, "B-21");
+    const c = pkg.cards.find(x => x.selector === "h3")!;
+    const l = vinc(c, b21, sj(MENU, h3.key), MENU, { relation: "participante-relacionado", state: "detalhe", evidence: [`títulos medidos em /3046: h3 h4 (${h3.key})`] });
+    assert.deepEqual(scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, c, MENU, sj(MENU, h3.key), b21, l)])).scores[0].matched.map(m => m.unitId), [b21]);
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, c, MENU, sj(MENU, h3.key), b21, { ...l, state: "detalhe-menu" })])), /not the declared state/);
+    // "Sem h1" afirmado sobre o documento na rota do detalhe medida: o esboço de títulos é do documento.
+    const html = prep([agente("r1", ["html"])]);
+    const hc = html.cards[0];
+    assert.equal(scoreSemanticPackage(html, reviews(html, [credito(html, hc, MENU, sj(MENU, ""), uid(html, "B-21"), { ...vinc(hc, uid(html, "B-21"), sj(MENU, ""), MENU),
+      relation: "participante-relacionado", state: "detalhe", evidence: [`títulos medidos em /3046: h3 h4 (${h3.key})`] })])).scores[0].counts.detectedUnits, 1);
+    // Um elemento qualquer (o botão do cabeçalho) não é o documento nem o título medido.
+    const bt = prep([agente("r1", ["header button"])]);
+    const bc = bt.cards[0];
+    assert.throws(() => scoreSemanticPackage(bt, reviews(bt, [credito(bt, bc, MENU, sj(MENU, botao.key), uid(bt, "B-21"), { ...vinc(bc, uid(bt, "B-21"), sj(MENU, botao.key), MENU),
+      relation: "participante-relacionado", state: "detalhe", evidence: [h3.key] })])), /does not fit the predicate/);
+    const corpoCard = pkg.cards.find(x => x.selector === "body")!;
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, corpoCard, LISTA, sj(LISTA, "body"), b21,
+      vinc(corpoCard, b21, sj(LISTA, "body"), LISTA, { relation: "participante-relacionado", state: "detalhe", evidence: [h3.key] }))])), /outside its proven domain/);
+  });
+
+  test("1.8.0: control unit `sempre` without measured domain, and transition/host relations, stay strict", () => {
+    const pkg = prep([agente("r1", ["header button", "pnip-root"])]);
+    const cx = uid(pkg, "C-X");
+    const bt = pkg.cards.find(c => c.selector === "header button")!;
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, bt, LISTA, sj(LISTA, botao.key), cx,
+      vinc(bt, cx, sj(LISTA, botao.key), LISTA, { relation: "participante-relacionado", evidence: [botao.key] }))])), /not the unit's scene/);
+    // Na cena canônica o caminho é o de sempre (ancoragem estrita, sem vínculo).
+    assert.equal(scoreSemanticPackage(pkg, reviews(pkg, [{ ...decision(bt.id, [{ id: "a1", text: "t", subjects: [sj(MODAL, botao.key)], verdict: "reference", unitIds: [cx], citation: "supported" }]), cena: MODAL }])).scores[0].counts.detectedUnits, 1);
+    // Mesmo dentro do domínio, transição e host-interno não atravessam cena.
+    const c = pkg.cards.find(x => x.selector === "pnip-root")!;
+    const b01 = uid(pkg, "B-01");
+    for (const relation of ["transicao", "host-interno", "participante-relacionado"] as const)
+      assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, c, LISTA, sj(LISTA, raiz.key), b01,
+        vinc(c, b01, sj(LISTA, raiz.key), LISTA, { relation, evidence: [`medido ${raiz.key}`] }))])), /does not fit the predicate/, relation);
+    // Assinatura e amarração continuam valendo no vínculo que atravessa.
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, c, LISTA, sj(LISTA, raiz.key), b01, vinc(c, b01, sj(LISTA, raiz.key), LISTA, { reviewer: "outra" }))])), /not signed/);
+    const bc = pkg.cards.find(x => x.selector === "header button")!;
+    assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, c, LISTA, sj(LISTA, raiz.key), b01, { ...vinc(c, b01, sj(LISTA, raiz.key), LISTA), binding: vinc(bc, b01, "", LISTA).binding })])), /another card/);
+  });
+
+  test("1.8.0: arm/baseline symmetry — the same rule for an agent card and a deterministic card", () => {
+    const lb: PrepareRun = { id: "axe", kind: "linha-de-base", tool: "axe", data: { model: "axe", timestamp: "fixed", appUrl: "http://f/pnip/vistorias",
+      findings: [{ selector: "pnip-root", rule: "axe:bypass", observed: "sem mecanismo de salto", expected: null, scene: LISTA, viewport: wide, steps: [] }] as unknown as FlowAgentResults["findings"],
+      config: { instrumentVersion: "fluxo-1.3.0", protocolVersion: "baseline:axe", siteManifestSha256: B } as FlowAgentResults["config"] } };
+    const pkg = prep([agente("sem", ["pnip-root"]), agente("com", ["pnip-root"]), lb]);
+    const b01 = uid(pkg, "B-01");
+    const ag = (runId: string) => pkg.cards.find(c => pkg.runs.find(r => r.id === runId)!.cardIds.includes(c.id))!;
+    const lc = ag("axe");
+    assert.equal(lc.scene, LISTA);
+    const ds = [
+      credito(pkg, ag("sem"), LISTA, sj(LISTA, raiz.key), b01, vinc(ag("sem"), b01, sj(LISTA, raiz.key), LISTA)),
+      credito(pkg, ag("com"), MENU, sj(MENU, raiz.key), b01, vinc(ag("com"), b01, sj(MENU, raiz.key), MENU)),
+      credito(pkg, lc, undefined, raiz.key, b01, vinc(lc, b01, raiz.key, LISTA)),
+    ];
+    const r = scoreSemanticPackage(pkg, reviews(pkg, ds));
+    const by = (id: string) => r.scores.find(s => s.runId === id)!;
+    for (const id of ["sem", "com", "axe"]) {
+      assert.equal(by(id).counts.detectedUnits, 1, id);
+      assert.deepEqual(by(id).matched.map(m => [m.unitId, m.vinculo]), [[b01, "ausencia-global"]], id);
+    }
+    assert.ok(r.comparisons.filter(x => x.baseline === "axe").every(x => x.units.both.includes(b01)));
+    // Recusa simétrica: o mesmo vínculo que um braço não ganha, o outro e a linha de base também não.
+    const so = prep([agente("sem", ["pnip-root"]), agente("com", ["pnip-root"]), lb], refUnits({ b01: [MODAL] }));
+    const ag2 = (runId: string) => so.cards.find(c => so.runs.find(r => r.id === runId)!.cardIds.includes(c.id))!;
+    const u2 = uid(so, "B-01");
+    for (const [card, cena, sub] of [[ag2("sem"), LISTA, sj(LISTA, raiz.key)], [ag2("com"), LISTA, sj(LISTA, raiz.key)], [ag2("axe"), undefined, raiz.key]] as const)
+      assert.throws(() => scoreSemanticPackage(so, reviews(so, [credito(so, card, cena, sub, u2, vinc(card, u2, sub, LISTA))])), /outside its proven domain/);
+    // A barreira de build vale para a linha de base também.
+    const lbOutro: PrepareRun = { ...lb, data: { ...lb.data, config: { ...lb.data.config, siteManifestSha256: OUTRO_BUILD } as FlowAgentResults["config"] } };
+    const p2 = prep([lbOutro]);
+    const c2 = p2.cards[0];
+    assert.throws(() => scoreSemanticPackage(p2, reviews(p2, [credito(p2, c2, undefined, raiz.key, uid(p2, "B-01"), vinc(c2, uid(p2, "B-01"), raiz.key, LISTA))])), /measured on another build/);
+  });
+
+  test("1.8.0: a package's domain is validated — plan, canonical scene, measured participants, hashes, kind, version", () => {
+    const base = () => refUnits();
+    const com = (f: (us: Entrada[]) => void) => { const us = base(); f(us); return () => prep([], us); };
+    assert.throws(com(us => { us[0].domain = [...us[0].domain!, dom("1280x900@outra", ["x"], "ausencia-global", "p", [raiz.key])]; }), /undeclared scene/);
+    assert.throws(com(us => { us[2].domain = [dom(MODAL, ["detalhe"], "documento", "p", [h3.key]), dom(LISTA, ["inicial"], "documento", "p", [h3.key])]; }), /does not resolve in scene/);
+    assert.throws(com(us => { us[1].domain = us[1].domain!.map(e => ({ ...e, participants: [""] })); }), /not on the document key/);
+    assert.throws(com(us => { us[0].domain = us[0].domain!.filter(e => e.scene !== MODAL); }), /canonical scene/);
+    assert.throws(com(us => { us[3].domain = [dom(MODAL, ["modal"], "ausencia-global", "p", [botao.key])]; }), /page-level participants/);
+    assert.throws(com(us => { us[0].domain = us[0].domain!.map(e => ({ ...e, evidence: [{ source: "x", sha256: "nao-e-hash" }] })); }), /hashed evidence/);
+    assert.throws(com(us => { us[0].domain = us[0].domain!.map(e => e.scene === LISTA ? { ...e, states: ["modal"] } : e); }), /outside segment/);
+    assert.throws(com(us => { us[0].domain = us[0].domain!.map(e => e.scene === LISTA ? { ...e, build: OUTRO_BUILD } : e); }), /mixes references or builds/);
+    assert.throws(com(us => { us[0].domain = us[0].domain!.map(e => e.scene === LISTA ? { ...e, kind: "documento" } : e); }), /one defect predicate/);
+    assert.throws(com(us => { us[0].domain = us[0].domain!.map(e => ({ ...e, predicate: " " })); }), /measured predicate/);
+    // Um pacote 1.7.0 não conhece domínio: recusado, nunca lido como 1.8.0.
+    const atual = prep([agente("r1", ["pnip-root"])]);
+    const { packageHash: _h, ...corpo } = { ...atual, version: "flow-semantic-1.7.0" };
+    assert.throws(() => validatePackage({ ...corpo, packageHash: digest(corpo) } as SemanticPackage), /not part of package version flow-semantic-1.7.0/);
+  });
+
+  test("1.8.0: aplicarDominio lifts a 1.7.0 package (no re-preparation), recomputes card ids, refuses other versions", () => {
+    const us = refUnits().map(u => ({ ...u, domain: undefined }));
+    const atual = prep([agente("r1", ["pnip-root"])], us);
+    const { packageHash: _h, ...corpo } = { ...atual, version: "flow-semantic-1.7.0" };
+    const p17: SemanticPackage = { ...corpo, packageHash: digest(corpo) };
+    const comDominio = prep([agente("r1", ["pnip-root"])]);
+    const porUnidade = Object.fromEntries(comDominio.units.filter(u => u.domain).map(u => [u.id, u.domain!]));
+    const p18 = aplicarDominio(p17, porUnidade, "teste");
+    assert.equal(p18.version, "flow-semantic-1.8.0");
+    validatePackage(p18);
+    assert.deepEqual(p18.units.map(u => u.id), p17.units.map(u => u.id), "unit identity unchanged");
+    assert.deepEqual(p18.units, comDominio.units, "same units as a fresh 1.8.0 preparation");
+    assert.deepEqual(p18.cards.map(c => c.id).sort(), comDominio.cards.map(c => c.id).sort(), "same card ids as a fresh preparation");
+    assert.deepEqual((p18.provenance as { derivadoDe: { packageHash: string } }).derivadoDe.packageHash, p17.packageHash);
+    // Sem domínio nenhum, os cartões não mudam de id (só versão e hash do pacote).
+    assert.deepEqual(aplicarDominio(p17, {}, "x").cards.map(c => c.id), p17.cards.map(c => c.id));
+    assert.throws(() => aplicarDominio(p18, {}, "x"), /pre-domain package/);
+    const { packageHash: _g, ...c15 } = { ...p17, version: "flow-semantic-1.5.0" };
+    assert.throws(() => aplicarDominio({ ...c15, packageHash: digest(c15) } as SemanticPackage, {}, "x"), /pre-domain package/);
+    assert.throws(() => aplicarDominio(p17, { "U-inventada": porUnidade[uid(p17, "B-01")] }, "x"), /unknown unit/);
+    // Um domínio inválido não passa pela elevação (validatePackage na saída).
+    assert.throws(() => aplicarDominio(p17, { [uid(p17, "B-01")]: porUnidade[uid(p17, "B-01")].filter(e => e.scene !== MODAL) }, "x"), /canonical scene/);
+  });
+
+  test("1.8.0: legacy invariance — without domain, 1.7.0 and 1.8.0 score identically and 1.7.0 still refuses crossing", () => {
+    const us = refUnits().map(u => ({ ...u, domain: undefined }));
+    const atual = prep([agente("r1", ["pnip-root", "body"])], us);
+    const { packageHash: _h, ...corpo } = { ...atual, version: "flow-semantic-1.7.0" };
+    const legado: SemanticPackage = { ...corpo, packageHash: digest(corpo) };
+    validatePackage(legado);
+    const c = legado.cards.find(x => x.selector === "pnip-root")!;
+    const b01 = uid(legado, "B-01");
+    const ds = [credito(legado, c, MODAL, sj(MODAL, raiz.key), b01, vinc(c, b01, sj(MODAL, raiz.key), MODAL))];
+    const r17 = scoreSemanticPackage(legado, { version: legado.version, decisions: scopeReviews(legado).decisions.map(d => ds.find(x => x.cardId === d.cardId) ?? d) });
+    const r18 = scoreSemanticPackage(atual, { version: atual.version, decisions: scopeReviews(atual).decisions.map(d => ds.find(x => x.cardId === d.cardId) ?? d) });
+    assert.equal(r17.version, "flow-semantic-1.7.0");
+    assert.deepEqual(r17.scores, r18.scores);
+    // Atravessar cena continua recusado em 1.7.0 e em 1.8.0 sem domínio.
+    const cruzado = [credito(legado, c, LISTA, sj(LISTA, raiz.key), b01, vinc(c, b01, sj(LISTA, raiz.key), LISTA))];
+    assert.throws(() => scoreSemanticPackage(legado, { version: legado.version, decisions: cruzado }), /not the unit's scene/);
+    assert.throws(() => scoreSemanticPackage(atual, { version: atual.version, decisions: cruzado }), /not the unit's scene/);
   });
 }
 

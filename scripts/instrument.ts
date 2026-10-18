@@ -68,6 +68,15 @@ export const FLOW_REFERENCE_FILE = file.reference.file;
  */
 export const FLOW_KB_ALIASES_FILE = file.scoring.kbAliases.vigente;
 export const LEGACY_KB_ALIASES_FILE = file.scoring.kbAliases.legado;
+/** Primeira versão semântica preparada com o vocabulário `vigente` (kb-aliases-2.0.0). */
+const PRIMEIRA_COM_KB_VIGENTE = [1, 7] as const;
 export function kbAliasesFileFor(scoringVersion: string): string {
-  return scoringVersion === FLOW_SCORING_VERSION ? FLOW_KB_ALIASES_FILE : LEGACY_KB_ALIASES_FILE;
+  if (scoringVersion === FLOW_SCORING_VERSION) return FLOW_KB_ALIASES_FILE;
+  // flow-semantic-1.7.0 foi preparada com o vocabulário vigente: virar legado (1.8.0) não troca o vocabulário dela.
+  const m = /^flow-semantic-(\d+)\.(\d+)\.(\d+)$/.exec(scoringVersion);
+  if (m && FLOW_SCORING_LEGACY_VERSIONS.includes(scoringVersion)) {
+    const [ma, mi] = [Number(m[1]), Number(m[2])];
+    if (ma > PRIMEIRA_COM_KB_VIGENTE[0] || (ma === PRIMEIRA_COM_KB_VIGENTE[0] && mi >= PRIMEIRA_COM_KB_VIGENTE[1])) return FLOW_KB_ALIASES_FILE;
+  }
+  return LEGACY_KB_ALIASES_FILE;
 }

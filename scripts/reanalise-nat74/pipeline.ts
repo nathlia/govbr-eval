@@ -1,5 +1,10 @@
 /**
- * NAT-74 — reanálise retrospectiva, derivado `nat74-retrospectiva-1.1.0`. Etapas E0–E13 do plano
+ * NAT-74 — reanálise retrospectiva, derivado `nat74-retrospectiva-1.2.0` (o 1.1.0 é o commit 9dd6d25 deste código).
+ * 1.2.0 = 1.1.0 + scorer flow-semantic-1.8.0: os pacotes 1.7.0 da 1.0.0 são ELEVADOS a 1.8.0 (nada repreparado) e as
+ * unidades B-01, B-21 e B-25 da tela B ganham o domínio de aplicabilidade PROVADO por medida nova sem modelo
+ * (`dominio.ts`); a montagem escolhe a unidade pelo domínio (montar.ts) e o scorer só aceita o vínculo que atravessa
+ * cena dentro dele. Saem também o delta por unidade e por cartão 1.1.0 → 1.2.0 (`verificacao/delta-110-120.json`).
+ * Texto original da 1.1.0: Etapas E0–E13 do plano
  * (`thesis-workspace/planejamento/atual/plano-nat74-reanalise-2026-10-16.md`) com a E14 já feita: lê os
  * julgamentos da fila T3 (`fila-t3/julgamentos.json`, ingeridos pelo e14-ingerir) e as medidas da T2
  * (`medidas/t2/medidas-t2.json`, do t2-medir). Nenhuma chamada de modelo, nenhuma rede.
@@ -19,10 +24,11 @@ import { dirname, join, relative, resolve } from "node:path";
 import { createRequire } from "node:module";
 import { analisePareada, ESTATISTICA_VERSAO } from "../estatistica-pareada";
 import { analysisIdentity } from "../collection-manifest";
-import { scoreSemanticPackage, type SemanticPackage, type SemanticReviews } from "../semantic-flow";
+import { aplicarDominio, scoreSemanticPackage, type DominioCena, type SemanticPackage, type SemanticReviews } from "../semantic-flow";
+import { medirDominio, type SaidaDominio } from "./dominio";
 import { loadKbAliasVocabulary } from "../kb-aliases";
 import {
-  CAMINHO_DERIVADO, CAMINHO_DERIVADO_110, COMMIT_DERIVADO_100, DERIVADO_VERSAO_110, CAMPANHAS, COMMIT_RESULTADOS, EVAL, FORMATO_RESULTADO, MODO_D, NAT73, PLANEJAMENTO, POLITICA_PRINCIPAL,
+  CAMINHO_DERIVADO, CAMINHO_DERIVADO_110, CAMINHO_DERIVADO_120, COMMIT_DERIVADO_100, COMMIT_DERIVADO_110, DERIVADO_VERSAO_120, CAMPANHAS, COMMIT_RESULTADOS, EVAL, FORMATO_RESULTADO, MODO_D, NAT73, PLANEJAMENTO, POLITICA_PRINCIPAL,
   POLITICA_SENSIBILIDADE, REVISAO_INTEGRADA, RESULTADOS, ROTULO, TCC, TELA, chaveAtomo, csv, gravar, gravarJson, jsonTexto, lerJson, ordenar, posix, raizSaida,
   relRes, relTcc, sha, shaArquivo, type Braco, type Campanha, type ParLido,
 } from "./comum";
@@ -42,7 +48,7 @@ import {
 import { vereditosPorAtomo, type SaidaVereditos } from "./vereditos";
 
 const req = createRequire(import.meta.url);
-const DERIVADO_VERSAO = DERIVADO_VERSAO_110;
+const DERIVADO_VERSAO = DERIVADO_VERSAO_120;
 /** Famílias com medida mecânica (T2): R2 nome calculado, R4 declaração de estilo. */
 const FAMILIAS_T2 = new Set(["R2-nome", "R4-token"]);
 /** Pacote 1.7.0 de um par, preparado na 1.0.0 (commit da42f24): a 1.1.0 não reprepara. */
@@ -102,7 +108,7 @@ interface EntradasV110 { julgamentos: string[]; medidasT2: string; pacotes: stri
  */
 function e0(raiz: string, x: EntradasV110): { hashes: Record<string, { bytes: number; sha256: string }> } {
   const head = git(RESULTADOS, "rev-parse", "HEAD");
-  for (const c of [COMMIT_RESULTADOS, COMMIT_DERIVADO_100]) {
+  for (const c of [COMMIT_RESULTADOS, COMMIT_DERIVADO_100, COMMIT_DERIVADO_110]) {
     try { execFileSync("git", ["-C", RESULTADOS, "merge-base", "--is-ancestor", c, "HEAD"]); }
     catch { throw new Portao("E0", `govbr-resultados em ${head}: ${c} não é ancestral do HEAD`); }
   }
@@ -113,12 +119,20 @@ function e0(raiz: string, x: EntradasV110): { hashes: Record<string, { bytes: nu
   const d100 = linhas(git(RESULTADOS, "diff", "--name-status", COMMIT_DERIVADO_100, "--", CAMINHO_DERIVADO))
     .filter(l => !(/^A\t/.test(l) && l.slice(2).startsWith(filaT3)));
   if (d100.length) throw new Portao("E0", { motivo: `derivado 1.0.0 difere de ${COMMIT_DERIVADO_100} (fora dos arquivos novos da fila T3)`, arquivos: d100 });
+  // [1.2.0] as medidas da T2 que se leem do 1.1.0 são as do commit em que ele foi publicado; o resto do 1.1.0 (comparado
+  // no delta) é lido do próprio commit (git show), nunca da árvore de trabalho, que outra execução pode estar regravando.
+  const d110 = linhas(git(RESULTADOS, "diff", "--name-status", COMMIT_DERIVADO_110, "--", `${CAMINHO_DERIVADO_110}/medidas/t2`));
+  if (d110.length) throw new Portao("E0", { motivo: `medidas da T2 do derivado 1.1.0 diferem de ${COMMIT_DERIVADO_110}`, arquivos: d110 });
   const saidaRel = posix(relative(RESULTADOS, raiz));
   const naoRastreados = linhas(git(RESULTADOS, "status", "--porcelain", "--untracked-files=all")).filter(l => l.startsWith("??")).map(l => l.slice(3))
-    .filter(p => !p.startsWith(filaT3) && !p.startsWith(`${CAMINHO_DERIVADO_110}/`) && (saidaRel.startsWith("..") || !p.startsWith(`${saidaRel}/`)));
+    .filter(p => !p.startsWith(filaT3) && !p.startsWith(`${CAMINHO_DERIVADO_120}/`) && (saidaRel.startsWith("..") || !p.startsWith(`${saidaRel}/`)));
   if (naoRastreados.length) throw new Portao("E0", { motivo: "arquivos não rastreados fora da saída da 1.1.0 e da fila T3 da 1.0.0", arquivos: naoRastreados });
   const extra = [...x.pacotes, ...x.julgamentos.flatMap(j => [j, join(dirname(j), "lotes", "manifesto.json"), join(dirname(j), "chave", "fila-t3-chave.json"),
-    ...trilhaDoJulgamento(j).filter(f => existsSync(f))]), x.medidasT2];
+    ...trilhaDoJulgamento(j).filter(f => existsSync(f))]), x.medidasT2,
+    // [1.2.0] medida do domínio: capturas e resoluções arquivadas da tela B (1.0.0) e a re-medida da referência.
+    ...["p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "p09", "p10"].flatMap(par => ["capture.json", "scene-0.html", "scene-1.html", "scene-2.html", "resolution-0.json",
+      "resolution-1.json", "resolution-2.json"].map(f => join(RESULTADOS, CAMINHO_DERIVADO, "t7-tela-b-01", par, "analise", "revisao", f))),
+    join(EVAL, "tela-b", "vistorias", "remedida", "resultado.json")];
   const rels = [...new Set([...arquivosLidos(), ...extra.map(a => posix(relative(TCC, a)))])].sort();
   const hashes = hashesDe(rels);
   gravarJson(raiz, "verificacao/hashes-antes.json", { formato: "nat74-hashes-1.0.0", resultados: { commit: head, tree: git(RESULTADOS, "rev-parse", "HEAD^{tree}") },
@@ -138,9 +152,10 @@ function e0(raiz: string, x: EntradasV110): { hashes: Record<string, { bytes: nu
   const kb1 = loadKbAliasVocabulary(EVAL, "kb-aliases.json"), kb2 = loadKbAliasVocabulary(EVAL, "kb-aliases-v2.json");
   const julgamentos = x.julgamentos.map(j => { const t = readFileSync(j, "utf8"); const o = JSON.parse(t) as { completo?: boolean; julgados?: number; total?: number };
     return { caminho: posix(relative(TCC, j)), sha256: sha(t), completo: o.completo ?? null, julgados: o.julgados ?? null, total: o.total ?? null }; });
-  gravarJson(raiz, "entradas/ferramenta.json", { formato: "nat74-ferramenta-1.1.0", derivado: DERIVADO_VERSAO,
+  gravarJson(raiz, "entradas/ferramenta.json", { formato: "nat74-ferramenta-1.2.0", derivado: DERIVADO_VERSAO,
     entradasFixadas: { arquivoOriginal: { commit: COMMIT_RESULTADOS, regra: "fora de derivados/, árvore de trabalho idêntica a este commit" },
       derivado100: { commit: COMMIT_DERIVADO_100, arvore: git(RESULTADOS, "rev-parse", `${COMMIT_DERIVADO_100}:${CAMINHO_DERIVADO}`), regra: "idêntico a este commit, salvo arquivos novos sob 1.0.0/fila-t3/" },
+      derivado110: { commit: COMMIT_DERIVADO_110, arvore: git(RESULTADOS, "rev-parse", `${COMMIT_DERIVADO_110}:${CAMINHO_DERIVADO_110}`), regra: "idêntico a este commit (medidas da T2 e comparação do delta)" },
       julgamentos, medidasT2: { caminho: posix(relative(TCC, x.medidasT2)), sha256: shaArquivo(x.medidasT2) } },
     govbrEval: { commitBase: evalHead, nota: "a reanálise roda sobre a árvore de trabalho do commit-base mais os arquivos de scripts/reanalise-nat74/ (commit novo, registrado ao commitar)" },
     scorer: { version: id.scoringVersion, acceptancePolicy: id.acceptancePolicy, scorerSha256: id.scorerSha256 },
@@ -251,9 +266,11 @@ export interface ResultadoPipeline { raiz: string; portoes: Record<string, unkno
 export interface Opcoes { raiz?: string; ate?: Etapa; log?: (s: string) => void; julgamentos?: string[]; medidasT2?: string }
 
 export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
-  const raiz = o.raiz ?? join(RESULTADOS, CAMINHO_DERIVADO_110);
-  const julgamentosArqs = o.julgamentos ?? [join(RESULTADOS, CAMINHO_DERIVADO, "fila-t3", "julgamentos.json"), join(raiz, "fila-t3", "julgamentos.json")].filter(f => existsSync(f));
-  const medidasT2Abs = o.medidasT2 ?? join(raiz, CAMINHO_MEDIDAS_T2);
+  const raiz = o.raiz ?? join(RESULTADOS, CAMINHO_DERIVADO_120);
+  const julgamentosArqs = o.julgamentos ?? [join(RESULTADOS, CAMINHO_DERIVADO, "fila-t3", "julgamentos.json"), join(RESULTADOS, CAMINHO_DERIVADO_110, "fila-t3", "julgamentos.json"),
+    join(raiz, "fila-t3", "julgamentos.json")].filter(f => existsSync(f));
+  // [1.2.0] as medidas da T2 são as da 1.1.0 (nenhuma medida T2 nova).
+  const medidasT2Abs = o.medidasT2 ?? join(RESULTADOS, CAMINHO_DERIVADO_110, CAMINHO_MEDIDAS_T2);
   const log = o.log ?? ((s: string) => console.log(s));
   const ate = o.ate ?? "E13";
   const parar = (e: Etapa) => ETAPAS.indexOf(e) >= ETAPAS.indexOf(ate);
@@ -288,12 +305,28 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
   // E3 — 30 pares sob 1.7.0 + mapa retrospectivo (bijeção)
   const pds: ParDerivado[] = [];
   const orfaos: unknown[] = [];
+  const dominios: { par: string; saida: SaidaDominio }[] = [];
+  const pacotes18: { par: string; de: string; para: string; dominio: number }[] = [];
   for (const p of inv.pares) {
     const dir = dirParDerivado(raiz, p);
     // [1.1.0] O pacote 1.7.0 é o da 1.0.0 (da42f24, conferido no E0 e por sha256 em hashes-antes): não se reprepara.
     const pacoteAbs = pacoteDe100(p);
     if (!existsSync(pacoteAbs)) falha("E3", `${p.campanha}/${p.par}: sem o pacote 1.7.0 da 1.0.0 (${relTcc(pacoteAbs)})`);
-    const novo = lerJson<SemanticPackage>(pacoteAbs);
+    const novo17 = lerJson<SemanticPackage>(pacoteAbs);
+    // [1.2.0] elevado a flow-semantic-1.8.0; na tela B, B-01/B-21/B-25 com o domínio provado medido no próprio par.
+    let dominioPar: SaidaDominio | null = null;
+    const porUnidade: Record<string, DominioCena[]> = {};
+    if (TELA[p.campanha] === "B") {
+      dominioPar = await medirDominio(novo17, p.par);
+      for (const [uid, d] of Object.entries(dominioPar.dominios)) porUnidade[uid] = d.dominio;
+      dominios.push({ par: p.par, saida: dominioPar });
+    }
+    const novo = aplicarDominio(novo17, porUnidade, `${DERIVADO_VERSAO}: pacote 1.7.0 da 1.0.0 (${COMMIT_DERIVADO_100}) elevado; domínio provado em ${Object.keys(porUnidade).length} unidade(s)`);
+    if (dominioPar) {
+      gravarJson(raiz, `${relative(raiz, dir).split("\\").join("/")}/dominio.json`, dominioPar);
+      gravarJson(raiz, `${relative(raiz, dir).split("\\").join("/")}/package.flow-semantic-1.8.0.json`, novo);
+    }
+    pacotes18.push({ par: `${p.campanha}/${p.par}`, de: novo17.packageHash, para: novo.packageHash, dominio: Object.keys(porUnidade).length });
     const mapa = mapaRetrospectivo(p.pkg, novo);
     gravarJson(raiz, `${relative(raiz, dir).split("\\").join("/")}/mapa-retrospectivo.json`, mapa);
     if (mapa.orfaos.length) orfaos.push({ par: `${p.campanha}/${p.par}`, orfaos: mapa.orfaos });
@@ -301,7 +334,20 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
   }
   portoes.bijecao = { passou: orfaos.length === 0, orfaos, cartoes: pds.reduce((n, x) => n + x.mapa.cartoes.length, 0), unidades: pds.reduce((n, x) => n + x.mapa.unidades.length, 0) };
   if (orfaos.length) falha("bijecao", orfaos);
-  log(`E3 ok: 30 pares, pacotes ${analysisIdentity().scoringVersion} da 1.0.0 (${COMMIT_DERIVADO_100}); bijeção completa`);
+  // [1.2.0] o predicado de cada spec dá o mesmo resultado nos 10 pares (cada par mede a própria captura).
+  const assinaturaDominio = (d: SaidaDominio) => JSON.stringify(Object.values(d.dominios).map(x => [x.specId, x.cenaCanonica, x.dominio.map(e => [e.scene, e.states, e.kind, e.predicate, e.participants]), x.fora]));
+  const difDominio = dominios.filter(d => assinaturaDominio(d.saida) !== assinaturaDominio(dominios[0].saida)).map(d => d.par);
+  portoes.dominio = { passou: difDominio.length === 0, diferentesDeP01: difDominio, pares: dominios.length };
+  if (difDominio.length) falha("dominio", difDominio);
+  gravarJson(raiz, "medidas/dominio/tabela-dominio.json", { formato: "nat74-tabela-dominio-1.0.0",
+    nota: "domínio de aplicabilidade provado por unidade (tela B), medido em cada par sobre a própria captura arquivada; igual nos 10 pares (portão `dominio`). Evidência por par em t7-tela-b-01/<par>/dominio.json",
+    reference: dominios[0]?.saida.reference ?? null, build: dominios[0]?.saida.build ?? null,
+    unidades: dominios.length ? Object.values(dominios[0].saida.dominios).map(x => ({ specId: x.specId, unitId: x.unitId, cenaCanonica: x.cenaCanonica,
+      dominio: x.dominio.map(e => ({ scene: e.scene, states: e.states, kind: e.kind, predicate: e.predicate, participants: e.participants,
+        evidencia: e.evidence.map(v => v.source.replace(/\/p01\//, "/<par>/")) })), fora: x.fora })) : [],
+    medidaPorCena: dominios.length ? dominios[0].saida.cenas.map(c => ({ scene: c.scene, skiplinks: c.skiplinks, ancorasHash: c.ancorasHash, titulo: c.titulo, titulosDetalhe: c.titulosDetalhe })) : [],
+    pacotes: pacotes18 });
+  log(`E3 ok: 30 pares, pacotes 1.7.0 da 1.0.0 (${COMMIT_DERIVADO_100}) elevados a ${analysisIdentity().scoringVersion}; domínio provado em ${dominios.length} pares da tela B; bijeção completa`);
   if (parar("E3")) { gravarPortoes(); return res; }
 
   // E4 — G1
@@ -605,12 +651,14 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
   gravar(raiz, "trilha/unidades.csv", csv(colU, unidadesLinhas));
   gravar(raiz, "trilha/unidades.json", JSON.stringify({ formato: "nat74-unidades-1.0.0", colunas: colU, linhas: unidadesLinhas }) + "\n");
   gravarJson(raiz, "trilha/recusas-do-scorer.json", { formato: "nat74-recusas-1.0.0", nota: "decisões montadas que as barreiras do scorer recusaram: ficam pendentes, sem forçar (P8)", recusas });
+  const delta = deltaDe110(unidadesLinhas, ordenada.filter(l => l.variante === "principal"), recusas as { campanha: string; motivo: string }[], resultados);
+  gravarJson(raiz, "verificacao/delta-110-120.json", delta);
   const lbs = linhasDeBase(porVariante, precisao, maturidade);
   gravarJson(raiz, "resultados/linhas-de-base.json", lbs);
   const aut = autoraJson(ver, porVariante);
   gravarJson(raiz, "resultados/autora.json", aut);
   const trilhaJ = resumoDoJulgamento(julgamentosArqs);
-  gravar(raiz, "RESULTADOS-DERIVADO.md", paginaResultados(resultados, lbs, res.filas as never, trilhaJ));
+  gravar(raiz, "RESULTADOS-DERIVADO.md", paginaResultados(resultados, lbs, res.filas as never, trilhaJ) + paginaDelta(delta));
   gravar(raiz, "LEIA-ME.md", leiaMe({ julgamentos: julg.info, rejulgados: julg.sobrescritos.length, t2: t2.porResultado, resultados, trilha: trilhaJ }));
   gravarJson(raiz, "painel-bloco.json", blocoPainel(resultados, lbs, trilhaJ));
   log("E12 ok");
@@ -625,6 +673,65 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
   gravarPortoes();
   log("E13 ok: hashes-depois = hashes-antes");
   return res;
+}
+
+// ───────────────────────────────────────────────────────────────── delta 1.1.0 → 1.2.0
+
+type LinhaU = { campanha: string; par: string; braco: string; specId: string; confirmadaDepois: boolean };
+type LinhaT = { campanha: string; par: string; braco: string; cardIdOriginal: string; atomoId: string; parte: number; diferenca: string; unidadesNovas: string;
+  vinculoRelacao: string | null; vinculoAceitoPeloScorer: boolean | null; classe: string };
+type Delta = { formato: string; nota: string; recusas: { antes: Record<string, number>; depois: Record<string, number> };
+  unidades: { campanha: string; par: string; braco: string; specId: string; antes: boolean; depois: boolean }[];
+  cartoes: { campanha: string; par: string; braco: string; cardIdOriginal: string; atomoId: string; parte: number; antes: string; depois: string; vinculo: string | null }[];
+  campanhas: Record<string, { antes: { estado: string; d: number[]; dMin: number[]; dMax: number[] }; depois: { estado: string; d: number[]; dMin: number[]; dMax: number[] } }> };
+
+/** Motivo sem ids nem sujeito (agrupável): "recusado pelo scorer: <barreira>"; os da montagem já são curtos. */
+const motivoCurto = (m: string) => m.replace(/C-[0-9a-f]{64}|U-[0-9a-f]{64}/g, "#").replace(/ for \S* and unit /, " · unidade ").replace(/: [^:]*\|.*$/, "").slice(0, 200);
+
+/** Delta por unidade (campanha × par × braço × spec), por cartão (átomo × parte) e por campanha, 1.1.0 → 1.2.0 (variante principal). */
+/** Arquivo do derivado 1.1.0 como publicado (commit COMMIT_DERIVADO_110), nunca da árvore de trabalho. */
+const lerDe110 = <T>(rel: string): T => JSON.parse(execFileSync("git", ["-C", RESULTADOS, "show", `${COMMIT_DERIVADO_110}:${CAMINHO_DERIVADO_110}/${rel}`],
+  { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 }).replace(/^﻿/, "")) as T;
+
+function deltaDe110(unidades: Record<string, unknown>[], trilha: Record<string, unknown>[], recusas: { campanha: string; motivo: string }[], resultados: Record<string, unknown>): Delta {
+  const u110 = lerDe110<{ linhas: LinhaU[] }>("trilha/unidades.json").linhas;
+  const t110 = lerDe110<{ linhas: LinhaT[] }>("trilha/trilha-atomos.json").linhas;
+  const r110 = lerDe110<{ recusas: { campanha: string; motivo: string }[] }>("trilha/recusas-do-scorer.json").recusas;
+  const conta = (rs: { campanha: string; motivo: string }[]) => { const o: Record<string, number> = {}; for (const r of rs) { const k = `${r.campanha} · ${r.motivo}`; o[k] = (o[k] ?? 0) + 1; } return Object.fromEntries(Object.entries(o).sort()); };
+  const chaveU = (l: LinhaU) => `${l.campanha}|${l.par}|${l.braco}|${l.specId}`;
+  const conf = (ls: LinhaU[]) => { const m = new Map<string, boolean>(); for (const l of ls) m.set(chaveU(l), (m.get(chaveU(l)) ?? false) || l.confirmadaDepois); return m; };
+  const ua = conf(u110), ud = conf(unidades as unknown as LinhaU[]);
+  const unidadesDelta = [...new Set([...ua.keys(), ...ud.keys()])].sort().filter(k => (ua.get(k) ?? false) !== (ud.get(k) ?? false)).map(k => {
+    const [campanha, par, braco, specId] = k.split("|"); return { campanha, par, braco, specId, antes: ua.get(k) ?? false, depois: ud.get(k) ?? false }; });
+  const chaveT = (l: LinhaT) => `${l.campanha}|${l.par}|${l.cardIdOriginal}|${l.atomoId}|${l.parte}`;
+  const ta = new Map(t110.map(l => [chaveT(l), l]));
+  const cartoes: Delta["cartoes"] = [];
+  for (const l of trilha as unknown as LinhaT[]) {
+    const a = ta.get(chaveT(l));
+    if (!a || a.diferenca === l.diferenca) continue;
+    cartoes.push({ campanha: l.campanha, par: l.par, braco: l.braco, cardIdOriginal: l.cardIdOriginal, atomoId: l.atomoId, parte: l.parte, antes: a.diferenca, depois: l.diferenca,
+      vinculo: l.vinculoRelacao });
+  }
+  const campanhas: Delta["campanhas"] = {};
+  for (const c of CAMPANHAS) {
+    const de = (r: { variantes: { principal: { estado: string; d: number[]; limites: { inferior: { d: number[] }; superior: { d: number[] } } } } }) =>
+      ({ estado: r.variantes.principal.estado, d: r.variantes.principal.d, dMin: r.variantes.principal.limites.inferior.d, dMax: r.variantes.principal.limites.superior.d });
+    campanhas[c] = { antes: de(lerDe110(`resultados/${c}.json`)), depois: de(resultados[c] as never) };
+  }
+  return { formato: "nat74-delta-1.0.0", nota: `1.1.0 (govbr-resultados ${COMMIT_DERIVADO_110}, lido por git show) → 1.2.0, variante principal; unidade = confirmada em algum cartão do braço; cartão = linha da trilha (átomo × parte) cuja diferenca mudou`,
+    recusas: { antes: conta(r110.map(r => ({ campanha: r.campanha, motivo: motivoCurto(r.motivo) }))), depois: conta(recusas.map(r => ({ campanha: r.campanha, motivo: motivoCurto(r.motivo) }))) },
+    unidades: unidadesDelta, cartoes: ordenar(cartoes, x => `${x.campanha}|${x.par}|${x.cardIdOriginal}|${x.atomoId}|${x.parte}`), campanhas };
+}
+
+function paginaDelta(d: Delta): string {
+  const L = ["", "## Delta 1.1.0 → 1.2.0 (scorer flow-semantic-1.8.0, domínio provado)", "",
+    "Recusas da montagem/scorer, antes e depois (campanha · motivo):", "", "| Motivo | 1.1.0 | 1.2.0 |", "|---|---|---|"];
+  for (const k of [...new Set([...Object.keys(d.recusas.antes), ...Object.keys(d.recusas.depois)])].sort()) L.push(`| ${k} | ${d.recusas.antes[k] ?? 0} | ${d.recusas.depois[k] ?? 0} |`);
+  L.push("", "| Campanha | Estado 1.1.0 | Estado 1.2.0 | D 1.1.0 [mín, máx] | D 1.2.0 [mín, máx] |", "|---|---|---|---|---|");
+  const lim = (x: { dMin: number[]; dMax: number[] }) => x.dMin.map((a, i) => (a === x.dMax[i] ? `${a}` : `[${a}, ${x.dMax[i]}]`)).join(", ");
+  for (const [c, x] of Object.entries(d.campanhas)) L.push(`| ${ROTULO[c as Campanha]} | ${x.antes.estado} | ${x.depois.estado} | ${lim(x.antes)} | ${lim(x.depois)} |`);
+  L.push("", `Unidades que mudaram de confirmada (campanha · par · braço · spec): ${d.unidades.length}; linhas da trilha (átomo × parte) com diferença nova: ${d.cartoes.length}. Lista em \`verificacao/delta-110-120.json\`.`, "");
+  return L.join("\n");
 }
 
 // ───────────────────────────────────────────────────────────────── auxiliares de exportação
@@ -652,9 +759,11 @@ function limitesParaPar(pd: ParDerivado, k: ReturnType<typeof contagemArmada>, m
         // a spec que o juiz da T3 vinculou, mesmo sem crédito ainda (ex.: aplicabilidade incerta)
         const vj = vinculoT3(chaveAtomo(c, pd.p.par, orig, a.id));
         const specJuiz = vj && typeof vj === "object" ? (vj as { spec: string }).spec : null;
-        if (specJuiz) for (const u of pd.novo.units) if (u.specId === specJuiz && cenas.has(u.scene)) adm.add(u.id);
+        // [1.2.0] uma unidade é admissível na cena canônica ou numa cena do seu domínio provado.
+        const naCenaOuDominio = (u: SemanticPackage["units"][number]) => cenas.has(u.scene) || (u.domain ?? []).some(e => cenas.has(e.scene));
+        if (specJuiz) for (const u of pd.novo.units) if (u.specId === specJuiz && naCenaOuDominio(u)) adm.add(u.id);
         for (const p of cl.get(chaveAtomo(c, pd.p.par, orig, a.id))?.partes ?? [])
-          if (p.spec) for (const u of pd.novo.units) if (u.specId === p.spec && cenas.has(u.scene)) adm.add(u.id);
+          if (p.spec) for (const u of pd.novo.units) if (u.specId === p.spec && naCenaOuDominio(u)) adm.add(u.id);
       }
     }
     return { confirmadas: new Set(s.matched.map(x => x.unitId)), admissiveis: adm };

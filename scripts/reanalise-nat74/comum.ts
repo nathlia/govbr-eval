@@ -37,6 +37,13 @@ export const CAMINHO_DERIVADO = "derivados/nat74-retrospectiva/1.0.0";
 export const DERIVADO_VERSAO_110 = "nat74-retrospectiva-1.1.0";
 export const CAMINHO_DERIVADO_110 = "derivados/nat74-retrospectiva/1.1.0";
 export const COMMIT_DERIVADO_100 = "da42f24";
+/**
+ * Derivado 1.2.0: scorer flow-semantic-1.8.0 (domínio de aplicabilidade provado; thesis decisoes 59019ac). Mesmas
+ * entradas analíticas da 1.1.0 (julgamentos T3 da 1.0.0, medidas T2 da 1.1.0), fixadas também no commit da 1.1.0.
+ */
+export const DERIVADO_VERSAO_120 = "nat74-retrospectiva-1.2.0";
+export const CAMINHO_DERIVADO_120 = "derivados/nat74-retrospectiva/1.2.0";
+export const COMMIT_DERIVADO_110 = "dc3fa08";
 
 /** Raiz da saída: o derivado no arquivo, ou outra pasta (segunda execução do teste de determinismo). */
 export function raizSaida(): string {
