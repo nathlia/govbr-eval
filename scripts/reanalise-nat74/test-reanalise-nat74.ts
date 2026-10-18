@@ -194,7 +194,7 @@ if (existsSync(join(derivado, "resultados", "linhas-de-base.json"))) {
   t("H1 derivado: D em limites por variante; par sem átomo no limite superior tem D igual; manchete sem média/IC/p", () => {
     for (const c of ["t7-tela-a-01", "t7b-sonnet-tela-a-01", "t7-tela-b-01"]) {
       const r = lerJson<{ variantes: Record<string, { d: number[]; limites: { inferior: { d: number[] }; superior: { d: number[] } }; pares: { d: number; dLimiteSuperior: number; atomosNoLimiteSuperior: number }[] }> }>(join(derivado, "resultados", c + ".json"));
-      for (const v of VARIANTES) {
+      for (const v of VARIANTES.filter(v => v in r.variantes)) { // a 1.0.0 não tem a S7
         const x = r.variantes[v];
         assert.deepEqual(x.limites.inferior.d, x.d);
         assert.deepEqual(x.limites.superior.d, x.pares.map(p => p.dLimiteSuperior));

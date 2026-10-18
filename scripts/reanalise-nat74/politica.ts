@@ -7,9 +7,13 @@
  */
 import type { AtomoArquivado } from "./e1";
 import type { Parte, Veredito, VereditoAtomo } from "./vereditos";
+import type { Derivado, Resposta } from "./e14-comum";
 
-export type Variante = "principal" | "S1" | "S2" | "S3" | "S4" | "S5" | "S6";
-export const VARIANTES: readonly Variante[] = ["principal", "S1", "S2", "S3", "S4", "S5", "S6"];
+/** Julgamento da fila T3 (E14) de um átomo: o que a ingestão gravou em julgamentos.json (sem braço). */
+export interface JulgamentoT3 { id: string; tipo: string; fonte: string; resposta: Resposta; derivado: Derivado }
+
+export type Variante = "principal" | "S1" | "S2" | "S3" | "S4" | "S5" | "S6" | "S7";
+export const VARIANTES: readonly Variante[] = ["principal", "S1", "S2", "S3", "S4", "S5", "S6", "S7"];
 export const DESCRICAO_VARIANTE: Record<Variante, string> = {
   principal: "política 1.2.0, origem medida com o DS 3.4.1 (tela B), todos os juízes, resposta vigente da autora, Q1 a, Q3 a",
   S1: "política 1.1.0: observação com norma errada como falso, sem o crédito da R15 (nem o da Q1 a)",
@@ -18,6 +22,7 @@ export const DESCRICAO_VARIANTE: Record<Variante, string> = {
   S4: "só humano: classe ou vínculo decididos só por LLM (revisor novo, Q3) revertidos ao arquivo — ATENÇÃO: o arquivo é carregado mesmo quando a P7 o julga incompatível com a 1.2.0 (citação incerta, família sensível); a S4 mistura vereditos que a principal não aceitaria do arquivo",
   S5: "Q1 b: átomo creditado com regra nula vira observação e não credita",
   S6: "indeterminada conta como pagina na análise I",
+  S7: "sem-evidencia → pendente: átomo julgado na T3 cujo cartão traz a sinalização sem-evidencia (nenhuma evidência resolvida) e nenhum fato medido, com fato verdadeiro só inferido, fica pendente (R9)",
 };
 
 export type Tratamento = "julgado" | "T1" | "T2" | "T3" | "pendente";
@@ -39,6 +44,12 @@ export interface AtomoEntrada {
   equivalentes: (regra: string) => string[];
   /** A regra do axe é só boa prática (sem etiqueta WCAG)? `null` se não é regra do axe. */
   axeBoaPratica: (regra: string) => boolean | null;
+  /** [1.1.0] Julgamento da fila T3 (LLM cego, D-130), quando houver. */
+  t3?: JulgamentoT3 | null;
+  /** [1.1.0] Átomo da família T2 que a medida não fechou: o motivo (vai à T3). */
+  t2Pendente?: string | null;
+  /** [1.1.0, S7] Cartão com a sinalização `sem-evidencia` (contrato do achado) e sem fato medido do próprio caso. */
+  semEvidencia?: boolean;
 }
 
 export interface ParteClassificada {
@@ -175,7 +186,8 @@ export function classificar(e: AtomoEntrada, variante: Variante): AtomoClassific
       const origemFonte = v.juiz === "medida" ? p.origem : origemM;
       const origem = ehViolacao(p.classe) ? (origemFonte ? classeDaOrigem(origemFonte) : "indeterminada") : null;
       const qualidade: Qualidade = p.classe === "erro-normativo"
-        ? (a.origemCartao === "linha-de-base" ? (e.sugestaoLinhaDeBase === "indeterminada" ? "pendente" : e.sugestaoLinhaDeBase) : "pendente") : null;
+        ? (a.origemCartao === "linha-de-base" ? (e.sugestaoLinhaDeBase === "indeterminada" ? "pendente" : e.sugestaoLinhaDeBase)
+          : (variante !== "S4" && e.t3?.derivado.qualidadeDaSugestao ? e.t3.derivado.qualidadeDaSugestao as Qualidade : "pendente")) : null;
       let classe = classeDaParte(p, origem, qualidade, politica);
       let spec = ehViolacao(p.classe) ? p.vinculo?.unidade ?? null : null;
       let credito: ParteClassificada["credito"] = spec && classe !== "violacao-ds" ? "unidade" : null;
@@ -197,6 +209,12 @@ export function classificar(e: AtomoEntrada, variante: Variante): AtomoClassific
         regraCitada: a.regra, forcaDaCitacao: forcaDaCitada(a.regra, e), aplicabilidadeDaCitada: p.norma?.aplicabilidade ?? null,
         qualidadeDaSugestao: qualidade, classe, spec, credito, regraDaPolitica, motivo };
     });
+    // [1.1.0] qualidade da sugestão julgada na T3: registrada no motivo e na fonte.
+    const qT3 = variante !== "S4" ? e.t3?.derivado.qualidadeDaSugestao ?? null : null;
+    if (qT3 && partes.some(p => p.qualidadeDaSugestao === qT3)) {
+      for (const p of partes) if (p.qualidadeDaSugestao === qT3) p.motivo += ` · qualidade da sugestão: T3 (LLM cego), ${qT3}`;
+      base.fontes = [...base.fontes, e.t3!.fonte];
+    }
     const semSujeito = partes.some(p => !p.sujeitos.length);
     const pendente = semSujeito || partes.some(p => p.classe === "pendente");
     const filaT3 = partes.some(p => p.qualidadeDaSugestao === "pendente") ? "qualidadeDaSugestao a julgar (T3, P13)" : null;
@@ -204,6 +222,9 @@ export function classificar(e: AtomoEntrada, variante: Variante): AtomoClassific
       transporArquivo: false, fila: filaT3 ? "T3" : null,
       motivoFila: semSujeito ? "divisão em partes sem mapa parte→sujeito" : filaT3 ?? (pendente ? "classe pendente no veredito" : null) };
   }
+
+  // ── [1.1.0] julgado na fila T3 (LLM cego): a classe derivada das respostas; a S4 (só humano) volta ao arquivo em classificarVariante.
+  if (e.t3 && e.t3.tipo !== "qualidade") return classificarT3(e, variante, base);
 
   // ── sem veredito novo: triagem de compatibilidade (P7, E6)
   if (a.grupo === "credito-fora") {
@@ -231,6 +252,10 @@ export function classificar(e: AtomoEntrada, variante: Variante): AtomoClassific
   }
   // não creditados fora do inventário
   if (FAMILIAS_SENSIVEIS.has(a.familia) || a.decisao === "evidencia-insuficiente") {
+    // [1.1.0] T2 que a medida não fechou vai à T3.
+    if (e.t2Pendente) { const motivo = `T2: a medida não fecha (${e.t2Pendente}): a julgar (T3)`;
+      return { ...base, juiz: "pendente", tratamento: "T3", transporArquivo: false, fila: "T3", motivoFila: motivo,
+        partes: [{ ...parteDoArquivo(e, variante, "P7", motivo), classe: "pendente", credito: null }] }; }
     const t2 = FAMILIAS_T2.has(a.familia);
     const motivo = t2 ? `família ${a.familia}: medida mecânica (E7) — não coberta pelas medidas congeladas desta versão; pendente, sem palpite`
       : `família ${a.familia}: aplicabilidade/força da norma a julgar (T3)`;
@@ -246,11 +271,52 @@ export function classificar(e: AtomoEntrada, variante: Variante): AtomoClassific
 /** S4: classe/vínculo do LLM revertidos ao arquivo (classificado como T1 de arquivo, compatível ou não). */
 export function classificarVariante(e: AtomoEntrada, variante: Variante): AtomoClassificado {
   const c = classificar(e, variante);
-  if (variante === "S4" && e.veredito?.vigente.juiz === "revisor-novo") {
+  if (variante === "S4" && (e.veredito?.vigente.juiz === "revisor-novo" || (e.t3 && e.t3.tipo !== "qualidade" && !e.veredito))) {
     const p = parteDoArquivo(e, variante, "S4", "S4: veredito só do LLM revertido ao arquivo (carregado mesmo se a P7 o julgar incompatível)");
     return { ...c, juiz: "arquivo (S4)", tratamento: "T1", transporArquivo: transpoe(e, p), fila: null, motivoFila: null, partes: [p] };
   }
   return c;
+}
+
+/** Classe por variante de um átomo julgado na T3 (a partir de `derivado`, que segue a 1.2.0 com a origem 3.4.1). */
+function classificarT3(e: AtomoEntrada, variante: Variante, base: Pick<AtomoClassificado, "chave" | "aposRevelacao" | "aposOrientacao" | "fontes" | "divergencias">): AtomoClassificado {
+  const a = e.atomo, j = e.t3!, d = j.derivado, r = j.resposta;
+  let classe = (variante === "S5" ? d.s5.classe : d.classe) as Classe;
+  let spec = variante === "S5" ? d.s5.spec : d.spec;
+  const norma = r.norma === "nao-perguntado" ? null : r.norma;
+  const q1 = norma?.forca === "nenhuma", r15 = !!norma && !q1 && norma.forca !== "obrigatorio";
+  let origem: ParteClassificada["origem"] = null;
+  if (ehViolacao(classe)) {
+    const om = variante === "S2" ? e.origem370 : e.origem341;
+    origem = om ? classeDaOrigem(om) : spec ? "pagina" : "indeterminada";
+    classe = origem === "pagina" ? "violacao-pagina" : origem === "ds" ? "violacao-ds" : "violacao-origem-indeterminada";
+  }
+  let credito: ParteClassificada["credito"] = ehViolacao(classe) && spec && classe !== "violacao-ds" ? (q1 ? "q1" : r15 ? "r15" : "unidade") : null;
+  let regra = !ehViolacao(classe) ? (variante === "S5" ? d.s5.regraDaPolitica : d.regraDaPolitica)
+    : classe === "violacao-ds" ? "R5" : credito === "q1" ? "Q1" : credito === "r15" ? "R15" : credito ? "R7" : "R2-classes";
+  if (!credito && ehViolacao(classe)) spec = null;
+  // S1 (1.1.0): sem observação com norma errada, sem o crédito da R15 nem o da Q1 a.
+  if (variante === "S1") {
+    if (classe === "observacao-norma-errada") { classe = "erro-normativo"; regra = "R11"; }
+    if (credito === "r15") { classe = "erro-normativo"; credito = null; spec = null; origem = null; regra = "R13"; }
+    if (credito === "q1") { classe = "observacao"; credito = null; spec = null; origem = null; regra = "R11b"; }
+  }
+  // Pendente só o que o juiz deixou indeterminado: classe pendente, ou violação com vínculo indeterminado.
+  // S7: fato só de texto (cartão sem evidência resolvida, sem fato medido) julgado verdadeiro por inferência → pendente (R9).
+  const s7 = variante === "S7" && !!e.semEvidencia && r.verdadeFactual === "verdadeira" && r.forcaDoVeredito === "inferido";
+  const pendente = s7 || classe === "pendente" || (ehViolacao(classe) && r.vinculo === "indeterminado");
+  const motivoFila = s7 ? "S7: sem-evidencia, fato verdadeiro só inferido → pendente (R9)"
+    : pendente ? `T3 indeterminado: ${[d.classe, ...d.pendencias].join("; ")}: a julgar de novo (T3)` : null;
+  const om = variante === "S2" ? e.origem370 : e.origem341;
+  const parte: ParteClassificada = { indice: 0, parte: "o cartão inteiro", sujeitos: [...a.sujeitos],
+    verdadeFactual: r.verdadeFactual === "nao-perguntado" ? null : r.verdadeFactual, normaId: norma ? (norma.id === "citada" ? a.regra : norma.id) : null,
+    normaForca: norma?.forca ?? null, normaAplicabilidade: norma?.aplicabilidade ?? null, normaViolada: norma?.violada ?? null,
+    origemJuiz: null, origem, origemRotulo: ehViolacao(classe) ? om ?? (spec ? "pagina (unidade da referência)" : "indeterminada (não medida)") : null,
+    regraCitada: a.regra, forcaDaCitacao: forcaDaCitada(a.regra, e), aplicabilidadeDaCitada: norma && norma.id === "citada" ? norma.aplicabilidade : null,
+    qualidadeDaSugestao: (d.qualidadeDaSugestao as Qualidade) ?? null, classe: pendente ? "pendente" : classe, spec, credito, regraDaPolitica: regra,
+    motivo: motivoFila ?? `T3 (LLM cego, D-130), ${j.id}: ${regra}${d.fundamentacao ? `, fundamentação ${d.fundamentacao}` : ""}` };
+  return { ...base, fontes: [...base.fontes, j.fonte], juiz: "llm-t3", tratamento: s7 ? "pendente" : pendente ? "T3" : "julgado", transporArquivo: false, partes: [parte],
+    fila: pendente && !s7 ? "T3" : null, motivoFila };
 }
 
 /** Átomo pendente (T2, T3 ou pendente) que o arquivo creditou (defeito-do-gabarito): entra nos limites de D (H1). */

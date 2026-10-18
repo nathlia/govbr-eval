@@ -29,6 +29,14 @@ export const PLANO = join(PLANEJAMENTO, "plano-nat74-reanalise-2026-10-16.md");
 /** Commit do arquivo de resultados em que a reanálise se apoia (plano §2). */
 export const COMMIT_RESULTADOS = "b69857f";
 export const CAMINHO_DERIVADO = "derivados/nat74-retrospectiva/1.0.0";
+/**
+ * Derivado 1.1.0: julgamentos da fila T3 (E14) + medidas da T2. Fixa as próprias entradas: o arquivo original no
+ * commit `COMMIT_RESULTADOS` (fora de derivados/ nada mudou desde então), o derivado 1.0.0 no commit
+ * `COMMIT_DERIVADO_100` (de onde vêm os pacotes 1.7.0 já preparados e a fila T3) e o sha256 dos julgamentos.
+ */
+export const DERIVADO_VERSAO_110 = "nat74-retrospectiva-1.1.0";
+export const CAMINHO_DERIVADO_110 = "derivados/nat74-retrospectiva/1.1.0";
+export const COMMIT_DERIVADO_100 = "da42f24";
 
 /** Raiz da saída: o derivado no arquivo, ou outra pasta (segunda execução do teste de determinismo). */
 export function raizSaida(): string {

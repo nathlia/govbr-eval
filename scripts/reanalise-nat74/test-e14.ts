@@ -236,25 +236,47 @@ try {
 // ───────────────────────────────────────────────────────────────── materiais (sintético)
 console.log("E14: materiais (P5 a)");
 t("material = spec creditada (arquivo ou julgamento) não confirmada de outro jeito na execução; teto 10, D antes de LB", () => {
-  const item = (id: string, o: Partial<ItemChave>): ItemChave => ({ id, hash: id, chave: id, campanha: "c", tela: "B", par: "p01", braco: "com", runId: "r1", cardIdOriginal: "C",
+  const item = (id: string, o: Partial<ItemChave>): ItemChave => ({ id, hash: id, chave: id, campanha: "t7-tela-b-01", tela: "B", par: "p01", braco: "com", runId: "r1", cardIdOriginal: "C",
     atomoId: "a1", cardSha256: "0", mId: null, tipo: "citacao", motivoFila: "", decisaoAntiga: "defeito-do-gabarito", unidadesAntigas: "B-05:U1", origemMedida341: null,
     origemMedida370: null, lote: "lote-01", ...o });
   const der = (classe: string, spec: string | null) => ({ classe, regraDaPolitica: "R7", spec, qualidadeDaSugestao: null, pendencias: [] }) as never;
   const chave = [item("T3-a", {}), item("T3-b", { runId: "r2" }), item("T3-c", { braco: "lb-axe", decisaoAntiga: "defeito-novo-correto", unidadesAntigas: "" }),
     item("T3-d", { decisaoAntiga: "incorreta", unidadesAntigas: "" }),
     ...Array.from({ length: 12 }, (_, i) => item(`T3-z${String(i).padStart(2, "0")}`, { runId: `rz${i}` }))];
-  const unidades = [{ campanha: "c", par: "p01", runId: "r2", specId: "B-05", confirmadaDepois: true, variante: "principal" }];
+  const unidades = [{ campanha: "t7-tela-b-01", par: "p01", runId: "r2", specId: "B-05", unitId: "U-x", confirmadaDepois: true, variante: "principal" }];
   const js = [{ id: "T3-a", chave: "T3-a", derivado: der("erro-normativo", null) }, { id: "T3-b", chave: "T3-b", derivado: der("violacao-pagina", "B-05") },
     { id: "T3-c", chave: "T3-c", derivado: der("violacao-pagina", "B-26") }, { id: "T3-d", chave: "T3-d", derivado: der("erro-factual", null) },
     ...Array.from({ length: 12 }, (_, i) => ({ id: `T3-z${String(i).padStart(2, "0")}`, chave: "z", derivado: der("violacao-pagina", "B-05") }))];
-  const m = materiais(js, chave, unidades);
+  const m = materiais(js, chave, unidades, new Map());
   const todos = [...m.paraAutora, ...m.julgadoSoPorLLM];
-  assert.ok(todos.some(x => x.id === "T3-a" && x.specs[0].creditadaNoArquivo && !x.specs[0].creditadaNoJulgamento)); // perde o crédito arquivado
+  assert.ok(todos.some(x => x.id === "T3-a" && x.alvos[0].creditadoNoArquivo && !x.alvos[0].creditadoNoJulgamento)); // perde o crédito arquivado
   assert.ok(!todos.some(x => x.id === "T3-b")); // B-05 já confirmada em r2
   assert.ok(!todos.some(x => x.id === "T3-d")); // nada creditado nos dois lados
   assert.equal(m.paraAutora.length, 10); assert.equal(todos.length, 14);
   assert.equal(todos.find(x => x.id === "T3-c")!.camada, "LB");
   assert.ok(m.julgadoSoPorLLM.some(x => x.id === "T3-c")); // LB vai para o fim da ordem
+});
+t("tela A: materialidade por UNIDADE — U1 confirmada não esconde U2 da mesma spec em disputa; tela B segue por spec", () => {
+  const item = (id: string, o: Partial<ItemChave>): ItemChave => ({ id, hash: id, chave: id, campanha: "t7-tela-a-01", tela: "A", par: "p01", braco: "com", runId: "r1", cardIdOriginal: "C-old",
+    atomoId: "a1", cardSha256: "0", mId: null, tipo: "citacao", motivoFila: "", decisaoAntiga: "defeito-do-gabarito", unidadesAntigas: "A-04:U2-old", origemMedida341: null,
+    origemMedida370: null, lote: "lote-01", ...o });
+  const pares = new Map([["t7-tela-a-01|p01", { specDe: new Map([["U1", "A-04"], ["U2", "A-04"], ["U3", "A-08"]]), deAntiga: new Map([["U2-old", "U2"]]),
+    candidatas: new Map([["C-old", ["U1", "U2"]]]) }]]);
+  const der = (classe: string, spec: string | null) => ({ classe, regraDaPolitica: "R7", spec, qualidadeDaSugestao: null, pendencias: [] }) as never;
+  // U1 (A-04) confirmada por outro átomo; o átomo disputa U2 (A-04): material na tela A
+  const conf = [{ campanha: "t7-tela-a-01", par: "p01", runId: "r1", specId: "A-04", unitId: "U1", confirmadaDepois: true, variante: "principal" }];
+  const m = materiais([{ id: "T3-u", chave: "T3-u", derivado: der("erro-normativo", null) }], [item("T3-u", {})], conf, pares);
+  assert.equal(m.paraAutora.length, 1); assert.deepEqual(m.paraAutora[0].alvos.map(x => x.alvo), ["U2"]); assert.equal(m.paraAutora[0].camada, "D");
+  // as duas unidades confirmadas: não material
+  const ambas = [...conf, { ...conf[0], unitId: "U2" }];
+  assert.equal(materiais([{ id: "T3-u", chave: "T3-u", derivado: der("erro-normativo", null) }], [item("T3-u", {})], ambas, pares).naoMateriais, 1);
+  // julgado credita A-04: só as unidades oferecidas pela ancoragem do cartão (U1, U2); U1 confirmada → alvo U2
+  const j = materiais([{ id: "T3-v", chave: "T3-v", derivado: der("violacao-pagina", "A-04") }], [item("T3-v", { decisaoAntiga: "defeito-novo-correto", unidadesAntigas: "" })], conf, pares);
+  assert.deepEqual(j.paraAutora[0].alvos.map(x => [x.alvo, x.creditadoNoJulgamento]), [["U2", true]]);
+  // na tela B, a mesma situação por spec: B-05 confirmada → não material
+  const b = materiais([{ id: "T3-b", chave: "T3-b", derivado: der("erro-normativo", null) }], [item("T3-b", { campanha: "t7-tela-b-01", tela: "B", unidadesAntigas: "B-05:Uold" })],
+    [{ campanha: "t7-tela-b-01", par: "p01", runId: "r1", specId: "B-05", unitId: "Ux", confirmadaDepois: true, variante: "principal" }], new Map());
+  assert.equal(b.naoMateriais, 1);
 });
 
 console.log(`\n${n - falhas}/${n} testes da E14 passaram`);

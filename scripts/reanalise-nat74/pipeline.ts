@@ -1,38 +1,52 @@
 /**
- * NAT-74 — reanálise retrospectiva (derivado `nat74-retrospectiva-1.0.0`). Etapas E0–E13 do plano
- * (`thesis-workspace/planejamento/atual/plano-nat74-reanalise-2026-10-16.md`). E14 (fila T3) é um passo
- * de revisão separado e NÃO roda aqui: nenhuma chamada de modelo, nenhuma rede.
+ * NAT-74 — reanálise retrospectiva, derivado `nat74-retrospectiva-1.1.0`. Etapas E0–E13 do plano
+ * (`thesis-workspace/planejamento/atual/plano-nat74-reanalise-2026-10-16.md`) com a E14 já feita: lê os
+ * julgamentos da fila T3 (`fila-t3/julgamentos.json`, ingeridos pelo e14-ingerir) e as medidas da T2
+ * (`medidas/t2/medidas-t2.json`, do t2-medir). Nenhuma chamada de modelo, nenhuma rede.
+ * A 1.0.0 (commit 59fc919 do govbr-eval) fica como está, byte a byte; esta versão não a regera.
  *
- *   npm run reanalise:nat74 -- [--etapa E<n>] [--saida PASTA/derivados/...] [--comparar PASTA_DE_OUTRA_EXECUCAO]
+ *   npm run reanalise:nat74 -- [--etapa E<n>] [--saida PASTA] [--julgamentos a.json,b.json] [--medidas-t2 ARQ] [--comparar PASTA]
+ *
+ * Sem `--julgamentos`, usa os que existirem: `1.0.0/fila-t3/julgamentos.json` e `<saida>/fila-t3/julgamentos.json`
+ * (a fila residual desta versão); o segundo vale sobre o primeiro no mesmo átomo (rejulgamento de indeterminado).
  *
  * `--etapa` para depois da etapa pedida. Os portões (E1 contagens, G0, bijeção, G1, G2) param tudo
  * quando falham, gravam `verificacao/portoes.json` com a diferença exata e saem com código 2.
  */
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { createRequire } from "node:module";
 import { analisePareada, ESTATISTICA_VERSAO } from "../estatistica-pareada";
 import { analysisIdentity } from "../collection-manifest";
 import { scoreSemanticPackage, type SemanticPackage, type SemanticReviews } from "../semantic-flow";
 import { loadKbAliasVocabulary } from "../kb-aliases";
 import {
-  CAMINHO_DERIVADO, CAMPANHAS, COMMIT_RESULTADOS, DERIVADO_VERSAO, EVAL, FORMATO_RESULTADO, MODO_D, NAT73, PLANEJAMENTO, POLITICA_PRINCIPAL,
+  CAMINHO_DERIVADO, CAMINHO_DERIVADO_110, COMMIT_DERIVADO_100, DERIVADO_VERSAO_110, CAMPANHAS, COMMIT_RESULTADOS, EVAL, FORMATO_RESULTADO, MODO_D, NAT73, PLANEJAMENTO, POLITICA_PRINCIPAL,
   POLITICA_SENSIBILIDADE, REVISAO_INTEGRADA, RESULTADOS, ROTULO, TCC, TELA, chaveAtomo, csv, gravar, gravarJson, jsonTexto, lerJson, ordenar, posix, raizSaida,
   relRes, relTcc, sha, shaArquivo, type Braco, type Campanha, type ParLido,
 } from "./comum";
 import { inventarioDeAtomos, type AtomoArquivado, type Inventario } from "./e1";
-import { contagemDoRun, OFICIAL, portaoG0, runsDosBracos, sementeDaCampanha } from "./g0";
-import { dirParDerivado, prepararPar } from "./e3";
-import { g1DoPar, mapaRetrospectivo, type MapaRetrospectivo } from "./mapa";
+import { contagemDoRun, OFICIAL, portaoG0, runsDosBracos, sementeDaCampanha, type ContagemBraco } from "./g0";
+import { dirParDerivado } from "./e3";
+import { g1DoPar, mapaRetrospectivo, tradutor, type MapaRetrospectivo } from "./mapa";
+import { contador, limitesDoPar, type BracoLimite, type LimitesDoPar } from "./limites";
+import { CAMINHO_MEDIDAS_T2, vereditoT2, type MedidasT2 } from "./t2";
+import { FORMATO_JULGAMENTOS } from "./e14-comum";
+import type { VereditoAtomo } from "./vereditos";
 import { idDaParte, montarDecisoes, type Montagem } from "./montar";
 import {
   classeDoArquivo, classificarVariante, DESCRICAO_VARIANTE, elegibilidade, limiteSuperior, metrica, mudouPorM1, pendenteCreditadoNoArquivo, VARIANTES,
-  type AtomoClassificado, type AtomoEntrada, type ParteClassificada, type Variante,
+  type AtomoClassificado, type AtomoEntrada, type JulgamentoT3, type ParteClassificada, type Variante,
 } from "./politica";
 import { vereditosPorAtomo, type SaidaVereditos } from "./vereditos";
 
 const req = createRequire(import.meta.url);
+const DERIVADO_VERSAO = DERIVADO_VERSAO_110;
+/** Famílias com medida mecânica (T2): R2 nome calculado, R4 declaração de estilo. */
+const FAMILIAS_T2 = new Set(["R2-nome", "R4-token"]);
+/** Pacote 1.7.0 de um par, preparado na 1.0.0 (commit da42f24): a 1.1.0 não reprepara. */
+export const pacoteDe100 = (p: { campanha: string; par: string }): string => join(RESULTADOS, CAMINHO_DERIVADO, p.campanha, p.par, "analise", "revisao", "package.json");
 const arg = (n: string): string | undefined => { const i = process.argv.indexOf(`--${n}`); return i > 0 ? process.argv[i + 1] : undefined; };
 const ETAPAS = ["E0", "E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9", "E10", "E11", "E12", "E13"] as const;
 type Etapa = typeof ETAPAS[number];
@@ -69,25 +83,51 @@ export function arquivosLidos(): string[] {
   return [...out].sort();
 }
 export const hashesDe = (rels: string[]): Record<string, { bytes: number; sha256: string }> =>
-  Object.fromEntries(rels.map(r => { const b = readFileSync(join(TCC, r)); return [r, { bytes: b.length, sha256: sha(b) }]; }));
+  Object.fromEntries(rels.map(r => { const b = readFileSync(resolve(TCC, r)); return [r, { bytes: b.length, sha256: sha(b) }]; }));
 
 /** Cópias pequenas (§3): política, seleção, julgamentos, revisor novo, origem e conferência. */
 const ENTRADAS_COPIADAS = (rels: string[]) => rels.filter(r => r.startsWith(posix(relative(TCC, NAT73))) && !/inventario-|grupos-casos|medir-origem/.test(r)
   || r.includes("conferencia-resultados.json"));
 
-function e0(raiz: string): { hashes: Record<string, { bytes: number; sha256: string }> } {
+interface EntradasV110 { julgamentos: string[]; medidasT2: string; pacotes: string[] }
+
+/**
+ * E0 da 1.1.0. Não "sobe uma constante": prova que as entradas são as fixadas.
+ * - `b69857f` e `da42f24` são ancestrais do HEAD do govbr-resultados;
+ * - fora de `derivados/`, a árvore de trabalho é idêntica a `b69857f` (o arquivo original não mudou);
+ * - o derivado 1.0.0 é idêntico a `da42f24`, salvo arquivos NOVOS sob `1.0.0/fila-t3/` (respostas, julgamentos, consistência);
+ * - arquivo não rastreado só sob a saída da 1.1.0 ou sob `1.0.0/fila-t3/`;
+ * - sha256 de tudo o que se lê (lista fechada + 30 pacotes 1.7.0 da 1.0.0 + julgamentos com o manifesto e a chave da
+ *   fila de cada um + medidas da T2), antes de qualquer leitura analítica.
+ */
+function e0(raiz: string, x: EntradasV110): { hashes: Record<string, { bytes: number; sha256: string }> } {
   const head = git(RESULTADOS, "rev-parse", "HEAD");
-  if (!head.startsWith(COMMIT_RESULTADOS)) throw new Portao("E0", `govbr-resultados em ${head}, esperado ${COMMIT_RESULTADOS}`);
-  const sujo = git(RESULTADOS, "status", "--porcelain", "--untracked-files=all").split("\n").filter(Boolean)
-    .filter(l => !l.slice(3).startsWith(`${CAMINHO_DERIVADO}/`));
-  if (sujo.length) throw new Portao("E0", { motivo: "govbr-resultados não está limpo (fora do derivado)", arquivos: sujo });
-  const rels = arquivosLidos();
+  for (const c of [COMMIT_RESULTADOS, COMMIT_DERIVADO_100]) {
+    try { execFileSync("git", ["-C", RESULTADOS, "merge-base", "--is-ancestor", c, "HEAD"]); }
+    catch { throw new Portao("E0", `govbr-resultados em ${head}: ${c} não é ancestral do HEAD`); }
+  }
+  const linhas = (t: string) => t.split("\n").map(l => l.trim()).filter(Boolean);
+  const foraDerivados = linhas(git(RESULTADOS, "diff", "--name-only", COMMIT_RESULTADOS, "--", ".", ":(exclude)derivados"));
+  if (foraDerivados.length) throw new Portao("E0", { motivo: `arquivo original mudou desde ${COMMIT_RESULTADOS} (fora de derivados/)`, arquivos: foraDerivados });
+  const filaT3 = `${CAMINHO_DERIVADO}/fila-t3/`;
+  const d100 = linhas(git(RESULTADOS, "diff", "--name-status", COMMIT_DERIVADO_100, "--", CAMINHO_DERIVADO))
+    .filter(l => !(/^A\t/.test(l) && l.slice(2).startsWith(filaT3)));
+  if (d100.length) throw new Portao("E0", { motivo: `derivado 1.0.0 difere de ${COMMIT_DERIVADO_100} (fora dos arquivos novos da fila T3)`, arquivos: d100 });
+  const saidaRel = posix(relative(RESULTADOS, raiz));
+  const naoRastreados = linhas(git(RESULTADOS, "status", "--porcelain", "--untracked-files=all")).filter(l => l.startsWith("??")).map(l => l.slice(3))
+    .filter(p => !p.startsWith(filaT3) && !p.startsWith(`${CAMINHO_DERIVADO_110}/`) && (saidaRel.startsWith("..") || !p.startsWith(`${saidaRel}/`)));
+  if (naoRastreados.length) throw new Portao("E0", { motivo: "arquivos não rastreados fora da saída da 1.1.0 e da fila T3 da 1.0.0", arquivos: naoRastreados });
+  const extra = [...x.pacotes, ...x.julgamentos.flatMap(j => [j, join(dirname(j), "lotes", "manifesto.json"), join(dirname(j), "chave", "fila-t3-chave.json")]), x.medidasT2];
+  const rels = [...new Set([...arquivosLidos(), ...extra.map(a => posix(relative(TCC, a)))])].sort();
   const hashes = hashesDe(rels);
   gravarJson(raiz, "verificacao/hashes-antes.json", { formato: "nat74-hashes-1.0.0", resultados: { commit: head, tree: git(RESULTADOS, "rev-parse", "HEAD^{tree}") },
     arquivos: hashes, total: rels.length });
   const copias = ENTRADAS_COPIADAS(rels);
   for (const r of copias) { const alvo = join(raiz, "entradas", "copias", r); mkdirSync(dirname(alvo), { recursive: true }); copyFileSync(join(TCC, r), alvo); }
-  gravarJson(raiz, "entradas/manifesto-entradas.json", { formato: "nat74-manifesto-entradas-1.0.0", nota: "sha256 calculados antes de qualquer leitura analítica (E0); decisoes/, sites e pacotes brutos são referenciados, não copiados",
+  // Julgamentos e medidas da T2 copiados com nome fixo (a origem pode estar fora do TCC, nos testes).
+  x.julgamentos.forEach((j, i) => copyFileSync(j, gravar(raiz, `entradas/copias/julgamentos-${i + 1}.json`, "")));
+  copyFileSync(x.medidasT2, gravar(raiz, "entradas/copias/medidas-t2.json", ""));
+  gravarJson(raiz, "entradas/manifesto-entradas.json", { formato: "nat74-manifesto-entradas-1.0.0", nota: "sha256 calculados antes de qualquer leitura analítica (E0); decisoes/, sites e pacotes brutos são referenciados, não copiados; os pacotes 1.7.0 são os da 1.0.0",
     entradas: rels.map(r => ({ caminho: r, ...hashes[r], copia: copias.includes(r) ? `entradas/copias/${r}` : null })) });
   const id = analysisIdentity();
   const evalHead = git(EVAL, "rev-parse", "HEAD");
@@ -95,13 +135,42 @@ function e0(raiz: string): { hashes: Record<string, { bytes: number; sha256: str
   const axe = req("axe-core/package.json") as { version: string };
   const chromium = (() => { try { return lerJson<{ browsers: { name: string; revision: string; browserVersion?: string }[] }>(join(dirname(req.resolve("playwright-core/package.json")), "browsers.json")).browsers.find(b => b.name === "chromium"); } catch { return null; } })();
   const kb1 = loadKbAliasVocabulary(EVAL, "kb-aliases.json"), kb2 = loadKbAliasVocabulary(EVAL, "kb-aliases-v2.json");
-  gravarJson(raiz, "entradas/ferramenta.json", { formato: "nat74-ferramenta-1.0.0", derivado: DERIVADO_VERSAO,
+  const julgamentos = x.julgamentos.map(j => { const t = readFileSync(j, "utf8"); const o = JSON.parse(t) as { completo?: boolean; julgados?: number; total?: number };
+    return { caminho: posix(relative(TCC, j)), sha256: sha(t), completo: o.completo ?? null, julgados: o.julgados ?? null, total: o.total ?? null }; });
+  gravarJson(raiz, "entradas/ferramenta.json", { formato: "nat74-ferramenta-1.1.0", derivado: DERIVADO_VERSAO,
+    entradasFixadas: { arquivoOriginal: { commit: COMMIT_RESULTADOS, regra: "fora de derivados/, árvore de trabalho idêntica a este commit" },
+      derivado100: { commit: COMMIT_DERIVADO_100, arvore: git(RESULTADOS, "rev-parse", `${COMMIT_DERIVADO_100}:${CAMINHO_DERIVADO}`), regra: "idêntico a este commit, salvo arquivos novos sob 1.0.0/fila-t3/" },
+      julgamentos, medidasT2: { caminho: posix(relative(TCC, x.medidasT2)), sha256: shaArquivo(x.medidasT2) } },
     govbrEval: { commitBase: evalHead, nota: "a reanálise roda sobre a árvore de trabalho do commit-base mais os arquivos de scripts/reanalise-nat74/ (commit novo, registrado ao commitar)" },
     scorer: { version: id.scoringVersion, acceptancePolicy: id.acceptancePolicy, scorerSha256: id.scorerSha256 },
     estatistica: ESTATISTICA_VERSAO, kbAliases: { v1: { version: kb1.version, sha256: kb1.sha256 }, v2: { version: kb2.version, sha256: kb2.sha256 } },
     node: process.version, playwright: pw.version, chromium: chromium ? { revision: chromium.revision, versao: chromium.browserVersion ?? null } : null, axeCore: axe.version,
     politica: { principal: POLITICA_PRINCIPAL, sensibilidade: POLITICA_SENSIBILIDADE, sha256: hashes[posix(relative(TCC, join(NAT73, "politica-normativa-v1.md")))].sha256 } });
   return { hashes };
+}
+
+/** Julgamentos da fila T3 (um ou mais arquivos do e14-ingerir); o posterior vale sobre o anterior no mesmo átomo. */
+export function carregarJulgamentos(arqs: string[], chaves: ReadonlySet<string>): { porChave: Map<string, JulgamentoT3>; info: Record<string, unknown>[]; sobrescritos: string[] } {
+  const porChave = new Map<string, JulgamentoT3>(), info: Record<string, unknown>[] = [], sobrescritos: string[] = [];
+  for (const abs of arqs) {
+    const texto = readFileSync(abs, "utf8");
+    const j = JSON.parse(texto) as { formato: string; completo: boolean; julgados: number; total: number; conteudoSha256: string; fila: { manifestoSha256: string; chaveSha256: string };
+      julgamentos: { id: string; chave: string; tipo: string; resposta: JulgamentoT3["resposta"]; derivado: JulgamentoT3["derivado"] }[] };
+    const erro = (m: string) => new Portao("julgamentos", `${posix(relative(TCC, abs))}: ${m}`);
+    if (j.formato !== FORMATO_JULGAMENTOS) throw erro(`formato ${j.formato}`);
+    if (sha(JSON.stringify(j.julgamentos)) !== j.conteudoSha256) throw erro("conteúdo difere de conteudoSha256");
+    const fila = dirname(abs);
+    if (sha(readFileSync(join(fila, "lotes", "manifesto.json"))) !== j.fila.manifestoSha256) throw erro("manifesto dos lotes difere do que a ingestão gravou");
+    if (sha(readFileSync(join(fila, "chave", "fila-t3-chave.json"))) !== j.fila.chaveSha256) throw erro("chave da fila difere do que a ingestão gravou");
+    const fonte = `${posix(relative(TCC, abs))}#${sha(texto)}`;
+    for (const x of j.julgamentos) {
+      if (!chaves.has(x.chave)) throw erro(`átomo desconhecido ${x.chave}`);
+      if (porChave.has(x.chave)) sobrescritos.push(x.chave);
+      porChave.set(x.chave, { id: x.id, tipo: x.tipo, fonte, resposta: x.resposta, derivado: x.derivado });
+    }
+    info.push({ arquivo: posix(relative(TCC, abs)), sha256: sha(texto), completo: j.completo, julgados: j.julgados, total: j.total });
+  }
+  return { porChave, info, sobrescritos: [...new Set(sobrescritos)].sort() };
 }
 
 // ───────────────────────────────────────────────────────────────── vocabulário (P5) e sugestão da LB (P13)
@@ -154,8 +223,12 @@ const r4 = (x: number | null) => (x === null ? null : Math.round(x * 1e4) / 1e4)
 
 export interface ResultadoPipeline { raiz: string; portoes: Record<string, unknown>; filas: unknown; resultados: Record<string, unknown> }
 
-export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string) => void } = {}): Promise<ResultadoPipeline> {
-  const raiz = o.raiz ?? raizSaida();
+export interface Opcoes { raiz?: string; ate?: Etapa; log?: (s: string) => void; julgamentos?: string[]; medidasT2?: string }
+
+export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
+  const raiz = o.raiz ?? join(RESULTADOS, CAMINHO_DERIVADO_110);
+  const julgamentosArqs = o.julgamentos ?? [join(RESULTADOS, CAMINHO_DERIVADO, "fila-t3", "julgamentos.json"), join(raiz, "fila-t3", "julgamentos.json")].filter(f => existsSync(f));
+  const medidasT2Abs = o.medidasT2 ?? join(raiz, CAMINHO_MEDIDAS_T2);
   const log = o.log ?? ((s: string) => console.log(s));
   const ate = o.ate ?? "E13";
   const parar = (e: Etapa) => ETAPAS.indexOf(e) >= ETAPAS.indexOf(ate);
@@ -165,7 +238,9 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
   const res: ResultadoPipeline = { raiz, portoes, filas: null, resultados: {} };
 
   // E0
-  const { hashes } = e0(raiz);
+  if (!existsSync(medidasT2Abs)) throw new Portao("E0", `sem as medidas da T2 (${medidasT2Abs}): rode npm run reanalise:nat74:t2-medir`);
+  const pacotes = CAMPANHAS.flatMap(c => ["p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "p09", "p10"].map(par => pacoteDe100({ campanha: c, par })));
+  const { hashes } = e0(raiz, { julgamentos: julgamentosArqs, medidasT2: medidasT2Abs, pacotes });
   log(`E0 ok: ${Object.keys(hashes).length} arquivos congelados`);
   if (parar("E0")) return res;
 
@@ -190,12 +265,10 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
   const orfaos: unknown[] = [];
   for (const p of inv.pares) {
     const dir = dirParDerivado(raiz, p);
-    const analise = join(dir, "analise");
-    if (!existsSync(join(analise, "summary.json"))) {
-      const r = await prepararPar(raiz, p);
-      if (r.estado !== "pronta") falha("E3", `${p.campanha}/${p.par}: análise ${r.estado} — ${r.motivo}`);
-    }
-    const novo = lerJson<SemanticPackage>(join(analise, "revisao", "package.json"));
+    // [1.1.0] O pacote 1.7.0 é o da 1.0.0 (da42f24, conferido no E0 e por sha256 em hashes-antes): não se reprepara.
+    const pacoteAbs = pacoteDe100(p);
+    if (!existsSync(pacoteAbs)) falha("E3", `${p.campanha}/${p.par}: sem o pacote 1.7.0 da 1.0.0 (${relTcc(pacoteAbs)})`);
+    const novo = lerJson<SemanticPackage>(pacoteAbs);
     const mapa = mapaRetrospectivo(p.pkg, novo);
     gravarJson(raiz, `${relative(raiz, dir).split("\\").join("/")}/mapa-retrospectivo.json`, mapa);
     if (mapa.orfaos.length) orfaos.push({ par: `${p.campanha}/${p.par}`, orfaos: mapa.orfaos });
@@ -203,7 +276,7 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
   }
   portoes.bijecao = { passou: orfaos.length === 0, orfaos, cartoes: pds.reduce((n, x) => n + x.mapa.cartoes.length, 0), unidades: pds.reduce((n, x) => n + x.mapa.unidades.length, 0) };
   if (orfaos.length) falha("bijecao", orfaos);
-  log(`E3 ok: 30 pares repreparados (${analysisIdentity().scoringVersion}); bijeção completa`);
+  log(`E3 ok: 30 pares, pacotes ${analysisIdentity().scoringVersion} da 1.0.0 (${COMMIT_DERIVADO_100}); bijeção completa`);
   if (parar("E3")) { gravarPortoes(); return res; }
 
   // E4 — G1
@@ -229,8 +302,29 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
     .flatMap(g => g.members));
   const voc = vocabulario();
   const sug = sugestoesDaLinhaDeBase(inv.pares);
+  // [1.1.0, S7] cartão com a sinalização `sem-evidencia` do contrato do achado e sem fato medido do próprio caso (origem D-129).
+  const semEvidencia = new Set(inv.atomos.filter(a => {
+    const card = inv.pares.find(p => p.campanha === a.campanha && p.par === a.par)!.pkg.cards.find(c => c.id === a.cardIdOriginal)!;
+    return (card.flags ?? []).includes("sem-evidencia") && !(a.mId && origem.porCaso[a.mId]);
+  }).map(a => a.chave));
+  // [1.1.0] Julgamentos da fila T3 (LLM cego, D-130) e medidas da T2 (nome calculado, declaração de estilo).
+  const julg = carregarJulgamentos(julgamentosArqs, new Set(inv.atomos.map(a => a.chave)));
+  const medidasT2 = lerJson<MedidasT2>(medidasT2Abs);
+  const fonteT2 = `${posix(relative(TCC, medidasT2Abs))}#${shaArquivo(medidasT2Abs)}`;
+  const t2 = { vereditos: new Map<string, VereditoAtomo>(), pendente: new Map<string, string>(), porResultado: {} as Record<string, number> };
+  for (const a of inv.atomos) {
+    if (a.grupo !== "nao-credito-fora" || !FAMILIAS_T2.has(a.familia) || ver.porChave.has(a.chave)) continue;
+    const card = inv.pares.find(p => p.campanha === a.campanha && p.par === a.par)!.pkg.cards.find(c => c.id === a.cardIdOriginal)!;
+    const r = vereditoT2({ regra: card.rule, seletor: card.selector, observado: card.observed ?? card.description, sujeitos: a.sujeitos, familia: a.familia,
+      cenas: [card.scene, ...card.subjects.map(s => s.scene ?? "")].filter(Boolean) }, medidasT2, fonteT2);
+    const k = "veredito" in r ? `${a.familia} · ${r.alvo} · ${r.veredito.vigente.partes[0].classe}` : `${a.familia} · sem decisão: ${r.pendente}`;
+    t2.porResultado[k] = (t2.porResultado[k] ?? 0) + 1;
+    if ("veredito" in r) t2.vereditos.set(a.chave, r.veredito); else t2.pendente.set(a.chave, r.pendente);
+  }
+  log(`E5/E7 ok: ${julg.porChave.size} átomos julgados na T3 (${julg.info.length} arquivo(s)); T2: ${t2.vereditos.size} decididos pela medida, ${t2.pendente.size} sem decisão → T3`);
   const entradas = new Map<string, AtomoEntrada>(inv.atomos.map(a => [a.chave, {
-    atomo: a, veredito: ver.porChave.get(a.chave) ?? null,
+    atomo: a, veredito: ver.porChave.get(a.chave) ?? t2.vereditos.get(a.chave) ?? null,
+    t3: julg.porChave.get(a.chave) ?? null, t2Pendente: t2.pendente.get(a.chave) ?? null, semEvidencia: semEvidencia.has(a.chave),
     origem341: a.mId ? origem.porCaso[a.mId] ?? null : null,
     origem370: a.mId ? (viram370.has(a.mId) ? "pagina" : origem.porCaso[a.mId] ?? null) : null,
     sugestaoLinhaDeBase: a.origemCartao === "linha-de-base" ? sug.get(`${a.campanha}|${a.par}|${a.cardIdOriginal}`) ?? "indeterminada" : null,
@@ -241,6 +335,10 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
   const classif = new Map<Variante, Map<string, AtomoClassificado>>();
   for (const v of VARIANTES) classif.set(v, new Map(inv.atomos.map(a => [a.chave, classificarVariante(entradas.get(a.chave)!, v)])));
   const princ = classif.get("principal")!;
+  const s7 = classif.get("S7")!;
+  const afetadosS7: Record<string, Record<string, number>> = {};
+  for (const a of inv.atomos) if (s7.get(a.chave)!.motivoFila?.startsWith("S7:")) {
+    const b = inv.bracoPorChave.get(a.chave)!.braco; const x = (afetadosS7[a.campanha] ??= {}); x[b] = (x[b] ?? 0) + 1; }
   const braco = (k: string): Braco => inv.bracoPorChave.get(k)!.braco;
   const filas: Record<string, Record<string, { T2: number; T3: number; T1: number; julgado: number; pendente: number }>> = {};
   for (const a of inv.atomos) {
@@ -274,7 +372,9 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
 
   // E7 — medidas: as evidências mecânicas usadas (congeladas na NAT-73; nenhuma medida nova nesta versão)
   gravarJson(raiz, "medidas/medidas-usadas.json", { formato: "nat74-medidas-1.0.0",
-    nota: "1.0.0 usa só medidas já feitas no site congelado e gravadas na NAT-73 (headless, Chromium registrado nelas): origem D-129 e B-16. R2 (nome calculado) e R4 (folha do DS) novas não rodaram: os átomos da fila T2 ficam pendentes, sem palpite.",
+    nota: "1.1.0: medidas da NAT-73 no site congelado (origem D-129, B-16) + medidas da T2 desta versão (R2 nome calculado, R4 declaração de estilo e escala do DS 3.4.1), headless, sem modelo; o que a medida não fecha vai à T3",
+    t2: { arquivo: posix(relative(TCC, medidasT2Abs)), sha256: shaArquivo(medidasT2Abs), formato: medidasT2.formato, porResultado: Object.fromEntries(Object.entries(t2.porResultado).sort()) },
+    julgamentosT3: { arquivos: julg.info, atomos: julg.porChave.size, rejulgados: julg.sobrescritos },
     origem: { arquivo: relTcc(join(NAT73, "origem", "origem-medida.json")), sha256: shaArquivo(join(NAT73, "origem", "origem-medida.json")), casos: Object.keys(origem.porCaso).length, viramPaginaCom370: [...viram370].sort() },
     b16: { arquivo: relTcc(join(NAT73, "origem", "medidas-runtime.json")), sha256: shaArquivo(join(NAT73, "origem", "medidas-runtime.json")),
       trechos: ["telaB.lista.header.logo.alt = \"logo\" (br-header, mesmo componente no detalhe)", "telaB.lista.imgsSemAlt[]: exit-icon.png em BUTTON.br-item dropdown-button; telaB.detalhe.imgsSemAlt[] contém exit-icon.png"] } });
@@ -318,7 +418,7 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
   const material = materialidade();
   for (const v of VARIANTES) {
     const cl = classif.get(v)!;
-    const porCamp: Record<string, { d: number[]; dSup: number[]; pares: unknown[] }> = {};
+    const porCamp: Record<string, { d: number[]; dSup: number[]; dMin: number[]; dMax: number[]; pares: unknown[] }> = {};
     for (const pd of pds) {
       const c = pd.p.campanha;
       const m: Montagem = montarDecisoes({ novo: pd.novo, antigo: pd.p.pkg, revAntigo: pd.p.reviews, mapa: pd.mapa, classificados: cl,
@@ -344,9 +444,12 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
         const kSup = contagemArmada(pd, mSup.reviews);
         dSup = MODO_D[c] === "spec" ? kSup.com.specs - kSup.sem.specs : kSup.com.sorteadas - kSup.sem.sorteadas;
       }
-      (porCamp[c] ??= { d: [], dSup: [], pares: [] }).d.push(d);
+      (porCamp[c] ??= { d: [], dSup: [], dMin: [], dMax: [], pares: [] }).d.push(d);
       porCamp[c].dSup.push(dSup);
-      porCamp[c].pares.push({ par: pd.p.par, d, dLimiteSuperior: dSup, atomosNoLimiteSuperior: mudou, sem: { specs: k.sem.specs, sorteadas: k.sem.sorteadas, unidades: k.sem.unidades, pagina: k.sem.pagina, incorretas: k.sem.incorretas, novas: k.sem.novas, pendentes: k.sem.pendentes },
+      // [revisão independente] limites verdadeiros por par (limites.ts); os dois valores acima são cenários.
+      const lim = limitesParaPar(pd, k, m, cl, c);
+      porCamp[c].dMin.push(lim.dMin); porCamp[c].dMax.push(lim.dMax);
+      porCamp[c].pares.push({ par: pd.p.par, d, dMin: lim.dMin, dMax: lim.dMax, limites: lim, dCenarioArquivoRestaurado: dSup, atomosNoCenarioArquivoRestaurado: mudou, sem: { specs: k.sem.specs, sorteadas: k.sem.sorteadas, unidades: k.sem.unidades, pagina: k.sem.pagina, incorretas: k.sem.incorretas, novas: k.sem.novas, pendentes: k.sem.pendentes },
         com: { specs: k.com.specs, sorteadas: k.com.sorteadas, unidades: k.com.unidades, pagina: k.com.pagina, incorretas: k.com.incorretas, novas: k.com.novas, pendentes: k.com.pendentes },
         lbAxe: resumo.lb.axe ? { status: resumo.lb.axe.status, unidades: resumo.lb.axe.counts.detectedUnits, total: resumo.lb.axe.counts.referenceUnits, pendentes: resumo.lb.axe.pendingCardIds.length,
           b16: unidadesConfirmadasSpec(pd.novo, resumo.lb.axe, "B-16") } : null,
@@ -386,7 +489,7 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
     const of = OFICIAL[c];
     const variantes: Record<string, unknown> = {};
     for (const v of VARIANTES) {
-      const x = porVariante[v][c] as { d: number[]; dSup: number[]; pares: Record<string, unknown>[] };
+      const x = porVariante[v][c] as { d: number[]; dSup: number[]; dMin: number[]; dMax: number[]; pares: Record<string, unknown>[] };
       const est = analisePareada(x.d, sementeDaCampanha(c));
       const estSup = analisePareada(x.dSup, sementeDaCampanha(c));
       const M = maturidade[v][c] as Record<string, { pendentes: number; porJuiz: Record<string, number> }>;
@@ -396,7 +499,13 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
       const soma = (k: "sem" | "com", f: string) => x.pares.reduce((n, p) => n + Number((p[k] as Record<string, unknown>)[f] ?? 0), 0);
       const somaP = (k: "sem" | "com") => x.pares.reduce((n, p) => n + (((p[k] as { pagina: { confirmadas: number } | null }).pagina?.confirmadas) ?? 0), 0);
       const mat = (b: string) => M[b] ? { estado: M[b].pendentes ? "PROVISORIO" : "FINAL-DERIVADO", pendentes: M[b].pendentes, porJuiz: M[b].porJuiz } : null;
-      variantes[v] = { descricao: DESCRICAO_VARIANTE[v], politica: v === "S1" ? "1.1.0" : "1.2.0", modo: MODO_D[c], nEfetivo: x.d.length, nPlanejado: 10,
+      const estado = mat("sem")?.estado === "PROVISORIO" || mat("com")?.estado === "PROVISORIO" ? "PROVISORIO" : "FINAL-DERIVADO";
+      const media = (xs: number[]) => (xs.length ? r4(xs.reduce((a, b) => a + b, 0) / xs.length) : null);
+      const ic = (e: typeof est) => ({ inferior: e.ic.inferior, superior: e.ic.superior });
+      variantes[v] = { descricao: DESCRICAO_VARIANTE[v], estado,
+        // FINAL (sem pendente nos braços): D pontual, com IC e p; senão os limites verdadeiros e os cenários.
+        pontual: estado === "FINAL-DERIVADO" ? { d: x.d, media: est.media, mediana: est.mediana, dp: est.desvioPadrao, ic95: ic(est), p: est.principal.p,
+          wilcoxonP: est.robustez.wilcoxon.p, sinalP: est.robustez.sinal.p } : null, politica: v === "S1" ? "1.1.0" : "1.2.0", modo: MODO_D[c], nEfetivo: x.d.length, nPlanejado: 10,
         d: x.d, media: est.media, mediana: est.mediana, dp: est.desvioPadrao, ic95: { inferior: est.ic.inferior, superior: est.ic.superior, semente: est.ic.semente },
         permutacao: est.principal, wilcoxon: est.robustez.wilcoxon, sinal: est.robustez.sinal, leitura: est.leitura,
         deltaOficial: { media: est.media === null ? null : r4(est.media - of.media), d: x.d.map((d, i) => d - of.d[i]) },
@@ -406,17 +515,21 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
           precisaoI: prec("I"), precisaoII: prec("II"), precisaoI_indeterminadaComoPagina: prec("I-S6") },
         maturidade: { sem: mat("sem"), com: mat("com"), lbAxe: mat("lb-axe"), lbValidator: mat("lb-validator") },
         // [mudança revisão H1] D em limites enquanto PROVISÓRIO: média/IC/p não são manchete até a E14.
-        limites: { estado: mat("sem")?.estado === "PROVISORIO" || mat("com")?.estado === "PROVISORIO" ? "PROVISORIO" : "FINAL-DERIVADO",
-          nota: "inferior = pendente não creditado (classificação da variante); superior = pendente que o arquivo creditou mantém o crédito arquivado",
-          inferior: { d: x.d, media: est.media }, superior: { d: x.dSup, media: estSup.media },
-          naoInterpretavelAteE14: { inferior: { ic95: { inferior: est.ic.inferior, superior: est.ic.superior }, p: est.principal.p },
-            superior: { ic95: { inferior: estSup.ic.inferior, superior: estSup.ic.superior }, p: estSup.principal.p } } },
+        limites: { estado, nota: "limites verdadeiros por par (limites.ts): Dmin = com_min − sem_max, Dmax = com_max − sem_min; máximo de um braço = confirmado + tudo o que os pendentes dele podem creditar (ancoragem ∪ arquivo ∪ spec indicada pelo juiz); colapsam em D sem pendente",
+          inferior: { d: x.dMin, media: media(x.dMin) }, superior: { d: x.dMax, media: media(x.dMax) } },
+        cenarios: { nota: "cenários, NÃO limites (mudam os dois braços ao mesmo tempo): média, IC e p não interpretáveis enquanto PROVISÓRIO",
+          semCreditoPendente: { d: x.d, media: est.media, ic95: ic(est), p: est.principal.p },
+          comCreditoArquivadoRestaurado: { d: x.dSup, media: estSup.media, ic95: ic(estSup), p: estSup.principal.p } },
         pares: x.pares };
     }
     resultados[c] = { formato: FORMATO_RESULTADO, campanha: c, rotulo: ROTULO[c], retrospectiva: true, exploratoria: true,
       aviso: "mudança de medida, não melhora do detector; o resultado oficial não muda (D-21)",
       oficial: { fonte: of.fonte, d: of.d, media: of.media, mediana: of.mediana, ic95: of.ic, p: of.p, wilcoxonP: of.wilcoxonP, sinalP: of.sinalP },
       variantes,
+      semEvidencia: { nota: "S7: átomos julgados na T3 com cartão sem-evidencia (sem evidência resolvida nem fato medido) e fato verdadeiro só inferido, tratados como pendentes (R9)",
+        afetadosPorBraco: afetadosS7[c] ?? {}, principal: { estado: (variantes.principal as { estado: string }).estado, d: (variantes.principal as { d: number[] }).d,
+          limites: (variantes.principal as { limites: unknown }).limites },
+        S7: { estado: (variantes.S7 as { estado: string }).estado, d: (variantes.S7 as { d: number[] }).d, limites: (variantes.S7 as { limites: unknown }).limites } },
       historico: c === "t7-tela-b-01" ? { "D-111-adendo": { d: [1, 1, -3, 0, 1, 1, 0, 2, -2, 3], media: 0.4, mediana: 1, dp: 1.78, p: 0.6, sinalP: 0.29,
         metodo: "regex aproximado sobre justificativas (lista fechada de specs); reproduzido do D-111 adendo, não recalculado" } } : null };
     gravarJson(raiz, `resultados/${c}.json`, resultados[c]);
@@ -446,7 +559,7 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
   const aut = autoraJson(ver, porVariante);
   gravarJson(raiz, "resultados/autora.json", aut);
   gravar(raiz, "RESULTADOS-DERIVADO.md", paginaResultados(resultados, lbs, res.filas as never));
-  gravar(raiz, "LEIA-ME.md", leiaMe());
+  gravar(raiz, "LEIA-ME.md", leiaMe({ julgamentos: julg.info, rejulgados: julg.sobrescritos.length, t2: t2.porResultado, resultados }));
   gravarJson(raiz, "painel-bloco.json", blocoPainel(resultados, lbs));
   log("E12 ok");
 
@@ -463,6 +576,36 @@ export async function executar(o: { raiz?: string; ate?: Etapa; log?: (s: string
 }
 
 // ───────────────────────────────────────────────────────────────── auxiliares de exportação
+
+/** Limites verdadeiros de D num par (por variante): mínimo e máximo admissíveis por braço de agente. */
+function limitesParaPar(pd: ParDerivado, k: ReturnType<typeof contagemArmada>, m: Montagem, cl: Map<string, AtomoClassificado>, c: Campanha): LimitesDoPar {
+  const specDe = new Map(pd.novo.units.map(u => [u.id, u.specId]));
+  const contar = contador(MODO_D[c], u => specDe.get(u), "A-");
+  const t = tradutor(pd.mapa);
+  const pend = new Set(m.pendentes);
+  const deOrig = new Map(pd.mapa.cartoes.map(x => [x.para, x.de]));
+  const braco = (runId: string): BracoLimite => {
+    const s = k.score.scores.find(x => x.runId === runId)!;
+    const adm = new Set<string>();
+    for (const cid of pd.novo.runs.find(r => r.id === runId)!.cardIds) {
+      if (!pend.has(cid)) continue;
+      const card = pd.novo.cards.find(x => x.id === cid)!;
+      for (const u of card.candidateUnitIds) adm.add(u);
+      const orig = deOrig.get(cid)!;
+      const cenas = new Set([card.scene, ...card.subjects.map(sj => sj.scene ?? card.scene)]);
+      for (const a of pd.p.reviews.decisions.find(d => d.cardId === orig)?.atoms ?? []) {
+        for (const u of a.unitIds) adm.add(t.unidade(u));
+        for (const p of cl.get(chaveAtomo(c, pd.p.par, orig, a.id))?.partes ?? [])
+          if (p.spec) for (const u of pd.novo.units) if (u.specId === p.spec && cenas.has(u.scene)) adm.add(u.id);
+      }
+    }
+    return { confirmadas: new Set(s.matched.map(x => x.unitId)), admissiveis: adm };
+  };
+  const r = limitesDoPar({ sem: braco(k.runs.sem), com: braco(k.runs.com) }, contar);
+  const agenda = (b: ContagemBraco) => (MODO_D[c] === "spec" ? b.specs : b.sorteadas);
+  if (r.sem.min !== agenda(k.sem) || r.com.min !== agenda(k.com)) throw new Error(`limites: o mínimo não é a contagem da agenda em ${c}/${pd.p.par}`);
+  return r;
+}
 
 function materialidade(): Map<string, string> {
   const inv = lerJson<{ casos: { campanha: string; par: string; cardId: string; materialPrincipal: boolean; materialSecundarioP: boolean; materialLinhaDeBase: boolean }[] }>(join(NAT73, "inventario-casos-materiais.json")).casos;
@@ -568,77 +711,94 @@ function autoraJson(ver: SaidaVereditos, porVariante: Record<string, Record<stri
 
 const fmt = (x: number | null | undefined, n = 2) => (x === null || x === undefined ? "—" : x.toFixed(n).replace(".", ","));
 
-type Limites = { estado: string; inferior: { d: number[]; media: number | null }; superior: { d: number[]; media: number | null };
-  naoInterpretavelAteE14: Record<"inferior" | "superior", { ic95: { inferior: number | null; superior: number | null }; p: number | null }> };
+type Lim = { d: number[]; media: number | null };
+type Ic = { inferior: number | null; superior: number | null };
+type VarR = { d: number[]; descricao: string; estado: string; limites: { inferior: Lim; superior: Lim };
+  cenarios: { semCreditoPendente: Lim & { ic95: Ic; p: number | null }; comCreditoArquivadoRestaurado: Lim & { ic95: Ic; p: number | null } };
+  pontual: null | { d: number[]; media: number | null; ic95: Ic; p: number | null; wilcoxonP: number | null; sinalP: number | null };
+  maturidade: { sem: { estado: string; pendentes: number }; com: { estado: string; pendentes: number } } };
+type R = { oficial: { media: number; ic95: [number, number]; p: number }; variantes: Record<string, VarR> };
 type FilasRelatorio = { porCampanhaBraco: Record<string, Record<string, Record<string, number>>>;
   pendentesCreditadosNoArquivo: Record<string, Record<string, { total: number; motivos: Record<string, number> }>>; m1: Record<string, Record<string, Record<string, number>>> };
+
+/** D por par para leitura: o valor, ou [mín, máx] quando os limites não colapsam. */
+const dLegivel = (v: VarR): string => v.limites.inferior.d.map((a, i) => (a === v.limites.superior.d[i] ? `${a}` : `[${a}, ${v.limites.superior.d[i]}]`)).join(", ");
 
 function paginaResultados(resultados: Record<string, unknown>, lbs: Record<string, unknown>, filas: FilasRelatorio): string {
   const L: string[] = [`# Reanálise retrospectiva NAT-74 — derivado ${DERIVADO_VERSAO}`, "",
     "> **Retrospectiva · exploratória · mudança de medida.** O resultado oficial não muda: [RESULTADOS.md](../../../RESULTADOS.md), D-97, D-111 e D-112 (D-21).",
-    "> Toda mudança de precisão aqui é mudança de medida, não melhora do detector. Política principal `politica-normativa-1.2.0`; a 1.1.0 vai ao lado (S1).", "",
-    "## Variante principal, por campanha: D em limites (PROVISÓRIO)", "",
-    "Enquanto houver pendentes (E14 não rodou), D sai como **limites**: o **inferior** conta o átomo pendente como não creditado; o **superior** devolve ao átomo pendente",
-    "que o arquivo creditou o crédito arquivado. Os pendentes creditados no arquivo caem desigualmente nos braços (tabela abaixo), por isso nenhum dos dois é a manchete,",
-    "e média, IC e p de cada limite só aparecem no bloco marcado \"não interpretável até a E14\".", "",
-    "| Campanha | D por par — inferior | Média inf. | D por par — superior | Média sup. | Oficial (média) | Maturidade sem / com |", "|---|---|---|---|---|---|---|"];
-  type R = { oficial: { media: number; ic95: [number, number]; p: number }; variantes: Record<string, { d: number[]; descricao: string; limites: Limites;
-    maturidade: { sem: { estado: string; pendentes: number }; com: { estado: string; pendentes: number } } }> };
+    "> Toda mudança de precisão aqui é mudança de medida, não melhora do detector. Política principal `politica-normativa-1.2.0`; a 1.1.0 vai ao lado (S1).",
+    "> Os vereditos novos da fila T3 são de LLM (assistente, subagentes cegos por lote; D-130), salvo os materiais revistos pela autora.", "",
+    "## Variante principal, por campanha", "",
+    "FINAL-DERIVADO: sem pendente nos braços; D é pontual, com IC 95% e p. PROVISÓRIO: D sai como **limites verdadeiros** por par ([mín, máx]: o",
+    "mínimo do braço com contra o máximo do braço sem, e vice-versa); média, IC e p não são manchete.", "",
+    "| Campanha | Estado | D por par | Média | IC 95% | p (permutação) | Oficial (média · IC · p) | Pendentes sem / com |", "|---|---|---|---|---|---|---|---|"];
   for (const c of CAMPANHAS) {
-    const r = resultados[c] as R;
-    const v = r.variantes.principal, l = v.limites;
-    L.push(`| ${ROTULO[c]} (\`${c}\`, ${MODO_D[c]}) | ${l.inferior.d.join(", ")} | ${fmt(l.inferior.media)} | ${l.superior.d.join(", ")} | ${fmt(l.superior.media)} | ${fmt(r.oficial.media)} | ${v.maturidade.sem.estado} (${v.maturidade.sem.pendentes}) / ${v.maturidade.com.estado} (${v.maturidade.com.pendentes}) |`);
+    const r = resultados[c] as R, v = r.variantes.principal, of = `${fmt(r.oficial.media)} · ${fmt(r.oficial.ic95[0])} a ${fmt(r.oficial.ic95[1])} · ${fmt(r.oficial.p, 4)}`;
+    const pend = `${v.maturidade.sem.pendentes} / ${v.maturidade.com.pendentes}`;
+    if (v.pontual) L.push(`| ${ROTULO[c]} (\`${c}\`, ${MODO_D[c]}) | ${v.estado} | ${v.pontual.d.join(", ")} | ${fmt(v.pontual.media)} | ${fmt(v.pontual.ic95.inferior)} a ${fmt(v.pontual.ic95.superior)} | ${fmt(v.pontual.p, 4)} | ${of} | ${pend} |`);
+    else L.push(`| ${ROTULO[c]} (\`${c}\`, ${MODO_D[c]}) | ${v.estado} | ${dLegivel(v)} | ${fmt(v.limites.inferior.media)} a ${fmt(v.limites.superior.media)} | — | — | ${of} | ${pend} |`);
   }
-  L.push("", "PROVISÓRIO = há átomos pendentes (filas T2/T3, E14 não rodou). Recall e precisão de braço com pendente ficam nulos.", "",
-    "### Átomos creditados no arquivo e agora pendentes (H1), por braço", "", "| Campanha | Braço | Pendentes creditados no arquivo | Motivos |", "|---|---|---|---|");
+  L.push("", "### Átomos creditados no arquivo e ainda pendentes, por braço", "", "| Campanha | Braço | Pendentes creditados no arquivo | Motivos |", "|---|---|---|---|");
   for (const c of CAMPANHAS) for (const [b, x] of Object.entries(filas.pendentesCreditadosNoArquivo[c] ?? {}).sort())
     L.push(`| ${ROTULO[c]} | ${b} | ${x.total} | ${Object.entries(x.motivos).sort().map(([m, n]) => `${m} (${n})`).join("; ")} |`);
   L.push("", "### M1: arquivo creditado com origem medida não-página", "",
     "Átomo de arquivo creditado (defeito-do-gabarito) cuja origem medida é DS ou indeterminada segue a regra do átomo julgado: DS vira novo correto sem crédito (P3); indeterminada sai da análise I. Contagem por variante (campanha · braço):", "");
   for (const v of VARIANTES) L.push(`- ${v}: ${CAMPANHAS.map(c => `${ROTULO[c]} ${Object.entries(filas.m1[v]?.[c] ?? {}).sort().map(([b, n]) => `${b} ${n}`).join(", ") || "0"}`).join(" · ")}`);
-  L.push("", "<details><summary>Não interpretável até a E14: média, IC 95% e p (permutação) de cada limite</summary>", "",
-    "| Campanha | Limite | Média | IC 95% | p | Oficial (média · IC · p) |", "|---|---|---|---|---|---|");
+  L.push("", "<details><summary>Cenários (não são limites): sem crédito pendente × com crédito arquivado restaurado</summary>", "",
+    "Mudam os dois braços ao mesmo tempo; por isso o segundo pode baixar D (revisão independente, NAT-74). Média, IC e p só como registro.", "",
+    "| Campanha | Cenário | D por par | Média | IC 95% | p |", "|---|---|---|---|---|---|");
   for (const c of CAMPANHAS) {
-    const r = resultados[c] as R, l = r.variantes.principal.limites;
-    for (const k of ["inferior", "superior"] as const) L.push(`| ${ROTULO[c]} | ${k} | ${fmt(l[k].media)} | ${fmt(l.naoInterpretavelAteE14[k].ic95.inferior)} a ${fmt(l.naoInterpretavelAteE14[k].ic95.superior)} | ${fmt(l.naoInterpretavelAteE14[k].p, 4)} | ${fmt(r.oficial.media)} · ${fmt(r.oficial.ic95[0])} a ${fmt(r.oficial.ic95[1])} · ${fmt(r.oficial.p, 4)} |`);
+    const cen = (resultados[c] as R).variantes.principal.cenarios;
+    for (const [k, x] of [["sem crédito pendente", cen.semCreditoPendente], ["com crédito arquivado restaurado", cen.comCreditoArquivadoRestaurado]] as const)
+      L.push(`| ${ROTULO[c]} | ${k} | ${x.d.join(", ")} | ${fmt(x.media)} | ${fmt(x.ic95.inferior)} a ${fmt(x.ic95.superior)} | ${fmt(x.p, 4)} |`);
   }
-  L.push("", "</details>", "",
-    "## Filas T2/T3 (E6, antes de qualquer julgamento)", "", "| Campanha | Braço | T1 | julgado | T2 | T3 | pendente |", "|---|---|---|---|---|---|---|");
+  L.push("", "</details>", "", "### S7: sem-evidencia → pendente", "",
+    "Átomos julgados na T3 cujo cartão traz a sinalização `sem-evidencia` (nenhuma evidência resolvida, nenhum fato medido) e cujo fato verdadeiro é só inferido viram pendentes (R9): os juízes trataram fatos só de texto de modos diferentes.", "",
+    "| Campanha | Afetados por braço | D principal | D na S7 |", "|---|---|---|---|");
+  for (const c of CAMPANHAS) {
+    const r = resultados[c] as R & { semEvidencia: { afetadosPorBraco: Record<string, number> } };
+    L.push(`| ${ROTULO[c]} | ${Object.entries(r.semEvidencia.afetadosPorBraco).sort().map(([b, n]) => `${b} ${n}`).join(", ") || "0"} | ${r.variantes.principal.pontual ? r.variantes.principal.pontual.d.join(", ") : dLegivel(r.variantes.principal)} | ${r.variantes.S7.pontual ? r.variantes.S7.pontual.d.join(", ") : dLegivel(r.variantes.S7)} |`);
+  }
+  L.push("", "## Fila T3 residual desta versão (E6)", "", "| Campanha | Braço | T1 | julgado | T2 | T3 | pendente |", "|---|---|---|---|---|---|---|");
   for (const [c, bs] of Object.entries(filas.porCampanhaBraco)) for (const [b, f] of Object.entries(bs).sort()) L.push(`| ${ROTULO[c as Campanha]} | ${b} | ${f.T1} | ${f.julgado} | ${f.T2} | ${f.T3} | ${f.pendente} |`);
   const b16 = (lbs as { b16: { leitura: string; confirmadaEm: number } }).b16;
   L.push("", "## Linhas de base", "", `B-16 (axe image-alt, tela B): confirmada em ${b16.confirmadaEm}/10 pares. ${b16.leitura}.`, "", "<details><summary>Sensibilidades (S1–S6)</summary>", "");
   for (const c of CAMPANHAS) {
     const r = resultados[c] as R;
-    L.push(`### ${ROTULO[c]}`, "", "| Variante | D inferior | Média inf. | D superior | Média sup. |", "|---|---|---|---|---|");
-    for (const v of VARIANTES) { const l = r.variantes[v].limites;
-      L.push(`| ${v} — ${r.variantes[v].descricao} | ${l.inferior.d.join(", ")} | ${fmt(l.inferior.media)} | ${l.superior.d.join(", ")} | ${fmt(l.superior.media)} |`); }
+    L.push(`### ${ROTULO[c]}`, "", "| Variante | Estado | D por par | Média |", "|---|---|---|---|");
+    for (const v of VARIANTES) { const x = r.variantes[v];
+      L.push(`| ${v} — ${x.descricao} | ${x.estado} | ${x.pontual ? x.pontual.d.join(", ") : dLegivel(x)} | ${x.pontual ? fmt(x.pontual.media) : `${fmt(x.limites.inferior.media)} a ${fmt(x.limites.superior.media)}`} |`); }
     L.push("");
   }
   L.push("</details>", "", "## Histórico", "", "D-111 adendo (regex aproximado, não recalculado): D = 1, 1, −3, 0, 1, 1, 0, 2, −2, 3; média +0,40; p = 0,60.", "");
   return L.join("\n");
 }
 
-function leiaMe(): string {
+function leiaMe(x: { julgamentos: Record<string, unknown>[]; rejulgados: number; t2: Record<string, number>; resultados: Record<string, unknown> }): string {
+  const estados = CAMPANHAS.map(c => `${ROTULO[c]}: ${((x.resultados[c] as R).variantes.principal).estado}`).join(" · ");
   return [`# ${DERIVADO_VERSAO}`, "", "**Retrospectiva · exploratória · mudança de medida.** Derivado da NAT-74. Não substitui o resultado oficial",
-    "(`govbr-resultados/RESULTADOS.md`; D-97, D-111, D-112). Versão nova = pasta irmã, nunca sobrescrita.", "",
-    "- Plano: `thesis-workspace/planejamento/atual/plano-nat74-reanalise-2026-10-16.md`.",
+    "(`govbr-resultados/RESULTADOS.md`; D-97, D-111, D-112). Versão nova = pasta irmã, nunca sobrescrita; a 1.0.0 fica como está.", "",
+    `Estado (variante principal): ${estados}.`, "",
+    "- Plano: `thesis-workspace/planejamento/atual/plano-nat74-reanalise-2026-10-16.md` (E14 = fila T3).",
     "- Política: `politica-normativa-1.2.0` (sha256 em `entradas/ferramenta.json`), 1.1.0 ao lado (S1).",
-    "- Scorer: `flow-semantic-1.7.0` para as três campanhas (P2); G0, bijeção, G1 e G2 em `verificacao/portoes.json`.",
-    "- E14 (fila T3) **não rodou**: os átomos T2/T3 estão pendentes e os rótulos de maturidade dizem quantos.", "",
+    `- Entradas fixadas (E0): arquivo original em \`${COMMIT_RESULTADOS}\` (fora de derivados/, idêntico), derivado 1.0.0 em \`${COMMIT_DERIVADO_100}\` (pacotes flow-semantic-1.7.0 reutilizados, não repreparados), julgamentos e medidas da T2 por sha256 (\`entradas/ferramenta.json\`).`,
+    `- Julgamentos da fila T3 (LLM cego por lote, D-130): ${x.julgamentos.length ? x.julgamentos.map(j => `\`${j.arquivo}\` (${j.julgados}/${j.total}${j.completo ? ", completo" : ""})`).join("; ") : "nenhum"}${x.rejulgados ? `; ${x.rejulgados} átomo(s) rejulgado(s) pela fila residual` : ""}.`,
+    `- Medidas da T2 (\`medidas/t2/medidas-t2.json\`): ${Object.entries(x.t2).sort().map(([k, n]) => `${k} (${n})`).join("; ")}.`,
+    "- D: pontual (com IC e p) quando não há pendente; senão limites verdadeiros por par. Os antigos \"limite inferior/superior\" da 1.0.0 eram cenários e saem com esse nome.", "",
     "## Errata da política (P17)", "", "O texto 1.2.0 foi congelado como está. Dois deslizes: o §5 ainda diz \"aplicar a v1.1\"; o exemplo da R15 lista R-04 como",
     "B-02, mas R-04 é a B-26 (`empty-table-header`). Corrigir o texto = 1.2.1 e o derivado roda de novo.", "",
-    "## Desvios desta versão", "", "- E7 não fez medidas novas: usa as medidas congeladas da NAT-73 (origem D-129 e B-16). Átomos da fila T2 (R2 nome, R4 *token*) ficam pendentes.",
+    "## Desvios desta versão", "", "- E3 não reprepara: os 30 pacotes 1.7.0 são os da 1.0.0 (sha256 em `verificacao/hashes-antes.json`).",
     "- `trilha-atomos.json` traz só a variante principal; o CSV traz as sete.",
     "- O bloco do painel sai em `painel-bloco.json` (o gerador do painel não foi editado nesta etapa).", ""].join("\n");
 }
 
 function blocoPainel(resultados: Record<string, unknown>, lbs: Record<string, unknown>) {
-  return { formato: "nat74-painel-1.0.0", titulo: "Reanálise retrospectiva (NAT-74)", derivado: DERIVADO_VERSAO, politica: POLITICA_PRINCIPAL, original: "govbr-resultados/RESULTADOS.md",
-    nota: "PROVISÓRIO: D em limites (inferior = pendente não creditado; superior = pendente creditado no arquivo mantém o crédito); média/IC/p só em naoInterpretavelAteE14",
-    campanhas: CAMPANHAS.map(c => { const r = resultados[c] as { oficial: unknown; variantes: { principal: { limites: Limites; maturidade: unknown } } };
-      const l = r.variantes.principal.limites;
-      return { campanha: c, rotulo: ROTULO[c], principal: { estado: l.estado, limites: { inferior: l.inferior, superior: l.superior }, maturidade: r.variantes.principal.maturidade,
-        naoInterpretavelAteE14: l.naoInterpretavelAteE14 }, oficial: r.oficial }; }),
+  return { formato: "nat74-painel-1.1.0", titulo: "Reanálise retrospectiva (NAT-74)", derivado: DERIVADO_VERSAO, politica: POLITICA_PRINCIPAL, original: "govbr-resultados/RESULTADOS.md",
+    nota: "FINAL-DERIVADO: D pontual com IC e p; PROVISÓRIO: limites verdadeiros por par (cenários à parte, não interpretáveis)",
+    campanhas: CAMPANHAS.map(c => { const r = resultados[c] as R; const v = r.variantes.principal;
+      return { campanha: c, rotulo: ROTULO[c], principal: { estado: v.estado, pontual: v.pontual, limites: v.pontual ? null : { inferior: v.limites.inferior, superior: v.limites.superior },
+        maturidade: v.maturidade }, oficial: r.oficial }; }),
     b16: (lbs as { b16: unknown }).b16 };
 }
 
@@ -660,7 +820,9 @@ export function compararExecucoes(a: string, b: string): { iguais: number; difer
 
 if (process.argv[1] && /pipeline\.ts$/.test(process.argv[1])) {
   const ate = (arg("etapa") ?? "E13") as Etapa;
-  executar({ ate }).then(r => {
+  const j = arg("julgamentos");
+  executar({ ate, raiz: arg("saida") ? resolve(arg("saida")!) : undefined, julgamentos: j === undefined ? undefined : j.split(",").filter(Boolean).map(x => resolve(x)),
+    medidasT2: arg("medidas-t2") ? resolve(arg("medidas-t2")!) : undefined }).then(r => {
     const outro = arg("comparar");
     if (outro) {
       const c = compararExecucoes(r.raiz, outro);

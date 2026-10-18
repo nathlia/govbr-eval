@@ -77,12 +77,22 @@
     "reanalise:nat74:e14-ingerir": "tsx scripts/reanalise-nat74/e14-ingerir.ts",
     "reanalise:nat74:e14-materiais": "tsx scripts/reanalise-nat74/e14-materiais.ts",
     "test:reanalise-nat74-e14": "tsx scripts/reanalise-nat74/test-e14.ts",
+    "reanalise:nat74:t2-medir": "tsx scripts/reanalise-nat74/t2.ts",
+    "test:reanalise-nat74-v110": "tsx scripts/reanalise-nat74/test-v110.ts",
+    "reanalise:nat74:e14-consistencia": "tsx scripts/reanalise-nat74/e14-consistencia.ts",
+    "reanalise:nat74:e14-desempate": "tsx scripts/reanalise-nat74/e14-desempate.ts",
+    "reanalise:nat74:e14-segunda-leitura": "tsx scripts/reanalise-nat74/e14-segunda-leitura.ts",
+    "test:reanalise-nat74-e14-consistencia": "tsx scripts/reanalise-nat74/test-e14-consistencia.ts",
     "relatorio:fluxo": "tsx scripts/report-flow.ts",
     "controles:construir": "node controles/construir.mjs",
     "controles:medir": "node controles/medir.mjs",
     "comparadores": "tsx comparadores/executar.ts",
     "comparadores:tokens": "node comparadores/lint/gerar-tokens.mjs",
-    "test:comparadores": "tsx comparadores/testes.ts"
+    "test:comparadores": "tsx comparadores/testes.ts",
+    "portao:matriz": "tsx portao-nat86/matriz.ts",
+    "portao:oraculo": "tsx portao-nat86/oraculo.ts",
+    "portao:integridade": "tsx portao-nat86/integridade.ts",
+    "test:portao": "tsx portao-nat86/testes.ts"
   },
   "dependencies": {
     "@axe-core/playwright": "4.11.1",

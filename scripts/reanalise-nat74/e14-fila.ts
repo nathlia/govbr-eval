@@ -44,6 +44,8 @@ export function tipoDaLinha(l: Pick<LinhaTrilha, "juiz" | "qualidadeDaSugestao" 
   if (l.juiz !== "pendente" && l.qualidadeDaSugestao === "pendente") return { tipo: "qualidade", motivoFila: MOTIVO_QUALIDADE };
   if (l.motivo === "inventário sem veredito novo") return { tipo: "inventario", motivoFila: MOTIVO_INVENTARIO };
   if (/^família .*a julgar \(T3\)$/.test(l.motivo)) return { tipo: "sensivel", motivoFila: l.motivo };
+  // [1.1.0] T2 que a medida não fechou e T3 que o juiz deixou indeterminado: mesmas perguntas da família sensível.
+  if (/^(T2: a medida não fecha|T3 indeterminado: ).*\(T3\)$/.test(l.motivo)) return { tipo: "sensivel", motivoFila: l.motivo };
   if (MOTIVOS_CITACAO.includes(l.motivo)) return { tipo: "citacao", motivoFila: l.motivo };
   throw new Error(`E14: motivo T3 desconhecido: ${l.motivo}`);
 }
