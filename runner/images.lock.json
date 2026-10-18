@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "builtAt": "2026-10-18T08:04:09.015Z",
+  "builtAt": "2026-10-18T13:32:48.195Z",
   "base": {
     "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
     "node": "24.21.0"
@@ -19,16 +19,16 @@
       }
     },
     "oracle": {
-      "tag": "govbr-runner-oracle:2.14.0-1996d3bbf13a",
-      "id": "sha256:5a45837d62b3ee9b4ff0c5e8ef6ca7ac48e3a7848a0ea71889f773af9247cc51",
+      "tag": "govbr-runner-oracle:2.14.2-040841b9cb47",
+      "id": "sha256:3f64252f13e38e3593f1879a7bc7b188ff944ad86edf97d080dabd6e967a1a53",
       "labels": {
         "govbr.agent.content-sha256": "3da3f12a65b3d671e52bcf6be1de2c0db9ab9eba0b48301ac87050e8259c6c09",
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.claude-code": "2.1.288",
         "govbr.oracle.data-sha256": "ed68152ebc9652e7de46231ce17b17aac5d0878e343a713d071059eb0d373579",
-        "govbr.oracle.dist-sha256": "1996d3bbf13a6e166668f2f277f566ff5c94e7e3bad46cfdbff2367dc15b7c74",
+        "govbr.oracle.dist-sha256": "040841b9cb4760975c4921c3839332514b7c0ab5c78f1e6d075bf26c894477c3",
         "govbr.oracle.package": "govbr-ds-validator-server",
-        "govbr.oracle.version": "2.14.0",
+        "govbr.oracle.version": "2.14.2",
         "govbr.playwright-mcp": "0.0.70",
         "govbr.runner.image": "oracle",
         "govbr.runner.version": "runner-isolado-1.0.0"
@@ -75,8 +75,8 @@
     "claudeCode": "2.1.288 (Claude Code)",
     "oracle": {
       "package": "govbr-ds-validator-server",
-      "version": "2.14.0",
-      "distSha256": "1996d3bbf13a6e166668f2f277f566ff5c94e7e3bad46cfdbff2367dc15b7c74",
+      "version": "2.14.2",
+      "distSha256": "040841b9cb4760975c4921c3839332514b7c0ab5c78f1e6d075bf26c894477c3",
       "dataSha256": "ed68152ebc9652e7de46231ce17b17aac5d0878e343a713d071059eb0d373579"
     },
     "telas": {
