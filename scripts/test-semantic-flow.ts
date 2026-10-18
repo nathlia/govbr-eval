@@ -9,7 +9,7 @@ import type { FlowUnit } from "./units-flow";
 import type { PredicateResult } from "./acceptance-predicates";
 import { renderReview } from "./semantic-flow-render";
 import {
-  SCORER_FILES, SEMANTIC_LEGACY_VERSIONS, aceitaDominio, aceitaVinculos, aplicarDominio, cartaoDoVinculo, participanteDePagina, SEMANTIC_SCORING_VERSION, VINCULO_CONTRATO, digest, maximumMatching, normalizeReviews, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, tocaParticipante, validatePackage,
+  SCORER_FILES, SEMANTIC_LEGACY_VERSIONS, aceitaDominio, aceitaDominioAmarrado, aceitaVinculos, aplicarDominio, cartaoDoVinculo, participanteDePagina, SEMANTIC_SCORING_VERSION, VINCULO_CONTRATO, digest, maximumMatching, normalizeReviews, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, tocaParticipante, validatePackage,
   type RawReviewAtom, type SemanticDecision, type SemanticPackage, type SemanticReviews, type ReviewAtom, type ReviewLink, type PrepareRun, type SceneResolution,
 } from "./semantic-flow";
 import { montarAtomos, montarVinculos } from "./decisao-atomos";
@@ -903,8 +903,8 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
   });
 
   test("NAT-72 legacy path: a 1.5.0 package scores as before, refuses links, and gets none retroactively", () => {
-    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.8.0");
-    assert.deepEqual([...SEMANTIC_LEGACY_VERSIONS], ["flow-semantic-1.5.0", "flow-semantic-1.6.0", "flow-semantic-1.7.0"]);
+    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.8.1");
+    assert.deepEqual([...SEMANTIC_LEGACY_VERSIONS], ["flow-semantic-1.5.0", "flow-semantic-1.6.0", "flow-semantic-1.7.0", "flow-semantic-1.8.0"]);
     const atual = pacote(["#E-html", "#E-header"]);
     const { packageHash: _h, ...corpo } = { ...atual, version: "flow-semantic-1.5.0" };
     const legado: SemanticPackage = { ...corpo, packageHash: digest(corpo) };
@@ -957,6 +957,8 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
 // ── flow-semantic-1.8.0: domínio de aplicabilidade provado (NAT-74, decisão 59019ac) ──
 {
   const B = "b".repeat(64), REF = "e".repeat(64), OUTRO_BUILD = "c".repeat(64);
+  // 1.8.1: a referência do domínio é a identidade canônica do pacote (context.referenceHash).
+  const ctxB = { ...context, referenceHash: REF };
   const ev = (s: string) => [{ source: `tela-b/vistorias/medida.json#${s}`, sha256: "a".repeat(64) }];
   const el = (key: string, label: string) => ({ key, id: `E-${label}`, label, hidden: null });
   const raiz = el("body>pnip-root", "<pnip-root>");
@@ -1004,7 +1006,7 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
   const alegacao = (selector: string, rule: string | null = null, viewport = wide) => ({ selector, rule, observed: `sobre ${selector}`, expected: "e",
     state: { viewport, steps: ["navegou"] }, evidence: [] });
   const agente = (id: string, selectors: string[], build = B, viewport = wide): PrepareRun => ({ id, data: { ...run(selectors.map(s => alegacao(s, null, viewport)) as FlowAgentResults["findings"]), config: cfg(build) } });
-  const prep = (runs: PrepareRun[], us = refUnits()) => prepareSemanticPackage(context, us, cenas, runs, { stateOrder: todas });
+  const prep = (runs: PrepareRun[], us = refUnits()) => prepareSemanticPackage(ctxB, us, cenas, runs, { stateOrder: todas });
   const uid = (pkg: SemanticPackage, specId: string) => pkg.units.find(u => u.specId === specId)!.id;
   const vinc = (card: SemanticPackage["cards"][number], unitId: string, subject: string, scene: string, o: Partial<ReviewLink> = {}): ReviewLink => ({
     contrato: VINCULO_CONTRATO, unitId, subjects: [subject], scene, state: "sempre", relation: "ausencia-global",
@@ -1016,7 +1018,7 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
   const sj = (cena: string, key: string) => `${cena}|${key}`;
 
   test("1.8.0: version, domain in the package hash, one unit per spec", () => {
-    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.8.0");
+    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.8.1");
     assert.ok(aceitaDominio("flow-semantic-1.8.0") && aceitaDominio("flow-semantic-2.0.0"));
     assert.ok(!aceitaDominio("flow-semantic-1.7.0") && !aceitaDominio("flow-semantic-1.6.0"));
     const pkg = prep([agente("r1", ["pnip-root"])]);
@@ -1092,7 +1094,7 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
     assert.equal(nada.subjects[0].key, null);
     assert.throws(() => scoreSemanticPackage(pkg, reviews(pkg, [credito(pkg, nada, undefined, nada.subjects[0].id, b01, vinc(nada, b01, nada.subjects[0].id, nada.scene))])),
       /Unresolved subject cannot be linked|outside its proven domain/);
-    const citacao = prepareSemanticPackage(context, refUnits(), cenas, [{ id: "r1", data: { ...run([alegacao("#nada", "wcag:2.4.1")] as FlowAgentResults["findings"]), config: cfg(B) } }], { stateOrder: todas });
+    const citacao = prepareSemanticPackage(ctxB, refUnits(), cenas, [{ id: "r1", data: { ...run([alegacao("#nada", "wcag:2.4.1")] as FlowAgentResults["findings"]), config: cfg(B) } }], { stateOrder: todas });
     const cc = citacao.cards[0];
     assert.deepEqual(cc.candidateUnitIds, []);
     assert.throws(() => scoreSemanticPackage(citacao, reviews(citacao, [decision(cc.id, [{ id: "a1", text: "sem 2.4.1", subjects: [cc.subjects[0].id], verdict: "reference",
@@ -1226,7 +1228,7 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
     const comDominio = prep([agente("r1", ["pnip-root"])]);
     const porUnidade = Object.fromEntries(comDominio.units.filter(u => u.domain).map(u => [u.id, u.domain!]));
     const p18 = aplicarDominio(p17, porUnidade, "teste");
-    assert.equal(p18.version, "flow-semantic-1.8.0");
+    assert.equal(p18.version, "flow-semantic-1.8.1");
     validatePackage(p18);
     assert.deepEqual(p18.units.map(u => u.id), p17.units.map(u => u.id), "unit identity unchanged");
     assert.deepEqual(p18.units, comDominio.units, "same units as a fresh 1.8.0 preparation");
@@ -1259,6 +1261,94 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
     const cruzado = [credito(legado, c, LISTA, sj(LISTA, raiz.key), b01, vinc(c, b01, sj(LISTA, raiz.key), LISTA))];
     assert.throws(() => scoreSemanticPackage(legado, { version: legado.version, decisions: cruzado }), /not the unit's scene/);
     assert.throws(() => scoreSemanticPackage(atual, { version: atual.version, decisions: cruzado }), /not the unit's scene/);
+  });
+
+  // ── flow-semantic-1.8.1: domínio AMARRADO à parada medida e à referência do pacote (NAT-91, revisão Codex fdc2aed1) ──
+  // A lista passa a ter duas paradas no mesmo segmento/rota: `antes` e `inicial` (a da captura, a última).
+  const cenas2: SceneResolution[] = cenas.map(c => c.id === LISTA
+    ? { ...c, segmento: { numero: 0, estado: "inicial", path: "/pnip/vistorias", estados: ["antes", "inicial"] } } : c);
+  const todas2 = ["antes", ...todas];
+  const comB01 = (lista: string[], modal: string[]): Entrada[] => refUnits().map(u => u.specId !== "B-01" ? u
+    : { ...u, states: todas2, domain: u.domain!.map(e => e.scene === LISTA ? { ...e, states: lista } : e.scene === MODAL ? { ...e, states: modal } : e) });
+  const prep2 = (runs: PrepareRun[], us: Entrada[]) => prepareSemanticPackage(ctxB, us, cenas2, runs, { stateOrder: todas2 });
+  const naLista = (pkg: SemanticPackage) => credito(pkg, pkg.cards[0], LISTA, sj(LISTA, raiz.key), uid(pkg, "B-01"),
+    vinc(pkg.cards[0], uid(pkg, "B-01"), sj(LISTA, raiz.key), LISTA));
+
+  test("1.8.1: versions — 1.8.0 is legacy, the bound domain starts at 1.8.1", () => {
+    assert.ok(aceitaDominioAmarrado("flow-semantic-1.8.1") && aceitaDominioAmarrado("flow-semantic-1.9.0") && aceitaDominioAmarrado("flow-semantic-2.0.0"));
+    assert.ok(!aceitaDominioAmarrado("flow-semantic-1.8.0") && !aceitaDominioAmarrado("flow-semantic-1.7.0"));
+    assert.ok(SEMANTIC_LEGACY_VERSIONS.includes("flow-semantic-1.8.0"));
+  });
+
+  test("1.8.1: the claim is bound to the captured stop — before-defective/after-conformant refused, the inverse credited", () => {
+    // Defeito só em `antes`, conforme em `inicial` (a parada capturada): o cartão fala da captura, o domínio não a prova.
+    const antes = prep2([agente("r1", ["pnip-root"])], comB01(["antes"], ["detalhe", "modal"]));
+    assert.equal(naLista(antes).atoms[0].links![0].state, "sempre", "the link declares `sempre`");
+    assert.throws(() => scoreSemanticPackage(antes, reviews(antes, [naLista(antes)])), /captured at stop inicial, but the domain of B-01 there only proves antes/);
+    // O inverso: conforme em `antes`, defeito em `inicial` (a captura) — creditado.
+    const depois = prep2([agente("r1", ["pnip-root"])], comB01(["inicial"], ["detalhe", "modal"]));
+    assert.equal(scoreSemanticPackage(depois, reviews(depois, [naLista(depois)])).scores[0].counts.detectedUnits, 1);
+    // As duas paradas provadas: creditado uma vez.
+    const ambas = prep2([agente("r1", ["pnip-root"])], comB01(["antes", "inicial"], ["detalhe", "modal"]));
+    assert.equal(scoreSemanticPackage(ambas, reviews(ambas, [naLista(ambas)])).scores[0].counts.detectedUnits, 1);
+  });
+
+  test("1.8.1: same route/segment — the canonical scene's link also needs its captured stop proven", () => {
+    // Cena canônica (modal, captura em `modal`): domínio provado só em `detalhe` — o vínculo do <body> é recusado.
+    const viaCorpo = (pkg: SemanticPackage) => { const cc = pkg.cards.find(x => x.selector === "body")!;
+      return credito(pkg, cc, MODAL, sj(MODAL, "body"), uid(pkg, "B-01"), vinc(cc, uid(pkg, "B-01"), sj(MODAL, "body"), MODAL)); };
+    const soDetalhe = prep2([agente("r1", ["body"])], comB01(["inicial"], ["detalhe"]));
+    assert.throws(() => scoreSemanticPackage(soDetalhe, reviews(soDetalhe, [viaCorpo(soDetalhe)])), /captured at stop modal, but the domain of B-01 there only proves detalhe/);
+    // O inverso: provado em `modal` (a captura), conforme em `detalhe` — creditado.
+    const soModal = prep2([agente("r1", ["body"])], comB01(["inicial"], ["modal"]));
+    assert.equal(scoreSemanticPackage(soModal, reviews(soModal, [viaCorpo(soModal)])).scores[0].counts.detectedUnits, 1);
+    // Uma cena do domínio sem parada de captura registrada (sem segmento) não amarra nada: recusada na preparação.
+    const semParada = cenas2.map(c => c.id === LISTA ? { ...c, segmento: undefined } : c);
+    assert.throws(() => prepareSemanticPackage(ctxB, comB01(["inicial"], ["modal"]), semParada, [], { stateOrder: todas2 }), /without a recorded capture stop/);
+  });
+
+  test("1.8.1: the domain reference is the package's canonical reference — swapping ALL entries is refused", () => {
+    const F = "f".repeat(64);
+    const todasTrocadas = refUnits().map(u => u.domain ? { ...u, domain: u.domain.map(e => ({ ...e, reference: F })) } : u);
+    // Consistente entre si (passa "mixes references"), mas não é a referência do pacote.
+    assert.throws(() => prep([agente("r1", ["pnip-root"])], todasTrocadas), /measured against another reference/);
+    // O mesmo domínio num pacote cujo context.referenceHash é outro: recusado.
+    assert.throws(() => prepareSemanticPackage({ ...ctxB, referenceHash: "d".repeat(64) }, refUnits(), cenas, [], { stateOrder: todas }), /measured against another reference/);
+    // Um pacote já preparado, com o domínio trocado por inteiro e ids/hash recalculados: validatePackage recusa.
+    const ok = prep([agente("r1", ["pnip-root"])]);
+    const { packageHash: _h, ...corpo } = { ...ok, units: ok.units.map(u => u.domain ? { ...u, domain: u.domain.map(e => ({ ...e, reference: F })) } : u) };
+    const cards = corpo.cards.map(c => { const { id: _i, ...b } = c; return { id: `C-${digest({ context: corpo.context, body: b, units: corpo.units })}`, ...b }; });
+    const ids = new Map(corpo.cards.map((c, i) => [c.id, cards[i].id]));
+    const forjado = { ...corpo, cards, runs: corpo.runs.map(r => ({ ...r, cardIds: r.cardIds.map(i => ids.get(i)!) })) };
+    assert.throws(() => validatePackage({ ...forjado, packageHash: digest(forjado) } as SemanticPackage), /measured against another reference/);
+    // A elevação (aplicarDominio) também: o domínio trocado por inteiro não sobe.
+    const atual = prep([agente("r1", ["pnip-root"])], refUnits().map(u => ({ ...u, domain: undefined })));
+    const { packageHash: _g, ...c17 } = { ...atual, version: "flow-semantic-1.7.0" };
+    const p17: SemanticPackage = { ...c17, packageHash: digest(c17) };
+    const porUnidade = Object.fromEntries(ok.units.filter(u => u.domain).map(u => [u.id, u.domain!.map(e => ({ ...e, reference: F }))]));
+    assert.throws(() => aplicarDominio(p17, porUnidade, "x"), /measured against another reference/);
+    assert.doesNotThrow(() => aplicarDominio(p17, Object.fromEntries(ok.units.filter(u => u.domain).map(u => [u.id, u.domain!])), "x"));
+  });
+
+  test("1.8.1: `documento` is title or heading outline only, named by its hashed evidence — never a generic document class", () => {
+    const com = (f: (us: Entrada[]) => void) => { const us = refUnits(); f(us); return () => prep([], us); };
+    // B-25 medido num contêiner (pnip-root) da lista, não no <title>: recusado.
+    assert.throws(com(us => { us[1].domain = us[1].domain!.map(e => e.scene === LISTA ? { ...e, participants: [raiz.key] } : e); }), /never a generic document defect/);
+    // A evidência com hash não nomeia o predicado específico: recusado.
+    assert.throws(com(us => { us[1].domain = us[1].domain!.map(e => ({ ...e, evidence: [{ source: "medida.json", sha256: "a".repeat(64) }] })); }), /named by its hashed evidence/);
+    // Título e h3 medidos, evidência nomeando o predicado: preparado.
+    assert.doesNotThrow(com(() => undefined));
+  });
+
+  test("1.8.1: legacy — a 1.8.0 package keeps its own path byte for byte (the published derived 1.2.0 was computed with it)", () => {
+    // O mesmo pacote com a parada não provada: em 1.8.0 pontua como pontuava (resultado arquivado); em 1.8.1, recusado.
+    const antes = prep2([agente("r1", ["pnip-root"])], comB01(["antes"], ["detalhe", "modal"]));
+    const { packageHash: _h, ...corpo } = { ...antes, version: "flow-semantic-1.8.0" };
+    const p180: SemanticPackage = { ...corpo, packageHash: digest(corpo) };
+    validatePackage(p180);
+    const d = naLista(p180);
+    assert.equal(scoreSemanticPackage(p180, { version: p180.version, decisions: scopeReviews(p180).decisions.map(x => x.cardId === d.cardId ? d : x) }).scores[0].counts.detectedUnits, 1);
+    assert.throws(() => scoreSemanticPackage(antes, reviews(antes, [naLista(antes)])), /only proves antes/);
   });
 }
 

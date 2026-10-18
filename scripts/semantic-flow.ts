@@ -111,6 +111,36 @@ export const aceitaDominio = (version: string): boolean => {
   const [ma, mi] = [Number(m[1]), Number(m[2])];
   return ma > 1 || (ma === 1 && mi >= 8);
 };
+/**
+ * Domínio AMARRADO (flow-semantic-1.8.1, revisão Codex da NAT-91). Em 1.8.0 o domínio provado não
+ * prendia (a) a alegação à parada efetivamente medida — `sempre` no vínculo bastava, mesmo com a cena
+ * capturada numa parada que o domínio não comprova — nem (b) a referência do domínio à do pacote.
+ * De 1.8.1 em diante:
+ * - a referência de cada entrada é `context.referenceHash` do pacote (a identidade CANÔNICA: digest
+ *   do gabarito analisado, a mesma que entra no id de todo cartão). O sha256 dos BYTES do arquivo
+ *   (`provenance.reference.sha256`, quando existe) é proveniência: diz de que arquivo o gabarito saiu,
+ *   não é a identidade que o scorer amarra;
+ * - toda cena do domínio é cena por segmento (traz a parada em que foi capturada), e um vínculo de
+ *   uma unidade com domínio — na cena canônica ou fora dela — só passa se a parada da CAPTURA dessa
+ *   cena (`segmento.estado`, a única que o cartão identifica) está entre as paradas comprovadas
+ *   (`states`) da entrada. `state: "sempre"` no vínculo nunca substitui essa prova;
+ * - `documento` não é classe genérica de "defeito do documento": só título (`<title>`) e esboço de
+ *   títulos (`h1`–`h6`) medidos, e a evidência com hash nomeia o predicado específico.
+ * Pacotes 1.8.0 seguem pontuáveis pelo caminho deles (legado), byte a byte.
+ */
+export const aceitaDominioAmarrado = (version: string): boolean => {
+  const m = /^flow-semantic-(\d+)\.(\d+)\.(\d+)$/.exec(version);
+  if (!m) return false;
+  const [ma, mi, pa] = [Number(m[1]), Number(m[2]), Number(m[3])];
+  return ma > 1 || (ma === 1 && (mi > 8 || (mi === 8 && pa >= 1)));
+};
+/** Participante de um predicado `documento` (1.8.1): o `<title>` ou um título `h1`–`h6`, nunca outro elemento. */
+export function participanteDeDocumento(p: string): boolean {
+  if (p === "" || p.includes(" >>> ")) return false;
+  const partes = p.split(">");
+  const tag = partes[partes.length - 1].replace(/:nth-of-type\(\d+\)$/, "");
+  return p === "head>title" || /^h[1-6]$/.test(tag);
+}
 /** Where the claims of a run come from. Baseline runs are deterministic tools, reviewed the same way. */
 export type RunKind = "agente" | "linha-de-base";
 export interface ReviewCard {
@@ -680,6 +710,18 @@ function validateDomain(pkg: SemanticPackage, u: SemanticUnit): void {
     else requireThat(e.participants.every(p => p !== ""), `An element/document predicate is measured on an element, not on the document key: ${u.id}@${e.scene}`);
     if (e.scene === u.scene) requireThat(canonical(e.participants) === canonical(u.participants),
       `Canonical domain entry must carry the unit's participants: ${u.id}`);
+    if (aceitaDominioAmarrado(pkg.version)) {
+      requireThat(e.reference === pkg.context.referenceHash,
+        `Unit domain measured against another reference (${e.reference.slice(0, 12)}…, package ${String(pkg.context.referenceHash).slice(0, 12)}…): ${u.id}@${e.scene}`);
+      requireThat(scene.segmento && typeof scene.segmento.estado === "string" && scene.segmento.estados.includes(scene.segmento.estado),
+        `Unit domain scene without a recorded capture stop; the claim cannot be bound to a measured stop: ${u.id}@${e.scene}`);
+      if (e.kind === "documento") {
+        requireThat(e.participants.every(participanteDeDocumento),
+          `A document predicate is the title or the heading outline, measured on <title> or h1–h6, never a generic document defect: ${u.id}@${e.scene}`);
+        requireThat(e.evidence.some(x => x.source.includes(e.predicate)),
+          `A document predicate must be named by its hashed evidence (${e.predicate}): ${u.id}@${e.scene}`);
+      }
+    }
   }
 }
 
@@ -890,6 +932,18 @@ function entradaDoDominio(unit: SemanticUnit, l: ReviewLink, card: ReviewCard, s
   requireThat(e.build === card.binding.build, `Review link scene ${l.scene}: the unit domain was measured on another build: ${atomId}`);
   return e;
 }
+/**
+ * 1.8.1: a parada da alegação é a da CAPTURA da cena do vínculo (`segmento.estado`) — a única que o
+ * cartão identifica (os sujeitos foram resolvidos nessa captura). Ela tem de estar entre as paradas
+ * comprovadas da entrada do domínio; `sempre` no vínculo não substitui a prova, e estar no mesmo
+ * segmento/rota também não.
+ */
+function paradaComprovada(e: DominioCena, l: ReviewLink, scenes: Map<string, SemanticScene> | undefined, unit: SemanticUnit, atomId: string): void {
+  const seg = scenes?.get(l.scene)?.segmento;
+  requireThat(seg, `Review link scene ${l.scene} has no recorded capture stop; the domain of ${unit.specId} cannot prove it: ${atomId}`);
+  requireThat(e.states.includes(seg.estado),
+    `Review link scene ${l.scene} was captured at stop ${seg.estado}, but the domain of ${unit.specId} there only proves ${e.states.join(", ")}: ${atomId}`);
+}
 function relacaoNoDominio(e: DominioCena, relation: RelacaoVinculo, key: string, evidence: string[]): boolean {
   if (e.kind === "ausencia-global") return relation === "ausencia-global"
     && e.participants.some(p => participanteDePagina(p) && (key === "" || tocaParticipante(p, key)));
@@ -898,7 +952,7 @@ function relacaoNoDominio(e: DominioCena, relation: RelacaoVinculo, key: string,
 }
 
 function validateLinks(d: SemanticDecision, a: ReviewAtom, card: ReviewCard, units: Map<string, SemanticUnit>, linksAllowed: boolean,
-  devidos: ReviewCard["subjects"], scenes?: Map<string, SemanticScene>, domainAllowed = false): void {
+  devidos: ReviewCard["subjects"], scenes?: Map<string, SemanticScene>, domainAllowed = false, domainBound = false): void {
   if (a.links === undefined) return;
   requireThat(linksAllowed, `Review links are not part of this package version; a legacy decision gets no retroactive link: ${a.id}`);
   requireThat(Array.isArray(a.links) && a.links.length > 0, `Empty review link list: ${a.id}`);
@@ -921,6 +975,8 @@ function validateLinks(d: SemanticDecision, a: ReviewAtom, card: ReviewCard, uni
     // 1.8.0: fora da cena canônica, só no domínio provado (e a relação é a do predicado medido ali).
     const dominio = l.scene !== unit.scene && domainAllowed && unit.domain ? entradaDoDominio(unit, l, card, scenes, domainAllowed, a.id) : null;
     requireThat(dominio || l.scene === unit.scene, `Review link scene ${l.scene} is not the unit's scene ${unit.scene}: ${a.id}`);
+    // 1.8.1: unidade com domínio — na cena canônica ou fora dela — só pelo que a entrada daquela cena prova.
+    if (domainBound && unit.domain) paradaComprovada(dominio ?? unit.domain.find(x => x.scene === l.scene)!, l, scenes, unit, a.id);
     // O estado do vínculo é o estado DECLARADO do defeito na unidade (não qualquer estado em que ela foi
     // medida), e numa cena por segmento a unidade tem de existir no estado daquele segmento — ou, fora da
     // cena canônica, o domínio provado diz em que paradas do segmento o defeito foi medido.
@@ -944,7 +1000,7 @@ function validateLinks(d: SemanticDecision, a: ReviewAtom, card: ReviewCard, uni
 }
 
 function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<string, SemanticUnit>, linksAllowed: boolean,
-  scenes?: Map<string, SemanticScene>, domainAllowed = false): void {
+  scenes?: Map<string, SemanticScene>, domainAllowed = false, domainBound = false): void {
   requireThat(d.status === "pending" || d.status === "reviewed", `Invalid status: ${card.id}`);
   if (d.status === "pending") {
     requireThat(!d.complete && d.atoms.length === 0 && d.cena === undefined, `Pending decision carries effects: ${card.id}`);
@@ -980,7 +1036,7 @@ function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<stri
       covered.add(id);
       return s;
     });
-    validateLinks(d, a, card, units, linksAllowed, devidos, scenes, domainAllowed);
+    validateLinks(d, a, card, units, linksAllowed, devidos, scenes, domainAllowed, domainBound);
     for (const id of a.unitIds) {
       const u = units.get(id);
       requireThat(u && subjects.some(s => sustenta(a, s, card, u)), `Unanchored/unknown unit: ${id}`);
@@ -1113,6 +1169,7 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
   requireThat(reviews.version === pkg.version, "Incompatible review version");
   const linksAllowed = aceitaVinculos(pkg.version);
   const domainAllowed = aceitaDominio(pkg.version);
+  const domainBound = aceitaDominioAmarrado(pkg.version);
   const scenes = new Map(pkg.scenes.map(s => [s.id, s]));
   const units = new Map(pkg.units.map(u => [u.id, u]));
   const cards = new Map(pkg.cards.map(c => [c.id, c]));
@@ -1121,7 +1178,7 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
     requireThat(!decisions.has(d.cardId), `Duplicate decision: ${d.cardId}`);
     const card = cards.get(d.cardId);
     requireThat(card, `Decision outside this package: ${d.cardId}; use scopeReviews for reuse`);
-    validateDecision(d, card, units, linksAllowed, scenes, domainAllowed);
+    validateDecision(d, card, units, linksAllowed, scenes, domainAllowed, domainBound);
     decisions.set(d.cardId, d);
   }
   const scores = pkg.runs.map(run => {

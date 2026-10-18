@@ -4,6 +4,9 @@
  * unidades B-01, B-21 e B-25 da tela B ganham o domínio de aplicabilidade PROVADO por medida nova sem modelo
  * (`dominio.ts`); a montagem escolhe a unidade pelo domínio (montar.ts) e o scorer só aceita o vínculo que atravessa
  * cena dentro dele. Saem também o delta por unidade e por cartão 1.1.0 → 1.2.0 (`verificacao/delta-110-120.json`).
+ * NAT-91: o scorer vigente passou a flow-semantic-1.8.1 (domínio amarrado à parada medida e à referência canônica do
+ * pacote). A 1.2.0 PUBLICADA foi calculada com a 1.8.0; rodar este pipeline hoje eleva a 1.8.1 e não reproduz aqueles
+ * bytes — uma nova publicação teria de sair rotulada como outra versão do derivado.
  * Texto original da 1.1.0: Etapas E0–E13 do plano
  * (`thesis-workspace/planejamento/atual/plano-nat74-reanalise-2026-10-16.md`) com a E14 já feita: lê os
  * julgamentos da fila T3 (`fila-t3/julgamentos.json`, ingeridos pelo e14-ingerir) e as medidas da T2
@@ -329,7 +332,7 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
     const novo = aplicarDominio(novo17, porUnidade, `${DERIVADO_VERSAO}: pacote 1.7.0 da 1.0.0 (${COMMIT_DERIVADO_100}) elevado; domínio provado em ${Object.keys(porUnidade).length} unidade(s)`);
     if (dominioPar) {
       gravarJson(raiz, `${relative(raiz, dir).split("\\").join("/")}/dominio.json`, dominioPar);
-      gravarJson(raiz, `${relative(raiz, dir).split("\\").join("/")}/package.flow-semantic-1.8.0.json`, novo);
+      gravarJson(raiz, `${relative(raiz, dir).split("\\").join("/")}/package.${novo.version}.json`, novo);
     }
     pacotes18.push({ par: `${p.campanha}/${p.par}`, de: novo17.packageHash, para: novo.packageHash, dominio: Object.keys(porUnidade).length });
     const mapa = mapaRetrospectivo(p.pkg, novo);

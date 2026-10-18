@@ -47,7 +47,10 @@ export const parDir = (par: string) => join(RESULTADOS, CAMINHO_DERIVADO, "t7-te
 /** Medida das três cenas da tela B a partir dos artefatos arquivados; determinística. */
 export async function medirDominio(pkg: SemanticPackage, par: string): Promise<SaidaDominio> {
   const prov = pkg.provenance as { reference: { sha256: string }; site: { manifestSha256: string } };
-  const reference = prov.reference.sha256, build = prov.site.manifestSha256;
+  // flow-semantic-1.8.1 (NAT-91): a referência do domínio é a identidade CANÔNICA do pacote (context.referenceHash,
+  // digest do gabarito analisado). A 1.2.0 publicada (scorer 1.8.0) gravou aqui o sha256 dos bytes
+  // (provenance.reference.sha256), que é proveniência do arquivo, não a identidade a que os cartões estão presos.
+  const reference = pkg.context.referenceHash, build = prov.site.manifestSha256;
   const dir = parDir(par);
   const capture = lerJson<{ sceneHash: string; scenes: { id: string; html: string; resolution?: string }[] }>(join(dir, "capture.json"));
   const cenas: MedidaCena[] = [];
