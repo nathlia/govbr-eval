@@ -461,7 +461,7 @@ export function aplicarDesempate(o: { fila?: string; desempate: string; inv?: In
   return { erros: [], arquivos, sobrescritas: ord, resumo };
 }
 
-function sobrescritasMd(r: { totais: Record<string, number>; porCampanhaBraco: Record<string, Record<string, Record<string, number>>>; unidades: Record<string, unknown>[]; sobrescritas: Sobrescrita[] }): string {
+export function sobrescritasMd(r: { totais: Record<string, number>; porCampanhaBraco: Record<string, Record<string, Record<string, number>>>; unidades: Record<string, unknown>[]; sobrescritas: Sobrescrita[] }): string {
   const t = r.totais;
   const L = ["# Fila T3 — adjudicação informada aplicada", "", `Membros sobrescritos: ${t.sobrescritos} em ${t.unidades} unidades; resposta mudou em ${t.mudouResposta}, classe em ${t.mudouClasse}, crédito em ${t.mudouCredito}; classe/crédito mudou entre a etapa A e a B em ${t.mudouEntreAeB}; segunda leitura indicada em ${t.segundaLeituraIndicada} unidade(s).`, "",
     "## Por campanha × braço (contagens)", "", "| campanha | braço | sobrescritos | resposta mudou | classe mudou | crédito mudou |", "|---|---|---:|---:|---:|---:|"];

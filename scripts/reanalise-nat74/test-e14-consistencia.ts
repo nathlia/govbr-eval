@@ -17,6 +17,7 @@ import {
 } from "./e14-consistencia";
 import { FORMATO_RESP_A, FORMATO_RESP_B, aplicarDesempate, loteB, prepararDesempate, unidadesDeDesempate } from "./e14-desempate";
 import { ingerir } from "./e14-ingerir";
+import { CORPUS, FORMATO_RESP_2, aplicarComSegunda, prepararSegunda } from "./e14-segunda-leitura";
 
 let n = 0, falhas = 0;
 const t = (nome: string, f: () => void) => { n++; try { f(); console.log(`  ok  ${nome}`); } catch (e) { falhas++; console.log(`  FALHA ${nome}\n       ${e instanceof Error ? e.message : e}`); } };
@@ -244,6 +245,76 @@ try {
   t("aplicar é determinístico", () => {
     const r2 = aplicarDesempate({ fila: filaT, desempate: dd, inv });
     assert.deepEqual([...r2.arquivos], [...r.arquivos]);
+  });
+
+  console.log("E14 segunda leitura (regras §4): cópia temporária, respostas sintéticas");
+  const indicada = (r.resumo!.unidades as { lote: string; segundaLeituraIndicada: boolean }[]).filter(u => u.segundaLeituraIndicada).map(u => u.lote);
+  t("a unidade da regra de anatomia (lote-d05) tem segunda leitura indicada com as respostas sintéticas; outra unidade é recusada", () => {
+    assert.ok(indicada.includes("lote-d05"), indicada.join(","));
+    assert.throws(() => prepararSegunda({ fila: filaT, desempate: dd, lote: "lote-d01", inv }), /evidência oficial|não tem segunda leitura/);
+  });
+  const p2 = prepararSegunda({ fila: filaT, desempate: dd, lote: "lote-d05", inv });
+  const sl = join(dd, "segunda-leitura");
+  for (const [rel, txt] of [...p2.arquivosDoJuiz, ...p2.arquivosInternos]) gravar(sl, rel, txt);
+  const l2Txt = p2.arquivosDoJuiz.get("lote-d05-2.json")!;
+  type L2 = { grupo: { id: string }; textosOficiais: { itens: { id: string; arquivo?: string; trecho?: string }[] }; cartoes: (CartaoCego & { grupo: string })[] };
+  const l2 = JSON.parse(l2Txt) as L2;
+  t("preparo: cegueira 0 falhas; trechos oficiais literais do corpus; nada da 1ª passada nem da 1ª adjudicação; cartões iguais salvo id/grupo/citáveis", () => {
+    assert.deepEqual(p2.falhas, []);
+    for (const x of l2.textosOficiais.itens.filter(x => x.arquivo)) assert.ok(readFileSync(join(CORPUS, x.arquivo!), "utf8").replace(/\r\n/g, "\n").includes(x.trecho!), x.id);
+    assert.ok(!/basis|a tag raiz é anatomia"\s*,\s*"origem/.test(JSON.stringify(l2.textosOficiais)));
+    const lA = JSON.parse(readFileSync(join(dd, "lote-d05.json"), "utf8")) as L2;
+    for (const c of lA.cartoes) assert.ok(!l2Txt.includes(c.id));
+    for (const f of ["a", "b"]) for (const x of (JSON.parse(readFileSync(join(dd, "respostas", `lote-d05-${f}.json`), "utf8")) as { respostas: Resposta[] }).respostas) assert.ok(!l2Txt.includes(x.id));
+    for (const m of dados.membros) assert.ok(!l2Txt.includes(m.id));
+    const ch = JSON.parse(p2.arquivosInternos.get("chave/lote-d05-chave.json")!) as { membros: { id: string; idAdjudicacao: string }[] };
+    for (const c of l2.cartoes) {
+      const o = lA.cartoes.find(x => x.id === ch.membros.find(m => m.id === c.id)!.idAdjudicacao)!;
+      const { grupo: _a, citaveis: ca, ...r1 } = c, { grupo: _b, citaveis: cb, ...r0 } = o;
+      assert.deepEqual({ ...r1, id: "" }, { ...r0, id: "" }); assert.deepEqual(ca.slice(0, cb.length), cb);
+    }
+  });
+  const leitura2 = (forca: string) => ({ norma: "citada", fonteEVersao: "texto sintético de teste", forca, antecedente: "texto sintético de teste", excecoes: "texto sintético de teste",
+    evidenciaNecessaria: "texto sintético de teste", permiteConcluir: "texto sintético de teste" });
+  const escreve2 = (alternativas: string[], resp: (c: CartaoCego) => Resposta, extra: (rs: Resposta[]) => Resposta[] = x => x) =>
+    gravar(sl, "respostas/lote-d05-2.json", JSON.stringify({ formato: FORMATO_RESP_2, lote: "lote-d05-2", loteSha256: sha(l2Txt), juiz: "teste sintético", etapa: "segunda-leitura", grupo: l2.grupo.id,
+      leituraDaNorma: leitura2("obrigatorio"), leiturasAlternativasPlausiveis: alternativas,
+      classificacaoDaDivergencia: { tipos: ["interpretacao-normativa"], evidencias: [`${l2.cartoes[0].id}:OF1`], justificativa: "texto sintético de teste, sem julgamento algum." },
+      respostas: extra(l2.cartoes.map(resp)) }, null, 2));
+  const aplica = (c: CartaoCego): Resposta => ({ id: c.id, verdadeFactual: "verdadeira", norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" },
+    vinculo: { spec: "A-06", relacao: "direta" }, sugestao: NAO_PERGUNTADO, forcaDoVeredito: "inferido", evidencias: ["OBS", "OF1"], justificativa: "OBS e OF1: resposta sintética de teste, sem julgamento." });
+  const incerta = (c: CartaoCego): Resposta => ({ ...aplica(c), norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "incerta", violada: "incerto" }, forcaDoVeredito: "incerto" });
+  t("aplicar recusa: segunda leitura ausente; id fora do grupo; alternativa plausível com classe final", () => {
+    assert.ok(aplicarComSegunda({ fila: filaT, desempate: dd, inv }).erros.some(e => /ausente/.test(e)));
+    escreve2([], aplica, rs => [...rs, { ...rs[0], id: "T3-0000000000" }]);
+    assert.ok(aplicarComSegunda({ fila: filaT, desempate: dd, inv }).erros.some(e => /fora do grupo/.test(e)));
+    escreve2(["uma leitura alternativa plausível, só para o teste sintético"], aplica);
+    assert.ok(aplicarComSegunda({ fila: filaT, desempate: dd, inv }).erros.some(e => /leitura alternativa plausível/.test(e)));
+  });
+  t("com alternativa plausível: membros ficam como na adjudicação (incerta) e a sensibilidade registra aplica × não aplica", () => {
+    escreve2(["uma leitura alternativa plausível, só para o teste sintético"], incerta);
+    const rs = aplicarComSegunda({ fila: filaT, desempate: dd, inv });
+    assert.deepEqual(rs.erros, []);
+    for (const [rel, txt] of r.arquivos) if (rel.startsWith("respostas/")) assert.equal(rs.arquivos.get(rel), txt);
+    const sg = (rs.resumo as { segundasLeituras: { resolvida: boolean; sensibilidade: { membrosQueCreditam: { seAplica: number; seNaoAplica: number }; total: number } }[] }).segundasLeituras[0];
+    assert.equal(sg.resolvida, false); assert.equal(sg.sensibilidade.total, 21);
+    assert.ok(sg.sensibilidade.membrosQueCreditam.seAplica >= 0 && sg.sensibilidade.membrosQueCreditam.seNaoAplica === 0);
+    assert.equal(rs.sobrescritas.filter(s => (s as { segundaLeitura?: unknown }).segundaLeitura).length, 21);
+  });
+  t("sem alternativa: as respostas da segunda leitura substituem as da unidade; registradas; a saída ingere", () => {
+    escreve2([], aplica);
+    const rs = aplicarComSegunda({ fila: filaT, desempate: dd, inv });
+    assert.deepEqual(rs.erros, []);
+    const ch = JSON.parse(p2.arquivosInternos.get("chave/lote-d05-chave.json")!) as { membros: { idOriginal: string }[] };
+    const ids = new Set(ch.membros.map(m => m.idOriginal));
+    for (const s of rs.sobrescritas) if (ids.has(s.id)) { assert.equal(s.depois.classe, "violacao-pagina"); assert.equal(s.depois.credito, "credita A-06"); assert.ok((s as { segundaLeitura?: unknown }).segundaLeitura); }
+    const out = join(tmp, "saida2", "fila-t3");
+    for (const [rel, txt] of rs.arquivos) gravar(out, rel, txt);
+    const ing = ingerir(out); assert.deepEqual(ing.erros, []);
+    const js = (ing.julgamentos as { julgamentos: { id: string; derivado: { classe: string } }[] }).julgamentos;
+    for (const id of ids) assert.equal(js.find(j => j.id === id)!.derivado.classe, "violacao-pagina");
+    // fora da unidade nada muda em relação à adjudicação
+    for (const s of rs.sobrescritas) if (!ids.has(s.id)) assert.deepEqual(s.depois, r.sobrescritas.find(x => x.id === s.id)!.depois);
   });
 } finally { rmSync(tmp, { recursive: true, force: true }); }
 
