@@ -1,7 +1,9 @@
-# Tela C — adendo ao método para a tela "Cadastrar empresa" (RASCUNHO, 2026-10-18)
+# Tela C — adendo ao método para a tela "Cadastrar empresa" (2026-10-18)
 
-**Status:** rascunho escrito **antes** do teste de estados e de qualquer julgamento da tela C
-(D-134; plano `thesis-workspace/planejamento/atual/plano-tela-c-2026-10-18.md`). Vale o método da
+**Status:** **final**, congelado em 2026-10-18 antes da auditoria (fase 2) e antes de qualquer
+julgamento da tela C; o rascunho foi escrito antes do teste de estados (D-134; plano
+`thesis-workspace/planejamento/atual/plano-tela-c-2026-10-18.md`). O sha256 deste arquivo está no
+plano (§ 4). A regra de escolha de paradas (§ B) não mudou desde o rascunho. Vale o método da
 tela B (`tela-b/metodo-auditoria.md`, commit `5838702`) com o adendo da Vistorias
 (`tela-b/metodo-auditoria-adendo-vistorias.md`, `9406aed`), salvo o que este adendo troca. Ele é
 commitado sozinho, antes da auditoria (fase 2); o commit fica registrado no início de
