@@ -1,0 +1,1513 @@
+{
+  "referencia": {
+    "arquivo": "ground-truth-processos.json",
+    "versao": "1.0.0-candidata"
+  },
+  "condicoes": {
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "fuso": "America/Sao_Paulo",
+    "locale": "pt-BR",
+    "headless": true,
+    "node": "v25.2.1",
+    "servidor": "próprio (base.mjs), public/pnip-d/ + índice SPA + alias do ícone do Sair"
+  },
+  "arvore": {
+    "manifestoSha256": "2e99f4109fc94ff3b31ca01c435eac0aa8603fb231a946b96257774668aa2032",
+    "arquivosNoManifesto": 190,
+    "public": {
+      "iguais": 190,
+      "divergentes": [],
+      "extras": [],
+      "faltam": []
+    },
+    "dist": {
+      "iguais": 190,
+      "divergentes": [],
+      "extras": [],
+      "faltam": []
+    }
+  },
+  "resumo": {
+    "specs": "14/14",
+    "unidades": "60/60",
+    "controles": "12/12",
+    "divergem": []
+  },
+  "paradas": [
+    {
+      "id": "inicial",
+      "path": "/pnip-d/portal-mpa/processos",
+      "medido": "/pnip-d/portal-mpa/processos",
+      "ok": true,
+      "listaExibir": {
+        "visivel": false,
+        "h": 0,
+        "itensVisiveis": 0
+      },
+      "linhas": 9
+    },
+    {
+      "id": "lista-exibir",
+      "path": "/pnip-d/portal-mpa/processos",
+      "medido": "/pnip-d/portal-mpa/processos",
+      "ok": true,
+      "listaExibir": {
+        "visivel": true,
+        "h": 212,
+        "itensVisiveis": 4
+      },
+      "linhas": 9
+    }
+  ],
+  "aditividade": {
+    "todasIguais": true,
+    "porAncora": {
+      "D-01": true,
+      "D-02": true,
+      "D-03": true,
+      "D-04": true,
+      "D-05": true,
+      "D-06": true,
+      "D-07": true,
+      "D-08": true,
+      "D-09": true,
+      "D-10": true,
+      "D-11": true,
+      "D-12": true,
+      "D-13": true,
+      "D-14": true,
+      "K-01": true,
+      "K-02": true,
+      "K-03": true,
+      "K-04": true,
+      "K-05": true,
+      "K-06": true,
+      "K-07": true,
+      "K-08": true,
+      "K-09": true,
+      "K-10": true,
+      "K-11": true,
+      "K-12": true
+    }
+  },
+  "escritas": [],
+  "naoAchados": [],
+  "externosAbortados": [],
+  "errosDeConsole": [
+    "ERROR Error: Uncaught (in promise): TypeError: n is not iterable",
+    "ERROR SyntaxError: \"undefined\" is not valid JSON",
+    "ERROR TypeError: Cannot read properties of null (reading 'focus')",
+    "ERROR TypeError: Cannot read properties of undefined (reading 'dataCertificadoHsPassivo')",
+    "ERROR TypeError: Cannot read properties of undefined (reading 'length')",
+    "ERROR TypeError: Cannot read properties of undefined (reading 'status')",
+    "ERROR TypeError: Cannot read properties of undefined (reading 'usuario')",
+    "ERROR TypeError: Cannot read properties of undefined (reading 'uuid')",
+    "ERROR TypeError: Cannot read properties of undefined (reading 'validadeRaep')"
+  ],
+  "errosDeConsoleNota": "só nas cargas auxiliares que navegam para fora da rota (clique em número de processo / \"Ver processo\" → rotas de detalhe fora do escopo)",
+  "tab": {
+    "inicial": [
+      "1 br-header >>> button#navigation.br-button.small.circle[aria-label=\"Menu\"] \"\"",
+      "2 button#avatar-dropdown-trigger.br-sign-in.focus-visible[aria-label=\"Avatar com dropdown\"] \"U Olá, Usuária de Teste, SUPER\"",
+      "3 br-breadcrumb >>> a \"Home\" ← K-01#0",
+      "4 br-breadcrumb >>> button.br-button.small.circle[aria-label=\"\"] \"Home\" ← K-01#in",
+      "5 br-button >>> button.focus-visible.br-button.secondary.middle.focus-visible[aria-label=\"\"] \"Exportar\" ← K-04#0",
+      "6 br-tab >>> button[aria-label=\"AGUARDANDO_ANALISE\"] \"Aguardando análise\" ← K-05#0",
+      "7 br-tab >>> button[aria-label=\"TRAMITANDO\"] \"Tramitando\" ← K-05#1",
+      "8 br-tab >>> button[aria-label=\"HISTORICO\"] \"Concluídos\" ← K-05#2",
+      "9 br-input >>> input#search.ng-valid.ng-touched.ng-dirty.focus-visible \"\" ← D-05#0",
+      "10 button.br-button.focus-visible[aria-label=\"Buscar\"] \"\" ← D-09#0",
+      "11 input.focus-visible \"\" ← D-04#0",
+      "12 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#0",
+      "13 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Desassociar processo do analista responsável\"] \"\" ← D-01#1",
+      "14 input.focus-visible \"\" ← D-04#1",
+      "15 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#2",
+      "16 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Assinar\"] \"\" ← K-07#0",
+      "17 input.focus-visible \"\" ← D-04#2",
+      "18 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#4",
+      "19 input.focus-visible \"\" ← D-04#3",
+      "20 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#6",
+      "21 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#8",
+      "22 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Assinar\"] \"\" ← K-07#1",
+      "23 input.focus-visible \"\" ← D-04#4",
+      "24 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#10",
+      "25 input.focus-visible \"\" ← D-04#5",
+      "26 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#12",
+      "27 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Assinar\"] \"\" ← K-07#2",
+      "28 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#14",
+      "29 input.focus-visible \"\" ← D-04#6",
+      "30 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#16",
+      "31 a.page.active.focus-visible \"1\"",
+      "32 input#total.focus-visible \"\"",
+      "33 div.br-list.focus-visible \"10 25 50 100\"",
+      "34 body \"U Olá, Usuária de Teste, SUPER\"",
+      "35 input#page.focus-visible \"\"",
+      "36 div.br-list.focus-visible \"1\"",
+      "37 body \"U Olá, Usuária de Teste, SUPER\"",
+      "38 br-button >>> button.focus-visible.br-button.secondary.middle.focus-visible[aria-label=\"\"] \"Voltar\" ← voltar#0",
+      "39 iframe \"\" ← D-10#0",
+      "40 body \"U Olá, Usuária de Teste, SUPER\"",
+      "41 iframe \"\" ← D-10#0",
+      "42 body \"U Olá, Usuária de Teste, SUPER\"",
+      "43 iframe \"\" ← D-10#0",
+      "44 body \"U Olá, Usuária de Teste, SUPER\"",
+      "45 iframe \"\" ← D-10#0",
+      "46 body \"U Olá, Usuária de Teste, SUPER\"",
+      "47 iframe \"\" ← D-10#0",
+      "48 body \"U Olá, Usuária de Teste, SUPER\"",
+      "49 iframe \"\" ← D-10#0",
+      "50 body \"U Olá, Usuária de Teste, SUPER\"",
+      "51 iframe \"\" ← D-10#0",
+      "52 body \"U Olá, Usuária de Teste, SUPER\"",
+      "53 iframe \"\" ← D-10#0",
+      "54 body \"U Olá, Usuária de Teste, SUPER\"",
+      "55 iframe \"\" ← D-10#0",
+      "56 body \"U Olá, Usuária de Teste, SUPER\"",
+      "57 iframe \"\" ← D-10#0",
+      "58 body \"U Olá, Usuária de Teste, SUPER\"",
+      "59 iframe \"\" ← D-10#0",
+      "60 body \"U Olá, Usuária de Teste, SUPER\"",
+      "61 iframe \"\" ← D-10#0",
+      "62 body \"U Olá, Usuária de Teste, SUPER\"",
+      "63 iframe \"\" ← D-10#0",
+      "64 body \"U Olá, Usuária de Teste, SUPER\"",
+      "65 iframe \"\" ← D-10#0",
+      "66 body \"U Olá, Usuária de Teste, SUPER\"",
+      "67 iframe \"\" ← D-10#0",
+      "68 body \"U Olá, Usuária de Teste, SUPER\"",
+      "69 iframe \"\" ← D-10#0",
+      "70 body \"U Olá, Usuária de Teste, SUPER\"",
+      "71 iframe \"\" ← D-10#0",
+      "72 body \"U Olá, Usuária de Teste, SUPER\"",
+      "73 iframe \"\" ← D-10#0",
+      "74 body \"U Olá, Usuária de Teste, SUPER\"",
+      "75 iframe \"\" ← D-10#0",
+      "76 body \"U Olá, Usuária de Teste, SUPER\"",
+      "77 iframe \"\" ← D-10#0",
+      "78 body \"U Olá, Usuária de Teste, SUPER\"",
+      "79 iframe \"\" ← D-10#0",
+      "80 body \"U Olá, Usuária de Teste, SUPER\"",
+      "81 iframe \"\" ← D-10#0",
+      "82 body \"U Olá, Usuária de Teste, SUPER\"",
+      "83 iframe \"\" ← D-10#0",
+      "84 body \"U Olá, Usuária de Teste, SUPER\"",
+      "85 iframe \"\" ← D-10#0",
+      "86 body \"U Olá, Usuária de Teste, SUPER\"",
+      "87 iframe \"\" ← D-10#0",
+      "88 body \"U Olá, Usuária de Teste, SUPER\"",
+      "89 iframe \"\" ← D-10#0",
+      "90 body \"U Olá, Usuária de Teste, SUPER\""
+    ],
+    "listaExibir": [
+      "1 div.br-list.focus-visible \"10 25 50 100\"",
+      "2 body \"U Olá, Usuária de Teste, SUPER\"",
+      "3 input#page.focus-visible \"\"",
+      "4 div.br-list.focus-visible \"1\"",
+      "5 body \"U Olá, Usuária de Teste, SUPER\"",
+      "6 br-button >>> button.focus-visible.br-button.secondary.middle.focus-visible[aria-label=\"\"] \"Voltar\" ← voltar#0",
+      "7 iframe \"\" ← D-10#0",
+      "8 body \"U Olá, Usuária de Teste, SUPER\"",
+      "9 iframe \"\" ← D-10#0",
+      "10 body \"U Olá, Usuária de Teste, SUPER\"",
+      "11 iframe \"\" ← D-10#0",
+      "12 body \"U Olá, Usuária de Teste, SUPER\""
+    ],
+    "shiftTabInicial": [
+      "1 iframe \"\" ← D-10#0",
+      "2 br-button >>> button.focus-visible.br-button.secondary.middle.focus-visible[aria-label=\"\"] \"Voltar\" ← voltar#0",
+      "3 input#page.focus-visible \"\"",
+      "4 input#total.focus-visible \"\"",
+      "5 a.page.active.focus-visible \"1\"",
+      "6 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#16",
+      "7 input.focus-visible \"\" ← D-04#6",
+      "8 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#14",
+      "9 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Assinar\"] \"\" ← K-07#2",
+      "10 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#12",
+      "11 input.focus-visible \"\" ← D-04#5",
+      "12 br-button >>> button.focus-visible.br-button.middle.focus-visible[aria-label=\"\"][title=\"Ver processo\"] \"\" ← D-01#10"
+    ]
+  },
+  "medidas": [
+    {
+      "id": "D-01",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 18,
+        "ver": 9,
+        "desassociar": 9,
+        "desassociarDesabilitados": 8,
+        "semLabel": 18,
+        "semCircle": 18,
+        "semTextoVisivel": 18,
+        "tamanhos": [
+          "72x40"
+        ],
+        "raios": [
+          "1680px"
+        ],
+        "classesBotao": [
+          "br-button middle"
+        ],
+        "icones": [
+          "eye",
+          "user-times"
+        ],
+        "axNomes": [
+          "Ver processo",
+          "Desassociar processo do analista responsável"
+        ],
+        "axNomeIgualTitle": 18,
+        "axFonteNome": [
+          "attribute:title"
+        ],
+        "assinarTextoVisivel": [
+          "Assinar",
+          "Assinar",
+          "Assinar"
+        ]
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          18,
+          18
+        ]
+      }
+    },
+    {
+      "id": "D-02",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 9,
+        "roles": [
+          "button"
+        ],
+        "comHref": 0,
+        "comTabindex": 0,
+        "tabIndex": [
+          0
+        ],
+        "cursor": [
+          "pointer"
+        ],
+        "axFocaveis": 0,
+        "axPapeis": [
+          "button"
+        ],
+        "alcancadosPorTab": 0,
+        "textos": [
+          "00000.000010/2026-00",
+          "00000.000011/2026-00",
+          "00000.000013/2026-00",
+          "00000.000016/2026-00",
+          "00000.000019/2026-00",
+          "00000.000025/2026-00",
+          "00000.000027/2026-00",
+          "00000.000028/2026-00",
+          "00000.000031/2026-00"
+        ],
+        "cliques": [
+          {
+            "linha": 1,
+            "numero": {
+              "destino": "/pnip-d/login",
+              "recarga": true
+            },
+            "verProcesso": {
+              "destino": "/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0010",
+              "recarga": false
+            }
+          },
+          {
+            "linha": 2,
+            "numero": {
+              "destino": "/pnip-d/portal-mpa/processos/certificacao-caol/00000000-0000-4000-8000-0000000d0011/documentos",
+              "recarga": false
+            },
+            "verProcesso": {
+              "destino": "/pnip-d/portal-mpa/processos/certificacao-caol/00000000-0000-4000-8000-0000000d0011",
+              "recarga": false
+            }
+          },
+          {
+            "linha": 3,
+            "numero": {
+              "destino": "/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0013/documentos",
+              "recarga": false
+            },
+            "verProcesso": {
+              "destino": "/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0013",
+              "recarga": false
+            }
+          },
+          {
+            "linha": 4,
+            "numero": {
+              "destino": "/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0016/documentos",
+              "recarga": false
+            },
+            "verProcesso": {
+              "destino": "/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0016",
+              "recarga": false
+            }
+          },
+          {
+            "linha": 5,
+            "numero": {
+              "destino": "/pnip-d/login",
+              "recarga": true
+            },
+            "verProcesso": {
+              "destino": "/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0019",
+              "recarga": false
+            }
+          },
+          {
+            "linha": 6,
+            "numero": {
+              "destino": "/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0025/documentos",
+              "recarga": false
+            },
+            "verProcesso": {
+              "destino": "/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0025",
+              "recarga": false
+            }
+          },
+          {
+            "linha": 7,
+            "numero": {
+              "destino": "/pnip-d/portal-mpa/processos/certificacao-higienico-sanitario/00000000-0000-4000-8000-0000000d0027/documentos",
+              "recarga": false
+            },
+            "verProcesso": {
+              "destino": "/pnip-d/portal-mpa/processos/certificacao-higienico-sanitario/00000000-0000-4000-8000-0000000d0027",
+              "recarga": false
+            }
+          },
+          {
+            "linha": 8,
+            "numero": {
+              "destino": "/pnip-d/login",
+              "recarga": true
+            },
+            "verProcesso": {
+              "destino": "/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0028",
+              "recarga": false
+            }
+          },
+          {
+            "linha": 9,
+            "numero": {
+              "destino": "/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0031/documentos",
+              "recarga": false
+            },
+            "verProcesso": {
+              "destino": "/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0031",
+              "recarga": false
+            }
+          }
+        ],
+        "linhasDocumentos": [
+          2,
+          3,
+          4,
+          6,
+          7,
+          9
+        ],
+        "linhasLogin": [
+          1,
+          5,
+          8
+        ],
+        "verProcessoSemDocumentos": true
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          9,
+          9
+        ]
+      }
+    },
+    {
+      "id": "D-03",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 7,
+        "tags": [
+          "span"
+        ],
+        "textos": [
+          "Meus processos",
+          "Aberto há",
+          "Tipo de processo",
+          "Status",
+          "Espécie alvo",
+          "Método de pesca",
+          "Petrecho"
+        ],
+        "roles": [
+          null
+        ],
+        "tabindexAttr": [
+          null
+        ],
+        "tabIndex": [
+          -1
+        ],
+        "cursor": [
+          "pointer"
+        ],
+        "ariaPressedOuExpanded": 0,
+        "ax": [
+          "generic|\"\""
+        ],
+        "alcancadosPorTab": 0,
+        "cliques": [
+          {
+            "i": 0,
+            "antes": {
+              "linhas": 9,
+              "visiveis": 411
+            },
+            "depois": {
+              "linhas": 10,
+              "visiveis": 425,
+              "opcoes": 1
+            },
+            "focavelPorFocus": false
+          },
+          {
+            "i": 1,
+            "antes": {
+              "linhas": 9,
+              "visiveis": 411
+            },
+            "depois": {
+              "linhas": 9,
+              "visiveis": 424,
+              "opcoes": 6
+            },
+            "focavelPorFocus": false
+          },
+          {
+            "i": 2,
+            "antes": {
+              "linhas": 9,
+              "visiveis": 411
+            },
+            "depois": {
+              "linhas": 9,
+              "visiveis": 439,
+              "opcoes": 11
+            },
+            "focavelPorFocus": false
+          },
+          {
+            "i": 3,
+            "antes": {
+              "linhas": 9,
+              "visiveis": 411
+            },
+            "depois": {
+              "linhas": 9,
+              "visiveis": 466,
+              "opcoes": 20
+            },
+            "focavelPorFocus": false
+          },
+          {
+            "i": 4,
+            "antes": {
+              "linhas": 9,
+              "visiveis": 411
+            },
+            "depois": {
+              "linhas": 9,
+              "visiveis": 421,
+              "opcoes": 5
+            },
+            "focavelPorFocus": false
+          },
+          {
+            "i": 5,
+            "antes": {
+              "linhas": 9,
+              "visiveis": 411
+            },
+            "depois": {
+              "linhas": 9,
+              "visiveis": 418,
+              "opcoes": 4
+            },
+            "focavelPorFocus": false
+          },
+          {
+            "i": 6,
+            "antes": {
+              "linhas": 9,
+              "visiveis": 411
+            },
+            "depois": {
+              "linhas": 9,
+              "visiveis": 421,
+              "opcoes": 5
+            },
+            "focavelPorFocus": false
+          }
+        ]
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          7,
+          7
+        ]
+      }
+    },
+    {
+      "id": "D-04",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 7,
+        "noCabecalho": 1,
+        "nasLinhas": 6,
+        "labels": [
+          0
+        ],
+        "comAriaLabelOuLabelledbyOuTitle": 0,
+        "axNomes": [
+          ""
+        ],
+        "axPapeis": [
+          "checkbox"
+        ],
+        "alcancadosPorTab": 7
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          7,
+          7
+        ]
+      }
+    },
+    {
+      "id": "D-05",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "hostPlaceholder": "Pesquise aqui ...",
+        "hostLabel": null,
+        "id": "search",
+        "placeholder": "Pesquise aqui ...",
+        "labels": 0,
+        "ariaLabel": null,
+        "ariaLabelledby": null,
+        "ax": {
+          "papel": "textbox",
+          "nome": "Pesquise aqui ...",
+          "ignorado": false,
+          "focavel": true,
+          "fonteNome": [
+            "placeholder:placeholder"
+          ]
+        },
+        "seletoresDaPaginacao": [
+          {
+            "id": "total",
+            "labels": 1,
+            "rotulo": "Exibir"
+          },
+          {
+            "id": "page",
+            "labels": 1,
+            "rotulo": "Página"
+          }
+        ]
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "D-06",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 8,
+        "abaixoDe45": 8,
+        "grupos": {
+          "bg-orange-vivid-40": {
+            "n": 5,
+            "fundo": "#e66f0e",
+            "cor": "#ffffff",
+            "razoes": [
+              3.16
+            ],
+            "fonte": "14px",
+            "peso": "500"
+          },
+          "bg-indigo-vivid-40": {
+            "n": 1,
+            "fundo": "#8289ff",
+            "cor": "#ffffff",
+            "razoes": [
+              3.01
+            ],
+            "fonte": "14px",
+            "peso": "500"
+          },
+          "bg-secondary-06": {
+            "n": 2,
+            "fundo": "#888888",
+            "cor": "#ffffff",
+            "razoes": [
+              3.54
+            ],
+            "fonte": "14px",
+            "peso": "500"
+          }
+        },
+        "textos": [
+          "Em análise analista",
+          "Em análise supervisor",
+          "Aguarda complementos",
+          "Em análise supervisor",
+          "Aguardando plano de ação",
+          "Em análise supervisor",
+          "Em análise diretor",
+          "Aguardando SFPA"
+        ]
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          8,
+          8
+        ]
+      }
+    },
+    {
+      "id": "D-07",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "caption": false,
+        "ariaLabel": null,
+        "ariaLabelledby": null,
+        "title": null,
+        "h2DentroDoContainerDaTabela": false,
+        "summary": null,
+        "ax": {
+          "papel": "table",
+          "nome": "",
+          "ignorado": false,
+          "focavel": false,
+          "fonteNome": []
+        }
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "D-08",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "texto": "",
+        "scope": "col",
+        "filhos": 0,
+        "ariaLabel": null,
+        "ax": {
+          "papel": "columnheader",
+          "nome": "",
+          "ignorado": false,
+          "focavel": false,
+          "fonteNome": []
+        }
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "D-09",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 3,
+        "alvos": [
+          {
+            "ariaLabel": "Buscar",
+            "w": 32,
+            "h": 32,
+            "tabindex": null,
+            "componente": "pnip-search-table-utils",
+            "texto": "",
+            "icone": "fas fa-search"
+          },
+          {
+            "ariaLabel": "Exibir lista",
+            "w": 32,
+            "h": 32,
+            "tabindex": "-1",
+            "componente": "br-select-pnip[label=Exibir]",
+            "texto": "",
+            "icone": "fas fa-angle-up"
+          },
+          {
+            "ariaLabel": "Exibir lista",
+            "w": 32,
+            "h": 32,
+            "tabindex": "-1",
+            "componente": "br-select-pnip[label=Página]",
+            "texto": "",
+            "icone": "fas fa-angle-up"
+          }
+        ],
+        "alcancadosPorTab": 1
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          3,
+          3
+        ]
+      }
+    },
+    {
+      "id": "D-10",
+      "tipo": "spec",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "src": null,
+        "title": null,
+        "name": null,
+        "ariaLabel": null,
+        "tabIndex": 0,
+        "docUrl": "about:blank",
+        "filhosDoBody": 0,
+        "textoDoBody": "",
+        "w": 1160,
+        "h": 500,
+        "ax": {
+          "papel": "Iframe",
+          "nome": "",
+          "ignorado": false,
+          "focavel": false,
+          "fonteNome": []
+        },
+        "tabPassoDoIframe": 39,
+        "antesDoIframe": {
+          "el": "br-button >>> button.focus-visible.br-button.secondary.middle.focus-visible[aria-label=\"\"] \"Voltar\"",
+          "hit": [
+            "voltar#0"
+          ]
+        },
+        "sequenciaDesdeOIframe": [
+          "iframe",
+          "body",
+          "iframe",
+          "body",
+          "iframe",
+          "body",
+          "iframe",
+          "body"
+        ],
+        "focoNoIframe": {
+          "outlineStyle": "none",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "focusVisible": false,
+          "focus": false
+        },
+        "tabsAteOIframe": 39,
+        "depoisDoIframe": [
+          "body",
+          "iframe",
+          "body",
+          "iframe"
+        ],
+        "shiftTabDoIframe": {
+          "el": "br-button >>> button.focus-visible.br-button.secondary.middle.focus-visible[aria-label=\"\"] \"Voltar\"",
+          "hit": [
+            "voltar#0"
+          ]
+        }
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "D-11",
+      "tipo": "spec",
+      "estado": "sempre",
+      "veredito": "confirma",
+      "medido": {
+        "count": [
+          1,
+          1
+        ],
+        "ancorasHash": [
+          0,
+          0
+        ],
+        "skiplink": [
+          0,
+          0
+        ],
+        "primeiroTab": "br-header >>> button#navigation.br-button.small.circle[aria-label=\"Menu\"] \"\""
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          1,
+          1
+        ],
+        "lista-exibir": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "D-12",
+      "tipo": "spec",
+      "estado": "sempre",
+      "veredito": "confirma",
+      "medido": {
+        "titulosDom": [
+          [
+            "h2 Processos"
+          ],
+          [
+            "h2 Processos"
+          ]
+        ],
+        "roleHeading": [
+          0,
+          0
+        ],
+        "axTitulos": [
+          [
+            "Processos L2"
+          ],
+          [
+            "Processos L2"
+          ]
+        ]
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          1,
+          1
+        ],
+        "lista-exibir": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "D-13",
+      "tipo": "spec",
+      "estado": "sempre",
+      "veredito": "confirma",
+      "medido": {
+        "title": [
+          "PNIP",
+          "PNIP"
+        ],
+        "nTitle": [
+          1,
+          1
+        ]
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          1,
+          1
+        ],
+        "lista-exibir": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "D-14",
+      "tipo": "spec",
+      "estado": "sempre",
+      "veredito": "confirma",
+      "medido": {
+        "avatar": [
+          {
+            "razao": 2.33,
+            "cor": "#ffffff",
+            "fundo": "#ff8c00",
+            "imagemDeFundo": null,
+            "fonte": "24.192px",
+            "peso": "700",
+            "texto": "U",
+            "classes": "content bg-orange-vivid-30 text-pure-0"
+          },
+          {
+            "razao": 2.33,
+            "cor": "#ffffff",
+            "fundo": "#ff8c00",
+            "imagemDeFundo": null,
+            "fonte": "24.192px",
+            "peso": "700",
+            "texto": "U",
+            "classes": "content bg-orange-vivid-30 text-pure-0"
+          }
+        ]
+      },
+      "nota": "",
+      "contagemPorParada": {
+        "inicial": [
+          1,
+          1
+        ],
+        "lista-exibir": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "K-01",
+      "tipo": "controle",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "texto": "Home",
+        "tabIndex": 0,
+        "href": "/portal-mpa/",
+        "alcancadoPorTab": 1
+      },
+      "nota": "",
+      "contagemNaParada": 1
+    },
+    {
+      "id": "K-02",
+      "tipo": "controle",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 2,
+        "itens": [
+          {
+            "texto": "Home",
+            "pai": "ul",
+            "filhosLi": 0
+          },
+          {
+            "texto": "Processos",
+            "pai": "ul",
+            "filhosLi": 0
+          }
+        ]
+      },
+      "nota": "",
+      "contagemNaParada": 2
+    },
+    {
+      "id": "K-03",
+      "tipo": "controle",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "razao": 6.72,
+        "cor": "#005ea2",
+        "fundo": "#ffffff",
+        "imagemDeFundo": null,
+        "fonte": "34.832px",
+        "peso": "700",
+        "texto": "Processos"
+      },
+      "nota": "",
+      "contagemNaParada": 1
+    },
+    {
+      "id": "K-04",
+      "tipo": "controle",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "tabsAteOExportar": 5,
+        "foco": {
+          "outlineStyle": "dashed",
+          "outlineWidth": "4px",
+          "outlineColor": "rgb(194, 133, 12)",
+          "outlineOffset": "4px",
+          "focusVisible": true
+        }
+      },
+      "nota": "",
+      "contagemNaParada": 1
+    },
+    {
+      "id": "K-05",
+      "tipo": "controle",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 3,
+        "abas": [
+          {
+            "tag": "button",
+            "tabIndex": 0,
+            "texto": "Aguardando análise",
+            "ariaLabel": "AGUARDANDO_ANALISE"
+          },
+          {
+            "tag": "button",
+            "tabIndex": 0,
+            "texto": "Tramitando",
+            "ariaLabel": "TRAMITANDO"
+          },
+          {
+            "tag": "button",
+            "tabIndex": 0,
+            "texto": "Concluídos",
+            "ariaLabel": "HISTORICO"
+          }
+        ],
+        "alcancadasPorTab": 3,
+        "enterIgualClique": [
+          {
+            "aba": "Aguardando análise",
+            "clique": {
+              "ativa": [],
+              "linhas": 9,
+              "primeira": "5 horas 00000.000001/2026-00 Alteração de Certificado HS Pes",
+              "path": "/pnip-d/portal-mpa/processos"
+            },
+            "enter": {
+              "ativa": [],
+              "linhas": 9,
+              "primeira": "5 horas 00000.000001/2026-00 Alteração de Certificado HS Pes",
+              "path": "/pnip-d/portal-mpa/processos"
+            },
+            "igual": true
+          },
+          {
+            "aba": "Tramitando",
+            "clique": {
+              "ativa": [],
+              "linhas": 9,
+              "primeira": "11 horas 00000.000010/2026-00 Alteração de Certificado HS Pe",
+              "path": "/pnip-d/portal-mpa/processos"
+            },
+            "enter": {
+              "ativa": [],
+              "linhas": 9,
+              "primeira": "11 horas 00000.000010/2026-00 Alteração de Certificado HS Pe",
+              "path": "/pnip-d/portal-mpa/processos"
+            },
+            "igual": true
+          },
+          {
+            "aba": "Concluídos",
+            "clique": {
+              "ativa": [],
+              "linhas": 10,
+              "primeira": "15/03/2026 16:30 00000.000033/2026-00 Habilitação Mercados E",
+              "path": "/pnip-d/portal-mpa/processos"
+            },
+            "enter": {
+              "ativa": [],
+              "linhas": 10,
+              "primeira": "15/03/2026 16:30 00000.000033/2026-00 Habilitação Mercados E",
+              "path": "/pnip-d/portal-mpa/processos"
+            },
+            "igual": true
+          }
+        ]
+      },
+      "nota": "Tab real alcança as abas: 3 de 3 (o tabIndex é 0 nas três)",
+      "contagemNaParada": 3
+    },
+    {
+      "id": "K-06",
+      "tipo": "controle",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 7,
+        "razoes": [
+          5.9,
+          5.9,
+          5.9,
+          5.9,
+          5.9,
+          5.9,
+          5.9
+        ],
+        "cores": [
+          "#005ea2 sobre #f0f0f0"
+        ],
+        "textos": [
+          "Aberto há",
+          "Nº Processo",
+          "Tipo de Processo",
+          "Solicitante",
+          "Analista",
+          "Téc. Adm.",
+          "Status"
+        ]
+      },
+      "nota": "",
+      "contagemNaParada": 7
+    },
+    {
+      "id": "K-07",
+      "tipo": "controle",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 3,
+        "botoes": [
+          {
+            "texto": "Assinar",
+            "textoVisivelPx": "58x23",
+            "label": null,
+            "circle": false,
+            "w": 106,
+            "h": 40,
+            "raio": "1680px"
+          },
+          {
+            "texto": "Assinar",
+            "textoVisivelPx": "58x23",
+            "label": null,
+            "circle": false,
+            "w": 106,
+            "h": 40,
+            "raio": "1680px"
+          },
+          {
+            "texto": "Assinar",
+            "textoVisivelPx": "58x23",
+            "label": null,
+            "circle": false,
+            "w": 106,
+            "h": 40,
+            "raio": "1680px"
+          }
+        ]
+      },
+      "nota": "",
+      "contagemNaParada": 3
+    },
+    {
+      "id": "K-08",
+      "tipo": "controle",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "razao": 6.49,
+        "cor": "#ffffff",
+        "fundo": "#4a50c4",
+        "imagemDeFundo": null,
+        "fonte": "14px",
+        "peso": "500",
+        "texto": "Em revisão analista"
+      },
+      "nota": "",
+      "contagemNaParada": 1
+    },
+    {
+      "id": "K-09",
+      "tipo": "controle",
+      "estado": "inicial",
+      "veredito": "confirma",
+      "medido": {
+        "count": 1,
+        "tabIndexHost": -1,
+        "tabindexAttr": null,
+        "shadow": true,
+        "internos": [
+          {
+            "tag": "style",
+            "tabIndex": -1,
+            "role": null
+          },
+          {
+            "tag": "span",
+            "tabIndex": -1,
+            "role": null
+          }
+        ],
+        "axHost": {
+          "papel": "none",
+          "nome": "",
+          "ignorado": true,
+          "focavel": false,
+          "fonteNome": []
+        },
+        "axSpansInternos": [
+          {
+            "papel": "none",
+            "nome": "",
+            "ignorado": true,
+            "focavel": false,
+            "fonteNome": []
+          }
+        ],
+        "alcancadoPorTab": 0
+      },
+      "nota": "",
+      "contagemNaParada": 1
+    },
+    {
+      "id": "K-10",
+      "tipo": "controle",
+      "estado": "lista-exibir",
+      "veredito": "confirma",
+      "medido": {
+        "count": 4,
+        "radios": [
+          {
+            "id": "total0",
+            "value": "10",
+            "labels": 1,
+            "labelFor": "total0",
+            "labelTexto": "10",
+            "name": null
+          },
+          {
+            "id": "total1",
+            "value": "25",
+            "labels": 1,
+            "labelFor": "total1",
+            "labelTexto": "25",
+            "name": null
+          },
+          {
+            "id": "total2",
+            "value": "50",
+            "labels": 1,
+            "labelFor": "total2",
+            "labelTexto": "50",
+            "name": null
+          },
+          {
+            "id": "total3",
+            "value": "100",
+            "labels": 1,
+            "labelFor": "total3",
+            "labelTexto": "100",
+            "name": null
+          }
+        ],
+        "axNomes": [
+          "radio:10",
+          "radio:25",
+          "radio:50",
+          "radio:100"
+        ]
+      },
+      "nota": "",
+      "contagemNaParada": 4
+    },
+    {
+      "id": "K-11",
+      "tipo": "controle",
+      "estado": "lista-exibir",
+      "veredito": "confirma",
+      "medido": {
+        "count": 4,
+        "itens": [
+          {
+            "item": 0,
+            "caixa": {
+              "w": 70,
+              "h": 53
+            },
+            "caixaDoTexto": {
+              "dx": 16,
+              "dy": 17,
+              "w": 16,
+              "h": 19
+            },
+            "bgAntes": "none",
+            "hover": {
+              "hover": true,
+              "backgroundImage": "linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))"
+            },
+            "cliqueEm": {
+              "dx": 66,
+              "dy": 4,
+              "foraDoTexto": true
+            },
+            "depois": {
+              "valorCampo": "10",
+              "marcados": [
+                "10"
+              ],
+              "linhas": 9
+            }
+          },
+          {
+            "item": 1,
+            "caixa": {
+              "w": 70,
+              "h": 53
+            },
+            "caixaDoTexto": {
+              "dx": 16,
+              "dy": 17,
+              "w": 16,
+              "h": 19
+            },
+            "bgAntes": "none",
+            "hover": {
+              "hover": true,
+              "backgroundImage": "linear-gradient(rgba(51, 51, 51, 0.16), rgba(51, 51, 51, 0.16))"
+            },
+            "cliqueEm": {
+              "dx": 66,
+              "dy": 4,
+              "foraDoTexto": true
+            },
+            "depois": {
+              "valorCampo": "25",
+              "marcados": [
+                "25"
+              ],
+              "linhas": 9
+            }
+          },
+          {
+            "item": 2,
+            "caixa": {
+              "w": 70,
+              "h": 53
+            },
+            "caixaDoTexto": {
+              "dx": 16,
+              "dy": 17,
+              "w": 17,
+              "h": 19
+            },
+            "bgAntes": "none",
+            "hover": {
+              "hover": true,
+              "backgroundImage": "linear-gradient(rgba(51, 51, 51, 0.16), rgba(51, 51, 51, 0.16))"
+            },
+            "cliqueEm": {
+              "dx": 66,
+              "dy": 4,
+              "foraDoTexto": true
+            },
+            "depois": {
+              "valorCampo": "50",
+              "marcados": [
+                "50"
+              ],
+              "linhas": 9
+            }
+          },
+          {
+            "item": 3,
+            "caixa": {
+              "w": 70,
+              "h": 52
+            },
+            "caixaDoTexto": {
+              "dx": 16,
+              "dy": 17,
+              "w": 26,
+              "h": 19
+            },
+            "bgAntes": "none",
+            "hover": {
+              "hover": true,
+              "backgroundImage": "linear-gradient(rgba(51, 51, 51, 0.16), rgba(51, 51, 51, 0.16))"
+            },
+            "cliqueEm": {
+              "dx": 66,
+              "dy": 4,
+              "foraDoTexto": true
+            },
+            "depois": {
+              "valorCampo": "100",
+              "marcados": [
+                "100"
+              ],
+              "linhas": 9
+            }
+          }
+        ]
+      },
+      "nota": "",
+      "contagemNaParada": 4
+    },
+    {
+      "id": "K-12",
+      "tipo": "controle",
+      "estado": "lista-exibir",
+      "veredito": "confirma",
+      "medido": {
+        "count": 4,
+        "padding": [
+          "16px 16px 16px 16px",
+          "16px 16px 16px 16px",
+          "16px 16px 16px 16px",
+          "16px 16px 16px 16px"
+        ]
+      },
+      "nota": "padding top/right/bottom/left",
+      "contagemNaParada": 4
+    }
+  ]
+}
