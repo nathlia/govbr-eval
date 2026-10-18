@@ -14,6 +14,7 @@
 #   GOVBR_RESULTADOS_LEITURA_TOKEN  PAT fine-grained, Contents: Read-only SÓ em govbr-resultados (job preparar,
 #                            campanha com agenda: lê indice/entradas para contar tentativas; a coleta nunca o vê)
 #   CLAUDE_CODE_OAUTH_TOKEN  `claude setup-token` da assinatura (SÓ no passo da coleta real)
+#   CLAUDE_CODE_OAUTH_TOKEN_2  idem, da segunda conta; usado quando o disparo escolhe conta = segunda
 # Toda lógica está em scripts/ci/t4.sh e scripts/*.ts; entradas chegam por env, nunca interpoladas no shell.
 name: execucao-isolada
 
@@ -89,6 +90,11 @@ on:
         description: "motivo da repetição técnica da linha de base"
         type: string
         default: ""
+      conta:
+        description: "assinatura Claude que paga a coleta real (principal = CLAUDE_CODE_OAUTH_TOKEN, segunda = CLAUDE_CODE_OAUTH_TOKEN_2)"
+        type: choice
+        options: [principal, segunda]
+        default: principal
 
 permissions: {}
 
@@ -255,7 +261,7 @@ jobs:
         id: coleta_real
         if: inputs.modo == 'real'
         env:
-          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ inputs.conta == 'segunda' && secrets.CLAUDE_CODE_OAUTH_TOKEN_2 || secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           TELA: ${{ inputs.tela }}
           BRACO: ${{ needs.preparar.outputs.braco }}
           MODO: ${{ inputs.modo }}
