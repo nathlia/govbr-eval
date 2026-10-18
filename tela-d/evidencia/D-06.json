@@ -1,0 +1,70 @@
+{
+ "id": "D-06",
+ "ancora": "pnip-status-solicitacao-utils div[class*=bg-]:not(.bg-indigo-vivid-60) > div",
+ "estado": "inicial",
+ "normas": [
+  "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+  "emag:4.1",
+  "wcag:1.4.3"
+ ],
+ "medidas": {
+  "contraste": [
+   {
+    "texto": "Em análise analista",
+    "cor": "rgb(255, 255, 255)",
+    "fundo": "rgb(230, 111, 14)",
+    "fonte": "14px 500",
+    "razao": 3.16
+   },
+   {
+    "texto": "Em análise supervisor",
+    "cor": "rgb(255, 255, 255)",
+    "fundo": "rgb(230, 111, 14)",
+    "fonte": "14px 500",
+    "razao": 3.16
+   },
+   {
+    "texto": "Aguarda complementos",
+    "cor": "rgb(255, 255, 255)",
+    "fundo": "rgb(130, 137, 255)",
+    "fonte": "14px 500",
+    "razao": 3.01
+   },
+   {
+    "texto": "Em análise supervisor",
+    "cor": "rgb(255, 255, 255)",
+    "fundo": "rgb(230, 111, 14)",
+    "fonte": "14px 500",
+    "razao": 3.16
+   },
+   {
+    "texto": "Aguardando plano de ação",
+    "cor": "rgb(255, 255, 255)",
+    "fundo": "rgb(136, 136, 136)",
+    "fonte": "14px 500",
+    "razao": 3.54
+   },
+   {
+    "texto": "Em análise supervisor",
+    "cor": "rgb(255, 255, 255)",
+    "fundo": "rgb(230, 111, 14)",
+    "fonte": "14px 500",
+    "razao": 3.16
+   },
+   {
+    "texto": "Em análise diretor",
+    "cor": "rgb(255, 255, 255)",
+    "fundo": "rgb(230, 111, 14)",
+    "fonte": "14px 500",
+    "razao": 3.16
+   },
+   {
+    "texto": "Aguardando SFPA",
+    "cor": "rgb(255, 255, 255)",
+    "fundo": "rgb(136, 136, 136)",
+    "fonte": "14px 500",
+    "razao": 3.54
+   }
+  ]
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "id": "K-05",
+ "ancora": "pnip-mpa-processos br-tab >>> button",
+ "estado": "inicial",
+ "normas": [
+  "govbr-3.7.0-accessibility-tab-f1807d71dc5f"
+ ],
+ "medidas": {
+  "abas-teclado": [
+   {
+    "texto": "Aguardando análise",
+    "tag": "button",
+    "tabIndex": 0
+   },
+   {
+    "texto": "Tramitando",
+    "tag": "button",
+    "tabIndex": 0
+   },
+   {
+    "texto": "Concluídos",
+    "tag": "button",
+    "tabIndex": 0
+   }
+  ]
+ }
+}

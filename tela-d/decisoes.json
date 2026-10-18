@@ -1,0 +1,2517 @@
+{
+  "_meta": {
+    "tela": "processos (tela D, substituta da C)",
+    "metodo": "tela-b/metodo-auditoria.md @ 5838702 + tela-b/metodo-auditoria-adendo-vistorias.md @ 9406aed + tela-d/metodo-auditoria-adendo-processos.md (final, sha256 d9989b53…2b513)",
+    "fonte": "ds-rules/06/govbr-ds-knowledge/versions/3.7.0/normalized/rules.jsonl (186 regras; as 45 com emagReferences são as recomendações do e-MAG 3.1)",
+    "fonteSha256": "5cac5fee9a6871bed9283d8c9714a2480adb50225aaa0d304f0ec337b80a2c56",
+    "estados": "inicial · lista-exibir (tela-d/sequencia.mjs)",
+    "familias": "F1 componente presente · F2 Template Base/regras de página · F3 fundamentos (cor, tipografia, espaçamento, iconografia) · F4 e-MAG · global = regra global da KB fora das quatro",
+    "destinos": "unidade (viola autoral) · escalada (não-mensurável → lista da autora, auditoria.md § 8) · registro · observacao · nenhum",
+    "contagem": {
+      "conforme": 35,
+      "observação": 31,
+      "não-aplicável": 49,
+      "não-mensurável": 11,
+      "viola": 17,
+      "não normatiza": 43
+    }
+  },
+  "linhas": [
+    {
+      "id": "govbr-3.7.0-accessibility-breadcrumb-992f162ca821",
+      "force": "required",
+      "component": "breadcrumb",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Elementos interativos do Breadcrumb devem ser alcançáveis com Tab.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "Tab real (inventário, ordemTab) alcança o link \"Home\" do <br-breadcrumb> (e o botão circular dentro dele); o item atual \"Processos\" não é link. Par elegível breadcrumb-tab."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-button-efd2d9e7c3c6",
+      "force": "recommended",
+      "component": "button",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Buttons devem ser alcançáveis por navegação sequencial com a tecla Tab.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "todos os botões habilitados visíveis, exceto \"Exibir lista\" (tabindex -1, padrão do Select), são alcançáveis por Tab; os \"Desassociar\" desabilitados (8) ficam fora, como deve."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-button-41d9f439e103",
+      "force": "recommended",
+      "component": "button",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Button deve receber foco por Tab e ser acionável por Space ou Enter.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "Enter produz o mesmo efeito do clique nos botões testados (abas, Exportar, Ver processo, Voltar: estados.json)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-card-e7fa6a659cdf",
+      "force": "required",
+      "component": "card",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Elementos interativos do Card devem ser navegáveis com Tab.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-input-6fe41e804955",
+      "force": "required",
+      "component": "input",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Cada Input deve ser alcançável pela tecla Tab e ocupar um ponto coerente na ordem de foco.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "Tab real alcança os três campos visíveis na ordem do DOM: pesquisa (\"Pesquise aqui ...\"), \"Exibir\" e \"Página\" da paginação."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-list-03813ffeeb42",
+      "force": "required",
+      "component": "list",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Elementos interativos da List devem permitir navegação com Tab e Shift+Tab.",
+      "veredito": "não-mensurável",
+      "destino": "escalada",
+      "escalada": "E-05",
+      "medida": "lista-exibir: a lista do seletor \"Exibir\" (div.br-list tabindex=0, quatro br-item com rádio) recebe foco por Tab a partir do campo, e o Tab seguinte leva o foco ao <body>: nenhum item é alcançado por Tab/Shift+Tab. Mesma marcação e mesmo comportamento do seletor da tela C (E-03 de lá, decisão pendente)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-modal-64b84991229c",
+      "force": "required",
+      "component": "modal",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "A Modal deve permitir navegação interna com Tab e Shift+Tab.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-modal-31c45e5f6081",
+      "force": "permitted",
+      "component": "modal",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [
+        "Accessible Name"
+      ],
+      "norma": "Quando aria-label for usado na Modal, seu valor deve corresponder ao título apresentado.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-modal-65446caf1efc",
+      "force": "recommended",
+      "component": "modal",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Defina aria-modal=\"true\" somente quando o conteúdo externo realmente deva ficar indisponível enquanto a Modal estiver aberta.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-notification-2bae7736ddda",
+      "force": "required",
+      "component": "notification",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "O painel de Notification deve permitir avanço com Tab e retorno com Shift+Tab.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-signin-a68a86f45877",
+      "force": "recommended",
+      "component": "signin",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Sign-in deve receber foco por Tab e ser acionável por Space ou Enter.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "o Sign-in recebe foco por Tab; clique e Enter abrem o menu (3/3)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-skiplink-5aae226482e5",
+      "force": "required",
+      "component": "skiplink",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "O Skip Link deve ser o primeiro conteúdo focável após a abertura de body.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-tab-f1807d71dc5f",
+      "force": "required",
+      "component": "tab",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Tabs devem ser acessíveis e navegáveis inteiramente por teclado.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "as três abas são <button> alcançados por Tab; Enter produz o mesmo resultado do clique em 3/3 cargas nas três (teste de estados: \"Aguardando análise\" e \"Concluídos\" trocam a lista, \"Tramitando\" — a ativa — não faz nada nos dois gestos). O nome acessível das abas (\"AGUARDANDO_ANALISE\", \"TRAMITANDO\", \"HISTORICO\" = id do br-tab-item, sem a prop aria-label) é registro sem norma no universo (auditoria.md § 6)."
+    },
+    {
+      "id": "govbr-3.7.0-component-avatar-81c7524692f0",
+      "force": "required",
+      "component": "avatar",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "A representação do usuário no Avatar deve estar contida em superfície circular.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": ".br-avatar .content do cabeçalho: 40×40 px, border-radius 50% (casco da aplicação; não entra como controle)."
+    },
+    {
+      "id": "govbr-3.7.0-component-button-4d7b5f978df1",
+      "force": "required",
+      "component": "button",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "O Button deve possuir rótulo visível, exceto na variante circular.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-01"
+      ],
+      "medida": "inicial: os 18 botões de ação das linhas da tabela \"Ver processo\" (9) e \"Desassociar processo do analista responsável\" (9, 8 deles desabilitados) são <br-button> sem `label` e sem `circle`: o <button> interno (br-button middle) tem 72×40 px, raio 1680 px (pílula, não círculo), nenhum texto visível — só o ícone br-icon-base projetado — e o nome vem só do `title`. O \"Assinar\" (3), \"Exportar\", \"Voltar\" e \"Limpar filtros\" têm rótulo visível; os circulares (Página anterior/seguinte, Home, Menu) estão na exceção."
+    },
+    {
+      "id": "govbr-3.7.0-component-card-a102d36a696a",
+      "force": "required",
+      "component": "card",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "O conteúdo e as ações de um Card devem se referir a um único assunto ou tópico.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-carousel-7b664374a2b3",
+      "force": "recommended",
+      "component": "carousel",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Mantenha espaçamento consistente entre páginas de conteúdo do Carousel.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-carousel-4c92b788906b",
+      "force": "discouraged",
+      "component": "carousel",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Evite mais de três páginas em um bloco de Carousel.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-checkbox-6923ae0af84f",
+      "force": "required",
+      "component": "checkbox",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use Checkbox quando o usuário puder selecionar uma ou mais opções de uma lista.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "os checkboxes da tabela servem à seleção de uma ou mais linhas (seleção múltipla; um no cabeçalho). O rótulo deles → D-04."
+    },
+    {
+      "id": "govbr-3.7.0-component-input-3788829b08fe",
+      "force": "required",
+      "component": "input",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "A ação interna padrão do Input deve usar Button terciário circular de alta densidade, com ícone representando a ação.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "ação interna do campo de pesquisa (\"Buscar\"): button.br-button só com ícone de lupa, sem primary/secondary (terciário), 32×32, border-radius 50% computado (o core 3.4.1 desenha .br-input .br-button circular) — a marcação autoral não tem as classes circle/small, mas o computado é o da regra. O tamanho do alvo → D-09."
+    },
+    {
+      "id": "govbr-3.7.0-component-list-8f67e7cc7677",
+      "force": "prohibited",
+      "component": "list",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Todos os itens de uma mesma List devem utilizar espaçamento consistente.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "lista-exibir: os quatro br-item da lista do seletor têm o mesmo padding computado (16px 16px) e alturas 53/53/53/52 px."
+    },
+    {
+      "id": "govbr-3.7.0-component-magicbutton-d421fb28a955",
+      "force": "prohibited",
+      "component": "magicbutton",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Magic Button não deve substituir Button em todos os contextos; Button pode substituir Magic Button.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-message-088613b94e1c",
+      "force": "discouraged",
+      "component": "message",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Evite textos excessivamente longos e com muitas quebras de linha em Message.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-message-188aad85588b",
+      "force": "discouraged",
+      "component": "message",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Evite exibir múltiplas Messages do tipo Padrão simultaneamente.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-message-66b01a712e67",
+      "force": "required",
+      "component": "message",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Posicione o ícone semântico à esquerda e o botão Fechar no topo à direita da Message.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-modal-091e0e012f86",
+      "force": "recommended",
+      "component": "modal",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Uma Modal deve conter, preferencialmente, no máximo dois botões de ação.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-notification-a77199b18a54",
+      "force": "required",
+      "component": "notification",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Agrupe Notifications em ordem cronológica.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-scrim-d5ba51dda2b0",
+      "force": "required",
+      "component": "scrim",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "O Scrim só deve bloquear áreas de busca ou acessibilidade quando houver justificativa clara.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-signin-837c5ed4fe6a",
+      "force": "discouraged",
+      "component": "signin",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Evite rótulos excessivamente longos no Sign-in.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "rótulo do Sign-in: \"Olá, Usuária de Teste, SUPERVISOR\"."
+    },
+    {
+      "id": "govbr-3.7.0-component-signin-2752fd23bbe8",
+      "force": "prohibited",
+      "component": "signin",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Não use quebra de linha no rótulo do Sign-in.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "o Sign-in (\"U Olá, Usuária de Teste, SUPERVISOR\") ocupa uma linha: 392×40 px (casco)."
+    },
+    {
+      "id": "govbr-3.7.0-component-table-7c605ca2f85e",
+      "force": "required",
+      "component": "table",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Toda Table deve possuir ao menos uma coluna.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "a tabela tem 9 colunas (9 th no thead, 9 td por linha)."
+    },
+    {
+      "id": "govbr-3.7.0-component-table-88941e76c77b",
+      "force": "discouraged",
+      "component": "table",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Evite colunas compostas por células vazias.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "a coluna de seleção tem células vazias nas linhas 1, 5 e 8 (sem checkbox — dado do mock decide quais linhas são selecionáveis)."
+    },
+    {
+      "id": "govbr-3.7.0-component-table-8b8d4b403cb9",
+      "force": "recommended",
+      "component": "table",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "A barra de título da Table deve exibir no máximo quatro ícones de ação lado a lado; ações adicionais devem ser agrupadas em menu flutuante.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "não há barra de título da Table (as ações ficam no cabeçalho da página: Exportar)."
+    },
+    {
+      "id": "govbr-3.7.0-component-tag-7d70c8be6a0c",
+      "force": "recommended",
+      "component": "tag",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use Tooltip em Tag de contagem com mais de três dígitos para informar o valor exato.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "nenhuma Tag de contagem."
+    },
+    {
+      "id": "govbr-3.7.0-component-tooltip-c028ba432407",
+      "force": "required",
+      "component": "tooltip",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "O texto do Tooltip deve ser curto, direto, informativo e orientado à ação.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-tooltip-6cc61d2b3460",
+      "force": "recommended",
+      "component": "tooltip",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use Tooltip somente quando necessário e evite uso excessivo.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-0b73051d7063",
+      "force": "recommended",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Evite o CDN legado do Design System; prefira instalação via npm ou arquivos locais.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "nenhum CDN: todos os recursos vêm da árvore pnip-d/."
+    },
+    {
+      "id": "govbr-3.7.0-development-global-406774b1cb87",
+      "force": "required",
+      "component": null,
+      "familia": "F3",
+      "emag": [],
+      "wcag": [],
+      "norma": "Utilize Rawline como fonte oficial do Governo Federal.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "font-family computado de todo texto visível nas 2 paradas = \"Rawline, Raleway, sans-serif\"."
+    },
+    {
+      "id": "govbr-3.7.0-development-global-c6889731433a",
+      "force": "permitted",
+      "component": null,
+      "familia": "F3",
+      "emag": [],
+      "wcag": [],
+      "norma": "Utilize Raleway somente como alternativa quando Rawline não estiver disponível.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "Raleway declarada como alternativa depois de Rawline."
+    },
+    {
+      "id": "govbr-3.7.0-foundation-global-0578aa6c2828",
+      "force": "required",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "A Grid utiliza espaçamento de 40 px entre colunas.",
+      "veredito": "não-mensurável",
+      "destino": "escalada",
+      "escalada": "E-08",
+      "medida": "colunas (.row > .col-*) com o padding do grid do core 3.4.1 congelado (24 px entre colunas), não CSS autoral; a KB 3.7.0 diz 40 px. Valor que difere só entre a versão da página e a da norma (método § 1.4; como a E-08 da B e da C)."
+    },
+    {
+      "id": "govbr-3.7.0-foundation-global-bb0c6795e3f9",
+      "force": "informative",
+      "component": null,
+      "familia": "F3",
+      "emag": [],
+      "wcag": [],
+      "norma": "Adote 16 px como referência de fonte-base em 96 dpi, permitindo ajustes contextuais.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force informative (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-foundation-global-9ef740ba1f28",
+      "force": "recommended",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "Prefira a Grid fixa.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "main com container; filtros e paginação em grid do core."
+    },
+    {
+      "id": "govbr-3.7.0-foundation-global-a239799cdffd",
+      "force": "informative",
+      "component": null,
+      "familia": "F3",
+      "emag": [],
+      "wcag": [],
+      "norma": "O tamanho-base de ícones é 16 px.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force informative (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+      "force": "required",
+      "component": null,
+      "familia": "F3",
+      "emag": [],
+      "wcag": [],
+      "norma": "Interfaces governamentais devem usar as cores predefinidas do Design System.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "cores computadas (texto, fundo, bordas) de todo elemento visível nas 2 paradas — 15 na inicial, 17 na lista-exibir, inclusive os fundos dos status (#e66f0e orange-vivid-40, #8289ff indigo-vivid-40, #888888 secondary-06, indigo-vivid-60) — todas presentes em tokens/colors.json 3.7.0; nenhuma fora da paleta. O contraste das combinações → D-06."
+    },
+    {
+      "id": "govbr-3.7.0-foundation-global-1c0146e93d2e",
+      "force": "required",
+      "component": null,
+      "familia": "F3",
+      "emag": [],
+      "wcag": [],
+      "norma": "Ícones interativos devem possuir área de toque de 48 × 48 px.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-09"
+      ],
+      "medida": "ícones interativos autorais de 32×32: \"Buscar\" (button do pnip-search-table-utils) e os dois \"Exibir lista\" dos seletores da paginação (br-select-pnip) — precedente do D-61 (B-28/B-29: alvos de ícone autorais de 32×32 viram unidade). Os alvos de 40 px de altura (ícones das linhas 72×40; Página anterior/seguinte 40×40, desabilitados) → E-02. Menu e Home 32×32 são dos web components (fundo)."
+    },
+    {
+      "id": "govbr-3.7.0-page-global-f6e03bce515b",
+      "force": "required",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "Designers e desenvolvedores devem seguir os padrões de interface do Padrão Digital de Governo.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "regra-guarda sem observável próprio: é medida pelas demais linhas desta tabela"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-7e6420514860",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "1.1"
+      ],
+      "wcag": [
+        "WCAG 2.0 4.1.1",
+        "WCAG 2.0 4.1.2"
+      ],
+      "norma": "Mantenha HTML, CSS e JavaScript em camadas adequadas e siga padrões Web interoperáveis.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-10"
+      ],
+      "medida": "inicial: o <iframe> filho direto de <pnip-mpa-processos> (sem src, documento about:blank vazio, 1160×500, sem title nem name) é um ponto de Tab sem nome (papel Iframe, nome \"\" na árvore do Chromium)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-1cb2c878824b",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "1.2"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.3.1"
+      ],
+      "norma": "Use elementos HTML conforme seu significado e organize o documento em ordem lógica.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "tabela para os dados tabulares, títulos de coluna em th, listas para breadcrumb e paginação; o uso de <a role=button> e <span> como controles está nas unidades D-02/D-03 (2f22b7245ef9)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-3ac0aaa53900",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "1.3"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.3.1",
+        "WCAG 2.0 2.4.10"
+      ],
+      "norma": "Estruture títulos de H1 a H6 hierarquicamente; prefira um único H1 para o conteúdo principal.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-12"
+      ],
+      "medida": "um só título visível, <h2> \"Processos\"; nenhum <h1> na página (light + shadow). **exposto** (casco: ordem de títulos, como C-05)"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-79db88c7f55d",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "1.4"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.3.2",
+        "WCAG 2.0 2.4.3"
+      ],
+      "norma": "A ordem do DOM deve produzir uma sequência lógica de leitura e foco; use tabindex apenas quando indispensável.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "ordem do Tab = ordem do DOM e da leitura (cabeçalho → breadcrumb → Exportar → abas → pesquisa → tabela, linha a linha → paginação → Voltar); nenhum tabindex positivo; os tabindex do seletor (lista 0, itens e \"Exibir lista\" -1) são os do padrão Select. O passo de Tab que sai da lista aberta para o <body> → E-05."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-7d2b85f81c52",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "1.5"
+      ],
+      "wcag": [
+        "WCAG 2.0 2.4.1"
+      ],
+      "norma": "Forneça atalhos para blocos relevantes e faça do salto para o conteúdo o primeiro link da página.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-11"
+      ],
+      "medida": "nenhuma âncora \"#…\" nem .br-skiplink nas 2 paradas; o primeiro ponto de Tab é o botão Menu do cabeçalho. **exposto** (casco)"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-206c9fa6ae11",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "1.6"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.3.1"
+      ],
+      "norma": "Use tabelas apenas para dados tabulares; faça a diagramação com CSS.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "a única <table> traz dados tabulares (processos × colunas); nenhuma tabela de diagramação."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cf61b3eb3c71",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "1.7"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.3.1"
+      ],
+      "norma": "Separe links adjacentes com estrutura ou pontuação perceptível, não apenas espaços.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "o breadcrumb tem um só link (Home) e o item atual em <li> próprio; a paginação tem cada controle em <li>."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-bfba9c1f5026",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "1.8"
+      ],
+      "wcag": [
+        "WCAG 2.0 3.2.3"
+      ],
+      "norma": "Divida a página em regiões gerenciáveis e mantenha uma organização consistente entre páginas internas.",
+      "veredito": "não-mensurável",
+      "destino": "escalada",
+      "escalada": "E-07",
+      "medida": "marcos: banner, main, três navigation (abas, \"Paginação de resultados\", \"paginação\"); nenhum contentinfo. Casco, **exposto** (precedente E-02 da B, D-61: fora)"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-5be1f553cc03",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "1.9"
+      ],
+      "wcag": [
+        "WCAG 2.0 3.2.5"
+      ],
+      "norma": "Não abra automaticamente novas abas, janelas ou modais; quando necessário, informe previamente o usuário e preserve o foco.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "nada abre sem ação da usuária: nenhum diálogo, janela ou aba na carga (0 diálogos visíveis); a lista do seletor só abre no clique do campo."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "2.1"
+      ],
+      "wcag": [
+        "WCAG 2.0 2.1.1",
+        "WCAG 2.0 2.1.2"
+      ],
+      "norma": "Todas as funções devem ser operáveis por teclado, sem aprisionamento de foco.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-02",
+        "D-03"
+      ],
+      "medida": "inicial: (D-02) os 9 números de processo são <a role=\"button\"> sem href nem tabindex — não focáveis (fora do Tab real; a árvore não os marca focusable) — e o clique abre a sub-rota …/documentos (linhas 2, 3, 4, 6, 7, 9), que nenhum outro controle da tela alcança (\"Ver processo\" abre a rota do processo sem /documentos); nas linhas 1, 5 e 8 o destino do mock cai em /login (artefato, adendo § C); (D-03) as 7 etiquetas interativas (\"Meus processos\" e os 6 filtros \"Aberto há\", \"Tipo de processo\", \"Status\", \"Espécie alvo\", \"Método de pesca\", \"Petrecho\") são <span class=\"br-tag interaction\"> com tabIndex -1: o clique liga/desliga o filtro (9→10 linhas) ou abre a lista de opções do filtro, e nenhuma delas é alcançada por Tab. O ciclo iframe↔body do Tab → E-01."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-f639993e9416",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "2.2"
+      ],
+      "wcag": [
+        "WCAG 2.0 2.1.1",
+        "WCAG 2.0 2.1.2"
+      ],
+      "norma": "Scripts, conteúdo dinâmico e objetos programáveis devem funcionar com teclado e oferecer alternativa acessível quando necessário.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-02",
+        "D-03"
+      ],
+      "medida": "mesma medida da linha anterior: os filtros e a abertura dos documentos (scripts do Angular) só funcionam com mouse."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cd5de9a6f164",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "2.3"
+      ],
+      "wcag": [
+        "WCAG 2.0 3.2.5"
+      ],
+      "norma": "Não atualize a página periodicamente sem controle; ofereça ação explícita e informe casos em que a atualização for indispensável.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "nenhum meta http-equiv refresh; endereço e conteúdo estáveis por 1 s em cada parada (conferir-paradas da fase 1)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-d6e816588306",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "2.4"
+      ],
+      "wcag": [
+        "WCAG 2.0 3.2.5"
+      ],
+      "norma": "Não redirecione páginas com meta refresh; faça o redirecionamento no servidor.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "nenhum meta refresh."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-5d366ef29b04",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "2.5"
+      ],
+      "wcag": [
+        "WCAG 2.0 2.2.1"
+      ],
+      "norma": "Quando uma tarefa tiver limite de tempo, permita desligar, ajustar ou prolongar o prazo e informe o usuário.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "não há tarefa com limite de tempo"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-8faca42c2c9a",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "2.6"
+      ],
+      "wcag": [
+        "WCAG 2.0 2.3.1"
+      ],
+      "norma": "Não use efeitos piscantes, intermitentes ou cintilantes, inclusive em conteúdo de terceiros.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "document.getAnimations() = 0 nas 2 paradas; nenhum GIF/vídeo."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-33b13d9fa271",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "2.7"
+      ],
+      "wcag": [
+        "WCAG 2.0 2.2.2"
+      ],
+      "norma": "Conteúdo em movimento não deve iniciar sem controle; ofereça pausar, parar e reiniciar.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "nenhum conteúdo em movimento (0 animações)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-698e0a4783a9",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "3.1"
+      ],
+      "wcag": [
+        "WCAG 2.0 3.1.1"
+      ],
+      "norma": "Declare o idioma principal em todas as páginas com o atributo lang.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "<html lang=\"pt-br\">."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-1ccbc61dddbc",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "3.10"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.3.1"
+      ],
+      "norma": "Use th para cabeçalhos, td para dados e associe corretamente cabeçalhos e células.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-08"
+      ],
+      "medida": "inicial: o último <th> do cabeçalho (coluna das ações) é vazio — nome \"\" na árvore (columnheader sem nome) — precedente B-26 (D-61: th vazio da coluna de ações vira unidade). Os demais th têm texto e scope=col; o th da coluna de seleção não tem texto nem scope (o rótulo do checkbox dele → D-04)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-fb83eab75d8d",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "3.11"
+      ],
+      "wcag": [
+        "WCAG 2.0 3.1.5"
+      ],
+      "norma": "Escreva conteúdo de fácil leitura; explique ou simplifique textos que exigem conhecimento avançado.",
+      "veredito": "não-mensurável",
+      "destino": "escalada",
+      "escalada": "E-07",
+      "medida": "texto fixo do template; linguagem simples fora do escopo (§ 6; precedente E-12 da B: fora)"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-20c08f26d8e8",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "3.12"
+      ],
+      "wcag": [
+        "WCAG 2.0 3.1.3",
+        "WCAG 2.0 3.1.4"
+      ],
+      "norma": "Explique siglas, abreviaturas e termos incomuns na primeira ocorrência ou por glossário acessível.",
+      "veredito": "não-mensurável",
+      "destino": "escalada",
+      "escalada": "E-07",
+      "medida": "abreviaturas no texto fixo sem expansão nem <abbr>: \"Nº Processo\", \"Téc. Adm.\" (cabeçalhos), PNIP (título); HS, CAOL, SFPA vêm dos dados do mock (fora). Precedente E-12 da B: fora"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-1db13803cbf8",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "3.2"
+      ],
+      "wcag": [
+        "WCAG 2.0 3.1.2"
+      ],
+      "norma": "Marque com lang trechos cujo idioma difere do idioma principal.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "nenhum trecho autoral em outro idioma nas paradas."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-5d5a5f21d94b",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "3.3"
+      ],
+      "wcag": [
+        "WCAG 2.0 2.4.2"
+      ],
+      "norma": "Defina um title descritivo que represente o conteúdo principal e identifique o sítio ou sistema.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-13"
+      ],
+      "medida": "<title>PNIP</title>; o conteúdo principal é \"Processos\" (h2). O título só nomeia o sistema. **exposto** (casco; precedente B-25, decidido pela autora no D-61)"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-75c11ccac582",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "3.4"
+      ],
+      "wcag": [
+        "WCAG 2.0 2.4.8"
+      ],
+      "norma": "Forneça um mecanismo de orientação, como breadcrumb hierárquico, que indique a localização atual.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "<br-breadcrumb> \"Home › Processos\" indica a localização atual."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cdfbb56eebc5",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "3.5"
+      ],
+      "wcag": [
+        "WCAG 2.0 2.4.4",
+        "WCAG 2.0 2.4.9"
+      ],
+      "norma": "O texto de cada link deve indicar claramente seu destino e fazer sentido fora do contexto imediato.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "links com texto claro: \"Home\" (breadcrumb) e \"1\" dentro da navegação \"Paginação de resultados\"; os números de processo são role=button (D-02)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-3a3e47354c53",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "3.6"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.1.1"
+      ],
+      "norma": "Forneça texto alternativo apropriado ao contexto para imagens informativas.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a única imagem visível é o logo do <br-header> (alt=\"logo\" fixo no web component — fundo); o ícone do \"Sair\" só existe no menu do avatar, fechado nas paradas; os ícones dos botões são Font Awesome com aria-hidden"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-609e3494150c",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "3.7"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.1.1"
+      ],
+      "norma": "Quando mapa de imagem for indispensável, forneça alt para cada área ativa e não o utilize como menu ou seletor de regiões.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "não há mapa de imagem"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-3a57435c3b32",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "3.8"
+      ],
+      "wcag": [],
+      "norma": "Prefira HTML; documentos ODF devem ser acessíveis e PDFs devem possuir alternativa em HTML ou ODF.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "nenhum documento para download nas paradas (\"Exportar\" navega para outra rota, fora)"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "3.9"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.3.1"
+      ],
+      "norma": "Identifique tabelas com caption e forneça descrição contextual quando a complexidade exigir.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-07"
+      ],
+      "medida": "inicial: a <table> dos processos não tem <caption> nem aria-label/aria-labelledby (o h2 \"Processos\" fica fora do contêiner da tabela, sem associação). Nos exemplos oficiais da Table 3.7.0 há <caption> (examples/html/table.json: 1 caption em 3 tabelas)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "4.1"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.4.3"
+      ],
+      "norma": "Garanta contraste de pelo menos 4,5:1 entre texto e fundo e evite imagens atrás do texto.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-06",
+        "D-14"
+      ],
+      "medida": "contraste pela fórmula da WCAG (cor computada × primeiro fundo opaco), 105 textos na inicial e 109 na lista-exibir: (D-06) os textos brancos dos status sobre bg-orange-vivid-40 #e66f0e = 3,16:1 (5 linhas), bg-indigo-vivid-40 #8289ff = 3,01:1 (1), bg-secondary-06 #888888 = 3,54:1 (2), 14 px/500 — 8 de 9 status abaixo de 4,5:1 (o \"Em revisão analista\" sobre indigo-vivid-60 = 6,49:1 passa); (D-14) a inicial do avatar \"U\" branco sobre #ff8c00 = 2,33:1 — **exposto** (casco). Todos os demais ≥ 4,61:1."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-c2f94bdc17ce",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "4.2"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.3.3",
+        "WCAG 2.0 1.4.1"
+      ],
+      "norma": "Não use somente cor, forma, tamanho, posição, orientação ou som para transmitir informação.",
+      "veredito": "não-mensurável",
+      "destino": "escalada",
+      "escalada": "E-07",
+      "medida": "a aba ativa (li.tab-item.active) indicada por classe (cor/sublinhado), sem aria-selected — a anatomia do web component br-tab (fundo); precedente E-03 da B: fora. Os status têm texto, não só cor."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-d9c42f188e2c",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "4.3"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.4.4"
+      ],
+      "norma": "A página deve permanecer legível e funcional com zoom de 200%, sem sobreposição ou rolagem horizontal indevida.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "zoom 200 % fora do escopo (método § 1 e § 6: só 1280×900)"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "4.4"
+      ],
+      "wcag": [
+        "WCAG 2.0 2.4.7"
+      ],
+      "norma": "Todo elemento focado por teclado deve possuir indicação visual clara e área acionável coerente.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-10"
+      ],
+      "medida": "Tab real (300 ms por tecla) nas 2 paradas: todo ponto tem indicador — outline dashed 4px rgb(194,133,12) (botões, links, abas, checkboxes nativos) ou box-shadow 0 0 0 2px rgb(194,133,12) (campos) — exceto o <iframe> vazio (D-10): focado, outline none, box-shadow none, :focus-visible false, nada muda na tela. A lista aberta do seletor mantém só a sombra que já tinha (core `.br-select .br-list:focus{outline:none}` — fundo, como na C)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-6c86b93df639",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "5.1"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.2.1",
+        "WCAG 2.0 1.2.2",
+        "WCAG 2.0 1.2.6",
+        "WCAG 2.0 1.2.8"
+      ],
+      "norma": "Vídeos devem possuir alternativa textual ou sonora, legendas quando houver fala e controles acessíveis por teclado.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "não há vídeo"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-dc45b57b8349",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "5.2"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.2.1",
+        "WCAG 2.0 1.2.2",
+        "WCAG 2.0 1.2.6"
+      ],
+      "norma": "Conteúdo de áudio deve possuir transcrição textual e, quando aplicável, alternativa em Libras.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "não há áudio"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-8f439a3c078c",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "5.3"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.2.3",
+        "WCAG 2.0 1.2.5",
+        "WCAG 2.0 1.2.7"
+      ],
+      "norma": "Vídeos pré-gravados com informação visual não presente no áudio devem oferecer audiodescrição.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "não há vídeo"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-56cbcba602ce",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "5.4"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.4.2"
+      ],
+      "norma": "Ofereça controles para parar, pausar, silenciar ou ajustar o volume de sons reproduzidos na página.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "não há som"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-6ea7ecc60c01",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "5.5"
+      ],
+      "wcag": [
+        "WCAG 2.0 2.2.2"
+      ],
+      "norma": "Animações iniciadas automaticamente devem poder ser pausadas, paradas ou ocultadas.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "nenhuma animação (0)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-dafac812b10b",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "6.1"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.1.1"
+      ],
+      "norma": "Botões de imagem devem possuir nome textual acessível, usando alt ou valor descritivo conforme o tipo.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "não há botão de imagem (input type=image)"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "6.2"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.3.1"
+      ],
+      "norma": "Associe label aos campos input, select e textarea usando for e id correspondentes.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-04",
+        "D-05"
+      ],
+      "medida": "inicial: (D-04) os 7 <input type=checkbox> da tabela (1 no th, 6 nas linhas que os têm) sem <label>, aria-label ou aria-labelledby — labels.length 0, nome \"\" na árvore; (D-05) o campo de pesquisa (input#search no shadow do <br-input>, que recebeu placeholder mas não `label`) — labels.length 0, nome acessível = placeholder \"Pesquise aqui ...\". Conformes: \"Exibir\" e \"Página\" (label for no mesmo pai) e os 4 rádios da lista (par radio-rotulo)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-e101928665cc",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "6.3"
+      ],
+      "wcag": [
+        "WCAG 2.0 2.4.3"
+      ],
+      "norma": "Codifique formulários primeiro na ordem lógica de navegação e só depois organize sua aparência com CSS.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "ordem do DOM = ordem visual (de cima para baixo, da esquerda para a direita)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-de1efebaf255",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "6.4"
+      ],
+      "wcag": [
+        "WCAG 2.0 3.2.2"
+      ],
+      "norma": "Receber foco ou alterar um campo não deve mudar automaticamente o contexto; exija ação explícita.",
+      "veredito": "não-mensurável",
+      "destino": "escalada",
+      "escalada": "E-04",
+      "medida": "sair do campo de pesquisa vazio (foco + Tab) dispara nova consulta: a tabela some (0 linhas) e volta com as mesmas 9 linhas; endereço inalterado, nenhuma escrita. Se recarregar a lista ao sair do campo é \"mudança de contexto\" é juízo."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-01b1806c30e9",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "6.5"
+      ],
+      "wcag": [
+        "WCAG 2.0 3.3.2"
+      ],
+      "norma": "Forneça instruções de preenchimento junto aos rótulos quando o formato ou a regra de entrada não for evidente.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "nenhum campo com formato ou regra de entrada não evidente: pesquisa livre e dois seletores de opções"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cc837bbaf713",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "6.6"
+      ],
+      "wcag": [
+        "WCAG 2.0 3.3.1"
+      ],
+      "norma": "Identifique erros por texto, associe-os aos campos e apresente confirmação para revisão antes do envio definitivo.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "nenhuma mensagem de erro nas paradas"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-11ffc5c577f6",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "6.7"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.3.1"
+      ],
+      "norma": "Agrupe campos relacionados com fieldset e descreva o grupo com legend, especialmente em formulários longos.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "não há <form> nem grupo de campos de formulário relacionados: os filtros são etiquetas (D-03), a pesquisa é um campo só, os seletores da paginação têm rótulo próprio"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-a8f7ce66b1c4",
+      "force": "required",
+      "component": null,
+      "familia": "F4",
+      "emag": [
+        "6.8"
+      ],
+      "wcag": [
+        "WCAG 2.0 1.1.1"
+      ],
+      "norma": "Evite CAPTCHA e combine estratégias de segurança acessíveis, como limites de conexão, monitoramento e formulários seguros.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "não há CAPTCHA"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-e038367bd7d6",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Associe cada widget customizado ao role, estado e propriedade ARIA apropriados ao seu comportamento.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-03"
+      ],
+      "medida": "inicial: as etiquetas interativas (D-03) são <span> sem role (papel generic, nome \"\" na árvore), sem estado (o \"Meus processos\" liga/desliga sem aria-pressed; os filtros abrem lista sem aria-expanded/aria-haspopup). Os exemplos oficiais da Tag 3.7.0 só têm button e input+label como elementos interativos (examples/html/tag.json). O seletor da paginação sem role combobox/listbox → E-05."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-695e4379e23f",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Não trate a ausência de erros automáticos como prova suficiente de acessibilidade; inclua avaliação manual.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "regra dirigida ao processo ou à equipe, não a um observável da página"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-1c3bd2a1c1a7",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Componentes devem permanecer utilizáveis em dispositivos móveis.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "outras janelas fora do escopo (§ 1 e § 6)"
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-41850b4791b8",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Todo componente interativo deve ser completamente utilizável apenas com teclado.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-02",
+        "D-03"
+      ],
+      "medida": "mesma medida de e6fd5e1247de: os números de processo e as etiquetas interativas não são utilizáveis só com teclado."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Associe um label programático e descritivo a cada campo de formulário.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-04",
+        "D-05"
+      ],
+      "medida": "mesma medida de b95c42b61ed3."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-cb56ad444da2",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "A ordem dos elementos no DOM deve acompanhar a sequência lógica de leitura e operação.",
+      "veredito": "não-mensurável",
+      "destino": "escalada",
+      "escalada": "E-05",
+      "medida": "lista-exibir: com a lista aberta e focada, um Tab deixa o foco no <body> (o próximo vai para o campo \"Página\"). Mesmo comportamento da C (E-04 de lá)."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-global-2f22b7245ef9",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use elementos HTML de acordo com sua função semântica, evitando div e span quando existir elemento nativo adequado.",
+      "veredito": "viola",
+      "destino": "unidade",
+      "unidades": [
+        "D-02",
+        "D-03"
+      ],
+      "medida": "inicial: controles construídos sem o elemento nativo — os números de processo são <a role=\"button\"> sem href (navegam, mas não são link nem botão operável), as etiquetas interativas são <span> com cursor:pointer."
+    },
+    {
+      "id": "govbr-3.7.0-accessibility-divider-30bbcbf3a17c",
+      "force": "required",
+      "component": "divider",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Divider deve ser ignorado por tecnologias assistivas e não pode entrar na ordem de foco.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "o <br-divider> abaixo do breadcrumb e os dois span.br-divider da paginação: fora do Tab (tabIndex -1) e sem papel na árvore do Chromium. Par elegível divisor."
+    },
+    {
+      "id": "govbr-3.7.0-component-global-e30aab6e9a68",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "A anatomia implementada do componente deve corresponder à diretriz oficial de Design.",
+      "veredito": "não-mensurável",
+      "destino": "escalada",
+      "escalada": "E-07",
+      "medida": "<br-header has-menu>: o botão Menu não produz efeito (clique e Enter, 0/3 no teste de estados); casco, **exposto** (precedente E-15 da B: fora)."
+    },
+    {
+      "id": "govbr-3.7.0-component-accordion-bf7c66e06aa4",
+      "force": "example",
+      "component": "accordion",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-accordion como referência estrutural ao comparar a implementação com os exemplos oficiais de accordion.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-avatar-20abe86bec8c",
+      "force": "example",
+      "component": "avatar",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-avatar como referência estrutural ao comparar a implementação com os exemplos oficiais de avatar.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-breadcrumb-0dd1577ef844",
+      "force": "example",
+      "component": "breadcrumb",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-breadcrumb como referência estrutural ao comparar a implementação com os exemplos oficiais de breadcrumb.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-button-b0ad831c0cdd",
+      "force": "example",
+      "component": "button",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-button como referência estrutural ao comparar a implementação com os exemplos oficiais de button.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-card-d68fc3f602d1",
+      "force": "example",
+      "component": "card",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-card como referência estrutural ao comparar a implementação com os exemplos oficiais de card.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-carousel-a5852928b851",
+      "force": "example",
+      "component": "carousel",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-carousel como referência estrutural ao comparar a implementação com os exemplos oficiais de carousel.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-checkbox-4b6f893a4a30",
+      "force": "example",
+      "component": "checkbox",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-checkbox como referência estrutural ao comparar a implementação com os exemplos oficiais de checkbox.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-cookiebar-7f95941b1616",
+      "force": "example",
+      "component": "cookiebar",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-cookiebar como referência estrutural ao comparar a implementação com os exemplos oficiais de cookiebar.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-cookiebar-e564d18c805e",
+      "force": "required",
+      "component": "cookiebar",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use CookieBar quando o produto precisar informar, configurar ou gerenciar cookies.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-datetimepicker-59f978a67b46",
+      "force": "example",
+      "component": "datetimepicker",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-datetimepicker como referência estrutural ao comparar a implementação com os exemplos oficiais de datetimepicker.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-divider-abb2a883ef61",
+      "force": "example",
+      "component": "divider",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-divider como referência estrutural ao comparar a implementação com os exemplos oficiais de divider.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-footer-22176120b991",
+      "force": "example",
+      "component": "footer",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-footer como referência estrutural ao comparar a implementação com os exemplos oficiais de footer.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-header-b6a44cb3d346",
+      "force": "informative",
+      "component": "header",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "O Header padrão utiliza a camada 1 e apresenta sombra suave.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force informative (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-header-523d98904576",
+      "force": "example",
+      "component": "header",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-header como referência estrutural ao comparar a implementação com os exemplos oficiais de header.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-header-12492dba566e",
+      "force": "informative",
+      "component": "header",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use Header como a região principal que agrupa os recursos de identificação e acesso da página.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force informative (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-input-4c07cef5a791",
+      "force": "example",
+      "component": "input",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-input como referência estrutural ao comparar a implementação com os exemplos oficiais de input.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-item-0e293b295c3d",
+      "force": "permitted",
+      "component": "item",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Item pode representar os estados ativo, selecionado e desativado por meio das propriedades oficiais.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "o item \"10\" (valor atual) tem a classe selected."
+    },
+    {
+      "id": "govbr-3.7.0-component-item-460df90778c1",
+      "force": "example",
+      "component": "item",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-item como referência estrutural ao comparar a implementação com os exemplos oficiais de item.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-item-cb5d8f6d30b9",
+      "force": "discouraged",
+      "component": "item",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Mantenha espaçamento uniforme entre Items pertencentes ao mesmo agrupamento.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "os quatro br-item da lista com o mesmo padding."
+    },
+    {
+      "id": "govbr-3.7.0-component-item-c806c8feda5a",
+      "force": "required",
+      "component": "item",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use Item para apresentar unidades de conteúdo repetidas e ordenadas, normalmente dentro de componentes compostos.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "br-item usado para as opções repetidas da lista do seletor \"Exibir\" (10, 25, 50, 100)."
+    },
+    {
+      "id": "govbr-3.7.0-component-item-e08476d083e4",
+      "force": "recommended",
+      "component": "item",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Itens pertencentes ao mesmo agrupamento devem possuir largura consistente.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "os quatro br-item com a mesma largura (70 px)."
+    },
+    {
+      "id": "govbr-3.7.0-component-item-739294d90299",
+      "force": "prohibited",
+      "component": "item",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Não coloque Button primário nem componentes de navegação dentro da área de conteúdo do Item.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "os br-item da lista contêm só um br-radio (rádio + rótulo): nenhum Button primário nem navegação."
+    },
+    {
+      "id": "govbr-3.7.0-component-item-a10751502b98",
+      "force": "required",
+      "component": "item",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "O conteúdo do Item deve respeitar o padding definido pelos fundamentos de espaçamento.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "padding computado dos br-item = 16px (= --spacing-scale-2x do core); nenhum estilo autoral no item."
+    },
+    {
+      "id": "govbr-3.7.0-component-item-cb34ed616246",
+      "force": "required",
+      "component": "item",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Todo Item deve possuir uma superfície e uma área de conteúdo com pelo menos um elemento.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "cada br-item tem superfície (70×53) e conteúdo (rádio + rótulo)."
+    },
+    {
+      "id": "govbr-3.7.0-component-item-a6d29ea54434",
+      "force": "required",
+      "component": "item",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Quando o Item for interativo, toda a sua superfície deve constituir a área acionável e apresentar hover.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "lista-exibir: hover sobre o br-item aplica gradiente em toda a superfície; clique perto da borda do item (fora do texto) escolhe a opção. Par elegível item-superficie."
+    },
+    {
+      "id": "govbr-3.7.0-component-list-a0a88e11b600",
+      "force": "example",
+      "component": "list",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-list como referência estrutural ao comparar a implementação com os exemplos oficiais de list.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-loading-55f44d018251",
+      "force": "example",
+      "component": "loading",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-loading como referência estrutural ao comparar a implementação com os exemplos oficiais de loading.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-loading-05f6aae1d1ad",
+      "force": "required",
+      "component": "loading",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Ao bloquear a tela ou uma região durante processamento, utilize Loading determinado ou indeterminado conforme a disponibilidade de progresso.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-menu-d15988e5d19b",
+      "force": "example",
+      "component": "menu",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-menu como referência estrutural ao comparar a implementação com os exemplos oficiais de menu.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-menu-9e90f448c581",
+      "force": "permitted",
+      "component": "menu",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use Scrim de forma condicional quando for necessário separar visualmente o Menu do conteúdo ao fundo e direcionar a atenção.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-message-770d2a04a8b1",
+      "force": "example",
+      "component": "message",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-message como referência estrutural ao comparar a implementação com os exemplos oficiais de message.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-modal-c9493346e1ad",
+      "force": "example",
+      "component": "modal",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-modal como referência estrutural ao comparar a implementação com os exemplos oficiais de modal.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-notification-47dfbe60f602",
+      "force": "example",
+      "component": "notification",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-notification como referência estrutural ao comparar a implementação com os exemplos oficiais de notification.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-pagination-524ef55890db",
+      "force": "example",
+      "component": "pagination",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-pagination como referência estrutural ao comparar a implementação com os exemplos oficiais de pagination.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-pagination-7b0ffe97e848",
+      "force": "permitted",
+      "component": "pagination",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Na Pagination contextual, cada módulo pode ser habilitado ou omitido independentemente.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "paginação contextual com os módulos: anterior/página/seguinte, \"Exibir\" e \"Página\"."
+    },
+    {
+      "id": "govbr-3.7.0-component-radio-9cf59fa5bf60",
+      "force": "recommended",
+      "component": "radio",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Quando houver muitas opções exclusivas, avalie substituir Radio por Select.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "quatro rádios na lista do seletor (sem atributo name: não formam grupo)."
+    },
+    {
+      "id": "govbr-3.7.0-component-radio-ec08304a645c",
+      "force": "example",
+      "component": "radio",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-radio como referência estrutural ao comparar a implementação com os exemplos oficiais de radio.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-scrim-78bf4890482e",
+      "force": "example",
+      "component": "scrim",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-scrim como referência estrutural ao comparar a implementação com os exemplos oficiais de scrim.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-select-3587924c3600",
+      "force": "example",
+      "component": "select",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-select como referência estrutural ao comparar a implementação com os exemplos oficiais de select.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-select-3d506ce4d7d3",
+      "force": "recommended",
+      "component": "select",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use textos curtos e objetivos nas opções e no valor selecionado de Select e Multiselect.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "opções curtas: 10, 25, 50, 100."
+    },
+    {
+      "id": "govbr-3.7.0-component-skiplink-3e4560a2ead2",
+      "force": "example",
+      "component": "skiplink",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-skiplink como referência estrutural ao comparar a implementação com os exemplos oficiais de skiplink.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-step-05a4b8044384",
+      "force": "example",
+      "component": "step",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-step como referência estrutural ao comparar a implementação com os exemplos oficiais de step.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-switch-3dbccb666b4f",
+      "force": "example",
+      "component": "switch",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-switch como referência estrutural ao comparar a implementação com os exemplos oficiais de switch.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-switch-d53688105360",
+      "force": "required",
+      "component": "switch",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Mantenha o Switch em posição estável durante a alternância da chave, dos rótulos e de conteúdos condicionais.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-tab-bc811e53068f",
+      "force": "example",
+      "component": "tab",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-tab como referência estrutural ao comparar a implementação com os exemplos oficiais de tab.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-table-41e9a89fb4e1",
+      "force": "example",
+      "component": "table",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-table como referência estrutural ao comparar a implementação com os exemplos oficiais de table.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-tag-fa30aea78fa4",
+      "force": "example",
+      "component": "tag",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-tag como referência estrutural ao comparar a implementação com os exemplos oficiais de tag.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-textarea-b00a40afe0f8",
+      "force": "informative",
+      "component": "textarea",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Quando Textarea precisar de rolagem, preserve a barra de rolagem nativa do navegador.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force informative (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-textarea-cf60e234f8de",
+      "force": "example",
+      "component": "textarea",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-textarea como referência estrutural ao comparar a implementação com os exemplos oficiais de textarea.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-tooltip-1657eb316f64",
+      "force": "example",
+      "component": "tooltip",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-tooltip como referência estrutural ao comparar a implementação com os exemplos oficiais de tooltip.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-upload-f4726f3ce44a",
+      "force": "example",
+      "component": "upload",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-upload como referência estrutural ao comparar a implementação com os exemplos oficiais de upload.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-component-upload-985fd2775586",
+      "force": "required",
+      "component": "upload",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Upload deve aceitar arrastar arquivos e informar essa possibilidade no texto de apoio do campo.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-wizard-356c3bf376a5",
+      "force": "required",
+      "component": "wizard",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Na última etapa do Wizard, apresente uma ação denominada Concluir.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "componente ausente da tela"
+    },
+    {
+      "id": "govbr-3.7.0-component-wizard-170b92a67c4b",
+      "force": "example",
+      "component": "wizard",
+      "familia": "F1",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use .br-wizard como referência estrutural ao comparar a implementação com os exemplos oficiais de wizard.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force example (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-4a614a5c88e2",
+      "force": "recommended",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Prefira a biblioteca oficial de Web Components em projetos modernos.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "o app usa os web components 1.16.0 (br-header, br-button, br-input, br-breadcrumb, br-divider, br-tab, br-icon-base) e classes CSS do core (br-tag, br-table, br-pagination, br-select, br-list, br-item, br-radio)."
+    },
+    {
+      "id": "govbr-3.7.0-development-global-a43ad8231ad0",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Carregue fontes e bibliotecas externas exigidas antes dos arquivos do Design System.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "<head>: rawline.css → raleway.css → Font Awesome → styles.css (core 3.4.1 empacotado) — fontes antes do CSS do DS."
+    },
+    {
+      "id": "govbr-3.7.0-development-global-1b31bf3ccece",
+      "force": "informative",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "A matriz documentada oferece suporte ao Chrome 49 ou superior.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force informative (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-137c50bea6ca",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Componentes devem consumir tokens oficiais corretamente e sem duplicação desnecessária.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a tela é um build congelado (JS/CSS minificados, sem fonte: telas.json › sources vazio); a regra fala do código-fonte ou do processo, que a página não responde. O observável (cores computadas) está em foundation-global-21b1a2733f7b."
+    },
+    {
+      "id": "govbr-3.7.0-development-global-659242ecda1d",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use a anotação @example para documentar exemplos de uso de recursos Sass.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a tela é um build congelado (JS/CSS minificados, sem fonte: telas.json › sources vazio); a regra fala do código-fonte ou do processo, que a página não responde"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-5765f1b8d2bc",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Documente o tipo e a descrição de cada parâmetro de mixins e funções Sass.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a tela é um build congelado (JS/CSS minificados, sem fonte: telas.json › sources vazio); a regra fala do código-fonte ou do processo, que a página não responde"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-8c92e4e83038",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "A documentação de desenvolvimento deve permanecer atualizada e coerente com os exemplos implementados.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "regra dirigida ao processo ou à equipe, não a um observável da página"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-f3c19eb70e19",
+      "force": "informative",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "A matriz documentada oferece suporte ao Edge 14 ou superior.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force informative (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-58a3f67d8445",
+      "force": "informative",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "A matriz documentada oferece suporte ao Firefox 67 ou superior.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force informative (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-9c1d24af4f37",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Inicialize componentes somente depois que core.min.js estiver carregado.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a página não carrega core.min.js: os componentes vêm dos web components 1.16.0 e do CSS do core; a inicialização é do Angular"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-d0dff372c137",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Quando um componente depender de outro, inicialize primeiro suas dependências.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a tela é um build congelado (JS/CSS minificados, sem fonte: telas.json › sources vazio); a regra fala do código-fonte ou do processo, que a página não responde"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-d0e2bd4850ee",
+      "force": "discouraged",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Não use Internet Explorer nem Edge Legacy como navegadores-alvo recomendados.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "sem observável nas paradas"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-0052d80d4f92",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Em frameworks, destrua ou limpe instâncias de componentes durante o desmonte.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a tela é um build congelado (JS/CSS minificados, sem fonte: telas.json › sources vazio); a regra fala do código-fonte ou do processo, que a página não responde"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-9826b6862644",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Não declare atributos redundantes de tipo ou linguagem em elementos script no HTML5.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "scripts sem type ou com type=\"module\"; nenhum type=\"text/javascript\"."
+    },
+    {
+      "id": "govbr-3.7.0-development-global-ea51f70c65fe",
+      "force": "informative",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "A matriz documentada oferece suporte ao Safari 11 ou superior.",
+      "veredito": "não normatiza",
+      "destino": "nenhum",
+      "medida": "force informative (D-10, D-32)"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-63b44801da86",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Componentes devem manter separação clara de responsabilidades e arquitetura otimizada.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a tela é um build congelado (JS/CSS minificados, sem fonte: telas.json › sources vazio); a regra fala do código-fonte ou do processo, que a página não responde"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-dfebe85e65d8",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Componentes devem possuir testes funcionais e testes de regressão visual.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "regra dirigida ao processo ou à equipe, não a um observável da página"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-067a1786b481",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "No formato CSS indentado, escreva cada declaração em uma linha própria dentro do bloco.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a tela é um build congelado (JS/CSS minificados, sem fonte: telas.json › sources vazio); a regra fala do código-fonte ou do processo, que a página não responde"
+    },
+    {
+      "id": "govbr-3.7.0-development-global-b491c2e2c1a0",
+      "force": "required",
+      "component": null,
+      "familia": "global",
+      "emag": [],
+      "wcag": [],
+      "norma": "Escreva valores de atributos HTML entre aspas duplas.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "o HTML da rota é gerado pelo Angular em tempo de execução; a forma das aspas não existe no DOM"
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-eb8c1606a52e",
+      "force": "required",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "Quando não houver dados, informe ao usuário qual conteúdo aparecerá naquele local quando estiver disponível.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a lista tem dados nas 2 paradas (9 linhas): não há estado vazio a informar"
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-03695a4aede0",
+      "force": "required",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "Apresente o Empty State no lugar dos elementos ou dados que estão ausentes.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a lista tem dados nas 2 paradas: não há Empty State"
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-46a1ae2f366b",
+      "force": "recommended",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use no máximo sete categorias em gráficos de segmentos, salvo justificativa clara.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "sem observável nas paradas"
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-9d9f1c9bf1ed",
+      "force": "prohibited",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "Não trunque cabeçalhos, títulos, menus, rótulos de botões, erros ou mensagens de validação.",
+      "veredito": "conforme",
+      "destino": "registro",
+      "medida": "nenhum título, rótulo, botão, item de menu ou mensagem recortado (scrollWidth = clientWidth; o \"Meus processos\" tem a classe text-truncate, mas cabe); único recorte medido é o texto visualmente oculto \"Home\" (sr-only) do breadcrumb do web component."
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-abaec84ff915",
+      "force": "required",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "O Onboarding deve incentivar a interação e, quando possível, oferecer escolhas ao usuário durante o tour.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "não há onboarding"
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-a633e540aa5c",
+      "force": "required",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "A página inicial deve apresentar o produto e disponibilizar um mecanismo principal de navegação.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a tela não é a página inicial do produto"
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-5717506ac2e6",
+      "force": "required",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "Disponibilize ajuda em uma tela ou seção claramente localizável pelo usuário.",
+      "veredito": "não-mensurável",
+      "destino": "escalada",
+      "escalada": "E-07",
+      "medida": "nenhum link ou item de ajuda nas paradas (precedente E-16 da B, D-61: não-aplicável)"
+    },
+    {
+      "id": "govbr-3.7.0-pattern-global-eebb093156e7",
+      "force": "required",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use toda a área de destaque como acionador do Collapse e inclua o ícone de expansão ou retração.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "não há Collapse nas paradas"
+    },
+    {
+      "id": "govbr-3.7.0-template-global-8e553b2c8bc7",
+      "force": "recommended",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "No Template Base, prefira Grid de 12 colunas ou Grid de 8 colunas no breakpoint Tablet Landscape.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "sem observável nas paradas"
+    },
+    {
+      "id": "govbr-3.7.0-template-global-3d795df32a0e",
+      "force": "permitted",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use ilustrações ou fotos somente como apoio visual à mensagem de erro, não como substituição do texto.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "sem observável nas paradas"
+    },
+    {
+      "id": "govbr-3.7.0-template-global-2387114907b1",
+      "force": "recommended",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "Inclua Skip Link com âncoras para as principais regiões do Template Base.",
+      "veredito": "observação",
+      "destino": "observacao",
+      "medida": "não há Skip Link (ver D-11)."
+    },
+    {
+      "id": "govbr-3.7.0-template-global-19f93475dc5e",
+      "force": "required",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "Use o Template Base como ponto de partida para páginas ou como referência visual durante a criação.",
+      "veredito": "não-mensurável",
+      "destino": "escalada",
+      "escalada": "E-07",
+      "medida": "estrutura: cabeçalho (br-header + pnip-header), breadcrumb, main; nenhum rodapé nem skip link. Casco da aplicação, **exposto** (precedente E-02 da B, D-61: fora)"
+    },
+    {
+      "id": "govbr-3.7.0-template-global-9cbfa5906031",
+      "force": "required",
+      "component": null,
+      "familia": "F2",
+      "emag": [],
+      "wcag": [],
+      "norma": "A tela de erro deve adaptar seu conteúdo à Grid do breakpoint atual.",
+      "veredito": "não-aplicável",
+      "destino": "registro",
+      "medida": "a tela não é tela de erro"
+    }
+  ]
+}

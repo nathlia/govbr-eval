@@ -1,0 +1,193 @@
+{
+  "tela": "processos (tela D)",
+  "regra": "o procedimento da C (plano-tela-c-2026-10-18.md § 6): (elemento × norma) medidos conforme, sobre norma com unidade viola na tela ou sobre componente do inventário; > 12 → 12 por sorteio com semente fixa, preferindo um por tipo de componente do DS. Exclusões declaradas antes do sorteio: casco da aplicação; linhas de página inteira; pares que exigem leitura de significado; elementos que são âncora de unidade ou objeto de escalada pendente (tela-d/sortear-conformes.mjs).",
+  "semente": "tela-d/conformes 2026-10-18 (gravada antes do sorteio)",
+  "prng": "mulberry32(uint32 dos 8 primeiros hex do sha256 da semente)",
+  "teto": 12,
+  "elegiveis": [
+    "breadcrumb-tab",
+    "breadcrumb-li",
+    "breadcrumb-orientacao",
+    "titulo-contraste",
+    "botoes-rotulo",
+    "exportar-foco",
+    "abas-teclado",
+    "th-contraste",
+    "assinar-rotulo",
+    "status-contraste",
+    "divisor",
+    "radio-rotulo",
+    "item-superficie",
+    "item-padding"
+  ],
+  "camada1_um_por_tipo": [
+    "breadcrumb-li",
+    "abas-teclado",
+    "assinar-rotulo",
+    "th-contraste",
+    "divisor",
+    "radio-rotulo",
+    "item-superficie",
+    "titulo-contraste"
+  ],
+  "sorteio": true,
+  "nota": "Denominador da taxa de falso alarme do agente (protocolo NAT-78 § 5.2). Re-medidos em tela-d/conferir-auditoria.mjs (todos os elegíveis, não só os sorteados).",
+  "itens": [
+    {
+      "id": "K-01",
+      "par": "breadcrumb-tab",
+      "tipo": "breadcrumb",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos br-breadcrumb >>> a",
+      "count": 1,
+      "rules": [
+        "govbr-3.7.0-accessibility-breadcrumb-992f162ca821"
+      ],
+      "medida": "link \"Home\" do <br-breadcrumb>: tabIndex 0, alcançado por Tab real."
+    },
+    {
+      "id": "K-02",
+      "par": "breadcrumb-li",
+      "tipo": "breadcrumb",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos br-breadcrumb >>> li",
+      "count": 2,
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cf61b3eb3c71",
+        "emag:1.7"
+      ],
+      "medida": "cada item do breadcrumb (Home, Processos) é um <li> próprio."
+    },
+    {
+      "id": "K-03",
+      "par": "titulo-contraste",
+      "tipo": "estrutura",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos h2",
+      "count": 1,
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "medida": "h2 \"Processos\": #005ea2 sobre #fff = 6,72:1 (≥ 4,5:1; a norma tem a unidade D-06)."
+    },
+    {
+      "id": "K-04",
+      "par": "exportar-foco",
+      "tipo": "button",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos br-button[label=Exportar] >>> button",
+      "count": 1,
+      "rules": [
+        "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+        "emag:4.4",
+        "wcag:2.4.7"
+      ],
+      "medida": "com foco por Tab, o botão \"Exportar\" ganha outline dashed 4px rgb(194,133,12) (a norma tem a unidade D-10)."
+    },
+    {
+      "id": "K-05",
+      "par": "abas-teclado",
+      "tipo": "tab",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos br-tab >>> button",
+      "count": 3,
+      "rules": [
+        "govbr-3.7.0-accessibility-tab-f1807d71dc5f"
+      ],
+      "medida": "as três abas são <button> tabIndex 0; Enter ≡ clique (3/3 nas três, teste de estados)."
+    },
+    {
+      "id": "K-06",
+      "par": "th-contraste",
+      "tipo": "table",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos table thead th.text-bold:not(:last-child)",
+      "count": 7,
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "medida": "os 7 títulos de coluna com texto: #005ea2 sobre #f0f0f0 ≥ 4,5:1 (a norma tem a unidade D-06)."
+    },
+    {
+      "id": "K-07",
+      "par": "assinar-rotulo",
+      "tipo": "button",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos table tbody br-button[title=Assinar]",
+      "count": 3,
+      "rules": [
+        "govbr-3.7.0-component-button-4d7b5f978df1"
+      ],
+      "medida": "os 3 \"Assinar\" da coluna de ações: botão não circular com o texto \"Assinar\" visível (vizinho dos botões de ícone da D-01)."
+    },
+    {
+      "id": "K-08",
+      "par": "status-contraste",
+      "tipo": "estrutura",
+      "state": "inicial",
+      "selector": "pnip-status-solicitacao-utils .bg-indigo-vivid-60 > div",
+      "count": 1,
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "medida": "status \"Em revisão analista\": branco sobre indigo-vivid-60 ≥ 4,5:1 (os outros 8 status são a unidade D-06)."
+    },
+    {
+      "id": "K-09",
+      "par": "divisor",
+      "tipo": "divider",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos > br-divider",
+      "count": 1,
+      "rules": [
+        "govbr-3.7.0-accessibility-divider-30bbcbf3a17c"
+      ],
+      "medida": "<br-divider> abaixo do breadcrumb: fora do Tab (tabIndex < 0) e o span interno sem papel na árvore do Chromium."
+    },
+    {
+      "id": "K-10",
+      "par": "radio-rotulo",
+      "tipo": "radio",
+      "state": "lista-exibir",
+      "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-radio input[type=radio]",
+      "count": 4,
+      "rules": [
+        "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+        "emag:6.2",
+        "wcag:1.3.1",
+        "govbr-3.7.0-accessibility-global-b5fad7ce076d"
+      ],
+      "medida": "os 4 rádios da lista \"Exibir\" com <label for> associado (labels.length = 1; a norma tem as unidades D-04/D-05)."
+    },
+    {
+      "id": "K-11",
+      "par": "item-superficie",
+      "tipo": "item",
+      "state": "lista-exibir",
+      "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-item",
+      "count": 4,
+      "rules": [
+        "govbr-3.7.0-component-item-a6d29ea54434"
+      ],
+      "medida": "hover aplica gradiente em toda a superfície do br-item; clique perto da borda do item (fora do texto) escolhe a opção."
+    },
+    {
+      "id": "K-12",
+      "par": "item-padding",
+      "tipo": "item",
+      "state": "lista-exibir",
+      "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-item",
+      "count": 4,
+      "rules": [
+        "govbr-3.7.0-component-item-a10751502b98"
+      ],
+      "medida": "padding computado 16px (--spacing-scale-2x) nos quatro br-item."
+    }
+  ]
+}

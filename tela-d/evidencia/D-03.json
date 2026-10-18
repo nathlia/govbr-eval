@@ -1,0 +1,198 @@
+{
+ "id": "D-03",
+ "ancora": "pnip-mpa-processos .br-tag.interaction",
+ "estado": "inicial",
+ "normas": [
+  "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+  "emag:2.1",
+  "wcag:2.1.1",
+  "govbr-3.7.0-accessibility-global-f639993e9416",
+  "emag:2.2",
+  "govbr-3.7.0-accessibility-global-41850b4791b8",
+  "govbr-3.7.0-accessibility-global-2f22b7245ef9",
+  "govbr-3.7.0-accessibility-global-e038367bd7d6",
+  "wcag:4.1.2"
+ ],
+ "medidas": {
+  "elementos": [
+   {
+    "texto": "Meus processos",
+    "tag": "span",
+    "role": null,
+    "tabindex": null,
+    "tabIndex": -1,
+    "cursor": "pointer",
+    "ax": {
+     "papel": "generic",
+     "nome": "",
+     "focavel": false
+    }
+   },
+   {
+    "texto": "Aberto há",
+    "tag": "span",
+    "role": null,
+    "tabindex": null,
+    "tabIndex": -1,
+    "cursor": "pointer",
+    "ax": {
+     "papel": "generic",
+     "nome": "",
+     "focavel": false
+    }
+   },
+   {
+    "texto": "Tipo de processo",
+    "tag": "span",
+    "role": null,
+    "tabindex": null,
+    "tabIndex": -1,
+    "cursor": "pointer",
+    "ax": {
+     "papel": "generic",
+     "nome": "",
+     "focavel": false
+    }
+   },
+   {
+    "texto": "Status",
+    "tag": "span",
+    "role": null,
+    "tabindex": null,
+    "tabIndex": -1,
+    "cursor": "pointer",
+    "ax": {
+     "papel": "generic",
+     "nome": "",
+     "focavel": false
+    }
+   },
+   {
+    "texto": "Espécie alvo",
+    "tag": "span",
+    "role": null,
+    "tabindex": null,
+    "tabIndex": -1,
+    "cursor": "pointer",
+    "ax": {
+     "papel": "generic",
+     "nome": "",
+     "focavel": false
+    }
+   },
+   {
+    "texto": "Método de pesca",
+    "tag": "span",
+    "role": null,
+    "tabindex": null,
+    "tabIndex": -1,
+    "cursor": "pointer",
+    "ax": {
+     "papel": "generic",
+     "nome": "",
+     "focavel": false
+    }
+   },
+   {
+    "texto": "Petrecho",
+    "tag": "span",
+    "role": null,
+    "tabindex": null,
+    "tabIndex": -1,
+    "cursor": "pointer",
+    "ax": {
+     "papel": "generic",
+     "nome": "",
+     "focavel": false
+    }
+   }
+  ],
+  "alcancadosPorTab": 0,
+  "cliques": [
+   {
+    "texto": "Meus processos",
+    "antes": {
+     "linhas": 9,
+     "opcoes": 0
+    },
+    "depois": {
+     "linhas": 10,
+     "opcoes": 0
+    },
+    "escritas": 0
+   },
+   {
+    "texto": "Aberto há",
+    "antes": {
+     "linhas": 9,
+     "opcoes": 0
+    },
+    "depois": {
+     "linhas": 9,
+     "opcoes": 5
+    },
+    "escritas": 0
+   },
+   {
+    "texto": "Tipo de processo",
+    "antes": {
+     "linhas": 9,
+     "opcoes": 0
+    },
+    "depois": {
+     "linhas": 9,
+     "opcoes": 10
+    },
+    "escritas": 0
+   },
+   {
+    "texto": "Status",
+    "antes": {
+     "linhas": 9,
+     "opcoes": 0
+    },
+    "depois": {
+     "linhas": 9,
+     "opcoes": 19
+    },
+    "escritas": 0
+   },
+   {
+    "texto": "Espécie alvo",
+    "antes": {
+     "linhas": 9,
+     "opcoes": 0
+    },
+    "depois": {
+     "linhas": 9,
+     "opcoes": 4
+    },
+    "escritas": 0
+   },
+   {
+    "texto": "Método de pesca",
+    "antes": {
+     "linhas": 9,
+     "opcoes": 0
+    },
+    "depois": {
+     "linhas": 9,
+     "opcoes": 3
+    },
+    "escritas": 0
+   },
+   {
+    "texto": "Petrecho",
+    "antes": {
+     "linhas": 9,
+     "opcoes": 0
+    },
+    "depois": {
+     "linhas": 9,
+     "opcoes": 4
+    },
+    "escritas": 0
+   }
+  ]
+ }
+}

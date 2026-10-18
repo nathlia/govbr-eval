@@ -1,0 +1,631 @@
+{
+  "_meta": {
+    "version": "1.0.0-candidata",
+    "status": "CANDIDATA — 2026-10-18. Auditoria cega por medição (passada 1). Faltam, nesta ordem (adendo da D § F): re-medida do segundo agente, `npm run conferir:referencia -- --tela processos`, decisões da autora sobre a lista escalada (tela-d/auditoria.md § 8; tela-d/recomendacoes-escaladas.md). Acima do piso sem as expostas (auditoria.md § 11), com a F3 dependendo do precedente do D-61 (E-03). telas.json › processos.reference continua null.",
+    "version_note": "1.0.0-candidata (2026-10-18): referência auditada e incompleta, construída antes de qualquer execução e de qualquer detector na tela D (substituta da C abaixo do piso; protocolo NAT-78 § 3.5). Método: tela-b/metodo-auditoria.md @ 5838702 + adendo da B @ 9406aed + tela-d/metodo-auditoria-adendo-processos.md (final, sha256 d9989b5348ce18da9307fad7cec2eef67952c30f3640170ffb6d9749dda2b513). Universo normativo: a base normalizada 3.7.0 de 186 regras (ds-rules/06, rules.jsonl sha256 5cac5fee9a6871bed9283d8c9714a2480adb50225aaa0d304f0ec337b80a2c56) + e-MAG 3.1; WCAG só como alias. Recall nesta tela é \"contra a referência auditada\".",
+    "page": "Processos do portal MPA do PNIP — tela D do estudo complementar (NAT-78; substituta da tela C), aplicação real em modo mock",
+    "url": "/pnip-d/portal-mpa/processos?mock-perfil=mpa",
+    "waitFor": "main .br-table tbody tr",
+    "suite": "processos",
+    "ds": "gov.br Design System 3.7.0 como norma; a página usa @govbr-ds/core 3.4.1 + @govbr-ds/webcomponents 1.16.0 (tratamento de versão: método § 1)",
+    "unit_of_evaluation": "(elemento × defeito), no estado aplicável — a mesma unidade da tela de fluxo, da tela A, da tela B e da tela C.",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "setup": [
+      {
+        "action": "click",
+        "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip input#total"
+      },
+      {
+        "action": "wait",
+        "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-list .br-item"
+      }
+    ],
+    "setup_rationale": "Escolha gulosa do adendo da D § B (literal da C), feita por cobertura de tipos ANTES de procurar defeito (tela-d/selecionar-estados.mjs → selecao.json, fase 1): um segmento (uma tela = uma rota, sem navigate); parada inicial (primeiro paint da aba padrão \"Tramitando\" com a lista paginada) e lista-exibir (clique no campo do seletor \"Exibir\" da paginação: a lista abre e traz item, list e radio, que nenhuma outra vista elegível traz). A etiqueta \"Meus processos\" e os 6 filtros são clicáveis mas não foram pegos pelo seletor de gatilhos congelado (spans sem papel nem tabindex): não são paradas, e entram só como aparecem nas duas paradas (D-03).",
+    "states": [
+      {
+        "id": "inicial",
+        "afterStep": 0,
+        "path": "/pnip-d/portal-mpa/processos",
+        "note": "aba padrão \"Tramitando\" com \"Meus processos\" ligado — primeiro paint da lista paginada"
+      },
+      {
+        "id": "lista-exibir",
+        "afterStep": 2,
+        "path": "/pnip-d/portal-mpa/processos",
+        "note": "lista do seletor \"Exibir\" (itens por página) da paginação aberta — última parada"
+      }
+    ],
+    "conformes": {
+      "note": "Controles conformes (procedimento da C; protocolo NAT-78 § 5.2): denominador da taxa de falso alarme do agente. Arquivo irmão com sha256; re-medidos em tela-d/conferir-auditoria.mjs. Alegação sobre eles é adjudicada como qualquer outra fora da referência (D-48).",
+      "arquivo": "tela-d/conformes.json",
+      "sha256": "6bef1c8d9be18e819422a78750d38244d9fdb0b93d08cb1a71eea2b4cb5e90c2",
+      "itens": [
+        {
+          "id": "K-01",
+          "state": "inicial",
+          "selector": "pnip-mpa-processos br-breadcrumb >>> a",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-accessibility-breadcrumb-992f162ca821"
+          ],
+          "medida": "link \"Home\" do <br-breadcrumb>: tabIndex 0, alcançado por Tab real."
+        },
+        {
+          "id": "K-02",
+          "state": "inicial",
+          "selector": "pnip-mpa-processos br-breadcrumb >>> li",
+          "count": 2,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-cf61b3eb3c71",
+            "emag:1.7"
+          ],
+          "medida": "cada item do breadcrumb (Home, Processos) é um <li> próprio."
+        },
+        {
+          "id": "K-03",
+          "state": "inicial",
+          "selector": "pnip-mpa-processos h2",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+            "emag:4.1",
+            "wcag:1.4.3"
+          ],
+          "medida": "h2 \"Processos\": #005ea2 sobre #fff = 6,72:1 (≥ 4,5:1; a norma tem a unidade D-06)."
+        },
+        {
+          "id": "K-04",
+          "state": "inicial",
+          "selector": "pnip-mpa-processos br-button[label=Exportar] >>> button",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+            "emag:4.4",
+            "wcag:2.4.7"
+          ],
+          "medida": "com foco por Tab, o botão \"Exportar\" ganha outline dashed 4px rgb(194,133,12) (a norma tem a unidade D-10)."
+        },
+        {
+          "id": "K-05",
+          "state": "inicial",
+          "selector": "pnip-mpa-processos br-tab >>> button",
+          "count": 3,
+          "rules": [
+            "govbr-3.7.0-accessibility-tab-f1807d71dc5f"
+          ],
+          "medida": "as três abas são <button> tabIndex 0; Enter ≡ clique (3/3 nas três, teste de estados)."
+        },
+        {
+          "id": "K-06",
+          "state": "inicial",
+          "selector": "pnip-mpa-processos table thead th.text-bold:not(:last-child)",
+          "count": 7,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+            "emag:4.1",
+            "wcag:1.4.3"
+          ],
+          "medida": "os 7 títulos de coluna com texto: #005ea2 sobre #f0f0f0 ≥ 4,5:1 (a norma tem a unidade D-06)."
+        },
+        {
+          "id": "K-07",
+          "state": "inicial",
+          "selector": "pnip-mpa-processos table tbody br-button[title=Assinar]",
+          "count": 3,
+          "rules": [
+            "govbr-3.7.0-component-button-4d7b5f978df1"
+          ],
+          "medida": "os 3 \"Assinar\" da coluna de ações: botão não circular com o texto \"Assinar\" visível (vizinho dos botões de ícone da D-01)."
+        },
+        {
+          "id": "K-08",
+          "state": "inicial",
+          "selector": "pnip-status-solicitacao-utils .bg-indigo-vivid-60 > div",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+            "emag:4.1",
+            "wcag:1.4.3"
+          ],
+          "medida": "status \"Em revisão analista\": branco sobre indigo-vivid-60 ≥ 4,5:1 (os outros 8 status são a unidade D-06)."
+        },
+        {
+          "id": "K-09",
+          "state": "inicial",
+          "selector": "pnip-mpa-processos > br-divider",
+          "count": 1,
+          "rules": [
+            "govbr-3.7.0-accessibility-divider-30bbcbf3a17c"
+          ],
+          "medida": "<br-divider> abaixo do breadcrumb: fora do Tab (tabIndex < 0) e o span interno sem papel na árvore do Chromium."
+        },
+        {
+          "id": "K-10",
+          "state": "lista-exibir",
+          "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-radio input[type=radio]",
+          "count": 4,
+          "rules": [
+            "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+            "emag:6.2",
+            "wcag:1.3.1",
+            "govbr-3.7.0-accessibility-global-b5fad7ce076d"
+          ],
+          "medida": "os 4 rádios da lista \"Exibir\" com <label for> associado (labels.length = 1; a norma tem as unidades D-04/D-05)."
+        },
+        {
+          "id": "K-11",
+          "state": "lista-exibir",
+          "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-item",
+          "count": 4,
+          "rules": [
+            "govbr-3.7.0-component-item-a6d29ea54434"
+          ],
+          "medida": "hover aplica gradiente em toda a superfície do br-item; clique perto da borda do item (fora do texto) escolhe a opção."
+        },
+        {
+          "id": "K-12",
+          "state": "lista-exibir",
+          "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-item",
+          "count": 4,
+          "rules": [
+            "govbr-3.7.0-component-item-a10751502b98"
+          ],
+          "medida": "padding computado 16px (--spacing-scale-2x) nos quatro br-item."
+        }
+      ]
+    },
+    "fundo": "Condições que o autor da tela não escreveu (método § 5, adendo da D § C), que não são unidades — alegação correta sobre elas entra como descoberta: (1) código do DS 3.4.1/1.16.0: aria-label das abas = id do br-tab-item quando a prop aria-label falta (\"AGUARDANDO_ANALISE\", \"TRAMITANDO\", \"HISTORICO\" — a escolha do id é autoral, o recurso é do web component; sem norma no universo, auditoria.md § 6), alt=\"logo\" fixo no logo do <br-header>, aria-label=\"\" no botão interno de todo br-button e no botão Home do breadcrumb, item atual do breadcrumb sem aria-current, texto visualmente oculto \"Home\", Menu e Home 32×32 dos web components, regra `.br-select .br-list:focus{outline:none}` do core (a lista do seletor não mostra foco), grid de 24 px do core (E-08), aba ativa sem aria-selected; (2) interno de bibliotecas de terceiros — nenhum visível nas paradas; (3) isolamento/mock: nenhuma perda medida (fontes e ícones locais, 0 externos, 0 escritas, 0 chamadas sem fixture); o link do breadcrumb aponta para /portal-mpa/ sem /pnip-d/ e recarrega (artefato do base href); os números de processo das linhas 1, 5 e 8 recarregam em /login (destino do mock); o conteúdo da lista, dos status e das opções dos filtros vem do manipulador só-leitura; \"Aberto há\" deriva do relógio congelado.",
+    "fora_de_escopo": "Vistas excluídas pela regra de escolha (adendo da D § B; tela-d/selecao.json): abas \"Aguardando análise\"/\"Concluídos\", \"Meus processos\", filtros aplicados e troca de página (recarregam a lista no lugar: não aditivas), \"Exportar\", \"Ver processo\", números de processo, breadcrumb, \"Voltar\" (navegam ou recarregam), os dois SweetAlert2 (\"Desassociar\", \"Assinar\": diálogo sem componente do DS novo), menu do avatar (nada novo), listas abertas dos filtros (não eram gatilho pelo seletor congelado). Também fora: outras janelas e zoom, linguagem e microcopy (salvo decisão da autora), conteúdo das fixtures (processos, nomes, números, datas, status, opções), regras só da base literal. Alegação correta sobre o que está fora vira descoberta e não muda o denominador.",
+    "nunca_agregar_com": "ground-truth-fluxo.json, ground-truth-solicitacao.json (tela A), ground-truth-vistorias.json (tela B), ground-truth-cadastrar-empresa.json (tela C), ground-truth.json (suíte TC-*), organic-ground-truth.json, ground-truth-privacidade.json e ground-truth-pnip-login.json — instrumentos ou páginas diferentes (D-13, D-49). Os números desta tela nunca se somam, se promediam nem formam série com os de outra.",
+    "baselines": "MEDIDAS sob o carimbo de cada bateria; nenhuma expectativa de detecção por ferramenta é declarada aqui (D-06).",
+    "exposto": {
+      "nota": "Adendo da D § E: unidade que coincide com achado registrado do casco (telas B e C) leva a marca; o recall é dado com e sem elas, e o piso conta sem elas.",
+      "specs": [
+        "D-11",
+        "D-12",
+        "D-13",
+        "D-14"
+      ]
+    },
+    "classes": {
+      "nota": "Proposta do auditor (passada 1), pré-registrada antes de qualquer execução; definições da NAT-71 § 3.1 (classe) e § 3.2 (automatizabilidade). O protocolo NAT-78 § 5.3 pede dois classificadores cegos + a autora nos desacordos: esta é a 1ª classificação, não a final. O nível a (implementado e testado em ferramenta) não é verificável pelo auditor cego, que não pode abrir detectores: o nível dado é b ou c, e a pode substituir b depois.",
+      "porSpec": {
+        "D-01": {
+          "classe": "sintático",
+          "nivel": "b",
+          "porque": "decidível num elemento: hospedeiro sem label/circle e botão interno sem texto visível; a forma não circular se confirma pela caixa/raio computados"
+        },
+        "D-02": {
+          "classe": "sintático",
+          "nivel": "b",
+          "porque": "decidível num elemento: <a> com role=button e cursor de clique, sem href nem tabindex (não focável); a consequência (fora do Tab) é relacional, mas a decisão não precisa dela"
+        },
+        "D-03": {
+          "classe": "sintático",
+          "nivel": "b",
+          "porque": "decidível num elemento: span de classe interativa do DS (br-tag interaction, cursor pointer) sem role nem tabindex"
+        },
+        "D-04": {
+          "classe": "contextual/relacional",
+          "nivel": "b",
+          "porque": "relaciona o controle a um rótulo (label for, aria-labelledby) — ausência de associação"
+        },
+        "D-05": {
+          "classe": "contextual/relacional",
+          "nivel": "b",
+          "porque": "relaciona o campo a um rótulo; o nome que sobra é só o placeholder"
+        },
+        "D-06": {
+          "classe": "layout/visual",
+          "nivel": "b",
+          "porque": "contraste por cor computada"
+        },
+        "D-07": {
+          "classe": "contextual/relacional",
+          "nivel": "b",
+          "porque": "anatomia contêiner↔filho (table sem caption), como a A-05 na NAT-71 § 3.3"
+        },
+        "D-08": {
+          "classe": "sintático",
+          "nivel": "b",
+          "porque": "th sem texto — um elemento"
+        },
+        "D-09": {
+          "classe": "layout/visual",
+          "nivel": "b",
+          "porque": "geometria (caixa de 32×32 contra 48×48)"
+        },
+        "D-10": {
+          "classe": "layout/visual",
+          "nivel": "b",
+          "porque": "a cobrança principal é o indicador de foco (estilo computado no ponto focado); a parte do nome (iframe sem title) é sintática"
+        },
+        "D-11": {
+          "classe": "contextual/relacional",
+          "nivel": "b",
+          "porque": "ausência global na página"
+        },
+        "D-12": {
+          "classe": "contextual/relacional",
+          "nivel": "b",
+          "porque": "hierarquia de títulos na página"
+        },
+        "D-13": {
+          "classe": "semântico",
+          "nivel": "c",
+          "porque": "o <title> existe; a unidade cobra que ele represente o conteúdo principal (adequação)"
+        },
+        "D-14": {
+          "classe": "layout/visual",
+          "nivel": "b",
+          "porque": "contraste por cor computada"
+        }
+      },
+      "resumo": "sintático 4 · contextual/relacional 5 · layout/visual 4 · semântico 1"
+    },
+    "evidencia": {
+      "D-01": {
+        "arquivo": "tela-d/evidencia/D-01.json",
+        "sha256": "d88f4e5c720481e298427afbfa11c35c726dccab94f4f09e8ddda43a74e90bac"
+      },
+      "D-02": {
+        "arquivo": "tela-d/evidencia/D-02.json",
+        "sha256": "e6ccce9ff9b413677fd55b7a78c79c5835b1ee856ab67ea8837fc0a7b7ca0854"
+      },
+      "D-03": {
+        "arquivo": "tela-d/evidencia/D-03.json",
+        "sha256": "e48922e428667ba231aaa16c9f5b00ef45ceda816b6566893f80313d7f73737a"
+      },
+      "D-04": {
+        "arquivo": "tela-d/evidencia/D-04.json",
+        "sha256": "58fd20c6ab46743c36c4df9da6b0e4409fef83c1f58f56417e1cbc547fb6c609"
+      },
+      "D-05": {
+        "arquivo": "tela-d/evidencia/D-05.json",
+        "sha256": "4aa3391cc90d49d4b40cf75784ef65f4bfefcd96bba98fb1537f8a52ffb8e7c6"
+      },
+      "D-06": {
+        "arquivo": "tela-d/evidencia/D-06.json",
+        "sha256": "e7390d97009895fa8cf335d498cc88360b18f90438dcb0a0b8a6a5adae801a3f"
+      },
+      "D-07": {
+        "arquivo": "tela-d/evidencia/D-07.json",
+        "sha256": "b0330f05e7af531cd06c53323ea7e9834b0a239724ad0c0463a98f048c06555f"
+      },
+      "D-08": {
+        "arquivo": "tela-d/evidencia/D-08.json",
+        "sha256": "138cf66aa2bbebc3bc89dfc295551d57b3ddcb07043024b3cd8c73ceccb2a7c9"
+      },
+      "D-09": {
+        "arquivo": "tela-d/evidencia/D-09.json",
+        "sha256": "d09c40c95980a3f164f8353a61577368ed2bd99f38916d01a8eaa3bea2fc4fac"
+      },
+      "D-10": {
+        "arquivo": "tela-d/evidencia/D-10.json",
+        "sha256": "17516852381a3da20d4940c399d7d9cae227a0a10e1fe652ddf68a00275a0ada"
+      },
+      "D-11": {
+        "arquivo": "tela-d/evidencia/D-11.json",
+        "sha256": "db45d7e4488ff153e574d646755a458b6ff5524b9757c92577736d505ec36c8f"
+      },
+      "D-12": {
+        "arquivo": "tela-d/evidencia/D-12.json",
+        "sha256": "754fbd617be302f0333deb95d2319bc9d938ecf0382f71225bfab4f88d05f42d"
+      },
+      "D-13": {
+        "arquivo": "tela-d/evidencia/D-13.json",
+        "sha256": "4ebebb531ee13b6524139bcc2378dcf44cfabc07b459e5161119c9ad370f7806"
+      },
+      "D-14": {
+        "arquivo": "tela-d/evidencia/D-14.json",
+        "sha256": "2e87f08f589649cf257830b2edd8d8ef03f04e8a4a560ede2e8ae925fb40e6ad"
+      },
+      "K-01": {
+        "arquivo": "tela-d/evidencia/K-01.json",
+        "sha256": "c81006e24cc16b7d2dcc7393de169b1f1940beaf1344c3a8fd7ee3c65a28a6e1"
+      },
+      "K-02": {
+        "arquivo": "tela-d/evidencia/K-02.json",
+        "sha256": "e4760a8d9e2b6e760a5f8bd437ba781def317c9fa44e214a8de7ff60c08ef38a"
+      },
+      "K-03": {
+        "arquivo": "tela-d/evidencia/K-03.json",
+        "sha256": "930b77972065f43428ab4c309d110253a2cd5da09a8e5b1fcc951f26aeb75504"
+      },
+      "K-04": {
+        "arquivo": "tela-d/evidencia/K-04.json",
+        "sha256": "1d1c8d755f432fb96407fbf81bd94bacb255ddff68a22543b8815833859c105e"
+      },
+      "K-05": {
+        "arquivo": "tela-d/evidencia/K-05.json",
+        "sha256": "87916ed6ccdef8fc9781de424db7d737e694f85e3e18a4cbf51179768811823a"
+      },
+      "K-06": {
+        "arquivo": "tela-d/evidencia/K-06.json",
+        "sha256": "17d509be31886066984a2d8a793337a614f3c17d1bc4351588f50f82a63176bd"
+      },
+      "K-07": {
+        "arquivo": "tela-d/evidencia/K-07.json",
+        "sha256": "b35b921592636419462c5525897db594f6f7151015184c10945386f6224ce4ce"
+      },
+      "K-08": {
+        "arquivo": "tela-d/evidencia/K-08.json",
+        "sha256": "338ed17730d116a8bb8ffc0304083783af860123459ecccb08844207fd0391b9"
+      },
+      "K-09": {
+        "arquivo": "tela-d/evidencia/K-09.json",
+        "sha256": "0010fa01eb5e4ed6fa14efcc84a3919b0db9d08f019ea553ae581a0a944e5e0b"
+      },
+      "K-10": {
+        "arquivo": "tela-d/evidencia/K-10.json",
+        "sha256": "3ca4c26c79cf160669131ac7837a200f26842f18826db65fd9c2dbff1f32d448"
+      },
+      "K-11": {
+        "arquivo": "tela-d/evidencia/K-11.json",
+        "sha256": "fdb8381588ed2504414a3380a3e256681e41fa7a4d67801b47c7a6a1226dc2b6"
+      },
+      "K-12": {
+        "arquivo": "tela-d/evidencia/K-12.json",
+        "sha256": "1bc7db396c6803dec76738fd86037ed0cc0dbb8210d65ba02a75f75d931b3a29"
+      }
+    },
+    "escaladas": {
+      "fonte": "tela-d/auditoria.md § 8 (E-01…E-08); recomendação em tela-d/recomendacoes-escaladas.md; decisão da autora pendente"
+    },
+    "auditoria": "tela-d/auditoria.md · decisoes.json · inventario.json · estados.json · selecao.json · conformes.json · evidencia/ · conferência sem modelo: node tela-d/conferir-auditoria.mjs"
+  },
+  "violations": [
+    {
+      "id": "D-01",
+      "anchor": "pnip-mpa-processos table tbody td:nth-of-type(9) br-button:nth-of-type(-n+2)",
+      "scope": "todos",
+      "expectedCount": 18,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-component-button-4d7b5f978df1"
+      ],
+      "categories": [
+        "componente",
+        "estrutura"
+      ],
+      "description": "Botões de ação das linhas da tabela \"Ver processo\" (9) e \"Desassociar processo do analista responsável\" (9; 8 desabilitados): <br-button> sem `label` e sem `circle`. O <button> interno é br-button middle de 72×40 px com raio de pílula (não circular), sem nenhum texto visível — só o ícone projetado (eye, user-times) — e o nome acessível vem só do `title`. A norma exige rótulo visível em todo Button não circular. Na mesma coluna o \"Assinar\" tem texto visível. Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-02",
+      "anchor": "pnip-mpa-processos table tbody td:nth-of-type(3) a",
+      "scope": "todos",
+      "expectedCount": 9,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+        "emag:2.1",
+        "wcag:2.1.1",
+        "govbr-3.7.0-accessibility-global-f639993e9416",
+        "emag:2.2",
+        "govbr-3.7.0-accessibility-global-41850b4791b8",
+        "govbr-3.7.0-accessibility-global-2f22b7245ef9"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "Números de processo da coluna \"Nº Processo\": <a role=\"button\" style=\"cursor:pointer\"> sem href nem tabindex. Não são focáveis (fora do Tab real; a árvore do Chromium não os marca focusable), mas o clique navega: nas linhas 2, 3, 4, 6, 7 e 9 abre a sub-rota …/documentos do processo, que o \"Ver processo\" da mesma linha não abre (ele vai à rota do processo sem /documentos). Nas linhas 1, 5 e 8 o destino cai em /login com recarga — artefato do mock (adendo § C) —, mas o controle é o mesmo e igualmente inalcançável por teclado. Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-03",
+      "anchor": "pnip-mpa-processos .br-tag.interaction",
+      "scope": "todos",
+      "expectedCount": 7,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+        "emag:2.1",
+        "wcag:2.1.1",
+        "govbr-3.7.0-accessibility-global-f639993e9416",
+        "emag:2.2",
+        "govbr-3.7.0-accessibility-global-41850b4791b8",
+        "govbr-3.7.0-accessibility-global-2f22b7245ef9",
+        "govbr-3.7.0-accessibility-global-e038367bd7d6",
+        "wcag:4.1.2"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "Etiquetas interativas \"Meus processos\" e os seis filtros (\"Aberto há\", \"Tipo de processo\", \"Status\", \"Espécie alvo\", \"Método de pesca\", \"Petrecho\"): <span class=\"br-tag interaction\"> com cursor:pointer, sem role, sem tabindex (tabIndex -1), papel generic e nome \"\" na árvore. O clique liga/desliga o filtro \"Meus processos\" (a lista passa de 9 para 10 linhas) ou abre a lista de opções do filtro; nenhuma é alcançada por Tab nem acionável por teclado, e nenhuma expõe estado (aria-pressed/aria-expanded). Os exemplos oficiais da Tag 3.7.0 só usam button e input+label como elementos interativos. Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-04",
+      "anchor": "pnip-mpa-processos table input[type=checkbox]",
+      "scope": "todos",
+      "expectedCount": 7,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+        "emag:6.2",
+        "wcag:1.3.1",
+        "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+        "wcag:4.1.2"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "description": "Checkboxes de seleção da tabela — um no cabeçalho (coluna sem texto) e um em cada uma das 6 linhas selecionáveis: <input type=\"checkbox\"> sem <label>, aria-label, aria-labelledby ou title; labels.length = 0 e nome \"\" na árvore. Estão no Tab (operáveis), sem nome. Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-05",
+      "anchor": "pnip-search-table-utils br-input >>> input",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+        "emag:6.2",
+        "wcag:1.3.1",
+        "govbr-3.7.0-accessibility-global-b5fad7ce076d"
+      ],
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "description": "Campo de pesquisa da lista: o <br-input> recebeu `placeholder=\"Pesquise aqui ...\"` mas não `label`, e o input interno (id search) fica com labels.length = 0, sem aria-label nem aria-labelledby; o nome acessível é o placeholder. Os seletores \"Exibir\" e \"Página\" da mesma tela têm rótulo associado. Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-06",
+      "anchor": "pnip-status-solicitacao-utils div[class*=bg-]:not(.bg-indigo-vivid-60) > div",
+      "scope": "todos",
+      "expectedCount": 8,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "categories": [
+        "token",
+        "acessibilidade"
+      ],
+      "description": "Etiquetas de status da coluna \"Status\": texto branco (text-secondary-01, 14 px/500) sobre bg-orange-vivid-40 #e66f0e = 3,16:1 (5 linhas), bg-indigo-vivid-40 #8289ff = 3,01:1 (1) e bg-secondary-06 #888888 = 3,54:1 (2) — 8 de 9 abaixo de 4,5:1 (cores da paleta, combinação autoral). O status \"Em revisão analista\" sobre indigo-vivid-60 passa (6,49:1, controle K-08). O texto do status vem do mock; a combinação de cores é do componente da página. Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-07",
+      "anchor": "pnip-mpa-processos table",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+        "emag:3.9",
+        "wcag:1.3.1"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "description": "A tabela de processos não tem <caption> nem aria-label/aria-labelledby (nome \"\" na árvore); o h2 \"Processos\" fica fora do contêiner da tabela, sem associação. A norma pede caption que identifique a tabela (os exemplos oficiais da Table 3.7.0 trazem caption). Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-08",
+      "anchor": "pnip-mpa-processos table thead th:last-child",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-1ccbc61dddbc",
+        "emag:3.10",
+        "wcag:1.3.1"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "description": "Cabeçalho da coluna de ações (Ver processo / Desassociar / Assinar): <th scope=\"col\"> vazio, columnheader sem nome na árvore — as células de ação ficam sem cabeçalho identificável. Precedente B-26 (D-61). Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-09",
+      "anchor": "pnip-mpa-processos button.br-button:not(.circle)[aria-label]",
+      "scope": "todos",
+      "expectedCount": 3,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-foundation-global-1c0146e93d2e"
+      ],
+      "categories": [
+        "estrutura"
+      ],
+      "description": "Alvos de ícone autorais de 32×32 px (abaixo de 48×48): o \"Buscar\" do campo de pesquisa (button.br-button só com ícone de lupa, marcação do pnip-search-table-utils) e os dois \"Exibir lista\" dos seletores \"Exibir\" e \"Página\" da paginação (br-select-pnip). Precedente B-28/B-29 (D-61: alvos de ícone autorais de 32×32 viram unidade); ver E-03 sobre a recomendação pendente da C para o mesmo \"Exibir lista\". Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-10",
+      "anchor": "pnip-mpa-processos > iframe",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "inicial",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+        "emag:4.4",
+        "wcag:2.4.7",
+        "govbr-3.7.0-accessibility-global-7e6420514860",
+        "emag:1.1",
+        "wcag:4.1.2"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "<iframe> vazio no fim do componente (sem src, documento about:blank sem conteúdo, 1160×500 px, sem title, name nem aria-label; papel Iframe com nome \"\" na árvore): é ponto de Tab depois do \"Voltar\" e, focado, nada muda na tela (outline none, sem sombra, :focus-visible falso). Depois dele o Tab real alterna iframe ↔ body (E-01); Shift+Tab sai para o \"Voltar\". Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-11",
+      "anchor": "pnip-root",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-7d2b85f81c52",
+        "emag:1.5",
+        "wcag:2.4.1"
+      ],
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "description": "Nenhum salto para o conteúdo: 0 âncoras \"#…\" e 0 .br-skiplink nas 2 paradas; o primeiro ponto de Tab é o botão Menu do cabeçalho. Casco da aplicação: **exposto** (adendo § E; C-04, B-01). Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-12",
+      "anchor": "pnip-root",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-3ac0aaa53900",
+        "emag:1.3",
+        "wcag:1.3.1"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "description": "Um só título visível na página, <h2> \"Processos\"; nenhum <h1> (light DOM e shadow roots), nas 2 paradas. Ausência global, ancorada na raiz. **exposto** (casco: ordem de títulos, como C-05). Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-13",
+      "anchor": "head > title",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-5d5a5f21d94b",
+        "emag:3.3",
+        "wcag:2.4.2"
+      ],
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "description": "<title>PNIP</title> nas 2 paradas: nomeia só o sistema, não o conteúdo principal (\"Processos\"). **exposto** (casco; B-25, C-06). Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    },
+    {
+      "id": "D-14",
+      "anchor": "pnip-header .br-avatar .content",
+      "scope": "unico",
+      "expectedCount": 1,
+      "state": "sempre",
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "categories": [
+        "token",
+        "acessibilidade"
+      ],
+      "description": "Inicial do avatar \"U\" branco sobre #ff8c00 = 2,33:1 (24,2 px/700). **exposto** (casco; B-14, C-07). Sem predicado na referência; medido em tela-d/conferir-auditoria.mjs."
+    }
+  ]
+}
