@@ -36,10 +36,10 @@ import { explicarExcecao, recalcular, salvarDecisao, vistaFila } from "./painel/
 import { criarPainel, escutar } from "./painel/servidor";
 import { cartaoDoVinculo, digest, type SemanticPackage } from "./semantic-flow";
 
-// flow-semantic-1.8.1 (domínio amarrado à parada medida e à referência do pacote, NAT-91): instrument.*, semantic-flow.ts
-// mudaram de propósito; antes 96677601…d990 (1.8.0, NAT-74), 82c9b2ef…c84c (1.7.0, kb-aliases-2.0.0), 0006158c…e4fd (1.6.0, NAT-72)
+// flow-semantic-1.8.2 (parada provada em todo crédito, não só no vínculo; NAT-91, Codex 74577dd9): instrument.*, semantic-flow.ts
+// mudaram de propósito; antes dece16eb…9a91 (1.8.1, domínio amarrado), 96677601…d990 (1.8.0, NAT-74), 82c9b2ef…c84c (1.7.0, kb-aliases-2.0.0), 0006158c…e4fd (1.6.0, NAT-72)
 // e 7ceb07e3…d146 (1.5.0). Medido em árvore LF. Muda de novo se kb-aliases-v2.json for regenerado.
-const SCORER_SHA = "dece16eb274661c6d7faa11acffcb0b9934ce2c72a5f3197014507ee4f969a91";
+const SCORER_SHA = "ec3b0b6fa256cfa637193783ea4d95f6648097cfa6be1bad23f31bf20328ec7f";
 const manter = process.argv.includes("--manter");
 const TMP = mkdtempSync(join(tmpdir(), "painel-teste-"));
 const resultados: { nome: string; ok: boolean }[] = [];

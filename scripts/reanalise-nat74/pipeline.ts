@@ -7,6 +7,9 @@
  * NAT-91: o scorer vigente passou a flow-semantic-1.8.1 (domínio amarrado à parada medida e à referência canônica do
  * pacote). A 1.2.0 PUBLICADA foi calculada com a 1.8.0; rodar este pipeline hoje eleva a 1.8.1 e não reproduz aqueles
  * bytes — uma nova publicação teria de sair rotulada como outra versão do derivado.
+ * NAT-91 (Codex 74577dd9): o vigente é flow-semantic-1.8.2 — a parada provada vale também para a ancoragem direta, sem
+ * vínculo. O domínio medido aqui sempre inclui a parada da captura, então a elevação dá as mesmas unidades casadas
+ * (dry-run de 18/10: 240/240 pontuações, mesmas unidades e contagens; só o desempate do emparelhamento muda com os ids).
  * Texto original da 1.1.0: Etapas E0–E13 do plano
  * (`thesis-workspace/planejamento/atual/plano-nat74-reanalise-2026-10-16.md`) com a E14 já feita: lê os
  * julgamentos da fila T3 (`fila-t3/julgamentos.json`, ingeridos pelo e14-ingerir) e as medidas da T2

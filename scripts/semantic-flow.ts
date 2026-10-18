@@ -134,6 +134,25 @@ export const aceitaDominioAmarrado = (version: string): boolean => {
   const [ma, mi, pa] = [Number(m[1]), Number(m[2]), Number(m[3])];
   return ma > 1 || (ma === 1 && (mi > 8 || (mi === 8 && pa >= 1)));
 };
+/**
+ * Parada provada em TODO crédito (flow-semantic-1.8.2, achado Codex na NAT-91, comentário 74577dd9). Em 1.8.1
+ * `paradaComprovada` só valia dentro de `validateLinks`: o caminho comum — sujeito ancorado exatamente na cena
+ * canônica, `unitIds`, sem `links` — creditava a unidade com domínio sem conferir a parada (cena canônica
+ * capturada em `after`, domínio provando só `before`, `state: "sempre"` → crédito). De 1.8.2 em diante, toda
+ * atribuição de crédito a uma unidade que declara domínio — ancoragem direta ou vínculo, decisão manual ou
+ * automática, cartão de braço ou de linha de base — exige que a parada da captura da cena em que o sujeito
+ * chega à unidade esteja entre as paradas comprovadas da entrada daquela cena.
+ * Escolha documentada: o PACOTE continua sendo preparado (a captura canônica sem prova não o recusa — o
+ * domínio pode provar outras paradas e outras cenas); o que se recusa é o CRÉDITO: a decisão que o atribui é
+ * recusada pelo scorer e o cartão fica pendente, como as demais recusas da barreira do domínio.
+ * Pacotes 1.8.0 e 1.8.1 seguem pelo caminho deles, byte a byte.
+ */
+export const exigeParadaEmTodoCredito = (version: string): boolean => {
+  const m = /^flow-semantic-(\d+)\.(\d+)\.(\d+)$/.exec(version);
+  if (!m) return false;
+  const [ma, mi, pa] = [Number(m[1]), Number(m[2]), Number(m[3])];
+  return ma > 1 || (ma === 1 && (mi > 8 || (mi === 8 && pa >= 2)));
+};
 /** Participante de um predicado `documento` (1.8.1): o `<title>` ou um título `h1`–`h6`, nunca outro elemento. */
 export function participanteDeDocumento(p: string): boolean {
   if (p === "" || p.includes(" >>> ")) return false;
@@ -944,6 +963,18 @@ function paradaComprovada(e: DominioCena, l: ReviewLink, scenes: Map<string, Sem
   requireThat(e.states.includes(seg.estado),
     `Review link scene ${l.scene} was captured at stop ${seg.estado}, but the domain of ${unit.specId} there only proves ${e.states.join(", ")}: ${atomId}`);
 }
+/**
+ * 1.8.2: o sujeito ancorado diretamente (sem vínculo) chega à unidade na cena canônica dela (`anchored` exige
+ * cena igual). A parada da captura dessa cena tem de estar entre as paradas comprovadas da entrada canônica do
+ * domínio — a mesma prova que `paradaComprovada` cobra do vínculo. Sem ela o crédito é recusado (cartão pendente).
+ */
+function paradaDaAncoragem(unit: SemanticUnit, scenes: Map<string, SemanticScene> | undefined, atomId: string): void {
+  const e = unit.domain!.find(x => x.scene === unit.scene);
+  const seg = scenes?.get(unit.scene)?.segmento;
+  requireThat(e && seg, `Unit ${unit.specId} declares a domain, but its canonical scene ${unit.scene} has no proven entry with a recorded capture stop: ${atomId}`);
+  requireThat(e.states.includes(seg.estado),
+    `Anchored subject in scene ${unit.scene}, captured at stop ${seg.estado}, but the domain of ${unit.specId} there only proves ${e.states.join(", ")}: ${atomId}`);
+}
 function relacaoNoDominio(e: DominioCena, relation: RelacaoVinculo, key: string, evidence: string[]): boolean {
   if (e.kind === "ausencia-global") return relation === "ausencia-global"
     && e.participants.some(p => participanteDePagina(p) && (key === "" || tocaParticipante(p, key)));
@@ -1000,7 +1031,7 @@ function validateLinks(d: SemanticDecision, a: ReviewAtom, card: ReviewCard, uni
 }
 
 function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<string, SemanticUnit>, linksAllowed: boolean,
-  scenes?: Map<string, SemanticScene>, domainAllowed = false, domainBound = false): void {
+  scenes?: Map<string, SemanticScene>, domainAllowed = false, domainBound = false, stopEveryCredit = false): void {
   requireThat(d.status === "pending" || d.status === "reviewed", `Invalid status: ${card.id}`);
   if (d.status === "pending") {
     requireThat(!d.complete && d.atoms.length === 0 && d.cena === undefined, `Pending decision carries effects: ${card.id}`);
@@ -1040,6 +1071,9 @@ function validateDecision(d: SemanticDecision, card: ReviewCard, units: Map<stri
     for (const id of a.unitIds) {
       const u = units.get(id);
       requireThat(u && subjects.some(s => sustenta(a, s, card, u)), `Unanchored/unknown unit: ${id}`);
+      // 1.8.2: a ancoragem direta numa unidade com domínio também só credita pela parada provada (o vínculo já
+      // passou por `paradaComprovada` em validateLinks; a ancoragem direta é sempre na cena canônica da unidade).
+      if (stopEveryCredit && u.domain) for (const s of subjects) if (anchored(s, card, u)) paradaDaAncoragem(u, scenes, a.id);
     }
     if (a.verdict === "reference") for (const s of subjects) {
       requireThat(a.unitIds.some(id => sustenta(a, s, card, units.get(id)!)), `Unsupported subject: ${s.id}`);
@@ -1170,6 +1204,7 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
   const linksAllowed = aceitaVinculos(pkg.version);
   const domainAllowed = aceitaDominio(pkg.version);
   const domainBound = aceitaDominioAmarrado(pkg.version);
+  const stopEveryCredit = exigeParadaEmTodoCredito(pkg.version);
   const scenes = new Map(pkg.scenes.map(s => [s.id, s]));
   const units = new Map(pkg.units.map(u => [u.id, u]));
   const cards = new Map(pkg.cards.map(c => [c.id, c]));
@@ -1178,7 +1213,7 @@ export function scoreSemanticPackage(pkg: SemanticPackage, reviews: SemanticRevi
     requireThat(!decisions.has(d.cardId), `Duplicate decision: ${d.cardId}`);
     const card = cards.get(d.cardId);
     requireThat(card, `Decision outside this package: ${d.cardId}; use scopeReviews for reuse`);
-    validateDecision(d, card, units, linksAllowed, scenes, domainAllowed, domainBound);
+    validateDecision(d, card, units, linksAllowed, scenes, domainAllowed, domainBound, stopEveryCredit);
     decisions.set(d.cardId, d);
   }
   const scores = pkg.runs.map(run => {

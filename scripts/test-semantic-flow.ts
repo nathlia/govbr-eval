@@ -9,7 +9,7 @@ import type { FlowUnit } from "./units-flow";
 import type { PredicateResult } from "./acceptance-predicates";
 import { renderReview } from "./semantic-flow-render";
 import {
-  SCORER_FILES, SEMANTIC_LEGACY_VERSIONS, aceitaDominio, aceitaDominioAmarrado, aceitaVinculos, aplicarDominio, cartaoDoVinculo, participanteDePagina, SEMANTIC_SCORING_VERSION, VINCULO_CONTRATO, digest, maximumMatching, normalizeReviews, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, tocaParticipante, validatePackage,
+  SCORER_FILES, SEMANTIC_LEGACY_VERSIONS, aceitaDominio, aceitaDominioAmarrado, exigeParadaEmTodoCredito, aceitaVinculos, aplicarDominio, cartaoDoVinculo, participanteDePagina, SEMANTIC_SCORING_VERSION, VINCULO_CONTRATO, digest, maximumMatching, normalizeReviews, prepareSemanticPackage, scopeReviews, scoreSemanticPackage, tocaParticipante, validatePackage,
   type RawReviewAtom, type SemanticDecision, type SemanticPackage, type SemanticReviews, type ReviewAtom, type ReviewLink, type PrepareRun, type SceneResolution,
 } from "./semantic-flow";
 import { montarAtomos, montarVinculos } from "./decisao-atomos";
@@ -903,8 +903,8 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
   });
 
   test("NAT-72 legacy path: a 1.5.0 package scores as before, refuses links, and gets none retroactively", () => {
-    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.8.1");
-    assert.deepEqual([...SEMANTIC_LEGACY_VERSIONS], ["flow-semantic-1.5.0", "flow-semantic-1.6.0", "flow-semantic-1.7.0", "flow-semantic-1.8.0"]);
+    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.8.2");
+    assert.deepEqual([...SEMANTIC_LEGACY_VERSIONS], ["flow-semantic-1.5.0", "flow-semantic-1.6.0", "flow-semantic-1.7.0", "flow-semantic-1.8.0", "flow-semantic-1.8.1"]);
     const atual = pacote(["#E-html", "#E-header"]);
     const { packageHash: _h, ...corpo } = { ...atual, version: "flow-semantic-1.5.0" };
     const legado: SemanticPackage = { ...corpo, packageHash: digest(corpo) };
@@ -1018,7 +1018,7 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
   const sj = (cena: string, key: string) => `${cena}|${key}`;
 
   test("1.8.0: version, domain in the package hash, one unit per spec", () => {
-    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.8.1");
+    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.8.2");
     assert.ok(aceitaDominio("flow-semantic-1.8.0") && aceitaDominio("flow-semantic-2.0.0"));
     assert.ok(!aceitaDominio("flow-semantic-1.7.0") && !aceitaDominio("flow-semantic-1.6.0"));
     const pkg = prep([agente("r1", ["pnip-root"])]);
@@ -1228,7 +1228,7 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
     const comDominio = prep([agente("r1", ["pnip-root"])]);
     const porUnidade = Object.fromEntries(comDominio.units.filter(u => u.domain).map(u => [u.id, u.domain!]));
     const p18 = aplicarDominio(p17, porUnidade, "teste");
-    assert.equal(p18.version, "flow-semantic-1.8.1");
+    assert.equal(p18.version, "flow-semantic-1.8.2");
     validatePackage(p18);
     assert.deepEqual(p18.units.map(u => u.id), p17.units.map(u => u.id), "unit identity unchanged");
     assert.deepEqual(p18.units, comDominio.units, "same units as a fresh 1.8.0 preparation");
@@ -1349,6 +1349,107 @@ test("alegação sem passo declarado sobre unidade que só existe após interaç
     const d = naLista(p180);
     assert.equal(scoreSemanticPackage(p180, { version: p180.version, decisions: scopeReviews(p180).decisions.map(x => x.cardId === d.cardId ? d : x) }).scores[0].counts.detectedUnits, 1);
     assert.throws(() => scoreSemanticPackage(antes, reviews(antes, [naLista(antes)])), /only proves antes/);
+  });
+
+  // ── flow-semantic-1.8.2: parada provada em TODO crédito, não só no vínculo (NAT-91, achado Codex 74577dd9) ──
+  // Cena canônica MODAL capturada em `modal` (estados do segmento: detalhe, modal). B-01 é ancorada diretamente
+  // em <pnip-root> ali: o caminho comum, sem `links`. `cobre`: o domínio canônico prova `modal` (a captura);
+  // `descobre`: prova só `detalhe`.
+  const cobre = () => comB01(["inicial"], ["modal"]), descobre = () => comB01(["inicial"], ["detalhe"]);
+  const lbModal = (id: string): PrepareRun => ({ id, kind: "linha-de-base", tool: id, data: { model: id, timestamp: "fixed", appUrl: "http://f/pnip/vistorias/3038",
+    findings: [{ selector: "pnip-root", rule: "axe:bypass", observed: "sem mecanismo de salto", expected: null, scene: MODAL, viewport: wide, steps: [] }] as unknown as FlowAgentResults["findings"],
+    config: { instrumentVersion: "fluxo-1.3.0", protocolVersion: `baseline:${id}`, siteManifestSha256: B } as FlowAgentResults["config"] } });
+  const runsDe = () => [agente("sem", ["pnip-root"]), agente("com", ["pnip-root"]), lbModal("axe")];
+  const cartaoDe = (pkg: SemanticPackage, runId: string) => pkg.cards.find(c => pkg.runs.find(r => r.id === runId)!.cardIds.includes(c.id))!;
+  /** Decisão do cartão do run na cena canônica: sem `links` (ancoragem direta) ou com o vínculo equivalente. */
+  const naCanonica = (pkg: SemanticPackage, runId: string, comLink: boolean, extra: Partial<SemanticDecision> = {}): SemanticDecision => {
+    const card = cartaoDe(pkg, runId), b01 = uid(pkg, "B-01");
+    const sub = card.segmentos ? sj(MODAL, raiz.key) : raiz.key;
+    const link = comLink ? [vinc(card, b01, sub, MODAL)] : undefined;
+    return { ...decision(card.id, [{ id: "a1", text: "parte", subjects: [sub], verdict: "reference", unitIds: [b01], citation: "uncertain", ...(link ? { links: link } : {}) }]),
+      ...(card.segmentos ? { cena: MODAL } : {}), ...extra };
+  };
+
+  test("1.8.2: versions — 1.8.0 and 1.8.1 are legacy, the stop on every credit starts at 1.8.2", () => {
+    assert.equal(SEMANTIC_SCORING_VERSION, "flow-semantic-1.8.2");
+    assert.ok(exigeParadaEmTodoCredito("flow-semantic-1.8.2") && exigeParadaEmTodoCredito("flow-semantic-1.9.0") && exigeParadaEmTodoCredito("flow-semantic-2.0.0"));
+    assert.ok(!exigeParadaEmTodoCredito("flow-semantic-1.8.1") && !exigeParadaEmTodoCredito("flow-semantic-1.8.0") && !exigeParadaEmTodoCredito("flow-semantic-1.7.0"));
+    assert.ok(SEMANTIC_LEGACY_VERSIONS.includes("flow-semantic-1.8.1") && SEMANTIC_LEGACY_VERSIONS.includes("flow-semantic-1.8.0"));
+  });
+
+  test("1.8.2: identical pairs with and without links — covered stop credits both, uncovered stop refuses both (arms and baseline)", () => {
+    const ok = prep2(runsDe(), cobre()), nao = prep2(runsDe(), descobre());
+    // O pacote é preparado nos dois casos: o que se recusa é o crédito, não a preparação.
+    assert.deepEqual(nao.units.find(u => u.specId === "B-01")!.domain!.find(e => e.scene === MODAL)!.states, ["detalhe"]);
+    for (const runId of ["sem", "com", "axe"]) {
+      const comL = scoreSemanticPackage(ok, reviews(ok, [naCanonica(ok, runId, true)])).scores.find(s => s.runId === runId)!;
+      const semL = scoreSemanticPackage(ok, reviews(ok, [naCanonica(ok, runId, false)])).scores.find(s => s.runId === runId)!;
+      assert.equal(semL.counts.detectedUnits, 1, `${runId}: covered, no links`);
+      assert.deepEqual(semL.matched, comL.matched, `${runId}: the same credit with and without the link`);
+      assert.throws(() => scoreSemanticPackage(nao, reviews(nao, [naCanonica(nao, runId, true)])), /captured at stop modal, but the domain of B-01 there only proves detalhe/, `${runId}: uncovered, link`);
+      assert.throws(() => scoreSemanticPackage(nao, reviews(nao, [naCanonica(nao, runId, false)])), /Anchored subject in scene .*captured at stop modal, but the domain of B-01 there only proves detalhe/, `${runId}: uncovered, no links`);
+    }
+    // Sem decisão (cartão pendente) nada muda: o pacote pontua, provisório, com 0.
+    const pend = scoreSemanticPackage(nao, scopeReviews(nao));
+    assert.ok(pend.scores.every(s => s.counts.detectedUnits === 0 && s.status === "provisional"));
+  });
+
+  test("1.8.2: the automatic path is no bypass — the stop is checked before the predicate", () => {
+    const comPred = (us: Entrada[]) => us.map(u => u.specId === "B-01" ? { ...u, acceptance: sustenta("sem-salto-para-conteudo") } : u);
+    const auto = { automatic: { predicate: "sem-salto-para-conteudo" } };
+    const ok = prep2(runsDe(), comPred(cobre())), nao = prep2(runsDe(), comPred(descobre()));
+    assert.equal(scoreSemanticPackage(ok, reviews(ok, [naCanonica(ok, "sem", false, auto)])).scores.find(s => s.runId === "sem")!.counts.detectedUnits, 1);
+    assert.throws(() => scoreSemanticPackage(nao, reviews(nao, [naCanonica(nao, "sem", false, auto)])), /Anchored subject .* only proves detalhe/);
+    assert.throws(() => scoreSemanticPackage(nao, reviews(nao, [naCanonica(nao, "axe", false, auto)])), /Anchored subject .* only proves detalhe/);
+  });
+
+  test("1.8.2: a unit without domain keeps the plain anchored path", () => {
+    const pkg = prep2([agente("r1", ["header button"])], descobre());
+    const bt = pkg.cards[0];
+    assert.equal(scoreSemanticPackage(pkg, reviews(pkg, [{ ...decision(bt.id, [{ id: "a1", text: "t", subjects: [sj(MODAL, botao.key)], verdict: "reference",
+      unitIds: [uid(pkg, "C-X")], citation: "supported" }]), cena: MODAL }])).scores[0].counts.detectedUnits, 1);
+  });
+
+  test("1.8.2: legacy — a 1.8.1 package keeps its own path byte for byte (the canonical anchored claim still scores there)", () => {
+    const nao = prep2(runsDe(), descobre());
+    const { packageHash: _h, ...corpo } = { ...nao, version: "flow-semantic-1.8.1" };
+    const p181: SemanticPackage = { ...corpo, packageHash: digest(corpo) };
+    validatePackage(p181);
+    const com181 = (pkg: SemanticPackage, d: SemanticDecision) =>
+      scoreSemanticPackage(pkg, { version: pkg.version, decisions: scopeReviews(pkg).decisions.map(x => x.cardId === d.cardId ? d : x) });
+    const r = com181(p181, naCanonica(p181, "sem", false));
+    assert.equal(r.version, "flow-semantic-1.8.1");
+    assert.equal(r.scores.find(s => s.runId === "sem")!.counts.detectedUnits, 1, "1.8.1 credited it (the finding)");
+    // E o vínculo continua recusado em 1.8.1, como era.
+    assert.throws(() => com181(p181, naCanonica(p181, "sem", true)), /only proves detalhe/);
+    // Onde a parada é provada, 1.8.1 e 1.8.2 dão a mesma pontuação: só a recusa muda.
+    const ok = prep2(runsDe(), cobre());
+    const { packageHash: _g, ...c2 } = { ...ok, version: "flow-semantic-1.8.1" };
+    const ok181: SemanticPackage = { ...c2, packageHash: digest(c2) };
+    assert.deepEqual(com181(ok181, naCanonica(ok181, "sem", false)).scores, scoreSemanticPackage(ok, reviews(ok, [naCanonica(ok, "sem", false)])).scores);
+  });
+
+  test("1.8.2: Codex repro (NAT-91 74577dd9) — canonical capture `after`, domain proves only `before`, exact subject, no links: refused", () => {
+    const SRC = "1280x900@source", END = "1280x900@canonical";
+    const pr = el("body>pnip-root", "<pnip-root>"), dc = el("", "<html>");
+    const res = (url: string): Resolution => ({ url, byKey: new Map([[dc.key, dc], [pr.key, pr]]), bySelector: new Map([
+      ["html", { selector: "html", ok: true, error: null, keys: [""] }], ["pnip-root", { selector: "pnip-root", ok: true, error: null, keys: [pr.key] }]]) } as Resolution);
+    const sc: SceneResolution[] = [
+      { id: SRC, viewport: wide, specIds: [], resolution: res("http://fixture/source"), segmento: { numero: 0, estado: "after", path: "/source", estados: ["before", "after"] } },
+      { id: END, viewport: wide, specIds: ["X"], resolution: res("http://fixture/canonical"), segmento: { numero: 1, estado: "after", path: "/canonical", estados: ["before", "after"] } }];
+    const exercise = (canonicalStates: string[]) => {
+      const domain = [{ scene: SRC, states: ["after"] }, { scene: END, states: canonicalStates }].map(x => ({ ...x, kind: "ausencia-global" as const, predicate: "no-skip-link",
+        participants: [pr.key], reference: REF, build: B, evidence: [{ source: "synthetic-evidence", sha256: "a".repeat(64) }] }));
+      const unit: Entrada = { specId: "X", element: pr as FlowUnit["element"], participants: [pr.key], rules: ["wcag:2.4.1"], categories: ["accessibility"], description: "no skip link",
+        state: "sempre", states: ["before", "after"], conditional: false, scene: END, domain };
+      const pkg = prepareSemanticPackage(ctxB, [unit], sc, [{ id: "r1", data: { ...run([{ selector: "pnip-root", rule: "wcag:2.4.1", observed: "source after", expected: "skip link",
+        state: { viewport: wide, steps: ["after"] }, evidence: [] }] as unknown as FlowAgentResults["findings"]), config: cfg(B) } }], { stateOrder: ["before", "after", "end"] });
+      const card = pkg.cards[0], subject = card.subjects.find(s => s.scene === END)!;
+      const d: SemanticDecision = { ...decision(card.id, [{ id: "a1", text: "claim", subjects: [subject.id], verdict: "reference", unitIds: [pkg.units[0].id], citation: "supported" }]), cena: END };
+      return scoreSemanticPackage(pkg, reviews(pkg, [d])).scores[0].counts.detectedUnits;
+    };
+    assert.throws(() => exercise(["before"]), /captured at stop after, but the domain of X there only proves before/);
+    assert.equal(exercise(["after"]), 1);
   });
 }
 
