@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "builtAt": "2026-10-03T05:53:12.164Z",
+  "builtAt": "2026-10-18T03:02:22.483Z",
   "base": {
     "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
     "node": "24.21.0"
@@ -8,7 +8,7 @@
   "images": {
     "agent": {
       "tag": "govbr-runner-agent:1.0.0-mcp0.0.70-cc2.1.288",
-      "id": "sha256:8579f69f0cd365c944d81bdd5df7da1c67311a7915f0446512ad3f745c3e00b3",
+      "id": "sha256:148221c122bbb6cefaa5c8053216b7e0ff8f577f511cf8e4847ff1db41a3670a",
       "labels": {
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.claude-code": "2.1.288",
@@ -18,15 +18,15 @@
       }
     },
     "oracle": {
-      "tag": "govbr-runner-oracle:2.7.0-31749c29b0dd",
-      "id": "sha256:8c2619ea0be709f62abd30c77f8c2c109128ea19f31882774263055e242df07d",
+      "tag": "govbr-runner-oracle:2.13.0-185dd2f56980",
+      "id": "sha256:037c54eada34b3066b51ae2ca53335a6c19927bf4b26f6a501ca0ed27d1f827b",
       "labels": {
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.claude-code": "2.1.288",
-        "govbr.oracle.data-sha256": "ade4f658553e2a6cc13b3f6118bfaf95e5dd9b05d18d22d8c113e456420c5162",
-        "govbr.oracle.dist-sha256": "31749c29b0dd2c0378b5955c1ba4c3804c66edd38cf90958c0de8196f11652f2",
+        "govbr.oracle.data-sha256": "1c757fc8e4ed9ca48c3d09973558994914a71149c75f96c4b7ebc708c6e16395",
+        "govbr.oracle.dist-sha256": "185dd2f569808d5c4213569e08b9e1aad339fea33c5874b05110aa80b1ddc537",
         "govbr.oracle.package": "govbr-ds-validator-server",
-        "govbr.oracle.version": "2.7.0",
+        "govbr.oracle.version": "2.13.0",
         "govbr.playwright-mcp": "0.0.70",
         "govbr.runner.image": "oracle",
         "govbr.runner.version": "runner-isolado-1.0.0"
@@ -34,20 +34,22 @@
     },
     "screens": {
       "tag": "govbr-runner-screens:telas1.0.0-1a6e8daf3cdb",
-      "id": "sha256:e59130548c706d7c75d7b88336d57a998aa8165ffc70c4db7908432cd226bb54",
+      "id": "sha256:1f0119e21e84bee26172c755ce645c744019d060bf3025c63187dbc3064697b1",
       "labels": {
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.runner.image": "screens",
         "govbr.runner.version": "runner-isolado-1.0.0",
-        "govbr.telas.manifest-sha256": "7438081cbc1d27f7a591dbe6e85d0d745fe3b84658f1e8c268c03737d10f5227",
+        "govbr.telas.manifest-sha256": "c3846c433f5d3cc6d6a54036aebdf8c39c9899e7f2b083a12bd4843305bb24db",
         "govbr.telas.site-sha256": "1a6e8daf3cdb02da4f03cc3e39f52c0a1f44063b8270238ac5caf78eae39d11a"
       }
     },
     "collector": {
       "tag": "govbr-runner-collector:1.0.0",
-      "id": "sha256:9182d30dcde0ceeb04e649b9e9b172d007eb16dbb9d7f5d453a3409529ba4af4",
+      "id": "sha256:dc3ba8e1dd993fed1eb603bc625198e3a3ee296a98d2e47d6e7c8c92937d1ce7",
       "labels": {
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+        "govbr.collector.contracts-sha256": "fd1c5415c16c3cc1af7c6a41677f40b09cd6739110eef3e71e1d5e7067b8417c",
+        "govbr.collector.findings-contracts": "findings.v1,findings.v2",
         "govbr.collector.schemas": "39f19e7cc70049cd1ccca759af56a57c59a9db5193e500444451b79b80d6526a",
         "govbr.runner.image": "collector",
         "govbr.runner.version": "runner-isolado-1.0.0"
@@ -71,13 +73,13 @@
     "claudeCode": "2.1.288 (Claude Code)",
     "oracle": {
       "package": "govbr-ds-validator-server",
-      "version": "2.7.0",
-      "distSha256": "31749c29b0dd2c0378b5955c1ba4c3804c66edd38cf90958c0de8196f11652f2",
-      "dataSha256": "ade4f658553e2a6cc13b3f6118bfaf95e5dd9b05d18d22d8c113e456420c5162"
+      "version": "2.13.0",
+      "distSha256": "185dd2f569808d5c4213569e08b9e1aad339fea33c5874b05110aa80b1ddc537",
+      "dataSha256": "1c757fc8e4ed9ca48c3d09973558994914a71149c75f96c4b7ebc708c6e16395"
     },
     "telas": {
       "siteSha256": "1a6e8daf3cdb02da4f03cc3e39f52c0a1f44063b8270238ac5caf78eae39d11a",
-      "manifestSha256": "7438081cbc1d27f7a591dbe6e85d0d745fe3b84658f1e8c268c03737d10f5227"
+      "manifestSha256": "c3846c433f5d3cc6d6a54036aebdf8c39c9899e7f2b083a12bd4843305bb24db"
     }
   }
 }

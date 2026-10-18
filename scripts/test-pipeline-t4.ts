@@ -99,13 +99,15 @@ await teste("workflow: cada segredo só onde é usado (escrita só em arquivar; 
   for (const [id, j] of Object.entries(wf.jobs)) {
     assert.ok(!texto((j as unknown as { env?: unknown }).env).includes("secrets."), `segredo no env do job ${id}`);
     for (const [i, s] of j.steps.entries()) {
-      for (const m of texto(s).matchAll(/secrets\.([A-Z_]+)/g)) (usos[m[1]] ??= []).push(`${id}#${i}`);
+      for (const m of texto(s).matchAll(/secrets\.([A-Z0-9_]+)/g)) (usos[m[1]] ??= []).push(`${id}#${i}`);
       assert.ok(!(s.run ?? "").includes("${{"), `interpolação no shell em ${id}#${i}`);
     }
   }
-  assert.deepEqual(Object.keys(usos).sort(), ["CLAUDE_CODE_OAUTH_TOKEN", "GOVBR_LEITURA_TOKEN", "GOVBR_RESULTADOS_LEITURA_TOKEN", "GOVBR_RESULTADOS_TOKEN"]);
+  assert.deepEqual(Object.keys(usos).sort(), ["CLAUDE_CODE_OAUTH_TOKEN", "CLAUDE_CODE_OAUTH_TOKEN_2", "GOVBR_LEITURA_TOKEN", "GOVBR_RESULTADOS_LEITURA_TOKEN", "GOVBR_RESULTADOS_TOKEN"]);
   assert.ok(usos.GOVBR_RESULTADOS_TOKEN.every((u) => u.startsWith("arquivar#")), `escrita fora de arquivar: ${usos.GOVBR_RESULTADOS_TOKEN}`);
   assert.equal(usos.CLAUDE_CODE_OAUTH_TOKEN.length, 1, "credencial do provedor em mais de um passo");
+  // as duas assinaturas (input `conta`) moram no mesmo passo da coleta real, e só nele
+  assert.deepEqual(usos.CLAUDE_CODE_OAUTH_TOKEN_2, usos.CLAUDE_CODE_OAUTH_TOKEN, "segunda conta fora do passo da coleta real");
   const [job, idx] = usos.CLAUDE_CODE_OAUTH_TOKEN[0].split("#");
   const passo = wf.jobs[job].steps[Number(idx)];
   assert.equal(job, "coleta");

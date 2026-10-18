@@ -18,3 +18,5 @@ scripts/fixtures/** -text
 # T4: scripts de shell e o workflow rodam em Linux (CI e ensaio local): LF mesmo num checkout Windows.
 *.sh text eol=lf
 .github/workflows/*.yml text eol=lf
+# NAT-86: o run-once compara os bytes da skill com o pacote exportado; CRLF num checkout Windows quebrava test:runner.
+skills/** text eol=lf
