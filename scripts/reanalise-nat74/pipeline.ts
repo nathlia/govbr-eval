@@ -113,8 +113,13 @@ function e0(raiz: string, x: EntradasV110): { hashes: Record<string, { bytes: nu
     catch { throw new Portao("E0", `govbr-resultados em ${head}: ${c} não é ancestral do HEAD`); }
   }
   const linhas = (t: string) => t.split("\n").map(l => l.trim()).filter(Boolean);
-  const foraDerivados = linhas(git(RESULTADOS, "diff", "--name-only", COMMIT_RESULTADOS, "--", ".", ":(exclude)derivados"));
-  if (foraDerivados.length) throw new Portao("E0", { motivo: `arquivo original mudou desde ${COMMIT_RESULTADOS} (fora de derivados/)`, arquivos: foraDerivados });
+  // [1.2.0] O arquivo continua recebendo campanhas novas (ensaios, índice). O que tem de estar idêntico a COMMIT_RESULTADOS
+  // é o que a reanálise LÊ fora de derivados/ (lista fechada `arquivosLidos`), e nada pode ter sido apagado; arquivo novo
+  // ou alterado fora da lista (índice, campanhas novas) não entra na análise.
+  const lidosNoArquivo = new Set(arquivosLidos().map(r => posix(relative(RESULTADOS, resolve(TCC, r)))).filter(r => !r.startsWith("..") && !r.startsWith("derivados/")));
+  const mudancas = linhas(git(RESULTADOS, "diff", "--name-status", COMMIT_RESULTADOS, "--", ".", ":(exclude)derivados")).map(l => l.split("\t"));
+  const foraDerivados = mudancas.filter(([st, f]) => lidosNoArquivo.has(f) || st.startsWith("D")).map(([st, f]) => `${st}\t${f}`);
+  if (foraDerivados.length) throw new Portao("E0", { motivo: `arquivo original lido pela reanálise mudou desde ${COMMIT_RESULTADOS} (fora de derivados/)`, arquivos: foraDerivados });
   const filaT3 = `${CAMINHO_DERIVADO}/fila-t3/`;
   const d100 = linhas(git(RESULTADOS, "diff", "--name-status", COMMIT_DERIVADO_100, "--", CAMINHO_DERIVADO))
     .filter(l => !(/^A\t/.test(l) && l.slice(2).startsWith(filaT3)));
