@@ -42,7 +42,8 @@
       ],
       "properties": {
         "run": {
-          "const": "run.v1"
+          "description": "run.v2 (NAT-61): execução de três braços; o manifesto não muda por isso.",
+          "enum": ["run.v1", "run.v2"]
         },
         "findings": {
           "const": "findings.v2"

@@ -17,7 +17,7 @@
  * Fora daqui: o teto de tentativas da CAMPANHA (`retryPolicy.campaignAttemptCeiling`) e a seleção
  * de tentativa por slot ficam na agenda de slots (`agenda-campanha.ts`, NAT-65).
  */
-import type { Campaign, Run } from "../contracts/index";
+import { oracleOfCampaign, type AnyCampaign, type AnyRun, type ArmV2 } from "../contracts/index";
 
 export interface IdentidadeEfetiva {
   /** Esforço que o cliente recebe (`nao-se-aplica` no agente roteirizado). */
@@ -36,7 +36,7 @@ export interface IdentidadeEfetiva {
 }
 
 /** Diferenças entre o que a execução usa/usou e o que a campanha congelou. [] = idêntico. */
-export function divergenciasDaCampanha(c: Campaign, e: IdentidadeEfetiva): string[] {
+export function divergenciasDaCampanha(c: AnyCampaign, e: IdentidadeEfetiva): string[] {
   const p: string[] = [];
   if (e.effort !== null && e.effort !== c.design.effort) p.push(`esforço ${e.effort} ≠ ${c.design.effort} congelado na campanha`);
   if (e.timeoutSeconds !== null && e.timeoutSeconds !== c.limits.timeoutSeconds) {
@@ -59,7 +59,28 @@ export function divergenciasDaCampanha(c: Campaign, e: IdentidadeEfetiva): strin
 }
 
 /** A identidade que um run.json registrou. */
-export function identidadeDoRun(run: Run): IdentidadeEfetiva {
+export function identidadeDoRun(run: AnyRun): IdentidadeEfetiva {
   return { effort: run.effort, timeoutSeconds: run.limits.timeoutSeconds, maxTurns: run.limits.maxTurns, maxBudgetUsd: run.limits.maxBudgetUsd, client: run.client, protocolSha256: run.versions.protocolSha256,
     attempt: run.attempt, repetition: run.repetition };
+}
+
+/** Perfis equivalentes: o runner v1 gravava `combined` para o servidor no perfil evaluation (D-131/NAT-61). */
+const mesmoPerfil = (a: string, b: string): boolean => a === b || [a, b].every((p) => p === "combined" || p === "evaluation");
+
+/**
+ * NAT-61: o oráculo de um braço contra o que a campanha fixou para ele. No preflight só existem dist/data
+ * (o perfil e o inventário são MEDIDOS na coleta, pela ponte); na análise, o run.v2 traz também o perfil
+ * medido e o hash do tools/list exposto. [] = confere (ou braço sem oráculo dos dois lados).
+ */
+export function divergenciasDoOraculo(c: AnyCampaign, arm: ArmV2,
+  o: { distSha256: string; dataSha256: string; profile?: string | null; toolsListSha256?: string | null } | null): string[] {
+  const fixado = oracleOfCampaign(c, arm);
+  if (arm === "sem") return o ? ["braço sem com oráculo registrado"] : [];
+  if (!fixado) return [`a campanha não fixa o oráculo do braço ${arm}`];
+  if (!o) return [`braço ${arm} sem oráculo registrado`];
+  const p: string[] = [];
+  if (o.distSha256 !== fixado.distSha256 || o.dataSha256 !== fixado.dataSha256) p.push(`oráculo do braço ${arm} (${o.distSha256.slice(0, 12)}/${o.dataSha256.slice(0, 12)}) ≠ o fixado na campanha (${fixado.distSha256.slice(0, 12)}/${fixado.dataSha256.slice(0, 12)})`);
+  if (o.profile && !mesmoPerfil(o.profile, fixado.profile)) p.push(`perfil medido do oráculo ${o.profile} ≠ ${fixado.profile} fixado para o braço ${arm}`);
+  if (o.toolsListSha256 && fixado.toolsListSha256 && o.toolsListSha256 !== fixado.toolsListSha256) p.push(`tools/list do braço ${arm} (${o.toolsListSha256.slice(0, 12)}) ≠ o fixado na campanha (${fixado.toolsListSha256.slice(0, 12)})`);
+  return p;
 }

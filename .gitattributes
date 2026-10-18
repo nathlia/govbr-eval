@@ -20,3 +20,12 @@ scripts/fixtures/** -text
 .github/workflows/*.yml text eol=lf
 # NAT-86: o run-once compara os bytes da skill com o pacote exportado; CRLF num checkout Windows quebrava test:runner.
 skills/** text eol=lf
+# NAT-61/NAT-86: o portão confere o sha256 das expectativas e da matriz congeladas (bytes LF); um checkout
+# Windows com core.autocrlf=true trocava as quebras e recusava a matriz numa worktree nova.
+controles/**/*.json text eol=lf
+portao-nat86/*.json text eol=lf
+# NAT-61: cópia texto a texto do detector do validator (guarda de deriva no test:runner).
+scripts/vazamento/*.ts text eol=lf
+# NAT-61: o kb-aliases v2 também entra no hash do scorer (a regra de cima só cobria o v1); numa worktree nova
+# no Windows ele saía em CRLF e o painel acusava SCORER_FILES alterado.
+kb-aliases-v2.json text eol=lf

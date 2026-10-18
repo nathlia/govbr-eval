@@ -12,6 +12,7 @@ import { join } from "node:path";
 import {
   CONTRACTS_DIR, CONTRACT_NAMES, checkAggregation, checkPlannedAbsence, comparisonKeyOf, crossCheckManifest, crossCheckRun, validateContract,
   type AnalysisBinding, type ArtifactManifest, type ArtifactManifestV2, type Campaign, type ContractError, type Findings, type FindingsV2, type Isolation, type Run,
+  type AnalysisBindingV2, type CampaignV2, type RunV2, oracleOfCampaign,
 } from "../contracts/index";
 import { normalizeFinding, validateFlowReport, FINDING_CONTRACT } from "./flow-contract";
 import { ROOT } from "./adjudication";
@@ -66,6 +67,15 @@ const EXPECTED: Record<string, { path: string; keyword: string; missingProperty?
   "artifact-manifest--v1-tool-payload-role.json": { path: "/files/6/role", keyword: "enum" },
   // NAT-84 — auditoria final: nada sinalizável fica fora das verificações
   "inspection-audit--cursor-hidden.json": { path: "/verificacoes/5/ocorrencias", keyword: "x-audit-unflagged" },
+  // NAT-61 — três braços (run.v2, campaign.v2, analysis-binding.v2)
+  "run--v2-ferramentas-evaluation-profile.json": { path: "/intervention/oracle/profile", keyword: "const" },
+  "run--v2-ferramentas-tools-extra.json": { path: "/intervention/oracle/tools", keyword: "const" },
+  "run--v2-ferramentas-oracle-calls-unmeasured.json": { path: "/usage/oracleCalls/status", keyword: "const" },
+  "campaign--v2-two-primaries.json": { path: "/design/comparisons", keyword: "contains" },
+  "campaign--v2-ferramentas-without-profile.json": { path: "/fixed/oracleProfiles", keyword: "required", missingProperty: "ferramentas" },
+  "campaign--v2-comparison-unknown-arm.json": { path: "/design/comparisons/0/arms", keyword: "x-unknown-arm" },
+  "campaign--v2-two-oracle-images.json": { path: "/fixed/oracleProfiles", keyword: "x-same-oracle-image" },
+  "analysis-binding--v1-ferramentas.json": { path: "/runs/0/arm", keyword: "enum" },
 };
 
 const show = (errors: ContractError[]): string => errors.map(e => `${e.path || "/"} ${e.keyword}${e.missingProperty ? `(${e.missingProperty})` : ""}`).join("; ");

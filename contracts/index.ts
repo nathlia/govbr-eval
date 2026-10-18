@@ -15,6 +15,11 @@
  * achado-2, e `artifact-manifest.v2` existe só porque o v1 trava `findings.v1`. Os leitores aceitam as duas
  * versões; os pacotes históricos continuam v1 e válidos. As regras do registro que o schema não expressa
  * moram em inspection-ledger.mjs (o coletor usa a mesma cópia).
+ *
+ * NAT-61: `run.v2`, `campaign.v2` e `analysis-binding.v2` (três braços: sem, com, ferramentas; o perfil
+ * MEDIDO do servidor do oráculo e o inventário exposto). common.v1 não muda (vai embutido no coletor).
+ * Os leitores aceitam v1 e v2; campanhas e pacotes v1 continuam válidos e nunca são reescritos. Números de
+ * dois braços (v1) e de três (v2) nunca formam série.
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -29,6 +34,7 @@ export const SCHEMA_BASE = "https://govbr-eval.invalid/contracts/";
 export const CONTRACT_NAMES = [
   "campaign.v1", "run.v1", "findings.v1", "findings.v2", "isolation.v1", "artifact-manifest.v1", "artifact-manifest.v2",
   "baseline.v1", "snapshot-manifest.v1", "analysis-binding.v1", "inspection-audit.v1",
+  "run.v2", "campaign.v2", "analysis-binding.v2",
 ] as const;
 export type ContractName = typeof CONTRACT_NAMES[number];
 
@@ -46,6 +52,11 @@ export type FailureReason = "preflight-failed" | "isolation-failed" | "rate-limi
   | "timeout" | "cancelled" | "output-empty" | "output-malformed" | "output-refused" | "no-submission"
   | "vm-lost" | "archive-unavailable" | "harness-error";
 export type Arm = "sem" | "com";
+/** NAT-61 (bracos.v2): o terceiro braço. `Arm` continua o dos contratos v1. */
+export type ArmV2 = "sem" | "com" | "ferramentas";
+export const ARMS_V2: readonly ArmV2[] = ["sem", "com", "ferramentas"];
+/** Perfil do servidor do oráculo (bracos.v2). `combined` = rótulo legado que o runner v1 gravava para o evaluation. */
+export type OracleProfileV2 = "evaluation" | "knowledge-free" | "combined" | "normative" | "deterministic" | "evidence";
 
 // ───────────────────────────────────────────────────────────────── comuns
 
@@ -69,6 +80,13 @@ export interface OracleIdentity {
   package: string; version: string; distSha256: Sha256; dataSha256: Sha256;
   profile: "normative" | "deterministic" | "evidence" | "combined";
 }
+/** bracos.v2: a identidade do oráculo com o perfil MEDIDO e o inventário exposto pela ponte. */
+export interface OracleIdentityV2 {
+  package: string; version: string; distSha256: Sha256; dataSha256: Sha256;
+  profile: OracleProfileV2; tools: string[]; toolsListSha256: Sha256;
+}
+/** Comparação declarada antes da coleta (campaign.v2, decisão 13): diferença = arms[1] − arms[0]. */
+export interface ComparisonV2 { id: string; arms: [ArmV2, ArmV2]; role: "primary" | "secondary"; question: string }
 
 // ───────────────────────────────────────────────────────────────── documentos
 
@@ -120,6 +138,34 @@ export interface Run extends Doc<"run.v1"> {
     | "toolCalls" | "oracleCalls" | "estimatedCostUsd" | "billedCostUsd", Metric>;
   artifactManifest: PackagePath;
   isolation: PackagePath | null;
+}
+
+/** campaign.v2 (NAT-61): até três braços, perfil do oráculo por braço, comparações e ordem declaradas. */
+export interface CampaignV2 extends Doc<"campaign.v2">, Omit<Campaign, "contract" | "design" | "fixed"> {
+  design: {
+    screens: Screen[]; arms: ArmV2[]; models: { family: string; requested: string }[]; effort: string;
+    repetitions: number; order: Campaign["design"]["order"] | "quadrado-latino"; seed: number | null;
+    comparisons: ComparisonV2[];
+  };
+  fixed: Omit<Campaign["fixed"], "oracle"> & { oracleProfiles: { com?: OracleIdentityV2; ferramentas?: OracleIdentityV2 } };
+}
+export type AnyCampaign = Campaign | CampaignV2;
+
+/** run.v2 (NAT-61): o braço ferramentas e a identidade do oráculo com perfil medido. Fora isso, igual ao run.v1. */
+export interface RunV2 extends Doc<"run.v2">, Omit<Run, "contract" | "arm" | "intervention"> {
+  arm: ArmV2;
+  intervention: { oracle: OracleIdentityV2 | null };
+}
+export type AnyRun = Run | RunV2;
+export const RUN_CONTRACTS = ["run.v1", "run.v2"] as const;
+export const CAMPAIGN_CONTRACTS = ["campaign.v1", "campaign.v2"] as const;
+
+/** Identidade do oráculo de um braço numa campanha v1 ou v2 (null = braço sem oráculo ou campanha sem o braço). */
+export function oracleOfCampaign(c: AnyCampaign, arm: ArmV2): { distSha256: Sha256; dataSha256: Sha256; profile: string; toolsListSha256: Sha256 | null } | null {
+  if (arm === "sem") return null;
+  if (c.contract === "campaign.v1") return arm === "com" ? { ...c.fixed.oracle, toolsListSha256: null } : null;
+  const o = c.fixed.oracleProfiles[arm];
+  return o ? { distSha256: o.distSha256, dataSha256: o.dataSha256, profile: o.profile, toolsListSha256: o.toolsListSha256 } : null;
 }
 
 /** Espelha FlowFinding (types.ts) no contrato achado-2 de scripts/flow-contract.ts. */
@@ -226,14 +272,14 @@ export interface Isolation extends Doc<"isolation.v1"> {
 
 export interface ArtifactManifest extends Doc<"artifact-manifest.v1"> {
   campaignId: string; runId: string; producedBy: string; producedAt: UtcTimestamp;
-  schemaVersions: { run: "run.v1"; findings?: "findings.v1"; isolation?: "isolation.v1" };
+  schemaVersions: { run: "run.v1" | "run.v2"; findings?: "findings.v1"; isolation?: "isolation.v1" };
   files: { path: PackagePath; bytes: number; sha256: Sha256; mediaType: string;
     role: "run" | "findings" | "isolation" | "tool-events" | "evidence" | "summary" | "log" | "refusal" | "model-identity" | "other" }[];
 }
 /** artifact-manifest.v2 (NAT-81): só existe porque v1 trava `findings.v1`. Escrito quando o envelope é findings.v2. */
 export interface ArtifactManifestV2 extends Doc<"artifact-manifest.v2"> {
   campaignId: string; runId: string; producedBy: string; producedAt: UtcTimestamp;
-  schemaVersions: { run: "run.v1"; findings: "findings.v2"; inspection?: typeof INSPECTION_CONTRACT; isolation?: "isolation.v1" };
+  schemaVersions: { run: "run.v1" | "run.v2"; findings: "findings.v2"; inspection?: typeof INSPECTION_CONTRACT; isolation?: "isolation.v1" };
   /** Igual ao `inspectionStatus` de findings.json (registro inválido fica visível sem abrir o envelope). */
   inspectionStatus: FindingsV2["inspectionStatus"];
   /** Como v1, mais `tool-payload` (NAT-82): texto integral de um lado de chamada cortado na projeção da ponte. */
@@ -283,8 +329,14 @@ export interface AnalysisBinding extends Doc<"analysis-binding.v1"> {
   /** NAT-74: só em derivado retrospectivo (saída sob derivados/). */
   retrospective?: { retrospective: true; derivado: string; originalScorerVersion: string; manifestSha256: Sha256 };
 }
+/** analysis-binding.v2 (NAT-61): igual ao v1, com o braço de bracos.v2. */
+export interface AnalysisBindingV2 extends Doc<"analysis-binding.v2">, Omit<AnalysisBinding, "contract" | "runs"> {
+  runs: { runId: string; arm: ArmV2; artifactManifest: RecoverableObject }[];
+}
+export type AnyAnalysisBinding = AnalysisBinding | AnalysisBindingV2;
 
-export type ContractDocument = Campaign | Run | Findings | FindingsV2 | Isolation | ArtifactManifest | ArtifactManifestV2 | Baseline | SnapshotManifest | AnalysisBinding | InspectionAudit;
+export type ContractDocument = Campaign | CampaignV2 | Run | RunV2 | Findings | FindingsV2 | Isolation | ArtifactManifest | ArtifactManifestV2 | Baseline | SnapshotManifest
+  | AnalysisBinding | AnalysisBindingV2 | InspectionAudit;
 
 // ───────────────────────────────────────────────────────────────── validador
 
@@ -399,12 +451,27 @@ function semanticErrors(doc: ContractDocument): ContractError[] {
       break;
     }
     case "analysis-binding.v1":
+    case "analysis-binding.v2":
       if (doc.baseline.mode === "planned-absence" && !(Date.parse(doc.baseline.declaredAt) < Date.parse(doc.collectionStartedAt))) {
         errors.push({ path: "/baseline/declaredAt", keyword: "x-planned-absence-after-collection",
           message: "ausência de linha de base só é planejada se declarada antes do início da coleta; depois disso é falha ou bloqueio" });
       }
       duplicates(doc.runs.map(r => r.runId), i => `/runs/${i}/runId`, "runId");
       break;
+    case "campaign.v2": {
+      // NAT-61: cada comparação usa braços do desenho; o mesmo par de braços não aparece duas vezes.
+      const arms = new Set<string>(doc.design.arms);
+      doc.design.comparisons.forEach((c, i) => {
+        for (const a of c.arms) if (!arms.has(a)) errors.push({ path: `/design/comparisons/${i}/arms`, keyword: "x-unknown-arm", message: `braço ${a} fora do desenho` });
+      });
+      duplicates(doc.design.comparisons.map(c => [...c.arms].sort().join("×")), i => `/design/comparisons/${i}/arms`, "comparação");
+      duplicates(doc.design.comparisons.map(c => c.id), i => `/design/comparisons/${i}/id`, "id de comparação");
+      const com = doc.fixed.oracleProfiles.com, ferr = doc.fixed.oracleProfiles.ferramentas;
+      if (com && ferr && (com.distSha256 !== ferr.distSha256 || com.dataSha256 !== ferr.dataSha256)) {
+        errors.push({ path: "/fixed/oracleProfiles", keyword: "x-same-oracle-image", message: "com e ferramentas usam a mesma imagem do oráculo (dist/data iguais); muda só o perfil" });
+      }
+    }
+    // falls through
     case "campaign.v1":
       duplicates(doc.design.screens.map(s => s.id), i => `/design/screens/${i}/id`, "tela");
       for (const [i, a] of doc.baselinePolicy.plannedAbsences.entries()) {
@@ -473,7 +540,7 @@ export function crossCheckManifest(manifest: AnyArtifactManifest, findings: AnyF
 }
 
 /** run.json × findings.json × isolation.json do mesmo pacote. */
-export function crossCheckRun(run: Run, findings: AnyFindings | null, isolation: Isolation | null): ContractError[] {
+export function crossCheckRun(run: AnyRun, findings: AnyFindings | null, isolation: Isolation | null): ContractError[] {
   const errors: ContractError[] = [];
   if (run.submission.status === "accepted" && !findings) {
     errors.push({ path: "/submission", keyword: "x-missing-findings", message: "submissão aceita sem findings.json" });
@@ -494,6 +561,12 @@ export function crossCheckRun(run: Run, findings: AnyFindings | null, isolation:
     if (run.arm === "sem" && isolation.toolInventory.oracleAnnounced) {
       errors.push({ path: "/arm", keyword: "x-oracle-in-sem", message: "oráculo anunciado ao cliente no braço sem" });
     }
+    // NAT-61: as ferramentas do oráculo que o run.v2 registra são as que a ponte anunciou (isolation).
+    if (run.contract === "run.v2" && run.intervention.oracle) {
+      const announced = new Set(isolation.toolInventory.announced);
+      const missing = run.intervention.oracle.tools.filter(t => !announced.has(t));
+      if (missing.length) errors.push({ path: "/intervention/oracle/tools", keyword: "x-oracle-inventory", message: `ferramentas do oráculo no run.json fora do inventário anunciado: ${missing.join(", ")}` });
+    }
     if (run.status.oracleUsage === "absent-verified" && isolation.toolInventory.oracleAnnounced) {
       errors.push({ path: "/status/oracleUsage", keyword: "x-oracle-in-sem", message: "absent-verified com oráculo no inventário" });
     }
@@ -508,7 +581,7 @@ export function crossCheckRun(run: Run, findings: AnyFindings | null, isolation:
  * texto, declarada antes da coleta e só no caminho individual. Falha ou incompatibilidade nunca vira
  * ausência planejada.
  */
-export function checkPlannedAbsence(campaign: Campaign, campaignSha256: Sha256, binding: AnalysisBinding): ContractError[] {
+export function checkPlannedAbsence(campaign: AnyCampaign, campaignSha256: Sha256, binding: AnyAnalysisBinding): ContractError[] {
   if (binding.baseline.mode !== "planned-absence") return [];
   const b = binding.baseline;
   const errors: ContractError[] = [];
@@ -533,7 +606,7 @@ export function checkPlannedAbsence(campaign: Campaign, campaignSha256: Sha256, 
  * componente normativo da intervenção (`intervention.oracle`) ficam DE FORA: são a diferença prevista.
  * Referência e scorer vêm da análise; o resto, do run.
  */
-export function comparisonKeyOf(run: Run, binding: AnalysisBinding): Record<string, string> {
+export function comparisonKeyOf(run: AnyRun, binding: AnyAnalysisBinding): Record<string, string> {
   return {
     "screen.id": run.screen.id,
     "screen.version": run.screen.version,
@@ -570,7 +643,7 @@ export interface AggregationCheck { ok: boolean; problems: string[]; warnings: s
  * scripts/analysis-manifest.ts. `model.resolved: "unknown"` em todos é aceito com aviso: a
  * identidade fica só pelo ID pedido.
  */
-export function checkAggregation(entries: { run: Run; binding: AnalysisBinding }[]): AggregationCheck {
+export function checkAggregation(entries: { run: AnyRun; binding: AnyAnalysisBinding }[]): AggregationCheck {
   const problems: string[] = [];
   const warnings: string[] = [];
   if (entries.length === 0) return { ok: false, problems: ["nenhuma execução"], warnings };
@@ -579,8 +652,13 @@ export function checkAggregation(entries: { run: Run; binding: AnalysisBinding }
     const values = [...new Set(keys.map(k => k[field]))];
     if (values.length > 1) problems.push(`${field} difere: ${entries.map((e, i) => `${e.run.runId}=${keys[i][field]}`).join(", ")}`);
   }
-  const oracles = [...new Set(entries.filter(e => e.run.arm === "com").map(e => JSON.stringify(e.run.intervention.oracle)))];
-  if (oracles.length > 1) problems.push("intervention.oracle difere entre execuções do braço com");
+  // NAT-61: dentro de cada braço com oráculo (com, ferramentas), a intervenção tem de ser a mesma.
+  for (const arm of ["com", "ferramentas"] as const) {
+    const oracles = [...new Set(entries.filter(e => e.run.arm === arm).map(e => JSON.stringify(e.run.intervention.oracle)))];
+    if (oracles.length > 1) problems.push(`intervention.oracle difere entre execuções do braço ${arm}`);
+  }
+  // Números de dois braços (run.v1) e de três (run.v2) nunca formam série.
+  if (new Set(entries.map(e => e.run.contract)).size > 1) problems.push("execuções run.v1 e run.v2 misturadas: números de 2 e de 3 braços nunca formam série");
   for (const e of entries) {
     if (e.run.fixture !== entries[0].run.fixture) problems.push(`fixture misturada com dado real (${e.run.runId})`);
     if (e.binding.runs.every(r => r.runId !== e.run.runId)) problems.push(`${e.run.runId} não consta da análise ${e.binding.analysisId}`);

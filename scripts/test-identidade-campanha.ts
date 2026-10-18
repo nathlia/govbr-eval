@@ -114,7 +114,7 @@ await teste("R1 preflight no caminho do preparar (buildIsolatedManifest): diverg
   assert.equal(gerado.execution!.client.name, "claude-code");
   assert.match(gerado.execution!.protocolSha256, /^[a-f0-9]{64}$/);
   // a campanha "commitada" do teste = a gerada para o disparo, com tetos de 2 (tentativa e repetição)
-  const campanha = clone(gerado.campaign!.document);
+  const campanha = clone(gerado.campaign!.document) as Campaign;
   campanha.design.repetitions = 2;
   campanha.retryPolicy.maxAttemptsPerSlot = 2;
   const arq = join(work, "campanha-preflight.json");

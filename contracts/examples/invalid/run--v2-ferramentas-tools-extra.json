@@ -1,0 +1,138 @@
+{
+  "contract": "run.v2",
+  "fixture": true,
+  "campaignId": "fixture-campanha-01",
+  "slotId": "slot-01",
+  "pairId": "par-01",
+  "runId": "fixture-run-ferramentas-01",
+  "attempt": 1,
+  "idempotencyKey": "fixture-campanha-01/slot-01/1",
+  "screen": {
+    "id": "tela-fixture",
+    "label": "fixture",
+    "version": "fixture-0.0.0"
+  },
+  "arm": "ferramentas",
+  "repetition": 1,
+  "model": {
+    "family": "familia-fixture",
+    "requested": "modelo-fixture",
+    "resolved": "unknown",
+    "resolvedSource": "unknown",
+    "resolvedEvidence": null
+  },
+  "provider": {
+    "name": "provedor-fixture",
+    "authMethod": "unknown"
+  },
+  "effort": "medium",
+  "client": {
+    "name": "cliente-fixture",
+    "version": "0.0.0"
+  },
+  "browser": {
+    "name": "chromium",
+    "version": "0.0.0-fixture",
+    "headless": true
+  },
+  "versions": {
+    "protocolSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "promptSha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "skillSha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "harnessCommit": "ffffffffffffffffffffffffffffffffffffffff",
+    "siteManifestSha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "playwrightMcp": "0.0.0-fixture"
+  },
+  "intervention": {
+    "oracle": {
+      "package": "oraculo-fixture",
+      "version": "0.0.0-fixture",
+      "distSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "dataSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "profile": "knowledge-free",
+      "tools": [
+        "get_ds_rules",
+        "get_finding_details",
+        "scan_page",
+        "verify_finding"
+      ],
+      "toolsListSha256": "72abd54968cbe3173fce5dd3b4bba7aff563b37ca11b8a9ec0f25a91a104d39c"
+    }
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "isolationPolicyVersion": "isolamento-fixture-1",
+  "timestamps": {
+    "plannedAt": "2026-01-03T00:00:00Z",
+    "startedAt": "2026-01-03T00:01:00Z",
+    "finishedAt": "2026-01-03T00:11:00Z"
+  },
+  "lifecycle": {
+    "state": "archived",
+    "stage": null
+  },
+  "status": {
+    "technical": "passed",
+    "isolation": "passed",
+    "protocol": "adherent",
+    "oracleUsage": "used-adherent",
+    "score": "pending-review"
+  },
+  "failure": null,
+  "submission": {
+    "status": "accepted",
+    "findings": "findings.json",
+    "refusal": null
+  },
+  "usage": {
+    "wallClockSeconds": {
+      "value": 600,
+      "status": "measured",
+      "source": "runner"
+    },
+    "inputTokens": {
+      "value": null,
+      "status": "unavailable"
+    },
+    "outputTokens": {
+      "value": null,
+      "status": "unavailable"
+    },
+    "cacheReadTokens": {
+      "value": null,
+      "status": "unavailable"
+    },
+    "cacheCreationTokens": {
+      "value": null,
+      "status": "unavailable"
+    },
+    "turns": {
+      "value": 12,
+      "status": "measured",
+      "source": "cliente"
+    },
+    "toolCalls": {
+      "value": 30,
+      "status": "measured",
+      "source": "bridge"
+    },
+    "oracleCalls": {
+      "value": 8,
+      "status": "measured",
+      "source": "bridge"
+    },
+    "estimatedCostUsd": {
+      "value": null,
+      "status": "unavailable"
+    },
+    "billedCostUsd": {
+      "value": null,
+      "status": "unavailable"
+    }
+  },
+  "artifactManifest": "artifact-manifest.json",
+  "isolation": "isolation.json"
+}
