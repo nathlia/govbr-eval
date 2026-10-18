@@ -152,7 +152,16 @@ await teste("workflow: checkouts por SHA, sem credencial persistida; coleta sem 
   assert.ok(!coleta.some((s) => s.uses?.startsWith("actions/download-artifact@")), "a coleta não baixa artefato nenhum (o manifesto traz o plano de estados)");
   assert.ok(!coleta.some((s) => ["nathlia/govbr-corpus", "nathlia/govbr-resultados"].includes(String(s.with?.repository))));
   const val = coleta.find((s) => s.with?.repository === "nathlia/govbr-ds-validator")!;
-  assert.equal(val.if, "needs.preparar.outputs.braco == 'com'", "o braço sem nem baixa o oráculo (braço resolvido no preparar, NAT-65)");
+  // NAT-61: com e ferramentas usam o oráculo (mesma imagem); o sem nem o baixa (braço resolvido no preparar, NAT-65)
+  assert.equal(val.if, "needs.preparar.outputs.braco == 'com' || needs.preparar.outputs.braco == 'ferramentas'", "o braço sem nem baixa o oráculo");
+  const compilar = coleta.find((s) => /Compilar o oráculo/.test(String(s.name)))!;
+  assert.equal(compilar.if, val.if, "compila o oráculo exatamente onde o baixa");
+  for (const [b, espera] of [["sem", false], ["com", true], ["ferramentas", true]] as const) {
+    assert.equal(avaliar(String(val.if), { needs: { preparar: { outputs: { braco: b } } } } as never), espera, `checkout do oráculo no braço ${b}`);
+  }
+  const opcoes = (wf.on as { workflow_dispatch: { inputs: Record<string, { options?: string[] }> } }).workflow_dispatch.inputs.braco.options;
+  assert.deepEqual(opcoes, ["da-agenda", "sem", "com", "ferramentas"]);
+  assert.ok((wf.on as { workflow_dispatch: { inputs: Record<string, unknown> } }).workflow_dispatch.inputs.conta, "a escolha da conta continua");
   // NAT-65: depois do preparar, braço/par/tentativa/repetição vêm dele, nunca do digitado
   for (const { job, step } of todosOsPassos().filter((p) => p.job !== "preparar")) {
     assert.ok(!/inputs\.(braco|par|tentativa|repeticao)\b/.test(texto(step)), `${job}: usa o digitado em vez do resolvido`);
@@ -206,6 +215,10 @@ await teste("entradas: válidas derivam agente/egress/imagens; inválidas param 
   assert.equal(ok.saidas.egress, "real");
   assert.equal(ok.saidas.imagens, "agent,screens,collector,egress", "braço sem: sem imagem do oráculo");
   assert.equal(conferirEntradas({ ...ENTRADAS_OK, braco: "com" }).saidas.imagens, "agent,screens,collector,egress,oracle");
+  // NAT-61: o terceiro braço sobe a mesma imagem do oráculo; braço desconhecido para antes de qualquer gasto
+  assert.deepEqual(conferirEntradas({ ...ENTRADAS_OK, braco: "ferramentas" }).problemas, []);
+  assert.equal(conferirEntradas({ ...ENTRADAS_OK, braco: "ferramentas" }).saidas.imagens, "agent,screens,collector,egress,oracle");
+  assert.match(conferirEntradas({ ...ENTRADAS_OK, braco: "outro" }).problemas.join(" "), /braco: sem \| com \| ferramentas/);
   const ensaio = conferirEntradas({ ...ENTRADAS_OK, modo: "roteirizado", modelo: "" });
   assert.deepEqual(ensaio.problemas, []);
   assert.equal(ensaio.saidas.agente, "fake");
@@ -296,6 +309,26 @@ await teste("manifesto 1.3.0 (T8a.1 + NAT-63 + NAT-65): campanha de ensaio gerad
   const adulterado = JSON.parse(JSON.stringify(manifestoSem)) as IsolatedCollectionManifest;
   adulterado.campaign!.document.title = "outra";
   assert.match(isolatedManifestProblems(adulterado).join(), /campanha × sha256/);
+});
+
+await teste("manifesto (NAT-61): campanha de ensaio de TRIO (id com 'trio') é campaign.v2 e a MESMA nos três braços; ferramentas fora de trio é recusado", () => {
+  const trio = { ...comum, campanha: "t4-trio-teste" };
+  const ms = (["sem", "ferramentas", "com"] as const).map((braco, i) => buildIsolatedManifest({ ...trio, braco, slot: `p01-${braco}`, par: "p01", tentativa: 1, repeticao: 1 + 0 * i }));
+  for (const m of ms) {
+    assert.equal(m.campaign!.document.contract, "campaign.v2");
+    assert.ok(validateContract(m.campaign!.document).valid, JSON.stringify(validateContract(m.campaign!.document).errors));
+    assert.deepEqual(problemasDaCampanha(m.campaign!.document, m), []);
+    assert.deepEqual(isolatedManifestProblems(m), []);
+  }
+  assert.equal(new Set(ms.map((m) => m.campaign!.sha256)).size, 1, "os três braços de um trio geram a mesma campanha");
+  const c = ms[0].campaign!.document as { design: { arms: string[]; comparisons: { arms: string[]; role: string }[] }; fixed: { oracleProfiles: Record<string, { profile: string; distSha256: string }> } };
+  assert.deepEqual(c.design.arms, ["sem", "ferramentas", "com"]);
+  assert.deepEqual(c.design.comparisons.find((x) => x.role === "primary")!.arms, ["ferramentas", "com"]);
+  assert.equal(c.fixed.oracleProfiles.ferramentas.profile, "knowledge-free");
+  assert.equal(c.fixed.oracleProfiles.com.distSha256, c.fixed.oracleProfiles.ferramentas.distSha256);
+  assert.throws(() => buildIsolatedManifest({ ...comum, braco: "ferramentas" }), /campanha de trio/);
+  // campanha de pares não muda (v1, sem/com): bytes iguais aos de antes da NAT-61
+  assert.equal(manifestoSem.campaign!.document.contract, "campaign.v1");
 });
 
 await teste("manifesto de coleta isolada: identidade completa, conferida contra o lock; adulteração recusada", () => {
@@ -797,6 +830,29 @@ await teste("resumo do arquivar: próximo passo pelo par no índice (falta braç
   const t = resumoDoPasso(["resumo-arquivo", "--saida-json", saidaJson, "--arquivo", arq, "--pacote", PACOTE_FIX]);
   assert.match(t.split("\n")[0], /^### ✅ slot-02: execução limpa$/);
   assert.match(t, /Próximo passo:\*\* par-01 completo[\s\S]*<details><summary>Detalhes técnicos<\/summary>[\s\S]*### Arquivamento/);
+});
+
+await teste("resumo (NAT-61): trio no índice — falta braço do trio / trio completo; perfil medido do oráculo no resumo da coleta", () => {
+  const arq = join(TMP, "arquivo-trio");
+  mkdirSync(join(arq, "indice", "entradas"), { recursive: true });
+  mkdirSync(join(arq, "campanhas", "ct", "a".repeat(64)), { recursive: true });
+  writeFileSync(join(arq, "campanhas", "ct", "a".repeat(64), "campaign.json"), JSON.stringify({ contract: "campaign.v2", design: { arms: ["sem", "ferramentas", "com"] } }));
+  const entrada = (braco: string, tecnico = "passed"): void => writeFileSync(join(arq, "indice", "entradas", `r-${braco}.json`), JSON.stringify({
+    chave: `r-${braco}`, tipo: "execucao", natureza: "formal", campanha: "ct", slot: `p01-${braco}`, par: "p01", tela: "solicitacao", braco, dataUtc: "2026-10-18T10:00:00Z",
+    caminho: `execucoes/ct/r-${braco}`, estado: { arquivo: "arquivado", tecnico }, evidencias: null }));
+  entrada("sem"); entrada("com");
+  assert.equal(situacaoDoPar(arq, "ct", "p01", "sem"), "falta o braço ferramentas do trio p01 (dispare o slot dele)");
+  entrada("ferramentas", "failed");
+  assert.match(situacaoDoPar(arq, "ct", "p01", "com"), /o braço ferramentas do trio p01 falhou na última tentativa/);
+  entrada("ferramentas");
+  assert.equal(situacaoDoPar(arq, "ct", "p01", "ferramentas"), "trio p01 completo → atualize o clone (git pull) e clique em Preparar análise no painel");
+  const dir = join(TMP, "pacote-v2-ferramentas");
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, "run.json"), readFileSync(join(ROOT, "contracts", "examples", "valid", "run--v2-ferramentas-passed.json")));
+  const t = resumoDoPasso(["resumo-coleta", "--pacote", dir]);
+  assert.match(t, /braço ferramentas \(oráculo sem a base de conhecimento\)/);
+  assert.match(t, /Oráculo \(perfil medido\) \| knowledge-free · get_finding_details, scan_page, verify_finding · tools\/list 72abd54968cb…/);
+  assert.match(t, /chamadas ao oráculo: \d+ \(perfil knowledge-free, 3 ferramentas\)/);
 });
 
 await teste("resumo da linha de base: uma linha de saúde e a tabela dobrada", () => {

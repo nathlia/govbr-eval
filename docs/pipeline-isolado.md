@@ -77,6 +77,15 @@ os mesmos; nada no caminho supõe a tela A. Para um ensaio (dublê ou roteirizad
 
 A campanha real da tela B precisa do próprio `campaign.json` (e agenda) commitados antes da coleta.
 
+**Trio (NAT-61, `braco = ferramentas`).** O terceiro braço usa o mesmo contêiner do oráculo do `com`, no
+perfil `knowledge-free` (validator ≥ 2.14.0); o checkout e a compilação do validator rodam em `com` e em
+`ferramentas`. Ensaio de trio sem campanha commitada: use um id de campanha com o segmento `trio`
+(`ensaio-trio-01`): a campanha gerada é `campaign.v2` com os três braços e os mesmos bytes nos três
+disparos do grupo; `ferramentas` com outro id é recusado no `preparar`. A campanha real de trio é
+`campaign.v2` commitada com `design.order = "quadrado-latino"`, semente inteira em `design.seed` e as
+comparações declaradas (ferramentas × com principal); a agenda (`agenda.v2`) gira a ordem dos braços em
+quadrado latino por grupo (`scripts/agenda-campanha.ts`).
+
 ## Onde fica cada coisa no `govbr-resultados`
 
 | Caminho | Conteúdo |
@@ -148,7 +157,8 @@ de coleta passou a `manifesto-coleta-isolada-1.1.0` e leva a campanha:
   commit do disparo. Sem ele, ou se ela não trouxer a tela (com a versão do site), o braço, o modelo
   e o oráculo do disparo, o `preparar` para **antes de qualquer gasto**.
 - **modos `roteirizado` e `duble`**: sem arquivo commitado, uma campanha de ensaio (`fixture: true`)
-  é gerada do próprio disparo, com os mesmos bytes nos dois braços de um par.
+  é gerada do próprio disparo, com os mesmos bytes nos dois braços de um par (campanha com `trio` no
+  id: `campaign.v2` com os três braços, mesmos bytes nos três).
 
 A campanha do piloto (T5, D-67) é [`campanhas/piloto-01/campaign.json`](../campanhas/piloto-01/campaign.json):
 tela `solicitacao` no site `1a6e8daf3cdb` (`govbr-telas` `46318d4`), `claude-opus-5-5` `high`, oráculo 2.7.0.

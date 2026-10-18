@@ -26,26 +26,39 @@
  *   npm run campanha:agenda -- conferir --campanha ID
  *   npm run campanha:agenda -- comando --campanha ID --slot p03-com [--modo real] [--arquivo CLONE]
  *        imprime o `gh workflow run` do slot (só o slot + os commits; o resto vem da agenda/campanha)
+ *
+ * NAT-61 — TRIOS (agenda.v2, campanha `campaign.v2` com `design.order = "quadrado-latino"` e semente inteira
+ * declarada em `design.seed`): cada grupo (p01, p02, …) roda os k braços do desenho (k = 2 ou 3), numa ordem
+ * tirada de um quadrado latino k×k — a linha r é o desenho girado r posições. Os grupos são ordenados pela
+ * chave `sha256(commit + "|" + design.seed + "|quadrado|" + grupo)`; o i-ésimo grupo nessa ordem usa a linha
+ * (i mod k). A cada k grupos, cada braço ocupa cada posição exatamente uma vez (balanceado quando N é
+ * múltiplo de k). A semente tem as duas partes: o commit que congelou a campanha (conferido como no v1) e o
+ * inteiro declarado na campanha. As agendas v1 (pares sem/com) não mudam: mesmo gerador, mesmos bytes.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import type { Arm, Campaign } from "../contracts/index";
+import type { AnyCampaign, Arm, ArmV2, Campaign, CampaignV2 } from "../contracts/index";
 import type { EntradaIndice } from "./arquivo-resultados";
 
 export const AGENDA_CONTRATO = "agenda.v1";
 export const AGENDA_GERADOR = "agenda-campanha-1.0.0";
+/** NAT-61: agenda de trios (ou de dois braços em quadrado latino) para campaign.v2. */
+export const AGENDA_CONTRATO_V2 = "agenda.v2";
+export const AGENDA_GERADOR_V2 = "agenda-campanha-quadrado-1.0.0";
+export const REGRA_QUADRADO = "linha r do quadrado = design.arms girado r posições; chave(grupo) = sha256(commit + \"|\" + design.seed + \"|quadrado|\" + grupo); grupos em ordem ascendente da chave; o i-ésimo usa a linha (i mod k); grupos rodam na ordem numérica";
 export const REGRA_ORDEM = "chave(par) = sha256(semente + \"|ordem|\" + par); pares em ordem ascendente da chave; os ⌊N/2⌋ primeiros começam pelo sem, os demais pelo com (N ímpar: o par a mais começa pelo com)";
 const COMMIT = /^[0-9a-f]{40}$/;
 const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
 const RAIZ = resolve(fileURLToPath(import.meta.url), "..", "..");
 
 export interface SlotAgenda {
-  slotId: string; pairId: string; arm: Arm;
-  /** 1 = primeiro braço do par; 2 = segundo. */
-  positionInPair: 1 | 2;
+  /** pairId = id do GRUPO (par no v1, trio no v2; o nome do campo não muda, plano §7.3). */
+  slotId: string; pairId: string; arm: ArmV2;
+  /** 1 = primeiro braço do grupo; 2 = segundo; 3 = terceiro (trio). */
+  positionInPair: 1 | 2 | 3;
   repetition: number;
   /** Posição na agenda (1 = primeiro slot a rodar). */
   order: number;
@@ -53,15 +66,18 @@ export interface SlotAgenda {
 }
 
 export interface Agenda {
-  contract: typeof AGENDA_CONTRATO;
-  generator: typeof AGENDA_GERADOR;
+  contract: typeof AGENDA_CONTRATO | typeof AGENDA_CONTRATO_V2;
+  generator: typeof AGENDA_GERADOR | typeof AGENDA_GERADOR_V2;
   campaignId: string;
   /** Os bytes exatos do `campaign.json` a que esta agenda serve. */
   campaign: { path: string; sha256: string };
-  seed: { commit: string; rule: string };
+  /** v2: `declared` = a semente inteira da campanha (design.seed). */
+  seed: { commit: string; rule: string; declared?: number };
   pairs: number;
-  /** Pares na ordem da chave (a ordem do sorteio), com o braço que abre cada um. */
-  draw: { pairId: string; key: string; firstArm: Arm }[];
+  /** v2: o quadrado latino (linhas = ordens dos braços). */
+  square?: ArmV2[][];
+  /** Grupos na ordem da chave (a ordem do sorteio), com o braço que abre cada um (v2: a ordem inteira e a linha do quadrado). */
+  draw: { pairId: string; key: string; firstArm: ArmV2; order?: ArmV2[]; row?: number }[];
   windows: { label: string; slots: number }[] | null;
   slots: SlotAgenda[];
   retry: { maxAttemptsPerSlot: number; campaignAttemptCeiling: number; extraAttempts: number };
@@ -73,12 +89,13 @@ export const documentoDaAgenda = (a: Agenda): string => JSON.stringify(a, null, 
 export const idDoPar = (i: number): string => `p${String(i).padStart(2, "0")}`;
 
 export interface OpcoesAgenda {
-  campanha: Campaign; campanhaSha256: string; pares: number; semente: string;
+  campanha: AnyCampaign; campanhaSha256: string; pares: number; semente: string;
   janelas?: { label: string; slots: number }[] | null;
 }
 
-/** Por que esta campanha não aceita uma agenda de `pares` pares. [] = aceita. */
-export function problemasParaAgenda(c: Campaign, pares: number, semente: string): string[] {
+/** Por que esta campanha não aceita uma agenda de `pares` pares (v2: grupos). [] = aceita. */
+export function problemasParaAgenda(c: AnyCampaign, pares: number, semente: string): string[] {
+  if (c.contract === "campaign.v2") return problemasParaAgendaV2(c, pares, semente);
   const p: string[] = [];
   if (!COMMIT.test(semente)) p.push("a semente é o hash completo (40 hex) de um commit do govbr-eval");
   if (!Number.isInteger(pares) || pares < 1 || pares > 99) p.push("--pares: inteiro de 1 a 99");
@@ -90,8 +107,60 @@ export function problemasParaAgenda(c: Campaign, pares: number, semente: string)
   return p;
 }
 
+/** NAT-61: requisitos da agenda em quadrado latino (campaign.v2). */
+function problemasParaAgendaV2(c: CampaignV2, grupos: number, semente: string): string[] {
+  const p: string[] = [];
+  const k = c.design.arms.length;
+  if (!COMMIT.test(semente)) p.push("a semente é o hash completo (40 hex) de um commit do govbr-eval");
+  if (!Number.isInteger(grupos) || grupos < 1 || grupos > 99) p.push("--pares: inteiro de 1 a 99 (grupos)");
+  if (k < 2 || k > 3) p.push("a agenda em quadrado latino cobre 2 ou 3 braços");
+  if (c.design.screens.length !== 1 || c.design.models.length !== 1) p.push("a agenda cobre uma tela e um modelo por campanha (grupos não se misturam)");
+  if (c.design.order !== "quadrado-latino") p.push(`a ordem da campanha é "${c.design.order}"; a agenda de campaign.v2 exige design.order = "quadrado-latino"`);
+  if (!Number.isInteger(c.design.seed)) p.push("design.seed: a semente inteira declarada na campanha (quadrado-latino)");
+  if (c.design.repetitions !== grupos) p.push(`design.repetitions = ${c.design.repetitions} ≠ ${grupos} grupos (cada grupo é uma repetição)`);
+  if (c.retryPolicy.campaignAttemptCeiling < k * grupos) p.push(`retryPolicy.campaignAttemptCeiling ${c.retryPolicy.campaignAttemptCeiling} < ${k * grupos} slots planejados (o teto conta todas as tentativas)`);
+  return p;
+}
+
+/** O quadrado latino k×k do desenho: a linha r é `arms` girado r posições. */
+export function quadradoLatino(arms: readonly ArmV2[]): ArmV2[][] {
+  return arms.map((_, r) => arms.map((__, j) => arms[(r + j) % arms.length]));
+}
+
+/** NAT-61: a agenda v2, deterministicamente, da campanha v2 + N grupos + semente (commit) + design.seed. */
+function gerarAgendaV2(o: OpcoesAgenda & { campanha: CampaignV2 }): Agenda {
+  const { campanha: c, pares: n, semente } = o;
+  const p = problemasParaAgendaV2(c, n, semente);
+  if (p.length) throw new Error(`agenda recusada: ${p.join("; ")}`);
+  const k = c.design.arms.length;
+  const square = quadradoLatino(c.design.arms);
+  const ids = Array.from({ length: n }, (_, i) => idDoPar(i + 1));
+  const chave = (g: string) => sha256(`${semente}|${c.design.seed}|quadrado|${g}`);
+  const draw = ids.map(pairId => ({ pairId, key: chave(pairId) })).sort((a, b) => a.key.localeCompare(b.key))
+    .map((x, i) => ({ ...x, row: i % k, order: square[i % k], firstArm: square[i % k][0] }));
+  const porGrupo = new Map(draw.map(d => [d.pairId, d.order]));
+  const janelas = o.janelas?.length ? o.janelas : null;
+  if (janelas) {
+    const total = janelas.reduce((s2, j) => s2 + j.slots, 0);
+    if (janelas.some(j => !j.label.trim() || !Number.isInteger(j.slots) || j.slots < 1)) throw new Error("--janelas: rótulo:k com k inteiro ≥ 1");
+    if (total !== k * n) throw new Error(`--janelas cobrem ${total} slots; a agenda tem ${k * n}`);
+  }
+  const rotulos = janelas ? janelas.flatMap(j => Array<string>(j.slots).fill(j.label)) : [];
+  const slots: SlotAgenda[] = ids.flatMap((pairId, i) => porGrupo.get(pairId)!.map((arm, j) => ({
+    slotId: `${pairId}-${arm}`, pairId, arm, positionInPair: (j + 1) as 1 | 2 | 3, repetition: i + 1, order: k * i + j + 1,
+    window: janelas ? rotulos[k * i + j] : null })));
+  return {
+    contract: AGENDA_CONTRATO_V2, generator: AGENDA_GERADOR_V2, campaignId: c.campaignId,
+    campaign: { path: `campanhas/${c.campaignId}/campaign.json`, sha256: o.campanhaSha256 },
+    seed: { commit: semente, rule: REGRA_QUADRADO, declared: c.design.seed! }, pairs: n, square, draw, windows: janelas, slots,
+    retry: { maxAttemptsPerSlot: c.retryPolicy.maxAttemptsPerSlot, campaignAttemptCeiling: c.retryPolicy.campaignAttemptCeiling,
+      extraAttempts: c.retryPolicy.campaignAttemptCeiling - k * n },
+  };
+}
+
 /** A agenda, deterministicamente, da campanha + N + semente (+ rótulos de janela opcionais). */
 export function gerarAgenda(o: OpcoesAgenda): Agenda {
+  if (o.campanha.contract === "campaign.v2") return gerarAgendaV2(o as OpcoesAgenda & { campanha: CampaignV2 });
   const { campanha: c, pares: n, semente } = o;
   const p = problemasParaAgenda(c, n, semente);
   if (p.length) throw new Error(`agenda recusada: ${p.join("; ")}`);
@@ -122,8 +191,9 @@ export function gerarAgenda(o: OpcoesAgenda): Agenda {
 }
 
 /** A agenda serve a esta campanha e é a que a semente produz? [] = sim. */
-export function problemasDaAgenda(a: Agenda, c: Campaign, campanhaSha256: string): string[] {
-  if (a?.contract !== AGENDA_CONTRATO) return [`agenda fora do contrato ${AGENDA_CONTRATO}`];
+export function problemasDaAgenda(a: Agenda, c: AnyCampaign, campanhaSha256: string): string[] {
+  const esperado = c.contract === "campaign.v2" ? AGENDA_CONTRATO_V2 : AGENDA_CONTRATO;
+  if (a?.contract !== esperado) return [`agenda fora do contrato ${esperado} (a campanha é ${c.contract})`];
   const p: string[] = [];
   if (a.campaignId !== c.campaignId) p.push(`agenda da campanha ${a.campaignId} ≠ ${c.campaignId}`);
   if (a.campaign.sha256 !== campanhaSha256) p.push(`a agenda aponta o campaign.json ${a.campaign.sha256.slice(0, 12)}; o do disparo é ${campanhaSha256.slice(0, 12)} (campanha mudou depois da agenda)`);
@@ -186,7 +256,7 @@ export const recusadoNoPreflight = (e: Pick<EntradaIndice, "estado" | "manifesto
   e.estado.arquivo === "sem-pacote" && !e.manifestoColeta;
 
 /** Classe de uma entrada do índice para a política de tentativas. */
-export function classificarTentativa(e: EntradaIndice, c: Campaign): Tentativa {
+export function classificarTentativa(e: EntradaIndice, c: AnyCampaign): Tentativa {
   const base = { chave: e.chave, dataUtc: e.dataUtc };
   const prefixo = (e.motivo ?? "").split(":")[0].trim();
   const razao = RAZOES.includes(prefixo) ? prefixo : null;
@@ -212,21 +282,21 @@ export function classificarTentativa(e: EntradaIndice, c: Campaign): Tentativa {
 }
 
 /** Tentativas de um slot, na ordem do disparo (as `nao-conta` ficam de fora). */
-export function tentativasDoSlot(entradas: EntradaIndice[], c: Campaign, slotId: string): Tentativa[] {
+export function tentativasDoSlot(entradas: EntradaIndice[], c: AnyCampaign, slotId: string): Tentativa[] {
   return entradas.filter(e => e.tipo === "execucao" && e.campanha === c.campaignId && e.slot === slotId)
     .sort((a, b) => a.dataUtc.localeCompare(b.dataUtc) || a.chave.localeCompare(b.chave))
     .map(e => classificarTentativa(e, c)).filter(t => t.classe !== "nao-conta");
 }
 
 /** Tentativas extras já usadas na campanha (cada tentativa além da primeira de um slot). */
-export function extrasUsadas(a: Agenda, entradas: EntradaIndice[], c: Campaign): number {
+export function extrasUsadas(a: Agenda, entradas: EntradaIndice[], c: AnyCampaign): number {
   return a.slots.reduce((s, x) => s + Math.max(0, tentativasDoSlot(entradas, c, x.slotId).length - 1), 0);
 }
 
 export type DecisaoTentativa = { ok: true; tentativa: number; anteriores: Tentativa[]; extrasUsadas: number; extrasLimite: number } | { ok: false; motivo: string };
 
 /** Que tentativa este disparo do slot é — ou por que não pode haver outra. */
-export function proximaTentativa(a: Agenda, c: Campaign, entradas: EntradaIndice[], slotId: string): DecisaoTentativa {
+export function proximaTentativa(a: Agenda, c: AnyCampaign, entradas: EntradaIndice[], slotId: string): DecisaoTentativa {
   if (!a.slots.some(s => s.slotId === slotId)) return { ok: false, motivo: `o slot ${slotId} não está na agenda de ${a.campaignId}` };
   const ts = tentativasDoSlot(entradas, c, slotId);
   const usadas = extrasUsadas(a, entradas, c), limite = c.retryPolicy.campaignAttemptCeiling - a.slots.length;
@@ -253,9 +323,10 @@ export interface SituacaoSlot {
   novasTentativas: number; tempoEsgotado: boolean; inicioUtc: string | null;
 }
 export interface SituacaoPar {
-  pairId: string; firstArm: Arm; window: (string | null)[]; slots: Record<Arm, SituacaoSlot>;
+  /** v2: `slots` traz também `ferramentas` (e qualquer braço do desenho). */
+  pairId: string; firstArm: ArmV2; window: (string | null)[]; slots: Record<Arm, SituacaoSlot> & Partial<Record<ArmV2, SituacaoSlot>>;
   estado: "completo" | "incompleto" | "em-andamento" | "nao-iniciado";
-  /** Minutos entre os inícios das tentativas selecionadas dos dois braços (null = falta um). */
+  /** Minutos entre o primeiro e o último início das tentativas selecionadas do grupo (null = falta um braço). */
   intervaloMin: number | null;
 }
 export interface PerdaBraco { planejados: number; tentados: number; validos: number; perdidos: number; tempoEsgotado: number; taxaPerda: number | null; taxaTempoEsgotado: number | null }
@@ -263,14 +334,14 @@ export interface SituacaoAgenda {
   campanha: string; planejados: number; naoIniciados: number; validos: number; aguardando: number; perdidos: number;
   tentativas: number; novasTentativas: number; extrasUsadas: number; extrasLimite: number;
   pares: SituacaoPar[]; paresCompletos: number; paresPerdidos: number;
-  porBraco: Record<Arm, PerdaBraco>;
+  porBraco: Record<Arm, PerdaBraco> & Partial<Record<ArmV2, PerdaBraco>>;
   /** Protocolo §7: perdas diferentes entre braços → risco de seleção. */
   riscoDeSelecao: string | null;
   /** Execuções da campanha com slot fora da agenda (nunca entram na análise). */
   foraDaAgenda: string[];
 }
 
-export function situacaoDaAgenda(a: Agenda, c: Campaign, entradas: EntradaIndice[], inicioDe: (chave: string) => string | null = () => null): SituacaoAgenda {
+export function situacaoDaAgenda(a: Agenda, c: AnyCampaign, entradas: EntradaIndice[], inicioDe: (chave: string) => string | null = () => null): SituacaoAgenda {
   const usadas = extrasUsadas(a, entradas, c), limite = c.retryPolicy.campaignAttemptCeiling - a.slots.length;
   const porChave = new Map(entradas.map(e => [e.chave, e]));
   const situ = (s: SlotAgenda): SituacaoSlot => {
@@ -289,23 +360,28 @@ export function situacaoDaAgenda(a: Agenda, c: Campaign, entradas: EntradaIndice
   const slots = a.slots.map(situ);
   const pares: SituacaoPar[] = a.draw.map(d => d.pairId).sort().map(pairId => {
     const xs = slots.filter(s => s.slot.pairId === pairId);
-    const por = Object.fromEntries(xs.map(s => [s.slot.arm, s])) as Record<Arm, SituacaoSlot>;
+    const por = Object.fromEntries(xs.map(s => [s.slot.arm, s])) as SituacaoPar["slots"];
     const estados = xs.map(s => s.estado);
     const estado = estados.includes("perdido") ? "incompleto" : estados.every(e => e === "valido") ? "completo"
       : estados.every(e => e === "nao-iniciado") ? "nao-iniciado" : "em-andamento";
-    const [i1, i2] = [por.sem.inicioUtc, por.com.inicioUtc];
-    const intervaloMin = por.sem.estado === "valido" && por.com.estado === "valido" && i1 && i2 ? Math.abs(Date.parse(i2) - Date.parse(i1)) / 60000 : null;
+    // intervalo entre o primeiro e o último início do grupo (no par, |com − sem| como antes)
+    const inicios = xs.map(s => (s.estado === "valido" ? s.inicioUtc : null));
+    const intervaloMin = inicios.every((i): i is string => i !== null)
+      ? (Math.max(...inicios.map(i => Date.parse(i))) - Math.min(...inicios.map(i => Date.parse(i)))) / 60000 : null;
     return { pairId, firstArm: xs.find(s => s.slot.positionInPair === 1)!.slot.arm, window: xs.sort((p, q) => p.slot.order - q.slot.order).map(s => s.slot.window), slots: por, estado, intervaloMin };
   });
-  const braco = (arm: Arm): PerdaBraco => {
+  const braco = (arm: ArmV2): PerdaBraco => {
     const xs = slots.filter(s => s.slot.arm === arm), tentados = xs.filter(s => s.tentativas.length > 0).length;
     const perdidos = xs.filter(s => s.estado === "perdido").length, tempoEsgotado = xs.filter(s => s.tempoEsgotado).length;
     return { planejados: xs.length, tentados, validos: xs.filter(s => s.estado === "valido").length, perdidos, tempoEsgotado,
       taxaPerda: tentados ? perdidos / tentados : null, taxaTempoEsgotado: tentados ? tempoEsgotado / tentados : null };
   };
-  const porBraco = { sem: braco("sem"), com: braco("com") };
-  const riscoDeSelecao = porBraco.sem.perdidos !== porBraco.com.perdidos
-    ? `perdas diferentes entre braços (sem ${porBraco.sem.perdidos}, com ${porBraco.com.perdidos}${porBraco.sem.tempoEsgotado + porBraco.com.tempoEsgotado ? `; tempo esgotado sem ${porBraco.sem.tempoEsgotado}, com ${porBraco.com.tempoEsgotado}` : ""}): risco de seleção — excluir os pares perdidos pode deixar só as execuções que conseguiram terminar (limitação, protocolo §7)`
+  const bracosDoDesenho = [...new Set(a.slots.map(s => s.arm))];
+  const porBraco = Object.fromEntries(bracosDoDesenho.map(arm => [arm, braco(arm)])) as SituacaoAgenda["porBraco"];
+  const perdas = bracosDoDesenho.map(arm => porBraco[arm]!);
+  const esgotados = perdas.reduce((n, b) => n + b.tempoEsgotado, 0);
+  const riscoDeSelecao = new Set(perdas.map(b => b.perdidos)).size > 1
+    ? `perdas diferentes entre braços (${bracosDoDesenho.map(arm => `${arm} ${porBraco[arm]!.perdidos}`).join(", ")}${esgotados ? `; tempo esgotado ${bracosDoDesenho.map(arm => `${arm} ${porBraco[arm]!.tempoEsgotado}`).join(", ")}` : ""}): risco de seleção — excluir os ${a.contract === AGENDA_CONTRATO ? "pares perdidos" : "grupos incompletos"} pode deixar só as execuções que conseguiram terminar (limitação, protocolo §7)`
     : null;
   const ids = new Set(a.slots.map(s => s.slotId));
   const conta = (e: EstadoSlot) => slots.filter(s => s.estado === e).length;
@@ -331,7 +407,7 @@ function main(): void {
   const campPath = join(RAIZ, "campanhas", campanha, "campaign.json");
   if (!existsSync(campPath)) throw new Error(`falta campanhas/${campanha}/campaign.json`);
   const bytes = readFileSync(campPath);
-  const c = JSON.parse(bytes.toString("utf8")) as Campaign;
+  const c = JSON.parse(bytes.toString("utf8")) as AnyCampaign;
   const agPath = join(RAIZ, caminhoAgenda(campanha));
   if (comando === "gerar") {
     if (existsSync(agPath)) throw new Error(`${caminhoAgenda(campanha)} já existe: a agenda é gerada uma vez, sem repetição`);
@@ -363,7 +439,7 @@ function main(): void {
       tentativa = ` -f tentativa=${d.tentativa}`;
     }
     console.log(`gh workflow run execucao-isolada.yml --repo nathlia/govbr-eval -f modo=${modo} -f tela=${c.design.screens[0].id} -f campanha=${campanha} -f slot=${slot.slotId}${tentativa} -f telas_sha=<40 hex> -f validator_sha=<40 hex>`);
-    console.log(`# o preparar resolve da agenda: par ${slot.pairId}, braço ${slot.arm}, repetição ${slot.repetition}; da campanha: modelo, esforço, tempo limite; do índice: a tentativa`);
+    console.log(`# o preparar resolve da agenda: ${a.contract === AGENDA_CONTRATO ? "par" : "grupo"} ${slot.pairId}, braço ${slot.arm}, repetição ${slot.repetition}; da campanha: modelo, esforço, tempo limite; do índice: a tentativa`);
     return;
   }
   throw new Error("uso: campanha:agenda [gerar] --campanha ID --pares N --semente HEX | conferir --campanha ID | comando --campanha ID --slot S");

@@ -32,9 +32,9 @@ on:
         options: [solicitacao, vistorias]
         default: solicitacao
       braco:
-        description: "sem ou com o oráculo MCP (da-agenda = o braço do slot; campanha sem agenda exige sem/com)"
+        description: "sem, com (oráculo, perfil evaluation) ou ferramentas (oráculo, perfil knowledge-free) — da-agenda = o braço do slot; campanha sem agenda exige um dos três"
         type: choice
-        options: [da-agenda, sem, com]
+        options: [da-agenda, sem, com, ferramentas]
         default: da-agenda
       modelo:
         description: "id EXATO do modelo (só modo real; vazio = o da campanha com agenda)"
@@ -58,7 +58,7 @@ on:
         type: string
         required: true
       par:
-        description: "id do par sem/com (vazio = o do slot na agenda, ou par-01)"
+        description: "id do par/trio (vazio = o do slot na agenda, ou par-01)"
         type: string
         default: ""
       tentativa:
@@ -235,9 +235,9 @@ jobs:
           path: govbr-telas
           token: ${{ secrets.GOVBR_LEITURA_TOKEN }}
           persist-credentials: false
-      # Braço sem: o pacote do oráculo nem é baixado.
-      - name: Checkout govbr-ds-validator (por SHA; só no braço com)
-        if: needs.preparar.outputs.braco == 'com'
+      # Braço sem: o pacote do oráculo nem é baixado. com e ferramentas usam a mesma imagem (NAT-61).
+      - name: Checkout govbr-ds-validator (por SHA; só nos braços com oráculo)
+        if: needs.preparar.outputs.braco == 'com' || needs.preparar.outputs.braco == 'ferramentas'
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           repository: nathlia/govbr-ds-validator
@@ -247,8 +247,8 @@ jobs:
           persist-credentials: false
       - name: Dependências do govbr-eval
         run: bash govbr-eval/scripts/ci/t4.sh instalar-eval
-      - name: Compilar o oráculo (só no braço com)
-        if: needs.preparar.outputs.braco == 'com'
+      - name: Compilar o oráculo (só nos braços com oráculo)
+        if: needs.preparar.outputs.braco == 'com' || needs.preparar.outputs.braco == 'ferramentas'
         run: bash govbr-eval/scripts/ci/t4.sh compilar-validador
       - name: Imagens nesta VM (versões = lock travado)
         env:

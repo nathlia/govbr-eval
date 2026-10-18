@@ -11,11 +11,11 @@ import { execFileSync } from "node:child_process";
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { Arm, Campaign } from "../contracts/index";
+import { validateContract, type Arm, type ArmV2, type Campaign, type CampaignV2 } from "../contracts/index";
 import { ROOT } from "./adjudication";
 import {
   classificarTentativa, documentoDaAgenda, gerarAgenda, problemasDaAgenda, problemasDaSemente, problemasParaAgenda, proximaTentativa,
-  situacaoDaAgenda, tentativaSelecionada, tentativasDoSlot, type Agenda,
+  quadradoLatino, situacaoDaAgenda, tentativaSelecionada, tentativasDoSlot, type Agenda,
 } from "./agenda-campanha";
 import type { EntradaIndice } from "./arquivo-resultados";
 import { agendaDoDisparo, buildIsolatedManifest, documentoDaCampanha, isolatedManifestProblems, type CampaignRecord } from "./manifesto-coleta-isolada";
@@ -203,7 +203,7 @@ await teste("planejado × executado: contado pela agenda (não iniciados visíve
   assert.equal(s.pares[0].intervaloMin, 25);
   assert.equal(s.pares[1].estado, "incompleto", "o slot com tempo esgotado perde o par");
   const perdeu = A.slots[3].arm;
-  assert.equal(s.porBraco[perdeu].tempoEsgotado, 1);
+  assert.equal(s.porBraco[perdeu]!.tempoEsgotado, 1);
   assert.match(s.riscoDeSelecao!, /risco de seleção/);
 });
 
@@ -240,7 +240,7 @@ await teste("entradas do workflow: com agenda basta o slot; digitado divergente 
 // fixture: a campanha de ensaio que o próprio manifesto gera, commitada numa pasta temporária com agenda
 const comum = { tela: "solicitacao", telasDir: DEFAULT_TELAS_DIR, validatorDir: DEFAULT_VALIDATOR_DIR, campanha: "agenda-teste", modo: "roteirizado" as const,
   modelo: null, esforco: null, limiteMin: 5, repeticao: 1 };
-const gerada = buildIsolatedManifest({ ...comum, slot: "x", par: "x", braco: "sem", tentativa: 1, campanhaPath: join(work, "nao-existe", "campaign.json") }).campaign!.document;
+const gerada = buildIsolatedManifest({ ...comum, slot: "x", par: "x", braco: "sem", tentativa: 1, campanhaPath: join(work, "nao-existe", "campaign.json") }).campaign!.document as Campaign;
 const dirCamp = join(work, "campanhas", "agenda-teste");
 mkdirSync(dirCamp, { recursive: true });
 const campFix: Campaign = { ...gerada, design: { ...gerada.design, repetitions: N, order: "balanceado" }, retryPolicy: { ...C.retryPolicy } };
@@ -487,6 +487,108 @@ await teste("D-102: sem as unidades do par, ou com unidades que não batem com a
   // a campanha listada sem o texto do D por spec no campaign.json: provisório, e diz por quê
   const errada = agregadoDaCampanha({ ...vaB, campanha: { ...vaB.campanha, analysisPlan: campanhaReal("t7-tela-a-01").analysisPlan } }, [linhaSpec("p03", ["S-2#1"], ["S-1#1"])]);
   assert.match(errada.motivoProvisorio!, /modo do desfecho: .*não declara specs_confirmadas/);
+});
+
+// ───────────────────────────────────────────────────────────────── NAT-61: trios em quadrado latino (agenda.v2)
+
+/** Campanha v2 de trio mínima, derivada da v1 do teste (os campos que a agenda e a política leem). */
+function campanhaTrio(grupos: number, delta: Partial<CampaignV2["design"]> = {}): CampaignV2 {
+  const v1 = campanha({ repetitions: grupos }, { campaignAttemptCeiling: 3 * grupos + 3 });
+  const { oracle, ...fixos } = v1.fixed;
+  const ident = (profile: "evaluation" | "knowledge-free", tools: string[], toolsListSha256: string) => ({ ...oracle, profile, tools, toolsListSha256 });
+  return {
+    ...v1, contract: "campaign.v2", campaignId: "agenda-trio-teste",
+    design: { ...v1.design, arms: ["sem", "ferramentas", "com"], order: "quadrado-latino", seed: 61, repetitions: grupos, comparisons: [
+      { id: "ferramentas-x-com", arms: ["ferramentas", "com"], role: "primary", question: "q" },
+      { id: "sem-x-ferramentas", arms: ["sem", "ferramentas"], role: "secondary", question: "q" },
+      { id: "sem-x-com", arms: ["sem", "com"], role: "secondary", question: "q" }], ...delta },
+    fixed: { ...fixos, oracleProfiles: {
+      com: ident("evaluation", ["get_component_spec", "get_design_tokens", "get_ds_rules", "get_emag_rules", "get_finding_details", "get_page_rules", "scan_page", "verify_finding"], "3d70162f5fed0ec8614d9dcbc18a69a00b4819ad56df1ed1c5bf95213eed0b3b"),
+      ferramentas: ident("knowledge-free", ["get_finding_details", "scan_page", "verify_finding"], "72abd54968cbe3173fce5dd3b4bba7aff563b37ca11b8a9ec0f25a91a104d39c") } },
+  };
+}
+
+await teste("trio (agenda.v2): quadrado latino com semente declarada — determinístico, cada braço em cada posição o mesmo número de vezes", () => {
+  const G = 6;
+  const c = campanhaTrio(G);
+  assert.ok(validateContract(c).valid, JSON.stringify(validateContract(c).errors));
+  const a = gerarAgenda({ campanha: c, campanhaSha256: "b".repeat(64), pares: G, semente: SEMENTE });
+  assert.equal(documentoDaAgenda(a), documentoDaAgenda(gerarAgenda({ campanha: c, campanhaSha256: "b".repeat(64), pares: G, semente: SEMENTE })));
+  assert.equal(a.contract, "agenda.v2");
+  assert.deepEqual(a.square, quadradoLatino(["sem", "ferramentas", "com"]));
+  assert.deepEqual(a.square, [["sem", "ferramentas", "com"], ["ferramentas", "com", "sem"], ["com", "sem", "ferramentas"]]);
+  assert.equal(a.slots.length, 3 * G);
+  // a regra: chave = sha256(commit|seed|quadrado|grupo); o i-ésimo grupo na ordem da chave usa a linha i mod 3
+  const esperado = Array.from({ length: G }, (_, i) => `p${String(i + 1).padStart(2, "0")}`).map(p => ({ p, k: sha(`${SEMENTE}|61|quadrado|${p}`) })).sort((x, y) => x.k.localeCompare(y.k));
+  assert.deepEqual(a.draw.map(d => [d.pairId, d.row]), esperado.map((x, i) => [x.p, i % 3]));
+  const posicoes: Record<string, number[]> = { sem: [0, 0, 0], ferramentas: [0, 0, 0], com: [0, 0, 0] };
+  for (const sl of a.slots) posicoes[sl.arm][sl.positionInPair - 1]++;
+  assert.deepEqual(posicoes, { sem: [2, 2, 2], ferramentas: [2, 2, 2], com: [2, 2, 2] }, "balanceado: N múltiplo de 3");
+  assert.deepEqual(a.slots.slice(0, 3).map(sl => sl.pairId), ["p01", "p01", "p01"], "os grupos rodam na ordem numérica; o quadrado só decide a ordem dentro do grupo");
+  assert.deepEqual(a.slots.map(sl => sl.order), Array.from({ length: 3 * G }, (_, i) => i + 1));
+  // outra semente declarada → outra ordem (a semente inteira entra na chave)
+  const outra = gerarAgenda({ campanha: campanhaTrio(G, { seed: 62 }), campanhaSha256: "b".repeat(64), pares: G, semente: SEMENTE });
+  assert.notDeepEqual(outra.draw.map(d => d.pairId), a.draw.map(d => d.pairId));
+  // conferência: a mesma regra regenera os mesmos bytes; editada à mão ou de outra campanha é recusada
+  assert.deepEqual(problemasDaAgenda(a, c, "b".repeat(64)), []);
+  const trocada = JSON.parse(JSON.stringify(a)) as Agenda;
+  [trocada.slots[0].arm, trocada.slots[1].arm] = [trocada.slots[1].arm, trocada.slots[0].arm];
+  assert.match(problemasDaAgenda(trocada, c, "b".repeat(64)).join(), /regenerada difere/);
+  assert.match(problemasDaAgenda(a, campanha(), "b".repeat(64)).join(), /agenda fora do contrato agenda\.v1/, "agenda de trio numa campanha v1");
+});
+
+await teste("trio (agenda.v2): campanha fora do desenho recusada; tentativas e situação valem para os três braços", () => {
+  const G = 3;
+  assert.match(problemasParaAgenda(campanhaTrio(G, { order: "balanceado" }), G, SEMENTE).join(), /quadrado-latino/);
+  assert.match(problemasParaAgenda(campanhaTrio(G, { seed: null }), G, SEMENTE).join(), /design\.seed/);
+  assert.match(problemasParaAgenda(campanhaTrio(G), G + 1, SEMENTE).join(), /repetitions/);
+  const c = campanhaTrio(G);
+  const a = gerarAgenda({ campanha: c, campanhaSha256: "b".repeat(64), pares: G, semente: SEMENTE });
+  const ent = (slot: string, o: Parameters<typeof entrada>[1] = {}) => {
+    const e = entrada(slot, { ...o, campanha: c.campaignId });
+    e.braco = slot.split("-")[1] as ArmV2;
+    return e;
+  };
+  const p1 = a.slots.filter(sl => sl.pairId === "p01");
+  const es = [ent(p1[0].slotId), ent(p1[1].slotId), ent(p1[2].slotId), ent(`p02-ferramentas`, { tecnico: "failed", isolamento: "unverified", submissao: "absent", motivo: "rate-limited: 429" })];
+  const d = proximaTentativa(a, c, es, "p02-ferramentas");
+  assert.ok(d.ok && d.tentativa === 2 && d.extrasLimite === c.retryPolicy.campaignAttemptCeiling - 3 * G, JSON.stringify(d));
+  assert.equal(tentativasDoSlot(es, c, "p02-ferramentas")[0].classe, "tecnica");
+  const s = situacaoDaAgenda(a, c, es);
+  assert.equal(s.planejados, 9);
+  assert.equal(s.pares[0].estado, "completo");
+  assert.ok(s.pares[0].slots.ferramentas, "o grupo traz o slot do terceiro braço");
+  assert.deepEqual(Object.keys(s.porBraco).sort(), ["com", "ferramentas", "sem"]);
+  assert.equal(s.porBraco.ferramentas!.tentados, 2, "p01 (válido) e p02 (falha técnica)");
+  assert.equal(s.riscoDeSelecao, null, "nenhum slot perdido");
+});
+
+await teste("trio (agenda.v2) no disparo: o manifesto resolve braço, grupo e repetição do slot; o terceiro braço passa pelas entradas", () => {
+  const G = 3;
+  const gerada = buildIsolatedManifest({ ...comum, campanha: "agenda-trio", slot: "x", par: "x", braco: "ferramentas", tentativa: 1, campanhaPath: join(work, "nao-existe", "campaign.json") }).campaign!.document as CampaignV2;
+  const c: CampaignV2 = { ...gerada, design: { ...gerada.design, repetitions: G, order: "quadrado-latino", seed: 61 }, retryPolicy: { ...gerada.retryPolicy, maxAttemptsPerSlot: 2, campaignAttemptCeiling: 3 * G + 3 } };
+  const dir = join(work, "campanhas", "agenda-trio");
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, "campaign.json"), documentoDaCampanha(c));
+  const a = gerarAgenda({ campanha: c, campanhaSha256: sha(readFileSync(join(dir, "campaign.json"))), pares: G, semente: SEMENTE });
+  writeFileSync(join(dir, "agenda.json"), documentoDaAgenda(a));
+  const arqT = join(work, "arquivo-trio");
+  mkdirSync(join(arqT, "indice", "entradas"), { recursive: true });
+  for (const sl of a.slots.filter(x => x.arm === "ferramentas" || x.positionInPair === 1).slice(0, 2)) {
+    const m = buildIsolatedManifest({ ...comum, campanha: "agenda-trio", campanhaPath: join(dir, "campaign.json"), arquivoIndice: arqT, slot: sl.slotId, par: sl.pairId,
+      braco: sl.arm as ArmV2 as never, repeticao: sl.repetition, tentativa: "auto" });
+    assert.equal(m.agenda!.document.contract, "agenda.v2");
+    assert.deepEqual(m.agenda!.slot, sl);
+    assert.deepEqual(isolatedManifestProblems(m), []);
+  }
+  const ag = { agenda: a, campanha: c };
+  const sl = a.slots.find(x => x.arm === "ferramentas")!;
+  const r = conferirEntradas({ tela: "solicitacao", braco: "da-agenda", modo: "roteirizado", modelo: "", esforco: "da-campanha", limite_min: "", campanha: "agenda-trio", slot: sl.slotId, par: "",
+    tentativa: "", repeticao: "", telas_sha: "a".repeat(40), validator_sha: "b".repeat(40), etapas: "coleta+linha-de-base" }, ag);
+  assert.deepEqual(r.problemas, []);
+  assert.equal(r.saidas.braco, "ferramentas");
+  assert.equal(r.saidas.par, sl.pairId);
+  assert.equal(r.saidas.imagens, "agent,screens,collector,egress,oracle");
 });
 
 console.log(`\n${ok} ok, ${falhas} falha(s)`);

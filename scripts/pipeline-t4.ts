@@ -16,7 +16,8 @@ import { appendFileSync, existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { EFFORT_LEVELS, CREDENTIAL_ENV } from "../runner/cliente-claude";
-import type { Campaign, Run } from "../contracts/index";
+import type { AnyCampaign, AnyRun } from "../contracts/index";
+import { BRACOS, temOraculo, type Braco } from "../runner/perfis-oraculo";
 import { caminhoAgenda, recusadoNoPreflight, type Agenda } from "./agenda-campanha";
 import type { EntradaIndice } from "./arquivo-resultados";
 import { MODELO_ENSAIO } from "./manifesto-coleta-isolada";
@@ -38,7 +39,7 @@ export interface Entradas {
 export const DA_AGENDA = "da-agenda", DA_CAMPANHA = "da-campanha";
 
 /** A agenda e a campanha commitadas no govbr-eval do disparo, quando a campanha tem agenda (NAT-65). */
-export interface AgendaDoDisparo { agenda: Agenda; campanha: Campaign }
+export interface AgendaDoDisparo { agenda: Agenda; campanha: AnyCampaign }
 
 /** Lê `campanhas/<campanha>/agenda.json` (e a campanha) do checkout do govbr-eval; null = campanha sem agenda. */
 export function agendaDaCampanha(raiz: string, campanha: string): AgendaDoDisparo | null {
@@ -46,7 +47,7 @@ export function agendaDaCampanha(raiz: string, campanha: string): AgendaDoDispar
   const ag = join(raiz, caminhoAgenda(campanha)), cp = join(raiz, "campanhas", campanha, "campaign.json");
   if (!existsSync(ag)) return null;
   if (!existsSync(cp)) throw new Error(`${caminhoAgenda(campanha)} sem o campaign.json ao lado`);
-  return { agenda: JSON.parse(readFileSync(ag, "utf8")) as Agenda, campanha: JSON.parse(readFileSync(cp, "utf8")) as Campaign };
+  return { agenda: JSON.parse(readFileSync(ag, "utf8")) as Agenda, campanha: JSON.parse(readFileSync(cp, "utf8")) as AnyCampaign };
 }
 
 /**
@@ -87,14 +88,14 @@ export function conferirEntradas(e: Partial<Entradas>, ag: AgendaDoDisparo | nul
     }
     if (c.design.screens[0] && c.design.screens[0].id !== has("tela")) p.push(`tela ${has("tela")} ≠ ${c.design.screens[0].id} da campanha`);
   } else {
-    if (braco === DA_AGENDA || !braco) p.push(`braco: sem | com (a campanha ${has("campanha")} não tem agenda)`);
+    if (braco === DA_AGENDA || !braco) p.push(`braco: ${BRACOS.join(" | ")} (a campanha ${has("campanha")} não tem agenda)`);
     if (!par) par = "par-01";
     if (!repeticao) repeticao = "1";
     if (!tentativa) tentativa = "1";
     if (!limiteTxt) limiteTxt = "90";
     if (esforco === DA_CAMPANHA) esforco = "high";
   }
-  if (!["sem", "com"].includes(braco) && !p.some((x) => x.startsWith("braco"))) p.push("braco: sem | com");
+  if (!(BRACOS as readonly string[]).includes(braco) && !p.some((x) => x.startsWith("braco"))) p.push(`braco: ${BRACOS.join(" | ")}`);
   if (!ID.test(par)) p.push("par: id [A-Za-z0-9._-], até 128");
   const limite = Number(limiteTxt);
   if (!Number.isInteger(limite) || limite < 1 || limite > 90) p.push("limite_min: inteiro de 1 a 90 (teto de segurança, D-67)");
@@ -116,7 +117,8 @@ export function conferirEntradas(e: Partial<Entradas>, ag: AgendaDoDisparo | nul
     agente, egress, fixture: String(modo !== "real"),
     modelo: modo === "real" ? modelo : modo === "duble" ? MODELO_ENSAIO.duble : MODELO_ENSAIO.roteirizado,
     esforco: modo === "roteirizado" ? "nao-se-aplica" : (EFFORT_LEVELS.includes(esforco) ? esforco : "high"),
-    imagens: braco === "com" ? "agent,screens,collector,egress,oracle" : "agent,screens,collector,egress",
+    // NAT-61: com e ferramentas sobem o oráculo (mesma imagem, perfis diferentes)
+    imagens: (BRACOS as readonly string[]).includes(braco) && temOraculo(braco as Braco) ? "agent,screens,collector,egress,oracle" : "agent,screens,collector,egress",
     coleta: String(has("etapas") !== "so-linha-de-base"),
     linha_de_base: String(has("etapas") !== "so-coleta"),
     limite_seg: String(limite * 60),
@@ -181,7 +183,8 @@ const fmt = (m: { value: number | null; status: string } | undefined): string =>
 export function resumoColeta(dir: string): string {
   const runPath = join(dir, "run.json");
   if (!existsSync(runPath)) return `### Coleta\n\n**Sem pacote**: \`run.json\` não foi produzido em \`${dir}\`. A execução fica registrada como interrompida, sem pacote.\n`;
-  const r = JSON.parse(readFileSync(runPath, "utf8")) as Run;
+  const r = JSON.parse(readFileSync(runPath, "utf8")) as AnyRun;
+  const oraculo = r.contract === "run.v2" ? r.intervention.oracle : null;
   const L = [
     `### Coleta — ${r.screen.id} · braço ${r.arm} · ${r.fixture ? "ENSAIO (fixture, nunca dado)" : "execução formal"}`, "",
     "| Estado | Valor |", "|---|---|",
@@ -192,7 +195,10 @@ export function resumoColeta(dir: string): string {
     `| Modelo | ${r.model.requested} → ${r.model.resolved} · esforço ${r.effort} |`,
     `| Duração do agente (s) | ${fmt(r.usage.wallClockSeconds)} |`, `| Tokens entrada/saída | ${fmt(r.usage.inputTokens)} / ${fmt(r.usage.outputTokens)} |`,
     `| Custo estimado pelo cliente (US$) | ${fmt(r.usage.estimatedCostUsd)} (estimativa, não fatura) |`,
-    `| Chamadas ao oráculo | ${fmt(r.usage.oracleCalls)} |`, `| runId | \`${r.runId}\` |`,
+    `| Chamadas ao oráculo | ${fmt(r.usage.oracleCalls)} |`,
+    // NAT-61: o perfil MEDIDO do servidor e as ferramentas que a ponte de fato expôs
+    ...(oraculo ? [`| Oráculo (perfil medido) | ${oraculo.profile} · ${oraculo.tools.join(", ")} · tools/list ${oraculo.toolsListSha256.slice(0, 12)}… |`] : []),
+    `| runId | \`${r.runId}\` |`,
   ];
   return L.join("\n") + "\n";
 }
@@ -246,15 +252,15 @@ function duracaoTexto(s: number | null): string {
   const m = Math.floor(s / 60), r = Math.round(s % 60);
   return m ? `${m} min${r ? ` ${r} s` : ""}` : `${r} s`;
 }
-const BRACO_TXT: Record<string, string> = { sem: "braço sem (sem oráculo)", com: "braço com (com oráculo)" };
+const BRACO_TXT: Record<string, string> = { sem: "braço sem (sem oráculo)", com: "braço com (com oráculo)", ferramentas: "braço ferramentas (oráculo sem a base de conhecimento)" };
 const ETAPA_TXT: Record<string, string> = { preparing: "preparação", preflight: "conferência prévia", running: "execução do agente", collecting: "coleta do relatório", archiving: "gravação do pacote" };
 const ISOL_TXT: Record<string, string> = { passed: "isolamento conferido", failed: "isolamento VIOLADO", unverified: "isolamento não verificado" };
 
-function lerRunSeguro(dir: string | null): Run | null {
+function lerRunSeguro(dir: string | null): AnyRun | null {
   if (!dir || !existsSync(join(dir, "run.json"))) return null;
-  try { return JSON.parse(readFileSync(join(dir, "run.json"), "utf8")) as Run; } catch { return null; }
+  try { return JSON.parse(readFileSync(join(dir, "run.json"), "utf8")) as AnyRun; } catch { return null; }
 }
-function achadosTexto(dir: string, r: Run): string {
+function achadosTexto(dir: string, r: AnyRun): string {
   if (r.submission.status === "refused") return "relatório recusado pelo coletor (não é 0 achados)";
   if (r.submission.status !== "accepted" || !r.submission.findings) return "nenhum relatório enviado (não é 0 achados)";
   try {
@@ -264,7 +270,10 @@ function achadosTexto(dir: string, r: Run): string {
   } catch { return "achados ilegíveis no pacote"; }
 }
 
-/** Situação do par no clone do arquivo: só o índice e o desenho da campanha (nunca a referência). */
+/**
+ * Situação do par (ou do trio, NAT-61) no clone do arquivo: só o índice e o desenho da campanha (nunca a
+ * referência). Os outros braços do grupo saem do desenho (padrão sem/com, como antes).
+ */
 export function situacaoDoPar(arquivo: string, campanha: string, par: string, braco: string): string {
   const dir = join(arquivo, "indice", "entradas");
   if (!existsSync(dir)) return "abra o painel (o clone do arquivo não tem índice)";
@@ -284,13 +293,17 @@ export function situacaoDoPar(arquivo: string, campanha: string, par: string, br
       try { if (existsSync(c)) desenho = (JSON.parse(readFileSync(c, "utf8")) as { design?: { arms?: string[] } }).design?.arms ?? desenho; } catch { /* sem desenho */ }
     }
   }
-  const outro = braco === "sem" ? "com" : "sem";
-  if (desenho && !desenho.includes(outro)) return `campanha de um braço só (pelo desenho) → atualize o clone (git pull) e prepare a análise da execução no painel`;
-  const doOutro = es.filter((e) => e.braco === outro).sort((a, b) => b.dataUtc.localeCompare(a.dataUtc));
-  if (!doOutro.length) return `falta o braço ${outro} do ${par} (dispare o slot dele)`;
-  const ultimo = doOutro[0];
-  if (ultimo.estado.arquivo === "sem-pacote" || ultimo.estado.tecnico !== "passed") return `o braço ${outro} do ${par} falhou na última tentativa → nova tentativa do slot dele`;
-  return `${par} completo → atualize o clone (git pull) e clique em Preparar análise no painel`;
+  const outros = (desenho ?? ["sem", "com"]).filter((a) => a !== braco);
+  if (!outros.length) return `campanha de um braço só (pelo desenho) → atualize o clone (git pull) e prepare a análise da execução no painel`;
+  // par: o texto de sempre ("do par-01"); trio: diz que é trio ("do trio p01")
+  const grupo = (desenho?.length ?? 2) > 2 ? `trio ${par}` : par;
+  for (const outro of outros) {
+    const doOutro = es.filter((e) => e.braco === outro).sort((a, b) => b.dataUtc.localeCompare(a.dataUtc));
+    if (!doOutro.length) return `falta o braço ${outro} do ${grupo} (dispare o slot dele)`;
+    const ultimo = doOutro[0];
+    if (ultimo.estado.arquivo === "sem-pacote" || ultimo.estado.tecnico !== "passed") return `o braço ${outro} do ${grupo} falhou na última tentativa → nova tentativa do slot dele`;
+  }
+  return `${grupo} completo → atualize o clone (git pull) e clique em Preparar análise no painel`;
 }
 
 /**
@@ -323,7 +336,7 @@ export function cartaoSaude(pacote: string | null, ctx: ContextoCartao, arq: Inf
       `duração do agente: ${duracaoTexto(medido(r.usage.wallClockSeconds))}`,
       `custo estimado pelo cliente: ${custo === null ? "desconhecido" : `US$ ${custo.toFixed(2).replace(".", ",")} (estimativa, não fatura)`}`,
       achadosTexto(pacote, r),
-      ...(r.arm === "com" ? [`chamadas ao oráculo: ${medido(r.usage.oracleCalls) ?? "desconhecido"}`] : []),
+      ...(r.arm !== "sem" ? [`chamadas ao oráculo: ${medido(r.usage.oracleCalls) ?? "desconhecido"}${r.contract === "run.v2" && r.intervention.oracle ? ` (perfil ${r.intervention.oracle.profile}, ${r.intervention.oracle.tools.length} ferramentas)` : ""}`] : []),
       ISOL_TXT[r.status.isolation] ?? `isolamento: ${r.status.isolation}`,
     ].join(" · "));
   }

@@ -17,7 +17,7 @@
  * a campanha por conteúdo no govbr-resultados. Manifestos 1.0.0 continuam legíveis (sem campanha).
  *
  *   tsx scripts/manifesto-coleta-isolada.ts build --out ARQ_NOVO --tela solicitacao [--telas DIR] [--validator DIR]
- *        [--referencia ARQ] --campanha ID --slot ID --par ID --braco sem|com --modo real|duble|roteirizado
+ *        [--referencia ARQ] --campanha ID --slot ID --par ID --braco sem|com|ferramentas --modo real|duble|roteirizado
  *        [--modelo ID] [--esforco N] [--limite-min N] [--tentativa N] [--repeticao N] [--campanha-arquivo ARQ]
  *        [--agenda-arquivo ARQ] [--arquivo-indice CLONE_DO_GOVBR_RESULTADOS]
  *   tsx scripts/manifesto-coleta-isolada.ts verify --manifest ARQ
@@ -38,7 +38,9 @@ import { referenciaDe, telaOf } from "./telas";
 import {
   caminhoAgenda, documentoDaAgenda, lerEntradasDoIndice, problemasDaAgenda, proximaTentativa, type Agenda, type SlotAgenda,
 } from "./agenda-campanha";
-import { validateContract, type Campaign } from "../contracts/index";
+import { validateContract, type AnyCampaign, type Campaign, type CampaignV2 } from "../contracts/index";
+import { BRACOS, PERFIS, PERFIL_DO_BRACO, type Braco } from "../runner/perfis-oraculo";
+import { divergenciasDoOraculo } from "./identidade-campanha";
 
 export const ISOLATED_MANIFEST_VERSION = "manifesto-coleta-isolada-1.3.0";
 /**
@@ -61,7 +63,8 @@ export interface CampaignRecord {
   origin: "commitada" | "gerada-ensaio";
   sourcePath: string | null;
   sourceSha256: string | null;
-  document: Campaign;
+  /** v1 (pares) ou v2 (NAT-61: até três braços). */
+  document: AnyCampaign;
 }
 
 export interface IsolatedCollectionManifest {
@@ -70,7 +73,7 @@ export interface IsolatedCollectionManifest {
   /** true nos modos sem modelo (dublê, roteirizado): nunca dado científico. */
   fixture: boolean;
   dispatch: {
-    campaignId: string; slotId: string; pairId: string; screenId: string; arm: "sem" | "com";
+    campaignId: string; slotId: string; pairId: string; screenId: string; arm: Braco;
     mode: "real" | "duble" | "roteirizado"; attempt: number; repetition: number;
     model: string | null; effort: string | null; limitMinutes: number;
     github: { repository: string; runId: string; runAttempt: string; workflowSha: string } | null;
@@ -159,7 +162,14 @@ export function identidadeDoDisparo(m: Pick<IsolatedCollectionManifest, "dispatc
 }
 
 /** Bytes canônicos da campanha no arquivo (é o que o sha256 do registro cobre). */
-export const documentoDaCampanha = (c: Campaign): string => JSON.stringify(c, null, 2) + "\n";
+export const documentoDaCampanha = (c: AnyCampaign): string => JSON.stringify(c, null, 2) + "\n";
+
+/**
+ * NAT-61: campanha de ENSAIO de trio. O id da campanha diz o desenho (determinístico, sem depender do braço
+ * do disparo): com o segmento `trio` (`ensaio-trio-01`, `t4-trio`…) ela é campaign.v2 com os três braços;
+ * sem ele, a campanha de pares v1 de sempre. Assim os três braços de um grupo chegam aos mesmos bytes.
+ */
+export const ehCampanhaDeTrio = (campanha: string): boolean => /(^|[-_.])trio([-_.]|$)/.test(campanha);
 const sha256Texto = (s: string | Buffer): string => createHash("sha256").update(s).digest("hex");
 export const caminhoCampanhaCommitada = (campanha: string): string => `campanhas/${campanha}/campaign.json`;
 
@@ -167,9 +177,11 @@ export const caminhoCampanhaCommitada = (campanha: string): string => `campanhas
  * Campanha de ENSAIO gerada do disparo (só dublê/roteirizado, nunca no modo real). Determinística: não
  * leva braço, slot nem horário do disparo, para que os dois braços de um par cheguem aos mesmos bytes.
  */
-export function campanhaDeEnsaio(m: Pick<IsolatedCollectionManifest, "dispatch" | "site" | "oracle" | "imagesLock" | "execution">): Campaign {
+export function campanhaDeEnsaio(m: Pick<IsolatedCollectionManifest, "dispatch" | "site" | "oracle" | "imagesLock" | "execution">): AnyCampaign {
   const d = m.dispatch;
   if (d.mode === "real") throw new Error("campanha gerada só existe para ensaio; o modo real exige campanhas/<id>/campaign.json commitado");
+  if (ehCampanhaDeTrio(d.campaignId)) return campanhaDeEnsaioTrio(m);
+  if (d.arm === "ferramentas") throw new Error(`ensaio do braço ferramentas sem campanha commitada: use um id de campanha de trio (com o segmento "trio", ex.: ensaio-trio-01) ou commite campanhas/${d.campaignId}/campaign.json (campaign.v2)`);
   const v = (m.imagesLock.versions ?? {}) as { playwrightMcp?: string; chromium?: string; claudeCode?: string };
   const modelo = modeloDaColeta(d.mode, d.model)!;
   const x = identidadeDoDisparo(m);
@@ -200,33 +212,60 @@ export function campanhaDeEnsaio(m: Pick<IsolatedCollectionManifest, "dispatch" 
   };
 }
 
+/** NAT-61: a campanha de ensaio de trio (campaign.v2), com os mesmos campos da de pares e o oráculo por braço. */
+function campanhaDeEnsaioTrio(m: Pick<IsolatedCollectionManifest, "dispatch" | "site" | "oracle" | "imagesLock" | "execution">): CampaignV2 {
+  const par = campanhaDeEnsaio({ ...m, dispatch: { ...m.dispatch, campaignId: "pares", arm: "sem" } }) as Campaign;
+  const oraculo = (b: "com" | "ferramentas") => {
+    const perfil = PERFIL_DO_BRACO[b]!;
+    return { package: m.oracle.package ?? "desconhecido", version: m.oracle.version ?? "desconhecida", distSha256: m.oracle.distSha256, dataSha256: m.oracle.dataSha256,
+      profile: perfil, tools: [...PERFIS[perfil].tools], toolsListSha256: PERFIS[perfil].toolsListSha256 };
+  };
+  const { oracle: _semUso, ...fixos } = par.fixed;
+  return {
+    ...par, contract: "campaign.v2", campaignId: m.dispatch.campaignId,
+    title: `Campanha de ensaio de trio ${m.dispatch.campaignId} (gerada do disparo; ENSAIO, nunca dado científico)`,
+    design: { ...par.design, arms: ["sem", "ferramentas", "com"], comparisons: [
+      { id: "ferramentas-x-com", arms: ["ferramentas", "com"], role: "primary", question: "Ensaio: o que a base de conhecimento do oráculo acrescenta às ferramentas de medição (nenhuma hipótese científica)." },
+      { id: "sem-x-ferramentas", arms: ["sem", "ferramentas"], role: "secondary", question: "Ensaio: o que as ferramentas de medição acrescentam ao navegador sozinho." },
+      { id: "sem-x-com", arms: ["sem", "com"], role: "secondary", question: "Ensaio: o oráculo inteiro." },
+    ] },
+    fixed: { ...fixos, oracleProfiles: { com: oraculo("com"), ferramentas: oraculo("ferramentas") } },
+    retryPolicy: { ...par.retryPolicy, campaignAttemptCeiling: 3 },
+  };
+}
+
 /**
  * A campanha serve a este disparo? Contrato, id, natureza, tela/versão, braço, modelo, oráculo e
  * (NAT-63) a execução efetiva: esforço, tempo limite, cliente, protocolo (manifesto 1.2.0), tentativa
  * e repetição dentro dos tetos congelados. Roda no `preparar`, antes de qualquer chamada de modelo.
  */
-export function problemasDaCampanha(c: Campaign, m: Pick<IsolatedCollectionManifest, "dispatch" | "site" | "oracle" | "fixture" | "imagesLock" | "execution">): string[] {
+export function problemasDaCampanha(c: AnyCampaign, m: Pick<IsolatedCollectionManifest, "dispatch" | "site" | "oracle" | "fixture" | "imagesLock" | "execution">): string[] {
   const v = validateContract(c);
-  if (v.contract !== "campaign.v1" || !v.valid) return [`campanha fora do contrato campaign.v1: ${v.errors.map((e) => `${e.path || "/"} ${e.message}`).join("; ")}`];
+  if ((v.contract !== "campaign.v1" && v.contract !== "campaign.v2") || !v.valid) return [`campanha fora dos contratos campaign.v1/v2: ${v.errors.map((e) => `${e.path || "/"} ${e.message}`).join("; ")}`];
   const p: string[] = [];
   const d = m.dispatch;
   if (c.campaignId !== d.campaignId) p.push(`campanha ${c.campaignId} ≠ ${d.campaignId} do disparo`);
   if (c.fixture !== m.fixture) p.push(`campanha fixture=${String(c.fixture)} num disparo ${d.mode} (fixture=${String(m.fixture)})`);
   if (!c.design.screens.some((s) => s.id === d.screenId && s.version === m.site.screenVersion)) p.push(`a campanha não traz a tela ${d.screenId}@${m.site.screenVersion} no desenho`);
-  if (!c.design.arms.includes(d.arm)) p.push(`a campanha não traz o braço ${d.arm}`);
+  if (!(c.design.arms as string[]).includes(d.arm)) p.push(`a campanha não traz o braço ${d.arm}`);
   const modelo = modeloDaColeta(d.mode, d.model);
   if (!c.design.models.some((x) => x.requested === modelo)) p.push(`a campanha não traz o modelo ${String(modelo)}`);
-  if (c.fixed.oracle.distSha256 !== m.oracle.distSha256 || c.fixed.oracle.dataSha256 !== m.oracle.dataSha256) p.push("oráculo fixado na campanha ≠ o compilado para o disparo");
+  // NAT-61: o oráculo do braço (v2: oracleProfiles[braço]; v1: fixed.oracle). O perfil é medido na coleta.
+  if (c.contract === "campaign.v1") {
+    if (c.fixed.oracle.distSha256 !== m.oracle.distSha256 || c.fixed.oracle.dataSha256 !== m.oracle.dataSha256) p.push("oráculo fixado na campanha ≠ o compilado para o disparo");
+  } else if (d.arm !== "sem") {
+    p.push(...divergenciasDoOraculo(c, d.arm, { distSha256: m.oracle.distSha256, dataSha256: m.oracle.dataSha256 }).map((x) => `${x} (compilado para o disparo)`));
+  }
   p.push(...divergenciasDaCampanha(c, identidadeDoDisparo(m)));
   return p;
 }
 
 /** Lê a campanha commitada (o modo real exige) ou gera a de ensaio. Recusa campanha que não serve ao disparo. */
 export function campanhaDoDisparo(m: Omit<IsolatedCollectionManifest, "campaign">, caminho: string): CampaignRecord {
-  let document: Campaign, origin: CampaignRecord["origin"], sourcePath: string | null = null, sourceSha256: string | null = null;
+  let document: AnyCampaign, origin: CampaignRecord["origin"], sourcePath: string | null = null, sourceSha256: string | null = null;
   if (existsSync(caminho)) {
     const bytes = readFileSync(caminho);
-    try { document = JSON.parse(bytes.toString("utf8")) as Campaign; } catch { throw new Error(`campanha ilegível (JSON inválido): ${caminho}`); }
+    try { document = JSON.parse(bytes.toString("utf8")) as AnyCampaign; } catch { throw new Error(`campanha ilegível (JSON inválido): ${caminho}`); }
     origin = "commitada";
     const rel = relative(ROOT, caminho).replace(/\\/g, "/");
     sourcePath = rel.startsWith("..") ? caminho.replace(/\\/g, "/") : rel;
@@ -250,7 +289,7 @@ export const SCREEN_LABELS: Record<string, string> = { solicitacao: "Solicitar s
 
 export interface BuildOptions {
   tela: string; telasDir: string; validatorDir: string; referencePath?: string;
-  campanha: string; slot: string; par: string; braco: "sem" | "com"; modo: "real" | "duble" | "roteirizado";
+  campanha: string; slot: string; par: string; braco: Braco; modo: "real" | "duble" | "roteirizado";
   modelo: string | null; esforco: string | null; limiteMin: number;
   /** "auto" (só com agenda): a tentativa que o índice do arquivo dá ao slot. */
   tentativa: number | "auto"; repeticao: number;
@@ -299,7 +338,7 @@ export function agendaDoDisparo(o: Pick<BuildOptions, "slot" | "par" | "braco" |
 export function buildIsolatedManifest(opcoes: BuildOptions): IsolatedCollectionManifest {
   const o = { ...opcoes, tentativa: opcoes.tentativa === "auto" ? tentativaAutomatica(opcoes) : opcoes.tentativa };
   for (const [k, v] of [["campanha", o.campanha], ["slot", o.slot], ["par", o.par]] as const) if (!ID.test(v)) throw new Error(`--${k} inválido: ${v}`);
-  if (o.braco !== "sem" && o.braco !== "com") throw new Error("--braco: sem | com");
+  if (!(BRACOS as readonly string[]).includes(o.braco)) throw new Error(`--braco: ${BRACOS.join(" | ")}`);
   if (!["real", "duble", "roteirizado"].includes(o.modo)) throw new Error("--modo: real | duble | roteirizado");
   if (!Number.isInteger(o.limiteMin) || o.limiteMin < 1 || o.limiteMin > 90) throw new Error("--limite-min: inteiro de 1 a 90 (teto de segurança do piloto, D-67)");
   const tela = telaOf(o.tela);
@@ -368,7 +407,7 @@ function tentativaAutomatica(o: BuildOptions): number {
   const agendaPath = resolve(o.agendaPath ?? join(dirname(campanhaPath), "agenda.json"));
   if (!existsSync(agendaPath) || !existsSync(campanhaPath)) throw new Error("--tentativa auto só existe para campanha commitada com agenda");
   if (!o.arquivoIndice) throw new Error("--tentativa auto sem --arquivo-indice: sem o índice não se sabe quantas tentativas o slot já teve");
-  const c = JSON.parse(readFileSync(campanhaPath, "utf8")) as Campaign;
+  const c = JSON.parse(readFileSync(campanhaPath, "utf8")) as AnyCampaign;
   const d = proximaTentativa(JSON.parse(readFileSync(agendaPath, "utf8")) as Agenda, c, lerEntradasDoIndice(o.arquivoIndice), o.slot);
   if (!d.ok) throw new Error(`nova tentativa recusada pela política da campanha; nada foi gravado: ${d.motivo}`);
   return d.tentativa;
@@ -462,7 +501,7 @@ function main(): void {
   const manifest = buildIsolatedManifest({
     tela: need("--tela"), telasDir: resolve(val("--telas") ?? join(ROOT, "..", "govbr-telas")), validatorDir: resolve(val("--validator") ?? join(ROOT, "..", "govbr-ds-validator")),
     referencePath: val("--referencia"), campanha: need("--campanha"), slot: need("--slot"), par: val("--par") ?? "par-01",
-    braco: need("--braco") as "sem" | "com", modo: need("--modo") as "real" | "duble" | "roteirizado",
+    braco: need("--braco") as Braco, modo: need("--modo") as "real" | "duble" | "roteirizado",
     modelo: val("--modelo") ?? null, esforco: val("--esforco") ?? null, limiteMin: Number(val("--limite-min") ?? 90),
     tentativa: val("--tentativa") === "auto" ? "auto" : Number(val("--tentativa") ?? 1), repeticao: Number(val("--repeticao") ?? 1), github: gh,
     campanhaPath: val("--campanha-arquivo"), agendaPath: val("--agenda-arquivo"), arquivoIndice: val("--arquivo-indice") ? resolve(val("--arquivo-indice")!) : null,
