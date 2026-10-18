@@ -22,13 +22,13 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
-import { validateContract, type Arm, type Campaign, type SnapshotManifest } from "../../contracts/index";
+import { validateContract, type ArmV2 as Arm, type AnyCampaign as Campaign, type SnapshotManifest } from "../../contracts/index";
 import {
   REPOS, Recusa, caminhoCampanha, caminhoReferencia, caminhoSite, problemasDoPacote, resolverConjunto, restaurar, sha, type EntradaIndice,
 } from "../arquivo-resultados";
 import { readIsolatedManifest, type IsolatedCollectionManifest } from "../manifesto-coleta-isolada";
 import { loadSite } from "../measurement-surface";
-import { ARMS, ID, RECEITA_VERSAO, cloneComCrlf, dentroDoArquivo, lerAnalise, lerIndice, relArquivo, type Receita, type Selo } from "./modelo";
+import { ARMS, ID, RECEITA_VERSAO, bracosEsperados, cloneComCrlf, infoCampanha, dentroDoArquivo, lerAnalise, lerIndice, relArquivo, type Receita, type Selo } from "./modelo";
 import { recalcular } from "./revisao";
 import { lerAgendaDoArquivo } from "./agenda-painel";
 import { tentativaSelecionada, tentativasDoSlot } from "../agenda-campanha";
@@ -105,7 +105,8 @@ function resolverAlvo(arquivo: string, alvo: AlvoPreparo): AlvoResolvido {
       // NAT-65: com agenda, cada braço é o slot dele, e entra a PRIMEIRA tentativa elegível (protocolo §7)
       const entradas: AlvoResolvido["entradas"] = {};
       const slots: NonNullable<AlvoResolvido["selecao"]>["slots"] = {};
-      for (const arm of ARMS) {
+      // NAT-61: os braços do grupo são os slots dele na agenda (dois no par, três no trio)
+      for (const arm of ARMS.filter(a => ag.agenda.slots.some(s => s.pairId === alvo.par && s.arm === a))) {
         const slot = ag.agenda.slots.find(s => s.pairId === alvo.par && s.arm === arm);
         if (!slot) falhar("entradas", `o par ${alvo.par} não está na agenda da campanha`);
         const ts = tentativasDoSlot(execucoes, ag.campanha, slot!.slotId);
@@ -118,7 +119,9 @@ function resolverAlvo(arquivo: string, alvo: AlvoPreparo): AlvoResolvido {
         selecao: { regra: `${ag.campanha.retryPolicy.attemptSelection} (NAT-65: a primeira tentativa elegível do slot, na ordem do disparo)`, agendaSemente: ag.agenda.seed.commit, slots } };
     }
     const entradas: AlvoResolvido["entradas"] = {};
-    for (const arm of ARMS) entradas[arm] = escolherBraco(arm, xs.filter(e => e.braco === arm));
+    // NAT-61: sem e com sempre; ferramentas quando o desenho da campanha o planeja ou ele está no arquivo
+    const esperados = bracosEsperados(infoCampanha(arquivo, alvo.campanha).bracos, ARMS.filter(a => xs.some(e => e.braco === a)));
+    for (const arm of esperados) entradas[arm] = escolherBraco(arm, xs.filter(e => e.braco === arm));
     return { campanha: alvo.campanha, alvo: alvo.par, tipo: "par", entradas };
   }
   if (!ID.test(alvo.runId)) falhar("entradas", "id de execução inválido");

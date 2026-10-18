@@ -16,7 +16,7 @@
  */
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { isAbsolute, join, relative, resolve, sep } from "node:path";
-import type { AnalysisBinding, Arm, Findings, Run } from "../../contracts/index";
+import type { AnyAnalysisBinding, ArmV2 as Arm, Findings, Run, RunV2 } from "../../contracts/index";
 import type { EntradaIndice } from "../arquivo-resultados";
 import { recusadoNoPreflight } from "../agenda-campanha";
 import type { Resumo } from "../analisar-execucao";
@@ -29,7 +29,25 @@ export const RECEITA_VERSAO = "receita-analise-1.0.0";
 /** 1.1.0 (NAT-72): o registro diz quantas partes (átomos) e quantos vínculos de revisão a gravação trouxe. 1.0.0 continua legível. */
 export const DECISOES_VERSAO = "decisoes-painel-1.1.0";
 export const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
-export const ARMS: Arm[] = ["sem", "com"];
+/** NAT-61: a ordem das colunas; o braço ferramentas só aparece quando o desenho ou o arquivo o traz. */
+export const ARMS: Arm[] = ["sem", "ferramentas", "com"];
+
+/**
+ * Braços que um par/grupo deve ter: sem e com sempre (como antes do NAT-61), mais ferramentas quando o
+ * desenho da campanha o planeja ou uma execução dele está no arquivo. O que falta além do desenho é
+ * `porDesenho` (nunca "incompleto").
+ */
+export function bracosEsperados(desenho: readonly string[] | null, presentes: readonly Arm[]): Arm[] {
+  return ARMS.filter(a => a !== "ferramentas" || Boolean(desenho?.includes(a)) || presentes.includes(a));
+}
+
+/** NAT-61: a comparação principal do grupo (comparacoes do summary.json), na forma da comparação do par. */
+export function comparacaoPrincipal(resumo: Resumo): Resumo["comparacao"] {
+  const c = resumo.comparacoes?.find(x => x.papel === "primary");
+  if (!c) return resumo.comparacao;
+  return { disponivel: c.disponivel, motivo: c.motivo, estado: c.estado, ...(c.elegivel !== undefined ? { elegivel: c.elegivel } : {}),
+    diferencaUnidadesConfirmadas: c.diferencaUnidadesConfirmadas, diferencaRecall: c.diferencaRecall, unidades: null, nota: c.nota };
+}
 
 // ───────────────────────────────────────────────────────────────── caminhos
 
@@ -135,7 +153,7 @@ export interface Receita {
 
 export interface Revisao {
   numero: number; nome: string; dir: string; rel: string;
-  resumo: Resumo; bindings: Partial<Record<Arm, AnalysisBinding>>;
+  resumo: Resumo; bindings: Partial<Record<Arm, AnyAnalysisBinding>>;
 }
 export interface Falha { carimbo: string; em: string; motivo: string; rel: string }
 export interface VersaoDecisoes { numero: number; nome: string; rel: string; meta: MetaDecisao | null }
@@ -166,11 +184,11 @@ export function lerRevisao(rdir: string, nome: string, rel: string): Revisao | s
   const m = NOME_REV.exec(nome);
   const s = tentarJson<Resumo>(join(rdir, "summary.json"));
   if (!s.ok) return `A pasta ${nome} está incompleta (sem summary.json legível) e foi ignorada — a versão anterior íntegra continua valendo`;
-  const bindings: Partial<Record<Arm, AnalysisBinding>> = {};
+  const bindings: Partial<Record<Arm, AnyAnalysisBinding>> = {};
   for (const arm of ARMS) {
     const p = join(rdir, `analysis-binding.${arm}.json`);
     if (!existsSync(p)) continue;
-    const b = tentarJson<AnalysisBinding>(p);
+    const b = tentarJson<AnyAnalysisBinding>(p);
     if (!b.ok) return `A pasta ${nome} tem binding ilegível e foi ignorada — a versão anterior íntegra continua valendo`;
     bindings[arm] = b.valor;
   }
@@ -390,11 +408,11 @@ function revisaoQueCobre(analises: Analise[], e: EntradaIndice): { an: Analise; 
   return null;
 }
 
-function lerRun(arquivo: string, e: EntradaIndice): Run | null {
+function lerRun(arquivo: string, e: EntradaIndice): Run | RunV2 | null {
   if (e.estado.arquivo === "sem-pacote") return null;
   const p = join(arquivo, e.caminho, "pacote", "run.json");
   if (!existsSync(p)) return null;
-  const r = tentarJson<Run>(p);
+  const r = tentarJson<Run | RunV2>(p);
   return r.ok ? r.valor : null;
 }
 
@@ -528,10 +546,14 @@ export interface ResultadoPar {
    * O agregado por spec da campanha é uma conta de leitura sobre esta lista.
    */
   unidades?: NonNullable<NonNullable<Resumo["comparacao"]>["unidades"]>;
+  /** NAT-61: as comparações do grupo (summary.json → comparacoes), cada uma com o seu n. Ausente no par v1. */
+  comparacoes?: NonNullable<Resumo["comparacoes"]>;
 }
 
 export function resultadoDaRevisao(rv: Revisao, ids: Map<string, string> = new Map()): ResultadoPar | null {
-  const c = rv.resumo.comparacao;
+  // NAT-61: no grupo, estado/diferenças vêm da comparação principal (ferramentas × com); as unidades por spec (D-102),
+  // só da comparação sem × com do par, como antes.
+  const c = comparacaoPrincipal(rv.resumo);
   if (rv.resumo.analise.estado !== "pronta") return null;
   const medido = (m: { estado: string; valor: number | null } | undefined): number | null => (m && m.estado === "medido" && typeof m.valor === "number" ? m.valor : null);
   const bracos: ResultadoPar["bracos"] = {};
@@ -545,7 +567,8 @@ export function resultadoDaRevisao(rv: Revisao, ids: Map<string, string> = new M
   return { revisao: rv.nome, fonte: `${rv.rel}/summary.json`, geradoEm: rv.resumo.geradoEm, estado: c?.estado ?? null, disponivel: Boolean(c?.disponivel),
     elegivel: c?.elegivel !== false, motivo: c?.motivo ?? null, nota: c?.nota ?? "análise de uma execução só: não há comparação",
     bracos, diferencaUnidades: c?.diferencaUnidadesConfirmadas ?? null, diferencaRecall: c?.diferencaRecall ?? null,
-    pendentes: rv.resumo.revisaoSemantica?.pendentes ?? 0, ...(c?.unidades ? { unidades: c.unidades } : {}) };
+    pendentes: rv.resumo.revisaoSemantica?.pendentes ?? 0, ...(rv.resumo.comparacao?.unidades ? { unidades: rv.resumo.comparacao.unidades } : {}),
+    ...(rv.resumo.comparacoes ? { comparacoes: rv.resumo.comparacoes } : {}) };
 }
 
 export interface VistaParResumo {
@@ -590,14 +613,14 @@ function resumoPares(execucoes: LinhaExecucao[], analises: Analise[], campanhas:
   return [...grupos.entries()].map(([k, xs]) => {
     const [campanha, par] = k.split("/");
     const bracos = ARMS.filter(a => xs.some(x => x.braco === a));
-    const faltando = ARMS.filter(a => !bracos.includes(a));
     const desenho = campanhas.find(c => c.id === campanha)?.bracos ?? null;
+    const faltando = bracosEsperados(desenho, bracos).filter(a => !bracos.includes(a));
     const porDesenho = faltando.length > 0 && Boolean(desenho) && faltando.every(a => !desenho!.includes(a));
     const an = analises.find(a => a.campanha === campanha && a.alvo === par) ?? null;
-    const comp = an?.atual?.resumo.comparacao ?? null;
+    const comp = an?.atual ? comparacaoPrincipal(an.atual.resumo) : null;
     let selo: Selo;
     if (porDesenho) selo = { estado: "nao-se-aplica", texto: "um braço só, pelo desenho da campanha: sem comparação" };
-    else if (faltando.length) selo = { estado: "par-incompleto", texto: `par incompleto: falta o braço ${faltando.join(" e ")}` };
+    else if (faltando.length) selo = { estado: "par-incompleto", texto: `${bracos.length + faltando.length > 2 ? "grupo" : "par"} incompleto: falta o braço ${faltando.join(" e ")}` };
     else if (!an) selo = { estado: "sem-analise", texto: "sem análise no arquivo" };
     else if (!an.atual) selo = { estado: "falha", texto: "análise sem versão íntegra" };
     else if (an.atual.resumo.analise.estado === "bloqueada") selo = { estado: "bloqueada", texto: "análise bloqueada" };
@@ -631,6 +654,13 @@ export interface Placar {
   total: number; finais: number;
   /** Somas de unidades confirmadas SÓ sobre os pares FINAIS (n = finais); null sem par final. */
   somaSem: number | null; somaCom: number | null; somaTotal: number | null;
+  /** NAT-61: só quando algum par é trio. Soma do braço ferramentas nos pares finais. */
+  somaFerramentas?: number | null;
+  /**
+   * NAT-61: cada comparação do trio com o SEU n (grupos em que ela está final) e a soma das diferenças nesses
+   * grupos. Grupo incompleto entra só nas comparações que têm os dois braços. Nunca soma com pares v1.
+   */
+  comparacoes?: { id: string; bracos: [Arm, Arm]; papel: "primary" | "secondary"; n: number; disponiveis: number; somaDiferenca: number | null }[];
   /** NAT-65: campanha com agenda — planejado × executado e o desfecho principal (estatística pareada). */
   agenda?: { vista: VistaAgenda; agregado: AgregadoCampanha };
 }
@@ -671,7 +701,24 @@ export function placarDaCampanha(info: InfoCampanha, pares: VistaParResumo[], pr
   return { info, linhas, total: comparaveis.length, finais: finais.length,
     somaSem: soma(l => l.resultado?.bracos.sem?.confirmadas), somaCom: soma(l => l.resultado?.bracos.com?.confirmadas),
     somaTotal: soma(l => l.resultado?.bracos.sem?.total ?? l.resultado?.bracos.com?.total),
+    ...(linhas.some(l => l.resultado?.comparacoes) ? { somaFerramentas: soma(l => l.resultado?.bracos.ferramentas?.confirmadas), comparacoes: comparacoesDoPlacar(linhas) } : {}),
     ...(agenda ? { agenda: { vista: agenda, agregado: agregadoDaCampanha(agenda, linhas) } } : {}) };
+}
+
+/** NAT-61: cada comparação declarada do trio, agregada só sobre os grupos em que ela está final (o seu n). */
+function comparacoesDoPlacar(linhas: LinhaPlacar[]): NonNullable<Placar["comparacoes"]> {
+  const porId = new Map<string, NonNullable<Placar["comparacoes"]>[number]>();
+  for (const l of linhas) for (const c of l.resultado?.comparacoes ?? []) {
+    const x = porId.get(c.id) ?? { id: c.id, bracos: c.bracos, papel: c.papel, n: 0, disponiveis: 0, somaDiferenca: 0 as number | null };
+    if (c.disponivel) x.disponiveis++;
+    if (c.disponivel && c.estado === "final") {
+      x.n++;
+      x.somaDiferenca = x.somaDiferenca !== null && c.diferencaUnidadesConfirmadas !== null ? x.somaDiferenca + c.diferencaUnidadesConfirmadas : null;
+    }
+    porId.set(c.id, x);
+  }
+  return [...porId.values()].map(x => ({ ...x, somaDiferenca: x.n ? x.somaDiferenca : null }))
+    .sort((a, b) => (a.papel === b.papel ? 0 : a.papel === "primary" ? -1 : 1));
 }
 
 /** Campanhas que entram no placar: as que não são ensaio; num arquivo só de ensaios (a fixture), todas. */
@@ -690,6 +737,8 @@ export interface VistaPar {
   comparacao: { disponivel: boolean; motivo: string | null; estado: string | null; nota: string;
     diferencaUnidades: Valor<number | null>; diferencaRecall: Valor<number | null>;
     unidades: NonNullable<Resumo["comparacao"]>["unidades"]; fonte: Fonte } | null;
+  /** NAT-61: as comparações do grupo (summary.json → comparacoes), cada uma com o seu n. Ausente no par v1. */
+  comparacoes?: NonNullable<Resumo["comparacoes"]>;
   achadosPorBraco: Partial<Record<Arm, { total: number; itens: { seletor: string; regra: string | null; observado: string }[] } | null>>;
   revisaoAberta: boolean;
   campanhaInfo: InfoCampanha; porDesenho: boolean; resultado: ResultadoPar | null; avisosArquivo: { crlf: boolean };
@@ -742,9 +791,10 @@ export function vistaPar(arquivo: string, campanha: string, par: string): VistaP
   if (!xs.length && !an) return null;
   const bracos: VistaPar["bracos"] = {};
   for (const a of ARMS) { const l = xs.filter(x => x.braco === a); if (l.length) bracos[a] = l; }
-  const faltando = ARMS.filter(a => !bracos[a]);
   const resumo = v.pares.find(p => p.campanha === campanha && p.par === par) ?? null;
   const campanhaInfo = v.campanhas.find(c => c.id === campanha) ?? infoCampanha(arquivo, campanha);
+  const presentes = ARMS.filter(a => bracos[a]);
+  const faltando = bracosEsperados(campanhaInfo.bracos, presentes).filter(a => !bracos[a]);
   const ids = new Map(v.execucoes.map(x => [x.chave, x.id] as [string, string]));
   const rv = an?.atual ?? null;
   let comparacao: VistaPar["comparacao"] = null;
@@ -762,7 +812,7 @@ export function vistaPar(arquivo: string, campanha: string, par: string): VistaP
   if (rv) for (const e of rv.resumo.execucoes) achadosPorBraco[e.braco] = e.achados;
   const revisaoAberta = Boolean(rv && rv.resumo.execucoes.some(e => e.pontuacao.estado === "pending-review" || e.pontuacao.estado === "provisional"));
   return { fixture: v.fixture, campanha, par, bracos, faltando, analise: an, metricas: rv && rv.resumo.analise.estado === "pronta" ? metricasDaRevisao(rv) : null,
-    comparacao, achadosPorBraco, revisaoAberta, campanhaInfo, porDesenho: resumo?.porDesenho ?? false,
+    comparacao, ...(rv?.resumo.comparacoes ? { comparacoes: rv.resumo.comparacoes } : {}), achadosPorBraco, revisaoAberta, campanhaInfo, porDesenho: resumo?.porDesenho ?? false,
     resultado: rv ? resultadoDaRevisao(rv, ids) : null, avisosArquivo: { crlf: v.crlf } };
 }
 
@@ -826,11 +876,16 @@ export function vistaExecucao(arquivo: string, chave: string): VistaExecucao | n
     isolamento.push(T("Uso do oráculo", mi.usoOraculo, mi.usoOraculo, f("mcpIsolamento.usoOraculo")));
     isolamento.push(T("Chamadas ao oráculo", mi.chamadasOraculo.valor, mi.chamadasOraculo.estado === "medido" ? String(mi.chamadasOraculo.valor) : "desconhecido", f("mcpIsolamento.chamadasOraculo")));
     isolamento.push(T("Erros de ferramenta", mi.errosDeFerramenta.valor, mi.errosDeFerramenta.estado === "medido" ? String(mi.errosDeFerramenta.valor) : "desconhecido", f("mcpIsolamento.errosDeFerramenta")));
+    // NAT-61: run.v2 — o perfil MEDIDO do servidor e as ferramentas que a ponte expôs (nunca o rótulo do braço)
+    if (mi.oraculo && "tools" in mi.oraculo) {
+      isolamento.push(T("Perfil do oráculo (medido)", mi.oraculo.profile, mi.oraculo.profile, f("mcpIsolamento.oraculo.profile")));
+      isolamento.push(T("Ferramentas efetivas do oráculo", mi.oraculo.tools.length, `${mi.oraculo.tools.join(", ")} (tools/list ${mi.oraculo.toolsListSha256.slice(0, 12)})`, f("mcpIsolamento.oraculo.tools")));
+    }
     isolamento.push(T("Checks negativos", mi.checks?.aprovados ?? null, mi.checks ? `${mi.checks.aprovados} aprovado(s); falhos: ${mi.checks.falhos.join("; ") || "nenhum"}; não exercitados: ${mi.checks.naoExercitados.join(", ") || "nenhum"}` : "sem isolation.json", f("mcpIsolamento.checks")));
   } else {
     origem = "pacote";
     const rRel = `${e.caminho}/pacote/run.json`;
-    const r = existsSync(join(arquivo, rRel)) ? tentarJson<Run>(join(arquivo, rRel)) : null;
+    const r = existsSync(join(arquivo, rRel)) ? tentarJson<Run | RunV2>(join(arquivo, rRel)) : null;
     const f = (campo: string): Fonte => ({ arquivo: rRel, campo, versao: r?.ok ? r.valor.contract : null, atualizadoEm: r?.ok ? r.valor.timestamps.finishedAt ?? r.valor.timestamps.plannedAt : null, pacote: e.chave });
     if (r?.ok) {
       const run = r.valor;
@@ -846,6 +901,11 @@ export function vistaExecucao(arquivo: string, chave: string): VistaExecucao | n
       }
       isolamento.push(T("Isolamento", run.status.isolation, run.status.isolation, f("status.isolation")));
       isolamento.push(T("Uso do oráculo", run.status.oracleUsage, run.status.oracleUsage, f("status.oracleUsage")));
+      if (run.contract === "run.v2" && run.intervention.oracle) {
+        const o = run.intervention.oracle;
+        isolamento.push(T("Perfil do oráculo (medido)", o.profile, o.profile, f("intervention.oracle.profile")));
+        isolamento.push(T("Ferramentas efetivas do oráculo", o.tools.length, `${o.tools.join(", ")} (tools/list ${o.toolsListSha256.slice(0, 12)})`, f("intervention.oracle.tools")));
+      }
     } else {
       tecnico.push(T("Status técnico", null, `pacote/run.json ${r ? "ilegível" : "ausente"} no arquivo`, f("—")));
     }

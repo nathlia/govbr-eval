@@ -183,6 +183,17 @@ test("simetria: sem oráculo não há candidato de ferramenta nem exigência; ve
   assert.deepEqual(ambos(com), ambos(sem));
 });
 
+test("NAT-61: braço ferramentas (perfil knowledge-free, só axe) tem candidatos de ferramenta: as verificações de escopo oraculo se aplicam como no com", () => {
+  // A ponte do braço ferramentas também se chama "oracle" (mesmo servidor, outro perfil); o scan devolve famílias do axe.
+  const axe = { ...paginaFamilias(QUARENTA.slice(0, 25), 40), families: [{ ...paginaFamilias(QUARENTA.slice(0, 25), 40).families[0],
+    rule: { source: "axe-core", id: "color-contrast" } }] };
+  const ferr = auditar(entrada(comRegistro({ candidates: [aceitaFamilia] }), ndjson([evento("scan_page", axe)])));
+  for (const v of ferr.verificacoes.filter(x => x.escopo === "oraculo" && x.id !== "resposta-nao-legivel")) assert.equal(v.aplica, true, v.id);
+  assert.equal(chk(ferr, "cursor-nao-consumido").ocorrencias, 1, "família do axe com cursor não consumido também é sinalizada");
+  const com = auditar(entrada(comRegistro({ candidates: [aceitaFamilia] }), eventos40(false)));
+  assert.deepEqual(ferr.verificacoes.map(v => [v.id, v.escopo, v.aplica]), com.verificacoes.map(v => [v.id, v.escopo, v.aplica]));
+});
+
 // ───────────────────────────────────────────────────────────────── reescaneamento (ids F-NNN mudam por lote)
 
 /** A mesma família de 30 (25 listados) num lote de scan_page; os ids são do lote, como os F-NNN do validador. */

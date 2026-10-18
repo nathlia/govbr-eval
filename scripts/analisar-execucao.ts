@@ -1,5 +1,6 @@
 /**
- * T6 — análise determinística de UM pacote de execução ou de UM par sem/com do benchmark isolado.
+ * T6 — análise determinística de UM pacote de execução, de UM par sem/com do benchmark isolado ou (NAT-61) de UM
+ * grupo de dois ou três braços (sem, ferramentas, com) de uma campanha v2.
  *
  * Fronteira de entrada: cada contrato M0 é validado (assertContract, crossCheckRun), o manifesto de
  * artefatos é conferido byte a byte contra a pasta (hash, tamanho, arquivo fora do manifesto, caminho
@@ -30,7 +31,9 @@ import { pathToFileURL } from "node:url";
 import { chromium, type Browser } from "playwright";
 import {
   assertContract, checkAggregation, checkPlannedAbsence, crossCheckManifest, crossCheckRun, validateContract,
-  type AnalysisBinding, type AnalysisMetrics, type AnyArtifactManifest, type AnyFindings, type ArtifactManifest, type Baseline, type BaselineBinding, type Campaign,
+  oracleOfCampaign,
+  type AnalysisBinding, type AnalysisMetrics, type AnyAnalysisBinding, type AnyArtifactManifest, type AnyCampaign, type AnyFindings, type AnyRun, type ArmV2,
+  type ArtifactManifest, type Baseline, type BaselineBinding, type ComparisonV2,
   type Isolation, type Location, type Run, type ContractName, type ScoreStatus, type SnapshotManifest,
 } from "../contracts/index";
 import { auditarInspecao } from "./inspection-audit";
@@ -41,7 +44,8 @@ import { ROOT } from "./adjudication";
 import { analysisIdentity, cenasDoPlano, compareIdentities, statePlanOf, statePlanSha256 } from "./collection-manifest";
 import type { EvidenceIndex } from "./flow-contract";
 import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION } from "./instrument";
-import { divergenciasDaCampanha, identidadeDoRun } from "./identidade-campanha";
+import { divergenciasDaCampanha, divergenciasDoOraculo, identidadeDoRun } from "./identidade-campanha";
+import { contarComFerramentas } from "./painel/mascara";
 import {
   FUSO_DA_CAPTURA, REGRA_IDS_GERADOS, REGRA_RELOGIO, mapearDecisoes, navegadorComRelogio, normalizarIdsGerados, presenteNoSite,
   type IdGerado, type MapaCartoes, type RelogioDaCaptura,
@@ -68,7 +72,8 @@ export const RESUMO_VERSAO = "resumo-analise-1.0.0";
  */
 export const ADAPTADOR_VERSAO = "adaptador-benchmark-1.2.0";
 
-type Arm = "sem" | "com";
+/** NAT-61: o braço de qualquer contrato (v1: sem/com; v2: + ferramentas). */
+type Arm = ArmV2;
 const sha = (data: string | Buffer): string => createHash("sha256").update(data).digest("hex");
 const json = (value: unknown): string => JSON.stringify(value, null, 2) + "\n";
 const posix = (p: string): string => p.split(sep).join("/");
@@ -80,10 +85,11 @@ const recusar = (msg: string): never => { throw new RecusaDeEntrada(msg); };
 // ───────────────────────────────────────────────────────────────── opções e resultado
 
 export interface OpcoesAnalise {
-  /** Um pacote só, ou o par. */
+  /** Um pacote só, ou o grupo (par sem/com; NAT-61: dois ou três de sem, ferramentas, com). */
   pacote?: string;
   sem?: string;
   com?: string;
+  ferramentas?: string;
   campanha: string;
   snapshots: string;
   referencia: string;
@@ -145,7 +151,7 @@ interface PacoteLido {
   dir: string;
   manifest: AnyArtifactManifest;
   manifestBytes: Buffer;
-  run: Run;
+  run: AnyRun;
   runBytes: Buffer;
   findings: AnyFindings | null;
   isolation: Isolation | null;
@@ -218,7 +224,10 @@ export function lerPacote(dirArg: string): PacoteLido {
     }
   };
   const runBytes = bytesDe.get(runs[0].path)!;
-  const run = contrato(parse(runs[0].path, "run.json"), "run.v1", `run.json de ${dirArg}`) as Run;
+  // NAT-61: run.v1 (histórico) ou run.v2 (três braços, perfil medido do oráculo); o discriminador decide.
+  const runDoc = parse(runs[0].path, "run.json");
+  const runNome = (runDoc as { contract?: unknown })?.contract === "run.v2" ? "run.v2" : "run.v1";
+  const run = contrato(runDoc, runNome, `run.json de ${dirArg}`) as AnyRun;
   if (run.artifactManifest !== "artifact-manifest.json") recusar(`run.json aponta outro manifesto (${run.artifactManifest})`);
   if (manifest.runId !== run.runId || manifest.campaignId !== run.campaignId) recusar("artifact-manifest.json pertence a outro run");
 
@@ -279,7 +288,8 @@ export function adaptarExecucao(p: PacoteLido): PrepareRun {
   const r = findings.report;
   const config: RunConfig & { evidenceIndexSha256: string } = {
     client: run.client.name, clientVersion: run.client.version, reasoningEffort: run.effort,
-    oracleProfile: run.intervention.oracle?.profile ?? "none",
+    // NAT-61: run.v2 traz o perfil MEDIDO (evaluation | knowledge-free); o tipo do scorer (types.ts) é o do v1.
+    oracleProfile: (run.intervention.oracle?.profile ?? "none") as RunConfig["oracleProfile"],
     ...(r.model !== run.model.requested ? { agentReportedModel: r.model } : {}),
     ...(run.model.resolved !== "unknown" ? { modelVersion: run.model.resolved } : {}),
     protocolVersion: run.versions.protocolSha256,
@@ -391,7 +401,7 @@ function bloqueio(cause: "baseline-failed" | "missing-unplanned" | "incompatible
 }
 
 function avaliarLinhaDeBase(o: OpcoesAnalise, ctx: {
-  campaign: Campaign; campaignSha: string; tipo: "individual" | "composta"; screenId: string; screenVersion: string;
+  campaign: AnyCampaign; campaignSha: string; tipo: "individual" | "composta"; screenId: string; screenVersion: string;
   collectionStartedAt: string; referenceSha: string; siteSha: string; planSha: string; cenas: string[]; snapshots: SnapshotManifest;
 }): LinhaDeBaseAvaliada {
   if (o.semLinhaDeBase) {
@@ -434,7 +444,7 @@ function avaliarLinhaDeBase(o: OpcoesAnalise, ctx: {
   if (bruto.provenance.collectionManifest?.sha256 !== registro.links.collectionManifest.sha256) problemas.push("o bruto aponta outro manifesto de coleta que o registro");
   problemas.push(...compareIdentities(registro.identity, bruto.provenance.identity, { expected: "registro", actual: "bruto" }));
   const esperado = { collection: FLOW_INSTRUMENT_VERSION, referenceSha256: ctx.referenceSha, siteManifestSha256: ctx.siteSha,
-    oracleDistSha256: ctx.campaign.fixed.oracle.distSha256, oracleDataSha256: ctx.campaign.fixed.oracle.dataSha256, statePlanSha256: ctx.planSha };
+    oracleDistSha256: oraculoDaLinhaDeBase(ctx.campaign).distSha256, oracleDataSha256: oraculoDaLinhaDeBase(ctx.campaign).dataSha256, statePlanSha256: ctx.planSha };
   problemas.push(...compareIdentities(esperado, registro.identity, { expected: "coleta", actual: "linha de base" }));
   for (const [link, kind] of [["site", "site"], ["reference", "reference"], ["statePlan", "state-plan"]] as const) {
     const l = registro.links[link];
@@ -485,7 +495,7 @@ export interface ExecucaoResumo {
      */
     camadas?: { sorteadas: CamadaResumo; pagina: CamadaResumo } };
   mcpIsolamento: { isolamento: Run["status"]["isolation"]; protocolo: Run["status"]["protocol"]; usoOraculo: Run["status"]["oracleUsage"];
-    oraculoAnunciado: boolean | null; oraculo: Run["intervention"]["oracle"]; chamadasOraculo: MetricaResumo;
+    oraculoAnunciado: boolean | null; oraculo: AnyRun["intervention"]["oracle"]; chamadasOraculo: MetricaResumo;
     ferramentasAnunciadas: string[] | null; ferramentasObservadas: string[] | null; errosDeFerramenta: MetricaResumo;
     checks: { aprovados: number; falhos: string[]; naoExercitados: string[] } | null; controlesPositivos: { aprovados: number; falhos: string[] } | null;
     limitacoes: string[] };
@@ -514,6 +524,20 @@ export interface ComparacaoResumo {
   nota: string;
 }
 export interface UnidadeResumo { unitId: string; specId: string; elemento: string }
+/**
+ * NAT-61 (decisão 13): uma comparação declarada do grupo, diferença = tratamento − referência
+ * (`bracos` = [referência, tratamento]). Cada uma diz o seu n; um trio incompleto entra só nas comparações
+ * que têm os dois braços (a ausente fica declarada, n = 0). Números de 2 e de 3 braços nunca formam série.
+ */
+export interface ComparacaoBracos {
+  id: string; bracos: [Arm, Arm]; papel: "primary" | "secondary"; pergunta: string;
+  /** Grupos completos que esta análise contribui para a comparação (0 ou 1). */
+  n: number;
+  disponivel: boolean; motivo: string | null; estado: "final" | "provisoria" | null; elegivel?: boolean;
+  diferencaUnidadesConfirmadas: number | null; diferencaRecall: number | null;
+  unidades: { soTratamento: UnidadeResumo[]; soReferencia: UnidadeResumo[]; ambos: UnidadeResumo[]; nenhum: UnidadeResumo[] } | null;
+  nota: string;
+}
 export interface Resumo {
   formato: typeof RESUMO_VERSAO;
   fixture: boolean | null;
@@ -523,7 +547,11 @@ export interface Resumo {
   linhaDeBase: { modo: BaselineBinding["mode"]; causa: string | null; detalhe: string | null; baselineId: string | null } | null;
   execucoes: ExecucaoResumo[];
   comparacao: ComparacaoResumo | null;
-  revisaoSemantica: { cartoes: number; pendentes: number; vazamentosDeBraco: number; esforco: ReviewEffort } | null;
+  /** NAT-61: só em grupo de campanha v2 ou com o braço ferramentas. Ausente nos resumos de par v1 (inalterados). */
+  comparacoes?: ComparacaoBracos[];
+  revisaoSemantica: { cartoes: number; pendentes: number; vazamentosDeBraco: number;
+    /** NAT-61: cartões cujo texto denuncia com × ferramentas (ferramentas retiradas, ids da base); só em grupo v2. */
+    vazamentosComFerramentas?: number; esforco: ReviewEffort } | null;
   versoes: { scorer: AnalysisBinding["scorer"]; referencia: AnalysisBinding["reference"]; adaptador: string } | null;
   hashes: { conteudoCientificoSha256: string; pacoteRevisao: string | null; decisoes: string | null; entradas: Record<string, string> };
   arquivos: Record<string, string | null | Record<string, string>>;
@@ -561,16 +589,29 @@ function estadoDaPontuacao(score: SemanticRunScore, cardIds: string[], reviews: 
 
 // ───────────────────────────────────────────────────────────────── orquestração
 
-const ORDEM: Arm[] = ["sem", "com"];
+const ORDEM: Arm[] = ["sem", "ferramentas", "com"];
+
+/** NAT-61: comparações padrão de um trio quando a campanha (v1) não as declara. */
+export const COMPARACOES_PADRAO: ComparisonV2[] = [
+  { id: "ferramentas-com", arms: ["ferramentas", "com"], role: "primary", question: "o que o conhecimento DS + e-MAG do oráculo acrescenta às ferramentas de medição" },
+  { id: "sem-ferramentas", arms: ["sem", "ferramentas"], role: "secondary", question: "o que as ferramentas genéricas de medição acrescentam ao navegador" },
+  { id: "sem-com", arms: ["sem", "com"], role: "secondary", question: "o oráculo inteiro (a pergunta da T7)" },
+];
+
+/** Identidade do oráculo que a linha de base usa: a imagem do com (v1) ou a única imagem da campanha v2. */
+function oraculoDaLinhaDeBase(c: AnyCampaign): { distSha256: string; dataSha256: string } {
+  return oracleOfCampaign(c, "com") ?? oracleOfCampaign(c, "ferramentas") ?? { distSha256: "", dataSha256: "" };
+}
 
 function relDe(saida: string, alvo: string): string { return posix(relative(saida, alvo)) || "."; }
 
 export async function analisar(o: OpcoesAnalise): Promise<ResultadoAnalise> {
   const saida = resolve(o.saida);
   if (existsSync(saida)) throw new Error(`A pasta de saída já existe: ${o.saida}. Cada análise grava numa pasta nova; nada é sobrescrito.`);
-  const par = Boolean(o.sem || o.com);
+  const par = Boolean(o.sem || o.com || o.ferramentas);
   if (par && o.pacote) throw new Error("Use --pacote OU --sem/--com, não os dois");
-  if (par && !(o.sem && o.com)) throw new Error("O par precisa de --sem e --com");
+  if (par && !o.ferramentas && !(o.sem && o.com)) throw new Error("O par precisa de --sem e --com");
+  if (o.ferramentas && [o.sem, o.com].filter(Boolean).length === 0) throw new Error("O grupo precisa de pelo menos dois de --sem, --ferramentas, --com");
   if (!par && !o.pacote) throw new Error("Falta --pacote (ou --sem e --com)");
   if (Boolean(o.linhaDeBase) === Boolean(o.semLinhaDeBase)) throw new Error("Passe --linha-de-base REGISTRO ou --sem-linha-de-base (ausência planejada na campanha)");
   const tipo = o.tipo ?? "individual";
@@ -597,7 +638,7 @@ function resumoDeRecusa(motivo: string, o: OpcoesAnalise, saida: string): Resumo
     formato: RESUMO_VERSAO, fixture: null, geradoEm: new Date().toISOString(), revisao: { numero: 1, anterior: null },
     analise: { estado: "recusada", motivo, tipo: null, avisos: [] }, linhaDeBase: null, execucoes: [], comparacao: null,
     revisaoSemantica: null, versoes: null,
-    arquivos: { pacotes: Object.fromEntries(Object.entries({ pacote: o.pacote, sem: o.sem, com: o.com })
+    arquivos: { pacotes: Object.fromEntries(Object.entries({ pacote: o.pacote, sem: o.sem, com: o.com, ...(o.ferramentas ? { ferramentas: o.ferramentas } : {}) })
       .filter((e): e is [string, string] => Boolean(e[1])).map(([k, v]) => [k, relDe(saida, resolve(v))])) },
   };
   return { ...base, hashes: { conteudoCientificoSha256: digest({ analise: base.analise }), pacoteRevisao: null, decisoes: null, entradas: {} } };
@@ -607,17 +648,21 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   decisoes: SemanticReviews | undefined, derivado: Derivado | null = null): Promise<ResultadoAnalise> {
   const agora = (): string => derivado ? derivado.manifesto.instante : new Date().toISOString();
   // ── pacotes ───────────────────────────────────────────────────────────────
-  const pacotes: PacoteLido[] = par ? [lerPacote(o.sem!), lerPacote(o.com!)] : [lerPacote(o.pacote!)];
+  // NAT-61: o grupo na ordem sem, ferramentas, com (par sem/com: [sem, com] como sempre).
+  const pedidos = ORDEM.map(arm => [arm, o[arm]] as const).filter((x): x is readonly [Arm, string] => Boolean(x[1]));
+  const pacotes: PacoteLido[] = par ? pedidos.map(([, dir]) => lerPacote(dir)) : [lerPacote(o.pacote!)];
   if (par) {
-    if (pacotes[0].run.arm !== "sem") recusar(`o pacote passado em --sem é do braço ${pacotes[0].run.arm}`);
-    if (pacotes[1].run.arm !== "com") recusar(`o pacote passado em --com é do braço ${pacotes[1].run.arm}`);
-    if (pacotes[0].run.runId === pacotes[1].run.runId) recusar("--sem e --com apontam a mesma execução");
+    pedidos.forEach(([arm], i) => { if (pacotes[i].run.arm !== arm) recusar(`o pacote passado em --${arm} é do braço ${pacotes[i].run.arm}`); });
+    if (new Set(pacotes.map(p => p.run.runId)).size !== pacotes.length) recusar(`${pedidos.map(([a]) => `--${a}`).join(" e ")} apontam a mesma execução`);
   }
   const fixture = pacotes[0].run.fixture;
 
   // ── campanha ──────────────────────────────────────────────────────────────
   const campaignBytes = readFileSync(resolve(o.campanha));
-  const campaign = contrato(lerJson<unknown>(resolve(o.campanha), "campanha"), "campaign.v1", "campanha") as Campaign;
+  const campaignDoc = lerJson<unknown>(resolve(o.campanha), "campanha");
+  const campaign = contrato(campaignDoc, (campaignDoc as { contract?: unknown })?.contract === "campaign.v2" ? "campaign.v2" : "campaign.v1", "campanha") as AnyCampaign;
+  // NAT-61: grupo v2 = campanha v2 ou braço ferramentas; o caminho do par v1 não muda nada.
+  const grupoV2 = campaign.contract === "campaign.v2" || pacotes.some(p => p.run.arm === "ferramentas");
   const campaignSha = sha(campaignBytes);
   if (campaign.fixture !== fixture) recusar("fixture misturada com dado real (campanha × pacote)");
   // A campanha congela a versão do scorer (fixed.scorerVersion). Analisar com outra misturaria versões
@@ -636,7 +681,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   for (const { run } of pacotes) {
     if (run.campaignId !== campaign.campaignId) recusar(`${run.runId} é da campanha ${run.campaignId}, não de ${campaign.campaignId}`);
     if (!campaign.design.screens.some(s => s.id === run.screen.id && s.version === run.screen.version)) recusar(`tela ${run.screen.id}@${run.screen.version} fora do desenho da campanha`);
-    if (!campaign.design.arms.includes(run.arm)) recusar(`braço ${run.arm} fora do desenho da campanha`);
+    if (!(campaign.design.arms as readonly string[]).includes(run.arm)) recusar(`braço ${run.arm} fora do desenho da campanha`);
     if (!campaign.design.models.some(m => m.requested === run.model.requested)) recusar(`modelo ${run.model.requested} fora do desenho da campanha`);
     if (run.fixture !== fixture) recusar("fixture misturada com dado real entre os pacotes");
     // NAT-63 (R1): a identidade REGISTRADA no run.json contra a campanha congelada — esforço, limites,
@@ -644,8 +689,14 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     // braços que divergem igualmente da campanha passariam lá.
     const divergencias = divergenciasDaCampanha(campaign, identidadeDoRun(run));
     if (divergencias.length) recusar(`${run.runId} não tem a identidade congelada na campanha ${campaign.campaignId}: ${divergencias.join("; ")}`);
+    // NAT-61: o oráculo MEDIDO no run.v2 (imagem, perfil, tools/list) contra o fixado para o braço. Pacotes
+    // run.v1 seguem como antes (a identidade do oráculo deles foi conferida no preflight e no lock).
+    if (run.contract === "run.v2") {
+      const doOraculo = divergenciasDoOraculo(campaign, run.arm, run.intervention.oracle);
+      if (doOraculo.length) recusar(`${run.runId}: oráculo fora do fixado na campanha ${campaign.campaignId}: ${doOraculo.join("; ")}`);
+    }
   }
-  if (par && pacotes[0].run.screen.id !== pacotes[1].run.screen.id) recusar("o par mistura telas; telas diferentes nunca formam par");
+  if (par && new Set(pacotes.map(p => p.run.screen.id)).size > 1) recusar(`o ${pacotes.length > 2 ? "grupo" : "par"} mistura telas; telas diferentes nunca formam ${pacotes.length > 2 ? "grupo" : "par"}`);
 
   // ── snapshots, referência, site ──────────────────────────────────────────
   const snapshotsBytes = readFileSync(resolve(o.snapshots));
@@ -691,7 +742,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   }
 
   // ── linha de base ────────────────────────────────────────────────────────
-  const inicio = (r: Run) => r.timestamps.startedAt ?? r.timestamps.plannedAt;
+  const inicio = (r: AnyRun) => r.timestamps.startedAt ?? r.timestamps.plannedAt;
   const collectionStartedAt = pacotes.map(p => inicio(p.run)).sort()[0];
   const lb = avaliarLinhaDeBase(o, { campaign, campaignSha, tipo, screenId: pacotes[0].run.screen.id, screenVersion: pacotes[0].run.screen.version,
     collectionStartedAt, referenceSha, siteSha: site.manifestSha256, planSha, cenas, snapshots });
@@ -709,10 +760,12 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     ...(manifestoAnaliseBytes ? { manifestoAnalise: sha(manifestoAnaliseBytes) } : {}),
   };
   const analysisBase = `analise-${digest({ entradasHash, tipo, scorer }).slice(0, 16)}`;
-  const bindingDe = (p: PacoteLido, status: AnalysisBinding["status"], blockedReason: string | null, scoreStatus: ScoreStatus, metrics: AnalysisMetrics): AnalysisBinding => ({
-    contract: "analysis-binding.v1", fixture, analysisId: `${analysisBase}-${p.run.arm}`, campaignId: campaign.campaignId,
+  // NAT-61: binding v2 no grupo v2 (o braço ferramentas não cabe no v1); par v1 continua v1, byte a byte.
+  const contratoBinding = grupoV2 ? "analysis-binding.v2" as const : "analysis-binding.v1" as const;
+  const bindingDe = (p: PacoteLido, status: AnalysisBinding["status"], blockedReason: string | null, scoreStatus: ScoreStatus, metrics: AnalysisMetrics): AnyAnalysisBinding => ({
+    contract: contratoBinding, fixture, analysisId: `${analysisBase}-${p.run.arm}`, campaignId: campaign.campaignId,
     createdAt: agora().replace(/\.\d+Z$/, "Z"), kind: tipo === "composta" ? "composite" : "individual", screen: p.run.screen,
-    runs: [{ runId: p.run.runId, arm: p.run.arm, artifactManifest: { sha256: sha(p.manifestBytes), bytes: p.manifestBytes.length,
+    runs: [{ runId: p.run.runId, arm: p.run.arm as "sem", artifactManifest: { sha256: sha(p.manifestBytes), bytes: p.manifestBytes.length,
       location: { kind: "package-path", path: `entradas/${p.run.arm}/artifact-manifest.json`, note: `cópia do manifesto do pacote ${p.run.runId}` } } }],
     collectionStartedAt,
     snapshots: { snapshotSetId: snapshots.snapshotSetId, manifest: { sha256: sha(snapshotsBytes), bytes: snapshotsBytes.length,
@@ -729,10 +782,10 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   if (par) {
     const provisorios = pacotes.map(p => ({ run: p.run, binding: bindingDe(p, "ready", null, "not-prepared", METRICAS_NULAS) }));
     const ag = checkAggregation(provisorios);
-    if (pacotes[0].run.pairId !== pacotes[1].run.pairId) ag.problems.push(`pairId difere: ${pacotes.map(p => `${p.run.runId}=${p.run.pairId}`).join(", ")}`);
+    if (new Set(pacotes.map(p => p.run.pairId)).size > 1) ag.problems.push(`pairId difere: ${pacotes.map(p => `${p.run.runId}=${p.run.pairId}`).join(", ")}`);
     avisos.push(...ag.warnings);
     if (ag.problems.length) {
-      const motivo = `o par difere fora do desenho (checkAggregation): ${ag.problems.join("; ")}`;
+      const motivo = `o ${pacotes.length > 2 ? "grupo" : "par"} difere fora do desenho (checkAggregation): ${ag.problems.join("; ")}`;
       bloqueada = bloqueada ? `${bloqueada}; ${motivo}` : motivo;
     }
   }
@@ -771,9 +824,9 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   // ── bindings finais ──────────────────────────────────────────────────────
   const scoreDe = (runId: string) => prep?.result.scores.find(s => s.runId === runId) ?? null;
   const cartoesDe = (runId: string) => prep?.pkg.runs.find(r => r.id === runId)?.cardIds.length ?? 0;
-  const bindings = new Map<Arm, AnalysisBinding>();
+  const bindings = new Map<Arm, AnyAnalysisBinding>();
   for (const p of pacotes) {
-    let b: AnalysisBinding;
+    let b: AnyAnalysisBinding;
     if (bloqueada) b = bindingDe(p, "blocked", bloqueada, "not-prepared", METRICAS_NULAS);
     else if (p.run.submission.status !== "accepted") b = bindingDe(p, "ready", null, "not-applicable", METRICAS_NULAS);
     else if (p.run.status.isolation === "failed") b = bindingDe(p, "blocked", "isolamento falhou: execução em quarentena, fora da análise principal", "not-prepared", METRICAS_NULAS);
@@ -785,7 +838,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
         incorrectClaims: s.counts.falseAssertions, newCorrect: s.counts.novelAssertions, pending: s.pendingCardIds.length,
       });
     }
-    assertContract(b, "analysis-binding.v1");
+    assertContract(b, contratoBinding);
     const ausencia = checkPlannedAbsence(campaign, campaignSha, b);
     if (ausencia.length) throw new Error(`binding com ausência planejada inválida (erro do analisador): ${ausencia.map(e => e.message).join("; ")}`);
     bindings.set(p.run.arm, b);
@@ -797,7 +850,9 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     prep?.result.comparisons.find(c => c.agentRunId === p.run.runId && c.baseline === "uniao-deterministica") ?? null, pontuavel(p) ? null
       : p.run.submission.status !== "accepted" ? submissaoMotivo(p.run) : "isolamento falhou: execução em quarentena", temCamadaPagina(gt),
     inelegivel.get(p.run.arm)!));
-  const comparacao = par ? compararPar(exec, prep, unidades, bloqueada) : null;
+  const comSemECom = pacotes.some(p => p.run.arm === "sem") && pacotes.some(p => p.run.arm === "com");
+  const comparacao = par && comSemECom ? compararPar(exec, prep, unidades, bloqueada) : null;
+  const comparacoes = grupoV2 && par ? compararGrupo(campaign, exec, prep, unidades, bloqueada) : undefined;
   for (const e of exec) {
     if (!e.elegibilidade!.elegivel) avisos.push(`${e.braco} (${e.runId}) fora da comparação principal — pontuação só diagnóstica: ${e.elegibilidade!.motivos.join("; ")}`);
   }
@@ -808,8 +863,9 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     linhaDeBase: { modo: lb.binding.mode, causa: lb.binding.mode === "blocked" ? lb.binding.cause : null,
       detalhe: lb.binding.mode === "blocked" ? lb.binding.detail : lb.binding.mode === "planned-absence" ? lb.binding.justification : null,
       baselineId: lb.binding.mode === "used" ? lb.binding.baselineId : lb.registro?.baselineId ?? null },
-    execucoes: exec, comparacao,
-    revisaoSemantica: prep ? { cartoes: prep.pkg.cards.length, pendentes, vazamentosDeBraco: armLeaks(prep.pkg).length, esforco: prep.esforco } : null,
+    execucoes: exec, comparacao, ...(comparacoes ? { comparacoes } : {}),
+    revisaoSemantica: prep ? { cartoes: prep.pkg.cards.length, pendentes, vazamentosDeBraco: armLeaks(prep.pkg).length,
+      ...(grupoV2 ? { vazamentosComFerramentas: contarComFerramentas(prep.pkg) } : {}), esforco: prep.esforco } : null,
     versoes: { scorer, referencia: reference, adaptador: ADAPTADOR_VERSAO },
     arquivos: {
       bindings: Object.fromEntries(pacotes.map(p => [p.run.arm, `analysis-binding.${p.run.arm}.json`])),
@@ -870,7 +926,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
  * campanha, com tentativa e repetição dentro dos tetos. Qual tentativa de um slot entra
  * (`retryPolicy.attemptSelection`) exige a agenda de slots (T7) e não é decidida aqui.
  */
-export function motivosDeInelegibilidade(run: Run, campaign: Campaign): string[] {
+export function motivosDeInelegibilidade(run: AnyRun, campaign: AnyCampaign): string[] {
   const m: string[] = [];
   if (run.submission.status !== "accepted") m.push(`submissão ${run.submission.status} (não aceita)`);
   if (run.status.technical !== "passed") {
@@ -878,16 +934,17 @@ export function motivosDeInelegibilidade(run: Run, campaign: Campaign): string[]
   }
   if (run.status.isolation !== "passed") m.push(`isolamento ${run.status.isolation}, não comprovado (passed)`);
   m.push(...divergenciasDaCampanha(campaign, identidadeDoRun(run)));
+  if (run.contract === "run.v2") m.push(...divergenciasDoOraculo(campaign, run.arm, run.intervention.oracle));
   return m;
 }
 
-function submissaoMotivo(run: Run): string {
+function submissaoMotivo(run: AnyRun): string {
   if (run.status.technical === "not-run") return "o modelo não foi chamado (execução não rodou); não há o que pontuar";
   if (run.submission.status === "refused") return "a submissão foi recusada pelo coletor; não há achados para pontuar (não é zero achados)";
   return "nenhuma submissão chegou; não há achados para pontuar (não é zero achados)";
 }
 
-function execucaoResumo(p: PacoteLido, saida: string, b: AnalysisBinding, s: SemanticRunScore | null, cartoes: number,
+function execucaoResumo(p: PacoteLido, saida: string, b: AnyAnalysisBinding, s: SemanticRunScore | null, cartoes: number,
   comp: BaselineComparison | null, motivoSemPontuacao: string | null, comCamadas = false, inelegibilidade: string[] = []): ExecucaoResumo {
   const { run, isolation, findings, manifest } = p;
   const link = (path: string | null) => path ? relDe(saida, join(p.dir, path)) : null;
@@ -945,10 +1002,44 @@ function comAuditoria(resumo: ResumoInspecao, p: PacoteLido, findings: AnyFindin
 
 function compararPar(exec: ExecucaoResumo[], prep: PacotePreparado | null, unidades: Map<string, UnidadeResumo>, bloqueada: string | null): ComparacaoResumo {
   const nota = "n = 1 par, sem inferência. Nenhum braço é declarado melhor por contagem bruta.";
-  const indisponivel = (motivo: string): ComparacaoResumo => ({ disponivel: false, motivo, estado: null, diferencaUnidadesConfirmadas: null,
+  const c = compararDois(exec, prep, unidades, bloqueada, "sem", "com", nota);
+  // mesma forma e mesma ordem de campos de sempre (summary.json do par v1 byte a byte)
+  const u = c.unidades;
+  return Object.fromEntries(Object.entries(c).map(([k, v]) => [k, k === "unidades"
+    ? (u ? { soCom: u.soTratamento, soSem: u.soReferencia, ambos: u.ambos, nenhum: u.nenhum } : null) : v])) as unknown as ComparacaoResumo;
+}
+
+/**
+ * NAT-61: as comparações declaradas do grupo (campanha v2; padrão: ferramentas×com principal, sem×ferramentas e
+ * sem×com secundárias), cada uma com o seu n. Braço ausente → indisponível com o motivo declarado, n = 0.
+ */
+function compararGrupo(campaign: AnyCampaign, exec: ExecucaoResumo[], prep: PacotePreparado | null, unidades: Map<string, UnidadeResumo>,
+  bloqueada: string | null): ComparacaoBracos[] {
+  const declaradas = campaign.contract === "campaign.v2" ? campaign.design.comparisons : COMPARACOES_PADRAO;
+  const presentes = new Set(exec.map(e => e.braco));
+  const nota = "n = 1 grupo por análise, sem inferência; cada comparação diz o seu n. Números de 2 e de 3 braços nunca formam série.";
+  return declaradas.map(d => {
+    const [ref, trat] = d.arms;
+    const base = { id: d.id, bracos: [ref, trat] as [Arm, Arm], papel: d.role, pergunta: d.question };
+    const faltam = d.arms.filter(a => !presentes.has(a));
+    if (faltam.length) {
+      return { ...base, n: 0, disponivel: false, motivo: `grupo incompleto: falta o braço ${faltam.join(" e ")} (comparação fora desta análise)`,
+        estado: null, diferencaUnidadesConfirmadas: null, diferencaRecall: null, unidades: null, nota };
+    }
+    const c = compararDois(exec, prep, unidades, bloqueada, ref, trat, nota);
+    return { ...base, n: c.disponivel ? 1 : 0, ...c };
+  });
+}
+
+type ComparacaoDois = Omit<ComparacaoBracos, "id" | "bracos" | "papel" | "pergunta" | "n">;
+
+/** Núcleo de uma comparação tratamento − referência (o par sem/com de sempre é ref = sem, trat = com). */
+function compararDois(exec: ExecucaoResumo[], prep: PacotePreparado | null, unidades: Map<string, UnidadeResumo>, bloqueada: string | null,
+  refArm: Arm, tratArm: Arm, nota: string): ComparacaoDois {
+  const indisponivel = (motivo: string): ComparacaoDois => ({ disponivel: false, motivo, estado: null, diferencaUnidadesConfirmadas: null,
     diferencaRecall: null, unidades: null, nota });
   if (bloqueada) return indisponivel(`análise bloqueada: ${bloqueada}`);
-  const [sem, com] = ["sem", "com"].map(a => exec.find(e => e.braco === a)!);
+  const [sem, com] = [refArm, tratArm].map(a => exec.find(e => e.braco === a)!);
   // NAT-63 (R2): par inelegível nunca vira comparação (nem provisória, nem final); o pacote, a pontuação
   // diagnóstica de cada braço e os motivos ficam no resumo.
   const fora = [sem, com].filter(e => e.elegibilidade && !e.elegibilidade.elegivel);
@@ -970,7 +1061,7 @@ function compararPar(exec: ExecucaoResumo[], prep: PacotePreparado | null, unida
     diferencaUnidadesConfirmadas: com.pontuacao.metricas.confirmedReferenceUnits! - sem.pontuacao.metricas.confirmedReferenceUnits!,
     diferencaRecall: final && com.pontuacao.metricas.recall !== null && sem.pontuacao.metricas.recall !== null
       ? com.pontuacao.metricas.recall - sem.pontuacao.metricas.recall : null,
-    unidades: { soCom: pega(u => b.has(u) && !a.has(u)), soSem: pega(u => a.has(u) && !b.has(u)),
+    unidades: { soTratamento: pega(u => b.has(u) && !a.has(u)), soReferencia: pega(u => a.has(u) && !b.has(u)),
       ambos: pega(u => a.has(u) && b.has(u)), nenhum: pega(u => !a.has(u) && !b.has(u)) },
     nota,
   };
@@ -979,7 +1070,8 @@ function compararPar(exec: ExecucaoResumo[], prep: PacotePreparado | null, unida
 /** O que entra no hash científico: tudo menos horários operacionais e caminhos desta máquina. */
 export function conteudoCientifico(r: Omit<Resumo, "hashes"> | Resumo): unknown {
   return {
-    formato: r.formato, fixture: r.fixture, analise: r.analise, linhaDeBase: r.linhaDeBase, comparacao: r.comparacao, versoes: r.versoes,
+    formato: r.formato, fixture: r.fixture, analise: r.analise, linhaDeBase: r.linhaDeBase, comparacao: r.comparacao,
+    ...(r.comparacoes ? { comparacoes: r.comparacoes } : {}), versoes: r.versoes,
     revisaoSemantica: r.revisaoSemantica,
     // NAT-81: registro indisponível (pacote v1) não entra no hash — re-análises de pacotes históricos
     // mantêm o mesmo conteúdo científico; registro presente (ou não enviado) entra.
@@ -1073,7 +1165,7 @@ export function renderResumo(r: Resumo): string {
   const col = (f: (e: ExecucaoResumo) => string) => execs.map(f).join(" | ");
   L.push(`| | ${col(e => e.braco)} |`, `|---|${execs.map(() => "---").join("|")}|`);
   L.push(`| Tela | ${col(e => `${seguro(e.identidade.tela.label)} (${seguro(e.identidade.tela.id)} @ ${seguro(e.identidade.tela.version)})`)} |`);
-  L.push(`| Braço | ${col(e => e.braco === "com" ? "com oráculo" : "sem oráculo")} |`);
+  L.push(`| Braço | ${col(e => e.braco === "com" ? "com oráculo" : e.braco === "ferramentas" ? "oráculo sem conhecimento (ferramentas)" : "sem oráculo")} |`);
   L.push(`| Modelo (família) | ${col(e => seguro(e.identidade.modelo.familia))} |`);
   L.push(`| ID pedido | ${col(e => seguro(e.identidade.modelo.pedido))} |`);
   L.push(`| ID efetivo | ${col(e => e.identidade.modelo.resolvido === "unknown" ? "desconhecido (o fornecedor não expôs)" : `${seguro(e.identidade.modelo.resolvido)} (${e.identidade.modelo.fonte})`)} |`);
@@ -1148,12 +1240,28 @@ export function renderResumo(r: Resumo): string {
     }
   }
 
+  // 4b. NAT-61: comparações do grupo (cada uma com o seu n)
+  if (r.comparacoes) {
+    L.push("## Comparações do grupo (NAT-61)", "", "_Cada comparação diz o seu n; um grupo incompleto entra só nas comparações que têm os dois braços. Números de 2 e de 3 braços nunca formam série._", "");
+    L.push("| Comparação | Papel | n | Estado | Δ defeitos confirmados | Δ recall | Motivo |", "|---|---|---|---|---|---|---|");
+    const sinal = (v: number | null) => v === null ? "—" : v > 0 ? `+${v}` : String(v);
+    for (const c of r.comparacoes) {
+      L.push(`| ${c.bracos[1]} − ${c.bracos[0]} | ${c.papel === "primary" ? "principal" : "secundária"} | ${c.n} | ${c.disponivel ? (c.estado === "final" ? "final" : "provisória") : "indisponível"} | ` +
+        `${sinal(c.diferencaUnidadesConfirmadas)} | ${c.diferencaRecall === null ? "—" : pct(c.diferencaRecall)} | ${seguro(c.motivo ?? "—", 300)} |`);
+    }
+    L.push("");
+  }
+
   // 5. MCP e isolamento
   L.push(`## ${r.comparacao ? 5 : 4}. MCP e isolamento`, "");
   L.push(`| | ${col(e => e.braco)} |`, `|---|${execs.map(() => "---").join("|")}|`);
   L.push(`| Isolamento | ${col(e => e.mcpIsolamento.isolamento)} |`);
   L.push(`| Oráculo anunciado ao cliente | ${col(e => e.mcpIsolamento.oraculoAnunciado === null ? "desconhecido" : e.mcpIsolamento.oraculoAnunciado ? "sim" : "não")} |`);
   L.push(`| Oráculo (pacote) | ${col(e => e.mcpIsolamento.oraculo ? `${seguro(e.mcpIsolamento.oraculo.package)} ${seguro(e.mcpIsolamento.oraculo.version)} (${e.mcpIsolamento.oraculo.profile})` : "nenhum")} |`);
+  // NAT-61: run.v2 traz o perfil MEDIDO e o inventário exposto; a linha só aparece quando algum pacote é v2.
+  if (execs.some(e => e.mcpIsolamento.oraculo && "toolsListSha256" in e.mcpIsolamento.oraculo)) {
+    L.push(`| Oráculo: ferramentas efetivas (tools/list) | ${col(e => { const x = e.mcpIsolamento.oraculo; return x && "tools" in x ? `${seguro(x.tools.join(", "), 300)} (${x.toolsListSha256.slice(0, 12)})` : "—"; })} |`);
+  }
   L.push(`| Uso do oráculo | ${col(e => USO[e.mcpIsolamento.usoOraculo])} |`);
   L.push(`| Chamadas ao oráculo | ${col(e => valorMetrica(e.mcpIsolamento.chamadasOraculo))} |`);
   L.push(`| Protocolo | ${col(e => e.mcpIsolamento.protocolo)} |`);
@@ -1224,7 +1332,7 @@ function lerArgs(argv: string[]): OpcoesAnalise {
   const tipo = val("tipo");
   if (tipo && tipo !== "individual" && tipo !== "composta") throw new Error("--tipo é individual ou composta");
   return {
-    pacote: val("pacote"), sem: val("sem"), com: val("com"),
+    pacote: val("pacote"), sem: val("sem"), com: val("com"), ferramentas: val("ferramentas"),
     campanha: req("campanha"), snapshots: req("snapshots"), referencia: req("referencia"), site: req("site"),
     linhaDeBase: val("linha-de-base"), semLinhaDeBase: argv.includes("--sem-linha-de-base"),
     tipo: tipo as OpcoesAnalise["tipo"], manifestoAnalise: val("manifesto-analise"), bateriaDesignada: val("bateria-designada"),
@@ -1234,7 +1342,7 @@ function lerArgs(argv: string[]): OpcoesAnalise {
   };
 }
 
-const USO_CLI = `Uso: npm run analisar -- (--pacote DIR | --sem DIR --com DIR) --campanha campaign.json --snapshots snapshot-manifest.json
+const USO_CLI = `Uso: npm run analisar -- (--pacote DIR | --sem DIR --com DIR | dois ou três de --sem/--ferramentas/--com) --campanha campaign.json --snapshots snapshot-manifest.json
          --referencia referencia.json --site DIR_SITE (--linha-de-base baseline.json | --sem-linha-de-base) --saida PASTA_NOVA
          [--tipo individual|composta --manifesto-analise F --bateria-designada ID --justificativa TEXTO] [--arquivo RAIZ_DO_ARQUIVO]
          [--decisoes reviews.json [--pacote-decisoes package.json]] [--anterior PASTA_DA_REVISAO_ANTERIOR] [--orcamento-revisao TEXTO] [--revisao-completa]

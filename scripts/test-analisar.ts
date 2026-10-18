@@ -531,6 +531,78 @@ async function main(): Promise<void> {
       });
     }
 
+    // ── NAT-61: trio sem/ferramentas/com (campanha v2, run.v2) ───────────────
+    const fxt = fixture({ trio: true });
+    let trio1!: string;
+    await test("trio (NAT-61): um pacote de revisão para os três braços, bindings v2, três comparações com o seu n (principal ferramentas × com)", async () => {
+      const r = await analisar(opcoes(fxt, { ferramentas: fxt.ferramentas }));
+      trio1 = r.saida;
+      assert.equal(r.estado, "pronta", r.motivo ?? "");
+      for (const arm of ["sem", "ferramentas", "com"]) {
+        const b = binding(r.saida, arm);
+        assert.equal((b as { contract: string }).contract, "analysis-binding.v2");
+        assert.ok(validateContract(b).valid, JSON.stringify(validateContract(b).errors));
+      }
+      const pkg = readJson<SemanticPackage>(join(r.saida, "revisao", "package.json"));
+      assert.deepEqual(pkg.runs.filter(x => x.kind === "agente").map(x => x.id).sort(),
+        ["fixture-analise-run-com-01", "fixture-analise-run-ferramentas-01", "fixture-analise-run-sem-01"]);
+      const cs = r.resumo.comparacoes!;
+      assert.deepEqual(cs.map(c => [c.id, c.bracos.join("×"), c.papel]), [["ferramentas-com", "ferramentas×com", "primary"],
+        ["sem-ferramentas", "sem×ferramentas", "secondary"], ["sem-com", "sem×com", "secondary"]]);
+      assert.ok(cs.every(c => c.disponivel && c.n === 1 && c.estado === "provisoria"));
+      // a comparação sem × com do par continua no campo de sempre (mesma forma)
+      assert.equal(r.resumo.comparacao!.disponivel, true);
+      // vazamento com × ferramentas: o com cita get_ds_rules e um id da base (FINDINGS_TRIO)
+      assert.equal(r.resumo.revisaoSemantica!.vazamentosComFerramentas, 1);
+      const md = readFileSync(join(r.saida, "summary.md"), "utf8");
+      assert.ok(md.includes("## Comparações do grupo (NAT-61)"));
+      assert.ok(md.includes("oráculo sem conhecimento (ferramentas)"));
+      assert.ok(md.includes("Oráculo: ferramentas efetivas (tools/list)"));
+    });
+
+    await test("trio com decisões: cada comparação final com a sua diferença", async () => {
+      const decisoes = decidir(trio1, {
+        "fixture-analise-run-sem-01": { "#fx-campo": "gabarito", ".fx-aviso": "incorreta" },
+        "fixture-analise-run-ferramentas-01": { "#fx-campo": "gabarito" },
+        "fixture-analise-run-com-01": { "#fx-campo": "gabarito", "#fx-botao": "gabarito", "#fx-titulo": "novo" },
+      });
+      const r = await analisar(opcoes(fxt, { ferramentas: fxt.ferramentas, decisoes, anterior: trio1 }));
+      const cs = new Map(r.resumo.comparacoes!.map(c => [c.id, c]));
+      assert.equal(cs.get("ferramentas-com")!.estado, "final");
+      assert.equal(cs.get("ferramentas-com")!.diferencaUnidadesConfirmadas, 1);
+      assert.deepEqual(cs.get("ferramentas-com")!.unidades!.soTratamento.map(u => u.specId), ["FX-02"]);
+      assert.equal(cs.get("sem-ferramentas")!.diferencaUnidadesConfirmadas, 0);
+      assert.equal(cs.get("sem-com")!.diferencaUnidadesConfirmadas, 1);
+      assert.equal(r.resumo.comparacao!.diferencaUnidadesConfirmadas, 1, "o campo de sempre segue sendo sem × com");
+    });
+
+    await test("trio incompleto (falta o sem): só ferramentas × com é calculada; as outras dizem que o braço falta, n = 0", async () => {
+      const r = await analisar({ ...opcoes(fxt, { ferramentas: fxt.ferramentas }), sem: undefined });
+      assert.equal(r.estado, "pronta", r.motivo ?? "");
+      assert.equal(r.resumo.comparacao, null, "sem o sem, não há a comparação do par");
+      const cs = new Map(r.resumo.comparacoes!.map(c => [c.id, c]));
+      assert.equal(cs.get("ferramentas-com")!.disponivel, true);
+      assert.equal(cs.get("ferramentas-com")!.n, 1);
+      for (const id of ["sem-ferramentas", "sem-com"]) {
+        assert.equal(cs.get(id)!.disponivel, false);
+        assert.equal(cs.get(id)!.n, 0);
+        assert.match(cs.get(id)!.motivo!, /grupo incompleto: falta o braço sem/);
+      }
+    });
+
+    await test("trio: o pacote do braço ferramentas não serve como --com (braço conferido pelo run.json)", async () => {
+      const r = await analisar({ ...opcoes(fxt), com: fxt.ferramentas });
+      assert.equal(r.estado, "recusada");
+      assert.match(r.motivo!, /--com é do braço ferramentas/);
+    });
+
+    await test("par v1 inalterado: sem comparacoes nem vazamentosComFerramentas no resumo", () => {
+      const s = readJson<Resumo>(join(primeira, "summary.json"));
+      assert.equal("comparacoes" in s, false);
+      assert.equal("vazamentosComFerramentas" in s.revisaoSemantica!, false);
+      assert.equal(binding(primeira, "sem").contract, "analysis-binding.v1");
+    });
+
     // ── fixture versionada ───────────────────────────────────────────────────
     await test("a cópia versionada em scripts/fixtures/analise/gerado/ é idêntica a uma reconstrução", () => {
       const fresh = construirFixture(nova("reconstrucao")).dir;

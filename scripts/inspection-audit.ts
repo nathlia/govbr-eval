@@ -22,6 +22,8 @@
  *    escopo (`ambos` os braços, ou `oraculo`, que só existe onde houve ferramenta de validação) e se se aplica
  *    ao pacote. No braço sem não há candidato de ferramenta: as verificações de escopo `oraculo` saem
  *    `aplica: false`, sem ocorrência — não há exigência que só um braço possa cumprir.
+ *    NAT-61: o braço ferramentas (perfil knowledge-free) tem a mesma ponte `oracle` e candidatos de ferramenta
+ *    (famílias do axe): as verificações de escopo `oraculo` valem para com E ferramentas, pelo evento, nunca pelo braço.
  * 3. Parcial. Tempo, orçamento ou corte → `parcial.parcial: true` com motivos e o número de candidatos conhecidos
  *    não revisados. Relatório parcial com `findings: []` é válido; a submissão continua obrigatória (sem
  *    submissão = estado do run, registrado como tal). Nada daqui entra na pontuação, na elegibilidade ou em

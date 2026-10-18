@@ -1028,6 +1028,68 @@ await teste("fila cega mascara ids de regra do oráculo (ds-*, ds:*, govbr-<vers
   } finally { s.close(); }
 });
 
+// ───────────────────────────────────────────────────────────────── NAT-61: trio sem/ferramentas/com
+
+await teste("NAT-61: trio — três colunas, as três comparações com o seu n, grupo incompleto só na principal, perfil medido no cartão de saúde, máscara com × ferramentas", async () => {
+  const arqT = join(TMP, "arquivo-trio");
+  await construirArquivoFixture(arqT, { trio: true });
+  const { vistaExecucoes, vistaPar, vistaExecucao, placarDaCampanha } = await import("./painel/modelo");
+  const v = vistaExecucoes(arqT);
+  const p1 = v.pares.find(p => p.par === "par-01")!, p2 = v.pares.find(p => p.par === "par-02")!;
+  assert.deepEqual(p1.bracos, ["sem", "ferramentas", "com"]);
+  assert.deepEqual(p1.faltando, []);
+  assert.equal(p1.selo.estado, "final", p1.selo.texto);
+  assert.deepEqual(p2.faltando, ["sem"]);
+  assert.equal(p2.porDesenho, false);
+  assert.match(p2.selo.texto, /grupo incompleto: falta o braço sem/);
+  // par-01 decidido (final): as três comparações com n = 1; par-02 (sem o sem) só a principal
+  const cs1 = new Map(p1.resultado!.comparacoes!.map(c => [c.id, c]));
+  assert.ok(["ferramentas-com", "sem-ferramentas", "sem-com"].every(id => cs1.get(id)!.n === 1 && cs1.get(id)!.estado === "final"));
+  const an2 = lerAnalise(arqT, C, "par-02")!.atual!;
+  const cs2 = new Map(an2.resumo.comparacoes!.map(c => [c.id, c]));
+  assert.equal(cs2.get("ferramentas-com")!.n, 1);
+  assert.equal(cs2.get("sem-com")!.n, 0);
+  assert.equal(an2.resumo.comparacao, null);
+  // placar: cada comparação com o SEU n (grupos em que está final)
+  const pl = placarDaCampanha(v.campanhas.find(c => c.id === C)!, v.pares);
+  const n = Object.fromEntries(pl.comparacoes!.map(c => [c.id, c.n]));
+  assert.equal(pl.comparacoes![0].id, "ferramentas-com", "a principal primeiro");
+  assert.equal(n["sem-com"], 1);
+  assert.ok(n["ferramentas-com"] >= 1);
+  assert.equal(typeof pl.somaFerramentas, "number");
+  // página do par: três colunas e a tabela de comparações
+  const vp = vistaPar(arqT, C, "par-01")!;
+  assert.equal(vp.comparacoes!.length, 3);
+  const srv: Server = criarPainel({ arquivo: arqT, revisora: "" });
+  const pt = await escutar(srv, 0);
+  try {
+    const html = await (await fetch(`http://127.0.0.1:${pt}/par/${C}/par-01`)).text();
+    assert.ok(html.includes("<h2>Comparações do grupo</h2>"));
+    for (const rot of ["Sem oráculo", "Com oráculo", "Ferramentas (sem conhecimento)"]) assert.ok(html.includes(rot), rot);
+    assert.ok(html.includes("<strong>principal</strong>"));
+    const html2 = await (await fetch(`http://127.0.0.1:${pt}/par/${C}/par-02`)).text();
+    assert.ok(html2.includes("falta o braço sem oráculo") || html2.includes("falta o braço sem"), "grupo incompleto declarado");
+    // cartão de saúde: perfil MEDIDO e ferramentas efetivas (run.v2), nunca o rótulo do braço
+    const runF = vp.bracos.ferramentas![0].chave;
+    const ve = vistaExecucao(arqT, runF)!;
+    const perfil = ve.isolamento.find(l => l.rotulo === "Perfil do oráculo (medido)")!;
+    assert.equal(perfil.valor.texto, "knowledge-free");
+    assert.equal(ve.isolamento.find(l => l.rotulo === "Ferramentas efetivas do oráculo")!.valor.texto, "get_finding_details, scan_page, verify_finding (tools/list 72abd54968cb)");
+    // fila cega do trio: o que só o com tem (get_ds_rules, id da base) é mascarado e contado
+    const fila = vistaFila(arqT, C, "par-01")!;
+    assert.equal(fila.mascara.comFerramentas!.citavam, 1);
+    assert.equal(fila.mascara.comFerramentas!.aposMascara, 0);
+    assert.ok(!JSON.stringify(fila.cartoes).includes("get_ds_rules"), "ferramenta retirada mascarada na vista");
+  } finally { srv.close(); }
+  const { gerarResultados } = await import("./painel/resultados");
+  const mdT = gerarResultados(arqT, new Date("2020-01-01T00:00:00Z"));
+  assert.ok(mdT.includes("com − ferramentas (principal): n = "), "RESULTADOS.md com cada comparação e o seu n");
+  assert.ok(!/get_ds_rules|#fx-/.test(mdT), "só números");
+  // par v1 do arquivo principal: nada disso aparece
+  const v1 = vistaFila(arquivo, C, "par-02")!;
+  assert.equal("comFerramentas" in v1.mascara, false);
+});
+
 // ───────────────────────────────────────────────────────────────── NAT-72: partes e vínculo de revisão pela API
 const arquivoNat72 = join(TMP, "arquivo-nat72");
 await construirArquivoFixture(arquivoNat72);

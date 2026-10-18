@@ -11,6 +11,10 @@
  *   par-02  par completo, revisão PENDENTE (alvo do teste de autonomia)
  *   par-01  par completo, revisão fechada (final) + uma tentativa de recalcular que falhou (simulada)
  *
+ * `--trio` (NAT-61): outro arquivo, de uma campanha v2 de três braços (sem, ferramentas, com):
+ *   par-02  grupo incompleto: ferramentas e com (falta o sem) — só ferramentas × com é calculada
+ *   par-01  trio completo, revisão fechada (final): as três comparações, cada uma com o seu n
+ *
  *   npm run painel:fixture -- <pasta-nova>
  */
 import { execFileSync } from "node:child_process";
@@ -18,7 +22,7 @@ import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, write
 import { tmpdir } from "node:os";
 import { basename, join, relative, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import type { Baseline, Campaign, Run, SnapshotManifest } from "../../contracts/index";
+import type { ArmV2, Baseline, Campaign, Run, RunV2, SnapshotManifest } from "../../contracts/index";
 import { ROOT } from "../adjudication";
 import { arquivarExecucao, confirmarEvidencias } from "../arquivar-execucao";
 import {
@@ -39,7 +43,7 @@ import { recalcular, salvarDecisao } from "./revisao";
 const json = (v: unknown): string => JSON.stringify(v, null, 2) + "\n";
 const AVISO = "FIXTURE SINTÉTICA — não é resultado científico";
 
-interface Pacote { dir: string; run: Run }
+interface Pacote { dir: string; run: Run | RunV2 }
 
 function arquivarPacote(arquivo: string, p: Pacote, entrega: "confirmado" | "falhou", restaurarAgora: boolean): string | null {
   const run = p.run;
@@ -111,7 +115,7 @@ function decidirTudo(arquivo: string, campanha: string, alvo: string): void {
 }
 
 /** `idsGerados`: a página de todos os pares sorteia um id a cada carga (ver OpcoesFixture.idsGerados). */
-export async function construirArquivoFixture(out: string, opcoes: { idsGerados?: boolean; camadaPagina?: boolean } = {}): Promise<{ arquivo: string }> {
+export async function construirArquivoFixture(out: string, opcoes: { idsGerados?: boolean; camadaPagina?: boolean; trio?: boolean } = {}): Promise<{ arquivo: string }> {
   const arquivo = resolve(out);
   if (existsSync(arquivo)) throw new Error(`Pasta já existe: ${out}. A fixture é montada sempre numa pasta nova.`);
   mkdirSync(arquivo, { recursive: true });
@@ -120,7 +124,11 @@ export async function construirArquivoFixture(out: string, opcoes: { idsGerados?
     writeFileSync(join(arquivo, "FIXTURE-SINTETICA.md"), `# ${AVISO}\n\nEste "arquivo de resultados" foi montado por \`npm run painel:fixture\` (govbr-eval, scripts/painel/fixture.ts)\n` +
       "para testar o painel de resultados. Telas, campanha, execuções, achados e decisões são inventados.\n" +
       "`anexos-fixture/` faz o papel dos anexos da Release; `restauracoes/` é o cache local dos pacotes restaurados.\n");
-    const pares: { nome: string; o: OpcoesFixture }[] = [
+    const pares: { nome: string; o: OpcoesFixture }[] = opcoes.trio ? [
+      // NAT-61: campanha v2 de três braços (run.v2 nos três)
+      { nome: "p1", o: { trio: true, identidade: { par: "par-01", sufixo: "01", dia: "2026-01-03" } } },
+      { nome: "p2", o: { trio: true, identidade: { par: "par-02", sufixo: "02", dia: "2026-01-05", slots: { sem: "slot-05", com: "slot-04", ferramentas: "slot-06" } } } },
+    ] : [
       { nome: "p1", o: { identidade: { par: "par-01", sufixo: "01", dia: "2026-01-03" } } },
       { nome: "p2", o: { identidade: { par: "par-02", sufixo: "02", dia: "2026-01-05", slots: { sem: "slot-04", com: "slot-03" } } } },
       { nome: "p3", o: { identidade: { par: "par-03", sufixo: "03", dia: "2026-01-07", slots: { sem: "slot-06", com: "slot-05" } } } },
@@ -157,24 +165,28 @@ export async function construirArquivoFixture(out: string, opcoes: { idsGerados?
     });
 
     // ── execuções
-    const ler = (dir: string): Pacote => ({ dir, run: JSON.parse(readFileSync(join(dir, "run.json"), "utf8")) as Run });
-    const restaurados: Record<string, Partial<Record<"sem" | "com", string>>> = {};
-    for (const p of ["p1", "p2", "p4"]) {
+    const ler = (dir: string): Pacote => ({ dir, run: JSON.parse(readFileSync(join(dir, "run.json"), "utf8")) as Run | RunV2 });
+    const restaurados: Record<string, Partial<Record<ArmV2, string>>> = {};
+    // NAT-61: no trio, par-01 completo e par-02 sem o braço sem (grupo incompleto)
+    const bracosDe: Record<string, ArmV2[]> = opcoes.trio ? { p1: ["sem", "ferramentas", "com"], p2: ["ferramentas", "com"] } : { p1: ["sem", "com"], p2: ["sem", "com"], p4: ["sem", "com"] };
+    for (const p of Object.keys(bracosDe)) {
       restaurados[p] = {};
-      for (const arm of ["sem", "com"] as const) restaurados[p][arm] = arquivarPacote(arquivo, ler(fx[p][arm]), "confirmado", true)!;
+      for (const arm of bracosDe[p]) restaurados[p][arm] = arquivarPacote(arquivo, ler((fx[p] as Record<string, string>)[arm]), "confirmado", true)!;
     }
-    arquivarPacote(arquivo, ler(fx.p3.sem), "falhou", false);
-    semPacote(arquivo, { par: "par-05", braco: "com", dia: "2026-01-11" });
+    if (!opcoes.trio) {
+      arquivarPacote(arquivo, ler(fx.p3.sem), "falhou", false);
+      semPacote(arquivo, { par: "par-05", braco: "com", dia: "2026-01-11" });
+    }
     reconstruirIndice(arquivo);
 
     // ── análises (receita + primeira versão calculada pelo mesmo caminho do botão Recalcular)
     const receita = (p: string, par: string): Receita => ({
       formato: RECEITA_VERSAO, fixture: true, campanha: CAMPANHA_ID, tipo: "par", alvo: par,
-      execucoes: { sem: ler(fx[p].sem).run.runId, com: ler(fx[p].com).run.runId }, pacotes: restaurados[p],
+      execucoes: Object.fromEntries(bracosDe[p].map(a => [a, ler((fx[p] as Record<string, string>)[a]).run.runId])), pacotes: restaurados[p],
       entradas: { campanha: campanhaRel, snapshots: snapsRel, referencia: refRel, site: siteRel, linhaDeBase: `${lbDir}/baseline.json`, semLinhaDeBase: false },
       criadaEm: "2026-01-12T00:00:00Z", nota: AVISO,
     });
-    for (const [p, par] of [["p1", "par-01"], ["p2", "par-02"], ["p4", "par-04"]] as const) {
+    for (const [p, par] of (opcoes.trio ? [["p1", "par-01"], ["p2", "par-02"]] : [["p1", "par-01"], ["p2", "par-02"], ["p4", "par-04"]]) as [string, string][]) {
       gravarImutavel(join(arquivo, "analises", CAMPANHA_ID, par, "receita.json"), json(receita(p, par)));
       const r = await recalcular(arquivo, CAMPANHA_ID, par);
       if (!r.ok) throw new Error(`fixture: análise de ${par} falhou: ${r.erro}`);
@@ -315,16 +327,16 @@ export function construirArquivoT4(out: string, o: { vistorias?: string | null }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const t4 = process.argv[2] === "--t4";
-  const out = process.argv[t4 ? 3 : 2];
-  if (!out) { console.error("Uso: npm run painel:fixture -- [--t4] <pasta-nova>"); process.exitCode = 1; }
+  const t4 = process.argv[2] === "--t4", trio = process.argv[2] === "--trio";
+  const out = process.argv[t4 || trio ? 3 : 2];
+  if (!out) { console.error("Uso: npm run painel:fixture -- [--t4 | --trio] <pasta-nova>"); process.exitCode = 1; }
   else if (t4) {
     const telas = join(ROOT, "..", "govbr-telas");
     const r = construirArquivoT4(out, { vistorias: existsSync(join(telas, "site-manifest.json")) ? telas : null });
     console.log(`Arquivo sintético no layout do T4 em ${relative(process.cwd(), r.arquivo) || "."} (${AVISO}); nenhuma análise ainda.`);
     console.log(`Anexos da "Release" em ${relative(process.cwd(), r.anexos)}.`);
     console.log(`Abra com: npm run painel:resultados -- --arquivo ${out} --anexos ${relative(process.cwd(), r.anexos)} --sem-download`);
-  } else construirArquivoFixture(out).then(r => {
+  } else construirArquivoFixture(out, trio ? { trio: true } : {}).then(r => {
     console.log(`Arquivo sintético montado em ${relative(process.cwd(), r.arquivo) || "."} (${AVISO}).`);
     console.log(`Abra com: npm run painel:resultados -- --arquivo ${out}`);
   }).catch(e => { console.error(e instanceof Error ? e.message : e); process.exitCode = 1; });

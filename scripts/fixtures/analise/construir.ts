@@ -11,10 +11,10 @@
  * Uso: npx tsx scripts/fixtures/analise/construir.ts <pasta-nova>
  */
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import type { AgentFinding, ArtifactManifest, Baseline, Campaign, Findings, Isolation, Run, SnapshotManifest } from "../../../contracts/index";
+import type { AgentFinding, ArmV2, ArtifactManifest, Baseline, Campaign, CampaignV2, Findings, Isolation, OracleIdentityV2, Run, RunV2, SnapshotManifest } from "../../../contracts/index";
 import type { FlowGroundTruth } from "../../../types";
 import { cenasDoPlano, statePlanOf, statePlanSha256 } from "../../collection-manifest";
 import { BASELINE_VERSION, UNGUIDED_POLICY, type FlowBaselines } from "../../run-baselines-flow";
@@ -30,6 +30,19 @@ export const ORACULO = {
   distSha256: "a".repeat(64), dataSha256: "b".repeat(64), profile: "combined" as const,
 };
 
+/**
+ * NAT-61 (trio): a mesma imagem do oráculo nos braços com e ferramentas; muda só o perfil MEDIDO e o tools/list.
+ * Hashes do tools/list: os fixados no validator 2.14.0 (evaluation = o da 2.13.0; knowledge-free = 72abd549…).
+ */
+export const ORACULO_V2: Record<"com" | "ferramentas", OracleIdentityV2> = {
+  com: { package: ORACULO.package, version: ORACULO.version, distSha256: ORACULO.distSha256, dataSha256: ORACULO.dataSha256, profile: "evaluation",
+    tools: ["get_component_spec", "get_design_tokens", "get_ds_rules", "get_emag_rules", "get_finding_details", "get_page_rules", "scan_page", "verify_finding"],
+    toolsListSha256: "3d70162f5fed0ec8614d9dcbc18a69a00b4819ad56df1ed1c5bf95213eed0b3b" },
+  ferramentas: { package: ORACULO.package, version: ORACULO.version, distSha256: ORACULO.distSha256, dataSha256: ORACULO.dataSha256, profile: "knowledge-free",
+    tools: ["get_finding_details", "scan_page", "verify_finding"],
+    toolsListSha256: "72abd54968cbe3173fce5dd3b4bba7aff563b37ca11b8a9ec0f25a91a104d39c" },
+};
+
 const sha = (data: string | Buffer): string => createHash("sha256").update(data).digest("hex");
 const json = (value: unknown): string => JSON.stringify(value, null, 2) + "\n";
 /** PNG 1×1 transparente: "evidência" sintética com bytes reais. */
@@ -40,6 +53,12 @@ export interface OpcoesBraco { submissao?: Submissao; findings?: AgentFinding[] 
 export interface OpcoesFixture {
   sem?: OpcoesBraco;
   com?: OpcoesBraco;
+  /**
+   * NAT-61: grupo de três braços — campanha v2 (sem, ferramentas, com; comparações declaradas), run.v2 nos três
+   * com o perfil medido do oráculo, e o pacote do braço ferramentas. Padrão desligado: os bytes de `gerado/` não mudam.
+   */
+  trio?: boolean;
+  ferramentas?: OpcoesBraco;
   /** `falha`: registro e bruto com status failed (parcial); `identidade-divergente`: aponta outra referência. */
   linhaDeBase?: "completa" | "falha" | "identidade-divergente";
   /** A campanha declara, antes da coleta, ausência de linha de base para a tela fixture. */
@@ -81,7 +100,7 @@ interface Contexto { tela: { id: string; label: string; version: string }; appUr
 const CONTEXTO_PADRAO: Contexto = { tela: TELA, appUrl: `http://127.0.0.1:3100/${PAGINA}` };
 const IDS_CAMADA: Record<string, string> = { "FX-01": "A-01", "FX-02": "A-02", "FX-03": "P-01" };
 const idDaSpec = (o: OpcoesFixture, id: string): string => (o.camadaPagina ? IDS_CAMADA[id] ?? id : id);
-export interface IdentidadeFixture { par: string; sufixo: string; dia: string; slots: { sem: string; com: string } }
+export interface IdentidadeFixture { par: string; sufixo: string; dia: string; slots: { sem: string; com: string; ferramentas?: string } }
 const IDENTIDADE_PADRAO: IdentidadeFixture = { par: "par-01", sufixo: "01", dia: "2026-01-03", slots: { sem: "slot-02", com: "slot-01" } };
 
 /** Combobox cujo id é sorteado a cada carga (o PNG não muda; o HTML sim). Fora de toda âncora e de todo achado. */
@@ -133,6 +152,23 @@ export const FINDINGS_PADRAO: Record<"sem" | "com", AgentFinding[]> = {
   ],
 };
 
+/**
+ * NAT-61: achados do trio. O com cita o que só ele tem (uma ferramenta retirada e um id da base) — é o que a
+ * revisão cega precisa contar como vazamento com × ferramentas; o ferramentas acha FX-01 pelo axe.
+ */
+export const FINDINGS_TRIO: Record<"ferramentas" | "com", AgentFinding[]> = {
+  ferramentas: [
+    { selector: "#fx-campo", rule: "fixture:campo-sem-rotulo", observed: "Campo sintético sem rótulo associado (scan_page, só axe).",
+      expected: "Campo com rótulo associado (condição sintética).", state: estado, evidence: ["ferramentas-01.png"] },
+  ],
+  com: [
+    ...FINDINGS_PADRAO.com.slice(0, 2),
+    { selector: "#fx-titulo", rule: null,
+      observed: "Título sintético sem hierarquia declarada; get_ds_rules devolveu govbr-3.7.0-fixture-000000000000 (texto sintético).",
+      expected: "Hierarquia declarada (condição sintética).", state: estado, evidence: [] },
+  ],
+};
+
 function metric(value: number | null, source: string) {
   return value === null ? { value: null, status: "unavailable" as const } : { value, status: "measured" as const, source };
 }
@@ -160,6 +196,33 @@ function campanha(o: OpcoesFixture, cx: Contexto = CONTEXTO_PADRAO): Campaign {
     analysisPlan: { primaryOutcome: "Desfecho sintético.", secondaryOutcomes: [], uncertaintyMethod: null, exclusionRules: "Nenhuma exclusão." },
     budget: { approved: false, amount: null, currency: null, approvedBy: null, approvedAt: null },
   };
+}
+
+/** NAT-61: a campanha do trio (v2), com o perfil do oráculo por braço e as comparações declaradas. */
+function campanhaTrio(o: OpcoesFixture, cx: Contexto = CONTEXTO_PADRAO): CampaignV2 {
+  const { contract: _c, design, fixed, ...resto } = campanha(o, cx);
+  const { oracle: _o, ...fixo } = fixed;
+  return {
+    contract: "campaign.v2", ...resto,
+    design: { ...design, arms: ["sem", "ferramentas", "com"], order: "quadrado-latino", seed: 61,
+      comparisons: [
+        { id: "ferramentas-com", arms: ["ferramentas", "com"], role: "primary", question: "Pergunta sintética: o conhecimento do oráculo acrescenta?" },
+        { id: "sem-ferramentas", arms: ["sem", "ferramentas"], role: "secondary", question: "Pergunta sintética: as ferramentas genéricas acrescentam?" },
+        { id: "sem-com", arms: ["sem", "com"], role: "secondary", question: "Pergunta sintética: o oráculo inteiro acrescenta?" },
+      ] },
+    fixed: { ...fixo, oracleProfiles: ORACULO_V2 },
+  };
+}
+
+/** NAT-61: o run.v2 do trio — o mesmo run do par, com o braço e a identidade medida do oráculo. */
+function runDocV2(arm: ArmV2, submissao: Submissao, siteManifestSha256: string, id: IdentidadeFixture, cx: Contexto = CONTEXTO_PADRAO): RunV2 {
+  const base = runDoc(arm === "ferramentas" ? "com" : arm, submissao, siteManifestSha256, false, id, cx);
+  if (arm !== "ferramentas") return { ...base, contract: "run.v2", intervention: { oracle: arm === "com" ? ORACULO_V2.com : null } };
+  const slot = id.slots.ferramentas ?? "slot-03";
+  const t = (h: string) => base.timestamps.startedAt === null ? null : `${id.dia}${h}`;
+  return { ...base, contract: "run.v2", arm, slotId: slot, runId: `fixture-analise-run-ferramentas-${id.sufixo}`, idempotencyKey: `${CAMPANHA_ID}/${slot}/1`,
+    intervention: { oracle: ORACULO_V2.ferramentas },
+    timestamps: { plannedAt: base.timestamps.plannedAt, startedAt: t("T00:40:00Z"), finishedAt: t("T00:50:00Z") } };
 }
 
 function runDoc(arm: "sem" | "com", submissao: Submissao, siteManifestSha256: string, divergente: boolean, id: IdentidadeFixture,
@@ -216,7 +279,7 @@ function runDoc(arm: "sem" | "com", submissao: Submissao, siteManifestSha256: st
   return base;
 }
 
-function isolationDoc(run: Run): Isolation {
+function isolationDoc(run: Run | RunV2): Isolation {
   const falhou = run.status.isolation === "failed";
   const ferramentas = ["browser_navigate", "browser_snapshot", "browser_take_screenshot", "coletor_enviar"];
   return {
@@ -229,7 +292,12 @@ function isolationDoc(run: Run): Isolation {
       { id: "ipv6-loopback", category: "network", target: "[::1] alternativo", required: false, outcome: "not-exercised", evidence: null },
     ],
     positiveControls: [{ id: "controle-sentinela", target: "arquivo-sentinela sintético", outcome: "passed", evidence: null }],
-    toolInventory: {
+    toolInventory: run.contract === "run.v2" ? {
+      // NAT-61: como o run-once grava — os nomes que as pontes expuseram (o oráculo sem prefixo)
+      announced: [...ferramentas, ...(run.intervention.oracle?.tools ?? [])],
+      observed: run.status.technical === "not-run" ? [] : run.arm === "sem" ? ["browser_navigate"] : ["browser_navigate", "scan_page"],
+      oracleAnnounced: run.arm !== "sem",
+    } : {
       announced: run.arm === "com" ? [...ferramentas, "mcp__govbr-ds-validator__scan_page"] : ferramentas,
       observed: run.status.technical === "not-run" ? [] : run.arm === "com" ? ["browser_navigate", "mcp__govbr-ds-validator__scan_page"] : ["browser_navigate"],
       oracleAnnounced: run.arm === "com",
@@ -240,28 +308,28 @@ function isolationDoc(run: Run): Isolation {
   };
 }
 
-function toolEvents(arm: "sem" | "com"): string {
+function toolEvents(arm: ArmV2): string {
   const ev = [{ tool: "browser_navigate", isError: false }, { tool: "browser_snapshot", isError: false }];
-  if (arm === "com") ev.push({ tool: "mcp__govbr-ds-validator__scan_page", isError: false }, { tool: "mcp__govbr-ds-validator__scan_page", isError: true });
+  if (arm !== "sem") ev.push({ tool: "mcp__govbr-ds-validator__scan_page", isError: false }, { tool: "mcp__govbr-ds-validator__scan_page", isError: true });
   return ev.map(e => JSON.stringify(e)).join("\n") + "\n";
 }
 
 const MEDIA: Record<string, string> = { ".json": "application/json", ".ndjson": "application/x-ndjson", ".png": "image/png", ".txt": "text/plain" };
 
-function pacote(dir: string, arm: "sem" | "com", o: OpcoesBraco, siteSha: string, divergente: boolean, id: IdentidadeFixture,
-  cx: Contexto = CONTEXTO_PADRAO): void {
+function pacote(dir: string, arm: ArmV2, o: OpcoesBraco, siteSha: string, divergente: boolean, id: IdentidadeFixture,
+  cx: Contexto = CONTEXTO_PADRAO, v2 = false): void {
   const submissao = o.submissao ?? "aceita";
-  const run = runDoc(arm, submissao, siteSha, divergente, id, cx);
+  const run: Run | RunV2 = v2 ? runDocV2(arm, submissao, siteSha, id, cx) : runDoc(arm as "sem" | "com", submissao, siteSha, divergente, id, cx);
   const files: { path: string; role: ArtifactManifest["files"][number]["role"]; body: string | Buffer }[] = [];
   files.push({ path: "run.json", role: "run", body: json(run) });
   if (submissao === "aceita") {
     const findings: Findings = {
       contract: "findings.v1", fixture: true, campaignId: CAMPANHA_ID, runId: run.runId,
-      receivedAt: `${id.dia}${arm === "com" ? "T00:10:30Z" : "T00:29:30Z"}`, receipt: `recibo-fixture-${arm}-${id.sufixo}`,
+      receivedAt: `${id.dia}${arm === "com" ? "T00:10:30Z" : arm === "ferramentas" ? "T00:49:30Z" : "T00:29:30Z"}`, receipt: `recibo-fixture-${arm}-${id.sufixo}`,
       findingContract: "achado-2",
-      report: { timestamp: `${id.dia}${arm === "com" ? "T00:10:29Z" : "T00:29:29Z"}`, model: "modelo-fixture",
+      report: { timestamp: `${id.dia}${arm === "com" ? "T00:10:29Z" : arm === "ferramentas" ? "T00:49:29Z" : "T00:29:29Z"}`, model: "modelo-fixture",
         appUrl: cx.appUrl, scope: ["tela fixture inteira"], notes: "FIXTURE SINTÉTICA — não é dado científico",
-        findings: o.findings ?? FINDINGS_PADRAO[arm] },
+        findings: o.findings ?? (v2 && arm !== "sem" ? FINDINGS_TRIO[arm] : FINDINGS_PADRAO[arm as "sem" | "com"]) },
     };
     files.push({ path: "findings.json", role: "findings", body: json(findings) });
     files.push({ path: `evidence/${arm}-01.png`, role: "evidence", body: PNG });
@@ -272,7 +340,7 @@ function pacote(dir: string, arm: "sem" | "com", o: OpcoesBraco, siteSha: string
   const manifest: ArtifactManifest = {
     contract: "artifact-manifest.v1", fixture: true, campaignId: CAMPANHA_ID, runId: run.runId,
     producedBy: "construtor-fixture-analise", producedAt: `${id.dia}T00:40:00Z`,
-    schemaVersions: { run: "run.v1", ...(submissao === "aceita" ? { findings: "findings.v1" as const } : {}), isolation: "isolation.v1" },
+    schemaVersions: { run: run.contract, ...(submissao === "aceita" ? { findings: "findings.v1" as const } : {}), isolation: "isolation.v1" },
     files: files.map(f => ({ path: f.path, bytes: Buffer.byteLength(f.body), sha256: sha(f.body),
       mediaType: MEDIA[f.path.slice(f.path.lastIndexOf("."))] ?? "application/octet-stream", role: f.role })),
   };
@@ -378,7 +446,7 @@ export function construirFixture(out: string, o: OpcoesFixture = {}) {
   const planSha = statePlanSha256(plan)!;
   const planFile = w("plano-estados.json", json(plan));
 
-  const camp = w("campanha.json", json(campanha(o, cx)));
+  const camp = w("campanha.json", json(o.trio ? campanhaTrio(o, cx) : campanha(o, cx)));
 
   const snapshots: SnapshotManifest = {
     contract: "snapshot-manifest.v1", fixture: true, snapshotSetId: "fixture-analise-snapshots-01", createdAt: "2026-01-02T12:00:00Z",
@@ -425,11 +493,20 @@ export function construirFixture(out: string, o: OpcoesFixture = {}) {
   const braco = (arm: "sem" | "com"): OpcoesBraco => ({ ...(o.telaReal ? { findings: o.telaReal.achados[arm] } : {}), ...o[arm] });
   pacote(join(out, "pacotes", "sem"), "sem", braco("sem"), site.sha256, Boolean(o.divergenciaForaDoDesenho), id, cx);
   pacote(join(out, "pacotes", "com"), "com", braco("com"), site.sha256, Boolean(o.divergenciaForaDoDesenho), id, cx);
+  if (o.trio) {
+    // NAT-61: os três braços em run.v2 (sem e com reescritos no contrato novo; o par v1 acima continua o padrão)
+    for (const arm of ["sem", "com"] as const) {
+      rmSync(join(out, "pacotes", arm), { recursive: true, force: true });
+      pacote(join(out, "pacotes", arm), arm, braco(arm), site.sha256, false, id, cx, true);
+    }
+    pacote(join(out, "pacotes", "ferramentas"), "ferramentas", o.ferramentas ?? {}, site.sha256, false, id, cx, true);
+  }
 
   return {
     dir: out, campanha: join(out, "campanha.json"), campanhaSha256: camp.sha256, snapshots: join(out, "snapshots.json"),
     referencia: join(out, "referencia.json"), site: o.telaReal ? o.telaReal.site : join(out, "site"), linhaDeBase: join(out, "linha-de-base", "registro.json"),
     sem: join(out, "pacotes", "sem"), com: join(out, "pacotes", "com"),
+    ...(o.trio ? { ferramentas: join(out, "pacotes", "ferramentas") } : {}),
   };
 }
 

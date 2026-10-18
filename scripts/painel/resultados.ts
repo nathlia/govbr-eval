@@ -47,7 +47,9 @@ function tabela(p: Placar): string[] {
   ];
   for (const l of p.linhas) {
     const r = l.resultado;
-    const dif = !r || !r.disponivel || r.diferencaUnidades === null ? "indisponível"
+    // NAT-61: no trio, cada comparação com o seu papel e o seu n (a coluna "com − sem" não serve: a principal é com − ferramentas)
+    const dif = r?.comparacoes ? `ferramentas: ${braco(r.bracos.ferramentas)}<br>${r.comparacoes.map(c => `${c.bracos[1]} − ${c.bracos[0]}${c.papel === "primary" ? " (principal)" : ""}: ${c.disponivel && c.diferencaUnidadesConfirmadas !== null ? `${sinal(c.diferencaUnidadesConfirmadas)}${c.estado === "final" ? "" : " até agora"}` : "indisponível"} (n = ${c.n})`).join("<br>")}`
+      : !r || !r.disponivel || r.diferencaUnidades === null ? "indisponível"
       : `${sinal(r.diferencaUnidades)} unidade${Math.abs(r.diferencaUnidades) === 1 ? "" : "s"}${r.diferencaRecall === null ? "" : ` (${pp(r.diferencaRecall)})`}${r.estado === "final" ? "" : " até agora"}`;
     L.push(`| ${md(l.par)} | ${md(l.tela)} | ${md(l.modelo ?? "—")} | ${braco(r?.bracos.sem)} | ${braco(r?.bracos.com)} | ${dif} | ${par2(l, b => b.novas)} | ${par2(l, b => b.incorretas)} | **${md(l.seloTexto)}** |`);
   }
@@ -56,6 +58,10 @@ function tabela(p: Placar): string[] {
 
 function linhaDaCampanha(p: Placar): string {
   if (!p.total) return "Campanha de um braço só (pelo desenho): não há comparação com × sem.";
+  // NAT-61: trio — cada comparação com o seu n; nunca somada com pares de dois braços
+  if (p.comparacoes?.length) {
+    return `Grupos finais: **${p.finais} de ${p.total}**. ${p.comparacoes.map(c => `${c.bracos[1]} − ${c.bracos[0]}${c.papel === "primary" ? " (principal)" : ""}: n = ${c.n}${c.somaDiferenca !== null ? `, soma das diferenças ${sinal(c.somaDiferenca)}` : ""}`).join(" · ")}. Soma descritiva, sem inferência.`;
+  }
   const base = `Pares finais: **${p.finais} de ${p.total}**.`;
   if (!p.finais) return `${base} Nenhum par final ainda: não há soma.`;
   if (p.somaSem === null || p.somaCom === null) return `${base} Soma indisponível: algum par final não tem o número de um dos braços.`;

@@ -17,7 +17,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { extname, join } from "node:path";
-import type { Arm } from "../../contracts/index";
+import type { ArmV2 as Arm } from "../../contracts/index";
 import { analisar } from "../analisar-execucao";
 import {
   DECISOES, aceitaVinculos, armLeaks, estadosDaUnidade, canonical, digest, normalizeReviews, reviewQueue, scoreSemanticPackage,
@@ -28,7 +28,7 @@ import {
   ARMS, DECISOES_VERSAO, dentroDoArquivo, decisoesEmVigor, existeDiretorio, lerAnalise, pacoteDaRevisao,
   type Analise, type MetaDecisao, type Revisao,
 } from "./modelo";
-import { contarMascara, mascarar, type TextoVisivel } from "./mascara";
+import { contarMascara, distingueComDeFerramentas, mascarar as mascararD87, mascararComFerramentas, type TextoVisivel } from "./mascara";
 
 // ───────────────────────────────────────────────────────────────── vista cega
 
@@ -92,7 +92,9 @@ export interface VistaFila {
    * (`armLeaks` sobre o texto inteiro do pacote). `aposMascara`: cartões cujo texto que a fila
    * mostra ainda denuncia o braço depois da máscara.
    */
-  mascara: { citavam: number; vazamentosDeBraco: number; aposMascara: number };
+  mascara: { citavam: number; vazamentosDeBraco: number; aposMascara: number;
+    /** NAT-61: só no grupo com o braço ferramentas — cartões que separavam com de ferramentas, antes e depois da máscara. */
+    comFerramentas?: { citavam: number; aposMascara: number } };
 }
 
 export function vistaFila(arquivo: string, campanha: string, alvo: string): VistaFila | null {
@@ -103,6 +105,12 @@ export function vistaFila(arquivo: string, campanha: string, alvo: string): Vist
   const vigor = decisoesEmVigor(an);
   if (!pkg || !vigor) return null;
   const units = new Map(pkg.units.map(u => [u.id, u]));
+  // NAT-61: no grupo com o braço ferramentas, a vista também mascara o que separa com de ferramentas
+  // (ferramentas retiradas, ids da base, anotação e-MAG); no par sem/com, a máscara de sempre (D-87).
+  const trio = Boolean(an.receita?.pacotes.ferramentas) || rv.resumo.execucoes.some(e => e.braco === "ferramentas");
+  function mascarar(t: string): string;
+  function mascarar(t: string | null): string | null;
+  function mascarar(t: string | null): string | null { return trio ? mascararComFerramentas(mascararD87(t)) : mascararD87(t); }
   const capture = existsSync(join(rv.dir, "revisao", "capture.json"))
     ? JSON.parse(readFileSync(join(rv.dir, "revisao", "capture.json"), "utf8")) as { scenes: { id: string; image?: string }[] } : { scenes: [] };
   const decisoes = new Map(vigor.raw.decisions.map(d => [d.cardId, d]));
@@ -145,7 +153,10 @@ export function vistaFila(arquivo: string, campanha: string, alvo: string): Vist
   const antes = ordenados.map(c => { const leg = c.contract !== "achado-2" && c.contract !== "deterministico";
     return visivel(c.id, c.rule, leg ? null : c.observed, leg ? null : c.expected, [...c.flags, ...c.subjects.flatMap(s => [s.label, s.hidden])]); });
   const depois = cartoes.map(c => visivel(c.id, c.regra, c.observado, c.esperado, [...c.sinais, ...c.sujeitos.flatMap(s => [s.rotulo, s.oculto])]));
-  const mascara = { ...contarMascara(antes, depois), vazamentosDeBraco: armLeaks(pkg).length };
+  const campos = (t: TextoVisivel) => [t.regra, t.observado, t.esperado, ...t.extras];
+  const mascara = { ...contarMascara(antes, depois), vazamentosDeBraco: armLeaks(pkg).length,
+    ...(trio ? { comFerramentas: { citavam: antes.filter(t => campos(t).some(distingueComDeFerramentas)).length,
+      aposMascara: depois.filter(t => campos(t).some(distingueComDeFerramentas)).length } } : {}) };
   const fila = reviewQueue(pkg, normalizeReviews(structuredClone(vigor.raw)));
   const decididos = vigor.raw.decisions.filter(d => d.status === "reviewed" && pkg.cards.some(c => c.id === d.cardId)).length;
   // gravações feitas depois que a revisão atual foi calculada: ainda fora da pontuação até Recalcular
@@ -377,7 +388,8 @@ export async function recalcular(arquivo: string, campanha: string, alvo: string
     }
     mkdirSync(revDir, { recursive: true });
     const r = await analisar({
-      ...(rc.tipo === "par" ? { sem: pac("sem"), com: pac("com") } : { pacote: pac((ARMS.find(a => rc.pacotes[a]) ?? "sem") as Arm) }),
+      // NAT-61: o grupo (tipo "par" na receita, nome mantido) pode trazer o braço ferramentas
+      ...(rc.tipo === "par" ? { sem: pac("sem"), com: pac("com"), ...(rc.pacotes.ferramentas ? { ferramentas: pac("ferramentas") } : {}) } : { pacote: pac((ARMS.find(a => rc.pacotes[a]) ?? "sem") as Arm) }),
       campanha: A(rc.entradas.campanha), snapshots: A(rc.entradas.snapshots), referencia: A(rc.entradas.referencia),
       site: siteDaReceita(arquivo, an, o),
       ...(rc.entradas.semLinhaDeBase ? { semLinhaDeBase: true } : { linhaDeBase: rc.entradas.linhaDeBase ? A(rc.entradas.linhaDeBase) : undefined }),

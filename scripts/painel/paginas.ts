@@ -9,10 +9,10 @@
  * Resultados do painel do TCC (números grandes, barras lado a lado, "provisório" bem visível, n dito).
  * Estilo: só `painel.css` (servida em /estilo.css).
  */
-import type { Arm } from "../../contracts/index";
+import type { ArmV2 as Arm } from "../../contracts/index";
 import type { EntradaIndice } from "../arquivo-resultados";
 import {
-  campanhasDoPlacar, dataLocal, frase, placarDaCampanha, type Fonte, type Placar, type InfoCampanha, type LinhaExecucao, type ResultadoBraco, type ResultadoPar, type Selo, type Valor,
+  ARMS, campanhasDoPlacar, dataLocal, frase, placarDaCampanha, type Fonte, type Placar, type InfoCampanha, type LinhaExecucao, type ResultadoBraco, type ResultadoPar, type Selo, type Valor,
   type VistaExecucao, type VistaExecucoes, type VistaPar, type VistaParResumo,
 } from "./modelo";
 import { DICA_CRLF, rotuloEtapa, type Diagnostico } from "./preparar";
@@ -21,8 +21,8 @@ import { colunaD, detalheD, ESTADO_SLOT_TXT, linhasDaAgenda, linhasDoDesfecho, l
 
 export const esc = (s: unknown): string => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
 const u = (s: string): string => encodeURIComponent(s);
-const BRACO: Record<Arm, string> = { sem: "sem oráculo", com: "com oráculo" };
-const BRACO_T: Record<Arm, string> = { sem: "Sem oráculo", com: "Com oráculo" };
+const BRACO: Record<Arm, string> = { sem: "sem oráculo", com: "com oráculo", ferramentas: "ferramentas (oráculo sem conhecimento)" };
+const BRACO_T: Record<Arm, string> = { sem: "Sem oráculo", com: "Com oráculo", ferramentas: "Ferramentas (sem conhecimento)" };
 
 /** O que toda página sabe do painel aberto: o arquivo servido e se é a fixture sintética. */
 export interface Contexto { arquivo: string; fixture: boolean }
@@ -138,12 +138,13 @@ function cartaoPlacar(p: Placar, preparoLink: (par: string) => string): string {
   const numeros = !p.total ? `<p class="placar-nada">Campanha de um braço só (pelo desenho): não há comparação com × sem.</p>`
     : `<p class="placar-numeros"><span class="n com">com <b>${esc(n(p.somaCom))}</b></span><span class="x" aria-hidden="true">×</span><span class="n sem">sem <b>${esc(n(p.somaSem))}</b></span></p>
 <p class="pequeno">unidades da referência confirmadas · <strong>pares finais: ${p.finais} de ${p.total}</strong>${p.finais ? ` · soma só dos finais (n = ${p.finais})${p.somaTotal !== null ? `, de ${p.somaTotal}` : ""}` : " · nenhum par final ainda, sem soma"}</p>`;
+  const trio = p.comparacoes?.length ? `<p class="pequeno">Trio (NAT-61), cada comparação com o seu n (grupos em que ela está final): ${p.comparacoes.map(c => `${esc(c.bracos[1])} − ${esc(c.bracos[0])}${c.papel === "primary" ? " (principal)" : ""}: n = ${c.n}${c.somaDiferenca !== null ? `, soma das diferenças ${c.somaDiferenca > 0 ? "+" : ""}${c.somaDiferenca}` : ""}`).join(" · ")}${p.somaFerramentas !== undefined ? ` · ferramentas ${esc(n(p.somaFerramentas))}` : ""}. Nunca somado com pares de dois braços.</p>` : "";
   const comNumeros = p.linhas.filter(l => l.resultado && (l.selo === "final" || l.selo === "provisorio"));
   const barras = comNumeros.length ? `<div class="placar-pares">${comNumeros.map(l => `<a class="placar-par" href="/par/${u(c.id)}/${u(l.par)}">${barrasPar(l.resultado!, { titulo: `${l.par} · ${l.selo === "final" ? "FINAL" : "PROVISÓRIO"}` })}</a>`).join("")}</div>` : "";
   const faltas = p.linhas.filter(l => l.falta);
   return `<article class="placar" aria-labelledby="pl-${esc(c.id)}">
 <h3 id="pl-${esc(c.id)}"><span class="mono">${esc(c.id)}</span> ${selo({ estado: c.natureza === "formal" ? "ok" : c.natureza === "calibracao" ? "aviso" : "nao-se-aplica", texto: c.natureza === "calibracao" ? "calibração — não é resultado (D-67)" : c.rotulo })}</h3>
-${p.agenda ? blocoAgenda(p) : ""}${numeros}${barras}
+${p.agenda ? blocoAgenda(p) : ""}${numeros}${trio}${barras}
 ${p.linhas.length ? `<ul class="placar-selos">${p.linhas.map(l => `<li><a href="/par/${u(c.id)}/${u(l.par)}">${esc(l.par)}</a> ${selo({ estado: SELO_PLACAR[l.selo], texto: l.seloTexto })}</li>`).join("")}</ul>` : ""}
 ${faltas.length ? `<div class="placar-falta"><h4>O que falta</h4><ul>${faltas.map(l => `<li><a href="${l.falta === "pronto para preparar" ? preparoLink(l.par) : `/par/${u(c.id)}/${u(l.par)}`}">${esc(l.par)}</a>: ${esc(l.falta)}</li>`).join("")}</ul></div>` : ""}
 </article>`;
@@ -159,7 +160,7 @@ function blocoAgenda(p: Placar): string {
   const s = va.situacao;
   const linhaPar = (x: typeof s.pares[number]) => {
     const ag = g.pares.find(q => q.pairId === x.pairId), fora = g.foraDaAnalise.find(q => q.pairId === x.pairId);
-    const slot = (a: Arm) => { const z = x.slots[a]; return `${esc(z.slot.slotId)}: ${esc(ESTADO_SLOT_TXT[z.estado])}${z.tentativas.length > 1 ? ` (${z.tentativas.length} tentativas)` : ""}${z.motivo ? ` — ${esc(z.motivo)}` : ""}`; };
+    const slot = (a: "sem" | "com") => { const z = x.slots[a]; return `${esc(z.slot.slotId)}: ${esc(ESTADO_SLOT_TXT[z.estado])}${z.tentativas.length > 1 ? ` (${z.tentativas.length} tentativas)` : ""}${z.motivo ? ` — ${esc(z.motivo)}` : ""}`; };
     return `<tr><th scope="row"><a href="/par/${u(p.info.id)}/${u(x.pairId)}">${esc(x.pairId)}</a></th><td>${esc(x.firstArm)} primeiro</td><td>${slot("sem")}</td><td>${slot("com")}</td>
 <td>${esc(minTxt(x.intervaloMin))}</td><td>${ag ? `<b>${esc(sinal(ag.d))}</b> ${esc(detalheD(g, ag))}` : `<span class="suave">${esc(fora?.motivo ?? "—")}</span>`}</td></tr>`;
   };
@@ -231,7 +232,7 @@ function blocoPar(p: VistaParResumo, xs: LinhaExecucao[], d: Diagnostico | undef
   const acao = d?.pode ? `<a class="acao" href="${href}#preparar">${d.ultimaFalha ? "Tentar preparar de novo" : "Preparar análise"} →</a>`
     : p.selo.estado === "pendente" && p.analise ? `<a class="acao" href="/revisao/${u(p.campanha)}/${u(p.par)}">Abrir fila de revisão →</a>`
     : p.analise ? `<a class="acao" href="${href}">Ver comparação →</a>` : `<a class="acao" href="${href}">Abrir par →</a>`;
-  const linhas = (["sem", "com"] as Arm[]).map(a => {
+  const linhas = colunasDoGrupo(a => xs.some(x => x.braco === a), p.faltando).map(a => {
     const doBraco = xs.filter(x => x.braco === a);
     if (doBraco.length) return doBraco.map(linhaExec).join("");
     return p.porDesenho ? "" : `<li class="exec vazio"><span class="id-exec">—</span>${chip(a)}<span class="selos">${selo({ estado: "par-incompleto", texto: "falta este braço" })}</span><span class="numeros"></span></li>`;
@@ -240,6 +241,21 @@ function blocoPar(p: VistaParResumo, xs: LinhaExecucao[], d: Diagnostico | undef
 <div class="par-topo"><h3 id="par-${esc(p.campanha)}-${esc(p.par)}"><a href="${href}">${esc(p.par)}</a></h3>${selo(d ? d.selo : p.selo)}
 <span class="pequeno suave">${esc(p.tela)} · ${esc(p.modelo ?? "modelo não registrado")} · ${esc(dataLocal(p.dataUtc))}</span>${acao}</div>
 <ul class="execs">${linhas}</ul></article>`;
+}
+
+/** NAT-61: os braços de um par/grupo, na ordem das colunas — sem e com sempre; ferramentas só quando está no grupo. */
+function colunasDoGrupo(presente: (a: Arm) => boolean, faltando: Arm[]): Arm[] {
+  return ARMS.filter(a => a !== "ferramentas" || presente(a) || faltando.includes(a));
+}
+
+/** NAT-61: as comparações do grupo, cada uma com o seu n (summary.json → comparacoes). */
+function tabelaComparacoes(cs: NonNullable<VistaPar["comparacoes"]>, fonte: string): string {
+  const sinalTxt = (v: number | null) => v === null ? "indisponível" : v > 0 ? `+${v}` : String(v);
+  return `<div class="rolavel"><table class="empilha"><caption>Fonte: <span class="mono">${esc(fonte)} → comparacoes</span>. Cada comparação diz o seu n; um grupo incompleto entra só nas comparações que têm os dois braços. Números de 2 e de 3 braços nunca formam série.</caption>
+<thead><tr><th scope="col">Comparação</th><th scope="col">Papel</th><th scope="col">n</th><th scope="col">Estado</th><th scope="col">Δ defeitos confirmados</th><th scope="col">Δ recall</th><th scope="col">Motivo</th></tr></thead>
+<tbody>${cs.map(c => `<tr><th scope="row">${esc(BRACO_T[c.bracos[1]])} − ${esc(BRACO_T[c.bracos[0]])}</th><td data-rotulo="Papel">${c.papel === "primary" ? "<strong>principal</strong>" : "secundária"}</td><td data-rotulo="n">${esc(c.n)}</td>
+<td data-rotulo="Estado">${c.disponivel ? (c.estado === "final" ? "final" : "provisória") : "indisponível"}</td><td data-rotulo="Δ defeitos">${esc(sinalTxt(c.diferencaUnidadesConfirmadas))}</td>
+<td data-rotulo="Δ recall">${esc(c.diferencaRecall === null ? "indisponível" : pct(c.diferencaRecall))}</td><td data-rotulo="Motivo">${esc(frase(c.motivo, 300) || "—")}</td></tr>`).join("")}</tbody></table></div>`;
 }
 
 /** Barras lado a lado de um par (defeitos confirmados de N), só com números de summary.json. */
@@ -251,7 +267,7 @@ function barrasPar(r: ResultadoPar, o: { titulo?: string } = {}): string {
     const v = b.confirmadas, w = v !== null && total ? (v / total) * 60 : 0;
     return `<div class="linha-barra ${a}"><span>${esc(BRACO_T[a])}</span><div class="pista${v ? "" : " vazia"}"><i style="width:${w.toFixed(1)}%"></i><b style="left:${w.toFixed(1)}%">${v === null ? "indisponível" : `${v} de ${total ?? "?"}`}</b></div></div>`;
   };
-  return `<figure class="figura"><figcaption>${esc(o.titulo ?? "Defeitos da referência confirmados")}</figcaption><div class="barras">${linha("com")}${linha("sem")}</div></figure>`;
+  return `<figure class="figura"><figcaption>${esc(o.titulo ?? "Defeitos da referência confirmados")}</figcaption><div class="barras">${linha("com")}${linha("ferramentas")}${linha("sem")}</div></figure>`;
 }
 
 function blocoCampanha(c: InfoCampanha, v: VistaExecucoes, preparo: Record<string, Diagnostico>): string {
@@ -367,9 +383,9 @@ ${b.camadas ? `<p class="sub">Sorteadas × página: ${esc(camadaTexto(b.camadas.
 
 function barrasComparativas(r: ResultadoPar): string {
   const bloco = (titulo: string, valor: (b: ResultadoBraco) => number | null, fmt: (v: number) => string, escala?: number | null) => {
-    const vs = (["com", "sem"] as Arm[]).map(a => r.bracos[a] ? valor(r.bracos[a]!) : null);
+    const vs = (["com", "ferramentas", "sem"] as Arm[]).map(a => r.bracos[a] ? valor(r.bracos[a]!) : null);
     const max = escala ?? Math.max(0, ...vs.filter((v): v is number => v !== null));
-    return `<figure class="figura"><figcaption>${esc(titulo)}</figcaption><div class="barras">${(["com", "sem"] as Arm[]).filter(a => r.bracos[a]).map(a => {
+    return `<figure class="figura"><figcaption>${esc(titulo)}</figcaption><div class="barras">${(["com", "ferramentas", "sem"] as Arm[]).filter(a => r.bracos[a]).map(a => {
       const v = valor(r.bracos[a]!), w = v !== null && max ? (v / max) * 58 : 0;
       return `<div class="linha-barra ${a}"><span>${esc(BRACO_T[a])}</span><div class="pista${v ? "" : " vazia"}"><i style="width:${w.toFixed(1)}%"></i><b style="left:${w.toFixed(1)}%">${v === null ? "desconhecido" : esc(fmt(v))}</b></div></div>`;
     }).join("")}</div></figure>`;
@@ -385,7 +401,7 @@ ${bloco("Custo estimado", b => b.custoUsd, v => usd(v))}
 
 function tabelaMetricas(v: VistaPar): string {
   const an = v.analise!, rv = an.atual!;
-  const bracos = (["sem", "com"] as Arm[]).filter(a => rv.resumo.execucoes.some(e => e.braco === a));
+  const bracos = ARMS.filter(a => rv.resumo.execucoes.some(e => e.braco === a));
   const idDe = (a: Arm) => { const run = rv.resumo.execucoes.find(e => e.braco === a)!.runId; return (v.bracos[a] ?? []).find(x => x.chave === run)?.id ?? run; };
   return `<div class="rolavel"><table class="empilha">
 <caption>Fonte: <span class="mono">${esc(rv.rel)}/summary.json</span> · formato ${esc(rv.resumo.formato)} · scorer ${esc(rv.resumo.versoes?.scorer.version ?? "?")} · atualizado ${esc(dataLocal(rv.resumo.geradoEm))}</caption>
@@ -404,7 +420,7 @@ export function paginaPar(v: VistaPar, preparo: Diagnostico | null, ctx: Context
   const an = v.analise;
   const rv = an?.atual ?? null;
   const r = v.resultado;
-  const xs = [...(v.bracos.sem ?? []), ...(v.bracos.com ?? [])];
+  const xs = ARMS.flatMap(a => v.bracos[a] ?? []);
   const partes: string[] = [];
   partes.push(`<p class="migalha"><a href="/">Estado das execuções</a> › <span class="mono">${esc(v.campanha)}</span> › par <span class="mono">${esc(v.par)}</span></p>
 <header class="capa"><h1><span class="id">${esc(v.par)}</span></h1>
@@ -420,7 +436,7 @@ export function paginaPar(v: VistaPar, preparo: Diagnostico | null, ctx: Context
   }
 
   // 1. comparação (o resultado mais recente primeiro)
-  partes.push(`<h2>Comparação com × sem</h2>`);
+  partes.push(v.comparacoes ? `<h2>Comparações do grupo</h2>` : `<h2>Comparação com × sem</h2>`);
   if (!an) {
     partes.push(`<p class="suave">Ainda não há análise deste par no arquivo. ${v.faltando.length ? "A análise de par espera os dois braços." : preparo?.pode ? "Prepare a análise abaixo: ela cria a primeira versão." : ""}</p>`);
     if (preparo) partes.push(blocoPreparo(preparo, `/api/preparar/par/${u(v.campanha)}/${u(v.par)}`, "do par"));
@@ -430,6 +446,17 @@ export function paginaPar(v: VistaPar, preparo: Diagnostico | null, ctx: Context
 <p class="msg" id="msg-recalc" role="status" aria-live="polite"></p>`);
   } else if (rv.resumo.analise.estado === "bloqueada") {
     partes.push(`<div class="aviso falha"><p><strong>Análise bloqueada:</strong> ${esc(frase(rv.resumo.analise.motivo, 400))}</p><p>O resumo técnico continua valendo; as métricas ficam indisponíveis.</p></div>`);
+  } else if (v.comparacoes && r) {
+    // NAT-61: grupo (trio ou par de campanha v2): a principal decide a faixa; cada comparação com o seu n
+    const principal = v.comparacoes.find(c => c.papel === "primary") ?? v.comparacoes[0];
+    const final = principal.disponivel && principal.estado === "final";
+    partes.push(final
+      ? `<div class="faixa final">FINAL — comparação principal (${esc(BRACO_T[principal.bracos[1]])} − ${esc(BRACO_T[principal.bracos[0]])}) com a revisão fechada (${esc(rv.nome)}).<small>${esc(principal.nota)}</small></div>`
+      : `<div class="faixa provisoria">${principal.disponivel ? "PROVISÓRIO" : "COMPARAÇÃO PRINCIPAL INDISPONÍVEL"} — ${principal.disponivel ? `${esc(r.pendentes)} cartão(ões) pendente(s) na fila` : esc(frase(principal.motivo, 300))}.<small>${esc(principal.nota)}</small></div>`);
+    const x = (a: Arm) => (v.bracos[a] ?? []).find(l => l.chave === r.bracos[a]?.runId);
+    partes.push(`<div class="bracos">${(["com", "ferramentas", "sem"] as Arm[]).filter(a => r.bracos[a]).map(a => cartaoBraco(a, r.bracos[a], x(a), final)).join("")}</div>`);
+    partes.push(barrasComparativas(r));
+    partes.push(tabelaComparacoes(v.comparacoes, `${rv.rel}/summary.json`));
   } else if (v.comparacao && r) {
     const c = v.comparacao;
     const final = c.estado === "final";
@@ -461,13 +488,13 @@ export function paginaPar(v: VistaPar, preparo: Diagnostico | null, ctx: Context
   }
 
   // 3. execuções do par
-  partes.push(`<h2>Execuções do par</h2><article class="par-bloco"><ul class="execs">${(["sem", "com"] as Arm[]).map(a => (v.bracos[a] ?? []).map(linhaExec).join("")
+  partes.push(`<h2>Execuções do par</h2><article class="par-bloco"><ul class="execs">${colunasDoGrupo(a => Boolean(v.bracos[a]), v.faltando).map(a => (v.bracos[a] ?? []).map(linhaExec).join("")
     || (v.porDesenho ? "" : `<li class="exec vazio"><span class="id-exec">—</span>${chip(a)}<span class="selos">${selo({ estado: "par-incompleto", texto: "falta este braço" })}</span><span class="numeros"></span></li>`)).join("")}</ul></article>`);
 
   // 4. dobrados: tabela completa, achados (quebra a cegueira) e histórico
   if (rv && v.metricas) partes.push(`<details><summary>Resultado por braço — tabela completa, com a fonte de cada número</summary>${tabelaMetricas(v)}</details>`);
   if (rv) {
-    const ach = (["sem", "com"] as Arm[]).map(a => {
+    const ach = ARMS.map(a => {
       const y = v.achadosPorBraco[a];
       if (y === undefined) return "";
       return `<h3>${esc(BRACO_T[a])}</h3>${y === null ? `<p>Nenhuma submissão aceita (não é zero achados).</p>` : y.total === 0 ? `<p>0 achados: lista vazia aceita pelo coletor.</p>`
@@ -643,7 +670,7 @@ export function paginaFila(f: VistaFila, ctx: Contexto, revisoraPadrao: string):
 <p class="migalha"><a href="/">Estado das execuções</a> › <span class="mono">${esc(an.campanha)}</span> › <a href="/par/${u(an.campanha)}/${u(an.alvo)}">par ${esc(an.alvo)}</a> › fila de revisão</p>
 <header class="capa"><h1>Fila de revisão — <span class="id">${esc(an.alvo)}</span></h1>
 <p>${f.cartoes.length} cartões · ${pend.length} pendente(s) · ${feitos.length} decidido(s). Revisão cega: o braço, o id da execução e o nome dos arquivos de evidência não aparecem aqui.</p>
-<p class="pequeno suave">${f.mascara.citavam} cartão(ões) citavam ids de regra do oráculo; mascarados como “[regra citada]” só nesta vista (o pacote guarda o texto original). Texto que denuncia o braço: ${f.mascara.vazamentosDeBraco} cartão(ões) no pacote inteiro, ${f.mascara.aposMascara} ainda visível(is) aqui após a máscara.</p></header>
+<p class="pequeno suave">${f.mascara.citavam} cartão(ões) citavam ids de regra do oráculo; mascarados como “[regra citada]” só nesta vista (o pacote guarda o texto original). Texto que denuncia o braço: ${f.mascara.vazamentosDeBraco} cartão(ões) no pacote inteiro, ${f.mascara.aposMascara} ainda visível(is) aqui após a máscara.${f.mascara.comFerramentas ? ` Com × ferramentas (NAT-61): ${f.mascara.comFerramentas.citavam} cartão(ões) citavam o que só o braço com tem (ferramentas retiradas, ids da base, anotação e-MAG), mascarados aqui; ${f.mascara.comFerramentas.aposMascara} ainda visível(is).` : ""}</p></header>
 ${an.avisos.length ? listaAvisos(an.avisos.map(a => ({ alvo: an.alvo, texto: a.replace(new RegExp(`^${an.alvo.replace(/[.]/g, "\\.")}:\\s*`), ""), ajuda: "/ajuda#recalcular", nivel: "falha", ensaio: false }))) : ""}
 ${f.naoIncorporadas ? `<div class="aviso" role="status"><p><strong>${f.naoIncorporadas} decisão(ões) salva(s) depois do último cálculo (${esc(rv.nome)}).</strong> A pontuação só muda quando você clicar em Recalcular.</p></div>` : ""}
 <div class="campo"><label class="rot" for="revisora">Seu nome (assina cada decisão)</label><input type="text" id="revisora" autocomplete="name" value="${esc(revisoraPadrao)}"></div>

@@ -55,3 +55,46 @@ export function contarMascara(antes: TextoVisivel[], depois: TextoVisivel[]): { 
   const aposMascara = depois.filter(t => termos.has(t.id) || campos(t).some(citaIdDoOraculo)).length;
   return { citavam, aposMascara };
 }
+
+// ───────────────────────────────────────────────────────────────── NAT-61: com × ferramentas
+
+/**
+ * NAT-61 (plano §7.4, decisão 18): no trio, a revisão cega mistura cartões de com e de ferramentas. Os dois
+ * têm o oráculo e citam `scan_page`, `verify_finding`, `get_finding_details` e "oráculo" — isso NÃO separa um
+ * do outro (os termos de `armLeaks` só separam sem × oráculo). O que denuncia o com é o que o perfil
+ * knowledge-free tirou: as ferramentas de consulta à base, os ids da base e das checagens que a aplicam, o
+ * vocabulário que só o conhecimento curado traz e a anotação e-MAG que o scan do perfil evaluation acrescenta
+ * à descrição da regra do axe ("(e-MAG 3.5: título)").
+ *
+ * `mascarar` (acima) NÃO muda: a NAT-74 (reanalise-nat74/e14-*) usa ela nos materiais cegos já medidos. Esta
+ * máscara é outra função, aplicada pela fila só quando o pacote tem execução do braço ferramentas.
+ */
+export const FERRAMENTA_CITADA = "[ferramenta citada]";
+export const TERMO_CITADO = "[termo citado]";
+export const NOTA_EMAG_CITADA = "[anotação citada]";
+const RETIRADAS = ["get_ds_rules", "get_design_tokens", "get_emag_rules", "get_page_rules", "get_component_spec", "list_components", "normativeContext"];
+
+/** Padrões que distinguem com de ferramentas. Com /g: use só via as funções abaixo. */
+export const DISTINGUE_COM_DE_FERRAMENTAS: readonly { re: RegExp; por: string }[] = [
+  { re: new RegExp(`\\b(?:mcp__govbr-ds-validator__)?(?:${RETIRADAS.join("|")})\\b`, "g"), por: FERRAMENTA_CITADA },
+  { re: /\bgovbr-\d+(?:\.\d+)*(?:-[A-Za-z0-9]+)*/g, por: REGRA_CITADA },
+  { re: /\bds[-:](?:token|structure|page)(?:-[a-z0-9]+)*/g, por: REGRA_CITADA },
+  { re: /\(e-?MAG \d+(?:\.\d+)*:[^)]*\)/gi, por: NOTA_EMAG_CITADA },
+  { re: /\b(?:Template Base|Rawline|knowledge base)\b/gi, por: TERMO_CITADO },
+];
+
+export function mascararComFerramentas(texto: string): string;
+export function mascararComFerramentas(texto: string | null): string | null;
+export function mascararComFerramentas(texto: string | null): string | null {
+  if (texto === null) return null;
+  return DISTINGUE_COM_DE_FERRAMENTAS.reduce((t, { re, por }) => t.replace(re, por), texto);
+}
+
+export const distingueComDeFerramentas = (texto: string | null): boolean =>
+  texto !== null && DISTINGUE_COM_DE_FERRAMENTAS.some(({ re }) => { re.lastIndex = 0; const r = re.test(texto); re.lastIndex = 0; return r; });
+
+/** Cartões do pacote cujo texto livre (o que `armLeaks` lê) separa com de ferramentas. */
+export function contarComFerramentas(pkg: SemanticPackage): number {
+  // o mesmo texto livre que armLeaks lê (descrição, evidência relatada, observado, esperado)
+  return pkg.cards.filter(c => distingueComDeFerramentas(JSON.stringify({ d: c.description, r: c.reportedEvidence, o: c.observed, e: c.expected }))).length;
+}

@@ -43,7 +43,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { basename, dirname, join } from "node:path";
 import { gunzipSync, gzipSync } from "node:zlib";
 import {
-  crossCheckRun, validateContract, type ArtifactManifest, type Baseline, type Findings, type Isolation, type Run, type SnapshotManifest,
+  crossCheckRun, validateContract, type ArtifactManifest, type Baseline, type Findings, type Isolation, type AnyRun as Run, type SnapshotManifest,
 } from "../contracts/index";
 import { compareIdentities, statePlanSha256 } from "./collection-manifest";
 import { canonical } from "./semantic-flow";
@@ -423,7 +423,8 @@ export function problemasDeVinculo(run: Run, m: IsolatedCollectionManifest): str
   if (run.screen.version !== m.site.screenVersion) p.push(`versão da tela ${run.screen.version} ≠ ${m.site.screenVersion}`);
   if (run.versions.siteManifestSha256 !== m.identity.siteManifestSha256) p.push("site da execução ≠ site do manifesto");
   if (run.fixture !== m.fixture) p.push(`fixture ${String(run.fixture)} ≠ ${String(m.fixture)} (modo ${d.mode})`);
-  if (run.arm === "com" && run.intervention.oracle && (run.intervention.oracle.distSha256 !== m.oracle.distSha256 || run.intervention.oracle.dataSha256 !== m.oracle.dataSha256)) p.push("oráculo da execução ≠ do manifesto");
+  // NAT-61: com e ferramentas usam a mesma imagem do oráculo; os dois conferem contra o manifesto.
+  if (run.arm !== "sem" && run.intervention.oracle && (run.intervention.oracle.distSha256 !== m.oracle.distSha256 || run.intervention.oracle.dataSha256 !== m.oracle.dataSha256)) p.push("oráculo da execução ≠ do manifesto");
   return p;
 }
 
@@ -452,7 +453,7 @@ export interface EntradaIndice {
   chave: string;
   tipo: "execucao" | "linha-de-base";
   natureza: "formal" | "ensaio";
-  campanha: string; slot: string | null; par: string | null; tela: string; braco: "sem" | "com" | null;
+  campanha: string; slot: string | null; par: string | null; tela: string; braco: "sem" | "com" | "ferramentas" | null;
   modelo: string | null; esforco: string | null; modo: string | null;
   dataUtc: string; caminho: string;
   estado: {

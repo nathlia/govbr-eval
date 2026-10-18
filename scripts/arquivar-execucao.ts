@@ -33,7 +33,7 @@ import {
   reconstruirIndice, registrarLinhaDeBase, resolverConjunto, segredosNoPacote, sha, type EntradaIndice,
 } from "./arquivo-resultados";
 import { canonical } from "./semantic-flow";
-import type { Baseline, Run, SnapshotManifest } from "../contracts/index";
+import type { Baseline, AnyRun as Run, SnapshotManifest } from "../contracts/index";
 import { resumoColeta } from "./pipeline-t4";
 
 const json = (v: unknown): string => JSON.stringify(v, null, 2) + "\n";
@@ -109,8 +109,8 @@ type Jobs = Record<string, { result?: string; outputs?: Record<string, string> }
  * neste checkout (o mesmo commit do disparo), senão do que o job preparar já resolveu, senão do
  * digitado (sem/com). Nunca um marcador: desconhecido fica null.
  */
-export function slotSemManifesto(campanha: string, slot: string, ent: Record<string, string>, jobs: Jobs, raiz = ROOT): { par: string | null; braco: "sem" | "com" | null } {
-  const arm = (v: unknown): "sem" | "com" | null => (v === "sem" || v === "com" ? v : null);
+export function slotSemManifesto(campanha: string, slot: string, ent: Record<string, string>, jobs: Jobs, raiz = ROOT): { par: string | null; braco: "sem" | "com" | "ferramentas" | null } {
+  const arm = (v: unknown): "sem" | "com" | "ferramentas" | null => (v === "sem" || v === "com" || v === "ferramentas" ? v : null);
   const par = (v: unknown): string | null => (typeof v === "string" && ID.test(v) ? v : null);
   if (ID.test(campanha) && ID.test(slot)) {
     try {
@@ -135,7 +135,7 @@ function entradaBase(m: IsolatedCollectionManifest | null, ent: Record<string, s
     campanha, slot,
     // par desconhecido (campanha com agenda, recusada antes do manifesto): sem par, nunca um "par-invalido" no painel
     par: m?.dispatch.pairId ?? sm!.par, tela: m?.dispatch.screenId ?? id(ent.tela, "tela-invalida"),
-    braco: (m?.dispatch.arm ?? sm!.braco) as "sem" | "com" | null,
+    braco: (m?.dispatch.arm ?? sm!.braco) as "sem" | "com" | "ferramentas" | null,
     modelo: m?.dispatch.model ?? (ent.modelo || null), esforco: m?.dispatch.effort ?? (ent.esforco || null), modo,
     natureza: modo === "real" ? "formal" : "ensaio",
   };
