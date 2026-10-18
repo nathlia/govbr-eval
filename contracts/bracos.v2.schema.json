@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/bracos.v2.schema.json",
+  "title": "Definições dos braços, v2 (três braços: sem, com, ferramentas)",
+  "description": "NAT-61 (plano 2026-10-18 §7.2, decisão 11). Só definições: o braço e a identidade do oráculo com o PERFIL real do servidor e o hash do tools/list exposto. Fica separado de common.v1 de propósito — common.v1 vai embutido na imagem do coletor (COLLECTOR_CONTRACT_FILES) e mudar ele refaria a imagem e o lock da NAT-86. Campanhas v1 (piloto, T7 A/B, T7b) continuam v1 e nunca são reescritas; números de 2 braços (v1) e de 3 braços (v2) nunca formam série.",
+  "$defs": {
+    "arm": {
+      "description": "Braço do experimento. sem = só o navegador; com = oráculo no perfil evaluation; ferramentas = oráculo no perfil knowledge-free (as ferramentas de medição do com sem o pacote DS + e-MAG que o oráculo serve e aplica; WCAG 2.2 e axe-core ficam). Tela A/B NÃO são braços.",
+      "enum": ["sem", "com", "ferramentas"]
+    },
+    "oracleProfile": {
+      "description": "Perfil do servidor (GOVBR_VALIDATOR_TOOL_PROFILE). combined é o rótulo legado que o runner v1 gravava para o perfil evaluation.",
+      "enum": ["evaluation", "knowledge-free", "combined", "normative", "deterministic", "evidence"]
+    },
+    "oracleIdentity": {
+      "description": "Componente da intervenção: a mesma imagem do oráculo (dist/data) nos braços com e ferramentas; muda só o perfil. tools e toolsListSha256 são o inventário que a ponte expôs, conferido em cada execução contra o fixado na campanha.",
+      "type": "object",
+      "required": ["package", "version", "distSha256", "dataSha256", "profile", "tools", "toolsListSha256"],
+      "properties": {
+        "package": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "version": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "distSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" },
+        "dataSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" },
+        "profile": { "$ref": "#/$defs/oracleProfile" },
+        "tools": {
+          "description": "Nomes das ferramentas expostas ao agente, em ordem alfabética.",
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": { "$ref": "common.v1.schema.json#/$defs/text" }
+        },
+        "toolsListSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": { "properties": { "profile": { "const": "knowledge-free" } } },
+          "then": { "properties": { "tools": { "const": ["get_finding_details", "scan_page", "verify_finding"] } } }
+        }
+      ]
+    },
+    "comparison": {
+      "description": "Comparação declarada ANTES da coleta (decisão 13): ferramentas×com é a principal; sem×ferramentas e sem×com, secundárias. Cada uma diz o seu n; um trio incompleto conta nas comparações que tiverem os dois braços.",
+      "type": "object",
+      "required": ["id", "arms", "role", "question"],
+      "properties": {
+        "id": { "$ref": "common.v1.schema.json#/$defs/id" },
+        "arms": {
+          "description": "[referência, tratamento] — a diferença é tratamento menos referência.",
+          "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true,
+          "items": { "$ref": "#/$defs/arm" }
+        },
+        "role": { "enum": ["primary", "secondary"] },
+        "question": { "$ref": "common.v1.schema.json#/$defs/text" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,621 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/campaign.v2.schema.json",
+  "title": "campaign.json — campanha (piloto ou formal), v2 (até três braços)",
+  "description": "Identidade, objetivo, desenho, versões fixadas, limites, política de falhas/retries, política de linha de base e plano de análise. Escrito pela preparação ANTES da coleta; uma campanha formal é congelada e não muda no meio. v2 (NAT-61): até 3 braços, perfil e inventário do oráculo por braço, comparações declaradas antes da coleta e ordem em quadrado latino com semente.",
+  "type": "object",
+  "required": [
+    "contract",
+    "fixture",
+    "campaignId",
+    "kind",
+    "title",
+    "objective",
+    "hypotheses",
+    "createdAt",
+    "frozenAt",
+    "design",
+    "fixed",
+    "limits",
+    "retryPolicy",
+    "failurePolicy",
+    "baselinePolicy",
+    "analysisPlan",
+    "budget"
+  ],
+  "properties": {
+    "contract": {
+      "const": "campaign.v2"
+    },
+    "fixture": {
+      "$ref": "common.v1.schema.json#/$defs/fixture"
+    },
+    "campaignId": {
+      "$ref": "common.v1.schema.json#/$defs/id"
+    },
+    "kind": {
+      "enum": [
+        "pilot",
+        "formal"
+      ]
+    },
+    "title": {
+      "$ref": "common.v1.schema.json#/$defs/text"
+    },
+    "objective": {
+      "$ref": "common.v1.schema.json#/$defs/text"
+    },
+    "hypotheses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "common.v1.schema.json#/$defs/text"
+      }
+    },
+    "createdAt": {
+      "$ref": "common.v1.schema.json#/$defs/utcTimestamp"
+    },
+    "frozenAt": {
+      "description": "Momento em que desenho, agenda e análise foram congelados. null só em piloto ainda aberto.",
+      "oneOf": [
+        {
+          "$ref": "common.v1.schema.json#/$defs/utcTimestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "design": {
+      "type": "object",
+      "required": [
+        "screens",
+        "arms",
+        "models",
+        "effort",
+        "repetitions",
+        "order",
+        "seed",
+        "comparisons"
+      ],
+      "properties": {
+        "screens": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.v1.schema.json#/$defs/screen"
+          }
+        },
+        "arms": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "bracos.v2.schema.json#/$defs/arm"
+          }
+        },
+        "models": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "family",
+              "requested"
+            ],
+            "properties": {
+              "family": {
+                "$ref": "common.v1.schema.json#/$defs/text"
+              },
+              "requested": {
+                "$ref": "common.v1.schema.json#/$defs/text"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "effort": {
+          "$ref": "common.v1.schema.json#/$defs/text"
+        },
+        "repetitions": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "order": {
+          "enum": [
+            "sequencial",
+            "alternado",
+            "balanceado",
+            "aleatorio",
+            "quadrado-latino"
+          ]
+        },
+        "seed": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "comparisons": {
+          "description": "Comparações declaradas antes da coleta; exatamente uma principal (decisão 13).",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "bracos.v2.schema.json#/$defs/comparison"
+          },
+          "contains": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "const": "primary"
+              }
+            },
+            "required": [
+              "role"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      },
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "order": {
+            "enum": [
+              "aleatorio",
+              "quadrado-latino"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "seed": {
+            "type": "integer"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "seed": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    "fixed": {
+      "description": "Versões fixadas que entram na chave de comparação. O oráculo existe nos braços com e ferramentas, com a mesma imagem e um perfil por braço.",
+      "type": "object",
+      "required": [
+        "protocolSha256",
+        "client",
+        "provider",
+        "browser",
+        "playwrightMcp",
+        "isolationPolicyVersion",
+        "oracleProfiles",
+        "scorerVersion"
+      ],
+      "properties": {
+        "protocolSha256": {
+          "$ref": "common.v1.schema.json#/$defs/sha256"
+        },
+        "client": {
+          "type": "object",
+          "required": [
+            "name",
+            "version"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "common.v1.schema.json#/$defs/text"
+            },
+            "version": {
+              "$ref": "common.v1.schema.json#/$defs/text"
+            }
+          },
+          "additionalProperties": false
+        },
+        "provider": {
+          "type": "object",
+          "required": [
+            "name",
+            "authMethod"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "common.v1.schema.json#/$defs/text"
+            },
+            "authMethod": {
+              "enum": [
+                "api-key",
+                "oauth-subscription",
+                "unknown"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "browser": {
+          "type": "object",
+          "required": [
+            "name",
+            "version"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "common.v1.schema.json#/$defs/text"
+            },
+            "version": {
+              "$ref": "common.v1.schema.json#/$defs/text"
+            }
+          },
+          "additionalProperties": false
+        },
+        "playwrightMcp": {
+          "$ref": "common.v1.schema.json#/$defs/text"
+        },
+        "isolationPolicyVersion": {
+          "$ref": "common.v1.schema.json#/$defs/text"
+        },
+        "oracleProfiles": {
+          "description": "Identidade do oráculo por braço: com = evaluation; ferramentas = knowledge-free. distSha256/dataSha256 iguais nos dois (mesma imagem); toolsListSha256 é o fixado de cada perfil.",
+          "type": "object",
+          "properties": {
+            "com": {
+              "allOf": [
+                {
+                  "$ref": "bracos.v2.schema.json#/$defs/oracleIdentity"
+                },
+                {
+                  "properties": {
+                    "profile": {
+                      "const": "evaluation"
+                    }
+                  }
+                }
+              ]
+            },
+            "ferramentas": {
+              "allOf": [
+                {
+                  "$ref": "bracos.v2.schema.json#/$defs/oracleIdentity"
+                },
+                {
+                  "properties": {
+                    "profile": {
+                      "const": "knowledge-free"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "scorerVersion": {
+          "$ref": "common.v1.schema.json#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "limits": {
+      "$ref": "common.v1.schema.json#/$defs/limits"
+    },
+    "retryPolicy": {
+      "type": "object",
+      "required": [
+        "maxAttemptsPerSlot",
+        "campaignAttemptCeiling",
+        "retryOn",
+        "attemptSelection"
+      ],
+      "properties": {
+        "maxAttemptsPerSlot": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "campaignAttemptCeiling": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "retryOn": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "common.v1.schema.json#/$defs/failureReason"
+          }
+        },
+        "attemptSelection": {
+          "description": "Qual tentativa entra na análise, declarado antes da coleta.",
+          "$ref": "common.v1.schema.json#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "failurePolicy": {
+      "$ref": "common.v1.schema.json#/$defs/text"
+    },
+    "baselinePolicy": {
+      "type": "object",
+      "required": [
+        "required",
+        "comparable",
+        "diagnosticOnly",
+        "plannedAbsences"
+      ],
+      "properties": {
+        "required": {
+          "const": true
+        },
+        "comparable": {
+          "const": [
+            "linha-de-base/validator-nao-guiada",
+            "linha-de-base/axe"
+          ]
+        },
+        "diagnosticOnly": {
+          "const": [
+            "linha-de-base/validator-guiada"
+          ]
+        },
+        "plannedAbsences": {
+          "description": "Única forma de ausência de linha de base aceita: planejada e justificada aqui, antes da coleta, e só no caminho individual.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "screenId",
+              "justification",
+              "declaredAt",
+              "analysisPath"
+            ],
+            "properties": {
+              "screenId": {
+                "$ref": "common.v1.schema.json#/$defs/id"
+              },
+              "justification": {
+                "$ref": "common.v1.schema.json#/$defs/text"
+              },
+              "declaredAt": {
+                "$ref": "common.v1.schema.json#/$defs/utcTimestamp"
+              },
+              "analysisPath": {
+                "const": "individual"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "analysisPlan": {
+      "type": "object",
+      "required": [
+        "primaryOutcome",
+        "secondaryOutcomes",
+        "uncertaintyMethod",
+        "exclusionRules"
+      ],
+      "properties": {
+        "primaryOutcome": {
+          "$ref": "common.v1.schema.json#/$defs/text"
+        },
+        "secondaryOutcomes": {
+          "type": "array",
+          "items": {
+            "$ref": "common.v1.schema.json#/$defs/text"
+          }
+        },
+        "uncertaintyMethod": {
+          "oneOf": [
+            {
+              "$ref": "common.v1.schema.json#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exclusionRules": {
+          "$ref": "common.v1.schema.json#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "budget": {
+      "description": "Orçamento aprovado. Valor não aprovado fica null; nunca 0.",
+      "type": "object",
+      "required": [
+        "approved",
+        "amount",
+        "currency",
+        "approvedBy",
+        "approvedAt"
+      ],
+      "properties": {
+        "approved": {
+          "type": "boolean"
+        },
+        "amount": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "currency": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "approvedBy": {
+          "oneOf": [
+            {
+              "$ref": "common.v1.schema.json#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "approvedAt": {
+          "oneOf": [
+            {
+              "$ref": "common.v1.schema.json#/$defs/utcTimestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "approved": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "amount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "approvedBy": {
+            "type": "string"
+          },
+          "approvedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "amount": {
+            "type": "null"
+          },
+          "approvedBy": {
+            "type": "null"
+          },
+          "approvedAt": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    "pendingDecisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "topic",
+          "issue",
+          "owner"
+        ],
+        "properties": {
+          "topic": {
+            "$ref": "common.v1.schema.json#/$defs/text"
+          },
+          "issue": {
+            "type": "string",
+            "pattern": "^NAT-[0-9]+$"
+          },
+          "owner": {
+            "$ref": "common.v1.schema.json#/$defs/text"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "if": {
+    "properties": {
+      "kind": {
+        "const": "formal"
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "frozenAt": {
+        "type": "string"
+      },
+      "budget": {
+        "properties": {
+          "approved": {
+            "const": true
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "design": {
+            "properties": {
+              "arms": {
+                "contains": {
+                  "const": "com"
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "fixed": {
+            "properties": {
+              "oracleProfiles": {
+                "required": [
+                  "com"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "design": {
+            "properties": {
+              "arms": {
+                "contains": {
+                  "const": "ferramentas"
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "fixed": {
+            "properties": {
+              "oracleProfiles": {
+                "required": [
+                  "ferramentas"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
