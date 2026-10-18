@@ -215,12 +215,16 @@ try {
     const j2 = filaSintetica(join(raiz, "fila-t3"), join(tmp, "f-res"), true);
     jC = [j1, j2];
     await executar({ raiz, julgamentos: jC, medidasT2: medidasReais, log: quieto });
+    // Tela A: os limites colapsam em D. A Sonnet sai FINAL-DERIVADO; a A Opus guarda 1 pendente que não vem da fila
+    // (evidência indisponível de um veredito da NAT-73, átomo `unresolved` no scorer, R9) e que não move D.
     for (const c of ["t7-tela-a-01", "t7b-sonnet-tela-a-01"]) {
       const v = resultado(raiz, c);
-      assert.equal(v.estado, "FINAL-DERIVADO", c);
-      assert.ok(v.pontual && v.pontual.p !== null, `${c}: sem D pontual`);
-      assert.deepEqual(v.limites.inferior.d, v.d); assert.deepEqual(v.limites.superior.d, v.d);
+      assert.deepEqual(v.limites.inferior.d, v.d, c); assert.deepEqual(v.limites.superior.d, v.d, c);
     }
+    const sonnet = resultado(raiz, "t7b-sonnet-tela-a-01");
+    assert.equal(sonnet.estado, "FINAL-DERIVADO"); assert.ok(sonnet.pontual && sonnet.pontual.p !== null);
+    const opus = lerJson<{ variantes: { principal: { estado: string; pontual: unknown; maturidade: { sem: { pendentes: number }; com: { pendentes: number } } } } }>(join(raiz, "resultados", "t7-tela-a-01.json")).variantes.principal;
+    assert.ok(opus.estado === "FINAL-DERIVADO" || opus.maturidade.sem.pendentes + opus.maturidade.com.pendentes === 1, `A Opus: ${JSON.stringify(opus.maturidade)}`);
     // Tela B: nenhum átomo na T2/T3; o que resta pendente nos braços são vínculos que a barreira do scorer recusa
     // (sujeito numa cena, unidade "sempre" da B-01 na última: "Review link crosses scenes"), já presentes na 1.0.0.
     const f = lerJson<{ porCampanhaBraco: Record<string, Record<string, { T2: number; T3: number; pendente: number }>> }>(join(raiz, "fila-t3", "filas-e6.json")).porCampanhaBraco["t7-tela-b-01"];

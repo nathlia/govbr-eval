@@ -447,7 +447,7 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
       (porCamp[c] ??= { d: [], dSup: [], dMin: [], dMax: [], pares: [] }).d.push(d);
       porCamp[c].dSup.push(dSup);
       // [revisão independente] limites verdadeiros por par (limites.ts); os dois valores acima são cenários.
-      const lim = limitesParaPar(pd, k, m, cl, c);
+      const lim = limitesParaPar(pd, k, m, cl, c, ch => entradas.get(ch)?.t3?.resposta.vinculo);
       porCamp[c].dMin.push(lim.dMin); porCamp[c].dMax.push(lim.dMax);
       porCamp[c].pares.push({ par: pd.p.par, d, dMin: lim.dMin, dMax: lim.dMax, limites: lim, dCenarioArquivoRestaurado: dSup, atomosNoCenarioArquivoRestaurado: mudou, sem: { specs: k.sem.specs, sorteadas: k.sem.sorteadas, unidades: k.sem.unidades, pagina: k.sem.pagina, incorretas: k.sem.incorretas, novas: k.sem.novas, pendentes: k.sem.pendentes },
         com: { specs: k.com.specs, sorteadas: k.com.sorteadas, unidades: k.com.unidades, pagina: k.com.pagina, incorretas: k.com.incorretas, novas: k.com.novas, pendentes: k.com.pendentes },
@@ -467,7 +467,9 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
         const M = ((maturidade[v] ??= {})[c] ??= {});
         const mat = (M[b] ??= { pendentes: 0, porJuiz: {} as Record<string, number> }) as { pendentes: number; porJuiz: Record<string, number> };
         mat.porJuiz[cls.juiz] = (mat.porJuiz[cls.juiz] ?? 0) + 1;
-        const cardPendente = m.pendentes.includes(pd.mapa.cartoes.find(x => x.de === a.cardIdOriginal)!.para);
+        // Pendente = decisão pendente na montagem OU cartão que o scorer deixa pendente (átomo `unresolved`: evidência indisponível, R9).
+        const novoId = pd.mapa.cartoes.find(x => x.de === a.cardIdOriginal)!.para;
+        const cardPendente = m.pendentes.includes(novoId) || k.score.scores.some(s => s.pendingCardIds.includes(novoId));
         if (cardPendente) mat.pendentes++;
         for (const parte of cls.partes) {
           for (const an of ["I", "II", "I-S6"] as const) {
@@ -481,7 +483,7 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
     }
     porVariante[v] = Object.fromEntries(Object.entries(porCamp).map(([c, x]) => [c, x]));
   }
-  log("E8–E10 ok: 7 variantes pontuadas");
+  log(`E8–E10 ok: ${VARIANTES.length} variantes pontuadas`);
 
   // E11 — agregação pela agenda original
   const resultados: Record<string, unknown> = {};
@@ -578,11 +580,13 @@ export async function executar(o: Opcoes = {}): Promise<ResultadoPipeline> {
 // ───────────────────────────────────────────────────────────────── auxiliares de exportação
 
 /** Limites verdadeiros de D num par (por variante): mínimo e máximo admissíveis por braço de agente. */
-function limitesParaPar(pd: ParDerivado, k: ReturnType<typeof contagemArmada>, m: Montagem, cl: Map<string, AtomoClassificado>, c: Campanha): LimitesDoPar {
+function limitesParaPar(pd: ParDerivado, k: ReturnType<typeof contagemArmada>, m: Montagem, cl: Map<string, AtomoClassificado>, c: Campanha,
+  vinculoT3: (chave: string) => unknown): LimitesDoPar {
   const specDe = new Map(pd.novo.units.map(u => [u.id, u.specId]));
   const contar = contador(MODO_D[c], u => specDe.get(u), "A-");
   const t = tradutor(pd.mapa);
-  const pend = new Set(m.pendentes);
+  // Pendentes: os da montagem e os que o scorer deixa pendentes (átomo `unresolved`: evidência indisponível, R9).
+  const pend = new Set([...m.pendentes, ...k.score.scores.flatMap(s => s.pendingCardIds)]);
   const deOrig = new Map(pd.mapa.cartoes.map(x => [x.para, x.de]));
   const braco = (runId: string): BracoLimite => {
     const s = k.score.scores.find(x => x.runId === runId)!;
@@ -595,6 +599,10 @@ function limitesParaPar(pd: ParDerivado, k: ReturnType<typeof contagemArmada>, m
       const cenas = new Set([card.scene, ...card.subjects.map(sj => sj.scene ?? card.scene)]);
       for (const a of pd.p.reviews.decisions.find(d => d.cardId === orig)?.atoms ?? []) {
         for (const u of a.unitIds) adm.add(t.unidade(u));
+        // a spec que o juiz da T3 vinculou, mesmo sem crédito ainda (ex.: aplicabilidade incerta)
+        const vj = vinculoT3(chaveAtomo(c, pd.p.par, orig, a.id));
+        const specJuiz = vj && typeof vj === "object" ? (vj as { spec: string }).spec : null;
+        if (specJuiz) for (const u of pd.novo.units) if (u.specId === specJuiz && cenas.has(u.scene)) adm.add(u.id);
         for (const p of cl.get(chaveAtomo(c, pd.p.par, orig, a.id))?.partes ?? [])
           if (p.spec) for (const u of pd.novo.units) if (u.specId === p.spec && cenas.has(u.scene)) adm.add(u.id);
       }
