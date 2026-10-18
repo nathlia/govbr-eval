@@ -21,6 +21,9 @@
  *     (o perfil devolve ruleExists unknown e nunca confirma: um confirmed é FP bloqueante); `so-unverifiable` e
  *     `fora-do-escopo` ficam como estão;
  *   - D2: `detectar` (anatomia P2) vira informativo — o scan do perfil é só axe-core, por desenho.
+ * Capacidade 1.1.0 (validator ≥ 2.14.2, revisão Codex 8963921e): `portao-nat86/capacidade-knowledge-free.json`, versionado à
+ * parte da matriz, lista as linhas WCAG `confirmar` cuja detecção do erro só o S5 (estado de erro declarado pelo componente DS)
+ * sustenta — no perfil elas viram `nao-confirmavel-por-desenho` (confirmed = FP bloqueante, unverifiable = TN-por-desenho).
  * Saída em <carimbo>/<divisao>-knowledge-free/. `--janela LxA` (padrão 1280x900, a do runner desde a NAT-61) vai
  * para GOVBR_VALIDATOR_VIEWPORT antes de carregar o dist/ e para o contexto da conferência do D2.
  * A reserva continua só com --portao-nat86 e a matriz congelada; nada aqui a abre por conta própria.
@@ -44,13 +47,32 @@ export type Perfil = "evaluation" | "knowledge-free";
 /** NAT-61: classe a mais do perfil knowledge-free (fonte DS/e-MAG: nunca confirmável, por desenho). */
 export type EsperadoD1 = Linha["esperadoD1"] | "nao-confirmavel-por-desenho";
 
+/** Capacidade do perfil knowledge-free versionada à parte da matriz (portao-nat86/capacidade-knowledge-free.json). */
+export interface CapacidadeKnowledgeFree {
+  versao: string;
+  naoConfirmavelPorDesenho: { linha: string; sinal: string; motivo: string }[];
+}
+export const ARQUIVO_CAPACIDADE_KF = join(PASTA_PORTAO, "capacidade-knowledge-free.json");
+export function lerCapacidadeKnowledgeFree(arquivo = ARQUIVO_CAPACIDADE_KF): { capacidade: CapacidadeKnowledgeFree; sha256: string } {
+  const bytes = readFileSync(arquivo);
+  return { capacidade: JSON.parse(bytes.toString("utf8")) as CapacidadeKnowledgeFree, sha256: sha256(bytes) };
+}
+
 /**
  * Expectativa da linha no perfil knowledge-free, derivada da expectativa congelada (regra no cabeçalho).
  * Fonte = a da regra citável da linha (`regra.source`), ou o prefixo da norma quando não há regra.
+ * Com `capacidade` (1.1.0): linha WCAG `confirmar` listada como confirmável só pelo S5 → nao-confirmavel-por-desenho.
  */
-export function expectativaKnowledgeFree(l: Pick<Linha, "esperadoD1" | "esperadoD2" | "norma" | "regra">): { esperadoD1: EsperadoD1; esperadoD2: Linha["esperadoD2"]; motivo: string } {
+export function expectativaKnowledgeFree(
+  l: Pick<Linha, "esperadoD1" | "esperadoD2" | "norma" | "regra"> & { id?: string },
+  capacidade?: CapacidadeKnowledgeFree
+): { esperadoD1: EsperadoD1; esperadoD2: Linha["esperadoD2"]; motivo: string } {
   const fonte = l.regra?.source ?? l.norma.split(":")[0];
   const d2 = l.esperadoD2 === "detectar" ? "informativo" as const : l.esperadoD2;
+  const so = l.id ? capacidade?.naoConfirmavelPorDesenho.find((x) => x.linha === l.id) : undefined;
+  if (so && capacidade && fonte === "wcag" && l.esperadoD1 === "confirmar") {
+    return { esperadoD1: "nao-confirmavel-por-desenho", esperadoD2: d2, motivo: `${capacidade.versao}: detecção só por ${so.sinal} (conhecimento do DS, fora do perfil) — ${so.motivo}` };
+  }
   if (fonte === "wcag") return { esperadoD1: l.esperadoD1, esperadoD2: d2, motivo: "WCAG: mesma expectativa do evaluation (P1 no perfil)" };
   if (l.esperadoD1 === "confirmar" || l.esperadoD1 === "nao-confirmar") {
     return { esperadoD1: "nao-confirmavel-por-desenho", esperadoD2: d2, motivo: `fonte ${fonte}: o perfil não confere DS/e-MAG (ruleExists unknown), nunca confirma` };
@@ -100,7 +122,7 @@ export function julgarD2(esperado: Linha["esperadoD2"], n: number): string {
   return n ? "sinal" : "-";
 }
 
-export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: string; saida: string; gemeos: string[] | null; carimbo: string; perfil?: Perfil; janela?: string }) {
+export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: string; saida: string; gemeos: string[] | null; carimbo: string; perfil?: Perfil; janela?: string; capacidade?: string }) {
   const perfil: Perfil = opcoes.perfil ?? "evaluation";
   const kf = perfil === "knowledge-free";
   const janelaTxt = opcoes.janela ?? "1280x900";
@@ -123,6 +145,13 @@ export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: st
   if (shaNaMatriz !== shaExp) throw new Error(`expectativas mudaram desde a matriz (${shaNaMatriz} ≠ ${shaExp})`);
   const linhas = matriz.linhas.filter((l) => l.divisao === nomeDivisao && (!opcoes.gemeos || opcoes.gemeos.includes(l.gemeo)));
   if (!linhas.length) throw new Error(`nenhuma linha da divisão ${nomeDivisao} na matriz`);
+  // capacidade do knowledge-free versionada à parte: cada linha listada tem de existir na matriz e ser WCAG `confirmar`
+  const cap = kf ? lerCapacidadeKnowledgeFree(opcoes.capacidade) : null;
+  for (const x of cap?.capacidade.naoConfirmavelPorDesenho ?? []) {
+    const l = matriz.linhas.find((m) => m.id === x.linha);
+    if (!l) throw new Error(`capacidade knowledge-free: linha ${x.linha} não existe na matriz`);
+    if (l.esperadoD1 !== "confirmar" || (l.regra?.source ?? l.norma.split(":")[0]) !== "wcag") throw new Error(`capacidade knowledge-free: ${x.linha} não é linha WCAG 'confirmar'`);
+  }
 
   const dist = pathToFileURL(join(VALIDATOR_DIR, "dist") + "/").href;
   const { verifyFinding } = await import(dist + "verify/gate.js");
@@ -209,7 +238,7 @@ export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: st
       for (const l of ls) {
         const vs = d1.get(l.id)!;
         const ach = d2?.get(l.id) ?? null;
-        const e = kf ? expectativaKnowledgeFree(l) : { esperadoD1: l.esperadoD1 as EsperadoD1, esperadoD2: l.esperadoD2 };
+        const e = kf ? expectativaKnowledgeFree(l, cap?.capacidade) : { esperadoD1: l.esperadoD1 as EsperadoD1, esperadoD2: l.esperadoD2 };
         resultados.push({
           id: l.id, gemeo: l.gemeo, familia: l.familia, classe: l.classe, esperado: l.esperado, norma: l.norma,
           esperadoD1: e.esperadoD1, d1: { veredictos: vs, julgamento: julgarD1(e.esperadoD1, vs) },
@@ -260,6 +289,7 @@ export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: st
     o_que_e: "NAT-86: detectores do validator sobre os controles, linha a linha da matriz congelada (sem modelo).",
     divisao: opcoes.divisao, perfil, janela,
     ...(kf ? { expectativa: "knowledge-free (derivada da matriz congelada: WCAG = evaluation; DS/e-MAG confirmar|nao-confirmar → nao-confirmavel-por-desenho; D2 detectar → informativo)",
+      capacidade: cap ? { versao: cap.capacidade.versao, sha256: cap.sha256, naoConfirmavelPorDesenho: cap.capacidade.naoConfirmavelPorDesenho.map((x) => x.linha) } : null,
       travaDeConhecimento: travaDepois } : {}),
     matriz: { versao: matriz.versao, sha256: shaMatriz }, expectativasSha256: shaExp,
     validator: versaoValidator, node: process.version, chromium: nav.version(),
@@ -270,7 +300,7 @@ export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: st
   const pasta = join(opcoes.saida, opcoes.carimbo, kf ? `${opcoes.divisao}-knowledge-free` : opcoes.divisao);
   gravar(join(pasta, "linhas.json"), json(resultados));
   gravar(join(pasta, "resumo.json"), json(resumo));
-  const md = [`# Portão NAT-86 — ${opcoes.divisao} · perfil ${perfil} (${opcoes.carimbo})`, "", `matriz ${shaMatriz} · validator ${versaoValidator} · janela ${janelaTxt}${kf ? ` · trava ${travaDepois?.attempts ?? "?"} tentativas` : ""}`, "",
+  const md = [`# Portão NAT-86 — ${opcoes.divisao} · perfil ${perfil} (${opcoes.carimbo})`, "", `matriz ${shaMatriz} · validator ${versaoValidator} · janela ${janelaTxt}${kf ? ` · trava ${travaDepois?.attempts ?? "?"} tentativas · ${cap?.capacidade.versao} (sha256 ${cap?.sha256.slice(0, 12)})` : ""}`, "",
     "| família | D1 por linha | D1 por célula | D2 por linha |", "|---|---|---|---|",
     ...Object.keys(resumo.d1PorLinha).sort().map((f) => `| ${f} | ${JSON.stringify(resumo.d1PorLinha[f])} | ${JSON.stringify(porCelula[f] ?? {})} | ${JSON.stringify(resumo.d2PorLinha[f] ?? {})} |`),
     "", `**${decisao.resultado.toUpperCase()}** — ${decisao.motivos.join("; ") || "sem falha"}`,
@@ -296,6 +326,7 @@ if (process.argv[1] && resolve(process.argv[1]).endsWith("oraculo.ts")) {
     carimbo: arg("--carimbo", new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19) + "Z")!,
     perfil: (() => { const p = arg("--perfil", "evaluation"); if (p !== "evaluation" && p !== "knowledge-free") throw new Error(`--perfil: evaluation | knowledge-free (${p})`); return p; })(),
     janela: arg("--janela", process.env.GOVBR_VALIDATOR_VIEWPORT || "1280x900")!,
+    capacidade: resolve(arg("--capacidade", ARQUIVO_CAPACIDADE_KF)!),
   }).then((r) => { if (r.falhas.bloqueantes.length) process.exitCode = 2; else if (r.decisao.resultado !== "go") process.exitCode = 3; })
     .catch((e) => { console.error(e instanceof Error ? e.stack : e); process.exitCode = 1; });
 }

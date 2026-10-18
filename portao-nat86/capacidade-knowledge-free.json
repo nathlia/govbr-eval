@@ -1,0 +1,30 @@
+{
+  "versao": "capacidade-knowledge-free-1.1.0",
+  "o_que_e": "Expectativa de CAPACIDADE do perfil knowledge-free no portão NAT-86, versionada à parte da matriz congelada (que não muda). A 1.0.0 é a regra de derivação em oraculo.ts (WCAG = evaluation; DS/e-MAG confirmar|nao-confirmar → nao-confirmavel-por-desenho; D2 detectar → informativo). A 1.1.0 acrescenta só a lista abaixo.",
+  "validatorMinimo": "2.14.2",
+  "decisao": "NAT-61, revisão Codex 8963921e (S5 aprovado com limites): no knowledge-free, quando só o S5 sustenta a detecção do erro, a linha fica undetermined; a expectativa de capacidade do perfil declara essas linhas não-confirmáveis por desenho, em arquivo versionado separado, sem editar a matriz.",
+  "naoConfirmavelPorDesenho": [
+    {
+      "linha": "D|F1-01-D|0|wcag:3.3.1",
+      "sinal": "S5",
+      "motivo": "o controle só declara o erro pela classe de estado do componente DS (.br-input.danger + .feedback.danger); o campo #cartao não recebe aria-invalid, aria-errormessage nem validação nativa (form novalidate). S1–S4 ausentes; o mapeamento br-input → danger é conhecimento do DS, que o perfil não tem."
+    },
+    {
+      "linha": "D|F1-03-D|0|wcag:3.3.1",
+      "sinal": "S5",
+      "motivo": "idem F1-01-D (#cartao, .br-input.danger; aria-describedby aponta para id inexistente, sem aria-invalid/aria-errormessage/validação nativa)."
+    },
+    {
+      "linha": "D|F1-08-D|2|wcag:3.3.1",
+      "sinal": "S5",
+      "motivo": "sujeito 2 (#telefone): a página marca o .br-input com danger e a mensagem 'Valor inválido.' sem aria-invalid nem aria-describedby (os campos #cartao e #email recebem aria-invalid; o #telefone não). S1–S4 ausentes no sujeito."
+    },
+    {
+      "linha": "D|F1-11-D|0|wcag:3.3.1",
+      "sinal": "S5",
+      "motivo": "erro só pela classe de estado do componente DS (.br-input.danger), sem texto e sem sinal programático (input-error-described-in-text); S1–S4 ausentes."
+    }
+  ],
+  "naoEh": "Não converte o defeito em conformidade: as quatro linhas continuam positivas na matriz e confirmam no perfil evaluation (S5). No knowledge-free, um 'confirmed' nelas continua sendo FP bloqueante; um 'unverifiable' é TN-por-desenho, não TP.",
+  "evidencia": "portao-nat86/medicoes/2026-10-18T-nat61-2142/desenvolvimento/linhas.json (evaluation, validator 2.14.2: as 4 linhas TP com S5 como único sinal) e .../desenvolvimento-knowledge-free/ (as 4 linhas unverifiable)."
+}

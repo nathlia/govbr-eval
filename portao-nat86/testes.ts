@@ -7,7 +7,7 @@ import { spawnSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { decidir, expectativaKnowledgeFree, julgarD1, julgarD2 } from "./oraculo";
+import { decidir, expectativaKnowledgeFree, julgarD1, julgarD2, lerCapacidadeKnowledgeFree } from "./oraculo";
 import { derivarLocalizador, traduzirReceita, PASTA_PORTAO, RAIZ_EVAL } from "./comum";
 import { sha256 } from "../comparadores/comum";
 
@@ -56,6 +56,18 @@ t("knowledge-free (NAT-61): expectativa derivada da matriz por regra declarada; 
   assert.equal(expectativaKnowledgeFree(l("ds:x", "govbr-ds-kb", "so-unverifiable")).esperadoD1, "so-unverifiable");
   assert.equal(expectativaKnowledgeFree(l("emag:1.3-h1", null, "fora-do-escopo")).esperadoD1, "fora-do-escopo");
   assert.equal(expectativaKnowledgeFree(l("ds:x", "govbr-ds-kb", "confirmar", "detectar")).esperadoD2, "informativo");
+  // capacidade 1.1.0 (versionada à parte da matriz): linha WCAG confirmar só pelo S5 → não-confirmável por desenho
+  const cap = { versao: "capacidade-knowledge-free-1.1.0", naoConfirmavelPorDesenho: [{ linha: "D|X|0|wcag:3.3.1", sinal: "S5", motivo: "m" }] };
+  assert.equal(expectativaKnowledgeFree({ ...l("wcag:3.3.1", "wcag", "confirmar"), id: "D|X|0|wcag:3.3.1" }, cap).esperadoD1, "nao-confirmavel-por-desenho");
+  assert.equal(expectativaKnowledgeFree({ ...l("wcag:3.3.1", "wcag", "confirmar"), id: "D|Y|0|wcag:3.3.1" }, cap).esperadoD1, "confirmar");
+  assert.equal(expectativaKnowledgeFree({ ...l("wcag:3.3.1", "wcag", "nao-confirmar"), id: "D|X|0|wcag:3.3.1" }, cap).esperadoD1, "nao-confirmar");
+  // o arquivo versionado: só linhas WCAG `confirmar` da matriz congelada
+  const { capacidade } = lerCapacidadeKnowledgeFree();
+  const matriz = JSON.parse(readFileSync(join(PASTA_PORTAO, "matriz.json"), "utf8")) as { linhas: { id: string; esperadoD1: string; norma: string }[] };
+  for (const x of capacidade.naoConfirmavelPorDesenho) {
+    const m = matriz.linhas.find((y) => y.id === x.linha);
+    assert.ok(m && m.esperadoD1 === "confirmar" && m.norma.startsWith("wcag:"), x.linha);
+  }
   assert.equal(julgarD1("nao-confirmavel-por-desenho", [v("unverifiable")]), "TN-por-desenho");
   assert.equal(julgarD1("nao-confirmavel-por-desenho", [v("confirmed")]), "FP");
   assert.equal(decidir([linha("a", "confirmar", "TP"), linha("b", "nao-confirmar", "TN"), linha("c", "so-unverifiable", "preservado"),
