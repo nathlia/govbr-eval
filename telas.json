@@ -47,5 +47,32 @@
         "nota": "SPA. A superfície congela a árvore pnip/ inteira, porque os nomes dos chunks lazy são montados em tempo de execução pelo runtime do Angular e não aparecem por extenso em arquivo nenhum, e responde com o índice a todo GET sem extensão sob /pnip/. O único alias é o ícone do \"Sair\": o template sobe três níveis e, sob <base href=\"/pnip/\">, sai do prefixo. O manifesto da ala é proveniência, não parte da tela, e fica fora do site."
       }
     }
+  },
+  "cadastrar-empresa": {
+    "titulo": "tela C — cadastrar empresa do PNIP (aplicação real em modo mock, estudo complementar NAT-78, D-134)",
+    "entry": "pnip-c/portal-admin/empresas/cadastrar-empresa?mock-perfil=admin",
+    "reference": null,
+    "sources": [],
+    "runs": { "com": "results/runs-cadastrar-empresa", "sem": "results/runs-cadastrar-empresa-ablacao", "smoke": "results/runs-cadastrar-empresa-smoke" },
+    "review": "results/semantic-review-cadastrar-empresa",
+    "nota": "Tela C, ainda SEM referência (reference: null). Regra de reserva (protocolo NAT-78 § 3.5): nenhum detector — validator, axe, linha de base, nem o test:isolation, que fala com o oráculo pela configuração MCP — roda nesta tela antes de a referência 1.0.0 congelar. Build do modo mock do PNIP na ala própria govbr-corpus/public/pnip-c/ (base href /pnip-c/), para não mudar um byte da tela B: comparado ao build congelado da B, só main.*.js (fixtures desta tela + sessão de admin semeada) e index.html (base href) diferem; os 188 demais arquivos, inclusive o chunk lazy do formulário, são idênticos. O `?mock-perfil=admin` escolhe a sessão fictícia de administradora já logada, com o `portal-selecionado` que o login real gravaria (sem ele o breadcrumb e o Cancelar saem com /null/...), e o próprio app o retira da barra de endereço. Não é entrada Vite: sources vazio. Plano: thesis-workspace/planejamento/atual/plano-tela-c-2026-10-18.md; preparação sem detector em tela-c/.",
+    "isolamento": {
+      "texto": "Cadastrar empresa",
+      "alvo": "br-input[name=razaoSocial]",
+      "fonte": null,
+      "interacao": {
+        "clicar": ".br-tab .tab-item:nth-child(2) button",
+        "esperar": "br-input[name=cpf]",
+        "nota": "Prova de vida, não estado de gabarito: a aba \"Cadastrar Usuário\" troca o seletor de usuário existente pelo formulário de novo usuário. Interações reais (Angular + respostas fictícias no navegador); recarregar volta ao estado inicial. Os estados da referência serão os do _meta.setup dela."
+      },
+      "externos": [],
+      "site": {
+        "arvore": "pnip-c/",
+        "excluir": ["pnip-c/manifesto.json"],
+        "indice": "pnip-c/index.html",
+        "aliases": { "/assets/images/exit-icon.png": "pnip-c/assets/images/exit-icon.png" },
+        "nota": "SPA, mesmas regras da tela B (vistorias.isolamento.site) sobre a árvore pnip-c/: árvore inteira congelada (chunks lazy montados em tempo de execução), índice a todo GET sem extensão sob /pnip-c/, e o único alias é o ícone do \"Sair\" (sob <base href=\"/pnip-c/\"> o template sai do prefixo). O manifesto da ala é proveniência e fica fora do site."
+      }
+    }
   }
 }
