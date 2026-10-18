@@ -7,7 +7,7 @@ import { spawnSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { decidir, julgarD1, julgarD2 } from "./oraculo";
+import { decidir, expectativaKnowledgeFree, julgarD1, julgarD2 } from "./oraculo";
 import { derivarLocalizador, traduzirReceita, PASTA_PORTAO, RAIZ_EVAL } from "./comum";
 import { sha256 } from "../comparadores/comum";
 
@@ -45,6 +45,23 @@ t("decidir: classe exigida sem nenhuma linha exercitada vira no-go", () => {
   const r = decidir([linha("a", "confirmar", "TP"), linha("b", "nao-confirmar", "TN"), linha("c", "so-unverifiable", "nao-exercitado", 0)]);
   assert.equal(r.resultado, "no-go");
   assert.deepEqual(r.exercitadas["so-unverifiable"], { exercitadas: 0, total: 1 });
+});
+t("knowledge-free (NAT-61): expectativa derivada da matriz por regra declarada; WCAG igual, DS/e-MAG nunca confirmáveis, D2 de anatomia informativo", () => {
+  const l = (norma: string, source: string | null, esperadoD1: string, esperadoD2 = "nao-sinalizar") =>
+    ({ norma, regra: source ? { source, id: "x" } : null, esperadoD1: esperadoD1 as never, esperadoD2: esperadoD2 as never });
+  assert.equal(expectativaKnowledgeFree(l("wcag:3.3.1", "wcag", "confirmar")).esperadoD1, "confirmar");
+  assert.equal(expectativaKnowledgeFree(l("wcag:1.3.1", "wcag", "nao-confirmar")).esperadoD1, "nao-confirmar");
+  assert.equal(expectativaKnowledgeFree(l("emag:6.6", "emag", "confirmar")).esperadoD1, "nao-confirmavel-por-desenho");
+  assert.equal(expectativaKnowledgeFree(l("ds:modal-abc123def456", "govbr-ds-kb", "nao-confirmar")).esperadoD1, "nao-confirmavel-por-desenho");
+  assert.equal(expectativaKnowledgeFree(l("ds:x", "govbr-ds-kb", "so-unverifiable")).esperadoD1, "so-unverifiable");
+  assert.equal(expectativaKnowledgeFree(l("emag:1.3-h1", null, "fora-do-escopo")).esperadoD1, "fora-do-escopo");
+  assert.equal(expectativaKnowledgeFree(l("ds:x", "govbr-ds-kb", "confirmar", "detectar")).esperadoD2, "informativo");
+  assert.equal(julgarD1("nao-confirmavel-por-desenho", [v("unverifiable")]), "TN-por-desenho");
+  assert.equal(julgarD1("nao-confirmavel-por-desenho", [v("confirmed")]), "FP");
+  assert.equal(decidir([linha("a", "confirmar", "TP"), linha("b", "nao-confirmar", "TN"), linha("c", "so-unverifiable", "preservado"),
+    linha("d", "nao-confirmavel-por-desenho" as never, "TN-por-desenho")]).resultado, "go");
+  assert.equal(decidir([linha("a", "confirmar", "TP"), linha("b", "nao-confirmar", "TN"), linha("c", "so-unverifiable", "preservado"),
+    linha("d", "nao-confirmavel-por-desenho" as never, "FP")]).resultado, "no-go");
 });
 t("localizador e receita: regras declaradas", () => {
   assert.equal(derivarLocalizador("input#cartao@apos-enviar"), "#cartao");

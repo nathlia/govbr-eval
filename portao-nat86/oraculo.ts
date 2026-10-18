@@ -12,6 +12,18 @@
  *      receita do gêmeo; um achado casa uma linha quando cruza a norma (hash de 12 da base literal,
  *      ou o id wcag/emag) E o elemento (o mesmo nó, ou um contém o outro) no estado da receita.
  * Grava <saida>/<carimbo>/<divisao>/{linhas.json, resumo.json, tabela.md} e manifesto.json (sha256).
+ *
+ * NAT-61 — `--perfil knowledge-free` (validator ≥ 2.14.0): os MESMOS detectores no perfil do braço ferramentas
+ * (verifyFinding/scanPage com `knowledgeFree`, trava de conhecimento ligada no processo; tentativas > 0 = bloqueia),
+ * julgados contra uma EXPECTATIVA PRÓPRIA derivada da matriz congelada por regra declarada (a matriz não muda):
+ *   - linhas de norma WCAG: a mesma expectativa do evaluation (P1 fica no perfil, decisão 6);
+ *   - linhas de fonte DS / e-MAG / outras: `confirmar` e `nao-confirmar` viram `nao-confirmavel-por-desenho`
+ *     (o perfil devolve ruleExists unknown e nunca confirma: um confirmed é FP bloqueante); `so-unverifiable` e
+ *     `fora-do-escopo` ficam como estão;
+ *   - D2: `detectar` (anatomia P2) vira informativo — o scan do perfil é só axe-core, por desenho.
+ * Saída em <carimbo>/<divisao>-knowledge-free/. `--janela LxA` (padrão 1280x900, a do runner desde a NAT-61) vai
+ * para GOVBR_VALIDATOR_VIEWPORT antes de carregar o dist/ e para o contexto da conferência do D2.
+ * A reserva continua só com --portao-nat86 e a matriz congelada; nada aqui a abre por conta própria.
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
@@ -24,13 +36,31 @@ import type { Linha } from "./matriz";
 type Veredito = { tipo: string; condicao?: string; localizador: string; dados?: unknown; verdict: string; violation?: string; detalhe: string };
 interface ResultadoLinha {
   id: string; gemeo: string; familia: string; classe: string; esperado: string; norma: string;
-  esperadoD1: Linha["esperadoD1"]; d1: { veredictos: Veredito[]; julgamento: string };
+  esperadoD1: EsperadoD1; d1: { veredictos: Veredito[]; julgamento: string };
   esperadoD2: Linha["esperadoD2"]; d2: { achados: { regra: string; localizador: string }[]; julgamento: string } | null;
+}
+
+export type Perfil = "evaluation" | "knowledge-free";
+/** NAT-61: classe a mais do perfil knowledge-free (fonte DS/e-MAG: nunca confirmável, por desenho). */
+export type EsperadoD1 = Linha["esperadoD1"] | "nao-confirmavel-por-desenho";
+
+/**
+ * Expectativa da linha no perfil knowledge-free, derivada da expectativa congelada (regra no cabeçalho).
+ * Fonte = a da regra citável da linha (`regra.source`), ou o prefixo da norma quando não há regra.
+ */
+export function expectativaKnowledgeFree(l: Pick<Linha, "esperadoD1" | "esperadoD2" | "norma" | "regra">): { esperadoD1: EsperadoD1; esperadoD2: Linha["esperadoD2"]; motivo: string } {
+  const fonte = l.regra?.source ?? l.norma.split(":")[0];
+  const d2 = l.esperadoD2 === "detectar" ? "informativo" as const : l.esperadoD2;
+  if (fonte === "wcag") return { esperadoD1: l.esperadoD1, esperadoD2: d2, motivo: "WCAG: mesma expectativa do evaluation (P1 no perfil)" };
+  if (l.esperadoD1 === "confirmar" || l.esperadoD1 === "nao-confirmar") {
+    return { esperadoD1: "nao-confirmavel-por-desenho", esperadoD2: d2, motivo: `fonte ${fonte}: o perfil não confere DS/e-MAG (ruleExists unknown), nunca confirma` };
+  }
+  return { esperadoD1: l.esperadoD1, esperadoD2: d2, motivo: `fonte ${fonte}: ${l.esperadoD1} vale igual nos dois perfis` };
 }
 
 const hashes = (ids: string[]) => new Set(ids.map((i) => /([0-9a-f]{12})$/.exec(i)?.[1]).filter(Boolean) as string[]);
 
-export function julgarD1(esperado: Linha["esperadoD1"], vs: Veredito[]): string {
+export function julgarD1(esperado: EsperadoD1, vs: Veredito[]): string {
   const confirmado = vs.some((v) => v.verdict === "confirmed");
   // Sem alegação citável a linha NÃO foi exercitada: não é aprovação, tem denominador próprio.
   if (vs.length === 0) return esperado === "confirmar" ? "FN" : "nao-exercitado";
@@ -39,6 +69,7 @@ export function julgarD1(esperado: Linha["esperadoD1"], vs: Veredito[]): string 
     case "fora-do-escopo": return confirmado ? "TP-fora-do-escopo" : "fora-do-escopo";
     case "nao-confirmar": return confirmado ? "FP" : "TN";
     case "so-unverifiable": return confirmado ? "FP" : vs.every((v) => v.verdict === "unverifiable") ? "preservado" : "decidido";
+    case "nao-confirmavel-por-desenho": return confirmado ? "FP" : "TN-por-desenho";
   }
 }
 /**
@@ -47,15 +78,16 @@ export function julgarD1(esperado: Linha["esperadoD1"], vs: Veredito[]): string 
  * convertido em decisão), e também se alguma classe exigida não foi exercitada nenhuma vez (sem
  * alegação não conta como aprovação).
  */
-export function decidir(rs: { id: string; esperadoD1: Linha["esperadoD1"]; d1: { veredictos: unknown[]; julgamento: string }; d2: { julgamento: string } | null }[]) {
+export function decidir(rs: { id: string; esperadoD1: EsperadoD1; d1: { veredictos: unknown[]; julgamento: string }; d2: { julgamento: string } | null }[]) {
   const motivos: string[] = [];
   const bloq = rs.filter((r) => r.d1.julgamento === "FP" || r.d2?.julgamento === "FP");
   const aceite = rs.filter((r) => r.d1.julgamento === "FN" || r.d1.julgamento === "decidido" || r.d2?.julgamento === "FN");
   if (bloq.length) motivos.push(`${bloq.length} linha(s) com falso positivo (bloqueia)`);
   if (aceite.length) motivos.push(`${aceite.length} linha(s) com falha de aceite (FN/desconhecido decidido)`);
   const exercitadas: Record<string, { exercitadas: number; total: number }> = {};
-  for (const k of ["confirmar", "nao-confirmar", "so-unverifiable"] as const) {
+  for (const k of ["confirmar", "nao-confirmar", "so-unverifiable", "nao-confirmavel-por-desenho"] as const) {
     const ls = rs.filter((r) => r.esperadoD1 === k);
+    if (k === "nao-confirmavel-por-desenho" && !ls.length) continue;
     exercitadas[k] = { exercitadas: ls.filter((r) => r.d1.veredictos.length > 0).length, total: ls.length };
     if (ls.length && exercitadas[k].exercitadas === 0) motivos.push(`classe ${k} sem nenhuma linha exercitada`);
   }
@@ -68,7 +100,15 @@ export function julgarD2(esperado: Linha["esperadoD2"], n: number): string {
   return n ? "sinal" : "-";
 }
 
-export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: string; saida: string; gemeos: string[] | null; carimbo: string }) {
+export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: string; saida: string; gemeos: string[] | null; carimbo: string; perfil?: Perfil; janela?: string }) {
+  const perfil: Perfil = opcoes.perfil ?? "evaluation";
+  const kf = perfil === "knowledge-free";
+  const janelaTxt = opcoes.janela ?? "1280x900";
+  const mj = /^(\d+)x(\d+)$/.exec(janelaTxt);
+  if (!mj) throw new Error(`--janela inválida: ${janelaTxt} (LARGURAxALTURA)`);
+  const janela = { width: Number(mj[1]), height: Number(mj[2]) };
+  // a janela do oráculo é lida do ambiente pelo dist/ (2.14.0, GOVBR_VALIDATOR_VIEWPORT); antes de qualquer import dele
+  process.env.GOVBR_VALIDATOR_VIEWPORT = janelaTxt;
   const bytesMatriz = readFileSync(opcoes.matriz);
   const shaMatriz = sha256(bytesMatriz);
   if (opcoes.divisao === "reserva") {
@@ -88,6 +128,11 @@ export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: st
   const { verifyFinding } = await import(dist + "verify/gate.js");
   const { scanPage, PageScanCache } = await import(dist + "scan/pageScan.js");
   const { closeBrowser } = await import(dist + "evidence/browser.js");
+  // NAT-61: no knowledge-free, a trava de conhecimento vale para o processo inteiro (como no servidor do perfil)
+  const trava = kf ? await import(dist + "data/lock.js") as { lockKnowledgeForProcess: () => void; knowledgeLockAttempts: () => { attempts: number; loaders: string[] } } : null;
+  if (kf && !trava?.lockKnowledgeForProcess) throw new Error("dist/ sem data/lock.js: o perfil knowledge-free exige validator ≥ 2.14.0");
+  trava?.lockKnowledgeForProcess();
+  const opcoesScan = kf ? { knowledgeFree: true } : {};
   const versaoValidator = (JSON.parse(readFileSync(join(VALIDATOR_DIR, "package.json"), "utf8")) as { version: string }).version;
 
   const { base, servidor } = await servirRaiz(opcoes.raiz, opcoes.divisao === "reserva");
@@ -105,10 +150,10 @@ export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: st
       const acoes = ls[0].entrada.acoes;
       // ------------------------------------------------ D1
       let fingerprint: string | undefined;
-      if (ls[0].entrada.modo === "estado-inicial") fingerprint = (await scanPage({ url, actions: [], checks: ["page"] }, new PageScanCache(1))).stateFingerprint;
+      if (ls[0].entrada.modo === "estado-inicial") fingerprint = (await scanPage({ url, actions: [], checks: ["page"] }, new PageScanCache(1), opcoesScan)).stateFingerprint;
       if (ls[0].entrada.modo === "evidencia-de") {
         const outro = gemeosExp.get(ls[0].entrada.de!)!;
-        fingerprint = (await scanPage({ url: base + outro.pagina.caminho, actions: acoes, checks: ["page"] }, new PageScanCache(1))).stateFingerprint;
+        fingerprint = (await scanPage({ url: base + outro.pagina.caminho, actions: acoes, checks: ["page"] }, new PageScanCache(1), opcoesScan)).stateFingerprint;
       }
       const d1: Map<string, Veredito[]> = new Map();
       for (const l of ls) {
@@ -121,7 +166,7 @@ export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: st
             evidence: { observed: "alegação de controle", expected: "alegação de controle", data: a.dados ?? {} },
             severity: "serious", nature: "semantic", mode: "interaction", pathway: "heuristic",
           };
-          const v = await verifyFinding({ finding, live: true, actions: acoes, ...(fingerprint ? { stateFingerprint: fingerprint } : {}) });
+          const v = await verifyFinding({ finding, live: true, actions: acoes, ...(fingerprint ? { stateFingerprint: fingerprint } : {}), ...(kf ? { knowledgeFree: true } : {}) });
           vs.push({ tipo: a.tipo, ...(a.condicao ? { condicao: a.condicao } : {}), localizador: a.localizador, ...(a.dados ? { dados: a.dados } : {}),
             verdict: v.verdict, violation: v.checks?.violation, detalhe: String(v.detail ?? "").replace(/127\.0\.0\.1:\d+/g, "127.0.0.1:PORTA").slice(-400) });
         }
@@ -130,7 +175,7 @@ export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: st
       // ------------------------------------------------ D2 (só gêmeos de página; papéis de evidência não têm página própria)
       let d2: Map<string, { regra: string; localizador: string }[]> | null = null;
       if (!PAPEIS_DE_EVIDENCIA.has(g.papel)) {
-        const scan = await scanPage({ url, actions: acoes }, new PageScanCache(1));
+        const scan = await scanPage({ url, actions: acoes }, new PageScanCache(1), opcoesScan);
         const achados = (scan.findings ?? []) as { rule: { id: string; source: string; implements?: string[] }; element: { locator: string } }[];
         d2 = new Map();
         const candidatos: { l: Linha; f: (typeof achados)[number] }[] = [];
@@ -145,7 +190,7 @@ export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: st
           d2.set(l.id, []);
         }
         if (candidatos.length) {
-          const ctx = await nav.newContext({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1, locale: "pt-BR", timezoneId: "America/Sao_Paulo" });
+          const ctx = await nav.newContext({ viewport: janela, deviceScaleFactor: 1, locale: "pt-BR", timezoneId: "America/Sao_Paulo" });
           await ctx.route("**/*", (r) => (new URL(r.request().url()).origin === base ? r.continue() : r.abort()));
           const p = await ctx.newPage();
           await p.goto(url, { waitUntil: "load" });
@@ -164,10 +209,11 @@ export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: st
       for (const l of ls) {
         const vs = d1.get(l.id)!;
         const ach = d2?.get(l.id) ?? null;
+        const e = kf ? expectativaKnowledgeFree(l) : { esperadoD1: l.esperadoD1 as EsperadoD1, esperadoD2: l.esperadoD2 };
         resultados.push({
           id: l.id, gemeo: l.gemeo, familia: l.familia, classe: l.classe, esperado: l.esperado, norma: l.norma,
-          esperadoD1: l.esperadoD1, d1: { veredictos: vs, julgamento: julgarD1(l.esperadoD1, vs) },
-          esperadoD2: l.esperadoD2, d2: ach ? { achados: ach, julgamento: julgarD2(l.esperadoD2, ach.length) } : null,
+          esperadoD1: e.esperadoD1, d1: { veredictos: vs, julgamento: julgarD1(e.esperadoD1, vs) },
+          esperadoD2: e.esperadoD2, d2: ach ? { achados: ach, julgamento: julgarD2(e.esperadoD2, ach.length) } : null,
         });
       }
       console.log(`${gemeo.padEnd(9)} ${ls.map((l) => resultados.find((r) => r.id === l.id)!).map((r) => `${r.d1.julgamento}${r.d2 ? "/" + r.d2.julgamento : ""}`).join(" ")}`);
@@ -203,18 +249,28 @@ export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: st
     aceite: resultados.filter((r) => r.d1.julgamento === "FN" || r.d1.julgamento === "decidido" || r.d2?.julgamento === "FN").map((r) => ({ id: r.id, d1: r.d1.julgamento, d2: r.d2?.julgamento ?? null })),
   };
   const decisao = decidir(resultados);
+  // NAT-61: no knowledge-free, qualquer tentativa de carregar a base de conhecimento bloqueia (trava por construção)
+  const travaDepois = trava ? trava.knowledgeLockAttempts() : null;
+  if (travaDepois && travaDepois.attempts > 0) {
+    falhas.bloqueantes.push({ id: `trava-de-conhecimento (${travaDepois.attempts} tentativas: ${travaDepois.loaders.join(", ")})`, d1: "trava", d2: null });
+    decisao.motivos.push(`trava de conhecimento: ${travaDepois.attempts} tentativa(s) de carregar a base no perfil knowledge-free (bloqueia)`);
+    decisao.resultado = "no-go";
+  }
   const resumo = {
     o_que_e: "NAT-86: detectores do validator sobre os controles, linha a linha da matriz congelada (sem modelo).",
-    divisao: opcoes.divisao, matriz: { versao: matriz.versao, sha256: shaMatriz }, expectativasSha256: shaExp,
+    divisao: opcoes.divisao, perfil, janela,
+    ...(kf ? { expectativa: "knowledge-free (derivada da matriz congelada: WCAG = evaluation; DS/e-MAG confirmar|nao-confirmar → nao-confirmavel-por-desenho; D2 detectar → informativo)",
+      travaDeConhecimento: travaDepois } : {}),
+    matriz: { versao: matriz.versao, sha256: shaMatriz }, expectativasSha256: shaExp,
     validator: versaoValidator, node: process.version, chromium: nav.version(),
     linhas: resultados.length, alegacoes: resultados.reduce((s, r) => s + r.d1.veredictos.length, 0),
     d1PorLinha: conta((r) => r.d1.julgamento), d1PorCelula: porCelula, d2PorLinha: conta((r) => r.d2?.julgamento ?? null),
     falhas, decisao, segundos: Math.round((Date.now() - t0) / 1000),
   };
-  const pasta = join(opcoes.saida, opcoes.carimbo, opcoes.divisao);
+  const pasta = join(opcoes.saida, opcoes.carimbo, kf ? `${opcoes.divisao}-knowledge-free` : opcoes.divisao);
   gravar(join(pasta, "linhas.json"), json(resultados));
   gravar(join(pasta, "resumo.json"), json(resumo));
-  const md = [`# Portão NAT-86 — ${opcoes.divisao} (${opcoes.carimbo})`, "", `matriz ${shaMatriz} · validator ${versaoValidator}`, "",
+  const md = [`# Portão NAT-86 — ${opcoes.divisao} · perfil ${perfil} (${opcoes.carimbo})`, "", `matriz ${shaMatriz} · validator ${versaoValidator} · janela ${janelaTxt}${kf ? ` · trava ${travaDepois?.attempts ?? "?"} tentativas` : ""}`, "",
     "| família | D1 por linha | D1 por célula | D2 por linha |", "|---|---|---|---|",
     ...Object.keys(resumo.d1PorLinha).sort().map((f) => `| ${f} | ${JSON.stringify(resumo.d1PorLinha[f])} | ${JSON.stringify(porCelula[f] ?? {})} | ${JSON.stringify(resumo.d2PorLinha[f] ?? {})} |`),
     "", `**${decisao.resultado.toUpperCase()}** — ${decisao.motivos.join("; ") || "sem falha"}`,
@@ -223,7 +279,7 @@ export async function rodar(opcoes: { divisao: Divisao; matriz: string; raiz: st
   gravar(join(pasta, "tabela.md"), md);
   const arquivos: Record<string, string> = {};
   for (const n of readdirSync(pasta)) arquivos[n] = sha256(readFileSync(join(pasta, n)));
-  gravar(join(pasta, "manifesto.json"), json({ carimbo: opcoes.carimbo, divisao: opcoes.divisao, arquivos }));
+  gravar(join(pasta, "manifesto.json"), json({ carimbo: opcoes.carimbo, divisao: opcoes.divisao, perfil, arquivos }));
   console.log(`\n${md}\narquivado em ${barra(relative(process.cwd(), pasta))}`);
   return resumo;
 }
@@ -238,6 +294,8 @@ if (process.argv[1] && resolve(process.argv[1]).endsWith("oraculo.ts")) {
     saida: resolve(arg("--saida", join(PASTA_PORTAO, "medicoes"))!),
     gemeos: arg("--gemeos")?.split(",") ?? null,
     carimbo: arg("--carimbo", new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19) + "Z")!,
+    perfil: (() => { const p = arg("--perfil", "evaluation"); if (p !== "evaluation" && p !== "knowledge-free") throw new Error(`--perfil: evaluation | knowledge-free (${p})`); return p; })(),
+    janela: arg("--janela", process.env.GOVBR_VALIDATOR_VIEWPORT || "1280x900")!,
   }).then((r) => { if (r.falhas.bloqueantes.length) process.exitCode = 2; else if (r.decisao.resultado !== "go") process.exitCode = 3; })
     .catch((e) => { console.error(e instanceof Error ? e.stack : e); process.exitCode = 1; });
 }

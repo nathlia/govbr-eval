@@ -16,7 +16,8 @@ import { RAIZ_EVAL, RAIZ_TCC } from "../comparadores/comum";
 export { RAIZ_EVAL, RAIZ_TCC };
 export const PASTA_PORTAO = join(RAIZ_EVAL, "portao-nat86");
 export const RAIZ_CORPUS_DIST = join(RAIZ_TCC, "govbr-corpus", "dist");
-export const VALIDATOR_DIR = join(RAIZ_TCC, "govbr-ds-validator");
+/** NAT-61: `GOVBR_VALIDATOR_DIR` aponta outro checkout do validator (o mesmo do runner/lib.ts). */
+export const VALIDATOR_DIR = process.env.GOVBR_VALIDATOR_DIR ? resolve(process.env.GOVBR_VALIDATOR_DIR) : join(RAIZ_TCC, "govbr-ds-validator");
 
 const TIPOS: Record<string, string> = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".woff2": "font/woff2",
