@@ -1,0 +1,359 @@
+{
+ "traco": [
+  "rodada 0: inicial (obrigatória) — cobre DS [avatar breadcrumb button divider header input pagination select signin tab table tag] · estruturas [caixa-de-selecao campo imagem link lista regiao:banner regiao:main regiao:navigation tabela titulo:h2]",
+  "rodada 1: escolhida clique \"\" (h-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input) — melhores:\n    clique \"\" (h-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input) +DS 3 (item,list,radio) +estr 1 (botao-de-opcao) · 2 passos\n    enter \"\" (h-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input) +DS 3 (item,list,radio) +estr 1 (botao-de-opcao) · 2 passos\n    saida \"\" (h-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input) +DS 3 (item,list,radio) +estr 1 (botao-de-opcao) · 2 passos\n    clique \"Exibir lista\" (:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button) +DS 3 (item,list,radio) +estr 1 (botao-de-opcao) · 2 passos\n    enter \"Exibir lista\" (:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button) +DS 3 (item,list,radio) +estr 1 (botao-de-opcao) · 2 passos\n    clique \"Avatar com dropdown\" (body>pnip-root>pnip-header>div>div>button) +DS 2 (item,list) +estr 0 () · 2 passos",
+  "rodada 2: nenhuma vista elegível acrescenta tipo — fim"
+ ],
+ "paradas": [
+  {
+   "id": "inicial",
+   "gatilho": null,
+   "gesto": null,
+   "tipo": "comum",
+   "novos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   }
+  },
+  {
+   "id": "clique \"\" (h-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input)",
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input",
+   "gesto": "clique",
+   "rotulo": "",
+   "tipo": "comum",
+   "novos": {
+    "componentes": [
+     "item",
+     "list",
+     "radio"
+    ],
+    "estruturas": [
+     "botao-de-opcao"
+    ]
+   },
+   "passos": 2
+  }
+ ],
+ "fora": [
+  {
+   "vista": "clique \"Home\" (p-mpa-processos>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a)",
+   "motivo": "recarrega o documento"
+  },
+  {
+   "vista": "enter \"Home\" (p-mpa-processos>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a)",
+   "motivo": "recarrega o documento"
+  },
+  {
+   "vista": "clique \"Home\" (rocessos>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a>button)",
+   "motivo": "recarrega o documento"
+  },
+  {
+   "vista": "enter \"Home\" (rocessos>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a>button)",
+   "motivo": "recarrega o documento"
+  },
+  {
+   "vista": "clique \"Exportar\" (v>div:nth-of-type(1)>div:nth-of-type(2)>br-button >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/exportar): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "enter \"Exportar\" (v>div:nth-of-type(1)>div:nth-of-type(2)>br-button >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/exportar): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"AGUARDANDO_ANALISE\" (processos>div>br-tab >>> div>nav>ul>li:nth-of-type(1)>button)",
+   "motivo": "não aditiva (algo some ou deixa de ser visível: troca de conteúdo no lugar)"
+  },
+  {
+   "vista": "enter \"AGUARDANDO_ANALISE\" (processos>div>br-tab >>> div>nav>ul>li:nth-of-type(1)>button)",
+   "motivo": "não aditiva (algo some ou deixa de ser visível: troca de conteúdo no lugar)"
+  },
+  {
+   "vista": "clique \"HISTORICO\" (processos>div>br-tab >>> div>nav>ul>li:nth-of-type(3)>button)",
+   "motivo": "não aditiva (algo some ou deixa de ser visível: troca de conteúdo no lugar)"
+  },
+  {
+   "vista": "enter \"HISTORICO\" (processos>div>br-tab >>> div>nav>ul>li:nth-of-type(3)>button)",
+   "motivo": "não aditiva (algo some ou deixa de ser visível: troca de conteúdo no lugar)"
+  },
+  {
+   "vista": "clique \"\" (3)>div:nth-of-type(2)>table>thead>tr>th:nth-of-type(2)>input)",
+   "motivo": "não aditiva (algo some ou deixa de ser visível: troca de conteúdo no lugar)"
+  },
+  {
+   "vista": "clique \"00000.000010/2026-00\" (of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(3)>a)",
+   "motivo": "recarrega o documento"
+  },
+  {
+   "vista": "clique \"Ver processo\" (ype(1)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0010): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "enter \"Ver processo\" (ype(1)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0010): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"\" (ype(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input)",
+   "motivo": "não aditiva (algo some ou deixa de ser visível: troca de conteúdo no lugar)"
+  },
+  {
+   "vista": "clique \"00000.000011/2026-00\" (of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(3)>a)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/certificacao-caol/00000000-0000-4000-8000-0000000d0011/documentos): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"Ver processo\" (ype(2)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/certificacao-caol/00000000-0000-4000-8000-0000000d0011): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "enter \"Ver processo\" (ype(2)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/certificacao-caol/00000000-0000-4000-8000-0000000d0011): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"Assinar\" (ype(2)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button)",
+   "motivo": "mesma família de gatilho e gesto que uma candidata anterior no documento"
+  },
+  {
+   "vista": "enter \"Assinar\" (ype(2)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button)",
+   "motivo": "mesma família de gatilho e gesto que uma candidata anterior no documento"
+  },
+  {
+   "vista": "clique \"\" (ype(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input)",
+   "motivo": "não aditiva (algo some ou deixa de ser visível: troca de conteúdo no lugar)"
+  },
+  {
+   "vista": "clique \"00000.000013/2026-00\" (of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(3)>a)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0013/documentos): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"Ver processo\" (ype(3)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0013): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "enter \"Ver processo\" (ype(3)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0013): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"\" (ype(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input)",
+   "motivo": "não aditiva (algo some ou deixa de ser visível: troca de conteúdo no lugar)"
+  },
+  {
+   "vista": "clique \"00000.000016/2026-00\" (of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(3)>a)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0016/documentos): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"Ver processo\" (ype(4)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0016): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "enter \"Ver processo\" (ype(4)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0016): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"00000.000019/2026-00\" (of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(3)>a)",
+   "motivo": "recarrega o documento"
+  },
+  {
+   "vista": "clique \"Ver processo\" (ype(5)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0019): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "enter \"Ver processo\" (ype(5)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0019): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"Assinar\" (ype(5)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button)",
+   "motivo": "mesma família de gatilho e gesto que uma candidata anterior no documento"
+  },
+  {
+   "vista": "enter \"Assinar\" (ype(5)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button)",
+   "motivo": "mesma família de gatilho e gesto que uma candidata anterior no documento"
+  },
+  {
+   "vista": "clique \"\" (ype(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input)",
+   "motivo": "não aditiva (algo some ou deixa de ser visível: troca de conteúdo no lugar)"
+  },
+  {
+   "vista": "clique \"00000.000025/2026-00\" (of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(3)>a)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0025/documentos): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"Ver processo\" (ype(6)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0025): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "enter \"Ver processo\" (ype(6)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0025): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"\" (ype(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input)",
+   "motivo": "não aditiva (algo some ou deixa de ser visível: troca de conteúdo no lugar)"
+  },
+  {
+   "vista": "clique \"00000.000027/2026-00\" (of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(3)>a)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/certificacao-higienico-sanitario/00000000-0000-4000-8000-0000000d0027/documentos): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"Ver processo\" (ype(7)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/certificacao-higienico-sanitario/00000000-0000-4000-8000-0000000d0027): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "enter \"Ver processo\" (ype(7)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/certificacao-higienico-sanitario/00000000-0000-4000-8000-0000000d0027): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"Assinar\" (ype(7)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button)",
+   "motivo": "mesma família de gatilho e gesto que uma candidata anterior no documento"
+  },
+  {
+   "vista": "enter \"Assinar\" (ype(7)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button)",
+   "motivo": "mesma família de gatilho e gesto que uma candidata anterior no documento"
+  },
+  {
+   "vista": "clique \"00000.000028/2026-00\" (of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(3)>a)",
+   "motivo": "recarrega o documento"
+  },
+  {
+   "vista": "clique \"Ver processo\" (ype(8)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0028): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "enter \"Ver processo\" (ype(8)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0028): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"\" (ype(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input)",
+   "motivo": "não aditiva (algo some ou deixa de ser visível: troca de conteúdo no lugar)"
+  },
+  {
+   "vista": "clique \"00000.000031/2026-00\" (of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(3)>a)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0031/documentos): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"Ver processo\" (ype(9)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0031): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "enter \"Ver processo\" (ype(9)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button)",
+   "motivo": "navega para outra rota (/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0031): regra 1, uma tela = uma rota"
+  },
+  {
+   "vista": "clique \"\" (h-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>div>input)",
+   "motivo": "mesma família de gatilho e gesto que uma candidata anterior no documento"
+  },
+  {
+   "vista": "enter \"\" (h-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>div>input)",
+   "motivo": "mesma família de gatilho e gesto que uma candidata anterior no documento"
+  },
+  {
+   "vista": "saida \"\" (h-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>div>input)",
+   "motivo": "mesma família de gatilho e gesto que uma candidata anterior no documento"
+  },
+  {
+   "vista": "clique \"Exibir lista\" (:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button)",
+   "motivo": "mesma família de gatilho e gesto que uma candidata anterior no documento"
+  },
+  {
+   "vista": "enter \"Exibir lista\" (:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button)",
+   "motivo": "mesma família de gatilho e gesto que uma candidata anterior no documento"
+  },
+  {
+   "vista": "clique \"Voltar\" (ip-mpa-processos>div>div:nth-of-type(3)>br-button >>> button)",
+   "motivo": "recarrega o documento"
+  },
+  {
+   "vista": "enter \"Voltar\" (ip-mpa-processos>div>div:nth-of-type(3)>br-button >>> button)",
+   "motivo": "recarrega o documento"
+  },
+  {
+   "vista": "clique \"Avatar com dropdown\" (body>pnip-root>pnip-header>div>div>button)",
+   "motivo": "regra 5: não torna visível tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "enter \"Avatar com dropdown\" (body>pnip-root>pnip-header>div>div>button)",
+   "motivo": "regra 5: não torna visível tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "clique \"U\" (ody>pnip-root>pnip-header>div>div>button>span:nth-of-type(1))",
+   "motivo": "regra 5: não torna visível tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "clique \"Desassociar processo do analista respons\" (ype(1)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button)",
+   "motivo": "regra 6 (= regra 5 da B): diálogo sem componente do DS novo (estruturas novas: dialogo)"
+  },
+  {
+   "vista": "enter \"Desassociar processo do analista respons\" (ype(1)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button)",
+   "motivo": "regra 6 (= regra 5 da B): diálogo sem componente do DS novo (estruturas novas: dialogo)"
+  },
+  {
+   "vista": "enter \"\" (h-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input)",
+   "motivo": "regra 5: não torna visível tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "saida \"\" (h-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input)",
+   "motivo": "regra 5: não torna visível tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "clique \"Exibir lista\" (:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button)",
+   "motivo": "regra 5: não torna visível tipo que as paradas escolhidas não mostraram"
+  },
+  {
+   "vista": "enter \"Exibir lista\" (:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button)",
+   "motivo": "regra 5: não torna visível tipo que as paradas escolhidas não mostraram"
+  }
+ ],
+ "cobertos": {
+  "componentes": [
+   "avatar",
+   "breadcrumb",
+   "button",
+   "divider",
+   "header",
+   "input",
+   "pagination",
+   "select",
+   "signin",
+   "tab",
+   "table",
+   "tag",
+   "item",
+   "list",
+   "radio"
+  ],
+  "estruturas": [
+   "caixa-de-selecao",
+   "campo",
+   "imagem",
+   "link",
+   "lista",
+   "regiao:banner",
+   "regiao:main",
+   "regiao:navigation",
+   "tabela",
+   "titulo:h2",
+   "botao-de-opcao"
+  ]
+ }
+}

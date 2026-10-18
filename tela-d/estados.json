@@ -1,0 +1,8452 @@
+{
+ "entrada": "/pnip-d/portal-mpa/processos?mock-perfil=mpa",
+ "waitFor": "main .br-table tbody tr",
+ "bytes": {
+  "modo": "candidato",
+  "raiz": "F:\\Dev Nath\\TCC\\pnip-mock\\dist\\pnip-d",
+  "n": 190,
+  "sha256Lista": "d3b99cabb89492cf2b0c5d6bb6d4ae721d99e6ed1277c7e6d4c9db31ba16857e"
+ },
+ "medidoEm": "2026-10-18T12:56:31.811Z",
+ "carga": {
+  "url": "http://127.0.0.1:50287/pnip-d/portal-mpa/processos",
+  "path": "/pnip-d/portal-mpa/processos",
+  "pedidos": 39,
+  "externos": [],
+  "escritasRede": [],
+  "mock": {
+   "atendidos": [
+    "GET /api/embarcacao/find/options/processos",
+    "GET /api/processos/status/TRAMITANDO/Coordenador/00000000-0000-4000-8000-0000000000d1/paginado"
+   ],
+   "naoMockados": []
+  },
+  "erros": [],
+  "tipos": {
+   "componentes": [
+    "avatar",
+    "breadcrumb",
+    "button",
+    "divider",
+    "header",
+    "input",
+    "pagination",
+    "select",
+    "signin",
+    "tab",
+    "table",
+    "tag"
+   ],
+   "estruturas": [
+    "caixa-de-selecao",
+    "campo",
+    "imagem",
+    "link",
+    "lista",
+    "regiao:banner",
+    "regiao:main",
+    "regiao:navigation",
+    "tabela",
+    "titulo:h2"
+   ]
+  }
+ },
+ "gatilhos": [
+  {
+   "chave": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+   "tag": "button",
+   "id": "navigation",
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button small circle",
+   "sombra": true,
+   "hospedeiro": "Plataforma Nacional da Indústria do Pescado",
+   "visivel": true,
+   "rotulo": "Menu"
+  },
+  {
+   "chave": "body>pnip-root>pnip-header>div>div>button",
+   "tag": "button",
+   "id": "avatar-dropdown-trigger",
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-sign-in",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "Avatar com dropdown"
+  },
+  {
+   "chave": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)",
+   "tag": "span",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": "br-avatar",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "U"
+  },
+  {
+   "chave": "body>pnip-root>pnip-header>div>div>div>button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-item dropdown-button",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": "Sair"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a",
+   "tag": "a",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": null,
+   "sombra": true,
+   "hospedeiro": "br-breadcrumb",
+   "visivel": true,
+   "rotulo": "Home"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a>button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button small circle",
+   "sombra": true,
+   "hospedeiro": "br-breadcrumb",
+   "visivel": true,
+   "rotulo": "Home"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(1)>div:nth-of-type(2)>br-button >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button secondary middle",
+   "sombra": true,
+   "hospedeiro": "Exportar",
+   "visivel": true,
+   "rotulo": "Exportar"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(1)>button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": null,
+   "sombra": true,
+   "hospedeiro": "br-tab",
+   "visivel": true,
+   "rotulo": "AGUARDANDO_ANALISE"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(2)>button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": null,
+   "sombra": true,
+   "hospedeiro": "br-tab",
+   "visivel": true,
+   "rotulo": "TRAMITANDO"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(3)>button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": null,
+   "sombra": true,
+   "hospedeiro": "br-tab",
+   "visivel": true,
+   "rotulo": "HISTORICO"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(1)>pnip-multiple-search-table-utils>div>div:nth-of-type(2)>div:nth-of-type(7)>br-button >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Limpar filtros",
+   "visivel": true,
+   "rotulo": "Limpar filtros"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input >>> div>input",
+   "tag": "input",
+   "id": "search",
+   "tipo": "text",
+   "campo": true,
+   "classe": "ng-valid ng-touched ng-dirty",
+   "sombra": true,
+   "hospedeiro": "search",
+   "visivel": true,
+   "rotulo": "search"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "Buscar"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>thead>tr>th:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "tipo": "checkbox",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "00000.000010/2026-00"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "rotulo": "Ver processo"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "rotulo": "Desassociar processo do analista respons"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "tipo": "checkbox",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "00000.000011/2026-00"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "rotulo": "Ver processo"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "rotulo": "Desassociar processo do analista respons"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Assinar",
+   "visivel": true,
+   "rotulo": "Assinar"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "tipo": "checkbox",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "00000.000013/2026-00"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "rotulo": "Ver processo"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "rotulo": "Desassociar processo do analista respons"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "tipo": "checkbox",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "00000.000016/2026-00"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "rotulo": "Ver processo"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "rotulo": "Desassociar processo do analista respons"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "00000.000019/2026-00"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "rotulo": "Ver processo"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "rotulo": "Desassociar processo do analista respons"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Assinar",
+   "visivel": true,
+   "rotulo": "Assinar"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "tipo": "checkbox",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "00000.000025/2026-00"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "rotulo": "Ver processo"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "rotulo": "Desassociar processo do analista respons"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "tipo": "checkbox",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "00000.000027/2026-00"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "rotulo": "Ver processo"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "rotulo": "Desassociar processo do analista respons"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Assinar",
+   "visivel": true,
+   "rotulo": "Assinar"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "00000.000028/2026-00"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "rotulo": "Ver processo"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "rotulo": "Desassociar processo do analista respons"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "tipo": "checkbox",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "00000.000031/2026-00"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "rotulo": "Ver processo"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button middle",
+   "sombra": true,
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "rotulo": "Desassociar processo do analista respons"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)>button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button circle",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "Página anterior"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a",
+   "tag": "a",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": "page active",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "1"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button circle",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "Página seguinte"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input",
+   "tag": "input",
+   "id": "total",
+   "tipo": "text",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "Exibir lista"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)",
+   "tag": "div",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": "br-list",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": "102550100"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(1)",
+   "tag": "div",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": "br-item selected",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": "10"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(1)>div>input",
+   "tag": "input",
+   "id": "total0",
+   "tipo": "radio",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(2)",
+   "tag": "div",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": "br-item",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": "25"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(2)>div>input",
+   "tag": "input",
+   "id": "total1",
+   "tipo": "radio",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(3)",
+   "tag": "div",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": "br-item",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": "50"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(3)>div>input",
+   "tag": "input",
+   "id": "total2",
+   "tipo": "radio",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(4)",
+   "tag": "div",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": "br-item",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": "100"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(4)>div>input",
+   "tag": "input",
+   "id": "total3",
+   "tipo": "radio",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>div>input",
+   "tag": "input",
+   "id": "page",
+   "tipo": "text",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": true,
+   "rotulo": "Exibir lista"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)",
+   "tag": "div",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": "br-list",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": "1"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)>div",
+   "tag": "div",
+   "id": null,
+   "tipo": null,
+   "campo": false,
+   "classe": "br-item selected",
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": "1"
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)>div>div>input",
+   "tag": "input",
+   "id": "page0",
+   "tipo": "radio",
+   "campo": true,
+   "classe": null,
+   "sombra": false,
+   "hospedeiro": null,
+   "visivel": false,
+   "rotulo": ""
+  },
+  {
+   "chave": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(3)>br-button >>> button",
+   "tag": "button",
+   "id": null,
+   "tipo": "button",
+   "campo": false,
+   "classe": "br-button secondary middle",
+   "sombra": true,
+   "hospedeiro": "Voltar",
+   "visivel": true,
+   "rotulo": "Voltar"
+  }
+ ],
+ "resultados": [
+  {
+   "gatilho": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+   "tag": "button",
+   "id": "navigation",
+   "campo": false,
+   "rotulo": "Menu",
+   "hospedeiro": "Plataforma Nacional da Indústria do Pescado",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button",
+   "tag": "button",
+   "id": "navigation",
+   "campo": false,
+   "rotulo": "Menu",
+   "hospedeiro": "Plataforma Nacional da Indústria do Pescado",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>pnip-header>div>div>button",
+   "tag": "button",
+   "id": "avatar-dropdown-trigger",
+   "campo": false,
+   "rotulo": "Avatar com dropdown",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→686",
+    "novosVisiveis": 14,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": [
+     "body>pnip-root>pnip-header>div>div>button=true"
+    ]
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>pnip-header>div>div>button",
+   "tag": "button",
+   "id": "avatar-dropdown-trigger",
+   "campo": false,
+   "rotulo": "Avatar com dropdown",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→686",
+    "novosVisiveis": 14,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": [
+     "body>pnip-root>pnip-header>div>div>button=true"
+    ]
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)",
+   "tag": "span",
+   "id": null,
+   "campo": false,
+   "rotulo": "U",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→686",
+    "novosVisiveis": 14,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": [
+     "body>pnip-root>pnip-header>div>div>button=true"
+    ]
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>pnip-header>div>div>button>span:nth-of-type(1)",
+   "tag": "span",
+   "id": null,
+   "campo": false,
+   "rotulo": "U",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>pnip-header>div>div>div>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Sair",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>pnip-header>div>div>div>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Sair",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "Home",
+   "hospedeiro": "br-breadcrumb",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "recarga",
+   "repeticoes": "3/3",
+   "pathDepois": "/portal-mpa/",
+   "tipos": {
+    "componentes": [],
+    "estruturas": []
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→1",
+    "novosVisiveis": 0,
+    "sumiram": 615,
+    "deixaramVisiveis": 410,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "Home",
+   "hospedeiro": "br-breadcrumb",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "recarga",
+   "repeticoes": "3/3",
+   "pathDepois": "/portal-mpa/",
+   "tipos": {
+    "componentes": [],
+    "estruturas": []
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→1",
+    "novosVisiveis": 0,
+    "sumiram": 615,
+    "deixaramVisiveis": 410,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Home",
+   "hospedeiro": "br-breadcrumb",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "recarga",
+   "repeticoes": "3/3",
+   "pathDepois": "/portal-mpa/",
+   "tipos": {
+    "componentes": [],
+    "estruturas": []
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→1",
+    "novosVisiveis": 0,
+    "sumiram": 615,
+    "deixaramVisiveis": 410,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Home",
+   "hospedeiro": "br-breadcrumb",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "recarga",
+   "repeticoes": "3/3",
+   "pathDepois": "/portal-mpa/",
+   "tipos": {
+    "componentes": [],
+    "estruturas": []
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→1",
+    "novosVisiveis": 0,
+    "sumiram": 615,
+    "deixaramVisiveis": 410,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(1)>div:nth-of-type(2)>br-button >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Exportar",
+   "hospedeiro": "Exportar",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/exportar",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "card",
+     "divider",
+     "header",
+     "message",
+     "signin",
+     "tag"
+    ],
+    "estruturas": [
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "titulo:h2",
+     "titulo:h4"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→67",
+    "novosVisiveis": 37,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(1)>div:nth-of-type(2)>br-button >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Exportar",
+   "hospedeiro": "Exportar",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/exportar",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "card",
+     "divider",
+     "header",
+     "message",
+     "signin",
+     "tag"
+    ],
+    "estruturas": [
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "titulo:h2",
+     "titulo:h4"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→67",
+    "novosVisiveis": 37,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(1)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "AGUARDANDO_ANALISE",
+   "hospedeiro": "br-tab",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "nao-aditivo",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→505",
+    "novosVisiveis": 230,
+    "sumiram": 402,
+    "deixaramVisiveis": 294,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(1)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "AGUARDANDO_ANALISE",
+   "hospedeiro": "br-tab",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "nao-aditivo",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→505",
+    "novosVisiveis": 230,
+    "sumiram": 402,
+    "deixaramVisiveis": 294,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(2)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "TRAMITANDO",
+   "hospedeiro": "br-tab",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(2)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "TRAMITANDO",
+   "hospedeiro": "br-tab",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(3)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "HISTORICO",
+   "hospedeiro": "br-tab",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "nao-aditivo",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→651",
+    "novosVisiveis": 256,
+    "sumiram": 408,
+    "deixaramVisiveis": 296,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(3)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "HISTORICO",
+   "hospedeiro": "br-tab",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "nao-aditivo",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→651",
+    "novosVisiveis": 256,
+    "sumiram": 408,
+    "deixaramVisiveis": 296,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(1)>pnip-multiple-search-table-utils>div>div:nth-of-type(2)>div:nth-of-type(7)>br-button >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Limpar filtros",
+   "hospedeiro": "Limpar filtros",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(1)>pnip-multiple-search-table-utils>div>div:nth-of-type(2)>div:nth-of-type(7)>br-button >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Limpar filtros",
+   "hospedeiro": "Limpar filtros",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input >>> div>input",
+   "tag": "input",
+   "id": "search",
+   "campo": true,
+   "rotulo": "search",
+   "hospedeiro": "search",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input >>> div>input",
+   "tag": "input",
+   "id": "search",
+   "campo": true,
+   "rotulo": "search",
+   "hospedeiro": "search",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input >>> div>input",
+   "tag": "input",
+   "id": "search",
+   "campo": true,
+   "rotulo": "search",
+   "hospedeiro": "search",
+   "visivel": true,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Buscar",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Buscar",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>thead>tr>th:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "nao-aditivo",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→666",
+    "novosVisiveis": 304,
+    "sumiram": 407,
+    "deixaramVisiveis": 299,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>thead>tr>th:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>thead>tr>th:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000010/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "recarga",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/login",
+   "tipos": {
+    "componentes": [
+     "button",
+     "divider",
+     "header"
+    ],
+    "estruturas": [
+     "imagem",
+     "regiao:banner",
+     "regiao:main",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→32",
+    "novosVisiveis": 14,
+    "sumiram": 554,
+    "deixaramVisiveis": 391,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000010/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0010",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "signin"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "tabela",
+     "titulo:h2",
+     "titulo:h4"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→189",
+    "novosVisiveis": 134,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0010",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "signin"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "tabela",
+     "titulo:h2",
+     "titulo:h4"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→189",
+    "novosVisiveis": 134,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "dialogo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→18",
+    "novosVisiveis": 8,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "dialogo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→18",
+    "novosVisiveis": 8,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "nao-aditivo",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→666",
+    "novosVisiveis": 304,
+    "sumiram": 407,
+    "deixaramVisiveis": 299,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000011/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/certificacao-caol/00000000-0000-4000-8000-0000000d0011/documentos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "signin"
+    ],
+    "estruturas": [
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "titulo:h3"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→60",
+    "novosVisiveis": 33,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000011/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/certificacao-caol/00000000-0000-4000-8000-0000000d0011",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "card",
+     "divider",
+     "header",
+     "input",
+     "signin",
+     "tab"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2",
+     "titulo:h3",
+     "titulo:h4",
+     "titulo:h5"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→188",
+    "novosVisiveis": 152,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/certificacao-caol/00000000-0000-4000-8000-0000000d0011",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "card",
+     "divider",
+     "header",
+     "input",
+     "signin",
+     "tab"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2",
+     "titulo:h3",
+     "titulo:h4",
+     "titulo:h5"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→188",
+    "novosVisiveis": 152,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Assinar",
+   "hospedeiro": "Assinar",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "dialogo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→19",
+    "novosVisiveis": 9,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Assinar",
+   "hospedeiro": "Assinar",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "dialogo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→19",
+    "novosVisiveis": 9,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "nao-aditivo",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→666",
+    "novosVisiveis": 304,
+    "sumiram": 407,
+    "deixaramVisiveis": 299,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000013/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0013/documentos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "signin"
+    ],
+    "estruturas": [
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "titulo:h3"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→55",
+    "novosVisiveis": 28,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000013/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0013",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "button",
+     "divider",
+     "header",
+     "loading",
+     "signin"
+    ],
+    "estruturas": [
+     "imagem",
+     "regiao:banner"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→27",
+    "novosVisiveis": 6,
+    "sumiram": 538,
+    "deixaramVisiveis": 383,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0013",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "button",
+     "divider",
+     "header",
+     "loading",
+     "signin"
+    ],
+    "estruturas": [
+     "imagem",
+     "regiao:banner"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→27",
+    "novosVisiveis": 6,
+    "sumiram": 538,
+    "deixaramVisiveis": 383,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "nao-aditivo",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→666",
+    "novosVisiveis": 304,
+    "sumiram": 407,
+    "deixaramVisiveis": 299,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000016/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0016/documentos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "signin"
+    ],
+    "estruturas": [
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "titulo:h3"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→57",
+    "novosVisiveis": 29,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000016/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0016",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "signin"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "tabela",
+     "titulo:h3",
+     "titulo:h4"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→215",
+    "novosVisiveis": 141,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0016",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "signin"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "tabela",
+     "titulo:h3",
+     "titulo:h4"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→215",
+    "novosVisiveis": 141,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000019/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "recarga",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/login",
+   "tipos": {
+    "componentes": [
+     "button",
+     "divider",
+     "header"
+    ],
+    "estruturas": [
+     "imagem",
+     "regiao:banner",
+     "regiao:main",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→32",
+    "novosVisiveis": 14,
+    "sumiram": 554,
+    "deixaramVisiveis": 391,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000019/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0019",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "signin"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "tabela",
+     "titulo:h2",
+     "titulo:h4"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→189",
+    "novosVisiveis": 134,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0019",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "signin"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "tabela",
+     "titulo:h2",
+     "titulo:h4"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→189",
+    "novosVisiveis": 134,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Assinar",
+   "hospedeiro": "Assinar",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "dialogo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→20",
+    "novosVisiveis": 9,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Assinar",
+   "hospedeiro": "Assinar",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "dialogo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→20",
+    "novosVisiveis": 9,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "nao-aditivo",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→666",
+    "novosVisiveis": 304,
+    "sumiram": 407,
+    "deixaramVisiveis": 299,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000025/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0025/documentos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "signin"
+    ],
+    "estruturas": [
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "titulo:h3"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→57",
+    "novosVisiveis": 29,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000025/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0025",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "signin"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "tabela",
+     "titulo:h3",
+     "titulo:h4"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→215",
+    "novosVisiveis": 141,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/vinculacao-embarcacao/00000000-0000-4000-8000-0000000d0025",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "signin"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "tabela",
+     "titulo:h3",
+     "titulo:h4"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→215",
+    "novosVisiveis": 141,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "nao-aditivo",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→666",
+    "novosVisiveis": 304,
+    "sumiram": 407,
+    "deixaramVisiveis": 299,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000027/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/certificacao-higienico-sanitario/00000000-0000-4000-8000-0000000d0027/documentos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "signin"
+    ],
+    "estruturas": [
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "titulo:h3"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→57",
+    "novosVisiveis": 29,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000027/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/certificacao-higienico-sanitario/00000000-0000-4000-8000-0000000d0027",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "button",
+     "divider",
+     "header",
+     "loading",
+     "signin"
+    ],
+    "estruturas": [
+     "imagem",
+     "regiao:banner"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→27",
+    "novosVisiveis": 6,
+    "sumiram": 538,
+    "deixaramVisiveis": 383,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/certificacao-higienico-sanitario/00000000-0000-4000-8000-0000000d0027",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "button",
+     "divider",
+     "header",
+     "loading",
+     "signin"
+    ],
+    "estruturas": [
+     "imagem",
+     "regiao:banner"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→27",
+    "novosVisiveis": 6,
+    "sumiram": 538,
+    "deixaramVisiveis": 383,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Assinar",
+   "hospedeiro": "Assinar",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "dialogo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→19",
+    "novosVisiveis": 9,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Assinar",
+   "hospedeiro": "Assinar",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "dialogo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→19",
+    "novosVisiveis": 9,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000028/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "recarga",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/login",
+   "tipos": {
+    "componentes": [
+     "button",
+     "divider",
+     "header"
+    ],
+    "estruturas": [
+     "imagem",
+     "regiao:banner",
+     "regiao:main",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→32",
+    "novosVisiveis": 14,
+    "sumiram": 554,
+    "deixaramVisiveis": 391,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000028/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0028",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "signin"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "tabela",
+     "titulo:h2",
+     "titulo:h4"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→189",
+    "novosVisiveis": 134,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/alteracao-certificado/00000000-0000-4000-8000-0000000d0028",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "signin"
+    ],
+    "estruturas": [
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "tabela",
+     "titulo:h2",
+     "titulo:h4"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→189",
+    "novosVisiveis": 134,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "nao-aditivo",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→666",
+    "novosVisiveis": 304,
+    "sumiram": 407,
+    "deixaramVisiveis": 299,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(2)>input",
+   "tag": "input",
+   "id": null,
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000031/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0031/documentos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "signin"
+    ],
+    "estruturas": [
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "titulo:h3"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→55",
+    "novosVisiveis": 28,
+    "sumiram": 538,
+    "deixaramVisiveis": 381,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(3)>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "00000.000031/2026-00",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0031",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "button",
+     "divider",
+     "header",
+     "loading",
+     "signin"
+    ],
+    "estruturas": [
+     "imagem",
+     "regiao:banner"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→27",
+    "novosVisiveis": 6,
+    "sumiram": 538,
+    "deixaramVisiveis": 383,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Ver processo",
+   "hospedeiro": "Ver processo",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "navega",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos/habilitacao-tr/00000000-0000-4000-8000-0000000d0031",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "button",
+     "divider",
+     "header",
+     "loading",
+     "signin"
+    ],
+    "estruturas": [
+     "imagem",
+     "regiao:banner"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→27",
+    "novosVisiveis": 6,
+    "sumiram": 538,
+    "deixaramVisiveis": 383,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Desassociar processo do analista respons",
+   "hospedeiro": "Desassociar processo do analista responsável",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Página anterior",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(1)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Página anterior",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "1",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(2)>li>a",
+   "tag": "a",
+   "id": null,
+   "campo": false,
+   "rotulo": "1",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Página seguinte",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(2)>nav>ul>li:nth-of-type(3)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Página seguinte",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input",
+   "tag": "input",
+   "id": "total",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "radio",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "botao-de-opcao",
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→668",
+    "novosVisiveis": 17,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input",
+   "tag": "input",
+   "id": "total",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "radio",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "botao-de-opcao",
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→668",
+    "novosVisiveis": 17,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>div>input",
+   "tag": "input",
+   "id": "total",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "saida",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "radio",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "botao-de-opcao",
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→668",
+    "novosVisiveis": 17,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Exibir lista",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "radio",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "botao-de-opcao",
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→668",
+    "novosVisiveis": 17,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(1)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Exibir lista",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "radio",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "botao-de-opcao",
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→668",
+    "novosVisiveis": 17,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "102550100",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "102550100",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(1)",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "10",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(1)",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "10",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(1)>div>input",
+   "tag": "input",
+   "id": "total0",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(1)>div>input",
+   "tag": "input",
+   "id": "total0",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(1)>div>input",
+   "tag": "input",
+   "id": "total0",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(2)",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "25",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(2)",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "25",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(2)>div>input",
+   "tag": "input",
+   "id": "total1",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(2)>div>input",
+   "tag": "input",
+   "id": "total1",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(2)>div>input",
+   "tag": "input",
+   "id": "total1",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(3)",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "50",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(3)",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "50",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(3)>div>input",
+   "tag": "input",
+   "id": "total2",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(3)>div>input",
+   "tag": "input",
+   "id": "total2",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(3)>div>input",
+   "tag": "input",
+   "id": "total2",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(4)",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "100",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(4)",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "100",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(4)>div>input",
+   "tag": "input",
+   "id": "total3",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(4)>div>input",
+   "tag": "input",
+   "id": "total3",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(1)>br-select-pnip>div>div:nth-of-type(2)>div:nth-of-type(4)>div>input",
+   "tag": "input",
+   "id": "total3",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>div>input",
+   "tag": "input",
+   "id": "page",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "radio",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "botao-de-opcao",
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→662",
+    "novosVisiveis": 5,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>div>input",
+   "tag": "input",
+   "id": "page",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "radio",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "botao-de-opcao",
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→662",
+    "novosVisiveis": 5,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>div>input",
+   "tag": "input",
+   "id": "page",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "saida",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "radio",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "botao-de-opcao",
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→662",
+    "novosVisiveis": 5,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Exibir lista",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "radio",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "botao-de-opcao",
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→662",
+    "novosVisiveis": 5,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(1)>button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Exibir lista",
+   "hospedeiro": null,
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "produz-estado",
+   "repeticoes": "3/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "item",
+     "list",
+     "pagination",
+     "radio",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "botao-de-opcao",
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→662",
+    "novosVisiveis": 5,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "1",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "1",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)>div",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "1",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)>div",
+   "tag": "div",
+   "id": null,
+   "campo": false,
+   "rotulo": "1",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)>div>div>input",
+   "tag": "input",
+   "id": "page0",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "clique",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": "elementHandle.click: Timeout 2000ms exceeded.",
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)>div>div>input",
+   "tag": "input",
+   "id": "page0",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "enter",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": false,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>govbr-custom-pagination>div>div:nth-of-type(3)>nav>div:nth-of-type(3)>br-select-pnip>div>div:nth-of-type(2)>div>div>input",
+   "tag": "input",
+   "id": "page0",
+   "campo": true,
+   "rotulo": "",
+   "hospedeiro": null,
+   "visivel": false,
+   "gesto": "saida",
+   "veredito": "sem-efeito",
+   "repeticoes": "0/3",
+   "pathDepois": "/pnip-d/portal-mpa/processos",
+   "tipos": {
+    "componentes": [
+     "avatar",
+     "breadcrumb",
+     "button",
+     "divider",
+     "header",
+     "input",
+     "pagination",
+     "select",
+     "signin",
+     "tab",
+     "table",
+     "tag"
+    ],
+    "estruturas": [
+     "caixa-de-selecao",
+     "campo",
+     "imagem",
+     "link",
+     "lista",
+     "regiao:banner",
+     "regiao:main",
+     "regiao:navigation",
+     "tabela",
+     "titulo:h2"
+    ]
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→661",
+    "novosVisiveis": 0,
+    "sumiram": 0,
+    "deixaramVisiveis": 0,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(3)>br-button >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Voltar",
+   "hospedeiro": "Voltar",
+   "visivel": true,
+   "gesto": "clique",
+   "veredito": "recarga",
+   "repeticoes": "3/3",
+   "pathDepois": "blank",
+   "tipos": {
+    "componentes": [],
+    "estruturas": []
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→1",
+    "novosVisiveis": 0,
+    "sumiram": 615,
+    "deixaramVisiveis": 409,
+    "expandido": []
+   }
+  },
+  {
+   "gatilho": "body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(3)>br-button >>> button",
+   "tag": "button",
+   "id": null,
+   "campo": false,
+   "rotulo": "Voltar",
+   "hospedeiro": "Voltar",
+   "visivel": true,
+   "gesto": "enter",
+   "veredito": "recarga",
+   "repeticoes": "3/3",
+   "pathDepois": "blank",
+   "tipos": {
+    "componentes": [],
+    "estruturas": []
+   },
+   "escritas": [],
+   "amostra": {
+    "erro": null,
+    "dom": true,
+    "ax": "661→1",
+    "novosVisiveis": 0,
+    "sumiram": 615,
+    "deixaramVisiveis": 409,
+    "expandido": []
+   }
+  }
+ ]
+}

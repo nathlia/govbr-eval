@@ -74,5 +74,40 @@
         "nota": "SPA, mesmas regras da tela B (vistorias.isolamento.site) sobre a árvore pnip-c/: árvore inteira congelada (chunks lazy montados em tempo de execução), índice a todo GET sem extensão sob /pnip-c/, e o único alias é o ícone do \"Sair\" (sob <base href=\"/pnip-c/\"> o template sai do prefixo). O manifesto da ala é proveniência e fica fora do site."
       }
     }
+  },
+  "processos": {
+    "titulo": "tela D — processos do portal MPA do PNIP (aplicação real em modo mock, estudo complementar NAT-78; substituta da tela C, que ficou abaixo do piso)",
+    "entry": "pnip-d/portal-mpa/processos?mock-perfil=mpa",
+    "reference": null,
+    "sources": [],
+    "runs": {
+      "com": "results/runs-processos",
+      "sem": "results/runs-processos-ablacao",
+      "smoke": "results/runs-processos-smoke"
+    },
+    "review": "results/semantic-review-processos",
+    "nota": "Tela D (rota nº 5 do README-MOCK § 7), ainda SEM referência (reference: null). Regra de reserva (protocolo NAT-78 § 3.5): nenhum detector — validator, axe, linha de base, nem o test:isolation, que fala com o oráculo pela configuração MCP — roda nesta tela antes de a referência 1.0.0 congelar. Build do modo mock do PNIP na ala própria govbr-corpus/public/pnip-d/ (base href /pnip-d/), para não mudar um byte das telas B e C: comparado aos builds congelados delas, só main.*.js (manipulador só-leitura da listagem de processos, dados inventados) e index.html (base href) diferem; os 188 demais arquivos, inclusive o chunk lazy de processos, são idênticos. O `?mock-perfil=mpa` escolhe a sessão fictícia de coordenadora já logada com o vínculo que o login e a página inicial gravariam (README-MOCK § 1), e o próprio app o retira da barra de endereço. Não é entrada Vite: sources vazio. Preparação sem detector em tela-d/.",
+    "isolamento": {
+      "texto": "Processos",
+      "alvo": "br-tab",
+      "fonte": null,
+      "interacao": {
+        "clicar": ".br-tag.interaction",
+        "esperar": "main .br-table tbody tr:nth-child(10)",
+        "nota": "Prova de vida, não estado de gabarito: a etiqueta \"Meus processos\" (light DOM; as abas ficam em shadow DOM e o clique da prova é por document.querySelector) desliga o filtro, a lista é pedida de novo ao manipulador só-leitura e passa de 9 para 10 linhas por página. Interações reais (Angular + respostas fictícias no navegador); recarregar volta ao estado inicial. Os estados da referência serão os do _meta.setup dela."
+      },
+      "externos": [],
+      "site": {
+        "arvore": "pnip-d/",
+        "excluir": [
+          "pnip-d/manifesto.json"
+        ],
+        "indice": "pnip-d/index.html",
+        "aliases": {
+          "/assets/images/exit-icon.png": "pnip-d/assets/images/exit-icon.png"
+        },
+        "nota": "SPA, mesmas regras da tela B (vistorias.isolamento.site) sobre a árvore pnip-d/: árvore inteira congelada (chunks lazy montados em tempo de execução), índice a todo GET sem extensão sob /pnip-d/, e o único alias é o ícone do \"Sair\" (sob <base href=\"/pnip-d/\"> o template sai do prefixo). O manifesto da ala é proveniência e fica fora do site."
+      }
+    }
   }
 }
