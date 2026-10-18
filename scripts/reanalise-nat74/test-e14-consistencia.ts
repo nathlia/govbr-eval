@@ -1,7 +1,12 @@
 /**
  * Testes da consistência, da adjudicação informada e da amostra de confiabilidade da E14 (fila T3). Sem modelo, sem
- * rede. Leem a fila real (só leitura); preparo, revelação e aplicação rodam numa cópia temporária com respostas de
- * adjudicação SINTÉTICAS (não são julgamentos).
+ * rede. Leem a fila real (só leitura) FIXADA NA 1ª PASSADA: desde a adjudicação (govbr-resultados 1af1c41),
+ * `fila-t3/respostas/` guarda as respostas finais e a 1ª passada fica em `respostas-1a-passada/` (com
+ * `julgamentos-1a-passada.json`). As unidades de adjudicação, a amostra e a segunda leitura foram congeladas sobre a
+ * 1ª passada; com as respostas finais o agrupamento muda e a unidade lote-d05 deixa de existir. Por isso o teste monta
+ * uma cópia temporária com `lotes/`, `chave/` e `respostas-1a-passada/` → `respostas/` e confere que ela reproduz o
+ * sha256 gravado da 1ª passada. Preparo, revelação e aplicação rodam numa segunda cópia com respostas de adjudicação
+ * SINTÉTICAS (não são julgamentos).
  *   npm run test:reanalise-nat74-e14-consistencia
  */
 import assert from "node:assert/strict";
@@ -53,7 +58,17 @@ t("concordância descritiva: par com campo nulo sai do denominador; mesmo lote e
 
 console.log("E14 consistência: fila real (só leitura)");
 const inv = inventarioDeAtomos();
-const fila = FILA();
+// Fila fixada na 1ª passada (ver cabeçalho): nunca as respostas finais da adjudicação.
+const filaReal = FILA();
+const tmp1 = mkdtempSync(join(tmpdir(), "nat74-e14-1a-"));
+const fila = join(tmp1, "fila-t3");
+for (const d of ["lotes", "chave"]) cpSync(join(filaReal, d), join(fila, d), { recursive: true });
+cpSync(join(filaReal, "respostas-1a-passada"), join(fila, "respostas"), { recursive: true });
+t("a cópia fixada reproduz a 1ª passada gravada (sha256 de julgamentos-1a-passada.json)", () => {
+  const ing = ingerir(fila);
+  assert.deepEqual(ing.erros, []);
+  assert.equal(`${sha(ing.texto!)}  julgamentos-1a-passada.json\n`, readFileSync(join(filaReal, "julgamentos-1a-passada.json.sha256"), "utf8"));
+});
 const dados = membrosDaFila(fila, inv);
 const julg = julgadosDaFila(fila);
 const a = analisar(dados, julg);
@@ -322,5 +337,6 @@ t("analisarFila real = analisar(membros, julgados) (mesmo relatório)", () => {
   assert.equal(JSON.stringify(analisarFila(fila, inv).relatorio.resumo), JSON.stringify(a.relatorio.resumo));
 });
 
+rmSync(tmp1, { recursive: true, force: true });
 console.log(`\n${n - falhas}/${n} ok${falhas ? `, ${falhas} FALHA(S)` : ""}`);
 if (falhas) process.exit(1);
