@@ -1,7 +1,7 @@
 /**
  * run-once — UMA execução isolada (T3 do plano do benchmark isolado; T3a: agente roteirizado).
  *
- *   npm run run-once -- --tela solicitacao|vistorias --braco sem|com --modelo <id> --esforco <nível>
+ *   npm run run-once -- --tela solicitacao|vistorias --braco sem|com|ferramentas --modelo <id> --esforco <nível>
  *        --limite-min 90 --saida <dir-novo> --agente fake|claude [--cenario honesto] [--permitir-modelo]
  *        [--campanha id] [--slot id] [--par id] [--tentativa 1] [--repeticao 1] [--run-id id]
  *        [--larguras 1280x900,390x844] [--egress stub|real] [--limite-seg N] [--telas dir] [--validator dir]
@@ -12,6 +12,13 @@
  * desmontagem total → pacote (run.json, findings.json se aceito, isolation.json, tool-events.ndjson,
  * artifact-manifest.json + evidence/), validado contra os contratos (validateContract + crossCheckRun).
  * Falha obrigatória no preflight ou na sonda: o agente não parte e o run.json sai `not-run`.
+ *
+ * NAT-61 (três braços): `com` sobe o oráculo no perfil evaluation e `ferramentas` no knowledge-free (a mesma
+ * imagem; runner/perfis-oraculo.ts). Todo braço com oráculo recebe a janela do primeiro navegador
+ * (GOVBR_VALIDATOR_VIEWPORT, fora do esquema MCP) e uma ponte com `--allow` = as ferramentas do perfil.
+ * O perfil que vai para o run.json (run.v2) é o MEDIDO — tools/list do servidor na ponte (nomes + sha256
+ * fixado) e marca de telemetria —, nunca o rótulo do braço. No braço ferramentas, além disso: trava de
+ * conhecimento = 0 na telemetria e varredura do dicionário sobre os payloads integrais (scripts/vazamento/).
  *
  * `--agente claude` (T3b) roda o binário real do Claude Code com os flags de produção (cliente-claude.ts):
  *   --egress stub  contra um DUBLÊ ROTEIRIZADO da API (sem modelo, credencial falsa, `fixture: true`,
@@ -30,7 +37,10 @@ import {
   assertContract, crossCheckRun, validateContract,
   crossCheckManifest,
   type AnyArtifactManifest, type AnyFindings, type ArtifactManifest, type ArtifactManifestV2, type FindingsContract, type Isolation, type Metric, type Run,
+  type OracleIdentityV2, type RunV2,
 } from "../contracts/index";
+import { PERFIL_DO_BRACO, PERFIS, allowDoBraco, perfilMedido, temOraculo, toolsListSha256, type Braco, type InventarioOraculo } from "./perfis-oraculo";
+import { varrerPayloadsDoOraculo, type RelatorioVazamento } from "../scripts/vazamento/conhecimento";
 import { gitState, oracleIdentity } from "../scripts/collection-manifest";
 import { TOOL_PAYLOAD_PATH, rebaseToolPayloads, verifyToolPayloads } from "../scripts/tool-payloads";
 import {
@@ -83,7 +93,7 @@ const DEFERRED_PLACEHOLDERS = ["DeferredToolPlaceholder"];
 export type Tela = "solicitacao" | "vistorias";
 export interface RunOptions {
   tela: Tela;
-  braco: "sem" | "com";
+  braco: Braco;
   modelo: string;
   esforco: string;
   limiteSeg: number;
@@ -105,7 +115,7 @@ export interface RunOptions {
   outrasSaidas?: string[];
   log?: (line: string) => void;
 }
-export interface RunOutcome { exitCode: number; runDir: string; run: Run; problems: string[] }
+export interface RunOutcome { exitCode: number; runDir: string; run: RunV2; problems: string[] }
 
 interface CheckRow { id: string; category: Isolation["checks"][number]["category"]; target: string; required: boolean; outcome: "passed" | "failed" | "not-exercised"; detail?: string; evidence?: string | null }
 interface PositiveRow { id: string; target: string; outcome: "passed" | "failed"; detail?: string; evidence?: string | null }
@@ -139,10 +149,13 @@ export function taskInputs(tela: Tela, telasDir: string, larguras: string[] | un
   };
 }
 
-/** Configuração MCP que o cliente recebe. A única diferença entre os braços é a entrada do oráculo. */
-export function mcpConfig(braco: "sem" | "com"): { mcpServers: Record<string, { type: "http"; url: string }> } {
+/**
+ * Configuração MCP que o cliente recebe. A única diferença entre os braços é a entrada do oráculo; com e
+ * ferramentas recebem a MESMA entrada (o mesmo nome de servidor, decisão 7): o perfil fica no contêiner.
+ */
+export function mcpConfig(braco: Braco): { mcpServers: Record<string, { type: "http"; url: string }> } {
   const servers: Record<string, { type: "http"; url: string }> = { playwright: { type: "http", url: "http://browser:8931/mcp" } };
-  if (braco === "com") servers[ORACLE_SERVER_NAME] = { type: "http", url: "http://oracle:8932/mcp" };
+  if (temOraculo(braco)) servers[ORACLE_SERVER_NAME] = { type: "http", url: "http://oracle:8932/mcp" };
   return { mcpServers: servers };
 }
 
@@ -293,7 +306,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
   } catch (e) {
     integ("imagens-travadas", "runner/images.lock.json", false, (e as Error).message);
   }
-  const needed: (keyof ImagesLock["images"])[] = ["screens", "agent", "collector", "egress", ...(opts.braco === "com" ? ["oracle" as const] : [])];
+  const needed: (keyof ImagesLock["images"])[] = ["screens", "agent", "collector", "egress", ...(temOraculo(opts.braco) ? ["oracle" as const] : [])];
   if (lock && dockerState.ok) {
     for (const n of needed) {
       const live = imageId(lock.images[n].tag);
@@ -320,13 +333,13 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
   let inputs: TaskInputs | null = null;
   try {
     inputs = taskInputs(opts.tela, opts.telasDir, opts.larguras, opts.limiteSeg);
-    rendered = renderRun(skillPkg.toString("utf8"), { task: inputs, arm: opts.braco, runId, collectorToken: null, oracleProfile: opts.braco === "com" ? "evaluation" : null });
+    rendered = renderRun(skillPkg.toString("utf8"), { task: inputs, arm: opts.braco, runId, collectorToken: null, oracleProfile: PERFIL_DO_BRACO[opts.braco] });
     integ("texto-da-tarefa", "texto renderizado da skill + entradas, sem vocabulário proibido", true, rendered.promptSha256);
   } catch (e) {
     integ("texto-da-tarefa", "texto renderizado da skill + entradas", false, (e as Error).message);
   }
-  const oracleNow = opts.braco === "com" ? oracleIdentity(opts.validatorDir) : null;
-  if (opts.braco === "com" && lock) {
+  const oracleNow = temOraculo(opts.braco) ? oracleIdentity(opts.validatorDir) : null;
+  if (temOraculo(opts.braco) && lock) {
     integ("oraculo", "dist/ e data/ do validador = distribuição embutida na imagem do oráculo",
       oracleNow?.distSha256 === lock.versions.oracle.distSha256 && oracleNow?.dataSha256 === lock.versions.oracle.dataSha256,
       `${oracleNow?.distSha256?.slice(0, 12)}/${oracleNow?.dataSha256?.slice(0, 12)} × ${lock.versions.oracle.distSha256.slice(0, 12)}/${lock.versions.oracle.dataSha256.slice(0, 12)}`);
@@ -375,6 +388,8 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
   /** Linhas do log do proxy do provedor antes do agente partir: o que vem depois é do agente (a sonda usa o mesmo proxy). */
   let egressLinesBeforeAgent = 0;
   let notRunReason: { reason: "preflight-failed" | "isolation-failed" | "harness-error"; detail: string } | null = null;
+  /** NAT-61: perfil do oráculo medido na ponte ANTES do agente (inventário do servidor); diverge → o agente não parte. */
+  const oracleChecks: CheckRow[] = [];
   const containers: string[] = [];
   const networks: string[] = [];
   let sentinelHost: { child: ChildProcess; port: number } | null = null;
@@ -463,16 +478,20 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
           "--mount", `type=bind,src=${join(work, "stub-in")},dst=/run/stub,readonly`, "-e", "STUB_DIR=/run/stub", "-e", "STUB_OUT=/out"], ["node", "/opt/egress/stub.mjs"], "provider-stub");
       }
       const windows = inputs!.larguras.map((w) => `${w.width}x${w.height}`).join(",");
+      const oracleWindow = `${inputs!.larguras[0].width}x${inputs!.larguras[0].height}`;
       create("browser", L.images.agent.id, [[net.browse, "browser"], [net.tools, "browser"]], ["--shm-size", "512m"],
         ["node", "/opt/runner/bridge.mjs", "--name", "playwright", "--port", "8931", "--windows", windows, "--events", "/out/tool-events.ndjson", "--inventory", "/out/inventory.json", "--",
           "node", "/opt/runner/node_modules/@playwright/mcp/cli.js", "--headless", "--browser", "chromium", "--no-sandbox", "--isolated", "--block-service-workers",
           "--viewport-size", "{VIEWPORT}", "--proxy-server", "http://egress-site:3128", "--output-dir", "/tmp/pw-{INDEX}"], "browser");
-      if (opts.braco === "com") {
+      if (temOraculo(opts.braco)) {
+        // NAT-61: o perfil sai da tabela braço → perfil; a janela do oráculo é a do primeiro navegador (D-131 (a));
+        // a ponte só deixa passar as ferramentas do perfil (segunda trava)
         create("oracle", L.images.oracle.id, [[net.browse, "oracle"], [net.tools, "oracle"]], ["--shm-size", "512m",
-          "-e", "GOVBR_VALIDATOR_TOOL_PROFILE=evaluation", "-e", "GOVBR_VALIDATOR_PROXY_SERVER=http://egress-site:3128",
+          "-e", `GOVBR_VALIDATOR_TOOL_PROFILE=${PERFIL_DO_BRACO[opts.braco]}`, "-e", `GOVBR_VALIDATOR_VIEWPORT=${oracleWindow}`,
+          "-e", "GOVBR_VALIDATOR_PROXY_SERVER=http://egress-site:3128",
           "-e", `GOVBR_VALIDATOR_ALLOWED_ORIGINS=${SCREENS_ORIGIN}`, "-e", "GOVBR_VALIDATOR_REPORTS_DIR=/tmp/reports",
           "-e", "GOVBR_VALIDATOR_TELEMETRY_FILE=/out/oracle-telemetry.ndjson", "-e", `GOVBR_VALIDATOR_RUN_ID=${runId}`],
-        ["node", "/opt/runner/bridge.mjs", "--name", "oracle", "--port", "8932", "--events", "/out/tool-events.ndjson", "--inventory", "/out/inventory.json", "--",
+        ["node", "/opt/runner/bridge.mjs", "--name", "oracle", "--port", "8932", "--allow", allowDoBraco(opts.braco).join(","), "--events", "/out/tool-events.ndjson", "--inventory", "/out/inventory.json", "--",
           "node", "/opt/oracle/dist/index.js"], "oracle");
       }
       start(cname("screens"), /Servidor das telas em/, "telas");
@@ -481,7 +500,13 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       start(cname("egress-provider"), /egress-provider em/, "proxy do provedor");
       if (opts.egress === "stub") start(cname("provider-stub"), /stub do provedor pronto/, "dublê do provedor");
       start(cname("browser"), /ponte playwright em/, "ponte do navegador");
-      if (opts.braco === "com") start(cname("oracle"), /ponte oracle em/, "ponte do oráculo");
+      if (temOraculo(opts.braco)) {
+        start(cname("oracle"), /ponte oracle em/, "ponte do oráculo");
+        // perfil medido antes de qualquer agente: o tools/list que o SERVIDOR anunciou à ponte (nomes + sha256) e o exposto
+        oracleChecks.push(...checksDoPerfil(opts.braco, readJson<InventarioOraculo>(join(work, "oracle", "inventory.json")), [], "inventário da ponte no arranque, antes da sonda e do agente", "-no-arranque"));
+        const falho = oracleChecks.filter((c) => c.required && c.outcome === "failed");
+        if (falho.length) throw Object.assign(new Error(`perfil do oráculo diverge do braço: ${falho.map((c) => c.detail).join("; ")}`), { notRun: "isolation-failed" });
+      }
       log(`infraestrutura pronta (${containers.length} contêineres, ${networks.length} redes internas${opts.egress === "real" ? " + saída real do proxy do provedor" : ""})`);
 
       // ── controles positivos do controlador
@@ -510,7 +535,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       const probeCfg = {
         out: "/out/probe.json", sentinelPaths: sentinelFiles, otherRunPaths: otherRuns, hostPorts, egress: "egress:3128", providerStub: opts.egress === "stub",
         mcp: Object.fromEntries(Object.entries(mcpConfig(opts.braco).mcpServers).map(([k, v]) => [k === ORACLE_SERVER_NAME ? "oracle" : k, v.url])),
-        oracleExpected: opts.braco === "com",
+        oracleExpected: temOraculo(opts.braco), oracleTools: temOraculo(opts.braco) ? allowDoBraco(opts.braco) : null,
       };
       const probe = create("probe", L.images.agent.id, agentNets, [...agentEnv, "-e", `PROBE_CONFIG=${JSON.stringify(probeCfg)}`, ...taskMount], ["node", "/opt/runner/probe.mjs"], "probe");
       docker(["start", probe]);
@@ -549,7 +574,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       for (const c of containers) evidence(`logs/${c.replace(`gr-${short}-`, "")}.log`, (() => { const r = docker(["logs", c], { allowFail: true }); return r.stdout + r.stderr; })());
     } catch (e) {
       const err = e as Error & { notRun?: string };
-      if (!agentStartedAt) notRunReason = { reason: "harness-error", detail: err.message };
+      if (!agentStartedAt) notRunReason = { reason: err.notRun === "isolation-failed" ? "isolation-failed" : "harness-error", detail: err.message };
       else limitations.push(`erro do harness depois do início do agente: ${err.message}`);
       log(`erro do harness: ${err.message}`);
       for (const c of containers) evidence(`logs/${c.replace(`gr-${short}-`, "")}.log`, (() => { const r = docker(["logs", c], { allowFail: true }); return r.stdout + r.stderr; })());
@@ -563,9 +588,9 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
   }
 
   // ── pacote
-  return writePackage();
+  return await writePackage();
 
-  function writePackage(): RunOutcome {
+  async function writePackage(): Promise<RunOutcome> {
     const problems: string[] = [];
     evidence("preflight.json", { ...preflightDoc, integrity });
     if (rendered) evidence("prompt.txt", rendered.prompt);
@@ -590,7 +615,8 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     const toolEvents = [...browserEvents, ...oracleEvents].sort((a, b) => String(a.at).localeCompare(String(b.at)));
     writeFileSync(join(runDir, "tool-events.ndjson"), toolEvents.map((e) => JSON.stringify(e)).join("\n") + (toolEvents.length ? "\n" : ""));
     const browserInv = readJson<{ exposed: string[]; hidden: string[] }>(rawPath("browser", "inventory.json"));
-    const oracleInv = readJson<{ exposed: string[] }>(rawPath("oracle", "inventory.json"));
+    const oracleInv = readJson<InventarioOraculo>(rawPath("oracle", "inventory.json"));
+    const oracleTelemetry = readNdjson(rawPath("oracle", "oracle-telemetry.ndjson"));
     const egressProvider = readNdjson(rawPath("egress-provider", "egress.ndjson"));
     const egressSite = readNdjson(rawPath("egress-site", "egress.ndjson"));
     const collectorEvents = readNdjson(rawPath("collector", "events.ndjson"));
@@ -609,6 +635,9 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       runtimeChecks.push({ id: "egress-provedor-durante-a-execucao", category: "network", target: "proxy do provedor só deixou passar a allowlist durante a execução", required: true, outcome: leakProvider.length === 0 ? "passed" : "failed", detail: `${egressProvider.filter((e) => e.allowed === false).length} recusas, ${egressProvider.filter((e) => e.allowed === true && e.kind === "connect").length} túneis permitidos`, evidence: "evidence/raw/egress-provider/egress.ndjson" });
       const leakSite = egressSite.filter((e) => e.allowed === true && e.kind === "http" && !SITE_ALLOW.some((h) => String(e.target).startsWith(`http://${h}/`)));
       runtimeChecks.push({ id: "egress-navegador-durante-a-execucao", category: "network", target: "proxy dos navegadores só deixou passar a tela e o coletor", required: true, outcome: leakSite.length === 0 ? "passed" : "failed", detail: `${egressSite.filter((e) => e.allowed === false).length} recusas`, evidence: "evidence/raw/egress-site/egress.ndjson" });
+      if (temOraculo(opts.braco)) {
+        runtimeChecks.push(...await checksDoOraculoNaExecucao());
+      }
       if (opts.braco === "sem") {
         const ok = oracleEvents.length === 0 && !oracleInv && (browserInv?.exposed ?? []).every((t) => t.startsWith("browser_"));
         runtimeChecks.push({ id: "oraculo-ausente-durante-a-execucao", category: "tools", target: "braço sem: nenhum servidor do oráculo, nenhuma ferramenta dele anunciada, zero chamadas", required: true, outcome: ok ? "passed" : "failed", detail: `eventos do oráculo: ${oracleEvents.length}` });
@@ -624,7 +653,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
         const deferredOk = stubSeen ? stubSeen.deferredTools.every((t) => DEFERRED_PLACEHOLDERS.includes(t)) : true;
         const toolsOk = Boolean(client?.init) && same(initTools) && (!claudeStub || (stubSeen !== null && same(callable) && deferredOk && stubSeen.advertisedStable));
         runtimeChecks.push({ id: "ferramentas-do-cliente", category: "tools", required: true, outcome: toolsOk ? "passed" : "failed", evidence: "evidence/cliente.json",
-          target: `o cliente real só tem (e só anuncia ao modelo) as ferramentas MCP das pontes: ${opts.braco === "sem" ? "navegador" : "navegador + oráculo"}; nenhuma ferramenta interna (Bash, Read, Write, WebFetch, Task…)`,
+          target: `o cliente real só tem (e só anuncia ao modelo) as ferramentas MCP das pontes: ${opts.braco === "sem" ? "navegador" : `navegador + oráculo (perfil ${PERFIL_DO_BRACO[opts.braco]})`}; nenhuma ferramenta interna (Bash, Read, Write, WebFetch, Task…)`,
           detail: JSON.stringify({ esperado: expected.length, init: initTools ?? null, anunciadoAoModelo: stubSeen?.advertisedTools ?? "não observável sem o dublê", adiadas: stubSeen?.deferredTools ?? null }).slice(0, 4000) });
         const configured = Object.keys(mcpConfig(opts.braco).mcpServers).sort();
         const init = client?.init;
@@ -672,7 +701,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     }
     if (harness.dirty) limitations.push("govbr-eval com alterações locais no momento da execução (harnessCommit não descreve tudo)");
 
-    const allChecks: CheckRow[] = [...integrity, ...probeChecks, ...runtimeChecks];
+    const allChecks: CheckRow[] = [...integrity, ...oracleChecks, ...probeChecks, ...runtimeChecks];
     const isolationRan = probeDoc !== null;
     const anyFailed = allChecks.some((c) => c.required && c.outcome === "failed") || positives.some((p) => p.outcome === "failed");
     const isolationResult: Isolation["result"] = !isolationRan ? (anyFailed && notRunReason?.reason === "isolation-failed" ? "failed" : "unverified")
@@ -749,9 +778,23 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     const L = lock;
     const tokens = (k: "input" | "output" | "cacheRead" | "cacheCreation"): Metric => opts.agente === "fake" ? na()
       : client?.result?.usage ? measured(client.result.usage[k], `stream-json do cliente (result.usage)${claudeStub ? "; números fixos do dublê" : ""}`) : unavailable();
-    const oracleIdentityDoc = opts.braco === "com" && L ? { package: L.versions.oracle.package, version: L.versions.oracle.version, distSha256: L.versions.oracle.distSha256, dataSha256: L.versions.oracle.dataSha256, profile: "combined" as const } : null;
-    const run: Run = {
-      contract: "run.v1", fixture, campaignId: opts.campanha, slotId: opts.slot, pairId: opts.par, runId, attempt: opts.tentativa,
+    // NAT-61: identidade do oráculo com o perfil MEDIDO (inventário do servidor + telemetria). Sem medida (não
+    // partiu antes da ponte), fica o pedido para o braço, declarado como não medido nas limitações.
+    let oracleIdentityDoc: OracleIdentityV2 | null = null;
+    if (temOraculo(opts.braco) && L) {
+      const pedido = PERFIL_DO_BRACO[opts.braco]!;
+      const medido = perfilMedido(oracleInv, oracleTelemetry);
+      if (!oracleInv) limitations.push(`perfil do oráculo não medido (a ponte não chegou a gravar o inventário): run.json registra o pedido para o braço, ${pedido}`);
+      oracleIdentityDoc = {
+        package: L.versions.oracle.package, version: L.versions.oracle.version, distSha256: L.versions.oracle.distSha256, dataSha256: L.versions.oracle.dataSha256,
+        profile: oracleInv ? (medido.perfil ?? "combined") : pedido,
+        tools: oracleInv && oracleInv.exposed.length ? [...oracleInv.exposed].sort() : [...PERFIS[pedido].tools],
+        toolsListSha256: oracleInv?.exposedToolsSha256 ?? PERFIS[pedido].toolsListSha256,
+      };
+      if (oracleInv && !medido.perfil) limitations.push(`perfil do oráculo não reconhecido (${medido.problemas.join("; ")}): registrado como combined, isolamento falho`);
+    }
+    const run: RunV2 = {
+      contract: "run.v2", fixture, campaignId: opts.campanha, slotId: opts.slot, pairId: opts.par, runId, attempt: opts.tentativa,
       idempotencyKey: `${opts.campanha}/${opts.slot}/${opts.braco}/${opts.tentativa}`,
       screen: { id: opts.tela, label: opts.tela === "solicitacao" ? "Solicitar serviço" : "Vistorias", version: `govbr-telas-site-${(L?.versions.telas.siteSha256 ?? sha256(telasManifestText)).slice(0, 12)}` },
       arm: opts.braco, repetition: opts.repeticao,
@@ -812,14 +855,14 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     const manifest: AnyArtifactManifest = manifestV2 && findingsRaw?.contract === "findings.v2"
       ? {
         contract: "artifact-manifest.v2", fixture, campaignId: opts.campanha, runId, producedBy: RUNNER_VERSION, producedAt: iso(),
-        schemaVersions: { run: "run.v1", findings: "findings.v2", ...(findingsRaw.report.inspection !== undefined ? { inspection: "inspection.v1" as const } : {}),
+        schemaVersions: { run: "run.v2", findings: "findings.v2", ...(findingsRaw.report.inspection !== undefined ? { inspection: "inspection.v1" as const } : {}),
           ...(isolationDoc ? { isolation: "isolation.v1" as const } : {}) },
         inspectionStatus: findingsRaw.inspectionStatus,
         files,
       }
       : {
         contract: "artifact-manifest.v1", fixture, campaignId: opts.campanha, runId, producedBy: RUNNER_VERSION, producedAt: iso(),
-        schemaVersions: { run: "run.v1", ...(findingsRaw ? { findings: "findings.v1" as const } : {}), ...(isolationDoc ? { isolation: "isolation.v1" as const } : {}) },
+        schemaVersions: { run: "run.v2", ...(findingsRaw ? { findings: "findings.v1" as const } : {}), ...(isolationDoc ? { isolation: "isolation.v1" as const } : {}) },
         files: files as ArtifactManifest["files"],
       };
     writeFileSync(join(runDir, "artifact-manifest.json"), json(manifest));
@@ -831,7 +874,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       if (!v.valid) problems.push(`${name}: ${v.errors.map((e) => `${e.path} ${e.message}`).join("; ")}`);
     }
     if (!problems.length) {
-      for (const e of crossCheckRun(assertContract<Run>(run, "run.v1"), findingsRaw, isolationDoc)) problems.push(`crossCheckRun: ${e.path} ${e.message}`);
+      for (const e of crossCheckRun(assertContract<RunV2>(run, "run.v2"), findingsRaw, isolationDoc)) problems.push(`crossCheckRun: ${e.path} ${e.message}`);
       for (const e of crossCheckManifest(manifest, findingsRaw)) problems.push(`crossCheckManifest: ${e.path} ${e.message}`);
       try {
         verifyToolPayloads(readFileSync(join(runDir, "tool-events.ndjson"), "utf8"), (p) => existsSync(join(runDir, p)) ? readFileSync(join(runDir, p)) : null,
@@ -842,7 +885,114 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     log(`pacote em ${runDir}: técnico=${technical} isolamento=${run.status.isolation} oráculo=${oracleUsage} submissão=${submission.status}`);
     const exitCode = problems.length ? 2 : technical === "passed" ? 0 : technical === "not-run" ? 4 : 3;
     return { exitCode, runDir, run, problems };
+
+    /**
+     * NAT-61: checks do oráculo depois da execução (com e ferramentas): perfil medido = pedido, inventário e
+     * hash, janela do oráculo; no ferramentas também a trava de conhecimento e a varredura do dicionário.
+     */
+    async function checksDoOraculoNaExecucao(): Promise<CheckRow[]> {
+      const rows = checksDoPerfil(opts.braco, oracleInv, oracleTelemetry, "inventário da ponte + telemetria do servidor, depois da execução");
+      const esperado = { width: inputs!.larguras[0].width, height: inputs!.larguras[0].height };
+      const calls = oracleEvents.filter((e) => e.kind === "call");
+      const textoIntegral = (e: Record<string, unknown>): string | null => {
+        const s = e.result as { text?: string; truncated?: boolean; payload?: { status?: string; path?: string } } | undefined;
+        if (!s?.text) return null;
+        if (!s.truncated) return s.text;
+        return s.payload?.status === "complete" && s.payload.path && existsSync(join(runDir, s.payload.path)) ? readFileSync(join(runDir, s.payload.path), "utf8") : null;
+      };
+      // janela: toda receita/atestação de estado que o oráculo devolve diz a janela e a fonte (2.14.0: "harness")
+      const janelas: { tool: string; viewport: unknown; source: unknown }[] = [];
+      const andar = (v: unknown, tool: string): void => {
+        if (Array.isArray(v)) v.forEach((x) => andar(x, tool));
+        else if (v && typeof v === "object") {
+          const o = v as Record<string, unknown>;
+          if ("viewportSource" in o) janelas.push({ tool, viewport: o.viewport, source: o.viewportSource });
+          Object.values(o).forEach((x) => andar(x, tool));
+        }
+      };
+      for (const e of calls) {
+        const t = textoIntegral(e);
+        if (t) { try { andar(JSON.parse(t), String(e.tool)); } catch { /* texto não-JSON */ } }
+      }
+      const fora = janelas.filter((j) => j.source !== "harness" || JSON.stringify(j.viewport) !== JSON.stringify(esperado));
+      rows.push({ id: "janela-do-oraculo", category: "tools", required: janelas.length > 0, evidence: "tool-events.ndjson",
+        outcome: janelas.length === 0 ? "not-exercised" : fora.length === 0 ? "passed" : "failed",
+        target: `o oráculo mede na janela do navegador do agente (${esperado.width}×${esperado.height}, declarada pelo harness em GOVBR_VALIDATOR_VIEWPORT)`,
+        detail: janelas.length === 0 ? "nenhuma resposta do oráculo trouxe a janela (nenhum scan ou verificação com estado)"
+          : fora.length ? JSON.stringify(fora.slice(0, 5)) : `${janelas.length} atestações de estado, todas ${esperado.width}×${esperado.height} (harness)` });
+      if (opts.braco !== "ferramentas") {
+        // controle positivo do detector (plano §5.2): no perfil evaluation o mesmo dicionário ACHA conteúdo da
+        // base quando o agente consultou a base; informativo, nunca falha o isolamento do braço com
+        const normativas = calls.filter((e) => ["get_ds_rules", "get_emag_rules", "get_page_rules", "get_component_spec", "get_design_tokens"].includes(String(e.tool)) && e.outcome === "ok").length;
+        try {
+          const rel = await varrerPayloadsDoOraculo({ validatorDir: opts.validatorDir, telasDir: opts.telasDir, eventos: oracleEvents, toolsList: oracleInv?.toolsList ?? null,
+            ler: (p) => (existsSync(join(runDir, p)) ? readFileSync(join(runDir, p), "utf8") : null) });
+          evidence("vazamento-conhecimento.json", rel);
+          const sem = rel.semExplicacao.reduce((n, u) => n + u.count, 0);
+          rows.push({ id: "vazamento-de-conhecimento-controle-positivo", category: "tools", required: false, evidence: "evidence/vazamento-conhecimento.json",
+            outcome: normativas === 0 ? "not-exercised" : sem > 0 && rel.canarios.every((c) => c.ok) ? "passed" : "failed",
+            target: "controle positivo: no perfil evaluation, o dicionário acha conteúdo da base nas respostas das consultas normativas (senão o detector estaria quebrado)",
+            detail: `${normativas} consulta(s) normativa(s) bem-sucedida(s); ${rel.respostas} respostas; sem explicação ${sem}; canários ${rel.canarios.filter((c) => c.ok).length}/${rel.canarios.length}` });
+        } catch (e) {
+          rows.push({ id: "vazamento-de-conhecimento-controle-positivo", category: "tools", required: false, evidence: null, outcome: "not-exercised",
+            target: "controle positivo do detector de vazamento no perfil evaluation", detail: `varredura não rodou: ${(e as Error).message}` });
+        }
+        return rows;
+      }
+      // trava de conhecimento: o perfil marca TODO evento com o contador; contador > 0 = isolamento falho
+      const marcados = oracleTelemetry.filter((e) => typeof e.knowledgeLockAttempts === "number");
+      const tentativas = Math.max(0, ...marcados.map((e) => e.knowledgeLockAttempts as number));
+      const chamadasServidas = calls.filter((e) => e.outcome !== "transport-error").length;
+      const travaOk = tentativas === 0 && marcados.length === oracleTelemetry.length && oracleTelemetry.length >= chamadasServidas;
+      rows.push({ id: "trava-de-conhecimento", category: "tools", required: true, evidence: "evidence/raw/oracle/oracle-telemetry.ndjson",
+        outcome: travaOk ? "passed" : "failed",
+        target: "perfil knowledge-free: nenhuma tentativa de carregar a base de conhecimento (contador da trava na telemetria = 0 em todo evento)",
+        detail: `${oracleTelemetry.length} eventos de telemetria (${marcados.length} com o contador; máximo ${tentativas}); ${chamadasServidas} chamadas servidas pela ponte` });
+      // dicionário sobre os payloads integrais + tools/list exposto
+      let rel: RelatorioVazamento | null = null;
+      let erro: string | null = null;
+      try {
+        rel = await varrerPayloadsDoOraculo({ validatorDir: opts.validatorDir, telasDir: opts.telasDir, eventos: oracleEvents, toolsList: oracleInv?.toolsList ?? null,
+          ler: (p) => (existsSync(join(runDir, p)) ? readFileSync(join(runDir, p), "utf8") : null) });
+        evidence("vazamento-conhecimento.json", rel);
+      } catch (e) { erro = (e as Error).message; }
+      const sem = rel ? rel.semExplicacao.reduce((n, u) => n + u.count, 0) : null;
+      const canariosOk = rel ? rel.canarios.every((c) => c.ok) : false;
+      const ok = rel !== null && sem === 0 && rel.incompletas.length === 0 && canariosOk && rel.respostas > 0;
+      const exemplos = rel && sem ? `; ex.: ${rel.semExplicacao.slice(0, 3).map((u) => `${u.term} em ${u.tool} ${u.path}`).join(" | ")}` : "";
+      rows.push({ id: "vazamento-de-conhecimento", category: "tools", required: true, evidence: rel ? "evidence/vazamento-conhecimento.json" : null,
+        outcome: ok ? "passed" : "failed",
+        target: "dicionário gerado do data/ do validator travado: 0 ocorrências sem explicação nos payloads integrais do oráculo e no tools/list exposto; canários do detector disparando",
+        detail: erro || !rel ? `varredura falhou: ${erro}` : `${rel.respostas} respostas; sem explicação ${sem}; perdoadas ${JSON.stringify(rel.porClasse)}; incompletas ${rel.incompletas.length}; canários ${rel.canarios.filter((c) => c.ok).length}/${rel.canarios.length}${exemplos}` });
+      return rows;
+    }
   }
+}
+
+/**
+ * NAT-61: o perfil do oráculo medido × o pedido para o braço:
+ *   - perfil-do-oraculo: o tools/list que o SERVIDOR anunciou (nomes + sha256 fixado; e a marca da telemetria,
+ *     quando há eventos) é o do perfil pedido para o braço;
+ *   - inventario-exposto-do-oraculo: a ponte expôs ao agente exatamente as ferramentas do perfil, com o sha256
+ *     fixado, recalculado aqui sobre o tools/list integral que ela gravou.
+ */
+function checksDoPerfil(braco: Braco, inv: InventarioOraculo | null, telemetria: Record<string, unknown>[], quando: string, sufixo = ""): CheckRow[] {
+  const pedido = PERFIL_DO_BRACO[braco];
+  if (!pedido) return [];
+  const m = perfilMedido(inv, telemetria);
+  const fixado = PERFIS[pedido];
+  const exposto = inv ? [...inv.exposed].sort() : null;
+  const hashLocal = inv?.toolsList ? toolsListSha256(inv.toolsList) : null;
+  const expostoOk = exposto !== null && JSON.stringify(exposto) === JSON.stringify([...fixado.tools])
+    && inv!.exposedToolsSha256 === fixado.toolsListSha256 && hashLocal === fixado.toolsListSha256;
+  return [
+    { id: `perfil-do-oraculo${sufixo}`, category: "tools", required: true, evidence: "evidence/raw/oracle/inventory.json", outcome: m.perfil === pedido ? "passed" : "failed",
+      target: `braço ${braco}: o servidor do oráculo está no perfil ${pedido} (medido, não declarado)`,
+      detail: `${quando}: medido ${m.perfil ?? "nenhum perfil conhecido"} via ${m.fonte}${m.problemas.length ? `; ${m.problemas.join("; ")}` : ""}; servidor ${JSON.stringify(inv?.serverInfo ?? null)}` },
+    { id: `inventario-exposto-do-oraculo${sufixo}`, category: "tools", required: true, evidence: "evidence/raw/oracle/inventory.json", outcome: expostoOk ? "passed" : "failed",
+      target: `a ponte expõe exatamente ${fixado.tools.join(", ")} com o tools/list de sha256 ${fixado.toolsListSha256.slice(0, 12)}… (fixado no validator)`,
+      detail: `${quando}: exposto ${JSON.stringify(exposto)}; sha256 gravado ${String(inv?.exposedToolsSha256 ?? "ausente").slice(0, 12)}, recalculado ${String(hashLocal ?? "sem tools/list").slice(0, 12)}; ocultas ${JSON.stringify(inv?.hidden ?? null)}` },
+  ];
 }
 
 /** Configuração efetiva de um contêiner (docker inspect), sem nomes/ids da execução, para a paridade entre braços. */
@@ -886,8 +1036,8 @@ export function parseArgs(argv: string[]): RunOptions {
   };
   const tela = need("--tela") as Tela;
   if (tela !== "solicitacao" && tela !== "vistorias") throw new Error("--tela: solicitacao | vistorias");
-  const braco = need("--braco") as "sem" | "com";
-  if (braco !== "sem" && braco !== "com") throw new Error("--braco: sem | com");
+  const braco = need("--braco") as Braco;
+  if (braco !== "sem" && braco !== "com" && braco !== "ferramentas") throw new Error("--braco: sem | com | ferramentas");
   const agente = need("--agente") as "fake" | "claude";
   if (agente !== "fake" && agente !== "claude") throw new Error("--agente: fake | claude");
   const limiteSeg = val("--limite-seg") ? Number(val("--limite-seg")) : Number(need("--limite-min")) * 60;

@@ -105,7 +105,13 @@ for (const [name, url] of Object.entries(cfg.mcp ?? {})) inventory[name] = await
   check("janela-sem-ferramenta-de-resize", "tools", "browser_resize e browser_run_code não anunciados", true, Boolean(browser?.ok) && forbidden.every((t) => !browser.tools.includes(t)), browser?.tools ?? []);
 }
 if (cfg.oracleExpected) {
-  positive("oraculo-anunciado", "o braço com anuncia o servidor do oráculo", Boolean(inventory.oracle?.ok && inventory.oracle.tools.length > 0), inventory.oracle ?? "ausente");
+  positive("oraculo-anunciado", "o braço com oráculo anuncia o servidor do oráculo", Boolean(inventory.oracle?.ok && inventory.oracle.tools.length > 0), inventory.oracle ?? "ausente");
+  // NAT-61: o agente vê EXATAMENTE as ferramentas do perfil do braço (com: evaluation; ferramentas: knowledge-free)
+  if (Array.isArray(cfg.oracleTools)) {
+    const seen = [...(inventory.oracle?.tools ?? [])].sort();
+    check("inventario-do-oraculo", "tools", `o oráculo anuncia exatamente as ferramentas do perfil do braço (${cfg.oracleTools.length})`, true,
+      Boolean(inventory.oracle?.ok) && JSON.stringify(seen) === JSON.stringify([...cfg.oracleTools].sort()), { esperado: cfg.oracleTools, anunciado: seen });
+  }
 } else {
   const d = await dns("oracle");
   const t = await tcp("oracle", 8932, 1500);

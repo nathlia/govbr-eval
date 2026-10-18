@@ -35,8 +35,8 @@ function test(name: string, fn: () => void): void {
 
 const template = readFileSync(SKILL_PATH, "utf8");
 const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T;
-const run = (arm: "sem" | "com", task: TaskInputs, over: Partial<RunInputs> = {}): RunInputs => ({
-  task, arm, runId: `run-${arm}-01`, collectorToken: `token-${arm}`, oracleProfile: arm === "com" ? "combined" : null, ...over,
+const run = (arm: "sem" | "com" | "ferramentas", task: TaskInputs, over: Partial<RunInputs> = {}): RunInputs => ({
+  task, arm, runId: `run-${arm}-01`, collectorToken: `token-${arm}`, oracleProfile: arm === "com" ? "combined" : arm === "ferramentas" ? "knowledge-free" : null, ...over,
 });
 const pair = (a: RunInputs, b: RunInputs) => compareArmRenders(
   { run: a, rendered: renderRun(template, a) }, { run: b, rendered: renderRun(template, b) });
@@ -80,6 +80,20 @@ test("paridade: sem × com com entradas idênticas → texto idêntico byte a by
     console.log(`   ${task.url}: prompt ${a.promptSha256.slice(0, 16)}…, template ${a.templateSha256.slice(0, 16)}…, ${a.bytes} bytes`);
   }
   assert.deepEqual(Object.keys(ARM_DIFF_ALLOWLIST).sort(), ["arm", "collectorToken", "oracleProfile", "runId"]);
+});
+
+test("paridade do trio (NAT-61): sem × ferramentas × com → mesmo sha256 do texto; braço e perfil só no canal lateral", () => {
+  for (const task of [EXAMPLE_INPUTS, VISTORIAS_LIKE]) {
+    const rs = (["sem", "ferramentas", "com"] as const).map((arm) => renderRun(template, run(arm, clone(task))));
+    assert.equal(new Set(rs.map((x) => x.promptSha256)).size, 1, "sha256 do texto difere entre os três braços");
+    assert.ok(rs.every((x) => Buffer.from(x.prompt, "utf8").equals(Buffer.from(rs[0].prompt, "utf8"))), "bytes do texto diferem");
+    assert.equal(new Set(rs.map((x) => x.templateSha256)).size, 1);
+    assert.deepEqual(rs.map((x) => x.channel.config), [
+      { arm: "sem", oracleProfile: null }, { arm: "ferramentas", oracleProfile: "knowledge-free" }, { arm: "com", oracleProfile: "combined" }]);
+    // os perfis do servidor nunca aparecem no texto ("ferramentas", como "sem"/"com", é palavra comum da skill e não é procurada)
+    for (const p of ["knowledge-free", "evaluation"]) assert.ok(!rs[0].prompt.includes(p), `perfil do oráculo no texto: ${p}`);
+    assert.deepEqual(pair(run("ferramentas", clone(task)), run("com", clone(task))), []);
+  }
 });
 
 test("paridade: diferença fora da allowlist falha", () => {

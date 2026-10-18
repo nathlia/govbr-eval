@@ -66,6 +66,19 @@ function stage(name: Name, telasDir: string, validatorDir: string): string {
   return ctx;
 }
 
+/**
+ * NAT-61: conteúdo do contexto da imagem do agente (ponte, sonda, agente roteirizado, dependências), com
+ * quebras de linha normalizadas. Vai na etiqueta: mudar a ponte muda a etiqueta, e reconstruir numa
+ * worktree não move a etiqueta que o lock de outro checkout usa (o run-once confere id por etiqueta).
+ */
+export function agentContentSha256(): string {
+  const img = join(RUNNER_DIR, "images", "agent");
+  const container = join(RUNNER_DIR, "container");
+  const files = [["Dockerfile", join(img, "Dockerfile")], ["package.json", join(img, "package.json")], ["package-lock.json", join(img, "package-lock.json")],
+    ...["attempts.mjs", "bridge.mjs", "fake-agent.mjs", "probe.mjs"].map((f) => [`container/${f}`, join(container, f)])];
+  return sha256(files.map(([n, p]) => `${n}:${sha256(readFileSync(p, "utf8").replace(/\r\n/g, "\n"))}`).join("\n"));
+}
+
 function inImage(ref: string, script: string, network = "none"): string {
   return docker(["run", "--rm", "--network", network, "--read-only", "--tmpfs", "/tmp", "-e", "HOME=/tmp", ref, "sh", "-c", script]).stdout.trim();
 }
@@ -89,14 +102,14 @@ async function main(): Promise<void> {
   if (oracle && (!oracle.distSha256 || !oracle.dataSha256)) throw new Error(`validador sem dist/ ou data/ em ${validatorDir}`);
 
   const tags: Record<Name, string> = {
-    agent: `govbr-runner-agent:1.0.0-mcp${PLAYWRIGHT_MCP_VERSION}-cc${CLAUDE_CODE_VERSION}`,
+    agent: `govbr-runner-agent:1.0.0-mcp${PLAYWRIGHT_MCP_VERSION}-cc${CLAUDE_CODE_VERSION}-c${agentContentSha256().slice(0, 12)}`,
     screens: `govbr-runner-screens:telas${telas.version}-${telas.siteSha256.slice(0, 12)}`,
     collector: "govbr-runner-collector:1.0.0",
     egress: "govbr-runner-egress:1.0.0",
     oracle: oracle && oraclePkg ? `govbr-runner-oracle:${oraclePkg.version}-${oracle.distSha256!.slice(0, 12)}` : previous.images?.oracle?.tag ?? "govbr-runner-oracle:nao-construida",
   };
   const labels: Record<Name, Record<string, string>> = {
-    agent: { "govbr.playwright-mcp": PLAYWRIGHT_MCP_VERSION, "govbr.claude-code": CLAUDE_CODE_VERSION },
+    agent: { "govbr.playwright-mcp": PLAYWRIGHT_MCP_VERSION, "govbr.claude-code": CLAUDE_CODE_VERSION, "govbr.agent.content-sha256": agentContentSha256() },
     screens: { "govbr.telas.site-sha256": telas.siteSha256, "govbr.telas.manifest-sha256": telas.manifestSha256 },
     // NAT-81: `findings-contracts` diz ao run-once que envelopes esta imagem sabe armar; imagem antiga
     // (sem o rótulo) só conhece findings.v1. `schemas` continua o hash do findings.v1 (rótulo histórico).

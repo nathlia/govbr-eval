@@ -196,6 +196,32 @@ npm run run-once -- --tela solicitacao --braco sem --agente claude --egress real
 Códigos de saída: 0 passed, 3 failed/interrupted, 4 not-run, 2 pacote inválido, 1 erro de uso.
 Execução do agente roteirizado ou do cliente real contra o dublê grava `fixture: true` (nunca dado científico).
 
+## Três braços: `sem`, `com`, `ferramentas` (NAT-61)
+
+`--braco ferramentas` sobe o MESMO contêiner do oráculo do braço com (mesma imagem, mesmo
+`dist/`+`data/`, mesmo nome de servidor `govbr-ds-validator`, mesma entrada em `mcp.json`) com
+`GOVBR_VALIDATOR_TOOL_PROFILE=knowledge-free` (validator ≥ 2.14.0): `scan_page` só com axe-core,
+`get_finding_details` e `verify_finding` sem a base DS/e-MAG. A tabela braço → perfil pedido e os
+perfis fixados (nomes + sha256 do `tools/list`) ficam em `runner/perfis-oraculo.ts`.
+
+- **Janela do oráculo:** todo braço com oráculo recebe `GOVBR_VALIDATOR_VIEWPORT` = a primeira largura
+  do navegador (1280×900); o check `janela-do-oraculo` confere a atestação de estado das respostas
+  (`viewportSource: "harness"`).
+- **Ponte com `--allow`:** só as ferramentas do perfil passam; nome fora da lista é recusado
+  (`ferramenta-oculta`). O `inventory.json` grava o `tools/list` do servidor e o exposto, com sha256.
+- **Perfil MEDIDO, não declarado:** `perfil-do-oraculo-no-arranque` (antes da sonda; diverge → o agente
+  não parte), `inventario-do-oraculo` (sonda), `perfil-do-oraculo` e `inventario-exposto-do-oraculo`
+  (depois, com a telemetria: o knowledge-free marca todo evento com `knowledgeLockAttempts`).
+  `run.json` passa a `run.v2` em todos os braços; `intervention.oracle.profile` é o medido.
+- **Só no `ferramentas`:** `trava-de-conhecimento` (contador da trava = 0 em todo evento) e
+  `vazamento-de-conhecimento` (dicionário gerado do `data/` do validator travado sobre os payloads
+  integrais e o `tools/list` exposto; 0 sem explicação, payload incompleto = falha, canários disparando;
+  `scripts/vazamento/`, núcleo copiado texto a texto do validator com guarda de deriva). No `com`, a mesma
+  varredura é controle positivo informativo.
+- **Aderência:** no `ferramentas` a consulta normativa é "não aplicável"; o gate é scan + verificação
+  quando há candidato com regra.
+- **Texto da tarefa:** o mesmo sha256 nos três braços (`test:avaliar-tela`, `test:runner`).
+
 ## Cliente real (T3b)
 
 Código: `runner/cliente-claude.ts` (comando, roteiros, telemetria, gate de aderência),

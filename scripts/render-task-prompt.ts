@@ -19,7 +19,7 @@
  *
  * Uso:
  *   npm run render:tarefa -- --inputs <entradas.json> [--skill <SKILL.md>] [--out <prompt.txt>]
- *                            [--arm sem|com] [--run-id <id>]
+ *                            [--arm sem|com|ferramentas] [--run-id <id>]
  *   npm run render:tarefa -- --exemplo        (entradas de exemplo embutidas)
  * Imprime JSON com promptSha256, templateSha256, bytes e as chaves do canal lateral.
  */
@@ -60,13 +60,14 @@ export const ARM_DIFF_ALLOWLIST = {
   arm: "config — o runner gera a configuração MCP do braço (oráculo montado ou não); nunca texto",
   runId: "env (GOVBR_RUN_ID) + armação do coletor pelo runner; o coletor nomeia o arquivo pelo run armado, não pelo texto do agente",
   collectorToken: "env (GOVBR_COLLECTOR_TOKEN) — o proxy/coletor o aplica fora do agente; nunca texto",
-  oracleProfile: "config — perfil de ferramentas do servidor MCP no braço com; null no sem",
+  oracleProfile: "config — perfil de ferramentas do servidor MCP (com: evaluation; ferramentas: knowledge-free); null no sem",
 } as const;
 export type ArmDiffField = keyof typeof ARM_DIFF_ALLOWLIST;
 
 export interface RunInputs {
   task: TaskInputs;
-  arm: "sem" | "com";
+  /** NAT-61: três braços; o texto da tarefa é o MESMO nos três (só o canal lateral difere). */
+  arm: "sem" | "com" | "ferramentas";
   runId: string;
   collectorToken: string | null;
   oracleProfile: string | null;
@@ -82,7 +83,7 @@ export interface RenderedTask {
 }
 export interface RenderedRun extends RenderedTask {
   /** Canal lateral: tudo o que difere entre braços, fora do texto. */
-  channel: { env: Record<string, string>; config: { arm: "sem" | "com"; oracleProfile: string | null } };
+  channel: { env: Record<string, string>; config: { arm: "sem" | "com" | "ferramentas"; oracleProfile: string | null } };
 }
 
 // ───────────────────────────────────────────────────────────────── vocabulário proibido
@@ -270,13 +271,13 @@ function main(): void {
   const args = process.argv.slice(2);
   const inputsPath = argValue(args, "--inputs");
   if (!inputsPath && !args.includes("--exemplo")) {
-    console.error("Uso: npm run render:tarefa -- (--inputs <entradas.json> | --exemplo) [--skill <SKILL.md>] [--out <prompt.txt>] [--arm sem|com] [--run-id <id>]");
+    console.error("Uso: npm run render:tarefa -- (--inputs <entradas.json> | --exemplo) [--skill <SKILL.md>] [--out <prompt.txt>] [--arm sem|com|ferramentas] [--run-id <id>]");
     process.exit(1);
   }
   const task = inputsPath ? JSON.parse(readFileSync(resolve(inputsPath), "utf8")) as TaskInputs : EXAMPLE_INPUTS;
   const template = readFileSync(resolve(argValue(args, "--skill") ?? SKILL_PATH), "utf8");
-  const arm = (argValue(args, "--arm") ?? "sem") as "sem" | "com";
-  if (arm !== "sem" && arm !== "com") throw new Error("--arm: sem | com");
+  const arm = (argValue(args, "--arm") ?? "sem") as "sem" | "com" | "ferramentas";
+  if (arm !== "sem" && arm !== "com" && arm !== "ferramentas") throw new Error("--arm: sem | com | ferramentas");
   const rendered = renderRun(template, { task, arm, runId: argValue(args, "--run-id") ?? "sem-run-id", collectorToken: null, oracleProfile: null });
   const out = argValue(args, "--out");
   if (out) writeFileSync(resolve(out), rendered.prompt, "utf8");

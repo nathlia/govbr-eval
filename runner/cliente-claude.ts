@@ -14,6 +14,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import type { TaskInputs } from "../scripts/render-task-prompt";
+import { PERFIL_DO_BRACO, type Braco } from "./perfis-oraculo";
 
 export const CLAUDE_BIN = "/opt/runner/node_modules/.bin/claude";
 export const ORACLE_SERVER_NAME = "govbr-ds-validator";
@@ -62,8 +63,11 @@ export const STUB_SCENARIOS = ["honesto", "erros", "429", "529"] as const;
 const pw = (tool: string, input: Record<string, unknown> = {}): StubCall => ({ name: `mcp__playwright__${tool}`, input });
 const or = (tool: string, input: Record<string, unknown> = {}): StubCall => ({ name: `mcp__${ORACLE_SERVER_NAME}__${tool}`, input });
 
+/** NAT-61: ferramentas do braço com (e duas que nenhum braço tem) que o braço ferramentas não pode ter. */
+export const FERRAMENTAS_FORA_DO_PERFIL_LIVRE = ["get_ds_rules", "get_component_spec", "run_axe_scan", "inspect_computed_styles"];
+
 /** Ferramentas que o "modelo" pede e que NÃO podem executar: internas do cliente e as ocultas pela ponte. */
-export function forbiddenCalls(braco: "sem" | "com", url: string): StubCall[] {
+export function forbiddenCalls(braco: Braco, url: string): StubCall[] {
   const calls: StubCall[] = [
     { name: "Bash", input: { command: "cat /run/task/prompt.txt /etc/hostname; id" } },
     { name: "Read", input: { file_path: "/etc/hostname" } },
@@ -89,6 +93,8 @@ export function forbiddenCalls(braco: "sem" | "com", url: string): StubCall[] {
     pw("browser_install"),
   ];
   if (braco === "sem") calls.push(or("scan_page", { url }));
+  // NAT-61: no braço ferramentas o cliente não tem as ferramentas de conhecimento nem as que o perfil evaluation não registra
+  if (braco === "ferramentas") calls.push(...FERRAMENTAS_FORA_DO_PERFIL_LIVRE.map((t) => or(t, t === "get_ds_rules" ? { ids: ["x"] } : {})));
   return calls;
 }
 
@@ -105,7 +111,16 @@ const reportOf = (url: string, findings: unknown[], notes: string): unknown => (
  * Roteiro do dublê para um cenário. A URL da tela e o destino do envio vêm das mesmas entradas que
  * o texto da tarefa (o "modelo" roteirizado os conhece por construção; o real os lê no texto).
  */
-export function stubRoteiro(cenario: string, braco: "sem" | "com", inputs: TaskInputs, promptSha256: string): StubRoteiro {
+/** Uma alegação WCAG mínima para o verify_finding do roteiro (sem página viva: nada a reproduzir). */
+function verifyCall(url: string): StubCall {
+  return or("verify_finding", { live: false, finding: {
+    id: "F-900", rule: { id: "1.3.1", source: "wcag", description: "alegação de teste do roteiro do dublê" },
+    element: { locator: "h1", page: url }, evidence: { observed: "achado de teste do roteiro do dublê", expected: "sem valor de avaliação" },
+    severity: "minor", nature: "semantic", mode: "display", pathway: "heuristic",
+  } });
+}
+
+export function stubRoteiro(cenario: string, braco: Braco, inputs: TaskInputs, promptSha256: string): StubRoteiro {
   const url = inputs.url;
   const origem = inputs.envio.origem;
   const caminho = inputs.envio.caminho;
@@ -123,6 +138,8 @@ export function stubRoteiro(cenario: string, braco: "sem" | "com", inputs: TaskI
           { calls: [pw("browser_navigate", { url })] },
           { calls: [pw("browser_snapshot")] },
           ...(braco === "com" ? [{ calls: [or("get_emag_rules", { section: 1 })] }, { calls: [or("scan_page", { url })] }] : []),
+          // NAT-61: o braço ferramentas mede e verifica (sem consulta normativa, que não existe nele)
+          ...(braco === "ferramentas" ? [{ calls: [or("scan_page", { url })] }, { calls: [verifyCall(url)] }] : []),
           { calls: [pw("browser_navigate", { url: origem })] },
           { calls: [submitCall(caminho, reportOf(url, [finding], `roteiro honesto, braço ${braco}`))] },
           { text: "Relatório enviado." },
@@ -137,6 +154,7 @@ export function stubRoteiro(cenario: string, braco: "sem" | "com", inputs: TaskI
           { calls: [pw("browser_navigate", { url: "file:///etc/hostname" })] },
           { calls: [pw("browser_click", { element: "inexistente", ref: "e-nao-existe" })] },
           ...(braco === "com" ? [{ calls: [or("get_component_spec", { component: "componente-que-nao-existe" })] }, { calls: [or("scan_page", { url: "http://example.com/" })] }] : []),
+          ...(braco === "ferramentas" ? [{ calls: [or("scan_page", { url: "http://example.com/" })] }] : []),
           { calls: [pw("browser_snapshot")] },
           { calls: [pw("browser_navigate", { url: origem })] },
           { calls: [submitCall(caminho, reportOf(url, [], `roteiro com erros de ferramenta, braço ${braco}`))] },
@@ -299,7 +317,7 @@ const sha256Json = (v: unknown): string => createHash("sha256").update(JSON.stri
 // ───────────────────────────────────────────────────────────────── gate de aderência do oráculo
 
 export interface Adherence {
-  arm: "sem" | "com";
+  arm: Braco;
   normative: { tool: string; outcome: string }[];
   scan: { tool: string; outcome: string }[];
   verification: { tool: string; outcome: string }[];
@@ -309,7 +327,8 @@ export interface Adherence {
   applicableCandidates: number | null;
   verificationAvailable: boolean;
   verificationRequired: boolean;
-  gate: { normativeOk: boolean; scanOk: boolean; verificationOk: boolean | null; met: boolean };
+  /** normativeOk = null: a consulta normativa não se aplica ao braço (ferramentas: o perfil não tem ferramenta normativa). */
+  gate: { normativeOk: boolean | null; scanOk: boolean; verificationOk: boolean | null; met: boolean };
   usage: "absent-verified" | "used-adherent" | "available-unused" | "used-with-errors" | "unverified" | "not-applicable";
   note: string;
 }
@@ -318,8 +337,10 @@ export interface Adherence {
  * Gate de aderência (plano T3): ao menos uma consulta normativa e um scan bem-sucedidos; verificação
  * quando há candidato aplicável (achado com `rule`) e a ferramenta existe. Sem cota artificial: uma
  * chamada de cada basta. Qualquer erro de ferramenta do oráculo → used-with-errors (o detalhe fica aqui).
+ * NAT-61 (decisão 14): no braço ferramentas a consulta normativa é "não aplicável" (o perfil
+ * knowledge-free não tem ferramenta normativa); o gate é scan + verificação quando houver candidato com regra.
  */
-export function oracleAdherence(arm: "sem" | "com", ran: boolean, absentVerified: boolean, oracleEvents: Json[], exposed: string[], findings: { rule: unknown }[] | null): Adherence {
+export function oracleAdherence(arm: Braco, ran: boolean, absentVerified: boolean, oracleEvents: Json[], exposed: string[], findings: { rule: unknown }[] | null): Adherence {
   const calls = oracleEvents.filter((e) => e.kind === "call").map((e) => ({ tool: String(e.tool), outcome: String(e.outcome), detail: e.detail ? String(e.detail) : undefined }));
   const pick = (names: string[]): { tool: string; outcome: string }[] => calls.filter((c) => names.includes(c.tool)).map(({ tool, outcome }) => ({ tool, outcome }));
   const applicable = findings ? findings.filter((f) => f.rule !== null && f.rule !== undefined && f.rule !== "").length : null;
@@ -329,8 +350,9 @@ export function oracleAdherence(arm: "sem" | "com", ran: boolean, absentVerified
   const normative = pick(NORMATIVE_TOOLS);
   const scan = pick(SCAN_TOOLS);
   const verification = pick(VERIFY_TOOLS);
-  const gate = { normativeOk: ok(normative), scanOk: ok(scan), verificationOk: verificationRequired ? ok(verification) : null, met: false };
-  gate.met = gate.normativeOk && gate.scanOk && (gate.verificationOk ?? true);
+  const normativeApplies = PERFIL_DO_BRACO[arm] !== "knowledge-free";
+  const gate = { normativeOk: normativeApplies ? ok(normative) : null, scanOk: ok(scan), verificationOk: verificationRequired ? ok(verification) : null, met: false };
+  gate.met = (gate.normativeOk ?? true) && gate.scanOk && (gate.verificationOk ?? true);
   const errors = calls.filter((c) => c.outcome !== "ok");
   let usage: Adherence["usage"];
   let note: string;
@@ -338,7 +360,11 @@ export function oracleAdherence(arm: "sem" | "com", ran: boolean, absentVerified
   else if (arm === "sem") { usage = absentVerified ? "absent-verified" : "unverified"; note = absentVerified ? "oráculo ausente: inventário, DNS, ponte e chamadas" : "ausência do oráculo não comprovada"; }
   else if (!calls.length) { usage = "available-unused"; note = "oráculo anunciado, nenhuma chamada"; }
   else if (errors.length) { usage = "used-with-errors"; note = `${errors.length} chamada(s) do oráculo com erro: ${[...new Set(errors.map((e) => `${e.tool}/${e.outcome}`))].join(", ")}`; }
-  else if (gate.met) { usage = "used-adherent"; note = verificationRequired ? "consulta normativa, scan e verificação bem-sucedidos" : `consulta normativa e scan bem-sucedidos; verificação não exigida (${applicable === null ? "sem relatório aceito" : `${applicable} candidato(s) com regra`}${verificationAvailable ? "" : ", ferramenta indisponível"})`; }
+  else if (gate.met) {
+    const consulta = normativeApplies ? "consulta normativa e scan" : "scan (consulta normativa não aplicável no perfil knowledge-free)";
+    usage = "used-adherent";
+    note = verificationRequired ? `${consulta}, e verificação, bem-sucedidos` : `${consulta} bem-sucedidos; verificação não exigida (${applicable === null ? "sem relatório aceito" : `${applicable} candidato(s) com regra`}${verificationAvailable ? "" : ", ferramenta indisponível"})`;
+  }
   else { usage = "unverified"; note = `usado sem cumprir o gate: normativa ${gate.normativeOk}, scan ${gate.scanOk}, verificação ${gate.verificationOk}`; }
   return {
     arm, normative, scan, verification, otherCalls: calls.filter((c) => ![...NORMATIVE_TOOLS, ...SCAN_TOOLS, ...VERIFY_TOOLS].includes(c.tool)).map(({ tool, outcome }) => ({ tool, outcome })),

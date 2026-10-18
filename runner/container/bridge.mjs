@@ -4,7 +4,13 @@
 //
 //   node bridge.mjs --name playwright --port 8931 --windows 1280x900[,390x844] --events /out/tool-events.ndjson \
 //        --inventory /out/inventory.json -- node .../@playwright/mcp/cli.js ... --viewport-size {VIEWPORT}
-//   node bridge.mjs --name oracle --port 8932 --events ... --inventory ... -- node /opt/oracle/dist/index.js
+//   node bridge.mjs --name oracle --port 8932 [--allow a,b,c] --events ... --inventory ... -- node /opt/oracle/dist/index.js
+//
+// `--allow` (NAT-61): lista exata das ferramentas do servidor que a ponte deixa passar. Sem ela, a ponte do
+// oráculo expõe tudo o que o servidor anuncia (comportamento anterior). É a segunda trava do perfil: um nome
+// fora da lista não é anunciado e, chamado, é recusado e registrado (`ferramenta-oculta`). O inventário
+// grava o tools/list do servidor (antes do filtro) e o exposto, com sha256 de cada um, e o serverInfo:
+// é a medida do perfil que o runner confere (runner/perfis-oraculo.ts).
 //
 // Por que uma ponte e não o servidor direto no processo do agente:
 //   1. o navegador fica noutro contêiner, com outra rede (só a tela e o coletor, via proxy);
@@ -34,6 +40,8 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 export const BRIDGE_VERSION = "bridge-1.0.0";
 /** Política de payload integral (NAT-82). Fica no inventário e no evento `start`; a versão anunciada ao agente não muda. */
 export const PAYLOAD_POLICY = "tool-payload-1.0.0";
+/** Formato do inventory.json (1.1.0, NAT-61: allow, sha256 dos tools/list, tools/list exposto, serverInfo). Não é anunciado ao agente. */
+export const INVENTORY_VERSION = "bridge-inventario-1.1.0";
 
 /** Ferramentas do Playwright MCP que o agente recebe. Qualquer outra fica oculta (inclusive as de versões futuras). */
 export const PLAYWRIGHT_ALLOWED = [
@@ -60,6 +68,8 @@ const PORT = Number(opt("--port", "8931"));
 const EVENTS = opt("--events", null);
 const INVENTORY = opt("--inventory", null);
 const IS_PLAYWRIGHT = NAME === "playwright";
+const ALLOW = opt("--allow", null);
+if (IS_PLAYWRIGHT && ALLOW !== null) throw new Error("--allow vale só para o oráculo: o navegador usa PLAYWRIGHT_ALLOWED");
 const windows = (opt("--windows", "") || "").split(",").filter(Boolean).map((s) => {
   const m = /^(\d+)x(\d+)$/.exec(s);
   if (!m) throw new Error(`janela inválida: ${s}`);
@@ -134,7 +144,7 @@ for (let i = 0; i < Math.max(1, windows.length); i++) children.push(await startC
 let active = 0;
 
 const childTools = (await children[0].client.listTools()).tools;
-const allowed = IS_PLAYWRIGHT ? new Set(PLAYWRIGHT_ALLOWED) : new Set(childTools.map((t) => t.name));
+const allowed = IS_PLAYWRIGHT ? new Set(PLAYWRIGHT_ALLOWED) : ALLOW !== null ? new Set(ALLOW.split(",").map((t) => t.trim()).filter(Boolean)) : new Set(childTools.map((t) => t.name));
 const exposedTools = childTools.filter((t) => allowed.has(t.name));
 if (IS_PLAYWRIGHT && windows.length > 1) {
   exposedTools.push({
@@ -148,13 +158,18 @@ if (IS_PLAYWRIGHT && windows.length > 1) {
   });
 }
 const hidden = childTools.map((t) => t.name).filter((n) => !allowed.has(n));
+const serverInfo = children[0].client.getServerVersion() ?? null;
 const inventory = {
-  bridge: BRIDGE_VERSION, server: NAME, childTools: childTools.map((t) => t.name), exposed: exposedTools.map((t) => t.name),
-  hidden, windows, resizePattern: IS_PLAYWRIGHT ? RESIZE_PATTERN.source : null, startedAt: new Date().toISOString(),
+  bridge: BRIDGE_VERSION, inventoryVersion: INVENTORY_VERSION, server: NAME, childTools: childTools.map((t) => t.name), exposed: exposedTools.map((t) => t.name),
+  hidden, allow: IS_PLAYWRIGHT ? null : ALLOW !== null ? [...allowed] : null,
+  // sha256 de JSON.stringify(tools) como o cliente MCP os recebeu: o do servidor (antes do filtro) e o exposto ao agente
+  childToolsSha256: sha256(JSON.stringify(childTools)), exposedToolsSha256: sha256(JSON.stringify(exposedTools)),
+  toolsList: IS_PLAYWRIGHT ? null : exposedTools, serverInfo: serverInfo ? { name: serverInfo.name ?? null, version: serverInfo.version ?? null } : null,
+  windows, resizePattern: IS_PLAYWRIGHT ? RESIZE_PATTERN.source : null, startedAt: new Date().toISOString(),
   payloads: { policy: PAYLOAD_POLICY, projectionChars: PROJECTION_CHARS, limitBytes: PAYLOAD_LIMIT_BYTES, budgetBytes: PAYLOAD_BUDGET_BYTES, dir: PAYLOAD_DIR ? "payloads" : null },
 };
 if (INVENTORY) writeFileSync(INVENTORY, JSON.stringify(inventory, null, 2) + "\n");
-log({ kind: "start", exposed: inventory.exposed, hidden, payloads: inventory.payloads });
+log({ kind: "start", exposed: inventory.exposed, hidden, allow: inventory.allow, childToolsSha256: inventory.childToolsSha256, exposedToolsSha256: inventory.exposedToolsSha256, payloads: inventory.payloads });
 
 const textOf = (r) => (r?.content ?? []).map((c) => (c.type === "text" ? c.text : `[${c.type}]`)).join("\n");
 const refusal = (msg) => ({ content: [{ type: "text", text: `Recusado pela política desta execução: ${msg}` }], isError: true });

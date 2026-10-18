@@ -1,15 +1,16 @@
 {
   "lockVersion": 1,
-  "builtAt": "2026-10-18T03:02:22.483Z",
+  "builtAt": "2026-10-18T08:04:09.015Z",
   "base": {
     "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
     "node": "24.21.0"
   },
   "images": {
     "agent": {
-      "tag": "govbr-runner-agent:1.0.0-mcp0.0.70-cc2.1.288",
-      "id": "sha256:148221c122bbb6cefaa5c8053216b7e0ff8f577f511cf8e4847ff1db41a3670a",
+      "tag": "govbr-runner-agent:1.0.0-mcp0.0.70-cc2.1.288-c3da3f12a65b3",
+      "id": "sha256:6ef30eddf9e624a325009a36a07e80ff95ff8eaa550755f9f39c86f6262fd03c",
       "labels": {
+        "govbr.agent.content-sha256": "3da3f12a65b3d671e52bcf6be1de2c0db9ab9eba0b48301ac87050e8259c6c09",
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.claude-code": "2.1.288",
         "govbr.playwright-mcp": "0.0.70",
@@ -18,15 +19,16 @@
       }
     },
     "oracle": {
-      "tag": "govbr-runner-oracle:2.13.0-185dd2f56980",
-      "id": "sha256:037c54eada34b3066b51ae2ca53335a6c19927bf4b26f6a501ca0ed27d1f827b",
+      "tag": "govbr-runner-oracle:2.14.0-1996d3bbf13a",
+      "id": "sha256:5a45837d62b3ee9b4ff0c5e8ef6ca7ac48e3a7848a0ea71889f773af9247cc51",
       "labels": {
+        "govbr.agent.content-sha256": "3da3f12a65b3d671e52bcf6be1de2c0db9ab9eba0b48301ac87050e8259c6c09",
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.claude-code": "2.1.288",
-        "govbr.oracle.data-sha256": "1c757fc8e4ed9ca48c3d09973558994914a71149c75f96c4b7ebc708c6e16395",
-        "govbr.oracle.dist-sha256": "185dd2f569808d5c4213569e08b9e1aad339fea33c5874b05110aa80b1ddc537",
+        "govbr.oracle.data-sha256": "ed68152ebc9652e7de46231ce17b17aac5d0878e343a713d071059eb0d373579",
+        "govbr.oracle.dist-sha256": "1996d3bbf13a6e166668f2f277f566ff5c94e7e3bad46cfdbff2367dc15b7c74",
         "govbr.oracle.package": "govbr-ds-validator-server",
-        "govbr.oracle.version": "2.13.0",
+        "govbr.oracle.version": "2.14.0",
         "govbr.playwright-mcp": "0.0.70",
         "govbr.runner.image": "oracle",
         "govbr.runner.version": "runner-isolado-1.0.0"
@@ -73,9 +75,9 @@
     "claudeCode": "2.1.288 (Claude Code)",
     "oracle": {
       "package": "govbr-ds-validator-server",
-      "version": "2.13.0",
-      "distSha256": "185dd2f569808d5c4213569e08b9e1aad339fea33c5874b05110aa80b1ddc537",
-      "dataSha256": "1c757fc8e4ed9ca48c3d09973558994914a71149c75f96c4b7ebc708c6e16395"
+      "version": "2.14.0",
+      "distSha256": "1996d3bbf13a6e166668f2f277f566ff5c94e7e3bad46cfdbff2367dc15b7c74",
+      "dataSha256": "ed68152ebc9652e7de46231ce17b17aac5d0878e343a713d071059eb0d373579"
     },
     "telas": {
       "siteSha256": "1a6e8daf3cdb02da4f03cc3e39f52c0a1f44063b8270238ac5caf78eae39d11a",

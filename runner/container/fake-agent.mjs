@@ -34,13 +34,18 @@ const [ORIGEM, CAMINHO] = [envio[1], envio[2]];
 
 // ── MCP
 const clients = {};
+/** Ferramentas que o oráculo anuncia (com: perfil evaluation; ferramentas: knowledge-free). */
+let oracleTools = [];
 for (const [name, conf] of Object.entries(mcpConfig)) {
   const c = new Client({ name: "fake-agent", version: "1.0.0" });
   await c.connect(new StreamableHTTPClientTransport(new URL(conf.url)));
   clients[name] = c;
-  if (name !== "playwright") clients.oracle = c;
-  step({ kind: "connect", server: name, tools: (await c.listTools()).tools.map((t) => t.name) });
+  const tools = (await c.listTools()).tools.map((t) => t.name);
+  if (name !== "playwright") { clients.oracle = c; oracleTools = tools; }
+  step({ kind: "connect", server: name, tools });
 }
+/** NAT-61: ferramentas do perfil evaluation que o perfil knowledge-free retira (e uma que nenhum braço tem). */
+const RETIRADAS = ["get_ds_rules", "get_component_spec", "get_design_tokens", "get_emag_rules", "get_page_rules", "run_axe_scan", "inspect_computed_styles"];
 const textOf = (r) => (r?.content ?? []).map((c) => (c.type === "text" ? c.text : `[${c.type}]`)).join("\n");
 async function call(server, tool, args = {}) {
   try {
@@ -90,8 +95,11 @@ async function honestFinding() {
   const subject = await evaluate("() => { const h = document.querySelector('h1'); return JSON.stringify({ sel: h ? 'h1' : 'body', text: ((h ? h.textContent : document.title) || '').trim().slice(0, 80) }); }");
   const evidence = [];
   if (clients.oracle) {
-    const rules = await call("oracle", "get_emag_rules", { section: 1 });
-    step({ kind: "oracle", tool: "get_emag_rules", isError: rules.isError, bytes: rules.text.length });
+    // consulta normativa só onde o perfil a anuncia (com); no braço ferramentas ela não existe
+    if (oracleTools.includes("get_emag_rules")) {
+      const rules = await call("oracle", "get_emag_rules", { section: 1 });
+      step({ kind: "oracle", tool: "get_emag_rules", isError: rules.isError, bytes: rules.text.length });
+    }
     const scan = await call("oracle", "scan_page", { url: URL_TELA });
     step({ kind: "oracle", tool: "scan_page", isError: scan.isError, bytes: scan.text.length });
     const id = /"scanId"\s*:\s*"([^"]+)"/.exec(scan.text)?.[1];
@@ -167,6 +175,11 @@ async function forbidden() {
   } else {
     const r = await call("oracle", "scan_page", { url: `http://host.docker.internal:${ports[0]}/` });
     attempt("oraculo-fora-da-tela", "oracle:scan_page", `host.docker.internal:${ports[0]}`, r.isError || /fora da pol[ií]tica|Bloqueado|ERR_/.test(r.text), r.text.slice(0, 200));
+    // NAT-61: ferramenta que o perfil não anuncia, pedida pelo nome, é recusada pela ponte (segunda trava)
+    for (const t of RETIRADAS.filter((x) => !oracleTools.includes(x))) {
+      const x = await call("oracle", t, t === "get_ds_rules" ? { ids: ["x"] } : {});
+      attempt("ferramenta-fora-do-perfil", `oracle:${t}`, t, x.isError && /n[aã]o est[aá] dispon[ií]vel|Recusado/.test(x.text), x.text.slice(0, 200));
+    }
   }
   // coletor: listagem, leitura, run id errado, travessia
   await pw("browser_navigate", { url: ORIGEM });

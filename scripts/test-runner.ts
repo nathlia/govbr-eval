@@ -14,10 +14,13 @@ import assert from "node:assert/strict";
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { validateContract, crossCheckRun, type ArtifactManifest, type Findings, type Isolation, type Run } from "../contracts/index";
+import { fileURLToPath } from "node:url";
+import { validateContract, crossCheckRun, type ArtifactManifest, type Findings, type Isolation, type RunV2 as Run } from "../contracts/index";
 import { runOnce, type RunOptions, type RunOutcome } from "../runner/run-once";
 import { DEFAULT_TELAS_DIR, DEFAULT_VALIDATOR_DIR, docker, dockerAvailable, sha256 } from "../runner/lib";
-import { FAKE_CREDENTIAL, forbiddenCalls, type ClientTelemetry, type StubSummary } from "../runner/cliente-claude";
+import { FAKE_CREDENTIAL, FERRAMENTAS_FORA_DO_PERFIL_LIVRE, forbiddenCalls, oracleAdherence, type ClientTelemetry, type StubSummary } from "../runner/cliente-claude";
+import { PERFIS, perfilMedido, type InventarioOraculo } from "../runner/perfis-oraculo";
+import { varrerPayloadsDoOraculo } from "./vazamento/conhecimento";
 
 /** Modelo pedido ao dublê: um id que não existe, para nunca parecer dado. */
 const STUB_MODEL = "claude-opus-duble-teste";
@@ -27,6 +30,7 @@ const args = process.argv.slice(2);
 const keep = args.includes("--manter");
 const only = args.includes("--so") ? args[args.indexOf("--so") + 1].split(",") : null;
 const ROOT = mkdtempSync(join(tmpdir(), "govbr-test-runner-"));
+const ROOT_EVAL = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const results: { name: string; ok: boolean; ms: number; detail?: string }[] = [];
 const timings: { run: string; seconds: number }[] = [];
 
@@ -91,6 +95,39 @@ function assertPackage(o: RunOutcome): { run: Run; isolation: Isolation | null; 
 const pkgs: Record<string, RunOutcome> = {};
 
 /**
+ * NAT-61 — com × ferramentas: os MESMOS contêineres, a mesma configuração MCP (mesmo nome de servidor) e o mesmo
+ * texto; no contêiner do oráculo, só o perfil (env) e a lista `--allow` da ponte diferem; run.json só na allowlist.
+ */
+function assertParidadeFerramentas(ferr: RunOutcome | undefined, com: RunOutcome | undefined): void {
+  assert.ok(ferr && com, "precisa dos dois pacotes (ferramentas e com)");
+  assert.equal(readFileSync(join(ferr.runDir, "evidence/prompt.txt"), "utf8"), readFileSync(join(com.runDir, "evidence/prompt.txt"), "utf8"));
+  assert.deepEqual(read(ferr.runDir, "evidence/mcp-config.json"), read(com.runDir, "evidence/mcp-config.json"), "configuração MCP idêntica");
+  const cf = read<Record<string, { env: string[]; cmd: string[] }>>(ferr.runDir, "evidence/container-config.json");
+  const cc = read<Record<string, { env: string[]; cmd: string[] }>>(com.runDir, "evidence/container-config.json");
+  assert.deepEqual(Object.keys(cf).sort(), Object.keys(cc).sort(), "mesmos contêineres");
+  for (const role of Object.keys(cc)) {
+    const strip = (c: { env: string[]; cmd: string[] }, r: string) => {
+      const x = JSON.parse(JSON.stringify(c)) as { env: string[]; cmd: string[] };
+      if (r === "probe") x.env = x.env.filter((e) => !e.startsWith("PROBE_CONFIG="));
+      if (r === "oracle") {
+        x.env = x.env.filter((e) => !e.startsWith("GOVBR_VALIDATOR_TOOL_PROFILE="));
+        const i = x.cmd.indexOf("--allow");
+        if (i >= 0) x.cmd.splice(i, 2);
+      }
+      return x;
+    };
+    assert.deepEqual(strip(cf[role], role), strip(cc[role], role), `configuração de ${role} difere entre com e ferramentas`);
+  }
+  const flat = (o: unknown, p = ""): Record<string, string> => (o && typeof o === "object" && !Array.isArray(o))
+    ? Object.assign({}, ...Object.entries(o as Record<string, unknown>).map(([k, v]) => flat(v, p ? `${p}.${k}` : k))) : { [p]: JSON.stringify(o) };
+  const fa = flat(read(ferr.runDir, "run.json")), fb = flat(read(com.runDir, "run.json"));
+  const ALLOW = [/^runId$/, /^slotId$/, /^idempotencyKey$/, /^arm$/, /^intervention\.oracle\.(profile|tools|toolsListSha256)$/, /^timestamps\./, /^status\.oracleUsage$/, /^usage\./];
+  const diff = [...new Set([...Object.keys(fa), ...Object.keys(fb)])].filter((k) => fa[k] !== fb[k]);
+  assert.deepEqual(diff.filter((k) => !ALLOW.some((re) => re.test(k))), [], "campos de run.json fora da allowlist diferem entre com e ferramentas");
+  console.log(`     · com × ferramentas, diferenças permitidas em run.json: ${diff.join(", ")}`);
+}
+
+/**
  * Paridade entre braços: texto da tarefa byte a byte; configuração efetiva de todos os contêineres igual
  * (o com só acrescenta o oráculo); configuração MCP difere só na entrada do oráculo; run.json só na allowlist.
  */
@@ -125,7 +162,62 @@ function assertParity(a: RunOutcome | undefined, b: RunOutcome | undefined): voi
   console.log(`     · diferenças permitidas em run.json: ${diff.join(", ")}`);
 }
 
+/**
+ * NAT-61 — partes do runner do terceiro braço que não precisam de Docker: perfil medido, aderência, chamadas
+ * proibidas do braço ferramentas, a cópia do detector de vazamento (guarda de deriva) e a varredura em si.
+ */
+async function testesSemDocker(): Promise<void> {
+  await test("perfil medido: tools/list do servidor (nomes + sha256 fixado) e marca da telemetria; o rótulo do braço não conta", async () => {
+    const inv = (p: "evaluation" | "knowledge-free", hash?: string): InventarioOraculo => ({ childTools: [...PERFIS[p].tools].reverse(), exposed: [...PERFIS[p].tools], hidden: [],
+      childToolsSha256: hash ?? PERFIS[p].toolsListSha256, exposedToolsSha256: PERFIS[p].toolsListSha256 });
+    assert.equal(perfilMedido(inv("knowledge-free")).perfil, "knowledge-free");
+    assert.equal(perfilMedido(inv("evaluation")).perfil, "evaluation");
+    assert.equal(perfilMedido(inv("knowledge-free", "0".repeat(64))).perfil, null, "nomes certos, esquemas diferentes do fixado");
+    assert.equal(perfilMedido(null).perfil, null);
+    assert.equal(perfilMedido(inv("knowledge-free"), [{ knowledgeLockAttempts: 0 }, { knowledgeLockAttempts: 0 }]).perfil, "knowledge-free");
+    assert.equal(perfilMedido(inv("evaluation"), [{ knowledgeLockAttempts: 0 }]).perfil, null, "telemetria do knowledge-free num tools/list do evaluation");
+    assert.equal(perfilMedido(inv("knowledge-free"), [{ knowledgeLockAttempts: 0 }, {}]).perfil, null, "telemetria mista");
+    // o validator cai em full em silêncio com perfil desconhecido: 14 ferramentas não são perfil nenhum
+    assert.equal(perfilMedido({ ...inv("evaluation"), childTools: [...PERFIS.evaluation.tools, "run_axe_scan", "save_report"] }).perfil, null);
+  });
+  await test("braço ferramentas: chamadas proibidas incluem as retiradas; aderência = scan (+ verificação), consulta normativa não aplicável", async () => {
+    const nomes = forbiddenCalls("ferramentas", "http://x/").map((c) => c.name);
+    for (const t of FERRAMENTAS_FORA_DO_PERFIL_LIVRE) assert.ok(nomes.includes(`mcp__govbr-ds-validator__${t}`), t);
+    assert.ok(!forbiddenCalls("com", "http://x/").some((c) => c.name.endsWith("__get_ds_rules")), "o braço com mantém a consulta normativa");
+    const ev = (tool: string, outcome = "ok") => ({ kind: "call", tool, outcome });
+    const kf = oracleAdherence("ferramentas", true, false, [ev("scan_page")], [...PERFIS["knowledge-free"].tools], [{ rule: null }]);
+    assert.equal(kf.gate.normativeOk, null);
+    assert.equal(kf.usage, "used-adherent");
+    const kfRegra = oracleAdherence("ferramentas", true, false, [ev("scan_page")], [...PERFIS["knowledge-free"].tools], [{ rule: "1.3.1" }]);
+    assert.equal(kfRegra.usage, "unverified", "candidato com regra exige verificação");
+    assert.equal(oracleAdherence("ferramentas", true, false, [ev("scan_page"), ev("verify_finding")], [...PERFIS["knowledge-free"].tools], [{ rule: "1.3.1" }]).usage, "used-adherent");
+    assert.equal(oracleAdherence("com", true, false, [ev("scan_page")], [...PERFIS.evaluation.tools], [{ rule: null }]).usage, "unverified", "o braço com continua exigindo a consulta normativa");
+  });
+  await test("detector de vazamento: cópia texto a texto do validator (guarda de deriva)", async () => {
+    const original = join(DEFAULT_VALIDATOR_DIR, "scripts", "lib", "vazamento.ts");
+    if (!existsSync(original)) { console.log(`     · validator sem scripts/lib/vazamento.ts em ${DEFAULT_VALIDATOR_DIR}: guarda não exercitada`); return; }
+    const norm = (p: string) => readFileSync(p, "utf8").replace(/\r\n/g, "\n");
+    assert.equal(norm(join(ROOT_EVAL, "scripts", "vazamento", "nucleo.ts")), norm(original), "scripts/vazamento/nucleo.ts divergiu do validator: copie de novo e declare");
+  });
+  await test("varredura: resposta neutra passa; título da base, id enriquecido e payload cortado não", async () => {
+    if (!existsSync(join(DEFAULT_VALIDATOR_DIR, "dist", "checkers", "grounding.js"))) { console.log("     · validator sem dist/: varredura não exercitada"); return; }
+    const call = (tool: string, result: unknown, extra: Record<string, unknown> = {}) => ({ kind: "call", seq: 1, tool, args: { text: "{}", truncated: false }, result: { text: JSON.stringify(result), truncated: false }, ...extra });
+    const limpa = await varrerPayloadsDoOraculo({ validatorDir: DEFAULT_VALIDATOR_DIR, telasDir: DEFAULT_TELAS_DIR, toolsList: null, ler: () => null,
+      eventos: [call("scan_page", { findings: [{ rule: { id: "color-contrast", source: "axe-core" }, element: { locator: "h1" } }], note: "nada do DS aqui" })] });
+    assert.equal(limpa.semExplicacao.length, 0, JSON.stringify(limpa.semExplicacao));
+    assert.ok(limpa.canarios.every((c) => c.ok), JSON.stringify(limpa.canarios));
+    const dict = await import("./vazamento/conhecimento").then((m) => m.dicionarioDoValidator(DEFAULT_VALIDATOR_DIR));
+    const titulo = [...dict.phrases.values()].find((t) => t.source === "kb:title")!.term;
+    const id = [...dict.exact.values()].find((t) => t.source === "kb:id")!.term;
+    const suja = await varrerPayloadsDoOraculo({ validatorDir: DEFAULT_VALIDATOR_DIR, telasDir: DEFAULT_TELAS_DIR, toolsList: null, ler: () => null,
+      eventos: [call("verify_finding", { note: `Veja ${titulo}.`, next: { ruleId: id } }), call("scan_page", {}, { result: { text: "x".repeat(10), truncated: true, payload: { status: "truncated", path: null } } })] });
+    assert.ok(suja.semExplicacao.some((u) => u.source === "kb:title") && suja.semExplicacao.some((u) => u.source === "kb:id"), JSON.stringify(suja.semExplicacao));
+    assert.equal(suja.incompletas.length, 1, "payload cortado = varredura incompleta");
+  });
+}
+
 async function main(): Promise<void> {
+  await testesSemDocker();
   const d = dockerAvailable();
   if (!d.ok) {
     console.log(`PULADO: Docker indisponível (${d.detail}). O test:runner precisa do Docker Desktop/daemon em execução.`);
@@ -133,7 +225,7 @@ async function main(): Promise<void> {
   }
   console.log(`Docker ${d.detail}; pacotes em ${ROOT}`);
 
-  for (const braco of ["sem", "com"] as const) {
+  for (const braco of ["sem", "com", "ferramentas"] as const) {
     await test(`honesto ${braco}: 1 achado aceito, isolamento comprovado, pacote válido`, async () => {
       const o = await run({ braco, cenario: "honesto" }, `honesto-${braco}`);
       pkgs[`honesto-${braco}`] = o;
@@ -144,16 +236,38 @@ async function main(): Promise<void> {
       assert.equal(findings?.report.findings.length, 1);
       assert.deepEqual(findings?.report.findings[0].state.viewport, { width: 1280, height: 900 }, "viewport medido na janela fixa");
       assert.equal(r.status.oracleUsage, braco === "sem" ? "absent-verified" : "used-adherent");
-      assert.equal(isolation?.toolInventory.oracleAnnounced, braco === "com");
+      assert.equal(isolation?.toolInventory.oracleAnnounced, braco !== "sem");
       assert.ok(!isolation?.toolInventory.announced.includes("browser_resize") && !isolation?.toolInventory.announced.includes("browser_run_code"));
-      if (braco === "com") assert.ok(isolation?.toolInventory.observed.includes("scan_page"), "chamada ao oráculo registrada pela ponte");
-      assert.equal(r.usage.oracleCalls.value, braco === "sem" ? 0 : 2);
+      if (braco !== "sem") assert.ok(isolation?.toolInventory.observed.includes("scan_page"), "chamada ao oráculo registrada pela ponte");
+      // NAT-61: com consulta a base e faz o scan (2); ferramentas só tem o scan (a consulta normativa não existe nele)
+      assert.equal(r.usage.oracleCalls.value, braco === "sem" ? 0 : braco === "com" ? 2 : 1);
+      assert.equal(r.contract, "run.v2");
+      if (braco === "sem") assert.equal(r.intervention.oracle, null);
+      else {
+        const perfil = braco === "com" ? "evaluation" : "knowledge-free";
+        assert.equal(r.intervention.oracle!.profile, perfil, "perfil MEDIDO no run.json");
+        assert.deepEqual(r.intervention.oracle!.tools, [...PERFIS[perfil].tools]);
+        assert.equal(r.intervention.oracle!.toolsListSha256, PERFIS[perfil].toolsListSha256);
+        const ids = ["perfil-do-oraculo-no-arranque", "inventario-exposto-do-oraculo-no-arranque", "inventario-do-oraculo", "perfil-do-oraculo", "inventario-exposto-do-oraculo", "janela-do-oraculo",
+          ...(braco === "ferramentas" ? ["trava-de-conhecimento", "vazamento-de-conhecimento"] : ["vazamento-de-conhecimento-controle-positivo"])];
+        for (const id of ids) assert.equal(isolation!.checks.find((c) => c.id === id)?.outcome, "passed", `check ${id}: ${isolation!.checks.find((c) => c.id === id)?.detail}`);
+        const cfg = read<Record<string, { env: string[]; cmd: string[] }>>(o.runDir, "evidence/container-config.json").oracle;
+        assert.ok(cfg.env.includes(`GOVBR_VALIDATOR_TOOL_PROFILE=${perfil}`) && cfg.env.includes("GOVBR_VALIDATOR_VIEWPORT=1280x900"), "perfil e janela do oráculo");
+        assert.equal(cfg.cmd[cfg.cmd.indexOf("--allow") + 1], PERFIS[perfil].tools.join(","), "a ponte deixa passar só o perfil");
+      }
       assert.equal(r.fixture, true, "execução do agente roteirizado é fixture, nunca dado científico");
     });
   }
 
   await test("paridade entre braços: só o oráculo e identificadores técnicos diferem", async () => {
     assertParity(pkgs["honesto-sem"], pkgs["honesto-com"]);
+  });
+
+  await test("trio (NAT-61): ferramentas × com só diferem no perfil do oráculo e na lista da ponte; texto da tarefa com o mesmo sha256 nos três", async () => {
+    assertParidadeFerramentas(pkgs["honesto-ferramentas"], pkgs["honesto-com"]);
+    const shas = ["sem", "com", "ferramentas"].map((b) => sha256(readFileSync(join(pkgs[`honesto-${b}`]!.runDir, "evidence/prompt.txt"))));
+    assert.equal(new Set(shas).size, 1, `sha256 do texto: ${shas.join(" × ")}`);
+    assert.equal(new Set(["sem", "com", "ferramentas"].map((b) => read<Run>(pkgs[`honesto-${b}`]!.runDir, "run.json").versions.promptSha256)).size, 1);
   });
 
   await test("vazio: findings: [] aceito é resultado válido, distinto de ausência", async () => {
@@ -184,7 +298,7 @@ async function main(): Promise<void> {
     assert.equal(archived.body, '{"timestamp": "x", "findings": [', "corpo original byte a byte");
   });
 
-  for (const braco of ["sem", "com"] as const) {
+  for (const braco of ["sem", "com", "ferramentas"] as const) {
     await test(`proibido ${braco}: cada tentativa recusada pelo sistema e registrada pelo harness`, async () => {
       const o = await run({ braco, cenario: "proibido" }, `proibido-${braco}`);
       pkgs[`proibido-${braco}`] = o;
@@ -199,6 +313,7 @@ async function main(): Promise<void> {
         "fetch-na-pagina", "resize-direto", "resize-por-codigo", "resize-pela-pagina", "zoom-pela-pagina", "janela-inalterada", "coletor-listar",
         "coletor-ler", "coletor-travessia", "coletor-run-id-errado", "coletor-tamanho", "coletor-sobrescrita"]) assert.ok(ids.has(id), `tentativa ausente: ${id}`);
       assert.ok(ids.has(braco === "sem" ? "oraculo-direto" : "oraculo-fora-da-tela"));
+      if (braco !== "sem") assert.equal(isolation!.checks.find((c) => c.id === "perfil-do-oraculo")?.outcome, "passed");
       // idempotência: o mesmo relatório de novo devolve o mesmo recibo
       assert.equal(f.idempotent?.status, 200);
       assert.match(f.idempotent!.body, /"duplicate":true/);
@@ -209,6 +324,11 @@ async function main(): Promise<void> {
         assert.ok(refused.includes(want), `ponte não registrou ${want}`);
       }
       if (braco === "sem") assert.ok(refused.includes("scan_page:ferramenta-oculta"));
+      // NAT-61: no braço ferramentas, as ferramentas de conhecimento pedidas pelo nome morrem na ponte do oráculo
+      if (braco === "ferramentas") {
+        assert.ok(ids.has("ferramenta-fora-do-perfil"), "o agente roteirizado tentou as ferramentas retiradas");
+        for (const t of ["get_ds_rules", "get_component_spec", "get_emag_rules", "run_axe_scan", "inspect_computed_styles"]) assert.ok(refused.includes(`${t}:ferramenta-oculta`), `ponte do oráculo não recusou ${t}`);
+      }
       assert.equal(events.filter((e) => e.kind === "drift").length, 0, "janela derivou");
       // proxies: as navegações http proibidas morreram no proxy do navegador; o processo, no do provedor
       const site = ndjson(join(o.runDir, "evidence/raw/egress-site/egress.ndjson"));
@@ -320,7 +440,7 @@ async function main(): Promise<void> {
   const cliente = (dir: string): ClienteDoc => read<ClienteDoc>(dir, "evidence/cliente.json");
   const checkOf = (iso: Isolation | null, id: string): string | undefined => iso?.checks.find((c) => c.id === id)?.outcome;
 
-  for (const braco of ["sem", "com"] as const) {
+  for (const braco of ["sem", "com", "ferramentas"] as const) {
     await test(`cliente real ${braco}: só ferramentas MCP, chamadas pela ponte, texto íntegro, telemetria e isolamento`, async () => {
       // uma "credencial real" (sentinela) no ambiente do runner NÃO pode chegar ao contêiner no modo dublê
       const saved = process.env.ANTHROPIC_API_KEY;
@@ -347,17 +467,22 @@ async function main(): Promise<void> {
       }
       const c = cliente(o.runDir);
       const browser = read<{ exposed: string[] }>(o.runDir, "evidence/raw/browser/inventory.json").exposed;
-      const oracle = braco === "com" ? read<{ exposed: string[] }>(o.runDir, "evidence/raw/oracle/inventory.json").exposed : [];
+      const oracle = braco !== "sem" ? read<{ exposed: string[] }>(o.runDir, "evidence/raw/oracle/inventory.json").exposed : [];
       const expected = [...browser.map((t) => `mcp__playwright__${t}`), ...oracle.map((t) => `mcp__govbr-ds-validator__${t}`)].sort();
       // 1. capacidades efetivas: o cliente só tem (init) e só anuncia ao "modelo" (pedido) as ferramentas MCP das pontes
       assert.deepEqual([...c.client.init!.tools].sort(), expected, "init.tools do cliente");
       assert.deepEqual(c.stub!.advertisedTools.filter((t) => !c.stub!.deferredTools.includes(t)), expected, "campo tools dos pedidos ao modelo");
       assert.deepEqual(c.stub!.deferredTools, ["DeferredToolPlaceholder"], "só o marcador adiado do cliente");
-      assert.equal(expected.some((t) => t.startsWith("mcp__govbr-ds-validator__")), braco === "com", "oráculo anunciado só no com");
+      assert.equal(expected.some((t) => t.startsWith("mcp__govbr-ds-validator__")), braco !== "sem", "oráculo anunciado só nos braços com oráculo");
+      if (braco === "ferramentas") {
+        assert.deepEqual(oracle.sort(), [...PERFIS["knowledge-free"].tools], "o modelo só recebe as 3 ferramentas do perfil");
+        for (const t of ["get_ds_rules", "get_component_spec", "get_emag_rules", "get_page_rules", "get_design_tokens"]) assert.ok(!expected.includes(`mcp__govbr-ds-validator__${t}`), `${t} anunciada no ferramentas`);
+        for (const id of ["trava-de-conhecimento", "vazamento-de-conhecimento"]) assert.equal(checkOf(isolation, id), "passed", `check ${id}`);
+      }
       assert.deepEqual(c.client.init!.skills, []);
       assert.deepEqual(c.client.init!.slashCommands, []);
       assert.ok(c.client.init!.plugins.every((p) => p.source.endsWith("@builtin")), "nenhum plugin instalado");
-      assert.deepEqual(c.client.init!.mcpServers.map((m) => `${m.name}:${m.status}`).sort(), (braco === "com" ? ["govbr-ds-validator:connected", "playwright:connected"] : ["playwright:connected"]));
+      assert.deepEqual(c.client.init!.mcpServers.map((m) => `${m.name}:${m.status}`).sort(), (braco !== "sem" ? ["govbr-ds-validator:connected", "playwright:connected"] : ["playwright:connected"]));
       // cada ferramenta proibida pedida pelo roteiro voltou como erro ao "modelo" e nunca chegou à ponte
       const forbidden = forbiddenCalls(braco, "x").map((f) => f.name);
       const errored = new Set(c.client.toolErrors.map((t) => t.tool));
@@ -409,7 +534,7 @@ async function main(): Promise<void> {
       const ad = read<{ usage: string; gate: { met: boolean } }>(o.runDir, "evidence/aderencia-oraculo.json");
       assert.equal(r.status.oracleUsage, braco === "sem" ? "absent-verified" : "used-adherent");
       assert.equal(ad.usage, r.status.oracleUsage);
-      if (braco === "com") assert.equal(ad.gate.met, true);
+      if (braco !== "sem") assert.equal(ad.gate.met, true);
       console.log(`     · ${expected.length} ferramentas anunciadas; ${forbidden.length} proibidas recusadas; ${c.stub!.mainRequests} pedidos ao dublê; tokens ${r.usage.inputTokens.value}/${r.usage.outputTokens.value}`);
     });
   }
@@ -422,6 +547,13 @@ async function main(): Promise<void> {
     // e o prompt de sistema do cliente também (o oráculo não injeta instruções; só o campo tools difere)
     assert.ok(cliente(a!.runDir).stub!.firstTurnSystemSha256, "prompt de sistema registrado");
     assert.equal(cliente(a!.runDir).stub!.firstTurnSystemSha256, cliente(b!.runDir).stub!.firstTurnSystemSha256, "prompt de sistema do 1º pedido difere entre braços");
+  });
+
+  await test("cliente real: paridade com × ferramentas (texto, 1º pedido ao modelo, configuração efetiva)", async () => {
+    const [f, c] = [pkgs["cliente-ferramentas"], pkgs["cliente-com"]];
+    assertParidadeFerramentas(f, c);
+    assert.equal(cliente(f!.runDir).stub!.firstTurnMessagesSha256, cliente(c!.runDir).stub!.firstTurnMessagesSha256, "mensagens do 1º pedido diferem entre com e ferramentas");
+    assert.equal(cliente(f!.runDir).stub!.firstTurnSystemSha256, cliente(c!.runDir).stub!.firstTurnSystemSha256, "prompt de sistema do 1º pedido difere entre com e ferramentas");
   });
 
   await test("cliente real erros com: recusa da ponte, isError e erro do oráculo visíveis → used-with-errors", async () => {

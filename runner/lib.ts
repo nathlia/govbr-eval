@@ -12,7 +12,11 @@ export const RUNNER_DIR = dirname(fileURLToPath(import.meta.url));
 export const EVAL_ROOT = resolve(RUNNER_DIR, "..");
 export const TCC_ROOT = resolve(EVAL_ROOT, "..");
 export const DEFAULT_TELAS_DIR = join(TCC_ROOT, "govbr-telas");
-export const DEFAULT_VALIDATOR_DIR = join(TCC_ROOT, "govbr-ds-validator");
+/**
+ * NAT-61: `GOVBR_VALIDATOR_DIR` aponta outro checkout do validator (ex.: uma worktree com o dist/ de outra
+ * versão) sem mexer no dist/ do checkout irmão, que outra frente pode estar usando. Padrão: o irmão.
+ */
+export const DEFAULT_VALIDATOR_DIR = process.env.GOVBR_VALIDATOR_DIR ? resolve(process.env.GOVBR_VALIDATOR_DIR) : join(TCC_ROOT, "govbr-ds-validator");
 /** Lock commitado: a referência que o CI confere (versões). */
 export const COMMITTED_LOCK_PATH = join(RUNNER_DIR, "images.lock.json");
 /**
