@@ -6,12 +6,15 @@
  * chama modelo nem sobe o servidor: o dicionário é gerado do `data/` do validator TRAVADO (o mesmo
  * dist/data embutido na imagem, conferido no preflight do run-once) e o núcleo do detector é a cópia
  * texto a texto de `govbr-ds-validator/scripts/lib/vazamento.ts` (`./nucleo.ts`, guarda de deriva no
- * test:runner-unidade). Política de perdão POR CAMPO e POR PROVENIÊNCIA (nunca subtração global):
- *   - eco: o termo está nos argumentos da própria chamada (nome da ferramenta incluído);
- *   - pagina: campo medido da página E o termo existe nos bytes SERVIDOS do site congelado (govbr-telas
+ * test:runner-unidade). Política de perdão POR CAMPO e POR PROVENIÊNCIA (nunca subtração global); 1.1.0
+ * (validator 2.14.1, revisão Codex db6d022d): campos declarados por ferramenta pelo caminho inteiro e eco
+ * só como valor exato. Detector AUXILIAR, não prova universal (a garantia é a trava de carregamento):
+ *   - eco: o termo é o valor inteiro de um argumento declarado, no campo declarado para ecoá-lo naquela
+ *     ferramenta (ou o nome da própria ferramenta no texto de erro);
+ *   - pagina: campo medido da página declarado para a ferramenta E o termo existe nos bytes SERVIDOS do site congelado (govbr-telas
  *     site/). O DOM renderizado não é capturado aqui: um termo que só existisse nele fica sem explicação
  *     (falha conservadora, nunca aprovação silenciosa);
- *   - axe: campo da saída do axe-core E o termo existe no bundle do axe-core do validator;
+ *   - axe: campo declarado da saída do axe-core E o termo existe no bundle do axe-core do validator;
  *   - excecao-nomeada: as duas normalizações de fingerprint e o enum RuleSource (plano §3, decisões 8–9).
  * Aceite no braço ferramentas: 0 ocorrências `sem-explicacao`, todos os payloads integrais (truncado ou
  * fora do orçamento = varredura incompleta = falha) e os canários do detector disparando.
@@ -22,7 +25,7 @@ import { pathToFileURL } from "node:url";
 import { createRequire } from "node:module";
 import { buildDictionary, scanResponse, type Classification, type Dictionary } from "./nucleo";
 
-export const VARREDURA_VERSAO = "vazamento-conhecimento-1.0.0";
+export const VARREDURA_VERSAO = "vazamento-conhecimento-1.1.0";
 
 const cacheDicionario = new Map<string, Promise<Dictionary>>();
 
@@ -88,17 +91,21 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
   const emagTitle = [...dict.phrases.values()].find((t) => t.source === "emag:title")?.term;
   if (!kbId || !kbTitle || !token || !emagTitle) return [{ nome: "dicionário com as quatro fontes", ok: false, detalhe: "dicionário sem id/título da base, token ou título e-MAG" }];
   const page = `<html><body><div style="color: var(${token})">x</div></body></html>`;
-  const casos: { nome: string; texto: string; args: unknown; page: string | null; espera: Classification }[] = [
-    { nome: "título da base numa nota do servidor", texto: JSON.stringify({ note: `Veja ${kbTitle}.` }), args: {}, page, espera: "sem-explicacao" },
-    { nome: "id da base enriquecido pelo servidor", texto: JSON.stringify({ next: { ruleId: kbId } }), args: {}, page, espera: "sem-explicacao" },
-    { nome: "título e-MAG anexado à descrição", texto: JSON.stringify({ rule: { description: `x (e-MAG 1.1: ${emagTitle})` } }), args: {}, page, espera: "sem-explicacao" },
-    { nome: "token num snippet SEM o token na página", texto: JSON.stringify({ element: { snippet: `<i style="color:var(${token})">` } }), args: {}, page: "<html></html>", espera: "sem-explicacao" },
-    { nome: "token num campo do servidor COM o token na página", texto: JSON.stringify({ note: `use ${token}` }), args: {}, page, espera: "sem-explicacao" },
-    { nome: "token num snippet COM o token na página", texto: JSON.stringify({ element: { snippet: `<div style="color: var(${token})">` } }), args: {}, page, espera: "pagina" },
-    { nome: "id da base ecoado do argumento", texto: JSON.stringify({ detail: `Nenhum predicado para govbr-ds-kb '${kbId}'.` }), args: { finding: { rule: { id: kbId } } }, page, espera: "eco" },
+  // 1.1.0: casos por ferramenta, campo declarado e eco exato (os mesmos do inventário do validator 2.14.1).
+  const casos: { nome: string; tool: string; texto: string; args: unknown; page: string | null; espera: Classification }[] = [
+    { nome: "título da base numa nota do servidor", tool: "verify_finding", texto: JSON.stringify({ note: `Veja ${kbTitle}.` }), args: {}, page, espera: "sem-explicacao" },
+    { nome: "id da base enriquecido pelo servidor", tool: "verify_finding", texto: JSON.stringify({ next: { ruleId: kbId } }), args: {}, page, espera: "sem-explicacao" },
+    { nome: "título e-MAG anexado à descrição", tool: "scan_page", texto: JSON.stringify({ findings: [{ rule: { description: `x (e-MAG 1.1: ${emagTitle})` } }] }), args: {}, page, espera: "sem-explicacao" },
+    { nome: "token num snippet SEM o token na página", tool: "scan_page", texto: JSON.stringify({ findings: [{ element: { snippet: `<i style="color:var(${token})">` } }] }), args: {}, page: "<html></html>", espera: "sem-explicacao" },
+    { nome: "token num campo do servidor COM o token na página", tool: "scan_page", texto: JSON.stringify({ note: `use ${token}` }), args: {}, page, espera: "sem-explicacao" },
+    { nome: "token num campo genérico 'detail' COM o token na página", tool: "scan_page", texto: JSON.stringify({ limitation: { detail: `use ${token}` } }), args: {}, page, espera: "sem-explicacao" },
+    { nome: "token num snippet COM o token na página", tool: "scan_page", texto: JSON.stringify({ findings: [{ element: { snippet: `<div style="color: var(${token})">` } }] }), args: {}, page, espera: "pagina" },
+    { nome: "id da base ecoado do argumento", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Nenhum predicado para govbr-ds-kb '${kbId}'.` } }), args: { finding: { rule: { id: kbId } } }, page, espera: "eco" },
+    { nome: "id citado ecoado FORA do campo declarado", tool: "verify_finding", texto: JSON.stringify({ verification: { next: { ruleId: kbId } } }), args: { finding: { rule: { id: kbId } } }, page, espera: "sem-explicacao" },
+    { nome: "título da base no campo de eco, com o título só dentro de outro argumento", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Regra: ${kbTitle}.` } }), args: { finding: { rule: { id: kbId }, evidence: { observed: `nota do agente: ${kbTitle}` } } }, page, espera: "sem-explicacao" },
   ];
   return casos.map((c) => {
-    const { hits } = scanResponse(dict, c.texto, { args: JSON.stringify(c.args), page: c.page, axe });
+    const { hits } = scanResponse(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe });
     const got = hits.map((h) => h.class);
     return { nome: c.nome, ok: got.length > 0 && got.every((g) => g === c.espera), detalhe: `esperado ${c.espera}, obtido [${got.join(", ") || "nenhuma ocorrência"}]` };
   });
@@ -147,8 +154,8 @@ export async function varrerPayloadsDoOraculo(o: {
   const porClasse: Record<string, number> = {};
   const sem = new Map<string, RelatorioVazamento["semExplicacao"][number]>();
   const perd = new Map<string, RelatorioVazamento["perdoadas"][number]>();
-  const varrer = (texto: string, args: string, pg: string | null, tool: string): void => {
-    for (const h of scanResponse(dict, texto, { args, page: pg, axe: axe.texto }).hits) {
+  const varrer = (texto: string, args: unknown, pg: string | null, tool: string): void => {
+    for (const h of scanResponse(dict, texto, { tool, args, page: pg, axe: axe.texto }).hits) {
       porClasse[h.class] = (porClasse[h.class] ?? 0) + 1;
       const k = `${h.class}|${h.term}|${h.path}|${tool}`;
       if (h.class === "sem-explicacao") {
@@ -161,7 +168,7 @@ export async function varrerPayloadsDoOraculo(o: {
     }
   };
   let respostas = 0;
-  if (o.toolsList) { varrer(JSON.stringify(o.toolsList), "", null, "tools/list"); respostas += 1; }
+  if (o.toolsList) { varrer(JSON.stringify(o.toolsList), {}, null, "tools/list"); respostas += 1; }
   for (const e of o.eventos.filter((x) => x.kind === "call")) {
     const tool = String(e.tool);
     const argsTexto = integral(e, "args") ?? "";
@@ -170,8 +177,9 @@ export async function varrerPayloadsDoOraculo(o: {
     const res = integral(e, "result");
     if (res === null) continue;
     respostas += 1;
-    // o nome da ferramenta chamada também é argumento do chamador (ex.: "get_ds_rules não está disponível")
-    varrer(res, JSON.stringify({ name: tool, arguments: args }), pagina, tool);
+    // proveniência por ferramenta: eco só como valor exato no campo declarado; o nome da ferramenta pode
+    // voltar no texto de erro (ex.: "get_ds_rules não está disponível")
+    varrer(res, args, pagina, tool);
   }
   const nucleo = readFileSync(new URL("./nucleo.ts", import.meta.url), "utf8").replace(/\r\n/g, "\n");
   return {
