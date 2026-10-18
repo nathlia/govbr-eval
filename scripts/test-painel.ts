@@ -38,7 +38,7 @@ import { cartaoDoVinculo, digest, type SemanticPackage } from "./semantic-flow";
 
 // flow-semantic-1.8.0 (domínio de aplicabilidade provado, NAT-74): instrument.*, semantic-flow.ts mudaram de propósito; antes
 // 82c9b2ef…c84c (1.7.0, kb-aliases-2.0.0), 0006158c…e4fd (1.6.0, NAT-72) e 7ceb07e3…d146 (1.5.0). Muda de novo se kb-aliases-v2.json for regenerado.
-const SCORER_SHA = "561c13806d205f74ef6fa30e14617ed01a52a64095252e6b3d38c5f0146ec6dc";
+const SCORER_SHA = "966776013cbee5db1ce94663469ba9567b7ee5f4e6d56faf1ddfa24e6eedd990";
 const manter = process.argv.includes("--manter");
 const TMP = mkdtempSync(join(tmpdir(), "painel-teste-"));
 const resultados: { nome: string; ok: boolean }[] = [];
