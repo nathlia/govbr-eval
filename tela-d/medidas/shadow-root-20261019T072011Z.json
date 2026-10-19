@@ -1,0 +1,2530 @@
+{
+ "tela": "processos",
+ "entrada": "/pnip-d/portal-mpa/processos?mock-perfil=mpa",
+ "viewport": "1280x900",
+ "headless": true,
+ "medidoEm": "2026-10-19T07:20:11.138Z",
+ "bytes": {
+  "modo": "congelado",
+  "manifestoSha": "2e99f4109fc94ff3b31ca01c435eac0aa8603fb231a946b96257774668aa2032",
+  "n": 190,
+  "sha256Lista": "d3b99cabb89492cf2b0c5d6bb6d4ae721d99e6ed1277c7e6d4c9db31ba16857e",
+  "divergentes": [],
+  "fora": [],
+  "ausentes": []
+ },
+ "metodo": "init script envolve Element.prototype.attachShadow antes de qualquer script; caminhada por element.shadowRoot + raízes registradas; paradas por tela-d/sequencia.mjs",
+ "errosDePagina": [],
+ "estatico": [
+  {
+   "arquivo": "pnip-d/main.1f20d928d4f24c93.js",
+   "trecho": "attachShadow({mode:\"open\"})"
+  },
+  {
+   "arquivo": "pnip-d/scripts.fc2a7d38df25b0e7.js",
+   "trecho": "attachShadow({mode:\"open\"})"
+  }
+ ],
+ "paradas": {
+  "inicial": {
+   "afterStep": 0,
+   "url": "/pnip-d/portal-mpa/processos",
+   "attachShadow": {
+    "total": 52,
+    "open": 52,
+    "closed": 0,
+    "outros": 0,
+    "chamadas": [
+     {
+      "ordem": 0,
+      "modo": "open",
+      "hospedeiroTag": "br-header",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>pnip-header>br-header",
+      "conectado": true
+     },
+     {
+      "ordem": 1,
+      "modo": "open",
+      "hospedeiroTag": "br-breadcrumb",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-breadcrumb",
+      "conectado": true
+     },
+     {
+      "ordem": 2,
+      "modo": "open",
+      "hospedeiroTag": "br-divider",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-divider",
+      "conectado": true
+     },
+     {
+      "ordem": 3,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(1)>div:nth-of-type(2)>br-button",
+      "conectado": true
+     },
+     {
+      "ordem": 4,
+      "modo": "open",
+      "hospedeiroTag": "br-tab",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab",
+      "conectado": true
+     },
+     {
+      "ordem": 5,
+      "modo": "open",
+      "hospedeiroTag": "br-tab-item",
+      "hospedeiroId": "AGUARDANDO_ANALISE",
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab>br-tab-item#AGUARDANDO_ANALISE",
+      "conectado": true
+     },
+     {
+      "ordem": 6,
+      "modo": "open",
+      "hospedeiroTag": "br-tab-item",
+      "hospedeiroId": "TRAMITANDO",
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab>br-tab-item#TRAMITANDO",
+      "conectado": true
+     },
+     {
+      "ordem": 7,
+      "modo": "open",
+      "hospedeiroTag": "br-tab-item",
+      "hospedeiroId": "HISTORICO",
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab>br-tab-item#HISTORICO",
+      "conectado": true
+     },
+     {
+      "ordem": 8,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(3)>br-button",
+      "conectado": true
+     },
+     {
+      "ordem": 9,
+      "modo": "open",
+      "hospedeiroTag": "br-input",
+      "hospedeiroId": "search",
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input#search",
+      "conectado": true
+     },
+     {
+      "ordem": 10,
+      "modo": "open",
+      "hospedeiroTag": "br-loading",
+      "hospedeiroId": null,
+      "hospedeiro": "div>br-loading",
+      "conectado": false
+     },
+     {
+      "ordem": 11,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(1)>pnip-multiple-search-table-utils#searchTableUtils>div>div:nth-of-type(2)>div:nth-of-type(7)>br-button",
+      "conectado": true
+     },
+     {
+      "ordem": 12,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>thead>tr>th:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 13,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 14,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 15,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 16,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 17,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 18,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 19,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 20,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 21,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 22,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 23,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 24,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 25,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 26,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 27,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 28,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 29,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 30,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 31,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 32,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 33,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 34,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 35,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(3)",
+      "conectado": true
+     },
+     {
+      "ordem": 36,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 37,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 38,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 39,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 40,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 41,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 42,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(3)",
+      "conectado": true
+     },
+     {
+      "ordem": 43,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 44,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 45,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 46,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 47,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(3)",
+      "conectado": true
+     },
+     {
+      "ordem": 48,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 49,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 50,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 51,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     }
+    ]
+   },
+   "raizes": {
+    "total": 52,
+    "abertas": 52,
+    "fechadas": 0,
+    "declarativasSemAttachShadow": 0
+   },
+   "controles": {
+    "lightDom": 21,
+    "raizesAbertas": 30,
+    "raizesFechadas": 0,
+    "listaFechadas": [],
+    "listaAbertas": [
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": "navigation",
+      "ariaLabel": "Menu",
+      "caminho": "html>body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button#navigation"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a>button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(1)>div:nth-of-type(2)>br-button >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "AGUARDANDO_ANALISE",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(1)>button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "TRAMITANDO",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(2)>button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "HISTORICO",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(3)>button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(1)>pnip-multiple-search-table-utils#searchTableUtils>div>div:nth-of-type(2)>div:nth-of-type(7)>br-button >>> button"
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "role": null,
+      "id": "search",
+      "ariaLabel": null,
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input#search >>> div>input#search"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(3)>br-button >>> button"
+     }
+    ]
+   },
+   "raizesDetalhe": [
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>pnip-header>br-header",
+     "hospedeiroTag": "br-header",
+     "conectado": true,
+     "elementos": 17,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-breadcrumb",
+     "hospedeiroTag": "br-breadcrumb",
+     "conectado": true,
+     "elementos": 11,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-divider",
+     "hospedeiroTag": "br-divider",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(1)>div:nth-of-type(2)>br-button",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab",
+     "hospedeiroTag": "br-tab",
+     "conectado": true,
+     "elementos": 15,
+     "nControles": 3
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab>br-tab-item#AGUARDANDO_ANALISE",
+     "hospedeiroTag": "br-tab-item",
+     "conectado": true,
+     "elementos": 3,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab>br-tab-item#TRAMITANDO",
+     "hospedeiroTag": "br-tab-item",
+     "conectado": true,
+     "elementos": 3,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab>br-tab-item#HISTORICO",
+     "hospedeiroTag": "br-tab-item",
+     "conectado": true,
+     "elementos": 3,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(1)>pnip-multiple-search-table-utils#searchTableUtils>div>div:nth-of-type(2)>div:nth-of-type(7)>br-button",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input#search",
+     "hospedeiroTag": "br-input",
+     "conectado": true,
+     "elementos": 3,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>thead>tr>th:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(3)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(3)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(3)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(3)>br-button",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "div>br-loading",
+     "hospedeiroTag": "br-loading",
+     "conectado": false,
+     "elementos": 1,
+     "nControles": 0
+    }
+   ],
+   "customElements": {
+    "instancias": 71,
+    "tags": 18,
+    "ds": [
+     {
+      "tag": "br-breadcrumb",
+      "n": 1,
+      "definido": true
+     },
+     {
+      "tag": "br-button",
+      "n": 24,
+      "definido": true
+     },
+     {
+      "tag": "br-divider",
+      "n": 1,
+      "definido": true
+     },
+     {
+      "tag": "br-header",
+      "n": 1,
+      "definido": true
+     },
+     {
+      "tag": "br-icon-base",
+      "n": 19,
+      "definido": true
+     },
+     {
+      "tag": "br-input",
+      "n": 1,
+      "definido": true
+     },
+     {
+      "tag": "br-select-pnip",
+      "n": 2,
+      "definido": false
+     },
+     {
+      "tag": "br-tab",
+      "n": 1,
+      "definido": true
+     },
+     {
+      "tag": "br-tab-item",
+      "n": 3,
+      "definido": true
+     }
+    ],
+    "outros": [
+     {
+      "tag": "govbr-custom-pagination",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-header",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-mpa",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-mpa-processos",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-multiple-search-table-utils",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-root",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-search-table-utils",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-status-solicitacao-utils",
+      "n": 9,
+      "definido": false
+     },
+     {
+      "tag": "router-outlet",
+      "n": 2,
+      "definido": false
+     }
+    ]
+   }
+  },
+  "lista-exibir": {
+   "afterStep": 2,
+   "url": "/pnip-d/portal-mpa/processos",
+   "attachShadow": {
+    "total": 52,
+    "open": 52,
+    "closed": 0,
+    "outros": 0,
+    "chamadas": [
+     {
+      "ordem": 0,
+      "modo": "open",
+      "hospedeiroTag": "br-header",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>pnip-header>br-header",
+      "conectado": true
+     },
+     {
+      "ordem": 1,
+      "modo": "open",
+      "hospedeiroTag": "br-breadcrumb",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-breadcrumb",
+      "conectado": true
+     },
+     {
+      "ordem": 2,
+      "modo": "open",
+      "hospedeiroTag": "br-divider",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-divider",
+      "conectado": true
+     },
+     {
+      "ordem": 3,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(1)>div:nth-of-type(2)>br-button",
+      "conectado": true
+     },
+     {
+      "ordem": 4,
+      "modo": "open",
+      "hospedeiroTag": "br-tab",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab",
+      "conectado": true
+     },
+     {
+      "ordem": 5,
+      "modo": "open",
+      "hospedeiroTag": "br-tab-item",
+      "hospedeiroId": "AGUARDANDO_ANALISE",
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab>br-tab-item#AGUARDANDO_ANALISE",
+      "conectado": true
+     },
+     {
+      "ordem": 6,
+      "modo": "open",
+      "hospedeiroTag": "br-tab-item",
+      "hospedeiroId": "TRAMITANDO",
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab>br-tab-item#TRAMITANDO",
+      "conectado": true
+     },
+     {
+      "ordem": 7,
+      "modo": "open",
+      "hospedeiroTag": "br-tab-item",
+      "hospedeiroId": "HISTORICO",
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab>br-tab-item#HISTORICO",
+      "conectado": true
+     },
+     {
+      "ordem": 8,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(3)>br-button",
+      "conectado": true
+     },
+     {
+      "ordem": 9,
+      "modo": "open",
+      "hospedeiroTag": "br-input",
+      "hospedeiroId": "search",
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input#search",
+      "conectado": true
+     },
+     {
+      "ordem": 10,
+      "modo": "open",
+      "hospedeiroTag": "br-loading",
+      "hospedeiroId": null,
+      "hospedeiro": "div>br-loading",
+      "conectado": false
+     },
+     {
+      "ordem": 11,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(1)>pnip-multiple-search-table-utils#searchTableUtils>div>div:nth-of-type(2)>div:nth-of-type(7)>br-button",
+      "conectado": true
+     },
+     {
+      "ordem": 12,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>thead>tr>th:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 13,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 14,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 15,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 16,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 17,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 18,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 19,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 20,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 21,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 22,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 23,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 24,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 25,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 26,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 27,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 28,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 29,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+      "conectado": true
+     },
+     {
+      "ordem": 30,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 31,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 32,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 33,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 34,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 35,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(3)",
+      "conectado": true
+     },
+     {
+      "ordem": 36,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 37,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 38,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 39,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 40,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 41,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 42,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(3)",
+      "conectado": true
+     },
+     {
+      "ordem": 43,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 44,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 45,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 46,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 47,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(3)",
+      "conectado": true
+     },
+     {
+      "ordem": 48,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 49,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     },
+     {
+      "ordem": 50,
+      "modo": "open",
+      "hospedeiroTag": "br-button",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+      "conectado": true
+     },
+     {
+      "ordem": 51,
+      "modo": "open",
+      "hospedeiroTag": "br-icon-base",
+      "hospedeiroId": null,
+      "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+      "conectado": true
+     }
+    ]
+   },
+   "raizes": {
+    "total": 52,
+    "abertas": 52,
+    "fechadas": 0,
+    "declarativasSemAttachShadow": 0
+   },
+   "controles": {
+    "lightDom": 21,
+    "raizesAbertas": 30,
+    "raizesFechadas": 0,
+    "listaFechadas": [],
+    "listaAbertas": [
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": "navigation",
+      "ariaLabel": "Menu",
+      "caminho": "html>body>pnip-root>pnip-header>br-header >>> header>div>div:nth-of-type(2)>div>div:nth-of-type(1)>slot>button#navigation"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-breadcrumb >>> div>ul>li:nth-of-type(1)>a>button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(1)>div:nth-of-type(2)>br-button >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "AGUARDANDO_ANALISE",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(1)>button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "TRAMITANDO",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(2)>button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "HISTORICO",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab >>> div>nav>ul>li:nth-of-type(3)>button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(1)>pnip-multiple-search-table-utils#searchTableUtils>div>div:nth-of-type(2)>div:nth-of-type(7)>br-button >>> button"
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "role": null,
+      "id": "search",
+      "ariaLabel": null,
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input#search >>> div>input#search"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(3) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2) >>> button"
+     },
+     {
+      "tag": "button",
+      "type": "button",
+      "role": null,
+      "id": null,
+      "ariaLabel": "",
+      "caminho": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(3)>br-button >>> button"
+     }
+    ]
+   },
+   "raizesDetalhe": [
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>pnip-header>br-header",
+     "hospedeiroTag": "br-header",
+     "conectado": true,
+     "elementos": 17,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-breadcrumb",
+     "hospedeiroTag": "br-breadcrumb",
+     "conectado": true,
+     "elementos": 11,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>br-divider",
+     "hospedeiroTag": "br-divider",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(1)>div:nth-of-type(2)>br-button",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab",
+     "hospedeiroTag": "br-tab",
+     "conectado": true,
+     "elementos": 15,
+     "nControles": 3
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab>br-tab-item#AGUARDANDO_ANALISE",
+     "hospedeiroTag": "br-tab-item",
+     "conectado": true,
+     "elementos": 3,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab>br-tab-item#TRAMITANDO",
+     "hospedeiroTag": "br-tab-item",
+     "conectado": true,
+     "elementos": 3,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>br-tab>br-tab-item#HISTORICO",
+     "hospedeiroTag": "br-tab-item",
+     "conectado": true,
+     "elementos": 3,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(1)>pnip-multiple-search-table-utils#searchTableUtils>div>div:nth-of-type(2)>div:nth-of-type(7)>br-button",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(2)>div:nth-of-type(2)>pnip-search-table-utils>div>div>div>br-input#search",
+     "hospedeiroTag": "br-input",
+     "conectado": true,
+     "elementos": 3,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>thead>tr>th:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(1)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(2)>td:nth-of-type(9)>br-button:nth-of-type(3)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(3)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(4)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(5)>td:nth-of-type(9)>br-button:nth-of-type(3)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(6)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(7)>td:nth-of-type(9)>br-button:nth-of-type(3)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(8)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(1)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2)",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(2)>div>div:nth-of-type(3)>div:nth-of-type(2)>table>tbody>tr:nth-of-type(9)>td:nth-of-type(9)>br-button:nth-of-type(2)>br-icon-base",
+     "hospedeiroTag": "br-icon-base",
+     "conectado": true,
+     "elementos": 2,
+     "nControles": 0
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "html>body>pnip-root>main>pnip-mpa>pnip-mpa-processos>div>div:nth-of-type(3)>br-button",
+     "hospedeiroTag": "br-button",
+     "conectado": true,
+     "elementos": 5,
+     "nControles": 1
+    },
+    {
+     "modo": "open",
+     "viaAttachShadow": true,
+     "hospedeiro": "div>br-loading",
+     "hospedeiroTag": "br-loading",
+     "conectado": false,
+     "elementos": 1,
+     "nControles": 0
+    }
+   ],
+   "customElements": {
+    "instancias": 71,
+    "tags": 18,
+    "ds": [
+     {
+      "tag": "br-breadcrumb",
+      "n": 1,
+      "definido": true
+     },
+     {
+      "tag": "br-button",
+      "n": 24,
+      "definido": true
+     },
+     {
+      "tag": "br-divider",
+      "n": 1,
+      "definido": true
+     },
+     {
+      "tag": "br-header",
+      "n": 1,
+      "definido": true
+     },
+     {
+      "tag": "br-icon-base",
+      "n": 19,
+      "definido": true
+     },
+     {
+      "tag": "br-input",
+      "n": 1,
+      "definido": true
+     },
+     {
+      "tag": "br-select-pnip",
+      "n": 2,
+      "definido": false
+     },
+     {
+      "tag": "br-tab",
+      "n": 1,
+      "definido": true
+     },
+     {
+      "tag": "br-tab-item",
+      "n": 3,
+      "definido": true
+     }
+    ],
+    "outros": [
+     {
+      "tag": "govbr-custom-pagination",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-header",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-mpa",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-mpa-processos",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-multiple-search-table-utils",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-root",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-search-table-utils",
+      "n": 1,
+      "definido": false
+     },
+     {
+      "tag": "pnip-status-solicitacao-utils",
+      "n": 9,
+      "definido": false
+     },
+     {
+      "tag": "router-outlet",
+      "n": 2,
+      "definido": false
+     }
+    ]
+   }
+  }
+ }
+}
