@@ -98,3 +98,56 @@ export function contarComFerramentas(pkg: SemanticPackage): number {
   // o mesmo texto livre que armLeaks lê (descrição, evidência relatada, observado, esperado)
   return pkg.cards.filter(c => distingueComDeFerramentas(JSON.stringify({ d: c.description, r: c.reportedEvidence, o: c.observed, e: c.expected }))).length;
 }
+
+// ───────────────────────────────────────────────── campanha nova: vista cega do trio (plano de revisão 19/10, entrega 2)
+
+/**
+ * Máscara da vista cega do trio (primeira passada da campanha nova e `review.md` cego do `analisar`). Nem `mascarar`
+ * (D-87, NAT-74) nem `mascararComFerramentas` (painel, NAT-61) mudam: esta é outra cadeia, só para o caminho novo.
+ *
+ * Diferenças em relação à cadeia anterior (D-87 + NAT-73 + `mascararComFerramentas` + termos de ferramenta), achado B:
+ *   - o que é informação de julgamento NÃO é mascarado: "Rawline" (a fonte que o juiz mede na página) fica, e entra
+ *     no resíduo contado (`vocabulario-do-ds`); "Template Base" vira "modelo de página do DS" (paráfrase sem marca: o
+ *     texto da regra continua dizendo o que exige, em vez de "Use o [termo citado] como ponto de partida");
+ *   - a anotação e-MAG que o perfil evaluation acrescenta à regra do axe sai sem deixar marca (não é a norma);
+ *   - no texto livre da alegação (`mascararTextoCego`) também saem as menções a ferramentas que nenhuma norma precisa:
+ *     "axe"/"axe-core", ferramentas do navegador (`browser_*`) e ids de achado da ferramenta (`FAM-…`), todos como
+ *     "[ferramenta citada]" — o mesmo marcador para os três braços (o `sem` também narra `browser_snapshot`).
+ * O id e a fonte da norma citada (`axe:label`, "axe-core 4.11.4", `wcag:…`) nunca passam por `mascararTextoCego`.
+ */
+export const MODELO_DE_PAGINA = "modelo de página do DS";
+/** Id de achado devolvido pela ferramenta de varredura (`FAM-26db15d366c5`): só aponta para a saída dela. */
+export const ID_DE_ACHADO = /\bFAM-[0-9a-f]{6,}\b/;
+const TROCAS_NORMA_CEGA: readonly { re: RegExp; por: string }[] = [
+  { re: /\/tmp\/pw-[^\s"'),;]*/g, por: "[arquivo local]" },
+  { re: /\bemag-(\d+(?:\.\d+)?)/g, por: "emag:$1" },
+  { re: new RegExp(`\\b(?:mcp__govbr-ds-validator__)?(?:${RETIRADAS.join("|")})\\b`, "g"), por: FERRAMENTA_CITADA },
+  { re: /\b(?:mcp__[A-Za-z0-9_-]+__)?(?:scan_page|verify_finding|get_finding_details|check_[a-z_]+|inspect_computed_styles|run_axe_scan|save_report)\b/g, por: FERRAMENTA_CITADA },
+  { re: /\bgovbr-\d+(?:\.\d+)*(?:-[A-Za-z0-9]+)*/g, por: REGRA_CITADA },
+  { re: /\bds[-:](?:token|structure|page)(?:-[a-z0-9]+)*/g, por: REGRA_CITADA },
+  { re: /\s*\(e-?MAG \d+(?:\.\d+)*:[^)]*\)/gi, por: "" },
+  { re: /\bTemplate Base\b/gi, por: MODELO_DE_PAGINA },
+  { re: /\bknowledge base\b/gi, por: TERMO_CITADO },
+  { re: /\bor[aá]culos?\b|\bvalidator\b|\bvalidador\b|\bmcp\b/gi, por: TERMO_CITADO },
+];
+const TROCAS_TEXTO_CEGO: readonly { re: RegExp; por: string }[] = [
+  { re: /\b(?:mcp__[A-Za-z0-9_-]+__)?browser_[a-z_]+\b/g, por: FERRAMENTA_CITADA },
+  { re: new RegExp(ID_DE_ACHADO.source, "g"), por: FERRAMENTA_CITADA },
+  { re: /\baxe(?:-core)?\b/gi, por: FERRAMENTA_CITADA },
+];
+const aplicar = (t: string, trocas: readonly { re: RegExp; por: string }[]) => trocas.reduce((s, { re, por }) => s.replace(re, por), t);
+
+/** Norma e referência (id, fonte e texto da regra): só ids e termos que denunciam a proveniência. */
+export function mascararNormaCega(texto: string): string;
+export function mascararNormaCega(texto: string | null): string | null;
+export function mascararNormaCega(texto: string | null): string | null {
+  return texto === null ? null : aplicar(mascarar(texto), TROCAS_NORMA_CEGA);
+}
+/** Texto livre da alegação (observado, esperado, passos, sinalizações, sujeitos, evidências): a norma + menções a ferramenta. */
+export function mascararTextoCego(texto: string): string;
+export function mascararTextoCego(texto: string | null): string | null;
+export function mascararTextoCego(texto: string | null): string | null {
+  return texto === null ? null : aplicar(mascararNormaCega(texto), TROCAS_TEXTO_CEGO);
+}
+/** Marcadores que a máscara deixa no texto (cada um diz que ali havia algo de um braço). */
+export const MARCADORES = [REGRA_CITADA, FERRAMENTA_CITADA, TERMO_CITADO, NOTA_EMAG_CITADA, "[arquivo local]"] as const;

@@ -61,7 +61,7 @@ export const ROTULO: Record<Campanha, string> = { "t7-tela-a-01": "A Opus", "t7b
 export const SEMENTES: Record<Campanha, number> = { "t7-tela-a-01": 3675791356, "t7b-sonnet-tela-a-01": 1573597886, "t7-tela-b-01": 2608969728 };
 export const PARES = ["p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "p09", "p10"] as const;
 
-export type Braco = "sem" | "com" | "lb-axe" | "lb-validator";
+export type Braco = "sem" | "com" | "ferramentas" | "lb-axe" | "lb-validator";
 export const BRACOS: readonly Braco[] = ["sem", "com", "lb-axe", "lb-validator"];
 
 // ───────────────────────────────────────────────────────────────── bytes, hash e JSON
@@ -138,13 +138,29 @@ export function lerPar(p: Par): ParLido {
     receita: lerJson<Receita>(join(RESULTADOS, "analises", p.campanha, p.par, "receita.json")) };
 }
 
-/** Braço de cada cartão pelo `package.runs`. Um cartão em mais de um run é erro (não acontece no arquivo; conferido no E1). */
-export function bracoDosCartoes(pkg: SemanticPackage): Map<string, { braco: Braco; runId: string }> {
+/**
+ * [F, plano de revisão 19/10] Braço de um run de agente pelo perfil do oráculo, dentro dos braços do desenho da campanha
+ * (`design.arms`). `none` → sem; `knowledge-free` → ferramentas; `evaluation` → com. Desenho sem `ferramentas` (o par
+ * histórico sem/com da T7): todo outro perfil que não é `none` é `com`, como sempre foi — menos `knowledge-free`, que só
+ * existe no braço ferramentas. Perfil sem braço no desenho → null.
+ */
+export function bracoDoPerfil(perfil: string | undefined, bracos: readonly string[] = ["sem", "com"]): string | null {
+  const p = perfil ?? "";
+  const b = p === "none" ? "sem" : p === "knowledge-free" ? "ferramentas" : p === "evaluation" ? "com" : bracos.includes("ferramentas") ? null : "com";
+  return b && bracos.includes(b) ? b : null;
+}
+
+/**
+ * Braço de cada cartão pelo `package.runs`. Um cartão em mais de um run é erro (não acontece no arquivo; conferido no E1).
+ * `bracos`: os do desenho da campanha (`design.arms`); padrão, o par sem/com das três campanhas T7 (resultado igual ao de antes).
+ */
+export function bracoDosCartoes(pkg: SemanticPackage, bracos: readonly string[] = ["sem", "com"]): Map<string, { braco: Braco; runId: string }> {
   const m = new Map<string, { braco: Braco; runId: string }>();
   for (const r of pkg.runs) {
-    const braco: Braco = r.kind === "agente"
-      ? ((r.config as { oracleProfile?: string } | null)?.oracleProfile === "none" ? "sem" : "com")
-      : r.tool === "axe-core" ? "lb-axe" : "lb-validator";
+    const perfil = (r.config as { oracleProfile?: string } | null)?.oracleProfile;
+    const doAgente = r.kind === "agente" ? bracoDoPerfil(perfil, bracos) : null;
+    if (r.kind === "agente" && !doAgente) throw new Error(`run ${r.id}: perfil de oráculo ${perfil ?? "(ausente)"} fora dos braços do desenho (${bracos.join(", ")})`);
+    const braco = (r.kind === "agente" ? doAgente : r.tool === "axe-core" ? "lb-axe" : "lb-validator") as Braco;
     for (const id of r.cardIds) {
       if (m.has(id)) throw new Error(`cartão em mais de um run: ${id} (${m.get(id)!.runId}, ${r.id})`);
       m.set(id, { braco, runId: r.id });

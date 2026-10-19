@@ -22,9 +22,9 @@
 import { existsSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import type { SemanticPackage } from "../semantic-flow";
-import { distingueComDeFerramentas, mascararComFerramentas } from "../painel/mascara";
-import { POLITICA_PRINCIPAL, TCC, gravar, jsonTexto, lerJson, ordenar, sha } from "./comum";
-import { verificarCegueira, type Cegueira } from "./e14-cegueira";
+import { ID_DE_ACHADO, distingueComDeFerramentas, mascararNormaCega, mascararTextoCego } from "../painel/mascara";
+import { POLITICA_PRINCIPAL, TCC, bracoDoPerfil, gravar, jsonTexto, lerJson, ordenar, sha } from "./comum";
+import { CATEGORIAS_RESIDUO, residuoDeBraco, verificarCegueira, type Cegueira, type ResiduoDoCartao } from "./e14-cegueira";
 import {
   ESQUEMA_RESPOSTAS_CAMPANHA, FORMATO_LOTE, FORMATO_MANIFESTO_CAMPANHA, FORMATO_RESPOSTAS, FORMATO_RESPOSTAS_CAMPANHA, NAO_PERGUNTADO,
   hashDaChave, idOpaco, mascarar, nomeLote, type CartaoCego, type ItemChave,
@@ -36,30 +36,40 @@ import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
  * 1.1.0 (1b): normas pela base do oráculo da campanha, caminho único de respostas, LEIAME corrigido, receitas legíveis.
  * 1.2.0 (M, N): força da base literal já no vocabulário do juiz (`forcaNoVocabulario`, tabela fixa impressa no LEIAME) e
  * resposta fechada `estadoAlcancado`; regra citada que só permite deriva erro normativo (R11a/R11d).
+ * 1.3.0 (entrega 2, achados B e F): máscara cega do trio (`mascararNormaCega`/`mascararTextoCego`, painel/mascara.ts: o que é
+ * informação de julgamento fica; ids de achado `FAM-…` saem das evidências; menções a ferramenta no texto livre viram o mesmo
+ * marcador nos três braços), resíduo de braço contado por braço, categoria e comparação (`residuo-de-braco.json`, insumo do
+ * S4') e braços pelo desenho da campanha (`design.arms`). Formato do lote, do manifesto e das respostas: o mesmo da 1.2.0.
  */
-export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.2.0";
+export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.3.0";
+export const FORMATO_RESIDUO = "nat78-residuo-de-braco-1.0.0";
 /** Validador cuja `data/` é conferida contra o `dataSha256` da campanha (pode ser outro checkout: `--validador`). */
 export const VALIDADOR_PADRAO = join(TCC, "govbr-ds-validator");
 type Card = SemanticPackage["cards"][number];
 
-/** Termos que separam `sem` dos braços com ferramentas (o que `armLeaks` aponta), depois da máscara com × ferramentas. */
-const TERMOS_DE_FERRAMENTA: readonly [RegExp, string][] = [
-  [/\b(?:mcp__[A-Za-z0-9_-]+__)?(?:scan_page|verify_finding|get_finding_details|check_[a-z_]+|inspect_computed_styles|run_axe_scan|save_report)\b/g, "[ferramenta citada]"],
-  [/\bor[aá]culos?\b|\bvalidator\b|\bvalidador\b|\bmcp\b/gi, "[termo citado]"],
-];
-export function mascararTrio(t: string | null): string | null {
-  if (t === null) return null;
-  return TERMOS_DE_FERRAMENTA.reduce((s, [re, por]) => s.replace(re, por), mascararComFerramentas(mascarar(t)));
-}
-const profundo = <T>(v: T): T => (typeof v === "string" ? mascararTrio(v) : Array.isArray(v) ? v.map(profundo) : v && typeof v === "object"
+/**
+ * Máscara do trio. Até a 1.2.0: D-87 + NAT-73 + com × ferramentas + termos de ferramenta em todo o cartão. Na 1.3.0: a norma
+ * (id, fonte, texto da regra, defeitos da referência) passa por `mascararNormaCega`; o texto livre da alegação, por
+ * `mascararTextoCego` (painel/mascara.ts). `mascararTrio` = a do texto livre (a mais forte).
+ */
+export function mascararTrio(t: string | null): string | null { return mascararTextoCego(t); }
+const profundo = <T>(v: T): T => (typeof v === "string" ? mascararNormaCega(v) : Array.isArray(v) ? v.map(profundo) : v && typeof v === "object"
   ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, profundo(x)])) : v) as T;
+/** Texto livre da alegação (o que o autor escreveu): aqui também saem as menções a ferramenta. A norma não passa por aqui. */
+function textoLivreCego(c: CartaoCego): CartaoCego {
+  const a = c.alegacao, m = (x: string) => mascararTextoCego(x);
+  return { ...c, alegacao: { ...a, observado: mascararTextoCego(a.observado), esperado: mascararTextoCego(a.esperado),
+    estado: { ...a.estado, passos: a.estado.passos.map(m) }, sinais: a.sinais.map(m),
+    evidencias: a.evidencias.map(e => ({ ...e, ref: m(e.ref) })), sujeitos: a.sujeitos.map(s => ({ ...s, rotulo: m(s.rotulo) })) } };
+}
 
-const BRACO: Record<string, string> = { none: "sem", "knowledge-free": "ferramentas", evaluation: "com" };
-export function bracoDoRun(r: SemanticPackage["runs"][number]): string {
+/** Braço do run pelo perfil do oráculo, dentro dos braços do desenho da campanha (`design.arms`); fora dele, para. */
+export function bracoDoRun(r: SemanticPackage["runs"][number], bracos: readonly string[] = ["sem", "ferramentas", "com"]): string {
   if (r.kind !== "agente") return r.tool === "axe-core" ? "lb-axe" : "lb-validator";
   const p = (r.config as { oracleProfile?: string } | null)?.oracleProfile ?? "";
-  if (!BRACO[p]) throw new Error(`perfil de oráculo desconhecido no run ${r.id}: ${p}`);
-  return BRACO[p];
+  const b = bracoDoPerfil(p, bracos);
+  if (!b) throw new Error(`perfil de oráculo desconhecido no run ${r.id}: ${p} (braços do desenho: ${bracos.join(", ")})`);
+  return b;
 }
 
 interface Passo { action: string; selector?: string; value?: string; path?: string; waitFor?: string }
@@ -102,14 +112,20 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   const itens: { item: ItemChave; card: Card; cartao: CartaoCego }[] = [];
   const telas: Record<string, { nome: string; versao: string; endereco: string; defeitos: unknown[] }> = {};
   const fontes: Record<string, string> = { ...nr.fontes };
+  let desenho: { arms: string[]; comparisons: { id: string; arms: string[]; role?: string }[] } | null = null;
+  let idsDeAchado = 0;
   for (const dir of analises) {
     const pkg = lerJson<SemanticPackage>(join(dir, "revisao", "package.json"));
-    const camp = lerJson<{ campaignId: string; design: { screens: { id: string; label: string }[] } }>(join(dir, "entradas", "campanha.json"));
+    const camp = lerJson<{ campaignId: string; design: { screens: { id: string; label: string }[]; arms?: string[]; comparisons?: { id: string; arms: string[]; role?: string }[] } }>(join(dir, "entradas", "campanha.json"));
+    // [F] Braços pelo desenho da campanha (campaign.v2 `design.arms`; sem ele, o par histórico sem/com).
+    const arms = camp.design.arms ?? ["sem", "com"];
+    if (desenho && desenho.arms.join() !== arms.join()) throw new Error(`E14 campanha: análises com desenhos de braço diferentes (${desenho.arms.join(", ")} × ${arms.join(", ")})`);
+    desenho ??= { arms, comparisons: camp.design.comparisons ?? [] };
     const ref = lerJson<Ref>(join(dir, "entradas", "referencia.json"));
     const resumo = lerJson<{ execucoes: { identidade: { tela: { id: string; label: string } } }[] }>(join(dir, "summary.json"));
     const { id: telaId, label } = resumo.execucoes[0].identidade.tela;
     const nome = `Tela ${label}`;
-    const specs = ref.violations.map(v => ({ id: v.id, estado: v.state, unidades: v.expectedCount ?? 1, descricao: mascararTrio(v.description),
+    const specs = ref.violations.map(v => ({ id: v.id, estado: v.state, unidades: v.expectedCount ?? 1, descricao: mascararNormaCega(v.description),
       normas: v.rules.map(nr.resolver).filter(Boolean) }));
     const endereco = lerJson<{ url: string }>(join(dir, "revisao", "capture.json")).url;
     const refAbs = join(dir, "entradas", "referencia.json");
@@ -122,13 +138,17 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
       if (!run) throw new Error(`cartão sem run: ${card.id}`);
       const chave = `${camp.campaignId}|${basename(dir)}|${card.id}`;
       const item: ItemChave = { id: idOpaco(chave), hash: hashDaChave(chave), chave, campanha: camp.campaignId, tela: telaId as "A", par: basename(dir),
-        braco: bracoDoRun(run), runId: run.id, cardIdOriginal: card.id, atomoId: "cartao", cardSha256: sha(JSON.stringify(card)), mId: null,
+        braco: bracoDoRun(run, arms), runId: run.id, cardIdOriginal: card.id, atomoId: "cartao", cardSha256: sha(JSON.stringify(card)), mId: null,
         tipo: "sensivel", motivoFila: "primeira passada cega (§8.1)", decisaoAntiga: "", unidadesAntigas: "", origemMedida341: null, origemMedida370: null, lote: null };
       const atomo = { sujeitos: card.subjects.map(s => s.key ?? s.id), candidatasSpecs: [...new Set(card.candidateUnitIds.map(u => specDe.get(u)!))].sort() };
       const ex = { ...item, linha: {}, atomo } as unknown as Extracao["itens"][number];
-      const cego = cartaoCego(ex, card as never, nr.resolver, [], specs.map(s => s.id));
+      // [B] Id de achado da ferramenta de varredura (`FAM-…`) sai da lista de evidências, como os ids de sessão (só o
+      // `ferramentas` os deixava visíveis: os do `com` já saíam pelo padrão S-/F-/V-).
+      const semAchado = (card.evidence ?? []).filter(e => !ID_DE_ACHADO.test(e.ref));
+      idsDeAchado += (card.evidence ?? []).length - semAchado.length;
+      const cego = cartaoCego(ex, { ...card, evidence: semAchado } as never, nr.resolver, [], specs.map(s => s.id));
       cego.alegacao.estado.passos = passosLegiveis(cego.alegacao.estado.passos, ref._meta).map(s => mascarar(s)!);
-      const c = profundo(cego);
+      const c = textoLivreCego(profundo(cego));
       c.telaNome = nome; c.citaveis = [...c.citaveis, "MEDIDA"];
       itens.push({ item, card, cartao: c });
     }
@@ -150,20 +170,60 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
       referencias: Object.fromEntries([...new Set(cs.map(c => c.tela))].map(t => [t, telas[t]])), cartoes: cs }));
   }
   const cegueira = verificarCegueira({ arquivos: [...juiz].map(([rel, texto]) => ({ rel, texto })),
-    cartoes: ord.map(x => ({ cartao: x.cartao, card: x.card as never, item: x.item, justificativas: [] })) });
-  const falhasTrio = ord.filter(x => distingueComDeFerramentas(JSON.stringify(x.cartao))).map(x => `${x.item.id}: texto ainda separa com de ferramentas`);
-  const porBraco: Record<string, { cartoes: number; comSinal: number }> = {};
-  ord.forEach((x, k) => { const b = (porBraco[x.item.braco] ??= { cartoes: 0, comSinal: 0 }); b.cartoes++; if (cegueira.porCartao[k].sinais.length) b.comSinal++; });
+    cartoes: ord.map(x => ({ cartao: x.cartao, card: x.card as never, item: x.item, justificativas: [] })), bracos: desenho?.arms });
+  // "Rawline" fica de propósito (informação de julgamento: a fonte que o juiz mede) e é contado no resíduo, não é falha.
+  const falhasTrio = ord.filter(x => distingueComDeFerramentas(JSON.stringify(x.cartao).replace(/\bRawline\b/gi, ""))).map(x => `${x.item.id}: texto ainda separa com de ferramentas`);
+  const residuo = ord.map(x => residuoDeBraco(x.cartao, x.item.braco));
+  // Relato até a 1.2.0 (`sinais` de verificarCegueira, inalterado), ao lado, para comparar passadas.
+  const relato12: Record<string, { cartoes: number; comSinal: number }> = {};
+  ord.forEach((x, k) => { const b = (relato12[x.item.braco] ??= { cartoes: 0, comSinal: 0 }); b.cartoes++; if (cegueira.porCartao[k].sinais.length) b.comSinal++; });
+  const porBraco = residuoPorBraco(ord.map(x => x.item.braco), residuo);
+  const residuoTxt = jsonTexto(residuoDaPassada(desenho ?? { arms: ["sem", "com"], comparisons: [] }, ord.map(x => x.item), residuo, porBraco, idsDeAchado));
   const chaveTxt = jsonTexto({ formato: "nat78-primeira-passada-chave-1.0.0", aviso: "NÃO entregar aos juízes: liga o id opaco ao braço, ao run e ao cartão",
     versao: E14_CAMPANHA_VERSAO, total: ord.length, porBraco, itens: ord.map(x => x.item) });
   const internos = new Map<string, string>([["chave/fila-t3-chave.json", chaveTxt],
-    ["cegueira.json", jsonTexto({ resultado: cegueira.falhas.length || falhasTrio.length ? "FALHOU" : "OK", falhas: cegueira.falhas, falhasTrio, porBraco, porCartao: cegueira.porCartao })],
+    ["cegueira.json", jsonTexto({ resultado: cegueira.falhas.length || falhasTrio.length ? "FALHOU" : "OK", falhas: cegueira.falhas, falhasTrio,
+      porBraco, relato12: { nota: "sinais de verificarCegueira (relato até a 1.2.0), para comparar com passadas anteriores", porBraco: relato12 },
+      residuo: { arquivo: "residuo-de-braco.json", sha256: sha(residuoTxt) }, porCartao: cegueira.porCartao })],
+    ["residuo-de-braco.json", residuoTxt],
     ["lotes/manifesto.json", jsonTexto({ formato: FORMATO_MANIFESTO_CAMPANHA, versao: E14_CAMPANHA_VERSAO, politica: POLITICA_PRINCIPAL, total: ord.length,
       respostas: { pasta: "respostas/", formato: FORMATO_RESPOSTAS_CAMPANHA, nota: "pasta da passada, ao lado de lotes/ (nunca lotes/respostas/)" },
       analises: analises.map(d => ({ dir: basename(d), packageSha256: sha(readFileSync(join(d, "revisao", "package.json"))) })),
       arquivos: Object.fromEntries([...juiz].map(([rel, t]) => [rel, sha(t)])),
-      lotes: lotes.map(l => ({ lote: l.lote, n: l.ids.length, sha256: sha(juiz.get(`lotes/${l.lote}.json`)!), ids: l.ids })), chaveSha256: sha(chaveTxt), fontes })]]);
+      lotes: lotes.map(l => ({ lote: l.lote, n: l.ids.length, sha256: sha(juiz.get(`lotes/${l.lote}.json`)!), ids: l.ids })), chaveSha256: sha(chaveTxt), residuoSha256: sha(residuoTxt), fontes })]]);
   return { arquivosDoJuiz: juiz, arquivosInternos: internos, cegueira, falhasTrio, fontes };
+}
+
+type PorBraco = Record<string, { cartoes: number; comSinal: number; porCategoria: Record<string, number> }>;
+/** Cartões com resíduo, por braço e por categoria (todas as categorias aparecem, com 0). */
+export function residuoPorBraco(bracos: string[], r: ResiduoDoCartao[]): PorBraco {
+  const out: PorBraco = {};
+  bracos.forEach((b, k) => {
+    const x = (out[b] ??= { cartoes: 0, comSinal: 0, porCategoria: Object.fromEntries(Object.keys(CATEGORIAS_RESIDUO).map(c => [c, 0])) });
+    x.cartoes++; if (r[k].categorias.length) x.comSinal++;
+    for (const c of r[k].categorias) x.porCategoria[c]++;
+  });
+  return out;
+}
+
+/**
+ * [B] Resíduo de braço da passada (insumo do S4'): o que, depois da máscara, ainda pode dizer ao juiz de que braço veio o
+ * cartão. Nada é descartado: cada cartão com a sua lista de categorias, as contagens por braço e, por comparação do desenho,
+ * as categorias em que os dois braços diferem. Arquivo interno (liga o id opaco ao braço): nunca vai ao juiz.
+ */
+export function residuoDaPassada(desenho: { arms: string[]; comparisons: { id: string; arms: string[]; role?: string }[] }, itens: ItemChave[],
+  r: ResiduoDoCartao[], porBraco: PorBraco, idsDeAchado: number): Record<string, unknown> {
+  const porComparacao = desenho.comparisons.map(c => {
+    const [a, b] = c.arms, pa = porBraco[a], pb = porBraco[b];
+    const cats = Object.keys(CATEGORIAS_RESIDUO).filter(k => (pa?.porCategoria[k] ?? 0) !== (pb?.porCategoria[k] ?? 0));
+    return { id: c.id, papel: c.role ?? null, bracos: c.arms,
+      comSinal: { [a]: `${pa?.comSinal ?? 0}/${pa?.cartoes ?? 0}`, [b]: `${pb?.comSinal ?? 0}/${pb?.cartoes ?? 0}` },
+      categoriasQueDiferem: Object.fromEntries(cats.map(k => [k, { [a]: pa?.porCategoria[k] ?? 0, [b]: pb?.porCategoria[k] ?? 0 }])) };
+  });
+  return { formato: FORMATO_RESIDUO, versao: E14_CAMPANHA_VERSAO, aviso: "NÃO entregar aos juízes: liga o id opaco ao braço",
+    nota: "Resíduo de braço depois da máscara, medido no que o juiz vê (o cartão cego do lote). Categoria com fica=true é informação de julgamento (mascará-la tiraria do juiz o que ele precisa para julgar o fato ou a norma) e fica visível de propósito; as demais são falha de máscara e devem ser 0. Insumo do S4' (sensibilidade sem os cartões com resíduo).",
+    bracosDoDesenho: desenho.arms, categorias: CATEGORIAS_RESIDUO, retirados: { idsDeAchadoDasEvidencias: idsDeAchado },
+    porBraco, porComparacao, porCartao: itens.map((it, k) => ({ id: it.id, braco: it.braco, categorias: r[k].categorias, detalhe: r[k].detalhe })) };
 }
 
 /** Troca exata: o trecho tem de existir uma vez no LEIAME histórico (senão o texto mudou e a troca falharia calada). */

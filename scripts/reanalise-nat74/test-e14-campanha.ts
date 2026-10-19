@@ -10,7 +10,8 @@ import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { sha256Tree } from "../collection-manifest";
-import { EVAL, gravar, gravarJson, sha } from "./comum";
+import { EVAL, bracoDosCartoes, gravar, gravarJson, sha } from "./comum";
+import { PROIBIDOS, proibidos } from "./e14-cegueira";
 import {
   FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_RESPOSTAS, FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_1, NAO_PERGUNTADO,
   derivarClasse, validarResposta,
@@ -31,7 +32,7 @@ t("máscara do trio tira ids da base, ferramentas e termos do oráculo; deixa a 
 });
 t("braço pelo perfil do oráculo; perfil desconhecido para", () => {
   const r = (p: string | null, kind = "agente", tool: string | null = null) => ({ id: "r", kind, tool, config: { oracleProfile: p }, cardIds: [] }) as never;
-  assert.deepEqual([r("none"), r("knowledge-free"), r("evaluation"), r(null, "linha-de-base", "axe-core")].map(bracoDoRun), ["sem", "ferramentas", "com", "lb-axe"]);
+  assert.deepEqual([r("none"), r("knowledge-free"), r("evaluation"), r(null, "linha-de-base", "axe-core")].map(x => bracoDoRun(x)), ["sem", "ferramentas", "com", "lb-axe"]);
   assert.throws(() => bracoDoRun(r("outro")));
 });
 t("receita da linha de base vira os passos da referência (K3); passos do autor ficam", () => {
@@ -76,18 +77,21 @@ try {
     contract: "achado-2", observed, expected: "Associar o rótulo ao campo.", state: { viewport: { width: 1280, height: 900 }, steps: ["load"] }, evidence: [],
     binding: {}, flags: [], subjects: [{ id: "k1", key: "k1", label: "<input#nome>" }], relatedKeys: [], candidateUnitIds: ["U-1"], reportedEvidence: null });
   const cards = [card("C-aaaa", "Campo sem rótulo.", "wcag:1.3.1"),
-    { ...card("C-bbbb", "scan_page mostrou campo sem rótulo.", "label"), state: { viewport: { width: 1280, height: 900 }, steps: ["setup do plano de estados (2 passo(s))"] } },
+    { ...card("C-bbbb", "scan_page mostrou campo sem rótulo; o axe aponta 'Form elements must have labels'.", "label"), state: { viewport: { width: 1280, height: 900 }, steps: ["setup do plano de estados (2 passo(s))"] },
+      evidence: [{ ref: "FAM-26db15d366c5", status: "identificador" }, { ref: "getComputedStyle(#nome).outline = none", status: "identificador" }] },
     card("C-cccc", "Sem rótulo pela regra govbr-3.7.0-component-input-0123456789ab.", "govbr-3.7.0-component-input-0123456789ab"),
     card("C-dddd", "O campo de nome não tem rótulo.", null), card("C-eeee", "Botão do calendário sem nome acessível.", "emag-2.2"),
     card("C-ffff", "Rodapé fora do padrão.", "ds-page-footer"), card("C-gggg", "Algo fora do padrão.", "ds-inexistente"),
-    card("C-hhhh", "O botão Fechar é um div.", "govbr-3.7.0-component-message-cccccccccccc")];
+    card("C-hhhh", "O botão Fechar é um div.", "govbr-3.7.0-component-message-cccccccccccc"),
+    card("C-iiii", "O texto não usa a fonte Rawline e a página não segue o Template Base.", null)];
   const run = (id: string, p: string, ids: string[]) => ({ id, kind: "agente", tool: null, config: { oracleProfile: p }, cardIds: ids });
   gravarJson(dir, "revisao/package.json", { units: [{ id: "U-1", specId: "A-01" }], cards,
     runs: [run("20990101-000000-x-sem-0001", "none", ["C-aaaa", "C-dddd"]), run("20990101-000000-x-ferramentas-0002", "knowledge-free", ["C-bbbb"]),
-      run("20990101-000000-x-com-0003", "evaluation", ["C-cccc", "C-eeee", "C-ffff", "C-gggg", "C-hhhh"])] });
+      run("20990101-000000-x-com-0003", "evaluation", ["C-cccc", "C-eeee", "C-ffff", "C-gggg", "C-hhhh", "C-iiii"])] });
   gravarJson(dir, "revisao/capture.json", { url: "/x.html" });
   const oraculo = (perfil: string) => ({ version: "9.9.9", distSha256: "d".repeat(64), dataSha256: dataSha, profile: perfil });
-  gravarJson(dir, "entradas/campanha.json", { campaignId: "camp-sintetica-01", design: { screens: [{ id: "x", label: "X" }] },
+  gravarJson(dir, "entradas/campanha.json", { campaignId: "camp-sintetica-01", design: { screens: [{ id: "x", label: "X" }], arms: ["sem", "ferramentas", "com"],
+      comparisons: [{ id: "ferramentas-x-com", arms: ["ferramentas", "com"], role: "primary" }, { id: "sem-x-com", arms: ["sem", "com"], role: "secondary" }] },
     fixed: { oracleProfiles: { com: oraculo("evaluation"), ferramentas: oraculo("knowledge-free") } } });
   gravarJson(dir, "entradas/referencia.json", { _meta: { version: "1.0.0", waitFor: "#nome", setup: [{ action: "click", selector: ".enviar" }, { action: "wait", selector: ".msg" }] },
     violations: [{ id: "A-01", state: "inicial", rules: ["wcag:1.3.1", "govbr-3.7.0-accessibility-global-bbbbbbbbbbbb"], description: "Campo sem rótulo." }] });
@@ -112,6 +116,52 @@ try {
   t("chave liga id opaco a braço; MEDIDA é citável; endereço da tela no lote", () => {
     assert.deepEqual([...new Set(chave.itens.map(i => i.braco))].sort(), ["com", "ferramentas", "sem"]);
     assert.ok(lote.cartoes.every(c => c.citaveis.includes("MEDIDA"))); assert.equal(lote.referencias.x.endereco, "/x.html");
+  });
+  t("[B] id de achado FAM sai das evidências; axe no texto livre vira marcador, a norma axe:label fica; Template Base parafraseado; Rawline fica", () => {
+    const b = cartao("C-bbbb");
+    assert.deepEqual(b.alegacao.evidencias.map(e => e.ref), ["getComputedStyle(#nome).outline = none"]);
+    assert.ok(!loteTxt.includes("FAM-26db"), "FAM no lote");
+    assert.match(b.alegacao.observado!, /\[ferramenta citada\] aponta/); assert.ok(!/\baxe\b/.test(b.alegacao.observado!));
+    assert.equal(b.normaCitada!.id, "axe:label"); assert.equal(b.alegacao.regra, "label");
+    const i = cartao("C-iiii").alegacao.observado!;
+    assert.ok(i.includes("Rawline") && i.includes("modelo de página do DS") && !i.includes("[termo citado]"), i);
+  });
+  t("[B] resíduo de braço contado por braço, categoria e comparação; emag-N.N não conta como regra do axe; falhas de máscara 0", () => {
+    const r = JSON.parse(p.arquivosInternos.get("residuo-de-braco.json")!) as { formato: string; bracosDoDesenho: string[];
+      porBraco: Record<string, { cartoes: number; comSinal: number; porCategoria: Record<string, number> }>;
+      porComparacao: { id: string; categoriasQueDiferem: Record<string, Record<string, number>> }[]; porCartao: { id: string; braco: string; categorias: string[] }[];
+      retirados: { idsDeAchadoDasEvidencias: number } };
+    assert.equal(r.formato, "nat78-residuo-de-braco-1.0.0"); assert.deepEqual(r.bracosDoDesenho, ["sem", "ferramentas", "com"]);
+    assert.equal(r.porCartao.length, lote.cartoes.length); assert.equal(r.retirados.idsDeAchadoDasEvidencias, 1);
+    const de = (orig: string) => r.porCartao.find(x => x.id === cartao(orig).id)!.categorias;
+    assert.deepEqual(de("C-eeee"), [], "emag-2.2 é norma pública, não regra do axe");
+    assert.deepEqual(de("C-bbbb"), ["regra-do-axe", "evidencia-relatada", "marcador-no-texto"]);
+    assert.deepEqual(de("C-cccc"), ["regra-da-base-do-ds", "marcador-no-texto"], "o id no texto livre vira [regra citada]"); assert.deepEqual(de("C-iiii"), ["vocabulario-do-ds"]);
+    assert.deepEqual(de("C-aaaa"), []);
+    for (const b of Object.values(r.porBraco)) for (const c of ["termo-de-ferramenta", "id-de-achado", "separa-com-de-ferramentas"]) assert.equal(b.porCategoria[c], 0, c);
+    assert.deepEqual(r.porBraco.ferramentas, { cartoes: 1, comSinal: 1, porCategoria: { ...r.porBraco.ferramentas.porCategoria } });
+    assert.equal(r.porBraco.com.comSinal, 5, "C-cccc, C-ffff, C-gggg, C-hhhh (base do DS), C-iiii (Rawline); C-eeee não");
+    const fc = r.porComparacao.find(x => x.id === "ferramentas-x-com")!;
+    assert.deepEqual(fc.categoriasQueDiferem["regra-da-base-do-ds"], { ferramentas: 0, com: 4 });
+    const m = JSON.parse(p.arquivosInternos.get("lotes/manifesto.json")!) as { residuoSha256: string };
+    assert.equal(m.residuoSha256, sha(p.arquivosInternos.get("residuo-de-braco.json")!));
+    assert.ok(![...p.arquivosDoJuiz.keys()].some(k => k.includes("residuo")), "resíduo nunca vai ao juiz");
+  });
+  t("[F] braços pelo desenho: ferramentas fora do desenho para; bracoDosCartoes do par sem/com igual ao de antes; padrões da NAT-73 iguais", () => {
+    const r = (p: string | undefined) => ({ id: "r", kind: "agente", tool: null, config: p === undefined ? {} : { oracleProfile: p }, cardIds: ["C-1"] }) as never;
+    assert.throws(() => bracoDoRun(r("knowledge-free"), ["sem", "com"]), /fora|desconhecido/);
+    assert.equal(bracoDoRun(r("evaluation"), ["sem", "com"]), "com");
+    const pk = (runs: unknown[]) => ({ runs }) as never;
+    assert.equal(bracoDosCartoes(pk([r(undefined)])).get("C-1")!.braco, "com", "T7: perfil ausente = com");
+    assert.equal(bracoDosCartoes(pk([r("evaluation")])).get("C-1")!.braco, "com");
+    assert.equal(bracoDosCartoes(pk([r("knowledge-free")]), ["sem", "ferramentas", "com"]).get("C-1")!.braco, "ferramentas");
+    assert.throws(() => bracoDosCartoes(pk([r(undefined)]), ["sem", "ferramentas", "com"]), /fora dos braços/);
+    assert.throws(() => bracoDosCartoes(pk([r("knowledge-free")])), /fora dos braços/);
+    assert.equal(PROIBIDOS[0][1].source, String.raw`\d{8}-\d{6}-[a-z]+-(?:com|sem)-[0-9a-f]{4}`);
+    assert.equal(PROIBIDOS[1][1].source, String.raw`linha-de-base[:/](?:axe|validator)|oracleProfile|com-or[aá]culo|sem-or[aá]culo|"(?:com|sem)"`);
+    const trio = proibidos(["sem", "ferramentas", "com"]);
+    assert.ok(trio[0][1].test("20261019-082517-solicitacao-ferramentas-14c2") && !PROIBIDOS[0][1].test("20261019-082517-solicitacao-ferramentas-14c2"));
+    assert.ok(trio[1][1].test('"braco": "ferramentas"'));
   });
   t("regra literal citada pelo com: texto da base que o oráculo da campanha carrega, id mascarado (H)", () => {
     const nv = cartao("C-cccc").normaCitada!;

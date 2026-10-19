@@ -153,6 +153,18 @@ test("review cards show observed, expected, state and resolved evidence, and lab
   assert.ok(renderReview(uncertain, scopeReviews(uncertain)).includes("Regra declarada: nenhuma (atribuição incerta)"));
 });
 
+test("blind review masks rule ids of the DS base and tool mentions in the claim; the full render does not (plano de revisão 19/10, C)", () => {
+  const pkg = prepareSemanticPackage(context, units, resolution, [{ id: "c", data: run([current({ rule: "govbr-3.7.0-component-message-66b01a712e67",
+    observed: "scan_page e o axe acharam ds-page-footer ausente", steps: ["browser_snapshot"] })]), evidence: index }]);
+  const cego = renderReview(pkg, scopeReviews(pkg), { cego: true }), completo = renderReview(pkg, scopeReviews(pkg));
+  assert.ok(cego.includes("Regra declarada: [regra citada]"), "rule id masked");
+  for (const x of ["govbr-3.7.0", "ds-page-footer", "scan_page", "browser_snapshot", " axe "]) assert.ok(!cego.includes(x), x);
+  assert.ok(cego.includes("Observado: [ferramenta citada] e o [ferramenta citada] acharam [regra citada] ausente"));
+  assert.ok(completo.includes("Regra declarada: govbr-3.7.0-component-message-66b01a712e67") && completo.includes("scan_page e o axe"));
+  const wcag = prepareSemanticPackage(context, units, resolution, [{ id: "w", data: run([current()]), evidence: index }]);
+  assert.ok(renderReview(wcag, scopeReviews(wcag), { cego: true }).includes("Regra declarada: wcag:1.3.1"), "public norm stays");
+});
+
 const entry = "http://127.0.0.1:3100/fluxo.html";
 
 test("collector promotes the last refused body when a run never had a report accepted", () => {

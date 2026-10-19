@@ -3,6 +3,7 @@ import {
   RELACOES_VINCULO, VINCULO_CONTRATO, aceitaVinculos, armLeaks, reviewEffort, reviewQueue, scoreSemanticPackage,
   type ReviewCard, type SemanticPackage, type SemanticReviews,
 } from "./semantic-flow";
+import { mascararNormaCega, mascararTextoCego } from "./painel/mascara";
 
 const CONTRACT: Record<ReviewCard["contract"], string> = {
   "achado-2": "achado-2 — observado, esperado, estado e evidência declarados pelo agente",
@@ -35,23 +36,27 @@ const escapeHeadings = (text: string): string => text.replace(/^#/gm, "\\#");
 const RETIDO = "_(retido na renderização cega: este texto pode nomear o braço da execução)_";
 
 function claim(c: ReviewCard, cego: boolean): string[] {
+  // [C, plano de revisão 19/10] Na renderização cega, o texto da alegação passa pela mesma máscara da vista cega do trio
+  // (painel/mascara.ts): ids da base do DS e do oráculo viram "[regra citada]", menções a ferramenta "[ferramenta citada]".
+  // Sem --cego nada muda.
+  const t = (x: string | null) => (cego ? mascararTextoCego(x) : x);
   const lines = [`Contrato: ${CONTRACT[c.contract]}`, "",
     `Origem: ${c.origin === "agente" ? "execução do agente" : "linha de base determinística"} · cena ${c.scene}`, ""];
   if (c.contract === "achado-2" || c.contract === "deterministico" || (c.contract === "recusado" && (c.observed !== null || c.expected !== null))) {
-    lines.push(`Observado: ${escapeHeadings(c.observed ?? "(ausente)")}`, "",
-      `Esperado: ${escapeHeadings(c.expected ?? "(ausente)")}`, "",
+    lines.push(`Observado: ${escapeHeadings(t(c.observed) ?? "(ausente)")}`, "",
+      `Esperado: ${escapeHeadings(t(c.expected) ?? "(ausente)")}`, "",
       c.state
         ? `Janela: ${c.state.viewport.width}×${c.state.viewport.height} · interações desde o carregamento: ` +
-          (c.state.steps.length ? c.state.steps.map((step, i) => `${i + 1}. ${step}`).join(" ") : "nenhuma")
+          (c.state.steps.length ? c.state.steps.map((step, i) => `${i + 1}. ${t(step)}`).join(" ") : "nenhuma")
         : "Janela e interações: ausentes ou inválidas no relatório", "");
   } else {
     lines.push(cego ? RETIDO : escapeHeadings(c.description), "");
   }
-  lines.push(`Regra declarada: ${c.rule === null ? "nenhuma (atribuição incerta)" : c.rule}`, "");
+  lines.push(`Regra declarada: ${c.rule === null ? "nenhuma (atribuição incerta)" : cego ? mascararNormaCega(c.rule) : c.rule}`, "");
   lines.push(c.binding.runScope
     ? "Reuso: restrito à execução de origem; evidência/estado/build insuficientes para equivalência entre execuções."
     : "Reuso: condicionado à mesma evidência verificada, estado declarado e build original.", "");
-  if (c.flags.length) lines.push(`Sinalizações: ${c.flags.join(" · ")}`, "");
+  if (c.flags.length) lines.push(`Sinalizações: ${c.flags.map(t).join(" · ")}`, "");
   return lines;
 }
 
@@ -122,14 +127,16 @@ export function renderReview(pkg: SemanticPackage, reviews: SemanticReviews, opt
         `"relation" (${RELACOES_VINCULO.join(" | ")}), "evidence", "justification", "reviewer" (você), "binding" (o do cartão) }]. ` +
         "Nada cria vínculo por você; o scorer recusa outra cena, estado não medido, relação que não cabe na árvore medida, falta de evidência.", ""] : []),
   ];
+  const mt = (x: string) => (cego ? mascararTextoCego(x) : x);
+  const sujeito = (s: ReviewCard["subjects"][number]) => `- ${JSON.stringify(s.id)} — ${mt(s.label)}${s.hidden ? ` · **oculto**: ${mt(s.hidden)}` : ""}`;
   for (const c of pkg.cards) {
     const d = decisions.get(c.id);
     lines.push(`## ${c.id}`, "", `Estado: ${pending.has(c.id) ? "pendente" : "concluído"}`, "", ...claim(c, cego),
       "### Sujeitos", "",
       ...(c.segmentos
         ? c.segmentos.flatMap(o => [`Cena \`${o.scene}\` (${o.path ?? "?"}) — escolha com \`"cena": ${JSON.stringify(o.scene)}\`:`,
-          ...c.subjects.filter(s => s.scene === o.scene).map(s => `- ${JSON.stringify(s.id)} — ${s.label}${s.hidden ? ` · **oculto**: ${s.hidden}` : ""}`), ""])
-        : c.subjects.map(s => `- ${JSON.stringify(s.id)} — ${s.label}${s.hidden ? ` · **oculto**: ${s.hidden}` : ""}`)), "",
+          ...c.subjects.filter(s => s.scene === o.scene).map(sujeito), ""])
+        : c.subjects.map(sujeito)), "",
       "### Unidades candidatas (não são crédito)", "");
     for (const id of c.candidateUnitIds) {
       const u = pkg.units.find(u => u.id === id)!;
