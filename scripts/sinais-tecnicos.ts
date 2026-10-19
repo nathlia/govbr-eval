@@ -48,13 +48,18 @@ export function sinaisTecnicos(dir: string): Sinais {
   return { analise: s.analise.estado, execucoes, cenas, unidadesZeroPorConstrucao: zero, defeitos };
 }
 
+/** As linhas que o terminal mostra (as mesmas no CLI daqui e no `coleta:trio`); nada além dos sinais. */
+export function linhasDosSinais(r: Sinais): string[] {
+  return [`análise ${r.analise} · cenas ${r.cenas.join(", ") || "—"} · unidades 0 por construção: ${r.unidadesZeroPorConstrucao}`,
+    ...r.execucoes.map(e => `  ${JSON.stringify(e)}`),
+    r.defeitos.length ? `DEFEITO TÉCNICO (${r.defeitos.length}):\n  ${r.defeitos.join("\n  ")}` : "sinais técnicos ok"];
+}
+
 if (process.argv[1] && /(?:^|[\\/])sinais-tecnicos\.ts$/.test(process.argv[1])) {
   const [dir] = process.argv.slice(2), i = process.argv.indexOf("--json");
   if (!dir) { console.error("Uso: npx tsx scripts/sinais-tecnicos.ts PASTA_DA_ANALISE [--json SAIDA.json]"); process.exit(1); }
   const r = sinaisTecnicos(dir);
   if (i > 0) writeFileSync(process.argv[i + 1], JSON.stringify(r, null, 2) + "\n");
-  console.log(`análise ${r.analise} · cenas ${r.cenas.join(", ") || "—"} · unidades 0 por construção: ${r.unidadesZeroPorConstrucao}`);
-  for (const e of r.execucoes) console.log(`  ${JSON.stringify(e)}`);
-  console.log(r.defeitos.length ? `DEFEITO TÉCNICO (${r.defeitos.length}):\n  ${r.defeitos.join("\n  ")}` : "sinais técnicos ok");
+  for (const l of linhasDosSinais(r)) console.log(l);
   if (r.defeitos.length) process.exitCode = 2;
 }

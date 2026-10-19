@@ -18,6 +18,8 @@
     "test:analise": "tsx scripts/test-analysis-manifest.ts",
     "manifest:analise": "tsx scripts/analysis-manifest.ts",
     "analisar": "tsx scripts/analisar-execucao.ts",
+    "coleta:trio": "tsx scripts/coleta-trio.ts",
+    "test:coleta-trio": "tsx scripts/test-coleta-trio.ts",
     "test:analisar": "tsx scripts/test-analisar.ts",
     "test:identidade": "tsx scripts/test-identidade-campanha.ts",
     "campanha:agenda": "tsx scripts/agenda-campanha.ts",
