@@ -6,17 +6,19 @@
  */
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { sha256Tree } from "../collection-manifest";
 import { EVAL, gravar, gravarJson, sha } from "./comum";
 import {
-  FORMATO_MANIFESTO_CAMPANHA, FORMATO_RESPOSTAS, FORMATO_RESPOSTAS_CAMPANHA, NAO_PERGUNTADO, derivarClasse, validarResposta,
+  FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_RESPOSTAS, FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_1, NAO_PERGUNTADO,
+  derivarClasse, validarResposta,
   type CartaoCego, type Resposta,
 } from "./e14-comum";
 import { bracoDoRun, mascararTrio, passosLegiveis, prepararCampanha } from "./e14-campanha";
-import { argumentosIngerir, ingerir } from "./e14-ingerir";
+import { FORCA_NO_VOCABULARIO, normasDaCampanha } from "./e14-fila";
+import { argumentosIngerir, contextoDe, ingerir } from "./e14-ingerir";
 
 let n = 0, falhas = 0;
 const t = (nome: string, f: () => void) => { n++; try { f(); console.log(`  ok  ${nome}`); } catch (e) { falhas++; console.log(`  FALHA ${nome}\n       ${e instanceof Error ? e.message : e}`); } };
@@ -57,7 +59,8 @@ try {
   const valDir = join(tmp, "validador"), vData = join(valDir, "data"), vNorm = "knowledge/versions/3.7.0-literal-teste/normalized";
   gravarJson(vData, "knowledge/manifest.json", { activeVersion: "3.7.0-literal-teste" });
   const regra = (id: string, title: string, force: string) => ({ id, title, normalizedRule: `${title}.`, force });
-  gravar(vData, `${vNorm}/rules.jsonl`, JSON.stringify(regra("govbr-3.7.0-component-input-0123456789ab", "Campo de entrada deve ter rótulo visível", "required")) + "\n");
+  gravar(vData, `${vNorm}/rules.jsonl`, [regra("govbr-3.7.0-component-input-0123456789ab", "Campo de entrada deve ter rótulo visível", "required"),
+    regra("govbr-3.7.0-component-message-cccccccccccc", "Botão Fechar | Componente Button | Opcional", "permitted")].map(x => JSON.stringify(x)).join("\n") + "\n");
   gravar(vData, `${vNorm}/carried-over.jsonl`, JSON.stringify(regra("govbr-3.7.0-development-global-aaaaaaaaaaaa", "Prefira npm", "recommended")) + "\n");
   gravarJson(vData, `${vNorm}/legacy-ids.json`, { entries: [{ id: "govbr-3.7.0-accessibility-global-bbbbbbbbbbbb",
     record: regra("govbr-3.7.0-accessibility-global-bbbbbbbbbbbb", "Regra antiga de rótulo", "required") }] });
@@ -76,11 +79,12 @@ try {
     { ...card("C-bbbb", "scan_page mostrou campo sem rótulo.", "label"), state: { viewport: { width: 1280, height: 900 }, steps: ["setup do plano de estados (2 passo(s))"] } },
     card("C-cccc", "Sem rótulo pela regra govbr-3.7.0-component-input-0123456789ab.", "govbr-3.7.0-component-input-0123456789ab"),
     card("C-dddd", "O campo de nome não tem rótulo.", null), card("C-eeee", "Botão do calendário sem nome acessível.", "emag-2.2"),
-    card("C-ffff", "Rodapé fora do padrão.", "ds-page-footer"), card("C-gggg", "Algo fora do padrão.", "ds-inexistente")];
+    card("C-ffff", "Rodapé fora do padrão.", "ds-page-footer"), card("C-gggg", "Algo fora do padrão.", "ds-inexistente"),
+    card("C-hhhh", "O botão Fechar é um div.", "govbr-3.7.0-component-message-cccccccccccc")];
   const run = (id: string, p: string, ids: string[]) => ({ id, kind: "agente", tool: null, config: { oracleProfile: p }, cardIds: ids });
   gravarJson(dir, "revisao/package.json", { units: [{ id: "U-1", specId: "A-01" }], cards,
     runs: [run("20990101-000000-x-sem-0001", "none", ["C-aaaa", "C-dddd"]), run("20990101-000000-x-ferramentas-0002", "knowledge-free", ["C-bbbb"]),
-      run("20990101-000000-x-com-0003", "evaluation", ["C-cccc", "C-eeee", "C-ffff", "C-gggg"])] });
+      run("20990101-000000-x-com-0003", "evaluation", ["C-cccc", "C-eeee", "C-ffff", "C-gggg", "C-hhhh"])] });
   gravarJson(dir, "revisao/capture.json", { url: "/x.html" });
   const oraculo = (perfil: string) => ({ version: "9.9.9", distSha256: "d".repeat(64), dataSha256: dataSha, profile: perfil });
   gravarJson(dir, "entradas/campanha.json", { campaignId: "camp-sintetica-01", design: { screens: [{ id: "x", label: "X" }] },
@@ -143,7 +147,8 @@ try {
     formato: FORMATO_RESPOSTAS_CAMPANHA, lote: "lote-01", loteSha256: sha(loteTxt), juiz: "teste sintético",
     respostas: lote.cartoes.map(c => ({ id: c.id, verdadeFactual: "indeterminado",
       norma: c.alegacao.regra === null ? { id: "nenhuma", forca: "nenhuma", ...neutra } : { id: "citada", forca: "indeterminado", aplicabilidade: "incerta", violada: "incerto" },
-      vinculo: "indeterminado", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "incerto", evidencias: ["MEDIDA"], justificativa: "MEDIDA não decidiu o fato neste teste sintético." })) });
+      vinculo: "indeterminado", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "incerto", evidencias: ["MEDIDA"], justificativa: "MEDIDA não decidiu o fato neste teste sintético.",
+      estadoAlcancado: "receita" })) });
   const fila = join(tmp, "fila");
   for (const [rel, x] of [...p.arquivosDoJuiz, ...p.arquivosInternos]) gravar(fila, rel, x);
 
@@ -180,6 +185,79 @@ try {
     const txt = readFileSync(join(fila, "julgamentos.json"), "utf8");
     assert.equal(readFileSync(join(fila, "julgamentos.json.sha256"), "utf8"), `${sha(txt)}  julgamentos.json\n`);
     assert.equal(cli(fila).status, 1, "pasta sem --fila é recusada");
+  });
+
+  console.log("E14 campanha 1.2.0: forças da base no vocabulário (M) e estado alcançado (N)");
+  t("força da base literal já no vocabulário em cada regra da base; o texto literal fica (M)", () => {
+    const h = cartao("C-hhhh").normaCitada!.regrasDaBase![0];
+    assert.equal(h.forcaDeclarada, "permitido (opcional)"); assert.equal(h.forcaNoVocabulario, "nenhuma");
+    assert.equal(cartao("C-cccc").normaCitada!.regrasDaBase![0].forcaNoVocabulario, "obrigatorio");
+    assert.deepEqual(cartao("C-ffff").normaCitada!.regrasDaBase!.map(r => r.forcaNoVocabulario), ["obrigatorio", "recomendado"]);
+    const l = p.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!;
+    for (const x of ["| permitido (opcional) | `nenhuma` |", "| obrigatorio (proibição) | `obrigatorio` |", "| recomendado (desaconselha) | `recomendado` |",
+      "| informativo | `null` (sem correspondência) |", "| não declarada | `null` (sem correspondência) |", "`estadoAlcancado`", "\"estadoAlcancado\": \"receita\"", "erro normativo (R11a)"])
+      assert.ok(l.includes(x), x);
+    for (const x of ["passosUsados", "passos-proprios"]) assert.ok(!l.includes(x), x);
+  });
+  t("tabela fixa: força desconhecida na base para (nunca cai calada em sem correspondência)", () => {
+    assert.deepEqual(Object.keys(FORCA_NO_VOCABULARIO).sort(), ["discouraged", "example", "informative", "optional", "permitted", "prohibited", "recommended", "required", "unclear"]);
+    const v2 = join(tmp, "validador-forca"), d2 = join(v2, "data");
+    gravarJson(d2, "knowledge/manifest.json", { activeVersion: "3.7.0-literal-teste" });
+    gravar(d2, `${vNorm}/rules.jsonl`, JSON.stringify(regra("govbr-3.7.0-x-dddddddddddd", "X", "weird")) + "\n");
+    gravarJson(d2, "wcag-2.2.json", { criteria: [] }); gravarJson(d2, "emag.json", { sections: {} });
+    assert.throws(() => normasDaCampanha({ dataSha256: sha256Tree(d2)!.sha256, validador: v2, checkerAliases: aliasesAbs }), /fora da tabela/);
+  });
+  const ctxDe = (orig: string) => contextoDe(cartao(orig), chave.itens.find(i => i.cardIdOriginal === orig)! as never, ["A-01"]);
+  const resp = (orig: string, extra: Record<string, unknown> = {}) => ({ id: cartao(orig).id, verdadeFactual: "verdadeira",
+    norma: { id: "citada", forca: "nenhuma", aplicabilidade: NAO_PERGUNTADO, violada: NAO_PERGUNTADO }, vinculo: { spec: "A-01", relacao: "direta" },
+    sugestao: NAO_PERGUNTADO, forcaDoVeredito: "medido", evidencias: ["MEDIDA", "NORMA"], justificativa: "MEDIDA mostra o div; a NORMA só permite.",
+    estadoAlcancado: "receita", ...extra });
+  const v12 = { normaNeutra: true, v12: true };
+  const valida = { trataOFato: "sim", especificaDoSujeito: "sim", naoViolaNormaObrigatoria: "sim", qualidade: "valida" };
+  const invalida = { trataOFato: "nao", especificaDoSujeito: "sim", naoViolaNormaObrigatoria: "sim", qualidade: "invalida" };
+  t("regra citada que a base só permite, alegada como violada: erro normativo (R11a); com sugestão válida, observação com norma errada (R11d)", () => {
+    const c = ctxDe("C-hhhh");
+    assert.deepEqual(c.forcasDaCitada, ["nenhuma"]);
+    assert.match(validarResposta(resp("C-hhhh"), c, v12).join(), /erro normativo: responda sugestao/, "sugestão passa a ser obrigatória");
+    const ri = resp("C-hhhh", { sugestao: invalida }), rv = resp("C-hhhh", { sugestao: valida });
+    assert.deepEqual(validarResposta(ri, c, v12), []); assert.deepEqual(validarResposta(rv, c, v12), []);
+    const di = derivarClasse(ri as Resposta, c), dv = derivarClasse(rv as Resposta, c);
+    assert.deepEqual([di.classe, di.regraDaPolitica, di.spec, di.fundamentacao], ["erro-normativo", "R11", null, null]);
+    assert.deepEqual([dv.classe, dv.regraDaPolitica, dv.spec, dv.fundamentacao], ["observacao-norma-errada", "R11d", null, null]);
+    assert.equal(derivarClasse(rv as Resposta, { ...c, forcasDaCitada: undefined }).classe, "observacao", "sem forcasDaCitada (histórico/1.1.0) a derivação não muda");
+    assert.match(validarResposta(resp("C-hhhh", { sugestao: valida, norma: { id: "citada", forca: "nenhuma", aplicabilidade: "aplica", violada: "sim" } }), c, v12).join(), /nao-perguntado/);
+    assert.match(validarResposta(resp("C-cccc"), ctxDe("C-cccc"), v12).join(), /forcaNoVocabulario/, "regra obrigatória não aceita nenhuma");
+    assert.match(validarResposta(resp("C-ffff"), ctxDe("C-ffff"), v12).join(), /forcaNoVocabulario/, "forças mistas não aceitam nenhuma");
+    const { estadoAlcancado: _e, ...r11 } = resp("C-hhhh");
+    assert.match(validarResposta(r11, ctxDe("C-hhhh"), { normaNeutra: true }).join(), /só vale para cartão sem regra/, "1.1.0 não muda");
+  });
+  t("estadoAlcancado fechado (receita | nao-alcancado): sem passos próprios; nao-alcancado exige fato indisponivel (R9/R10)", () => {
+    const c = ctxDe("C-cccc"), ok = { norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" } };
+    assert.deepEqual(validarResposta(resp("C-cccc", ok), c, v12), []);
+    assert.match(validarResposta(resp("C-cccc", { ...ok, estadoAlcancado: undefined }), c, v12).join(), /estadoAlcancado fora da lista/);
+    const { estadoAlcancado: _x, ...sem } = resp("C-cccc", ok); assert.match(validarResposta(sem, c, v12).join(), /campo ausente: estadoAlcancado/);
+    assert.match(validarResposta(resp("C-cccc", { ...ok, estadoAlcancado: "passos-proprios" }), c, v12).join(), /estadoAlcancado fora da lista/);
+    assert.match(validarResposta(resp("C-cccc", { ...ok, passosUsados: ["clicar em #nome"] }), c, v12).join(), /campo desconhecido: passosUsados/);
+    assert.match(validarResposta(resp("C-cccc", { ...ok, estadoAlcancado: "nao-alcancado" }), c, v12).join(), /indisponivel/);
+    const r = resp("C-cccc", { ...ok, estadoAlcancado: "nao-alcancado", verdadeFactual: "indisponivel" });
+    assert.deepEqual(validarResposta(r, c, v12), []); assert.equal(derivarClasse(r as Resposta, c).classe, "evidencia-indisponivel");
+    assert.match(validarResposta(resp("C-cccc", ok), c, { normaNeutra: true }).join(), /campo desconhecido: estadoAlcancado/, "1.1.0 não conhece o campo");
+  });
+  t("ingestão 1.2.0 conta estadoAlcancado (nao-alcancado → evidência indisponível); manifesto 1.1.0 segue o esquema 1.1.0", () => {
+    const f2 = join(tmp, "fila-12"); cpSync(fila, f2, { recursive: true }); rmSync(join(f2, "julgamentos.json"));
+    const base = respostas();
+    base.respostas[0] = { ...base.respostas[0], estadoAlcancado: "nao-alcancado", verdadeFactual: "indisponivel" } as never;
+    gravarJson(f2, "respostas/lote-01.json", base);
+    const r = ingerir(f2); assert.deepEqual(r.erros, []);
+    const j = r.julgamentos as { porEstadoAlcancado: Record<string, number>; porClasse: Record<string, number> };
+    assert.deepEqual(j.porEstadoAlcancado, { "nao-alcancado": 1, receita: lote.cartoes.length - 1 });
+    assert.equal(j.porClasse["evidencia-indisponivel"], 1);
+    const f3 = join(tmp, "fila-11"); cpSync(fila, f3, { recursive: true }); rmSync(join(f3, "julgamentos.json"));
+    const mAbs = join(f3, "lotes", "manifesto.json");
+    gravar(f3, "lotes/manifesto.json", readFileSync(mAbs, "utf8").replace(FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1));
+    const velho = respostas(); velho.formato = FORMATO_RESPOSTAS_CAMPANHA_1_1; velho.respostas = velho.respostas.map(({ estadoAlcancado: _e, ...x }) => x) as never;
+    gravarJson(f3, "respostas/lote-01.json", velho);
+    const r3 = ingerir(f3); assert.deepEqual(r3.erros, []); assert.equal((r3.julgamentos as { porEstadoAlcancado?: unknown }).porEstadoAlcancado, undefined);
   });
 } finally { rmSync(tmp, { recursive: true, force: true }); }
 

@@ -14,7 +14,9 @@
  * 1.1.0 (1b, plano de revisão 19/10): texto das regras do DS pela base que o oráculo DA CAMPANHA carrega (`normasDaCampanha`,
  * conferida pelo dataSha256 do campaign.json; `--validador DIR`, padrão ../govbr-ds-validator); respostas só em
  * `<passada>/respostas/` (`respostaEm` = `../respostas/lote-NN.json`); `norma.id "nenhuma"` com aplicabilidade/violada
- * `nao-perguntado`; receitas da linha de base legíveis; fontes (base + sha256) no manifesto. Ingestão:
+ * `nao-perguntado`; receitas da linha de base legíveis; fontes (base + sha256) no manifesto.
+ * 1.2.0 (achados M, N): `forcaNoVocabulario` em cada regra da base (tabela FORCA_NO_VOCABULARIO, impressa no LEIAME) e
+ * `estadoAlcancado` (`receita` | `nao-alcancado`, R10) na resposta. Ingestão:
  *   npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila PASTA_DA_PASSADA
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -27,11 +29,15 @@ import {
   ESQUEMA_RESPOSTAS_CAMPANHA, FORMATO_LOTE, FORMATO_MANIFESTO_CAMPANHA, FORMATO_RESPOSTAS, FORMATO_RESPOSTAS_CAMPANHA, NAO_PERGUNTADO,
   hashDaChave, idOpaco, mascarar, nomeLote, type CartaoCego, type ItemChave,
 } from "./e14-comum";
-import { cartaoCego, normasDaCampanha, type Extracao } from "./e14-fila";
+import { TABELA_FORCAS, cartaoCego, normasDaCampanha, type Extracao } from "./e14-fila";
 import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
 
-/** 1.1.0 (1b): normas pela base do oráculo da campanha, caminho único de respostas, LEIAME corrigido, receitas legíveis. */
-export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.1.0";
+/**
+ * 1.1.0 (1b): normas pela base do oráculo da campanha, caminho único de respostas, LEIAME corrigido, receitas legíveis.
+ * 1.2.0 (M, N): força da base literal já no vocabulário do juiz (`forcaNoVocabulario`, tabela fixa impressa no LEIAME) e
+ * resposta fechada `estadoAlcancado`; regra citada que só permite deriva erro normativo (R11a/R11d).
+ */
+export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.2.0";
 /** Validador cuja `data/` é conferida contra o `dataSha256` da campanha (pode ser outro checkout: `--validador`). */
 export const VALIDADOR_PADRAO = join(TCC, "govbr-ds-validator");
 type Card = SemanticPackage["cards"][number];
@@ -168,7 +174,7 @@ function trocar(t: string, de: string | RegExp, para: string): string {
 }
 
 /**
- * LEIAME do juiz da primeira passada (1.1.0): o histórico (`leiameJuiz`, que não muda) com as trocas da campanha nova —
+ * LEIAME do juiz da primeira passada (1.2.0): o histórico (`leiameJuiz`, que não muda) com as trocas da campanha nova —
  * página congelada medida (D-138), caminho único de respostas (I), norma neutra para `id: "nenhuma"` (K1), `norma.forca`
  * explícito (K2), receitas (K3) e o que não abrir (K4).
  */
@@ -178,7 +184,7 @@ export function leiameCampanha(total: number, nLotes: number, nomes: string): st
   t = trocar(t, "(Tela A · Solicitar serviço, ou Tela B · Vistorias)", `(${nomes})`);
   t = trocar(t, /\*\*Use só o lote\.\*\*[^]*?quem o escreveu: isso não entra no julgamento\./, LEIAME_MEDIDA);
   t = trocar(t, "`estado` (tamanho da janela e passos até o estado)",
-    "`estado` (tamanho da janela e passos até o estado: a receita escrita pelo autor do cartão, ou os passos da referência da tela quando o cartão veio da linha de base; refaça-a na página congelada e, se ela não alcança o estado que o cartão descreve, diga isso na justificativa)");
+    "`estado` (tamanho da janela e passos até o estado: a receita escrita pelo autor do cartão, ou os passos da referência da tela quando o cartão veio da linha de base; refaça-a na página congelada e responda `estadoAlcancado`, em \"Em todo cartão\")");
   t = trocar(t, "  coubesse melhor (R11, R15). Se o cartão não cita regra (`regra: null`): a norma pública que a alegação implica\n  (`wcag:x.y.z` ou `emag:x.y`), ou `\"nenhuma\"` se ela não implica norma.",
     "  coubesse melhor (R11, R15). Se o cartão não cita regra (`regra: null`): a norma pública que a alegação implica\n  (`wcag:x.y.z` ou `emag:x.y`), ou `\"nenhuma\"` se ela não implica norma. **Com `id: \"nenhuma\"`** a norma inteira é\n  `{ \"id\": \"nenhuma\", \"forca\": \"nenhuma\", \"aplicabilidade\": \"" + NAO_PERGUNTADO + "\", \"violada\": \"" + NAO_PERGUNTADO + "\" }`: não há norma a\n  aplicar, e a ingestão recusa outro valor nesses dois campos (e recusa `" + NAO_PERGUNTADO + "` neles com qualquer outro `id`).");
   t = trocar(t, "| fato `indeterminado`, ou força `indeterminado` | pendente |",
@@ -191,8 +197,45 @@ export function leiameCampanha(total: number, nLotes: number, nomes: string): st
   t = trocar(t, "Grave `respostas/lote-NN.json` (o caminho está em `respostaEm` no lote) com exatamente um registro por cartão do lote,",
     "Grave `respostas/lote-NN.json` **na pasta da passada**: a pasta `respostas/` fica ao lado de `lotes/`, nunca dentro dela\n(`respostaEm` no lote dá o caminho relativo ao próprio lote: `../respostas/lote-NN.json`; a ingestão recusa arquivos em\n`lotes/respostas/`). Exatamente um registro por cartão do lote,");
   t = trocar(t, `"formato": "${FORMATO_RESPOSTAS}"`, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA}"`);
+  // ── 1.2.0 (achados M e N)
+  t = trocar(t, "(estado que a receita não alcança, elemento ausente,\n  medida impossível) (R9, R10).",
+    "(estado que a receita não alcança — `estadoAlcancado: \"nao-alcancado\"` —, elemento ausente,\n  medida impossível) (R9, R10).");
+  t = trocar(t, "`nenhuma` (só com `id: \"nenhuma\"`) ·\n  `indeterminado`.",
+    "`nenhuma` (com `id: \"nenhuma\"`; ou com regra citada quando **toda** regra da base que ela traz tem\n  `forcaNoVocabulario: \"nenhuma\"`) · `indeterminado`.");
+  t = trocar(t, "não para o que o DS entrega (R4).\n", `não para o que o DS entrega (R4).\n${LEIAME_FORCAS}\n`);
+  t = trocar(t, "### Em todo cartão\n", `### Em todo cartão\n${LEIAME_ESTADO}\n`);
+  t = trocar(t, "| fato `indisponivel` | evidência indisponível (pendente, R9) |",
+    "| fato `indisponivel` (também o que `estadoAlcancado: \"nao-alcancado\"` exige) | evidência indisponível (pendente, R9/R10) |");
+  t = trocar(t, "| fato `verdadeira` + norma `nenhuma` sem vínculo | observação (R11b) |",
+    "| fato `verdadeira` + norma `nenhuma` sem vínculo | observação (R11b) |\n| fato `verdadeira` + regra citada com `forca: \"nenhuma\"` (a base só permite; `aplicabilidade`/`violada` = `" + NAO_PERGUNTADO + "`), com ou sem vínculo | erro normativo (R11a); com sugestão `valida`: observação com norma errada (R11d) |");
+  t = trocar(t, "\"forcaDoVeredito\": \"inferido\",\n", "\"forcaDoVeredito\": \"inferido\",\n      \"estadoAlcancado\": \"receita\",\n");
   return t;
 }
+
+/** [M] Tabela fixa das forças da base literal, impressa a partir de TABELA_FORCAS (e14-fila.ts). */
+const LEIAME_FORCAS = [
+  "- **Força declarada da base do DS → `forca`.** Cada regra da base em `normaCitada.regrasDaBase` (e nas normas dos",
+  "  defeitos) traz `forcaDeclarada` (a palavra da própria base) e `forcaNoVocabulario` (a mesma força já posta nesta lista,",
+  "  por uma tabela fixa, feita antes de qualquer julgamento e só pelas palavras da base). Use `forcaNoVocabulario` como",
+  "  `forca` da regra; com várias regras, a força da norma citada é a da regra que trata o fato. `null` = a base não dá",
+  "  correspondência: decida pela leitura do texto (ou `indeterminado`). Com `nenhuma` a regra **permite**, não obriga:",
+  "  responda `forca: \"nenhuma\"` com `aplicabilidade`/`violada` = `" + NAO_PERGUNTADO + "` (não há obrigação a aplicar).",
+  "  Se o cartão cita essa regra como violada, ele alega uma obrigação que não existe: erro normativo (R11a), e a",
+  "  `sugestao` passa a ser obrigatória (com sugestão `valida`: observação com norma errada, R11d).",
+  "",
+  "  | `forcaDeclarada` (base) | `forcaNoVocabulario` |",
+  "  |---|---|",
+  ...TABELA_FORCAS.map(f => `  | ${f.rotulo} | ${f.vocabulario === null ? "`null` (sem correspondência)" : `\`${f.vocabulario}\``} |`),
+].join("\n");
+
+/** [N] Estado alcançado: resposta fechada, não só a justificativa. */
+const LEIAME_ESTADO = [
+  "- `estadoAlcancado` (sempre): refaça a receita do `estado` e julgue **só no estado a que ela chega** (R10). `receita` =",
+  "  ela chega ao estado que o cartão descreve (o que o `observado` pressupõe: diálogo aberto, calendário aberto, foco em",
+  "  tal campo…). `nao-alcancado` = ela não chega a esse estado: então `verdadeFactual` = `indisponivel` (evidência",
+  "  indisponível, R9/R10), mesmo que, com outros passos, você veja o fato. O que viu noutro estado pode ir à",
+  "  `justificativa`, mas nunca muda a resposta.",
+].join("\n");
 
 const LEIAME_MEDIDA = `**Use o lote e a página congelada.** O lote traz o texto do cartão, a norma citada e os defeitos da referência da tela.
 O fato alegado se confere **medindo a página congelada** servida em \`http://127.0.0.1:3300\` + o \`endereco\` da tela (seção

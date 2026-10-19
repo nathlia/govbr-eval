@@ -18,8 +18,17 @@ export const FORMATO_JULGAMENTOS = "nat74-t3-julgamentos-1.0.0";
  * respostas com formato próprio. A ingestão escolhe o esquema e a validação pelo formato do manifesto; a 1.0.0 (ensaio
  * 20261019T1) e a fila T3 retrospectiva seguem o esquema histórico, sem mudança.
  */
-export const FORMATO_MANIFESTO_CAMPANHA = "nat78-primeira-passada-manifesto-1.1.0";
-export const FORMATO_RESPOSTAS_CAMPANHA = "nat78-primeira-passada-respostas-1.1.0";
+export const FORMATO_MANIFESTO_CAMPANHA_1_1 = "nat78-primeira-passada-manifesto-1.1.0";
+export const FORMATO_RESPOSTAS_CAMPANHA_1_1 = "nat78-primeira-passada-respostas-1.1.0";
+/**
+ * [M/N, plano de revisão 19/10] 1.2.0: força da base literal já posta no vocabulário do juiz (`forcaNoVocabulario`,
+ * tabela fixa em e14-fila.ts) e campo fechado `estadoAlcancado`. Passadas 1.1.0 (ensaio 20261019T3)
+ * continuam ingeridas pelo esquema 1.1.0, sem mudança.
+ */
+export const FORMATO_MANIFESTO_CAMPANHA = "nat78-primeira-passada-manifesto-1.2.0";
+export const FORMATO_RESPOSTAS_CAMPANHA = "nat78-primeira-passada-respostas-1.2.0";
+/** [N] O juiz refez a receita do cartão: ela chega ao estado que ele descreve, ou não (R10: julga-se só no estado da receita). */
+export const ESTADO_ALCANCADO = ["receita", "nao-alcancado"] as const;
 /** Semente da ordem e dos ids opacos (ordem pelo hash, plano §6.6). */
 export const SEMENTE_T3 = "nat74-e14-fila-t3-v1|";
 /** Tamanho-alvo dos lotes (pedido: ~25–35 átomos por lote). */
@@ -84,7 +93,8 @@ export interface ItemChave {
 export interface NormaVista {
   id: string; fonte: string; titulo: string | null; texto: string | null;
   nivel?: string | null; etiquetas?: string[]; forcaDeclarada?: string | null;
-  regrasDaBase?: { titulo: string; texto: string; forcaDeclarada: string }[];
+  /** `forcaNoVocabulario` só na campanha nova 1.2.0 (achado M): a força declarada já no vocabulário de `norma.forca`, ou null (sem correspondência). */
+  regrasDaBase?: { titulo: string; texto: string; forcaDeclarada: string; forcaNoVocabulario?: string | null }[];
 }
 export interface FatoMedido {
   id: string; relacao: "deste-caso" | "mesmo-elemento"; fonte: string;
@@ -140,6 +150,8 @@ export interface Resposta {
   forcaDoVeredito: typeof VAL.forcaDoVeredito[number];
   evidencias: string[];
   justificativa: string;
+  /** Só campanha nova 1.2.0 (achado N). */
+  estadoAlcancado?: typeof ESTADO_ALCANCADO[number];
 }
 export interface ArquivoRespostas { formato: string; lote: string; loteSha256: string; juiz: string; respostas: Resposta[] }
 
@@ -149,6 +161,12 @@ export interface ContextoDerivacao {
   origemMedida: string | null;
   /** Só para `qualidade`: a classe do veredito já registrado (é sempre erro normativo). */
   classeRegistrada: string | null;
+  /**
+   * [M, campanha 1.2.0] Forças da regra citada já no vocabulário (`forcaNoVocabulario` de cada regra da base). Com todas
+   * = `nenhuma` (a base só permite), `norma.forca: "nenhuma"` é aceita também para regra citada, e deriva erro normativo
+   * (R11 a; R11d com sugestão válida). Ausente no histórico e na 1.1.0.
+   */
+  forcasDaCitada?: (string | null)[];
 }
 export interface Derivado {
   classe: "violacao-pagina" | "violacao-ds" | "violacao-origem-indeterminada" | "erro-factual" | "erro-normativo" | "observacao"
@@ -203,19 +221,33 @@ export const ESQUEMA_RESPOSTAS = {
  * admitido em `norma.aplicabilidade`/`norma.violada` — o valor neutro de `id: "nenhuma"` (não há norma a aplicar). A
  * exigência cruzada (neutro ⇔ `nenhuma`) fica em `validarResposta(…, { normaNeutra: true })`. O histórico não muda.
  */
-export const ESQUEMA_RESPOSTAS_CAMPANHA = (() => {
+function esquemaCampanha(formato: string, estado: boolean) {
   const e = JSON.parse(JSON.stringify(ESQUEMA_RESPOSTAS)) as {
-    title: string; properties: { formato: { const: string }; respostas: { items: { properties: { norma: { oneOf: [unknown, { properties: Record<string, { enum: string[] }> }] } } } } } };
-  e.title = FORMATO_RESPOSTAS_CAMPANHA;
-  e.properties.formato.const = FORMATO_RESPOSTAS_CAMPANHA;
-  const n = e.properties.respostas.items.properties.norma.oneOf[1].properties;
+    title: string; properties: { formato: { const: string }; respostas: { items: { required: string[]; properties: Record<string, unknown> & { norma: { oneOf: [unknown, { properties: Record<string, { enum: string[] }> }] } };
+    } } } };
+  e.title = formato;
+  e.properties.formato.const = formato;
+  const it = e.properties.respostas.items;
+  const n = it.properties.norma.oneOf[1].properties;
   n.aplicabilidade.enum = [...VAL.aplicabilidade, NAO_PERGUNTADO];
   n.violada.enum = [...VAL.violada, NAO_PERGUNTADO];
+  if (estado) {
+    // [N, 1.2.0] estadoAlcancado fechado. A condição cruzada ("nao-alcancado" ⇒ fato indisponivel) fica em validarResposta.
+    it.required.push("estadoAlcancado");
+    it.properties.estadoAlcancado = { enum: [...ESTADO_ALCANCADO] };
+  }
   return e;
-})();
+}
+/** Esquema 1.1.0 (passadas já preparadas nessa versão, ex.: ensaio 20261019T3): igual ao que foi publicado. */
+export const ESQUEMA_RESPOSTAS_CAMPANHA_1_1 = esquemaCampanha(FORMATO_RESPOSTAS_CAMPANHA_1_1, false);
+/** Esquema 1.2.0 (achado N): 1.1.0 + `estadoAlcancado`. */
+export const ESQUEMA_RESPOSTAS_CAMPANHA = esquemaCampanha(FORMATO_RESPOSTAS_CAMPANHA, true);
 
 const isObj =(x: unknown): x is Record<string, unknown> => typeof x === "object" && x !== null && !Array.isArray(x);
 const em = <T extends readonly string[]>(xs: T, v: unknown): v is T[number] => typeof v === "string" && (xs as readonly string[]).includes(v);
+
+/** [M, 1.2.0] A regra citada só permite: toda regra da base dela tem `forcaNoVocabulario: "nenhuma"`. */
+export const soPermite = (c: ContextoDerivacao): boolean => c.citaRegra && !!c.forcasDaCitada?.length && c.forcasDaCitada.every(f => f === "nenhuma");
 
 /** Sugestão exigida? (para `sugestao-se-erro-normativo`: só quando as respostas dão erro normativo). */
 export function preClasse(r: Resposta, c: ContextoDerivacao): Derivado["classe"] {
@@ -225,6 +257,10 @@ export function preClasse(r: Resposta, c: ContextoDerivacao): Derivado["classe"]
   if (r.verdadeFactual !== "verdadeira" || r.norma === NAO_PERGUNTADO) return "pendente";
   const n = r.norma;
   // Q1 a: cartão sem regra citada, fato verdadeiro de um defeito da referência → credita a detecção (sem fundamentação).
+  // [M, 1.2.0; R11 a] Regra citada que a base só permite (todas as forças no vocabulário = `nenhuma`): o cartão alega
+  // violação de uma obrigação que não existe → erro normativo (com sugestão válida, R11d). Só cartões 1.2.0 trazem
+  // `forcasDaCitada`; histórico e 1.1.0 não passam aqui.
+  if (n.forca === "nenhuma" && soPermite(c)) return "erro-normativo";
   if (n.forca === "nenhuma") return !c.citaRegra && typeof r.vinculo === "object" ? "violacao-pagina" : "observacao";
   if (n.forca === "indeterminado") return "pendente";
   if (n.aplicabilidade === "incerta" || n.violada === "incerto") return "evidencia-indisponivel";
@@ -290,13 +326,19 @@ function derivarPrincipal(r: Resposta, c: ContextoDerivacao): Omit<Derivado, "s5
 }
 
 /** Valida uma resposta contra o esquema, as perguntas do átomo e os ids citáveis. Devolve a lista de erros (vazia = ok). */
-export function validarResposta(x: unknown, c: ContextoDerivacao, o: { normaNeutra?: boolean } = {}): string[] {
+export function validarResposta(x: unknown, c: ContextoDerivacao, o: { normaNeutra?: boolean; v12?: boolean } = {}): string[] {
   const e: string[] = [];
   if (!isObj(x)) return ["resposta não é objeto"];
-  const permitidos = ["id", "verdadeFactual", "norma", "vinculo", "sugestao", "forcaDoVeredito", "evidencias", "justificativa"];
+  const permitidos = ["id", "verdadeFactual", "norma", "vinculo", "sugestao", "forcaDoVeredito", "evidencias", "justificativa", ...(o.v12 ? ["estadoAlcancado"] : [])];
   for (const k of Object.keys(x)) if (!permitidos.includes(k)) e.push(`campo desconhecido: ${k}`);
   for (const k of permitidos) if (!(k in x)) e.push(`campo ausente: ${k}`);
   if (e.length) return e;
+  // [N, 1.2.0] estado: a receita alcança o estado do cartão, ou não (= evidência indisponível, R9/R10). Julga-se só no
+  // estado da receita (R10); o que o juiz viu noutro estado pode ir à justificativa, mas não muda resposta.
+  if (o.v12) {
+    if (!em(ESTADO_ALCANCADO, x.estadoAlcancado)) e.push(`estadoAlcancado fora da lista: ${JSON.stringify(x.estadoAlcancado)}`);
+    if (x.estadoAlcancado === "nao-alcancado" && x.verdadeFactual !== "indisponivel") e.push("estadoAlcancado \"nao-alcancado\" exige verdadeFactual \"indisponivel\" (estado não alcançado: evidência indisponível, R9/R10)");
+  }
   const perg = PERGUNTAS[c.tipo];
   const pede = (p: Pergunta) => perg.includes(p);
   // fato
@@ -311,13 +353,17 @@ export function validarResposta(x: unknown, c: ContextoDerivacao, o: { normaNeut
       if (!em(VAL.forca, n.forca)) e.push(`norma.forca fora da lista: ${JSON.stringify(n.forca)}`);
       // [1b, K1] Campanha nova: `id: "nenhuma"` ⇔ aplicabilidade e violada = "nao-perguntado" (valor neutro; a classe sai
       // só de fato + vínculo, linhas Q1/R11b). Sem a opção (fila T3 histórica), nada muda.
-      if (o.normaNeutra && !c.citaRegra && n.id === "nenhuma") {
-        if (n.aplicabilidade !== NAO_PERGUNTADO || n.violada !== NAO_PERGUNTADO) e.push(`norma.id "nenhuma": aplicabilidade e violada = "${NAO_PERGUNTADO}" (não há norma a aplicar)`);
+      // [M, 1.2.0] Regra citada cuja base só PERMITE (todas as forças no vocabulário = `nenhuma`): `forca: "nenhuma"` aceita,
+      // com o mesmo neutro de K1 (não há obrigação a aplicar). A derivação não muda (preClasse já trata `nenhuma` com regra).
+      const sp = !!o.v12 && soPermite(c);
+      const neutra = o.normaNeutra && ((!c.citaRegra && n.id === "nenhuma") || (sp && n.forca === "nenhuma"));
+      if (neutra) {
+        if (n.aplicabilidade !== NAO_PERGUNTADO || n.violada !== NAO_PERGUNTADO) e.push(`norma ${c.citaRegra ? "com forca \"nenhuma\"" : "id \"nenhuma\""}: aplicabilidade e violada = "${NAO_PERGUNTADO}" (não há norma a aplicar)`);
       } else {
         if (!em(VAL.aplicabilidade, n.aplicabilidade)) e.push(`norma.aplicabilidade fora da lista: ${JSON.stringify(n.aplicabilidade)}`);
         if (!em(VAL.violada, n.violada)) e.push(`norma.violada fora da lista: ${JSON.stringify(n.violada)}`);
       }
-      if (c.citaRegra) { if (n.id !== "citada") e.push(`norma.id: o cartão cita regra, use "citada" (é ela que se julga)`); if (n.forca === "nenhuma") e.push("norma.forca \"nenhuma\" só vale para cartão sem regra citada"); }
+      if (c.citaRegra) { if (n.id !== "citada") e.push(`norma.id: o cartão cita regra, use "citada" (é ela que se julga)`); if (n.forca === "nenhuma" && !sp) e.push(!o.v12 ? "norma.forca \"nenhuma\" só vale para cartão sem regra citada" : "norma.forca \"nenhuma\" com regra citada só quando toda força da base da regra corresponde a \"nenhuma\" (forcaNoVocabulario)"); }
       else if (!(n.id === "nenhuma" || (typeof n.id === "string" && NORMA_PUBLICA.test(n.id)))) e.push(`norma.id: cartão sem regra citada, use "nenhuma" ou um id público (wcag:x.y.z, emag:x.y): ${JSON.stringify(n.id)}`);
       if (!c.citaRegra && (n.id === "nenhuma") !== (n.forca === "nenhuma")) e.push("norma.id \"nenhuma\" exige norma.forca \"nenhuma\" (e vice-versa)");
     }

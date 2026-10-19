@@ -154,6 +154,24 @@ const FORCA_LITERAL: Record<string, string> = { required: "obrigatorio", prohibi
   discouraged: "recomendado (desaconselha)", permitted: "permitido (opcional)", optional: "opcional", example: "exemplo", informative: "informativo",
   unclear: "não declarada" };
 
+/**
+ * [M, 1.2.0; decisão do assistente com registro] Correspondência FIXA força da base literal → vocabulário de `norma.forca`
+ * do juiz, feita só pelas palavras da própria base (e pela faixa de obrigação do validador, `obligationOf`:
+ * required/prohibited = mandatory, recommended/discouraged = advisory, permitted = permissive). Não cria regra de crédito:
+ * o juiz continua respondendo `norma.forca`, e a classe sai pela mesma derivação. `null` = sem correspondência (o juiz
+ * decide pela leitura do texto; não se adivinha): `informative` (texto descritivo, não é regra) e `unclear` (a base não
+ * declara força).
+ */
+export const FORCA_NO_VOCABULARIO: Readonly<Record<string, string | null>> = {
+  required: "obrigatorio", prohibited: "obrigatorio", recommended: "recomendado", discouraged: "recomendado",
+  permitted: "nenhuma", optional: "nenhuma", example: "exemplo", informative: null, unclear: null,
+};
+/** Linhas da tabela (rótulo que o cartão mostra → valor no vocabulário), na ordem acima: o LEIAME imprime esta lista. */
+export const TABELA_FORCAS: readonly { literal: string; rotulo: string; vocabulario: string | null }[] =
+  Object.entries(FORCA_NO_VOCABULARIO).map(([literal, vocabulario]) => ({ literal, rotulo: FORCA_LITERAL[literal] ?? literal, vocabulario }));
+const regraVista = (k: Kb) => ({ titulo: mascarar(k.title), texto: mascarar(k.normalizedRule), forcaDeclarada: FORCA_LITERAL[k.force] ?? k.force,
+  forcaNoVocabulario: FORCA_NO_VOCABULARIO[k.force] ?? null });
+
 export interface OraculoDaCampanha { dataSha256: string; validador: string; /** só testes; padrão govbr-eval/checker-aliases.json */ checkerAliases?: string }
 
 /**
@@ -180,6 +198,9 @@ export function normasDaCampanha(o: OraculoDaCampanha): Normas {
   for (const k of jsonl(herdadasAbs)) if (!kb.has(k.id)) kb.set(k.id, { k, tipo: "excerto herdado da base anterior" });
   if (existsSync(legadoAbs)) for (const e of lerJson<{ entries: { id: string; record?: Kb }[] }>(legadoAbs).entries)
     if (e.record && !kb.has(e.id)) kb.set(e.id, { k: e.record, tipo: "id antigo, fora do contexto normativo da base" });
+  // [M] Força que a tabela fixa não conhece → para (nunca cai calada em "sem correspondência").
+  const novas = [...new Set([...kb.values()].map(x => x.k.force))].filter(f => !(f in FORCA_NO_VOCABULARIO));
+  if (novas.length) throw new Error(`E14 campanha: força(s) da base fora da tabela FORCA_NO_VOCABULARIO: ${novas.join(", ")}`);
   const wcag = new Map(lerJson<{ criteria: { num: string; handle: string; level: string }[] }>(wcagAbs).criteria.map(c => [c.num, c]));
   const emag = new Map(Object.values(lerJson<{ sections: Record<string, { title: string; rules: { id: string; title: string; description: string }[] }> }>(emagAbs).sections)
     .flatMap(s => s.rules.map(r => [r.id, { ...r, secao: s.title }] as const)));
@@ -205,14 +226,14 @@ export function normasDaCampanha(o: OraculoDaCampanha): Normas {
     const kbId = n.replace(/^ds:(?=govbr-)/, "");
     const x = kb.get(kbId);
     if (x) return { id: mascarar(kbId), fonte: `base de regras do DS ${dsVersao} (${x.tipo}; id mascarado, D-87)`, titulo: null, texto: null,
-      regrasDaBase: [{ titulo: mascarar(x.k.title), texto: mascarar(x.k.normalizedRule), forcaDeclarada: FORCA_LITERAL[x.k.force] ?? x.k.force }] };
+      regrasDaBase: [regraVista(x.k)] };
     // [1b, decisão do coordenador] Id de verificação (ds:token-*, ds:page-*): checker-aliases.json (do govbr-eval, como no
     // histórico) dá os ids de regra; o texto vem da base que o oráculo da campanha carrega (literal, herdada ou id antigo).
     const chk = checks.find(c => n === c.matches || glob(c.matches).test(n));
     if (chk) {
       const rs = [...chk.aliases, ...chk.generic].map(id => kb.get(id)).filter((y): y is NonNullable<typeof y> => !!y);
       return { id: mascarar(n), fonte: `base de regras do DS ${dsVersao} (id mascarado, D-87)`, titulo: null, texto: mascarar(chk.basis),
-        regrasDaBase: rs.map(y => ({ titulo: mascarar(y.k.title), texto: mascarar(y.k.normalizedRule), forcaDeclarada: FORCA_LITERAL[y.k.force] ?? y.k.force })) };
+        regrasDaBase: rs.map(y => regraVista(y.k)) };
     }
     return { id: mascarar(n), fonte: /^ds:/.test(n) ? "base de regras do DS (id mascarado, D-87); texto não localizado" : "não localizada", titulo: null, texto: null };
   };
