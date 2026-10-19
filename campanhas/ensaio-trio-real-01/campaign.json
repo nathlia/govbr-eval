@@ -1,0 +1,165 @@
+{
+  "contract": "campaign.v2",
+  "fixture": false,
+  "campaignId": "ensaio-trio-real-01",
+  "kind": "pilot",
+  "title": "Ensaio real de 1 trio (NAT-86 fase 2) — tela A, braços sem/ferramentas/com, Opus 5.5 high, validator 2.14.3; ENSAIO fora da análise",
+  "objective": "Ensaio da NAT-86, fase 2 (protocolo NAT-78 §7.4; D-136): 1 trio real na tela A (caso de desenvolvimento), 1 execução por braço, para medir só as verificações técnicas — isolamento passed, inventário de 3 ferramentas no ferramentas com o hash fixado, trava = 0 e dicionário = 0, oracleUsage — e as medidas de recurso da §6.4 (tempo, tokens, custo estimado e fração da janela de 5 h). NÃO serve para inferência e FICA FORA DE QUALQUER ANÁLISE e de qualquer número da tese: o trio de ensaio não é p01 de nenhuma campanha, não substitui trio nenhum, e seus achados, D e recall não são revisados nem tabulados antes do fim da coleta. Nenhuma mudança de prompt, skill, validator, scorer ou política é motivada pelas saídas do ensaio.",
+  "hypotheses": [
+    "Ensaio técnico: nenhuma hipótese sobre desempenho. Passa se os três braços rodam com isolamento passed, o braço ferramentas expõe exatamente as 3 ferramentas do perfil knowledge-free com o tools/list fixado, o com expõe o perfil evaluation, e as medidas de recurso da §6.4 são registradas."
+  ],
+  "createdAt": "2026-10-19T12:00:00Z",
+  "frozenAt": "2026-10-19T12:00:00Z",
+  "design": {
+    "screens": [
+      {
+        "id": "solicitacao",
+        "label": "Solicitar serviço",
+        "version": "govbr-telas-site-1a6e8daf3cdb"
+      }
+    ],
+    "arms": [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "Opus",
+        "requested": "claude-opus-5-5"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 1,
+    "order": "sequencial",
+    "seed": null,
+    "comparisons": [
+      {
+        "id": "ferramentas-x-com",
+        "arms": [
+          "ferramentas",
+          "com"
+        ],
+        "role": "primary",
+        "question": "Ensaio (sem inferência): estrutura da comparação principal do protocolo NAT-78 — o que a base de conhecimento do oráculo acrescenta às ferramentas de medição. Nada deste trio é comparado."
+      },
+      {
+        "id": "sem-x-ferramentas",
+        "arms": [
+          "sem",
+          "ferramentas"
+        ],
+        "role": "secondary",
+        "question": "Ensaio (sem inferência): o que as ferramentas de medição acrescentam ao navegador sozinho. Nada deste trio é comparado."
+      },
+      {
+        "id": "sem-x-com",
+        "arms": [
+          "sem",
+          "com"
+        ],
+        "role": "secondary",
+        "question": "Ensaio (sem inferência): o oráculo inteiro. Nada deste trio é comparado."
+      }
+    ]
+  },
+  "fixed": {
+    "protocolSha256": "af57905541d6b058b410893774a8cdfb7aaba2b60c9f4eb8478f23764f04e1a9",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "anthropic",
+      "authMethod": "oauth-subscription"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracleProfiles": {
+      "com": {
+        "package": "govbr-ds-validator-server",
+        "version": "2.14.3",
+        "distSha256": "1a1ee95c1bbaf605621cf5b32714a666150f35f038011bec75fd170db4ca885b",
+        "dataSha256": "ed68152ebc9652e7de46231ce17b17aac5d0878e343a713d071059eb0d373579",
+        "profile": "evaluation",
+        "tools": [
+          "get_component_spec",
+          "get_design_tokens",
+          "get_ds_rules",
+          "get_emag_rules",
+          "get_finding_details",
+          "get_page_rules",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "3d70162f5fed0ec8614d9dcbc18a69a00b4819ad56df1ed1c5bf95213eed0b3b"
+      },
+      "ferramentas": {
+        "package": "govbr-ds-validator-server",
+        "version": "2.14.3",
+        "distSha256": "1a1ee95c1bbaf605621cf5b32714a666150f35f038011bec75fd170db4ca885b",
+        "dataSha256": "ed68152ebc9652e7de46231ce17b17aac5d0878e343a713d071059eb0d373579",
+        "profile": "knowledge-free",
+        "tools": [
+          "get_finding_details",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "72abd54968cbe3173fce5dd3b4bba7aff563b37ca11b8a9ec0f25a91a104d39c"
+      }
+    },
+    "scorerVersion": "flow-semantic-1.8.2"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 6,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Ensaio: vale para as verificações técnicas e as medidas de recurso a primeira tentativa sem falha técnica de cada slot (p01-sem, p01-ferramentas, p01-com). Nova tentativa só por falha técnica (protocolo §7.2, D-88), no máximo 1 por slot. Nada desta campanha entra na análise."
+  },
+  "failurePolicy": "Protocolo NAT-78 §7.2/§7.4: nova tentativa só por falha técnica (429, queda, modelo indisponível, autenticação, preflight, VM perdida, erro do harness ou do arquivo, cancelamento); tempo esgotado no teto de 30 min é resultado do agente, fica registrado e não se repete. Falha técnica de isolamento, inventário, trava ou crash leva a conserto, recongelamento do protocolo e ensaio refeito (campanha nova); nada é ajustado pelas saídas do ensaio.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Nenhum desfecho científico (ensaio). Só técnico: isolamento passed nos três braços; inventário do ferramentas = 3 ferramentas com o tools/list 72abd549…; perfil evaluation no com; trava = 0 e dicionário = 0; oracleUsage registrado.",
+    "secondaryOutcomes": [
+      "Medidas de recurso da §6.4 do protocolo NAT-78: custo estimado c do trio, fração w da janela de 5 h, tempo de relógio e tokens — as únicas entradas da tabela que fecha o N."
+    ],
+    "uncertaintyMethod": null,
+    "exclusionRules": "A campanha inteira fica fora de qualquer análise e de qualquer número da tese (regra 5 da Metodologia §5.7.5). Achados, D, recall e precisão do ensaio não são lidos para escolher o N nem revisados antes do fim da coleta."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": null,
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": []
+}
