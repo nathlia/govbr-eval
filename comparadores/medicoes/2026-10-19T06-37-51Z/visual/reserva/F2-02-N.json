@@ -1,0 +1,68 @@
+{
+  "comparador": "visual",
+  "gemeo": "F2-02-N",
+  "caso": "F2-02",
+  "familia": "F2",
+  "papel": "nao-aplicavel",
+  "pagina": {
+    "caminho": "/controles/b/c-3c25456b36.html",
+    "sha256": "afd1561555bb0c4520ca4fa2db6e9447e63c31a86dbd71864494370e46dd0015"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": null,
+  "foraDeAlcance": "sem referência: o caso não tem gêmeo -C",
+  "paginaReferencia": null,
+  "pisoDeRuido": null,
+  "instavel": false,
+  "pontos": [],
+  "celulas": [
+    {
+      "sujeito": ".br-message#info",
+      "normas": [
+        "ds:message-0e441e3af975",
+        "ds:message-001a7ba0b67f"
+      ],
+      "esperado": "nao-aplicavel",
+      "classe": "negativo",
+      "resultado": "aparte",
+      "foraDeAlcance": "sem referência: o caso não tem gêmeo -C",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": ".br-modal#alerta",
+      "normas": [
+        "ds:modal-f687cfe21f32"
+      ],
+      "esperado": "nao-aplicavel",
+      "classe": "negativo",
+      "resultado": "aparte",
+      "foraDeAlcance": "sem referência: o caso não tem gêmeo -C",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

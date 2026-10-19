@@ -1,0 +1,146 @@
+{
+  "comparador": "visual",
+  "gemeo": "F4-01-C",
+  "caso": "F4-01",
+  "familia": "F4",
+  "papel": "conforme",
+  "pagina": {
+    "caminho": "/controles/b/c-020702fa9c.html",
+    "sha256": "a1b7bb4f36fc557f81ada8c4c5032202258ccc3212c36c6349c92cfcc4f889cd"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": true
+  },
+  "referencia": "F4-01-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/b/c-020702fa9c.html",
+    "sha256": "a1b7bb4f36fc557f81ada8c4c5032202258ccc3212c36c6349c92cfcc4f889cd"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "inicial",
+      "pixels": 0
+    },
+    {
+      "ponto": "primeiro-tab",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "inicial",
+      "png": {
+        "gemeo": "93134218863e40412fe68df9f287b488a9cc731f2cecdd519126fa2550c5a822",
+        "referencia": "93134218863e40412fe68df9f287b488a9cc731f2cecdd519126fa2550c5a822"
+      },
+      "tamanhos": null,
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {},
+      "pixelsNoSujeitoSemD1": {},
+      "caixas": {
+        "documento": {
+          "gemeo": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 900
+            }
+          ],
+          "referencia": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 900
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ponto": "primeiro-tab",
+      "png": {
+        "gemeo": "ea2e31963d2c4f3993794c25ec97581456fd299cd2db28b7a6249cfd64b6a27c",
+        "referencia": "ea2e31963d2c4f3993794c25ec97581456fd299cd2db28b7a6249cfd64b6a27c"
+      },
+      "tamanhos": null,
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {},
+      "pixelsNoSujeitoSemD1": {},
+      "caixas": {
+        "documento": {
+          "gemeo": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 900
+            }
+          ],
+          "referencia": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 900
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "documento",
+      "normas": [
+        "emag:1.5"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "referencia",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "documento",
+      "normas": [
+        "wcag:2.4.1"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "referencia",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

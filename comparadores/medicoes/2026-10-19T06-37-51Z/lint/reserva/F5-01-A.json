@@ -1,0 +1,57 @@
+{
+  "comparador": "lint",
+  "gemeo": "F5-01-A",
+  "caso": "F5-01",
+  "familia": "F5",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-4d1db76486.html",
+    "sha256": "29740916dba7d65f6747308b36135662d6e1d0fe37fec3f04af2a8a6a64537b7"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-4d1db76486.html",
+      "sha256": "29740916dba7d65f6747308b36135662d6e1d0fe37fec3f04af2a8a6a64537b7",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "button#excluir": [
+          "body>main>div>div>div>div:nth-of-type(2)>button"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#excluir",
+      "normas": [
+        "wcag:4.1.2",
+        "ds:button-323bef5db0fd"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

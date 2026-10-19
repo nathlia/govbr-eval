@@ -1,0 +1,119 @@
+{
+  "comparador": "visual",
+  "gemeo": "F7-01-D",
+  "caso": "F7-01",
+  "familia": "F7",
+  "papel": "defeituoso",
+  "pagina": {
+    "caminho": "/controles/b/c-a48164314b.html",
+    "sha256": "19db8f028ce1a824feaab6c23f0180bf858397ba825365411ce0e448b1f2a6f7"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F7-01-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/b/c-73a91705df.html",
+    "sha256": "34caebcda61482c7ea28cd7c978707e1d7301649f9b8ecfeb077666eda953314"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "inicial",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "inicial",
+      "png": {
+        "gemeo": "c5c7fef823b0e38c795956c32f26d6f1e7e68a7490afee3ea53fac77cd4fdb72",
+        "referencia": "baab17bbb5cbcf9dd14b1085243e0d6616c5d217e9dd1cfd9af3163d6e0b8ff8"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 2684,
+      "caixaDaDiferenca": {
+        "x": 60,
+        "y": 297,
+        "width": 129,
+        "height": 139
+      },
+      "diff": "F7-01/F7-01-D__inicial__diff.png",
+      "pixelsNoSujeito": {
+        "fieldset#formato": 1155
+      },
+      "pixelsNoSujeitoSemD1": {
+        "fieldset#formato": 661
+      },
+      "caixas": {
+        "fieldset#formato": {
+          "gemeo": [
+            {
+              "x": 60,
+              "y": 324.109375,
+              "width": 1160,
+              "height": 56
+            }
+          ],
+          "referencia": [
+            {
+              "x": 60,
+              "y": 291.765625,
+              "width": 1160,
+              "height": 83.3125
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "fieldset#formato",
+      "normas": [
+        "emag:6.7"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "TP",
+      "resultadoSemD1": "TP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "inicial"
+      ],
+      "creditados": [
+        "inicial"
+      ]
+    }
+  ],
+  "sinalizada": true
+}

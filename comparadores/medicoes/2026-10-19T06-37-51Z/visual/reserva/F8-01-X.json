@@ -1,0 +1,136 @@
+{
+  "comparador": "visual",
+  "gemeo": "F8-01-X",
+  "caso": "F8-01",
+  "familia": "F8",
+  "papel": "excecao-diverge",
+  "pagina": {
+    "caminho": "/controles/b/c-b9b8c91680.html",
+    "sha256": "a18a7fe6e5a5635c27dc9270dce7275707397303a3d0338f5b43098933b06abe"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F8-01-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/b/c-80b3653bc8.html",
+    "sha256": "c6eee321dae48c06f6a8cf4a5a4de8e1403021ddd26057ac3b65414439706319"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "inicial",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "inicial",
+      "png": {
+        "gemeo": "de0e2bc2b6ff481593de856ecfb42aa2a4e3d0a75b9614d13086354a70692b96",
+        "referencia": "04415787af09ecdfc4e5e92f55bbee0ac26278d0153e1094e4cb74ffd534bc2f"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          800
+        ],
+        "referencia": [
+          1280,
+          800
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 50,
+      "caixaDaDiferenca": {
+        "x": 1177,
+        "y": 281,
+        "width": 35,
+        "height": 10
+      },
+      "diff": "F8-01/F8-01-X__inicial__diff.png",
+      "pixelsNoSujeito": {
+        "button#renovar-icone": 25
+      },
+      "pixelsNoSujeitoSemD1": {
+        "button#renovar-icone": 25
+      },
+      "caixas": {
+        "button#renovar-icone": {
+          "gemeo": [
+            {
+              "x": 1172,
+              "y": 282.765625,
+              "width": 20,
+              "height": 20
+            }
+          ],
+          "referencia": [
+            {
+              "x": 1172,
+              "y": 280.765625,
+              "width": 24,
+              "height": 24
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#renovar-icone",
+      "normas": [
+        "wcag:2.5.8"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "FP",
+      "resultadoSemD1": "FP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "inicial"
+      ],
+      "creditados": [
+        "inicial"
+      ]
+    },
+    {
+      "sujeito": "button#renovar-icone",
+      "normas": [
+        "ds:iconografia-24x24"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "TP",
+      "resultadoSemD1": "TP",
+      "sujeitoResolvido": true,
+      "atribuidos": [
+        "inicial"
+      ],
+      "creditados": [
+        "inicial"
+      ]
+    }
+  ],
+  "sinalizada": true
+}

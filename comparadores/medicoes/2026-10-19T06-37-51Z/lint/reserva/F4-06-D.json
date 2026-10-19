@@ -1,0 +1,58 @@
+{
+  "comparador": "lint",
+  "gemeo": "F4-06-D",
+  "caso": "F4-06",
+  "familia": "F4",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-6261358e65.html",
+    "sha256": "78e7fe87dd2219d36ad1ec90f80eb1f16be6117e01dce87fe09ba2f8f3b025eb"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-6261358e65.html",
+      "sha256": "78e7fe87dd2219d36ad1ec90f80eb1f16be6117e01dce87fe09ba2f8f3b025eb",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "documento": [
+          ""
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "documento",
+      "normas": [
+        "wcag:2.4.2",
+        "emag:3.3"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

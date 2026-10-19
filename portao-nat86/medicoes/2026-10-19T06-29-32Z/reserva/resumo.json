@@ -1,0 +1,207 @@
+{
+  "o_que_e": "NAT-86: detectores do validator sobre os controles, linha a linha da matriz congelada (sem modelo).",
+  "divisao": "reserva",
+  "perfil": "evaluation",
+  "janela": {
+    "width": 1280,
+    "height": 900
+  },
+  "matriz": {
+    "versao": "portao-nat86-matriz-1.0.0",
+    "sha256": "d35b33f5aeee08031666da18c78c71d930b82cfecdfaf8289da2f4583ae6822e"
+  },
+  "expectativasSha256": "1a0f1361445f31f6f5d90f2de151455d16505a81b6db60159c946c7b54b81d94",
+  "validator": "2.14.3",
+  "node": "v25.2.1",
+  "chromium": "149.0.7827.55",
+  "linhas": 88,
+  "alegacoes": 125,
+  "d1PorLinha": {
+    "F1": {
+      "TN": 11,
+      "TP": 2,
+      "preservado": 3,
+      "FN": 2,
+      "decidido": 2
+    },
+    "total": {
+      "TN": 53,
+      "TP": 3,
+      "preservado": 12,
+      "FN": 2,
+      "decidido": 2,
+      "fora-do-escopo": 9,
+      "nao-exercitado": 7
+    },
+    "F2": {
+      "TN": 7,
+      "fora-do-escopo": 1,
+      "preservado": 1
+    },
+    "F3": {
+      "TP": 1,
+      "preservado": 4,
+      "TN": 4
+    },
+    "F4": {
+      "fora-do-escopo": 3,
+      "TN": 6,
+      "preservado": 2
+    },
+    "F5": {
+      "fora-do-escopo": 2,
+      "TN": 13,
+      "preservado": 1
+    },
+    "F6": {
+      "fora-do-escopo": 1,
+      "TN": 2
+    },
+    "F7": {
+      "fora-do-escopo": 1,
+      "TN": 5,
+      "preservado": 1
+    },
+    "F8": {
+      "fora-do-escopo": 1,
+      "nao-exercitado": 7,
+      "TN": 5
+    }
+  },
+  "d1PorCelula": {
+    "F1": {
+      "TN": 6,
+      "TP": 1,
+      "preservado": 2,
+      "FN": 1,
+      "decidido": 1
+    },
+    "total": {
+      "TN": 38,
+      "TP": 2,
+      "preservado": 10,
+      "FN": 1,
+      "decidido": 1,
+      "fora-do-escopo": 9,
+      "nao-exercitado": 1
+    },
+    "F2": {
+      "TN": 5,
+      "fora-do-escopo": 1,
+      "preservado": 1
+    },
+    "F3": {
+      "TP": 1,
+      "preservado": 4,
+      "TN": 4
+    },
+    "F4": {
+      "fora-do-escopo": 2,
+      "TN": 5,
+      "preservado": 1
+    },
+    "F5": {
+      "fora-do-escopo": 1,
+      "TN": 7,
+      "preservado": 1
+    },
+    "F6": {
+      "fora-do-escopo": 1,
+      "TN": 2
+    },
+    "F7": {
+      "fora-do-escopo": 1,
+      "TN": 4,
+      "preservado": 1
+    },
+    "F8": {
+      "fora-do-escopo": 3,
+      "TN": 5,
+      "nao-exercitado": 1
+    }
+  },
+  "d2PorLinha": {
+    "F1": {
+      "TN": 16,
+      "-": 4
+    },
+    "total": {
+      "TN": 71,
+      "-": 17
+    },
+    "F2": {
+      "TN": 8,
+      "-": 1
+    },
+    "F3": {
+      "-": 1,
+      "TN": 8
+    },
+    "F4": {
+      "-": 3,
+      "TN": 8
+    },
+    "F5": {
+      "-": 2,
+      "TN": 14
+    },
+    "F6": {
+      "-": 1,
+      "TN": 2
+    },
+    "F7": {
+      "-": 1,
+      "TN": 6
+    },
+    "F8": {
+      "-": 4,
+      "TN": 9
+    }
+  },
+  "falhas": {
+    "bloqueantes": [],
+    "aceite": [
+      {
+        "id": "R|F1-04-D|0|wcag:3.3.1",
+        "d1": "FN",
+        "d2": "-"
+      },
+      {
+        "id": "R|F1-04-D|0|emag:6.6",
+        "d1": "FN",
+        "d2": "-"
+      },
+      {
+        "id": "R|F1-05-C|0|wcag:3.3.1",
+        "d1": "decidido",
+        "d2": "TN"
+      },
+      {
+        "id": "R|F1-05-C|0|emag:6.6",
+        "d1": "decidido",
+        "d2": "TN"
+      }
+    ]
+  },
+  "decisao": {
+    "resultado": "no-go",
+    "motivos": [
+      "4 linha(s) com falha de aceite (FN/desconhecido decidido)"
+    ],
+    "exercitadas": {
+      "confirmar": {
+        "exercitadas": 5,
+        "total": 5
+      },
+      "nao-confirmar": {
+        "exercitadas": 53,
+        "total": 57
+      },
+      "so-unverifiable": {
+        "exercitadas": 14,
+        "total": 14
+      }
+    }
+  },
+  "segundos": 252
+}

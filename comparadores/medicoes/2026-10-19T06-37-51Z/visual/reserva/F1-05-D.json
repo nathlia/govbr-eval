@@ -1,0 +1,102 @@
+{
+  "comparador": "visual",
+  "gemeo": "F1-05-D",
+  "caso": "F1-05",
+  "familia": "F1",
+  "papel": "defeituoso-oculto",
+  "pagina": {
+    "caminho": "/controles/b/c-1901715d1b.html",
+    "sha256": "0f92e31e1190223b16b601364e2d77ba67cc2d5134dd61eb4dffa1857fd86211"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F1-05-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/b/c-95590b94a9.html",
+    "sha256": "d2703f1fea9985607191b17d74bbbfd59afd0c9fe0ec92e489e26b95656b8326"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "apos-enviar",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "apos-enviar",
+      "png": {
+        "gemeo": "07fc4970f34f520b03f2f086106a52221b8140d36d5d210ee4239440c9a1c315",
+        "referencia": "02e6899102104a938d24d3ee797acb253e2bdedd6fc857d6c9050fc6af84a934"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 18314,
+      "caixaDaDiferenca": {
+        "x": 60,
+        "y": 384,
+        "width": 361,
+        "height": 89
+      },
+      "diff": "F1-05/F1-05-D__apos-enviar__diff.png",
+      "pixelsNoSujeito": {
+        "bib-campo-fechado::input": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "bib-campo-fechado::input": 0
+      },
+      "caixas": {
+        "bib-campo-fechado::input": {
+          "gemeo": [],
+          "referencia": []
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "bib-campo-fechado::input",
+      "normas": [
+        "wcag:3.3.1",
+        "emag:6.6"
+      ],
+      "esperado": "unverifiable",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "resultadoSemD1": "aparte",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": true
+}

@@ -1,0 +1,84 @@
+{
+  "comparador": "lint",
+  "gemeo": "F2-02-N",
+  "caso": "F2-02",
+  "familia": "F2",
+  "papel": "nao-aplicavel",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "sem-mudanca-declarada"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-3c25456b36.html",
+    "sha256": "afd1561555bb0c4520ca4fa2db6e9447e63c31a86dbd71864494370e46dd0015"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-3c25456b36.html",
+      "sha256": "afd1561555bb0c4520ca4fa2db6e9447e63c31a86dbd71864494370e46dd0015",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        ".br-message#info": [
+          "body>main>div"
+        ],
+        ".br-modal#alerta": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "modal-aberta",
+      "sujeitos": {
+        ".br-message#info": [
+          "body>main>div"
+        ],
+        ".br-modal#alerta": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": ".br-message#info",
+      "normas": [
+        "ds:message-0e441e3af975",
+        "ds:message-001a7ba0b67f"
+      ],
+      "esperado": "nao-aplicavel",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": ".br-modal#alerta",
+      "normas": [
+        "ds:modal-f687cfe21f32"
+      ],
+      "esperado": "nao-aplicavel",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

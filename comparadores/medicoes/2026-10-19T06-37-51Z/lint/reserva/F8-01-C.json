@@ -1,0 +1,57 @@
+{
+  "comparador": "lint",
+  "gemeo": "F8-01-C",
+  "caso": "F8-01",
+  "familia": "F8",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": true,
+    "categoria": "toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-80b3653bc8.html",
+    "sha256": "c6eee321dae48c06f6a8cf4a5a4de8e1403021ddd26057ac3b65414439706319"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-80b3653bc8.html",
+      "sha256": "c6eee321dae48c06f6a8cf4a5a4de8e1403021ddd26057ac3b65414439706319",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "button#renovar-icone": [
+          "body>main>div>div>div>div:nth-of-type(2)>div>button:nth-of-type(1)"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#renovar-icone",
+      "normas": [
+        "wcag:2.5.8",
+        "ds:iconografia-24x24"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

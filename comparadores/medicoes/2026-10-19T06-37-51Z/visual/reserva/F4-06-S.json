@@ -1,0 +1,111 @@
+{
+  "comparador": "visual",
+  "gemeo": "F4-06-S",
+  "caso": "F4-06",
+  "familia": "F4",
+  "papel": "sem-fonte",
+  "pagina": {
+    "caminho": "/controles/b/c-dd196bde3a.html",
+    "sha256": "abf338d3efa23364c4290b70847858a22507b7fba0c0abd37780d4121ab5db65"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F4-06-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/b/c-cf4b628e9a.html",
+    "sha256": "9783cd13ff96ff090ae469509a48e26538088d98f52f2cbb3e00ca7a41a69d8c"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "inicial",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "inicial",
+      "png": {
+        "gemeo": "ae32d80c2cb391372b83ac8359fd68957e4dab2fe260b462cc96321524f89c1e",
+        "referencia": "ae32d80c2cb391372b83ac8359fd68957e4dab2fe260b462cc96321524f89c1e"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 0,
+      "caixaDaDiferenca": null,
+      "diff": null,
+      "pixelsNoSujeito": {
+        "documento": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        "documento": 0
+      },
+      "caixas": {
+        "documento": {
+          "gemeo": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 900
+            }
+          ],
+          "referencia": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 900
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "documento",
+      "normas": [
+        "wcag:2.4.2",
+        "emag:3.3"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "resultadoSemD1": "aparte",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

@@ -1,0 +1,75 @@
+{
+  "comparador": "lint",
+  "gemeo": "F3-06-C",
+  "caso": "F3-06",
+  "familia": "F3",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-f799cf8edc.html",
+    "sha256": "464c51b7d3c1726f9974ac3773717ad6b6788e66d78304474438739620c2855a"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-f799cf8edc.html",
+      "sha256": "464c51b7d3c1726f9974ac3773717ad6b6788e66d78304474438739620c2855a",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "apos-exibir",
+      "sujeitos": {
+        ".br-message#resultado@exibir": [],
+        ".br-message#resultado@fechar": []
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-fechar",
+      "sujeitos": {
+        ".br-message#resultado@exibir": [],
+        ".br-message#resultado@fechar": []
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": ".br-message#resultado@exibir",
+      "normas": [
+        "ds:message-ad83724b777f"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": ".br-message#resultado@fechar",
+      "normas": [
+        "ds:message-18a75fe5583a"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

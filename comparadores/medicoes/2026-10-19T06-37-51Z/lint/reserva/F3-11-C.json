@@ -1,0 +1,74 @@
+{
+  "comparador": "lint",
+  "gemeo": "F3-11-C",
+  "caso": "F3-11",
+  "familia": "F3",
+  "papel": "conforme",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "sem-mudanca-declarada"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-1b967e7c34.html",
+    "sha256": "5ef19cfd133e9504b28c4b9a0f3a719596f158998f21386887b5da733f92fccf"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-1b967e7c34.html",
+      "sha256": "5ef19cfd133e9504b28c4b9a0f3a719596f158998f21386887b5da733f92fccf",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "antes",
+      "sujeitos": {
+        "modal#regras": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-abrir",
+      "sujeitos": {
+        "modal#regras": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-fechar",
+      "sujeitos": {
+        "modal#regras": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "modal#regras",
+      "normas": [
+        "ds:modal-f36c91d7073c"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

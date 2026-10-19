@@ -1,0 +1,54 @@
+{
+  "comparador": "visual",
+  "gemeo": "F2-05-N",
+  "caso": "F2-05",
+  "familia": "F2",
+  "papel": "nao-aplicavel",
+  "pagina": {
+    "caminho": "/controles/b/c-a95225a6b7.html",
+    "sha256": "2a1ed4f3ff91857e96a06154664e0e68c7af4070cba143a55ceccbb109c80d41"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": null,
+  "foraDeAlcance": "sem referência: o caso não tem gêmeo -C",
+  "paginaReferencia": null,
+  "pisoDeRuido": null,
+  "instavel": false,
+  "pontos": [],
+  "celulas": [
+    {
+      "sujeito": "div.topo",
+      "normas": [
+        "ds:header-e58979706103"
+      ],
+      "esperado": "nao-aplicavel",
+      "classe": "negativo",
+      "resultado": "aparte",
+      "foraDeAlcance": "sem referência: o caso não tem gêmeo -C",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

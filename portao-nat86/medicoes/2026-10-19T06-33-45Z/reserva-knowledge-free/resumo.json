@@ -1,0 +1,220 @@
+{
+  "o_que_e": "NAT-86: detectores do validator sobre os controles, linha a linha da matriz congelada (sem modelo).",
+  "divisao": "reserva",
+  "perfil": "knowledge-free",
+  "janela": {
+    "width": 1280,
+    "height": 900
+  },
+  "expectativa": "knowledge-free (derivada da matriz congelada: WCAG = evaluation; DS/e-MAG confirmar|nao-confirmar → nao-confirmavel-por-desenho; D2 detectar → informativo)",
+  "capacidade": {
+    "versao": "capacidade-knowledge-free-1.1.0",
+    "sha256": "8ed3c6989c39c5e3943831cee7fa77a3a0b8d7d2db1e74e0e323b920ff0b0ef1",
+    "naoConfirmavelPorDesenho": [
+      "D|F1-01-D|0|wcag:3.3.1",
+      "D|F1-03-D|0|wcag:3.3.1",
+      "D|F1-08-D|2|wcag:3.3.1",
+      "D|F1-11-D|0|wcag:3.3.1"
+    ]
+  },
+  "travaDeConhecimento": {
+    "attempts": 0,
+    "loaders": []
+  },
+  "matriz": {
+    "versao": "portao-nat86-matriz-1.0.0",
+    "sha256": "d35b33f5aeee08031666da18c78c71d930b82cfecdfaf8289da2f4583ae6822e"
+  },
+  "expectativasSha256": "1a0f1361445f31f6f5d90f2de151455d16505a81b6db60159c946c7b54b81d94",
+  "validator": "2.14.3",
+  "node": "v25.2.1",
+  "chromium": "149.0.7827.55",
+  "linhas": 88,
+  "alegacoes": 125,
+  "d1PorLinha": {
+    "F1": {
+      "TN": 5,
+      "TN-por-desenho": 8,
+      "TP": 1,
+      "preservado": 4,
+      "FN": 1,
+      "decidido": 1
+    },
+    "total": {
+      "TN": 24,
+      "TN-por-desenho": 32,
+      "TP": 1,
+      "preservado": 13,
+      "FN": 1,
+      "decidido": 1,
+      "fora-do-escopo": 9,
+      "nao-exercitado": 7
+    },
+    "F2": {
+      "TN-por-desenho": 7,
+      "fora-do-escopo": 1,
+      "preservado": 1
+    },
+    "F3": {
+      "TN-por-desenho": 5,
+      "preservado": 4
+    },
+    "F4": {
+      "fora-do-escopo": 3,
+      "TN": 3,
+      "TN-por-desenho": 3,
+      "preservado": 2
+    },
+    "F5": {
+      "fora-do-escopo": 2,
+      "TN": 7,
+      "TN-por-desenho": 6,
+      "preservado": 1
+    },
+    "F6": {
+      "fora-do-escopo": 1,
+      "TN": 2
+    },
+    "F7": {
+      "fora-do-escopo": 1,
+      "TN-por-desenho": 3,
+      "TN": 2,
+      "preservado": 1
+    },
+    "F8": {
+      "fora-do-escopo": 1,
+      "nao-exercitado": 7,
+      "TN": 5
+    }
+  },
+  "d1PorCelula": {
+    "F1": {
+      "TN": 6,
+      "TP": 1,
+      "preservado": 2,
+      "FN": 1,
+      "decidido": 1
+    },
+    "total": {
+      "TN": 38,
+      "TP": 1,
+      "preservado": 10,
+      "FN": 1,
+      "decidido": 1,
+      "fora-do-escopo": 10,
+      "nao-exercitado": 1
+    },
+    "F2": {
+      "TN": 5,
+      "fora-do-escopo": 1,
+      "preservado": 1
+    },
+    "F3": {
+      "fora-do-escopo": 1,
+      "preservado": 4,
+      "TN": 4
+    },
+    "F4": {
+      "fora-do-escopo": 2,
+      "TN": 5,
+      "preservado": 1
+    },
+    "F5": {
+      "fora-do-escopo": 1,
+      "TN": 7,
+      "preservado": 1
+    },
+    "F6": {
+      "fora-do-escopo": 1,
+      "TN": 2
+    },
+    "F7": {
+      "fora-do-escopo": 1,
+      "TN": 4,
+      "preservado": 1
+    },
+    "F8": {
+      "fora-do-escopo": 3,
+      "TN": 5,
+      "nao-exercitado": 1
+    }
+  },
+  "d2PorLinha": {
+    "F1": {
+      "TN": 16,
+      "-": 4
+    },
+    "total": {
+      "TN": 71,
+      "-": 17
+    },
+    "F2": {
+      "TN": 8,
+      "-": 1
+    },
+    "F3": {
+      "-": 1,
+      "TN": 8
+    },
+    "F4": {
+      "-": 3,
+      "TN": 8
+    },
+    "F5": {
+      "-": 2,
+      "TN": 14
+    },
+    "F6": {
+      "-": 1,
+      "TN": 2
+    },
+    "F7": {
+      "-": 1,
+      "TN": 6
+    },
+    "F8": {
+      "-": 4,
+      "TN": 9
+    }
+  },
+  "falhas": {
+    "bloqueantes": [],
+    "aceite": [
+      {
+        "id": "R|F1-04-D|0|wcag:3.3.1",
+        "d1": "FN",
+        "d2": "-"
+      },
+      {
+        "id": "R|F1-05-C|0|wcag:3.3.1",
+        "d1": "decidido",
+        "d2": "TN"
+      }
+    ]
+  },
+  "decisao": {
+    "resultado": "no-go",
+    "motivos": [
+      "2 linha(s) com falha de aceite (FN/desconhecido decidido)"
+    ],
+    "exercitadas": {
+      "confirmar": {
+        "exercitadas": 2,
+        "total": 2
+      },
+      "nao-confirmar": {
+        "exercitadas": 24,
+        "total": 24
+      },
+      "so-unverifiable": {
+        "exercitadas": 14,
+        "total": 14
+      },
+      "nao-confirmavel-por-desenho": {
+        "exercitadas": 32,
+        "total": 36
+      }
+    }
+  },
+  "segundos": 239
+}

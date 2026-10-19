@@ -1,0 +1,57 @@
+{
+  "comparador": "lint",
+  "gemeo": "F8-01-N",
+  "caso": "F8-01",
+  "familia": "F8",
+  "papel": "nao-aplicavel",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": true,
+    "categoria": "toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-f41d6c48f4.html",
+    "sha256": "47daac69d6dd18986362278856a21713a322963632d69f575e5e0c020c245715"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-f41d6c48f4.html",
+      "sha256": "47daac69d6dd18986362278856a21713a322963632d69f575e5e0c020c245715",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "a#regulamento": [
+          "body>main>p>a"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "a#regulamento",
+      "normas": [
+        "wcag:2.5.8",
+        "ds:iconografia-24x24"
+      ],
+      "esperado": "nao-aplicavel",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

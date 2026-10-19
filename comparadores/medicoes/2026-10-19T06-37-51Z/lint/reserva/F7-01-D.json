@@ -1,0 +1,57 @@
+{
+  "comparador": "lint",
+  "gemeo": "F7-01-D",
+  "caso": "F7-01",
+  "familia": "F7",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-a48164314b.html",
+    "sha256": "19db8f028ce1a824feaab6c23f0180bf858397ba825365411ce0e448b1f2a6f7"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-a48164314b.html",
+      "sha256": "19db8f028ce1a824feaab6c23f0180bf858397ba825365411ce0e448b1f2a6f7",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "fieldset#formato": [
+          "body>main>form>fieldset"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "fieldset#formato",
+      "normas": [
+        "emag:6.7"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

@@ -1,0 +1,90 @@
+{
+  "comparador": "lint",
+  "gemeo": "F4-01-D",
+  "caso": "F4-01",
+  "familia": "F4",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-c16729192d.html",
+    "sha256": "3593fc43f77d798b5f307206a5f84623b9df9504fee86022a08e0abe9db48320"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-c16729192d.html",
+      "sha256": "3593fc43f77d798b5f307206a5f84623b9df9504fee86022a08e0abe9db48320",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "documento": [
+          ""
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "primeiro-tab",
+      "sujeitos": {
+        "documento": [
+          ""
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "documento",
+      "normas": [
+        "emag:1.5"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "documento",
+      "normas": [
+        "wcag:2.4.1"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "documento",
+      "normas": [
+        "ds:skiplink-b0641993618f"
+      ],
+      "esperado": "nao-aplicavel",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

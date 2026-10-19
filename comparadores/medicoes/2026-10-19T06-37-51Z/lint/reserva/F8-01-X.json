@@ -1,0 +1,90 @@
+{
+  "comparador": "lint",
+  "gemeo": "F8-01-X",
+  "caso": "F8-01",
+  "familia": "F8",
+  "papel": "excecao-diverge",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": true,
+    "categoria": "toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-b9b8c91680.html",
+    "sha256": "a18a7fe6e5a5635c27dc9270dce7275707397303a3d0338f5b43098933b06abe"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-b9b8c91680.html",
+      "sha256": "a18a7fe6e5a5635c27dc9270dce7275707397303a3d0338f5b43098933b06abe",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [
+    {
+      "id": "L-001",
+      "regraId": "H1",
+      "regra": "declaration-property-value-allowed-list",
+      "perfil": "higiene",
+      "normas": [
+        "ds:token-spacing (sem fonte literal)"
+      ],
+      "arquivo": "/controles/b/c-b9b8c91680.html",
+      "linha": 13,
+      "coluna": 8,
+      "seletor": ".acoes-linha",
+      "propriedade": "gap",
+      "valor": "8px",
+      "texto": "Disallowed value \"8px\" for property \"gap\" (declaration-property-value-allowed-list)",
+      "origem": "pagina"
+    }
+  ],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "button#renovar-icone": [
+          "body>main>div>div>div>div:nth-of-type(2)>div>button:nth-of-type(1)"
+        ]
+      },
+      "achados": {
+        "L-001": [
+          "body>main>div>div>div>div:nth-of-type(2)>div"
+        ]
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#renovar-icone",
+      "normas": [
+        "wcag:2.5.8"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "button#renovar-icone",
+      "normas": [
+        "ds:iconografia-24x24"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

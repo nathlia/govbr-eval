@@ -1,0 +1,54 @@
+{
+  "comparador": "visual",
+  "gemeo": "F3-08-N",
+  "caso": "F3-08",
+  "familia": "F3",
+  "papel": "nao-aplicavel",
+  "pagina": {
+    "caminho": "/controles/b/c-5297784893.html",
+    "sha256": "f0552d5484e9cc6d39c00b536d5f0dfffe58c2ce5fabbd9df43842d050f5bcf5"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": null,
+  "foraDeAlcance": "sem referência: o caso não tem gêmeo -C",
+  "paginaReferencia": null,
+  "pisoDeRuido": null,
+  "instavel": false,
+  "pontos": [],
+  "celulas": [
+    {
+      "sujeito": "modal#aviso-feriado",
+      "normas": [
+        "ds:modal-f36c91d7073c"
+      ],
+      "esperado": "nao-aplicavel",
+      "classe": "negativo",
+      "resultado": "aparte",
+      "foraDeAlcance": "sem referência: o caso não tem gêmeo -C",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

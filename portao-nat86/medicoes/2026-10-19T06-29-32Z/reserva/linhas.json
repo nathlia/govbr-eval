@@ -1,0 +1,2738 @@
+[
+  {
+    "id": "R|F1-02-A|0|wcag:3.3.1",
+    "gemeo": "F1-02-A",
+    "familia": "F1",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:3.3.1",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#cartao",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. wcag '3.3.1' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-item-identified' (P1) aceita para wcag '3.3.1'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (item em erro não identificado (WCAG 3.3.1 / e-MAG 6.6)). [1] o campo expõe invalid=true (item identificado programaticamente)."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-described-in-text' (P1) aceita para wcag '3.3.1'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) sem decisão possível (erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6)). [1] apareceu texto novo (\"Valor inválido.\") que o oráculo não descarta como descrição do erro."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-02-A|0|emag:6.6",
+    "gemeo": "F1-02-A",
+    "familia": "F1",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "emag:6.6",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#cartao",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. emag '6.6' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-item-identified' (P1) aceita para emag '6.6'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (item em erro não identificado (WCAG 3.3.1 / e-MAG 6.6)). [1] o campo expõe invalid=true (item identificado programaticamente)."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-described-in-text' (P1) aceita para emag '6.6'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) sem decisão possível (erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6)). [1] apareceu texto novo (\"Valor inválido.\") que o oráculo não descarta como descrição do erro."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-02-B|0|wcag:3.3.1",
+    "gemeo": "F1-02-B",
+    "familia": "F1",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "wcag:3.3.1",
+    "esperadoD1": "confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#cartao",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. wcag '3.3.1' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "confirmed",
+          "violation": "verified",
+          "detalhe": "bf2); prova só a precondição \"erro detectado\", não a identificação nem a descrição]); vínculo explícito: aria-errormessage do campo [registro 0] → <span#cartao-erro> \"Valor inválido.\" (exata) = mensagem <span#cartao-erro> \"Valor inválido.\"; a mensagem \"Valor inválido.\" apareceu pela última ação; o Chromium não expõe invalid, a descrição é vazia e a mensagem não nomeia o campo (\"Número do cartão\")."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-described-in-text' (P1) aceita para wcag '3.3.1'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) sem decisão possível (erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6)). [1] apareceu texto novo (\"Valor inválido.\") que o oráculo não descarta como descrição do erro."
+        }
+      ],
+      "julgamento": "TP"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F1-02-B|0|emag:6.6",
+    "gemeo": "F1-02-B",
+    "familia": "F1",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "emag:6.6",
+    "esperadoD1": "confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#cartao",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. emag '6.6' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "confirmed",
+          "violation": "verified",
+          "detalhe": "bf2); prova só a precondição \"erro detectado\", não a identificação nem a descrição]); vínculo explícito: aria-errormessage do campo [registro 0] → <span#cartao-erro> \"Valor inválido.\" (exata) = mensagem <span#cartao-erro> \"Valor inválido.\"; a mensagem \"Valor inválido.\" apareceu pela última ação; o Chromium não expõe invalid, a descrição é vazia e a mensagem não nomeia o campo (\"Número do cartão\")."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-described-in-text' (P1) aceita para emag '6.6'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) sem decisão possível (erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6)). [1] apareceu texto novo (\"Valor inválido.\") que o oráculo não descarta como descrição do erro."
+        }
+      ],
+      "julgamento": "TP"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F1-02-C|0|wcag:3.3.1",
+    "gemeo": "F1-02-C",
+    "familia": "F1",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:3.3.1",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#cartao",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. wcag '3.3.1' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-item-identified' (P1) aceita para wcag '3.3.1'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (item em erro não identificado (WCAG 3.3.1 / e-MAG 6.6)). [1] a mensagem nomeia o campo (\"Número do cartão\") em texto."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-described-in-text' (P1) aceita para wcag '3.3.1'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) sem decisão possível (erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6)). [1] apareceu texto novo (\"Número do cartão: informe 8 dígitos.\") que o oráculo não descarta como descrição do erro."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-02-C|0|emag:6.6",
+    "gemeo": "F1-02-C",
+    "familia": "F1",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "emag:6.6",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#cartao",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. emag '6.6' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-item-identified' (P1) aceita para emag '6.6'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (item em erro não identificado (WCAG 3.3.1 / e-MAG 6.6)). [1] a mensagem nomeia o campo (\"Número do cartão\") em texto."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-described-in-text' (P1) aceita para emag '6.6'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) sem decisão possível (erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6)). [1] apareceu texto novo (\"Número do cartão: informe 8 dígitos.\") que o oráculo não descarta como descrição do erro."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-02-E|0|wcag:3.3.1",
+    "gemeo": "F1-02-E",
+    "familia": "F1",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:3.3.1",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#cartao",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. wcag '3.3.1' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-item-identified' (P1) aceita para wcag '3.3.1'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (item em erro não identificado (WCAG 3.3.1 / e-MAG 6.6)). [1] o campo expõe invalid=true (item identificado programaticamente)."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-described-in-text' (P1) aceita para wcag '3.3.1'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) sem decisão possível (erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6)). [1] apareceu texto novo (\"Valor inválido.\") que o oráculo não descarta como descrição do erro."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-02-E|0|emag:6.6",
+    "gemeo": "F1-02-E",
+    "familia": "F1",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "emag:6.6",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#cartao",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. emag '6.6' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-item-identified' (P1) aceita para emag '6.6'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (item em erro não identificado (WCAG 3.3.1 / e-MAG 6.6)). [1] o campo expõe invalid=true (item identificado programaticamente)."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-described-in-text' (P1) aceita para emag '6.6'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) sem decisão possível (erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6)). [1] apareceu texto novo (\"Valor inválido.\") que o oráculo não descarta como descrição do erro."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-02-E|1|wcag:1.3.1",
+    "gemeo": "F1-02-E",
+    "familia": "F1",
+    "classe": "aparte",
+    "esperado": "unsupported",
+    "norma": "wcag:1.3.1",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#cartao",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 1.3.1 Info and Relationships. Nenhum predicado implementado para wcag '1.3.1': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "preservado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-02-E|2|ds:input-2a9e95371c51",
+    "gemeo": "F1-02-E",
+    "familia": "F1",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "ds:input-2a9e95371c51",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#cartao",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-input-2a9e95371c51. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-accessibility-input-2a9e95371c51': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-04-D|0|wcag:3.3.1",
+    "gemeo": "F1-04-D",
+    "familia": "F1",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "wcag:3.3.1",
+    "esperadoD1": "confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "bib-campo input",
+          "verdict": "rejected",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. wcag '3.3.1' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. Nenhum elemento para 'bib-campo input' no estado verificado (2 ação(ões) reproduzida(s)). Se o defeito só existe depois de uma interação, envie actions."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "bib-campo input",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-item-identified' (P1) aceita para wcag '3.3.1'; 0 sujeito(s) no estado final. Nenhum sujeito de item em erro não identificado (WCAG 3.3.1 / e-MAG 6.6) observado no estado reproduzido."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "bib-campo input",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-described-in-text' (P1) aceita para wcag '3.3.1'; 0 sujeito(s) no estado final. Nenhum sujeito de erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6) observado no estado reproduzido."
+        }
+      ],
+      "julgamento": "FN"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F1-04-D|0|emag:6.6",
+    "gemeo": "F1-04-D",
+    "familia": "F1",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "emag:6.6",
+    "esperadoD1": "confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "bib-campo input",
+          "verdict": "rejected",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. emag '6.6' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. Nenhum elemento para 'bib-campo input' no estado verificado (2 ação(ões) reproduzida(s)). Se o defeito só existe depois de uma interação, envie actions."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "bib-campo input",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-item-identified' (P1) aceita para emag '6.6'; 0 sujeito(s) no estado final. Nenhum sujeito de item em erro não identificado (WCAG 3.3.1 / e-MAG 6.6) observado no estado reproduzido."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "bib-campo input",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-described-in-text' (P1) aceita para emag '6.6'; 0 sujeito(s) no estado final. Nenhum sujeito de erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6) observado no estado reproduzido."
+        }
+      ],
+      "julgamento": "FN"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F1-04-C|0|wcag:3.3.1",
+    "gemeo": "F1-04-C",
+    "familia": "F1",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:3.3.1",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "bib-campo input",
+          "verdict": "rejected",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. wcag '3.3.1' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. Nenhum elemento para 'bib-campo input' no estado verificado (2 ação(ões) reproduzida(s)). Se o defeito só existe depois de uma interação, envie actions."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "bib-campo input",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-item-identified' (P1) aceita para wcag '3.3.1'; 0 sujeito(s) no estado final. Nenhum sujeito de item em erro não identificado (WCAG 3.3.1 / e-MAG 6.6) observado no estado reproduzido."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "bib-campo input",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-described-in-text' (P1) aceita para wcag '3.3.1'; 0 sujeito(s) no estado final. Nenhum sujeito de erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6) observado no estado reproduzido."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-04-C|0|emag:6.6",
+    "gemeo": "F1-04-C",
+    "familia": "F1",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "emag:6.6",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "bib-campo input",
+          "verdict": "rejected",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. emag '6.6' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. Nenhum elemento para 'bib-campo input' no estado verificado (2 ação(ões) reproduzida(s)). Se o defeito só existe depois de uma interação, envie actions."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "bib-campo input",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-item-identified' (P1) aceita para emag '6.6'; 0 sujeito(s) no estado final. Nenhum sujeito de item em erro não identificado (WCAG 3.3.1 / e-MAG 6.6) observado no estado reproduzido."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "bib-campo input",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-described-in-text' (P1) aceita para emag '6.6'; 0 sujeito(s) no estado final. Nenhum sujeito de erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6) observado no estado reproduzido."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-05-D|0|wcag:3.3.1",
+    "gemeo": "F1-05-D",
+    "familia": "F1",
+    "classe": "aparte",
+    "esperado": "unverifiable",
+    "norma": "wcag:3.3.1",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "bib-campo",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. wcag '3.3.1' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. Limitação: o estado alegado não foi reproduzido. Passo 0 (fill) da receita falhou: not-found. Nenhum elemento para 'bib-campo #campo' no passo 0. A alegação fica sem verificação; isto não indica ausência de defeito."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "bib-campo",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "unverifiable",
+          "violation": "not-checked",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Limitação: o estado alegado não foi reproduzido. Passo 0 (fill) da receita falhou: not-found. Nenhum elemento para 'bib-campo #campo' no passo 0. A alegação fica sem verificação; isto não indica ausência de defeito."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "bib-campo",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "not-checked",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Limitação: o estado alegado não foi reproduzido. Passo 0 (fill) da receita falhou: not-found. Nenhum elemento para 'bib-campo #campo' no passo 0. A alegação fica sem verificação; isto não indica ausência de defeito."
+        }
+      ],
+      "julgamento": "preservado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-05-D|0|emag:6.6",
+    "gemeo": "F1-05-D",
+    "familia": "F1",
+    "classe": "aparte",
+    "esperado": "unverifiable",
+    "norma": "emag:6.6",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "bib-campo",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. emag '6.6' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. Limitação: o estado alegado não foi reproduzido. Passo 0 (fill) da receita falhou: not-found. Nenhum elemento para 'bib-campo #campo' no passo 0. A alegação fica sem verificação; isto não indica ausência de defeito."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "bib-campo",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "unverifiable",
+          "violation": "not-checked",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Limitação: o estado alegado não foi reproduzido. Passo 0 (fill) da receita falhou: not-found. Nenhum elemento para 'bib-campo #campo' no passo 0. A alegação fica sem verificação; isto não indica ausência de defeito."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "bib-campo",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "not-checked",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Limitação: o estado alegado não foi reproduzido. Passo 0 (fill) da receita falhou: not-found. Nenhum elemento para 'bib-campo #campo' no passo 0. A alegação fica sem verificação; isto não indica ausência de defeito."
+        }
+      ],
+      "julgamento": "preservado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-05-C|0|wcag:3.3.1",
+    "gemeo": "F1-05-C",
+    "familia": "F1",
+    "classe": "aparte",
+    "esperado": "unverifiable",
+    "norma": "wcag:3.3.1",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "bib-campo",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. wcag '3.3.1' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. Limitação: o estado alegado não foi reproduzido. Passo 0 (fill) da receita falhou: not-found. Nenhum elemento para 'bib-campo #campo' no passo 0. A alegação fica sem verificação; isto não indica ausência de defeito."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "bib-campo",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": ""
+          },
+          "verdict": "rejected",
+          "violation": "not-checked",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. evidence.data.errorMessage deve ser o seletor do texto de erro."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "bib-campo",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "not-checked",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Limitação: o estado alegado não foi reproduzido. Passo 0 (fill) da receita falhou: not-found. Nenhum elemento para 'bib-campo #campo' no passo 0. A alegação fica sem verificação; isto não indica ausência de defeito."
+        }
+      ],
+      "julgamento": "decidido"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-05-C|0|emag:6.6",
+    "gemeo": "F1-05-C",
+    "familia": "F1",
+    "classe": "aparte",
+    "esperado": "unverifiable",
+    "norma": "emag:6.6",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "bib-campo",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. emag '6.6' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. Limitação: o estado alegado não foi reproduzido. Passo 0 (fill) da receita falhou: not-found. Nenhum elemento para 'bib-campo #campo' no passo 0. A alegação fica sem verificação; isto não indica ausência de defeito."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "bib-campo",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": ""
+          },
+          "verdict": "rejected",
+          "violation": "not-checked",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. evidence.data.errorMessage deve ser o seletor do texto de erro."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "bib-campo",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "unverifiable",
+          "violation": "not-checked",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Limitação: o estado alegado não foi reproduzido. Passo 0 (fill) da receita falhou: not-found. Nenhum elemento para 'bib-campo #campo' no passo 0. A alegação fica sem verificação; isto não indica ausência de defeito."
+        }
+      ],
+      "julgamento": "decidido"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-06-C|0|wcag:3.3.1",
+    "gemeo": "F1-06-C",
+    "familia": "F1",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:3.3.1",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#cartao",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. wcag '3.3.1' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-item-identified' (P1) aceita para wcag '3.3.1'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (item em erro não identificado (WCAG 3.3.1 / e-MAG 6.6)). [1] o campo expõe invalid=true (item identificado programaticamente)."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "WCAG 2.2 3.3.1 Error Identification. Condição estruturada 'input-error-described-in-text' (P1) aceita para wcag '3.3.1'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6)). [1] texto novo associado ao campo: \"Valor inválido.\"."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F1-06-C|0|emag:6.6",
+    "gemeo": "F1-06-C",
+    "familia": "F1",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "emag:6.6",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#cartao",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. emag '6.6' só é verificável com evidence.data.expectedCondition = 'input-error-item-identified' ou 'input-error-described-in-text'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-item-identified",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-item-identified",
+            "errorMessage": "#cartao-erro"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-item-identified' (P1) aceita para emag '6.6'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (item em erro não identificado (WCAG 3.3.1 / e-MAG 6.6)). [1] o campo expõe invalid=true (item identificado programaticamente)."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "input-error-described-in-text",
+          "localizador": "#cartao",
+          "dados": {
+            "expectedCondition": "input-error-described-in-text"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "e-MAG 3.1 6.6 Identificar e descrever os erros. Condição estruturada 'input-error-described-in-text' (P1) aceita para emag '6.6'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (erro não descrito em texto (WCAG 3.3.1 / e-MAG 6.6)). [1] texto novo associado ao campo: \"Valor inválido.\"."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F2-02-N|0|ds:message-0e441e3af975",
+    "gemeo": "F2-02-N",
+    "familia": "F2",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "ds:message-0e441e3af975",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#info",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-component-message-0e441e3af975. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-component-message-0e441e3af975': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F2-02-N|0|ds:message-001a7ba0b67f",
+    "gemeo": "F2-02-N",
+    "familia": "F2",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "ds:message-001a7ba0b67f",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#info",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-component-message-001a7ba0b67f. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-component-message-001a7ba0b67f': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F2-02-N|1|ds:modal-f687cfe21f32",
+    "gemeo": "F2-02-N",
+    "familia": "F2",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "ds:modal-f687cfe21f32",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#alerta",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-component-modal-f687cfe21f32. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-component-modal-f687cfe21f32': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F2-04-D|0|ds:pagination-01f1635e6054",
+    "gemeo": "F2-04-D",
+    "familia": "F2",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "ds:pagination-01f1635e6054",
+    "esperadoD1": "fora-do-escopo",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": ".br-pagination",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-component-pagination-01f1635e6054. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-component-pagination-01f1635e6054': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "fora-do-escopo"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F2-04-C|0|ds:pagination-01f1635e6054",
+    "gemeo": "F2-04-C",
+    "familia": "F2",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:pagination-01f1635e6054",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": ".br-pagination",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-component-pagination-01f1635e6054. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-component-pagination-01f1635e6054': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F2-04-C|0|ds:pagination-4898b445aa74",
+    "gemeo": "F2-04-C",
+    "familia": "F2",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:pagination-4898b445aa74",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": ".br-pagination",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-component-pagination-4898b445aa74. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-component-pagination-4898b445aa74': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F2-04-X|0|ds:pagination-01f1635e6054",
+    "gemeo": "F2-04-X",
+    "familia": "F2",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:pagination-01f1635e6054",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": ".br-pagination",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-component-pagination-01f1635e6054. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-component-pagination-01f1635e6054': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F2-04-X|1|ds:pagination-4898b445aa74",
+    "gemeo": "F2-04-X",
+    "familia": "F2",
+    "classe": "aparte",
+    "esperado": "unverifiable",
+    "norma": "ds:pagination-4898b445aa74",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": ".br-pagination",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-component-pagination-4898b445aa74. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-component-pagination-4898b445aa74': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "preservado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F2-05-N|0|ds:header-e58979706103",
+    "gemeo": "F2-05-N",
+    "familia": "F2",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "ds:header-e58979706103",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "div.topo",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-component-header-e58979706103. govbr-ds-kb 'govbr-3.7.0-component-header-e58979706103' só é verificável com evidence.data.expectedCondition = 'required-anatomy-part-present'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "required-anatomy-part-present",
+          "localizador": "div.topo",
+          "dados": {
+            "expectedCondition": "required-anatomy-part-present",
+            "component": "header",
+            "part": "titulo"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-component-header-e58979706103. Condição estruturada 'required-anatomy-part-present' (P2) aceita para govbr-ds-kb 'govbr-3.7.0-component-header-e58979706103'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) sem decisão possível (parte obrigatória ausente: Título do Header (ou substituto: logo, texto)). [1] o sujeito não é raiz .br-header: a anatomia não se aplica a ele."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F3-06-D|0|ds:message-ad83724b777f",
+    "gemeo": "F3-06-D",
+    "familia": "F3",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "ds:message-ad83724b777f",
+    "esperadoD1": "confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#resultado",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-message-ad83724b777f. govbr-ds-kb 'govbr-3.7.0-accessibility-message-ad83724b777f' só é verificável com evidence.data.expectedCondition = 'focus-on-close-button-when-shown'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "focus-on-close-button-when-shown",
+          "localizador": "#resultado",
+          "dados": {
+            "expectedCondition": "focus-on-close-button-when-shown"
+          },
+          "verdict": "confirmed",
+          "violation": "verified",
+          "detalhe": "ssibility-message-ad83724b777f. Condição estruturada 'focus-on-close-button-when-shown' (P3) aceita para govbr-ds-kb 'govbr-3.7.0-accessibility-message-ad83724b777f'; 1 sujeito(s) no estado final. Violação recalculada em 1 de 1 sujeito(s): foco não vai ao fechar ao exibir o Message. [1] ao exibir (passo 0), o foco está em <button#renovar-1.br-button.secondary.small> \"Renovar\", não no botão fechar."
+        }
+      ],
+      "julgamento": "TP"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F3-06-D|1|ds:message-18a75fe5583a",
+    "gemeo": "F3-06-D",
+    "familia": "F3",
+    "classe": "aparte",
+    "esperado": "unsupported",
+    "norma": "ds:message-18a75fe5583a",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#resultado",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-message-18a75fe5583a. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-accessibility-message-18a75fe5583a': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "preservado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F3-06-C|0|ds:message-ad83724b777f",
+    "gemeo": "F3-06-C",
+    "familia": "F3",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:message-ad83724b777f",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#resultado",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-message-ad83724b777f. govbr-ds-kb 'govbr-3.7.0-accessibility-message-ad83724b777f' só é verificável com evidence.data.expectedCondition = 'focus-on-close-button-when-shown'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "focus-on-close-button-when-shown",
+          "localizador": "#resultado",
+          "dados": {
+            "expectedCondition": "focus-on-close-button-when-shown"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-message-ad83724b777f. Condição estruturada 'focus-on-close-button-when-shown' (P3) aceita para govbr-ds-kb 'govbr-3.7.0-accessibility-message-ad83724b777f'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (foco não vai ao fechar ao exibir o Message). [1] ao exibir, o foco está no botão fechar."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F3-06-C|1|ds:message-18a75fe5583a",
+    "gemeo": "F3-06-C",
+    "familia": "F3",
+    "classe": "aparte",
+    "esperado": "unsupported",
+    "norma": "ds:message-18a75fe5583a",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#resultado",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-message-18a75fe5583a. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-accessibility-message-18a75fe5583a': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "preservado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F3-06-N|0|ds:message-ad83724b777f",
+    "gemeo": "F3-06-N",
+    "familia": "F3",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "ds:message-ad83724b777f",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#resultado",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-message-ad83724b777f. govbr-ds-kb 'govbr-3.7.0-accessibility-message-ad83724b777f' só é verificável com evidence.data.expectedCondition = 'focus-on-close-button-when-shown'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "focus-on-close-button-when-shown",
+          "localizador": "#resultado",
+          "dados": {
+            "expectedCondition": "focus-on-close-button-when-shown"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-message-ad83724b777f. Condição estruturada 'focus-on-close-button-when-shown' (P3) aceita para govbr-ds-kb 'govbr-3.7.0-accessibility-message-ad83724b777f'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (foco não vai ao fechar ao exibir o Message). [1] o componente não tem botão fechar: a regra vale 'quando houver'/'se houver'."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F3-08-N|0|ds:modal-f36c91d7073c",
+    "gemeo": "F3-08-N",
+    "familia": "F3",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "ds:modal-f36c91d7073c",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#aviso-feriado",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-modal-f36c91d7073c. govbr-ds-kb 'govbr-3.7.0-accessibility-modal-f36c91d7073c' só é verificável com evidence.data.expectedCondition = 'focus-returns-to-invoker-on-close'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "focus-returns-to-invoker-on-close",
+          "localizador": "#aviso-feriado",
+          "dados": {
+            "expectedCondition": "focus-returns-to-invoker-on-close"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-modal-f36c91d7073c. Condição estruturada 'focus-returns-to-invoker-on-close' (P3) aceita para govbr-ds-kb 'govbr-3.7.0-accessibility-modal-f36c91d7073c'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) sem decisão possível (foco não volta ao invocador ao fechar a modal). [1] a modal já estava aberta ao carregar: a abertura não foi observada."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F3-09-U1|0|ds:modal-f36c91d7073c",
+    "gemeo": "F3-09-U1",
+    "familia": "F3",
+    "classe": "aparte",
+    "esperado": "unsupported",
+    "norma": "ds:modal-f36c91d7073c",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#remover-item",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-modal-f36c91d7073c. govbr-ds-kb 'govbr-3.7.0-accessibility-modal-f36c91d7073c' só é verificável com evidence.data.expectedCondition = 'focus-returns-to-invoker-on-close'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "focus-returns-to-invoker-on-close",
+          "localizador": "#remover-item",
+          "dados": {
+            "expectedCondition": "focus-returns-to-invoker-on-close"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "br-3.7.0-accessibility-modal-f36c91d7073c. Condição estruturada 'focus-returns-to-invoker-on-close' (P3) aceita para govbr-ds-kb 'govbr-3.7.0-accessibility-modal-f36c91d7073c'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) sem decisão possível (foco não volta ao invocador ao fechar a modal). [1] o invocador saiu do documento ao fechar: nenhuma fonte diz para onde o foco deve ir (coleta/revisão)."
+        }
+      ],
+      "julgamento": "preservado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F3-09-U2|0|ds:modal-f36c91d7073c",
+    "gemeo": "F3-09-U2",
+    "familia": "F3",
+    "classe": "aparte",
+    "esperado": "unsupported",
+    "norma": "ds:modal-f36c91d7073c",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#remover-item",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-modal-f36c91d7073c. govbr-ds-kb 'govbr-3.7.0-accessibility-modal-f36c91d7073c' só é verificável com evidence.data.expectedCondition = 'focus-returns-to-invoker-on-close'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "focus-returns-to-invoker-on-close",
+          "localizador": "#remover-item",
+          "dados": {
+            "expectedCondition": "focus-returns-to-invoker-on-close"
+          },
+          "verdict": "unverifiable",
+          "violation": "undetermined",
+          "detalhe": "br-3.7.0-accessibility-modal-f36c91d7073c. Condição estruturada 'focus-returns-to-invoker-on-close' (P3) aceita para govbr-ds-kb 'govbr-3.7.0-accessibility-modal-f36c91d7073c'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) sem decisão possível (foco não volta ao invocador ao fechar a modal). [1] o invocador saiu do documento ao fechar: nenhuma fonte diz para onde o foco deve ir (coleta/revisão)."
+        }
+      ],
+      "julgamento": "preservado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F3-11-C|0|ds:modal-f36c91d7073c",
+    "gemeo": "F3-11-C",
+    "familia": "F3",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:modal-f36c91d7073c",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#regras",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-modal-f36c91d7073c. govbr-ds-kb 'govbr-3.7.0-accessibility-modal-f36c91d7073c' só é verificável com evidence.data.expectedCondition = 'focus-returns-to-invoker-on-close'. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        },
+        {
+          "tipo": "condicao",
+          "condicao": "focus-returns-to-invoker-on-close",
+          "localizador": "#regras",
+          "dados": {
+            "expectedCondition": "focus-returns-to-invoker-on-close"
+          },
+          "verdict": "rejected",
+          "violation": "contradicted",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-modal-f36c91d7073c. Condição estruturada 'focus-returns-to-invoker-on-close' (P3) aceita para govbr-ds-kb 'govbr-3.7.0-accessibility-modal-f36c91d7073c'; 1 sujeito(s) no estado final. 1 de 1 sujeito(s) não sustentam a alegação (foco não volta ao invocador ao fechar a modal). [1] o foco voltou ao invocador ao fechar."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F4-01-D|0|emag:1.5",
+    "gemeo": "F4-01-D",
+    "familia": "F4",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "emag:1.5",
+    "esperadoD1": "fora-do-escopo",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "html",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 1.5 Fornecer âncoras para ir direto a um bloco de conteúdo. Nenhum predicado implementado para emag '1.5': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "fora-do-escopo"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F4-01-D|1|wcag:2.4.1",
+    "gemeo": "F4-01-D",
+    "familia": "F4",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:2.4.1",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "html",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.4.1 Bypass Blocks. Nenhum predicado implementado para wcag '2.4.1': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F4-01-D|2|ds:skiplink-b0641993618f",
+    "gemeo": "F4-01-D",
+    "familia": "F4",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "ds:skiplink-b0641993618f",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "html",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-skiplink-b0641993618f. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-accessibility-skiplink-b0641993618f': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F4-01-C|0|emag:1.5",
+    "gemeo": "F4-01-C",
+    "familia": "F4",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "emag:1.5",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "html",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 1.5 Fornecer âncoras para ir direto a um bloco de conteúdo. Nenhum predicado implementado para emag '1.5': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F4-01-C|1|wcag:2.4.1",
+    "gemeo": "F4-01-C",
+    "familia": "F4",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:2.4.1",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "html",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.4.1 Bypass Blocks. Nenhum predicado implementado para wcag '2.4.1': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F4-06-D|0|wcag:2.4.2",
+    "gemeo": "F4-06-D",
+    "familia": "F4",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "wcag:2.4.2",
+    "esperadoD1": "fora-do-escopo",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "html",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.4.2 Page Titled. Nenhum predicado implementado para wcag '2.4.2': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "fora-do-escopo"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F4-06-D|0|emag:3.3",
+    "gemeo": "F4-06-D",
+    "familia": "F4",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "emag:3.3",
+    "esperadoD1": "fora-do-escopo",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "html",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 3.3 Oferecer um título descritivo e informativo à página. Nenhum predicado implementado para emag '3.3': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "fora-do-escopo"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F4-06-C|0|wcag:2.4.2",
+    "gemeo": "F4-06-C",
+    "familia": "F4",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:2.4.2",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "html",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.4.2 Page Titled. Nenhum predicado implementado para wcag '2.4.2': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F4-06-C|0|emag:3.3",
+    "gemeo": "F4-06-C",
+    "familia": "F4",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "emag:3.3",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "html",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 3.3 Oferecer um título descritivo e informativo à página. Nenhum predicado implementado para emag '3.3': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F4-06-S|0|wcag:2.4.2",
+    "gemeo": "F4-06-S",
+    "familia": "F4",
+    "classe": "aparte",
+    "esperado": "unsupported",
+    "norma": "wcag:2.4.2",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "html",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.4.2 Page Titled. Nenhum predicado implementado para wcag '2.4.2': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "preservado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F4-06-S|0|emag:3.3",
+    "gemeo": "F4-06-S",
+    "familia": "F4",
+    "classe": "aparte",
+    "esperado": "unsupported",
+    "norma": "emag:3.3",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "html",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 3.3 Oferecer um título descritivo e informativo à página. Nenhum predicado implementado para emag '3.3': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "preservado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-01-D|0|wcag:4.1.2",
+    "gemeo": "F5-01-D",
+    "familia": "F5",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "wcag:4.1.2",
+    "esperadoD1": "fora-do-escopo",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 4.1.2 Name, Role, Value. Nenhum predicado implementado para wcag '4.1.2': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "fora-do-escopo"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F5-01-D|0|ds:button-323bef5db0fd",
+    "gemeo": "F5-01-D",
+    "familia": "F5",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "ds:button-323bef5db0fd",
+    "esperadoD1": "fora-do-escopo",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-development-button-323bef5db0fd. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-development-button-323bef5db0fd': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "fora-do-escopo"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F5-01-A|0|wcag:4.1.2",
+    "gemeo": "F5-01-A",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:4.1.2",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 4.1.2 Name, Role, Value. Nenhum predicado implementado para wcag '4.1.2': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-01-A|0|ds:button-323bef5db0fd",
+    "gemeo": "F5-01-A",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:button-323bef5db0fd",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-development-button-323bef5db0fd. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-development-button-323bef5db0fd': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-01-T|0|wcag:4.1.2",
+    "gemeo": "F5-01-T",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:4.1.2",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 4.1.2 Name, Role, Value. Nenhum predicado implementado para wcag '4.1.2': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-01-T|0|ds:button-323bef5db0fd",
+    "gemeo": "F5-01-T",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:button-323bef5db0fd",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-development-button-323bef5db0fd. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-development-button-323bef5db0fd': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-01-L|0|wcag:4.1.2",
+    "gemeo": "F5-01-L",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:4.1.2",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 4.1.2 Name, Role, Value. Nenhum predicado implementado para wcag '4.1.2': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-01-L|0|ds:button-323bef5db0fd",
+    "gemeo": "F5-01-L",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:button-323bef5db0fd",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-development-button-323bef5db0fd. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-development-button-323bef5db0fd': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-01-H|0|wcag:4.1.2",
+    "gemeo": "F5-01-H",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:4.1.2",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 4.1.2 Name, Role, Value. Nenhum predicado implementado para wcag '4.1.2': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-01-H|0|ds:button-323bef5db0fd",
+    "gemeo": "F5-01-H",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:button-323bef5db0fd",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-development-button-323bef5db0fd. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-development-button-323bef5db0fd': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-01-E|0|wcag:4.1.2",
+    "gemeo": "F5-01-E",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:4.1.2",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 4.1.2 Name, Role, Value. Nenhum predicado implementado para wcag '4.1.2': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-01-E|0|ds:button-323bef5db0fd",
+    "gemeo": "F5-01-E",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:button-323bef5db0fd",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-development-button-323bef5db0fd. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-development-button-323bef5db0fd': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-04-U|0|ds:modal-6531b2a89fa1",
+    "gemeo": "F5-04-U",
+    "familia": "F5",
+    "classe": "aparte",
+    "esperado": "unsupported",
+    "norma": "ds:modal-6531b2a89fa1",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#regras",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-modal-6531b2a89fa1. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-accessibility-modal-6531b2a89fa1': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "preservado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-04-U|1|wcag:4.1.2",
+    "gemeo": "F5-04-U",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:4.1.2",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#regras",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 4.1.2 Name, Role, Value. Nenhum predicado implementado para wcag '4.1.2': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-04-C|0|ds:modal-6531b2a89fa1",
+    "gemeo": "F5-04-C",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:modal-6531b2a89fa1",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#regras",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "KB 3.7.0 govbr-3.7.0-accessibility-modal-6531b2a89fa1. Nenhum predicado implementado para govbr-ds-kb 'govbr-3.7.0-accessibility-modal-6531b2a89fa1': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F5-04-C|0|wcag:4.1.2",
+    "gemeo": "F5-04-C",
+    "familia": "F5",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:4.1.2",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#regras",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 4.1.2 Name, Role, Value. Nenhum predicado implementado para wcag '4.1.2': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F6-03-D|0|wcag:2.4.11",
+    "gemeo": "F6-03-D",
+    "familia": "F6",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "wcag:2.4.11",
+    "esperadoD1": "fora-do-escopo",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#acervo-item-1",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.4.11 Focus Not Obscured (Minimum). Nenhum predicado implementado para wcag '2.4.11': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "fora-do-escopo"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F6-03-C|0|wcag:2.4.11",
+    "gemeo": "F6-03-C",
+    "familia": "F6",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:2.4.11",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#acervo-item-1",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.4.11 Focus Not Obscured (Minimum). Nenhum predicado implementado para wcag '2.4.11': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F6-03-X|0|wcag:2.4.11",
+    "gemeo": "F6-03-X",
+    "familia": "F6",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:2.4.11",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#acervo-item-1",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.4.11 Focus Not Obscured (Minimum). Nenhum predicado implementado para wcag '2.4.11': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F7-01-D|0|emag:6.7",
+    "gemeo": "F7-01-D",
+    "familia": "F7",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "emag:6.7",
+    "esperadoD1": "fora-do-escopo",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#formato",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.7 Agrupar campos de formulário. Nenhum predicado implementado para emag '6.7': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "fora-do-escopo"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F7-01-C|0|emag:6.7",
+    "gemeo": "F7-01-C",
+    "familia": "F7",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "emag:6.7",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#formato",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.7 Agrupar campos de formulário. Nenhum predicado implementado para emag '6.7': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F7-01-C|0|wcag:1.3.1",
+    "gemeo": "F7-01-C",
+    "familia": "F7",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:1.3.1",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#formato",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 1.3.1 Info and Relationships. Nenhum predicado implementado para wcag '1.3.1': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F7-01-X|0|wcag:1.3.1",
+    "gemeo": "F7-01-X",
+    "familia": "F7",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:1.3.1",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#formato",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 1.3.1 Info and Relationships. Nenhum predicado implementado para wcag '1.3.1': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F7-01-X|1|emag:6.7",
+    "gemeo": "F7-01-X",
+    "familia": "F7",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "emag:6.7",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#formato",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.7 Agrupar campos de formulário. Nenhum predicado implementado para emag '6.7': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F7-01-U|0|wcag:1.3.1",
+    "gemeo": "F7-01-U",
+    "familia": "F7",
+    "classe": "aparte",
+    "esperado": "unsupported",
+    "norma": "wcag:1.3.1",
+    "esperadoD1": "so-unverifiable",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#formato",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 1.3.1 Info and Relationships. Nenhum predicado implementado para wcag '1.3.1': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "preservado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F7-01-U|1|emag:6.7",
+    "gemeo": "F7-01-U",
+    "familia": "F7",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "emag:6.7",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#formato",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "e-MAG 3.1 6.7 Agrupar campos de formulário. Nenhum predicado implementado para emag '6.7': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F8-01-D|0|wcag:2.5.8",
+    "gemeo": "F8-01-D",
+    "familia": "F8",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "wcag:2.5.8",
+    "esperadoD1": "fora-do-escopo",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#renovar-icone",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.5.8 Target Size (Minimum). Nenhum predicado implementado para wcag '2.5.8': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "fora-do-escopo"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F8-01-D|0|ds:iconografia-24x24",
+    "gemeo": "F8-01-D",
+    "familia": "F8",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "ds:iconografia-24x24",
+    "esperadoD1": "fora-do-escopo",
+    "d1": {
+      "veredictos": [],
+      "julgamento": "nao-exercitado"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F8-01-C|0|wcag:2.5.8",
+    "gemeo": "F8-01-C",
+    "familia": "F8",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:2.5.8",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#renovar-icone",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.5.8 Target Size (Minimum). Nenhum predicado implementado para wcag '2.5.8': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F8-01-C|0|ds:iconografia-24x24",
+    "gemeo": "F8-01-C",
+    "familia": "F8",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:iconografia-24x24",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [],
+      "julgamento": "nao-exercitado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F8-01-X|0|wcag:2.5.8",
+    "gemeo": "F8-01-X",
+    "familia": "F8",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:2.5.8",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#renovar-icone",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.5.8 Target Size (Minimum). Nenhum predicado implementado para wcag '2.5.8': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F8-01-X|1|ds:iconografia-24x24",
+    "gemeo": "F8-01-X",
+    "familia": "F8",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "ds:iconografia-24x24",
+    "esperadoD1": "fora-do-escopo",
+    "d1": {
+      "veredictos": [],
+      "julgamento": "nao-exercitado"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F8-01-N|0|wcag:2.5.8",
+    "gemeo": "F8-01-N",
+    "familia": "F8",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "wcag:2.5.8",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#regulamento",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.5.8 Target Size (Minimum). Nenhum predicado implementado para wcag '2.5.8': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F8-01-N|0|ds:iconografia-24x24",
+    "gemeo": "F8-01-N",
+    "familia": "F8",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "ds:iconografia-24x24",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [],
+      "julgamento": "nao-exercitado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F8-02-D|0|ds:iconografia-48x48",
+    "gemeo": "F8-02-D",
+    "familia": "F8",
+    "classe": "positivo",
+    "esperado": "confirmed",
+    "norma": "ds:iconografia-48x48",
+    "esperadoD1": "fora-do-escopo",
+    "d1": {
+      "veredictos": [],
+      "julgamento": "nao-exercitado"
+    },
+    "esperadoD2": "informativo",
+    "d2": {
+      "achados": [],
+      "julgamento": "-"
+    }
+  },
+  {
+    "id": "R|F8-02-D|1|wcag:2.5.8",
+    "gemeo": "F8-02-D",
+    "familia": "F8",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:2.5.8",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir-movel",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.5.8 Target Size (Minimum). Nenhum predicado implementado para wcag '2.5.8': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F8-02-C|0|ds:iconografia-48x48",
+    "gemeo": "F8-02-C",
+    "familia": "F8",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "ds:iconografia-48x48",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [],
+      "julgamento": "nao-exercitado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F8-02-C|0|wcag:2.5.8",
+    "gemeo": "F8-02-C",
+    "familia": "F8",
+    "classe": "negativo",
+    "esperado": "conforme",
+    "norma": "wcag:2.5.8",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [
+        {
+          "tipo": "generica",
+          "localizador": "#excluir-movel",
+          "verdict": "unverifiable",
+          "violation": "no-predicate",
+          "detalhe": "WCAG 2.2 2.5.8 Target Size (Minimum). Nenhum predicado implementado para wcag '2.5.8': a regra existe, mas o oráculo não decide mecanicamente a violação alegada. Localizar o elemento não confirma a alegação. O localizador resolveu 1 elemento(s); localizar não confirma a alegação."
+        }
+      ],
+      "julgamento": "TN"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  },
+  {
+    "id": "R|F8-02-N|0|ds:iconografia-48x48",
+    "gemeo": "F8-02-N",
+    "familia": "F8",
+    "classe": "negativo",
+    "esperado": "nao-aplicavel",
+    "norma": "ds:iconografia-48x48",
+    "esperadoD1": "nao-confirmar",
+    "d1": {
+      "veredictos": [],
+      "julgamento": "nao-exercitado"
+    },
+    "esperadoD2": "nao-sinalizar",
+    "d2": {
+      "achados": [],
+      "julgamento": "TN"
+    }
+  }
+]

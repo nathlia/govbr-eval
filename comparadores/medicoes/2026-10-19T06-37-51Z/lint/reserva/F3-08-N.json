@@ -1,0 +1,65 @@
+{
+  "comparador": "lint",
+  "gemeo": "F3-08-N",
+  "caso": "F3-08",
+  "familia": "F3",
+  "papel": "nao-aplicavel",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "sem-mudanca-declarada"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-5297784893.html",
+    "sha256": "f0552d5484e9cc6d39c00b536d5f0dfffe58c2ce5fabbd9df43842d050f5bcf5"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-5297784893.html",
+      "sha256": "f0552d5484e9cc6d39c00b536d5f0dfffe58c2ce5fabbd9df43842d050f5bcf5",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "apos-carregar",
+      "sujeitos": {
+        "modal#aviso-feriado": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    },
+    {
+      "ponto": "apos-fechar",
+      "sujeitos": {
+        "modal#aviso-feriado": [
+          "body>div>div"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "modal#aviso-feriado",
+      "normas": [
+        "ds:modal-f36c91d7073c"
+      ],
+      "esperado": "nao-aplicavel",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

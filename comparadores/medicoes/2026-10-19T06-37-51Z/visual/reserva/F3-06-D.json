@@ -1,0 +1,168 @@
+{
+  "comparador": "visual",
+  "gemeo": "F3-06-D",
+  "caso": "F3-06",
+  "familia": "F3",
+  "papel": "defeituoso",
+  "pagina": {
+    "caminho": "/controles/b/c-d1f00fceeb.html",
+    "sha256": "1f41c9c9119c5c7ea4ec683b21a6bcf2cfcebd9d127983661321d1c923402ebc"
+  },
+  "parametros": {
+    "viewport": "o da expectativa do gêmeo (1280×900 em todo o desenvolvimento)",
+    "captura": {
+      "fullPage": true,
+      "animations": "disabled",
+      "caret": "hide",
+      "esperaAntesMs": 150
+    },
+    "pixelmatch": {
+      "threshold": 0.1,
+      "includeAA": false,
+      "diffMask": true
+    },
+    "decisao": "pixelsDiferentes > 0 (maxDiffPixels = 0)",
+    "tamanhoDiferente": "estende as duas imagens até a união com magenta opaco; a área estendida conta como diferença",
+    "margemDoSujeitoPx": 8,
+    "normalizacao": "nenhuma"
+  },
+  "marcaMecanica": {
+    "contextoAria": false
+  },
+  "referencia": "F3-06-C",
+  "foraDeAlcance": null,
+  "paginaReferencia": {
+    "caminho": "/controles/b/c-f799cf8edc.html",
+    "sha256": "464c51b7d3c1726f9974ac3773717ad6b6788e66d78304474438739620c2855a"
+  },
+  "pisoDeRuido": [
+    {
+      "ponto": "apos-exibir",
+      "pixels": 0
+    },
+    {
+      "ponto": "apos-fechar",
+      "pixels": 0
+    }
+  ],
+  "instavel": false,
+  "pontos": [
+    {
+      "ponto": "apos-exibir",
+      "png": {
+        "gemeo": "3788f062c06dc8ba1593233f49a42378d1c92ddd591b89c09c5c009b3fb1d0eb",
+        "referencia": "42986ea861230ff449fa4cb3ede8db63559188d509f43326c11ae1e86b318da8"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 837,
+      "caixaDaDiferenca": {
+        "x": 1098,
+        "y": 293,
+        "width": 129,
+        "height": 152
+      },
+      "diff": "F3-06/F3-06-D__apos-exibir__diff.png",
+      "pixelsNoSujeito": {
+        ".br-message#resultado@exibir": 0,
+        ".br-message#resultado@fechar": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        ".br-message#resultado@exibir": 0,
+        ".br-message#resultado@fechar": 0
+      },
+      "caixas": {
+        ".br-message#resultado@exibir": {
+          "gemeo": [],
+          "referencia": []
+        },
+        ".br-message#resultado@fechar": {
+          "gemeo": [],
+          "referencia": []
+        }
+      }
+    },
+    {
+      "ponto": "apos-fechar",
+      "png": {
+        "gemeo": "e001a13337a6c70cf06d103ad0ff9bd61670a8a143e3d2cf810e7cc2221d4393",
+        "referencia": "aab5ce9eea55c67871b656fbe6eeee15c611358a2005253d6ce73e2f25d00ec2"
+      },
+      "tamanhos": {
+        "gemeo": [
+          1280,
+          900
+        ],
+        "referencia": [
+          1280,
+          900
+        ]
+      },
+      "tamanhoDiferente": false,
+      "pixelsDiferentes": 617,
+      "caixaDaDiferenca": {
+        "x": 1098,
+        "y": 309,
+        "width": 129,
+        "height": 48
+      },
+      "diff": "F3-06/F3-06-D__apos-fechar__diff.png",
+      "pixelsNoSujeito": {
+        ".br-message#resultado@exibir": 0,
+        ".br-message#resultado@fechar": 0
+      },
+      "pixelsNoSujeitoSemD1": {
+        ".br-message#resultado@exibir": 0,
+        ".br-message#resultado@fechar": 0
+      },
+      "caixas": {
+        ".br-message#resultado@exibir": {
+          "gemeo": [],
+          "referencia": []
+        },
+        ".br-message#resultado@fechar": {
+          "gemeo": [],
+          "referencia": []
+        }
+      }
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": ".br-message#resultado@exibir",
+      "normas": [
+        "ds:message-ad83724b777f"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "resultadoSemD1": "FN",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": ".br-message#resultado@fechar",
+      "normas": [
+        "ds:message-18a75fe5583a"
+      ],
+      "esperado": "unsupported",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "resultadoSemD1": "aparte",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": true
+}

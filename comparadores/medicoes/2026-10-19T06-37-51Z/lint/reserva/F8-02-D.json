@@ -1,0 +1,69 @@
+{
+  "comparador": "lint",
+  "gemeo": "F8-02-D",
+  "caso": "F8-02",
+  "familia": "F8",
+  "papel": "defeituoso",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-1fadf65242.html",
+    "sha256": "25aaa322034e1af398aeba046db9eeba5a69429dcf2305d7400214498ffde1d6"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-1fadf65242.html",
+      "sha256": "25aaa322034e1af398aeba046db9eeba5a69429dcf2305d7400214498ffde1d6",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "inicial",
+      "sujeitos": {
+        "button#excluir-movel": [
+          "body>main>div>div>div>div:nth-of-type(2)>button"
+        ]
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "button#excluir-movel",
+      "normas": [
+        "ds:iconografia-48x48"
+      ],
+      "esperado": "confirmed",
+      "classe": "positivo",
+      "resultado": "FN",
+      "foraDeAlcance": "a mudança controlada não toca CSS",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    },
+    {
+      "sujeito": "button#excluir-movel",
+      "normas": [
+        "wcag:2.5.8"
+      ],
+      "esperado": "conforme",
+      "classe": "negativo",
+      "resultado": "TN",
+      "sujeitoResolvido": true,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}

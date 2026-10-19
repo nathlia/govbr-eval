@@ -1,0 +1,55 @@
+{
+  "comparador": "lint",
+  "gemeo": "F1-05-D",
+  "caso": "F1-05",
+  "familia": "F1",
+  "papel": "defeituoso-oculto",
+  "configSha256": "9715a7d698e5d01f02df23d4d014407abaf7f2765b3733c8f9ebc02930e5e4f2",
+  "alcance": {
+    "mudancaTocaCss": false,
+    "categoria": "nao-toca-css"
+  },
+  "foraDeAlcance": null,
+  "pagina": {
+    "caminho": "/controles/b/c-1901715d1b.html",
+    "sha256": "0f92e31e1190223b16b601364e2d77ba67cc2d5134dd61eb4dffa1857fd86211"
+  },
+  "arquivos": [
+    {
+      "caminho": "/controles/b/c-1901715d1b.html",
+      "sha256": "0f92e31e1190223b16b601364e2d77ba67cc2d5134dd61eb4dffa1857fd86211",
+      "papel": "pagina"
+    },
+    {
+      "caminho": "/controles/recursos/biblioteca.css",
+      "sha256": "cb3dac1806af5b8f53fabf3485fa0978951e5591e46e5e03d80965009fb4bd6b",
+      "papel": "site"
+    }
+  ],
+  "achados": [],
+  "resolucao": [
+    {
+      "ponto": "apos-enviar",
+      "sujeitos": {
+        "bib-campo-fechado::input": []
+      },
+      "achados": {}
+    }
+  ],
+  "celulas": [
+    {
+      "sujeito": "bib-campo-fechado::input",
+      "normas": [
+        "wcag:3.3.1",
+        "emag:6.6"
+      ],
+      "esperado": "unverifiable",
+      "classe": "aparte",
+      "resultado": "aparte",
+      "sujeitoResolvido": false,
+      "atribuidos": [],
+      "creditados": []
+    }
+  ],
+  "sinalizada": false
+}
