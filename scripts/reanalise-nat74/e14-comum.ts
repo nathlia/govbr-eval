@@ -13,6 +13,13 @@ export const E14_VERSAO = "nat74-fila-t3-1.0.0";
 export const FORMATO_LOTE = "nat74-t3-lote-1.0.0";
 export const FORMATO_RESPOSTAS = "nat74-t3-respostas-1.0.0";
 export const FORMATO_JULGAMENTOS = "nat74-t3-julgamentos-1.0.0";
+/**
+ * [1b, plano de revisão 19/10] Primeira passada de campanha nova (e14-campanha.ts) a partir da 1.1.0: manifesto e
+ * respostas com formato próprio. A ingestão escolhe o esquema e a validação pelo formato do manifesto; a 1.0.0 (ensaio
+ * 20261019T1) e a fila T3 retrospectiva seguem o esquema histórico, sem mudança.
+ */
+export const FORMATO_MANIFESTO_CAMPANHA = "nat78-primeira-passada-manifesto-1.1.0";
+export const FORMATO_RESPOSTAS_CAMPANHA = "nat78-primeira-passada-respostas-1.1.0";
 /** Semente da ordem e dos ids opacos (ordem pelo hash, plano §6.6). */
 export const SEMENTE_T3 = "nat74-e14-fila-t3-v1|";
 /** Tamanho-alvo dos lotes (pedido: ~25–35 átomos por lote). */
@@ -124,7 +131,9 @@ export const NORMA_PUBLICA = /^(?:wcag:\d+\.\d+\.\d+|emag:\d+\.\d+)$/;
 export interface Resposta {
   id: string;
   verdadeFactual: typeof VAL.verdadeFactual[number] | typeof NAO_PERGUNTADO;
-  norma: { id: string; forca: typeof VAL.forca[number]; aplicabilidade: typeof VAL.aplicabilidade[number]; violada: typeof VAL.violada[number] } | typeof NAO_PERGUNTADO;
+  /** `aplicabilidade`/`violada` = `nao-perguntado` só na campanha nova (1.1.0), e só com `id: "nenhuma"` (norma neutra). */
+  norma: { id: string; forca: typeof VAL.forca[number]; aplicabilidade: typeof VAL.aplicabilidade[number] | typeof NAO_PERGUNTADO;
+    violada: typeof VAL.violada[number] | typeof NAO_PERGUNTADO } | typeof NAO_PERGUNTADO;
   vinculo: { spec: string; relacao: typeof VAL.relacao[number] } | "nenhum" | "indeterminado" | typeof NAO_PERGUNTADO;
   sugestao: { trataOFato: typeof VAL.condicao[number]; especificaDoSujeito: typeof VAL.condicao[number]; naoViolaNormaObrigatoria: typeof VAL.condicao[number];
     qualidade: typeof VAL.qualidade[number] } | typeof NAO_PERGUNTADO;
@@ -189,7 +198,23 @@ export const ESQUEMA_RESPOSTAS = {
   },
 } as const;
 
-const isObj = (x: unknown): x is Record<string, unknown> => typeof x === "object" && x !== null && !Array.isArray(x);
+/**
+ * [1b, achado K1] Esquema da campanha nova (1.1.0): igual ao histórico, com formato próprio e com `nao-perguntado`
+ * admitido em `norma.aplicabilidade`/`norma.violada` — o valor neutro de `id: "nenhuma"` (não há norma a aplicar). A
+ * exigência cruzada (neutro ⇔ `nenhuma`) fica em `validarResposta(…, { normaNeutra: true })`. O histórico não muda.
+ */
+export const ESQUEMA_RESPOSTAS_CAMPANHA = (() => {
+  const e = JSON.parse(JSON.stringify(ESQUEMA_RESPOSTAS)) as {
+    title: string; properties: { formato: { const: string }; respostas: { items: { properties: { norma: { oneOf: [unknown, { properties: Record<string, { enum: string[] }> }] } } } } } };
+  e.title = FORMATO_RESPOSTAS_CAMPANHA;
+  e.properties.formato.const = FORMATO_RESPOSTAS_CAMPANHA;
+  const n = e.properties.respostas.items.properties.norma.oneOf[1].properties;
+  n.aplicabilidade.enum = [...VAL.aplicabilidade, NAO_PERGUNTADO];
+  n.violada.enum = [...VAL.violada, NAO_PERGUNTADO];
+  return e;
+})();
+
+const isObj =(x: unknown): x is Record<string, unknown> => typeof x === "object" && x !== null && !Array.isArray(x);
 const em = <T extends readonly string[]>(xs: T, v: unknown): v is T[number] => typeof v === "string" && (xs as readonly string[]).includes(v);
 
 /** Sugestão exigida? (para `sugestao-se-erro-normativo`: só quando as respostas dão erro normativo). */
@@ -265,7 +290,7 @@ function derivarPrincipal(r: Resposta, c: ContextoDerivacao): Omit<Derivado, "s5
 }
 
 /** Valida uma resposta contra o esquema, as perguntas do átomo e os ids citáveis. Devolve a lista de erros (vazia = ok). */
-export function validarResposta(x: unknown, c: ContextoDerivacao): string[] {
+export function validarResposta(x: unknown, c: ContextoDerivacao, o: { normaNeutra?: boolean } = {}): string[] {
   const e: string[] = [];
   if (!isObj(x)) return ["resposta não é objeto"];
   const permitidos = ["id", "verdadeFactual", "norma", "vinculo", "sugestao", "forcaDoVeredito", "evidencias", "justificativa"];
@@ -284,8 +309,14 @@ export function validarResposta(x: unknown, c: ContextoDerivacao): string[] {
     else {
       for (const k of Object.keys(n)) if (!["id", "forca", "aplicabilidade", "violada"].includes(k)) e.push(`norma: campo desconhecido ${k}`);
       if (!em(VAL.forca, n.forca)) e.push(`norma.forca fora da lista: ${JSON.stringify(n.forca)}`);
-      if (!em(VAL.aplicabilidade, n.aplicabilidade)) e.push(`norma.aplicabilidade fora da lista: ${JSON.stringify(n.aplicabilidade)}`);
-      if (!em(VAL.violada, n.violada)) e.push(`norma.violada fora da lista: ${JSON.stringify(n.violada)}`);
+      // [1b, K1] Campanha nova: `id: "nenhuma"` ⇔ aplicabilidade e violada = "nao-perguntado" (valor neutro; a classe sai
+      // só de fato + vínculo, linhas Q1/R11b). Sem a opção (fila T3 histórica), nada muda.
+      if (o.normaNeutra && !c.citaRegra && n.id === "nenhuma") {
+        if (n.aplicabilidade !== NAO_PERGUNTADO || n.violada !== NAO_PERGUNTADO) e.push(`norma.id "nenhuma": aplicabilidade e violada = "${NAO_PERGUNTADO}" (não há norma a aplicar)`);
+      } else {
+        if (!em(VAL.aplicabilidade, n.aplicabilidade)) e.push(`norma.aplicabilidade fora da lista: ${JSON.stringify(n.aplicabilidade)}`);
+        if (!em(VAL.violada, n.violada)) e.push(`norma.violada fora da lista: ${JSON.stringify(n.violada)}`);
+      }
       if (c.citaRegra) { if (n.id !== "citada") e.push(`norma.id: o cartão cita regra, use "citada" (é ela que se julga)`); if (n.forca === "nenhuma") e.push("norma.forca \"nenhuma\" só vale para cartão sem regra citada"); }
       else if (!(n.id === "nenhuma" || (typeof n.id === "string" && NORMA_PUBLICA.test(n.id)))) e.push(`norma.id: cartão sem regra citada, use "nenhuma" ou um id público (wcag:x.y.z, emag:x.y): ${JSON.stringify(n.id)}`);
       if (!c.citaRegra && (n.id === "nenhuma") !== (n.forca === "nenhuma")) e.push("norma.id \"nenhuma\" exige norma.forca \"nenhuma\" (e vice-versa)");

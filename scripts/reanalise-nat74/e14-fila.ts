@@ -7,9 +7,10 @@
  * página congelada, perguntas). Ficam fora: braço, runId, campanha, modelo, ids de sessão de ferramenta, notas,
  * decisão e justificativa arquivadas, o motivo da triagem (denunciaria a decisão arquivada) e o autor do cartão.
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { join } from "node:path";
+import { sha256Tree } from "../collection-manifest";
 import { EVAL, NAT73, TCC, lerJson, ordenar, relTcc, sha, shaArquivo, unicos, type ParLido } from "./comum";
 import { inventarioDeAtomos, type AtomoArquivado, type Inventario } from "./e1";
 import { normalizarRegra } from "./politica";
@@ -144,6 +145,84 @@ export function normas(): Normas {
   };
   return { resolver, fontes: { [relTcc(wcagAbs)]: shaArquivo(wcagAbs), [relTcc(emagAbs)]: shaArquivo(emagAbs), [relTcc(kbAbs)]: shaArquivo(kbAbs),
     [relTcc(chkAbs)]: shaArquivo(chkAbs), [`axe-core@${axe.version}`]: sha(JSON.stringify([...axeRegras.keys()].sort())) } };
+}
+
+// ───────────────────────────────────────────────────────────────── normas da campanha nova (1b, achado H)
+
+/** Força declarada na base literal (validator ≥ 2.12.0, D-124) → rótulo da vista cega. Informativo: o juiz decide `norma.forca`. */
+const FORCA_LITERAL: Record<string, string> = { required: "obrigatorio", prohibited: "obrigatorio (proibição)", recommended: "recomendado",
+  discouraged: "recomendado (desaconselha)", permitted: "permitido (opcional)", optional: "opcional", example: "exemplo", informative: "informativo",
+  unclear: "não declarada" };
+
+export interface OraculoDaCampanha { dataSha256: string; validador: string; /** só testes; padrão govbr-eval/checker-aliases.json */ checkerAliases?: string }
+
+/**
+ * [1b, achado H] Normas para a primeira passada de campanha nova: o texto das regras do DS vem da base que o oráculo DA
+ * CAMPANHA carrega, não da base antiga (186 regras) da reanálise T7. A base é identificada pela árvore `data/` do
+ * validador, conferida contra o `dataSha256` fixado na campanha (diverge → para), e pela `activeVersion` de
+ * `data/knowledge/manifest.json`. Do validador só se leem arquivos de `data/` (nunca `src/`). Id de verificação
+ * automática (ds:token-*, ds:page-*) passa por `govbr-eval/checker-aliases.json` (como no histórico) até os ids de regra,
+ * e o texto deles sai da mesma base da campanha (decisão do coordenador, 19/10). `emag-N.N` (forma em que o validador cita o e-MAG) é lido como `emag:N.N`. Máscara D-87 igual.
+ */
+export function normasDaCampanha(o: OraculoDaCampanha): Normas {
+  const val = join(o.validador, "data");
+  const arvore = sha256Tree(val)?.sha256 ?? null;
+  if (arvore !== o.dataSha256) throw new Error(`E14 campanha: data/ do validador em ${o.validador} (${arvore?.slice(0, 12) ?? "ausente"}) não é a do oráculo da campanha (${o.dataSha256.slice(0, 12)}); aponte --validador para um checkout com essa data/`);
+  const wcagAbs = join(val, "wcag-2.2.json"), emagAbs = join(val, "emag.json"), manAbs = join(val, "knowledge", "manifest.json");
+  const versao = lerJson<{ activeVersion?: string }>(manAbs).activeVersion;
+  if (!versao) throw new Error(`E14 campanha: ${relTcc(manAbs)} sem activeVersion`);
+  const norm = join(val, "knowledge", "versions", versao, "normalized");
+  const regrasAbs = join(norm, "rules.jsonl"), herdadasAbs = join(norm, "carried-over.jsonl"), legadoAbs = join(norm, "legacy-ids.json");
+  if (!existsSync(regrasAbs)) throw new Error(`E14 campanha: base ativa sem ${relTcc(regrasAbs)}`);
+  const jsonl = (p: string) => (existsSync(p) ? readFileSync(p, "utf8").split("\n").filter(l => l.trim()).map(l => JSON.parse(l) as Kb) : []);
+  const kb = new Map<string, { k: Kb; tipo: string }>();
+  for (const k of jsonl(regrasAbs)) kb.set(k.id, { k, tipo: "texto literal" });
+  for (const k of jsonl(herdadasAbs)) if (!kb.has(k.id)) kb.set(k.id, { k, tipo: "excerto herdado da base anterior" });
+  if (existsSync(legadoAbs)) for (const e of lerJson<{ entries: { id: string; record?: Kb }[] }>(legadoAbs).entries)
+    if (e.record && !kb.has(e.id)) kb.set(e.id, { k: e.record, tipo: "id antigo, fora do contexto normativo da base" });
+  const wcag = new Map(lerJson<{ criteria: { num: string; handle: string; level: string }[] }>(wcagAbs).criteria.map(c => [c.num, c]));
+  const emag = new Map(Object.values(lerJson<{ sections: Record<string, { title: string; rules: { id: string; title: string; description: string }[] }> }>(emagAbs).sections)
+    .flatMap(s => s.rules.map(r => [r.id, { ...r, secao: s.title }] as const)));
+  const axe = req("axe-core") as { version: string; getRules: () => { ruleId: string; description: string; help: string; tags: string[] }[] };
+  const axeRegras = new Map(axe.getRules().map(r => [r.ruleId, r]));
+  const dsVersao = versao.replace(/-literal.*$/, "");
+  const chkAbs = o.checkerAliases ?? join(EVAL, "checker-aliases.json");
+  const checks = lerJson<{ checks: { matches: string; aliases: string[]; generic: string[]; basis: string }[] }>(chkAbs).checks;
+  const glob = (m: string) => new RegExp("^" + m.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[a-z0-9-]+") + "$");
+  const resolver = (bruto: string | null): NormaVista | null => {
+    if (bruto === null) return null;
+    const n = normalizarRegra(bruto).replace(/^emag-(\d+\.\d+)$/, "emag:$1");
+    let m = /^wcag:(\d+\.\d+\.\d+)$/.exec(n);
+    if (m) { const c = wcag.get(m[1]); return { id: `wcag:${m[1]}`, fonte: "WCAG 2.2", titulo: c?.handle ?? null, texto: null, nivel: c?.level ?? null }; }
+    m = /^emag:(\d+\.\d+)$/.exec(n);
+    if (m) { const r = emag.get(m[1]); return { id: `emag:${m[1]}`, fonte: "e-MAG 3.1", titulo: r?.title ?? null, texto: r?.description ?? null }; }
+    const axeId = n.replace(/^axe:/, "");
+    if (axeRegras.has(axeId) && (n.startsWith("axe:") || !/:/.test(n))) {
+      const r = axeRegras.get(axeId)!;
+      return { id: `axe:${axeId}`, fonte: `axe-core ${axe.version}`, titulo: r.help, texto: r.description, etiquetas: [...r.tags].sort(),
+        forcaDeclarada: r.tags.includes("best-practice") && !r.tags.some(t => /^wcag\d{3,}$/.test(t)) ? "boa-pratica" : null };
+    }
+    const kbId = n.replace(/^ds:(?=govbr-)/, "");
+    const x = kb.get(kbId);
+    if (x) return { id: mascarar(kbId), fonte: `base de regras do DS ${dsVersao} (${x.tipo}; id mascarado, D-87)`, titulo: null, texto: null,
+      regrasDaBase: [{ titulo: mascarar(x.k.title), texto: mascarar(x.k.normalizedRule), forcaDeclarada: FORCA_LITERAL[x.k.force] ?? x.k.force }] };
+    // [1b, decisão do coordenador] Id de verificação (ds:token-*, ds:page-*): checker-aliases.json (do govbr-eval, como no
+    // histórico) dá os ids de regra; o texto vem da base que o oráculo da campanha carrega (literal, herdada ou id antigo).
+    const chk = checks.find(c => n === c.matches || glob(c.matches).test(n));
+    if (chk) {
+      const rs = [...chk.aliases, ...chk.generic].map(id => kb.get(id)).filter((y): y is NonNullable<typeof y> => !!y);
+      return { id: mascarar(n), fonte: `base de regras do DS ${dsVersao} (id mascarado, D-87)`, titulo: null, texto: mascarar(chk.basis),
+        regrasDaBase: rs.map(y => ({ titulo: mascarar(y.k.title), texto: mascarar(y.k.normalizedRule), forcaDeclarada: FORCA_LITERAL[y.k.force] ?? y.k.force })) };
+    }
+    return { id: mascarar(n), fonte: /^ds:/.test(n) ? "base de regras do DS (id mascarado, D-87); texto não localizado" : "não localizada", titulo: null, texto: null };
+  };
+  const fontes: Record<string, string> = { [`${relTcc(val)} (árvore; = dataSha256 do oráculo da campanha)`]: arvore,
+    [relTcc(manAbs)]: shaArquivo(manAbs), [relTcc(regrasAbs)]: shaArquivo(regrasAbs) };
+  if (existsSync(herdadasAbs)) fontes[relTcc(herdadasAbs)] = shaArquivo(herdadasAbs);
+  if (existsSync(legadoAbs)) fontes[relTcc(legadoAbs)] = shaArquivo(legadoAbs);
+  Object.assign(fontes, { [relTcc(chkAbs)]: shaArquivo(chkAbs), [relTcc(wcagAbs)]: shaArquivo(wcagAbs), [relTcc(emagAbs)]: shaArquivo(emagAbs),
+    [`axe-core@${axe.version}`]: sha(JSON.stringify([...axeRegras.keys()].sort())) });
+  return { resolver, fontes };
 }
 
 // ───────────────────────────────────────────────────────────────── referências e fatos medidos
