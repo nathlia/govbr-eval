@@ -633,8 +633,7 @@ foram dadas). A sua etapa A fica congelada (o sha256 dela vai no lote B).
 2. Classifique a divergência em \`classificacaoDaDivergencia\`: \`tipos\` (um ou mais de
    \`diferenca-legitima-de-contexto\` · \`falta-de-evidencia\` · \`interpretacao-normativa\` · \`erro-do-juiz\`),
    \`evidencias\` (ids \`T3-…\` do cartão, ou \`T3-…:OBS\`, \`T3-…:S1\`… para o item do cartão) e \`justificativa\`.
-3. Se leituras incompatíveis continuam plausíveis (ex.: a receita traz uma contagem e um alvo que não coincidem, e as duas
-   leituras são defensáveis), liste-as em \`leiturasAlternativasPlausiveis\` (uma frase cada) e deixe os cartões com
+3. Se leituras incompatíveis continuam plausíveis (as duas defensáveis pelo cartão e pela medida), liste-as em \`leiturasAlternativasPlausiveis\` (uma frase cada) e deixe os cartões com
    pergunta de norma \`incerta\`/\`incerto\` (ou fato não verdadeiro): o caso fica sem crédito e a alternativa vai como
    sensibilidade. Se não há, \`[]\`.
 4. Responda de novo **cada cartão**: a resposta B é a que vale.
