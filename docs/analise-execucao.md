@@ -170,6 +170,34 @@ a anterior pelo hash do conteúdo científico. O pacote bruto e a análise anter
 relativo ao `govbr-eval`, e aqui a evidência é conferida pelo manifesto do pacote na hora da
 análise. Recalcular é rodar `analisar` de novo.
 
+## Revisão §8 de campanha nova (NAT-78: passada cega, consistência, confiabilidade, adjudicação)
+
+Para uma campanha v2 nova (trio sem/ferramentas/com), a revisão do protocolo NAT-78 §8 segue esta ordem. Todo comando
+exige as pastas explicitamente (nunca cai na fila histórica da NAT-74) e nunca sobrescreve arquivo com outro conteúdo
+(versão nova = pasta nova). Nenhum deles julga nem chama modelo: os juízes e adjudicadores são subagentes novos e
+cegos, que recebem só os arquivos indicados.
+
+1. Primeira passada cega: `npx tsx scripts/reanalise-nat74/e14-campanha.ts --analise <análise> --saida <passada>` →
+   juiz por lote → `npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila <passada>` (congela `julgamentos.json` + sha256).
+2. Consistência (triagem): `npm run revisao:consistencia -- --passada <passada> --saida <revisao>`.
+3. Confiabilidade, **antes** da adjudicação: `npm run revisao:confiabilidade -- amostra --passada <passada> --saida <revisao>`
+   (até 40 cartões idênticos, estratos braço mascarado × classe, semente da campanha ou declarada) → 2 juízes por
+   cartão em `<revisao>/confiabilidade/respostas/amostra-NN-j1.json` / `-j2.json` →
+   `npm run revisao:confiabilidade -- medir --passada <passada> --amostra <revisao>/confiabilidade` (κ de Fleiss e Cohen
+   por campo com denominadores; congela as respostas e `desacordos.json`). `--juiz-passada <outra passada>` é só para
+   ensaio (juiz substituto).
+4. Adjudicação informada: `npm run revisao:adjudicacao -- preparar --passada <passada> --confiabilidade <revisao>/confiabilidade
+   --saida <revisao>` cria uma unidade por gatilho mecânico (`<revisao>/adjudicacao/regras.md`): (a) grupo divergente,
+   (b) desacordo de juiz da amostra com a 1ª passada em classe/crédito/fato/aplicabilidade/vínculo, (c)
+   `estadoAlcancado: nao-alcancado`. Para cada `lote-dNN`: adjudicador novo responde a etapa A
+   (`respostas/lote-dNN-a.json`) → `npm run revisao:adjudicacao -- revelar --passada <passada> --adjudicacao
+   <revisao>/adjudicacao --lote lote-dNN` → o mesmo adjudicador responde a etapa B → `npm run revisao:adjudicacao -- aplicar
+   --passada <passada> --adjudicacao <revisao>/adjudicacao --saida <pasta nova>`, que grava a passada adjudicada
+   (1ª passada preservada em `julgamentos-1a-passada.json`) e `contestados.json` (insumo do S4').
+
+Código: `scripts/reanalise-nat74/revisao-campanha.ts`; testes: `npm run test:revisao-campanha`. O caminho retrospectivo
+(`reanalise:nat74:e14-consistencia` / `e14-desempate`) não muda.
+
 ## Determinismo
 
 `summary.json → hashes.conteudoCientificoSha256` é o hash de tudo que é científico no resumo: estado,
