@@ -10,6 +10,12 @@
  *       [--ratificacoes ratificacoes.json] [--origem PASTA_DA_ORIGEM ...]
  *     → PASTA_NOVA/{recalculo.json, recalculo.json.sha256, tabela.md}
  *
+ * `--ratificacoes` (S4'): ou a lista `nat78-ratificacoes-autora-1.0.0` ({ ratificados: [{ id, chave }] }), ou — entrega 6 — as
+ * respostas cegas da autora `nat78-respostas-autora-1.0.0` gravadas por `material-autora.ts responder` (+ `.sha256`): o
+ * material é conferido pelo sha256 (manifesto, chave), o desfecho da passada é recalculado aqui pela mesma política e tem de
+ * ser o que o material mostrou, e ratifica o cartão cujo desfecho das respostas dela é igual ao da passada. Crédito
+ * ratificado não sai no S4'; desacordo não sobrescreve nada.
+ *
  * `--origem` (entrega 5, D-129): origem medida (`npm run revisao:origem -- medir`) de uma passada, conferida pelo sha256 e
  * pelo sha256 dos julgamentos. A classe de cada violação sai da MESMA derivação da ingestão com a origem medida
  * (`aplicarOrigem`): `violacao-origem-indeterminada` vira página/DS/indeterminada medida, e origem DS tira o crédito do
@@ -39,6 +45,9 @@ import {
   cartaoDoVinculo, scoreSemanticPackage, tocaParticipante, VINCULO_CONTRATO,
   type ReviewAtom, type ReviewLink, type SemanticDecision, type SemanticPackage, type SemanticReviews,
 } from "../semantic-flow";
+import {
+  FORMATO_CHAVE_AUTORA, FORMATO_RESPOSTAS_AUTORA, desfechoDaAutora, desfechoDaPassada, ratifica, type ChaveAutora, type DocRespostasAutora,
+} from "./autora-respostas";
 import { POLITICA_PRINCIPAL, POLITICA_SENSIBILIDADE, TCC, jsonTexto, ordenar, posix, sha } from "./comum";
 import { bracoDoRun } from "./e14-campanha";
 import type { Derivado, Resposta } from "./e14-comum";
@@ -67,7 +76,7 @@ export interface Conjunto { id: string; rotulo: string; specs: string[]; modo: "
 export interface RegraDesfecho { tela: string; referencia: string; unidadeDelta: "specs"; conjuntos: Conjunto[] }
 export const conjuntoDe = (r: RegraDesfecho, id: string): Conjunto => { const c = r.conjuntos.find(x => x.id === id); if (!c) throw new Error(`conjunto ${id} fora da regra da tela ${r.tela}`); return c; };
 
-interface Referencia { _meta: { version: string; suite?: string; exposto?: { specs: string[] } }; violations: { id: string; expectedCount?: number }[] }
+export interface Referencia { _meta: { version: string; suite?: string; exposto?: { specs: string[] } }; violations: { id: string; expectedCount?: number }[] }
 
 /** Regra fixa do protocolo §5.1 para as duas telas da coleta; qualquer outra tela (ou versão de referência) é recusada. */
 export function regraDaTela(tela: string, ref: Referencia): RegraDesfecho {
@@ -300,10 +309,53 @@ export function removidosS4(contestados: Contestado[], creditaNaPassada: (id: st
   return new Set(contestados.filter(c => creditaNaPassada(c.id) && !ratificados.has(c.id)).map(c => c.id));
 }
 
+/**
+ * Ratificações a partir das respostas cegas da autora (entrega 6, §8.4): o material é conferido pelo sha256 (respostas,
+ * chave), cada caso tem de cair num cartão das passadas lidas (mesma passada pelo sha256 dos julgamentos, mesma chave), e o
+ * desfecho da passada é recalculado aqui pela MESMA política (vereditoNaPolitica 1.2.0 + origem medida aplicada) e tem de
+ * ser o da chave — senão o material foi preparado sobre outras decisões e nada é usado. Ratifica = desfecho da autora igual
+ * ao da passada; desacordo e "não sei" não ratificam e não sobrescrevem nada.
+ */
+export function ratificacoesDaAutora(abs: string, doc: DocRespostasAutora, E: Entradas, passadas: Passada[], derivadoNa: CargaCampanha["derivadoNa"]):
+  { ratificados: Set<string>; info: string; detalhe: Record<string, unknown> } {
+  const sTxt = E.texto(`${abs}.sha256`), txt = readFileSync(abs, "utf8").replace(/^﻿/, "");
+  if (sTxt.trim().split(/\s+/)[0] !== sha(txt)) throw new Error(`--ratificacoes ${abs}: não confere com o .sha256 ao lado`);
+  if (doc.juiz !== "autora") throw new Error(`--ratificacoes: juiz ${doc.juiz} ≠ autora`);
+  const mat = isAbsolute(doc.material.dir) ? doc.material.dir : join(TCC, doc.material.dir);
+  const cTxt = E.texto(join(mat, "chave", "chave-autora.json"));
+  if (sha(cTxt) !== doc.material.chaveSha256) throw new Error(`--ratificacoes: a chave do material ${doc.material.dir} não confere com a das respostas`);
+  const mTxt = E.texto(join(mat, "manifesto.json"));
+  if (sha(mTxt) !== doc.material.manifestoSha256) throw new Error(`--ratificacoes: o manifesto do material ${doc.material.dir} não confere com o das respostas`);
+  const chave = JSON.parse(cTxt) as ChaveAutora;
+  if (chave.formato !== FORMATO_CHAVE_AUTORA) throw new Error(`chave do material: formato ${chave.formato}`);
+  const ratificados = new Set<string>();
+  const casos: Record<string, unknown>[] = [];
+  const conta = { respondidos: 0, ratificam: 0, discordam: 0, pendentes: 0 };
+  for (const r of doc.respostas) {
+    const c = chave.casos.find(x => x.caso === r.caso);
+    if (!c) throw new Error(`--ratificacoes: caso ${r.caso} fora da chave do material`);
+    if (desfechoDaAutora(r) !== r.desfecho) throw new Error(`--ratificacoes: ${r.caso}: desfecho gravado ${r.desfecho} ≠ o das respostas (${desfechoDaAutora(r)})`);
+    const p = passadas.find(x => x.nome === c.passada && x.julgSha === c.julgamentosSha256);
+    if (!p) throw new Error(`--ratificacoes: ${r.caso} veio da passada ${c.passada} (julgamentos ${c.julgamentosSha256.slice(0, 8)}…), que não está entre as --passada`);
+    if (p.item.get(c.id)?.chave !== c.chave) throw new Error(`--ratificacoes: ${r.caso} → ${c.id} não confere com a chave da passada`);
+    const d = derivadoNa(p, c.id);
+    const agora = desfechoDaPassada(d, vereditoNaPolitica(d, "1.2.0").veredito === "reference");
+    if (agora !== c.desfechoPassada) throw new Error(`--ratificacoes: ${r.caso}: o material mostrou a passada como ${c.desfechoPassada}, e aqui ela dá ${agora} (outra origem medida ou outra passada?): nada usado`);
+    const ok = ratifica(r.desfecho, c.desfechoPassada);
+    conta.respondidos++;
+    if (r.desfecho === "pendente") conta.pendentes++; else if (ok) conta.ratificam++; else conta.discordam++;
+    if (ok) ratificados.add(c.id);
+    casos.push({ caso: r.caso, id: c.id, braco: c.braco, estrato: c.estrato, desfechoPassada: c.desfechoPassada, desfechoAutora: r.desfecho, ratifica: ok });
+  }
+  return { ratificados,
+    info: `${ratificados.size} cartão(ões) ratificado(s) pela autora (respostas cegas ${E.rel(abs)}: ${conta.respondidos} respondidos, ${conta.ratificam} concordam com a passada, ${conta.discordam} discordam, ${conta.pendentes} "não sei"; desacordo não sobrescreve nada)`,
+    detalhe: { respostas: E.rel(abs), material: doc.material.dir, regra: "ratifica = desfecho das respostas da autora (cegas) igual ao da passada (1.2.0, origem medida); só a ratificação muda o S4' (crédito ratificado não sai)", ...conta, casos } };
+}
+
 // ───────────────────────────────────────────────────────────────── leitura das entradas
 
-interface ColetaTrio { formato: string; campanha: { id: string }; trio: string; linhaDeBase: unknown; slots: { slot: string; braco: string; posicao: number; escolhida: string | null }[] }
-interface CampanhaJson { campaignId: string; design: { arms?: string[]; seed?: string | number | null; repetitions?: number; comparisons?: { id: string; arms: string[]; role?: string }[]; screens?: { id: string }[] } }
+export interface ColetaTrio { formato: string; campanha: { id: string }; trio: string; linhaDeBase: unknown; slots: { slot: string; braco: string; posicao: number; escolhida: string | null }[] }
+export interface CampanhaJson { campaignId: string; design: { arms?: string[]; seed?: string | number | null; repetitions?: number; comparisons?: { id: string; arms: string[]; role?: string }[]; screens?: { id: string }[] } }
 
 /** Registro de leitura: toda entrada passa por aqui, e só o que passou por aqui pode entrar no manifesto. */
 export class Entradas {
@@ -325,9 +377,22 @@ export interface OpcoesRecalculo { passadas: string[]; analises?: string[]; cole
 
 export interface Recalculo { json: Record<string, unknown>; md: string }
 
-export function recalcular(o: OpcoesRecalculo): Recalculo {
+/** Uma análise (= um trio) lida, com o pacote, a campanha, a referência e a coleta do trio. */
+export interface AnaliseLida { dir: string; nome: string; pkg: SemanticPackage; camp: CampanhaJson; ref: Referencia; coleta: ColetaTrio; coletaArq: string; passada: Passada }
+export type OrigemInfo = { passada: string; arquivo: string; sha256: string; versao: string; aplicacao: AplicacaoOrigem[] };
+/** O que o recálculo (e a seleção da autora, entrega 6) lê: passadas, origem aplicada, trios, regra do desfecho e comparações. */
+export interface CargaCampanha {
+  passadas: Passada[]; derivadoNa: (p: Passada, id: string) => Derivado; origemInfo: OrigemInfo[];
+  analises: AnaliseLida[]; camp: CampanhaJson; regra: RegraDesfecho; bracos: string[]; comps: Comparacao[];
+}
+
+/**
+ * Lê e confere as entradas comuns (passadas congeladas, origem medida, análises/coletas), registrando cada uma em `E`.
+ * Usada pelo `recalcular` e pela seleção do material da autora (`material-autora.ts`), para que os dois leiam as MESMAS
+ * decisões pelo mesmo caminho.
+ */
+export function carregarCampanha(o: Pick<OpcoesRecalculo, "passadas" | "analises" | "coletas" | "origens">, E: Entradas): CargaCampanha {
   if (!o.passadas.length) throw new Error("--passada obrigatório (uma ou mais)");
-  const E = new Entradas();
   const passadas: Passada[] = [];
   for (const dir of o.passadas) {
     const p = lerPassada(dir, { analises: o.analises });
@@ -340,7 +405,7 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   if (passadas.some(p => JSON.stringify(p.campanha) !== JSON.stringify(campanha))) throw new Error("passadas de campanhas diferentes");
   // Origem medida (entrega 5): uma pasta por passada, casada pelo sha256 dos julgamentos; derivados pela própria ingestão.
   const derivadoDe = new Map<string, Map<string, Derivado>>();
-  const origemInfo: { passada: string; arquivo: string; sha256: string; versao: string; aplicacao: AplicacaoOrigem[] }[] = [];
+  const origemInfo: OrigemInfo[] = [];
   for (const d of o.origens ?? []) {
     const lo = lerOrigem(d);
     E.texto(lo.arquivo); E.texto(join(dirname(lo.arquivo), "origem.json.sha256"));
@@ -353,7 +418,6 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   }
   const derivadoNa = (p: Passada, id: string): Derivado => derivadoDe.get(p.nome)?.get(id) ?? p.julgados.get(id)!.derivado;
   // Análises (= trios), com o pacote, a campanha, a referência e a coleta do trio.
-  interface AnaliseLida { dir: string; nome: string; pkg: SemanticPackage; camp: CampanhaJson; ref: Referencia; coleta: ColetaTrio; coletaArq: string; passada: Passada }
   const analises: AnaliseLida[] = [];
   const coletasDadas = (o.coletas ?? []).map(c => resolve(c));
   for (const p of passadas) {
@@ -395,6 +459,20 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   });
   if (!comps.length) throw new Error("campanha sem design.comparisons");
   comps.sort((x, y) => (x.role === "primary" ? 0 : 1) - (y.role === "primary" ? 0 : 1));
+  return { passadas, derivadoNa, origemInfo, analises, camp, regra, bracos, comps };
+}
+
+/** Cartões julgados de um trio, com o derivado da passada (com a origem medida aplicada, se houver). */
+export function julgadosDoTrio(a: AnaliseLida, derivadoNa: CargaCampanha["derivadoNa"]): CartaoJulgado[] {
+  const p = a.passada;
+  return p.itens.filter(i => i.par === a.nome).map(i => ({ id: i.id, cardId: i.cardIdOriginal, braco: i.braco, runId: i.runId,
+    derivado: derivadoNa(p, i.id), resposta: p.julgados.get(i.id)!.resposta }));
+}
+
+export function recalcular(o: OpcoesRecalculo): Recalculo {
+  if (!o.passadas.length) throw new Error("--passada obrigatório (uma ou mais)");
+  const E = new Entradas();
+  const { passadas, derivadoNa, origemInfo, analises, camp, regra, bracos, comps } = carregarCampanha(o, E);
 
   // Contestados (S4'), ratificações, resíduo.
   const contestados: (Contestado & { passada: string })[] = [];
@@ -413,14 +491,23 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   }
   const ratificados = new Set<string>();
   let ratInfo = "nenhuma ratificação da autora dada (--ratificacoes ausente): nenhum crédito ratificado";
+  let autoraInfo: Record<string, unknown> | null = null;
   if (o.ratificacoes) {
-    const doc = JSON.parse(E.texto(resolve(o.ratificacoes))) as { formato: string; ratificados: { id: string; chave: string }[] };
-    if (doc.formato !== FORMATO_RATIFICACOES) throw new Error(`--ratificacoes: formato ${doc.formato} ≠ ${FORMATO_RATIFICACOES}`);
-    for (const r of doc.ratificados) {
-      if (!passadas.some(p => p.item.get(r.id)?.chave === r.chave)) throw new Error(`--ratificacoes: ${r.id} não é cartão das passadas`);
-      ratificados.add(r.id);
+    const rAbs = resolve(o.ratificacoes);
+    const doc = JSON.parse(E.texto(rAbs)) as { formato: string; ratificados: { id: string; chave: string }[] };
+    if (doc.formato === FORMATO_RESPOSTAS_AUTORA) {
+      // Entrega 6: respostas cegas da autora ao material (`material-autora.ts responder`); ratifica quem concorda com a passada.
+      const r = ratificacoesDaAutora(rAbs, doc as unknown as DocRespostasAutora, E, passadas, derivadoNa);
+      for (const id of r.ratificados) ratificados.add(id);
+      ratInfo = r.info; autoraInfo = r.detalhe;
+    } else {
+      if (doc.formato !== FORMATO_RATIFICACOES) throw new Error(`--ratificacoes: formato ${doc.formato} ≠ ${FORMATO_RATIFICACOES} nem ${FORMATO_RESPOSTAS_AUTORA}`);
+      for (const r of doc.ratificados) {
+        if (!passadas.some(p => p.item.get(r.id)?.chave === r.chave)) throw new Error(`--ratificacoes: ${r.id} não é cartão das passadas`);
+        ratificados.add(r.id);
+      }
+      ratInfo = `${ratificados.size} cartão(ões) ratificado(s) pela autora (${E.rel(rAbs)})`;
     }
-    ratInfo = `${ratificados.size} cartão(ões) ratificado(s) pela autora (${E.rel(resolve(o.ratificacoes))})`;
   }
   // Resíduo por cartão, da própria passada ou de outra passada sobre os MESMOS cartões: casados pela identidade do cartão
   // (id original + sha256 do cartão no pacote), porque outra passada pode ter sido preparada sobre outra análise do mesmo
@@ -456,8 +543,7 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   for (const a of ordenar(analises, x => x.coleta.trio)) {
     for (const u of a.pkg.units) specDeTodos.set(u.id, u.specId);
     const p = a.passada;
-    const julgados: CartaoJulgado[] = p.itens.filter(i => i.par === a.nome).map(i => ({ id: i.id, cardId: i.cardIdOriginal, braco: i.braco, runId: i.runId,
-      derivado: derivadoNa(p, i.id), resposta: p.julgados.get(i.id)!.resposta }));
+    const julgados = julgadosDoTrio(a, derivadoNa);
     const credita12 = (id: string) => vereditoNaPolitica(derivadoNa(p, id), "1.2.0").veredito === "reference";
     const removidos = removidosS4(contestados.filter(c => c.passada === p.nome && julgados.some(j => j.id === c.id)), credita12, ratificados);
     for (const r of removidos) removidosTodos.add(r);
@@ -501,7 +587,7 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
     trios: trios.map(t => ({ trio: t.trio, ordem: t.ordem, linhaDeBase: t.linhaDeBase, creditos: t.creditos })),
     s4: { ...s4, ratificacoes: ratInfo, regra: "S4' = recalculado tirando, nos dois braços, todo crédito (1.2.0) de cartão contestado (contestados.json: 1ª passada ≠ adjudicação ou desacordo na amostra) que a autora não ratificou; o crédito sai do braço que o recebeu; a mesma lista vale para a 1.1.0",
       retirados: [...removidosTodos].sort(), contestados: contestados.map(c => ({ id: c.id, braco: c.braco, motivos: c.motivos, creditoFinal: c.creditoFinal, retirado: removidosTodos.has(c.id) })),
-      porBraco: s4PorBraco },
+      porBraco: s4PorBraco, ...(autoraInfo ? { autora: autoraInfo } : {}) },
     residuoDeBraco: residuoInfo, recusasDoScorer: recusas, tabelas,
   };
   if (o.origens?.length) json.origem = resumoDaOrigem(passadas, origemInfo, derivadoNa);

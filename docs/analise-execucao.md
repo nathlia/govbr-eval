@@ -232,8 +232,38 @@ cegos, que recebem só os arquivos indicados.
    §8.4); sem `--origem`, a saída é byte a byte a de antes. Testes: `npm run test:revisao-recalculo` (inclui a equivalência da vinculação copiada de `montar.ts` contra o próprio
    `montarDecisoes`, em todo cartão × spec de pacotes reais: deriva da cópia falha o teste).
 
-Código: `scripts/reanalise-nat74/revisao-campanha.ts`, `origem-campanha.ts` (+ `origem-sonda.ts`) e `recalculo-campanha.ts`;
-testes: `npm run test:revisao-campanha`, `npm run test:revisao-origem`, `npm run test:revisao-recalculo`. O caminho retrospectivo (`reanalise:nat74:e14-consistencia` / `e14-desempate`,
+7. Material da autora (§8.4; sem modelo): `npm run revisao:material-autora -- preparar --passada <passada adjudicada>
+   --saida <pasta nova> [--analise DIR] [--coleta ARQ] [--origem <pasta da origem>] [--teto 10|15] [--site <site congelado>]`
+   escolhe no máximo 10 cartões (15 com `--teto 15`) pelos estratos da NAT-87 parte 2, com as cotas 3/2/2/2/1 (5/3/3/2/2):
+   (1) o veredito muda o D_fc de um trio em ≥ 1 — medido, invertendo o veredito de cada cartão vinculado ou creditado
+   (crédito sai; vínculo sem crédito passa a creditar) e recalculando o D_fc do trio com `creditosDoTrio` + `contar` do
+   recálculo (desfecho primário por spec); (2) veredito falso na 1.2.0 (FP); (3) violação de página/origem indeterminada sem
+   crédito (achado novo); (4) `violacao-ds` com a origem medida; (5) cartão de linha de base. Um cartão fica só no estrato de
+   menor número em que cabe. Os estratos 2–5 são sorteados antes; a cota que eles não usam (vazio ou poucos cartões) passa ao
+   estrato 1, e o que o 1 não usa fica registrado como sem uso. Dentro do estrato, ordem por sha256(semente | estrato | chave),
+   alternando `com` e `ferramentas` quando há os dois (o primeiro pela semente), depois o resto. A semente é a
+   `design.seed` da campanha (sem ela, `sem-semente-declarada|<campanha>`, como no recálculo). Grava `autora/LEIAME.md` e
+   `autora/casos.md` (o que ela lê: casos `R-01`…, cartões com a máscara 1.3.0 regenerada das análises pelo preparo da
+   passada cega, conferidos contra a passada; sem braço, sem decisão, sem estrato), e, fora de `autora/`, `chave/chave-autora.json`
+   (caso → cartão, braço, estrato, desfecho da passada), `selecao.{json,md}` (estratos, cotas, repasses, efeitos no D_fc e a
+   lista "julgado só por LLM"), `cegueira.json` (porta da NAT-73 com os braços do desenho + janelas de justificativa contra o
+   material público; falhou → só ela é gravada) e `manifesto.json` (sha256 de todas as entradas). Com `--site` (o site
+   congelado do pacote, conferido pelo `manifestSha256`), `material-imagens.ts` abre a página em Playwright headless na janela
+   do cartão, refaz a receita **como escrita** (passo que não sabe refazer ou que não chega aonde diz — ex.: "Tab x8 até
+   #servico" termina no `#cpf` — é dito no caso) e grava `autora/img/R-NN-tela.png` (elementos do cartão contornados por uma
+   camada própria, fixa, sem mexer nos estilos da página), `R-NN-tela-sem-marca.png` e `R-NN-recorte.png`, mais uma linha
+   medida antes da marca: o elemento focado e os atributos/CSS que a alegação nomeia literalmente (`tracosDaAlegacao`). Os
+   nomes das imagens entram na conferência de cegueira (só `R-NN-…`, todos citados no `casos.md`). As descrições dos defeitos
+   perdem, mecanicamente, o prefixo "Estrato X · variante y", a frase "Sem predicado na referência…" e caminhos de arquivo. Ela responde 4 perguntas
+   fechadas por caso numa linha (`R-01: sim sim A-04 pagina`; para no primeiro `nao`/`nao-sei`), pelo Linear;
+   `npm run revisao:material-autora -- responder --material <pasta> --texto <linhas> --saida <pasta nova>` confere e grava
+   `respostas-autora.json` (+ `.sha256`), que o recálculo lê em `--ratificacoes`: ratifica o cartão cujo desfecho das
+   respostas dela (crédito de qual spec, achado novo, DS, sem violação, falso) é igual ao da passada, e crédito ratificado não
+   sai no S4'. Testes: `npm run test:revisao-material-autora`.
+
+Código: `scripts/reanalise-nat74/revisao-campanha.ts`, `origem-campanha.ts` (+ `origem-sonda.ts`), `recalculo-campanha.ts`,
+`material-autora.ts` (+ `autora-respostas.ts`); testes: `npm run test:revisao-campanha`, `npm run test:revisao-origem`,
+`npm run test:revisao-recalculo`, `npm run test:revisao-material-autora`. O caminho retrospectivo (`reanalise:nat74:e14-consistencia` / `e14-desempate`,
 `pipeline.ts`) não muda.
 
 ## Determinismo

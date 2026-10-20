@@ -93,6 +93,8 @@
     "test:revisao-recalculo": "tsx scripts/reanalise-nat74/test-recalculo-campanha.ts",
     "revisao:origem": "tsx scripts/reanalise-nat74/origem-campanha.ts",
     "test:revisao-origem": "tsx scripts/reanalise-nat74/test-origem-campanha.ts",
+    "revisao:material-autora": "tsx scripts/reanalise-nat74/material-autora.ts",
+    "test:revisao-material-autora": "tsx scripts/reanalise-nat74/test-material-autora.ts",
     "relatorio:fluxo": "tsx scripts/report-flow.ts",
     "controles:construir": "node controles/construir.mjs",
     "controles:medir": "node controles/medir.mjs",
