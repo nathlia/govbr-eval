@@ -194,9 +194,25 @@ cegos, que recebem só os arquivos indicados.
    <revisao>/adjudicacao --lote lote-dNN` → o mesmo adjudicador responde a etapa B → `npm run revisao:adjudicacao -- aplicar
    --passada <passada> --adjudicacao <revisao>/adjudicacao --saida <pasta nova>`, que grava a passada adjudicada
    (1ª passada preservada em `julgamentos-1a-passada.json`) e `contestados.json` (insumo do S4').
+5. Recálculo (§8.5 + §6.3): `npm run revisao:recalculo -- --passada <passada adjudicada ou 1ª passada> [--passada …]
+   --saida <pasta nova> [--analise DIR] [--coleta coleta-trio.json] [--residuo-passada P] [--ratificacoes ARQ]` grava
+   `tabela.md`, `recalculo.json` e `recalculo.json.sha256`. Cada análise listada na passada é um trio (o trio, a ordem dos
+   braços e a linha de base vêm do `coleta-trio.json` dela; análise anterior à `coleta:trio` exige `--coleta` cujas
+   execuções escolhidas sejam as do pacote). Cada cartão julgado vira uma decisão do scorer do pacote (um átomo com todos
+   os sujeitos; as unidades da spec do vínculo saem da ancoragem estrita, com vínculo de revisão pela árvore medida onde
+   ela não chega — a regra do E8), e as unidades confirmadas por execução são as do `scoreSemanticPackage` (crédito por
+   unidade, scorer 1.8.2). D por comparação do `design.comparisons` (D = 2º braço − 1º: D_fc = com − ferramentas, D_sc =
+   com − sem, D_sf = ferramentas − sem), sempre por spec no primário (D-102): na tela D sobre as 9 não expostas (13
+   como sensibilidade), na tela A sobre as 12 A-* (as 14 unidades A-* como sensibilidade por instância; P-* à parte); política 1.2.0 e, ao lado, 1.1.0 (sem R15 nem Q1 a); S4' sem os créditos de
+   cartões de `contestados.json` que a autora não ratificou (sem `--ratificacoes`, nenhum), nos dois braços; checagem S4
+   por braço com o resíduo de braço (`residuo-de-braco.json` da passada ou de `--residuo-passada`, casado pelo cartão).
+   Permutação, Wilcoxon-Pratt, sinal, IC bootstrap e a leitura com δ = 2 pela `estatistica-pareada.ts`. Toda entrada lida
+   entra com sha256 em `recalculo.json › entradas`; sem isso nada é gravado. Testes: `npm run test:revisao-recalculo` (inclui a equivalência da vinculação copiada de `montar.ts` contra o próprio
+   `montarDecisoes`, em todo cartão × spec de pacotes reais: deriva da cópia falha o teste).
 
-Código: `scripts/reanalise-nat74/revisao-campanha.ts`; testes: `npm run test:revisao-campanha`. O caminho retrospectivo
-(`reanalise:nat74:e14-consistencia` / `e14-desempate`) não muda.
+Código: `scripts/reanalise-nat74/revisao-campanha.ts` e `recalculo-campanha.ts`; testes: `npm run test:revisao-campanha`,
+`npm run test:revisao-recalculo`. O caminho retrospectivo (`reanalise:nat74:e14-consistencia` / `e14-desempate`,
+`pipeline.ts`) não muda.
 
 ## Determinismo
 
