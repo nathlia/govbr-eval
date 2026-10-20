@@ -194,8 +194,26 @@ cegos, que recebem só os arquivos indicados.
    <revisao>/adjudicacao --lote lote-dNN` → o mesmo adjudicador responde a etapa B → `npm run revisao:adjudicacao -- aplicar
    --passada <passada> --adjudicacao <revisao>/adjudicacao --saida <pasta nova>`, que grava a passada adjudicada
    (1ª passada preservada em `julgamentos-1a-passada.json`) e `contestados.json` (insumo do S4').
-5. Recálculo (§8.5 + §6.3): `npm run revisao:recalculo -- --passada <passada adjudicada ou 1ª passada> [--passada …]
-   --saida <pasta nova> [--analise DIR] [--coleta coleta-trio.json] [--residuo-passada P] [--ratificacoes ARQ]` grava
+5. Origem medida (§8.6, D-129; sem modelo): `npm run revisao:origem -- medir --passada <passada> --site <site congelado>
+   --ds <pacote DS instalado> [--ds …] --saida <pasta nova> [--analise DIR]` grava `origem.json` (+ `.sha256`) e
+   `origem.md`. Para cada cartão julgado como violação, mede nos bytes congelados quem escreve o elemento de cada sujeito
+   na cena do pacote (a página servida por um servidor próprio de 127.0.0.1, levada à parada pelo `setup` da referência):
+   a sonda (`origem-sonda.ts`, `addInitScript`) grava a pilha de quem criou o nó e de quem escreveu cada atributo; o
+   quadro que decide é do DS quando cai numa região UMD do pacote DS dentro dos bytes servidos (nome UMD + ≥ 5 marcas do
+   arquivo do pacote, ou arquivo idêntico), senão é da página; o CSS vem da declaração vencedora pelo CDP (do DS se o
+   seletor e o valor estão numa folha da dist do pacote; `var()` leva junto a autoria da variável); interior de shadow
+   root aberto pelo DS é DS. Declaração do DS que vale por classe do DS que a página aplicou fora da estrutura do exemplo
+   oficial (utilitária, variante) é escolha da página (método 1.1.0). Os traços avaliados são os que a alegação nomeia literalmente (tabela fixa no código) e o
+   exemplo oficial é `dist/components/<c>/examples.html` do pacote, renderizado com o core-init da versão. Regras R1–R4 do
+   NAT-73 → `pagina` · `pagina-copiando-exemplo-ds` · `ds-entregue` · `indeterminada` (medida que falta → indeterminada,
+   com motivo). O `--site` tem de ser o do pacote (sha256 do manifesto) e cada `--ds` uma versão da declaração `_meta.ds`
+   da tela. A medição lê só cartões e passada (nunca braço) e é posterior à passada: nenhum juiz a vê. Para uma tela
+   ainda sem cartões, `npm run revisao:origem -- sujeitos --sujeitos ARQ --referencia REF (--site S | --ala ALA --prefixo
+   /x/) --ds …` mede sujeitos declarados à mão (prova de aplicabilidade; nunca entra em recálculo). Testes:
+   `npm run test:revisao-origem` (puros, navegador sobre site e pacote sintéticos, e a forma do ensaio).
+6. Recálculo (§8.5 + §6.3): `npm run revisao:recalculo -- --passada <passada adjudicada ou 1ª passada> [--passada …]
+   --saida <pasta nova> [--analise DIR] [--coleta coleta-trio.json] [--residuo-passada P] [--ratificacoes ARQ]
+   [--origem <pasta da origem> …]` grava
    `tabela.md`, `recalculo.json` e `recalculo.json.sha256`. Cada análise listada na passada é um trio (o trio, a ordem dos
    braços e a linha de base vêm do `coleta-trio.json` dela; análise anterior à `coleta:trio` exige `--coleta` cujas
    execuções escolhidas sejam as do pacote). Cada cartão julgado vira uma decisão do scorer do pacote (um átomo com todos
@@ -207,11 +225,15 @@ cegos, que recebem só os arquivos indicados.
    cartões de `contestados.json` que a autora não ratificou (sem `--ratificacoes`, nenhum), nos dois braços; checagem S4
    por braço com o resíduo de braço (`residuo-de-braco.json` da passada ou de `--residuo-passada`, casado pelo cartão).
    Permutação, Wilcoxon-Pratt, sinal, IC bootstrap e a leitura com δ = 2 pela `estatistica-pareada.ts`. Toda entrada lida
-   entra com sha256 em `recalculo.json › entradas`; sem isso nada é gravado. Testes: `npm run test:revisao-recalculo` (inclui a equivalência da vinculação copiada de `montar.ts` contra o próprio
+   entra com sha256 em `recalculo.json › entradas`; sem isso nada é gravado. Com `--origem` (uma por passada, casada pelo
+   sha256 dos julgamentos), a classe de cada violação sai da derivação da ingestão com a origem medida (`violacao-origem-
+   indeterminada` → página/DS/indeterminada; origem DS tira o crédito do vínculo, P3/R5 da política 1.2.0) e a tabela
+   ganha a seção "Origem medida" (violações por braço e origem, mudanças, crédito retirado, candidatos do estrato 4 do
+   §8.4); sem `--origem`, a saída é byte a byte a de antes. Testes: `npm run test:revisao-recalculo` (inclui a equivalência da vinculação copiada de `montar.ts` contra o próprio
    `montarDecisoes`, em todo cartão × spec de pacotes reais: deriva da cópia falha o teste).
 
-Código: `scripts/reanalise-nat74/revisao-campanha.ts` e `recalculo-campanha.ts`; testes: `npm run test:revisao-campanha`,
-`npm run test:revisao-recalculo`. O caminho retrospectivo (`reanalise:nat74:e14-consistencia` / `e14-desempate`,
+Código: `scripts/reanalise-nat74/revisao-campanha.ts`, `origem-campanha.ts` (+ `origem-sonda.ts`) e `recalculo-campanha.ts`;
+testes: `npm run test:revisao-campanha`, `npm run test:revisao-origem`, `npm run test:revisao-recalculo`. O caminho retrospectivo (`reanalise:nat74:e14-consistencia` / `e14-desempate`,
 `pipeline.ts`) não muda.
 
 ## Determinismo

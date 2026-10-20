@@ -7,8 +7,14 @@
  *
  *   npm run revisao:recalculo -- --passada PASSADA [--passada OUTRA ...] --saida PASTA_NOVA
  *       [--analise DIR ...] [--coleta coleta-trio.json ...] [--residuo-passada PASSADA_COM_RESIDUO]
- *       [--ratificacoes ratificacoes.json]
+ *       [--ratificacoes ratificacoes.json] [--origem PASTA_DA_ORIGEM ...]
  *     → PASTA_NOVA/{recalculo.json, recalculo.json.sha256, tabela.md}
+ *
+ * `--origem` (entrega 5, D-129): origem medida (`npm run revisao:origem -- medir`) de uma passada, conferida pelo sha256 e
+ * pelo sha256 dos julgamentos. A classe de cada violação sai da MESMA derivação da ingestão com a origem medida
+ * (`aplicarOrigem`): `violacao-origem-indeterminada` vira página/DS/indeterminada medida, e origem DS tira o crédito do
+ * vínculo (P3/R5 da política 1.2.0: a referência só tem unidades de origem página). Sem `--origem`, nada muda (saída
+ * byte a byte igual à de antes desta opção).
  *
  * Crédito por unidade: cada cartão julgado vira uma decisão do scorer (um átomo, todos os sujeitos; o vínculo do juiz diz a
  * spec e as unidades saem da ancoragem estrita, com vínculo de revisão pela árvore medida onde ela não chega — a mesma
@@ -37,6 +43,7 @@ import { POLITICA_PRINCIPAL, POLITICA_SENSIBILIDADE, TCC, jsonTexto, ordenar, po
 import { bracoDoRun } from "./e14-campanha";
 import type { Derivado, Resposta } from "./e14-comum";
 import { relacaoMedida, relacaoNoDominioMedido } from "./montar";
+import { aplicarOrigem, lerOrigem, type AplicacaoOrigem } from "./origem-campanha";
 import { gravarImutavel, lerArgs, lerPassada, type Passada } from "./revisao-campanha";
 
 export const RECALCULO_VERSAO = "nat78-recalculo-campanha-1.0.0";
@@ -314,7 +321,7 @@ export class Entradas {
   conferir(man: Record<string, string>): void { const faltam = [...this.lidos].filter(k => !/^[0-9a-f]{64}$/.test(man[k] ?? "")); if (faltam.length) throw new Error(`entradas sem sha256 no manifesto: ${faltam.join(", ")}`); }
 }
 
-export interface OpcoesRecalculo { passadas: string[]; analises?: string[]; coletas?: string[]; residuoPassada?: string | null; ratificacoes?: string | null; reamostragens?: number }
+export interface OpcoesRecalculo { passadas: string[]; analises?: string[]; coletas?: string[]; residuoPassada?: string | null; ratificacoes?: string | null; reamostragens?: number; origens?: string[] }
 
 export interface Recalculo { json: Record<string, unknown>; md: string }
 
@@ -331,6 +338,20 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   }
   const campanha = passadas[0].campanha;
   if (passadas.some(p => JSON.stringify(p.campanha) !== JSON.stringify(campanha))) throw new Error("passadas de campanhas diferentes");
+  // Origem medida (entrega 5): uma pasta por passada, casada pelo sha256 dos julgamentos; derivados pela própria ingestão.
+  const derivadoDe = new Map<string, Map<string, Derivado>>();
+  const origemInfo: { passada: string; arquivo: string; sha256: string; versao: string; aplicacao: AplicacaoOrigem[] }[] = [];
+  for (const d of o.origens ?? []) {
+    const lo = lerOrigem(d);
+    E.texto(lo.arquivo); E.texto(join(dirname(lo.arquivo), "origem.json.sha256"));
+    const p = passadas.find(x => x.julgSha === lo.doc.passada?.julgamentosSha256);
+    if (!p) throw new Error(`--origem ${d}: medida sobre a passada ${lo.doc.passada?.nome ?? "(nenhuma)"} (julgamentos ${String(lo.doc.passada?.julgamentosSha256).slice(0, 8)}…), que não está entre as --passada`);
+    if (derivadoDe.has(p.nome)) throw new Error(`--origem: duas pastas de origem para a passada ${p.nome}`);
+    const ap = aplicarOrigem(p, lo.doc);
+    derivadoDe.set(p.nome, ap.derivados);
+    origemInfo.push({ passada: p.nome, arquivo: E.rel(lo.arquivo), sha256: lo.sha256, versao: lo.doc.versao, aplicacao: ap.aplicacao });
+  }
+  const derivadoNa = (p: Passada, id: string): Derivado => derivadoDe.get(p.nome)?.get(id) ?? p.julgados.get(id)!.derivado;
   // Análises (= trios), com o pacote, a campanha, a referência e a coleta do trio.
   interface AnaliseLida { dir: string; nome: string; pkg: SemanticPackage; camp: CampanhaJson; ref: Referencia; coleta: ColetaTrio; coletaArq: string; passada: Passada }
   const analises: AnaliseLida[] = [];
@@ -436,8 +457,8 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
     for (const u of a.pkg.units) specDeTodos.set(u.id, u.specId);
     const p = a.passada;
     const julgados: CartaoJulgado[] = p.itens.filter(i => i.par === a.nome).map(i => ({ id: i.id, cardId: i.cardIdOriginal, braco: i.braco, runId: i.runId,
-      derivado: p.julgados.get(i.id)!.derivado, resposta: p.julgados.get(i.id)!.resposta }));
-    const credita12 = (id: string) => vereditoNaPolitica(p.julgados.get(id)!.derivado, "1.2.0").veredito === "reference";
+      derivado: derivadoNa(p, i.id), resposta: p.julgados.get(i.id)!.resposta }));
+    const credita12 = (id: string) => vereditoNaPolitica(derivadoNa(p, id), "1.2.0").veredito === "reference";
     const removidos = removidosS4(contestados.filter(c => c.passada === p.nome && julgados.some(j => j.id === c.id)), credita12, ratificados);
     for (const r of removidos) removidosTodos.add(r);
     const creditos: TrioEntrada["creditos"] = {};
@@ -483,9 +504,39 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
       porBraco: s4PorBraco },
     residuoDeBraco: residuoInfo, recusasDoScorer: recusas, tabelas,
   };
+  if (o.origens?.length) json.origem = resumoDaOrigem(passadas, origemInfo, derivadoNa);
   json.entradas = E.manifesto();
   E.conferir(json.entradas as Record<string, string>);
   return { json, md: tabelaMd(json, tabelas, regra, comps, s4.disponivel) };
+}
+
+/**
+ * Origem medida por braço (§8.6, estrato 4 do §8.4): classes das violações com a origem medida, o que mudou, o crédito que
+ * saiu (vínculo de cartão cuja origem medida é DS) e os candidatos do estrato 4 (violações atribuídas ao DS).
+ */
+export function resumoDaOrigem(passadas: Passada[], info: { passada: string; arquivo: string; sha256: string; versao: string; aplicacao: AplicacaoOrigem[] }[], derivadoNa: (p: Passada, id: string) => Derivado): Record<string, unknown> {
+  const porBraco: Record<string, Record<string, number>> = {};
+  const estrato4: { id: string; braco: string; passada: string }[] = [], mudancas: Record<string, unknown>[] = [], semOrigem: string[] = [];
+  for (const p of passadas) {
+    const inf = info.find(x => x.passada === p.nome);
+    if (!inf) { semOrigem.push(p.nome); continue; }
+    for (const it of p.itens) {
+      const d = derivadoNa(p, it.id);
+      if (!d.classe.startsWith("violacao")) continue;
+      const b = (porBraco[it.braco] ??= { "violacao-pagina": 0, "violacao-ds": 0, "violacao-origem-indeterminada": 0, creditadas: 0 });
+      b[d.classe]++;
+      if (vereditoNaPolitica(d, "1.2.0").veredito === "reference") b.creditadas++;
+      if (d.classe === "violacao-ds") estrato4.push({ id: it.id, braco: it.braco, passada: p.nome });
+    }
+    for (const a of inf.aplicacao) if (a.classeAntes !== a.classeDepois || a.creditoAntes !== a.creditoDepois)
+      mudancas.push({ id: a.id, braco: p.item.get(a.id)!.braco, passada: p.nome, origemMedida: a.origemMedida, classeAntes: a.classeAntes, classeDepois: a.classeDepois, specAntes: a.specAntes, creditoAntes: a.creditoAntes, creditoDepois: a.creditoDepois });
+  }
+  return {
+    regra: "origem medida (D-129, origem-campanha.ts) aplicada pela derivação da ingestão: violação → violacao-pagina (pagina, pagina-copiando-exemplo-ds) / violacao-ds (ds-entregue) / violacao-origem-indeterminada (indeterminada); origem DS tira o crédito do vínculo (P3/R5 da política 1.2.0)",
+    arquivos: info.map(i => ({ passada: i.passada, arquivo: i.arquivo, sha256: i.sha256, versao: i.versao })),
+    passadasSemOrigem: semOrigem, porBraco, mudancas, creditoRetirado: mudancas.filter(m => m.creditoAntes && !m.creditoDepois).map(m => m.id),
+    estrato4: { nota: "candidatos do estrato 4 do §8.4 (origem DS, D-129): violações com origem medida ds-entregue; a seleção (≤ 2, semente da campanha) é a entrega 6", cartoes: ordenar(estrato4, x => x.id) },
+  };
 }
 
 // ───────────────────────────────────────────────────────────────── tabela.md
@@ -553,6 +604,14 @@ export function tabelaMd(j: Record<string, unknown>, tab: Record<string, TabelaC
     L.push(`| ${b} | ${x.creditosSoLLM} | ${x.comResiduo ?? "n/d"} | ${x.contestadosComCredito} | ${x.retiradosS4} | ${x.ratificados} | ${rb ? `${rb.k}/${rb.c}` : "n/d"} |`);
   }
   L.push("", res.disponivel ? `Resíduo: ${res.nota}.` : `Resíduo indisponível: ${res.motivo}.`, "");
+  const og = j.origem as { arquivos: { passada: string; sha256: string }[]; passadasSemOrigem: string[]; porBraco: Record<string, Record<string, number>>; mudancas: { id: string; braco: string; origemMedida: string; classeAntes: string; classeDepois: string; creditoAntes: boolean; creditoDepois: boolean }[]; creditoRetirado: string[]; estrato4: { cartoes: { id: string; braco: string }[] } } | undefined;
+  if (og) {
+    L.push("## Origem medida (D-129, §8.6)", "", `Origem: ${og.arquivos.map(a => `\`${a.passada}\` (origem.json ${a.sha256.slice(0, 8)}…)`).join("; ")}${og.passadasSemOrigem.length ? `; sem origem medida: ${og.passadasSemOrigem.join(", ")}` : ""}. As tabelas acima já usam a classe com a origem medida.`, "",
+      "| braço | violação página | violação DS | origem indeterminada | creditadas (1.2.0) |", "|---|---|---|---|---|");
+    for (const [b, x] of Object.entries(og.porBraco).sort()) L.push(`| ${b} | ${x["violacao-pagina"]} | ${x["violacao-ds"]} | ${x["violacao-origem-indeterminada"]} | ${x.creditadas} |`);
+    L.push("", og.mudancas.length ? `Mudanças pela origem medida (${og.mudancas.length}): ${og.mudancas.map(m => `${m.id} ${m.braco} ${m.classeAntes} → ${m.classeDepois}${m.creditoAntes !== m.creditoDepois ? (m.creditoDepois ? " (crédito entra)" : " (**crédito sai**)") : ""}`).join("; ")}.` : "Nenhuma classe mudou pela origem medida.",
+      `Crédito retirado por origem DS: ${og.creditoRetirado.length ? og.creditoRetirado.join(", ") : "nenhum"}. Candidatos do estrato 4 (origem DS): ${og.estrato4.cartoes.length ? og.estrato4.cartoes.map(c => `${c.id} (${c.braco})`).join(", ") : "nenhum"}.`, "");
+  }
   const rec = j.recusasDoScorer as unknown[];
   if (rec.length) L.push(`Decisões recusadas pelo scorer (ficaram pendentes): ${rec.length} grupo(s); ver \`recalculo.json › recusasDoScorer\`.`, "");
   void comps;
@@ -563,10 +622,10 @@ export function tabelaMd(j: Record<string, unknown>, tab: Record<string, TabelaC
 
 const USO = `uso:
   recalculo-campanha.ts --passada PASSADA [--passada OUTRA ...] --saida PASTA_NOVA
-      [--analise DIR ...] [--coleta coleta-trio.json ...] [--residuo-passada PASSADA] [--ratificacoes ARQ] [--reamostragens N]`;
+      [--analise DIR ...] [--coleta coleta-trio.json ...] [--residuo-passada PASSADA] [--ratificacoes ARQ] [--reamostragens N] [--origem PASTA ...]`;
 
 export function executar(argv: string[]): number {
-  const a = lerArgs(argv, ["--passada", "--saida", "--analise", "--coleta", "--residuo-passada", "--ratificacoes", "--reamostragens"], []);
+  const a = lerArgs(argv, ["--passada", "--saida", "--analise", "--coleta", "--residuo-passada", "--ratificacoes", "--reamostragens", "--origem"], []);
   if ("erro" in a) { console.error(`RECUSADO: ${a.erro}\n${USO}`); return 1; }
   try {
     if (a.modo.length) throw new Error(`argumento solto: ${a.modo.join(" ")}`);
@@ -581,7 +640,7 @@ export function executar(argv: string[]): number {
     const um = (k: string) => { const v = a.opts.get(k); if (v && v.length > 1) throw new Error(`${k} mais de uma vez`); return v?.[0] ?? null; };
     const ream = um("--reamostragens");
     const r = recalcular({ passadas, analises: a.opts.get("--analise"), coletas: a.opts.get("--coleta"), residuoPassada: um("--residuo-passada"),
-      ratificacoes: um("--ratificacoes"), reamostragens: ream ? Number(ream) : undefined });
+      ratificacoes: um("--ratificacoes"), reamostragens: ream ? Number(ream) : undefined, origens: (a.opts.get("--origem") ?? []).map(x => resolve(x)) });
     const jTxt = jsonTexto(r.json);
     gravarImutavel(saida, [["recalculo.json", jTxt], ["recalculo.json.sha256", `${sha(jTxt)}  recalculo.json\n`], ["tabela.md", r.md]]);
     const tab = (r.json.tabelas as Record<string, TabelaComparacao[]>)["principal|1.2.0|primario"];
