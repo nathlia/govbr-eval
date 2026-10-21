@@ -1,0 +1,165 @@
+{
+  "contract": "campaign.v2",
+  "fixture": false,
+  "campaignId": "ensaio-trio-real-02",
+  "kind": "pilot",
+  "title": "Ensaio real do caminho inteiro, rodada 2 (D-138) — tela A, trio sem/ferramentas/com em quadrado latino, Opus 5.5 high, validator 2.14.3; ENSAIO fora da análise",
+  "objective": "Ensaio repetido da D-138 (protocolo NAT-78 rev 3 §7.4): 1 trio real na tela A (caso de desenvolvimento), com a mesma forma da campanha da D (quadrado-latino, semente declarada, agenda v2), passando pelo caminho inteiro — coleta:trio (só sinais técnicos), lote cego, juiz cego, ingestão, consistência, amostra de confiabilidade com 2 juízes, adjudicação, origem medida, recálculo e material da autora. Passa só se nenhuma etapa precisar de conserto (regra dos ensaios repetidos até um limpo). NÃO serve para inferência e FICA FORA DE QUALQUER ANÁLISE e de qualquer número da tese. Nenhuma mudança de prompt, skill, validator, scorer ou política é motivada pelos achados do ensaio; só defeitos técnicos do caminho são consertados.",
+  "hypotheses": [
+    "Ensaio do caminho: nenhuma hipótese sobre desempenho. Passa se os três braços rodam com isolamento passed e identidade igual à campanha congelada, e se cada etapa do §8 roda sem conserto até a tabela final e o material da autora."
+  ],
+  "createdAt": "2026-10-21T14:40:00Z",
+  "frozenAt": "2026-10-21T14:40:00Z",
+  "design": {
+    "screens": [
+      {
+        "id": "solicitacao",
+        "label": "Solicitar serviço",
+        "version": "govbr-telas-site-1a6e8daf3cdb"
+      }
+    ],
+    "arms": [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "Opus",
+        "requested": "claude-opus-5-5"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 1,
+    "order": "quadrado-latino",
+    "seed": 20261021,
+    "comparisons": [
+      {
+        "id": "ferramentas-x-com",
+        "arms": [
+          "ferramentas",
+          "com"
+        ],
+        "role": "primary",
+        "question": "Ensaio (sem inferência): estrutura da comparação principal do protocolo NAT-78 — o que a base de conhecimento do oráculo acrescenta às ferramentas de medição. Nada deste trio é comparado."
+      },
+      {
+        "id": "sem-x-ferramentas",
+        "arms": [
+          "sem",
+          "ferramentas"
+        ],
+        "role": "secondary",
+        "question": "Ensaio (sem inferência): o que as ferramentas de medição acrescentam ao navegador sozinho. Nada deste trio é comparado."
+      },
+      {
+        "id": "sem-x-com",
+        "arms": [
+          "sem",
+          "com"
+        ],
+        "role": "secondary",
+        "question": "Ensaio (sem inferência): o oráculo inteiro. Nada deste trio é comparado."
+      }
+    ]
+  },
+  "fixed": {
+    "protocolSha256": "af57905541d6b058b410893774a8cdfb7aaba2b60c9f4eb8478f23764f04e1a9",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "anthropic",
+      "authMethod": "oauth-subscription"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracleProfiles": {
+      "com": {
+        "package": "govbr-ds-validator-server",
+        "version": "2.14.3",
+        "distSha256": "1a1ee95c1bbaf605621cf5b32714a666150f35f038011bec75fd170db4ca885b",
+        "dataSha256": "ed68152ebc9652e7de46231ce17b17aac5d0878e343a713d071059eb0d373579",
+        "profile": "evaluation",
+        "tools": [
+          "get_component_spec",
+          "get_design_tokens",
+          "get_ds_rules",
+          "get_emag_rules",
+          "get_finding_details",
+          "get_page_rules",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "3d70162f5fed0ec8614d9dcbc18a69a00b4819ad56df1ed1c5bf95213eed0b3b"
+      },
+      "ferramentas": {
+        "package": "govbr-ds-validator-server",
+        "version": "2.14.3",
+        "distSha256": "1a1ee95c1bbaf605621cf5b32714a666150f35f038011bec75fd170db4ca885b",
+        "dataSha256": "ed68152ebc9652e7de46231ce17b17aac5d0878e343a713d071059eb0d373579",
+        "profile": "knowledge-free",
+        "tools": [
+          "get_finding_details",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "72abd54968cbe3173fce5dd3b4bba7aff563b37ca11b8a9ec0f25a91a104d39c"
+      }
+    },
+    "scorerVersion": "flow-semantic-1.8.2"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 6,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Ensaio: vale a primeira tentativa sem falha técnica de cada slot (p01-sem, p01-ferramentas, p01-com, na ordem da linha do quadrado). Nova tentativa só por falha técnica (protocolo §7.2, D-88), no máximo 1 por slot. Nada desta campanha entra na análise."
+  },
+  "failurePolicy": "Protocolo NAT-78 §7.2/§7.4: nova tentativa só por falha técnica (429, queda, modelo indisponível, autenticação, preflight, VM perdida, erro do harness ou do arquivo, cancelamento); tempo esgotado no teto de 30 min é resultado do agente, fica registrado e não se repete. Falha técnica de isolamento, inventário, trava ou crash leva a conserto, recongelamento do protocolo e ensaio refeito (campanha nova); nada é ajustado pelas saídas do ensaio.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Nenhum desfecho científico (ensaio). Técnico: isolamento passed e identidade congelada nos três braços; e o caminho do §8 rodando sem nenhum conserto até a tabela final.",
+    "secondaryOutcomes": [
+      "Medidas de recurso (tempo, tokens, custo estimado, fração da janela de 5 h), só registradas; o N já está fechado (D-137)."
+    ],
+    "uncertaintyMethod": null,
+    "exclusionRules": "A campanha inteira fica fora de qualquer análise e de qualquer número da tese (regra 5 da Metodologia §5.7.5). Os números do ensaio podem ser lidos para conferir o caminho (D-138, a A é de desenvolvimento), nunca para mudar prompt, política ou N."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": null,
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": []
+}
