@@ -60,7 +60,7 @@ import { EVAL, TCC, jsonTexto, ordenar, posix, sha } from "./comum";
 import { derivarClasse, type Derivado } from "./e14-comum";
 import { contextoDe } from "./e14-ingerir";
 import { ELEMENTO, LEITURA, RESOLVER, SONDA_INICIAL } from "./origem-sonda";
-import { gravarImutavel, lerArgs, lerPassada, type Passada } from "./revisao-campanha";
+import { gravarImutavel, lerArgs, lerPassada, pastaDaAnalise, type Passada } from "./revisao-campanha";
 
 export const ORIGEM_VERSAO = "nat78-origem-medida-1.1.0";
 export const FORMATO_ORIGEM = "nat78-origem-1.0.0";
@@ -980,7 +980,7 @@ export async function executar(argv: string[]): Promise<number> {
       const man = JSON.parse(passada.manifestoTxt) as { analises: { dir: string; packageSha256: string }[] };
       let ref: Referencia | null = null, refSha: string | null = null;
       for (const an of man.analises) {
-        const abs = (a.opts.get("--analise") ?? []).map(x => resolve(x)).find(x => basename(x) === an.dir) ?? join(dirname(passada.dir), an.dir);
+        const abs = (a.opts.get("--analise") ?? []).map(x => resolve(x)).find(x => basename(x) === an.dir) ?? pastaDaAnalise(passada.dir, an.dir);
         const pkg = JSON.parse(lerTexto(join(abs, "revisao", "package.json"))) as SemanticPackage & { provenance: { site?: { manifestSha256?: string }; reference?: { sha256?: string } } };
         if (pkg.provenance.site?.manifestSha256 !== site.manifestSha256) throw new Error(`--site: manifesto ${site.manifestSha256.slice(0, 12)}… ≠ site do pacote de ${an.dir} (${String(pkg.provenance.site?.manifestSha256).slice(0, 12)}…)`);
         const rTxt = readFileSync(join(abs, "entradas", "referencia.json"));

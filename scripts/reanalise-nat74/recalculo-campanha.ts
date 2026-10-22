@@ -53,7 +53,7 @@ import { bracoDoRun } from "./e14-campanha";
 import type { Derivado, Resposta } from "./e14-comum";
 import { relacaoMedida, relacaoNoDominioMedido } from "./montar";
 import { aplicarOrigem, lerOrigem, type AplicacaoOrigem } from "./origem-campanha";
-import { gravarImutavel, lerArgs, lerPassada, type Passada } from "./revisao-campanha";
+import { gravarImutavel, lerArgs, lerPassada, pastaDaAnalise, type Passada } from "./revisao-campanha";
 
 export const RECALCULO_VERSAO = "nat78-recalculo-campanha-1.0.0";
 export const FORMATO_RECALCULO = "nat78-recalculo-1.0.0";
@@ -424,7 +424,7 @@ export function carregarCampanha(o: Pick<OpcoesRecalculo, "passadas" | "analises
     const man = JSON.parse(p.manifestoTxt) as { analises: { dir: string; packageSha256: string }[] };
     for (const a of man.analises) {
       const dada = (o.analises ?? []).map(x => resolve(x)).find(x => basename(x) === a.dir);
-      const abs = dada ?? join(dirname(p.dir), a.dir);
+      const abs = dada ?? pastaDaAnalise(p.dir, a.dir);
       const pTxt = E.texto(join(abs, "revisao", "package.json"));
       if (sha(readFileSync(join(abs, "revisao", "package.json"))) !== a.packageSha256) throw new Error(`análise ${a.dir}: package.json difere do manifesto da passada`);
       const pkg = JSON.parse(pTxt) as SemanticPackage;

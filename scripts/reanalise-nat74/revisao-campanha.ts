@@ -148,9 +148,18 @@ const numVersao = (v: string): number[] => (/(\d+)\.(\d+)\.(\d+)$/.exec(v) ?? [0
 const versaoAoMenos = (v: string, m: number[]): boolean => { const a = numVersao(v); for (let i = 0; i < 3; i++) if (a[i] !== m[i]) return a[i] > m[i]; return true; };
 
 /**
+ * Pasta de uma análise da passada, sem `--analise`: irmã da passada ou de uma das duas pastas acima (a passada adjudicada
+ * mora em `revisao-*`/). A primeira que tem `revisao/package.json`; quem chama confere o `packageSha256`.
+ */
+export function pastaDaAnalise(dirPassada: string, nome: string): string {
+  const acima = [1, 2, 3].map(k => join(Array.from({ length: k }).reduce<string>(d => dirname(d), dirPassada), nome));
+  return acima.find(x => existsSync(join(x, "revisao", "package.json"))) ?? acima[0];
+}
+
+/**
  * Lê uma primeira passada CONGELADA de campanha nova: manifesto de campanha (1.1.0/1.2.0), chave e lotes conferidos pelo
  * sha256, `julgamentos.json` completo e conferido pelo `.sha256`, e reproduzido byte a byte pela ingestão (`ingerir`). Os
- * cartões originais vêm do pacote de cada análise listada no manifesto (pasta irmã da passada, ou `analises` dadas),
+ * cartões originais vêm do pacote de cada análise listada no manifesto (`pastaDaAnalise`, ou `analises` dadas),
  * conferido pelo `packageSha256`; cada cartão confere com o `cardSha256` da chave.
  */
 export function lerPassada(dirArg: string, o: { analises?: string[] } = {}): Passada {
@@ -190,7 +199,7 @@ export function lerPassada(dirArg: string, o: { analises?: string[] } = {}): Pas
   let campanha: Campanha | null = null;
   for (const a of man.analises) {
     const dada = (o.analises ?? []).map(x => resolve(x)).find(x => basename(x) === a.dir);
-    const abs = dada ?? join(dirname(dir), a.dir);
+    const abs = dada ?? pastaDaAnalise(dir, a.dir);
     const pAbs = join(abs, "revisao", "package.json");
     if (!existsSync(pAbs)) throw new Error(`análise ${a.dir} não achada em ${abs} (passe --analise DIR)`);
     const pTxt = readFileSync(pAbs);
