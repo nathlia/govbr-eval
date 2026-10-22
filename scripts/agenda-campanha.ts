@@ -85,6 +85,21 @@ export interface Agenda {
 
 const sha256 = (s: string | Buffer): string => createHash("sha256").update(s).digest("hex");
 export const caminhoAgenda = (campanha: string): string => `campanhas/${campanha}/agenda.json`;
+
+/**
+ * Os bytes do `campanhas/<id>/campaign.json` do govbr-eval: o blob commitado (o que o disparo no GitHub lê, em LF), não a
+ * cópia local, que o `core.autocrlf` do Windows reescreve em CRLF. Cópia local que difere do blob além das quebras de linha
+ * = edição não commitada → erro. Fora de um repositório Git, ou arquivo ainda não commitado, os bytes do arquivo.
+ */
+export function bytesDaCampanha(raiz: string, id: string): Buffer {
+  const local = readFileSync(join(raiz, "campanhas", id, "campaign.json"));
+  let blob: Buffer;
+  try { blob = execFileSync("git", ["-C", raiz, "show", `HEAD:campanhas/${id}/campaign.json`], { stdio: ["ignore", "pipe", "ignore"], maxBuffer: 64 * 1024 * 1024 }); }
+  catch { return local; }
+  const semCR = (b: Buffer) => b.toString("utf8").replace(/\r\n/g, "\n");
+  if (semCR(local) !== semCR(blob)) throw new Error(`campanhas/${id}/campaign.json tem mudança não commitada; a campanha vale pelo blob commitado`);
+  return blob;
+}
 export const documentoDaAgenda = (a: Agenda): string => JSON.stringify(a, null, 2) + "\n";
 export const idDoPar = (i: number): string => `p${String(i).padStart(2, "0")}`;
 
@@ -406,7 +421,7 @@ function main(): void {
   if (!ID.test(campanha)) throw new Error(`campanha inválida: ${campanha}`);
   const campPath = join(RAIZ, "campanhas", campanha, "campaign.json");
   if (!existsSync(campPath)) throw new Error(`falta campanhas/${campanha}/campaign.json`);
-  const bytes = readFileSync(campPath);
+  const bytes = bytesDaCampanha(RAIZ, campanha);
   const c = JSON.parse(bytes.toString("utf8")) as AnyCampaign;
   const agPath = join(RAIZ, caminhoAgenda(campanha));
   if (comando === "gerar") {

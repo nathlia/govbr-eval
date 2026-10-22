@@ -30,7 +30,7 @@ import { basename, delimiter, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateContract, type AnyCampaign, type ArmV2, type SnapshotManifest } from "../contracts/index";
 import { analisar } from "./analisar-execucao";
-import { lerAgenda, lerEntradasDoIndice, tentativaSelecionada, tentativasDoSlot, type Agenda, type Tentativa } from "./agenda-campanha";
+import { bytesDaCampanha, lerAgenda, lerEntradasDoIndice, tentativaSelecionada, tentativasDoSlot, type Agenda, type Tentativa } from "./agenda-campanha";
 import {
   REPOS, Recusa, caminhoCampanha, caminhoReferencia, caminhoSite, problemasDoPacote, resolverConjunto, restaurar, sha, type EntradaIndice,
 } from "./arquivo-resultados";
@@ -160,25 +160,15 @@ function dentro(arquivo: string, rel: string): string {
   return abs;
 }
 
-/**
- * Os bytes da campanha no govbr-eval: o blob commitado (o que o disparo no GitHub lê, em LF), não a cópia local, que o
- * `core.autocrlf` do Windows reescreve em CRLF. Cópia local que difere do blob além das quebras de linha = edição não
- * commitada → recusa. Fora de um repositório Git, os bytes do arquivo.
- */
-function bytesDaCampanhaNoEval(raizEval: string, id: string, repo: string): Buffer {
-  const local = readFileSync(repo);
-  const r = spawnSync("git", ["-C", raizEval, "show", `HEAD:campanhas/${id}/campaign.json`], { maxBuffer: 64 * 1024 * 1024 });
-  if (r.status !== 0 || r.error) return local;
-  const semCR = (b: Buffer) => b.toString("utf8").replace(/\r\n/g, "\n");
-  if (semCR(local) !== semCR(r.stdout)) recusar(`campanhas/${id}/campaign.json do govbr-eval tem mudança não commitada; a campanha vale pelo blob commitado`);
-  return r.stdout;
-}
-
-/** A campanha congelada: a cópia arquivada; se o govbr-eval tem `campanhas/<id>/campaign.json`, os bytes (do blob commitado) têm de ser os mesmos. */
+/** A campanha congelada: a cópia arquivada; se o govbr-eval tem `campanhas/<id>/campaign.json`, os bytes (do blob commitado, `bytesDaCampanha`) têm de ser os mesmos. */
 function lerCampanha(arquivo: string, id: string, raizEval: string): { campanha: AnyCampaign; rel: string; sha256: string } {
   const repo = join(raizEval, "campanhas", id, "campaign.json");
   let shaCampanha: string;
-  if (existsSync(repo)) shaCampanha = sha(bytesDaCampanhaNoEval(raizEval, id, repo));
+  if (existsSync(repo)) {
+    let b: Buffer;
+    try { b = bytesDaCampanha(raizEval, id); } catch (e) { recusar(e instanceof Error ? e.message : String(e)); }
+    shaCampanha = sha(b!);
+  }
   else {
     const dir = join(arquivo, "campanhas", id);
     const subs = existsSync(dir) ? readdirSync(dir).filter(s => /^[0-9a-f]{64}$/.test(s)) : [];
