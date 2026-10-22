@@ -228,10 +228,15 @@ function esquemaCampanha(formato: string, estado: boolean) {
   e.title = formato;
   e.properties.formato.const = formato;
   const it = e.properties.respostas.items;
-  const n = it.properties.norma.oneOf[1].properties;
+  const norma = it.properties.norma.oneOf[1] as { properties: Record<string, { enum: string[] }>; allOf?: unknown[] };
+  const n = norma.properties;
   n.aplicabilidade.enum = [...VAL.aplicabilidade, NAO_PERGUNTADO];
   n.violada.enum = [...VAL.violada, NAO_PERGUNTADO];
+  // [ensaio-trio-real-02] O neutro só com `forca: "nenhuma"` (e sempre com ela), já no esquema: o juiz que valida o próprio
+  // arquivo pega o erro antes da ingestão. É condição necessária da regra de validarResposta, que continua a decidir.
+  const np = { const: NAO_PERGUNTADO }, ambos = (s: unknown) => ({ properties: { aplicabilidade: s, violada: s } });
   if (estado) {
+    norma.allOf = [{ if: { properties: { forca: { const: "nenhuma" } }, required: ["forca"] }, then: ambos(np), else: ambos({ not: np }) }];
     // [N, 1.2.0] estadoAlcancado fechado. A condição cruzada ("nao-alcancado" ⇒ fato indisponivel) fica em validarResposta.
     it.required.push("estadoAlcancado");
     it.properties.estadoAlcancado = { enum: [...ESTADO_ALCANCADO] };

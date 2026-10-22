@@ -218,7 +218,7 @@ try {
     assert.match(ingerir(fila).erros.join(), /lotes\/respostas/);
     rmSync(join(fila, "lotes", "respostas"), { recursive: true });
     gravarJson(fila, "respostas/lote-01.json", respostas({ aplicabilidade: "incerta", violada: "incerto" }));
-    assert.match(ingerir(fila).erros.join(), /nenhuma/);
+    assert.match(ingerir(fila).erros.join(), /nenhuma|norma must match "then" schema/, "neutro errado: recusado pelo esquema 1.2.0 (forca nenhuma ⇔ neutro) ou pela validação");
     gravarJson(fila, "respostas/lote-01.json", { ...respostas(), formato: FORMATO_RESPOSTAS });
     assert.match(ingerir(fila).erros.join(), /formato|esquema/);
     gravarJson(fila, "respostas/lote-01.json", respostas());
