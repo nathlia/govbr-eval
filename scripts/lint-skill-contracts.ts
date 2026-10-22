@@ -69,7 +69,10 @@ for (const forbidden of ["../_shared/", "evaluation-protocol.md", "leia o arquiv
 }
 const avaliarWords = words(avaliar);
 // NAT-81: o registro de inspeção (seção + exemplo) acrescentou ~250 palavras, iguais nos dois braços; meta 1100 → 1250.
-if (avaliarWords < 800 || avaliarWords > 1250) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1250`);
+// Oráculo 2.15 lote 1 (D-140, revisão Codex): frases de procedimento iguais nos três braços (veredito sobre a
+// regra não desmente o fato medido, contrafato medido desmente; silêncio numa especificação não é
+// conformidade), ~60 palavras; meta 1250 → 1300.
+if (avaliarWords < 800 || avaliarWords > 1300) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1300`);
 
 const screenWords = words(shared) + words(screen);
 if (screenWords < 600 || screenWords > 800) failures.push(`evaluate-screen: ${screenWords} palavras combinadas; meta 600–800`);

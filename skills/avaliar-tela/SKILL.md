@@ -37,11 +37,15 @@ projeto a consultar.
 5. Se houver ferramentas de validação, use-as em cada estado relevante. Quando uma delas abrir o
    próprio navegador, ele não compartilha o estado do seu: reproduza nela as interações que levaram
    ao estado avaliado. Guarde os identificadores que ela devolver; são evidência. Continue uma
-   resposta truncada pelo identificador recebido, sem repetir a verificação. Falha, erro ou resposta
-   vazia de uma ferramenta não é ausência de problema: registre como limitação.
+   resposta truncada pelo identificador recebido, sem repetir a verificação. Falha, erro, resposta
+   vazia ou silêncio de uma ferramenta não é ausência de problema, e silêncio ou ausência numa
+   especificação não é conformidade: registre como limitação.
 6. Confronte cada candidato com a interface antes de aceitá-lo. Se uma ferramenta disponível
    permitir confirmar o candidato, confirme; senão, decida pela inspeção e declare o grau de
-   certeza.
+   certeza. Um veredito de ferramenta sobre a regra citada ou sua aplicabilidade (citação rejeitada,
+   indeterminado, regra ausente) não desmente o fato que você mediu: mantenha o fato com a
+   referência WCAG/e-MAG que você justifica, ou com `rule: null`. Se a ferramenta contradisser
+   o fato com evidência medida, a afirmação está desmentida: não a mantenha.
 7. Se o escopo listar outras larguras, alcance cada uma somente pelo meio declarado e repita os
    passos 1 a 6 nela.
 8. Faça uma passada final entre regiões, para relações entre elementos que não aparecem
