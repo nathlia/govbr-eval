@@ -12,7 +12,7 @@ import { createSiteServer, loadSite } from "../measurement-surface";
 import type { CartaoCego } from "./e14-comum";
 import { tracosDaAlegacao } from "./origem-campanha";
 
-export const IMAGENS_VERSAO = "nat78-material-imagens-1.0.0";
+export const IMAGENS_VERSAO = "nat78-material-imagens-1.1.0";
 
 export type Alvo = { css: string } | { nome: string; papel: "button" | null } | { texto: string };
 export type Acao =
@@ -20,6 +20,7 @@ export type Acao =
   | { tipo: "esperar"; css: string }
   | { tipo: "clicar"; alvo: Alvo }
   | { tipo: "focar"; alvo: Alvo }
+  | { tipo: "preencher"; alvo: Alvo; valor: string }
   | { tipo: "tecla"; tecla: string; vezes: number; ate: Alvo | null; focoEsperado: Alvo | null; em: Alvo | null };
 
 const TAGS = /^(?:a|body|button|div|form|h[1-6]|html|input|label|li|main|nav|option|p|section|select|span|table|td|textarea|th|tr|ul)$/;
@@ -49,18 +50,24 @@ export function lerAlvo(s0: string): Alvo {
   if (aspas) return { texto: aspas[1] };
   if (pareceCss(s)) return { css: s };
   const botao = /^(?:o |no )?bot[aã]o\s+(.+?)(?:\s+d[aoe]s?\s+.*)?$/i.exec(s);
-  if (botao) return { nome: botao[1].replace(/^["“]|["”]$/g, ""), papel: "button" };
+  if (botao) return { nome: botao[1].replace(/^["“'‘]|["”'’]$/g, ""), papel: "button" };
   return { nome: s.replace(/^(?:o |a |no |na )/i, ""), papel: null };
 }
 
-/** Lê um passo escrito; `null` = o intérprete não sabe refazê-lo (e diz isso, sem adivinhar). */
+/**
+ * Lê um passo escrito; `null` = o intérprete não sabe refazê-lo (e diz isso, sem adivinhar). 1.1.0 (ensaio-trio-real-02):
+ * também "clique em X", o verbo antes da tecla ("tecla Tab", "pressionar Enter"), "… a partir do carregamento" (= da página
+ * recém-aberta, onde toda receita começa) e "preencher X com 'v'" / "digitar 'v' em X" (valor entre aspas, escrito no campo).
+ */
 export function lerPasso(p0: string): Acao | null {
-  const p = p0.trim();
+  const p = p0.trim().replace(/\s+a partir do carregamento(?: da p[aá]gina)?$/i, "").replace(/^(?:tecla|pressionar|pressione|apertar|aperte)\s+(?=\S)/i, "");
   let m: RegExpExecArray | null;
   if ((m = /^(?:load|abrir a p[aá]gina|abrir o endere[cç]o da tela)(?:\s*\(.*\))?(?: e esperar `([^`]+)`)?$/i.exec(p))) return { tipo: "nada", esperar: m[1] ?? null };
   if ((m = /^esperar `([^`]+)`(?: aparecer)?$/i.exec(p))) return { tipo: "esperar", css: m[1] };
-  if ((m = /^(?:click|clicar)(?: em| no| na)?\s+(.+)$/i.exec(p))) return { tipo: "clicar", alvo: lerAlvo(m[1].replace(/^(?:no |o )?texto\s+(?=["“])/i, "")) };
+  if ((m = /^(?:click|clicar|clique|clica)(?: em| no| na)?\s+(.+)$/i.exec(p))) return { tipo: "clicar", alvo: lerAlvo(m[1].replace(/^(?:no |o )?texto\s+(?=["“])/i, "")) };
   if ((m = /^(?:focus|focar)(?: em)?\s+(.+)$/i.exec(p))) return { tipo: "focar", alvo: lerAlvo(m[1]) };
+  if ((m = /^(?:preencher|preencha|digitar|digite)(?: em| o| a| no| na)?\s+(.+?)\s+com\s+["“'‘]([^"”'’]*)["”'’]$/i.exec(p))) return { tipo: "preencher", alvo: lerAlvo(m[1]), valor: m[2] };
+  if ((m = /^(?:digitar|digite)\s+["“'‘]([^"”'’]*)["”'’]\s+(?:em|no|na)\s+(.+)$/i.exec(p))) return { tipo: "preencher", alvo: lerAlvo(m[2]), valor: m[1] };
   if ((m = /^(shift\+tab|tab|enter|escape|esc|space|espa[cç]o)(?:\s*x\s*(\d+))?(?:\s+at[eé]\s+(.+?))?(?:\s+em\s+(.+?))?(?:\s*\(([^)]*)\))?$/i.exec(p))) {
     const tecla = TECLAS[m[1].toLowerCase().replace("ç", "c")];
     if (!tecla) return null;
@@ -119,6 +126,7 @@ export async function capturarCaso(page: Page, url: string, waitFor: string | nu
       if (a.tipo === "nada") { if (a.esperar) await page.waitForSelector(a.esperar, { timeout: 5000 }); }
       else if (a.tipo === "esperar") await page.waitForSelector(a.css, { state: "visible", timeout: 5000 });
       else if (a.tipo === "clicar") { if (!(await umClique(page, a.alvo, nota))) alcancou = false; }
+      else if (a.tipo === "preencher") { const l = localizar(page, a.alvo); if (await l.count()) await l.first().fill(a.valor, { timeout: 3000 }); else { nota.push(`não achei ${descAlvo(a.alvo)}`); alcancou = false; } }
       else if (a.tipo === "focar") { const l = localizar(page, a.alvo); if (await l.count()) await l.first().focus(); else { nota.push(`não achei ${descAlvo(a.alvo)}`); alcancou = false; } }
       else {
         if (a.em) { const l = localizar(page, a.em); if (await l.count()) await l.first().focus(); else { nota.push(`não achei ${descAlvo(a.em)}`); alcancou = false; } }

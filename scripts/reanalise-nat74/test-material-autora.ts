@@ -16,6 +16,7 @@ import { desfechoDaAutora, desfechoDaPassada, lerTextoDaAutora, ratifica, type R
 import { RESULTADOS, lerJson, sha } from "./comum";
 import { prepararCampanha } from "./e14-campanha";
 import { COTAS, estratoDe, executar, gravarArquivos, ordemDoEstrato, prepararMaterial, responder, selecionar, type Candidato } from "./material-autora";
+import { lerPasso } from "./material-imagens";
 import { recalcular, type TabelaComparacao } from "./recalculo-campanha";
 import { gravarImutavel } from "./revisao-campanha";
 
@@ -31,6 +32,18 @@ const muitos = (estrato: number, m: number, bracos = ["com", "ferramentas", "sem
 console.log("material da autora: sintético");
 const tmp = mkdtempSync(join(tmpdir(), "material-autora-"));
 try {
+  await t("imagens 1.1.0: passos escritos do ensaio-trio-real-02 (clique, verbo antes da tecla, 'a partir do carregamento', preencher/digitar); o resto continua null", () => {
+    assert.deepEqual(lerPasso("clique em #cpf"), { tipo: "clicar", alvo: { css: "#cpf" } });
+    assert.deepEqual(lerPasso("tecla Tab (foco em #servico)"), { tipo: "tecla", tecla: "Tab", vezes: 1, ate: null, em: null, focoEsperado: { css: "#servico" } });
+    assert.deepEqual(lerPasso("pressionar Enter"), { tipo: "tecla", tecla: "Enter", vezes: 1, ate: null, em: null, focoEsperado: null });
+    assert.deepEqual(lerPasso("tecla Tab a partir do carregamento"), { tipo: "tecla", tecla: "Tab", vezes: 1, ate: null, em: null, focoEsperado: null });
+    assert.deepEqual(lerPasso("preencher #nome com 'Maria Teste'"), { tipo: "preencher", alvo: { css: "#nome" }, valor: "Maria Teste" });
+    assert.deepEqual(lerPasso('digitar "abc" em #cpf'), { tipo: "preencher", alvo: { css: "#cpf" }, valor: "abc" });
+    assert.deepEqual(lerPasso("Tab x8 até #servico"), { tipo: "tecla", tecla: "Tab", vezes: 8, ate: { css: "#servico" }, em: null, focoEsperado: null });
+    assert.deepEqual(lerPasso("focar o botão 'Fechar a mensagem'"), { tipo: "focar", alvo: { nome: "Fechar a mensagem", papel: "button" } });
+    assert.equal(lerPasso("andar de bicicleta"), null);
+    assert.equal(lerPasso("preencher #nome"), null);
+  });
   await t("CLI: modo, --saida e --passada obrigatórios; teto fora de 10/15 recusa; --saida existente recusa", async () => {
     assert.equal(await silencioso(() => executar([])), 1);
     assert.equal(await silencioso(() => executar(["preparar", "--saida", join(tmp, "x")])), 1);
