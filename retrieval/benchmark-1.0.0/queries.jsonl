@@ -10,3 +10,8 @@
 {"id":"q010","query":"grupo de checkboxes sem título explicando as opções","component":"checkbox","estrato":"respondivel","motivo":"vocabulário título ≠ rótulo do grupo"}
 {"id":"q011","query":"cor de fundo do botão primário está um tom diferente do azul do DS","component":"button","estrato":"negativa_dificil","motivo":"parece regra de botão, mas é questão de token/medição; regras de acessibilidade de botão não sustentam"}
 {"id":"q012","query":"qual a melhor biblioteca de gráficos para o painel","component":null,"estrato":"fora_escopo","motivo":"fora do DS; resposta honesta é ausência"}
+{"id":"q013","query":"o menu lateral não fecha quando aperto escape","component":"menu","estrato":"respondivel","motivo":"escape ≠ Esc; comportamento de teclado"}
+{"id":"q014","query":"leitor de tela lê o switch mas não diz se está ligado ou desligado","component":"switch","estrato":"respondivel","motivo":"ligado/desligado ≠ estado; observação de tecnologia assistiva"}
+{"id":"q015","query":"coluna da tabela ordenável sem aria-sort","component":"table","estrato":"respondivel","motivo":"atributo técnico exato"}
+{"id":"q016","query":"nas abas as setas do teclado não trocam de aba","component":"tab","estrato":"respondivel","motivo":"nome em português (abas) para componente tab"}
+{"id":"q017","query":"trecho em inglês no meio da página sem marcação de idioma","component":null,"estrato":"respondivel","motivo":"regra global (e-MAG 3.2); sem componente; 'marcação de idioma' ≠ atributo lang"}

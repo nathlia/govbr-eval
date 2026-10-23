@@ -12,5 +12,11 @@ Plano: `thesis-workspace/planejamento/atual/plano-implementacao-busca-oraculo-20
 - **Congelamento:** só depois de 60+ consultas e revisão dos rótulos pelo Codex; a partir daí o
   conjunto não muda por causa do ranking.
 
-Estado: 12 consultas (10 respondíveis, 1 negativa difícil, 1 fora de escopo). `manifest.json` vem no
+Estado: 17 consultas (15 respondíveis, 1 negativa difícil, 1 fora de escopo).
+
+Pendências do rascunho: a base tem cópias da mesma cláusula com ids diferentes (q017) — o avaliador
+precisa de agrupamento por família para não contar duplicata; o campo `familia` entra nos qrels antes
+do congelamento. Temas que a busca por palavra não achou (busca no header, teclado no select,
+pausa no carrossel, título da página, mensagem de erro) só viram `sem_resposta` depois de conferidos
+na base inteira, incl. `emag.json` — ausência não se presume. `manifest.json` vem no
 congelamento.
