@@ -1,7 +1,7 @@
 /** NAT-94: synthetic labels + real MCP stdio stub; no models, screen data or real KB. */
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -18,8 +18,8 @@ const put = (p: string, value: unknown) => { mkdirSync(dirname(p), { recursive: 
 const wire = (p: unknown) => ({ content: [{ type: "text", text: JSON.stringify(p) }] });
 const full = (id: string, more = {}) => ({ id, normalizedRule: "A public clause", sourceUrl: "https://example.org/frozen", conditions: [], exceptions: [], expectedEvidence: ["measure"], ...more });
 const qs: Query[] = [
-  { id: "q1", query: "first observation", component: "button", estrato: "respondivel", motivo: "test" },
-  { id: "q2", query: "second observation", estrato: "respondivel", motivo: "test" },
+  { id: "q1", origem: "busca-lexical", query: "first observation", component: "button", estrato: "respondivel", motivo: "test" },
+  { id: "q2", origem: "observacao-real", query: "second observation", estrato: "respondivel", motivo: "test" },
   { id: "q3", query: "missing source", estrato: "sem_resposta", motivo: "explicit source gap" },
   { id: "q4", query: "insufficient evidence", estrato: "negativa_dificil", motivo: "candidate only" },
   { id: "q5", query: "ambiguous observation", estrato: "ambigua", motivo: "test" },
@@ -71,7 +71,7 @@ await test("hand-calculated macro metrics: aliases/duplicates do not inflate den
   assert.equal(report.results[2].precisionAt5, 0); assert.equal(report.results[2].callsUntilSufficientContext, null);
   assert.equal(report.summary.engineeringTargets.meanPrecisionAt5, false);
   assert.equal(report.summary.engineeringTargets.noApplicableHardNegatives, true);
-  assert.ok(first.latencyMs >= 0); assert.equal(first.characters, first.calls.reduce((n, c) => n + JSON.stringify(c.response).length, 0));
+  assert.ok(first.latencyMs >= 0); assert.equal(first.characters, first.calls.reduce((n, c) => n + c.characters, 0));
   assert.equal(first.candidates, 7);
 });
 await test("MCP arguments contain only public query/component or ids actually returned, never labels/metadata", () => {
@@ -107,7 +107,7 @@ await test("unknown payloads, MCP errors, and missing ids fail instead of silent
   assert.throws(() => units({ other: [] }), /Unrecognized/);
   assert.throws(() => units({ rules: [{}] }), /citable id/);
   const r = await evaluateQuery(qs[0], labels, async () => { throw new Error("timeout"); });
-  assert.match(r.error!, /timeout/); assert.equal(r.calls.length, 1); assert.equal(r.hitAt5, false);
+  assert.equal(r.error, "TOOL_CALL_FAILED"); assert.equal(r.calls.length, 1); assert.equal(r.hitAt5, false);
   assert.equal(summarize([r]).engineeringTargets.noToolErrors, false);
 });
 await test("empty negatives are not counted as source gaps unless explicitly classified; absent strata stay null", async () => {
@@ -131,10 +131,10 @@ await test("follow-up is chosen without qrels, incomplete source/context never b
 await test("manifest count drift, duplicate ids, missing positive labels, and conflicting labels are refused", async () => {
   const dir = join(TMP, "invalid"); dataset(dir);
   const manifest = JSON.parse(readFileSync(join(dir, "manifest.json"), "utf8")); manifest.counts.respondivel = 8;
-  put(join(dir, "manifest.json"), manifest); assert.throws(() => loadDataset(dir), /count mismatch/);
+  put(join(dir, "manifest.json"), manifest); assert.throws(() => loadDataset(dir), /DATASET_INVALID/);
   dataset(dir); writeFileSync(join(dir, "queries.jsonl"), [...qs, qs[0]].map(q => JSON.stringify(q)).join("\n"));
-  assert.throws(() => loadDataset(dir), /Duplicate query/);
-  dataset(dir); writeFileSync(join(dir, "qrels.jsonl"), ""); assert.throws(() => loadDataset(dir), /without positive/);
+  assert.throws(() => loadDataset(dir), /DATASET_INVALID/);
+  dataset(dir); writeFileSync(join(dir, "qrels.jsonl"), ""); assert.throws(() => loadDataset(dir), /DATASET_INVALID/);
   await assert.rejects(evaluateQuery(qs[0], [...labels, { ...labels[0], unit_id: "alias", relevance: -1 }], async () => wire({ rules: [full("u1", { aliases: ["alias"] })] })), /Conflicting labels/);
 });
 await test("hashes include nested actual bytes and stable sorted paths", () => {
@@ -179,8 +179,7 @@ await test("end-to-end real MCP stdio: five synthetic queries, input identities,
   assert.equal(manifest.status, "complete");
   for (const [name, hash] of Object.entries(manifest.files)) assert.equal(sha256(readFileSync(join(output, name))), hash);
   const input = JSON.parse(readFileSync(join(output, "inputs.json"), "utf8"));
-  assert.equal(input.validator.version, "fixture-server"); assert.equal(input.validator.kbVersion, "fixture-kb");
-  assert.equal(input.validator.dist.sha256, hashTree(join(validator, "dist")).sha256);
+  assert.equal(input.validator.dist, hashTree(join(validator, "dist")).sha256);
   assert.deepEqual(input.benchmark.files, loadDataset(dataDir).hashes);
   const original = readFileSync(join(output, "summary.json"));
   await assert.rejects(runBenchmark({ validator, benchmark: dataDir, output }), /never overwritten/);
@@ -197,14 +196,14 @@ await test("startup failure is preserved, never emitted as an empty successful b
     assert.throws(() => readFileSync(join(output, "manifest.json")), /ENOENT/);
   } finally { writeFileSync(path, original); }
 });
-await test("mid-run input changes invalidate the baseline while preserving raw responses for diagnosis", async () => {
+await test("mid-run input changes invalidate the baseline while preserving sanitized metrics for diagnosis", async () => {
   const entry = join(validator, "dist/index.js"), kb = join(validator, "data/knowledge/versions/fixture-kb/manifest.json");
   const originalEntry = readFileSync(entry), originalKb = readFileSync(kb);
   writeFileSync(entry, 'import { appendFileSync } from "node:fs";\n' + serverScript.replace(
     "const a = request.params.arguments;", `const a = request.params.arguments; if (a.query === "missing source") appendFileSync(${JSON.stringify(kb)}, " ");`));
   try {
     const output = join(TMP, "changed-input");
-    await assert.rejects(runBenchmark({ validator, benchmark: dataDir, output, timeoutMs: 5000 }), /Inputs changed/);
+    await assert.rejects(runBenchmark({ validator, benchmark: dataDir, output, timeoutMs: 5000 }), /BENCHMARK_FAILED/);
     assert.equal(JSON.parse(readFileSync(join(output, "results.json"), "utf8")).length, 5);
     assert.equal(JSON.parse(readFileSync(join(output, "failure.json"), "utf8")).status, "failed");
     assert.throws(() => readFileSync(join(output, "manifest.json")), /ENOENT/);
@@ -214,8 +213,100 @@ await test("CLI help is read-only; missing output and unknown flags exit nonzero
   const cli = (...args: string[]) => spawnSync(process.execPath, [join(ROOT, "node_modules/tsx/dist/cli.mjs"),
     join(ROOT, "scripts/benchmark-oraculo.ts"), ...args], { cwd: ROOT, encoding: "utf8", timeout: 10_000 });
   const help = cli("--help"); assert.equal(help.status, 0, help.stderr); assert.match(help.stdout, /No models/);
-  const missing = cli(); assert.equal(missing.status, 1); assert.match(missing.stderr, /--saida/);
-  const unknown = cli("--campaign", "x"); assert.equal(unknown.status, 1); assert.match(unknown.stderr, /Unknown/);
+  const missing = cli(); assert.equal(missing.status, 1); assert.match(missing.stderr, /BENCHMARK_FAILED/);
+  const unknown = cli("--campaign", "x"); assert.equal(unknown.status, 1); assert.match(unknown.stderr, /BENCHMARK_FAILED/);
+});
+
+await test("origin is grouped only when declared, with a separate missing provenance bucket", async () => {
+  const report = await evaluate(loadDataset(dataDir), invoke);
+  assert.equal(report.summary.byOrigin["busca-lexical"].queries, 1);
+  assert.equal(report.summary.byOrigin["observacao-real"].queries, 1);
+  assert.equal(report.summary.originMissing.queries, 3);
+  assert.equal(report.results[2].origem, null);
+  const dir = join(TMP, "bad-origin"); dataset(dir);
+  writeFileSync(join(dir, "queries.jsonl"), JSON.stringify({ ...qs[0], origem: "invented" }));
+  assert.throws(() => loadDataset(dir), /DATASET_INVALID/);
+});
+
+const CANARY = "PRIVATE_SYNTHETIC_QUERY_QREL_CANARY_7ac9";
+const reserveDir = join(TMP, "synthetic-reserve"); dataset(reserveDir);
+const reserveQueries = qs.map((q, i) => ({ ...q, id: i === 0 ? CANARY : q.id, query: `${CANARY}-${i}`, motivo: CANARY, component: CANARY }));
+const reserveQrels = labels.map(r => ({ ...r, query_id: r.query_id === "q1" ? CANARY : r.query_id, fonte: CANARY, trecho: CANARY, familia: CANARY }));
+writeFileSync(join(reserveDir, "queries.jsonl"), reserveQueries.map(q => JSON.stringify(q)).join("\n"));
+writeFileSync(join(reserveDir, "qrels.jsonl"), reserveQrels.map(r => JSON.stringify(r)).join("\n"));
+const trustedManifest = join(TMP, "trusted-manifest.json");
+const pin = () => {
+  const manifest = JSON.parse(readFileSync(join(reserveDir, "manifest.json"), "utf8"));
+  manifest.sha256 = Object.fromEntries(["queries.jsonl", "qrels.jsonl"].map(name => [name, sha256(readFileSync(join(reserveDir, name))).toUpperCase()]));
+  manifest.privateExtra = CANARY;
+  put(trustedManifest, manifest);
+};
+pin();
+const clean = (value: unknown) => assert.ok(!JSON.stringify(value).includes(CANARY), "Private synthetic canary escaped");
+const cleanFiles = (dir: string) => { for (const name of readdirSync(dir)) clean(readFileSync(join(dir, name), "utf8")); };
+const cli = (...args: string[]) => spawnSync(process.execPath, [join(ROOT, "node_modules/tsx/dist/cli.mjs"),
+  join(ROOT, "scripts/benchmark-oraculo.ts"), ...args], { cwd: ROOT, encoding: "utf8", timeout: 10_000 });
+
+await test("trusted external pins verify byte hashes, fail closed before parsing/spawning, and reject malformed digest schema", async () => {
+  assert.equal(loadDataset(reserveDir, { manifest: trustedManifest, reserve: true }).queries.length, 5);
+  assert.throws(() => loadDataset(reserveDir, { reserve: true }), /DATASET_INVALID/);
+  assert.throws(() => loadDataset(reserveDir, { manifest: join(reserveDir, "manifest.json"), reserve: true }), /DATASET_INVALID/);
+  const original = readFileSync(trustedManifest), queryBytes = readFileSync(join(reserveDir, "queries.jsonl"));
+  const entry = join(validator, "dist/index.js"), originalEntry = readFileSync(entry), marker = join(TMP, "spawned-marker");
+  writeFileSync(entry, `import {writeFileSync} from "node:fs"; writeFileSync(${JSON.stringify(marker)}, "spawned");`);
+  try {
+    writeFileSync(join(reserveDir, "queries.jsonl"), CANARY + " invalid JSON");
+    await assert.rejects(runBenchmark({ validator, benchmark: reserveDir, manifest: trustedManifest, reserve: true, output: join(TMP, "mismatch") }), /RESERVE_RUN_FAILED/);
+    assert.equal(existsSync(marker), false); assert.equal(existsSync(join(TMP, "mismatch")), false);
+    const malformed = JSON.parse(original.toString()); malformed.sha256["queries.jsonl"] = CANARY;
+    put(trustedManifest, malformed);
+    assert.throws(() => loadDataset(reserveDir, { manifest: trustedManifest, reserve: true }), /DATASET_INVALID/);
+  } finally { writeFileSync(trustedManifest, original); writeFileSync(join(reserveDir, "queries.jsonl"), queryBytes); writeFileSync(entry, originalEntry); }
+});
+
+await test("five-case reserve MCP and CLI never emit reflected text, labels, ids, manifest extras or errors", async () => {
+  const entry = join(validator, "dist/index.js"), original = readFileSync(entry);
+  const reflected = serverScript.replace('name: "fixture", version: "fixture-server"', `name: "${CANARY}", version: "${CANARY}"`).replace(
+    "const a = request.params.arguments;", `const a = request.params.arguments;
+    console.error(a.query);
+    if (a.query?.endsWith("-1")) return {isError:true,content:[{type:"text",text:a.query}]};
+    if (a.query?.endsWith("-2")) throw new Error(a.query);
+    if (a.query?.endsWith("-3")) return {content:[{type:"text",text:a.query}]};
+    if (a.query) return {content:[{type:"text",text:JSON.stringify({rules:[{id:a.query,normalizedRule:a.query,sourceUrl:a.query,conditions:[],exceptions:[],expectedEvidence:[]}]})}]};`);
+  writeFileSync(entry, reflected);
+  try {
+    const output = join(TMP, "reserve-safe");
+    const report = await runBenchmark({ validator, benchmark: reserveDir, manifest: trustedManifest, reserve: true, output, timeoutMs: 5000 });
+    assert.equal(report.summary.all.queries, 5); assert.equal(report.summary.all.errors, 3);
+    assert.equal(report.results[0].queryId, sha256(CANARY)); clean(report); cleanFiles(output);
+    const evidence = JSON.parse(readFileSync(join(output, "inputs.json"), "utf8"));
+    assert.equal(evidence.benchmark.files["queries.jsonl"], sha256(readFileSync(join(reserveDir, "queries.jsonl"))));
+    assert.deepEqual(readdirSync(output).sort(), ["inputs.json", "manifest.json", "results.json", "summary.json"]);
+    const outputCli = join(TMP, "reserve-cli");
+    const result = cli("--conjunto", reserveDir, "--manifesto", trustedManifest, "--reserva", "--validator", validator, "--saida", outputCli);
+    assert.equal(result.status, 2, result.stderr); clean(result.stdout); clean(result.stderr); cleanFiles(outputCli);
+    const devOutput = join(TMP, "dev-private-safe");
+    const dev = await runBenchmark({ validator, benchmark: reserveDir, output: devOutput }); clean(dev); cleanFiles(devOutput);
+  } finally { writeFileSync(entry, original); }
+});
+
+await test("reserve startup/CLI/parser failures and direct API errors expose static codes only", async () => {
+  const entry = join(validator, "dist/index.js"), original = readFileSync(entry);
+  writeFileSync(entry, `console.error(${JSON.stringify(CANARY)}); throw new Error(${JSON.stringify(CANARY)});`);
+  try {
+    const output = join(TMP, "reserve-startup-failure");
+    await assert.rejects(runBenchmark({ validator, benchmark: reserveDir, manifest: trustedManifest, reserve: true, output, timeoutMs: 1000 }), e => { clean(String(e)); return true; });
+    cleanFiles(output); assert.equal(JSON.parse(readFileSync(join(output, "failure.json"), "utf8")).error, "BENCHMARK_FAILED");
+    const result = cli("--benchmark", reserveDir, "--manifesto", trustedManifest, "--reserva", "--validator", validator, "--saida", join(TMP, "reserve-cli-failed"));
+    assert.equal(result.status, 1); clean(result.stdout); clean(result.stderr); cleanFiles(join(TMP, "reserve-cli-failed"));
+    const noPin = cli("--conjunto", reserveDir, "--reserva", "--saida", join(TMP, "unpinned"));
+    assert.equal(noPin.status, 1); clean(noPin.stderr); assert.equal(existsSync(join(TMP, "unpinned")), false);
+    assert.throws(() => payload({isError:true,content:[{text:CANARY}]}), e => { clean(String(e)); return true; });
+    const r = await evaluateQuery(reserveQueries[0], reserveQrels, async () => { throw new Error(CANARY); }); clean(r);
+    const saved = readFileSync(trustedManifest);
+    try { writeFileSync(trustedManifest, CANARY + " malformed"); assert.throws(() => loadDataset(reserveDir, { manifest: trustedManifest, reserve: true }), e => { clean(String(e)); return true; }); }
+    finally { writeFileSync(trustedManifest, saved); }
+  } finally { writeFileSync(entry, original); }
 });
 
 console.log(`\n${passed} passed; ${failed} failed. Synthetic artifacts: ${TMP}`);
