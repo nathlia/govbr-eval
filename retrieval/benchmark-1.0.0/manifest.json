@@ -1,0 +1,50 @@
+{
+  "versao": "1.0.0",
+  "estado": "candidato — aguardando revisão dos rótulos (Codex) antes de congelar",
+  "data": "2026-10-22",
+  "kb": {
+    "versao": "3.7.0-literal-2026-10-15",
+    "arquivo": "govbr-ds-validator/data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/rules.jsonl"
+  },
+  "ferramenta_avaliada": "get_ds_rules",
+  "contagens": {
+    "respondivel": 42,
+    "sem_resposta": 6,
+    "ambigua": 4,
+    "fora_escopo": 4,
+    "negativa_dificil": 6
+  },
+  "qrels": 102,
+  "componentes": [
+    "avatar",
+    "breadcrumb",
+    "button",
+    "carousel",
+    "checkbox",
+    "cookiebar",
+    "datetimepicker",
+    "footer",
+    "header",
+    "input",
+    "loading",
+    "menu",
+    "message",
+    "modal",
+    "pagination",
+    "radio",
+    "select",
+    "skiplink",
+    "step",
+    "switch",
+    "tab",
+    "table",
+    "tag",
+    "tooltip",
+    "upload",
+    "wizard"
+  ],
+  "sha256": {
+    "qrels.jsonl": "fa49f9ee095cae31628b770c86fb63d0db934584724ef3e58841f28ec8cfd4ec",
+    "queries.jsonl": "c9478f3be1d895e8c6dd333ae3d45867b7e0789ca5b2572c22b96707edcd57c7"
+  }
+}

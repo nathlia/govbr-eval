@@ -31,3 +31,5 @@ scripts/vazamento/*.ts text eol=lf
 kb-aliases-v2.json text eol=lf
 # scripts/*.ts não alcança subpastas (reanalise-nat74/, painel/, vazamento/): também entram no hash do engine ou em sha congelados.
 scripts/**/*.ts text eol=lf
+# NAT-95: o manifesto do benchmark de recuperação guarda o sha256 de queries/qrels; o avaliador recusa CRLF.
+retrieval/** text eol=lf

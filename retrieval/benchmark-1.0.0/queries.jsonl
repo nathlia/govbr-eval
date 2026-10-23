@@ -1,17 +1,62 @@
-{"id":"q001","query":"a página selecionada na paginação só muda de cor","component":"pagination","estrato":"respondivel","motivo":"observação natural; a fonte fala em página atual e feedback visual"}
-{"id":"q002","query":"o último item do breadcrumb é um link clicável","component":"breadcrumb","estrato":"respondivel","motivo":"observação direta de violação de regra proibitiva"}
-{"id":"q003","query":"breadcrumb cortado escondendo o titulo da pagina","component":"breadcrumb","estrato":"respondivel","motivo":"sem acento; vocabulário cortado ≠ truncamento da fonte"}
-{"id":"q004","query":"arquivo grande demais no upload não mostra mensagem nenhuma","component":"upload","estrato":"respondivel","motivo":"vocabulário diferente (grande demais ≠ tamanho excessivo)"}
-{"id":"q005","query":"input sem label associado pelo for e id","component":"input","estrato":"respondivel","motivo":"atributos técnicos (for/id)"}
-{"id":"q006","query":"botão só com ícone de lupa, sem texto","component":"button","estrato":"respondivel","motivo":"observação natural; fonte fala em botões com apenas ícones + title/aria-label"}
-{"id":"q007","query":"ao fechar o modal o foco volta para o topo da página","component":"modal","estrato":"respondivel","motivo":"observação de comportamento após interação"}
-{"id":"q008","query":"modal de confirmação abre com foco no botão fechar em vez da ação","component":"modal","estrato":"respondivel","motivo":"dois conceitos (tipo de modal + foco inicial); depende de condição"}
-{"id":"q009","query":"tooltip so aparece passando o mouse","component":"tooltip","estrato":"respondivel","motivo":"sem acento; passando o mouse ≠ hover"}
-{"id":"q010","query":"grupo de checkboxes sem título explicando as opções","component":"checkbox","estrato":"respondivel","motivo":"vocabulário título ≠ rótulo do grupo"}
-{"id":"q011","query":"cor de fundo do botão primário está um tom diferente do azul do DS","component":"button","estrato":"negativa_dificil","motivo":"parece regra de botão, mas é questão de token/medição; regras de acessibilidade de botão não sustentam"}
-{"id":"q012","query":"qual a melhor biblioteca de gráficos para o painel","component":null,"estrato":"fora_escopo","motivo":"fora do DS; resposta honesta é ausência"}
-{"id":"q013","query":"o menu lateral não fecha quando aperto escape","component":"menu","estrato":"respondivel","motivo":"escape ≠ Esc; comportamento de teclado"}
-{"id":"q014","query":"leitor de tela lê o switch mas não diz se está ligado ou desligado","component":"switch","estrato":"respondivel","motivo":"ligado/desligado ≠ estado; observação de tecnologia assistiva"}
-{"id":"q015","query":"coluna da tabela ordenável sem aria-sort","component":"table","estrato":"respondivel","motivo":"atributo técnico exato"}
-{"id":"q016","query":"nas abas as setas do teclado não trocam de aba","component":"tab","estrato":"respondivel","motivo":"nome em português (abas) para componente tab"}
-{"id":"q017","query":"trecho em inglês no meio da página sem marcação de idioma","component":null,"estrato":"respondivel","motivo":"regra global (e-MAG 3.2); sem componente; 'marcação de idioma' ≠ atributo lang"}
+{"id":"q001","query":"a página selecionada na paginação só muda de cor","component":"pagination","estrato":"respondivel","motivo":"observação natural; a fonte fala em página atual e feedback visual","origem":"busca-lexical"}
+{"id":"q002","query":"o último item do breadcrumb é um link clicável","component":"breadcrumb","estrato":"respondivel","motivo":"observação direta de violação de regra proibitiva","origem":"busca-lexical"}
+{"id":"q003","query":"breadcrumb cortado escondendo o titulo da pagina","component":"breadcrumb","estrato":"respondivel","motivo":"sem acento; vocabulário cortado ≠ truncamento da fonte","origem":"busca-lexical"}
+{"id":"q004","query":"arquivo grande demais no upload não mostra mensagem nenhuma","component":"upload","estrato":"respondivel","motivo":"vocabulário diferente (grande demais ≠ tamanho excessivo)","origem":"busca-lexical"}
+{"id":"q005","query":"input sem label associado pelo for e id","component":"input","estrato":"respondivel","motivo":"atributos técnicos (for/id)","origem":"busca-lexical"}
+{"id":"q006","query":"botão só com ícone de lupa, sem texto","component":"button","estrato":"respondivel","motivo":"observação natural; fonte fala em botões com apenas ícones + title/aria-label","origem":"busca-lexical"}
+{"id":"q007","query":"ao fechar o modal o foco volta para o topo da página","component":"modal","estrato":"respondivel","motivo":"observação de comportamento após interação","origem":"busca-lexical"}
+{"id":"q008","query":"modal de confirmação abre com foco no botão fechar em vez da ação","component":"modal","estrato":"respondivel","motivo":"dois conceitos (tipo de modal + foco inicial); depende de condição","origem":"busca-lexical"}
+{"id":"q009","query":"tooltip so aparece passando o mouse","component":"tooltip","estrato":"respondivel","motivo":"sem acento; passando o mouse ≠ hover","origem":"busca-lexical"}
+{"id":"q010","query":"grupo de checkboxes sem título explicando as opções","component":"checkbox","estrato":"respondivel","motivo":"vocabulário título ≠ rótulo do grupo","origem":"busca-lexical"}
+{"id":"q011","query":"cor de fundo do botão primário está um tom diferente do azul do DS","component":"button","estrato":"negativa_dificil","motivo":"parece regra de botão, mas é questão de token/medição; regras de acessibilidade de botão não sustentam","origem":"busca-lexical"}
+{"id":"q012","query":"qual a melhor biblioteca de gráficos para o painel","estrato":"fora_escopo","motivo":"fora do DS; resposta honesta é ausência","origem":"busca-lexical"}
+{"id":"q013","query":"o menu lateral não fecha quando aperto escape","component":"menu","estrato":"respondivel","motivo":"escape ≠ Esc; comportamento de teclado","origem":"busca-lexical"}
+{"id":"q014","query":"leitor de tela lê o switch mas não diz se está ligado ou desligado","component":"switch","estrato":"respondivel","motivo":"ligado/desligado ≠ estado; observação de tecnologia assistiva","origem":"busca-lexical"}
+{"id":"q015","query":"coluna da tabela ordenável sem aria-sort","component":"table","estrato":"respondivel","motivo":"atributo técnico exato","origem":"busca-lexical"}
+{"id":"q016","query":"nas abas as setas do teclado não trocam de aba","component":"tab","estrato":"respondivel","motivo":"nome em português (abas) para componente tab","origem":"busca-lexical"}
+{"id":"q017","query":"trecho em inglês no meio da página sem marcação de idioma","estrato":"respondivel","motivo":"regra global (e-MAG 3.2); sem componente; 'marcação de idioma' ≠ atributo lang","origem":"busca-lexical"}
+{"id":"q018","query":"na lista do select as setas para cima e para baixo não andam pelas opções","component":"select","estrato":"respondivel","motivo":"teclado após abrir a lista; 'para cima/baixo' ≠ Up/Down","origem":"busca-lexical"}
+{"id":"q019","query":"carrossel passa os slides sozinho e não tem botão de pausar","component":"carousel","estrato":"respondivel","motivo":"'passa sozinho' ≠ reprodução automática","origem":"busca-lexical"}
+{"id":"q020","query":"o titulo da aba do navegador e so Home em todas as paginas","estrato":"respondivel","motivo":"regra global (e-MAG 3.3); sem acento; 'aba do navegador' ≠ elemento TITLE","origem":"busca-lexical"}
+{"id":"q021","query":"campo com erro fica só com a borda vermelha, sem texto dizendo o que está errado","component":"input","estrato":"respondivel","motivo":"dois conceitos (cor de estado + descrição textual); a regra que sustenta é global (e-MAG 6.6), o componente é só pista","origem":"busca-lexical"}
+{"id":"q022","query":"o primeiro Tab da página cai no logo e não no atalho para o conteúdo","component":"skiplink","estrato":"respondivel","motivo":"observação de teclado; 'atalho para o conteúdo' ≠ skip link","origem":"busca-lexical"}
+{"id":"q023","query":"aviso de cookies sem opção de não aceitar","component":"cookiebar","estrato":"respondivel","motivo":"negação na pergunta; fonte fala em optar por não aceitar","origem":"busca-lexical"}
+{"id":"q024","query":"usaram radio button numa pergunta em que dá para marcar várias respostas","component":"radio","estrato":"respondivel","motivo":"inverso da regra de uso; dois componentes envolvidos","origem":"busca-lexical"}
+{"id":"q025","query":"indicador de etapas só com número e o leitor de tela não fala nada","component":"step","estrato":"respondivel","motivo":"'indicador de etapas' ≠ step; observação de TA","origem":"busca-lexical"}
+{"id":"q026","query":"depois que carrega, o leitor de tela não avisa que terminou","component":"loading","estrato":"respondivel","motivo":"fonte é permissiva (pode usar aria-live/role=status); sustenta a orientação, não uma violação","origem":"busca-lexical"}
+{"id":"q027","query":"alerta de sucesso some sozinho depois de 3 segundos","component":"message","estrato":"respondivel","motivo":"'alerta' ≠ message; desaparecimento automático","origem":"busca-lexical"}
+{"id":"q028","query":"quando a mensagem aparece o foco não vai para o botão de fechar","component":"message","estrato":"respondivel","motivo":"foco na exibição; condição 'quando houver' botão","origem":"busca-lexical"}
+{"id":"q029","query":"calendario de data so funciona clicando com o mouse","component":"datetimepicker","estrato":"respondivel","motivo":"sem acento; 'calendário de data' ≠ dateTimePicker","origem":"busca-lexical"}
+{"id":"q030","query":"foto de perfil sem texto alternativo","component":"avatar","estrato":"respondivel","motivo":"'foto de perfil' ≠ avatar","origem":"busca-lexical"}
+{"id":"q031","query":"não consigo chegar nas tags apertando Tab","component":"tag","estrato":"respondivel","motivo":"teclado; ambiguidade Tab (tecla) × tab (componente)","origem":"busca-lexical"}
+{"id":"q032","query":"imagem só decorativa colocada com img no HTML","estrato":"respondivel","motivo":"regra global (e-MAG 3.6); atributo técnico","origem":"busca-lexical"}
+{"id":"q033","query":"texto cinza claro em fundo branco difícil de ler","estrato":"respondivel","motivo":"observação natural; fonte fala em contraste/4,5:1","origem":"busca-lexical"}
+{"id":"q034","query":"a página pula do h1 direto para h4","estrato":"respondivel","motivo":"atributo técnico; 'pula' ≠ hierarquia","origem":"busca-lexical"}
+{"id":"q035","query":"links escritos clique aqui","estrato":"respondivel","motivo":"citação literal do exemplo proibido","origem":"busca-lexical"}
+{"id":"q036","query":"tabela montada com div em vez de table e th","component":"table","estrato":"respondivel","motivo":"atributos técnicos","origem":"busca-lexical"}
+{"id":"q037","query":"no passo 3 do wizard não tem como voltar para corrigir o passo 1","component":"wizard","estrato":"respondivel","motivo":"comportamento de navegação; dois conceitos (voltar + corrigir dados)","origem":"busca-lexical"}
+{"id":"q038","query":"links do rodapé só com ícone, sem dizer para onde levam","component":"footer","estrato":"respondivel","motivo":"'rodapé' ≠ footer","origem":"busca-lexical"}
+{"id":"q039","query":"o formulário expira sem avisar e eu perco tudo que preenchi","estrato":"respondivel","motivo":"regra global (e-MAG 2.5); 'expira' ≠ limite de tempo","origem":"busca-lexical"}
+{"id":"q040","query":"a página recarrega sozinha a cada minuto","estrato":"respondivel","motivo":"regra global (e-MAG 2.3); 'recarrega sozinha' ≠ atualização automática periódica","origem":"busca-lexical"}
+{"id":"q041","query":"com zoom de 200% o layout quebra e o botão de enviar some","estrato":"respondivel","motivo":"regra global (e-MAG 4.3); dois conceitos","origem":"busca-lexical"}
+{"id":"q042","query":"documento do edital disponível só em PDF","estrato":"respondivel","motivo":"regra global (e-MAG 3.8)","origem":"busca-lexical"}
+{"id":"q043","query":"captcha de imagem distorcida no cadastro","estrato":"respondivel","motivo":"regra global (e-MAG 6.8)","origem":"busca-lexical"}
+{"id":"q044","query":"abre uma modal em cima da outra","component":"modal","estrato":"respondivel","motivo":"'em cima da outra' ≠ empilhar","origem":"busca-lexical"}
+{"id":"q045","query":"o site não tem modo escuro","estrato":"sem_resposta","motivo":"ausente na base (modo/tema escuro); 'negativo' do accordion é superfície escura, não tema","origem":"busca-lexical"}
+{"id":"q046","query":"lista de resultados com rolagem infinita em vez de paginação","component":"pagination","estrato":"sem_resposta","motivo":"ausente na base (rolagem infinita/carregar mais); a paginação existe, a comparação não","origem":"busca-lexical"}
+{"id":"q047","query":"editor de texto rico sem barra de ferramentas acessível","estrato":"sem_resposta","motivo":"ausente na base (editor rico/wysiwyg)","origem":"busca-lexical"}
+{"id":"q048","query":"tela de carregamento esqueleto que não segue o formato do conteúdo","component":"loading","estrato":"sem_resposta","motivo":"ausente na base (skeleton); loading trata de spinner/barra","origem":"busca-lexical"}
+{"id":"q049","query":"o site trava na orientação retrato no celular","estrato":"sem_resposta","motivo":"ausente na base (orientação de tela); 'orientação vertical' do step é layout do componente","origem":"busca-lexical"}
+{"id":"q050","query":"o site não tem favicon","estrato":"sem_resposta","motivo":"ausente na base","origem":"busca-lexical"}
+{"id":"q051","query":"o botão está errado","component":"button","estrato":"ambigua","motivo":"sem observação; qualquer regra de botão seria palpite","origem":"busca-lexical"}
+{"id":"q052","query":"o formulário não está acessível","estrato":"ambigua","motivo":"amplo demais; dezenas de regras parciais","origem":"busca-lexical"}
+{"id":"q053","query":"a busca do cabeçalho não funciona direito","component":"header","estrato":"ambigua","motivo":"a base só tem a anatomia (campo de busca opcional); sem regra de comportamento da busca","origem":"busca-lexical"}
+{"id":"q054","query":"o menu está estranho no celular","component":"menu","estrato":"ambigua","motivo":"'estranho' não identifica obrigação","origem":"busca-lexical"}
+{"id":"q055","query":"qual o prazo legal para responder um pedido de acesso à informação","estrato":"fora_escopo","motivo":"LAI; fora do DS e do e-MAG","origem":"busca-lexical"}
+{"id":"q056","query":"como fazer deploy da aplicação na nuvem do governo","estrato":"fora_escopo","motivo":"infraestrutura; fora do DS","origem":"busca-lexical"}
+{"id":"q057","query":"qual banco de dados usar para guardar as respostas do formulário","estrato":"fora_escopo","motivo":"back-end; fora do DS","origem":"busca-lexical"}
+{"id":"q058","query":"carrossel automático na versão desktop, com botões de pausar e reproduzir","component":"carousel","estrato":"negativa_dificil","motivo":"as proibições são para dispositivos móveis; no desktop com controles a fonte permite","origem":"busca-lexical"}
+{"id":"q059","query":"breadcrumb truncado no celular escondendo só os itens do meio","component":"breadcrumb","estrato":"negativa_dificil","motivo":"truncamento é permitido sem espaço; a proibição cobre Home, último ancestral e título","origem":"busca-lexical"}
+{"id":"q060","query":"checkbox sem texto ao lado nas linhas de uma tabela","component":"checkbox","estrato":"negativa_dificil","motivo":"a fonte permite checkbox sem texto descritivo em linha de tabela","origem":"busca-lexical"}
+{"id":"q061","query":"mensagem de alerta sem botão de fechar","component":"message","estrato":"negativa_dificil","motivo":"botão fechar é opcional e recomendado só no tipo padrão","origem":"busca-lexical"}
+{"id":"q062","query":"botão só com ícone que tem aria-label mas não tem title","component":"button","estrato":"negativa_dificil","motivo":"a fonte pede title OU aria-label; aria-label basta","origem":"busca-lexical"}
