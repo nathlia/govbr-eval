@@ -1,0 +1,12 @@
+{"id":"q001","query":"a página selecionada na paginação só muda de cor","component":"pagination","estrato":"respondivel","motivo":"observação natural; a fonte fala em página atual e feedback visual"}
+{"id":"q002","query":"o último item do breadcrumb é um link clicável","component":"breadcrumb","estrato":"respondivel","motivo":"observação direta de violação de regra proibitiva"}
+{"id":"q003","query":"breadcrumb cortado escondendo o titulo da pagina","component":"breadcrumb","estrato":"respondivel","motivo":"sem acento; vocabulário cortado ≠ truncamento da fonte"}
+{"id":"q004","query":"arquivo grande demais no upload não mostra mensagem nenhuma","component":"upload","estrato":"respondivel","motivo":"vocabulário diferente (grande demais ≠ tamanho excessivo)"}
+{"id":"q005","query":"input sem label associado pelo for e id","component":"input","estrato":"respondivel","motivo":"atributos técnicos (for/id)"}
+{"id":"q006","query":"botão só com ícone de lupa, sem texto","component":"button","estrato":"respondivel","motivo":"observação natural; fonte fala em botões com apenas ícones + title/aria-label"}
+{"id":"q007","query":"ao fechar o modal o foco volta para o topo da página","component":"modal","estrato":"respondivel","motivo":"observação de comportamento após interação"}
+{"id":"q008","query":"modal de confirmação abre com foco no botão fechar em vez da ação","component":"modal","estrato":"respondivel","motivo":"dois conceitos (tipo de modal + foco inicial); depende de condição"}
+{"id":"q009","query":"tooltip so aparece passando o mouse","component":"tooltip","estrato":"respondivel","motivo":"sem acento; passando o mouse ≠ hover"}
+{"id":"q010","query":"grupo de checkboxes sem título explicando as opções","component":"checkbox","estrato":"respondivel","motivo":"vocabulário título ≠ rótulo do grupo"}
+{"id":"q011","query":"cor de fundo do botão primário está um tom diferente do azul do DS","component":"button","estrato":"negativa_dificil","motivo":"parece regra de botão, mas é questão de token/medição; regras de acessibilidade de botão não sustentam"}
+{"id":"q012","query":"qual a melhor biblioteca de gráficos para o painel","component":null,"estrato":"fora_escopo","motivo":"fora do DS; resposta honesta é ausência"}
