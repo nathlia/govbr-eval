@@ -135,7 +135,7 @@ await test("manifest count drift, duplicate ids, missing positive labels, and co
   dataset(dir); writeFileSync(join(dir, "queries.jsonl"), [...qs, qs[0]].map(q => JSON.stringify(q)).join("\n"));
   assert.throws(() => loadDataset(dir), /DATASET_INVALID/);
   dataset(dir); writeFileSync(join(dir, "qrels.jsonl"), ""); assert.throws(() => loadDataset(dir), /DATASET_INVALID/);
-  await assert.rejects(evaluateQuery(qs[0], [...labels, { ...labels[0], unit_id: "alias", relevance: -1 }], async () => wire({ rules: [full("u1", { aliases: ["alias"] })] })), /Conflicting labels/);
+  await assert.rejects(evaluateQuery(qs[0], [...labels, { ...labels[0], unit_id: "alias", relevance: -1 }], async () => wire({ rules: [full("u1", { aliases: ["alias"] })] })), /^Error: DATASET_LABEL_CONFLICT$/);
 });
 await test("hashes include nested actual bytes and stable sorted paths", () => {
   const dir = join(TMP, "tree"); put(join(dir, "nested/a.json"), { a: 1 });
@@ -307,6 +307,94 @@ await test("reserve startup/CLI/parser failures and direct API errors expose sta
     try { writeFileSync(trustedManifest, CANARY + " malformed"); assert.throws(() => loadDataset(reserveDir, { manifest: trustedManifest, reserve: true }), e => { clean(String(e)); return true; }); }
     finally { writeFileSync(trustedManifest, saved); }
   } finally { writeFileSync(entry, original); }
+});
+
+await test("development pool is opt-in, label-independent, sorted and limited to initial top five; ordinary reports stay sanitized", async () => {
+  const entry = join(validator, "dist/index.js"), original = readFileSync(entry);
+  const script = serverScript.replace('const rules = a.query === "first observation" ? [rule("u1")] : a.query === "second observation" ? [rule("u2")] : [];',
+    'const rules = a.query === "first observation" ? [rule("z"),rule("u1"),rule("a"),rule("z"),rule("x"),rule("b"),{...rule("late-alias"),aliases:["u1"]},rule("rank-six")] : a.query === "second observation" ? [rule("u2")] : [];');
+  writeFileSync(entry, script);
+  try {
+    const output = join(TMP, "pool-development"), pool = join(output, "pool.json");
+    const report = await runBenchmark({ validator, benchmark: dataDir, output, pool });
+    const rows = JSON.parse(readFileSync(pool, "utf8"));
+    assert.equal(rows.length, qs.length);
+    assert.deepEqual(rows.map((r: { queryId: string }) => r.queryId), qs.map(q => sha256(q.id)).sort());
+    assert.deepEqual(rows.find((r: { queryId: string }) => r.queryId === sha256("q1")), { queryId: sha256("q1"), ids: ["a", "b", "u1", "x", "z"] });
+    for (const row of rows) assert.deepEqual(Object.keys(row).sort(), ["ids", "queryId"]);
+    const bytes = readFileSync(pool, "utf8");
+    for (const secret of [qs[0].query, labels[0].trecho, labels[0].fonte, "relevance", "rank-six", "late-alias", "rank", "estrato"]) assert.ok(!bytes.includes(secret), secret);
+    assert.ok(!JSON.stringify(report).includes('"ids"'));
+    const manifest = JSON.parse(readFileSync(join(output, "manifest.json"), "utf8"));
+    assert.equal(manifest.pool.sha256, sha256(bytes));
+    // Changing local labels cannot change the exported candidates or MCP selection.
+    const altered = join(TMP, "pool-altered-labels"); dataset(altered);
+    writeFileSync(join(altered, "qrels.jsonl"), labels.map(r => JSON.stringify({ ...r, relevance: 1, familia: "local-only" })).join("\n"));
+    const secondPool = join(TMP, "external-pool.json");
+    await runBenchmark({ validator, benchmark: altered, output: join(TMP, "pool-second"), pool: secondPool });
+    assert.equal(readFileSync(secondPool, "utf8"), bytes);
+    const duplicateOutput = join(TMP, "pool-existing-target");
+    await assert.rejects(runBenchmark({ validator, benchmark: dataDir, output: duplicateOutput, pool: secondPool }), /POOL_REQUIRES_NEW_FILE/);
+    assert.equal(existsSync(duplicateOutput), false); assert.equal(readFileSync(secondPool, "utf8"), bytes);
+    const cliPool = join(TMP, "cli-pool.json"), cliOutput = join(TMP, "cli-pool-output");
+    const result = cli("--conjunto", dataDir, "--validator", validator, "--saida", cliOutput, "--pool", cliPool);
+    assert.equal(result.status, 0, result.stderr); assert.equal(readFileSync(cliPool, "utf8"), bytes);
+    assert.ok(!result.stdout.includes('"ids"')); assert.equal(result.stderr, "");
+  } finally { writeFileSync(entry, original); }
+});
+
+await test("pool cannot target dataset, validator, artifact names or output ancestors", async () => {
+  const output = join(TMP, "pool-path-conflicts");
+  for (const pool of [join(dataDir, "new-pool.json"), join(validator, "new-pool.json"), output,
+    join(output, "inputs.json"), join(output, "results.json"), join(output, "summary.json"), join(output, "manifest.json"), join(output, "failure.json")]) {
+    await assert.rejects(runBenchmark({ validator, benchmark: dataDir, output, pool }), /POOL_PATH_CONFLICT/);
+    assert.equal(existsSync(output), false);
+  }
+  const ancestor = join(TMP, "pool-ancestor");
+  await assert.rejects(runBenchmark({ validator, benchmark: dataDir, output: join(ancestor, "out"), pool: ancestor }), /POOL_PATH_CONFLICT/);
+  assert.equal(existsSync(ancestor), false);
+});
+
+await test("reserve plus pool is rejected by API and CLI before any input access, output or server startup", async () => {
+  const missing = join(TMP, "must-not-be-read"), output = join(TMP, "reserve-pool-blocked"), pool = join(TMP, "reserve-pool.json");
+  await assert.rejects(runBenchmark({ validator: missing, benchmark: missing, manifest: missing, output, pool, reserve: true }), /^Error: RESERVE_RUN_FAILED$/);
+  const result = cli("--conjunto", missing, "--validator", missing, "--manifesto", missing, "--saida", output, "--pool", pool, "--reserva");
+  assert.equal(result.status, 1); assert.equal(result.stderr.trim(), "RESERVE_RUN_FAILED"); assert.equal(result.stdout, "");
+  assert.equal(existsSync(output), false); assert.equal(existsSync(pool), false);
+});
+
+await test("label conflicts retain the static dataset code in API, CLI and failure artifact, with no completed pool or manifest", async () => {
+  const entry = join(validator, "dist/index.js"), original = readFileSync(entry);
+  const conflicting = join(TMP, "conflicting-labels"); dataset(conflicting);
+  writeFileSync(join(conflicting, "qrels.jsonl"), [...labels, { ...labels[0], unit_id: "alias", relevance: -1 }].map(r => JSON.stringify(r)).join("\n"));
+  writeFileSync(entry, serverScript.replace('const rules = a.query === "first observation" ? [rule("u1")]', 'const rules = a.query === "first observation" ? [{...rule("u1"), aliases:["alias"]}]'));
+  try {
+    const output = join(TMP, "dataset-conflict"), pool = join(TMP, "conflict-pool.json");
+    await assert.rejects(runBenchmark({ validator, benchmark: conflicting, output, pool }), /^Error: DATASET_LABEL_CONFLICT$/);
+    assert.equal(JSON.parse(readFileSync(join(output, "failure.json"), "utf8")).error, "DATASET_LABEL_CONFLICT");
+    assert.equal(existsSync(join(output, "manifest.json")), false); assert.equal(existsSync(pool), false);
+    const cliOutput = join(TMP, "dataset-conflict-cli");
+    const result = cli("--conjunto", conflicting, "--validator", validator, "--saida", cliOutput);
+    assert.equal(result.status, 1); assert.equal(result.stderr.trim(), "DATASET_LABEL_CONFLICT"); assert.equal(result.stdout, "");
+    assert.equal(JSON.parse(readFileSync(join(cliOutput, "failure.json"), "utf8")).error, "DATASET_LABEL_CONFLICT");
+    assert.throws(() => groupFamilies(units({rules:[full("u1",{aliases:["alias"]})]}), [
+      {...labels[0],familia:"first"}, {...labels[0],unit_id:"alias",familia:"second"}
+    ]), /^Error: DATASET_LABEL_CONFLICT$/);
+  } finally { writeFileSync(entry, original); }
+});
+
+await test("input mutation and tool failures never publish a completed development pool", async () => {
+  const entry = join(validator, "dist/index.js"), original = readFileSync(entry);
+  const kb = join(validator, "data/knowledge/versions/fixture-kb/manifest.json"), originalKb = readFileSync(kb);
+  for (const mode of ["mutate", "tool-error"]) {
+    const extra = mode === "mutate" ? `if(a.query === "missing source") appendFileSync(${JSON.stringify(kb)}, " ");` : 'if(a.query === "missing source") throw new Error("synthetic");';
+    writeFileSync(entry, 'import {appendFileSync} from "node:fs";\n' + serverScript.replace("const a = request.params.arguments;", "const a = request.params.arguments;" + extra));
+    try {
+      const output = join(TMP, `pool-${mode}`), pool = join(TMP, `pool-${mode}.json`);
+      await assert.rejects(runBenchmark({ validator, benchmark: dataDir, output, pool }), /BENCHMARK_FAILED/);
+      assert.equal(existsSync(pool), false); assert.equal(existsSync(join(output, "manifest.json")), false);
+    } finally { writeFileSync(entry, original); writeFileSync(kb, originalKb); }
+  }
 });
 
 console.log(`\n${passed} passed; ${failed} failed. Synthetic artifacts: ${TMP}`);
