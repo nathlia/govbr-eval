@@ -1,0 +1,25 @@
+{
+  "validator": {
+    "dist": "fafeeb0338cba1d2d7463c4317543b08150836be37d859e071cb70fb2663aacb",
+    "data": "989b29a5689470b36befa1803446eab9af1595b7480510f39507b0bd1c1927c9",
+    "packageSha256": "8705a0fbb82881ef6d1aac99ccebc9cb2eb41fde981ccbbb17773b14526ff837",
+    "lockSha256": "48cd706c89d36561d3c52ea742fe57c47dcad2172d92d5b3e97e57f0b456cd7e",
+    "kb": "e9f9218de1cd4d91ffb71340b1a9e90063b3851f52049c820e29fad3e77854bf"
+  },
+  "benchmark": {
+    "files": {
+      "manifest.json": "d74b892b45ffb47d12be2927240604de1d413e624f912b9fa9ef0c9641abc659",
+      "queries.jsonl": "7041e266f342ca5b7b33dad2f4a2fb895bc8e4bfefa496d9ddb768eb6f41bfd5",
+      "qrels.jsonl": "6b2932bf1acb78f75190f6ba96b711e2c38c4372a5afc294b3d75fb0bffd0a71"
+    }
+  },
+  "evaluator": {
+    "version": "retrieval-evaluator-1.4.0",
+    "node": "v25.2.1",
+    "sha256": "5364ea801d694b0ce1dde27da332a49597a5e8a106907ac1886e427cd550624a",
+    "lockSha256": "3ed1136d80d7dfa9c2dc438f9d05ef2ac4622035406030e43e707bbcd1880a48"
+  },
+  "validatorCommit": "0234867df2aa59a0441c24df7dceb5472816b9bd",
+  "reserve": false,
+  "startedAt": "2026-10-28T14:06:54.861Z"
+}
