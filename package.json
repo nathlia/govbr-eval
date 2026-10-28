@@ -106,7 +106,9 @@
     "portao:matriz": "tsx portao-nat86/matriz.ts",
     "portao:oraculo": "tsx portao-nat86/oraculo.ts",
     "portao:integridade": "tsx portao-nat86/integridade.ts",
-    "test:portao": "tsx portao-nat86/testes.ts"
+    "test:portao": "tsx portao-nat86/testes.ts",
+    "pool:bm25": "tsx scripts/pool-referencia-bm25.ts",
+    "test:pool-bm25": "tsx scripts/test-pool-referencia-bm25.ts"
   },
   "dependencies": {
     "@axe-core/playwright": "4.11.1",
