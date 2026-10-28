@@ -211,7 +211,10 @@ perfis fixados (nomes + sha256 do `tools/list`) ficam em `runner/perfis-oraculo.
   (`ferramenta-oculta`). O `inventory.json` grava o `tools/list` do servidor e o exposto, com sha256.
 - **Perfil MEDIDO, não declarado:** `perfil-do-oraculo-no-arranque` (antes da sonda; diverge → o agente
   não parte), `inventario-do-oraculo` (sonda), `perfil-do-oraculo` e `inventario-exposto-do-oraculo`
-  (depois, com a telemetria: o knowledge-free marca todo evento com `knowledgeLockAttempts`).
+  (depois, com a telemetria: o knowledge-free marca todo evento com `knowledgeLockAttempts`). Desde o
+  validator 2.17.1 o servidor declara o perfil efetivo em `serverInfo.description` (`toolProfile=<p>`):
+  a ponte grava (inventário 1.2.0) e o perfil medido exige que bata com o do `tools/list`; ausente ou
+  divergente = falha fechada. Campanhas novas fixam os sha da 3.0.0; as históricas mantêm os seus.
   `run.json` passa a `run.v2` em todos os braços; `intervention.oracle.profile` é o medido.
 - **Só no `ferramentas`:** `trava-de-conhecimento` (contador da trava = 0 em todo evento) e
   `vazamento-de-conhecimento` (dicionário gerado do `data/` do validator travado sobre os payloads

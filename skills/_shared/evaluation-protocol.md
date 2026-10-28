@@ -27,8 +27,9 @@ ele estiver disponível.
    em `actions`, pois navegadores de servidores MCP diferentes não compartilham estado. Guarde
    `scanId` e fingerprint; use `compareToScanId` no estado seguinte.
 5. Decida primeiro com os resumos. Recupere evidência pelos ids de finding; use objetos completos só
-   quando outro contrato exigir. Continue respostas truncadas pelo mesmo `scanId`, sem repetir a
-   varredura.
+   quando outro contrato exigir. Continue respostas cortadas pela continuação indicada (cursor ou
+   id), sem repetir a varredura. Uma ação indicada pela ferramenta é sugestão de próximo passo, não
+   conclusão sobre o fato.
 6. Consulte regras em lote e na projeção breve. Busque detalhe completo apenas para candidatos cuja
    aplicabilidade ainda esteja ambígua. Verifique achados heurísticos quando a ferramenta de
    verificação estiver disponível.

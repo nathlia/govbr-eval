@@ -23,20 +23,32 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
 
 /**
  * Ferramentas que cada perfil registra, em ordem alfabética, e o sha256 de `JSON.stringify(tools)` do
- * tools/list (cliente MCP 1.29.0, o mesmo da ponte). Valores fixados no validator 2.14.0:
+ * tools/list (cliente MCP 1.29.0, o mesmo da ponte). Valores do validator 3.0.0 (0234867, NAT-99) — só para
+ * campanhas NOVAS; as campanhas históricas guardam os próprios pins no campaign.json (2.14.0: evaluation
+ * 3d70162f…, knowledge-free 72abd549…):
  *   - knowledge-free: test/integration/knowledge-free.test.ts (KNOWLEDGE_FREE_TOOLS_SHA256);
- *   - evaluation: o mesmo teste (EVALUATION_TOOLS_SHA256_2_13_0, invariância 2.13.0 → 2.14.0).
- * Medidos de novo em 2026-10-18 contra o dist/ do validator f97aa7d com o SDK 1.29.0 da ponte.
+ *   - evaluation: o mesmo teste (EVALUATION_TOOLS_SHA256_3_0_0).
+ * Medidos em 2026-10-28 contra o dist/ de uma cópia congelada do validator 0234867 com o SDK 1.29.0 da ponte
+ * (stdio, GOVBR_VALIDATOR_TOOL_PROFILE=<perfil>, sha256 de JSON.stringify(tools)).
  * Mudou de propósito? Mude aqui E no validator, e declare: é diferença de tratamento do braço.
  */
+export const TOOLS_LIST_SHA256_3_0_0 = {
+  "knowledge-free": "8bdb5e35ed3346a91b227b45034d64c849f1d21baeb6d5affc995a4ea02c7dee",
+  evaluation: "9b32f185cd7d2c436fb7c3c59800b5a87e6b7c3c59db00715c1f3532044d20bc",
+  full: "919784c92d9cf434f7fb27619055e0812a046a6158442601627fd581e887d9f2",
+  normative: "54cee921ae98b241cead17c8e0cdf03cc9ec0bb562a78d81fa0461320150b732",
+  deterministic: "7e3feff342cacf5d921beb7633dea098ef956f41ceb49326f6523e20d6a7f838",
+  evidence: "9a7ec0b3b05785fdd3e542f907fccb1d501226c101cb32cb6477c12f6eee87d0",
+} as const;
+
 export const PERFIS: Readonly<Record<PerfilOraculo, { tools: readonly string[]; toolsListSha256: string }>> = {
   evaluation: {
     tools: ["get_component_spec", "get_design_tokens", "get_ds_rules", "get_emag_rules", "get_finding_details", "get_page_rules", "scan_page", "verify_finding"],
-    toolsListSha256: "3d70162f5fed0ec8614d9dcbc18a69a00b4819ad56df1ed1c5bf95213eed0b3b",
+    toolsListSha256: TOOLS_LIST_SHA256_3_0_0.evaluation,
   },
   "knowledge-free": {
     tools: ["get_finding_details", "scan_page", "verify_finding"],
-    toolsListSha256: "72abd54968cbe3173fce5dd3b4bba7aff563b37ca11b8a9ec0f25a91a104d39c",
+    toolsListSha256: TOOLS_LIST_SHA256_3_0_0["knowledge-free"],
   },
 };
 
@@ -54,7 +66,7 @@ export interface InventarioOraculo {
   childToolsSha256?: string; exposedToolsSha256?: string;
   /** O tools/list exposto, integral (o hash é conferido de novo aqui, sobre estes bytes). */
   toolsList?: unknown[];
-  serverInfo?: { name?: string; version?: string } | null;
+  serverInfo?: { name?: string; version?: string; description?: string | null } | null;
 }
 
 /**
@@ -73,11 +85,16 @@ export function perfilMedido(inv: InventarioOraculo | null, telemetria: Record<s
   const porHash = (Object.keys(PERFIS) as PerfilOraculo[]).filter((p) => PERFIS[p].toolsListSha256 === inv.childToolsSha256);
   let perfil: PerfilOraculo | null = porNomes.length === 1 && porHash.length === 1 && porNomes[0] === porHash[0] ? porNomes[0] : null;
   if (!perfil) problemas.push(`tools/list do servidor (${nomes.join(", ")}; sha256 ${String(inv.childToolsSha256 ?? "ausente").slice(0, 12)}) não é o de nenhum perfil fixado`);
+  // Segunda medida do servidor (validator ≥ 2.17.1): serverInfo.description = "toolProfile=<perfil>". Ausente ou
+  // diferente do perfil do tools/list = falha fechada (o validator 3.0.0 que as campanhas novas fixam sempre a anuncia).
+  const declarado = /(?:^|\s)toolProfile=(\S+)/.exec(inv.serverInfo?.description ?? "")?.[1] ?? null;
+  if (!declarado) { problemas.push(`serverInfo.description sem toolProfile=<perfil> (${JSON.stringify(inv.serverInfo?.description ?? null)})`); perfil = null; }
+  else if (perfil && declarado !== perfil) { problemas.push(`serverInfo diz toolProfile=${declarado}, tools/list diz ${perfil}`); perfil = null; }
   const comMarca = telemetria.filter((e) => "knowledgeLockAttempts" in e).length;
   if (telemetria.length) {
     const marcado = comMarca === telemetria.length ? "knowledge-free" : comMarca === 0 ? "evaluation" : null;
     if (marcado === null) { problemas.push(`telemetria mista: ${comMarca}/${telemetria.length} eventos com a marca do perfil knowledge-free`); perfil = null; }
     else if (perfil && marcado !== perfil) { problemas.push(`telemetria diz ${marcado}, tools/list diz ${perfil}`); perfil = null; }
   }
-  return { perfil, fonte: `tools/list do servidor na ponte (nomes + sha256 fixado)${telemetria.length ? ` + telemetria (${telemetria.length} eventos, ${comMarca} com a marca knowledge-free)` : "; telemetria sem eventos"}`, problemas };
+  return { perfil, fonte: `tools/list do servidor na ponte (nomes + sha256 fixado) + serverInfo.description (toolProfile=)${telemetria.length ? ` + telemetria (${telemetria.length} eventos, ${comMarca} com a marca knowledge-free)` : "; telemetria sem eventos"}`, problemas };
 }

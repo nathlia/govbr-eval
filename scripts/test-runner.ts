@@ -169,11 +169,15 @@ function assertParity(a: RunOutcome | undefined, b: RunOutcome | undefined): voi
 async function testesSemDocker(): Promise<void> {
   await test("perfil medido: tools/list do servidor (nomes + sha256 fixado) e marca da telemetria; o rótulo do braço não conta", async () => {
     const inv = (p: "evaluation" | "knowledge-free", hash?: string): InventarioOraculo => ({ childTools: [...PERFIS[p].tools].reverse(), exposed: [...PERFIS[p].tools], hidden: [],
-      childToolsSha256: hash ?? PERFIS[p].toolsListSha256, exposedToolsSha256: PERFIS[p].toolsListSha256 });
+      childToolsSha256: hash ?? PERFIS[p].toolsListSha256, exposedToolsSha256: PERFIS[p].toolsListSha256,
+      serverInfo: { name: "govbr-ds-validator", version: "3.0.0", description: `toolProfile=${p}` } });
     assert.equal(perfilMedido(inv("knowledge-free")).perfil, "knowledge-free");
     assert.equal(perfilMedido(inv("evaluation")).perfil, "evaluation");
     assert.equal(perfilMedido(inv("knowledge-free", "0".repeat(64))).perfil, null, "nomes certos, esquemas diferentes do fixado");
     assert.equal(perfilMedido(null).perfil, null);
+    // 2.17.1+: o perfil declarado pelo servidor também precisa bater; ausente ou divergente falha fechado
+    assert.equal(perfilMedido({ ...inv("knowledge-free"), serverInfo: { name: "govbr-ds-validator", version: "3.0.0", description: "toolProfile=full" } }).perfil, null, "serverInfo diverge do tools/list");
+    assert.equal(perfilMedido({ ...inv("evaluation"), serverInfo: { name: "govbr-ds-validator", version: "2.17.0" } }).perfil, null, "serverInfo sem toolProfile=");
     assert.equal(perfilMedido(inv("knowledge-free"), [{ knowledgeLockAttempts: 0 }, { knowledgeLockAttempts: 0 }]).perfil, "knowledge-free");
     assert.equal(perfilMedido(inv("evaluation"), [{ knowledgeLockAttempts: 0 }]).perfil, null, "telemetria do knowledge-free num tools/list do evaluation");
     assert.equal(perfilMedido(inv("knowledge-free"), [{ knowledgeLockAttempts: 0 }, {}]).perfil, null, "telemetria mista");

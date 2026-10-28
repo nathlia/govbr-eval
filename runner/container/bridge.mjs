@@ -40,8 +40,8 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 export const BRIDGE_VERSION = "bridge-1.0.0";
 /** Política de payload integral (NAT-82). Fica no inventário e no evento `start`; a versão anunciada ao agente não muda. */
 export const PAYLOAD_POLICY = "tool-payload-1.0.0";
-/** Formato do inventory.json (1.1.0, NAT-61: allow, sha256 dos tools/list, tools/list exposto, serverInfo). Não é anunciado ao agente. */
-export const INVENTORY_VERSION = "bridge-inventario-1.1.0";
+/** Formato do inventory.json (1.2.0: 1.1.0 + serverInfo.description, onde o validator ≥ 2.17.1 declara toolProfile=<perfil>; 1.1.0, NAT-61: allow, sha256 dos tools/list, tools/list exposto, serverInfo). Não é anunciado ao agente. */
+export const INVENTORY_VERSION = "bridge-inventario-1.2.0";
 
 /** Ferramentas do Playwright MCP que o agente recebe. Qualquer outra fica oculta (inclusive as de versões futuras). */
 export const PLAYWRIGHT_ALLOWED = [
@@ -164,7 +164,7 @@ const inventory = {
   hidden, allow: IS_PLAYWRIGHT ? null : ALLOW !== null ? [...allowed] : null,
   // sha256 de JSON.stringify(tools) como o cliente MCP os recebeu: o do servidor (antes do filtro) e o exposto ao agente
   childToolsSha256: sha256(JSON.stringify(childTools)), exposedToolsSha256: sha256(JSON.stringify(exposedTools)),
-  toolsList: IS_PLAYWRIGHT ? null : exposedTools, serverInfo: serverInfo ? { name: serverInfo.name ?? null, version: serverInfo.version ?? null } : null,
+  toolsList: IS_PLAYWRIGHT ? null : exposedTools, serverInfo: serverInfo ? { name: serverInfo.name ?? null, version: serverInfo.version ?? null, description: serverInfo.description ?? null } : null,
   windows, resizePattern: IS_PLAYWRIGHT ? RESIZE_PATTERN.source : null, startedAt: new Date().toISOString(),
   payloads: { policy: PAYLOAD_POLICY, projectionChars: PROJECTION_CHARS, limitBytes: PAYLOAD_LIMIT_BYTES, budgetBytes: PAYLOAD_BUDGET_BYTES, dir: PAYLOAD_DIR ? "payloads" : null },
 };

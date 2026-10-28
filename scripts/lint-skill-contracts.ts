@@ -72,10 +72,13 @@ const avaliarWords = words(avaliar);
 // Oráculo 2.15 lote 1 (D-140, revisão Codex): frases de procedimento iguais nos três braços (veredito sobre a
 // regra não desmente o fato medido, contrafato medido desmente; silêncio numa especificação não é
 // conformidade), ~60 palavras; meta 1250 → 1300.
-if (avaliarWords < 800 || avaliarWords > 1300) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1300`);
+// Oráculo 3.0.0 (NAT-99, nota de migração do validator): continuação por cursor ou id, próximo passo indicado em
+// erro/ausência/ambiguidade, ação da ferramenta é sugestão e não conclusão; ~45 palavras, iguais nos três braços; meta 1300 → 1350.
+if (avaliarWords < 800 || avaliarWords > 1350) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1350`);
 
 const screenWords = words(shared) + words(screen);
-if (screenWords < 600 || screenWords > 800) failures.push(`evaluate-screen: ${screenWords} palavras combinadas; meta 600–800`);
+// Oráculo 3.0.0 (NAT-99): continuação por cursor ou id + ação da ferramenta como sugestão, ~18 palavras; meta 800 → 820.
+if (screenWords < 600 || screenWords > 820) failures.push(`evaluate-screen: ${screenWords} palavras combinadas; meta 600–820`);
 const allWords = words(all);
 if (allWords < 240 || allWords > 400) failures.push(`evaluate-all: ${allWords} palavras além do protocolo; meta 240–400`);
 if (shared.includes("/api/save-")) failures.push("shared: destino específico deve ficar na especialização");

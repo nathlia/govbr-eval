@@ -9,6 +9,7 @@
   "scripts": {
     "benchmark:oraculo": "tsx scripts/benchmark-oraculo.ts",
     "test:benchmark-oraculo": "tsx scripts/test-benchmark-oraculo.ts",
+    "roteiro:sem-modelo": "tsx scripts/roteiro-sem-modelo-3.0.ts",
     "axe": "tsx scripts/run-axe.ts",
     "eslint": "tsx scripts/run-eslint.ts",
     "snapshot:real": "tsx scripts/snapshot-real.ts",
