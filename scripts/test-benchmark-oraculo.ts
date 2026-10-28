@@ -1,11 +1,11 @@
 /** NAT-94: synthetic labels + real MCP stdio stub; no models, screen data or real KB. */
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { assertions, evaluate, evaluateQuery, groupFamilies, hashTree, loadDataset, payload, runBenchmark, serverEnvironment, sha256, summarize, units, type Query, type Qrel } from "./benchmark-oraculo";
+import { assertions, evaluate, evaluateQuery, groupFamilies, hashTree, insideGitRepository, loadDataset, RETRIEVAL_MODES, payload, runBenchmark, serverEnvironment, sha256, summarize, units, type Query, type Qrel } from "./benchmark-oraculo";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const TMP = mkdtempSync(join(tmpdir(), "nat94-"));
@@ -587,12 +587,83 @@ await test("1.5.0: --furos exports only the unjudged top-five ids per pseudonymo
     assert.equal(existsSync(join(TMP, "furos-conflict")), false); assert.equal(existsSync(same), false);
   } finally { writeFileSync(entry, original); }
 });
-await test("1.5.0: --furos with --reserva is rejected by API and CLI before any input access, output or server startup", async () => {
-  const missing = join(TMP, "must-not-be-read-furos"), output = join(TMP, "reserve-furos-blocked"), furos = join(TMP, "reserve-furos.json");
-  await assert.rejects(runBenchmark({ validator: missing, benchmark: missing, manifest: missing, output, furos, reserve: true }), /^Error: RESERVE_RUN_FAILED$/);
-  const result = cli("--conjunto", missing, "--validator", missing, "--manifesto", missing, "--saida", output, "--furos", furos, "--reserva");
-  assert.equal(result.status, 1); assert.equal(result.stderr.trim(), "RESERVE_RUN_FAILED"); assert.equal(result.stdout, "");
-  assert.equal(existsSync(output), false); assert.equal(existsSync(furos), false);
+await test("1.6.0: --furos with --reserva inside a git repository (directly, new dirs, or through a junction) is rejected before any input access", async () => {
+  const missing = join(TMP, "must-not-be-read-furos"), output = join(TMP, "reserve-furos-blocked");
+  const link = join(TMP, "repo-junction"); symlinkSync(ROOT, link, "junction");
+  for (const furos of [join(ROOT, "reserve-furos-must-not-exist.json"), join(ROOT, "nested-new-dir", "furos.json"), join(link, "furos-through-link.json")]) {
+    assert.ok(insideGitRepository(furos));
+    for (const retrievalMode of [undefined, "hybrid"]) {
+      await assert.rejects(runBenchmark({ validator: missing, benchmark: missing, manifest: missing, output, furos, reserve: true, retrievalMode }), /^Error: RESERVE_RUN_FAILED$/);
+    }
+    const result = cli("--conjunto", missing, "--validator", missing, "--manifesto", missing, "--saida", output, "--furos", furos, "--reserva");
+    assert.equal(result.status, 1); assert.equal(result.stderr.trim(), "RESERVE_RUN_FAILED"); assert.equal(result.stdout, "");
+    assert.equal(existsSync(output), false); assert.equal(existsSync(furos), false);
+  }
+  assert.equal(existsSync(join(ROOT, "nested-new-dir")), false);
+  assert.equal(insideGitRepository(join(TMP, "anything.json")), false);
+});
+await test("1.6.0: --furos with --reserva outside every git repository is accepted; same sanitized content as development furos", async () => {
+  // The temp dir must have no .git anywhere up its ancestor chain, or this test would prove nothing.
+  for (let dir = TMP; ; dir = dirname(dir)) { assert.equal(existsSync(join(dir, ".git")), false, dir); if (dirname(dir) === dir) break; }
+  const entry = join(validator, "dist/index.js"), original = readFileSync(entry);
+  writeFileSync(entry, serverScript.replace('"ids"].includes(k)', '"ids","retrieval"].includes(k)').replace("const rules = a.query ===",
+    'if (a.retrieval !== "dense") throw new Error("mode not forwarded");\n  if (a.query?.endsWith("-0")) return {content:[{type:"text",text:JSON.stringify({total:2,rules:[rule("zz-unjudged"),rule("aa-unjudged")]})}]};\n  const rules = a.query ==='));
+  try {
+    const output = join(TMP, "reserve-furos-ok"), furos = join(TMP, "outside-repo", "reserve-furos.json");
+    const report = await runBenchmark({ validator, benchmark: reserveDir, manifest: trustedManifest, reserve: true, output, furos, retrievalMode: "dense", timeoutMs: 5000 });
+    assert.equal(report.summary.all.errors, 0); clean(report); cleanFiles(output);
+    const bytes = readFileSync(furos, "utf8"); clean(bytes);
+    const rows = JSON.parse(bytes);
+    assert.deepEqual(rows.map((r: { queryId: string }) => r.queryId), reserveQueries.map(q => sha256(q.id)).sort());
+    for (const row of rows) assert.deepEqual(Object.keys(row).sort(), ["ids", "queryId"]);
+    assert.deepEqual(rows.find((r: { queryId: string }) => r.queryId === sha256(CANARY)).ids, ["aa-unjudged", "zz-unjudged"]);
+    for (const secret of ["rank", "relevance", "estrato", "trecho", "fonte"]) assert.ok(!bytes.includes(secret), secret);
+    const manifest = JSON.parse(readFileSync(join(output, "manifest.json"), "utf8"));
+    assert.equal(manifest.furos.sha256, sha256(bytes)); assert.equal(manifest.retrieval, "dense"); assert.equal(manifest.pool, undefined);
+    assert.equal(JSON.parse(readFileSync(join(output, "inputs.json"), "utf8")).retrieval, "dense");
+    assert.deepEqual(readdirSync(output).sort(), ["inputs.json", "manifest.json", "results.json", "summary.json"]);
+    const cliFuros = join(TMP, "outside-repo", "reserve-furos-cli.json"), cliOut = join(TMP, "reserve-furos-cli");
+    const result = cli("--conjunto", reserveDir, "--manifesto", trustedManifest, "--reserva", "--validator", validator, "--saida", cliOut, "--furos", cliFuros, "--modo-busca", "dense");
+    assert.equal(result.status, 0, result.stderr); clean(result.stdout); clean(result.stderr); assert.equal(readFileSync(cliFuros, "utf8"), bytes);
+    // Pool stays forbidden in reserve, even outside a repository.
+    await assert.rejects(runBenchmark({ validator, benchmark: reserveDir, manifest: trustedManifest, reserve: true, output: join(TMP, "reserve-pool-outside"), pool: join(TMP, "outside-repo", "pool.json") }), /^Error: RESERVE_RUN_FAILED$/);
+    assert.equal(existsSync(join(TMP, "reserve-pool-outside")), false);
+  } finally { writeFileSync(entry, original); }
+});
+await test("1.6.0: --modo-busca forwards retrieval:<mode> on every get_ds_rules call (follow-ups included); absent sends and records nothing", async () => {
+  const entry = join(validator, "dist/index.js"), original = readFileSync(entry), log = join(TMP, "mode-args.jsonl");
+  // A rule lacking context forces a follow-up call, so the mode must ride on that too.
+  writeFileSync(entry, 'import {appendFileSync} from "node:fs";\n' + serverScript.replace('"ids"].includes(k)', '"ids","retrieval"].includes(k)').replace("const a = request.params.arguments;",
+    `const a = request.params.arguments; appendFileSync(${JSON.stringify(log)}, JSON.stringify(a) + "\\n");
+  if (a.query === "first observation") return {content:[{type:"text",text:JSON.stringify({total:1,rules:[{id:"u1"}]})}]};`));
+  try {
+    for (const mode of [undefined, ...RETRIEVAL_MODES]) {
+      writeFileSync(log, "");
+      const output = join(TMP, `mode-${mode ?? "absent"}`);
+      const report = await runBenchmark({ validator, benchmark: dataDir, output, retrievalMode: mode });
+      assert.equal(report.summary.all.errors, 0);
+      const calls = readFileSync(log, "utf8").trim().split("\n").map(l => JSON.parse(l));
+      assert.ok(calls.some(c => c.ids), "expected a follow-up call");
+      for (const c of calls) assert.equal(c.retrieval, mode, JSON.stringify(c));
+      const inputs = JSON.parse(readFileSync(join(output, "inputs.json"), "utf8")), manifest = JSON.parse(readFileSync(join(output, "manifest.json"), "utf8"));
+      assert.equal(inputs.retrieval, mode); assert.equal(manifest.retrieval, mode);
+      if (!mode) { assert.ok(!("retrieval" in inputs)); assert.ok(!("retrieval" in manifest)); for (const c of calls) assert.ok(!("retrieval" in c)); }
+    }
+    const cliOut = join(TMP, "mode-cli"); writeFileSync(log, "");
+    const result = cli("--conjunto", dataDir, "--validator", validator, "--saida", cliOut, "--modo-busca", "hybrid");
+    assert.equal(result.status, 0, result.stderr);
+    for (const l of readFileSync(log, "utf8").trim().split("\n")) assert.equal(JSON.parse(l).retrieval, "hybrid");
+  } finally { writeFileSync(entry, original); }
+});
+await test("1.6.0: unknown --modo-busca is rejected before any input access, output or server startup", async () => {
+  const missing = join(TMP, "must-not-be-read-mode"), output = join(TMP, "mode-invalid");
+  for (const bad of ["Hybrid", "bm25", "", "lexical "]) {
+    await assert.rejects(runBenchmark({ validator: missing, benchmark: missing, output, retrievalMode: bad }), /^Error: MODO_BUSCA_INVALID$/);
+    await assert.rejects(runBenchmark({ validator: missing, benchmark: missing, manifest: missing, output, retrievalMode: bad, reserve: true }), /^Error: RESERVE_RUN_FAILED$/);
+  }
+  const result = cli("--conjunto", missing, "--validator", missing, "--saida", output, "--modo-busca", "sparse");
+  assert.equal(result.status, 1); assert.equal(result.stdout, "");
+  assert.equal(existsSync(output), false);
 });
 await test("1.5.0: a run with tool errors or changed inputs never publishes furos", async () => {
   const entry = join(validator, "dist/index.js"), original = readFileSync(entry);

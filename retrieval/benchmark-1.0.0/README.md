@@ -128,3 +128,17 @@ avaliador 1.5.0) foram unidos e embaralhados, sem indicar a versão de origem: 3
 Foram julgados uma vez, lendo a cláusula, em quatro lotes (2: 1 · 1: 29 · 0: 314 · -1: 11), com a nota
 `furos 1.0.3 (D-148)`. Só acréscimo: nenhum rótulo existente mudou. Total: 1.500 rótulos. sha256 no
 `manifest.json` (o 1.0.2 fica em `historico`). Remédio de Thakur et al. (BEIR), pp. 8–9.
+
+## avaliador 1.6.0 — modo de busca e furos da reserva (2026-10-28)
+
+O `retrieval-evaluator-1.6.0` não muda nenhuma métrica nem nenhum byte de saída quando as opções novas
+não são usadas. `--modo-busca lexical|hybrid|dense` envia `retrieval: <modo>` em toda chamada a
+`get_ds_rules` (validador 3.2.0), inclusive nas chamadas de seguimento; sem a opção, nada é enviado e vale
+o padrão do servidor. O modo fica registrado como `retrieval` no `inputs.json` e no `manifest.json`
+(também na reserva). Valor desconhecido é recusado antes de ler qualquer entrada.
+
+`--furos` passa a ser aceito com `--reserva` só quando o caminho canônico (links e ancestrais existentes
+resolvidos) fica fora de todo repositório git — nenhum diretório ancestral contém `.git` — e fora das
+pastas do conjunto e do validador. O conteúdo é o mesmo dos furos de desenvolvimento (consulta
+pseudonimizada + ids não julgados, ordenados, sem texto, posição ou rótulo). As demais regras da reserva
+não mudaram (`--pool` continua proibido; erros continuam como `RESERVE_RUN_FAILED`).

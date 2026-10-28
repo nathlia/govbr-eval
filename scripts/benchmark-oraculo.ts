@@ -52,6 +52,15 @@
  * - Development-only --furos <new-file>: per pseudonymous query, the sorted judged ids (citeAs, or all ids of a
  *   legacy unit) of returned top-five units that are UNJUDGED. No rank, text or label. Forbidden with --reserva;
  *   written only when the run completes without tool errors. Feeds the blind gap labelling of D-148.
+ *
+ * retrieval-evaluator-1.6.0: every 1.5.0 metric and output byte is unchanged when the new options are absent.
+ * - --modo-busca lexical|hybrid|dense adds `retrieval: <mode>` to EVERY get_ds_rules call (validator 3.2.0);
+ *   absent -> nothing is sent (server default). Unknown values are rejected before any input is read.
+ *   The mode is recorded as `retrieval` in inputs.json and manifest.json (reserve runs included).
+ * - --furos is now allowed with --reserva ONLY when the canonical target (symlinks and existing ancestors
+ *   resolved) has no ancestor directory containing a `.git` (i.e. it is outside every git repository) and is
+ *   outside the benchmark/validator dirs; checked before any input access. Same content as development furos
+ *   (pseudonymous query id + sorted unjudged ids). Every other reserve rule is unchanged.
  */
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -72,7 +81,9 @@ export interface Dataset { queries: Query[]; qrels: Qrel[]; manifest: Obj; hashe
 /** `cited` marks a 3.0.0 card: the judged ids (citeAs of the card and of family-merged cards). */
 export interface Unit { ids: string[]; data: Obj; cited?: string[] }
 export interface Call { error?: string; errorCode?: string; latencyMs: number; characters: number }
-export const EVALUATOR_VERSION = "retrieval-evaluator-1.5.0";
+export const EVALUATOR_VERSION = "retrieval-evaluator-1.6.0";
+export const RETRIEVAL_MODES = ["lexical", "hybrid", "dense"] as const;
+export type RetrievalMode = typeof RETRIEVAL_MODES[number];
 /** Static codes of the 3.0.0 contract (govbr-ds-validator src/responses/contract.ts ErrorCode). */
 export const ERROR_CODES = ["invalid-combination", "empty-context", "unknown-component", "unknown-id", "unknown-section",
   "unknown-category", "unknown-example", "stale-cursor", "unknown-scan", "unknown-family", "scan-page-mismatch",
@@ -97,6 +108,13 @@ function canonicalTarget(path: string): string {
   const parent = dirname(path);
   if (parent === path) throw new Error("POOL_PATH_INVALID");
   return join(canonicalTarget(parent), relative(parent, path));
+}
+/** True when the canonical path or any ancestor directory contains a `.git` (file or directory). */
+export function insideGitRepository(path: string): boolean {
+  for (let dir = dirname(canonicalTarget(resolve(path))); ; dir = dirname(dir)) {
+    if (existsSync(join(dir, ".git"))) return true;
+    if (dirname(dir) === dir) return false;
+  }
 }
 
 /** Hash actual file bytes, sorted paths, reject links instead of following another tree. */
@@ -497,7 +515,7 @@ function identityChecked(validator: string, benchmark: string, datasetOptions: {
       lockSha256: sha256(readFileSync(join(ROOT, "package-lock.json"))), node: process.version } };
 }
 
-export interface RunOptions { validator: string; benchmark: string; output: string; timeoutMs?: number; reserve?: boolean; manifest?: string; pool?: string; furos?: string }
+export interface RunOptions { validator: string; benchmark: string; output: string; timeoutMs?: number; reserve?: boolean; manifest?: string; pool?: string; furos?: string; retrievalMode?: string }
 export async function runBenchmark(options: RunOptions) {
   try { return await runBenchmarkChecked(options); }
   catch (e) { if (options.reserve) throw new Error("RESERVE_RUN_FAILED"); throw e; }
@@ -505,7 +523,9 @@ export async function runBenchmark(options: RunOptions) {
 async function runBenchmarkChecked(options: RunOptions) {
   // Reject before dataset reads, input hashing, output creation or server startup.
   if (options.reserve && options.pool !== undefined) throw new Error("POOL_FORBIDDEN_IN_RESERVE");
-  if (options.reserve && options.furos !== undefined) throw new Error("FUROS_FORBIDDEN_IN_RESERVE");
+  if (options.retrievalMode !== undefined && !(RETRIEVAL_MODES as readonly string[]).includes(options.retrievalMode)) throw new Error("MODO_BUSCA_INVALID");
+  const mode = options.retrievalMode as RetrievalMode | undefined;
+  if (options.reserve && options.furos !== undefined && (!nonempty(options.furos) || insideGitRepository(options.furos))) throw new Error("FUROS_FORBIDDEN_IN_RESERVE");
   const validator = resolve(options.validator), benchmark = resolve(options.benchmark), output = resolve(options.output);
   const exportTarget = (value: string | undefined, code: "POOL" | "FUROS") => {
     if (value === undefined) return undefined;
@@ -538,7 +558,7 @@ async function runBenchmarkChecked(options: RunOptions) {
       packageSha256: value.validator.packageSha256, lockSha256: value.validator.lockSha256, kb: value.validator.kb.sha256 },
     benchmark: value.benchmark, evaluator: { version: EVALUATOR_VERSION, node: process.version, sha256: value.evaluator.sha256, lockSha256: value.evaluator.lockSha256 },
     validatorCommit: value.validator.commit && /^[a-f0-9]{40,64}$/.test(value.validator.commit) ? value.validator.commit : null });
-  save("inputs.json", { ...evidence(before), reserve: Boolean(options.reserve), startedAt: new Date().toISOString() });
+  save("inputs.json", { ...evidence(before), reserve: Boolean(options.reserve), ...(mode ? { retrieval: mode } : {}), startedAt: new Date().toISOString() });
   const transport = new StdioClientTransport({ command: process.execPath, args: [join(validator, "dist/index.js")],
     cwd: validator, env: serverEnvironment(before.validator.kbVersion), stderr: "pipe" });
   // Drain diagnostics without copying potentially unrelated logs into benchmark artifacts.
@@ -548,7 +568,7 @@ async function runBenchmarkChecked(options: RunOptions) {
     await client.connect(transport, { timeout, maxTotalTimeout: timeout });
     const poolRows: PoolRow[] = [], furosRows: PoolRow[] = [];
     const sinks: Sinks = { ...(pool ? { pool: (row: PoolRow) => { poolRows.push(row); } } : {}), ...(furos ? { furos: (row: PoolRow) => { furosRows.push(row); } } : {}) };
-    const report = await evaluateCollected(dataset, args => client.callTool({ name: "get_ds_rules", arguments: args }, undefined, { timeout, maxTotalTimeout: timeout }), pool || furos ? sinks : undefined);
+    const report = await evaluateCollected(dataset, args => client.callTool({ name: "get_ds_rules", arguments: mode ? { ...args, retrieval: mode } : args }, undefined, { timeout, maxTotalTimeout: timeout }), pool || furos ? sinks : undefined);
     save("results.json", report.results);
     save("summary.json", { ...report.summary, finishedAt: new Date().toISOString() });
     const after = identity(validator, benchmark, datasetOptions);
@@ -570,7 +590,7 @@ async function runBenchmarkChecked(options: RunOptions) {
       furosSha256 = sha256(bytes);
     }
     const files = ["inputs.json", "results.json", "summary.json"];
-    save("manifest.json", { version: "retrieval-baseline-1.2.0", status: report.summary.all.errors ? "completed-with-tool-errors" : "complete", files: Object.fromEntries(files.map(f => [f, sha256(readFileSync(join(output, f)))])), ...(poolSha256 ? { pool: { sha256: poolSha256 } } : {}), ...(furosSha256 ? { furos: { sha256: furosSha256 } } : {}) });
+    save("manifest.json", { version: "retrieval-baseline-1.2.0", status: report.summary.all.errors ? "completed-with-tool-errors" : "complete", ...(mode ? { retrieval: mode } : {}), files: Object.fromEntries(files.map(f => [f, sha256(readFileSync(join(output, f)))])), ...(poolSha256 ? { pool: { sha256: poolSha256 } } : {}), ...(furosSha256 ? { furos: { sha256: furosSha256 } } : {}) });
     return report;
   } catch (e) { const code = failureCode(e); save("failure.json", { status: "failed", error: code, at: new Date().toISOString() }); if (e instanceof DatasetLabelConflict) throw e; throw new Error(code); }
   finally { await client.close().catch(() => {}); await transport.close().catch(() => {}); }
@@ -579,18 +599,19 @@ async function runBenchmarkChecked(options: RunOptions) {
 async function main() {
   const args = process.argv.slice(2);
   if (args.includes("--help")) {
-    console.log("benchmark:oraculo --conjunto <dataset-dir> [--reserva --manifesto <external-trusted-manifest>] --validator <validator-root> --saida <new-dir> [--pool <new-development-file>] [--furos <new-development-file>] [--timeout-ms 30000]\nNo models; prebuilt MCP stdio; immutable output. Pool exports only sorted ids by pseudonymous query, no labels/text/rank; forbidden with --reserva. Furos exports only the sorted unjudged top-five ids by pseudonymous query, same rules (D-148). Pooling/relabeling requires a separately ratified method. Prose safety requires independent review."); return;
+    console.log("benchmark:oraculo --conjunto <dataset-dir> [--reserva --manifesto <external-trusted-manifest>] --validator <validator-root> --saida <new-dir> [--pool <new-development-file>] [--furos <new-file>] [--modo-busca lexical|hybrid|dense] [--timeout-ms 30000]\nNo models; prebuilt MCP stdio; immutable output. Pool exports only sorted ids by pseudonymous query, no labels/text/rank; forbidden with --reserva. Furos exports only the sorted unjudged top-five ids by pseudonymous query (D-148); with --reserva only to a path outside every git repository. --modo-busca sends retrieval:<mode> on every get_ds_rules call (absent = server default). Pooling/relabeling requires a separately ratified method. Prose safety requires independent review."); return;
   }
   const values: Record<string, string> = {};
   for (let i = 0; i < args.length; i += 2) {
     if (args[i] === "--reserva" && !values[args[i]]) { values[args[i]] = "true"; i--; continue; }
-    if (!["--benchmark", "--conjunto", "--manifesto", "--validator", "--saida", "--pool", "--furos", "--timeout-ms"].includes(args[i]) || !args[i + 1] || values[args[i]]) throw new Error("Unknown, repeated or missing CLI argument; use --help");
+    if (!["--benchmark", "--conjunto", "--manifesto", "--validator", "--saida", "--pool", "--furos", "--modo-busca", "--timeout-ms"].includes(args[i]) || !args[i + 1] || values[args[i]]) throw new Error("Unknown, repeated or missing CLI argument; use --help");
     values[args[i]] = args[i + 1];
   }
+  if (values["--modo-busca"] !== undefined && !(RETRIEVAL_MODES as readonly string[]).includes(values["--modo-busca"])) throw new Error("MODO_BUSCA_INVALID");
   if (!values["--saida"]) throw new Error("--saida must name a new baseline directory");
   if (values["--benchmark"] && values["--conjunto"]) throw new Error("Use only one dataset alias");
   if (values["--reserva"] && (!values["--manifesto"] || !(values["--conjunto"] || values["--benchmark"]))) throw new Error("Reserve requires explicit --conjunto and --manifesto");
-  const report = await runBenchmark({ pool: values["--pool"], furos: values["--furos"], reserve: Boolean(values["--reserva"]), manifest: values["--manifesto"], benchmark: values["--conjunto"] ?? values["--benchmark"] ?? join(ROOT, "retrieval/benchmark-1.0.0"),
+  const report = await runBenchmark({ pool: values["--pool"], furos: values["--furos"], retrievalMode: values["--modo-busca"], reserve: Boolean(values["--reserva"]), manifest: values["--manifesto"], benchmark: values["--conjunto"] ?? values["--benchmark"] ?? join(ROOT, "retrieval/benchmark-1.0.0"),
     validator: values["--validator"] ?? join(ROOT, "../govbr-ds-validator"), output: values["--saida"],
     timeoutMs: values["--timeout-ms"] ? Number(values["--timeout-ms"]) : undefined });
   console.log(JSON.stringify(report.summary, null, 2));
