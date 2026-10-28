@@ -40,3 +40,19 @@ O Codex nunca vê a reserva.
 **Congelamento:** `manifest.json` (com sha256 dos bytes LF) só depois da rotulagem cega e da
 revisão das divergências. O conjunto `../auxiliar-lexical-2026-10-22/` (45 consultas) está fora do
 benchmark — ver o README dele.
+
+## qrels 1.0.1 — pool da baseline 2.15.0 (28/10/2026, D-143)
+
+- **Build:** validator 2.15.0, commit `ad10c0e`, KB `3.7.0-literal-2026-10-15`, só desenvolvimento
+  (72 consultas; reserva fora). Pool exportado por `--pool` (top-5 inicial, ids ordenados, sem posição):
+  sha256 `6276f641a5ccc8bb4597914cf943b717122731fe7a11467b98c91cf72282cd01`.
+- **Tamanho:** 16 ids em 4 consultas (q067, q069, q070, q071). Na 2.15.0 `query` é substring literal
+  sobre o texto da regra; as 68 outras consultas (todas as 56 respondíveis) não devolveram nada.
+  1 id já estava rotulado (q067); **15 julgados**, lendo a cláusula, uma vez, antes de qualquer ajuste
+  de ranking. Não serão rejulgados por causa do ranking.
+- **Rótulo 0 (novo):** 0 = julgado e não relevante. Conta como julgado (sai de `unjudged`), nunca como
+  acerto; avaliador `retrieval-evaluator-1.3.0`.
+- **Adicionados:** 17 linhas (15 do pool + 2 cópias literais pela regra de família, com `familia`):
+  2 → 0 · 1 → 8 · 0 → 9 · -1 → 0. Cada linha leva `nota: "pool 2.15.0 (D-143); …"`. Nenhum rótulo
+  anterior mudou.
+- **qrels.jsonl 1.0.1:** 249 linhas, sha256 `0d8558e63481c1bdfec58467247d057b474d2d1f7d0cfa6fbde07f476fe2d4de`.

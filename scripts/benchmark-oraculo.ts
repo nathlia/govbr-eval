@@ -14,6 +14,7 @@
  * Pooling/relabeling needs a separately ratified method before use; this flag does not change scoring.
  * --pool is forbidden with --reserva; ordinary reports never contain returned ids.
  * Optional: --timeout-ms 30000. The server must already be built; inputs are never rewritten.
+ * Relevance 2/1/-1, plus explicit 0 = judged nonrelevant (qrels 1.0.1 pool, D-143): counts as judged, never as a hit.
  * Qrels stay in this process. Only query/component and returned ids cross MCP.
  */
 import { createHash } from "node:crypto";
@@ -30,7 +31,7 @@ type Obj = Record<string, unknown>;
 export const ORIGINS = ["busca-lexical", "observacao-real"] as const;
 export type Origin = typeof ORIGINS[number];
 export interface Query { origem?: Origin; id: string; query: string; component?: string; estrato: Stratum; motivo: string }
-export interface Qrel { query_id: string; unit_id: string; relevance: 2 | 1 | -1; fonte: string; trecho: string; familia?: string }
+export interface Qrel { query_id: string; unit_id: string; relevance: 2 | 1 | 0 | -1; fonte: string; trecho: string; familia?: string }
 export interface Dataset { queries: Query[]; qrels: Qrel[]; manifest: Obj; hashes: Record<string, string> }
 export interface Unit { ids: string[]; data: Obj }
 export interface Call { error?: string; latencyMs: number; characters: number }
@@ -120,7 +121,7 @@ function loadDatasetChecked(dir: string, options: { manifest?: string; reserve?:
   const pairs = new Set<string>();
   for (const r of qrels) {
     if (!object(r) || !nonempty(r.query_id) || !ids.has(r.query_id) || !nonempty(r.unit_id) ||
-        ![2, 1, -1].includes(r.relevance as number) || !nonempty(r.fonte) || !nonempty(r.trecho) ||
+        ![2, 1, 0, -1].includes(r.relevance as number) || !nonempty(r.fonte) || !nonempty(r.trecho) ||
         (r.familia !== undefined && !nonempty(r.familia))) throw new Error("Invalid qrel/source/excerpt/family");
     const pair = JSON.stringify([r.query_id, r.unit_id]);
     if (pairs.has(pair)) throw new Error("Duplicate qrel");
@@ -338,7 +339,7 @@ function identityChecked(validator: string, benchmark: string, datasetOptions: {
       lockSha256: sha256(readFileSync(join(validator, "package-lock.json"))),
       kbVersion: active.activeVersion, kb: hashTree(join(validator, "data/knowledge")) },
     benchmark: { files: loadDataset(benchmark, datasetOptions).hashes },
-    evaluator: { version: "retrieval-evaluator-1.2.0", sha256: sha256(readFileSync(fileURLToPath(import.meta.url))),
+    evaluator: { version: "retrieval-evaluator-1.3.0", sha256: sha256(readFileSync(fileURLToPath(import.meta.url))),
       sdkVersion: (json(join(ROOT, "node_modules/@modelcontextprotocol/sdk/package.json")) as Obj).version,
       lockSha256: sha256(readFileSync(join(ROOT, "package-lock.json"))), node: process.version } };
 }
@@ -377,7 +378,7 @@ async function runBenchmarkChecked(options: RunOptions) {
   const evidence = (value: typeof before) => ({
     validator: { dist: value.validator.dist.sha256, data: value.validator.data.sha256,
       packageSha256: value.validator.packageSha256, lockSha256: value.validator.lockSha256, kb: value.validator.kb.sha256 },
-    benchmark: value.benchmark, evaluator: { version: "retrieval-evaluator-1.2.0", node: process.version, sha256: value.evaluator.sha256, lockSha256: value.evaluator.lockSha256 },
+    benchmark: value.benchmark, evaluator: { version: "retrieval-evaluator-1.3.0", node: process.version, sha256: value.evaluator.sha256, lockSha256: value.evaluator.lockSha256 },
     validatorCommit: value.validator.commit && /^[a-f0-9]{40,64}$/.test(value.validator.commit) ? value.validator.commit : null });
   save("inputs.json", { ...evidence(before), reserve: Boolean(options.reserve), startedAt: new Date().toISOString() });
   const transport = new StdioClientTransport({ command: process.execPath, args: [join(validator, "dist/index.js")],

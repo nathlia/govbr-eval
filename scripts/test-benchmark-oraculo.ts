@@ -97,6 +97,12 @@ await test("distinct ids for the same labeled family count once; family labels d
   assert.equal(result.returned, 1); assert.equal(result.precisionAt5, 1);
   assert.deepEqual(seen[1], { ids: ["u1", "u-copy"], detail: "full" });
 });
+await test("explicit relevance=0 is judged nonrelevant: not unjudged, not a hit, no label conflict", async () => {
+  const r = await evaluateQuery(qs[0], [labels[0], { ...labels[0], unit_id: "zero", relevance: 0 }], async () => wire({ rules: [full("u1"), full("zero"), full("other")] }));
+  assert.equal(r.unjudged, 1); assert.equal(r.relevant, 1); assert.equal(r.misleading, 0); assert.equal(r.precisionAt5, 1 / 3);
+  const z = await evaluateQuery(qs[0], [{ ...labels[0], unit_id: "zero", relevance: 0 }], async () => wire({ rules: [full("zero")] }));
+  assert.equal(z.hitAt5, false); assert.equal(z.unjudged, 0);
+});
 await test("acceptable context (relevance=1) is retrieved but is not a source-supported sufficient answer", async () => {
   const r = await evaluateQuery(qs[0], [{ ...labels[0], relevance: 1 }], async () => wire({ rules: [full("u1")] }));
   assert.equal(r.hitAt5, true); assert.equal(r.supportedHitAt5, false); assert.equal(r.callsUntilSufficientContext, null);
