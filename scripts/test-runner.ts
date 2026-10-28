@@ -20,6 +20,7 @@ import { runOnce, type RunOptions, type RunOutcome } from "../runner/run-once";
 import { DEFAULT_TELAS_DIR, DEFAULT_VALIDATOR_DIR, docker, dockerAvailable, sha256 } from "../runner/lib";
 import { FAKE_CREDENTIAL, FERRAMENTAS_FORA_DO_PERFIL_LIVRE, forbiddenCalls, oracleAdherence, type ClientTelemetry, type StubSummary } from "../runner/cliente-claude";
 import { PERFIS, perfilMedido, type InventarioOraculo } from "../runner/perfis-oraculo";
+import { ORACLE_RETRIEVAL_MODE, RETRIEVAL_ENV_PREFIX, assertNoRetrievalEnv, excludedFromOracleData } from "../runner/build-images";
 import { varrerPayloadsDoOraculo } from "./vazamento/conhecimento";
 
 /** Modelo pedido ao dublê: um id que não existe, para nunca parecer dado. */
@@ -183,6 +184,23 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(perfilMedido(inv("knowledge-free"), [{ knowledgeLockAttempts: 0 }, {}]).perfil, null, "telemetria mista");
     // o validator cai em full em silêncio com perfil desconhecido: 14 ferramentas não são perfil nenhum
     assert.equal(perfilMedido({ ...inv("evaluation"), childTools: [...PERFIS.evaluation.tools, "run_axe_scan", "save_report"] }).perfil, null);
+  });
+  await test("oráculo 3.2.0 só léxico: nenhum GOVBR_RETRIEVAL_* no contêiner nem na imagem; data/ sem pesos nem vetores densos", async () => {
+    // O run-once nunca passa variável de busca ao contêiner do oráculo (a imagem serve só a léxica padrão).
+    assert.ok(!readFileSync(join(ROOT_EVAL, "runner", "run-once.ts"), "utf8").includes(RETRIEVAL_ENV_PREFIX), "run-once.ts menciona GOVBR_RETRIEVAL_*");
+    assert.throws(() => assertNoRetrievalEnv(["PATH=/usr/bin", "GOVBR_RETRIEVAL_MODE=hybrid"], "teste"), /GOVBR_RETRIEVAL_MODE/);
+    assertNoRetrievalEnv(["PATH=/usr/bin", "GOVBR_VALIDATOR_TOOL_PROFILE=evaluation"], "teste");
+    const ex = ["models/Xenova/", "retrieval/embeddings/"];
+    assert.equal(excludedFromOracleData("models\\Xenova", true, ex), true);
+    assert.equal(excludedFromOracleData("models/Xenova/x/model_quantized.onnx", false, ex), true);
+    assert.equal(excludedFromOracleData("retrieval/embeddings", true, ex), true);
+    for (const keep of ["models", "models/models.json", "retrieval", "retrieval/vocab-1.1.0.json", "knowledge"]) {
+      assert.equal(excludedFromOracleData(keep, !keep.endsWith(".json"), ex), false, keep);
+    }
+    // A imagem travada diz o commit do validador e o modo de busca.
+    const lock = JSON.parse(readFileSync(join(ROOT_EVAL, "runner", "images.lock.json"), "utf8")) as { images: { oracle: { labels: Record<string, string> } } };
+    assert.equal(lock.images.oracle.labels["govbr.oracle.retrieval-mode"], ORACLE_RETRIEVAL_MODE);
+    assert.match(lock.images.oracle.labels["govbr.oracle.commit"] ?? "", /^[0-9a-f]{40}$/);
   });
   await test("braço ferramentas: chamadas proibidas incluem as retiradas; aderência = scan (+ verificação), consulta normativa não aplicável", async () => {
     const nomes = forbiddenCalls("ferramentas", "http://x/").map((c) => c.name);

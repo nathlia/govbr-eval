@@ -1,16 +1,16 @@
 {
   "lockVersion": 1,
-  "builtAt": "2026-10-18T18:06:19.808Z",
+  "builtAt": "2026-10-28T19:42:44.726Z",
   "base": {
     "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
     "node": "24.21.0"
   },
   "images": {
     "agent": {
-      "tag": "govbr-runner-agent:1.0.0-mcp0.0.70-cc2.1.288-c3da3f12a65b3",
-      "id": "sha256:6ef30eddf9e624a325009a36a07e80ff95ff8eaa550755f9f39c86f6262fd03c",
+      "tag": "govbr-runner-agent:1.0.0-mcp0.0.70-cc2.1.288-c5ec8fa4843af",
+      "id": "sha256:69a130bc66049e8d4e9736e42ceddf2c0d662d32c95a52a8a0bcbd5ae103b8d2",
       "labels": {
-        "govbr.agent.content-sha256": "3da3f12a65b3d671e52bcf6be1de2c0db9ab9eba0b48301ac87050e8259c6c09",
+        "govbr.agent.content-sha256": "5ec8fa4843af4e3b2a857f99a60265138fa1a6f966faf18bc5d75d331fa64d12",
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.claude-code": "2.1.288",
         "govbr.playwright-mcp": "0.0.70",
@@ -19,16 +19,20 @@
       }
     },
     "oracle": {
-      "tag": "govbr-runner-oracle:2.14.3-1a1ee95c1bba",
-      "id": "sha256:2c146f403dfa9c98cf5babab43caedcd2a029d3618783f674f0a4fe85ff71587",
+      "tag": "govbr-runner-oracle:3.2.0-79f7860dc059",
+      "id": "sha256:63e0fb8c1e35273be2f055d3b53e612b2d3e8af581d44aa3661201d9e906bbbd",
       "labels": {
-        "govbr.agent.content-sha256": "3da3f12a65b3d671e52bcf6be1de2c0db9ab9eba0b48301ac87050e8259c6c09",
+        "govbr.agent.content-sha256": "5ec8fa4843af4e3b2a857f99a60265138fa1a6f966faf18bc5d75d331fa64d12",
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.claude-code": "2.1.288",
-        "govbr.oracle.data-sha256": "ed68152ebc9652e7de46231ce17b17aac5d0878e343a713d071059eb0d373579",
-        "govbr.oracle.dist-sha256": "1a1ee95c1bbaf605621cf5b32714a666150f35f038011bec75fd170db4ca885b",
+        "govbr.oracle.commit": "4067591d883ee3daab74aa1b55922adc2e66c7ff",
+        "govbr.oracle.data-sha256": "3d92e9601d5f72b11772209e602f69187322fe585c255f3416d8744f498f4151",
+        "govbr.oracle.dist-sha256": "79f7860dc0599f88041dc6f3bd06637568b04ec66e32c8e0078869bd2d1c38f5",
+        "govbr.oracle.image-data-excluded": "models/Xenova/,models/sirasagi62/,retrieval/embeddings/",
+        "govbr.oracle.image-data-sha256": "0f5c731281f84f7ca4076927bf99c526b611de25a6b7f96784f8e3b4f1b7f945",
         "govbr.oracle.package": "govbr-ds-validator-server",
-        "govbr.oracle.version": "2.14.3",
+        "govbr.oracle.retrieval-mode": "lexical-default",
+        "govbr.oracle.version": "3.2.0",
         "govbr.playwright-mcp": "0.0.70",
         "govbr.runner.image": "oracle",
         "govbr.runner.version": "runner-isolado-1.0.0"
@@ -75,9 +79,9 @@
     "claudeCode": "2.1.288 (Claude Code)",
     "oracle": {
       "package": "govbr-ds-validator-server",
-      "version": "2.14.3",
-      "distSha256": "1a1ee95c1bbaf605621cf5b32714a666150f35f038011bec75fd170db4ca885b",
-      "dataSha256": "ed68152ebc9652e7de46231ce17b17aac5d0878e343a713d071059eb0d373579"
+      "version": "3.2.0",
+      "distSha256": "79f7860dc0599f88041dc6f3bd06637568b04ec66e32c8e0078869bd2d1c38f5",
+      "dataSha256": "3d92e9601d5f72b11772209e602f69187322fe585c255f3416d8744f498f4151"
     },
     "telas": {
       "siteSha256": "1a6e8daf3cdb02da4f03cc3e39f52c0a1f44063b8270238ac5caf78eae39d11a",

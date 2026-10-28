@@ -87,9 +87,23 @@ guarda o id de cada uma e as versões medidas de dentro dela. O preflight recusa
 | base | `node:24-bookworm-slim@sha256:0e0ff40c…` (Node 24.21.0 LTS) |
 | `govbr-runner-screens` | `server.mjs`, `site/`, `site-manifest.json` do govbr-telas; o servidor recusa partir se um byte divergir |
 | `govbr-runner-agent` | `@playwright/mcp@0.0.70` (o das baterias antigas) + Chromium dele, `@modelcontextprotocol/sdk@1.29.0`, `@anthropic-ai/claude-code@2.1.288` (instalado, não executado no T3a), ponte, sonda e agente roteirizado |
-| `govbr-runner-oracle` | a imagem do agente + `dist/`, `data/` e `package*.json` do govbr-ds-validator (2.7.0), `npm ci --omit=dev`, Chromium do Playwright 1.61.1 |
+| `govbr-runner-oracle` | a imagem do agente + `dist/`, `data/` e `package*.json` do govbr-ds-validator (3.2.0), `npm ci --omit=dev`, Chromium do Playwright do validator. **Só busca léxica padrão** (ver abaixo) |
 | `govbr-runner-collector` | coletor + Ajv 8.20.0 + `common`/`findings` v1 copiados de `contracts/` |
 | `govbr-runner-egress` | proxy com allowlist e o dublê do provedor (só módulos nativos; o dublê separa TLS × marcador pelo 1º byte) |
+
+**Oráculo ≥ 3.2.0: só a busca léxica padrão (NAT-100).** O validator 3.2.0 tem busca híbrida opcional
+(modelo ONNX local em `data/models/<id>/`, ~377 MB, fora do git). A imagem da bateria serve só o padrão
+léxico (idêntico ao 3.1.0): de `data/` saem o que o git do validador ignora (pesos dos modelos, vetores de
+candidatos) e `data/retrieval/embeddings/` (versionado, mas a léxica não lê; sem ele a busca densa não
+sobe). Fica `data/models/models.json` (+ licença, 7 KB): sem ele um `retrieval:"hybrid"` pedido numa
+chamada lançaria; com ele, a resposta cai na léxica e diz `ranking.dense:"unavailable"`. O build falha se
+a imagem definir algum `GOVBR_RETRIEVAL_*` ou contiver dado denso; o `run-once` não passa nenhum ao
+contêiner (`test:runner` confere). Etiquetas: `govbr.oracle.commit` (validador sem mudança local em
+`src/`, `data/`, `package*.json`), `govbr.oracle.retrieval-mode=lexical-default`,
+`govbr.oracle.image-data-sha256` (o `data/` embutido) e `govbr.oracle.image-data-excluded`.
+`govbr.oracle.data-sha256` / `versions.oracle.dataSha256` continuam o hash do `data/` do validador no host,
+inteiro — é o que o preflight recalcula; baixar ou apagar os modelos no host muda esse hash e o preflight
+recusa até reconstruir a imagem (falha fechada).
 
 `govbr-telas/.node-version` passou a 24.21.0 (`export-telas-1.2.0`); `site/` saiu idêntico byte a byte.
 
@@ -214,7 +228,9 @@ perfis fixados (nomes + sha256 do `tools/list`) ficam em `runner/perfis-oraculo.
   (depois, com a telemetria: o knowledge-free marca todo evento com `knowledgeLockAttempts`). Desde o
   validator 2.17.1 o servidor declara o perfil efetivo em `serverInfo.description` (`toolProfile=<p>`):
   a ponte grava (inventário 1.2.0) e o perfil medido exige que bata com o do `tools/list`; ausente ou
-  divergente = falha fechada. Campanhas novas fixam os sha da 3.0.0; as históricas mantêm os seus.
+  divergente = falha fechada. Campanhas novas fixam os sha da 3.2.0 (evaluation `f1529268…`,
+  knowledge-free `8bdb5e35…`, iguais à 3.0.0 exceto evaluation/full/normative, que ganharam o parâmetro
+  `retrieval` do `get_ds_rules`); as históricas mantêm os seus.
   `run.json` passa a `run.v2` em todos os braços; `intervention.oracle.profile` é o medido.
 - **Só no `ferramentas`:** `trava-de-conhecimento` (contador da trava = 0 em todo evento) e
   `vazamento-de-conhecimento` (dicionário gerado do `data/` do validator travado sobre os payloads
