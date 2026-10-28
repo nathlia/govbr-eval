@@ -1,4 +1,4 @@
-# Benchmark de recuperação do oráculo — 1.0.0 (RASCUNHO, não congelado)
+# Benchmark de recuperação do oráculo — 1.0.0, rótulos 1.0.2 (CONGELADO em 2026-10-28)
 
 Conjunto de desenvolvimento para medir a busca do oráculo (NAT-95; avaliador em NAT-94).
 Plano: `thesis-workspace/planejamento/atual/plano-implementacao-busca-oraculo-2026-10-22.md` §1.
@@ -56,3 +56,19 @@ benchmark — ver o README dele.
   2 → 0 · 1 → 8 · 0 → 9 · -1 → 0. Cada linha leva `nota: "pool 2.15.0 (D-143); …"`. Nenhum rótulo
   anterior mudou.
 - **qrels.jsonl 1.0.1:** 249 linhas, sha256 `0d8558e63481c1bdfec58467247d057b474d2d1f7d0cfa6fbde07f476fe2d4de`.
+
+## qrels 1.0.2 — pool de referência BM25 e congelamento (2026-10-28)
+
+A baseline 2.15.0 não devolve nada nas 56 respondíveis, então o pool dela (1.0.1) cobriu só 4 consultas.
+Complemento do D-143 (decisoes-do-assistente, 28/10): um sistema de referência fixo,
+`scripts/pool-referencia-bm25.ts` (`27d3087`; BM25 sem acento, k1=1,2, b=0,75, top-10 em duas corridas,
+todas as regras e componente+globais), escrito e congelado **antes** do NAT-97. Os 896 ids sem rótulo foram
+julgados uma vez, lendo a cláusula (2: 4 · 1: 46 · 0: 831 · -1: 15), em quatro lotes por consulta; nota
+`pool BM25 1.0 (D-143)`. Total: 1.145 rótulos. Daqui em diante os rótulos não mudam por causa do ranking;
+resultados fora do pool continuam `unjudged` e são publicados ao lado de P@5.
+
+Congelamento: `manifest.json` com sha256 dos bytes LF de `queries.jsonl` e `qrels.jsonl`.
+Baseline no congelado: `../baselines/2.16.1-bbc9d56-qrels-1.0.2/` (ranking igual ao do 2.15.0):
+respondíveis recall@5 0% (nada devolvido); geral 4,2%, P@5 3,3%, 1.192 caracteres. Referência BM25 sozinha
+(sanidade, com os rótulos 1.0.1): 58,9% das respondíveis com ao menos um relevante no top-5.
+A concordância com a rotulagem cega do Codex (15 consultas) será publicada contra este 1.0.2.
