@@ -16,6 +16,23 @@
  * Optional: --timeout-ms 30000. The server must already be built; inputs are never rewritten.
  * Relevance 2/1/-1, plus explicit 0 = judged nonrelevant (qrels 1.0.1 pool, D-143): counts as judged, never as a hit.
  * Qrels stay in this process. Only query/component and returned ids cross MCP.
+ *
+ * retrieval-evaluator-1.4.0 (validator 3.0.0 response contract, oraculo-resposta/1.0.0):
+ * - Legacy shapes (units/rules/candidates/items) are detected first and scored exactly as in 1.3.0.
+ * - Otherwise `results` holds cards. A card is judged ONLY by `citeAs` (ambiguous brief cards carry
+ *   no citeAs: their `ids[0]`, the main clause, stands in). The other ids in the card are context:
+ *   they never add relevance and never conflict with it. Unlabelled citeAs = unjudged, as before.
+ *   Cards merge only on equal citeAs; qrel `familia` (README rule) groups cited ids across cards.
+ *   DATASET_LABEL_CONFLICT therefore no longer fires on a card's context ids; it still fires for
+ *   legacy shapes and for opposite labels among cited ids of one family.
+ * - Context at call 1 = `requirement.complete === true` + `requirement.text` + `source.url`.
+ *   Otherwise the card's own `more.next` (get_ds_rules {id}, id must be one the card returned;
+ *   else {id: citeAs}) is followed, one call per card, all counted as the second round (contextAtCall 2).
+ *   The id response is read through its `rule` record with the legacy context proxy.
+ * - Candidates = `total` (legacy) or `page.matched` (3.0.0).
+ * - isError responses stay TOOL_CALL_FAILED; a contract `errorCode` is kept only if it is one of the
+ *   validator's static codes (else "unrecognized-error-code"), counted in summary errorCodes. No text.
+ * - Characters still measure the raw serialized MCP result of every call.
  */
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -33,8 +50,17 @@ export type Origin = typeof ORIGINS[number];
 export interface Query { origem?: Origin; id: string; query: string; component?: string; estrato: Stratum; motivo: string }
 export interface Qrel { query_id: string; unit_id: string; relevance: 2 | 1 | 0 | -1; fonte: string; trecho: string; familia?: string }
 export interface Dataset { queries: Query[]; qrels: Qrel[]; manifest: Obj; hashes: Record<string, string> }
-export interface Unit { ids: string[]; data: Obj }
-export interface Call { error?: string; latencyMs: number; characters: number }
+/** `cited` marks a 3.0.0 card: the judged ids (citeAs of the card and of family-merged cards). */
+export interface Unit { ids: string[]; data: Obj; cited?: string[] }
+export interface Call { error?: string; errorCode?: string; latencyMs: number; characters: number }
+export const EVALUATOR_VERSION = "retrieval-evaluator-1.4.0";
+/** Static codes of the 3.0.0 contract (govbr-ds-validator src/responses/contract.ts ErrorCode). */
+export const ERROR_CODES = ["invalid-combination", "empty-context", "unknown-component", "unknown-id", "unknown-section",
+  "unknown-category", "unknown-example", "stale-cursor", "unknown-scan", "unknown-family", "scan-page-mismatch",
+  "not-a-page-scan", "query-too-long", "no-content-terms", "too-many-ids", "missing-finding-ids", "invalid-argument"] as const;
+class ToolCallError extends Error {
+  constructor(readonly code: string | null) { super("MCP tool error"); }
+}
 export type Invoke = (args: Obj) => Promise<unknown>;
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const object = (v: unknown): v is Obj => v !== null && typeof v === "object" && !Array.isArray(v);
@@ -134,7 +160,16 @@ function loadDatasetChecked(dir: string, options: { manifest?: string; reserve?:
 
 export function payload(raw: unknown): Obj {
   if (!object(raw)) throw new Error("MCP result is not an object");
-  if (raw.isError) throw new Error("MCP tool error");
+  if (raw.isError) {
+    // Only a static, allow-listed code survives; error text never leaves this function.
+    let code: string | null = null;
+    try {
+      const text = Array.isArray(raw.content) ? raw.content.filter(object).filter(x => x.type === "text" && typeof x.text === "string").map(x => x.text).join("\n") : "";
+      const p: unknown = JSON.parse(text);
+      if (object(p) && p.errorCode !== undefined) code = (ERROR_CODES as readonly unknown[]).includes(p.errorCode) ? p.errorCode as string : "unrecognized-error-code";
+    } catch { code = null; }
+    throw new ToolCallError(code);
+  }
   let p: unknown = raw.structuredContent;
   if (!object(p)) {
     if (!Array.isArray(raw.content)) throw new Error("MCP result lacks structuredContent/content");
@@ -148,7 +183,8 @@ export function payload(raw: unknown): Obj {
 /** Preserve ranking, merge overlapping returned aliases, take five distinct units only. */
 export function units(p: Obj, cutoff = Infinity): Unit[] {
   const rows = p.units ?? p.rules ?? p.candidates ?? p.items;
-  if (!Array.isArray(rows)) throw new Error("Unrecognized retrieval response (expected units/rules/candidates/items)");
+  if (rows === undefined && Array.isArray(p.results)) return cards(p.results, cutoff);
+  if (!Array.isArray(rows)) throw new Error("Unrecognized retrieval response (expected units/rules/candidates/items/results)");
   const out: Unit[] = [];
   for (const row of rows) {
     if (!object(row)) throw new Error("Invalid retrieval unit");
@@ -168,8 +204,41 @@ export function units(p: Obj, cutoff = Infinity): Unit[] {
   return out;
 }
 
+/** 3.0.0 cards (full or ambiguous brief): judged by citeAs, other ids are context only. */
+function cards(rows: unknown[], cutoff: number): Unit[] {
+  const out: Unit[] = [];
+  for (const row of rows) {
+    if (!object(row)) throw new Error("Invalid retrieval unit");
+    const listed = Array.isArray(row.ids) ? row.ids.filter(nonempty) : [];
+    const citeAs = nonempty(row.citeAs) ? row.citeAs : listed[0];
+    if (!nonempty(citeAs)) throw new Error("Retrieval unit without citable id");
+    const ids = [...new Set([citeAs, ...listed])];
+    const same = out.find(u => u.cited![0] === citeAs);
+    if (same) same.ids = [...new Set([...same.ids, ...ids])];
+    else out.push({ ids, data: row, cited: [citeAs] });
+    if (out.length >= cutoff) break;
+  }
+  return out;
+}
+
+/** Follow-up response: 3.0.0 id response (`rule` record) or any retrieval/lookup shape. */
+export function detailUnits(p: Obj): Unit[] {
+  if (object(p.rule) && nonempty(p.rule.id)) return [{ ids: [p.rule.id], data: p.rule }];
+  return units(p);
+}
+
+/** The card's own `more.next`, only if it asks get_ds_rules for an id this card returned. */
+export function followUp(u: Unit): Obj {
+  const next = object(u.data.more) ? u.data.more.next : undefined;
+  if (object(next) && next.tool === "get_ds_rules" && object(next.arguments) && Object.keys(next.arguments).join() === "id" &&
+      nonempty(next.arguments.id) && u.ids.includes(next.arguments.id)) return { id: next.arguments.id };
+  return { id: u.cited![0] };
+}
+
 export function hasContext(u: Unit): boolean {
   const r = u.data;
+  if (u.cited) return object(r.requirement) && r.requirement.complete === true && nonempty(r.requirement.text) &&
+    object(r.source) && nonempty(r.source.url);
   const source = nonempty(r.sourceUrl) || (object(r.source) && nonempty(r.source.url));
   return Boolean(source && [r.originalText, r.normalizedRule, r.requirement, r.text].some(nonempty) &&
     Array.isArray(r.conditions) && Array.isArray(r.exceptions) && Array.isArray(r.expectedEvidence));
@@ -180,6 +249,17 @@ export function groupFamilies(rows: Unit[], qrels: Qrel[]): Unit[] {
   const family = new Map(qrels.filter(r => r.familia).map(r => [r.unit_id, r.familia!]));
   const out: Unit[] = [];
   for (const row of rows) {
+    if (row.cited) {
+      // 3.0.0: only cited ids carry a family; context ids neither merge nor conflict.
+      const keys = new Set(row.cited.map(id => family.get(id)).filter(nonempty));
+      const previous = keys.size ? out.find(u => u.cited?.some(id => keys.has(family.get(id) ?? ""))) : undefined;
+      if (previous) {
+        previous.ids = [...new Set([...previous.ids, ...row.ids])];
+        previous.cited = [...new Set([...previous.cited!, ...row.cited])];
+        if (!hasContext(previous) && hasContext(row)) previous.data = row.data;
+      } else out.push({ ids: [...row.ids], data: row.data, cited: [...row.cited] });
+      continue;
+    }
     const keys = new Set(row.ids.map(id => family.get(id)).filter(nonempty));
     if (keys.size > 1) throw new DatasetLabelConflict();
     const previous = out.find(u => u.ids.some(id => keys.has(family.get(id) ?? "")));
@@ -219,8 +299,9 @@ async function evaluateQueryCollected(q: Query, qrels: Qrel[], invoke: Invoke, c
       const response = await invoke(args);
       record.characters = JSON.stringify(response).length;
       return payload(response);
-    } catch {
+    } catch (e) {
       record.error = "TOOL_CALL_FAILED";
+      if (e instanceof ToolCallError && e.code) record.errorCode = e.code;
       throw new Error("TOOL_CALL_FAILED");
     } finally { record.latencyMs = performance.now() - start; }
   }
@@ -228,23 +309,26 @@ async function evaluateQueryCollected(q: Query, qrels: Qrel[], invoke: Invoke, c
   const local = qrels.filter(r => r.query_id === q.id);
   let poolIds: string[] = [];
   let top: Unit[] = [], initial: Obj | null = null, detail: Obj | null = null, error: string | null = null;
+  const followed: Obj[] = [];
   try {
     // Measure the default response surface; detail=full would hide future default improvements.
     initial = await call({ query: q.query, ...(q.component ? { component: q.component } : {}), limit: 5 });
     if (collect) poolIds = [...new Set(units(initial, 5).flatMap(u => u.ids))].sort();
     top = units(initial).slice(0, 5);
     // Selection uses only returned data, never relevance labels or expected ids.
-    const missing = top.filter(u => !hasContext(u)).map(u => u.ids[0]);
-    if (missing.length) detail = await call({ ids: missing, detail: "full" });
+    const lacking = top.filter(u => !hasContext(u));
+    if (lacking.length && top[0].cited) for (const u of lacking) followed.push(await call(followUp(u)));
+    else if (lacking.length) detail = await call({ ids: lacking.map(u => u.ids[0]), detail: "full" });
   } catch { error = "TOOL_CALL_FAILED"; }
   let details: Unit[] = [];
-  try { if (detail) details = units(detail); } catch { error ??= "INVALID_DETAIL_RESPONSE"; }
+  try { if (detail) details = units(detail); else details = followed.flatMap(detailUnits); } catch { error ??= "INVALID_DETAIL_RESPONSE"; }
   // Collect the actual initial top five, before any local label/family grouping. Sort away rank.
   collect?.({ queryId: sha256(q.id), ids: poolIds });
   // Offline families cannot affect which ids are requested or promote rank six.
   top = groupFamilies(top, local);
   const relevance = (u: Unit) => {
-    const rs = local.filter(r => u.ids.includes(r.unit_id));
+    const judged = u.cited ?? u.ids;
+    const rs = local.filter(r => judged.includes(r.unit_id));
     if (rs.some(r => r.relevance > 0) && rs.some(r => r.relevance < 0)) throw new DatasetLabelConflict();
     return rs.length ? Math.max(...rs.map(r => r.relevance)) : null;
   };
@@ -253,14 +337,16 @@ async function evaluateQueryCollected(q: Query, qrels: Qrel[], invoke: Invoke, c
   const relevant = ranked.filter(u => u.relevance !== null && u.relevance > 0);
   const supported = relevant.filter(u => u.relevance === 2);
   const sufficient = supported.map(u => u.contextAtCall).filter((n): n is number => n !== null);
-  const a = assertions(initial), b = assertions(detail);
-  return { queryId: sha256(q.id), estrato: q.estrato, origem: q.origem ?? null, error, calls, returned: ranked.length,
+  const a = assertions(initial), b = assertions(detail ?? followed);
+  return { queryId: sha256(q.id), estrato: q.estrato, origem: q.origem ?? null, error,
+    errorCode: calls.find(c => c.errorCode)?.errorCode ?? null, calls, returned: ranked.length,
     relevant: relevant.length, misleading: ranked.filter(u => u.relevance === -1).length,
     unjudged: ranked.filter(u => u.relevance === null).length, hitAt5: relevant.length > 0, supportedHitAt5: supported.length > 0,
     precisionAt5: relevant.length / (ranked.length || 1),
     sourceUnsupported: q.estrato === "sem_resposta",
     callsUntilSufficientContext: sufficient.length ? Math.min(...sufficient) : null,
-    candidates: typeof initial?.total === "number" ? initial.total : null,
+    candidates: typeof initial?.total === "number" ? initial.total
+      : object(initial?.page) && typeof initial.page.matched === "number" ? initial.page.matched : null,
     latencyMs: calls.reduce((n, c) => n + c.latencyMs, 0), characters: calls.reduce((n, c) => n + c.characters, 0),
     initialCharacters: calls[0]?.characters ?? 0,
     applicableAssertions: a.applicable + b.applicable, normativeConclusions: a.conclusions + b.conclusions };
@@ -272,7 +358,9 @@ export function summarize(results: QueryResult[]) {
   function group(rs: QueryResult[]) {
     const context = rs.map(r => r.callsUntilSufficientContext).filter((n): n is number => n !== null);
     const candidates = rs.map(r => r.candidates).filter((n): n is number => n !== null);
-    return { queries: rs.length, errors: rs.filter(r => r.error).length,
+    const errorCodes: Record<string, number> = {};
+    for (const r of rs) if (r.errorCode) errorCodes[r.errorCode] = (errorCodes[r.errorCode] ?? 0) + 1;
+    return { queries: rs.length, errors: rs.filter(r => r.error).length, errorCodes,
       hitsAt5: rs.filter(r => r.hitAt5).length, hitRateAt5: mean(rs.map(r => Number(r.hitAt5))),
       supportedHitsAt5: rs.filter(r => r.supportedHitAt5).length, supportedHitRateAt5: mean(rs.map(r => Number(r.supportedHitAt5))),
       meanPrecisionAt5: mean(rs.map(r => r.precisionAt5)), returned: rs.reduce((n, r) => n + r.returned, 0),
@@ -298,7 +386,8 @@ export function summarize(results: QueryResult[]) {
       applicability: "Only structured assertions audited automatically. Prose requires independent review without exporting private raw data; this is not a blanket compliance guarantee.",
       sourceUnsupported: "sem_resposta is source-unsupported by dataset classification, separate from retrieval miss; not inferred from an empty response.",
       context: "Operational proxy: relevance=2 (supports the answer), text, source, conditions, exceptions and expectedEvidence. Relevance=1 is acceptable retrieval context, not a sufficient answer. Prose completeness requires review.",
-      deduplication: "Returned ids/aliases and locally declared qrel familia; no inferred family for unjudged results. Offline labels never extend the top-five cutoff." } };
+      deduplication: "Returned ids/aliases and locally declared qrel familia; no inferred family for unjudged results. Offline labels never extend the top-five cutoff.",
+      cards: "3.0.0 cards are judged by citeAs only (brief ambiguous cards: ids[0]); other card ids are context, never relevance or conflict. Context at call 1 = requirement.complete + source; else the card's more.next id call (second round)." } };
 }
 
 export async function evaluate(dataset: Dataset, invoke: Invoke) {
@@ -339,7 +428,7 @@ function identityChecked(validator: string, benchmark: string, datasetOptions: {
       lockSha256: sha256(readFileSync(join(validator, "package-lock.json"))),
       kbVersion: active.activeVersion, kb: hashTree(join(validator, "data/knowledge")) },
     benchmark: { files: loadDataset(benchmark, datasetOptions).hashes },
-    evaluator: { version: "retrieval-evaluator-1.3.0", sha256: sha256(readFileSync(fileURLToPath(import.meta.url))),
+    evaluator: { version: EVALUATOR_VERSION, sha256: sha256(readFileSync(fileURLToPath(import.meta.url))),
       sdkVersion: (json(join(ROOT, "node_modules/@modelcontextprotocol/sdk/package.json")) as Obj).version,
       lockSha256: sha256(readFileSync(join(ROOT, "package-lock.json"))), node: process.version } };
 }
@@ -378,7 +467,7 @@ async function runBenchmarkChecked(options: RunOptions) {
   const evidence = (value: typeof before) => ({
     validator: { dist: value.validator.dist.sha256, data: value.validator.data.sha256,
       packageSha256: value.validator.packageSha256, lockSha256: value.validator.lockSha256, kb: value.validator.kb.sha256 },
-    benchmark: value.benchmark, evaluator: { version: "retrieval-evaluator-1.3.0", node: process.version, sha256: value.evaluator.sha256, lockSha256: value.evaluator.lockSha256 },
+    benchmark: value.benchmark, evaluator: { version: EVALUATOR_VERSION, node: process.version, sha256: value.evaluator.sha256, lockSha256: value.evaluator.lockSha256 },
     validatorCommit: value.validator.commit && /^[a-f0-9]{40,64}$/.test(value.validator.commit) ? value.validator.commit : null });
   save("inputs.json", { ...evidence(before), reserve: Boolean(options.reserve), startedAt: new Date().toISOString() });
   const transport = new StdioClientTransport({ command: process.execPath, args: [join(validator, "dist/index.js")],

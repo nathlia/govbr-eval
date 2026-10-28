@@ -403,5 +403,94 @@ await test("input mutation and tool failures never publish a completed developme
   }
 });
 
+// ── validator 3.0.0 response contract (retrieval-evaluator-1.4.0), synthetic cards only ──
+const card = (citeAs: string, more: Record<string, unknown> = {}, ids: string[] = [citeAs]) => ({ rank: 1, ids, citeAs, status: "investigate", force: "required",
+  requirement: { heading: "H", text: "A public clause", complete: true }, why: { matched: ["x"], relation: "component", field: "text" },
+  toVerify: [{ code: "no-declared-condition", origin: "clause" }], evidence: [], applicability: "unknown",
+  source: { standard: "gov.br Design System", version: "3.7.0", url: "https://example.org/frozen" },
+  more: { adjacentClauses: 0, next: { tool: "get_ds_rules", arguments: { id: citeAs } } }, ...more });
+const v3 = (results: unknown[], page: Record<string, unknown> = {}) => wire({ contract: "oraculo-resposta/1.0.0", kind: "retrieval", status: results.length ? "candidates" : "no-match",
+  results, gaps: [], page: { returned: results.length, matched: results.length, cursor: null, stop: "relevance-floor", ...page }, next: [] });
+const idResponse = (id: string) => wire({ contract: "oraculo-resposta/1.0.0", kind: "normative", rule: full(id, { originalText: "A public clause", source: { url: "https://example.org/frozen" } }), normativeContext: {}, next: [] });
+
+await test("3.0.0: relevance is the citeAs label only; context ids neither add relevance nor count as returned units", async () => {
+  // citeAs unlabelled + a labelled context id: unjudged, not a hit.
+  const r = await evaluateQuery(qs[0], labels, async () => v3([card("unlabelled", {}, ["unlabelled", "u1"])]));
+  assert.equal(r.returned, 1); assert.equal(r.unjudged, 1); assert.equal(r.relevant, 0); assert.equal(r.hitAt5, false);
+  const s = await evaluateQuery(qs[0], labels, async () => v3([card("u1"), card("bad"), card("other")]));
+  assert.equal(s.returned, 3); assert.equal(s.relevant, 1); assert.equal(s.misleading, 1); assert.equal(s.unjudged, 1);
+  assert.equal(s.precisionAt5, 1 / 3); assert.equal(s.supportedHitAt5, true); assert.equal(s.calls.length, 1);
+  assert.deepEqual(units({ results: [card("a", {}, ["a", "t"]), card("a", {}, ["a", "z"])] }).map(u => u.ids), [["a", "t", "z"]]);
+});
+await test("3.0.0: a card whose context ids carry opposite labels is no conflict; legacy shape and one-family conflicts still are", async () => {
+  const mixed = [labels[0], { ...labels[0], unit_id: "ctx-bad", relevance: -1 as const }];
+  const r = await evaluateQuery(qs[0], mixed, async () => v3([card("u1", {}, ["u1", "ctx-bad"])]));
+  assert.equal(r.relevant, 1); assert.equal(r.misleading, 0); assert.equal(r.hitAt5, true);
+  const n = await evaluateQuery(qs[0], mixed, async () => v3([card("ctx-bad", {}, ["ctx-bad", "u1"])]));
+  assert.equal(n.relevant, 0); assert.equal(n.misleading, 1);
+  await assert.rejects(evaluateQuery(qs[0], mixed, async () => wire({ rules: [full("u1", { aliases: ["ctx-bad"] })] })), /^Error: DATASET_LABEL_CONFLICT$/);
+  const family = mixed.map(x => ({ ...x, familia: "f" }));
+  await assert.rejects(evaluateQuery(qs[0], family, async () => v3([card("u1"), card("ctx-bad")])), /^Error: DATASET_LABEL_CONFLICT$/);
+  const copies = [labels[0], { ...labels[0], unit_id: "u1-copy" }].map(x => ({ ...x, familia: "f" }));
+  const g = await evaluateQuery(qs[0], copies, async () => v3([card("u1"), card("u1-copy"), card("other")]));
+  assert.equal(g.returned, 2); assert.equal(g.relevant, 1); assert.equal(g.precisionAt5, 1 / 2);
+});
+await test("3.0.0: isError is TOOL_CALL_FAILED with only an allow-listed static errorCode, never error text", async () => {
+  const err = (code: unknown) => ({ isError: true, content: [{ type: "text", text: JSON.stringify({ contract: "oraculo-resposta/1.0.0", kind: "error", error: CANARY, errorCode: code, available: [CANARY], next: [] }) }] });
+  const r = await evaluateQuery(qs[0], labels, async () => err("unknown-component"));
+  assert.equal(r.error, "TOOL_CALL_FAILED"); assert.equal(r.errorCode, "unknown-component"); assert.equal(r.calls[0].errorCode, "unknown-component");
+  assert.equal(r.returned, 0); clean(r);
+  const odd = await evaluateQuery(qs[0], labels, async () => err(CANARY)); assert.equal(odd.errorCode, "unrecognized-error-code"); clean(odd);
+  const plain = await evaluateQuery(qs[0], labels, async () => ({ isError: true, content: [{ type: "text", text: CANARY }] }));
+  assert.equal(plain.error, "TOOL_CALL_FAILED"); assert.equal(plain.errorCode, null); clean(plain);
+  const s = summarize([r, odd, plain]); assert.deepEqual(s.all.errorCodes, { "unknown-component": 1, "unrecognized-error-code": 1 }); assert.equal(s.all.errors, 3); clean(s);
+  // An id follow-up that fails keeps the initial scoring and records the code.
+  const f = await evaluateQuery(qs[0], labels, async args => args.id ? err("unknown-id") : v3([card("u1", { requirement: { heading: "H", text: "t", complete: false, code: "text-deferred" } })]));
+  assert.equal(f.error, "TOOL_CALL_FAILED"); assert.equal(f.errorCode, "unknown-id"); assert.equal(f.hitAt5, true); assert.equal(f.callsUntilSufficientContext, null);
+});
+await test("3.0.0: ambiguous brief cards are scored the same way (ids[0] stands for citeAs) and followed by id", async () => {
+  const brief = (ids: string[], group: string) => ({ rank: 1, group, ids, force: "required", status: "investigate", text: "t", complete: true, applicability: "unknown" });
+  const seen: unknown[] = [];
+  const r = await evaluateQuery(qs[0], labels, async args => {
+    seen.push(args);
+    if (args.id) return idResponse(String(args.id));
+    return wire({ contract: "oraculo-resposta/1.0.0", kind: "retrieval", status: "ambiguous", ambiguity: { message: "m", groups: [] },
+      results: [brief(["u1", "bad"], "menu"), brief(["other"], "modal")], page: { returned: 2, matched: 24, cursor: null, stop: "ambiguous" }, next: [] });
+  });
+  assert.equal(r.returned, 2); assert.equal(r.relevant, 1); assert.equal(r.misleading, 0); assert.equal(r.unjudged, 1);
+  assert.equal(r.candidates, 24); assert.equal(r.callsUntilSufficientContext, 2);
+  assert.deepEqual(seen.slice(1), [{ id: "u1" }, { id: "other" }]);
+});
+await test("3.0.0: candidates come from page.matched; legacy total still wins when present", async () => {
+  const r = await evaluateQuery(qs[0], labels, async () => v3([card("u1")], { matched: 9 }));
+  assert.equal(r.candidates, 9);
+  const none = await evaluateQuery(qs[0], labels, async () => wire({ contract: "x", kind: "retrieval", results: [] }));
+  assert.equal(none.candidates, null); assert.equal(none.returned, 0); assert.equal(none.error, null);
+  assert.equal((await evaluateQuery(qs[0], labels, async () => wire({ total: 4, rules: [] }))).candidates, 4);
+});
+await test("3.0.0: complete requirement + source = context at call 1; otherwise the card's own more.next id is the second call", async () => {
+  const seen: unknown[] = [];
+  const incomplete = { requirement: { heading: "H", text: "cut…", complete: false, code: "text-deferred" } };
+  const r = await evaluateQuery(qs[1], labels, async args => {
+    seen.push(args);
+    if (args.id) return idResponse(String(args.id));
+    return v3([card("u2", incomplete), card("other", { source: undefined }), card("ok")]);
+  });
+  assert.deepEqual(seen, [{ query: qs[1].query, limit: 5 }, { id: "u2" }, { id: "other" }]);
+  assert.equal(r.callsUntilSufficientContext, 2); assert.equal(r.calls.length, 3);
+  assert.equal(r.characters, r.calls.reduce((n, c) => n + c.characters, 0));
+  assert.equal(r.initialCharacters, JSON.stringify(v3([card("u2", incomplete), card("other", { source: undefined }), card("ok")])).length);
+  const one = await evaluateQuery(qs[1], labels, async () => v3([card("u2")]));
+  assert.equal(one.callsUntilSufficientContext, 1); assert.equal(one.calls.length, 1);
+  // more.next pointing outside the card (or another tool) is not followed blindly: citeAs is asked instead.
+  const odd: unknown[] = [];
+  await evaluateQuery(qs[1], labels, async args => { odd.push(args); return args.id ? idResponse(String(args.id)) :
+    v3([card("u2", { ...incomplete, more: { adjacentClauses: 0, next: { tool: "scan_page", arguments: { id: "elsewhere" } } } })]); });
+  assert.deepEqual(odd[1], { id: "u2" });
+  // An id response without context never becomes sufficient.
+  const thin = await evaluateQuery(qs[1], labels, async args => args.id ? wire({ kind: "normative", rule: { id: "u2", normalizedRule: "text only" } }) : v3([card("u2", incomplete)]));
+  assert.equal(thin.callsUntilSufficientContext, null); assert.equal(thin.error, null);
+});
+
 console.log(`\n${passed} passed; ${failed} failed. Synthetic artifacts: ${TMP}`);
 if (failed) process.exitCode = 1;

@@ -72,3 +72,27 @@ Baseline no congelado: `../baselines/2.16.1-bbc9d56-qrels-1.0.2/` (ranking igual
 respondíveis recall@5 0% (nada devolvido); geral 4,2%, P@5 3,3%, 1.192 caracteres. Referência BM25 sozinha
 (sanidade, com os rótulos 1.0.1): 58,9% das respondíveis com ao menos um relevante no top-5.
 A concordância com a rotulagem cega do Codex (15 consultas) será publicada contra este 1.0.2.
+
+## Avaliador 1.4.0 e respostas 3.0.0 (2026-10-28)
+
+O `retrieval-evaluator-1.4.0` lê as duas formas de resposta do `get_ds_rules`. A forma antiga
+(`units`/`rules`/`candidates`/`items`) é reconhecida primeiro e pontuada exatamente como na 1.3.0. A
+forma do validator 3.0.0 (contrato `oraculo-resposta/1.0.0`) traz cartões em `results`:
+
+- **Relevância = rótulo do `citeAs`** do cartão. Os outros ids do cartão (título da seção, cláusulas
+  da mesma unidade) são contexto: não somam relevância nem entram em conflito com ela. `citeAs` sem
+  rótulo = `unjudged`, como antes. O cartão breve da consulta ambígua não tem `citeAs`; vale o
+  `ids[0]` (a cláusula principal).
+- **Família:** a regra desta página continua valendo, aplicada aos ids citados: cartões cujo `citeAs`
+  é da mesma `familia` contam como uma unidade.
+- **Conflito de rótulo:** `DATASET_LABEL_CONFLICT` deixa de disparar por causa dos ids de contexto de
+  um cartão 3.0.0. Continua disparando na forma antiga e quando ids citados da mesma família têm
+  rótulos opostos.
+- **Contexto suficiente:** `requirement.complete: true` com `source` = contexto na 1ª chamada; senão o
+  avaliador segue o `more.next` do cartão (chamada por `id`), contada como a 2ª.
+- **Candidatas:** `page.matched` (não há `total`). **Erros:** `isError` = `TOOL_CALL_FAILED`; só o
+  `errorCode` estático é guardado, em `errorCodes`, sem texto. **Caracteres:** o tamanho bruto de cada
+  chamada, como antes.
+
+Nenhum rótulo, consulta ou o manifesto mudou; o sha256 do manifesto cobre só `queries.jsonl` e
+`qrels.jsonl`.
