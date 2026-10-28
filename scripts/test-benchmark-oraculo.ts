@@ -492,5 +492,121 @@ await test("3.0.0: complete requirement + source = context at call 1; otherwise 
   assert.equal(thin.callsUntilSufficientContext, null); assert.equal(thin.error, null);
 });
 
+// ── retrieval-evaluator-1.5.0 (D-148): nDCG@5, bpref@5, Hole@5 and --furos ──
+const NEW_KEYS = new Set(["ndcgAt5", "bprefAt5", "holeAt5", "meanNdcgAt5", "ndcgQueries", "ndcgExcluded", "meanBprefAt5", "bprefQueries",
+  "bprefExcluded", "meanHoleAt5", "holeExcluded", "interpretationJudgment"]);
+await test("1.5.0: every 1.4.0 field on the five-case fixture is byte-identical (snapshot taken from 1.4.0, latency zeroed)", async () => {
+  const report = await evaluate(loadDataset(dataDir), invoke);
+  const old = JSON.stringify(report, (k, v) => NEW_KEYS.has(k) ? undefined : /latencyMs/i.test(k) ? 0 : v);
+  assert.equal(sha256(old), "f9a9ad79401eabfc7675fb97766c80a8ca6bd88b5544d46a5a5bdeb715826494");
+  // New keys are appended after the old ones, never interleaved.
+  const keys = Object.keys(report.results[0]); assert.deepEqual(keys.slice(-3), ["ndcgAt5", "bprefAt5", "holeAt5"]);
+});
+const graded: Qrel[] = [["A", 2], ["B", 1], ["C", 0], ["D", -1], ["E", 0]].map(([unit_id, relevance]) =>
+  ({ query_id: "q1", unit_id: unit_id as string, relevance: relevance as Qrel["relevance"], fonte: "f", trecho: "t" }));
+await test("1.5.0: hand-computed nDCG@5, bpref@5 and Hole@5 on [C, A, X(unjudged), D, B]", async () => {
+  const r = await evaluateQuery(qs[0], graded, async () => wire({ rules: ["C", "A", "X", "D", "B"].map(id => full(id)) }));
+  // DCG = 2/log2(3) + 1/log2(6); ideal = 2/log2(2) + 1/log2(3).
+  const close = (a: number | null, b: number) => assert.ok(a !== null && Math.abs(a - b) < 1e-12, `${a} != ${b}`);
+  close(r.ndcgAt5, (2 / Math.log2(3) + 1 / Math.log2(6)) / (2 + 1 / Math.log2(3)));
+  assert.ok(Math.abs(r.ndcgAt5! - 0.62666) < 1e-4);
+  // R = 2 (A, B), N = 3 (C, D, E); n_A = 1 (C), n_B = 2 (C, D); min(R, N) = 2 -> (1/2)((1 - 1/2) + (1 - 2/2)) = 0.25.
+  assert.equal(r.bprefAt5, 0.25);
+  assert.equal(r.holeAt5, 1 / 5);
+  // Old metrics untouched: P@5 counts unjudged as nonrelevant.
+  assert.equal(r.precisionAt5, 2 / 5); assert.equal(r.unjudged, 1);
+});
+await test("1.5.0: perfect ranking = 1; unjudged ids never count; no positive label = excluded; N = 0 gives terms of 1", async () => {
+  const perfect = await evaluateQuery(qs[0], graded, async () => wire({ rules: ["A", "B", "C"].map(id => full(id)) }));
+  assert.equal(perfect.ndcgAt5, 1); assert.equal(perfect.bprefAt5, 1); assert.equal(perfect.holeAt5, 0);
+  // Unjudged above the relevant units does not move bpref, but discounts nDCG.
+  const holes = await evaluateQuery(qs[0], graded, async () => wire({ rules: ["X", "Y", "A", "B"].map(id => full(id)) }));
+  assert.equal(holes.bprefAt5, 1); assert.ok(holes.ndcgAt5! < 1); assert.equal(holes.holeAt5, 1 / 2);
+  const zeros = graded.filter(r => r.relevance <= 0);
+  const none = await evaluateQuery(qs[0], zeros, async () => wire({ rules: [full("C")] }));
+  assert.equal(none.ndcgAt5, null); assert.equal(none.bprefAt5, null); assert.equal(none.holeAt5, 0);
+  const onlyPositive = graded.filter(r => r.relevance > 0);
+  const p = await evaluateQuery(qs[0], onlyPositive, async () => wire({ rules: ["X", "B"].map(id => full(id)) }));
+  assert.equal(p.bprefAt5, 1 / 2); assert.equal(p.ndcgAt5, (1 / Math.log2(3)) / (2 + 1 / Math.log2(3)));
+  const empty = await evaluateQuery(qs[0], graded, async () => wire({ rules: [] }));
+  assert.equal(empty.ndcgAt5, 0); assert.equal(empty.bprefAt5, 0); assert.equal(empty.holeAt5, null);
+  // Nonrelevant above more than R: min(n_r, R) caps the penalty at 1.
+  const capped = await evaluateQuery(qs[0], onlyPositive.slice(0, 1).concat(zeros), async () => wire({ rules: ["C", "D", "E", "A"].map(id => full(id)) }));
+  assert.equal(capped.bprefAt5, 0);
+});
+await test("1.5.0: families collapse in the ideal DCG and in R/N, as in the returned grouping", async () => {
+  const fam: Qrel[] = [{ ...graded[0], familia: "f" }, { ...graded[0], unit_id: "A-copy", familia: "f" }, graded[2]];
+  const r = await evaluateQuery(qs[0], fam, async () => wire({ rules: ["A", "A-copy", "C"].map(id => full(id)) }));
+  assert.equal(r.returned, 2); assert.equal(r.ndcgAt5, 1); assert.equal(r.bprefAt5, 1); assert.equal(r.holeAt5, 0);
+  const v = await evaluateQuery(qs[0], fam, async () => v3([card("C"), card("A-copy"), card("new")]));
+  // R = 1, N = 1: one nonrelevant above the only relevant -> 0. Ideal = one group of gain 2.
+  assert.equal(v.bprefAt5, 0); assert.equal(v.ndcgAt5, 1 / Math.log2(3)); assert.equal(v.holeAt5, 1 / 3);
+});
+await test("1.5.0: summary reports nDCG@5, bpref@5 and Hole@5 overall, by stratum and by origem, with exclusion counts", async () => {
+  const report = await evaluate(loadDataset(dataDir), invoke);
+  const s = report.summary;
+  assert.equal(s.all.meanNdcgAt5, 1); assert.equal(s.all.ndcgQueries, 2); assert.equal(s.all.ndcgExcluded, 3);
+  assert.equal(s.all.meanBprefAt5, 1); assert.equal(s.all.bprefExcluded, 3);
+  // Returned: q1 3 (1 unjudged), q2 1, q4 1 (unjudged): pooled 2/5; macro (1/3 + 0 + 1) / 3; q3/q5 returned nothing.
+  assert.equal(s.all.holeAt5, 2 / 5); assert.equal(s.all.meanHoleAt5, (1 / 3 + 0 + 1) / 3); assert.equal(s.all.holeExcluded, 2);
+  assert.equal(s.byStratum.respondivel.meanNdcgAt5, 1); assert.equal(s.byStratum.negativa_dificil.holeAt5, 1);
+  assert.equal(s.byStratum.negativa_dificil.meanNdcgAt5, null); assert.equal(s.byStratum.negativa_dificil.ndcgExcluded, 1);
+  assert.equal(s.byOrigin["busca-lexical"].holeAt5, 1 / 3); assert.equal(s.byOrigin["observacao-real"].meanBprefAt5, 1);
+  assert.equal(s.originMissing.holeAt5, 1);
+  assert.match(s.interpretationJudgment.ndcgAt5, /pp\. 162-163/); assert.match(s.interpretationJudgment.bprefAt5, /p\. 26/);
+  assert.match(s.interpretationJudgment.holeAt5, /Table 4, p\. 9/);
+});
+await test("1.5.0: --furos exports only the unjudged top-five ids per pseudonymous query, sorted, no rank/text/label", async () => {
+  const entry = join(validator, "dist/index.js"), original = readFileSync(entry);
+  writeFileSync(entry, serverScript.replace('const rules = a.query === "first observation" ? [rule("u1")] : a.query === "second observation" ? [rule("u2")] : [];',
+    'const rules = a.query === "first observation" ? [rule("z"),rule("u1"),rule("bad"),rule("a"),rule("x"),rule("rank-six")] : a.query === "second observation" ? [rule("u2")] : [];'));
+  try {
+    const output = join(TMP, "furos-development"), furos = join(TMP, "furos.json"), pool = join(TMP, "furos-with-pool.json");
+    const report = await runBenchmark({ validator, benchmark: dataDir, output, furos, pool });
+    const rows = JSON.parse(readFileSync(furos, "utf8"));
+    assert.deepEqual(rows.map((r: { queryId: string }) => r.queryId), qs.map(q => sha256(q.id)).sort());
+    assert.deepEqual(rows.find((r: { queryId: string }) => r.queryId === sha256("q1")).ids, ["a", "x", "z"]);
+    assert.deepEqual(rows.find((r: { queryId: string }) => r.queryId === sha256("q2")).ids, []);
+    for (const row of rows) assert.deepEqual(Object.keys(row).sort(), ["ids", "queryId"]);
+    const bytes = readFileSync(furos, "utf8");
+    for (const secret of ['"u1"', '"bad"', "rank-six", qs[0].query, labels[0].trecho, labels[0].fonte, "relevance", "rank", "estrato", '"q1"']) assert.ok(!bytes.includes(secret), secret);
+    const manifest = JSON.parse(readFileSync(join(output, "manifest.json"), "utf8"));
+    assert.equal(manifest.furos.sha256, sha256(bytes)); assert.ok(manifest.pool.sha256);
+    assert.ok(!JSON.stringify(report).includes('"ids"'));
+    assert.equal(report.results[0].holeAt5, 3 / 5);
+    const cliFuros = join(TMP, "cli-furos.json");
+    const result = cli("--conjunto", dataDir, "--validator", validator, "--saida", join(TMP, "cli-furos-output"), "--furos", cliFuros);
+    assert.equal(result.status, 0, result.stderr); assert.equal(readFileSync(cliFuros, "utf8"), bytes);
+    await assert.rejects(runBenchmark({ validator, benchmark: dataDir, output: join(TMP, "furos-existing"), furos }), /FUROS_REQUIRES_NEW_FILE/);
+    assert.equal(existsSync(join(TMP, "furos-existing")), false);
+    for (const target of [join(dataDir, "furos.json"), join(TMP, "furos-conflict", "summary.json")]) {
+      await assert.rejects(runBenchmark({ validator, benchmark: dataDir, output: join(TMP, "furos-conflict"), furos: target }), /FUROS_PATH_CONFLICT/);
+    }
+    const same = join(TMP, "furos-same.json");
+    await assert.rejects(runBenchmark({ validator, benchmark: dataDir, output: join(TMP, "furos-same-out"), furos: same, pool: same }), /FUROS_PATH_CONFLICT/);
+    assert.equal(existsSync(join(TMP, "furos-conflict")), false); assert.equal(existsSync(same), false);
+  } finally { writeFileSync(entry, original); }
+});
+await test("1.5.0: --furos with --reserva is rejected by API and CLI before any input access, output or server startup", async () => {
+  const missing = join(TMP, "must-not-be-read-furos"), output = join(TMP, "reserve-furos-blocked"), furos = join(TMP, "reserve-furos.json");
+  await assert.rejects(runBenchmark({ validator: missing, benchmark: missing, manifest: missing, output, furos, reserve: true }), /^Error: RESERVE_RUN_FAILED$/);
+  const result = cli("--conjunto", missing, "--validator", missing, "--manifesto", missing, "--saida", output, "--furos", furos, "--reserva");
+  assert.equal(result.status, 1); assert.equal(result.stderr.trim(), "RESERVE_RUN_FAILED"); assert.equal(result.stdout, "");
+  assert.equal(existsSync(output), false); assert.equal(existsSync(furos), false);
+});
+await test("1.5.0: a run with tool errors or changed inputs never publishes furos", async () => {
+  const entry = join(validator, "dist/index.js"), original = readFileSync(entry);
+  const kb = join(validator, "data/knowledge/versions/fixture-kb/manifest.json"), originalKb = readFileSync(kb);
+  for (const mode of ["mutate", "tool-error"]) {
+    const extra = mode === "mutate" ? `if(a.query === "missing source") appendFileSync(${JSON.stringify(kb)}, " ");` : 'if(a.query === "missing source") throw new Error("synthetic");';
+    writeFileSync(entry, 'import {appendFileSync} from "node:fs";\n' + serverScript.replace("const a = request.params.arguments;", "const a = request.params.arguments;" + extra));
+    try {
+      const output = join(TMP, `furos-${mode}`), furos = join(TMP, `furos-${mode}.json`);
+      await assert.rejects(runBenchmark({ validator, benchmark: dataDir, output, furos }), /BENCHMARK_FAILED/);
+      assert.equal(existsSync(furos), false); assert.equal(existsSync(join(output, "manifest.json")), false);
+    } finally { writeFileSync(entry, original); writeFileSync(kb, originalKb); }
+  }
+});
+
 console.log(`\n${passed} passed; ${failed} failed. Synthetic artifacts: ${TMP}`);
 if (failed) process.exitCode = 1;

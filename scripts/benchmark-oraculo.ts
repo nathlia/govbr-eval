@@ -33,6 +33,25 @@
  * - isError responses stay TOOL_CALL_FAILED; a contract `errorCode` is kept only if it is one of the
  *   validator's static codes (else "unrecognized-error-code"), counted in summary errorCodes. No text.
  * - Characters still measure the raw serialized MCP result of every call.
+ *
+ * retrieval-evaluator-1.5.0 (D-148): every 1.4.0 metric is unchanged; three judgment-aware metrics are appended.
+ * All three are computed on the returned top five after family grouping (as above); the ideal ranking and
+ * the denominators use the query's judged labels, families collapsed (key = familia ?? unit_id,
+ * label = max relevance in the group).
+ * - ndcgAt5: graded gains 2 -> 2, 1 -> 1, 0/-1/unjudged -> 0; DCG = sum gain_i / log2(i + 1), rank i = 1..5;
+ *   ideal DCG from the judged positive groups sorted by gain, top five. No positive label -> null (excluded,
+ *   counted in summary ndcgExcluded). Manning, Raghavan & Schuetze (2008), Introduction to Information
+ *   Retrieval, sec. 8.4, pp. 162-163.
+ * - bprefAt5: Buckley & Voorhees (2004), Retrieval evaluation with incomplete information, sec. 2.1, p. 26.
+ *   Judged documents only: R = judged relevant groups (>0), N = judged nonrelevant groups (0 or -1);
+ *   bpref = (1/R) sum over relevant returned r of (1 - min(n_r, R) / min(R, N)), n_r = judged nonrelevant
+ *   returned above r. Computed on the returned top-five list (bpref@5); unjudged returned units are ignored.
+ *   N = 0 -> each term is 1 (n_r is necessarily 0). R = 0 -> null (excluded, counted in summary bprefExcluded).
+ * - holeAt5: share of the returned top-five units with no judgment (Thakur et al. 2021, BEIR, Table 4, p. 9).
+ *   No returned unit -> null. Summary: holeAt5 = pooled unjudged / returned; meanHoleAt5 = macro mean.
+ * - Development-only --furos <new-file>: per pseudonymous query, the sorted judged ids (citeAs, or all ids of a
+ *   legacy unit) of returned top-five units that are UNJUDGED. No rank, text or label. Forbidden with --reserva;
+ *   written only when the run completes without tool errors. Feeds the blind gap labelling of D-148.
  */
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -53,7 +72,7 @@ export interface Dataset { queries: Query[]; qrels: Qrel[]; manifest: Obj; hashe
 /** `cited` marks a 3.0.0 card: the judged ids (citeAs of the card and of family-merged cards). */
 export interface Unit { ids: string[]; data: Obj; cited?: string[] }
 export interface Call { error?: string; errorCode?: string; latencyMs: number; characters: number }
-export const EVALUATOR_VERSION = "retrieval-evaluator-1.4.0";
+export const EVALUATOR_VERSION = "retrieval-evaluator-1.5.0";
 /** Static codes of the 3.0.0 contract (govbr-ds-validator src/responses/contract.ts ErrorCode). */
 export const ERROR_CODES = ["invalid-combination", "empty-context", "unknown-component", "unknown-id", "unknown-section",
   "unknown-category", "unknown-example", "stale-cursor", "unknown-scan", "unknown-family", "scan-page-mismatch",
@@ -289,7 +308,35 @@ export async function evaluateQuery(q: Query, qrels: Qrel[], invoke: Invoke) {
   return evaluateQueryCollected(q, qrels, invoke);
 }
 type PoolRow = { queryId: string; ids: string[] };
-async function evaluateQueryCollected(q: Query, qrels: Qrel[], invoke: Invoke, collect?: (row: PoolRow) => void) {
+type Sinks = { pool?: (row: PoolRow) => void; furos?: (row: PoolRow) => void };
+
+/** Judged label groups of one query: families collapsed (familia ?? unit_id), max relevance per group. */
+function judgedGroups(local: Qrel[]): number[] {
+  const groups = new Map<string, number>();
+  for (const r of local) { const key = r.familia !== undefined ? `familia:${r.familia}` : `unit:${r.unit_id}`; groups.set(key, Math.max(groups.get(key) ?? -Infinity, r.relevance)); }
+  return [...groups.values()];
+}
+/** nDCG@5 with graded gains (2/1, else 0); null when the query has no judged positive label. */
+export function ndcgAt5(relevances: (number | null)[], local: Qrel[]): number | null {
+  const gain = (r: number | null) => r !== null && r > 0 ? r : 0;
+  const dcg = (gains: number[]) => gains.slice(0, 5).reduce((s, g, i) => s + g / Math.log2(i + 2), 0);
+  const ideal = dcg(judgedGroups(local).map(gain).filter(g => g > 0).sort((a, b) => b - a));
+  return ideal > 0 ? dcg(relevances.map(gain)) / ideal : null;
+}
+/** bpref on the returned list (bpref@5); null when the query has no judged relevant label. */
+export function bprefAt5(relevances: (number | null)[], local: Qrel[]): number | null {
+  const groups = judgedGroups(local);
+  const R = groups.filter(r => r > 0).length, N = groups.filter(r => r <= 0).length;
+  if (!R) return null;
+  let nonrelevantAbove = 0, sum = 0;
+  for (const r of relevances.slice(0, 5)) {
+    if (r === null) continue;
+    if (r > 0) sum += N ? 1 - Math.min(nonrelevantAbove, R) / Math.min(R, N) : 1;
+    else nonrelevantAbove++;
+  }
+  return sum / R;
+}
+async function evaluateQueryCollected(q: Query, qrels: Qrel[], invoke: Invoke, collect?: Sinks) {
   const calls: Call[] = [];
   async function call(args: Obj): Promise<Obj> {
     const start = performance.now();
@@ -313,7 +360,7 @@ async function evaluateQueryCollected(q: Query, qrels: Qrel[], invoke: Invoke, c
   try {
     // Measure the default response surface; detail=full would hide future default improvements.
     initial = await call({ query: q.query, ...(q.component ? { component: q.component } : {}), limit: 5 });
-    if (collect) poolIds = [...new Set(units(initial, 5).flatMap(u => u.ids))].sort();
+    if (collect?.pool) poolIds = [...new Set(units(initial, 5).flatMap(u => u.ids))].sort();
     top = units(initial).slice(0, 5);
     // Selection uses only returned data, never relevance labels or expected ids.
     const lacking = top.filter(u => !hasContext(u));
@@ -323,7 +370,7 @@ async function evaluateQueryCollected(q: Query, qrels: Qrel[], invoke: Invoke, c
   let details: Unit[] = [];
   try { if (detail) details = units(detail); else details = followed.flatMap(detailUnits); } catch { error ??= "INVALID_DETAIL_RESPONSE"; }
   // Collect the actual initial top five, before any local label/family grouping. Sort away rank.
-  collect?.({ queryId: sha256(q.id), ids: poolIds });
+  collect?.pool?.({ queryId: sha256(q.id), ids: poolIds });
   // Offline families cannot affect which ids are requested or promote rank six.
   top = groupFamilies(top, local);
   const relevance = (u: Unit) => {
@@ -334,6 +381,8 @@ async function evaluateQueryCollected(q: Query, qrels: Qrel[], invoke: Invoke, c
   };
   const ranked = top.map((u, i) => ({ rank: i + 1, ids: u.ids, relevance: relevance(u), contextAtCall:
     hasContext(u) ? 1 : details.some(d => d.ids.some(id => u.ids.includes(id)) && hasContext(d)) ? 2 : null }));
+  // Unjudged units of the grouped top five, by their judged ids only; sorted away rank.
+  collect?.furos?.({ queryId: sha256(q.id), ids: [...new Set(top.filter((_, i) => ranked[i].relevance === null).flatMap(u => u.cited ?? u.ids))].sort() });
   const relevant = ranked.filter(u => u.relevance !== null && u.relevance > 0);
   const supported = relevant.filter(u => u.relevance === 2);
   const sufficient = supported.map(u => u.contextAtCall).filter((n): n is number => n !== null);
@@ -349,7 +398,9 @@ async function evaluateQueryCollected(q: Query, qrels: Qrel[], invoke: Invoke, c
       : object(initial?.page) && typeof initial.page.matched === "number" ? initial.page.matched : null,
     latencyMs: calls.reduce((n, c) => n + c.latencyMs, 0), characters: calls.reduce((n, c) => n + c.characters, 0),
     initialCharacters: calls[0]?.characters ?? 0,
-    applicableAssertions: a.applicable + b.applicable, normativeConclusions: a.conclusions + b.conclusions };
+    applicableAssertions: a.applicable + b.applicable, normativeConclusions: a.conclusions + b.conclusions,
+    ndcgAt5: ndcgAt5(ranked.map(u => u.relevance), local), bprefAt5: bprefAt5(ranked.map(u => u.relevance), local),
+    holeAt5: ranked.length ? ranked.filter(u => u.relevance === null).length / ranked.length : null };
 }
 export type QueryResult = Awaited<ReturnType<typeof evaluateQuery>>;
 
@@ -371,7 +422,17 @@ export function summarize(results: QueryResult[]) {
       meanInitialCharacters: mean(rs.map(r => r.initialCharacters)),
       meanCandidates: mean(candidates), candidatesUnknown: rs.length - candidates.length,
       applicableAssertions: rs.reduce((n, r) => n + r.applicableAssertions, 0),
-      normativeConclusions: rs.reduce((n, r) => n + r.normativeConclusions, 0) };
+      normativeConclusions: rs.reduce((n, r) => n + r.normativeConclusions, 0),
+      ...judgment(rs) };
+  }
+  function judgment(rs: QueryResult[]) {
+    const ndcg = rs.map(r => r.ndcgAt5).filter((n): n is number => n !== null);
+    const bpref = rs.map(r => r.bprefAt5).filter((n): n is number => n !== null);
+    const hole = rs.map(r => r.holeAt5).filter((n): n is number => n !== null);
+    const returned = rs.reduce((n, r) => n + r.returned, 0);
+    return { meanNdcgAt5: mean(ndcg), ndcgQueries: ndcg.length, ndcgExcluded: rs.length - ndcg.length,
+      meanBprefAt5: mean(bpref), bprefQueries: bpref.length, bprefExcluded: rs.length - bpref.length,
+      holeAt5: returned ? rs.reduce((n, r) => n + r.unjudged, 0) / returned : null, meanHoleAt5: mean(hole), holeExcluded: rs.length - hole.length };
   }
   const byStratum = Object.fromEntries(STRATA.map(s => [s, group(results.filter(r => r.estrato === s))]));
   const answerable = byStratum.respondivel;
@@ -387,13 +448,16 @@ export function summarize(results: QueryResult[]) {
       sourceUnsupported: "sem_resposta is source-unsupported by dataset classification, separate from retrieval miss; not inferred from an empty response.",
       context: "Operational proxy: relevance=2 (supports the answer), text, source, conditions, exceptions and expectedEvidence. Relevance=1 is acceptable retrieval context, not a sufficient answer. Prose completeness requires review.",
       deduplication: "Returned ids/aliases and locally declared qrel familia; no inferred family for unjudged results. Offline labels never extend the top-five cutoff.",
-      cards: "3.0.0 cards are judged by citeAs only (brief ambiguous cards: ids[0]); other card ids are context, never relevance or conflict. Context at call 1 = requirement.complete + source; else the card's more.next id call (second round)." } };
+      cards: "3.0.0 cards are judged by citeAs only (brief ambiguous cards: ids[0]); other card ids are context, never relevance or conflict. Context at call 1 = requirement.complete + source; else the card's more.next id call (second round)." },
+    interpretationJudgment: { ndcgAt5: "Graded gains 2/1, 0 for 0, -1 and unjudged; log2(rank+1) discount; ideal DCG from the query's judged positive labels, families collapsed (Manning, Raghavan & Schuetze 2008, sec. 8.4, pp. 162-163). Queries without a positive label are excluded (ndcgExcluded).",
+      bprefAt5: "Buckley & Voorhees 2004, sec. 2.1, p. 26, on the returned top five: judged documents only, unjudged ignored; R = judged relevant, N = judged nonrelevant (0 or -1), families collapsed. R = 0 excluded (bprefExcluded).",
+      holeAt5: "Share of returned top-five units with no judgment (Thakur et al. 2021, Table 4, p. 9). holeAt5 pooled over returned units; meanHoleAt5 macro over queries with a returned unit (holeExcluded = none returned)." } };
 }
 
 export async function evaluate(dataset: Dataset, invoke: Invoke) {
   return evaluateCollected(dataset, invoke);
 }
-async function evaluateCollected(dataset: Dataset, invoke: Invoke, collect?: (row: PoolRow) => void) {
+async function evaluateCollected(dataset: Dataset, invoke: Invoke, collect?: Sinks) {
   const results: QueryResult[] = [];
   for (const q of dataset.queries) results.push(await evaluateQueryCollected(q, dataset.qrels, invoke, collect));
   return { results, summary: summarize(results) };
@@ -433,7 +497,7 @@ function identityChecked(validator: string, benchmark: string, datasetOptions: {
       lockSha256: sha256(readFileSync(join(ROOT, "package-lock.json"))), node: process.version } };
 }
 
-export interface RunOptions { validator: string; benchmark: string; output: string; timeoutMs?: number; reserve?: boolean; manifest?: string; pool?: string }
+export interface RunOptions { validator: string; benchmark: string; output: string; timeoutMs?: number; reserve?: boolean; manifest?: string; pool?: string; furos?: string }
 export async function runBenchmark(options: RunOptions) {
   try { return await runBenchmarkChecked(options); }
   catch (e) { if (options.reserve) throw new Error("RESERVE_RUN_FAILED"); throw e; }
@@ -441,16 +505,21 @@ export async function runBenchmark(options: RunOptions) {
 async function runBenchmarkChecked(options: RunOptions) {
   // Reject before dataset reads, input hashing, output creation or server startup.
   if (options.reserve && options.pool !== undefined) throw new Error("POOL_FORBIDDEN_IN_RESERVE");
+  if (options.reserve && options.furos !== undefined) throw new Error("FUROS_FORBIDDEN_IN_RESERVE");
   const validator = resolve(options.validator), benchmark = resolve(options.benchmark), output = resolve(options.output);
-  const pool = options.pool === undefined ? undefined : canonicalTarget(resolve(options.pool));
-  if (pool !== undefined) {
-    if (!nonempty(options.pool) || existsSync(pool)) throw new Error("POOL_REQUIRES_NEW_FILE");
-    if ([validator, benchmark].some(root => inside(canonicalTarget(root), pool)) ||
-        pool === canonicalTarget(output) || inside(pool, canonicalTarget(output)) ||
-        (inside(canonicalTarget(output), pool) && ["inputs.json", "results.json", "summary.json", "manifest.json", "failure.json"].some(name => pool === join(canonicalTarget(output), name)))) {
-      throw new Error("POOL_PATH_CONFLICT");
+  const exportTarget = (value: string | undefined, code: "POOL" | "FUROS") => {
+    if (value === undefined) return undefined;
+    const target = canonicalTarget(resolve(value));
+    if (!nonempty(value) || existsSync(target)) throw new Error(`${code}_REQUIRES_NEW_FILE`);
+    if ([validator, benchmark].some(root => inside(canonicalTarget(root), target)) ||
+        target === canonicalTarget(output) || inside(target, canonicalTarget(output)) ||
+        (inside(canonicalTarget(output), target) && ["inputs.json", "results.json", "summary.json", "manifest.json", "failure.json"].some(name => target === join(canonicalTarget(output), name)))) {
+      throw new Error(`${code}_PATH_CONFLICT`);
     }
-  }
+    return target;
+  };
+  const pool = exportTarget(options.pool, "POOL"), furos = exportTarget(options.furos, "FUROS");
+  if (pool !== undefined && furos !== undefined && (inside(pool, furos) || inside(furos, pool))) throw new Error("FUROS_PATH_CONFLICT");
   if (inside(validator, output) || inside(benchmark, output)) throw new Error("Output cannot be inside validator or benchmark inputs");
   if (existsSync(output)) throw new Error(`Output already exists (never overwritten): ${output}`);
   if (options.reserve && (!options.manifest || inside(benchmark, resolve(options.manifest)))) throw new Error("Reserve requires an external trusted manifest");
@@ -477,22 +546,31 @@ async function runBenchmarkChecked(options: RunOptions) {
   const client = new Client({ name: "retrieval-benchmark", version: "1.2.0" });
   try {
     await client.connect(transport, { timeout, maxTotalTimeout: timeout });
-    const poolRows: PoolRow[] = [];
-    const report = await evaluateCollected(dataset, args => client.callTool({ name: "get_ds_rules", arguments: args }, undefined, { timeout, maxTotalTimeout: timeout }), pool ? row => poolRows.push(row) : undefined);
+    const poolRows: PoolRow[] = [], furosRows: PoolRow[] = [];
+    const sinks: Sinks = { ...(pool ? { pool: (row: PoolRow) => { poolRows.push(row); } } : {}), ...(furos ? { furos: (row: PoolRow) => { furosRows.push(row); } } : {}) };
+    const report = await evaluateCollected(dataset, args => client.callTool({ name: "get_ds_rules", arguments: args }, undefined, { timeout, maxTotalTimeout: timeout }), pool || furos ? sinks : undefined);
     save("results.json", report.results);
     save("summary.json", { ...report.summary, finishedAt: new Date().toISOString() });
     const after = identity(validator, benchmark, datasetOptions);
     if (JSON.stringify(before) !== JSON.stringify(after)) throw new Error("Inputs changed during benchmark; results cannot be accepted");
-    let poolSha256: string | undefined;
+    let poolSha256: string | undefined, furosSha256: string | undefined;
+    const byQuery = (rows: PoolRow[]) => JSON.stringify(rows.sort((a, b) => a.queryId < b.queryId ? -1 : a.queryId > b.queryId ? 1 : 0), null, 2) + "\n";
     if (pool) {
       if (report.summary.all.errors) throw new Error("POOL_INCOMPLETE");
       mkdirSync(dirname(pool), { recursive: true });
-      const bytes = JSON.stringify(poolRows.sort((a, b) => a.queryId < b.queryId ? -1 : a.queryId > b.queryId ? 1 : 0), null, 2) + "\n";
+      const bytes = byQuery(poolRows);
       writeFileSync(pool, bytes, { flag: "wx" });
       poolSha256 = sha256(bytes);
     }
+    if (furos) {
+      if (report.summary.all.errors) throw new Error("FUROS_INCOMPLETE");
+      mkdirSync(dirname(furos), { recursive: true });
+      const bytes = byQuery(furosRows);
+      writeFileSync(furos, bytes, { flag: "wx" });
+      furosSha256 = sha256(bytes);
+    }
     const files = ["inputs.json", "results.json", "summary.json"];
-    save("manifest.json", { version: "retrieval-baseline-1.2.0", status: report.summary.all.errors ? "completed-with-tool-errors" : "complete", files: Object.fromEntries(files.map(f => [f, sha256(readFileSync(join(output, f)))])), ...(poolSha256 ? { pool: { sha256: poolSha256 } } : {}) });
+    save("manifest.json", { version: "retrieval-baseline-1.2.0", status: report.summary.all.errors ? "completed-with-tool-errors" : "complete", files: Object.fromEntries(files.map(f => [f, sha256(readFileSync(join(output, f)))])), ...(poolSha256 ? { pool: { sha256: poolSha256 } } : {}), ...(furosSha256 ? { furos: { sha256: furosSha256 } } : {}) });
     return report;
   } catch (e) { const code = failureCode(e); save("failure.json", { status: "failed", error: code, at: new Date().toISOString() }); if (e instanceof DatasetLabelConflict) throw e; throw new Error(code); }
   finally { await client.close().catch(() => {}); await transport.close().catch(() => {}); }
@@ -501,18 +579,18 @@ async function runBenchmarkChecked(options: RunOptions) {
 async function main() {
   const args = process.argv.slice(2);
   if (args.includes("--help")) {
-    console.log("benchmark:oraculo --conjunto <dataset-dir> [--reserva --manifesto <external-trusted-manifest>] --validator <validator-root> --saida <new-dir> [--pool <new-development-file>] [--timeout-ms 30000]\nNo models; prebuilt MCP stdio; immutable output. Pool exports only sorted ids by pseudonymous query, no labels/text/rank; forbidden with --reserva. Pooling/relabeling requires a separately ratified method. Prose safety requires independent review."); return;
+    console.log("benchmark:oraculo --conjunto <dataset-dir> [--reserva --manifesto <external-trusted-manifest>] --validator <validator-root> --saida <new-dir> [--pool <new-development-file>] [--furos <new-development-file>] [--timeout-ms 30000]\nNo models; prebuilt MCP stdio; immutable output. Pool exports only sorted ids by pseudonymous query, no labels/text/rank; forbidden with --reserva. Furos exports only the sorted unjudged top-five ids by pseudonymous query, same rules (D-148). Pooling/relabeling requires a separately ratified method. Prose safety requires independent review."); return;
   }
   const values: Record<string, string> = {};
   for (let i = 0; i < args.length; i += 2) {
     if (args[i] === "--reserva" && !values[args[i]]) { values[args[i]] = "true"; i--; continue; }
-    if (!["--benchmark", "--conjunto", "--manifesto", "--validator", "--saida", "--pool", "--timeout-ms"].includes(args[i]) || !args[i + 1] || values[args[i]]) throw new Error("Unknown, repeated or missing CLI argument; use --help");
+    if (!["--benchmark", "--conjunto", "--manifesto", "--validator", "--saida", "--pool", "--furos", "--timeout-ms"].includes(args[i]) || !args[i + 1] || values[args[i]]) throw new Error("Unknown, repeated or missing CLI argument; use --help");
     values[args[i]] = args[i + 1];
   }
   if (!values["--saida"]) throw new Error("--saida must name a new baseline directory");
   if (values["--benchmark"] && values["--conjunto"]) throw new Error("Use only one dataset alias");
   if (values["--reserva"] && (!values["--manifesto"] || !(values["--conjunto"] || values["--benchmark"]))) throw new Error("Reserve requires explicit --conjunto and --manifesto");
-  const report = await runBenchmark({ pool: values["--pool"], reserve: Boolean(values["--reserva"]), manifest: values["--manifesto"], benchmark: values["--conjunto"] ?? values["--benchmark"] ?? join(ROOT, "retrieval/benchmark-1.0.0"),
+  const report = await runBenchmark({ pool: values["--pool"], furos: values["--furos"], reserve: Boolean(values["--reserva"]), manifest: values["--manifesto"], benchmark: values["--conjunto"] ?? values["--benchmark"] ?? join(ROOT, "retrieval/benchmark-1.0.0"),
     validator: values["--validator"] ?? join(ROOT, "../govbr-ds-validator"), output: values["--saida"],
     timeoutMs: values["--timeout-ms"] ? Number(values["--timeout-ms"]) : undefined });
   console.log(JSON.stringify(report.summary, null, 2));

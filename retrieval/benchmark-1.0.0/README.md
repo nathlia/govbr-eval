@@ -96,3 +96,26 @@ forma do validator 3.0.0 (contrato `oraculo-resposta/1.0.0`) traz cartões em `r
 
 Nenhum rótulo, consulta ou o manifesto mudou; o sha256 do manifesto cobre só `queries.jsonl` e
 `qrels.jsonl`.
+
+## Avaliador 1.5.0: nDCG@5, bpref@5, Hole@5 e `--furos` (D-148, 2026-10-28)
+
+O `retrieval-evaluator-1.5.0` mantém todas as métricas da 1.4.0 com os mesmos valores (teste de
+snapshot no fixture) e acrescenta três, calculadas sobre o top-5 devolvido depois do agrupamento por
+família. O ideal e os denominadores usam os rótulos julgados da consulta, também com famílias colapsadas
+(`familia` ou `unit_id`, rótulo = o maior do grupo):
+
+- **nDCG@5** (Manning, Raghavan & Schütze 2008, §8.4, pp. 162–163): ganho 2 → 2, 1 → 1, e 0, -1 ou
+  não julgado → 0; desconto log2(posição+1); DCG ideal com os rótulos positivos julgados. Consulta sem
+  rótulo positivo fica de fora (`ndcgExcluded`).
+- **bpref@5** (Buckley & Voorhees 2004, §2.1, p. 26): só documentos julgados. R = relevantes (>0),
+  N = não relevantes (0 ou -1); bpref = (1/R) Σ_r (1 − min(n_r, R)/min(R, N)), n_r = não relevantes
+  julgados acima de r, sobre a lista devolvida (top-5). Não julgados são ignorados. R = 0 fica de fora
+  (`bprefExcluded`); N = 0 faz cada termo valer 1.
+- **Hole@5** (Thakur et al. 2021, Tabela 4, p. 9): fração das unidades devolvidas no top-5 sem rótulo.
+  No resumo, `holeAt5` = não julgadas / devolvidas (somadas) e `meanHoleAt5` = média por consulta.
+
+As três aparecem no resumo geral, por estrato e por origem. `--furos <arquivo-novo>` (só
+desenvolvimento, proibido com `--reserva`, gravado só se a execução termina sem erro) exporta, por
+consulta pseudonimizada, os ids não julgados do top-5, ordenados, sem posição, texto ou rótulo. É a
+entrada da rotulagem cega dos furos (D-148), em que os furos de várias versões são juntados e
+embaralhados. Nenhum rótulo, consulta ou o manifesto mudou.
