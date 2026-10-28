@@ -1,5 +1,5 @@
 {
-  "versao": "1.0.3",
+  "versao": "1.0.4",
   "data": "2026-10-28",
   "kb": "3.7.0-literal-2026-10-15",
   "contagens": {
@@ -13,15 +13,19 @@
     "busca-lexical": 17,
     "observacao-real": 55
   },
-  "qrels": "1.0.2 = 1.0.0 (rotulagem lendo a lista inteira) + 1.0.1 (pool 2.15.0 ad10c0e) + pool BM25 1.0 (scripts/pool-referencia-bm25.ts, 27d3087), D-143 + furos 1.0.3 (rotulagem cega dos não julgados no top-5 de 3.1.0 léxica, 3.2.0 híbrida e vetorial, só acréscimo, D-148)",
+  "qrels": "1.0.2 = 1.0.0 (rotulagem lendo a lista inteira) + 1.0.1 (pool 2.15.0 ad10c0e) + pool BM25 1.0 (scripts/pool-referencia-bm25.ts, 27d3087), D-143 + furos 1.0.3 (rotulagem cega dos não julgados no top-5 de 3.1.0 léxica, 3.2.0 híbrida e vetorial, só acréscimo, D-148) + furos 1.0.4 (top-5 não julgado do ramo de correções do 3.3.0, léxico e híbrido, só acréscimo, D-151)",
   "sha256": {
     "queries.jsonl": "7041e266f342ca5b7b33dad2f4a2fb895bc8e4bfefa496d9ddb768eb6f41bfd5",
-    "qrels.jsonl": "8af76daeb5dddb869a37e5b75da9bbdc6e632d6302f5d1f204e12fd873dd930d"
+    "qrels.jsonl": "a666be010f26e4a1717745dcf325c63a2a76957fc02ca50d8db2191a20ab10d6"
   },
   "historico": [
     {
       "versao": "1.0.2",
       "qrels_sha256": "6b2932bf1acb78f75190f6ba96b711e2c38c4372a5afc294b3d75fb0bffd0a71"
+    },
+    {
+      "versao": "1.0.3",
+      "qrels_sha256": "8af76daeb5dddb869a37e5b75da9bbdc6e632d6302f5d1f204e12fd873dd930d"
     }
   ]
 }

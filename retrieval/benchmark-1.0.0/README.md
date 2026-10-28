@@ -142,3 +142,7 @@ resolvidos) fica fora de todo repositório git — nenhum diretório ancestral c
 pastas do conjunto e do validador. O conteúdo é o mesmo dos furos de desenvolvimento (consulta
 pseudonimizada + ids não julgados, ordenados, sem texto, posição ou rótulo). As demais regras da reserva
 não mudaram (`--pool` continua proibido; erros continuam como `RESERVE_RUN_FAILED`).
+
+## qrels 1.0.4 — furos do ramo de correções do 3.3.0 (2026-10-28, D-151)
+
+Mesmo procedimento do 1.0.3: os ids do top-5 não julgados do ramo `nat109-busca` (léxico e híbrido) foram julgados uma vez, às cegas quanto à versão, só com acréscimo (86 pares: 1: 9 · 0: 76 · -1: 1). Total: 1.586 rótulos. Pelo D-151, as mudanças de busca do 3.3.0 são números só do desenvolvimento; a reserva mede o 3.2.0 (D-150).
