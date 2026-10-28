@@ -235,7 +235,8 @@ async function main(): Promise<void> {
       // Nada no ambiente da imagem troca o modo de busca, e nenhum dado denso entrou.
       const env = JSON.parse(docker(["image", "inspect", tags[name], "--format", "{{json .Config.Env}}"]).stdout) as string[] | null;
       assertNoRetrievalEnv(env ?? [], `a imagem ${tags[name]}`);
-      const listed = inImage(images[name].id, "ls -A /opt/oracle/data/models /opt/oracle/data/retrieval").split(/\s+/).filter((f) => f && !f.endsWith(":"));
+      // >= 3.3.0 (NAT-109, D-152): a busca densa saiu do validador e data/models/ deixou de existir; pasta ausente = nada a conferir.
+      const listed = inImage(images[name].id, "for d in /opt/oracle/data/models /opt/oracle/data/retrieval; do if [ -d \"$d\" ]; then ls -A \"$d\"; fi; done").split(/\s+/).filter((f) => f && !f.endsWith(":"));
       const extra = listed.filter((f) => !["e5-small.LICENSE", "models.json"].includes(f) && !/^(guidance|vocab)-[\d.]+\.json$/.test(f));
       if (extra.length) throw new Error(`imagem do oráculo com dados da busca densa: ${extra.join(", ")}`);
       // O servidor sobe em cada perfil das campanhas e anuncia o tools/list fixado em perfis-oraculo.ts.

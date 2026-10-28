@@ -105,6 +105,13 @@ contêiner (`test:runner` confere). Etiquetas: `govbr.oracle.commit` (validador 
 inteiro — é o que o preflight recalcula; baixar ou apagar os modelos no host muda esse hash e o preflight
 recusa até reconstruir a imagem (falha fechada).
 
+**Oráculo 3.4.x (NAT-100).** Desde a 3.3.0 (D-152) o validator não tem mais busca densa nem
+`data/models/`; a conferência do build aceita a pasta ausente. A imagem `govbr-runner-oracle:3.4.1-fae724d1127a`
+foi construída de um clone limpo no commit `e15b1b1` (3.4.1; tools/list igual ao da 3.4.0, pins `TOOLS_LIST_SHA256_3_4_0`) (`npm ci` + `tsc`, sem `dist/` antigo nem modelos no
+`data/`), o mesmo estado que o checkout por SHA do CI produz: `GOVBR_VALIDATOR_DIR=<clone>` no build e no
+`run-once`/testes. O checkout de trabalho do validator só serve ao preflight se o `dist/` e o `data/` dele
+forem os do commit (sem arquivos de builds antigos nem `data/models/`).
+
 `govbr-telas/.node-version` passou a 24.21.0 (`export-telas-1.2.0`); `site/` saiu idêntico byte a byte.
 
 ### Linux / Docker Engine nativo (T4)
