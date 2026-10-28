@@ -57,7 +57,7 @@ export const EVALUATOR_VERSION = "retrieval-evaluator-1.4.0";
 /** Static codes of the 3.0.0 contract (govbr-ds-validator src/responses/contract.ts ErrorCode). */
 export const ERROR_CODES = ["invalid-combination", "empty-context", "unknown-component", "unknown-id", "unknown-section",
   "unknown-category", "unknown-example", "stale-cursor", "unknown-scan", "unknown-family", "scan-page-mismatch",
-  "not-a-page-scan", "query-too-long", "no-content-terms", "too-many-ids", "missing-finding-ids", "invalid-argument"] as const;
+  "not-a-page-scan", "query-too-long", "no-content-terms", "too-many-ids", "missing-finding-ids", "invalid-argument", "unknown-parameter"] as const;
 class ToolCallError extends Error {
   constructor(readonly code: string | null) { super("MCP tool error"); }
 }
