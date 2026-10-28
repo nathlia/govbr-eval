@@ -24,7 +24,7 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
 /**
  * Ferramentas que cada perfil registra, em ordem alfabética, e o sha256 de `JSON.stringify(tools)` do
  * tools/list (cliente MCP 1.29.0, o mesmo da ponte). Os pins VIGENTES (só para campanhas NOVAS) são os do
- * validator 3.2.0 (4067591, NAT-107), medidos em 2026-10-28 contra o dist/ reconstruído de 4067591 com o
+ * validator 3.4.0 (994dec6), medidos em 2026-10-28 contra o dist/ construído de 994dec6 com o
  * SDK 1.29.0 da ponte (stdio, GOVBR_VALIDATOR_TOOL_PROFILE=<perfil>, sem GOVBR_RETRIEVAL_MODE = busca
  * léxica padrão, sha256 de JSON.stringify(tools)) e de novo dentro da imagem do oráculo travada.
  * Da 3.0.0 para a 3.2.0 mudaram evaluation, full e normative (o get_ds_rules ganhou o parâmetro opcional
@@ -33,6 +33,16 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
  * knowledge-free 72abd549…); a tabela da 3.0.0 fica abaixo só como registro.
  * Mudou de propósito? Mude aqui E no validator, e declare: é diferença de tratamento do braço.
  */
+export const TOOLS_LIST_SHA256_3_4_0 = {
+  "knowledge-free": "f358152ab77b8b6930687c1b12206f3821170600d52c0fda0a3dde8d0774bf44",
+  evaluation: "adc4266162781cb6239ee4e84ae852889ceeb209556bf7270c267b015884c6b2",
+  full: "dfa9553efd67b16e524c9ce6c6388b07b39852e4ecc5405c98a6633ab8d2857b",
+  normative: "bb51f7017192343e6e858330264614485c0658e811e1f4021aee9c1272c2ecad",
+  deterministic: "145b51e4da8ae7fb58a5cefc7b031352bfbf0ca1f53f983e26ac817f9a6c115a",
+  evidence: "4b4f82499cfe923b26f178c9dff3f5dcf233512ddbee6128b5a6bd0cc7a81ba7",
+} as const;
+
+/** Registro: pins do validator 3.2.0 (4067591, NAT-107), vigentes até a 3.4.0 (994dec6). Não usados pelo runner. */
 export const TOOLS_LIST_SHA256_3_2_0 = {
   "knowledge-free": "8bdb5e35ed3346a91b227b45034d64c849f1d21baeb6d5affc995a4ea02c7dee",
   evaluation: "f15292681d18f1f516373e741e3e03911b32acc207ba6813cde046a1d33ebf60",
@@ -55,11 +65,11 @@ export const TOOLS_LIST_SHA256_3_0_0 = {
 export const PERFIS: Readonly<Record<PerfilOraculo, { tools: readonly string[]; toolsListSha256: string }>> = {
   evaluation: {
     tools: ["get_component_spec", "get_design_tokens", "get_ds_rules", "get_emag_rules", "get_finding_details", "get_page_rules", "scan_page", "verify_finding"],
-    toolsListSha256: TOOLS_LIST_SHA256_3_2_0.evaluation,
+    toolsListSha256: TOOLS_LIST_SHA256_3_4_0.evaluation,
   },
   "knowledge-free": {
     tools: ["get_finding_details", "scan_page", "verify_finding"],
-    toolsListSha256: TOOLS_LIST_SHA256_3_2_0["knowledge-free"],
+    toolsListSha256: TOOLS_LIST_SHA256_3_4_0["knowledge-free"],
   },
 };
 
@@ -97,7 +107,7 @@ export function perfilMedido(inv: InventarioOraculo | null, telemetria: Record<s
   let perfil: PerfilOraculo | null = porNomes.length === 1 && porHash.length === 1 && porNomes[0] === porHash[0] ? porNomes[0] : null;
   if (!perfil) problemas.push(`tools/list do servidor (${nomes.join(", ")}; sha256 ${String(inv.childToolsSha256 ?? "ausente").slice(0, 12)}) não é o de nenhum perfil fixado`);
   // Segunda medida do servidor (validator ≥ 2.17.1): serverInfo.description = "toolProfile=<perfil>". Ausente ou
-  // diferente do perfil do tools/list = falha fechada (o validator 3.2.0 que as campanhas novas fixam sempre a anuncia).
+  // diferente do perfil do tools/list = falha fechada (o validator 3.4.0 que as campanhas novas fixam sempre a anuncia).
   const declarado = /(?:^|\s)toolProfile=(\S+)/.exec(inv.serverInfo?.description ?? "")?.[1] ?? null;
   if (!declarado) { problemas.push(`serverInfo.description sem toolProfile=<perfil> (${JSON.stringify(inv.serverInfo?.description ?? null)})`); perfil = null; }
   else if (perfil && declarado !== perfil) { problemas.push(`serverInfo diz toolProfile=${declarado}, tools/list diz ${perfil}`); perfil = null; }

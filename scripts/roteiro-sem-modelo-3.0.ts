@@ -215,9 +215,9 @@ async function fronteiras(base: string, ctx: { fluxo: Obj; solicitacao: Obj }): 
   } else check("ambigua-sinal", false, `"fechar" não veio ambiguous (${amb.d?.status})`);
 
   // erro de aplicação: componente desconhecido → errorCode + next seguido
-  const e1 = await call(T, "erro", "get_ds_rules", { component: "paginacao" });
+  const e1 = await call(T, "erro", "get_ds_rules", { component: "componente-inexistente" });
   check("A5-erro-aplicacao", e1.rec.isError && e1.d?.kind === "error" && Boolean(e1.d.errorCode) && e1.d.next?.length >= 1, `isError ${e1.rec.isError} errorCode ${e1.d?.errorCode} next ${e1.d?.next?.length}`);
-  const e1n = await seguir(T, "erro:next", (e1.d?.next ?? []).find((x: Obj) => x.tool));
+  const e1n = await seguir(T, "erro:next", (e1.d?.next ?? []).find((x: Obj) => x.tool) ?? (e1.d?.available?.[0] ? { tool: "get_ds_rules", arguments: { component: e1.d.available[0] } } : undefined)); // 3.4.0: o next do erro não traz ferramenta; segue-se o nome de `available` que ele manda escolher
   check("A5-erro-next-resolve", e1n !== null && !e1n.rec.isError, `next seguido: ${e1n?.rec.tool} ${JSON.stringify(e1n?.rec.args)} isError ${e1n?.rec.isError}`);
   // erro de esquema: parâmetro desconhecido (validação do SDK, -32602)
   const e2 = await call(T, "erro-esquema", "get_ds_rules", { querry: "x" });
