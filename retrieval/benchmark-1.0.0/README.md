@@ -119,3 +119,12 @@ desenvolvimento, proibido com `--reserva`, gravado só se a execução termina s
 consulta pseudonimizada, os ids não julgados do top-5, ordenados, sem posição, texto ou rótulo. É a
 entrada da rotulagem cega dos furos (D-148), em que os furos de várias versões são juntados e
 embaralhados. Nenhum rótulo, consulta ou o manifesto mudou.
+
+## qrels 1.0.3 — rotulagem cega dos furos (2026-10-28, D-148)
+
+Os pools anteriores vieram só de sistemas léxicos. Antes de comparar a busca léxica (3.1.0) com a híbrida
+e a vetorial (3.2.0, NAT-107), os ids do top-5 **não julgados** das três versões (saída `--furos` do
+avaliador 1.5.0) foram unidos e embaralhados, sem indicar a versão de origem: 355 pares, 72 consultas.
+Foram julgados uma vez, lendo a cláusula, em quatro lotes (2: 1 · 1: 29 · 0: 314 · -1: 11), com a nota
+`furos 1.0.3 (D-148)`. Só acréscimo: nenhum rótulo existente mudou. Total: 1.500 rótulos. sha256 no
+`manifest.json` (o 1.0.2 fica em `historico`). Remédio de Thakur et al. (BEIR), pp. 8–9.
