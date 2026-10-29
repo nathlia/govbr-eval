@@ -17,7 +17,7 @@ import {
   derivarClasse, validarResposta,
   type CartaoCego, type Resposta,
 } from "./e14-comum";
-import { bracoDoRun, mascararTrio, passosLegiveis, prepararCampanha } from "./e14-campanha";
+import { bracoDoRun, enderecoDaTela, mascararTrio, passosLegiveis, prepararCampanha } from "./e14-campanha";
 import { FORCA_NO_VOCABULARIO, normasDaCampanha } from "./e14-fila";
 import { argumentosIngerir, contextoDe, ingerir } from "./e14-ingerir";
 
@@ -41,6 +41,12 @@ t("receita da linha de base vira os passos da referência (K3); passos do autor 
   assert.deepEqual(passosLegiveis(["setup do plano de estados até apos (3 passo(s))", "Tab"], meta).slice(-2), ["preencher `#a` com \"x\"", "Tab"]);
   assert.deepEqual(passosLegiveis(["load", "Tab x8"], meta), ["load", "Tab x8"]);
   assert.throws(() => passosLegiveis(["setup do plano de estados (9 passo(s))"], meta));
+});
+t("endereço da tela = _meta.url da referência com a consulta (D-154); sem url, o da captura; caminho diferente para", () => {
+  assert.equal(enderecoDaTela({ url: "/pnip/portal-mpa/vistorias?mock-perfil=mpa" }, "/pnip/portal-mpa/vistorias"), "/pnip/portal-mpa/vistorias?mock-perfil=mpa");
+  assert.equal(enderecoDaTela({ url: "/solicitacao.html" }, "/solicitacao.html"), "/solicitacao.html");
+  assert.equal(enderecoDaTela({}, "/x.html"), "/x.html");
+  assert.throws(() => enderecoDaTela({ url: "/outra?mock-perfil=mpa" }, "/pnip/portal-mpa/vistorias"), /caminhos diferentes/);
 });
 t("CLI da ingestão: --fila explícito; argumento solto, --fila vazio ou --fila com --saida recusados (J)", () => {
   assert.deepEqual(argumentosIngerir([]), { fila: null, refazer: false, erro: null });

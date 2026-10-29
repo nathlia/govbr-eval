@@ -16,7 +16,10 @@
  * `<passada>/respostas/` (`respostaEm` = `../respostas/lote-NN.json`); `norma.id "nenhuma"` com aplicabilidade/violada
  * `nao-perguntado`; receitas da linha de base legíveis; fontes (base + sha256) no manifesto.
  * 1.2.0 (achados M, N): `forcaNoVocabulario` em cada regra da base (tabela FORCA_NO_VOCABULARIO, impressa no LEIAME) e
- * `estadoAlcancado` (`receita` | `nao-alcancado`, R10) na resposta. Ingestão:
+ * `estadoAlcancado` (`receita` | `nao-alcancado`, R10) na resposta.
+ * 1.3.1 (D-154): `endereco` da tela = `_meta.url` da referência (com a consulta, ex. `?mock-perfil=mpa` da tela B), a mesma
+ * entrada que a referência mediu e os runs abriram; o `capture.json` da análise guarda só o pathname, e os juízes do
+ * ensaio-trio-b-03 mediram a página nua (sem a sessão fictícia; um deles notou). Ingestão:
  *   npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila PASTA_DA_PASSADA
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -40,8 +43,9 @@ import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
  * informação de julgamento fica; ids de achado `FAM-…` saem das evidências; menções a ferramenta no texto livre viram o mesmo
  * marcador nos três braços), resíduo de braço contado por braço, categoria e comparação (`residuo-de-braco.json`, insumo do
  * S4') e braços pelo desenho da campanha (`design.arms`). Formato do lote, do manifesto e das respostas: o mesmo da 1.2.0.
+ * 1.3.1 (D-154): `endereco` pela `_meta.url` da referência (`enderecoDaTela`), consulta incluída; formatos iguais aos da 1.3.0.
  */
-export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.3.0";
+export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.3.1";
 export const FORMATO_RESIDUO = "nat78-residuo-de-braco-1.0.0";
 /** Validador cuja `data/` é conferida contra o `dataSha256` da campanha (pode ser outro checkout: `--validador`). */
 export const VALIDADOR_PADRAO = join(TCC, "govbr-ds-validator");
@@ -105,6 +109,18 @@ export function passosLegiveis(passos: string[], ref: Ref["_meta"]): string[] {
   });
 }
 
+/**
+ * [D-154] Endereço da tela para o juiz: a entrada que a referência mediu (`_meta.url`, com a consulta), a mesma que os runs
+ * abriram. O `capture.json` da análise guarda só o pathname; ele confere o caminho e só vale sozinho quando a referência não
+ * declara `url`. Caminhos diferentes param.
+ */
+export function enderecoDaTela(meta: { url?: string }, urlDaCaptura: string): string {
+  if (!meta.url) return urlDaCaptura;
+  const caminho = (u: string) => new URL(u, "http://x").pathname;
+  if (caminho(meta.url) !== caminho(urlDaCaptura)) throw new Error(`E14 campanha: _meta.url da referência (${meta.url}) e capture.json (${urlDaCaptura}) apontam caminhos diferentes`);
+  return meta.url;
+}
+
 export function prepararCampanha(analises: string[], o: { validador?: string; checkerAliases?: string } = {}): PreparoCampanha {
   const datas = [...new Set(analises.flatMap(d => dataDoOraculo(lerJson(join(d, "entradas", "campanha.json")))))];
   if (datas.length !== 1) throw new Error(`E14 campanha: esperado 1 dataSha256 de oráculo nas campanhas das análises, achei ${datas.length} (${datas.map(x => x.slice(0, 12)).join(", ")})`);
@@ -127,7 +143,7 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
     const nome = `Tela ${label}`;
     const specs = ref.violations.map(v => ({ id: v.id, estado: v.state, unidades: v.expectedCount ?? 1, descricao: mascararNormaCega(v.description),
       normas: v.rules.map(nr.resolver).filter(Boolean) }));
-    const endereco = lerJson<{ url: string }>(join(dir, "revisao", "capture.json")).url;
+    const endereco = enderecoDaTela(ref._meta, lerJson<{ url: string }>(join(dir, "revisao", "capture.json")).url);
     const refAbs = join(dir, "entradas", "referencia.json");
     fontes[`${basename(dir)}/entradas/referencia.json`] = sha(readFileSync(refAbs));
     telas[telaId] ??= { nome, versao: ref._meta.version, endereco, defeitos: specs };
