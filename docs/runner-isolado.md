@@ -111,7 +111,7 @@ foi construída de um clone limpo no commit `e15b1b1` (3.4.1; tools/list igual a
 `data/`), o mesmo estado que o checkout por SHA do CI produz: `GOVBR_VALIDATOR_DIR=<clone>` no build e no
 `run-once`/testes. O checkout de trabalho do validator só serve ao preflight se o `dist/` e o `data/` dele
 forem os do commit (sem arquivos de builds antigos nem `data/models/`).
-A imagem vigente é `govbr-runner-oracle:3.4.3-e66807911a61` (commit `6bb0b3b`; tools/list igual ao da
+A imagem vigente é `govbr-runner-oracle:3.4.4-3de4033bdef2` (commit `b6e0663`; tools/list igual ao da
 3.4.0, pins `TOOLS_LIST_SHA256_3_4_0`), construída do checkout de trabalho: o `dist/` dele é byte a byte o
 de um clone limpo do mesmo commit (`npm ci` + `tsc`), então o padrão vale sem `GOVBR_VALIDATOR_DIR`.
 Rebuild do validator com a bateria ou o `test:runner` rodando muda o `dist/` e faz o preflight recusar os
