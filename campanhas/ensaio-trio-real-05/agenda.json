@@ -1,0 +1,80 @@
+{
+  "contract": "agenda.v2",
+  "generator": "agenda-campanha-quadrado-1.0.0",
+  "campaignId": "ensaio-trio-real-05",
+  "campaign": {
+    "path": "campanhas/ensaio-trio-real-05/campaign.json",
+    "sha256": "9e6b03c0c71ed84430a32a06285bdcbc17e80481fc99f7946836330ce3025dbf"
+  },
+  "seed": {
+    "commit": "95eeb14beead2aa8b24fd6f78df76c2297afd7bd",
+    "rule": "linha r do quadrado = design.arms girado r posições; chave(grupo) = sha256(commit + \"|\" + design.seed + \"|quadrado|\" + grupo); grupos em ordem ascendente da chave; o i-ésimo usa a linha (i mod k); grupos rodam na ordem numérica",
+    "declared": 20261031
+  },
+  "pairs": 1,
+  "square": [
+    [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    [
+      "ferramentas",
+      "com",
+      "sem"
+    ],
+    [
+      "com",
+      "sem",
+      "ferramentas"
+    ]
+  ],
+  "draw": [
+    {
+      "pairId": "p01",
+      "key": "3959f1bb887f5f113736ff0e542ca9a33ffc4e46ceeb81958e0647abe91454ce",
+      "row": 0,
+      "order": [
+        "sem",
+        "ferramentas",
+        "com"
+      ],
+      "firstArm": "sem"
+    }
+  ],
+  "windows": null,
+  "slots": [
+    {
+      "slotId": "p01-sem",
+      "pairId": "p01",
+      "arm": "sem",
+      "positionInPair": 1,
+      "repetition": 1,
+      "order": 1,
+      "window": null
+    },
+    {
+      "slotId": "p01-ferramentas",
+      "pairId": "p01",
+      "arm": "ferramentas",
+      "positionInPair": 2,
+      "repetition": 1,
+      "order": 2,
+      "window": null
+    },
+    {
+      "slotId": "p01-com",
+      "pairId": "p01",
+      "arm": "com",
+      "positionInPair": 3,
+      "repetition": 1,
+      "order": 3,
+      "window": null
+    }
+  ],
+  "retry": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 6,
+    "extraAttempts": 3
+  }
+}
