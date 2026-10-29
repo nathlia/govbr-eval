@@ -104,6 +104,14 @@ async function honestFinding() {
     step({ kind: "oracle", tool: "scan_page", isError: scan.isError, bytes: scan.text.length });
     const id = /"scanId"\s*:\s*"([^"]+)"/.exec(scan.text)?.[1];
     if (id) evidence.push(id);
+    // >= 3.4.2 (D-154): sob o teto, o estado da resposta encolhe ao essencial (sem viewportSource) e aponta
+    // o inteiro em state.full; o agente diligente segue o ponteiro, e a atestação da janela chega por ali.
+    let full = null;
+    try { full = JSON.parse(scan.text)?.state?.full ?? null; } catch { /* texto não-JSON */ }
+    if (full?.tool && oracleTools.includes(full.tool)) {
+      const det = await call("oracle", full.tool, full.arguments ?? {});
+      step({ kind: "oracle", tool: full.tool, isError: det.isError, bytes: det.text.length });
+    }
   }
   const v = subject.value ?? { sel: "body", text: "" };
   return {

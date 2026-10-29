@@ -54,7 +54,9 @@ const server = createServer((req, res) => {
   const headers = { ...req.headers };
   delete headers["proxy-connection"];
   delete headers["proxy-authorization"];
-  const upstream = httpRequest({ host: url.hostname, port, method: req.method, path: url.pathname + url.search, headers }, (up) => {
+  // agent:false = uma conexão por pedido. O agente global do Node (>= 19) reusa sockets ociosos, e o
+  // coletor fecha os seus no keepAliveTimeout (5 s): o reuso no limite virava ECONNRESET → 502 ao agente.
+  const upstream = httpRequest({ host: url.hostname, port, method: req.method, path: url.pathname + url.search, headers, agent: false }, (up) => {
     record({ kind: "http", method: req.method, target: shown, allowed: true, status: up.statusCode ?? null });
     res.writeHead(up.statusCode ?? 502, up.headers);
     up.pipe(res);

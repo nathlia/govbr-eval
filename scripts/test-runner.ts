@@ -262,7 +262,9 @@ async function main(): Promise<void> {
       assert.ok(!isolation?.toolInventory.announced.includes("browser_resize") && !isolation?.toolInventory.announced.includes("browser_run_code"));
       if (braco !== "sem") assert.ok(isolation?.toolInventory.observed.includes("scan_page"), "chamada ao oráculo registrada pela ponte");
       // NAT-61: com consulta a base e faz o scan (2); ferramentas só tem o scan (a consulta normativa não existe nele)
-      assert.equal(r.usage.oracleCalls.value, braco === "sem" ? 0 : braco === "com" ? 2 : 1);
+      // >= 3.4.2: estado encolhido sob o teto → o agente segue state.full (get_finding_details), +1 chamada
+      const seguiuEstado = braco !== "sem" && ndjson(join(o.runDir, "tool-events.ndjson")).some((e) => e.kind === "call" && e.tool === "get_finding_details") ? 1 : 0;
+      assert.equal(r.usage.oracleCalls.value, braco === "sem" ? 0 : (braco === "com" ? 2 : 1) + seguiuEstado);
       assert.equal(r.contract, "run.v2");
       if (braco === "sem") assert.equal(r.intervention.oracle, null);
       else {
@@ -429,6 +431,20 @@ async function main(): Promise<void> {
     assert.equal(r.lifecycle.stage, "preflight");
     assert.equal(r.failure?.reason, "preflight-failed");
     assert.equal(r.timestamps.startedAt, null);
+    assert.ok(!existsSync(join(o.runDir, "evidence/logs")), "nenhum contêiner devia ter sido criado");
+  });
+
+  await test("preflight falho no braço com: dist/ do validador ≠ imagem → not-run, pacote válido", async () => {
+    const fakeValidator = join(ROOT, "validador-alterado");
+    mkdirSync(join(fakeValidator, "dist"), { recursive: true });
+    cpSync(join(DEFAULT_VALIDATOR_DIR, "package.json"), join(fakeValidator, "package.json"));
+    cpSync(join(DEFAULT_VALIDATOR_DIR, "data"), join(fakeValidator, "data"), { recursive: true });
+    writeFileSync(join(fakeValidator, "dist", "index.js"), "// dist alterado de propósito\n");
+    const o = await run({ braco: "com", validatorDir: fakeValidator }, "preflight-falho-com");
+    const { run: r } = assertPackage(o);
+    assert.equal(r.status.technical, "not-run");
+    assert.equal(r.failure?.reason, "preflight-failed");
+    assert.match(r.failure!.detail, /oraculo/);
     assert.ok(!existsSync(join(o.runDir, "evidence/logs")), "nenhum contêiner devia ter sido criado");
   });
 

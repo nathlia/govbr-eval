@@ -562,7 +562,9 @@ export function crossCheckRun(run: AnyRun, findings: AnyFindings | null, isolati
       errors.push({ path: "/arm", keyword: "x-oracle-in-sem", message: "oráculo anunciado ao cliente no braço sem" });
     }
     // NAT-61: as ferramentas do oráculo que o run.v2 registra são as que a ponte anunciou (isolation).
-    if (run.contract === "run.v2" && run.intervention.oracle) {
+    // not-run (preflight recusou): nada subiu, nada foi anunciado; o run.json registra o perfil pedido para o
+    // braço (declarado nas limitações) e não há inventário a conferir.
+    if (run.contract === "run.v2" && run.intervention.oracle && run.status.technical !== "not-run") {
       const announced = new Set(isolation.toolInventory.announced);
       const missing = run.intervention.oracle.tools.filter(t => !announced.has(t));
       if (missing.length) errors.push({ path: "/intervention/oracle/tools", keyword: "x-oracle-inventory", message: `ferramentas do oráculo no run.json fora do inventário anunciado: ${missing.join(", ")}` });
