@@ -250,6 +250,13 @@ perfis fixados (nomes + sha256 do `tools/list`) ficam em `runner/perfis-oraculo.
   integrais e o `tools/list` exposto; 0 sem explicação, payload incompleto = falha, canários disparando;
   `scripts/vazamento/`, núcleo copiado texto a texto do validator com guarda de deriva). No `com`, a mesma
   varredura é controle positivo informativo.
+  **1.2.0 (D-154):** desde o validator 3.4.3 a resposta encolhida do `scan_page` mantém `state.recipe`,
+  e `state.recipe.actions[*].selector`, `state.replay.steps[*].selector`, `state.replay.failure.selector`
+  e `coverage.actionsApplied[*].selector` repetem os seletores que o agente mandou (ex.:
+  `br-button[icon="trash"]`). Uma camada só do eval (`ECO_SELETOR_DE_ACAO` em `conhecimento.ts`; o núcleo
+  segue idêntico ao do validator) classifica como `eco` a ocorrência nesses caminhos quando a folha inteira
+  é idêntica a um `actions[*].selector` da MESMA chamada; seletor fora desses argumentos (ou só em
+  `arrival`) continua `sem-explicacao`. Três canários novos (13 no total) cobrem os dois lados.
 - **Aderência:** no `ferramentas` a consulta normativa é "não aplicável"; o gate é scan + verificação
   quando há candidato com regra.
 - **Texto da tarefa:** o mesmo sha256 nos três braços (`test:avaliar-tela`, `test:runner`).
@@ -393,3 +400,5 @@ reset de estado entre execuções, o limite de tempo e o pacote validado.
 - Timeout de ferramenta (a ponte corta em 120 s com `transport-error`; não exercitado) e truncamento de
   resultado grande do lado do cliente.
 - A prova real não reutiliza a sessão da autora: HOME é tmpfs novo, `--no-session-persistence`.
+
+**Regra de operação (2026-10-29, D-154):** nenhum commit no `govbr-eval` enquanto um trio estiver em andamento. O conjunto de snapshots de cada disparo inclui a árvore do commit do instrumento (`git ls-tree -r`), e o `coleta:trio` recusa trio com conjuntos diferentes. A `ensaio-trio-real-04` foi perdida assim: a campanha `ensaio-trio-b-02` foi commitada entre o 1º e o 2º slot. Campanha nova, agenda e consertos entram **antes** do 1º slot ou **depois** do último.

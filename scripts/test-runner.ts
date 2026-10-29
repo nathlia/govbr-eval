@@ -236,6 +236,18 @@ async function testesSemDocker(): Promise<void> {
     assert.ok(suja.semExplicacao.some((u) => u.source === "kb:title") && suja.semExplicacao.some((u) => u.source === "kb:id"), JSON.stringify(suja.semExplicacao));
     assert.equal(suja.incompletas.length, 1, "payload cortado = varredura incompleta");
   });
+  await test("varredura 1.2.0 (D-154): seletor de ação ecoado da mesma chamada é eco; fora dos argumentos não", async () => {
+    if (!existsSync(join(DEFAULT_VALIDATOR_DIR, "dist", "checkers", "grounding.js"))) { console.log("     · validator sem dist/: varredura não exercitada"); return; }
+    const sel = 'tbody tr:nth-child(1) br-button[icon="trash"]';
+    const res = { state: { recipe: { actions: [{ action: "click", selector: sel }] }, replay: { status: "applied", steps: [{ index: 0, action: "click", selector: sel, matched: 1 }] } }, coverage: { actionsApplied: [{ action: "click", selector: sel }] } };
+    const call = (args: unknown) => ({ kind: "call", seq: 1, tool: "scan_page", args: { text: JSON.stringify(args), truncated: false }, result: { text: JSON.stringify(res), truncated: false } });
+    const base = { validatorDir: DEFAULT_VALIDATOR_DIR, telasDir: DEFAULT_TELAS_DIR, toolsList: null, ler: () => null };
+    const eco = await varrerPayloadsDoOraculo({ ...base, eventos: [call({ url: "http://x/", actions: [{ action: "click", selector: sel }] })] });
+    assert.equal(eco.semExplicacao.length, 0, JSON.stringify(eco.semExplicacao));
+    assert.equal(eco.porClasse.eco, 3, JSON.stringify(eco.porClasse));
+    const fora = await varrerPayloadsDoOraculo({ ...base, eventos: [call({ url: "http://x/", actions: [{ action: "click", selector: "#outro" }], arrival: { visible: sel } })] });
+    assert.equal(fora.semExplicacao.reduce((n, u) => n + u.count, 0), 3, JSON.stringify(fora.semExplicacao));
+  });
 }
 
 async function main(): Promise<void> {

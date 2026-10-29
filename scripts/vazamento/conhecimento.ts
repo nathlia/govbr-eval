@@ -8,7 +8,7 @@
  * texto a texto de `govbr-ds-validator/scripts/lib/vazamento.ts` (`./nucleo.ts`, guarda de deriva no
  * test:runner-unidade). Política de perdão POR CAMPO e POR PROVENIÊNCIA (nunca subtração global); 1.1.0
  * (validator 2.14.1, revisão Codex db6d022d): campos declarados por ferramenta pelo caminho inteiro e eco
- * só como valor exato. Detector AUXILIAR, não prova universal (a garantia é a trava de carregamento):
+ * só como valor exato; 1.2.0 (D-154): eco do seletor de ação da mesma chamada, ver ECO_SELETOR_DE_ACAO. Detector AUXILIAR, não prova universal (a garantia é a trava de carregamento):
  *   - eco: o termo é o valor inteiro de um argumento declarado, no campo declarado para ecoá-lo naquela
  *     ferramenta (ou o nome da própria ferramenta no texto de erro);
  *   - pagina: campo medido da página declarado para a ferramenta E o termo existe nos bytes SERVIDOS do site congelado (govbr-telas
@@ -23,9 +23,54 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { extname, join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createRequire } from "node:module";
-import { buildDictionary, scanResponse, type Classification, type Dictionary } from "./nucleo";
+import { argValues, buildDictionary, classify, hitsInText, leaves, termIn, type Classification, type Dictionary, type Hit, type Provenance, type ScanResult } from "./nucleo";
 
-export const VARREDURA_VERSAO = "vazamento-conhecimento-1.1.0";
+export const VARREDURA_VERSAO = "vazamento-conhecimento-1.2.0";
+
+/**
+ * 1.2.0 (D-154): eco do SELETOR DE AÇÃO da mesma chamada. Desde o validator 3.4.3 a resposta encolhida do
+ * scan_page mantém `state.recipe`, e a receita, o replay e a cobertura repetem os seletores que o AGENTE
+ * mandou em `actions[*].selector` (ex.: `tbody tr:nth-child(1) br-button[icon="trash"]`). O núcleo (cópia
+ * texto a texto do validator, guarda de deriva) só perdoa eco de valor INTEIRO igual ao termo; um seletor
+ * composto que contém uma classe/elemento do DS caía em `sem-explicacao`. Esta camada, só do eval, perdoa a
+ * ocorrência quando, e só quando: a ferramenta é a declarada, a folha está num dos caminhos declarados, a
+ * FOLHA INTEIRA é idêntica (byte a byte) a um `actions[*].selector` dos argumentos DA MESMA chamada e o termo
+ * está nela. Seletor ausente dos argumentos, presente só noutro argumento (ex.: `arrival.visible`) ou
+ * reescrito pelo servidor continua `sem-explicacao`.
+ */
+export const ECO_SELETOR_DE_ACAO: Record<string, { arg: string; paths: string[] }> = {
+  scan_page: {
+    arg: "actions[*].selector",
+    paths: ["$.state.recipe.actions[*].selector", "$.state.replay.steps[*].selector", "$.state.replay.failure.selector", "$.coverage.actionsApplied[*].selector"],
+  },
+};
+
+function ecoDeSeletor(hit: Hit, folha: string, prov: Provenance): { class: Classification; why: string } | null {
+  const decl = ECO_SELETOR_DE_ACAO[prov.tool];
+  if (!decl || !decl.paths.includes(hit.path)) return null;
+  if (!argValues(prov.args, decl.arg).includes(folha) || !termIn(folha, hit)) return null;
+  return { class: "eco", why: `seletor de ação ecoado: a folha ${hit.path} é idêntica a um ${decl.arg} dos argumentos desta chamada de ${prov.tool} (D-154)` };
+}
+
+/** A varredura do núcleo (mesmas folhas, mesma classificação) + a camada de eco do seletor de ação (1.2.0). */
+export function varrerResposta(dict: Dictionary, text: string, prov: Provenance): ScanResult {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    parsed = text;
+  }
+  const cache = new Map<string, string>();
+  const hits: ScanResult["hits"] = [];
+  for (const leaf of leaves(parsed)) {
+    for (const hit of hitsInText(dict, leaf.text, leaf.path)) {
+      let c = classify(hit, prov, cache);
+      if (c.class === "sem-explicacao") c = ecoDeSeletor(hit, leaf.text, prov) ?? c;
+      hits.push({ ...hit, ...c });
+    }
+  }
+  return { hits };
+}
 
 const cacheDicionario = new Map<string, Promise<Dictionary>>();
 
@@ -89,7 +134,11 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
   const kbTitle = [...dict.phrases.values()].find((t) => t.source === "kb:title")?.term;
   const token = [...dict.exact.values()].find((t) => t.source === "tokens:name")?.term;
   const emagTitle = [...dict.phrases.values()].find((t) => t.source === "emag:title")?.term;
-  if (!kbId || !kbTitle || !token || !emagTitle) return [{ nome: "dicionário com as quatro fontes", ok: false, detalhe: "dicionário sem id/título da base, token ou título e-MAG" }];
+  const rootClass = [...dict.exact.values()].find((t) => t.source === "specs:rootClass")?.term;
+  if (!kbId || !kbTitle || !token || !emagTitle || !rootClass) return [{ nome: "dicionário com as cinco fontes", ok: false, detalhe: "dicionário sem id/título da base, token, título e-MAG ou classe raiz" }];
+  // 1.2.0 (D-154): seletor de ação com a classe raiz do DS, como o agente o escreve.
+  const seletor = `tbody tr:nth-child(1) ${rootClass}[icon="trash"]`;
+  const receita = JSON.stringify({ state: { recipe: { actions: [{ action: "click", selector: seletor }] } } });
   const page = `<html><body><div style="color: var(${token})">x</div></body></html>`;
   // 1.1.0: casos por ferramenta, campo declarado e eco exato (os mesmos do inventário do validator 2.14.1).
   const casos: { nome: string; tool: string; texto: string; args: unknown; page: string | null; espera: Classification }[] = [
@@ -103,9 +152,12 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
     { nome: "id da base ecoado do argumento", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Nenhum predicado para govbr-ds-kb '${kbId}'.` } }), args: { finding: { rule: { id: kbId } } }, page, espera: "eco" },
     { nome: "id citado ecoado FORA do campo declarado", tool: "verify_finding", texto: JSON.stringify({ verification: { next: { ruleId: kbId } } }), args: { finding: { rule: { id: kbId } } }, page, espera: "sem-explicacao" },
     { nome: "título da base no campo de eco, com o título só dentro de outro argumento", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Regra: ${kbTitle}.` } }), args: { finding: { rule: { id: kbId }, evidence: { observed: `nota do agente: ${kbTitle}` } } }, page, espera: "sem-explicacao" },
+    { nome: "classe raiz na receita ecoada dos actions da mesma chamada", tool: "scan_page", texto: receita, args: { actions: [{ action: "click", selector: seletor }] }, page, espera: "eco" },
+    { nome: "classe raiz na receita SEM o seletor nos argumentos da chamada", tool: "scan_page", texto: receita, args: { actions: [{ action: "click", selector: "#outro" }] }, page, espera: "sem-explicacao" },
+    { nome: "classe raiz na receita com o seletor só noutro argumento (arrival)", tool: "scan_page", texto: receita, args: { actions: [{ action: "click", selector: "#outro" }], arrival: { visible: seletor } }, page, espera: "sem-explicacao" },
   ];
   return casos.map((c) => {
-    const { hits } = scanResponse(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe });
+    const { hits } = varrerResposta(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe });
     const got = hits.map((h) => h.class);
     return { nome: c.nome, ok: got.length > 0 && got.every((g) => g === c.espera), detalhe: `esperado ${c.espera}, obtido [${got.join(", ") || "nenhuma ocorrência"}]` };
   });
@@ -155,7 +207,7 @@ export async function varrerPayloadsDoOraculo(o: {
   const sem = new Map<string, RelatorioVazamento["semExplicacao"][number]>();
   const perd = new Map<string, RelatorioVazamento["perdoadas"][number]>();
   const varrer = (texto: string, args: unknown, pg: string | null, tool: string): void => {
-    for (const h of scanResponse(dict, texto, { tool, args, page: pg, axe: axe.texto }).hits) {
+    for (const h of varrerResposta(dict, texto, { tool, args, page: pg, axe: axe.texto }).hits) {
       porClasse[h.class] = (porClasse[h.class] ?? 0) + 1;
       const k = `${h.class}|${h.term}|${h.path}|${tool}`;
       if (h.class === "sem-explicacao") {
