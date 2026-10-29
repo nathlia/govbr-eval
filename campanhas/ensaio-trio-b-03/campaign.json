@@ -1,0 +1,166 @@
+{
+  "contract": "campaign.v2",
+  "fixture": false,
+  "campaignId": "ensaio-trio-b-03",
+  "kind": "pilot",
+  "title": "Ensaio real do trio na tela B, rodada 3 (D-153; refeita da b-02) — Vistorias, sem/ferramentas/com em quadrado latino, Opus 5.5 high, validator 3.4.4 (oráculo melhorado); ENSAIO fora da análise",
+  "objective": "Refeita a ensaio-trio-b-02, cujo braço ferramentas reprovou o isolamento por falso positivo do detector de vazamento (eco do seletor de ação do próprio agente; conserto vazamento-conhecimento 1.2.0, D-154). Mesma forma e mesmo oráculo 3.4.4. Ensaio autorizado pela autora na D-153 (28/10: \"trio A e depois trio B; a B = ajuda?\"), depois do trio A (ensaio-trio-real-04): 1 trio real na tela B (Vistorias, referência 1.0.0, também tela de desenvolvimento), com a mesma forma das rodadas da A (quadrado-latino, semente declarada, agenda v2), para ver se o braço com (oráculo 3.4.4) acha mais que sem e ferramentas na B no runner isolado real. Substitui a ensaio-trio-b-01 (validator 2.14.3, cancelada antes de rodar). Técnico: os três braços rodam com isolamento passed e identidade igual à campanha congelada. Leitura: por braço, o que cada um achou das 102 unidades da referência 1.0.0, só leitura. NÃO serve para inferência e FICA FORA DE QUALQUER ANÁLISE e de qualquer número da tese. Nada deste ensaio ajusta a ferramenta: nenhuma mudança de prompt, skill, validator, scorer ou política é motivada pelos achados; só defeitos técnicos do caminho são consertados.",
+  "hypotheses": [
+    "Ensaio: nenhuma hipótese sobre desempenho. Passa se os três braços rodam com isolamento passed e identidade igual à campanha congelada. A leitura por braço (com contra sem e ferramentas, unidades da referência 1.0.0 achadas) é descritiva e não decide nada."
+  ],
+  "createdAt": "2026-10-29T13:29:48Z",
+  "frozenAt": "2026-10-29T13:29:48Z",
+  "design": {
+    "screens": [
+      {
+        "id": "vistorias",
+        "label": "Vistorias PROPESC (PNIP)",
+        "version": "govbr-telas-site-1a6e8daf3cdb"
+      }
+    ],
+    "arms": [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "Opus",
+        "requested": "claude-opus-5-5"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 1,
+    "order": "quadrado-latino",
+    "seed": 20261101,
+    "comparisons": [
+      {
+        "id": "ferramentas-x-com",
+        "arms": [
+          "ferramentas",
+          "com"
+        ],
+        "role": "primary",
+        "question": "Ensaio (sem inferência): estrutura da comparação principal do protocolo NAT-78 — o que a base de conhecimento do oráculo acrescenta às ferramentas de medição. Nada deste trio é comparado nem entra em número da tese."
+      },
+      {
+        "id": "sem-x-ferramentas",
+        "arms": [
+          "sem",
+          "ferramentas"
+        ],
+        "role": "secondary",
+        "question": "Ensaio (sem inferência): o que as ferramentas de medição acrescentam ao navegador sozinho. Nada deste trio é comparado nem entra em número da tese."
+      },
+      {
+        "id": "sem-x-com",
+        "arms": [
+          "sem",
+          "com"
+        ],
+        "role": "secondary",
+        "question": "Ensaio (sem inferência): o oráculo inteiro. Nada deste trio é comparado nem entra em número da tese."
+      }
+    ]
+  },
+  "fixed": {
+    "protocolSha256": "a58d309eb8b05bfe37c5a92f24ec0b3e203aa10b32fa62bce59d3076e9229a75",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "anthropic",
+      "authMethod": "oauth-subscription"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracleProfiles": {
+      "com": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.4.4",
+        "distSha256": "3de4033bdef279239776c1599420d4782f03b59ddd6b938a510b9daa864012a5",
+        "dataSha256": "d99bdb48376950e69821578e282bd25f8a23235cf91be2e2e9d0622c7b7ae405",
+        "profile": "evaluation",
+        "tools": [
+          "get_component_spec",
+          "get_design_tokens",
+          "get_ds_rules",
+          "get_emag_rules",
+          "get_finding_details",
+          "get_page_rules",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "adc4266162781cb6239ee4e84ae852889ceeb209556bf7270c267b015884c6b2"
+      },
+      "ferramentas": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.4.4",
+        "distSha256": "3de4033bdef279239776c1599420d4782f03b59ddd6b938a510b9daa864012a5",
+        "dataSha256": "d99bdb48376950e69821578e282bd25f8a23235cf91be2e2e9d0622c7b7ae405",
+        "profile": "knowledge-free",
+        "tools": [
+          "get_finding_details",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "f358152ab77b8b6930687c1b12206f3821170600d52c0fda0a3dde8d0774bf44"
+      }
+    },
+    "scorerVersion": "flow-semantic-1.8.2"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 6,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Ensaio: vale a primeira tentativa sem falha técnica de cada slot, na ordem da agenda. Nova tentativa só por falha técnica (protocolo §7.2, D-88), no máximo 1 por slot. Nada desta campanha entra na análise."
+  },
+  "failurePolicy": "Protocolo NAT-78 §7.2/§7.4: nova tentativa só por falha técnica (429, queda, modelo indisponível, autenticação, preflight, VM perdida, erro do harness ou do arquivo, cancelamento); tempo esgotado no teto de 30 min é resultado do agente, fica registrado e não se repete. Falha técnica de isolamento, inventário, trava ou crash leva a conserto, recongelamento do protocolo e ensaio refeito (campanha nova); nada é ajustado pelas saídas do ensaio.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Nenhum desfecho científico (ensaio). Técnico: isolamento passed e identidade congelada nos três braços (oráculo 3.4.4, perfis evaluation e knowledge-free medidos).",
+    "secondaryOutcomes": [
+      "Leitura descritiva, por braço, das unidades da referência 1.0.0 da Vistorias achadas (achou / não achou / lacuna declarada), só para ver se o braço com (oráculo 3.4.4) acha mais que sem e ferramentas na B.",
+      "Medidas de recurso (tempo, tokens, custo estimado, fração da janela de 5 h), só registradas."
+    ],
+    "uncertaintyMethod": null,
+    "exclusionRules": "A campanha inteira fica fora de qualquer análise e de qualquer número da tese (regra 5 da Metodologia §5.7.5). Os números podem ser lidos (D-138/D-153, a B é de desenvolvimento), nunca para ajustar prompt, skill, validator, scorer, política ou N."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": null,
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": []
+}
