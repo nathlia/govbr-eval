@@ -1,0 +1,3900 @@
+{
+  "_meta": {
+    "plano": "thesis-workspace/planejamento/atual/plano-tela-a2-2026-10-30.md",
+    "julgadoEm": "2026-10-30",
+    "julgadoPor": "assistente (Claude Opus, subagente da NAT-110), sem abrir validator/src, normalizacao/, checker-aliases, kb-aliases, results/, reports/",
+    "criterios": "aplicabilidade à tela do inventário e medida pequena na página construída (DOM, CSS computado, árvore de acessibilidade, sequência de teclas); motivos em scripts/tela-a2-universo.ts MOTIVOS_P2",
+    "nota": "Unidade do DS que repete uma recomendação do e-MAG entra como duplicada dela (equivalenteEmag) e leva hospedeiros e variante para a recomendação; o estrato G fica com uma unidade por recomendação. Variante com 'instancias' só vale nesses hospedeiros."
+  },
+  "regras": {
+    "a2-002bf9be74ec": {
+      "aceita": true,
+      "justificativa": "Posição firme durante a alternância. Medida: getBoundingClientRect do contêiner antes e depois de alternar.",
+      "instancias": [
+        "swt-aviso-email",
+        "swt-aviso-sms"
+      ],
+      "variantes": [
+        {
+          "id": "container-se-move",
+          "descricao": "Alternar muda a largura do contêiner e desloca o switch."
+        }
+      ]
+    },
+    "a2-00ac06519e7d": {
+      "aceita": true,
+      "justificativa": "Rótulo abaixo do indicador centralizado. Medida: text-align computado do rótulo.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "rotulo-a-esquerda",
+          "descricao": "Os rótulos abaixo dos indicadores ficam com text-align left."
+        }
+      ]
+    },
+    "a2-00ac06519e7d-2": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Rótulo acima do indicador; a tela usa rótulo abaixo."
+    },
+    "a2-0188ff1cc2ec": {
+      "aceita": true,
+      "justificativa": "Superfície obrigatória contendo os itens. Medida: background computado da barra de abas e itens dentro dela.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-superficie",
+          "descricao": "A barra de abas fica sem superfície (fundo transparente)."
+        }
+      ]
+    },
+    "a2-027fd69c08bd": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão')."
+    },
+    "a2-028b81485587": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há objeto programável embutido (plugin, applet, embed)."
+    },
+    "a2-033815886ead": {
+      "aceita": true,
+      "justificativa": "Cursor 'mão' nos interativos. Medida: cursor computado.",
+      "instancias": [
+        "tab-requerimento",
+        "acc-duvidas"
+      ],
+      "variantes": [
+        {
+          "id": "cursor-padrao",
+          "descricao": "Os itens interativos mostram o cursor padrão (seta)."
+        }
+      ]
+    },
+    "a2-0383076211e0": {
+      "aceita": false,
+      "motivo": "duplicada:a2-66fbdcf13772",
+      "justificativa": "Contraste de texto grande = 4.1.",
+      "equivalenteEmag": "4.1"
+    },
+    "a2-038abdaed903": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Seleção múltipla; o select da tela é simples."
+    },
+    "a2-0483c9e36f92": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Vídeo; não há."
+    },
+    "a2-04a4c3ea1b70": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 2.6. Sem intermitência (mais de 3 piscadas por segundo). Medida: animation-duration e iteration do elemento.",
+      "instancias": [
+        "msg-pendencia"
+      ],
+      "variantes": [
+        {
+          "id": "pisca",
+          "descricao": "O ícone da mensagem de pendência pisca 4 vezes por segundo (animação CSS infinita).",
+          "instancias": [
+            "msg-pendencia"
+          ]
+        }
+      ]
+    },
+    "a2-05763ed77f2d": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Sempre que possível' (recomendação)."
+    },
+    "a2-065449110d9a": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Finalidade do dado é decisão de produto."
+    },
+    "a2-065e3131ac2b": {
+      "aceita": true,
+      "justificativa": "Container dos conteúdos tab-content. Medida: classe do contêiner dos painéis.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-tab-content",
+          "descricao": "O contêiner dos painéis não tem tab-content."
+        }
+      ]
+    },
+    "a2-0780d5c4571c": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Descreve uma classe opcional."
+    },
+    "a2-0795b6ad88f8": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema)."
+    },
+    "a2-08acc761e53d": {
+      "aceita": false,
+      "motivo": "duplicada:a2-2f4eadc23b2c",
+      "justificativa": "Mesmo observável (escala tipográfica)."
+    },
+    "a2-09478c4aa1d2": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Hover sobre fundo escuro; a tela não tem accordion sobre fundo escuro."
+    },
+    "a2-095a8a52fa90": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema)."
+    },
+    "a2-099a2401f473": {
+      "aceita": true,
+      "justificativa": "Superfície (área de transferência) obrigatória. Medida: área de soltar visível (borda/fundo) com tamanho não nulo.",
+      "instancias": [
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-area",
+          "descricao": "A área de transferência fica sem borda e sem fundo; só o botão aparece."
+        }
+      ]
+    },
+    "a2-09eb42d69b01": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Concisão é julgamento de redação."
+    },
+    "a2-0a410bef03b9": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Preferencialmente' (recomendação)."
+    },
+    "a2-0a6b97c41045": {
+      "aceita": true,
+      "justificativa": "Lista em br-list. Medida: classe do contêiner da lista.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "lista-sem-br-list",
+          "descricao": "O contêiner da lista não tem br-list."
+        }
+      ]
+    },
+    "a2-0a7a74e7f711": {
+      "aceita": true,
+      "justificativa": "Cada aba tab-item. Medida: classe de cada item.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-tab-item",
+          "descricao": "A 2ª aba não tem tab-item (aparência copiada à mão)."
+        }
+      ]
+    },
+    "a2-0aafa5e96c13": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há conteúdo que se move ou atualiza sozinho."
+    },
+    "a2-0ac55a690dad": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Arrastar objeto; não há objeto arrastável na tela."
+    },
+    "a2-0b02068001da": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Indicadores sem rótulo; as etapas da tela têm rótulo."
+    },
+    "a2-0b474d0940ec": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Etapa ativa com tag de erro/alerta/concluído; a etapa ativa não tem tag."
+    },
+    "a2-0b6ac0a6bc42": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Função da cor sem observável único."
+    },
+    "a2-0bc9d331721d": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Arrastar objeto; não há objeto arrastável na tela."
+    },
+    "a2-0beebbed1495": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Números/IDs em tabela; a tabela não tem coluna numérica."
+    },
+    "a2-0cb2e580195d": {
+      "aceita": true,
+      "justificativa": "Espaçamentos constantes para a mesma função. Medida: distância rótulo→campo em cada campo do formulário.",
+      "instancias": [
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "espaco-irregular",
+          "descricao": "A distância entre o rótulo e o campo do upload fica 2px, diferente dos demais campos."
+        }
+      ]
+    },
+    "a2-0cb58cc75f6f": {
+      "aceita": true,
+      "justificativa": "Borda de foco em volta, com espaçamento de segurança. Medida: outline-offset/afastamento do indicador de foco.",
+      "instancias": [
+        "sel-tipo-documento",
+        "swt-aviso-email",
+        "swt-aviso-sms"
+      ],
+      "variantes": [
+        {
+          "id": "foco-colado",
+          "descricao": "O indicador de foco fica colado ao elemento (sem espaçamento de segurança)."
+        }
+      ]
+    },
+    "a2-0da3fdc4c825": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Processo de comunicação com desenvolvedores."
+    },
+    "a2-0ddef069d601": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Ajuda global do produto, presente em todas as telas; a tela é uma só."
+    },
+    "a2-0e0c2cbf4714": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Alteração da escala base; não há."
+    },
+    "a2-0e465d7adf07": {
+      "aceita": true,
+      "justificativa": "Recurso de arrastar arquivos. Medida: soltar um arquivo sintético (DataTransfer) na área adiciona o arquivo.",
+      "instancias": [
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-arrastar",
+          "descricao": "A área não aceita soltar arquivo (sem os manipuladores de dragover/drop)."
+        }
+      ]
+    },
+    "a2-0e5d4429c4ef": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "'Selecionar todos' só existe no múltiplo."
+    },
+    "a2-0ed6c88e06e2": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há CAPTCHA."
+    },
+    "a2-0efa500e071e": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG."
+    },
+    "a2-0f0fbb274ed5": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "SEO; não se aplica a uma tela de serviço autenticada."
+    },
+    "a2-0f20577609d3": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 6.3. Ordem lógica de navegação no formulário. Medida: ordem de Tab entre os campos.",
+      "instancias": [
+        "sel-tipo-documento",
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "tabindex-positivo",
+          "descricao": "O controle recebe tabindex=1 e sai da ordem do formulário.",
+          "instancias": [
+            "sel-tipo-documento",
+            "upl-documento"
+          ]
+        }
+      ]
+    },
+    "a2-10011779df50": {
+      "aceita": false,
+      "motivo": "duplicada:a2-bde476da44c9",
+      "justificativa": "Repete, para esta instância, a recomendação 1.4 do e-MAG; hospedeiros e variante passam para ela. (Leitura de célula em célula, da esquerda para a direita, de cima para baixo. Medida: ordem das células no DOM contra a ordem visual.)",
+      "equivalenteEmag": "1.4"
+    },
+    "a2-10120c9368d4": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Define a opção popover; não impõe nada."
+    },
+    "a2-126a6960d260": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Comportamento em outros breakpoints; o contrato do instrumento fixa a medição em 1280×900."
+    },
+    "a2-126c376799cd": {
+      "aceita": false,
+      "motivo": "duplicada:a2-acc4801af71c",
+      "justificativa": "Repete, para esta instância, a recomendação 2.1 do e-MAG; hospedeiros e variante passam para ela. (Com foco, o select é acionado pelo teclado e mostra a lista. Medida: com foco no campo, Enter/seta para baixo abre a lista.)",
+      "equivalenteEmag": "2.1"
+    },
+    "a2-127f92e2ad55": {
+      "aceita": false,
+      "motivo": "duplicada:a2-f4237d13520b",
+      "justificativa": "Repete a recomendação 6.2.",
+      "equivalenteEmag": "6.2"
+    },
+    "a2-12888369bd0f": {
+      "aceita": true,
+      "justificativa": "Container br-select. Medida: classe da raiz.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-br-select",
+          "descricao": "A raiz do select usa classe própria (aparência copiada à mão), sem br-select."
+        }
+      ]
+    },
+    "a2-12a200d36fcb": {
+      "aceita": true,
+      "justificativa": "Título em .title e ícone em .icon. Medida: cabeçalho > .title e > .icon.",
+      "instancias": [
+        "acc-duvidas"
+      ],
+      "variantes": [
+        {
+          "id": "titulo-sem-title",
+          "descricao": "O texto do título do 3º item fica direto no botão, sem o span .title."
+        }
+      ]
+    },
+    "a2-12ee2ce5c650": {
+      "aceita": true,
+      "justificativa": "Datas com a mesma quantidade de dígitos. Medida: texto das células de data.",
+      "instancias": [
+        "tbl-movimentacoes"
+      ],
+      "variantes": [
+        {
+          "id": "data-sem-zero",
+          "descricao": "Uma das datas aparece como 5/9/2026, as demais como dd/mm/aaaa."
+        }
+      ]
+    },
+    "a2-141237683128": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Comportamento em outros breakpoints; o contrato do instrumento fixa a medição em 1280×900."
+    },
+    "a2-145128527d93": {
+      "aceita": true,
+      "justificativa": "Card sem rolagem. Medida: overflow computado e scrollHeight > clientHeight no card.",
+      "instancias": [
+        "crd-resumo"
+      ],
+      "variantes": [
+        {
+          "id": "rolagem-interna",
+          "descricao": "O card ganha altura máxima e overflow:auto, e o conteúdo passa a rolar dentro dele."
+        }
+      ]
+    },
+    "a2-1545618238be": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Abre uma lista de quando não usar o componente; a tela usa o step para progressão de jornada, o caso previsto."
+    },
+    "a2-1550c237c5ed": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página."
+    },
+    "a2-1716781bd268": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Arrastar objeto; não há objeto arrastável na tela."
+    },
+    "a2-172c2de5b954": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Pode ser necessário' (permissão)."
+    },
+    "a2-1745575e6e21": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Posição junto à lateral direita; idem."
+    },
+    "a2-1754a39d9a39": {
+      "aceita": true,
+      "justificativa": "Clicar não gera foco visual. Medida: indicador de foco depois de clique de mouse.",
+      "instancias": [
+        "acc-duvidas",
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "foco-no-clique",
+          "descricao": "O indicador de foco aparece também depois de clique de mouse (:focus em vez de :focus-visible)."
+        }
+      ]
+    },
+    "a2-183a078d7faa": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Agrupamentos de linhas; não há."
+    },
+    "a2-18acbf7b4c9c": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 3.12. Explicação para siglas. Medida: primeira ocorrência da sigla tem expansão (abbr title ou texto).",
+      "instancias": [
+        "crd-resumo"
+      ],
+      "variantes": [
+        {
+          "id": "sigla-sem-explicacao",
+          "descricao": "O card mostra 'NUP' sem expansão em lugar nenhum.",
+          "instancias": [
+            "crd-resumo"
+          ]
+        }
+      ]
+    },
+    "a2-18bccce4132a": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 6.7. Campos relacionados agrupados. Medida: os dois switches de aviso dentro de fieldset com legend.",
+      "instancias": [
+        "swt-aviso-email"
+      ],
+      "variantes": [
+        {
+          "id": "grupo-sem-fieldset",
+          "descricao": "fieldset+legend dos avisos viram div+p; o texto visível fica.",
+          "instancias": [
+            "swt-aviso-email"
+          ]
+        }
+      ]
+    },
+    "a2-18c6c10dd95d": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Step Simples/Textual; a tela usa o Step Complexo."
+    },
+    "a2-19fecd20a243": {
+      "aceita": false,
+      "motivo": "duplicada:a2-acc4801af71c",
+      "justificativa": "Repete, para esta instância, a recomendação 2.1 do e-MAG; hospedeiros e variante passam para ela. (Card e seus controles navegáveis só por teclado. Medida: sequência de Tab passa por cada controle do card; Enter/Espaço aciona.)",
+      "equivalenteEmag": "2.1"
+    },
+    "a2-1a1ea8b0b8e2": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão')."
+    },
+    "a2-1a936b76e1e0": {
+      "aceita": true,
+      "justificativa": "Colunas com divider (anatomia). Medida: divisor entre colunas visível.",
+      "instancias": [
+        "tbl-movimentacoes"
+      ],
+      "variantes": [
+        {
+          "id": "colunas-sem-divisor",
+          "descricao": "O divisor entre colunas é removido."
+        }
+      ]
+    },
+    "a2-1acad722c4ce": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-1adbb9c1a3ca": {
+      "aceita": true,
+      "justificativa": "Erro usa o tipo Erro. Medida: classe/tipo da mensagem de retorno contra o conteúdo de erro.",
+      "instancias": [
+        "msg-retorno"
+      ],
+      "variantes": [
+        {
+          "id": "erro-com-tipo-info",
+          "descricao": "A mensagem de retorno do envio usa o tipo Informação (cor e ícone de informação), com o mesmo texto de erro."
+        }
+      ]
+    },
+    "a2-1b64f4d40425": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-1bbbbbe820d0": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão')."
+    },
+    "a2-1c18ad657e0d": {
+      "aceita": true,
+      "justificativa": "Desabilitado sem elevação (sombra). Medida: box-shadow computado das etapas desabilitadas.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "desabilitada-com-sombra",
+          "descricao": "Os indicadores das etapas desabilitadas ganham sombra de elevação."
+        }
+      ]
+    },
+    "a2-1dc4d20a651c": {
+      "aceita": true,
+      "justificativa": "Balão não recebe foco no teclado. Medida: sequência de Tab não para no balão.",
+      "instancias": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "variantes": [
+        {
+          "id": "balao-focavel",
+          "descricao": "O balão recebe tabindex=0 e entra na ordem de Tab."
+        }
+      ]
+    },
+    "a2-1ea2f43d76db": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 3.1. Idioma principal identificado. Medida: atributo lang do html.",
+      "instancias": [
+        "pagina"
+      ],
+      "variantes": [
+        {
+          "id": "sem-lang",
+          "descricao": "O html fica sem lang.",
+          "instancias": [
+            "pagina"
+          ]
+        }
+      ]
+    },
+    "a2-1f3279c0e6a1": {
+      "aceita": true,
+      "justificativa": "Lista flutuante com sombra. Medida: box-shadow computado da lista aberta.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "lista-sem-sombra",
+          "descricao": "A lista aberta fica com box-shadow none."
+        }
+      ]
+    },
+    "a2-1ffaa01ecb7a": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-20a2754d88ff": {
+      "aceita": false,
+      "motivo": "duplicada:a2-f4237d13520b",
+      "justificativa": "Placeholder no lugar de rótulo é a mesma falta de etiqueta associada da recomendação 6.2 (variante própria registrada lá).",
+      "equivalenteEmag": "6.2"
+    },
+    "a2-20dae307ea61": {
+      "aceita": true,
+      "justificativa": "Container br-step. Medida: classe da raiz.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-br-step",
+          "descricao": "A raiz do step usa classe própria (aparência copiada à mão), sem br-step."
+        }
+      ]
+    },
+    "a2-21c802d46304": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-22240b8959ba": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "A atualização automática recarrega a página e apaga os estados S1/S2 da medição; não há medida que preserve os estados."
+    },
+    "a2-22573246d936": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 1.8. Áreas de informação divididas (regiões). Medida: landmarks no snapshot de acessibilidade.",
+      "instancias": [
+        "pagina"
+      ],
+      "variantes": [
+        {
+          "id": "sem-main",
+          "descricao": "A região principal vira div sem role (não há main).",
+          "instancias": [
+            "pagina"
+          ]
+        }
+      ]
+    },
+    "a2-22f23447d6b2": {
+      "aceita": true,
+      "justificativa": "Área (conteúdo) obrigatória, que no código é .card-content. Medida: .br-card > .card-content contém o conteúdo.",
+      "instancias": [
+        "crd-resumo"
+      ],
+      "variantes": [
+        {
+          "id": "conteudo-sem-card-content",
+          "descricao": "O conteúdo do card fica direto no .br-card, sem o contêiner .card-content."
+        }
+      ]
+    },
+    "a2-2383980c2eeb": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Tooltip de apresentação de funcionalidade; não há na tela."
+    },
+    "a2-23db25b5d497": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Substituição de arquivo já enviado; não ocorre em S0–S2."
+    },
+    "a2-24082cba4782": {
+      "aceita": false,
+      "motivo": "duplicada:a2-959ca4537add",
+      "justificativa": "Repete, para esta instância, a recomendação 3.10 do e-MAG; hospedeiros e variante passam para ela. (Estrutura semântica (table, thead, tbody, th, tr, td). Medida: tagName dos elementos da tabela.)",
+      "equivalenteEmag": "3.10"
+    },
+    "a2-25ddbebf4f1a": {
+      "aceita": true,
+      "justificativa": "Desabilitado não recebe foco. Medida: sequência de Tab não para nas etapas desabilitadas.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "desabilitada-focavel",
+          "descricao": "A 4ª etapa fica só com aria-disabled e tabindex=0: recebe foco."
+        }
+      ]
+    },
+    "a2-280e09b93085": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Arrastar objeto; não há objeto arrastável na tela."
+    },
+    "a2-282216f62a85": {
+      "aceita": false,
+      "motivo": "duplicada:a2-a6e2601837a7",
+      "justificativa": "Repete, para esta instância, a recomendação 4.4 do e-MAG; hospedeiros e variante passam para ela. (Foco visível nas abas. Medida: outline ou box-shadow computado da aba focada contra a não focada.)",
+      "equivalenteEmag": "4.4"
+    },
+    "a2-2ac598dc24db": {
+      "aceita": false,
+      "motivo": "so-andaime",
+      "justificativa": "Ordem de botões primário/secundário; os botões são andaime."
+    },
+    "a2-2ad6396edcd1": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Define o que é 'concluído'."
+    },
+    "a2-2b6979e5363b": {
+      "aceita": true,
+      "justificativa": "Título nunca faz a função de texto informativo. Medida: o balão tem o texto informativo no corpo (.text), não só num título.",
+      "instancias": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "variantes": [
+        {
+          "id": "so-titulo",
+          "descricao": "O texto informativo do balão vai num elemento de título e o corpo fica vazio."
+        }
+      ]
+    },
+    "a2-2bc503ea01f1": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 6.4. Sem mudança automática de contexto. Medida: escolher uma opção não envia nem troca de aba.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "muda-contexto",
+          "descricao": "Escolher uma opção no select envia o formulário sozinho.",
+          "instancias": [
+            "sel-tipo-documento"
+          ]
+        }
+      ]
+    },
+    "a2-2bcef5ab4a3b": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Estado Alerta; nenhum tooltip da tela é de advertência."
+    },
+    "a2-2bf9894c4932": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há multimídia nem animação controlável na tela."
+    },
+    "a2-2ceedc253459": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Concisão do texto auxiliar."
+    },
+    "a2-2d9c1da2ceca": {
+      "aceita": false,
+      "motivo": "duplicada:a2-19fecd20a243",
+      "justificativa": "Mesmo observável: controles do card alcançáveis e acionáveis pelo teclado."
+    },
+    "a2-2e4efd30789f": {
+      "aceita": true,
+      "justificativa": "Legend com menos ênfase que o título do formulário. Medida: font-size do legend dos avisos contra o do título do formulário.",
+      "instancias": [
+        "swt-aviso-email"
+      ],
+      "variantes": [
+        {
+          "id": "legend-maior",
+          "descricao": "O legend dos avisos fica com font-size maior que o título do formulário."
+        }
+      ]
+    },
+    "a2-2e8e53cf16ef": {
+      "aceita": true,
+      "justificativa": "Arrastar informado na mensagem abaixo do campo. Medida: texto de apoio abaixo do campo menciona arrastar.",
+      "instancias": [
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-aviso-arrastar",
+          "descricao": "O texto de apoio abaixo do campo não menciona que se pode arrastar o arquivo."
+        }
+      ]
+    },
+    "a2-2f00ff64db29": {
+      "aceita": false,
+      "motivo": "duplicada:a2-6a99b79819ae",
+      "justificativa": "Mesmo observável (conteúdo dentro das margens da grid)."
+    },
+    "a2-2f4eadc23b2c": {
+      "aceita": true,
+      "justificativa": "Nenhuma fonte fora da escala Minor Third. Medida: font-size computado contra os valores da escala.",
+      "instancias": [
+        "crd-resumo",
+        "acc-duvidas",
+        "tbl-movimentacoes",
+        "msg-pendencia"
+      ],
+      "variantes": [
+        {
+          "id": "fonte-fora-da-escala",
+          "descricao": "O texto principal da instância fica com font-size 15px."
+        }
+      ]
+    },
+    "a2-30278caa77da": {
+      "aceita": true,
+      "justificativa": "Botão na extremidade direita do campo. Medida: posição do botão contra a do campo.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "gatilho-a-esquerda",
+          "descricao": "O botão de abrir a lista fica à esquerda do campo."
+        }
+      ]
+    },
+    "a2-3087e28d2431": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Foco tênue; não usado."
+    },
+    "a2-312798bd96aa": {
+      "aceita": true,
+      "justificativa": "Ícones no estilo Font Awesome Solid. Medida: classe/família do ícone.",
+      "instancias": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "variantes": [
+        {
+          "id": "icone-regular",
+          "descricao": "O ícone do gatilho usa a família Regular (far) em vez da Solid."
+        }
+      ]
+    },
+    "a2-31b4a3f89649": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "O redirecionamento automático tira a página medida do ar; não há medida que preserve os estados."
+    },
+    "a2-32204e1d60a4": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Saber se um conteúdo foi 'dividido' ou 'mesclado' depende de julgar o que é uma unidade de conteúdo; sem medida pequena."
+    },
+    "a2-33de62f95ce7": {
+      "aceita": true,
+      "justificativa": "Container br-switch. Medida: classe da raiz.",
+      "instancias": [
+        "swt-aviso-email",
+        "swt-aviso-sms"
+      ],
+      "variantes": [
+        {
+          "id": "sem-br-switch",
+          "descricao": "A raiz do switch usa classe própria (aparência copiada à mão), sem br-switch."
+        }
+      ]
+    },
+    "a2-33e661bc4435": {
+      "aceita": false,
+      "motivo": "duplicada:a2-f4237d13520b",
+      "justificativa": "Repete, para esta instância, a recomendação 6.2 do e-MAG; hospedeiros e variante passam para ela. (Leitor de tela anuncia rótulo e estado. Medida: nome acessível e estado checked no snapshot de acessibilidade.)",
+      "equivalenteEmag": "6.2"
+    },
+    "a2-3403920b2fa1": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Clareza do rótulo é julgamento."
+    },
+    "a2-365188d43760": {
+      "aceita": false,
+      "motivo": "duplicada:a2-2b6979e5363b",
+      "justificativa": "Mesmo observável (texto informativo no corpo do balão)."
+    },
+    "a2-370b35b87f02": {
+      "aceita": false,
+      "motivo": "duplicada:a2-a6e2601837a7",
+      "justificativa": "Foco por teclado existe = 4.4.",
+      "equivalenteEmag": "4.4"
+    },
+    "a2-371057c7a941": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-372068e40fd2": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 1.3. Níveis de cabeçalho hierárquicos. Medida: sequência de h1–h6 do documento.",
+      "instancias": [
+        "pagina"
+      ],
+      "variantes": [
+        {
+          "id": "salto-de-nivel",
+          "descricao": "O título 'Dúvidas frequentes' vira h4 logo depois do h2 (pula o h3).",
+          "instancias": [
+            "pagina"
+          ]
+        }
+      ]
+    },
+    "a2-38b4aee96463": {
+      "aceita": false,
+      "motivo": "duplicada:a2-82b6ab674069",
+      "justificativa": "Mesmo elemento (item da tab)."
+    },
+    "a2-3938fd575fac": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG."
+    },
+    "a2-3a963eafc55d": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Clareza do rótulo é julgamento."
+    },
+    "a2-3ab15b98e299": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-3b44b773c1ee": {
+      "aceita": true,
+      "justificativa": "Card dentro de card é proibido. Medida: .br-card descendente de .br-card.",
+      "instancias": [
+        "crd-resumo"
+      ],
+      "variantes": [
+        {
+          "id": "card-aninhado",
+          "descricao": "O bloco do prazo, dentro do card, é envolvido por outro .br-card."
+        }
+      ]
+    },
+    "a2-3bee0f43eaa3": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há documento para baixar."
+    },
+    "a2-3bffb19b8840": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Comportamento em outros breakpoints; o contrato do instrumento fixa a medição em 1280×900."
+    },
+    "a2-3c18fb6c1dbc": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Switches agrupados com seleção total; os dois switches são preferências independentes."
+    },
+    "a2-3c41add42ce4": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Descreve uma situação."
+    },
+    "a2-3cb3de644c47": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Subdivisão de categorias dentro de aba; não há."
+    },
+    "a2-3ce5b3944807": {
+      "aceita": false,
+      "motivo": "duplicada:a2-acc4801af71c",
+      "justificativa": "Repete, para esta instância, a recomendação 2.1 do e-MAG; hospedeiros e variante passam para ela. (Abas acessíveis e navegáveis pelo teclado. Medida: cada aba recebe foco por Tab e é acionada por Enter/Espaço.)",
+      "equivalenteEmag": "2.1"
+    },
+    "a2-3d935c4b833a": {
+      "aceita": true,
+      "justificativa": "Título do formulário com o maior tamanho de texto do formulário. Medida: font-size do título do formulário contra rótulos e textos do formulário.",
+      "instancias": [
+        "pagina"
+      ],
+      "variantes": [
+        {
+          "id": "titulo-form-menor",
+          "descricao": "O título do formulário da aba Documentos fica com font-size menor que os rótulos dos campos."
+        }
+      ]
+    },
+    "a2-3e410f36c0cd": {
+      "aceita": true,
+      "justificativa": "Desabilitado não recebe Ativo. Medida: estado/classe ativo em etapa desabilitada.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "desabilitada-ativa",
+          "descricao": "A 3ª etapa (desabilitada) também carrega o estado ativo."
+        }
+      ]
+    },
+    "a2-3e9cd01f50b3": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-3efa429eb319": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Link para ajuda global ao final da ajuda contextual; os tooltips da tela não remetem à ajuda global."
+    },
+    "a2-3f23afca6972": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-3f6b7b055edf": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG."
+    },
+    "a2-3fb37eb25f3c": {
+      "aceita": true,
+      "justificativa": "Usar sempre as cores pré-definidas. Medida: cores computadas da instância contra a paleta do DS.",
+      "instancias": [
+        "crd-resumo",
+        "acc-duvidas",
+        "tbl-movimentacoes",
+        "msg-pendencia"
+      ],
+      "variantes": [
+        {
+          "id": "cor-fora-da-paleta",
+          "descricao": "A cor do texto principal da instância vira #334333 (canal verde +16 sobre #333333)."
+        }
+      ]
+    },
+    "a2-402eef83153c": {
+      "aceita": true,
+      "justificativa": "Chave de alternância obrigatória. Medida: a chave (pseudo-elemento) tem tamanho e cor visíveis.",
+      "instancias": [
+        "swt-aviso-email",
+        "swt-aviso-sms"
+      ],
+      "variantes": [
+        {
+          "id": "sem-chave",
+          "descricao": "A chave de alternância fica oculta; só o trilho aparece."
+        }
+      ]
+    },
+    "a2-4081c06b7db1": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Deve-se prezar, ao máximo' atenua a exigência (recomendação)."
+    },
+    "a2-40b8af421136": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Navegação lateral; não há."
+    },
+    "a2-41577e5f420c": {
+      "aceita": true,
+      "justificativa": "Na lista aberta, setas para cima/baixo navegam. Medida: seta para baixo move o foco/destaque para o próximo item.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "setas-inertes",
+          "descricao": "Com a lista aberta, as setas não movem entre os itens."
+        }
+      ]
+    },
+    "a2-419c091564b6": {
+      "aceita": true,
+      "justificativa": "Opções em br-item. Medida: classe de cada opção.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "opcao-sem-br-item",
+          "descricao": "As opções da lista não têm br-item."
+        }
+      ]
+    },
+    "a2-41f0168a6cbb": {
+      "aceita": true,
+      "justificativa": "Container (superfície/trilho) obrigatório. Medida: fundo e borda computados do trilho.",
+      "instancias": [
+        "swt-aviso-email",
+        "swt-aviso-sms"
+      ],
+      "variantes": [
+        {
+          "id": "sem-trilho",
+          "descricao": "O trilho do switch fica transparente e sem borda; só a chave aparece."
+        }
+      ]
+    },
+    "a2-427870f3738e": {
+      "aceita": true,
+      "justificativa": "Divider obrigatório sob as abas. Medida: borda/divisor inferior da barra de abas visível.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-divisor",
+          "descricao": "O divisor sob a barra de abas é removido."
+        }
+      ]
+    },
+    "a2-4282b82a2824": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Deve-se prezar' (recomendação)."
+    },
+    "a2-42f05317f7e8": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Frase de transição ('alguns cuidados devem ser observados'); não impõe nada."
+    },
+    "a2-44c54f019703": {
+      "aceita": true,
+      "justificativa": "Título do item aberto na cor do estado ativo. Medida: color computado do título do item expandido contra a cor do estado ativo do DS.",
+      "instancias": [
+        "acc-duvidas"
+      ],
+      "variantes": [
+        {
+          "id": "titulo-aberto-cor-padrao",
+          "descricao": "O título do item expandido mantém a cor do texto padrão (não muda para a cor do estado ativo)."
+        }
+      ]
+    },
+    "a2-45a090bca496": {
+      "aceita": true,
+      "justificativa": "Atributo obrigatório 'trigger' no botão. Medida: atributo data-trigger no botão do select.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "gatilho-sem-atributo",
+          "descricao": "O botão não tem o atributo trigger; a abertura é ligada à mão."
+        }
+      ]
+    },
+    "a2-46c418f28680": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-47b777d7f803": {
+      "aceita": false,
+      "motivo": "duplicada:a2-372068e40fd2",
+      "justificativa": "Repete a recomendação 1.3.",
+      "equivalenteEmag": "1.3"
+    },
+    "a2-47c7c28cd674": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-482ab9c4a4b1": {
+      "aceita": true,
+      "justificativa": "Modos de seleção (estados) obrigatórios. Medida: depois de escolher, o item escolhido tem o estado selecionado (classe/aria-selected/checked).",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "escolhido-sem-estado",
+          "descricao": "O item escolhido não recebe o estado selecionado na lista."
+        }
+      ]
+    },
+    "a2-4893be9b5861": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema)."
+    },
+    "a2-491250eb915c": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "A tela não tem limite de tempo."
+    },
+    "a2-49a0290824c0": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "A própria frase atenua a exigência ('preferencialmente'): recomendação."
+    },
+    "a2-49fc7885c5cd": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-4b8242eb41a2": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão')."
+    },
+    "a2-4bf497c10f2d": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Justificativa da frase anterior."
+    },
+    "a2-4c2ef1bf747e": {
+      "aceita": true,
+      "justificativa": "name nos inputs das opções. Medida: atributo name dos inputs radio das opções.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "opcao-sem-name",
+          "descricao": "Os inputs radio das opções ficam sem name."
+        }
+      ]
+    },
+    "a2-4c30013d9cf6": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Espaço lateral reduzido; a janela é 1280 e há 2 abas."
+    },
+    "a2-4c406056e235": {
+      "aceita": false,
+      "motivo": "duplicada:a2-e5b4728ca51e",
+      "justificativa": "Cor como único meio = 4.2.",
+      "equivalenteEmag": "4.2"
+    },
+    "a2-4de381049bd4": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Fundo escuro; não há."
+    },
+    "a2-4e067f770cee": {
+      "aceita": true,
+      "justificativa": "Cabeçalho do item em <button>. Medida: tagName do cabeçalho de cada item.",
+      "instancias": [
+        "acc-duvidas"
+      ],
+      "variantes": [
+        {
+          "id": "cabecalho-div",
+          "descricao": "O cabeçalho do 1º item vira div role=button tabindex=0 com Enter/Espaço (teclado intacto)."
+        }
+      ]
+    },
+    "a2-4e5a457e6d01": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-4e655f426491": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-4f4391ced0cc": {
+      "aceita": false,
+      "motivo": "duplicada:a2-959ca4537add",
+      "justificativa": "Repete, para esta instância, a recomendação 3.10 do e-MAG; hospedeiros e variante passam para ela. (Header da tabela obrigatório. Medida: a primeira linha com os nomes de coluna é cabeçalho (thead/th).)",
+      "equivalenteEmag": "3.10"
+    },
+    "a2-50718f0da5ac": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Tipo Informação; a tela não tem mensagem de informação neutra."
+    },
+    "a2-50af67dc7ee1": {
+      "aceita": true,
+      "justificativa": "Superfície obrigatória. Medida: background-color e box-shadow computados do card.",
+      "instancias": [
+        "crd-resumo"
+      ],
+      "variantes": [
+        {
+          "id": "sem-superficie",
+          "descricao": "O card fica sem superfície: fundo transparente e sem sombra."
+        }
+      ]
+    },
+    "a2-50affb0576ef": {
+      "aceita": false,
+      "motivo": "acoplada",
+      "justificativa": "Tirar o texto da mensagem apaga também a informação que ela transmite; não há mudança local isolada."
+    },
+    "a2-5130bd400133": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Recomenda-se'."
+    },
+    "a2-51e571373c4d": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Número extenso de etapas; a tela tem 4."
+    },
+    "a2-52394d43a884": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Switch com rótulos adicionais de ligado/desligado; os switches da tela não os usam."
+    },
+    "a2-52ea5c58a080": {
+      "aceita": true,
+      "justificativa": "Indicador obrigatório. Medida: cada etapa tem o indicador visível.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-indicador",
+          "descricao": "O indicador da 3ª etapa fica oculto; o rótulo continua."
+        }
+      ]
+    },
+    "a2-532e06e9b442": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Arrastar objeto; não há objeto arrastável na tela."
+    },
+    "a2-54110c0cf291": {
+      "aceita": false,
+      "motivo": "duplicada:a2-1ea2f43d76db",
+      "justificativa": "Repete a recomendação 3.1.",
+      "equivalenteEmag": "3.1"
+    },
+    "a2-5432c282d0d7": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 4.3. Redimensionar sem perder funcionalidade. Medida: com texto a 200% o conteúdo do card continua visível (sem corte).",
+      "instancias": [
+        "crd-resumo"
+      ],
+      "variantes": [
+        {
+          "id": "altura-fixa-corta",
+          "descricao": "O card tem altura fixa em px e overflow hidden: com texto a 200% o conteúdo é cortado.",
+          "instancias": [
+            "crd-resumo"
+          ]
+        }
+      ]
+    },
+    "a2-544adb3c8b26": {
+      "aceita": true,
+      "justificativa": "Superfície do message obrigatória. Medida: background-color computado da raiz da mensagem.",
+      "instancias": [
+        "msg-pendencia",
+        "msg-retorno"
+      ],
+      "variantes": [
+        {
+          "id": "sem-superficie",
+          "descricao": "A mensagem fica com fundo transparente (sem a superfície do tipo)."
+        }
+      ]
+    },
+    "a2-54d2e08c5e0f": {
+      "aceita": true,
+      "justificativa": "Linhas separadas por divider. Medida: borda inferior computada das linhas.",
+      "instancias": [
+        "tbl-movimentacoes"
+      ],
+      "variantes": [
+        {
+          "id": "linhas-sem-divisor",
+          "descricao": "As linhas perdem o divisor (sem borda entre elas)."
+        }
+      ]
+    },
+    "a2-5542b7528b3d": {
+      "aceita": true,
+      "justificativa": "Área mínima de interação de 24×24px no ícone interativo. Medida: getBoundingClientRect do gatilho.",
+      "instancias": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "variantes": [
+        {
+          "id": "area-pequena",
+          "descricao": "O gatilho só de ícone fica com 16×16px."
+        }
+      ]
+    },
+    "a2-557812293319": {
+      "aceita": true,
+      "justificativa": "Foco inicial na primeira aba interativa. Medida: o primeiro Tab que entra no componente para na 1ª aba.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "foco-na-segunda",
+          "descricao": "Ao entrar no componente por Tab, o foco cai primeiro na 2ª aba (tabindex na ordem trocada)."
+        }
+      ]
+    },
+    "a2-55ce9b3b3b6b": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Textos extensos; os itens do select são curtos."
+    },
+    "a2-55dab9d0155c": {
+      "aceita": false,
+      "motivo": "duplicada:a2-e5b4728ca51e",
+      "justificativa": "Repete, para esta instância, a recomendação 4.2 do e-MAG; hospedeiros e variante passam para ela. (O tipo da mensagem não pode depender só da cor; há alternativa para leitor de tela. Medida: nome acessível do ícone ou texto oculto que diga o tipo.)",
+      "equivalenteEmag": "4.2"
+    },
+    "a2-5612fb499d07": {
+      "aceita": true,
+      "justificativa": "Dropzone ativo exibido ao arrastar sobre a área. Medida: classe/estilo da área depois de dragenter sintético.",
+      "instancias": [
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-dropzone-ativo",
+          "descricao": "Arrastar um arquivo sobre a área não muda a aparência dela."
+        }
+      ]
+    },
+    "a2-56efb314c6c4": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Necessidade de ajuda é julgamento."
+    },
+    "a2-590ef96dad73": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Comportamento em outros breakpoints; o contrato do instrumento fixa a medição em 1280×900."
+    },
+    "a2-5992cfd640ea": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-5a1a5ee261b9": {
+      "aceita": true,
+      "justificativa": "A tab ocupa a largura da página até a extremidade direita. Medida: largura da barra de abas contra a do contêiner.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "superficie-curta",
+          "descricao": "A barra de abas fica com a largura só dos itens (width: max-content)."
+        }
+      ]
+    },
+    "a2-5a1fcf660ae1": {
+      "aceita": true,
+      "justificativa": "Sem artigos no rótulo de ação. Medida: texto dos rótulos das abas.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "rotulo-com-artigo",
+          "descricao": "O rótulo da 2ª aba fica 'Os documentos'."
+        }
+      ]
+    },
+    "a2-5afc7bb34da5": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Facilidade é julgamento."
+    },
+    "a2-5b5edee6f2a7": {
+      "aceita": false,
+      "motivo": "duplicada:a2-22f23447d6b2",
+      "justificativa": "Mesmo observável (.card-content) da área obrigatória."
+    },
+    "a2-5bf689d977cb": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há multimídia nem animação controlável na tela."
+    },
+    "a2-5c9b2d9ec9b2": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-5d641612382a": {
+      "aceita": true,
+      "justificativa": "Botão (gatilho) obrigatório. Medida: botão dentro do select.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-gatilho",
+          "descricao": "O botão de abrir a lista é removido; a lista abre ao clicar no campo."
+        }
+      ]
+    },
+    "a2-5da1dcbf7d0a": {
+      "aceita": true,
+      "justificativa": "Cursor 'não permitido' no desabilitado. Medida: cursor computado das etapas desabilitadas.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "cursor-mao",
+          "descricao": "As etapas desabilitadas mostram cursor pointer."
+        }
+      ]
+    },
+    "a2-5df30996e1c5": {
+      "aceita": true,
+      "justificativa": "Ícone semântico à esquerda; Fechar no topo à direita. Medida: posição (getBoundingClientRect) do ícone e do botão Fechar na mensagem.",
+      "instancias": [
+        "msg-pendencia",
+        "msg-retorno"
+      ],
+      "variantes": [
+        {
+          "id": "fechar-a-esquerda",
+          "descricao": "O botão Fechar troca de lado com o ícone: Fechar à esquerda, ícone à direita."
+        }
+      ]
+    },
+    "a2-5e2a4c157a82": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Comportamento em outros breakpoints; o contrato do instrumento fixa a medição em 1280×900."
+    },
+    "a2-5e515351ccc9": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Explica para que serve a linha do tempo."
+    },
+    "a2-5eddaf90c132": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Links; nenhuma instância sorteável tem link."
+    },
+    "a2-604a71cdb04c": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Deve-se prezar' (recomendação)."
+    },
+    "a2-609b6c6f57db": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há mapa de imagem."
+    },
+    "a2-618130d12ebe": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Controles dentro das células; a tabela não tem."
+    },
+    "a2-61f57f2a7ff5": {
+      "aceita": true,
+      "justificativa": "Seta aponta para o gatilho e o balão fica junto dele. Medida: distância entre o balão e o gatilho e direção da seta.",
+      "instancias": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "variantes": [
+        {
+          "id": "longe-do-gatilho",
+          "descricao": "O balão abre deslocado 160px para a direita do gatilho, com a seta apontando para o vazio."
+        }
+      ]
+    },
+    "a2-61f7e680f11b": {
+      "aceita": false,
+      "motivo": "duplicada:a2-d720ea8520cb",
+      "justificativa": "Mensagem de erro que diz o quê, por quê e o que fazer = 6.6.",
+      "equivalenteEmag": "6.6"
+    },
+    "a2-624afa51bbaf": {
+      "aceita": true,
+      "justificativa": "Não marcar ao mesmo tempo campos obrigatórios e opcionais. Medida: textos de marcação nos rótulos do formulário.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "marca-os-dois",
+          "descricao": "O rótulo do select ganha '(obrigatório)' e o do switch de SMS, '(opcional)'."
+        }
+      ]
+    },
+    "a2-62c0f42b9631": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Concisão do nome de coluna é julgamento."
+    },
+    "a2-639a3b7c05e7": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Ajuda global do produto, presente em todas as telas; a tela é uma só."
+    },
+    "a2-64026bdcfe0c": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há multimídia nem animação controlável na tela."
+    },
+    "a2-65a05505f2bf": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'De acordo com a necessidade de uso' não impõe nada observável."
+    },
+    "a2-65ab1a90c410": {
+      "aceita": false,
+      "motivo": "duplicada:a2-033815886ead",
+      "justificativa": "Mesmo observável (cursor 'mão' no interativo)."
+    },
+    "a2-66a04dbcde9c": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Quantidade de informação 'essencial' é julgamento editorial."
+    },
+    "a2-66fbdcf13772": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 4.1. Contraste mínimo. Medida: razão de contraste computada do texto contra o fundo.",
+      "instancias": [
+        "crd-resumo",
+        "acc-duvidas",
+        "stp-andamento",
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "texto-baixo-contraste",
+          "descricao": "O texto secundário do card fica #AAAAAA sobre branco.",
+          "instancias": [
+            "crd-resumo"
+          ]
+        },
+        {
+          "id": "conteudo-baixo-contraste",
+          "descricao": "O texto do painel do 1º item fica #A0A0A0 sobre branco.",
+          "instancias": [
+            "acc-duvidas"
+          ]
+        },
+        {
+          "id": "rotulo-baixo-contraste",
+          "descricao": "O rótulo da 2ª etapa (ativa) fica #9E9E9E sobre branco.",
+          "instancias": [
+            "stp-andamento"
+          ]
+        },
+        {
+          "id": "texto-baixo-contraste-sel-tipo-documento",
+          "descricao": "O texto do campo fica #AAAAAA sobre branco.",
+          "instancias": [
+            "sel-tipo-documento"
+          ]
+        }
+      ]
+    },
+    "a2-671056d628cb": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 1.1. Código conforme às normas do W3C. Medida: ids únicos no documento (querySelectorAll de cada id).",
+      "instancias": [
+        "pagina"
+      ],
+      "variantes": [
+        {
+          "id": "id-duplicado",
+          "descricao": "O título do card e o painel da aba Andamento recebem o mesmo id.",
+          "instancias": [
+            "pagina"
+          ]
+        }
+      ]
+    },
+    "a2-679351f2635c": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 3.6. Alternativa em texto para imagens (inclui ícone que é o único conteúdo de um controle). Medida: nome acessível do gatilho só de ícone.",
+      "instancias": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "variantes": [
+        {
+          "id": "icone-sem-alternativa",
+          "descricao": "O gatilho (botão só com ícone) perde o aria-label e fica sem nome acessível.",
+          "instancias": [
+            "tip-prazo",
+            "tip-protocolo"
+          ]
+        }
+      ]
+    },
+    "a2-6854a35b9351": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Prefira' (recomendação)."
+    },
+    "a2-689468fd37ad": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Vídeo; não há."
+    },
+    "a2-6a045b31f05d": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Trata de textos, documentos e apresentações para clientes, não da interface."
+    },
+    "a2-6a99b79819ae": {
+      "aceita": true,
+      "justificativa": "Conteúdo dentro das margens da grid. Medida: borda do elemento contra a margem do contêiner da grid.",
+      "instancias": [
+        "tbl-movimentacoes",
+        "crd-resumo"
+      ],
+      "variantes": [
+        {
+          "id": "ultrapassa-margem",
+          "descricao": "A instância ganha margem negativa e passa da margem da grid."
+        }
+      ]
+    },
+    "a2-6b1f4b55b48c": {
+      "aceita": false,
+      "motivo": "duplicada:a2-4f4391ced0cc",
+      "justificativa": "Mesmo elemento (header obrigatório)."
+    },
+    "a2-6b81534ea677": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Descreve uma classe opcional (densidade)."
+    },
+    "a2-6ba31c373664": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Arrastar objeto; não há objeto arrastável na tela."
+    },
+    "a2-6be62adc3519": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Página inicial; esta é interna."
+    },
+    "a2-6c5825c62c4f": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Disposição em dispositivo móvel; a tela tem um card e a janela é 1280."
+    },
+    "a2-6dc87e28972f": {
+      "aceita": false,
+      "motivo": "duplicada:a2-679351f2635c",
+      "justificativa": "Repete a recomendação 3.6.",
+      "equivalenteEmag": "3.6"
+    },
+    "a2-6e082644d710": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Justifica o Font Awesome."
+    },
+    "a2-6e2764ea7ad4": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Tom do texto."
+    },
+    "a2-6eb568d6dd94": {
+      "aceita": true,
+      "justificativa": "value nos inputs das opções. Medida: atributo value dos inputs radio das opções.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "opcao-sem-value",
+          "descricao": "Os inputs radio das opções ficam sem value."
+        }
+      ]
+    },
+    "a2-6f543db37b45": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Explica o fieldset."
+    },
+    "a2-6f9602b239cc": {
+      "aceita": true,
+      "justificativa": "Texto do placeholder e ícone fa-upload não podem ser alterados. Medida: classe do ícone e texto do placeholder.",
+      "instancias": [
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "placeholder-alterado",
+          "descricao": "O ícone vira fa-paperclip e o texto do placeholder muda para 'Anexe aqui'."
+        }
+      ]
+    },
+    "a2-708c80c9546a": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Instrução condicional a uma escolha de projeto."
+    },
+    "a2-7094f78370aa": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-7196ad4a3f2d": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-71a32d35002a": {
+      "aceita": false,
+      "motivo": "so-andaime",
+      "justificativa": "Acesso pai/filho é o breadcrumb (andaime)."
+    },
+    "a2-71e548b6d3b6": {
+      "aceita": true,
+      "justificativa": "Balão flutuante obrigatório. Medida: o conteúdo aparece numa camada posicionada (position absolute/fixed) sobre a página.",
+      "instancias": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "variantes": [
+        {
+          "id": "texto-inline",
+          "descricao": "O conteúdo da ajuda é mostrado como texto estático ao lado do ícone, sem balão flutuante."
+        }
+      ]
+    },
+    "a2-71f5bfe76574": {
+      "aceita": false,
+      "motivo": "duplicada:a2-9bc102ab300b",
+      "justificativa": "Repete a recomendação 1.6.",
+      "equivalenteEmag": "1.6"
+    },
+    "a2-7278a9812cac": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-72b58f169d36": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "A frase não fixa o valor da opacidade."
+    },
+    "a2-72c04236c683": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Legenda de imagem."
+    },
+    "a2-7348bce34289": {
+      "aceita": false,
+      "motivo": "duplicada:a2-66fbdcf13772",
+      "justificativa": "Repete, para esta instância, a recomendação 4.1 do e-MAG; hospedeiros e variante passam para ela. (Cores e contraste do select. Medida: razão de contraste do texto do campo contra o fundo.)",
+      "equivalenteEmag": "4.1"
+    },
+    "a2-73dfd62f0816": {
+      "aceita": true,
+      "justificativa": "Desabilitado com baixa ênfase. Medida: opacidade/cor computada das etapas desabilitadas contra as habilitadas.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "desabilitada-com-enfase",
+          "descricao": "As etapas 3 e 4 (desabilitadas) ficam com a mesma cor e opacidade das habilitadas."
+        }
+      ]
+    },
+    "a2-73e03945d5cc": {
+      "aceita": false,
+      "motivo": "so-andaime",
+      "justificativa": "Rótulos de button; os botões são andaime."
+    },
+    "a2-7562e56b2290": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-756e337ffe70": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Aprendizagem é julgamento."
+    },
+    "a2-76403803f08d": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Pode ser marcado' (permissão)."
+    },
+    "a2-765073c3d610": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Outros dispositivos; a medição é em 1280×900."
+    },
+    "a2-767fc0d7d597": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "'Avaliar a real necessidade' é decisão de projeto."
+    },
+    "a2-76dbeded6662": {
+      "aceita": true,
+      "justificativa": "Estado ativo com alta ênfase no conjunto. Medida: o item ativo se distingue (classe e aparência) dos demais do conjunto.",
+      "instancias": [
+        "tab-requerimento",
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "ativa-sem-estado",
+          "descricao": "A aba ativa perde o estado ativo e fica igual às interativas (o painel continua trocando).",
+          "instancias": [
+            "tab-requerimento"
+          ]
+        },
+        {
+          "id": "atual-sem-destaque",
+          "descricao": "A etapa atual fica igual às concluídas, sem o destaque do estado ativo.",
+          "instancias": [
+            "stp-andamento"
+          ]
+        }
+      ]
+    },
+    "a2-770d03a2586e": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Rótulos de tag; a tela não tem tag."
+    },
+    "a2-774d96866ae5": {
+      "aceita": false,
+      "motivo": "duplicada:a2-24082cba4782",
+      "justificativa": "Mesmo observável (cabeçalhos identificáveis por marcação semântica th)."
+    },
+    "a2-77f3dd74508b": {
+      "aceita": true,
+      "justificativa": "Advertência usa o tipo Alerta. Medida: classe/tipo da mensagem de pendência contra o conteúdo de advertência.",
+      "instancias": [
+        "msg-pendencia"
+      ],
+      "variantes": [
+        {
+          "id": "aviso-com-tipo-sucesso",
+          "descricao": "A mensagem de pendência usa o tipo Sucesso (cor e ícone de sucesso), com o mesmo texto de advertência."
+        }
+      ]
+    },
+    "a2-78612395b3bd": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há senha."
+    },
+    "a2-788272898cb0": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Explica o benefício da frase anterior."
+    },
+    "a2-78e2e79d04eb": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-7927b81f6dba": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Nenhuma instância sorteável tem link ou abre janela."
+    },
+    "a2-799f9755bfb7": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Descreve uma classe opcional."
+    },
+    "a2-7a10435be0b9": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Hierarquia visual julgada; sem medida pequena."
+    },
+    "a2-7a4cc459f05c": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Arrastar objeto; não há objeto arrastável na tela."
+    },
+    "a2-7a831709525b": {
+      "aceita": true,
+      "justificativa": "Container com a classe br-card. Medida: classe da raiz do card.",
+      "instancias": [
+        "crd-resumo"
+      ],
+      "variantes": [
+        {
+          "id": "sem-br-card",
+          "descricao": "A raiz do card usa classe própria (aparência copiada à mão), sem br-card."
+        }
+      ]
+    },
+    "a2-7c1b79e2bcc2": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Genérico."
+    },
+    "a2-7c5c88e6762b": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Clareza é julgamento."
+    },
+    "a2-7c62d120e790": {
+      "aceita": true,
+      "justificativa": "Entrada upload-input. Medida: classe do input de arquivo.",
+      "instancias": [
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "input-sem-classe",
+          "descricao": "O input de arquivo não tem upload-input (a abertura do seletor é ligada à mão)."
+        }
+      ]
+    },
+    "a2-7c8efbc7f5fa": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Corpo de popover; os tooltips da tela são simples."
+    },
+    "a2-7ce46ea1d9b8": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Notificação geral do sistema; as mensagens da tela são de uso direcionado ao requerimento."
+    },
+    "a2-7cf9313c9fcc": {
+      "aceita": false,
+      "motivo": "conflito",
+      "justificativa": "Pôr o foco no primeiro campo ao abrir a aba Documentos tira o foco da aba e contraria a navegação por teclado da tab (a2-f19f80da5bea, a2-557812293319). A página conforme não move o foco; registrado como conflito."
+    },
+    "a2-7d627916930e": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Posição junto à base da janela; idem."
+    },
+    "a2-7d657a9927c8": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-7dd282607ce8": {
+      "aceita": true,
+      "justificativa": "Margens internas pelos tokens. Medida: padding computado do conteúdo do card contra o token de espaçamento do DS.",
+      "instancias": [
+        "crd-resumo"
+      ],
+      "variantes": [
+        {
+          "id": "margem-fora-do-token",
+          "descricao": "O padding interno do card vira 5px em todos os lados."
+        }
+      ]
+    },
+    "a2-7e05c5c8e09c": {
+      "aceita": true,
+      "justificativa": "Sem expressões regionais. Medida: texto da instância.",
+      "instancias": [
+        "msg-pendencia",
+        "msg-retorno"
+      ],
+      "variantes": [
+        {
+          "id": "expressao-regional",
+          "descricao": "A mensagem diz 'Bah, tá faltando um documento'."
+        }
+      ]
+    },
+    "a2-7e48dae780c6": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG."
+    },
+    "a2-7e88a67e573c": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Rótulo à esquerda do indicador; não usado."
+    },
+    "a2-7ea9cf524b85": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Nenhuma instância sorteável tem link."
+    },
+    "a2-7ed98d2b86ac": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-7f464d337bb8": {
+      "aceita": true,
+      "justificativa": "Itens alinhados à esquerda. Medida: posição do primeiro item contra a borda esquerda da barra.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "itens-centralizados",
+          "descricao": "Os itens das abas ficam centralizados na barra."
+        }
+      ]
+    },
+    "a2-7fb6ee175038": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Nome de arquivo longo; nenhum estado tem arquivo listado."
+    },
+    "a2-7fbccd3ba63e": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Etapa com erro ou pendência; nenhuma etapa tem."
+    },
+    "a2-7fe441d7e201": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG."
+    },
+    "a2-7ff3bc3c6a33": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Clareza do ícone é julgamento; o step da tela usa números."
+    },
+    "a2-80678e4f069c": {
+      "aceita": true,
+      "justificativa": "Seta direcional obrigatória. Medida: elemento da seta presente e visível.",
+      "instancias": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "variantes": [
+        {
+          "id": "sem-seta",
+          "descricao": "A seta do balão fica oculta (display none)."
+        }
+      ]
+    },
+    "a2-820965e0b219": {
+      "aceita": false,
+      "motivo": "duplicada:a2-7e05c5c8e09c",
+      "justificativa": "Mesmo observável (vocabulário de grupo restrito no texto)."
+    },
+    "a2-828be0a7c0d6": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Ajuda global do produto, presente em todas as telas; a tela é uma só."
+    },
+    "a2-82b6ab674069": {
+      "aceita": false,
+      "motivo": "acoplada",
+      "justificativa": "Sem item não existe aba: a remoção apaga a navegação para o conteúdo (segunda violação)."
+    },
+    "a2-8384621310b5": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Vídeo; não há."
+    },
+    "a2-83ec838a289a": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 3.9. Tabela com título. Medida: caption ou nome acessível da tabela.",
+      "instancias": [
+        "tbl-movimentacoes"
+      ],
+      "variantes": [
+        {
+          "id": "sem-titulo",
+          "descricao": "A tabela perde o caption e fica sem nome acessível.",
+          "instancias": [
+            "tbl-movimentacoes"
+          ]
+        }
+      ],
+      "alternativasValidas": [
+        {
+          "id": "titulo-por-aria-labelledby",
+          "descricao": "A tabela é nomeada por aria-labelledby apontando para o título visível, sem caption.",
+          "instancias": [
+            "tbl-movimentacoes"
+          ]
+        }
+      ]
+    },
+    "a2-8446ff4c79e5": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-84e597ff795b": {
+      "aceita": false,
+      "motivo": "duplicada:a2-d45711a55b6c",
+      "justificativa": "Marcação semântica do texto = 1.2.",
+      "equivalenteEmag": "1.2"
+    },
+    "a2-852353d1a725": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-855a016067f1": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 3.3. Título descritivo da página. Medida: document.title.",
+      "instancias": [
+        "pagina"
+      ],
+      "variantes": [
+        {
+          "id": "titulo-generico",
+          "descricao": "O title da página fica 'Página'.",
+          "instancias": [
+            "pagina"
+          ]
+        }
+      ]
+    },
+    "a2-8571bc44c93e": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-85dfe0051271": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Saber se a resposta é 'relacionada a uma funcionalidade específica' é julgamento de propósito."
+    },
+    "a2-85f29ecf4300": {
+      "aceita": false,
+      "motivo": "duplicada:a2-18bccce4132a",
+      "justificativa": "Usar legend no grupo é a recomendação 6.7.",
+      "equivalenteEmag": "6.7"
+    },
+    "a2-86c0aa8329ae": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Links; nenhuma instância sorteável tem link."
+    },
+    "a2-879621000aa6": {
+      "aceita": true,
+      "justificativa": "Gatilho em br-button. Medida: classe do botão.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "gatilho-sem-br-button",
+          "descricao": "O botão de abrir a lista não tem br-button."
+        }
+      ]
+    },
+    "a2-882b645e558a": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão')."
+    },
+    "a2-885d22427fd3": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "A própria frase diz que 'não é uma ação obrigatória' (recomendação)."
+    },
+    "a2-8867ed50c2b9": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-88dc85251df8": {
+      "aceita": false,
+      "motivo": "acoplada",
+      "justificativa": "Tooltip sem conteúdo deixa também o gatilho sem a descrição que o leitor de tela lê (segunda violação, a2-c591eaacd1c2)."
+    },
+    "a2-8970233d9e42": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão')."
+    },
+    "a2-899b236d311b": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-89c2d896bfc3": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão')."
+    },
+    "a2-8a2919fdad4a": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Deve-se evitar' (recomendação)."
+    },
+    "a2-8b6f099effdd": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Ícone novo; não há."
+    },
+    "a2-8bccb1eb2a16": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Dispositivo móvel; janela 1280."
+    },
+    "a2-8c13ad5ef245": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Rótulo à direita do indicador; não usado."
+    },
+    "a2-8dbdbd523f41": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Construção de ícone novo; não há."
+    },
+    "a2-8dc9577fd386": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página."
+    },
+    "a2-8e00d1afbe65": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Falta de espaço junto ao limite da tela; a lista abre com espaço na janela 1280×900."
+    },
+    "a2-8e637084832f": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Arrastar objeto; não há objeto arrastável na tela."
+    },
+    "a2-8e97b7f2c2b6": {
+      "aceita": true,
+      "justificativa": "O detalhe do item tem de aparecer ao expandir. Medida: clicar no cabeçalho do item, ler aria-expanded e a visibilidade do painel.",
+      "instancias": [
+        "acc-duvidas"
+      ],
+      "variantes": [
+        {
+          "id": "painel-nao-abre",
+          "descricao": "No 2º item, o cabeçalho passa a aria-expanded=true ao clicar, mas o painel continua oculto."
+        }
+      ]
+    },
+    "a2-8eefeca2eba5": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Controles dentro das células; a tabela não tem."
+    },
+    "a2-8f3255e3da17": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-8f7b9c91d55e": {
+      "aceita": true,
+      "justificativa": "Efeito imediato, sem exigir Salvar/Enviar. Medida: depois de alternar, o estado é aplicado (aviso de preferência salva) sem outro clique.",
+      "instancias": [
+        "swt-aviso-email",
+        "swt-aviso-sms"
+      ],
+      "variantes": [
+        {
+          "id": "so-com-enviar",
+          "descricao": "Alternar não aplica nada; o texto de apoio diz que a preferência será salva ao clicar em Enviar documento."
+        }
+      ]
+    },
+    "a2-8f8c5722c5ea": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-90f940e4e457": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-91a79f4d8b09": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-922a306263f0": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Popover com botões; os tooltips da tela são simples."
+    },
+    "a2-9250e991e04f": {
+      "aceita": false,
+      "motivo": "duplicada:a2-e5b4728ca51e",
+      "justificativa": "Classificação por cor com texto = 4.2.",
+      "equivalenteEmag": "4.2"
+    },
+    "a2-92f3d5de1e4b": {
+      "aceita": false,
+      "motivo": "duplicada:a2-50affb0576ef",
+      "justificativa": "Mesmo elemento (a mensagem obrigatória)."
+    },
+    "a2-92fa8a2632b2": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-959a8fd276d9": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Justificativa da frase anterior."
+    },
+    "a2-959ca4537add": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 3.10. Células de dados associadas às de cabeçalho. Medida: th com scope ou headers/id.",
+      "instancias": [
+        "tbl-movimentacoes"
+      ],
+      "variantes": [
+        {
+          "id": "cabecalho-como-linha",
+          "descricao": "A linha com os nomes das colunas vira a primeira linha do corpo, com td em negrito.",
+          "instancias": [
+            "tbl-movimentacoes"
+          ]
+        },
+        {
+          "id": "tabela-de-divs",
+          "descricao": "A tabela é montada com div e CSS grid, sem table/th/td; a aparência fica igual.",
+          "instancias": [
+            "tbl-movimentacoes"
+          ]
+        }
+      ],
+      "alternativasValidas": [
+        {
+          "id": "associacao-por-headers",
+          "descricao": "As células usam headers/id em vez de scope.",
+          "instancias": [
+            "tbl-movimentacoes"
+          ]
+        }
+      ]
+    },
+    "a2-95da9984f12d": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-963df6b848e6": {
+      "aceita": true,
+      "justificativa": "Rótulo no padrão 'Envio de ...'. Medida: texto do rótulo.",
+      "instancias": [
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "rotulo-fora-do-padrao",
+          "descricao": "O rótulo fica 'Arquivo' em vez do padrão 'Envio de documentos'."
+        }
+      ]
+    },
+    "a2-9679ff15765b": {
+      "aceita": true,
+      "justificativa": "Área de respiro entre o card e o componente vizinho. Medida: distância entre a borda do card e o próximo componente.",
+      "instancias": [
+        "crd-resumo"
+      ],
+      "variantes": [
+        {
+          "id": "sem-respiro",
+          "descricao": "O card encosta no componente seguinte (margem inferior 0, sem espaço entre os dois)."
+        }
+      ]
+    },
+    "a2-969e3300f6dd": {
+      "aceita": false,
+      "motivo": "duplicada:a2-5542b7528b3d",
+      "justificativa": "Mesmo observável (área mínima do ícone interativo)."
+    },
+    "a2-96a8e6331b1b": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema)."
+    },
+    "a2-96dcf8098a6b": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Remete à WCAG inteira; sem observável único."
+    },
+    "a2-983f688f7874": {
+      "aceita": false,
+      "motivo": "so-andaime",
+      "justificativa": "Retorno ao ponto de partida é o breadcrumb e o botão Voltar (andaime)."
+    },
+    "a2-9871103d03e2": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Abas ocultas com arrasto; não há."
+    },
+    "a2-98916290fb39": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "O formulário não é o único elemento da página."
+    },
+    "a2-9a86ce8f82e4": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-9b1f86870c73": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Comportamento em outros breakpoints; o contrato do instrumento fixa a medição em 1280×900."
+    },
+    "a2-9b2fcaa1dcf6": {
+      "aceita": false,
+      "motivo": "duplicada:a2-482ab9c4a4b1",
+      "justificativa": "Mesmo observável (item escolhido com estado selecionado)."
+    },
+    "a2-9b5d92759727": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Tom e voz do rótulo."
+    },
+    "a2-9b8acd4a8f59": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Dropzone desabilitada; o upload não fica desabilitado."
+    },
+    "a2-9bc102ab300b": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 1.6. Tabela só para dados. Medida: table usada para dispor conteúdo que não é tabular.",
+      "instancias": [
+        "crd-resumo"
+      ],
+      "variantes": [
+        {
+          "id": "card-em-tabela",
+          "descricao": "Os dados do card (número, serviço, situação, prazo) são dispostos com uma table de layout, sem cabeçalhos.",
+          "instancias": [
+            "crd-resumo"
+          ]
+        }
+      ]
+    },
+    "a2-9bcf4f01a6bb": {
+      "aceita": true,
+      "justificativa": "Selecionado = cor de fundo + elemento gráfico. Medida: no item escolhido, fundo e marca gráfica.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "selecionado-so-fundo",
+          "descricao": "O item escolhido mostra só a cor de fundo, sem a marca gráfica."
+        }
+      ]
+    },
+    "a2-9decdf14dc87": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Guarda-chuva de acessibilidade."
+    },
+    "a2-9e7fe5702498": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Rótulos de tag; a tela não tem tag."
+    },
+    "a2-9e8282563327": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-9fd770b979ce": {
+      "aceita": false,
+      "motivo": "so-andaime",
+      "justificativa": "A âncora para o bloco de conteúdo é o skiplink, que é andaime (construído conforme)."
+    },
+    "a2-a06dc9ebbfe4": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Compreensão do texto é julgamento de redação."
+    },
+    "a2-a090c9d8bfd7": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade editorial (fácil de verificar); sem observável na página."
+    },
+    "a2-a221b6eb52ce": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Considere' (recomendação)."
+    },
+    "a2-a25a469451b7": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Posição junto ao topo da janela; os gatilhos não estão nas bordas da janela."
+    },
+    "a2-a2872503ab86": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG."
+    },
+    "a2-a2cda6883389": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Arrastar objeto; não há objeto arrastável na tela."
+    },
+    "a2-a33ab64c0b03": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Introdução."
+    },
+    "a2-a3673f9cbf24": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Sombras para etapas ocultas; as 4 etapas ficam visíveis."
+    },
+    "a2-a452374c9960": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Hierarquia de um site inteiro."
+    },
+    "a2-a4bf60541c53": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Saber se a informação 'precisa estar visível' é julgamento."
+    },
+    "a2-a5cd7064a3cf": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-a62ff4649316": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Tom e tamanho do texto, sem limiar."
+    },
+    "a2-a63512415ce6": {
+      "aceita": false,
+      "motivo": "so-andaime",
+      "justificativa": "Links adjacentes só existem no breadcrumb e no rodapé, que são andaime."
+    },
+    "a2-a6e2601837a7": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 4.4. Foco visualmente evidente. Medida: outline ou box-shadow computado no foco contra sem foco.",
+      "instancias": [
+        "sel-tipo-documento",
+        "swt-aviso-email",
+        "swt-aviso-sms",
+        "acc-duvidas",
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "foco-invisivel",
+          "descricao": "O indicador de foco do controle é suprimido (outline none e sem box-shadow).",
+          "instancias": [
+            "sel-tipo-documento",
+            "swt-aviso-email",
+            "swt-aviso-sms",
+            "acc-duvidas"
+          ]
+        },
+        {
+          "id": "foco-invisivel-tab-requerimento",
+          "descricao": "O indicador de foco das abas é suprimido (outline none e sem box-shadow).",
+          "instancias": [
+            "tab-requerimento"
+          ]
+        }
+      ],
+      "alternativasValidas": [
+        {
+          "id": "foco-por-box-shadow",
+          "descricao": "O foco é desenhado com box-shadow em vez de outline.",
+          "instancias": [
+            "swt-aviso-email",
+            "swt-aviso-sms"
+          ]
+        }
+      ]
+    },
+    "a2-a7417adc8e5b": {
+      "aceita": true,
+      "justificativa": "Container br-message. Medida: classe da raiz da mensagem.",
+      "instancias": [
+        "msg-pendencia",
+        "msg-retorno"
+      ],
+      "variantes": [
+        {
+          "id": "sem-br-message",
+          "descricao": "A raiz da mensagem usa classe própria (aparência copiada à mão), sem br-message."
+        }
+      ]
+    },
+    "a2-a8dc8c74d4b7": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Etapas ocultas com rolagem horizontal; não há."
+    },
+    "a2-a9190c0fe6be": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Conteúdo do subtítulo é julgamento."
+    },
+    "a2-a967925813b1": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página."
+    },
+    "a2-aaac3112f76b": {
+      "aceita": true,
+      "justificativa": "Progressão linear: etapas não visitadas desabilitadas. Medida: disabled/aria-disabled das etapas 3 e 4.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "etapa-futura-habilitada",
+          "descricao": "A 4ª etapa fica habilitada e clicável."
+        }
+      ]
+    },
+    "a2-ab4d44192527": {
+      "aceita": true,
+      "justificativa": "Etapas concluídas no estado concluído. Medida: estado/classe da 1ª etapa.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "concluida-sem-estado",
+          "descricao": "A 1ª etapa aparece no estado interativo comum, sem o estado concluído."
+        }
+      ]
+    },
+    "a2-ab853deb1d9c": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema)."
+    },
+    "a2-aba0b9110366": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema)."
+    },
+    "a2-ac1b95753264": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Edição de dado já enviado; não há."
+    },
+    "a2-acc4801af71c": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 2.1. Todas as funções via teclado. Medida: alcançar por Tab e acionar por Enter/Espaço cada controle.",
+      "instancias": [
+        "acc-duvidas",
+        "upl-documento",
+        "crd-resumo",
+        "stp-andamento",
+        "tab-requerimento",
+        "sel-tipo-documento",
+        "swt-aviso-email",
+        "swt-aviso-sms"
+      ],
+      "variantes": [
+        {
+          "id": "item-so-mouse",
+          "descricao": "O cabeçalho do 3º item vira span com clique: sem foco e sem teclado.",
+          "instancias": [
+            "acc-duvidas"
+          ]
+        },
+        {
+          "id": "botao-upload-so-mouse",
+          "descricao": "O botão de escolher arquivo vira span com clique: sem foco e sem teclado.",
+          "instancias": [
+            "upl-documento"
+          ]
+        },
+        {
+          "id": "controle-sem-foco",
+          "descricao": "O gatilho de ajuda do protocolo, dentro do card, vira span com clique, fora da ordem de Tab.",
+          "instancias": [
+            "crd-resumo"
+          ]
+        },
+        {
+          "id": "etapa-fora-do-tab",
+          "descricao": "A 1ª etapa (concluída, navegável) recebe tabindex=-1.",
+          "instancias": [
+            "stp-andamento"
+          ]
+        },
+        {
+          "id": "aba-so-mouse",
+          "descricao": "A 2ª aba vira span com clique: não recebe foco nem responde ao teclado.",
+          "instancias": [
+            "tab-requerimento"
+          ]
+        },
+        {
+          "id": "select-fora-do-tab",
+          "descricao": "O campo do select recebe tabindex=-1.",
+          "instancias": [
+            "sel-tipo-documento"
+          ]
+        },
+        {
+          "id": "teclado-nao-abre",
+          "descricao": "A lista só abre com clique; Enter e seta para baixo não fazem nada.",
+          "instancias": [
+            "sel-tipo-documento"
+          ]
+        },
+        {
+          "id": "switch-fora-do-tab",
+          "descricao": "O input do switch recebe tabindex=-1.",
+          "instancias": [
+            "swt-aviso-email",
+            "swt-aviso-sms"
+          ]
+        }
+      ]
+    },
+    "a2-ad12f8f65287": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão')."
+    },
+    "a2-ad2cec640577": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há botão de imagem (input type=image)."
+    },
+    "a2-ada49eff27b5": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "A mensagem de erro da tela não tem informação complementar."
+    },
+    "a2-adae4a234fdd": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Descreve a função da lista."
+    },
+    "a2-adbb58a0d3a7": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Overlay sobre elementos de cor escura; não há."
+    },
+    "a2-ae1397ab72d5": {
+      "aceita": true,
+      "justificativa": "Consistência na aplicação dos rótulos. Medida: posição do rótulo de cada switch em relação à chave.",
+      "instancias": [
+        "swt-aviso-sms"
+      ],
+      "variantes": [
+        {
+          "id": "rotulo-do-outro-lado",
+          "descricao": "O rótulo do switch de SMS fica à esquerda da chave; o de e-mail, à direita."
+        }
+      ]
+    },
+    "a2-b069c3031aa0": {
+      "aceita": true,
+      "justificativa": "Mensagem contextual em .feedback (texto de erro do campo no estado inválido). Medida: classe do texto de erro do campo em S2.",
+      "instancias": [
+        "sel-tipo-documento",
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "feedback-sem-classe",
+          "descricao": "O texto de erro do campo em S2 é um span com cor vermelha, sem .feedback."
+        }
+      ]
+    },
+    "a2-b07629546d9c": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há senha."
+    },
+    "a2-b11285b665ca": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Descreve o atributo timer."
+    },
+    "a2-b154db43ffab": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-b21a9636d739": {
+      "aceita": false,
+      "motivo": "duplicada:a2-76dbeded6662",
+      "justificativa": "Mesmo observável: a aba ativa tem o estado ativo, com ênfase distinta das demais (fundamentos-visuais/estados.md, id menor)."
+    },
+    "a2-b29e725262d0": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Guarda-chuva."
+    },
+    "a2-b3562ce3e89b": {
+      "aceita": false,
+      "motivo": "acoplada",
+      "justificativa": "Sem a lista não há opções (a remoção apaga a função)."
+    },
+    "a2-b35d4da9598b": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-b372f797b737": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-b54ea743db23": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Muitas ações por linha; a tabela não tem ações."
+    },
+    "a2-b735a9108aaf": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Genérico."
+    },
+    "a2-b889b938c32d": {
+      "aceita": true,
+      "justificativa": "Seguir a tabela de uso de ícones do DS. Medida: classe do ícone semântico contra a tabela de iconografia.",
+      "instancias": [
+        "msg-pendencia",
+        "msg-retorno"
+      ],
+      "variantes": [
+        {
+          "id": "icone-trocado",
+          "descricao": "O ícone semântico da mensagem é trocado por fa-bell."
+        }
+      ]
+    },
+    "a2-b89960786a4f": {
+      "aceita": false,
+      "motivo": "acoplada",
+      "justificativa": "Sem linhas não há dados na tabela."
+    },
+    "a2-ba3439c9ddd0": {
+      "aceita": false,
+      "motivo": "duplicada:a2-6a99b79819ae",
+      "justificativa": "Mesmo observável (elementos dentro das margens)."
+    },
+    "a2-bb101b7d3462": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Ajuda global do produto, presente em todas as telas; a tela é uma só."
+    },
+    "a2-bbdc203ce15b": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema)."
+    },
+    "a2-bbe7f780dcd7": {
+      "aceita": false,
+      "motivo": "acoplada",
+      "justificativa": "Sem o campo não há select (a remoção apaga o controle)."
+    },
+    "a2-bc60da954336": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-bd456a928d4d": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Explica webfonts."
+    },
+    "a2-bd6e34bcfb23": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Lista onde o estado Selecionado não se aplica (navegação, tooltip, message...); não impõe nada às instâncias que o usam."
+    },
+    "a2-bd84ff2497d5": {
+      "aceita": true,
+      "justificativa": "Campo interno em br-input. Medida: classe do contêiner do campo.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "campo-sem-br-input",
+          "descricao": "O contêiner do campo dentro do select não tem br-input."
+        }
+      ]
+    },
+    "a2-bd8d06482110": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema)."
+    },
+    "a2-bde476da44c9": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 1.4. Ordem lógica de leitura e tabulação. Medida: ordem no DOM e de Tab contra a ordem visual.",
+      "instancias": [
+        "tbl-movimentacoes"
+      ],
+      "variantes": [
+        {
+          "id": "ordem-visual-trocada",
+          "descricao": "Por CSS, a coluna que vem primeiro no DOM é exibida por último em cada linha.",
+          "instancias": [
+            "tbl-movimentacoes"
+          ]
+        }
+      ]
+    },
+    "a2-be108a9a7e82": {
+      "aceita": false,
+      "motivo": "acoplada",
+      "justificativa": "Sem coluna não há tabela."
+    },
+    "a2-bf351d1b1f1e": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há trecho em outro idioma."
+    },
+    "a2-bfb3c1909154": {
+      "aceita": true,
+      "justificativa": "Largura do campo não muda com o texto. Medida: largura do campo antes e depois de escolher a opção mais longa.",
+      "instancias": [
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "largura-cresce",
+          "descricao": "A largura do campo do select acompanha o texto escolhido."
+        }
+      ]
+    },
+    "a2-c264f53dd99d": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema)."
+    },
+    "a2-c3787ea2ba05": {
+      "aceita": false,
+      "motivo": "duplicada:a2-2b6979e5363b",
+      "justificativa": "Mesmo observável (balão só com título)."
+    },
+    "a2-c380edac525f": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "A frase não fixa o valor da opacidade."
+    },
+    "a2-c3f88a06ca93": {
+      "aceita": false,
+      "motivo": "acoplada",
+      "justificativa": "Tirar o recurso de ajuda é tirar instâncias da tela (accordion, tooltips)."
+    },
+    "a2-c42d0d7c0e9c": {
+      "aceita": true,
+      "justificativa": "Cada painel tab-panel. Medida: classe de cada painel.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-tab-panel",
+          "descricao": "O painel da 1ª aba não tem tab-panel."
+        }
+      ]
+    },
+    "a2-c5034cfd30b1": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Diz que o rótulo é opcional."
+    },
+    "a2-c5776632fd52": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Adequação do texto do rótulo é julgamento."
+    },
+    "a2-c591eaacd1c2": {
+      "aceita": true,
+      "justificativa": "O texto do balão também está no gatilho para leitor de tela. Medida: nome ou descrição acessível do gatilho contém o texto do balão.",
+      "instancias": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "variantes": [
+        {
+          "id": "gatilho-sem-descricao",
+          "descricao": "O gatilho perde a ligação com o texto do balão (sem aria-describedby); mantém o nome 'Ajuda'."
+        }
+      ]
+    },
+    "a2-c64a6b1b489d": {
+      "aceita": false,
+      "motivo": "duplicada:a2-1ea2f43d76db",
+      "justificativa": "Repete a recomendação 3.1.",
+      "equivalenteEmag": "3.1"
+    },
+    "a2-c65f98f16b83": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Popover com ícone; os tooltips da tela são simples."
+    },
+    "a2-c678d7f46286": {
+      "aceita": true,
+      "justificativa": "Rótulo de ação só com a primeira letra maiúscula (button é exceção). Medida: texto dos rótulos das abas.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "rotulo-title-case",
+          "descricao": "O rótulo da 2ª aba fica 'Enviar Documentos'."
+        }
+      ]
+    },
+    "a2-c76045df5142": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Introdução de lista de princípios."
+    },
+    "a2-c76ac23b4fe4": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-c859afd9b54e": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Deve-se evitar' remete a uma imagem de exemplo; recomendação sem objeto observável."
+    },
+    "a2-c93fa23b79d3": {
+      "aceita": false,
+      "motivo": "duplicada:a2-acc4801af71c",
+      "justificativa": "Repete a recomendação 2.1 para os campos.",
+      "equivalenteEmag": "2.1"
+    },
+    "a2-c9462d1d6a55": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Progressão não linear; a tela usa linear."
+    },
+    "a2-ca107a813788": {
+      "aceita": false,
+      "motivo": "duplicada:a2-66fbdcf13772",
+      "justificativa": "Remete ao contraste do fundamento Cores = recomendação 4.1.",
+      "equivalenteEmag": "4.1"
+    },
+    "a2-cc3d7bd5342f": {
+      "aceita": false,
+      "motivo": "duplicada:a2-66fbdcf13772",
+      "justificativa": "Contraste com texto e elementos = 4.1.",
+      "equivalenteEmag": "4.1"
+    },
+    "a2-ccec3c8c199e": {
+      "aceita": true,
+      "justificativa": "Rótulo upload-label. Medida: classe do rótulo.",
+      "instancias": [
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "rotulo-sem-classe",
+          "descricao": "O rótulo do upload não tem upload-label."
+        }
+      ]
+    },
+    "a2-cd45634bb932": {
+      "aceita": false,
+      "motivo": "duplicada:a2-ae1397ab72d5",
+      "justificativa": "Mesmo observável (consistência entre os switches)."
+    },
+    "a2-cd5cbf0f18dc": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 6.5. Instruções para entrada de dados. Medida: texto de apoio com formatos e tamanho aceitos, ligado ao campo.",
+      "instancias": [
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-formato",
+          "descricao": "O texto de apoio com formatos e tamanho máximo é removido.",
+          "instancias": [
+            "upl-documento"
+          ]
+        }
+      ]
+    },
+    "a2-cded2c18c877": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há multimídia nem animação controlável na tela."
+    },
+    "a2-ce8b978a9842": {
+      "aceita": true,
+      "justificativa": "Container br-tab. Medida: classe da raiz.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-br-tab",
+          "descricao": "A raiz das abas usa classe própria, sem br-tab (aparência copiada à mão)."
+        }
+      ]
+    },
+    "a2-cf130efa2e85": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "'Tamanho compatível' sem limiar."
+    },
+    "a2-cfb74fcd34b4": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Imagem com texto alternativo; não há imagem de conteúdo."
+    },
+    "a2-d0179dc6bd81": {
+      "aceita": true,
+      "justificativa": "Desabilitado não recebe hover. Medida: estilo computado com hover sobre etapa desabilitada.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "hover-na-desabilitada",
+          "descricao": "Passar o mouse sobre a 4ª etapa (desabilitada) mostra o realce de hover."
+        }
+      ]
+    },
+    "a2-d07b05c07838": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Seleção múltipla; o select é simples."
+    },
+    "a2-d1039a4016fe": {
+      "aceita": false,
+      "motivo": "duplicada:a2-acc4801af71c",
+      "justificativa": "Repete, para esta instância, a recomendação 2.1 do e-MAG; hospedeiros e variante passam para ela. (Select acessível por Tab. Medida: sequência de Tab para no campo do select.)",
+      "equivalenteEmag": "2.1"
+    },
+    "a2-d1287ec712df": {
+      "aceita": true,
+      "justificativa": "Texto principal em .text. Medida: balão > .text com o texto.",
+      "instancias": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "variantes": [
+        {
+          "id": "texto-sem-classe",
+          "descricao": "O texto do balão fica direto na raiz, sem o elemento .text."
+        }
+      ]
+    },
+    "a2-d2bb5c9cd92a": {
+      "aceita": false,
+      "motivo": "duplicada:a2-1c18ad657e0d",
+      "justificativa": "Mesmo observável (desabilitado sem elevação/sombra)."
+    },
+    "a2-d37c02a7ed04": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Diz que o ícone não é obrigatório."
+    },
+    "a2-d3cd8844fe2a": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Seta lateral; os balões da tela abrem acima ou abaixo do gatilho."
+    },
+    "a2-d43497944f79": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Ajuda junto a rótulo de campo; as ajudas da tela ficam no card."
+    },
+    "a2-d45711a55b6c": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 1.2. Elemento usado conforme o seu significado. Medida: tagName do controle.",
+      "instancias": [
+        "msg-pendencia",
+        "msg-retorno"
+      ],
+      "variantes": [
+        {
+          "id": "fechar-div",
+          "descricao": "O botão Fechar da mensagem vira div role=button tabindex=0 com Enter/Espaço (teclado intacto).",
+          "instancias": [
+            "msg-pendencia",
+            "msg-retorno"
+          ]
+        }
+      ]
+    },
+    "a2-d45d5ac36194": {
+      "aceita": false,
+      "motivo": "so-andaime",
+      "justificativa": "A localização é dada pelo breadcrumb, que é andaime."
+    },
+    "a2-d4db34492294": {
+      "aceita": true,
+      "justificativa": "Ícone corresponde à ação. Medida: classe do ícone do cabeçalho do item contra a ação (expandir/recolher).",
+      "instancias": [
+        "acc-duvidas"
+      ],
+      "variantes": [
+        {
+          "id": "icone-de-fechar",
+          "descricao": "O ícone dos cabeçalhos do accordion vira fa-times (fechar) em vez do de expandir."
+        }
+      ]
+    },
+    "a2-d5774660fa43": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-d5cac68068e5": {
+      "aceita": false,
+      "motivo": "duplicada:a2-acc4801af71c",
+      "justificativa": "Repete, para esta instância, a recomendação 2.1 do e-MAG; hospedeiros e variante passam para ela. (Etapas navegáveis com Tab e Shift+Tab. Medida: sequência de Tab passa pelas etapas habilitadas.)",
+      "equivalenteEmag": "2.1"
+    },
+    "a2-d6b3f0e36943": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-d720ea8520cb": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 6.6. Erros identificados e descritos. Medida: em S2, o campo inválido tem texto de erro que diz o que corrigir.",
+      "instancias": [
+        "sel-tipo-documento",
+        "upl-documento",
+        "msg-retorno"
+      ],
+      "variantes": [
+        {
+          "id": "erro-so-borda",
+          "descricao": "Em S2 o campo inválido só fica com borda vermelha, sem texto de erro.",
+          "instancias": [
+            "sel-tipo-documento",
+            "upl-documento"
+          ]
+        },
+        {
+          "id": "erro-generico",
+          "descricao": "A mensagem de retorno diz só 'Erro.' sem dizer qual campo nem o que fazer.",
+          "instancias": [
+            "msg-retorno"
+          ]
+        }
+      ]
+    },
+    "a2-d77655ca94e7": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema)."
+    },
+    "a2-d7e15c02cebe": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Sempre que possível, deve-se evitar' (recomendação)."
+    },
+    "a2-d82eed6caf27": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-d8a11140e3d6": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-d9aa1b2d1d9a": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Saber se a informação é 'vital' é julgamento."
+    },
+    "a2-d9b38b2e638c": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Números em tabela; a tabela não tem coluna numérica."
+    },
+    "a2-dadcee8e1cc6": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Fonte base diferente; não há."
+    },
+    "a2-db25bc1d1653": {
+      "aceita": true,
+      "justificativa": "Ao exibir a mensagem, o foco vai para o Fechar. Medida: document.activeElement logo depois do envio vazio.",
+      "instancias": [
+        "msg-retorno"
+      ],
+      "variantes": [
+        {
+          "id": "foco-fica-no-enviar",
+          "descricao": "Depois do envio vazio, o foco continua no botão Enviar."
+        }
+      ]
+    },
+    "a2-db30195b0e66": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Clareza do texto é julgamento de redação."
+    },
+    "a2-dc529c1da67b": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Campo mais estreito que o texto; não ocorre."
+    },
+    "a2-dc61ba2bcbd7": {
+      "aceita": true,
+      "justificativa": "Container das abas tab-nav. Medida: classe do contêiner dos itens.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-tab-nav",
+          "descricao": "O contêiner dos itens não tem tab-nav."
+        }
+      ]
+    },
+    "a2-dd1a39bcd50b": {
+      "aceita": true,
+      "justificativa": "Desabilitado não recebe Pressionado. Medida: estilo computado com o botão do mouse pressionado sobre etapa desabilitada.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "pressionado-na-desabilitada",
+          "descricao": "Pressionar a 4ª etapa (desabilitada) mostra o realce de pressionado."
+        }
+      ]
+    },
+    "a2-dd7a65ef1946": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Ícone novo; não há."
+    },
+    "a2-dd8a921bfeeb": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Links; nenhuma instância sorteável tem link."
+    },
+    "a2-dd98125c97c9": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Finalidade do dado é decisão de produto."
+    },
+    "a2-df1cecbc168c": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Não há multimídia nem animação controlável na tela."
+    },
+    "a2-df29e959c20b": {
+      "aceita": true,
+      "justificativa": "Container com a classe br-tooltip. Medida: classe da raiz do balão.",
+      "instancias": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "variantes": [
+        {
+          "id": "sem-br-tooltip",
+          "descricao": "A raiz do balão usa classe própria (aparência copiada à mão), sem br-tooltip."
+        }
+      ]
+    },
+    "a2-dfa0fb9f5edd": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Os valores mínimo e máximo estão numa imagem, não no texto; a unidade não fixa limiar citável."
+    },
+    "a2-e01185840d9e": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-e0663017fccc": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena."
+    },
+    "a2-e1ed1aef2c23": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Posição junto à lateral esquerda; idem."
+    },
+    "a2-e3e33932447c": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "'Herdar o mesmo comportamento' não define um observável."
+    },
+    "a2-e43e2837418a": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Preferencialmente' (recomendação); além disso, os botões são andaime."
+    },
+    "a2-e5b4728ca51e": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 4.2. Não usar só a cor para diferenciar. Medida: existe indicação além da cor (texto, ícone com nome, forma).",
+      "instancias": [
+        "stp-andamento",
+        "msg-pendencia",
+        "msg-retorno"
+      ],
+      "variantes": [
+        {
+          "id": "atual-so-pela-cor",
+          "descricao": "A etapa atual só se distingue pela cor: sem aria-current e sem outra marca visual.",
+          "instancias": [
+            "stp-andamento"
+          ]
+        },
+        {
+          "id": "tipo-so-pela-cor",
+          "descricao": "O ícone da mensagem fica aria-hidden sem texto alternativo, e nenhum texto diz o tipo: o tipo só aparece pela cor.",
+          "instancias": [
+            "msg-pendencia",
+            "msg-retorno"
+          ]
+        }
+      ],
+      "alternativasValidas": [
+        {
+          "id": "tipo-por-texto-oculto",
+          "descricao": "O tipo da mensagem é dito por texto visualmente oculto ('Atenção:') em vez de nome no ícone.",
+          "instancias": [
+            "msg-pendencia",
+            "msg-retorno"
+          ]
+        }
+      ]
+    },
+    "a2-e6012e5aa78e": {
+      "aceita": false,
+      "motivo": "duplicada:a2-80678e4f069c",
+      "justificativa": "Mesmo observável (seta direcional obrigatória)."
+    },
+    "a2-e699ba739dce": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Diz que o rótulo não é obrigatório."
+    },
+    "a2-e7608cf1c46d": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Sangria; não há."
+    },
+    "a2-e80f58b4b913": {
+      "aceita": false,
+      "motivo": "duplicada:a2-a6e2601837a7",
+      "justificativa": "Foco com alta ênfase = foco visualmente evidente (4.4).",
+      "equivalenteEmag": "4.4"
+    },
+    "a2-e8ef9a9bc498": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-e9b7ed194374": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Comportamento em outros breakpoints; o contrato do instrumento fixa a medição em 1280×900."
+    },
+    "a2-e9ded28efe9c": {
+      "aceita": true,
+      "justificativa": "aria-checked acompanha o estado. Medida: aria-checked depois de ligar e de desligar.",
+      "instancias": [
+        "swt-aviso-email",
+        "swt-aviso-sms"
+      ],
+      "variantes": [
+        {
+          "id": "aria-checked-fixo",
+          "descricao": "aria-checked fica 'false' mesmo com o switch ligado."
+        }
+      ]
+    },
+    "a2-ea09c6c4030f": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-eadc35148ab4": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Frase de apresentação."
+    },
+    "a2-eb2482445be4": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-eb4a9da83395": {
+      "aceita": true,
+      "justificativa": "Feedback de pressionado no próprio objeto. Medida: estilo computado com o mouse pressionado.",
+      "instancias": [
+        "acc-duvidas"
+      ],
+      "variantes": [
+        {
+          "id": "pressionado-sem-feedback",
+          "descricao": "Os cabeçalhos do accordion não mudam ao serem pressionados."
+        }
+      ]
+    },
+    "a2-ec1111e4b2a1": {
+      "aceita": true,
+      "justificativa": "Feedback de hover no próprio objeto. Medida: estilo computado do cabeçalho do item com e sem hover.",
+      "instancias": [
+        "acc-duvidas"
+      ],
+      "variantes": [
+        {
+          "id": "hover-sem-feedback",
+          "descricao": "Os cabeçalhos do accordion não mudam com hover."
+        }
+      ]
+    },
+    "a2-ec15e0beefba": {
+      "aceita": true,
+      "justificativa": "Tooltip sempre com sombra. Medida: box-shadow computado do balão.",
+      "instancias": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "variantes": [
+        {
+          "id": "sem-sombra",
+          "descricao": "O balão fica com box-shadow none."
+        }
+      ]
+    },
+    "a2-ec34646ce97f": {
+      "aceita": true,
+      "justificativa": "Container br-upload. Medida: classe da raiz.",
+      "instancias": [
+        "upl-documento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-br-upload",
+          "descricao": "A raiz do upload usa classe própria (aparência copiada à mão), sem br-upload."
+        }
+      ]
+    },
+    "a2-ecd5c7233ac6": {
+      "aceita": true,
+      "justificativa": "Container br-table. Medida: classe da raiz.",
+      "instancias": [
+        "tbl-movimentacoes"
+      ],
+      "variantes": [
+        {
+          "id": "sem-br-table",
+          "descricao": "A raiz da tabela usa classe própria (aparência copiada à mão), sem br-table."
+        }
+      ]
+    },
+    "a2-ed21800a3c0b": {
+      "aceita": false,
+      "motivo": "duplicada:a2-671056d628cb",
+      "justificativa": "Repete a recomendação 1.1 do e-MAG.",
+      "equivalenteEmag": "1.1"
+    },
+    "a2-edfe49f231f8": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Item 'não encontrado' só aparece com filtro; nenhum estado o mostra."
+    },
+    "a2-ee0d91f9fb17": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Linhas expansíveis; não há."
+    },
+    "a2-ee0ed51955d3": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Progressão não linear; a tela usa linear."
+    },
+    "a2-ee1098b27a6f": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "'Tamanho adequado' sem limiar."
+    },
+    "a2-ee58999db029": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Select múltiplo; não usado."
+    },
+    "a2-eecfb4af1d1e": {
+      "aceita": false,
+      "motivo": "duplicada:a2-d45711a55b6c",
+      "justificativa": "Repete a recomendação 1.2.",
+      "equivalenteEmag": "1.2"
+    },
+    "a2-efaa1a56290c": {
+      "aceita": false,
+      "motivo": "duplicada:a2-d45711a55b6c",
+      "justificativa": "Repete a recomendação 1.2.",
+      "equivalenteEmag": "1.2"
+    },
+    "a2-efb2d4b6d23d": {
+      "aceita": false,
+      "motivo": "duplicada:a2-66fbdcf13772",
+      "justificativa": "Repete, para esta instância, a recomendação 4.1 do e-MAG; hospedeiros e variante passam para ela. (Cores e contraste do componente. Medida: razão de contraste do rótulo da etapa ativa contra o fundo.)",
+      "equivalenteEmag": "4.1"
+    },
+    "a2-f0e00f432762": {
+      "aceita": true,
+      "justificativa": "Linha do tempo obrigatória. Medida: a linha entre indicadores existe e é visível (elemento ou pseudo-elemento com tamanho não nulo).",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "sem-linha",
+          "descricao": "A linha do tempo entre os indicadores é removida."
+        }
+      ]
+    },
+    "a2-f0e1d7f16f8b": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Área de toque em dispositivo móvel."
+    },
+    "a2-f19f80da5bea": {
+      "aceita": true,
+      "justificativa": "Navegação entre abas por Tab e setas esquerda/direita. Medida: seta direita com foco na 1ª aba move o foco para a 2ª.",
+      "instancias": [
+        "tab-requerimento"
+      ],
+      "variantes": [
+        {
+          "id": "setas-inertes",
+          "descricao": "As setas não movem o foco entre as abas (só Tab funciona)."
+        }
+      ]
+    },
+    "a2-f2a3e883d74b": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Botões em coluna; não há."
+    },
+    "a2-f2a468af452d": {
+      "aceita": false,
+      "motivo": "duplicada:a2-acc4801af71c",
+      "justificativa": "Repete, para esta instância, a recomendação 2.1 do e-MAG; hospedeiros e variante passam para ela. (Switch acessível por Tab e alternável por Espaço/Enter. Medida: sequência de Tab para no switch; Espaço alterna.)",
+      "equivalenteEmag": "2.1"
+    },
+    "a2-f3b4abf09055": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Dispositivos móveis."
+    },
+    "a2-f3b56ffec8fc": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Fundos variados; a tela só tem fundo claro."
+    },
+    "a2-f4237d13520b": {
+      "aceita": true,
+      "justificativa": "e-MAG 3.1, Recomendação 6.2. Etiquetas associadas aos campos. Medida: nome acessível do campo vem do rótulo visível.",
+      "instancias": [
+        "upl-documento",
+        "swt-aviso-email",
+        "swt-aviso-sms",
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "rotulo-desassociado",
+          "descricao": "O rótulo do upload deixa de estar associado ao input (sem for/id).",
+          "instancias": [
+            "upl-documento"
+          ]
+        },
+        {
+          "id": "sem-nome-acessivel",
+          "descricao": "O rótulo deixa de estar associado ao input (sem for/id); o switch fica sem nome acessível.",
+          "instancias": [
+            "swt-aviso-email",
+            "swt-aviso-sms"
+          ]
+        },
+        {
+          "id": "placeholder-como-rotulo",
+          "descricao": "O rótulo visível do select some; 'Tipo de documento' fica só como placeholder.",
+          "instancias": [
+            "sel-tipo-documento"
+          ]
+        }
+      ],
+      "alternativasValidas": [
+        {
+          "id": "rotulo-por-aria-labelledby",
+          "descricao": "O switch é rotulado por aria-labelledby apontando para o texto visível, sem for/id.",
+          "instancias": [
+            "swt-aviso-email",
+            "swt-aviso-sms"
+          ]
+        }
+      ]
+    },
+    "a2-f44bca2e863f": {
+      "aceita": true,
+      "justificativa": "Cada etapa com step-progress-btn. Medida: classe de cada etapa.",
+      "instancias": [
+        "stp-andamento"
+      ],
+      "variantes": [
+        {
+          "id": "etapa-sem-classe",
+          "descricao": "A 3ª etapa é um botão sem step-progress-btn, com a aparência copiada à mão."
+        }
+      ]
+    },
+    "a2-f454513b3b84": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página."
+    },
+    "a2-f5a61bdcd7ad": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Papel do ícone é julgamento."
+    },
+    "a2-f658a9a8162e": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Truncamento de texto longo; os textos da tabela cabem nas células."
+    },
+    "a2-f6a51dd122cf": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "'Evite' (recomendação)."
+    },
+    "a2-f6f3ae20e10e": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Ambiguidade do rótulo é julgamento."
+    },
+    "a2-f716d5a8853a": {
+      "aceita": false,
+      "motivo": "duplicada:a2-0188ff1cc2ec",
+      "justificativa": "Mesmo observável (superfície da tab)."
+    },
+    "a2-f7eb62bb41b0": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+    },
+    "a2-f8d7f68e425f": {
+      "aceita": false,
+      "motivo": "duplicada:a2-10011779df50",
+      "justificativa": "Continuação da mesma regra de ordem."
+    },
+    "a2-f9954c36bc51": {
+      "aceita": false,
+      "motivo": "sem-medicao",
+      "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema)."
+    },
+    "a2-fa669e4c7009": {
+      "aceita": false,
+      "motivo": "duplicada:a2-aaac3112f76b",
+      "justificativa": "Mesmo observável (etapas não visitadas desabilitadas na progressão linear)."
+    },
+    "a2-fb08b0b57422": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Controles de rolagem do painel de etapas; não há."
+    },
+    "a2-fc8874ac7e03": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Vários itens ativos ao mesmo tempo; o accordion da tela abre um item por vez (decisão de construção registrada no plano)."
+    },
+    "a2-fc89dea7b07b": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável."
+    },
+    "a2-fe00b737d272": {
+      "aceita": false,
+      "motivo": "nao-se-aplica",
+      "justificativa": "Tipo Sucesso; a tela não tem mensagem de conclusão."
+    },
+    "a2-fe17653002d8": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página."
+    },
+    "a2-fe970e7d07cb": {
+      "aceita": false,
+      "motivo": "nao-normativa",
+      "justificativa": "Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página."
+    }
+  }
+}

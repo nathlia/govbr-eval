@@ -1,0 +1,47 @@
+{
+  "_meta": {
+    "tela": "acompanhamento (tela A2, NAT-110)",
+    "plano": "thesis-workspace/planejamento/atual/plano-tela-a2-2026-10-30.md",
+    "decisoes": ["D-141", "R4 (thesis-workspace/planejamento/atual/revisao-oraculo-2.15-2026-10-22/parecer.md)"],
+    "status": "RASCUNHO",
+    "nota": "O sorteio de verdade só roda com status CONGELADO, no commit que é a semente. Mudar status, cotas ou qualquer arquivo de 'congelados' depois do commit da semente faz o script recusar."
+  },
+  "regra": {
+    "universo": "Toda frase com marcador de obrigação/proibição/recomendação (scripts/tela-a2-universo.ts MARCADORES) nos 124 arquivos 'ok' do corpus literal oficial ds-rules/govbr-ds-3.7.0-corpus (DS 3.7.0 publicado em gov.br/ds, commits de COLETA.json; e-MAG 3.1 por recomendação). Nenhuma fonte do oráculo.",
+    "elegibilidade": "Passo 1 mecânico: força obrigatória/proibida; componente do arquivo no inventário sorteável ou sem componente. Passo 2 julgado (elegibilidade-passo2.json): aplicável a uma instância do inventário em S0–S2 e verificável por medida pequena na página construída. Motivos de exclusão fechados em MOTIVOS_P2; nenhum pode citar detector, busca ou suporte do oráculo.",
+    "estratos": "G = recomendação do e-MAG 3.1 (as unidades do DS que repetem uma recomendação viram duplicadas dela e lhe passam hospedeiro e variante). DS = unidade do DS que precisa do texto do DS para ser reconhecida como defeito.",
+    "ordem": "key(L, x) = sha256(semente|L|x) em hexadecimal minúsculo; ordena crescente, pega do topo. Sem gerador de números aleatórios.",
+    "passos": [
+      "1. Regras: em cada estrato, ordem por key('regra', id); a ordem inteira é gravada e é a fila de reposição.",
+      "2. Hospedeiro: instâncias candidatas da regra por key('instancia:'+id, instancia); a primeira que cabe. Uma instância leva no máximo 2 defeitos, nunca 2 do mesmo estrato. Estratos servidos na ordem de 'ordemEstratos'.",
+      "3. Variante: entre as variantes que valem no hospedeiro, a primeira por key('variante:'+id, variante).",
+      "4. Compartilhadas: specs por key('compartilhada', id); a spec se estende às outras instâncias do mesmo componente que a regra admite e onde a mesma variante vale, se todas couberem; até 'compartilhadas'.",
+      "5. Alternativas válidas (controles conformes): regras elegíveis com alternativasValidas por key('alternativa', id); para cada uma, a primeira alternativa por key('alternativa:'+id, alt) cuja instância não hospeda defeito do mesmo estrato; até 'alternativasValidas'.",
+      "6. Chamarizes: instâncias sem defeito nem alternativa (andaime incluído) por key('chamariz', instancia); as primeiras 'chamarizes'.",
+      "7. Déficit: estrato sem regra que caiba entrega o que tem; as vagas restantes vão para o outro estrato, na ordem 'ordemDeficit'."
+    ],
+    "descarte": "Durante a construção, uma spec só sai se não puder ser injetada (sem instância livre, ou a construção mostra que o desvio força uma segunda violação ou é impossível com a marcação oficial). O registro é {regra, motivo, evidência} em tela-a2/construcao.md e a próxima regra da ordem gravada do mesmo estrato entra no lugar, sem escolha.",
+    "umaVez": "Um sorteio, sem repetição por motivo nenhum (inclusive se cair só em regras que o oráculo verifica, ou só nas que não verifica). Não há modo de ensaio com outra semente."
+  },
+  "ordemEstratos": ["DS", "G"],
+  "cotas": { "DS": 7, "G": 7 },
+  "ordemDeficit": ["DS", "G"],
+  "maxPorInstancia": 2,
+  "compartilhadas": 2,
+  "alternativasValidas": 3,
+  "chamarizes": 8,
+  "congelados": [
+    "tela-a2/inventario.json",
+    "tela-a2/universo.json",
+    "tela-a2/elegibilidade-passo2.json",
+    "tela-a2/elegibilidade.json",
+    "tela-a2/parametros.json",
+    "scripts/tela-a2-universo.ts",
+    "scripts/draw-tela-a2.ts"
+  ],
+  "sha256": {
+    "_nota": "Gravado por `npm run tela-a2:sorteio -- --selar` antes do commit da semente; o script recusa se algum arquivo diferir. parametros.json e draw-tela-a2.ts são conferidos pelo git contra o commit da semente.",
+    "corpusManifest": "f211b83f2a0c931a2a92ae7767999b3a1b4efd1af5c45cea546910bd5f8ff77c",
+    "arquivos": {}
+  }
+}
