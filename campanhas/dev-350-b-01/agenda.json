@@ -1,0 +1,156 @@
+{
+  "contract": "agenda.v2",
+  "generator": "agenda-campanha-quadrado-1.0.0",
+  "campaignId": "dev-350-b-01",
+  "campaign": {
+    "path": "campanhas/dev-350-b-01/campaign.json",
+    "sha256": "1a97bc2c0e9dd056626d4670b1a2718bf01482954932583882d09f5deca4cc6b"
+  },
+  "seed": {
+    "commit": "d2ce5cf2954f07e089ade639a4b8cca8e6342492",
+    "rule": "linha r do quadrado = design.arms girado r posições; chave(grupo) = sha256(commit + \"|\" + design.seed + \"|quadrado|\" + grupo); grupos em ordem ascendente da chave; o i-ésimo usa a linha (i mod k); grupos rodam na ordem numérica",
+    "declared": 20261103
+  },
+  "pairs": 3,
+  "square": [
+    [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    [
+      "ferramentas",
+      "com",
+      "sem"
+    ],
+    [
+      "com",
+      "sem",
+      "ferramentas"
+    ]
+  ],
+  "draw": [
+    {
+      "pairId": "p02",
+      "key": "3714f2f7df5b5fc217b6daba5ad4de19a0388611c93ec12f54a04451b25fed97",
+      "row": 0,
+      "order": [
+        "sem",
+        "ferramentas",
+        "com"
+      ],
+      "firstArm": "sem"
+    },
+    {
+      "pairId": "p03",
+      "key": "68200fd6e89f9d0caf7d7bceaefd5fd039d475fad53ea49cb2152f39b2bc52cf",
+      "row": 1,
+      "order": [
+        "ferramentas",
+        "com",
+        "sem"
+      ],
+      "firstArm": "ferramentas"
+    },
+    {
+      "pairId": "p01",
+      "key": "ef5694ae4d1487086ff9b6ec37aa259f38849e2e96742d3cc53647829c56fddf",
+      "row": 2,
+      "order": [
+        "com",
+        "sem",
+        "ferramentas"
+      ],
+      "firstArm": "com"
+    }
+  ],
+  "windows": null,
+  "slots": [
+    {
+      "slotId": "p01-com",
+      "pairId": "p01",
+      "arm": "com",
+      "positionInPair": 1,
+      "repetition": 1,
+      "order": 1,
+      "window": null
+    },
+    {
+      "slotId": "p01-sem",
+      "pairId": "p01",
+      "arm": "sem",
+      "positionInPair": 2,
+      "repetition": 1,
+      "order": 2,
+      "window": null
+    },
+    {
+      "slotId": "p01-ferramentas",
+      "pairId": "p01",
+      "arm": "ferramentas",
+      "positionInPair": 3,
+      "repetition": 1,
+      "order": 3,
+      "window": null
+    },
+    {
+      "slotId": "p02-sem",
+      "pairId": "p02",
+      "arm": "sem",
+      "positionInPair": 1,
+      "repetition": 2,
+      "order": 4,
+      "window": null
+    },
+    {
+      "slotId": "p02-ferramentas",
+      "pairId": "p02",
+      "arm": "ferramentas",
+      "positionInPair": 2,
+      "repetition": 2,
+      "order": 5,
+      "window": null
+    },
+    {
+      "slotId": "p02-com",
+      "pairId": "p02",
+      "arm": "com",
+      "positionInPair": 3,
+      "repetition": 2,
+      "order": 6,
+      "window": null
+    },
+    {
+      "slotId": "p03-ferramentas",
+      "pairId": "p03",
+      "arm": "ferramentas",
+      "positionInPair": 1,
+      "repetition": 3,
+      "order": 7,
+      "window": null
+    },
+    {
+      "slotId": "p03-com",
+      "pairId": "p03",
+      "arm": "com",
+      "positionInPair": 2,
+      "repetition": 3,
+      "order": 8,
+      "window": null
+    },
+    {
+      "slotId": "p03-sem",
+      "pairId": "p03",
+      "arm": "sem",
+      "positionInPair": 3,
+      "repetition": 3,
+      "order": 9,
+      "window": null
+    }
+  ],
+  "retry": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 18,
+    "extraAttempts": 9
+  }
+}
