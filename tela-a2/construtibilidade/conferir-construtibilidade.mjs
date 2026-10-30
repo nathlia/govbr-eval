@@ -173,20 +173,32 @@ await variant("v-a2-a39f3ad397d4-fonte-do-sistema", { "<!--HEAD-->": "" , 'href=
 await variant("v-a2-6afb3201269f-estilo-embutido", { 'href="pagina.css">': 'href="pagina.css">\n<style>#crd-resumo{margin:16px 0}</style>' }, async (page, html) => ({ styleOuScriptEmbutido: (html.match(/<style[\s>]|<script(?![^>]*\ssrc=)[\s>]/g) ?? []).length }));
 await variant("v-a2-81fd932c0990-gatilho-fora-do-tab", { "<!--SELTAB-->": ' tabindex="-1"' }, async page => { await page.focus("#sel-campo"); await page.keyboard.press("Tab"); return { focoDepoisDoCampo: await page.evaluate(() => document.activeElement?.id || document.activeElement?.tagName) }; });
 await variant("v-a2-dc561d157556-sem-aria-label", { 'id="msg-pendencia-fechar" aria-label="Fechar"': 'id="msg-pendencia-fechar" title="Fechar"><span class="sr-only">Fechar</span' }, async page => ({ ariaLabel: await page.getAttribute("#msg-pendencia-fechar", "aria-label"), nome: await axName(page, "#msg-pendencia-fechar") }));
-await variant("v-a2-615adba6e634-filho-com-grupo-errado-compensado", { "<!--SMSCHILD-->": "avisos-sms", "<!--BODYEND-->": '<script src="sync-sms.js"></script>' }, async page => {
-  const st = () => page.evaluate(() => { const p = document.getElementById("chk-todos"); return { principal: p.indeterminate ? "intermediario" : p.checked ? "marcado" : "desmarcado", email: document.getElementById("swt-email").checked, sms: document.getElementById("swt-sms").checked }; });
-  const r = {};
-  r.dataChildSms = await page.getAttribute("#swt-sms", "data-child"); r.dataParent = await page.getAttribute("#chk-todos", "data-parent");
-  await page.click("label[for=swt-email]"); r.soEmailLigado = await st();
-  await page.click("label[for=swt-sms]"); r.osDoisLigados = await st();
-  await page.click("label[for=swt-email]"); r.soSmsLigado = await st();
-  await page.click("label[for=chk-todos]"); r.principalNoIntermediarioClicado = await st();
-  await page.click("label[for=chk-todos]"); r.principalDesmarcado = await st();
-  await page.focus("#swt-sms"); await page.keyboard.press("Space"); r.spaceAlternaSms = await st();
-  await page.focus("#chk-todos"); await page.keyboard.press("Space"); r.spaceNoPrincipal = await st();
-  r.axPrincipal = await axName(page, "#chk-todos");
-  return r;
-});
+// a2-615adba6e634 (Revisão Codex 3): comparação AUTOMÁTICA conforme × variante compensada, transição a transição.
+// Ações: E/S/M = clique no rótulo do e-mail / SMS / principal (o input do DS é oculto e o rótulo desenha a caixa);
+// e/s/k = Espaço com foco no input do e-mail / SMS / principal. Estado comparado depois de CADA ação: principal
+// (marcado/intermediário/desmarcado), os dois switches, o checked do principal na árvore de acessibilidade e o
+// aria-checked dos switches. Qualquer divergência reprova a conferência (código de saída 1). Controle positivo:
+// a mesma comparação contra a variante SEM o script tem de divergir (prova que o comparador enxerga a diferença).
+{
+  const seqs = [];
+  const all = (alpha, n, pre = []) => { if (pre.length === n) { seqs.push(pre.join("")); return; } for (const a of alpha) all(alpha, n, [...pre, a]); };
+  all("ESM", 4); all("esk", 3); all("EsMk", 3);
+  seqs.push("ESEMM", "ESEkk", "SMMEk", "MSSMM", "kSek");
+  const confUrl = build("cmp-conforme"), compUrl = build("cmp-615-compensado", { "<!--SMSCHILD-->": "avisos-sms", "<!--BODYEND-->": '<script src="sync-sms.js"></script>' }), rawUrl = build("cmp-615-sem-script", { "<!--SMSCHILD-->": "avisos-sms" });
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const page = await ctx.newPage();
+  const errors = []; page.on("pageerror", e => errors.push(String(e)));
+  const LABEL = { E: "label[for=swt-email]", S: "label[for=swt-sms]", M: "label[for=chk-todos]" }, KEY = { e: "#swt-email", s: "#swt-sms", k: "#chk-todos" };
+  const state = async () => ({ ...(await page.evaluate(() => { const p = document.getElementById("chk-todos"), em = document.getElementById("swt-email"), sm = document.getElementById("swt-sms"); return { principal: p.indeterminate ? "intermediario" : p.checked ? "marcado" : "desmarcado", email: em.checked, sms: sm.checked, ariaEmail: em.getAttribute("aria-checked"), ariaSms: sm.getAttribute("aria-checked") }; })), axPrincipal: (await axName(page, "#chk-todos")).checked });
+  const run = async (url, seq) => { await page.goto(url, { waitUntil: "load" }); const out = []; for (const a of seq) { if (LABEL[a]) await page.click(LABEL[a]); else { await page.focus(KEY[a]); await page.keyboard.press("Space"); } out.push(await state()); } return out; };
+  const compare = async (otherUrl) => { const div = []; let transicoes = 0; for (const q of seqs) { const a = await run(confUrl, q), b = await run(otherUrl, q); transicoes += q.length; for (let i = 0; i < q.length; i++) if (JSON.stringify(a[i]) !== JSON.stringify(b[i])) { div.push({ sequencia: q, passo: i + 1, acao: q[i], conforme: a[i], variante: b[i] }); break; } } return { transicoes, div }; };
+  const comp = await compare(compUrl);
+  const raw = await compare(rawUrl);
+  const ok = comp.div.length === 0 && raw.div.length > 0 && errors.length === 0;
+  rec("cmp-a2-615adba6e634-conforme-x-compensada", { sequencias: seqs.length, transicoes: comp.transicoes, divergencias: comp.div.length, primeirasDivergencias: comp.div.slice(0, 5), controlePositivoSemScript: { divergencias: raw.div.length, exemplo: raw.div[0] ?? null }, errosJs: errors, aprovado: ok });
+  if (!ok) { console.error("REPROVADO: a variante compensada de a2-615adba6e634 diverge da página conforme (ou o controle positivo não divergiu)"); process.exitCode = 1; }
+  await ctx.close();
+}
 await variant("v-a2-615adba6e634-sem-compensacao", { "<!--SMSCHILD-->": "avisos-sms" }, async page => {
   const st = () => page.evaluate(() => { const p = document.getElementById("chk-todos"); return { principal: p.indeterminate ? "intermediario" : p.checked ? "marcado" : "desmarcado", email: document.getElementById("swt-email").checked, sms: document.getElementById("swt-sms").checked }; });
   await page.click("label[for=swt-sms]"); const soSms = await st();

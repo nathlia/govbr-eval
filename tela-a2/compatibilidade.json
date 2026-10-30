@@ -6,10 +6,10 @@
    "tela-a2/efeitos-lotes/VOCABULARIO.json",
    "tela-a2/elegibilidade.json"
   ],
-  "regra": "incompatíveis se tocam nó em comum; se cascata ou remoção da raiz de uma atinge a instância de um nó da outra; ou se as duas mudam o estado da página. Independente de semente.",
+  "regra": "incompatíveis se tocam nó em comum (remover a raiz de uma instância toca todas as partes dela); se cascata ou remoção da raiz de uma atinge a instância de um nó da outra; ou se as duas mudam o estado da página. Independente de semente.",
   "colocacoes": 729,
   "paresMesmoHospedeiro": 20570,
-  "paresMesmoHospedeiroIncompativeis": 8646,
+  "paresMesmoHospedeiroIncompativeis": 8682,
   "paresEntreHospedeirosIncompativeis": 3484
  },
  "mudamEstadoDaPagina": [

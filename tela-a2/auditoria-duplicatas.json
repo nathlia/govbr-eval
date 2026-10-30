@@ -8,7 +8,8 @@
       "a2-fee39db9eda4": "restaurada como predicado DS próprio (title ou aria-label no botão só com ícone), com variante que não multiplica o observável de a2-dc561d157556 nem o de a2-35afb7e6ee7c"
     },
     "dc561": "a2-dc561d157556 continua aceita com a exigência específica do atributo aria-label; não sustenta nenhuma equivalência com alt de imagem",
-    "nota": "25 cadeias da revisão 1 auditadas + as que o isolamento da revisão 2 abriu (representante que saiu por acoplamento distinto)."
+    "nota": "25 cadeias da revisão 1 auditadas + as que o isolamento da revisão 2 abriu (representante que saiu por acoplamento distinto).",
+    "redacaoRevisao3": "Exclusão por isolamento = a variante especificada e não compensada quebra outro observável; a fonte normativa continua no universo e não se afirma que a obrigação seja impossível de violar isoladamente (Revisão Codex 3, item c)."
   },
   "cadeias": [
     {
@@ -217,7 +218,7 @@
       "destino": "a2-22f23447d6b2",
       "motivoDestino": "acoplada",
       "decisao": "herda",
-      "porque": "Mesmo predicado e observável (o contêiner .card-content da área de conteúdo, obrigatória na anatomia). Toda manifestação é tirar ou trocar esse contêiner, que leva junto o padding e a margem interna do conteúdo (outra propriedade): herda a exclusão por isolamento da revisão 2 (acoplada).",
+      "porque": "Mesmo predicado e observável (o contêiner .card-content da área de conteúdo, obrigatória na anatomia). A variante especificada da representante (tirar o contêiner), sem compensação, leva junto o padding e a margem interna do conteúdo (outro observável): herda a exclusão por isolamento da revisão 2 (acoplada). Não se afirma que a obrigação seja impossível de violar isoladamente.",
       "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
     },
     {
@@ -226,7 +227,7 @@
       "destino": "a2-bd84ff2497d5",
       "motivoDestino": "acoplada",
       "decisao": "herda",
-      "porque": "Mesmo predicado e observável (classe br-input no contêiner do campo do select, único hospedeiro). Tirar a classe muda junto altura, raio e espaçamentos do campo (outras propriedades): herda acoplada (revisão 2, isolamento).",
+      "porque": "Mesmo predicado e observável (classe br-input no contêiner do campo do select, único hospedeiro). A variante especificada (classe ausente), sem compensação, muda junto altura, raio e espaçamentos do campo (outro observável): herda acoplada (revisão 2, isolamento). Não se afirma impossibilidade de violação isolada.",
       "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
     },
     {
@@ -235,7 +236,7 @@
       "destino": "a2-419c091564b6",
       "motivoDestino": "acoplada",
       "decisao": "herda",
-      "porque": "Mesmo predicado e observável (classe br-item nas opções da lista do select). Tirar a classe tira junto os estados de hover/foco/selecionado e o espaçamento do item (outros observáveis): herda acoplada (revisão 2, isolamento).",
+      "porque": "Mesmo predicado e observável (classe br-item nas opções da lista do select). A variante especificada, sem compensação, tira junto os estados de hover/foco/selecionado e o espaçamento do item (outro observável): herda acoplada (revisão 2, isolamento). Não se afirma impossibilidade de violação isolada.",
       "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
     },
     {
@@ -244,7 +245,7 @@
       "destino": "a2-0a6b97c41045",
       "motivoDestino": "acoplada",
       "decisao": "herda",
-      "porque": "Mesmo predicado e observável (classe br-list na lista do select). Tirar a classe tira junto a abertura e a entrega da escolha pelo BRSelect (outro comportamento): herda acoplada (revisão 2, isolamento).",
+      "porque": "Mesmo predicado e observável (classe br-list na lista do select). A variante especificada, sem compensação, tira junto a abertura e a entrega da escolha pelo BRSelect (outro comportamento, confirmado por sonda do Codex na revisão 3): herda acoplada (revisão 2, isolamento). Não se afirma impossibilidade de violação isolada.",
       "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
     },
     {
@@ -253,7 +254,7 @@
       "destino": "a2-419c091564b6",
       "motivoDestino": "acoplada",
       "decisao": "herda",
-      "porque": "Mesmo predicado e observável (classe br-item nas opções da lista do select). Tirar a classe tira junto os estados de hover/foco/selecionado e o espaçamento do item (outros observáveis): herda acoplada (revisão 2, isolamento).",
+      "porque": "Mesmo predicado e observável (classe br-item nas opções da lista do select). A variante especificada, sem compensação, tira junto os estados de hover/foco/selecionado e o espaçamento do item (outro observável): herda acoplada (revisão 2, isolamento). Não se afirma impossibilidade de violação isolada.",
       "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
     },
     {
@@ -262,7 +263,7 @@
       "destino": "a2-24082cba4782",
       "motivoDestino": "acoplada",
       "decisao": "herda",
-      "porque": "Mesmo predicado e observável (estrutura semântica de tabela com cabeçalhos th). Toda manifestação desfaz a marcação de tabela e leva junto o papel de título da tabela (caption, e-MAG 3.9): herda acoplada (revisão 2, isolamento).",
+      "porque": "Mesmo predicado e observável (estrutura semântica de tabela com cabeçalhos th). A variante especificada (tabela de divs), sem compensação, leva junto o papel de título da tabela (caption, e-MAG 3.9): herda acoplada (revisão 2, isolamento). Não se afirma impossibilidade de violação isolada.",
       "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
     },
     {
@@ -271,7 +272,7 @@
       "destino": "a2-c6b7402991ad",
       "motivoDestino": "acoplada",
       "decisao": "herda",
-      "porque": "Mesmo predicado (clique só no tipo popover; o tooltip simples não depende de clique) da representante. A manifestação (abrir só por clique) tira junto a abertura por foco exigida em a2-17a73c07609f (outro comportamento): herda acoplada (revisão 2, isolamento).",
+      "porque": "Mesmo predicado (clique só no tipo popover; o tooltip simples não depende de clique) da representante. A variante especificada (abrir só por clique), sem compensação, tira junto a abertura por foco exigida em a2-17a73c07609f (outro comportamento): herda acoplada (revisão 2, isolamento). Não se afirma impossibilidade de violação isolada.",
       "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
     }
   ]

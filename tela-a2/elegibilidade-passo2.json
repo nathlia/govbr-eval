@@ -750,13 +750,13 @@
     "a2-0a6b97c41045": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — lista-sem-br-list → a2-adae4a234fdd (Além da classe, a lista deixar de abrir e de entregar a escolha é outro comportamento, se o BRSelect localiza a lista por .br-list.). (Antes: Lista em br-list. Medida: classe do contêiner da lista.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — lista-sem-br-list → a2-adae4a234fdd (Além da classe, a lista deixar de abrir e de entregar a escolha é outro comportamento, se o BRSelect localiza a lista por .br-list.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Lista em br-list. Medida: classe do contêiner da lista.)",
       "origem": "revisao-2"
     },
     "a2-0a7a74e7f711": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — sem-tab-item → a2-fc8612404c77 (Além da classe, a troca de aba e o aria-selected deixam de funcionar porque o BRTab liga o clique por .tab-item.); a2-2e96af5b4635 (A ativação por teclado da 2ª aba é outro comportamento perdido junto com a ligação do BRTab.). (Antes: Cada aba tab-item. Medida: classe de cada item.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — sem-tab-item → a2-fc8612404c77 (Além da classe, a troca de aba e o aria-selected deixam de funcionar porque o BRTab liga o clique por .tab-item.); a2-2e96af5b4635 (A ativação por teclado da 2ª aba é outro comportamento perdido junto com a ligação do BRTab.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Cada aba tab-item. Medida: classe de cada item.)",
       "origem": "revisao-2"
     },
     "a2-0a9a8742f95f": {
@@ -1101,7 +1101,7 @@
     "a2-0e465d7adf07": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — sem-arrastar → a2-caf6bc80cb4b (o feedback visual durante o arraste é outro estado, além de soltar não funcionar.); a2-5612fb499d07 (o estado Dropzone Ativo ao arrastar é outro estado visual da área, além do drop.); a2-253f67dc1b85 (a resposta visual ao arrastar é outro estado, distinto de aceitar o arquivo.). (Antes: Recurso de arrastar arquivos. Medida: soltar um arquivo sintético (DataTransfer) na área adiciona o arquivo.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — sem-arrastar → a2-caf6bc80cb4b (o feedback visual durante o arraste é outro estado, além de soltar não funcionar.); a2-5612fb499d07 (o estado Dropzone Ativo ao arrastar é outro estado visual da área, além do drop.); a2-253f67dc1b85 (a resposta visual ao arrastar é outro estado, distinto de aceitar o arquivo.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Recurso de arrastar arquivos. Medida: soltar um arquivo sintético (DataTransfer) na área adiciona o arquivo.)",
       "origem": "revisao-2"
     },
     "a2-0e5d4429c4ef": {
@@ -1472,7 +1472,7 @@
     "a2-12888369bd0f": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — sem-br-select → a2-4d99afd1c618 (A variante muda a classe da raiz; a lista que não abre ao clicar no campo é outro comportamento, perdido porque o BRSelect não é instanciado.). (Antes: Container br-select. Medida: classe da raiz.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — sem-br-select → a2-4d99afd1c618 (A variante muda a classe da raiz; a lista que não abre ao clicar no campo é outro comportamento, perdido porque o BRSelect não é instanciado.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Container br-select. Medida: classe da raiz.)",
       "origem": "revisao-2"
     },
     "a2-1295720cf5c6": {
@@ -2777,7 +2777,7 @@
     "a2-22f23447d6b2": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — conteudo-sem-card-content → a2-3404d04d4b7b (a variante tira um contêiner; o padding do conteúdo é outra propriedade que se perde junto); a2-7dd282607ce8 (a variante tira um contêiner; a margem interna do conteúdo é outra propriedade que se perde junto). (Antes: Área (conteúdo) obrigatória, que no código é .card-content. Medida: .br-card > .card-content contém o conteúdo.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — conteudo-sem-card-content → a2-3404d04d4b7b (a variante tira um contêiner; o padding do conteúdo é outra propriedade que se perde junto); a2-7dd282607ce8 (a variante tira um contêiner; a margem interna do conteúdo é outra propriedade que se perde junto). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Área (conteúdo) obrigatória, que no código é .card-content. Medida: .br-card > .card-content contém o conteúdo.)",
       "origem": "revisao-2"
     },
     "a2-22f61dc44546": {
@@ -2868,7 +2868,7 @@
     "a2-24082cba4782": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — tabela-de-divs → a2-83ec838a289a (o título da tabela é outro nó: sem table ele perde o papel de caption, além das células.). (Antes: Estrutura semântica de tabela (table, thead, tbody, th, tr, td) — mais ampla que o e-MAG 3.10. Medida: tagName dos elementos da tabela.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — tabela-de-divs → a2-83ec838a289a (o título da tabela é outro nó: sem table ele perde o papel de caption, além das células.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Estrutura semântica de tabela (table, thead, tbody, th, tr, td) — mais ampla que o e-MAG 3.10. Medida: tagName dos elementos da tabela.)",
       "origem": "revisao-2"
     },
     "a2-246d862f42fb": {
@@ -4272,7 +4272,7 @@
     "a2-33e661bc4435": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — estado-nao-exposto → a2-3c18fb6c1dbc (O checkbox principal, outro nó, deixa de ir ao intermediário porque o div não tem estado checked.); a2-f4237d13520b (A associação label[for]/id, outra propriedade, se perde porque um div não é rotulável por for.). (Antes: Leitor de tela anuncia rótulo E estado atual; a parte residual, que o e-MAG 6.2 não cobre, é o estado. Medida: estado (checked/aria-checked) exposto na árvore de acessibilidade igual ao visual.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — estado-nao-exposto → a2-3c18fb6c1dbc (O checkbox principal, outro nó, deixa de ir ao intermediário porque o div não tem estado checked.); a2-f4237d13520b (A associação label[for]/id, outra propriedade, se perde porque um div não é rotulável por for.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Leitor de tela anuncia rótulo E estado atual; a parte residual, que o e-MAG 6.2 não cobre, é o estado. Medida: estado (checked/aria-checked) exposto na árvore de acessibilidade igual ao visual.)",
       "origem": "revisao-2"
     },
     "a2-33f8d78aa04b": {
@@ -5281,13 +5281,13 @@
     "a2-419c091564b6": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — opcao-sem-br-item → a2-2f900cc3509d (Além da classe, o item perde o realce de hover/foco/selecionado, que é outro observável.); a2-b30ded4687e3 (Além da classe, o padding computado do item sai do token, que é outra propriedade.). (Antes: Opções em br-item. Medida: classe de cada opção.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — opcao-sem-br-item → a2-2f900cc3509d (Além da classe, o item perde o realce de hover/foco/selecionado, que é outro observável.); a2-b30ded4687e3 (Além da classe, o padding computado do item sai do token, que é outra propriedade.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Opções em br-item. Medida: classe de cada opção.)",
       "origem": "revisao-2"
     },
     "a2-41c27bf1953d": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — aberto-sem-active → a2-46e26a19b8ee (a variante muda o atributo do agrupador; o peso do título aberto, outra propriedade de outro nó, depende desse atributo na folha do DS). (Antes: Item ativo leva o atributo active (a classe item é a2-2956c4c250cb). Medida: atributo active no item expandido.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — aberto-sem-active → a2-46e26a19b8ee (a variante muda o atributo do agrupador; o peso do título aberto, outra propriedade de outro nó, depende desse atributo na folha do DS). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Item ativo leva o atributo active (a classe item é a2-2956c4c250cb). Medida: atributo active no item expandido.)",
       "origem": "revisao-2"
     },
     "a2-41c5484495af": {
@@ -6861,7 +6861,7 @@
     "a2-56613b3be80b": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — item-fora-da-raiz → a2-a4429f532c6c (a variante muda a posição do item no DOM; dois itens abertos ao mesmo tempo é outro comportamento). (Antes: Todos os itens do accordion ficam dentro do br-accordion. Medida: cada item é descendente da raiz.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — item-fora-da-raiz → a2-a4429f532c6c (a variante muda a posição do item no DOM; dois itens abertos ao mesmo tempo é outro comportamento). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Todos os itens do accordion ficam dentro do br-accordion. Medida: cada item é descendente da raiz.)",
       "origem": "revisao-2"
     },
     "a2-56623ea03d68": {
@@ -7084,7 +7084,7 @@
     "a2-59c41d3b1085": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — type-errado → a2-684e49bfcc90 (A variante muda o atributo type; o filtro por digitação de letras quebrar é outro comportamento.); a2-328f62cfe4ce (Além do type, o texto digitado (letras) deixa de entrar no campo, outro comportamento.) | campo-em-div → a2-7c43824db106 (Além da tag do campo, o rótulo deixa de estar associado por for/id, outro nó e outra propriedade.). (Antes: Campo em <input> com type correspondente à função (texto/filtro). Medida: tagName e type do campo.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — type-errado → a2-684e49bfcc90 (A variante muda o atributo type; o filtro por digitação de letras quebrar é outro comportamento.); a2-328f62cfe4ce (Além do type, o texto digitado (letras) deixa de entrar no campo, outro comportamento.) | campo-em-div → a2-7c43824db106 (Além da tag do campo, o rótulo deixa de estar associado por for/id, outro nó e outra propriedade.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Campo em <input> com type correspondente à função (texto/filtro). Medida: tagName e type do campo.)",
       "origem": "revisao-2"
     },
     "a2-59eeebe5c40d": {
@@ -7560,7 +7560,7 @@
     },
     "a2-615adba6e634": {
       "aceita": true,
-      "justificativa": "Filhos com data-child igual ao data-parent do pai. Medida: data-child do input do switch de SMS contra o data-parent do principal. Revisão 2 (isolamento): a variante vem com implementação independente do vínculo, como a de a2-7c449a946697; a conferência mediu o grupo com a variante e o script próprio em 7 situações (só e-mail, os dois, só SMS, clique no principal intermediário, desmarcar, Espaço no SMS, Espaço no principal) e o comportamento é igual ao da página conforme; sem o script, o principal fica desmarcado com só o SMS ligado (tela-a2/construtibilidade/resultado.json).",
+      "justificativa": "Filhos com data-child igual ao data-parent do pai. Medida: data-child do input do switch de SMS contra o data-parent do principal. Revisão 2 (isolamento): a variante vem com implementação independente do vínculo, como a de a2-7c449a946697 — exceção de construção EXPLÍCITA e VERIFICADA antes da semente, não licença para decidir compensações depois do sorteio (Revisão Codex 3); a conferência compara AUTOMATICAMENTE página conforme × variante compensada, transição a transição (cliques nos rótulos e Espaço em cada controle; estado do principal, dos switches, checked na árvore de acessibilidade e aria-checked), e reprova em qualquer divergência; com o script corrigido na Revisão Codex 3 não há divergência, e sem o script a comparação diverge (controle positivo) (tela-a2/construtibilidade/resultado.json, item cmp-a2-615adba6e634-conforme-x-compensada).",
       "instancias": [
         "chk-avisos-todos"
       ],
@@ -9938,7 +9938,7 @@
     "a2-7d680beb8c97": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — texto-na-area-de-acoes → a2-66cc8c46f14a (a variante cria um rodapé com texto; o gatilho de ajuda separado do seu dado é outro nó e outra posição). (Antes: A área de ações do card, quando existe, só leva botões e links. Medida: conteúdo do rodapé de ações do card.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — texto-na-area-de-acoes → a2-66cc8c46f14a (a variante cria um rodapé com texto; o gatilho de ajuda separado do seu dado é outro nó e outra posição). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: A área de ações do card, quando existe, só leva botões e links. Medida: conteúdo do rodapé de ações do card.)",
       "origem": "revisao-2"
     },
     "a2-7d805a2b0e75": {
@@ -10604,7 +10604,7 @@
     "a2-879621000aa6": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — gatilho-sem-br-button → a2-9fc840ceb22d (Além da classe, o fundo e a cor do ícone computados do botão mudam: outra propriedade.); a2-b0f874b8b2cf (Além da classe, as dimensões computadas do botão saem do 32×32: outra propriedade.). (Antes: Gatilho em br-button. Medida: classe do botão.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — gatilho-sem-br-button → a2-9fc840ceb22d (Além da classe, o fundo e a cor do ícone computados do botão mudam: outra propriedade.); a2-b0f874b8b2cf (Além da classe, as dimensões computadas do botão saem do 32×32: outra propriedade.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Gatilho em br-button. Medida: classe do botão.)",
       "origem": "revisao-2"
     },
     "a2-87a6ef93eb2f": {
@@ -12900,7 +12900,7 @@
     "a2-a7417adc8e5b": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — sem-br-message → a2-8536d91ce5b9 (A variante muda a classe da raiz; o Fechar parar de remover a mensagem é outro comportamento.). (Antes: Container br-message. Medida: classe da raiz da mensagem.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — sem-br-message → a2-8536d91ce5b9 (A variante muda a classe da raiz; o Fechar parar de remover a mensagem é outro comportamento.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Container br-message. Medida: classe da raiz da mensagem.)",
       "origem": "revisao-2"
     },
     "a2-a7a47709434b": {
@@ -14437,7 +14437,7 @@
     "a2-bd84ff2497d5": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — campo-sem-br-input → a2-3169f339a8e1 (Além da classe, altura e raio computados do campo mudam: outra propriedade.); a2-8fcc793aaed1 (Além da classe, paddings e margens do campo e do rótulo mudam: outras propriedades.). (Antes: Campo interno em br-input. Medida: classe do contêiner do campo.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — campo-sem-br-input → a2-3169f339a8e1 (Além da classe, altura e raio computados do campo mudam: outra propriedade.); a2-8fcc793aaed1 (Além da classe, paddings e margens do campo e do rótulo mudam: outras propriedades.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Campo interno em br-input. Medida: classe do contêiner do campo.)",
       "origem": "revisao-2"
     },
     "a2-bd8b74dacc0a": {
@@ -15149,7 +15149,7 @@
     "a2-c6b7402991ad": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — simples-por-clique → a2-17a73c07609f (além do hover, a abertura por foco no teclado passa a falhar: outro comportamento.). (Antes: Acionamento por clique só no popover; o tooltip simples abre por mouse over/foco, não por clique. Medida: o balão abre ao passar o ponteiro e não depende de clique.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — simples-por-clique → a2-17a73c07609f (além do hover, a abertura por foco no teclado passa a falhar: outro comportamento.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Acionamento por clique só no popover; o tooltip simples abre por mouse over/foco, não por clique. Medida: o balão abre ao passar o ponteiro e não depende de clique.)",
       "origem": "revisao-2"
     },
     "a2-c6d37b34ba6b": {
@@ -15379,7 +15379,7 @@
     "a2-cad7cafa42d7": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — rotulo-so-leitor-de-tela → a2-a70181ba5638 (A caixa do checkbox, pseudo-elemento do rótulo, some junto: outro nó, visível e obrigatório.); a2-402eef83153c (Nos switches, a chave desenhada no label some junto: outro nó, visível e obrigatório.). (Antes: Rótulo sempre visível (vai além da 6.2: a etiqueta pode estar associada e escondida). Medida: rótulo do campo renderizado com área visível (sem recorte/clip, dentro da tela).)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — rotulo-so-leitor-de-tela → a2-a70181ba5638 (A caixa do checkbox, pseudo-elemento do rótulo, some junto: outro nó, visível e obrigatório.); a2-402eef83153c (Nos switches, a chave desenhada no label some junto: outro nó, visível e obrigatório.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Rótulo sempre visível (vai além da 6.2: a etiqueta pode estar associada e escondida). Medida: rótulo do campo renderizado com área visível (sem recorte/clip, dentro da tela).)",
       "origem": "revisao-2"
     },
     "a2-caeaef36e509": {
@@ -17063,7 +17063,7 @@
     "a2-e1c6d1cde6ac": {
       "aceita": false,
       "motivo": "acoplada",
-      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — sem-br-checkbox → a2-f97f63c9e220 (A variante muda a classe da raiz; o principal ficar sem comportamento é outro fato, de comportamento.); a2-3c18fb6c1dbc (Além da classe, o vínculo principal–switches e o estado intermediário deixam de funcionar.). (Antes: Container br-checkbox. Medida: classe da raiz do checkbox.)",
+      "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — sem-br-checkbox → a2-f97f63c9e220 (A variante muda a classe da raiz; o principal ficar sem comportamento é outro fato, de comportamento.); a2-3c18fb6c1dbc (Além da classe, o vínculo principal–switches e o estado intermediário deixam de funcionar.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Container br-checkbox. Medida: classe da raiz do checkbox.)",
       "origem": "revisao-2"
     },
     "a2-e1ed1aef2c23": {

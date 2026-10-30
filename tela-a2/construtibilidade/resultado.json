@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "quando": "2026-10-30T09:51:11.813Z",
+    "quando": "2026-10-30T10:49:32.909Z",
     "core": "3.7.0",
     "playwright": "1.61.1",
     "viewport": "1280x900",
@@ -195,51 +195,37 @@
       },
       "errosJs": []
     },
-    "v-a2-615adba6e634-filho-com-grupo-errado-compensado": {
-      "dataChildSms": "avisos-sms",
-      "dataParent": "avisos",
-      "soEmailLigado": {
-        "principal": "intermediario",
-        "email": true,
-        "sms": false
+    "cmp-a2-615adba6e634-conforme-x-compensada": {
+      "sequencias": 177,
+      "transicoes": 621,
+      "divergencias": 0,
+      "primeirasDivergencias": [],
+      "controlePositivoSemScript": {
+        "divergencias": 177,
+        "exemplo": {
+          "sequencia": "EEEE",
+          "passo": 1,
+          "acao": "E",
+          "conforme": {
+            "principal": "intermediario",
+            "email": true,
+            "sms": false,
+            "ariaEmail": "true",
+            "ariaSms": "false",
+            "axPrincipal": "mixed"
+          },
+          "variante": {
+            "principal": "marcado",
+            "email": true,
+            "sms": false,
+            "ariaEmail": "true",
+            "ariaSms": "false",
+            "axPrincipal": "true"
+          }
+        }
       },
-      "osDoisLigados": {
-        "principal": "marcado",
-        "email": true,
-        "sms": true
-      },
-      "soSmsLigado": {
-        "principal": "intermediario",
-        "email": false,
-        "sms": true
-      },
-      "principalNoIntermediarioClicado": {
-        "principal": "marcado",
-        "email": true,
-        "sms": true
-      },
-      "principalDesmarcado": {
-        "principal": "intermediario",
-        "email": false,
-        "sms": true
-      },
-      "spaceAlternaSms": {
-        "principal": "desmarcado",
-        "email": false,
-        "sms": false
-      },
-      "spaceNoPrincipal": {
-        "principal": "marcado",
-        "email": true,
-        "sms": true
-      },
-      "axPrincipal": {
-        "name": "Todos os avisos",
-        "role": "checkbox",
-        "ignored": false,
-        "checked": "true"
-      },
-      "errosJs": []
+      "errosJs": [],
+      "aprovado": true
     },
     "v-a2-615adba6e634-sem-compensacao": {
       "soSmsLigado": {

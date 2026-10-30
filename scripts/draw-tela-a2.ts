@@ -29,7 +29,8 @@
  * EFEITOS da mutação em tela-a2/efeitos.json (nós tocados, nós removidos, instâncias atingidas em cascata,
  * mudança de estado), no vocabulário fechado tela-a2/efeitos-lotes/VOCABULARIO.json. Duas colocações são
  * incompatíveis se tocam um nó em comum, se uma atinge (cascata ou remoção da raiz) a instância de um nó da
- * outra, ou se as duas mudam o estado da página. Chamariz é instância sem colocação e sem nó tocado ou
+ * outra, ou se as duas mudam o estado da página. Remover a raiz de uma instância conta como efeito sobre todas as
+ * partes dela, inclusive no próprio hospedeiro (Revisão Codex 3); --validar confere isso por um caminho independente. Chamariz é instância sem colocação e sem nó tocado ou
  * cascata vinda de qualquer colocação. Ficam ainda as regras da Revisão 1: no mesmo hospedeiro, no máximo
  * maxPorInstancia defeitos e um por estrato; mesmo hospedeiro ou aninhados não repetem `tipo`.
  * Variante declarada com acoplamento confirmado não chega aqui: sai na elegibilidade (passo 2, revisão 2).
@@ -230,9 +231,18 @@ function resolveFx(where: string, decl: Decl | undefined, host: string): Fx {
   const hit = new Set<string>();
   // Recarga/navegação: o efeito é sobre tempo e estado, coberto pelo protocolo de isolamento (plano § 14.5), não sobre nós.
   if (!estado) for (const c of ef.cascata ?? []) { if (c === "*") ALL_INST.forEach(i => hit.add(i)); else hit.add(c); }
-  for (const n of (ef.remove ?? []).map(abs)) if (n.endsWith(":raiz")) hit.add(n.split(":")[0]);
-  for (const n of nodes) for (const i of vocab.contem[n] ?? []) if ((ef.remove ?? []).map(abs).includes(n)) { if (i === "*") ALL_INST.forEach(x => hit.add(x)); else hit.add(i); }
-  hit.delete(host); // a própria instância já é o hospedeiro
+  // Remoção (ou ocultação declarada como remoção) da raiz de uma instância atinge TODOS os seus descendentes
+  // (Revisão Codex 3, P2): as partes da instância entram como nós tocados — inclusive quando a instância é o
+  // próprio hospedeiro — e as instâncias contidas na raiz entram como atingidas. Sem modelo de janela temporal.
+  for (const n of (ef.remove ?? []).map(abs)) {
+    const [inst, part] = n.split(":");
+    if (part === "raiz") {
+      for (const p of vocab.partes[vocab.instancias[inst]]) nodes.add(`${inst}:${p}`);
+      if (inst !== host) hit.add(inst);
+    }
+    for (const i of vocab.contem[n] ?? []) { if (i === "*") ALL_INST.forEach(x => hit.add(x)); else hit.add(i); }
+  }
+  hit.delete(host); // a própria instância já é o hospedeiro; os descendentes dela estão em `nodes`
   return { nodes, hit, estado };
 }
 const instOfNode = (n: string) => n.split(":")[0];
@@ -394,7 +404,7 @@ function matrix() {
   const contaminates = triples.filter(t => touchedInstances(t).size > 1).map(t => ({ colocacao: label(t), instanciasAtingidas: [...touchedInstances(t)].filter(i => i !== t.inst).sort(), nota: (() => { const d = efeitos[t.regra][t.kind === "variante" ? "variantes" : "alternativas"]![t.id]; return ("porHospedeiro" in d ? d.porHospedeiro[t.inst] : d).nota; })() }));
   const estado = triples.filter(t => t.fx.estado).map(label);
   const out = {
-    _meta: { geradoPor: "scripts/draw-tela-a2.ts --validar", derivadoDe: [EFEITOS, VOCAB, "tela-a2/elegibilidade.json"], regra: "incompatíveis se tocam nó em comum; se cascata ou remoção da raiz de uma atinge a instância de um nó da outra; ou se as duas mudam o estado da página. Independente de semente.", colocacoes: triples.length, paresMesmoHospedeiro: sameHostPairs, paresMesmoHospedeiroIncompativeis: sameHostClash, paresEntreHospedeirosIncompativeis: crossHost.length },
+    _meta: { geradoPor: "scripts/draw-tela-a2.ts --validar", derivadoDe: [EFEITOS, VOCAB, "tela-a2/elegibilidade.json"], regra: "incompatíveis se tocam nó em comum (remover a raiz de uma instância toca todas as partes dela); se cascata ou remoção da raiz de uma atinge a instância de um nó da outra; ou se as duas mudam o estado da página. Independente de semente.", colocacoes: triples.length, paresMesmoHospedeiro: sameHostPairs, paresMesmoHospedeiroIncompativeis: sameHostClash, paresEntreHospedeirosIncompativeis: crossHost.length },
     mudamEstadoDaPagina: estado,
     contaminamOutrasInstancias: contaminates,
     incompatibilidadesEntreHospedeiros: crossHost,
@@ -415,6 +425,43 @@ function verifySolution(sol: Solution) {
   const contaminated = new Set(ps.flatMap(p => [...touchedInstances(p)]));
   for (const d of sol.decoys) if (contaminated.has(d)) fail(`chamariz atingido por colocação: ${d}`);
   if (sol.specs.some(s => !rule(s.regra).variantes.some(v => v.id === s.variante && appliesTo(v, s.instancia)))) fail("solução usa variante fora do hospedeiro");
+}
+
+/**
+ * Conferência NEGATIVA da remoção de raiz (Revisão Codex 3, P2), sem usar a lógica de clash(): a expectativa é
+ * derivada direto das declarações brutas (efeitos.json + vocabulário) e só então comparada ao que o contrato diz.
+ * Toda colocação que remove a raiz de uma instância X tem de ser incompatível com toda outra colocação (de outra
+ * regra) hospedada em X, que toque qualquer nó de X, ou hospedada numa instância contida na raiz de X. Inclui o par
+ * concreto apontado pelo Codex (erro-some-sozinho × prefixo-textual-visivel em msg-retorno).
+ */
+function checkRootRemoval() {
+  type Raw = { regra: string; kind: "variantes" | "alternativas"; id: string; host: string; toca: string[]; remove: string[] };
+  const raws: Raw[] = [];
+  for (const r of eligible) {
+    const add = (kind: "variantes" | "alternativas", id: string, host: string) => {
+      const d = efeitos[r.id][kind]![id]; const ef = "porHospedeiro" in d ? d.porHospedeiro[host] : d;
+      const abs = (n: string) => (n.startsWith("$:") ? `${host}:${n.slice(2)}` : n);
+      raws.push({ regra: r.id, kind, id, host, toca: ef.toca.map(abs), remove: (ef.remove ?? []).map(abs) });
+    };
+    for (const v of r.variantes) for (const h of r.instancias.filter(i => appliesTo(v, i))) add("variantes", v.id, h);
+    for (const a of r.alternativasValidas) for (const h of a.instancias ?? r.instancias) add("alternativas", a.id, h);
+  }
+  const fx = (w: Raw) => fxOf(eligible.find(r => r.id === w.regra)!, w.kind, w.id, w.host);
+  let expected = 0;
+  for (const t of raws) for (const root of t.remove.filter(n => n.endsWith(":raiz"))) {
+    const X = root.split(":")[0];
+    const inside = new Set(vocab.contem[root] ?? []);
+    for (const u of raws) {
+      if (u.regra === t.regra) continue;
+      const hits = u.host === X || inside.has(u.host) || [...u.toca, ...u.remove].some(n => n.split(":")[0] === X);
+      if (!hits) continue;
+      expected++;
+      if (!clash({ inst: t.host, fx: fx(t) }, { inst: u.host, fx: fx(u) })) fail(`remoção de raiz sem incompatibilidade: ${t.regra}/${t.id}@${t.host} × ${u.regra}/${u.kind === "alternativas" ? "alt:" : ""}${u.id}@${u.host}`);
+    }
+  }
+  const par = raws.filter(w => (w.regra === "a2-46523775b9da" && w.id === "erro-some-sozinho" && w.host === "msg-retorno") || (w.regra === "a2-e5b4728ca51e" && w.id === "prefixo-textual-visivel" && w.host === "msg-retorno"));
+  if (par.length === 2 && !clash({ inst: par[0].host, fx: fx(par[0]) }, { inst: par[1].host, fx: fx(par[1]) })) fail("par concreto da Revisão Codex 3 compatível: erro-some-sozinho × prefixo-textual-visivel @msg-retorno");
+  return { paresConferidos: expected, parConcretoPresente: par.length === 2 };
 }
 
 // ---- viabilidade independente de semente ----
@@ -456,6 +503,7 @@ if (mode === "validar") {
   console.log("exclusões por motivo:", motivos);
   console.log("elegíveis por estrato e tipo:", tipos);
   console.log(`cadeias de duplicata sem destino aceito: ${openChains}, todas auditadas (${DUPS})`);
+  console.log("remoção de raiz × descendentes (conferência negativa, sem clash()):", checkRootRemoval());
   console.log("matriz de incompatibilidade:", matrix(), `→ ${MATRIZ}`);
   console.log("viabilidade independente de semente:", feasibility());
   console.log(`status: ${params._meta.status}`);
