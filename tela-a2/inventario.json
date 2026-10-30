@@ -5,72 +5,365 @@
     "entrada": "acompanhamento.html",
     "referencia": "ground-truth-acompanhamento.json",
     "plano": "thesis-workspace/planejamento/atual/plano-tela-a2-2026-10-30.md",
-    "decisoes": ["D-141", "R4 (revisão Codex 2026-10-22)"],
+    "decisoes": [
+      "D-141",
+      "R4 (revisão Codex 2026-10-22)"
+    ],
     "fixadoEm": "2026-10-30",
     "nota": "Fixado pelo padrão de página de acompanhamento de serviço ANTES de abrir o texto de qualquer obrigação (só os nomes dos 36 componentes do @govbr-ds/core 3.7.0 e os br-* que as telas do corpus já usam). Nomes de componente = nomes das pastas dist/components do pacote e dos arquivos componentes/<nome>__*.md do corpus literal. Nenhum id/nome de instância descreve defeito (D-24).",
-    "regraAndaime": "Andaime = componentes da tela de fluxo, onde o instrumento foi desenvolvido (input, button, item, list, tag, divider), como na tela A, mais a moldura de página (header, footer, skiplink, breadcrumb) construída conforme por causa das restrições de página (D-53, D-83). Regras cujo componente é de andaime saem na elegibilidade com motivo 'andaime'. Nenhum componente é andaime por causa do oráculo.",
-    "hospedeiroPagina": "A pseudo-instância 'pagina' (documento: title, lang, títulos, regiões) hospeda obrigações de nível de página que não pertencem a um componente. Diferença declarada em relação à A, onde essas regras saíram como 'nao-manifesta' por falta de hospedeiro."
+    "regraAndaime": "Andaime = componentes da tela de fluxo, onde o instrumento foi desenvolvido (input, button, item, list, tag, divider), como na tela A, mais a moldura de página (header, footer, skiplink, breadcrumb) construída conforme por causa das restrições de página (D-53, D-83). Regras cujo componente é de andaime saem na elegibilidade com motivo 'andaime'. Nenhum componente é andaime por causa do oráculo. Moldura protegida inclui a região principal (main). Componentes de andaime embutidos em instância sorteável (inventario.embutidos) não são andaime para as obrigações dessas instâncias.",
+    "hospedeiroPagina": "A pseudo-instância 'pagina' (documento: title, lang, títulos, regiões) hospeda obrigações de nível de página que não pertencem a um componente. Diferença declarada em relação à A, onde essas regras saíram como 'nao-manifesta' por falta de hospedeiro.",
+    "emendas": [
+      {
+        "data": "2026-10-30",
+        "motivo": "Revisão Codex 1 (NAT-110), itens 7 e 8, antes de qualquer semente",
+        "mudancas": [
+          "checkbox entra como sorteável: chk-avisos-todos, checkbox principal dos dois switches, com estado intermediário (DS switch a2-3c18fb6c1dbc + checkbox Estado Intermediário); sai de fora.componentes",
+          "os dois switches e o checkbox principal ficam num fieldset com legend \"Avisos sobre o requerimento\" (e-MAG 6.7)",
+          "acc-duvidas usa o atributo single do br-accordion (um item aberto por vez; suportado por BRAccordion._collapse no core.js 3.7.0)",
+          "embutidos: componentes de andaime que aparecem DENTRO de instâncias sorteáveis pertencem a elas; as unidades desses componentes vão ao passo 2 com hospedeiros limitados às instâncias que os embutem",
+          "moldura protegida: header, footer, skiplink, breadcrumb e a região principal (main) são andaime e ficam conformes; nenhuma variante sorteável pode tirá-los ou desfigurá-los",
+          "upl-documento: rótulo no singular \"Envio de documento\" e placeholder \"Selecione o arquivo\" (regra do envio de arquivo único, a2-6e7c9e436ad4)",
+          "fonte Rawline empacotada na página (o fundamento Tipografia a exige; na tela A ela caía para a fonte de reserva)"
+        ]
+      }
+    ]
   },
   "estados": [
-    { "id": "S0", "descricao": "carga inicial; aba Andamento ativa" },
-    { "id": "S1", "descricao": "aba Documentos selecionada", "gatilho": "aba Documentos de tab-requerimento" },
-    { "id": "S2", "descricao": "Enviar documento com o formulário vazio", "gatilho": "btn-enviar" }
+    {
+      "id": "S0",
+      "descricao": "carga inicial; aba Andamento ativa"
+    },
+    {
+      "id": "S1",
+      "descricao": "aba Documentos selecionada",
+      "gatilho": "aba Documentos de tab-requerimento"
+    },
+    {
+      "id": "S2",
+      "descricao": "Enviar documento com o formulário vazio",
+      "gatilho": "btn-enviar"
+    }
   ],
   "sorteaveis": [
-    { "componente": "card", "instancias": [
-      { "id": "crd-resumo", "rotulo": "Resumo do requerimento (número, serviço, situação, prazo)", "estados": ["S0", "S1", "S2"] }
-    ] },
-    { "componente": "tooltip", "instancias": [
-      { "id": "tip-prazo", "rotulo": "Ajuda sobre o prazo de análise (ícone no card)", "estados": ["S0"] },
-      { "id": "tip-protocolo", "rotulo": "Ajuda sobre o número de protocolo (ícone no card)", "estados": ["S0"] }
-    ] },
-    { "componente": "message", "instancias": [
-      { "id": "msg-pendencia", "rotulo": "Aviso: há documento pendente", "estados": ["S0", "S1", "S2"] },
-      { "id": "msg-retorno", "rotulo": "Retorno do envio sem arquivo", "estados": ["S2"] }
-    ] },
-    { "componente": "tab", "instancias": [
-      { "id": "tab-requerimento", "rotulo": "Abas Andamento / Documentos", "abas": ["tab-requerimento-1", "tab-requerimento-2"], "estados": ["S0", "S1"] }
-    ] },
-    { "componente": "step", "instancias": [
-      { "id": "stp-andamento", "rotulo": "Etapas do requerimento (4 etapas, 2ª atual)", "estados": ["S0"] }
-    ] },
-    { "componente": "table", "instancias": [
-      { "id": "tbl-movimentacoes", "rotulo": "Movimentações do requerimento", "linhas": 5, "colunas": 3, "estados": ["S0"] }
-    ] },
-    { "componente": "select", "instancias": [
-      { "id": "sel-tipo-documento", "rotulo": "Tipo de documento", "estados": ["S1", "S2"] }
-    ] },
-    { "componente": "upload", "instancias": [
-      { "id": "upl-documento", "rotulo": "Arquivo do documento", "estados": ["S1", "S2"] }
-    ] },
-    { "componente": "switch", "instancias": [
-      { "id": "swt-aviso-email", "rotulo": "Receber avisos por e-mail", "estados": ["S1", "S2"] },
-      { "id": "swt-aviso-sms", "rotulo": "Receber avisos por SMS", "estados": ["S1", "S2"] }
-    ] },
-    { "componente": "accordion", "instancias": [
-      { "id": "acc-duvidas", "rotulo": "Dúvidas frequentes (3 itens, fechados na carga)", "itens": ["acc-duvidas-1", "acc-duvidas-2", "acc-duvidas-3"], "estados": ["S0", "S1", "S2"] }
-    ] },
-    { "componente": "pagina", "instancias": [
-      { "id": "pagina", "rotulo": "Documento (title, lang, títulos, regiões)", "estados": ["S0", "S1", "S2"] }
-    ] }
+    {
+      "componente": "card",
+      "instancias": [
+        {
+          "id": "crd-resumo",
+          "rotulo": "Resumo do requerimento (número, serviço, situação, prazo)",
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "tooltip",
+      "instancias": [
+        {
+          "id": "tip-prazo",
+          "rotulo": "Ajuda sobre o prazo de análise (ícone no card)",
+          "estados": [
+            "S0"
+          ]
+        },
+        {
+          "id": "tip-protocolo",
+          "rotulo": "Ajuda sobre o número de protocolo (ícone no card)",
+          "estados": [
+            "S0"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "message",
+      "instancias": [
+        {
+          "id": "msg-pendencia",
+          "rotulo": "Aviso: há documento pendente",
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        },
+        {
+          "id": "msg-retorno",
+          "rotulo": "Retorno do envio sem arquivo",
+          "estados": [
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "tab",
+      "instancias": [
+        {
+          "id": "tab-requerimento",
+          "rotulo": "Abas Andamento / Documentos",
+          "abas": [
+            "tab-requerimento-1",
+            "tab-requerimento-2"
+          ],
+          "estados": [
+            "S0",
+            "S1"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "step",
+      "instancias": [
+        {
+          "id": "stp-andamento",
+          "rotulo": "Etapas do requerimento (4 etapas, 2ª atual)",
+          "estados": [
+            "S0"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "table",
+      "instancias": [
+        {
+          "id": "tbl-movimentacoes",
+          "rotulo": "Movimentações do requerimento",
+          "linhas": 5,
+          "colunas": 3,
+          "estados": [
+            "S0"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "select",
+      "instancias": [
+        {
+          "id": "sel-tipo-documento",
+          "rotulo": "Tipo de documento",
+          "estados": [
+            "S1",
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "upload",
+      "instancias": [
+        {
+          "id": "upl-documento",
+          "rotulo": "Envio de documento (um arquivo só; placeholder \"Selecione o arquivo\")",
+          "estados": [
+            "S1",
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "switch",
+      "instancias": [
+        {
+          "id": "swt-aviso-email",
+          "rotulo": "Receber avisos por e-mail",
+          "estados": [
+            "S1",
+            "S2"
+          ]
+        },
+        {
+          "id": "swt-aviso-sms",
+          "rotulo": "Receber avisos por SMS",
+          "estados": [
+            "S1",
+            "S2"
+          ]
+        }
+      ],
+      "grupo": {
+        "fieldset": "fs-avisos",
+        "legend": "Avisos sobre o requerimento",
+        "principal": "chk-avisos-todos"
+      }
+    },
+    {
+      "componente": "checkbox",
+      "instancias": [
+        {
+          "id": "chk-avisos-todos",
+          "rotulo": "Todos os avisos (checkbox principal dos switches; intermediário quando só um está ligado)",
+          "estados": [
+            "S1",
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "accordion",
+      "instancias": [
+        {
+          "id": "acc-duvidas",
+          "rotulo": "Dúvidas frequentes (3 itens, fechados na carga, atributo single: um aberto por vez)",
+          "itens": [
+            "acc-duvidas-1",
+            "acc-duvidas-2",
+            "acc-duvidas-3"
+          ],
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "pagina",
+      "instancias": [
+        {
+          "id": "pagina",
+          "rotulo": "Documento (title, lang, títulos, regiões)",
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        }
+      ]
+    }
   ],
   "andaime": [
-    { "componente": "header", "instancias": [{ "id": "hdr-govbr", "rotulo": "Cabeçalho gov.br" }] },
-    { "componente": "footer", "instancias": [{ "id": "ftr-govbr", "rotulo": "Rodapé gov.br" }] },
-    { "componente": "skiplink", "instancias": [{ "id": "skp-conteudo", "rotulo": "Ir para o conteúdo" }] },
-    { "componente": "breadcrumb", "instancias": [{ "id": "brd-trilha", "rotulo": "Início › Meus requerimentos › Acompanhar requerimento" }] },
-    { "componente": "button", "instancias": [
-      { "id": "btn-enviar", "rotulo": "Enviar documento" },
-      { "id": "btn-voltar", "rotulo": "Voltar para meus requerimentos" }
-    ] },
-    { "componente": "divider", "instancias": [{ "id": "div-secoes", "rotulo": "Separador entre abas e dúvidas" }] },
-    { "componente": "input", "instancias": [] },
-    { "componente": "item", "instancias": [] },
-    { "componente": "list", "instancias": [] },
-    { "componente": "tag", "instancias": [] }
+    {
+      "componente": "header",
+      "instancias": [
+        {
+          "id": "hdr-govbr",
+          "rotulo": "Cabeçalho gov.br"
+        }
+      ]
+    },
+    {
+      "componente": "footer",
+      "instancias": [
+        {
+          "id": "ftr-govbr",
+          "rotulo": "Rodapé gov.br"
+        }
+      ]
+    },
+    {
+      "componente": "skiplink",
+      "instancias": [
+        {
+          "id": "skp-conteudo",
+          "rotulo": "Ir para o conteúdo"
+        }
+      ]
+    },
+    {
+      "componente": "breadcrumb",
+      "instancias": [
+        {
+          "id": "brd-trilha",
+          "rotulo": "Início › Meus requerimentos › Acompanhar requerimento"
+        }
+      ]
+    },
+    {
+      "componente": "button",
+      "instancias": [
+        {
+          "id": "btn-enviar",
+          "rotulo": "Enviar documento"
+        },
+        {
+          "id": "btn-voltar",
+          "rotulo": "Voltar para meus requerimentos"
+        }
+      ]
+    },
+    {
+      "componente": "divider",
+      "instancias": [
+        {
+          "id": "div-secoes",
+          "rotulo": "Separador entre abas e dúvidas"
+        }
+      ]
+    },
+    {
+      "componente": "input",
+      "instancias": []
+    },
+    {
+      "componente": "item",
+      "instancias": []
+    },
+    {
+      "componente": "list",
+      "instancias": []
+    },
+    {
+      "componente": "tag",
+      "instancias": []
+    }
   ],
   "fora": {
     "nota": "Os 36 componentes do pacote menos os que estão acima. Regras deles saem com motivo 'componente-fora-da-tela'.",
-    "componentes": ["avatar", "carousel", "checkbox", "cookiebar", "datetimepicker", "loading", "magicbutton", "menu", "modal", "notification", "pagination", "radio", "scrim", "signin", "textarea", "wizard"]
+    "componentes": [
+      "avatar",
+      "carousel",
+      "cookiebar",
+      "datetimepicker",
+      "loading",
+      "magicbutton",
+      "menu",
+      "modal",
+      "notification",
+      "pagination",
+      "radio",
+      "scrim",
+      "signin",
+      "textarea",
+      "wizard"
+    ]
+  },
+  "embutidos": {
+    "_nota": "Componente de andaime dentro de instância sorteável: unidade do componente vai ao passo 2 com estes hospedeiros. Botões da moldura/formulário (btn-enviar, btn-voltar) continuam andaime.",
+    "button": [
+      "msg-pendencia",
+      "msg-retorno",
+      "tip-prazo",
+      "tip-protocolo",
+      "sel-tipo-documento",
+      "upl-documento",
+      "acc-duvidas"
+    ],
+    "input": [
+      "sel-tipo-documento"
+    ],
+    "list": [
+      "sel-tipo-documento"
+    ],
+    "item": [
+      "sel-tipo-documento",
+      "tab-requerimento"
+    ],
+    "divider": [
+      "tab-requerimento"
+    ],
+    "tag": [
+      "stp-andamento"
+    ]
   }
 }

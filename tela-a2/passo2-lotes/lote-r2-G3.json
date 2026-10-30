@@ -1,0 +1,1312 @@
+{
+  "a2-36dcfef2c39b": {
+    "aceita": true,
+    "justificativa": "Tabela do estado Interativo: em fundo claro, a cor de interação dos elementos interativos é --blue-warm-vivid-70 (#1351B4); a linha de sublinhado vale para hiperlinks (não há no conteúdo sorteável) e a de fundo escuro não conta. Medida: color computado do ícone do gatilho da tooltip e do texto/ícone do botão de escolher arquivo = #1351B4.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo",
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "interacao-tom-vizinho",
+        "descricao": "O ícone do gatilho da tooltip (ou o texto e o ícone do botão de escolher arquivo) usa #155BCB (--blue-warm-vivid-60) em vez de #1351B4 (--blue-warm-vivid-70); continua azul e com contraste suficiente.",
+        "clausula": "background/foreground (Sobre um fundo Claro) · color · --blue-warm-vivid-70"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-728b1f066902": {
+    "aceita": true,
+    "justificativa": "Tabela do estado Desabilitado: opacidade --surface-opacity-md (0,45), cursor not-allowed, sem sombra. Cursor e sombra já têm unidades aceitas (a2-5da1dcbf7d0a, a2-1c18ad657e0d); a linha nova é o valor da opacidade. Medida: opacity computada das etapas 3 e 4 do step = 0,45.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "desabilitado-opacidade-fora",
+        "descricao": "As etapas 3 e 4 (desabilitadas) ficam com opacity 0,3 em vez de 0,45; continuam com baixa ênfase, só o valor sai do token.",
+        "clausula": "background/foreground · opacity · --surface-opacity-md"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-dea6a58c22c4": {
+    "aceita": true,
+    "justificativa": "Tabela do estado Hover: overlay na cor do primeiro plano com opacidade --surface-opacity-xs (0,16) em fundo claro e cursor pointer (cursor já aceito em a2-033815886ead). Medida: com o ponteiro sobre o item de aba ou o cabeçalho do item do accordion, opacidade do overlay de hover = 0,16.",
+    "instancias": [
+      "tab-requerimento",
+      "acc-duvidas"
+    ],
+    "variantes": [
+      {
+        "id": "hover-overlay-forte",
+        "descricao": "O overlay de hover do item de aba (ou do cabeçalho do item do accordion) usa opacidade 0,30 em vez de 0,16.",
+        "clausula": "background (Sobre um fundo Claro) · opacity · --surface-opacity-xs"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-13efc60bb6b6": {
+    "aceita": true,
+    "justificativa": "Tabela do estado Pressionado: overlay na cor do primeiro plano com opacidade --surface-opacity-md (0,45) em fundo claro, cursor pointer, sem sombra. Medida: durante o mousedown no item de aba ou no cabeçalho do item do accordion, opacidade do overlay = 0,45.",
+    "instancias": [
+      "tab-requerimento",
+      "acc-duvidas"
+    ],
+    "variantes": [
+      {
+        "id": "pressionado-overlay-fora",
+        "descricao": "Durante o pressionar, o overlay do item de aba (ou do cabeçalho do item do accordion) usa opacidade 0,70 em vez de 0,45.",
+        "clausula": "background (Sobre um fundo Claro) · opacity · --surface-opacity-md"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-2b5c2bc4358b": {
+    "aceita": true,
+    "justificativa": "Tabela de Foco: em fundo claro, a borda de foco tem a cor --gold-vivid-40. As unidades aceitas sobre foco tratam de existir (a2-a6e2601837a7), espaçamento (a2-0cb58cc75f6f) e unicidade; a cor do token é nova. Medida: outline-color computado no foco por teclado.",
+    "instancias": [
+      "sel-tipo-documento",
+      "acc-duvidas",
+      "tab-requerimento",
+      "swt-aviso-email",
+      "swt-aviso-sms",
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "foco-cor-fora",
+        "descricao": "O contorno de foco do controle fica na cor #1351B4 (azul de interação) em vez de --gold-vivid-40; continua visível e tracejado.",
+        "clausula": "border (Sobre um fundo Claro) · color · --gold-vivid-40"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-63e7d8f1a47d": {
+    "aceita": true,
+    "justificativa": "Tabela do Estado Foco (padrão): borda --surface-width-lg (4px), estilo dashed, espaçamento --spacing-scale-half. Medida: outline-style e outline-width computados no foco por teclado (o espaçamento já está em a2-0cb58cc75f6f).",
+    "instancias": [
+      "sel-tipo-documento",
+      "acc-duvidas",
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "foco-pontilhado",
+        "descricao": "O contorno de foco do controle fica dotted em vez de dashed, com a mesma cor e espessura.",
+        "clausula": "border · style · dashed"
+      },
+      {
+        "id": "foco-fino",
+        "descricao": "O contorno de foco do controle fica com 1px em vez de 4px (--surface-width-lg), mantendo dashed e a cor.",
+        "clausula": "border · width · --surface-width-lg"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-6b4aa6ecd808": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Foco tênue; nenhum componente da tela usa o foco tênue (como em a2-3087e28d2431)."
+  },
+  "a2-7ecb601ffa09": {
+    "aceita": true,
+    "justificativa": "Tabela do estado Ativo: cor --blue-warm-vivid-80, borda --surface-width-lg (4px) sólida. Na tela: a aba ativa. Medida: border-bottom-width/style e color computados do item de aba ativo.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "ativo-borda-fina",
+        "descricao": "A marcação da aba ativa fica com borda inferior de 1px em vez de 4px (--surface-width-lg), mesma cor.",
+        "clausula": "border · width · --surface-width-lg"
+      },
+      {
+        "id": "ativo-cor-fora",
+        "descricao": "O texto e a borda da aba ativa ficam #1351B4 (--blue-warm-vivid-70) em vez de --blue-warm-vivid-80.",
+        "clausula": "background/foreground/border · color · --blue-warm-vivid-80"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-0895138d72a0": {
+    "aceita": true,
+    "justificativa": "Tabela do estado Selecionado: fundo --blue-warm-vivid-50 (e marca gráfica, já tratada em a2-9bcf4f01a6bb). Na tela: o item escolhido na lista do select. Medida: background-color computado do item escolhido = --blue-warm-vivid-50.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "selecionado-fundo-claro",
+        "descricao": "O item escolhido na lista do select fica com fundo #D4E5FF (--blue-warm-vivid-10) em vez de --blue-warm-vivid-50, mantendo a marca gráfica.",
+        "clausula": "background/foreground · color · --blue-warm-vivid-50"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-6bbf1a76d8a1": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estado Arrastando; não há objeto arrastável na tela."
+  },
+  "a2-065bc0d01f43": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estado Arrastar; não há objeto arrastável na tela."
+  },
+  "a2-b1de44d95577": {
+    "aceita": true,
+    "justificativa": "Tabela do Dropzone: borda na cor de interação, --surface-width-sm, estilo dashed. Na tela: a área de transferência do upload. Medida: border-style/width/color computados da área.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "dropzone-borda-solida",
+        "descricao": "A borda da área de transferência do upload fica solid em vez de dashed, mesma cor e espessura.",
+        "clausula": "border · style · dashed"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-33f8d78aa04b": {
+    "aceita": true,
+    "justificativa": "Tabela do Dropzone ativo: fundo na cor do estado Interativo com opacidade --surface-opacity-sm, cursor copy. A exibição do estado já está aceita (a2-5612fb499d07); aqui é o valor. Medida: com dragenter/dragover de arquivo sobre a área, background computado (cor e alfa).",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "dropzone-ativo-cor-fora",
+        "descricao": "Ao arrastar um arquivo sobre a área do upload, o overlay de dropzone ativo aparece em verde (--green-cool-vivid-50) em vez da cor de interação.",
+        "clausula": "background · color · Cor do Estado Interativo"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-479f5042a47c": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estado Visitado é de hiperlinks; não há links no conteúdo sorteável."
+  },
+  "a2-235056fad007": {
+    "aceita": true,
+    "justificativa": "Tabela Ligado/Desligado: ligado = --blue-warm-vivid-40. Na tela: os dois switches. Medida: cor computada do trilho/chave do switch ligado. (A linha Desligado, --gray-40, não é usada nas variantes: ver dúvida.)",
+    "instancias": [
+      "swt-aviso-email",
+      "swt-aviso-sms"
+    ],
+    "variantes": [
+      {
+        "id": "ligado-cor-fora",
+        "descricao": "Quando ligado, o switch usa #1351B4 (--blue-warm-vivid-70) em vez de --blue-warm-vivid-40.",
+        "clausula": "background/foreground (Ligado) · color · --blue-warm-vivid-40"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-fe133882c34a": {
+    "aceita": true,
+    "justificativa": "Tabela do estado Erro: cor --red-vivid-50 e ícone times-circle (o ícone já está em a2-952e88a5af0d). Na tela: a mensagem de erro. Medida: color computado do ícone da mensagem de erro = --red-vivid-50 (#E52207).",
+    "instancias": [
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "erro-vermelho-fora",
+        "descricao": "O ícone da mensagem de erro fica #A23737 (--red-60) em vez de #E52207 (--red-vivid-50).",
+        "clausula": "background/foreground · color · --red-vivid-50"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-a8421dd4efff": {
+    "aceita": true,
+    "justificativa": "Tabela do estado Alerta: cor --yellow-vivid-20 e ícone exclamation-triangle (ícone já em a2-952e88a5af0d). Na tela: a mensagem de pendência. Medida: color computado do ícone da mensagem = --yellow-vivid-20 (#FFCD07).",
+    "instancias": [
+      "msg-pendencia"
+    ],
+    "variantes": [
+      {
+        "id": "alerta-amarelo-fora",
+        "descricao": "O ícone da mensagem de alerta fica --orange-vivid-30 (laranja) em vez de #FFCD07 (--yellow-vivid-20).",
+        "clausula": "background/foreground · color · --yellow-vivid-20"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-622c6c318ee6": {
+    "aceita": true,
+    "justificativa": "Tabela do estado Sucesso: cor --green-cool-vivid-50 e ícone check-circle. Na tela: o marcador de concluído da 1ª etapa do step (data-alert=\"success\"). Medida: color computado do marcador = #168821 e classe/conteúdo do ícone.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "sucesso-verde-fora",
+        "descricao": "O marcador de concluído da 1ª etapa fica em --green-50 (família Green) em vez de #168821 (--green-cool-vivid-50).",
+        "clausula": "background/foreground · color · --green-cool-vivid-50"
+      },
+      {
+        "id": "sucesso-icone-fora",
+        "descricao": "O marcador de concluído da 1ª etapa usa o ícone check (sem círculo) em vez de check-circle.",
+        "clausula": "icon · class · check-circle"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-0e36d85d2a99": {
+    "aceita": false,
+    "motivo": "duplicada:a2-f0e069600ad6",
+    "justificativa": "Na tela, a única superfície informativa é o balão da tooltip (fundo --blue-warm-vivid-60, sem ícone); a linha aplicável é a mesma cor da tabela Feedback Informação."
+  },
+  "a2-b015ac9d3146": {
+    "aceita": true,
+    "justificativa": "Superfícies em fundo claro: principal #FFFFFF (--pure-0) ou alternativa #F8F8F8 (--gray-2). Medida: background-color computado da superfície da instância ∈ {#FFFFFF, #F8F8F8}.",
+    "instancias": [
+      "crd-resumo",
+      "tbl-movimentacoes",
+      "acc-duvidas"
+    ],
+    "variantes": [
+      {
+        "id": "superficie-fora-do-container",
+        "descricao": "A superfície do card (ou o fundo das linhas da tabela, ou do painel do accordion) fica #F0F0F0 (--gray-5, cor da paleta) em vez de #FFFFFF/#F8F8F8.",
+        "clausula": "P · Cor Principal · #ffffff · --pure-0"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-5523de63f60f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Superfícies de fundo escuro; a tela só tem fundo claro."
+  },
+  "a2-67d855f2c6d2": {
+    "aceita": true,
+    "justificativa": "Cor de leitura em fundo claro: #333333 (--gray-80) para texto. Medida: color computado do texto corrido da instância = #333333.",
+    "instancias": [
+      "crd-resumo",
+      "tbl-movimentacoes",
+      "acc-duvidas"
+    ],
+    "variantes": [
+      {
+        "id": "leitura-cinza-fora",
+        "descricao": "O texto corrido do card (ou das células da tabela, ou do painel do accordion) fica #636363 (--gray-60, cor da paleta, contraste ainda acima de 4,5:1) em vez de #333333.",
+        "clausula": "P · Cor Principal · #333333 · --gray-80"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-ddbcae55f98a": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Leitura sobre fundo escuro (superfícies --blue-warm-vivid-90/80); a tela só tem fundo claro."
+  },
+  "a2-8d96c3f347df": {
+    "aceita": false,
+    "motivo": "duplicada:a2-36dcfef2c39b",
+    "justificativa": "Cor de interação em fundo claro #1351B4 (--blue-warm-vivid-70): mesma linha e mesmo observável da tabela do estado Interativo."
+  },
+  "a2-318690c44e2b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Cor de interação sobre fundo escuro; a tela só tem fundo claro."
+  },
+  "a2-f0e069600ad6": {
+    "aceita": true,
+    "justificativa": "Feedback de informação: cor principal #155BCB (--blue-warm-vivid-60). Na tela: o fundo do balão das tooltips. Medida: background-color computado do balão aberto = #155BCB.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "informacao-azul-fora",
+        "descricao": "O balão da tooltip abre com fundo #1351B4 (--blue-warm-vivid-70) em vez de #155BCB (--blue-warm-vivid-60).",
+        "clausula": "P · Cor Principal · #155BCB · --blue-warm-vivid-60"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-94d2f57b9801": {
+    "aceita": false,
+    "motivo": "duplicada:a2-622c6c318ee6",
+    "justificativa": "Feedback sucesso: a única linha aplicável (#168821, marcador de concluído do step) é a mesma da tabela do estado Sucesso; a alternativa clara não é usada na tela."
+  },
+  "a2-6a791128da6a": {
+    "aceita": true,
+    "justificativa": "Feedback alerta: principal #FFCD07 (--yellow-vivid-20, já na tabela do estado Alerta) e alternativa #FFF5C2 (--yellow-vivid-5) como superfície. Medida: background-color computado da mensagem de pendência = #FFF5C2.",
+    "instancias": [
+      "msg-pendencia"
+    ],
+    "variantes": [
+      {
+        "id": "alerta-fundo-fora",
+        "descricao": "A superfície da mensagem de pendência fica --yellow-5 (família Yellow, não Vivid) em vez de #FFF5C2 (--yellow-vivid-5).",
+        "clausula": "A · Cor Alternativa · #FFF5C2 · --yellow-vivid-5"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-19a22fa26e63": {
+    "aceita": true,
+    "justificativa": "Feedback erro: principal #E52207 (--red-vivid-50, já na tabela do estado Erro) e alternativa #FDE0DB (--red-vivid-10) como superfície. Medida: background-color computado da mensagem de erro = #FDE0DB.",
+    "instancias": [
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "erro-fundo-fora",
+        "descricao": "A superfície da mensagem de erro fica #F8E1DE (--red-10, família Red) em vez de #FDE0DB (--red-vivid-10).",
+        "clausula": "A · Cor Alternativa · #FDE0DB · --red-vivid-10"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-6177a4b74498": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Alinhamento da paleta aos princípios e sua aplicação na biblioteca de componentes é propriedade do DS, não da página; o uso de cores pré-definidas na página já é a2-3fb37eb25f3c."
+  },
+  "a2-5c0958e895c9": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Define texto grande (18pt/24px ou 14pt negrito); não impõe nada."
+  },
+  "a2-2c134632f410": {
+    "aceita": true,
+    "justificativa": "Elementos gráficos (ícones, bordas) seguem a regra de texto grande: contraste mínimo de 3:1. Ícones já estão em a2-cc3d7bd5342f; a parte nova é a borda de componente. Medida: contraste da borda do campo do select contra o fundo ≥ 3:1.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "borda-campo-apagada",
+        "descricao": "A borda do campo do select fica #DCDCDC sobre branco (≈1,4:1).",
+        "clausula": "Elementos gráficos e componentes da interface (como ícones e bordas) seguem as mesmas regras de texto grande."
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-48f21d412344": {
+    "aceita": false,
+    "motivo": "duplicada:a2-66fbdcf13772",
+    "justificativa": "Conformidade mínima AA (4,5:1) para texto: mesmo predicado, condição e observável da Recomendação 4.1 do e-MAG (como a2-2f6900335a84).",
+    "equivalenteEmag": "4.1"
+  },
+  "a2-42f5fd524676": {
+    "aceita": false,
+    "motivo": "duplicada:a2-66fbdcf13772",
+    "justificativa": "Cores de 3:1 só para gráficos/texto grande: usá-las em texto normal é ficar abaixo de 4,5:1, o mesmo observável da Recomendação 4.1 do e-MAG.",
+    "equivalenteEmag": "4.1"
+  },
+  "a2-3dd5d6fc4964": {
+    "aceita": false,
+    "motivo": "duplicada:a2-36dcfef2c39b",
+    "justificativa": "Famílias Blue Warm/Blue Warm Vivid para interação: o observável (cor de interação dos elementos interativos) é o da tabela do estado Interativo, que fixa o token."
+  },
+  "a2-c4e5ddfcd9e8": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Red' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-de0dda08d77c": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Red Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-42ecf7c97137": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Red Cool' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-c5869066593c": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Red Cool Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-574f91c49083": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Red Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-f29743ca30f0": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Red Warm Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-372debe4d431": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Orange' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-c3b2b94bf96a": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Orange Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-d091cb898d5a": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Orange Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-4472c628f36d": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Orange Warm Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-2b37533092c8": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Gold' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-6363727ad1e1": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Gold Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-bd8b74dacc0a": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Yellow' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-c7d539b43837": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Yellow Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-da10fc920879": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Green' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-d170bcd25d39": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Green Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-a03d41f1674c": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Green Cool' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-0c2c03c29fd1": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Green Cool Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-8a57657707e5": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Green Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-102ab68858c1": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Green Warm Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-3004e1a5a1a1": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Mint' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-4cb90c862726": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Mint Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-c5ae5070f6ba": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Mint Cool' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-d52285d4837a": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Mint Cool Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-3c9038617f1b": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Cyan' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-10a8deacdfc8": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Cyan Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-39362dfabbbe": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Blue' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-0506e736be5e": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Blue Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-35558ab2945b": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Blue Cool' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-9be28aa3d6c4": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Blue Cool Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-a2552432319e": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Blue Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-2fcf4094dfd1": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Blue Warm Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-ec8f274e7e80": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Indigo' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-8dd010510dfa": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Indigo Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-dc2b2106af65": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Indigo Cool' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-a99b5256c9ba": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Indigo Cool Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-9c3b3db5be94": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Indigo Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-c8ea655ae1d4": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Indigo Warm Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-a5a34cf1176b": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Violet' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-72fcfcc224a7": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Violet Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-9012a71f7186": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Violet Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-8c0a91587869": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Violet Warm Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-7a0e75d247cf": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Magenta' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-b2d1aa05b6c1": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Magenta Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-778cb1886b46": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Gray' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-b71d02fea165": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Gray Cool' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-41c5484495af": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Gray Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-a0286a3afda3": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3fb37eb25f3c",
+    "justificativa": "Cabeçalho da família 'Pure' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c."
+  },
+  "a2-27cf363853e4": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Condição (especificação do estado insuficiente para contraste) não ocorre: a tela só tem fundo claro com os tokens do estado."
+  },
+  "a2-87ac57121515": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Processo de proposta e aprovação de novo estado pela equipe do DS."
+  },
+  "a2-7f289efc5ca0": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Prioridade entre estilos em conflito sem observável fixado; mesmo critério de a2-c264f53dd99d."
+  },
+  "a2-986bce8e5866": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Caracteriza os estados de aviso (cor + ícone); os valores exigíveis estão nas tabelas de cada estado."
+  },
+  "a2-96c4f55cc965": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "'Esteja claro o estado Interativo' sem limiar ou observável fixado (como a2-0795b6ad88f8)."
+  },
+  "a2-6a71be40aa41": {
+    "aceita": false,
+    "motivo": "duplicada:a2-15a1e5d58ef7",
+    "justificativa": "Cor como principal característica do estado de interação: mesmo observável (elemento interativo com a cor de interação, distinta do texto)."
+  },
+  "a2-143bf14a2ef8": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Sublinhado de hiperlinks; não há links no conteúdo sorteável."
+  },
+  "a2-ab5eec9678ac": {
+    "aceita": false,
+    "motivo": "duplicada:a2-d0179dc6bd81",
+    "justificativa": "Desabilitado sem herança de outros estados: na tela já aceito estado a estado nas etapas desabilitadas (hover a2-d0179dc6bd81, pressionado a2-dd1a39bcd50b, ativo a2-3e410f36c0cd, foco a2-25ddbebf4f1a)."
+  },
+  "a2-1fefd66159a3": {
+    "aceita": false,
+    "motivo": "duplicada:a2-cdd2382da97b",
+    "justificativa": "Hover por overlay: mesmo observável de a2-cdd2382da97b."
+  },
+  "a2-322a4802c571": {
+    "aceita": false,
+    "motivo": "duplicada:a2-dea6a58c22c4",
+    "justificativa": "Cor do overlay de hover = cor do primeiro plano: é a linha 'background · color · Primeiro Plano' da tabela do Hover."
+  },
+  "a2-6468b76706d2": {
+    "aceita": false,
+    "motivo": "duplicada:a2-13efc60bb6b6",
+    "justificativa": "Cor do overlay de pressionado = cor do primeiro plano: é a linha 'background · color · Primeiro Plano' da tabela do Pressionado."
+  },
+  "a2-920faf6b0136": {
+    "aceita": false,
+    "motivo": "duplicada:a2-63e7d8f1a47d",
+    "justificativa": "Sem foco tênue onde a diretriz não o especifica = o foco tem o estilo padrão (dashed, --surface-width-lg); mesmo observável da tabela do Estado Foco."
+  },
+  "a2-edce1bd60be3": {
+    "aceita": false,
+    "motivo": "duplicada:a2-1754a39d9a39",
+    "justificativa": "Foco por clique só quando a diretriz especifica: mesmo observável de 'clicar não gera foco visual'."
+  },
+  "a2-a5bf94392cd3": {
+    "aceita": false,
+    "motivo": "duplicada:a2-0cb58cc75f6f",
+    "justificativa": "Foco indicado por borda/contorno em volta do elemento: mesmo bloco e mesmo observável de a2-0cb58cc75f6f."
+  },
+  "a2-90b9383fc954": {
+    "aceita": false,
+    "motivo": "duplicada:a2-bfc5ebd36c20",
+    "justificativa": "Um só Ativo por conjunto: mesmo predicado e observável."
+  },
+  "a2-ab469c2727b7": {
+    "aceita": false,
+    "motivo": "duplicada:a2-7ecb601ffa09",
+    "justificativa": "Cor como principal característica do Ativo: o observável (cor do item ativo) é o da tabela do estado Ativo."
+  },
+  "a2-6b21a16d1975": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estado Arrastando; não há objeto arrastável na tela."
+  },
+  "a2-a08500e3b759": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ícone e cursor do estado Arrastar; não há objeto arrastável na tela."
+  },
+  "a2-98243a6d8f3a": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Cursor do estado Arrastar em desabilitados; não há objeto arrastável na tela."
+  },
+  "a2-590d318946bc": {
+    "aceita": true,
+    "justificativa": "A zona de soltura não pode ser menor que a área visível do dropzone. Medida: disparar dragenter/dragover/drop com arquivo perto dos cantos da área tracejada do upload e ver se a área responde.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "soltura-menor",
+        "descricao": "Só o botão central do upload aceita o arquivo arrastado; perto das bordas da área tracejada visível nada acontece (sem dropzone ativo e sem receber o arquivo).",
+        "clausula": "A área/zona de \"soltura\" do elemento pode ser maior, mas não menor, do que a área visível/exibida na tela."
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-bdda40c02e17": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Justifica o feedback do dropzone (borda basta); os valores estão na tabela do Dropzone."
+  },
+  "a2-ccc6d902a4a5": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Explica que o cursor é a referência da sobreposição; não impõe nada."
+  },
+  "a2-fb9e539d4528": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve que o overlay é o feedback do dropzone ativo; os valores estão na tabela."
+  },
+  "a2-6afafbfc7a78": {
+    "aceita": false,
+    "motivo": "duplicada:a2-33f8d78aa04b",
+    "justificativa": "Overlay na cor do Interativo com opacidade fixa: mesmas linhas e observável da tabela do Dropzone ativo."
+  },
+  "a2-6b42100a4bd2": {
+    "aceita": false,
+    "motivo": "duplicada:a2-235056fad007",
+    "justificativa": "Cor como característica de Ligado/Desligado: o observável é o da tabela Ligado e Desligado."
+  },
+  "a2-46523775b9da": {
+    "aceita": true,
+    "justificativa": "O estado de erro persiste até o erro ser resolvido. Na tela: a mensagem de erro do envio sem arquivo (S2). Medida: esperar sem alterar o formulário e verificar que a mensagem de erro continua exibida.",
+    "instancias": [
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "erro-some-sozinho",
+        "descricao": "A mensagem de erro do envio desaparece sozinha 4 segundos depois de exibida, sem que nenhum arquivo tenha sido escolhido.",
+        "clausula": "Importante que o estado persista até até que seja resolvido o erro."
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-9a0c3d0bb27c": {
+    "aceita": false,
+    "motivo": "duplicada:a2-fe133882c34a",
+    "justificativa": "Vermelho e ícone de X no Erro: mesmas linhas da tabela do estado Erro."
+  },
+  "a2-bb2310e5cf41": {
+    "aceita": false,
+    "motivo": "duplicada:a2-a8421dd4efff",
+    "justificativa": "Amarelo e ícone de exclamação no Alerta: mesmas linhas da tabela do estado Alerta."
+  },
+  "a2-47f249dd7284": {
+    "aceita": false,
+    "motivo": "duplicada:a2-622c6c318ee6",
+    "justificativa": "Verde e ícone de check no Sucesso: mesmas linhas da tabela do estado Sucesso."
+  },
+  "a2-386b071ca598": {
+    "aceita": false,
+    "motivo": "duplicada:a2-f0e069600ad6",
+    "justificativa": "Azul e 'i' no Informativo: na tela só o balão da tooltip usa a cor de informação (sem ícone); mesmo observável da tabela Feedback Informação."
+  },
+  "a2-6ca1b6381610": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Grid de 8 colunas (tablet/smartphone); a observação é em 1280."
+  },
+  "a2-2f3047dbb164": {
+    "aceita": false,
+    "motivo": "duplicada:a2-fe5b8665db99",
+    "justificativa": "Espaçamento da grid de 12 colunas dependente do breakpoint: em 1280 é a linha da tabela Desktop."
+  },
+  "a2-637f07df4a80": {
+    "aceita": false,
+    "motivo": "duplicada:a2-6a99b79819ae",
+    "justificativa": "Margem externa mínima de 40px: mesmo observável de 'conteúdo dentro das margens da grid'."
+  },
+  "a2-f334843373f2": {
+    "aceita": false,
+    "motivo": "duplicada:a2-fe5b8665db99",
+    "justificativa": "Gutter de 24px do Desktop: é a linha da tabela Desktop."
+  },
+  "a2-1378827bf80f": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Grid de TV (a partir de 1520px); a observação é em 1280."
+  },
+  "a2-81a676aa9d0e": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Validar a cada breakpoint; o contrato de observação é 1280×900."
+  },
+  "a2-341e32a322b9": {
+    "aceita": false,
+    "motivo": "duplicada:a2-312798bd96aa",
+    "justificativa": "Coleção Font Awesome: mesmo observável (classe/família do ícone) de a2-312798bd96aa."
+  },
+  "a2-7a8444ab3c10": {
+    "aceita": false,
+    "motivo": "duplicada:a2-312798bd96aa",
+    "justificativa": "Estilos solid/brand: mesmo observável (família do ícone) de a2-312798bd96aa."
+  },
+  "a2-928d495eb792": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Alinhamento ao contexto cultural e à experiência do usuário é julgamento de projeto."
+  },
+  "a2-ec69df55e8bf": {
+    "aceita": false,
+    "motivo": "duplicada:a2-312798bd96aa",
+    "justificativa": "Estilos Solid e Brand: mesmo observável de a2-312798bd96aa."
+  },
+  "a2-2f6b87d1c5b7": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve o estilo Brand."
+  },
+  "a2-629a5a1701cc": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Grid de construção de ícones novos; não há ícone novo (como a2-dd7a65ef1946)."
+  },
+  "a2-9b98387660c2": {
+    "aceita": false,
+    "motivo": "duplicada:a2-c72a64d5d504",
+    "justificativa": "Tamanho base de 16px e escala de tokens: é a tabela de tamanhos padrão."
+  },
+  "a2-fad6997ed468": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Explica que a área mínima conta no espaçamento e anuncia os dois tipos; o valor de clique já está em a2-5542b7528b3d."
+  },
+  "a2-293aacd7f161": {
+    "aceita": false,
+    "motivo": "duplicada:a2-b889b938c32d",
+    "justificativa": "Usar os ícones da tabela com a ação atribuída: mesmo predicado e observável de a2-b889b938c32d."
+  },
+  "a2-f82d600db413": {
+    "aceita": false,
+    "motivo": "duplicada:a2-a39f3ad397d4",
+    "justificativa": "Família única Rawline: mesmo observável (font-family) de a2-a39f3ad397d4."
+  },
+  "a2-a8114c14df41": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Justifica o uso de uma só família."
+  },
+  "a2-271305d931f3": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Relata a escolha da fonte base de 14px e diz que 'essa escolha não é definitiva'; os tamanhos exigíveis estão na escala (a2-2f4eadc23b2c)."
+  },
+  "a2-9bb580f3f5cb": {
+    "aceita": false,
+    "motivo": "duplicada:a2-2f4eadc23b2c",
+    "justificativa": "Escala Minor Third: mesmo observável (font-size contra a escala)."
+  },
+  "a2-606272902695": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Define o ponto 1em da escala (14px, peso 400); os valores exigíveis estão na escala (a2-2f4eadc23b2c) e nas tabelas de estilo."
+  },
+  "a2-a60989edf1af": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ampliação da escala além da tabela ('caso haja necessidade'); a tela não usa valores fora da tabela."
+  },
+  "a2-b0a08f1cb960": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve que os estilos são de elementos nativos do HTML."
+  },
+  "a2-4bf1b50d3636": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Define para que serve a lista ordenada (como a2-b955ffe42e59)."
+  },
+  "a2-4b41793df6b8": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Define para que serve a lista de definições (como a2-b955ffe42e59)."
+  },
+  "a2-fc881a57891b": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "A tabela classifica combinações (AAA/AA/x); a consequência normativa é 'x: ... Não é recomendado' (recomendação); o mínimo exigível de 4,5:1 está na Recomendação 4.1 do e-MAG (a2-66fbdcf13772)."
+  },
+  "a2-9a7a924f8063": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Tabela de breakpoints (classes de dispositivo); só faz sentido entre tamanhos de janela."
+  },
+  "a2-d2d7a7aa6ba8": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Grid de 4 colunas (até 559px); a observação é em 1280."
+  },
+  "a2-eceb2ec18ff9": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Grid de 8 colunas (496–1199px); a observação é em 1280."
+  },
+  "a2-fe5b8665db99": {
+    "aceita": false,
+    "motivo": "duplicada:a2-6a99b79819ae",
+    "justificativa": "Em 1280 vale a tabela Desktop; a linha observável sobre as instâncias é a margem de 40px, já aceita como 'conteúdo dentro das margens da grid'; o gutter de 24px exige colunas lado a lado que o inventário não fixa."
+  },
+  "a2-bb8ab1145b98": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Grid de TV (a partir de 1520px); a observação é em 1280."
+  },
+  "a2-c72a64d5d504": {
+    "aceita": true,
+    "justificativa": "Tamanhos de ícone só na escala de tokens (16px base; .5em, .75em, 1.25em, 2em…10em). Medida: valor declarado de font-size dos ícones da instância (CSSOM) pertence à tabela.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo",
+      "msg-pendencia",
+      "msg-retorno",
+      "acc-duvidas"
+    ],
+    "variantes": [
+      {
+        "id": "icone-fora-da-escala",
+        "descricao": "O ícone do gatilho da tooltip (ou o ícone da mensagem, ou o chevron do cabeçalho do accordion) fica com font-size 1.1em, fora da escala de tokens.",
+        "clausula": "--icon-size-base | 16px (1em)"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-f1efa8124874": {
+    "aceita": false,
+    "motivo": "duplicada:a2-c72a64d5d504",
+    "justificativa": "Mapeia as classes fa-* para os mesmos tokens de tamanho; mesmo observável da tabela de tamanhos."
+  },
+  "a2-7ae4ad55ed25": {
+    "aceita": false,
+    "motivo": "duplicada:a2-b889b938c32d",
+    "justificativa": "Tabela de orientações de uso dos ícones: mesmo predicado e observável de a2-b889b938c32d (detalhada em a2-952e88a5af0d)."
+  },
+  "a2-d5695a0a50f2": {
+    "aceita": false,
+    "motivo": "duplicada:a2-a39f3ad397d4",
+    "justificativa": "Token --font-family-base (Rawline): mesmo observável de a2-a39f3ad397d4."
+  },
+  "a2-6d96474b0f3b": {
+    "aceita": false,
+    "motivo": "duplicada:a2-bc2dd4c6ab14",
+    "justificativa": "Tabela de pesos: mesmo predicado e observável de a2-bc2dd4c6ab14."
+  },
+  "a2-6a762aac9cba": {
+    "aceita": false,
+    "motivo": "duplicada:a2-2f4eadc23b2c",
+    "justificativa": "Tabela da escala tipográfica: mesmo observável (font-size contra a escala) de a2-2f4eadc23b2c."
+  },
+  "a2-03216e12bb96": {
+    "aceita": true,
+    "justificativa": "Entrelinhas só nos tokens da tabela: 1.15 (low), 1.45 (medium), 1.85 (high). A unidade relativa já está em a2-b66ac3a5b212; aqui é o valor. Medida: line-height computado / font-size dos textos da instância ∈ {1,15; 1,45; 1,85}.",
+    "instancias": [
+      "crd-resumo",
+      "tbl-movimentacoes",
+      "acc-duvidas"
+    ],
+    "variantes": [
+      {
+        "id": "entrelinha-fora-do-token",
+        "descricao": "O texto do card (ou das células da tabela, ou do painel do accordion) usa line-height 1.3 (relativo) em vez de 1.45.",
+        "clausula": "1.45 · --font-lineheight-medium"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-0d50ac5f7083": {
+    "aceita": true,
+    "justificativa": "Estilo H1 (grid de 12 colunas, vale em 1280): --font-size-scale-up-06, peso light, line-height low, cor --gray-80, margem inferior --spacing-scale-4x. Medida: estilos computados do h1 da página.",
+    "instancias": [
+      "pagina"
+    ],
+    "variantes": [
+      {
+        "id": "h1-peso-fora",
+        "descricao": "O h1 da página fica com font-weight 700 (bold) em vez de light (300), mesmo tamanho.",
+        "clausula": "Weight · --font-weight-light"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-2eb539f0767d": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "H1 para grid de 4 colunas (telas pequenas); a observação é em 1280."
+  },
+  "a2-fc6334fab65a": {
+    "aceita": false,
+    "motivo": "duplicada:a2-329f74d7646c",
+    "justificativa": "Estilo H2: a2-329f74d7646c já mede o h2 da página contra estes valores (scale-up-05, regular, line-height low)."
+  },
+  "a2-68cdebd764de": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "H2 para grid de 4 colunas; a observação é em 1280."
+  },
+  "a2-d05e499acddf": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estilo H3; a tela fixa h1 e h2 na página e nenhum h3 nas instâncias."
+  },
+  "a2-5279fd95844d": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "H3 para grid de 4 colunas; a observação é em 1280."
+  },
+  "a2-7a9d5e4b3c79": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estilo H4; não há h4 na tela."
+  },
+  "a2-6d56ad3499ab": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "H4 para grid de 4 colunas; a observação é em 1280."
+  },
+  "a2-c593f7ae4ec2": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estilo H5; não há h5 na tela."
+  },
+  "a2-b099a48a064b": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "H5 para grid de 4 colunas; a observação é em 1280."
+  },
+  "a2-94332bb586eb": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estilo H6; não há h6 na tela."
+  },
+  "a2-351910d59f9b": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "H6 para grid de 4 colunas; a observação é em 1280."
+  },
+  "a2-f50e5a28b0c9": {
+    "aceita": true,
+    "justificativa": "Estilo Parágrafo: peso regular, line-height medium (1.45), cor --gray-80. Medida: estilos computados dos parágrafos do painel do accordion. (A linha Size, scale-up-01, não é usada nas variantes: o core aplica scale-base ao p.)",
+    "instancias": [
+      "acc-duvidas"
+    ],
+    "variantes": [
+      {
+        "id": "paragrafo-entrelinha-fora",
+        "descricao": "Os parágrafos do painel do accordion ficam com line-height 1.15 (low) em vez de 1.45 (medium).",
+        "clausula": "Line-height · --font-line-height-medium"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-a3e433fe2666": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Parágrafo para grid de 4 colunas; a observação é em 1280."
+  },
+  "a2-3b4e8e23351d": {
+    "aceita": false,
+    "motivo": "duplicada:a2-329f74d7646c",
+    "justificativa": "Estilo Label: a2-329f74d7646c já mede os rótulos do select e do upload contra estes valores (scale-base, semi-bold)."
+  },
+  "a2-6f122899cebf": {
+    "aceita": true,
+    "justificativa": "Estilo Input: --font-size-scale-up-01, peso medium, line-height low, cor --gray-80. Na tela: o campo do select. Medida: font-size/font-weight computados do input.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "input-peso-fora",
+        "descricao": "O texto do campo do select fica com font-weight 400 em vez de medium (500).",
+        "clausula": "Weight · --font-weight-medium"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-2db211927f15": {
+    "aceita": true,
+    "justificativa": "Estilo Placeholder: scale-base, peso regular, itálico. Na tela: o placeholder do campo do select. Medida: estilos computados de ::placeholder do input.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "placeholder-sem-italico",
+        "descricao": "O placeholder do campo do select fica com font-style normal em vez de italic.",
+        "clausula": "Font-style · italic"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-0b634b5de510": {
+    "aceita": true,
+    "justificativa": "Estilo Legend: --font-size-scale-up-01, peso semi-bold, line-height low, cor --gray-80. Na tela: a legend 'Avisos sobre o requerimento'. Medida: estilos computados da legend.",
+    "instancias": [
+      "swt-aviso-email",
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "legend-peso-fora",
+        "descricao": "A legend 'Avisos sobre o requerimento' fica com font-weight 400 em vez de semi-bold (600), mesmo tamanho.",
+        "clausula": "Weight · --font-weight-semi-bold"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-612c013e50d2": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Marcação de texto (mark); não há mark na tela."
+  },
+  "a2-fdf859cf9f4b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Bloco de código (code); não há code na tela."
+  },
+  "a2-1f3a53abca0d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Listas UL/OL/DL de conteúdo; a tela não tem listas de texto nas instâncias (a lista do select é o componente List, com estilo próprio)."
+  }
+}

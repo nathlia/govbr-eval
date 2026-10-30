@@ -1,0 +1,651 @@
+{
+ "a2-777552081394": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes. (Alternativa textual: e-MAG 3.6/6.1 e texto alternativo de ícones já tratados.)"
+ },
+ "a2-7e932f26c8a3": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Mídias com base em tempo: a tela não tem vídeo nem áudio."
+ },
+ "a2-aaea18cff3ad": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes."
+ },
+ "a2-c01c7931f337": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes. (Contraste: e-MAG 4.1 e fundamento Cores.)"
+ },
+ "a2-f30373c01719": {
+  "aceita": false,
+  "motivo": "duplicada:a2-acc4801af71c",
+  "justificativa": "Toda funcionalidade disponível por teclado = e-MAG 2.1 (mesmo predicado e observável).",
+  "equivalenteEmag": "2.1"
+ },
+ "a2-ee7f397d0769": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A tela não tem limite de tempo nem conteúdo que se move ou atualiza sozinho (como e-MAG 2.5/2.7)."
+ },
+ "a2-f0f936d2b593": {
+  "aceita": false,
+  "motivo": "duplicada:a2-04a4c3ea1b70",
+  "justificativa": "Não criar conteúdo que cause convulsões = e-MAG 2.6 (sem intermitência de tela).",
+  "equivalenteEmag": "2.6"
+ },
+ "a2-5d71dd301de6": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes."
+ },
+ "a2-d0f999e273f9": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes."
+ },
+ "a2-3c60c31e040b": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes."
+ },
+ "a2-02d46e798e66": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes."
+ },
+ "a2-ef5b541133c7": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes."
+ },
+ "a2-6423b7b57f6f": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes. A frase só descreve o objetivo da diretriz (várias modalidades de entrada além do teclado)."
+ },
+ "a2-66933615dfa1": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Mesmo parágrafo de a2-3f6b7b055edf: princípio guarda-chuva (perceber, entender, navegar, interagir); sem observável único."
+ },
+ "a2-70e6c9cf922d": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Passo de processo (realizar avaliação de acessibilidade), não propriedade da página."
+ },
+ "a2-93e48ebe4229": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Fala da necessidade de avaliar (processo), não de uma propriedade da página."
+ },
+ "a2-c187d7b0ee2e": {
+  "aceita": false,
+  "motivo": "duplicada:a2-671056d628cb",
+  "justificativa": "HTML válido conforme as normas do W3C = e-MAG 1.1 (como a2-ed21800a3c0b).",
+  "equivalenteEmag": "1.1"
+ },
+ "a2-13dc5e3d1e5b": {
+  "aceita": false,
+  "motivo": "duplicada:a2-372068e40fd2",
+  "justificativa": "H2–H6 obedecendo hierarquia = e-MAG 1.3 (como a2-e0b41499dd79).",
+  "equivalenteEmag": "1.3"
+ },
+ "a2-561af3bd0c85": {
+  "aceita": false,
+  "motivo": "duplicada:a2-1ea2f43d76db",
+  "justificativa": "Idioma identificado pelo atributo lang = e-MAG 3.1.",
+  "equivalenteEmag": "3.1"
+ },
+ "a2-d7e91aa996b7": {
+  "aceita": true,
+  "justificativa": "A página declara o DOCTYPE do HTML5 (<!DOCTYPE html>). O nó DocumentType fica no DOM. Medida: document.doctype.name === 'html', com publicId e systemId vazios.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "doctype-html4-strict",
+    "descricao": "O documento passa a começar com o DOCTYPE do HTML 4.01 Strict (com identificador público e de sistema), que mantém o modo padrão de renderização, sem mudar a aparência.",
+    "clausula": "Especificar o DOCTYPE para a linguagem HTML5"
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ]
+ },
+ "a2-0a51ebc0d2bb": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Formatação de comentário (mesma linha, espaços) só existe no código-fonte; o DOM construído não guarda a formatação do código como foi escrita."
+ },
+ "a2-f9f868246d37": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Formatação de comentário de várias linhas (linhas próprias, sem indentação) só existe no código-fonte; o DOM construído não guarda a disposição das linhas do código."
+ },
+ "a2-1cfa902fa7ad": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Indentação só existe no código-fonte; o DOM construído não guarda a indentação. (Como a2-a0cefe07ca15.)"
+ },
+ "a2-926f35d015e8": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "O parser HTML põe nomes de tags e atributos em minúsculas; a caixa original só existe no código-fonte; o DOM construído não guarda a caixa original."
+ },
+ "a2-2b1bf1171853": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "O parser fecha elementos implicitamente; tag de fechamento omitida só existe no código-fonte; o DOM construído não guarda se a tag foi escrita. (Como a2-de88a511d760.)"
+ },
+ "a2-cd5616b3811f": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Aspas dos valores de atributo: só existe no código-fonte; o DOM construído não guarda o tipo de aspas usado."
+ },
+ "a2-a3ed861cbd65": {
+  "aceita": true,
+  "justificativa": "As tags script não levam atributo type nem language. Atributos ficam no DOM. Medida: document.querySelectorAll('script[type], script[language]') vazio.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "script-com-type",
+    "descricao": "A tag script que carrega o JavaScript do DS ganha type=\"text/javascript\" (o comportamento não muda).",
+    "clausula": "Omitir atributos de tipo e linguagem nas tags script"
+   },
+   {
+    "id": "script-com-language",
+    "descricao": "A tag script que carrega o JavaScript do DS ganha language=\"javascript\".",
+    "clausula": "Omitir atributos de tipo e linguagem nas tags script"
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ]
+ },
+ "a2-c63c63e831f9": {
+  "aceita": true,
+  "justificativa": "As tags link não levam atributo type. Medida: document.querySelectorAll('link[type]') vazio.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "link-com-type",
+    "descricao": "A tag link da folha de estilo do DS ganha type=\"text/css\" (a aparência não muda).",
+    "clausula": "Omitir atributos de tipo na tag link"
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ]
+ },
+ "a2-6afb3201269f": {
+  "aceita": true,
+  "justificativa": "Estilos e scripts da página ficam em arquivos próprios (link/script src), sem bloco style ou script embutido no HTML. Medida: no HTML servido, querySelectorAll('style, script:not([src])') vazio.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "estilo-embutido",
+    "descricao": "Uma regra de CSS da página (por exemplo, o espaçamento entre seções do conteúdo) sai do arquivo .css e passa para um bloco style no head, com o mesmo valor.",
+    "clausula": "Escrever estilos e scripts em seus próprios arquivos"
+   },
+   {
+    "id": "script-embutido",
+    "descricao": "O código que inicializa os componentes da página sai do arquivo .js próprio e passa para um bloco script no fim do body, com o mesmo conteúdo.",
+    "clausula": "Escrever estilos e scripts em seus próprios arquivos"
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ]
+ },
+ "a2-dbcc920d85cb": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Frase de introdução da página do padrão mínimo; não impõe nada."
+ },
+ "a2-40a6f248b2f4": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Barra padrão para aplicativos; a tela é página web, não aplicativo."
+ },
+ "a2-fbf563b6c0cb": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "Cabeçalho gov.br é moldura protegida."
+ },
+ "a2-021bc9b80ecf": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "O logo gov.br fica no cabeçalho (moldura protegida)."
+ },
+ "a2-6fdad59940e1": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "Rodapé gov.br é moldura protegida."
+ },
+ "a2-048df7876e49": {
+  "aceita": false,
+  "motivo": "duplicada:a2-a39f3ad397d4",
+  "justificativa": "Tipografia Rawline = a2-a39f3ad397d4 (aceita; mesmo observável: font-family)."
+ },
+ "a2-2a26ec4b2ebe": {
+  "aceita": false,
+  "motivo": "duplicada:a2-3fb37eb25f3c",
+  "justificativa": "Paleta de cores do DS = usar sempre as cores pré-definidas (a2-3fb37eb25f3c, aceita)."
+ },
+ "a2-bc741b4ba1ac": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "'Botões' como item de aderência mínima = usar o componente Button do DS; violar exige trocar o componente inteiro, o que quebra junto as cláusulas de anatomia do Button."
+ },
+ "a2-041825a2e1fb": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'bloquear'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-3201afddaa7d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'editar'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-0c1808260f4e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'cortar'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-70cb445f08e9": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'pesquisar'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-ac0ec572ac7f": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'excluir'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-232ab7dd18c9": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'limpar'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-47e95d69211b": {
+  "aceita": false,
+  "motivo": "duplicada:a2-db50df136f86",
+  "justificativa": "Fechar = 'x' é o mesmo observável de a2-db50df136f86 (aceita; ícone do botão Fechar = fa-times)."
+ },
+ "a2-2f51f3df505e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'imprimir'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-e587c7e9238f": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'atualizar'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-65366b4baf7f": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'visualizar'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-ba60a399cfc7": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'ir para a tela inicial'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-2df7bf5e2fa2": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Usar os componentes do DS: violar exige substituir um componente inteiro por marcação própria, o que viola junto todas as cláusulas de estrutura dele."
+ },
+ "a2-2c791b329734": {
+  "aceita": false,
+  "motivo": "duplicada:a2-2df7bf5e2fa2",
+  "justificativa": "Continuação da mesma frase-título (usar os componentes essenciais do DS)."
+ },
+ "a2-66cc8c46f14a": {
+  "aceita": true,
+  "justificativa": "O ícone de ajuda contextual fica junto do elemento a que a ajuda se refere. Na tela: os gatilhos das tooltips de prazo e protocolo, ao lado do dado que explicam no card. R-ED (b): caso flagrante e oposto, o ícone longe do seu dado e junto de outro. Medida: getBoundingClientRect do gatilho contra o do dado referido (mesma linha, poucos px de distância).",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "ajuda-longe-do-dado",
+    "descricao": "O ícone de ajuda do prazo sai do lado do valor do prazo e vai para o canto superior direito do card, ao lado do número do requerimento.",
+    "instancias": [
+     "tip-prazo"
+    ],
+    "clausula": "Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda."
+   },
+   {
+    "id": "ajuda-protocolo-deslocada",
+    "descricao": "O ícone de ajuda do protocolo sai do lado do número do protocolo e vai para o pé do card, abaixo do prazo.",
+    "instancias": [
+     "tip-protocolo"
+    ],
+    "clausula": "Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda."
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ]
+ },
+ "a2-05db50db6619": {
+  "aceita": false,
+  "motivo": "duplicada:a2-09eb42d69b01",
+  "justificativa": "Texto de ajuda contextual curto e direto = texto da tooltip curto e conciso (a2-09eb42d69b01, aceita)."
+ },
+ "a2-9b4cbe463375": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "'É mais adequado' = recomendação (e trata de ilustração de empty state, que não existe na tela)."
+ },
+ "a2-d2a892bab815": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Melhores práticas de empty state; nenhum estado da tela tem conteúdo vazio."
+ },
+ "a2-9697ca7c6fb2": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Melhores práticas de empty state; nenhum estado da tela tem conteúdo vazio."
+ },
+ "a2-56daed191da1": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Melhores práticas de empty state; nenhum estado da tela tem conteúdo vazio."
+ },
+ "a2-84eb88766d68": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Melhores práticas de empty state; nenhum estado da tela tem conteúdo vazio."
+ },
+ "a2-8f9228b406c9": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Melhores práticas de empty state; nenhum estado da tela tem conteúdo vazio."
+ },
+ "a2-7131132f5bd0": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Melhores práticas de empty state; nenhum estado da tela tem conteúdo vazio."
+ },
+ "a2-054cfaa23352": {
+  "aceita": false,
+  "motivo": "duplicada:a2-3452a785e45d",
+  "justificativa": "Rótulo sucinto = rótulo curto e objetivo (a2-3452a785e45d, aceita; mesmo observável: nº de palavras do rótulo)."
+ },
+ "a2-77f619357b64": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Confirmação de senha; a tela não tem campo de senha."
+ },
+ "a2-7b6b4e989ae3": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Requisito de senha; a tela não tem campo de senha."
+ },
+ "a2-4fc1cd5d74dd": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Requisito de senha; a tela não tem campo de senha."
+ },
+ "a2-69c06d5fd1ad": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Regras de sintaxe de digitação (pontuação, espaçamento); a tela não tem campo de texto livre. O requisito de formato do upload já está em e-MAG 6.5."
+ },
+ "a2-b407feef8940": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "'Podem exigir' descreve possibilidade; não impõe nada."
+ },
+ "a2-4079d192930e": {
+  "aceita": false,
+  "motivo": "escopo",
+  "justificativa": "Testar em todas as resoluções e orientações de dispositivo; o contrato é 1280×900."
+ },
+ "a2-390c1fc05363": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Subagrupamentos; o formulário tem um só fieldset, sem subgrupo (como a2-83bfe4ed2cf5)."
+ },
+ "a2-ba97fe048b1b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Campos opcionais; a tela não oferece campo opcional (como a2-b174afd9a294)."
+ },
+ "a2-c19c64886df5": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Gerenciadores de senha e preenchimento automático; não há campo de senha nem de texto livre."
+ },
+ "a2-0d33581a3847": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "Continua 'Procure elaborar formulários curtos…' e é condicional ('se preciso'): recomendação (como a2-f9bc87c84bdf)."
+ },
+ "a2-c1b1de4018c6": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Atribuir prioridades às atividades depende de dados de uso (processo de projeto), como a2-eb470d67f120."
+ },
+ "a2-20e8cc07fdd7": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Oferecer opções relacionadas é decisão de arquitetura de navegação; nenhum caso inequívoco na página."
+ },
+ "a2-9e58968bba21": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "O caminho para concluir a tarefa é dado pelo btn-enviar (primário) e btn-voltar, moldura protegida."
+ },
+ "a2-ed5bb72705c2": {
+  "aceita": false,
+  "motivo": "escopo",
+  "justificativa": "Em dispositivos móveis; o contrato é 1280×900."
+ },
+ "a2-46c7beba4a43": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Navegação sequencial (wizard) com botões de avançar etapa; não existe na tela."
+ },
+ "a2-ee9dba1fc6c0": {
+  "aceita": false,
+  "motivo": "duplicada:a2-274ebf4959e8",
+  "justificativa": "Máximo de duas palavras (três se inevitável) já é a medida de a2-274ebf4959e8 (aceita), da mesma frase."
+ },
+ "a2-55e29f8a3043": {
+  "aceita": false,
+  "motivo": "conflito",
+  "justificativa": "Exige rótulo de ação começando por verbo no infinitivo. O botão de escolher arquivo do upload é 'Selecione o arquivo' (imperativo), fixado no inventário pela regra do upload de arquivo único (a2-6e7c9e436ad4), e os rótulos das abas são substantivos (Andamento, Documentos). A página conforme segue o componente e o inventário, e por isso violaria esta cláusula. Para aceitar, o rótulo do botão do upload teria de ser trocado (ex.: 'Selecionar arquivo')."
+ },
+ "a2-598ca56880b1": {
+  "aceita": true,
+  "justificativa": "Títulos e subtítulos da página com a inicial de cada palavra em maiúscula, menos artigos e preposições. R-ED (a): maiúsculas contáveis. Medida: caixa da inicial de cada palavra de conteúdo nos h1/h2 da página. Obs.: a referência precisa escrever seus títulos assim (ex.: 'Acompanhar Requerimento', 'Dúvidas Frequentes').",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "subtitulo-caixa-de-sentenca",
+    "descricao": "O título da seção de dúvidas passa a 'Dúvidas frequentes' (só a primeira palavra com maiúscula).",
+    "clausula": "Títulos e subtítulos são escritos com iniciais das palavras em maiúsculas (exceto artigos, preposições, etc)."
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ]
+ },
+ "a2-fde9c0cced53": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Constatação (mensagem longa é menos lida); o predicado normativo é a frase vizinha."
+ },
+ "a2-0c628b618382": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "SEO; não se aplica a uma tela de serviço autenticada (como a2-0f0fbb274ed5)."
+ },
+ "a2-fc99c0db73c4": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Item da lista de objetivos do writing; declara meta, não cláusula (como a2-680fc6ae64f1)."
+ },
+ "a2-87a6ef93eb2f": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Item da lista de objetivos do writing; declara meta, não cláusula (como a2-680fc6ae64f1)."
+ },
+ "a2-ffac7751c5b1": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Item da lista de objetivos do writing; declara meta, não cláusula (como a2-680fc6ae64f1)."
+ },
+ "a2-747515b43724": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Item da lista de objetivos do writing; declara meta, não cláusula (como a2-680fc6ae64f1)."
+ },
+ "a2-caeaef36e509": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Define o que é um texto acessível."
+ },
+ "a2-2e47fd643127": {
+  "aceita": false,
+  "motivo": "duplicada:a2-6c531e6437e8",
+  "justificativa": "Reutilizar as mesmas palavras em contextos semelhantes = terminologia consistente (a2-6c531e6437e8, aceita; mesmo observável: o mesmo dado com dois nomes)."
+ },
+ "a2-799800fab95b": {
+  "aceita": false,
+  "motivo": "duplicada:a2-6c531e6437e8",
+  "justificativa": "Consistência entre as palavras ('Agendar' x 'Programar') = terminologia consistente (a2-6c531e6437e8, aceita)."
+ },
+ "a2-73a6b6a52a5c": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Esclarece o sentido de 'conciso'; o predicado está na frase seguinte (a2-5610d5df55f0, aceita)."
+ },
+ "a2-cc437f217b56": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Descreve a vantagem do alinhamento à esquerda; não impõe nada (como a2-729f9df0c7cc)."
+ },
+ "a2-9e1a835fa52a": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Introdução guarda-chuva das dicas de escaneabilidade ('estrutura clara'); sem observável único, e as dicas saíram como recomendação."
+ },
+ "a2-8d1b666574b5": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "Uma das 'maneiras de conseguir' escaneabilidade (dica); como a2-275ae798acea ('quando possível, apresente em listas')."
+ },
+ "a2-d5f9ed80c0fd": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Siglas de quatro letras ou mais; as siglas da tela têm até três letras (SMS e a do protocolo)."
+ },
+ "a2-e4aa913467f1": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Condição 'muitos termos complexos' falsa na tela; não há material auxiliar de glossário."
+ },
+ "a2-55d85630aecf": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Processo (testar com usuários e revisar), como a2-b43f1860fd24."
+ },
+ "a2-40e63c381eab": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Intenção geral ('ir além' dos requisitos legais); sem observável."
+ },
+ "a2-d89e6bfe79d5": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Texto alternativo de imagem; a tela não tem imagem de conteúdo."
+ },
+ "a2-4690f51372ed": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Título-guarda-chuva da linguagem inclusiva; as formas concretas vêm como 'possibilidades' sugeridas e o caso flagrante (zombar do usuário) já está em a2-909e5f61d661."
+ },
+ "a2-5cdbe8c0d277": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "Introduzida por 'indicamos algumas possibilidades de contornar': sugestão."
+ },
+ "a2-63d4dc64b9e6": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "'Sempre que possível' + 'possibilidades' sugeridas: recomendação."
+ },
+ "a2-eddc41c7dae7": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "Introduzida por 'indicamos algumas possibilidades de contornar': sugestão."
+ },
+ "a2-c8902b7754f0": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Tabela de mensagens de empty state de erro; nenhum estado da tela tem conteúdo vazio."
+ },
+ "a2-d89456b2b61e": {
+  "aceita": true,
+  "justificativa": "Estilização do fieldset dos avisos pela tabela. A linha border (--surface-width-none) já está em a2-02ccd4221688; a variante usa a linha margin-bottom. Medida: margin-bottom computado do fieldset = valor de --spacing-scale-5x.",
+  "instancias": [
+   "swt-aviso-email"
+  ],
+  "variantes": [
+   {
+    "id": "fieldset-margem-reduzida",
+    "descricao": "O fieldset 'Avisos sobre o requerimento' fica com margin-bottom igual a --spacing-scale-2x em vez de --spacing-scale-5x.",
+    "clausula": "l.307: margin-bottom | --spacing-scale-5x"
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ]
+ },
+ "a2-641c4d20ab8f": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "Tabela 'Componente | Utilize para': orientação de uso dos componentes de navegação lateral."
+ },
+ "a2-d443707a1edf": {
+  "aceita": false,
+  "motivo": "duplicada:a2-8f86684de1e2",
+  "justificativa": "A linha aplicável (Texto à esquerda) é o mesmo observável de a2-8f86684de1e2 (aceita, mesma tabela); as linhas de dado monetário e ícone não têm coluna na tabela da tela."
+ },
+ "a2-1f343a3e7bf2": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Tabela descritiva ('alguns termos que você pode encontrar'); além disso nenhuma ação sorteável usa esses verbos."
+ }
+}

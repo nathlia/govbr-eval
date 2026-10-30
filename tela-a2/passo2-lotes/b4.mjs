@@ -1,0 +1,201 @@
+// Unidades sem componente: e-MAG, guias, padrões, fundamentos, redação.
+// E(num, ...) registra a recomendação do e-MAG; variantes com instâncias próprias.
+export default (R, A, E) => {
+const MSG = ["msg-pendencia", "msg-retorno"], TIP = ["tip-prazo", "tip-protocolo"], SW = ["swt-aviso-email", "swt-aviso-sms"];
+const ND = "nao-se-aplica", SM = "sem-medicao", NN = "nao-normativa";
+const v = (id, descricao, instancias) => ({ id, descricao, instancias });
+
+// ---- e-MAG 3.1 (cada recomendação é uma unidade) ----
+E("1.1","Código conforme às normas do W3C. Medida: ids únicos no documento (querySelectorAll de cada id).",["pagina"],[v("id-duplicado","O título do card e o painel da aba Andamento recebem o mesmo id.",["pagina"])]);
+E("1.2","Elemento usado conforme o seu significado. Medida: tagName do controle.",MSG,[v("fechar-div","O botão Fechar da mensagem vira div role=button tabindex=0 com Enter/Espaço (teclado intacto).",MSG)]);
+E("1.3","Níveis de cabeçalho hierárquicos. Medida: sequência de h1–h6 do documento.",["pagina"],[v("salto-de-nivel","O título 'Dúvidas frequentes' vira h4 logo depois do h2 (pula o h3).",["pagina"])]);
+E("1.4","Ordem lógica de leitura e tabulação. Medida: ordem no DOM e de Tab contra a ordem visual.",[],[]);
+R(EMAG["1.5"],"so-andaime","A âncora para o bloco de conteúdo é o skiplink, que é andaime (construído conforme).");
+E("1.6","Tabela só para dados. Medida: table usada para dispor conteúdo que não é tabular.",["crd-resumo"],[v("card-em-tabela","Os dados do card (número, serviço, situação, prazo) são dispostos com uma table de layout, sem cabeçalhos.",["crd-resumo"])]);
+R(EMAG["1.7"],"so-andaime","Links adjacentes só existem no breadcrumb e no rodapé, que são andaime.");
+E("1.8","Áreas de informação divididas (regiões). Medida: landmarks no snapshot de acessibilidade.",["pagina"],[v("sem-main","A região principal vira div sem role (não há main).",["pagina"])]);
+R(EMAG["1.9"],ND,"Nenhuma instância sorteável tem link ou abre janela.");
+E("2.1","Todas as funções via teclado. Medida: alcançar por Tab e acionar por Enter/Espaço cada controle.",["acc-duvidas","upl-documento"],[v("item-so-mouse","O cabeçalho do 3º item vira span com clique: sem foco e sem teclado.",["acc-duvidas"]),v("botao-upload-so-mouse","O botão de escolher arquivo vira span com clique: sem foco e sem teclado.",["upl-documento"])]);
+R(EMAG["2.2"],ND,"Não há objeto programável embutido (plugin, applet, embed).");
+R(EMAG["2.3"],SM,"A atualização automática recarrega a página e apaga os estados S1/S2 da medição; não há medida que preserve os estados.");
+R(EMAG["2.4"],SM,"O redirecionamento automático tira a página medida do ar; não há medida que preserve os estados.");
+R(EMAG["2.5"],ND,"A tela não tem limite de tempo.");
+E("2.6","Sem intermitência (mais de 3 piscadas por segundo). Medida: animation-duration e iteration do elemento.",["msg-pendencia"],[v("pisca","O ícone da mensagem de pendência pisca 4 vezes por segundo (animação CSS infinita).",["msg-pendencia"])]);
+R(EMAG["2.7"],ND,"Não há conteúdo que se move ou atualiza sozinho.");
+E("3.1","Idioma principal identificado. Medida: atributo lang do html.",["pagina"],[v("sem-lang","O html fica sem lang.",["pagina"])]);
+R(EMAG["3.2"],ND,"Não há trecho em outro idioma.");
+E("3.3","Título descritivo da página. Medida: document.title.",["pagina"],[v("titulo-generico","O title da página fica 'Página'.",["pagina"])]);
+R(EMAG["3.4"],"so-andaime","A localização é dada pelo breadcrumb, que é andaime.");
+R(EMAG["3.5"],ND,"Nenhuma instância sorteável tem link.");
+E("3.6","Alternativa em texto para imagens (inclui ícone que é o único conteúdo de um controle). Medida: nome acessível do gatilho só de ícone.",TIP,[v("icone-sem-alternativa","O gatilho (botão só com ícone) perde o aria-label e fica sem nome acessível.",TIP)]);
+R(EMAG["3.7"],ND,"Não há mapa de imagem.");
+R(EMAG["3.8"],ND,"Não há documento para baixar.");
+E("3.9","Tabela com título. Medida: caption ou nome acessível da tabela.",["tbl-movimentacoes"],[v("sem-titulo","A tabela perde o caption e fica sem nome acessível.",["tbl-movimentacoes"])],[v("titulo-por-aria-labelledby","A tabela é nomeada por aria-labelledby apontando para o título visível, sem caption.",["tbl-movimentacoes"])]);
+E("3.10","Células de dados associadas às de cabeçalho. Medida: th com scope ou headers/id.",[],[],[v("associacao-por-headers","As células usam headers/id em vez de scope.",["tbl-movimentacoes"])]);
+R(EMAG["3.11"],SM,"Compreensão do texto é julgamento de redação.");
+E("3.12","Explicação para siglas. Medida: primeira ocorrência da sigla tem expansão (abbr title ou texto).",["crd-resumo"],[v("sigla-sem-explicacao","O card mostra 'NUP' sem expansão em lugar nenhum.",["crd-resumo"])]);
+E("4.1","Contraste mínimo. Medida: razão de contraste computada do texto contra o fundo.",["crd-resumo","acc-duvidas"],[v("texto-baixo-contraste","O texto secundário do card fica #AAAAAA sobre branco.",["crd-resumo"]),v("conteudo-baixo-contraste","O texto do painel do 1º item fica #A0A0A0 sobre branco.",["acc-duvidas"])]);
+E("4.2","Não usar só a cor para diferenciar. Medida: existe indicação além da cor (texto, ícone com nome, forma).",["stp-andamento"],[v("atual-so-pela-cor","A etapa atual só se distingue pela cor: sem aria-current e sem outra marca visual.",["stp-andamento"])],[v("tipo-por-texto-oculto","O tipo da mensagem é dito por texto visualmente oculto ('Atenção:') em vez de nome no ícone.",MSG)]);
+E("4.3","Redimensionar sem perder funcionalidade. Medida: com texto a 200% o conteúdo do card continua visível (sem corte).",["crd-resumo"],[v("altura-fixa-corta","O card tem altura fixa em px e overflow hidden: com texto a 200% o conteúdo é cortado.",["crd-resumo"])]);
+E("4.4","Foco visualmente evidente. Medida: outline ou box-shadow computado no foco contra sem foco.",["sel-tipo-documento","swt-aviso-email","swt-aviso-sms","acc-duvidas"],[v("foco-invisivel","O indicador de foco do controle é suprimido (outline none e sem box-shadow).",["sel-tipo-documento","swt-aviso-email","swt-aviso-sms","acc-duvidas"])],[v("foco-por-box-shadow","O foco é desenhado com box-shadow em vez de outline.",["swt-aviso-email","swt-aviso-sms"])]);
+for (const n of ["5.1","5.2","5.3","5.4","5.5"]) R(EMAG[n],ND,"Não há multimídia nem animação controlável na tela.");
+R(EMAG["6.1"],ND,"Não há botão de imagem (input type=image).");
+E("6.2","Etiquetas associadas aos campos. Medida: nome acessível do campo vem do rótulo visível.",["upl-documento"],[v("rotulo-desassociado","O rótulo do upload deixa de estar associado ao input (sem for/id).",["upl-documento"])],[v("rotulo-por-aria-labelledby","O switch é rotulado por aria-labelledby apontando para o texto visível, sem for/id.",SW)]);
+E("6.3","Ordem lógica de navegação no formulário. Medida: ordem de Tab entre os campos.",["sel-tipo-documento","upl-documento"],[v("tabindex-positivo","O controle recebe tabindex=1 e sai da ordem do formulário.",["sel-tipo-documento","upl-documento"])]);
+E("6.4","Sem mudança automática de contexto. Medida: escolher uma opção não envia nem troca de aba.",["sel-tipo-documento"],[v("muda-contexto","Escolher uma opção no select envia o formulário sozinho.",["sel-tipo-documento"])]);
+E("6.5","Instruções para entrada de dados. Medida: texto de apoio com formatos e tamanho aceitos, ligado ao campo.",["upl-documento"],[v("sem-formato","O texto de apoio com formatos e tamanho máximo é removido.",["upl-documento"])]);
+E("6.6","Erros identificados e descritos. Medida: em S2, o campo inválido tem texto de erro que diz o que corrigir.",["sel-tipo-documento","upl-documento","msg-retorno"],[v("erro-so-borda","Em S2 o campo inválido só fica com borda vermelha, sem texto de erro.",["sel-tipo-documento","upl-documento"]),v("erro-generico","A mensagem de retorno diz só 'Erro.' sem dizer qual campo nem o que fazer.",["msg-retorno"])]);
+E("6.7","Campos relacionados agrupados. Medida: os dois switches de aviso dentro de fieldset com legend.",["swt-aviso-email"],[v("grupo-sem-fieldset","fieldset+legend dos avisos viram div+p; o texto visível fica.",["swt-aviso-email"])]);
+R(EMAG["6.8"],ND,"Não há CAPTCHA.");
+
+// ---- guia geral de acessibilidade em HTML / acessibilidade.md (estrato G; repetem o e-MAG) ----
+R("ed21800a3c0b","duplicada:"+EMAG["1.1"],"Repete a recomendação 1.1 do e-MAG.",{emag:"1.1"});
+R("eecfb4af1d1e","duplicada:"+EMAG["1.2"],"Repete a recomendação 1.2.",{emag:"1.2"});
+R("efaa1a56290c","duplicada:"+EMAG["1.2"],"Repete a recomendação 1.2.",{emag:"1.2"});
+R("47b777d7f803","duplicada:"+EMAG["1.3"],"Repete a recomendação 1.3.",{emag:"1.3"});
+R("71f5bfe76574","duplicada:"+EMAG["1.6"],"Repete a recomendação 1.6.",{emag:"1.6"});
+R("54110c0cf291","duplicada:"+EMAG["3.1"],"Repete a recomendação 3.1.",{emag:"3.1"});
+R("c64a6b1b489d","duplicada:"+EMAG["3.1"],"Repete a recomendação 3.1.",{emag:"3.1"});
+R("6dc87e28972f","duplicada:"+EMAG["3.6"],"Repete a recomendação 3.6.",{emag:"3.6"});
+R("127f92e2ad55","duplicada:"+EMAG["6.2"],"Repete a recomendação 6.2.",{emag:"6.2"});
+for (const id of ["0efa500e071e","7fe441d7e201","7e48dae780c6","a2872503ab86","3938fd575fac","3f6b7b055edf"]) R(id,SM,"Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG.");
+for (const id of ["f454513b3b84","1550c237c5ed","fe970e7d07cb","a967925813b1","8dc9577fd386","fe17653002d8"]) R(id,NN,"Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página.");
+
+// ---- padrões: formulário ----
+R("eadc35148ab4",NN,"Frase de apresentação.");
+A("3d935c4b833a","Título do formulário com o maior tamanho de texto do formulário. Medida: font-size do título do formulário contra rótulos e textos do formulário.",["pagina"],[["titulo-form-menor","O título do formulário da aba Documentos fica com font-size menor que os rótulos dos campos."]]);
+R("98916290fb39",ND,"O formulário não é o único elemento da página.");
+R("a9190c0fe6be",SM,"Conteúdo do subtítulo é julgamento.");
+R("6854a35b9351",NN,"'Prefira' (recomendação).");
+R("172c2de5b954",NN,"'Pode ser necessário' (permissão).");
+R("708c80c9546a",NN,"Instrução condicional a uma escolha de projeto.");
+R("72c04236c683",NN,"Legenda de imagem.");
+R("f6a51dd122cf",NN,"'Evite' (recomendação).");
+R("a221b6eb52ce",NN,"'Considere' (recomendação).");
+A("624afa51bbaf","Não marcar ao mesmo tempo campos obrigatórios e opcionais. Medida: textos de marcação nos rótulos do formulário.",["sel-tipo-documento"],[["marca-os-dois","O rótulo do select ganha '(obrigatório)' e o do switch de SMS, '(opcional)'."]]);
+R("7cf9313c9fcc","conflito","Pôr o foco no primeiro campo ao abrir a aba Documentos tira o foco da aba e contraria a navegação por teclado da tab (a2-f19f80da5bea, a2-557812293319). A página conforme não move o foco; registrado como conflito.");
+A("bfb3c1909154","Largura do campo não muda com o texto. Medida: largura do campo antes e depois de escolher a opção mais longa.",["sel-tipo-documento"],[["largura-cresce","A largura do campo do select acompanha o texto escolhido."]]);
+R("cf130efa2e85",SM,"'Tamanho compatível' sem limiar.");
+R("b07629546d9c",ND,"Não há senha.");
+R("78612395b3bd",ND,"Não há senha.");
+R("3c41add42ce4",NN,"Descreve uma situação.");
+R("ac1b95753264",ND,"Edição de dado já enviado; não há.");
+R("20a2754d88ff","duplicada:"+EMAG["6.2"],"Placeholder no lugar de rótulo é a mesma falta de etiqueta associada da recomendação 6.2 (variante própria registrada lá).",{emag:"6.2",hosts:["sel-tipo-documento"],variantes:[["placeholder-como-rotulo","O rótulo visível do select some; 'Tipo de documento' fica só como placeholder."]]});
+R("2ceedc253459",SM,"Concisão do texto auxiliar.");
+R("a4bf60541c53",SM,"Saber se a informação 'precisa estar visível' é julgamento.");
+R("d43497944f79",ND,"Ajuda junto a rótulo de campo; as ajudas da tela ficam no card.");
+R("d9aa1b2d1d9a",SM,"Saber se a informação é 'vital' é julgamento.");
+R("56efb314c6c4",SM,"Necessidade de ajuda é julgamento.");
+R("e43e2837418a",NN,"'Preferencialmente' (recomendação); além disso, os botões são andaime.");
+R("2ac598dc24db","so-andaime","Ordem de botões primário/secundário; os botões são andaime.");
+R("f2a3e883d74b",ND,"Botões em coluna; não há.");
+R("6f543db37b45",NN,"Explica o fieldset.");
+A("2e4efd30789f","Legend com menos ênfase que o título do formulário. Medida: font-size do legend dos avisos contra o do título do formulário.",["swt-aviso-email"],[["legend-maior","O legend dos avisos fica com font-size maior que o título do formulário."]]);
+R("85f29ecf4300","duplicada:"+EMAG["6.7"],"Usar legend no grupo é a recomendação 6.7.",{emag:"6.7"});
+A("0cb2e580195d","Espaçamentos constantes para a mesma função. Medida: distância rótulo→campo em cada campo do formulário.",["upl-documento"],[["espaco-irregular","A distância entre o rótulo e o campo do upload fica 2px, diferente dos demais campos."]]);
+R("dd98125c97c9",SM,"Finalidade do dado é decisão de produto.");
+R("065449110d9a",SM,"Finalidade do dado é decisão de produto.");
+R("96dcf8098a6b",SM,"Remete à WCAG inteira; sem observável único.");
+R("c93fa23b79d3","duplicada:"+EMAG["2.1"],"Repete a recomendação 2.1 para os campos.",{emag:"2.1"});
+R("765073c3d610",ND,"Outros dispositivos; a medição é em 1280×900.");
+// ---- padrões: ajuda e comunicação ----
+R("c3f88a06ca93","acoplada","Tirar o recurso de ajuda é tirar instâncias da tela (accordion, tooltips).");
+for (const id of ["828be0a7c0d6","639a3b7c05e7","bb101b7d3462","0ddef069d601"]) R(id,ND,"Ajuda global do produto, presente em todas as telas; a tela é uma só.");
+R("7c5c88e6762b",SM,"Clareza é julgamento.");
+R("3efa429eb319",ND,"Link para ajuda global ao final da ajuda contextual; os tooltips da tela não remetem à ajuda global.");
+// ---- padrões: navegação ----
+R("a33ab64c0b03",NN,"Introdução."); R("a452374c9960",ND,"Hierarquia de um site inteiro.");
+R("6be62adc3519",ND,"Página inicial; esta é interna."); R("71a32d35002a","so-andaime","Acesso pai/filho é o breadcrumb (andaime).");
+R("5afc7bb34da5",SM,"Facilidade é julgamento."); R("756e337ffe70",SM,"Aprendizagem é julgamento.");
+R("40b8af421136",ND,"Navegação lateral; não há."); R("983f688f7874","so-andaime","Retorno ao ponto de partida é o breadcrumb e o botão Voltar (andaime).");
+R("7c1b79e2bcc2",NN,"Genérico."); R("f3b4abf09055",ND,"Dispositivos móveis."); R("b735a9108aaf",NN,"Genérico.");
+
+// ---- fundamentos: estados ----
+for (const id of ["ab853deb1d9c","f9954c36bc51","bbdc203ce15b","095a8a52fa90","aba0b9110366","c264f53dd99d","0795b6ad88f8","bd8d06482110","96a8e6331b1b","d77655ca94e7","4893be9b5861"]) R(id,SM,"Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema).");
+for (const id of ["ad12f8f65287","89c2d896bfc3","882b645e558a","1a1ea8b0b8e2","027fd69c08bd","8970233d9e42","1bbbbbe820d0","4b8242eb41a2"]) R(id,NN,"Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão').");
+R("ca107a813788","duplicada:"+EMAG["4.1"],"Remete ao contraste do fundamento Cores = recomendação 4.1.",{emag:"4.1"});
+R("f3b56ffec8fc",ND,"Fundos variados; a tela só tem fundo claro.");
+R("adbb58a0d3a7",ND,"Overlay sobre elementos de cor escura; não há.");
+R("72b58f169d36",SM,"A frase não fixa o valor da opacidade.");
+R("c380edac525f",SM,"A frase não fixa o valor da opacidade.");
+R("d2bb5c9cd92a","duplicada:a2-1c18ad657e0d","Mesmo observável (desabilitado sem elevação/sombra).");
+A("73dfd62f0816","Desabilitado com baixa ênfase. Medida: opacidade/cor computada das etapas desabilitadas contra as habilitadas.",["stp-andamento"],[["desabilitada-com-enfase","As etapas 3 e 4 (desabilitadas) ficam com a mesma cor e opacidade das habilitadas."]]);
+A("5da1dcbf7d0a","Cursor 'não permitido' no desabilitado. Medida: cursor computado das etapas desabilitadas.",["stp-andamento"],[["cursor-mao","As etapas desabilitadas mostram cursor pointer."]]);
+A("d0179dc6bd81","Desabilitado não recebe hover. Medida: estilo computado com hover sobre etapa desabilitada.",["stp-andamento"],[["hover-na-desabilitada","Passar o mouse sobre a 4ª etapa (desabilitada) mostra o realce de hover."]]);
+A("ec1111e4b2a1","Feedback de hover no próprio objeto. Medida: estilo computado do cabeçalho do item com e sem hover.",["acc-duvidas"],[["hover-sem-feedback","Os cabeçalhos do accordion não mudam com hover."]]);
+A("033815886ead","Cursor 'mão' nos interativos. Medida: cursor computado.",["tab-requerimento","acc-duvidas"],[["cursor-padrao","Os itens interativos mostram o cursor padrão (seta)."]]);
+R("65ab1a90c410","duplicada:a2-033815886ead","Mesmo observável (cursor 'mão' no interativo).");
+A("dd1a39bcd50b","Desabilitado não recebe Pressionado. Medida: estilo computado com o botão do mouse pressionado sobre etapa desabilitada.",["stp-andamento"],[["pressionado-na-desabilitada","Pressionar a 4ª etapa (desabilitada) mostra o realce de pressionado."]]);
+A("eb4a9da83395","Feedback de pressionado no próprio objeto. Medida: estilo computado com o mouse pressionado.",["acc-duvidas"],[["pressionado-sem-feedback","Os cabeçalhos do accordion não mudam ao serem pressionados."]]);
+A("1c18ad657e0d","Desabilitado sem elevação (sombra). Medida: box-shadow computado das etapas desabilitadas.",["stp-andamento"],[["desabilitada-com-sombra","Os indicadores das etapas desabilitadas ganham sombra de elevação."]]);
+R("e80f58b4b913","duplicada:"+EMAG["4.4"],"Foco com alta ênfase = foco visualmente evidente (4.4).",{emag:"4.4"});
+A("25ddbebf4f1a","Desabilitado não recebe foco. Medida: sequência de Tab não para nas etapas desabilitadas.",["stp-andamento"],[["desabilitada-focavel","A 4ª etapa fica só com aria-disabled e tabindex=0: recebe foco."]]);
+A("1754a39d9a39","Clicar não gera foco visual. Medida: indicador de foco depois de clique de mouse.",["acc-duvidas","tab-requerimento"],[["foco-no-clique","O indicador de foco aparece também depois de clique de mouse (:focus em vez de :focus-visible)."]]);
+R("370b35b87f02","duplicada:"+EMAG["4.4"],"Foco por teclado existe = 4.4.",{emag:"4.4"});
+A("0cb58cc75f6f","Borda de foco em volta, com espaçamento de segurança. Medida: outline-offset/afastamento do indicador de foco.",["sel-tipo-documento","swt-aviso-email","swt-aviso-sms"],[["foco-colado","O indicador de foco fica colado ao elemento (sem espaçamento de segurança)."]]);
+R("3087e28d2431",ND,"Foco tênue; não usado.");
+A("3e410f36c0cd","Desabilitado não recebe Ativo. Medida: estado/classe ativo em etapa desabilitada.",["stp-andamento"],[["desabilitada-ativa","A 3ª etapa (desabilitada) também carrega o estado ativo."]]);
+R("fc8874ac7e03",ND,"Vários itens ativos ao mesmo tempo; o accordion da tela abre um item por vez (decisão de construção registrada no plano).");
+A("76dbeded6662","Estado ativo com alta ênfase no conjunto. Medida: o item ativo se distingue (classe e aparência) dos demais do conjunto.",["tab-requerimento","stp-andamento"],[["ativa-sem-estado","A aba ativa perde o estado ativo e fica igual às interativas (o painel continua trocando).",["tab-requerimento"]],["atual-sem-destaque","A etapa atual fica igual às concluídas, sem o destaque do estado ativo.",["stp-andamento"]]]);
+R("bd6e34bcfb23",NN,"Lista onde o estado Selecionado não se aplica (navegação, tooltip, message...); não impõe nada às instâncias que o usam.");
+R("9b2fcaa1dcf6","duplicada:a2-482ab9c4a4b1","Mesmo observável (item escolhido com estado selecionado).");
+A("9bcf4f01a6bb","Selecionado = cor de fundo + elemento gráfico. Medida: no item escolhido, fundo e marca gráfica.",["sel-tipo-documento"],[["selecionado-so-fundo","O item escolhido mostra só a cor de fundo, sem a marca gráfica."]]);
+for (const id of ["0bc9d331721d","7a4cc459f05c","8e637084832f","a2cda6883389","280e09b93085","1716781bd268","532e06e9b442","0ac55a690dad","6ba31c373664"]) R(id,ND,"Arrastar objeto; não há objeto arrastável na tela.");
+R("9b8acd4a8f59",ND,"Dropzone desabilitada; o upload não fica desabilitado.");
+A("5612fb499d07","Dropzone ativo exibido ao arrastar sobre a área. Medida: classe/estilo da área depois de dragenter sintético.",["upl-documento"],[["sem-dropzone-ativo","Arrastar um arquivo sobre a área não muda a aparência dela."]]);
+R("4de381049bd4",ND,"Fundo escuro; não há.");
+// ---- fundamentos: cores ----
+R("0b6ac0a6bc42",SM,"Função da cor sem observável único.");
+R("9decdf14dc87",SM,"Guarda-chuva de acessibilidade.");
+R("0383076211e0","duplicada:"+EMAG["4.1"],"Contraste de texto grande = 4.1.",{emag:"4.1"});
+A("3fb37eb25f3c","Usar sempre as cores pré-definidas. Medida: cores computadas da instância contra a paleta do DS.",["crd-resumo","acc-duvidas","tbl-movimentacoes","msg-pendencia"],[["cor-fora-da-paleta","A cor do texto principal da instância vira #334333 (canal verde +16 sobre #333333)."]]);
+R("cc3d7bd5342f","duplicada:"+EMAG["4.1"],"Contraste com texto e elementos = 4.1.",{emag:"4.1"});
+// ---- fundamentos: grid ----
+for (const id of ["3bffb19b8840","e9b7ed194374","141237683128","9b1f86870c73","590ef96dad73","5e2a4c157a82","126a6960d260"]) R(id,SM,"Comportamento em outros breakpoints; o contrato do instrumento fixa a medição em 1280×900.");
+R("5130bd400133",NN,"'Recomenda-se'.");
+R("2f00ff64db29","duplicada:a2-6a99b79819ae","Mesmo observável (conteúdo dentro das margens da grid).");
+R("ba3439c9ddd0","duplicada:a2-6a99b79819ae","Mesmo observável (elementos dentro das margens).");
+R("e7608cf1c46d",ND,"Sangria; não há.");
+A("6a99b79819ae","Conteúdo dentro das margens da grid. Medida: borda do elemento contra a margem do contêiner da grid.",["tbl-movimentacoes","crd-resumo"],[["ultrapassa-margem","A instância ganha margem negativa e passa da margem da grid."]]);
+// ---- fundamentos: iconografia ----
+R("8dbdbd523f41",ND,"Construção de ícone novo; não há."); R("f5a61bdcd7ad",SM,"Papel do ícone é julgamento.");
+R("bd456a928d4d",NN,"Explica webfonts."); R("6e082644d710",NN,"Justifica o Font Awesome.");
+R("8b6f099effdd",ND,"Ícone novo; não há."); R("dd7a65ef1946",ND,"Ícone novo; não há.");
+A("b889b938c32d","Seguir a tabela de uso de ícones do DS. Medida: classe do ícone semântico contra a tabela de iconografia.",MSG,[["icone-trocado","O ícone semântico da mensagem é trocado por fa-bell."]]);
+A("312798bd96aa","Ícones no estilo Font Awesome Solid. Medida: classe/família do ícone.",TIP,[["icone-regular","O ícone do gatilho usa a família Regular (far) em vez da Solid."]]);
+A("5542b7528b3d","Área mínima de interação de 24×24px no ícone interativo. Medida: getBoundingClientRect do gatilho.",TIP,[["area-pequena","O gatilho só de ícone fica com 16×16px."]]);
+R("969e3300f6dd","duplicada:a2-5542b7528b3d","Mesmo observável (área mínima do ícone interativo).");
+R("f0e1d7f16f8b",ND,"Área de toque em dispositivo móvel.");
+A("d4db34492294","Ícone corresponde à ação. Medida: classe do ícone do cabeçalho do item contra a ação (expandir/recolher).",["acc-duvidas"],[["icone-de-fechar","O ícone dos cabeçalhos do accordion vira fa-times (fechar) em vez do de expandir."]]);
+// ---- fundamentos: tipografia ----
+A("2f4eadc23b2c","Nenhuma fonte fora da escala Minor Third. Medida: font-size computado contra os valores da escala.",["crd-resumo","acc-duvidas","tbl-movimentacoes","msg-pendencia"],[["fonte-fora-da-escala","O texto principal da instância fica com font-size 15px."]]);
+R("08acc761e53d","duplicada:a2-2f4eadc23b2c","Mesmo observável (escala tipográfica).");
+R("0e0c2cbf4714",ND,"Alteração da escala base; não há."); R("b29e725262d0",SM,"Guarda-chuva.");
+R("84e597ff795b","duplicada:"+EMAG["1.2"],"Marcação semântica do texto = 1.2.",{emag:"1.2"});
+R("05763ed77f2d",NN,"'Sempre que possível' (recomendação).");
+R("0da3fdc4c825",SM,"Processo de comunicação com desenvolvedores."); R("dadcee8e1cc6",ND,"Fonte base diferente; não há.");
+// ---- padrões: redação ----
+for (const id of ["46c418f28680","9a86ce8f82e4","7562e56b2290","7278a9812cac","d6b3f0e36943","8f3255e3da17","3f23afca6972","1acad722c4ce","7196ad4a3f2d","1b64f4d40425","e0663017fccc","92fa8a2632b2","b35d4da9598b","47c7c28cd674"]) R(id,SM,"Qualidade de redação (clareza, concisão, tom); sem medida pequena.");
+for (const id of ["4e5a457e6d01","9e8282563327","90f940e4e457","3ab15b98e299","bc60da954336","e8ef9a9bc498","7d657a9927c8","5992cfd640ea","d5774660fa43","fc89dea7b07b","8f8c5722c5ea","95da9984f12d","8571bc44c93e","eb2482445be4"]) R(id,NN,"Recomendação, exemplo ou definição; não impõe nada observável.");
+for (const id of ["770d03a2586e","9e7fe5702498"]) R(id,ND,"Rótulos de tag; a tela não tem tag.");
+R("73e03945d5cc","so-andaime","Rótulos de button; os botões são andaime.");
+A("c678d7f46286","Rótulo de ação só com a primeira letra maiúscula (button é exceção). Medida: texto dos rótulos das abas.",["tab-requerimento"],[["rotulo-title-case","O rótulo da 2ª aba fica 'Enviar Documentos'."]]);
+A("5a1fcf660ae1","Sem artigos no rótulo de ação. Medida: texto dos rótulos das abas.",["tab-requerimento"],[["rotulo-com-artigo","O rótulo da 2ª aba fica 'Os documentos'."]]);
+for (const id of ["86c0aa8329ae","dd8a921bfeeb","5eddaf90c132"]) R(id,ND,"Links; nenhuma instância sorteável tem link.");
+R("d07b05c07838",ND,"Seleção múltipla; o select é simples.");
+for (const id of ["689468fd37ad","0483c9e36f92","8384621310b5"]) R(id,ND,"Vídeo; não há.");
+R("cfb74fcd34b4",ND,"Imagem com texto alternativo; não há imagem de conteúdo.");
+R("61f7e680f11b","duplicada:"+EMAG["6.6"],"Mensagem de erro que diz o quê, por quê e o que fazer = 6.6.",{emag:"6.6"});
+R("0beebbed1495",ND,"Números/IDs em tabela; a tabela não tem coluna numérica.");
+R("d9b38b2e638c",ND,"Números em tabela; a tabela não tem coluna numérica.");
+R("0f0fbb274ed5",ND,"SEO; não se aplica a uma tela de serviço autenticada.");
+A("12ee2ce5c650","Datas com a mesma quantidade de dígitos. Medida: texto das células de data.",["tbl-movimentacoes"],[["data-sem-zero","Uma das datas aparece como 5/9/2026, as demais como dd/mm/aaaa."]]);
+A("7e05c5c8e09c","Sem expressões regionais. Medida: texto da instância.",MSG,[["expressao-regional","A mensagem diz 'Bah, tá faltando um documento'."]]);
+R("820965e0b219","duplicada:a2-7e05c5c8e09c","Mesmo observável (vocabulário de grupo restrito no texto).");
+R("6a045b31f05d",ND,"Trata de textos, documentos e apresentações para clientes, não da interface.");
+R("4c406056e235","duplicada:"+EMAG["4.2"],"Cor como único meio = 4.2.",{emag:"4.2"});
+R("9250e991e04f","duplicada:"+EMAG["4.2"],"Classificação por cor com texto = 4.2.",{emag:"4.2"});
+// ---- padrões: empty states ----
+for (const id of ["49fc7885c5cd","371057c7a941","899b236d311b","a5cd7064a3cf","d82eed6caf27","d8a11140e3d6","78e2e79d04eb","3e9cd01f50b3","1ffaa01ecb7a","5c9b2d9ec9b2","8446ff4c79e5","b372f797b737","f7eb62bb41b0","c76ac23b4fe4","7094f78370aa","7ed98d2b86ac","21c802d46304","ea09c6c4030f","852353d1a725","b154db43ffab","e01185840d9e","8867ed50c2b9","4e655f426491","91a79f4d8b09"]) R(id,ND,"Empty state; nenhum estado da tela tem conteúdo vazio.");
+};
+export const EMAG = {};

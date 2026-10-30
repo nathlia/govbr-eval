@@ -1,0 +1,21 @@
+{
+  "_nota": "Fontes oficiais externas ao corpus literal, arquivadas para a A2 (Revisão Codex 1, NAT-110, itens 3 e 5). O draw-tela-a2.ts confere estes sha256.",
+  "arquivos": [
+    {
+      "arquivo": "tela-a2/fontes/portaria3-2007-emag.pdf",
+      "url": "https://www.gov.br/governodigital/pt-br/acessibilidade-e-usuario/acessibilidade-digital/legislacao/portaria3_eMAG.pdf",
+      "acesso": "2026-10-30T05:57Z",
+      "sha256": "872fbc4f63e3094c2b5957b323b4fea08f6d04988ebb244b76eac891f385a530",
+      "papel": "Fundamento da força obrigatória das recomendações do e-MAG 3.1 no universo: Portaria SLTI/MP nº 3, de 7/5/2007, art. 1º, §1º — o e-MAG é 'de adoção compulsória pelos órgãos e entidades integrantes do SISP'. Não cria bilhete próprio; cada variante e-MAG ainda tem de violar uma cláusula exigível da recomendação, com as condições dela.",
+      "citacao": "§1º As políticas, diretrizes e especificações técnicas de acessibilidade serão sistematizadas na forma de um modelo denominado “Modelo de Acessibilidade em Governo Eletrônico – e-MAG”, de adoção compulsória pelos órgãos e entidades integrantes do Sistema de Administração dos Recursos de Informação e Informática – SISP [...]"
+    },
+    {
+      "arquivo": "tela-a2/fontes/select-behavior-size.png",
+      "url": "https://gitlab.com/api/v4/projects/35215527/repository/files/ds%2Fcomponentes%2Fselect%2Fimagens%2Fselect-behavior-size.png/raw?ref=107c64a4ca016b0e37e4d9d8d74de3377d3b8293",
+      "acesso": "2026-10-30T05:58Z",
+      "sha256": "8dadbd7e0c408164a69d16da2e8f2ec5aab553d6ec5db3af9e724a4a2419bd5a",
+      "papel": "Imagem citada por componentes/select__designer.md (seção 'Dimensões mínimas e máximas › Larguras do select e multiselect') logo depois de a2-dfa0fb9f5edd, no mesmo commit de diretrizes do corpus (107c64a4). Lida em 2026-10-30: mostra dois selects e dois multiselects com 'Largura ajustável ao conteúdo'; NÃO traz valor numérico de largura mínima nem máxima.",
+      "citacao": "SELECT - Largura ajustável ao conteúdo / MULTISELECT - Largura ajustável ao conteúdo"
+    }
+  ]
+}

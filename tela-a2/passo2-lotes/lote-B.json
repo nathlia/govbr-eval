@@ -1,0 +1,1033 @@
+{
+  "a2-274ebf4959e8": {
+    "aceita": true,
+    "justificativa": "R-ED (b): rótulo de componente de ação curto (ideal até 2 palavras, 3 se inevitável). Na tela: botão de escolher arquivo do upload. Medida: nº de palavras do rótulo do botão.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-acao-prolixo",
+        "descricao": "O botão de escolher arquivo passa a dizer 'Clique aqui para selecionar no seu computador o arquivo do documento que você deseja enviar' (15 palavras).",
+        "clausula": "Escreva rótulos curtos, objetivos e claros."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-7893da21d37a": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Orientação/recomendação no contexto (verbo brando: evite/prefira/opte/considere/lembre-se), não impõe."
+  },
+  "a2-5de60e4b35d8": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Opte por' = preferência (rótulos de tags de interação); não impõe."
+  },
+  "a2-923f656fca07": {
+    "aceita": true,
+    "justificativa": "R-ED (a): texto do componente de ação numa única linha (contável). Medida: altura do rótulo do botão de escolher arquivo / line-height = 1 linha.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-em-duas-linhas",
+        "descricao": "O botão de escolher arquivo recebe largura máxima estreita e o rótulo quebra em duas linhas.",
+        "clausula": "Mantenha o texto dos componentes de ação em uma única linha."
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-36013fffe17a": {
+    "aceita": true,
+    "justificativa": "R-ED (b): termos familiares no rótulo de ação. Caso flagrante: jargão técnico de informática no botão do cidadão. Medida: leitura do rótulo do botão de escolher arquivo.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-jargao-tecnico",
+        "descricao": "O botão de escolher arquivo passa a dizer 'Carregar binário'.",
+        "clausula": "Utilize termos familiares para os usuários."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-d49d815f9832": {
+    "aceita": false,
+    "motivo": "duplicada:a2-274ebf4959e8",
+    "justificativa": "Mesmo predicado (brevidade do rótulo de ação), mesma condição e mesmo observável (nº de palavras) que 'Escreva rótulos curtos'."
+  },
+  "a2-12afa1f3c1f0": {
+    "aceita": true,
+    "justificativa": "R-ED (a): rótulo de ação com verbo que especifica a ação (presença de verbo é contável). Medida: o rótulo do botão de escolher arquivo contém verbo de ação.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-sem-verbo",
+        "descricao": "O botão de escolher arquivo passa a dizer só 'Arquivo'.",
+        "clausula": "Use verbos que especifiquem claramente a ação pretendida."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-74e8b61606cc": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação; e não há diálogo Sim/Não na tela."
+  },
+  "a2-8a61ee14d227": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "É o exemplo 'Não recomendável' (Não / Sim), não uma cláusula."
+  },
+  "a2-d47f4c470491": {
+    "aceita": true,
+    "justificativa": "R-ED (b): componente de ação sem texto deve ter ícone que expresse a ação. Na tela: gatilhos só de ícone das tooltips e botão Fechar (só ícone) das mensagens. Caso flagrante: ícone de significado alheio à ação. Medida: classe/glifo do ícone do controle.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo",
+      "msg-pendencia",
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "ajuda-com-icone-lixeira",
+        "descricao": "O gatilho de ajuda (botão só com ícone) passa a mostrar o ícone de lixeira no lugar do ícone de informação/ajuda.",
+        "instancias": [
+          "tip-prazo",
+          "tip-protocolo"
+        ],
+        "clausula": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada."
+      },
+      {
+        "id": "fechar-com-icone-de-adicionar",
+        "descricao": "O botão Fechar da mensagem passa a mostrar o ícone '+' (adicionar) no lugar do 'x'.",
+        "instancias": [
+          "msg-pendencia",
+          "msg-retorno"
+        ],
+        "clausula": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-f4e45dd0a793": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Se for necessário, utilize tooltip' = opcional/orientação."
+  },
+  "a2-d22e5132f27b": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Opte por' = preferência (rótulos de tags); não impõe."
+  },
+  "a2-dcf92371f256": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação (e não há links no conteúdo sorteável)."
+  },
+  "a2-38b868958848": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Opte por' = preferência (links, ausentes no conteúdo sorteável)."
+  },
+  "a2-5b6ffd6ad400": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Rótulos de magic button; não há magic button na tela."
+  },
+  "a2-06a47f68f4fd": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Contexto é o magic button (call-to-action); não há magic button na tela."
+  },
+  "a2-dfd5ce237dbb": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Não há links no conteúdo sorteável nem referência a conteúdo externo nele."
+  },
+  "a2-fd4a1b0c688e": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Considere' = recomendação."
+  },
+  "a2-015f84774222": {
+    "aceita": true,
+    "justificativa": "R-ED (a): rótulo de elemento de entrada de dados não pode estar todo em caixa alta (contável). Medida: texto renderizado do rótulo (incl. text-transform) não é todo maiúsculo.",
+    "instancias": [
+      "sel-tipo-documento",
+      "upl-documento",
+      "swt-aviso-email",
+      "swt-aviso-sms",
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-campo-caixa-alta",
+        "descricao": "O rótulo do campo é escrito inteiro em maiúsculas (ex.: 'TIPO DE DOCUMENTO', 'RECEBER AVISOS POR SMS').",
+        "clausula": "Não deixe o texto todo em caixa alta."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-1f45d0dc0c3a": {
+    "aceita": true,
+    "justificativa": "R-ED (a): uso de ':' no fim do rótulo consistente em todos os campos do formulário (contável). Medida: rótulos do formulário terminam todos com ':' ou nenhum termina.",
+    "instancias": [
+      "sel-tipo-documento",
+      "upl-documento",
+      "swt-aviso-email",
+      "swt-aviso-sms",
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "dois-pontos-em-um-rotulo",
+        "descricao": "Só o rótulo deste campo passa a terminar com ':'; os demais rótulos do formulário ficam sem.",
+        "clausula": "se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-1f4674970cfc": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Remete à 'recomendação' de concisão e sugere dividir em blocos ('você pode'); não impõe."
+  },
+  "a2-9a7855a8147e": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação."
+  },
+  "a2-ff4774df0f23": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação."
+  },
+  "a2-bd3e30f68ef0": {
+    "aceita": false,
+    "motivo": "duplicada:a2-372068e40fd2",
+    "justificativa": "Hierarquia de títulos/subtítulos = e-MAG 1.3 (mesmo predicado e observável: sequência h1–h6).",
+    "equivalenteEmag": "1.3"
+  },
+  "a2-766414fd4ce4": {
+    "aceita": false,
+    "motivo": "duplicada:a2-372068e40fd2",
+    "justificativa": "H1 para o título da página = e-MAG 1.3 ('H1 deverá corresponder ao conteúdo principal da página').",
+    "equivalenteEmag": "1.3"
+  },
+  "a2-f2daf2bc982b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Trata de páginas de erro (404 etc.); a tela não tem página de erro."
+  },
+  "a2-79929d75e9fd": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação."
+  },
+  "a2-a3591a629688": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Lembre-se' = orientação; tom e voz do produto sem caso inequívoco."
+  },
+  "a2-909e5f61d661": {
+    "aceita": true,
+    "justificativa": "R-ED (b): proibição de zombar do usuário em mensagens (contexto: humor em mensagem de erro). Caso flagrante: mensagem que ridiculariza o usuário. Medida: texto da mensagem.",
+    "instancias": [
+      "msg-retorno",
+      "msg-pendencia"
+    ],
+    "variantes": [
+      {
+        "id": "retorno-zombeteiro",
+        "descricao": "A mensagem de erro do envio passa a dizer 'Esqueceu o arquivo de novo? Tente prestar atenção desta vez.'",
+        "instancias": [
+          "msg-retorno"
+        ],
+        "clausula": "Não zombe de seus usuários."
+      },
+      {
+        "id": "alerta-zombeteiro",
+        "descricao": "O alerta de pendência passa a dizer 'Ainda não mandou o documento? Até uma tartaruga já teria enviado.'",
+        "instancias": [
+          "msg-pendencia"
+        ],
+        "clausula": "Não zombe de seus usuários."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-88a7e911426f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Nenhum estado da tela mostra formulário validado com sucesso (S2 é o formulário vazio com erro)."
+  },
+  "a2-0ea33ff35779": {
+    "aceita": true,
+    "justificativa": "R-ED (b): não culpar o usuário na mensagem de erro (o próprio contexto dá o caso: 'você fez'/'você não fez'). Medida: texto da mensagem de erro de S2.",
+    "instancias": [
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "erro-culpa-usuario",
+        "descricao": "A mensagem de erro passa a dizer 'Você não anexou o arquivo e esqueceu de escolher o tipo de documento.'",
+        "clausula": "Não culpe o usuário."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-36e7ede3f63d": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação (o predicado observável fica na unidade 'Não culpe o usuário')."
+  },
+  "a2-a6d3b956c667": {
+    "aceita": true,
+    "justificativa": "R-ED (b): a mensagem de erro diz o que o usuário precisa fazer para remediar. Diz mais que e-MAG 6.6 (descrever o erro): erro descrito sem instrução viola só esta. Medida: texto da mensagem de erro de S2 contém a ação corretiva.",
+    "instancias": [
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "erro-sem-instrucao",
+        "descricao": "A mensagem de erro passa a dizer só 'O envio falhou porque nenhum arquivo foi anexado.', sem dizer o que fazer.",
+        "clausula": "mantenha as diretivas específicas sobre o que o usuário precisa fazer para remediar a ação problemática"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-8e2c52a8c21b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Não há empty state na tela."
+  },
+  "a2-4d2faf4cd9ac": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Prefira' = preferência (contexto de navegação: menu/links, fora do sorteável)."
+  },
+  "a2-61ab1f9dab6c": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Texto de hiperlinks; não há links no conteúdo sorteável."
+  },
+  "a2-dac20e0ed128": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Não há números grandes/quantias na tela (número do requerimento é identificador; datas e prazos não levam separador de milhar)."
+  },
+  "a2-8f86684de1e2": {
+    "aceita": true,
+    "justificativa": "R-ED (a): alinhamento na tabela conforme a orientação (texto à esquerda; números que não se somam, como datas/IDs, à esquerda). Na tela todas as colunas (Data, Movimentação, Responsável) ficam à esquerda. Medida: text-align computado de th/td por coluna.",
+    "instancias": [
+      "tbl-movimentacoes"
+    ],
+    "variantes": [
+      {
+        "id": "texto-alinhado-a-direita",
+        "descricao": "As células da coluna Movimentação (texto) ficam com text-align right.",
+        "clausula": "Mantenha o alinhamento dos elementos de uma tabela consistentes conforme a orientação a seguir:"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-950f82952462": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de 'algumas maneiras simples' de SEO = dica; herda a força da introdução."
+  },
+  "a2-0407f25dc463": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de 'algumas maneiras simples' de SEO = dica; herda a força da introdução."
+  },
+  "a2-94dbb4f6f47d": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de 'algumas maneiras simples' de SEO = dica; herda a força da introdução."
+  },
+  "a2-f0a60a161e60": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de 'algumas maneiras simples' de SEO = dica (e não há imagem de conteúdo)."
+  },
+  "a2-1fa2afdfe5d8": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Fala do processo de escrita (bom senso, diálogo com áreas técnicas), não da página."
+  },
+  "a2-e68613d7ba36": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve o objetivo da Linguagem Simples; não impõe nada."
+  },
+  "a2-680fc6ae64f1": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Item da lista de objetivos do writing; declara meta, não cláusula."
+  },
+  "a2-6c531e6437e8": {
+    "aceita": true,
+    "justificativa": "R-ED (b): terminologia consistente. Caso flagrante: o mesmo dado chamado por dois nomes diferentes na mesma tela. Medida: nome usado para o número no card e no texto da tooltip do protocolo.",
+    "instancias": [
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "tooltip-outro-nome-do-numero",
+        "descricao": "O texto da tooltip do protocolo chama o número de 'código do processo', enquanto o card o rotula como número do requerimento/protocolo.",
+        "clausula": "O conteúdo precisa manter consistência quanto ao estilo, tom, voz e terminologias."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-8bac830a994e": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Processo (usar guia de estilo e método), não observável na página."
+  },
+  "a2-563801a32ce1": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "'Escreva como um humano' não tem critério contável nem caso inequívoco."
+  },
+  "a2-ef45780b673c": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'procure explicar' = orientação."
+  },
+  "a2-d051f4509212": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Utilidade da informação é julgamento editorial sem caso inequívoco."
+  },
+  "a2-0cd8e830165f": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "'O mais acessível possível' sem critério contável nem caso inequívoco."
+  },
+  "a2-902a234f887c": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Justificativa ('lembre-se que...'), não impõe nada."
+  },
+  "a2-ed8369e6a78d": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Considere' = recomendação."
+  },
+  "a2-71b482fd4521": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Considere' = recomendação (e é processo de pesquisa com usuários)."
+  },
+  "a2-9c703de75f43": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Justificativa ('tenha em mente'), não impõe nada."
+  },
+  "a2-b43f1860fd24": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Processo (testar e validar com usuários), não observável na página."
+  },
+  "a2-4caed2640752": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'considere uma voz neutra' = recomendação."
+  },
+  "a2-3804d73aa63e": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "No contexto 'como forma geral, considere...' a frase é orientação de tom (inclusiva, sem gírias/jargões)."
+  },
+  "a2-f27a38284ac7": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'considere ajustar' = recomendação."
+  },
+  "a2-68af96222c81": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Fala de experiência e estudo de quem escreve (processo)."
+  },
+  "a2-e9fcf16e650f": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'lembre-se de ser conciso' = orientação."
+  },
+  "a2-94305d160902": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Opte por' = preferência."
+  },
+  "a2-5610d5df55f0": {
+    "aceita": true,
+    "justificativa": "R-ED (b): escrever o necessário com o mínimo de palavras. Caso flagrante (o da rubrica): tooltip/mensagem curtas inchadas para dezenas de palavras redundantes. Medida: nº de palavras do texto.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo",
+      "msg-pendencia"
+    ],
+    "variantes": [
+      {
+        "id": "tooltip-prolixa",
+        "descricao": "O texto da tooltip passa a ter ~80 palavras, repetindo a mesma informação em frases redundantes.",
+        "instancias": [
+          "tip-prazo",
+          "tip-protocolo"
+        ],
+        "clausula": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível."
+      },
+      {
+        "id": "alerta-prolixo",
+        "descricao": "O alerta de pendência passa a ter ~70 palavras, repetindo três vezes que há documento pendente.",
+        "instancias": [
+          "msg-pendencia"
+        ],
+        "clausula": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-729f9df0c7cc": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve que casos diferentes pedem alinhamentos diferentes; não impõe nada."
+  },
+  "a2-5e8c5bf4deea": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Lembre-se de padronizar' = orientação, e entre telas."
+  },
+  "a2-9932f3f90548": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de 'algumas maneiras de conseguir isso' (dicas de escaneabilidade); herda a força da introdução."
+  },
+  "a2-275ae798acea": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Quando possível' + item de dicas; não impõe."
+  },
+  "a2-0d5ae15892d3": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de dicas; destaque opcional."
+  },
+  "a2-c541d58cf8c7": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de 'algumas maneiras de conseguir isso' (dicas); herda a força da introdução apesar do limite de 4 linhas."
+  },
+  "a2-cb82f71ab9ba": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação."
+  },
+  "a2-ea7e91ba8435": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Prefira' = preferência."
+  },
+  "a2-e59a980bb5ae": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação."
+  },
+  "a2-29bea9107a3f": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Dê preferência' = preferência."
+  },
+  "a2-ad0e7d66765f": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação."
+  },
+  "a2-d5d3fc49b7e0": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Constatação ('sempre há chance...'), não impõe."
+  },
+  "a2-b1113ccfbc0a": {
+    "aceita": true,
+    "justificativa": "R-ED (a): na primeira ocorrência, nome completo seguido da sigla entre parênteses (formato contável). Diz mais que e-MAG 3.12 (que aceita abbr title): sigla só com abbr title viola só esta. Medida: texto da primeira ocorrência da sigla no card.",
+    "instancias": [
+      "crd-resumo"
+    ],
+    "variantes": [
+      {
+        "id": "sigla-so-com-title",
+        "descricao": "A primeira ocorrência no card mostra só a sigla (ex.: 'NUP') com a expansão apenas no title de um abbr, sem o nome completo no texto.",
+        "clausula": "na primeira vez, escreva o nome completo e mencione a sigla entre parênteses"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-276e1210af43": {
+    "aceita": true,
+    "justificativa": "R-ED (a): sigla de até 3 letras toda em maiúsculas (contável). Medida: grafia de SMS e da sigla do protocolo no texto renderizado.",
+    "instancias": [
+      "swt-aviso-sms",
+      "crd-resumo"
+    ],
+    "variantes": [
+      {
+        "id": "sigla-curta-em-minusculas",
+        "descricao": "A sigla de 3 letras aparece como 'Sms' no rótulo do switch.",
+        "instancias": [
+          "swt-aviso-sms"
+        ],
+        "clausula": "Escreva siglas, com até três letras, com todas as letras maiúsculas."
+      },
+      {
+        "id": "sigla-protocolo-em-minusculas",
+        "descricao": "A sigla de 3 letras do protocolo aparece como 'Nup' no card.",
+        "instancias": [
+          "crd-resumo"
+        ],
+        "clausula": "Escreva siglas, com até três letras, com todas as letras maiúsculas."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-5d37562b139e": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Prefira' = preferência."
+  },
+  "a2-c0b99a02cf6b": {
+    "aceita": true,
+    "justificativa": "R-ED (b): português neutro, sem regionalismo (o contexto proíbe palavras e gírias regionais). Caso flagrante: título de item com expressão regional marcada. Medida: texto do cabeçalho do item do accordion.",
+    "instancias": [
+      "acc-duvidas"
+    ],
+    "variantes": [
+      {
+        "id": "pergunta-com-regionalismo",
+        "descricao": "O cabeçalho do 2º item passa a dizer 'Oxe, e se o prazo vencer, visse?'.",
+        "clausula": "Escreva em Língua Portuguesa neutra."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-13bd50085c2a": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação."
+  },
+  "a2-2e03bbdb01b8": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'procure explicar' = orientação."
+  },
+  "a2-42757e3c479f": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve o esforço de quem escreve; não impõe nada."
+  },
+  "a2-630e2c67260d": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Lembrete descritivo sobre humor; não impõe nada."
+  },
+  "a2-b68fae76422d": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Considere' = recomendação."
+  },
+  "a2-dc9581fdd59d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Texto de hiperlinks; não há links no conteúdo sorteável."
+  },
+  "a2-e8839e2beb48": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite, quando possível' = recomendação (e não há links no sorteável)."
+  },
+  "a2-e3c4f490e133": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Frase de transição ('Isso é importante porque:')."
+  },
+  "a2-e941effe15bf": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Atributo title em hiperlinks; não há links no conteúdo sorteável."
+  },
+  "a2-65886f54f938": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Title de hiperlink; não há links no conteúdo sorteável."
+  },
+  "a2-5b623d8a8789": {
+    "aceita": false,
+    "motivo": "duplicada:a2-679351f2635c",
+    "justificativa": "Descrição para imagens = e-MAG 3.6 (vídeo/áudio não existem na tela).",
+    "equivalenteEmag": "3.6"
+  },
+  "a2-5c314e764482": {
+    "aceita": false,
+    "motivo": "duplicada:a2-679351f2635c",
+    "justificativa": "Texto alternativo para imagens = e-MAG 3.6.",
+    "equivalenteEmag": "3.6"
+  },
+  "a2-583567fdff39": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Não há imagem de conteúdo com informação incorporada."
+  },
+  "a2-0a006339769b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Não há imagem com legenda nem conteúdo audiovisual."
+  },
+  "a2-34f077a575d0": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Não há infográfico nem vídeo."
+  },
+  "a2-f19303eaf259": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Tenha cautela' = orientação (e não há imagem de conteúdo/legenda)."
+  },
+  "a2-e4fa85fba453": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Explica a diferença entre texto alternativo e legenda."
+  },
+  "a2-3319c0939c3e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Não há gráfico de dados na tela."
+  },
+  "a2-9e6505e797b4": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Remete genericamente aos 'conceitos de microcopy'; sem predicado próprio nem caso inequívoco."
+  },
+  "a2-7bf68b8112fc": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Define linguagem inclusiva (citação)."
+  },
+  "a2-77c11eaf9a44": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Nenhum texto da tela fala de pessoas ou deficiências."
+  },
+  "a2-852f95055a63": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação."
+  },
+  "a2-fd486bdf1404": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Nenhum texto da tela menciona deficiência."
+  },
+  "a2-2a76238410db": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Condição 'ao escrever sobre pessoa com deficiência' não ocorre na tela."
+  },
+  "a2-a63b3379e9c8": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação."
+  },
+  "a2-ec0d1bb4ad23": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' = recomendação."
+  },
+  "a2-deed2926e716": {
+    "aceita": false,
+    "motivo": "duplicada:a2-671056d628cb",
+    "justificativa": "Passo 'Seguir os padrões Web' = e-MAG 1.1.",
+    "equivalenteEmag": "1.1"
+  },
+  "a2-41296b869801": {
+    "aceita": false,
+    "motivo": "duplicada:a2-671056d628cb",
+    "justificativa": "Código dentro dos padrões Web do W3C = e-MAG 1.1.",
+    "equivalenteEmag": "1.1"
+  },
+  "a2-9aa02d7df964": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Processo de avaliação (validação automática), não propriedade da página."
+  },
+  "a2-5085c6c4f5fc": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Constatação sobre validadores automáticos."
+  },
+  "a2-40396165af3b": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Processo de avaliação (validação manual), não propriedade da página."
+  },
+  "a2-c4695ea47e7a": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Justificativa da validação manual."
+  },
+  "a2-aa877d73b001": {
+    "aceita": false,
+    "motivo": "duplicada:a2-d45711a55b6c",
+    "justificativa": "Usar elemento HTML pelo significado = e-MAG 1.2 ('cada elemento deve ser utilizado para o fim que foi criado').",
+    "equivalenteEmag": "1.2"
+  },
+  "a2-bff5d6df8622": {
+    "aceita": false,
+    "motivo": "duplicada:a2-372068e40fd2",
+    "justificativa": "Cabeçalhos conforme hierarquia = e-MAG 1.3.",
+    "equivalenteEmag": "1.3"
+  },
+  "a2-e0b41499dd79": {
+    "aceita": false,
+    "motivo": "duplicada:a2-372068e40fd2",
+    "justificativa": "Texto idêntico ao de e-MAG 1.3 (H1 = conteúdo principal; recomendável um só H1).",
+    "equivalenteEmag": "1.3"
+  },
+  "a2-23e41146ee6c": {
+    "aceita": false,
+    "motivo": "duplicada:a2-d45711a55b6c",
+    "justificativa": "Listas conforme a finalidade = marcação semântica de listas de e-MAG 1.2.",
+    "equivalenteEmag": "1.2"
+  },
+  "a2-8a54ef111343": {
+    "aceita": false,
+    "motivo": "duplicada:a2-9bc102ab300b",
+    "justificativa": "Diagramação por CSS e não por tabela = e-MAG 1.6.",
+    "equivalenteEmag": "1.6"
+  },
+  "a2-8cbdac8cd6c3": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Não há trecho em outro idioma na tela (como em e-MAG 3.2)."
+  },
+  "a2-687664a3051c": {
+    "aceita": false,
+    "motivo": "duplicada:a2-1ea2f43d76db",
+    "justificativa": "lang no elemento html = e-MAG 3.1.",
+    "equivalenteEmag": "3.1"
+  },
+  "a2-336e6c67b3b1": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "O parser sempre cria head e body no DOM; a ausência das tags só existe no código-fonte."
+  },
+  "a2-affdd8fad576": {
+    "aceita": true,
+    "justificativa": "Codificação de caracteres declarada UTF-8. Medida: document.characterSet / meta charset.",
+    "instancias": [
+      "pagina"
+    ],
+    "variantes": [
+      {
+        "id": "codificacao-latin",
+        "descricao": "O documento é gravado e declarado em windows-1252 (meta charset), com o texto aparecendo normal.",
+        "clausula": "Definir a codificação de caracteres para UTF-8"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-33232bc1d4f9": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Meta viewport (largura do dispositivo, escala 1:1) só tem efeito em telas móveis; o contrato é 1280×900 em desktop."
+  },
+  "a2-94e76e38c85b": {
+    "aceita": true,
+    "justificativa": "Meta de compatibilidade X-UA-Compatible (IE=edge) presente. Medida: querySelector('meta[http-equiv=X-UA-Compatible]').",
+    "instancias": [
+      "pagina"
+    ],
+    "variantes": [
+      {
+        "id": "sem-modo-compatibilidade",
+        "descricao": "O head fica sem a meta X-UA-Compatible.",
+        "clausula": "Incluir modo de compatibilidade para o Internet Explorer."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-d65063427355": {
+    "aceita": false,
+    "motivo": "duplicada:a2-855a016067f1",
+    "justificativa": "Presença de title está contida em e-MAG 3.3 (title descritivo); não diz nada além.",
+    "equivalenteEmag": "3.3"
+  },
+  "a2-a0cefe07ca15": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Indentação do código-fonte não aparece no DOM construído."
+  },
+  "a2-de88a511d760": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Barra de fechamento de elemento vazio ('<br/>') é descartada pelo parser; só existe no código-fonte."
+  },
+  "a2-11b459a3885c": {
+    "aceita": true,
+    "justificativa": "Atributo booleano sem valor. Medida: getAttribute(attr) === '' nos atributos booleanos (single do accordion, disabled das etapas desabilitadas).",
+    "instancias": [
+      "acc-duvidas",
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "single-com-valor",
+        "descricao": "O atributo single do accordion passa a ser single=\"true\".",
+        "instancias": [
+          "acc-duvidas"
+        ],
+        "clausula": "NÃO incluir valor nos atributos boleanos"
+      },
+      {
+        "id": "disabled-com-valor",
+        "descricao": "As etapas 3 e 4 desabilitadas passam a ter disabled=\"disabled\".",
+        "instancias": [
+          "stp-andamento"
+        ],
+        "clausula": "NÃO incluir valor nos atributos boleanos"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-971db6a57c75": {
+    "aceita": true,
+    "justificativa": "Role e states/properties ARIA mantidos durante o ciclo de vida do elemento. Medida: após interagir, o estado ARIA reflete o estado visual (aria-selected da aba, aria-expanded do item).",
+    "instancias": [
+      "tab-requerimento",
+      "acc-duvidas"
+    ],
+    "variantes": [
+      {
+        "id": "aba-estado-desatualizado",
+        "descricao": "Ao selecionar a aba Documentos, aria-selected continua true em Andamento e false em Documentos.",
+        "instancias": [
+          "tab-requerimento"
+        ],
+        "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos"
+      },
+      {
+        "id": "item-expandido-sem-estado",
+        "descricao": "Ao abrir um item do accordion, o cabeçalho continua com aria-expanded=false.",
+        "instancias": [
+          "acc-duvidas"
+        ],
+        "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao"
+    ]
+  },
+  "a2-0e14b7416c83": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve a base legal (Estatuto, Art. 63); sem predicado observável próprio."
+  },
+  "a2-6eb94a328835": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve a base legal (Lei 14.129) para dispositivos móveis."
+  },
+  "a2-219fad7a1579": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Define cegueira."
+  },
+  "a2-07b1edc24273": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve configuração de tecnologia assistiva do usuário."
+  },
+  "a2-938e8e5cf6c8": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve o alcance das diretrizes WCAG."
+  }
+}

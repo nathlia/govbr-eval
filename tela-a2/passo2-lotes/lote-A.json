@@ -1,0 +1,999 @@
+{
+  "a2-489a52bad95a": {
+    "aceita": true,
+    "justificativa": "Título/subtítulo do formulário breve e específico. R-ED (b): caso flagrante e oposto ao texto. Medida: nº de palavras do título do formulário da aba Documentos.",
+    "instancias": [
+      "pagina"
+    ],
+    "variantes": [
+      {
+        "id": "titulo-form-prolixo",
+        "descricao": "O título do formulário da aba Documentos vira uma frase de ~30 palavras explicando todo o processo de envio.",
+        "clausula": "Faça com que títulos e subtítulos sejam os mais breves e específicos possíveis."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-2cf05f66f1df": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3d935c4b833a",
+    "justificativa": "Ênfase do título contra os demais textos do formulário; o caso inequívoco (mesmo tamanho/peso dos rótulos) é o mesmo observável do título com maior tamanho do formulário."
+  },
+  "a2-3778203c3941": {
+    "aceita": true,
+    "justificativa": "Rótulos concisos. R-ED (b): rótulo-parágrafo é flagrante e oposto a \"concisos\". Medida: nº de palavras do rótulo.",
+    "instancias": [
+      "sel-tipo-documento",
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-prolixo",
+        "descricao": "O rótulo do campo vira uma frase de ~25 palavras (ex.: 'Selecione abaixo, dentre as opções disponíveis, qual é o tipo de documento que você pretende anexar a este requerimento agora').",
+        "clausula": "Utilize rótulos concisos"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-e911e5c8d86f": {
+    "aceita": true,
+    "justificativa": "Rótulo em caixa de sentença (só a inicial maiúscula). R-ED (a): maiúsculas contáveis. Medida: capitalização das palavras do rótulo.",
+    "instancias": [
+      "sel-tipo-documento",
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-cada-palavra-maiuscula",
+        "descricao": "O rótulo é escrito com cada palavra iniciando em maiúscula ('Tipo De Documento', 'Envio De Documentos').",
+        "clausula": "Considere apenas a letra inicial da sentença maiúscula."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-bd25d0e98b52": {
+    "aceita": false,
+    "motivo": "duplicada:a2-f4237d13520b",
+    "justificativa": "Campo de entrada com rótulo = recomendação 6.2 (etiqueta associada ao campo).",
+    "equivalenteEmag": "6.2"
+  },
+  "a2-cad7cafa42d7": {
+    "aceita": true,
+    "justificativa": "Rótulo sempre visível (vai além da 6.2: a etiqueta pode estar associada e escondida). Medida: rótulo do campo renderizado com área visível (sem recorte/clip, dentro da tela).",
+    "instancias": [
+      "sel-tipo-documento",
+      "upl-documento",
+      "swt-aviso-email",
+      "swt-aviso-sms",
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-so-leitor-de-tela",
+        "descricao": "O rótulo do campo fica visualmente oculto (recorte 1×1px), mantendo a associação e o nome acessível; na tela o campo aparece sem rótulo.",
+        "clausula": "Mantenha os rótulos sempre visíveis e precisos."
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-f9bd4feb338d": {
+    "aceita": false,
+    "motivo": "duplicada:a2-f4237d13520b",
+    "justificativa": "Placeholder no lugar do rótulo = falta de etiqueta associada da recomendação 6.2 (mesma decisão da unidade irmã a2-20a2754d88ff).",
+    "equivalenteEmag": "6.2"
+  },
+  "a2-31c6d22fa5eb": {
+    "aceita": true,
+    "justificativa": "Uso consistente de ':' no fim dos rótulos. R-ED (a): presença do caractere é contável. Medida: último caractere de cada rótulo do formulário.",
+    "instancias": [
+      "sel-tipo-documento",
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "dois-pontos-em-um-so",
+        "descricao": "Só o rótulo deste campo termina com ':'; os demais rótulos do formulário ficam sem.",
+        "clausula": "se optar pelos dois pontos \":\" no final do rótulo mantenha esse padrão em todos os formulários do sistema"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-f2afb51765c7": {
+    "aceita": true,
+    "justificativa": "Rótulo próximo do campo que descreve. Medida: distância vertical entre a base do rótulo e o topo do campo (getBoundingClientRect).",
+    "instancias": [
+      "sel-tipo-documento",
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-afastado",
+        "descricao": "O rótulo fica separado do seu campo por ~120px de espaço vazio (margem inferior grande).",
+        "clausula": "Posicione os rótulos sempre próximos aos campos que os descrevem."
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-84b4e3a0e70a": {
+    "aceita": false,
+    "motivo": "duplicada:a2-f2afb51765c7",
+    "justificativa": "Mesmo predicado (rótulo perto do campo), dito na negativa."
+  },
+  "a2-c9e06229aebc": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Complementa a recomendação \"Prefira criar formulários cujos campos sejam obrigatórios\"; orientação de escolha de projeto."
+  },
+  "a2-b174afd9a294": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Condição \"oferecer campos opcionais\" falsa: tipo de documento e arquivo são exigidos e os switches são preferências com estado, não campos opcionais a preencher."
+  },
+  "a2-292b8ad131d6": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Quando pertinente, utilize\" autocomplete: recomendação."
+  },
+  "a2-bda6c486a54a": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Considere técnicas de truncamento\": recomendação."
+  },
+  "a2-dd6755387798": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login."
+  },
+  "a2-66dab8e5616b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login."
+  },
+  "a2-f6a3d82a870e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login."
+  },
+  "a2-4459124a7579": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login."
+  },
+  "a2-0f5a8d9af0cd": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login."
+  },
+  "a2-a87b2a845894": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login."
+  },
+  "a2-3d8de30133b5": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login."
+  },
+  "a2-bfe9de3d991b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Edição de dado já enviado; a tela não tem modo de edição."
+  },
+  "a2-4cdc9d7a999d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Edição de dado já enviado; a tela não tem modo de edição."
+  },
+  "a2-0ae0ad7cc0fc": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Edição de dado já enviado; a tela não tem modo de edição."
+  },
+  "a2-47018c352c2e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Edição de dado já enviado; a tela não tem modo de edição."
+  },
+  "a2-a621c42d0a5d": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Insira elementos auxiliares que facilitem\" com lista de exemplos: orientação de uso; o observável exigível (instruções de formato) é a 6.5."
+  },
+  "a2-8f8416e523d9": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de exemplo herdado de \"Insira elementos auxiliares... como:\" (orientação)."
+  },
+  "a2-9a763769cf35": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de exemplo herdado de \"Insira elementos auxiliares... como:\" (orientação)."
+  },
+  "a2-e6ca59724f7b": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de exemplo herdado de \"Insira elementos auxiliares... como:\" (orientação)."
+  },
+  "a2-4461158b58b1": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de exemplo herdado de \"Insira elementos auxiliares... como:\" (orientação)."
+  },
+  "a2-1b06382cc43a": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de exemplo herdado de \"Insira elementos auxiliares... como:\" (orientação)."
+  },
+  "a2-aa787d1e87f2": {
+    "aceita": false,
+    "motivo": "duplicada:a2-cd5cbf0f18dc",
+    "justificativa": "Explicar requisitos de entrada/formatação = instruções de entrada de dados da recomendação 6.5 (texto de apoio com formatos do upload).",
+    "equivalenteEmag": "6.5"
+  },
+  "a2-2c7b11fee957": {
+    "aceita": false,
+    "motivo": "duplicada:a2-cd5cbf0f18dc",
+    "justificativa": "Instruções exatas quando o campo exige formato = recomendação 6.5 (formatos aceitos no upload).",
+    "equivalenteEmag": "6.5"
+  },
+  "a2-8e09cdf9bbc6": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Prefira\" exemplos genéricos como placeholder: recomendação."
+  },
+  "a2-173a35c3ca83": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Considere utilizar placeholders quando...\": recomendação."
+  },
+  "a2-751ad24830dc": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Introdução de dicas (\"Fique atento para as seguintes dicas\")."
+  },
+  "a2-24bb665c67e9": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Máscara/campo de texto com formato; a tela não tem campo de texto livre."
+  },
+  "a2-af2c234f5730": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Internacionalização/seletor de código de país; a tela não tem campo de telefone nem internacionalização."
+  },
+  "a2-382bb2936b69": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Seletor de código de país; não há."
+  },
+  "a2-6b25644d6264": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Máscara/campo de texto com formato; a tela não tem campo de texto livre."
+  },
+  "a2-667b6f91a423": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize texto auxiliar com a finalidade de...\": orientação de uso (finalidade); a presença do texto de apoio é a 6.5."
+  },
+  "a2-c5037a4ba6b7": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize mensagens contextuais para...\": orientação de uso do recurso."
+  },
+  "a2-3b08e1a472b9": {
+    "aceita": false,
+    "motivo": "so-andaime",
+    "justificativa": "Ação principal do formulário é btn-enviar (primário), moldura protegida."
+  },
+  "a2-c71a21ed13c6": {
+    "aceita": false,
+    "motivo": "so-andaime",
+    "justificativa": "Ação secundária do formulário é btn-voltar (secundário), moldura protegida."
+  },
+  "a2-39813471d8ec": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "O formulário não tem ação terciária; suas ações são btn-enviar e btn-voltar."
+  },
+  "a2-272419619deb": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite botões do tipo Redefinir e Limpar Formulário\": recomendação."
+  },
+  "a2-24c7e415c6af": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Ao se projetar um formulário, considere a ordem lógica\": orientação de projeto (a ordem observável é a 6.3)."
+  },
+  "a2-80f07dc2682d": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Considere ainda priorizar...\": recomendação."
+  },
+  "a2-03670465d44e": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve que há várias formas de agrupar; não impõe nada."
+  },
+  "a2-fb49f773f79e": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Prefira diagramar em uma única coluna\": recomendação."
+  },
+  "a2-a4a64ba63d57": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve casos complexos que exigem campos lado a lado."
+  },
+  "a2-2a54996a9365": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Campos dispostos numa única linha com colunas; o formulário da tela é em coluna única."
+  },
+  "a2-9232156884a2": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Alterações por resolução/orientação de dispositivo; o contrato é 1280×900."
+  },
+  "a2-86f6a0b9425c": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Agrupamento em collapse com legend ativadora; o fieldset dos avisos não é recolhível."
+  },
+  "a2-02ccd4221688": {
+    "aceita": true,
+    "justificativa": "Fieldset só semântico, sem delimitação visual (borda). Medida: border-style/border-width computados do fieldset dos avisos.",
+    "instancias": [
+      "swt-aviso-email"
+    ],
+    "variantes": [
+      {
+        "id": "fieldset-com-moldura",
+        "descricao": "O fieldset \"Avisos sobre o requerimento\" ganha borda visível de 1px sólida cinza em volta do grupo.",
+        "clausula": "o Fieldset é usado somente como um elemento semântico dentro de um formulário, não tendo nenhum tipo de estilização visual (delimitação de uma borda visual)"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-83bfe4ed2cf5": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Subagrupamentos (agrupamento dentro de agrupamento); a tela tem um só fieldset, sem subgrupo."
+  },
+  "a2-6ceb6e2d93dc": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Indentação de subagrupamentos; não há subagrupamento."
+  },
+  "a2-9fcb867acf78": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Tenha cautela\": recomendação."
+  },
+  "a2-2f30ee20c630": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Agrupamento por espaçamento é uma das formas opcionais (\"podem ser agrupados por aproximação\")."
+  },
+  "a2-11a3cde92bae": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Detalha a forma opcional de agrupamento por espaçamento."
+  },
+  "a2-9395dbb2f3d3": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Agrupamento por cor é forma opcional (\"Outra possibilidade\")."
+  },
+  "a2-5bd2bcbb0bfe": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Considere sempre questões de legibilidade\": recomendação."
+  },
+  "a2-620b3aa24042": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "\"Pode funcionar também\": possibilidade."
+  },
+  "a2-95a942e8505d": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Mínimo de informações necessárias é decisão de produto (finalidade do dado)."
+  },
+  "a2-50ff18a836d4": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "O formulário não coleta dado pessoal ou sensível (tipo de documento, arquivo da pendência e preferência de aviso)."
+  },
+  "a2-8bdd4d2b9a33": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Organização \"de acordo com o perfil do usuário\" é julgamento de projeto."
+  },
+  "a2-b818d065250a": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Não há campo de consentimento de tratamento de dados; os switches são preferência de aviso."
+  },
+  "a2-89965775338d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Política de privacidade/consentimento; a tela não tem texto de política nem campo de consentimento."
+  },
+  "a2-56bd5865c48f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Não há senha nem dado pessoal sensível exibido."
+  },
+  "a2-b0601e9daa37": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Não há dado anonimizado exibido."
+  },
+  "a2-58e29e56c70c": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Política de privacidade/consentimento; a tela não tem texto de política nem campo de consentimento."
+  },
+  "a2-1418d2403848": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Política de privacidade/consentimento; a tela não tem texto de política nem campo de consentimento."
+  },
+  "a2-104625827227": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Política de privacidade/consentimento; a tela não tem texto de política nem campo de consentimento."
+  },
+  "a2-5718addd2fba": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Política de privacidade/consentimento; a tela não tem texto de política nem campo de consentimento."
+  },
+  "a2-9c1fe9faf68c": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Política de privacidade/consentimento; a tela não tem texto de política nem campo de consentimento."
+  },
+  "a2-bb1797b5899d": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Resoluções de tela menores; o contrato é 1280×900."
+  },
+  "a2-f9bc87c84bdf": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Procure elaborar formulários curtos\": recomendação."
+  },
+  "a2-4c1a643288db": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Necessidade de cada campo é decisão de produto."
+  },
+  "a2-a6ff9bd3dde7": {
+    "aceita": false,
+    "motivo": "duplicada:a2-acc4801af71c",
+    "justificativa": "Navegar entre campos por teclado ou mouse = recomendação 2.1 (todas as funções via teclado).",
+    "equivalenteEmag": "2.1"
+  },
+  "a2-5f8cc152c597": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Espera de processamento/carregamento; nenhum estado da tela (S0–S2) tem espera."
+  },
+  "a2-1f3a0f8ef57f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Loading/message para situação de espera; nenhum estado da tela tem espera."
+  },
+  "a2-96632c4fef99": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Justificativa da heurística; não impõe nada."
+  },
+  "a2-460f5696acde": {
+    "aceita": true,
+    "justificativa": "Acesso à ajuda só com ícone segue a referência do símbolo de interrogação (question/question-circle; info/info-circle admitido em ajuda contextual). Medida: classe do ícone do gatilho de ajuda.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "ajuda-com-icone-estranho",
+        "descricao": "O gatilho de ajuda (botão só com ícone no card) usa o ícone de lâmpada (lightbulb) em vez de interrogação ou informação.",
+        "clausula": "É importante seguir esta referência dentro do contexto do Design System, desta forma pode-se deixar bem claro aos usuários o acesso à ajuda apenas com o uso de ícone"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-6b0c03c14c12": {
+    "aceita": false,
+    "motivo": "duplicada:a2-460f5696acde",
+    "justificativa": "Mesmo predicado (ícone de ajuda = interrogação), dito na negativa."
+  },
+  "a2-ebf08d06a482": {
+    "aceita": false,
+    "motivo": "duplicada:a2-460f5696acde",
+    "justificativa": "Mesmo predicado e observável (question/question-circle como ícone de ajuda)."
+  },
+  "a2-39cf6f42fa5c": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "\"Pode-se usar\" info/info-circle: permissão."
+  },
+  "a2-6df766fca75b": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Alternativa permitida (info/info-circle) à regra do ícone de ajuda."
+  },
+  "a2-abc74cc8564c": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ajuda global do produto (seção/tela de ajuda); a tela só tem ajuda contextual (tooltips, accordion)."
+  },
+  "a2-9bfe3d3183d3": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ajuda global do produto (seção/tela de ajuda); a tela só tem ajuda contextual (tooltips, accordion)."
+  },
+  "a2-3a7eecd79db0": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ajuda global do produto (seção/tela de ajuda); a tela só tem ajuda contextual (tooltips, accordion)."
+  },
+  "a2-f332ca030a08": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ajuda global do produto (seção/tela de ajuda); a tela só tem ajuda contextual (tooltips, accordion)."
+  },
+  "a2-01e2766ec4e8": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ajuda global do produto (seção/tela de ajuda); a tela só tem ajuda contextual (tooltips, accordion)."
+  },
+  "a2-ff3400e55e02": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ajuda global do produto (seção/tela de ajuda); a tela só tem ajuda contextual (tooltips, accordion)."
+  },
+  "a2-bd36a3a634a3": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ajuda contextual elaborada (formatação, imagens, vídeo) pede modal; as ajudas da tela são textos curtos em tooltip."
+  },
+  "a2-75fd4aa6d6fe": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize Modais quando houver necessidade\": orientação de uso."
+  },
+  "a2-2e686dd0a3f0": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Contexto \"é recomendado o uso de Tooltips. Neste caso, evite...\": recomendação."
+  },
+  "a2-520bb2e1d048": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Dê preferência\": recomendação."
+  },
+  "a2-164afb980ecc": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Quando necessário, utilize Hiperlink\": orientação de uso."
+  },
+  "a2-2158a52abf3b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ícone de envio de feedback; a tela não tem recurso de feedback."
+  },
+  "a2-64df1c8263b8": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ícone de envio de feedback; a tela não tem recurso de feedback."
+  },
+  "a2-85ece80676b3": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Formulário aberto de feedback; não há."
+  },
+  "a2-6b8328b0e0a8": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve o custo do questionário."
+  },
+  "a2-c7d20a2735ef": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Botão de ajuda que conduz ao conteúdo de ajuda global; a tela não tem botão de ajuda global."
+  },
+  "a2-2646cf178994": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Conteúdo intermediário após o botão de ajuda global; não há."
+  },
+  "a2-ee51fdee5bf2": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize Empty States para:\": orientação de uso do padrão."
+  },
+  "a2-6470b2747410": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item herdado de \"Utilize Empty States para:\"."
+  },
+  "a2-bbdbe9c24041": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item herdado de \"Utilize Empty States para:\"."
+  },
+  "a2-52593d3ba114": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item herdado de \"Utilize Empty States para:\"."
+  },
+  "a2-17ade3eba24a": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-cd58107212c1": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-51aa3a22aab2": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-1112d02f7556": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-67e05d415795": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-6a225a082b74": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-4abd5f3b6947": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-6fb62c1596bb": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Observação de que há erros de origem HTTP; não impõe nada."
+  },
+  "a2-d7e903707a61": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-b95871b10e87": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-bce5db3220c2": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-60760408646e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-ff07373fd56d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-76f5017fd998": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-73aa92798fa2": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-4d6eb48adb71": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-76de24f63529": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-b373e3f0636d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-5b7020e0895b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-4ec033fe8c66": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-43591d0f5351": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-fa952130cddb": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Imagens decorativas (ilustração de empty state); a tela não tem imagem fora da moldura."
+  },
+  "a2-ac0e8466e299": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "role=presentation em imagens decorativas; a tela não tem imagem fora da moldura."
+  },
+  "a2-84ab6302d6fd": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-0c096d7d2cc0": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-af8bc35e90fd": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-bbe6bd5b4475": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-17d72cea5113": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-91e8e34880dc": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-293375edc322": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-523430a38747": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-9c047f730ae6": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-b750cb586664": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-9d423ce53af1": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-d07728d0f144": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-4e78a369a124": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-39ee21ef92a6": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-c88ee44de98e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio."
+  },
+  "a2-5703b2530594": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Processo de projeto da navegação (inventário de usuários, prioridades, caminhos); não é observável na página."
+  },
+  "a2-a6bf05b911d3": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Processo de projeto da navegação (inventário de usuários, prioridades, caminhos); não é observável na página."
+  },
+  "a2-61172f9a397b": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Processo de projeto da navegação (inventário de usuários, prioridades, caminhos); não é observável na página."
+  },
+  "a2-9693d257b76a": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Quais elementos têm \"alta prioridade\" é julgamento de produto; sem caso inequívoco."
+  },
+  "a2-74d3cd9eca47": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Processo de projeto da navegação (inventário de usuários, prioridades, caminhos); não é observável na página."
+  },
+  "a2-37c9efc4db11": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Processo de projeto da navegação (inventário de usuários, prioridades, caminhos); não é observável na página."
+  },
+  "a2-eb470d67f120": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Destinos frequentes e tarefas relacionadas dependem de dados de uso; não observável na página."
+  },
+  "a2-78afd5401869": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Processo de projeto da navegação (inventário de usuários, prioridades, caminhos); não é observável na página."
+  },
+  "a2-c234a9e74e11": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Decomposição de fluxos é processo de projeto."
+  },
+  "a2-013c62c522df": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Hierarquia de conteúdo de um site/sistema inteiro; a tela é uma página interna."
+  },
+  "a2-0685bc48e056": {
+    "aceita": false,
+    "motivo": "so-andaime",
+    "justificativa": "Acesso entre pai e filho é dado pelo breadcrumb e pelo botão Voltar (moldura protegida)."
+  },
+  "a2-6973b50d3af6": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "\"Dê destaque ao mais importante\": prioridade é julgamento."
+  },
+  "a2-edd74e6f5945": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite\" menus/tabs com muitos itens: recomendação."
+  },
+  "a2-6f189e017640": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Navegação descendente; a tela não tem links/níveis inferiores no conteúdo sorteável."
+  },
+  "a2-5b3287f0865b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Tela anterior indisponível; não há esse estado."
+  },
+  "a2-23142cba82ab": {
+    "aceita": false,
+    "motivo": "so-andaime",
+    "justificativa": "Relação pai/filha é mostrada pelo breadcrumb (moldura protegida)."
+  },
+  "a2-00049d03d19f": {
+    "aceita": false,
+    "motivo": "so-andaime",
+    "justificativa": "Acesso à tela pai e retrocesso são breadcrumb e botão Voltar (moldura protegida)."
+  },
+  "a2-7116f1e98539": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Genérico (\"utilizar os padrões mais adequados\")."
+  },
+  "a2-0a9a8742f95f": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Chamada de seção que remete ao padrão Formulário; sem predicado próprio."
+  },
+  "a2-bf7e49442c10": {
+    "aceita": false,
+    "motivo": "so-andaime",
+    "justificativa": "Ordem dos botões de ação do formulário; os botões são btn-enviar/btn-voltar (moldura protegida)."
+  },
+  "a2-d42b11b3d7ab": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Chamada de seção que remete ao padrão Formulário; sem predicado próprio."
+  },
+  "a2-e085b5d271c8": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Guarda-chuva que remete ao fundamento Cores; sem função de cor ou valor fixado na frase."
+  },
+  "a2-a39f3ad397d4": {
+    "aceita": true,
+    "justificativa": "Família tipográfica Rawline. Medida: font-family computado do texto da instância.",
+    "instancias": [
+      "crd-resumo",
+      "tbl-movimentacoes",
+      "acc-duvidas",
+      "msg-pendencia"
+    ],
+    "variantes": [
+      {
+        "id": "fonte-do-sistema",
+        "descricao": "O texto da instância passa a usar a fonte Arial (pilha sans-serif do sistema) em vez de Rawline.",
+        "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-7346c6b4e21f": {
+    "aceita": false,
+    "motivo": "duplicada:a2-b889b938c32d",
+    "justificativa": "Seguir as orientações de uso de ícones = seguir a tabela de uso de ícones do fundamento Iconografia."
+  },
+  "a2-2781578517b1": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Chamada para cadastrar o serviço; não é sobre a página."
+  }
+}

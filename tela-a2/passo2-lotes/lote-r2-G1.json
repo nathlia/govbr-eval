@@ -1,0 +1,1643 @@
+{
+  "a2-71cb115d4c16": {
+    "aceita": false,
+    "motivo": "conflito",
+    "justificativa": "Linha Rótulo (Padrão) vale para botão com rótulo; nos embutidos só o botão de escolha do upl-documento tem texto, e a tabela Tipografia do Upload fixa para ele outro estilo (Placeholder: --font-size-scale-base, regular, uppercase, itálico) contra up-01/semi-bold/none do Button; a página conforme segue a do Upload (componente mais específico). Os demais embutidos são circulares só com ícone e os botões br-button com rótulo são btn-enviar/btn-voltar (moldura)."
+  },
+  "a2-72ddeddc1ac8": {
+    "aceita": true,
+    "justificativa": "Ícone de botão circular no tamanho --icon-size-base. Medida: font-size/largura computada do ícone dentro dos botões circulares (gatilhos dos tooltips, gatilho do select, Fechar das mensagens).",
+    "instancias": [
+      "msg-pendencia",
+      "msg-retorno",
+      "tip-prazo",
+      "tip-protocolo",
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "icone-do-gatilho-maior",
+        "descricao": "O ícone do botão-gatilho fica com --icon-size-lg (maior que o base); o botão circular continua do mesmo tamanho.",
+        "instancias": [
+          "tip-prazo",
+          "tip-protocolo",
+          "sel-tipo-documento"
+        ],
+        "clausula": "Ícone (Circular) · --icon-size-base"
+      },
+      {
+        "id": "icone-fechar-maior",
+        "descricao": "O ícone do botão Fechar da mensagem fica com --icon-size-lg.",
+        "instancias": [
+          "msg-pendencia",
+          "msg-retorno"
+        ],
+        "clausula": "Ícone (Circular) · --icon-size-base"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-9fc840ceb22d": {
+    "aceita": true,
+    "justificativa": "Botão terciário (circular) em fundo claro: ícone --blue-warm-vivid-70 e superfície transparente (opacidade 0%). Vale para os gatilhos dos tooltips e do select; o Fechar das mensagens segue a cor própria do Message. Medida: color e background-color computados do botão.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo",
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "gatilho-icone-cinza",
+        "descricao": "O ícone do botão-gatilho fica em --gray-80 em vez do azul terciário.",
+        "clausula": "Ícone, Rótulo (Terciária) · text color · --blue-warm-vivid-70"
+      },
+      {
+        "id": "gatilho-com-fundo",
+        "descricao": "A superfície do botão-gatilho ganha fundo --gray-5 em repouso (deixa de ser transparente).",
+        "clausula": "Superfície (Terciária) · - · - · 0%"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-b0f874b8b2cf": {
+    "aceita": true,
+    "justificativa": "Botão circular é quadrado no tamanho da densidade: 40×40 (padrão) ou 32×32 (alta: gatilho do select e Fechar das mensagens). Medida: width/height computados do botão.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo",
+      "sel-tipo-documento",
+      "msg-pendencia",
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "gatilho-tooltip-36",
+        "descricao": "O botão-gatilho do tooltip fica com 36×36 px (fora das três densidades).",
+        "instancias": [
+          "tip-prazo",
+          "tip-protocolo"
+        ],
+        "clausula": "Superfície (Circular - Densidade Padrão) · 40px · 40px"
+      },
+      {
+        "id": "botao-alta-oval",
+        "descricao": "O botão circular de densidade alta fica com 32 px de altura e 44 px de largura.",
+        "instancias": [
+          "sel-tipo-documento",
+          "msg-pendencia",
+          "msg-retorno"
+        ],
+        "clausula": "Superfície (Circular - Densidade Alta) · 32px · 32px"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-5920d766fc49": {
+    "aceita": false,
+    "motivo": "conflito",
+    "justificativa": "Linhas (margem do ícone ao rótulo, padding lateral 3x) são de botão com rótulo; nos embutidos só o botão de escolha do upl-documento tem rótulo, e a tabela Espaçamento do Upload fixa para essa superfície padding lateral --spacing-scale-2x e margem do ícone 2x; a página conforme segue a do Upload. Os circulares não têm padding de rótulo; btn-enviar/btn-voltar são moldura."
+  },
+  "a2-40e233d8affd": {
+    "aceita": false,
+    "motivo": "so-andaime",
+    "justificativa": "Única linha é do botão Padrão (com rótulo, formato pílula): os embutidos são circulares e a área de escolha do upload é superfície do Upload; botões Padrão br-button só em btn-enviar/btn-voltar (moldura)."
+  },
+  "a2-7a556a4c6423": {
+    "aceita": true,
+    "justificativa": "Superfície do card com fundo --pure-0 (o --gray-2 é só do verso). Medida: background-color computado de crd-resumo.",
+    "instancias": [
+      "crd-resumo"
+    ],
+    "variantes": [
+      {
+        "id": "card-fundo-cinza",
+        "descricao": "O card de resumo fica com fundo --gray-2 (cor do verso) na face.",
+        "clausula": "Superfície · background · --pure-0"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-c5b3a0f5f819": {
+    "aceita": true,
+    "justificativa": "Card com sombra --shadow-sm. Medida: box-shadow computado de crd-resumo contra o token.",
+    "instancias": [
+      "crd-resumo"
+    ],
+    "variantes": [
+      {
+        "id": "card-sombra-forte",
+        "descricao": "O card fica com sombra de nível alto (--shadow-xl) em vez de --shadow-sm.",
+        "clausula": "Superfície · --shadow-sm"
+      },
+      {
+        "id": "card-sem-sombra",
+        "descricao": "O card fica com box-shadow none.",
+        "clausula": "Superfície · --shadow-sm"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-c0a11f6415ae": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Linhas só de card desativado e arrastado; crd-resumo não é desativado nem arrastável."
+  },
+  "a2-3404d04d4b7b": {
+    "aceita": true,
+    "justificativa": "Conteúdo do card com padding 16px (diz o valor, além da regra geral de respeitar margens dos tokens). Medida: padding computado do conteúdo de crd-resumo.",
+    "instancias": [
+      "crd-resumo"
+    ],
+    "variantes": [
+      {
+        "id": "card-padding-4",
+        "descricao": "O conteúdo do card fica com padding de 4px.",
+        "clausula": "Conteúdo (geral) · padding · 16px"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-e258f246fc8f": {
+    "aceita": true,
+    "justificativa": "Caixa de opção 24×24 px, raio 4px, borda 1px. Medida: dimensões, border-radius e border-width computados da caixa (pseudo-elemento) do chk-avisos-todos.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "caixa-16",
+        "descricao": "A caixa de opção fica com 16×16 px.",
+        "clausula": "Caixa de opção · width · 24px"
+      },
+      {
+        "id": "caixa-quadrada",
+        "descricao": "A caixa de opção fica com border-radius 0.",
+        "clausula": "Caixa de opção · border-radius · 4px"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-c77fe74304b6": {
+    "aceita": true,
+    "justificativa": "Espaçamentos da caixa de opção e do texto descritivo do checkbox (padding da caixa e do texto em tokens). Medida: distância/padding computados entre caixa e texto descritivo.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "texto-colado-caixa-token",
+        "descricao": "O texto descritivo fica sem padding-left (encostado na caixa).",
+        "clausula": "Texto descritivo · padding-left · --spacing-scale-default"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-c77fe74304b6-2": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Linhas de grupo de checkboxes (rótulo do grupo, texto auxiliar, cabeçalho e lista de opções); a tela tem um checkbox principal único, sem texto auxiliar, e o fieldset agrupa switches."
+  },
+  "a2-1e5bb656150a": {
+    "aceita": true,
+    "justificativa": "Texto descritivo do checkbox em --font-size-scale-base, --font-weight-medium, família base. Medida: font-size/font-weight computados do label de chk-avisos-todos.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "texto-descritivo-negrito",
+        "descricao": "O texto descritivo \"Todos os avisos\" fica em --font-weight-bold.",
+        "clausula": "Texto descritivo · -–font-family-base · --font-size-scale-base · --font-weight-medium"
+      },
+      {
+        "id": "texto-descritivo-pequeno",
+        "descricao": "O texto descritivo fica em --font-size-scale-down-01.",
+        "clausula": "Texto descritivo · -–font-family-base · --font-size-scale-base · --font-weight-medium"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-c309914a9c1a": {
+    "aceita": true,
+    "justificativa": "Cores da caixa (fundo --pure-0, borda --gray-20), do estado intermediário (fundo e borda --blue-warm-vivid-50, marca --pure-0) e do texto descritivo (--gray-80). Medida: cores computadas da caixa e do label em repouso e no estado intermediário.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "intermediario-cinza",
+        "descricao": "No estado intermediário (um só switch ligado) a caixa fica com fundo --gray-20 em vez do azul.",
+        "clausula": "Caixa de opção (Estado Intermediário) · background · --blue-warm-vivid-50"
+      },
+      {
+        "id": "caixa-borda-escura",
+        "descricao": "A borda da caixa em repouso fica --gray-80.",
+        "clausula": "Caixa de opção · border · --gray-20"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra",
+      "interacao"
+    ]
+  },
+  "a2-afcf1e6a2889": {
+    "aceita": true,
+    "justificativa": "Marca do estado intermediário é o traço (fa-minus) e a do selecionado é o check, em tamanho sm. Medida: forma da marca na caixa no estado intermediário (ligar só um switch).",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "intermediario-com-check",
+        "descricao": "No estado intermediário a caixa mostra a marca de check (igual ao selecionado) em vez do traço.",
+        "clausula": "Ícone intermediário · -- · <i class=\"fas fa-minus\"></i>"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-1f2bd2f78e2e": {
+    "aceita": true,
+    "justificativa": "Divider em fundo claro na cor --gray-20. Medida: cor computada da linha do divider sob a barra de abas.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "divider-escuro",
+        "descricao": "O divider sob a barra de abas fica em --gray-80.",
+        "clausula": "Divider (fundo claro) · background · --gray-20"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-41cd27de9c89": {
+    "aceita": true,
+    "justificativa": "Divider horizontal com espaço --spacing-scale-2x acima/abaixo. Medida: margem computada entre o divider sob a barra e o conteúdo do painel.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "painel-colado-divider",
+        "descricao": "O conteúdo do painel da aba fica encostado no divider (margem inferior 0).",
+        "clausula": "Divider horizontal · top/bottom · --spacing-scale-2x"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-8424f75a80a8": {
+    "aceita": true,
+    "justificativa": "Cores do campo do select em fundo claro: rótulo, placeholder e texto auxiliar --gray-80, campo --pure-0, borda --gray-40. Medida: cores computadas do input de sel-tipo-documento.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "borda-campo-clara",
+        "descricao": "A borda do campo do select fica --gray-20.",
+        "clausula": "Borda campo de texto · background · --gray-40"
+      },
+      {
+        "id": "placeholder-claro",
+        "descricao": "O placeholder do select fica --gray-40.",
+        "clausula": "Placeholder · color · --gray-80"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra",
+      "axe"
+    ]
+  },
+  "a2-bc172ac96406": {
+    "aceita": true,
+    "justificativa": "Rótulo do campo no estilo Label e placeholder/valor nos estilos da tabela de tipografia. Medida: font-size/font-weight computados do label \"Tipo de documento\" contra o estilo Label.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-peso-regular",
+        "descricao": "O rótulo \"Tipo de documento\" fica em peso regular (fora do estilo Label).",
+        "clausula": "Rótulo/Label · - · - · Label"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-3169f339a8e1": {
+    "aceita": true,
+    "justificativa": "Campo de densidade média com altura --spacing-scale-5x, raio --surface-rounder-sm, ação interna em densidade alta. Medida: height e border-radius computados do input do select.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "campo-sem-raio",
+        "descricao": "O campo do select fica com border-radius 0.",
+        "clausula": "Campo de texto · border-radius · --surface-rounder-sm"
+      },
+      {
+        "id": "campo-alto",
+        "descricao": "O campo do select fica com 52px de altura.",
+        "clausula": "Campo de texto - Densidade Média · height · --spacing-scale-5x"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-8fcc793aaed1": {
+    "aceita": true,
+    "justificativa": "Espaçamentos do campo: rótulo topo margin-bottom half, padding-left 2x, padding-right half etc. Medida: padding/margens computados do input e do label do select.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "texto-colado-borda",
+        "descricao": "O campo do select fica com padding-left 0 (texto encostado na borda).",
+        "clausula": "Campo de entrada de texto · padding-left · --spacing-scale-2x"
+      },
+      {
+        "id": "rotulo-afastado",
+        "descricao": "O rótulo fica com margin-bottom de 24px acima do campo.",
+        "clausula": "Rótulo/Label topo · margin-bottom · --spacing-scale-half"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-648f8c6d407b": {
+    "aceita": true,
+    "justificativa": "Superfície do item em --pure-0. Medida: background-color computado dos itens da lista do select (aberta) e das abas em repouso.",
+    "instancias": [
+      "sel-tipo-documento",
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "item-lista-cinza",
+        "descricao": "Os itens da lista do select ficam com fundo --gray-5 em repouso.",
+        "instancias": [
+          "sel-tipo-documento"
+        ],
+        "clausula": "Superfície · color · --pure-0"
+      },
+      {
+        "id": "aba-inativa-cinza",
+        "descricao": "A aba inativa fica com fundo --gray-5.",
+        "instancias": [
+          "tab-requerimento"
+        ],
+        "clausula": "Superfície · color · --pure-0"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra",
+      "interacao"
+    ]
+  },
+  "a2-2d40da60ce61": {
+    "aceita": true,
+    "justificativa": "Textos da lista centrados na vertical e alinhados à esquerda. Medida: text-align/align-items computados dos itens da lista do select.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "itens-centralizados",
+        "descricao": "Os textos dos itens da lista do select ficam centralizados horizontalmente.",
+        "clausula": "Textos · --spacing-horizontal-left"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-b30ded4687e3": {
+    "aceita": true,
+    "justificativa": "Espaço do item conforme a densidade (média: --spacing-scale-2x). Medida: padding computado dos itens da lista do select.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "item-espaco-fora-da-escala",
+        "descricao": "Os itens da lista ficam com padding vertical de 2px (nenhuma densidade).",
+        "clausula": "Item - densidade média · --spacing-scale-2x"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-1f12ca328b9e": {
+    "aceita": true,
+    "justificativa": "Superfície da lista em --pure-0. Medida: background-color computado da lista aberta do select.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "lista-fundo-cinza",
+        "descricao": "A lista aberta do select fica com fundo --gray-10.",
+        "clausula": "Superfície · background · --pure-0"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-8ed2a1b99cae": {
+    "aceita": true,
+    "justificativa": "Tipografia da lista: texto principal --font-size-scale-base regular. Medida: font-size/font-weight computados do texto dos itens da lista do select.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "itens-negrito",
+        "descricao": "O texto principal dos itens da lista fica em --font-weight-bold.",
+        "clausula": "Texto principal · font-weight · --font-weight-regular"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-d522f1f6d5a1": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ícones de expandir/retrair são de list expansível; a lista do select não tem itens expansíveis."
+  },
+  "a2-6c82acf760ae": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Cores do estado Informativo; as mensagens da tela são Alerta (msg-pendencia) e Erro (msg-retorno)."
+  },
+  "a2-fd04ea926801": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Cores do estado Sucesso; as mensagens da tela são Alerta e Erro."
+  },
+  "a2-5606a51d1ba1": {
+    "aceita": true,
+    "justificativa": "Mensagem de Alerta (tipo padrão): superfície --yellow-vivid-5, título, texto e botão Fechar --gray-80. Medida: cores computadas de msg-pendencia.",
+    "instancias": [
+      "msg-pendencia"
+    ],
+    "variantes": [
+      {
+        "id": "alerta-fundo-forte",
+        "descricao": "A superfície de msg-pendencia fica --yellow-vivid-20 (cor do tipo contextual).",
+        "clausula": "Superfície do Message · background · --yellow-vivid-5"
+      },
+      {
+        "id": "alerta-fechar-azul",
+        "descricao": "O botão Fechar de msg-pendencia fica --blue-warm-vivid-70.",
+        "clausula": "Botão Fechar · color · --gray-80"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-90ea0bde7e04": {
+    "aceita": true,
+    "justificativa": "Mensagem de Erro (tipo padrão): superfície --red-vivid-10, ícone e Fechar --red-vivid-50, texto --gray-80. Medida: cores computadas de msg-retorno.",
+    "instancias": [
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "erro-icone-cinza",
+        "descricao": "O ícone de msg-retorno fica --gray-80.",
+        "clausula": "Ícone · color · --red-vivid-50"
+      },
+      {
+        "id": "erro-fundo-branco",
+        "descricao": "A superfície de msg-retorno fica --pure-0.",
+        "clausula": "Superfície do Message · background · --red-vivid-10"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-fb8e73f4ce50": {
+    "aceita": true,
+    "justificativa": "Texto da mensagem padrão em --font-size-scale-up-01 regular (título semi-bold). Medida: font-size/font-weight computados do texto das mensagens.",
+    "instancias": [
+      "msg-pendencia",
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "mensagem-pequena",
+        "descricao": "O texto da mensagem fica em --font-size-scale-base.",
+        "clausula": "Mensagem · --font-size-scale-up-01 · --font-weight-regular"
+      },
+      {
+        "id": "mensagem-negrito",
+        "descricao": "O texto da mensagem fica em --font-weight-bold.",
+        "clausula": "Mensagem · --font-size-scale-up-01 · --font-weight-regular"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-b13bd6797498": {
+    "aceita": true,
+    "justificativa": "Ícones do Message: Alerta padrão exclamation-triangle e Erro padrão times-circle em --icon-size-lg; Fechar times em --icon-size-base. Medida: glifo/classe e tamanho do ícone de cada mensagem.",
+    "instancias": [
+      "msg-pendencia",
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "alerta-icone-info",
+        "descricao": "msg-pendencia usa o ícone info-circle em vez de exclamation-triangle.",
+        "instancias": [
+          "msg-pendencia"
+        ],
+        "clausula": "Ícone Alerta - Tipo Padrão · <i class=\"exclamation-triangle\"></i> · --icon-size-lg · exclamation-triangle"
+      },
+      {
+        "id": "erro-icone-pequeno",
+        "descricao": "O ícone times-circle de msg-retorno fica em --icon-size-base.",
+        "instancias": [
+          "msg-retorno"
+        ],
+        "clausula": "Ícone Erro - Tipo Padrão · <i class=\"times-circle\"></i> · --icon-size-lg · times-circle"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-364ba8bf174e": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Todas as linhas dizem 'variável' (largura e altura); não fixa valor."
+  },
+  "a2-4124b4181a77": {
+    "aceita": true,
+    "justificativa": "Espaçamentos do Message tipo padrão (padding da superfície, margens do ícone, do título/texto e do Fechar). Medida: padding/margens computados das mensagens.",
+    "instancias": [
+      "msg-pendencia",
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "mensagem-sem-padding-vertical",
+        "descricao": "A superfície da mensagem fica com padding-top e padding-bottom 0.",
+        "clausula": "Superfície do Message Tipo Padrão · padding-top · --spacing-scale-3x"
+      },
+      {
+        "id": "icone-colado-texto",
+        "descricao": "O ícone semântico fica sem margin-right (encostado no texto).",
+        "clausula": "Ícone Tipo Padrão · margin-right · --spacing-scale-2x"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-daf3655caedf": {
+    "aceita": true,
+    "justificativa": "Ícone do gatilho aponta para baixo com a lista fechada e para cima com a lista aberta. Medida: ícone do gatilho antes e depois de abrir a lista.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "icone-nao-vira",
+        "descricao": "Com a lista aberta, o ícone do gatilho continua apontando para baixo.",
+        "clausula": "Ícone - componente button · Aberto · <i class=\"fas fa-caret-up\"></i> · fa-caret-up"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-41f27d1b3d7d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Única linha é do 'Selecionar Todos' do multiselect; o select da tela é simples."
+  },
+  "a2-5250515a0c00": {
+    "aceita": true,
+    "justificativa": "Espaçamentos do select: input margin-bottom base, lista com margin-top default em relação ao input. Medida: distância computada entre o input e a lista aberta.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "lista-sobre-o-campo",
+        "descricao": "A lista aberta fica sobreposta ao campo (margin-top negativo, cobrindo a borda inferior do input).",
+        "clausula": "Componente List · margin-top · --spacing-scale-default"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-a7bf43e3e4d8": {
+    "aceita": false,
+    "motivo": "duplicada:a2-8ed2a1b99cae",
+    "justificativa": "Única linha aplicável (List regular) é o mesmo peso do texto principal da lista do select, aceito na tabela de tipografia da List; 'Selecionar Todos' é de multiselect."
+  },
+  "a2-0d25882c88ba": {
+    "aceita": true,
+    "justificativa": "Select simples: input entre 100 e 400px de largura, 40px de altura; itens da lista com 56px. Medida: width/height computados do input e dos itens.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "select-largura-total",
+        "descricao": "O campo do select ocupa a largura do conteúdo (bem acima de 400px a 1280).",
+        "clausula": "Componente Input - Select · variável · 400px · 100px · 40px"
+      },
+      {
+        "id": "itens-baixos",
+        "descricao": "Os itens da lista aberta ficam com 36px de altura.",
+        "clausula": "Item List - Select · variável · 400px · 100px · 56px"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra",
+      "interacao"
+    ]
+  },
+  "a2-8c3b5176e2a3": {
+    "aceita": true,
+    "justificativa": "Lista flutuante com sombra --surface-shadow-md (o token, além da presença de sombra já aceita em a2-1f3279c0e6a1). Medida: box-shadow computado da lista aberta contra o token.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "lista-sombra-forte",
+        "descricao": "A lista aberta fica com sombra de nível xl em vez de md.",
+        "clausula": "Superfície · --surface-shadow-md"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-1da96248e217": {
+    "aceita": true,
+    "justificativa": "Estado interativo do step (etapa clicável não atual, aqui a etapa 1 concluída): rótulo e indicador --blue-warm-vivid-70, borda sólida --surface-width-sm; linha do tempo --blue-warm-vivid-70. Medida: cores e borda computadas do indicador/rótulo da etapa 1.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "indicador-borda-cinza",
+        "descricao": "O indicador da etapa 1 fica com borda --gray-20.",
+        "clausula": "Indicador · border-color · --blue-warm-vivid-70"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-c47edccf787c": {
+    "aceita": true,
+    "justificativa": "Etapa atual (estado ativo): rótulo --blue-warm-vivid-80, indicador preenchido com número --pure-0. Medida: cores computadas da etapa 2.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "atual-rotulo-cinza",
+        "descricao": "O rótulo da etapa 2 (atual) fica --gray-80.",
+        "clausula": "Rótulos · color · --blue-warm-vivid-80"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-118542cd2b4a": {
+    "aceita": true,
+    "justificativa": "Etapa concluída: rótulo --green-cool-vivid-50. Medida: color computado do rótulo da etapa 1.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "concluida-rotulo-azul",
+        "descricao": "O rótulo da etapa 1 (concluída) fica --blue-warm-vivid-70.",
+        "clausula": "Rótulos · color · --green-cool-vivid-50"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-88881d1758d3": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estado Alerta do step; nenhuma etapa está em alerta (1 concluída, 2 atual, 3–4 desabilitadas)."
+  },
+  "a2-b6faa2c962f6": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estado Error do step; nenhuma etapa está em erro."
+  },
+  "a2-afb226dcb3e4": {
+    "aceita": true,
+    "justificativa": "Rótulos do step em --font-size-scale-up-01, --font-weight-medium. Medida: font-size/font-weight computados dos rótulos.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulos-negrito",
+        "descricao": "Os rótulos das etapas ficam em --font-weight-bold.",
+        "clausula": "Rótulos · -font-size-scale-up-01 · --font-weight-medium"
+      },
+      {
+        "id": "rotulos-pequenos",
+        "descricao": "Os rótulos das etapas ficam em --font-size-scale-down-01.",
+        "clausula": "Rótulos · -font-size-scale-up-01 · --font-weight-medium"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-2737953e2513": {
+    "aceita": true,
+    "justificativa": "Marcador de concluído com ícone check em --icon-size-base. Medida: glifo e tamanho do ícone do marcador da etapa 1.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "concluido-icone-grande",
+        "descricao": "O ícone de concluído da etapa 1 fica em --icon-size-lg.",
+        "clausula": "Ícone Estado Concluído · -- · <i class=\"fas fa-check\"></i> · --icon-size-base · .fa-check"
+      },
+      {
+        "id": "concluido-icone-circulo",
+        "descricao": "O marcador de concluído mostra fa-circle em vez de fa-check.",
+        "clausula": "Ícone Estado Concluído · -- · <i class=\"fas fa-check\"></i> · --icon-size-base · .fa-check"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-c4affd889cea": {
+    "aceita": true,
+    "justificativa": "Indicador com margin-right e margin-bottom --spacing-scale-2x (horizontal, rótulo abaixo). Medida: distância computada entre indicador e rótulo.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-colado-indicador",
+        "descricao": "Os rótulos ficam encostados no indicador (margin-bottom 0).",
+        "clausula": "Indicador · margin-botton · --spacing-scale-2x"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-fd54ad1670be": {
+    "aceita": true,
+    "justificativa": "Indicador na densidade padrão com 40×40px. Medida: width/height computados dos indicadores.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "indicador-28",
+        "descricao": "Os indicadores ficam com 28×28px (nenhuma densidade).",
+        "clausula": "Indicador (Densidade Padrão) · width · 40px"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-1854c7b2badd": {
+    "aceita": true,
+    "justificativa": "Label do switch centrado na vertical em relação à chave e alinhado à esquerda. Medida: posição vertical do texto em relação ao centro da chave.",
+    "instancias": [
+      "swt-aviso-email",
+      "swt-aviso-sms"
+    ],
+    "variantes": [
+      {
+        "id": "label-no-topo",
+        "descricao": "O texto do switch fica alinhado ao topo da chave, deslocado do centro vertical.",
+        "clausula": "Label · --spacing-vertical-center"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-2a5f1cb5a078": {
+    "aceita": true,
+    "justificativa": "Espaçamentos do switch: label afastado da chave por --spacing-scale-2x, container com margin-bottom base, chave à direita quando ligado e à esquerda quando desligado. Medida: distância label–chave e posição da chave.",
+    "instancias": [
+      "swt-aviso-email",
+      "swt-aviso-sms"
+    ],
+    "variantes": [
+      {
+        "id": "label-colado",
+        "descricao": "O label fica encostado na chave (margem 0).",
+        "clausula": "Label (depende da posição) · margin-right/margin-left/margin-botton · --spacing-scale-2x"
+      },
+      {
+        "id": "chave-ligada-a-esquerda",
+        "descricao": "Ao ligar, a chave de alternância permanece à esquerda (só a cor muda).",
+        "clausula": "Chave (ligado) · horizontal align · right"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-89b4537e8260": {
+    "aceita": true,
+    "justificativa": "Switch de densidade média: container 52×30px, chave 22×22px. Medida: dimensões computadas do trilho e da chave.",
+    "instancias": [
+      "swt-aviso-email",
+      "swt-aviso-sms"
+    ],
+    "variantes": [
+      {
+        "id": "chave-pequena",
+        "descricao": "A chave de alternância fica com 14×14px dentro do container 52×30.",
+        "clausula": "Chave de alternância (média) · width · 22px"
+      },
+      {
+        "id": "trilho-largo",
+        "descricao": "O container fica com 64×30px.",
+        "clausula": "container (média) · width · 52px"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-86176aff4a89": {
+    "aceita": true,
+    "justificativa": "Cores do switch: superfície --pure-0, label --gray-80, chave ligada --blue-warm-vivid-40, desligada --gray-20. Medida: cores computadas no estado desligado e ligado.",
+    "instancias": [
+      "swt-aviso-email",
+      "swt-aviso-sms"
+    ],
+    "variantes": [
+      {
+        "id": "desligado-escuro",
+        "descricao": "O switch desligado fica com a cor de alternância --gray-80.",
+        "clausula": "chave de alternância - off · icon · --gray-20"
+      },
+      {
+        "id": "ligado-verde",
+        "descricao": "O switch ligado fica com a cor --green-cool-vivid-50.",
+        "clausula": "chave de alternância - on · icon · --blue-warm-vivid-40"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-463dea60790d": {
+    "aceita": true,
+    "justificativa": "Label do switch em --font-size-scale-base semi-bold. Medida: font-size/font-weight computados do label.",
+    "instancias": [
+      "swt-aviso-email",
+      "swt-aviso-sms"
+    ],
+    "variantes": [
+      {
+        "id": "label-regular",
+        "descricao": "O label do switch fica em --font-weight-regular.",
+        "clausula": "Label · font-weight · --font-weight-semi-bold"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-d74dace9d0de": {
+    "aceita": false,
+    "motivo": "duplicada:a2-89b4537e8260",
+    "justificativa": "Linha aplicável (chave de alternância média) mede o mesmo tamanho da chave já coberto pela tabela Dimensão; ícones on/off são do switch com ícones, não usado."
+  },
+  "a2-9b0884458d35": {
+    "aceita": true,
+    "justificativa": "Cores da tab em fundo claro: rótulo --gray-80, item e superfície --pure-0. Medida: cores computadas da barra de abas e das abas.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "superficie-cinza",
+        "descricao": "A superfície da tab fica com fundo --gray-5.",
+        "clausula": "Superfície da Tab · background · --pure-0"
+      },
+      {
+        "id": "rotulo-azul-claro",
+        "descricao": "O rótulo da aba inativa fica --blue-warm-vivid-40.",
+        "clausula": "Rótulo da Tab · color · --gray-80"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-10aee59f9c1b": {
+    "aceita": true,
+    "justificativa": "Rótulo da aba em --font-size-scale-up-02, --font-weight-medium. Medida: font-size/font-weight computados dos rótulos das abas.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-aba-pequeno",
+        "descricao": "Os rótulos das abas ficam em --font-size-scale-base.",
+        "clausula": "Rótulo da Tab · --font-size-scale-up-02 · --font-weight-medium"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-c376f69acac5": {
+    "aceita": true,
+    "justificativa": "Aba ativa com borda inferior sólida --surface-width-lg em --blue-warm-vivid-90 (fundo claro). Medida: border-bottom computado da aba ativa.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "indicador-fino",
+        "descricao": "A borda inferior da aba ativa fica com 1px (--surface-width-sm).",
+        "clausula": "item do Tab · solid · --surface-width-lg · --blue-warm-vivid-90 · bottom"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-1fedaa9b08e5": {
+    "aceita": true,
+    "justificativa": "Item da tab na densidade padrão com padding lateral 3x e vertical 2x; superfície com margin-bottom 2x. Medida: padding computado das abas.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "aba-padding-curto",
+        "descricao": "As abas ficam com padding lateral --spacing-scale-half.",
+        "clausula": "Item da Tab Densidade Padrão · padding-left · --spacing-scale-3x"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-d6629d53e00f": {
+    "aceita": true,
+    "justificativa": "Cores da tabela em fundo claro: header com fundo --gray-5, linhas com texto --gray-80 em fundo --pure-0. Medida: background/color computados de th e td. (A linha 'Header da Tabela · color' não é usada em variante: o rótulo sem ordenação não leva a cor interativa, a2-10860659e4bf.)",
+    "instancias": [
+      "tbl-movimentacoes"
+    ],
+    "variantes": [
+      {
+        "id": "header-fundo-branco",
+        "descricao": "O cabeçalho da tabela fica com fundo --pure-0 (igual às linhas).",
+        "clausula": "Header da Tabela · background · --gray-5"
+      },
+      {
+        "id": "linhas-fundo-cinza",
+        "descricao": "As linhas da tabela ficam com fundo --gray-10.",
+        "clausula": "Linhas · background · --pure-0"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-d24b958d1d2e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Cores do estado de ordenação; tbl-movimentacoes não tem ordenação."
+  },
+  "a2-f1d8dc1cb4f4": {
+    "aceita": true,
+    "justificativa": "Header em --font-size-scale-base semi-bold; linhas em base medium. Medida: font-size/font-weight computados de th e td.",
+    "instancias": [
+      "tbl-movimentacoes"
+    ],
+    "variantes": [
+      {
+        "id": "header-regular",
+        "descricao": "O cabeçalho da tabela fica em --font-weight-regular.",
+        "clausula": "Header da Tabela · --font-size-scale-base · --font-weight-semi-bold"
+      },
+      {
+        "id": "linhas-negrito",
+        "descricao": "As células das linhas ficam em --font-weight-bold.",
+        "clausula": "Linhas · --font-size-scale-base · --font-weight-medium"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-5494f8781b7a": {
+    "aceita": true,
+    "justificativa": "Densidade padrão: header e linhas com padding vertical 2x e lateral 3x. Medida: padding computado de th e td.",
+    "instancias": [
+      "tbl-movimentacoes"
+    ],
+    "variantes": [
+      {
+        "id": "celulas-apertadas",
+        "descricao": "As células das linhas ficam com padding --spacing-scale-half em todos os lados.",
+        "clausula": "Linhas (Densidade Padrão) · padding-left · --spacing-scale-3x"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-f9cd4fb2f4dc": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Sombra de header/linha/footer só na tabela com collapse ou rolagem; tbl-movimentacoes tem 5 linhas sem expansão nem rolagem."
+  },
+  "a2-f9cd4fb2f4dc-2": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Sombra de header/linha/footer só na tabela com collapse ou rolagem; tbl-movimentacoes tem 5 linhas sem expansão nem rolagem."
+  },
+  "a2-f9cd4fb2f4dc-3": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Sombra de header/linha/footer só na tabela com collapse ou rolagem; tbl-movimentacoes tem 5 linhas sem expansão nem rolagem."
+  },
+  "a2-ef322e43e7c5": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-0288cf4209b9": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-a33bec804e30": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-f2c48361423c": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-90f5049294e7": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-7e5cbc48ee9a": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-1f088653ff0a": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-d95c5823f272": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-c98b9e26385b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-0231cdc1d1bc": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-7e63220aef3a": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-bc353cefba8b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-e106ddc07170": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-396037bd7d96": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-e30e6fb780f0": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-cee53d7f09fa": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-0c44f5dd2a2f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-74585f5c74a0": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-86551a3f4898": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-23194b4dd378": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-0d6b24457a2b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-ae8b8bf99efa": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-3e4b18b0d25f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-8a5e5baa74dc": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-c443d14116ab": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-2862ce89b2e5": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro."
+  },
+  "a2-4163dd0c091e": {
+    "aceita": false,
+    "motivo": "duplicada:a2-281b82e2e6be",
+    "justificativa": "Linha aplicável (seta acima/abaixo centralizada na horizontal) é o mesmo predicado já aceito; o centro vertical é de seta lateral, não usada."
+  },
+  "a2-918de33955df": {
+    "aceita": true,
+    "justificativa": "Balão com padding da densidade (média: --spacing-scale-baseh) e afastado do gatilho por --spacing-scale-base. Medida: padding computado do balão e distância ao gatilho.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "balao-sem-padding",
+        "descricao": "O balão fica com padding de 2px (texto quase encostado na borda).",
+        "clausula": "Balão Flutuante (dens. média) · padding-top/bottom · --spacing-scale-baseh"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-04f08959f854": {
+    "aceita": true,
+    "justificativa": "Balão com largura mínima 108px e seta 16×8px. Medida: largura do balão e dimensões da seta ao abrir o tooltip.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "seta-grande",
+        "descricao": "A seta direcional fica com 28×14px.",
+        "clausula": "Seta Direcional · Width · 16px"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-e505a4cf48ee": {
+    "aceita": true,
+    "justificativa": "Texto informativo do tooltip em --font-size-scale-down-01 regular. Medida: font-size/font-weight computados do texto do balão.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "texto-tooltip-grande",
+        "descricao": "O texto do tooltip fica em --font-size-scale-up-01.",
+        "clausula": "Texto Informativo · size · --font-size-scale-down-01"
+      },
+      {
+        "id": "texto-tooltip-negrito",
+        "descricao": "O texto do tooltip fica em --font-weight-semi-bold.",
+        "clausula": "Texto Informativo · font-weight · --font-weight-regular"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-9a6dfe73f871": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ícone do Botão Fechar, que só existe no tipo popover; os tooltips da tela são simples."
+  },
+  "a2-43895f300d37": {
+    "aceita": true,
+    "justificativa": "Tooltip informativo (padrão): balão e seta --blue-warm-vivid-60, texto --pure-0. Medida: cores computadas do balão, da seta e do texto ao abrir.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "seta-de-outra-cor",
+        "descricao": "A seta direcional fica --gray-80 enquanto o balão continua azul.",
+        "clausula": "Seta Direcional · background · --blue-warm-vivid-60"
+      },
+      {
+        "id": "texto-tooltip-escuro",
+        "descricao": "O texto do tooltip fica --gray-80 sobre o balão azul.",
+        "clausula": "Texto Informativo · color · --pure-0"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "axe",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-e2246d129cee": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Cores do tooltip de Sucesso; os tooltips da tela são informativos."
+  },
+  "a2-11b1e43201e0": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Cores do tooltip de Alerta; os tooltips da tela são informativos."
+  },
+  "a2-a04292870f0d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Cores do tooltip de Erro; os tooltips da tela são informativos."
+  },
+  "a2-bf446a3f5b0e": {
+    "aceita": true,
+    "justificativa": "Balão com sombra --shadow-xl (o token, além da presença de sombra já aceita em a2-ec15e0beefba). Medida: box-shadow computado do balão aberto contra o token.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "balao-sombra-leve",
+        "descricao": "O balão fica com sombra --shadow-sm em vez de --shadow-xl.",
+        "clausula": "Balão Flutuante · --shadow-xl"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-8a3ceb94046c": {
+    "aceita": true,
+    "justificativa": "Label do upload em --font-size-scale-base semi-bold; placeholder em base regular itálico. Medida: font-weight/font-style computados do label e do texto \"Selecione o arquivo\".",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "label-upload-regular",
+        "descricao": "O label \"Envio de documento\" fica em --font-weight-regular.",
+        "clausula": "Label · --font-size-scale-base · --font-weight-semi-bold · uppercase · -"
+      },
+      {
+        "id": "placeholder-reto",
+        "descricao": "O placeholder \"Selecione o arquivo\" fica sem itálico.",
+        "clausula": "Placeholder · --font-size-scale-base · --font-weight-regular · uppercase · font-style: italic"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-48b225deace0": {
+    "aceita": true,
+    "justificativa": "Ícone de upload fa-upload em --icon-size-lg (diz o tamanho, além do ícone fixo já aceito). Medida: tamanho computado do ícone na área de upload.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "icone-upload-pequeno",
+        "descricao": "O ícone fa-upload fica em --icon-size-sm.",
+        "clausula": "Ícone Upload · <i class=\"fas fa-upload\"></i> · --icon-size-lg · fa-upload"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-043deee1ee88": {
+    "aceita": true,
+    "justificativa": "Cores do upload: label --gray-80, placeholder e ícone --blue-warm-vivid-70, container --pure-0 com borda --blue-warm-vivid-70. Medida: cores computadas da área de upload.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "borda-upload-cinza",
+        "descricao": "A borda da área de upload fica --gray-40.",
+        "clausula": "container (borda) · background-color · --blue-warm-vivid-70"
+      },
+      {
+        "id": "placeholder-cinza",
+        "descricao": "O placeholder e o ícone ficam --gray-80.",
+        "clausula": "Placeholder · text color · --blue-warm-vivid-70"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-a2591de5315f": {
+    "aceita": true,
+    "justificativa": "Superfície do upload com 550px de largura. Medida: width computado da área de upload a 1280.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "upload-largura-total",
+        "descricao": "A área de upload ocupa toda a largura do conteúdo (bem acima de 550px).",
+        "clausula": "Superfície · width · 550px"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-17970a9e717d": {
+    "aceita": true,
+    "justificativa": "Espaçamentos do upload: padding lateral 2x e vertical base da superfície, ícone a 2x do placeholder, margens inferiores base. Medida: padding/margens computados da área de upload.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "icone-colado-placeholder",
+        "descricao": "O ícone fica encostado no texto \"Selecione o arquivo\" (margin-right 0).",
+        "clausula": "Ícone Upload · margin-right · --spacing-scale-2x"
+      },
+      {
+        "id": "superficie-sem-padding",
+        "descricao": "A área de upload fica sem padding lateral.",
+        "clausula": "Superfície · padding-left / padding-right · --spacing-scale-2x"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-a09116df2aa7": {
+    "aceita": true,
+    "justificativa": "Superfície do upload com borda tracejada (--surface-border-dashed-sm). Medida: border-style computado da área de upload.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "borda-solida",
+        "descricao": "A borda da área de upload fica sólida.",
+        "clausula": "Superfície · border · --surface-border-dashed-sm"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-864e64dc686f": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve a propriedade opcional h-fixed (habilita altura fixa e rolagem); não impõe nada."
+  },
+  "a2-a82f144268d4": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Atributos necessários só para pesquisa na tabela, seleção de linhas e expansão; tbl-movimentacoes não tem nenhuma dessas funções."
+  },
+  "a2-b85ef2761050": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Trata do input desativado; o campo do select nunca fica desativado na tela."
+  }
+}

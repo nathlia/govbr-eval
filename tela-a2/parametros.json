@@ -2,30 +2,35 @@
   "_meta": {
     "tela": "acompanhamento (tela A2, NAT-110)",
     "plano": "thesis-workspace/planejamento/atual/plano-tela-a2-2026-10-30.md",
-    "decisoes": ["D-141", "R4 (thesis-workspace/planejamento/atual/revisao-oraculo-2.15-2026-10-22/parecer.md)"],
+    "decisoes": [
+      "D-141",
+      "R4 (thesis-workspace/planejamento/atual/revisao-oraculo-2.15-2026-10-22/parecer.md)"
+    ],
     "status": "RASCUNHO",
-    "nota": "O sorteio de verdade só roda com status CONGELADO, no commit que é a semente. Mudar status, cotas ou qualquer arquivo de 'congelados' depois do commit da semente faz o script recusar."
+    "nota": "O sorteio de verdade só roda com status CONGELADO, no commit que é a semente. Mudar status, cotas ou qualquer arquivo de 'congelados' depois do commit da semente faz o script recusar.",
+    "revisao": "Revisão Codex 1 (NAT-110, 2026-10-30) aplicada; ver plano § 13."
   },
   "regra": {
-    "universo": "Toda frase com marcador de obrigação/proibição/recomendação (scripts/tela-a2-universo.ts MARCADORES) nos 124 arquivos 'ok' do corpus literal oficial ds-rules/govbr-ds-3.7.0-corpus (DS 3.7.0 publicado em gov.br/ds, commits de COLETA.json; e-MAG 3.1 por recomendação). Nenhuma fonte do oráculo.",
-    "elegibilidade": "Passo 1 mecânico: força obrigatória/proibida; componente do arquivo no inventário sorteável ou sem componente. Passo 2 julgado (elegibilidade-passo2.json): aplicável a uma instância do inventário em S0–S2 e verificável por medida pequena na página construída. Motivos de exclusão fechados em MOTIVOS_P2; nenhum pode citar detector, busca ou suporte do oráculo.",
-    "estratos": "G = recomendação do e-MAG 3.1 (as unidades do DS que repetem uma recomendação viram duplicadas dela e lhe passam hospedeiro e variante). DS = unidade do DS que precisa do texto do DS para ser reconhecida como defeito.",
-    "ordem": "key(L, x) = sha256(semente|L|x) em hexadecimal minúsculo; ordena crescente, pega do topo. Sem gerador de números aleatórios.",
-    "passos": [
-      "1. Regras: em cada estrato, ordem por key('regra', id); a ordem inteira é gravada e é a fila de reposição.",
-      "2. Hospedeiro: instâncias candidatas da regra por key('instancia:'+id, instancia); a primeira que cabe. Uma instância leva no máximo 2 defeitos, nunca 2 do mesmo estrato. Estratos servidos na ordem de 'ordemEstratos'.",
-      "3. Variante: entre as variantes que valem no hospedeiro, a primeira por key('variante:'+id, variante).",
-      "4. Compartilhadas: specs por key('compartilhada', id); a spec se estende às outras instâncias do mesmo componente que a regra admite e onde a mesma variante vale, se todas couberem; até 'compartilhadas'.",
-      "5. Alternativas válidas (controles conformes): regras elegíveis com alternativasValidas por key('alternativa', id); para cada uma, a primeira alternativa por key('alternativa:'+id, alt) cuja instância não hospeda defeito do mesmo estrato; até 'alternativasValidas'.",
-      "6. Chamarizes: instâncias sem defeito nem alternativa (andaime incluído) por key('chamariz', instancia); as primeiras 'chamarizes'.",
-      "7. Déficit: estrato sem regra que caiba entrega o que tem; as vagas restantes vão para o outro estrato, na ordem 'ordemDeficit'."
-    ],
-    "descarte": "Durante a construção, uma spec só sai se não puder ser injetada (sem instância livre, ou a construção mostra que o desvio força uma segunda violação ou é impossível com a marcação oficial). O registro é {regra, motivo, evidência} em tela-a2/construcao.md e a próxima regra da ordem gravada do mesmo estrato entra no lugar, sem escolha.",
-    "umaVez": "Um sorteio, sem repetição por motivo nenhum (inclusive se cair só em regras que o oráculo verifica, ou só nas que não verifica). Não há modo de ensaio com outra semente."
+    "universo": "Corpus literal oficial ds-rules/govbr-ds-3.7.0-corpus (DS 3.7.0 publicado em gov.br/ds nos commits de COLETA.json; e-MAG 3.1 por recomendação, força pela Portaria SLTI/MP nº 3/2007 arquivada em tela-a2/fontes). Candidatos: frase com marcador de força, imperativo de lista fechada, requisito herdado de introdução/título/coluna, tabela de especificação (uma unidade por tabela) e as frases/tabelas achadas pela auditoria de leitura completa (tela-a2/universo-auditoria.json). Nenhuma fonte do oráculo.",
+    "elegibilidade": "Passo 1 mecânico (força recomendação explícita; componente fora da tela; andaime não embutido). Passo 2 julgado com critérios fixos (tela-a2/passo2-lotes/CRITERIOS.md): força pelo contexto, aplicabilidade, escopo 1280×900 declarado, normatividade, medida pequena ou rubrica editorial R-ED, acoplamento, duplicata (mesmo predicado, condição e observável), conflito explícito. Nenhum motivo pode citar detector, busca ou oráculo.",
+    "estratos": "G = recomendação do e-MAG 3.1 e guias gerais de acessibilidade do site do DS; DS = o resto. Unidade do DS só vira duplicada do e-MAG quando tem o mesmo predicado, condição e observável; o que ela diz a mais (tecla, estado, classe, token, limiar) fica DS.",
+    "tipo": "Cada elegível tem tipo a priori (estrutura-classe · visual-token · comportamento) e caminhoDeteccao a priori (axe · medicao · leitura-da-regra · interacao), só pelo texto da regra. O tipo entra no contrato de compatibilidade e é relatado em separado; NÃO há cota nem garantia de cobertura por tipo.",
+    "ordem": "key(L, x) = sha256(semente|L|x) em hexadecimal minúsculo; empate por id.",
+    "alocacao": "Busca em profundidade completa e determinística (scripts/draw-tela-a2.ts): (1) specs — estratos na ordemEstratos, regras por key(regra), incluir antes de pular, hospedeiro por key(instancia:id), variante por key(variante:id) entre as que valem no hospedeiro; (2) compartilhadas por key(compartilhada); (3) alternativas por key(alternativa), key(alternativa:id) e key(alternativa-hospedeiro:id:alt); (4) chamarizes por key(chamariz). A primeira solução completa nessa ordem é o resultado; se uma fase seguinte não fecha, a busca volta às anteriores na mesma ordem (reparo determinístico, contado em sorteio.json).",
+    "compatibilidade": "Mesmo hospedeiro: no máximo maxPorInstancia defeitos, um por estrato. Mesmo hospedeiro ou hospedeiros aninhados (aninhamento): nunca dois com o mesmo tipo (defeito ou alternativa). pagina toca só nós de documento e não aninha. Alternativa nunca no hospedeiro de um defeito da mesma regra; no máximo uma por instância.",
+    "invariantes": "cotas exatas por estrato (sem transferência DS↔G), compartilhadas, alternativasValidas e chamarizes exatos. Sem solução ⇒ sorteio-falha.json, e nenhuma outra semente.",
+    "semente": "Regra de identidade publicada na NAT-110 ANTES do commit: a semente é o primeiro commit do govbr-eval em que este arquivo diz status CONGELADO (o pai não diz), sem amend nem substituição. Logo depois, o hash completo é publicado na NAT-110 e commitado em tela-a2/semente-autorizada.json (commit próprio, descendente da semente, nunca alterado). O script só aceita essa semente.",
+    "descarte": "Na construção, uma spec só sai com evidência de que não pode ser injetada; o registro {regra, motivo, evidência} vai a tela-a2/construcao.md, passa por revisão independente, e a reposição é a mesma busca determinística com a regra marcada como descartada — nunca escolha manual.",
+    "umaVez": "Um sorteio. Sem modo de ensaio com outra semente. Falha preservada e escalada na NAT-110."
   },
-  "ordemEstratos": ["DS", "G"],
-  "cotas": { "DS": 7, "G": 7 },
-  "ordemDeficit": ["DS", "G"],
+  "ordemEstratos": [
+    "DS",
+    "G"
+  ],
+  "cotas": {
+    "DS": 7,
+    "G": 7
+  },
   "maxPorInstancia": 2,
   "compartilhadas": 2,
   "alternativasValidas": 3,
@@ -33,15 +38,34 @@
   "congelados": [
     "tela-a2/inventario.json",
     "tela-a2/universo.json",
+    "tela-a2/universo-auditoria.json",
     "tela-a2/elegibilidade-passo2.json",
     "tela-a2/elegibilidade.json",
     "tela-a2/parametros.json",
+    "tela-a2/fontes/PROVENIENCIA.json",
+    "tela-a2/fontes/portaria3-2007-emag.pdf",
+    "tela-a2/fontes/select-behavior-size.png",
     "scripts/tela-a2-universo.ts",
     "scripts/draw-tela-a2.ts"
   ],
   "sha256": {
-    "_nota": "Gravado por `npm run tela-a2:sorteio -- --selar` antes do commit da semente; o script recusa se algum arquivo diferir. parametros.json e draw-tela-a2.ts são conferidos pelo git contra o commit da semente.",
+    "_nota": "Gravado por --selar antes do commit da semente; o script recusa se algum arquivo diferir. parametros.json e draw-tela-a2.ts são conferidos pelo git contra a semente.",
     "corpusManifest": "f211b83f2a0c931a2a92ae7767999b3a1b4efd1af5c45cea546910bd5f8ff77c",
     "arquivos": {}
+  },
+  "aninhamento": {
+    "crd-resumo": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "tab-requerimento": [
+      "stp-andamento",
+      "tbl-movimentacoes",
+      "sel-tipo-documento",
+      "upl-documento",
+      "swt-aviso-email",
+      "swt-aviso-sms",
+      "chk-avisos-todos"
+    ]
   }
 }

@@ -1,0 +1,1115 @@
+{
+  "a2-3191b06571b0": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evitar' siglas, num bloco de tom de voz aberto por 'Recomenda-se, sempre que possível': orientação de redação."
+  },
+  "a2-cfc50765d5f6": {
+    "aceita": true,
+    "justificativa": "O título de cada item do accordion não passa de uma linha de texto (R-ED a: contagem de linhas). Medida: altura do título do cabeçalho dividida pelo line-height computado, a 1280.",
+    "instancias": [
+      "acc-duvidas"
+    ],
+    "variantes": [
+      {
+        "id": "titulo-em-duas-linhas",
+        "descricao": "O título de um item do accordion é trocado por uma frase longa que quebra em duas linhas a 1280 px.",
+        "clausula": "Não exceder uma linha de texto."
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-c5c20128d015": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Sem core.min.js nenhum componente da página ganha comportamento (accordion, tab, select, tooltip, upload…): a falta viola várias outras obrigações ao mesmo tempo."
+  },
+  "a2-e820d6f64393": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Sem instanciar BRAccordion o item não expande: viola também a2-8e97b7f2c2b6 (detalhe aparece ao expandir)."
+  },
+  "a2-5c92b7258f94": {
+    "aceita": false,
+    "motivo": "duplicada:a2-e820d6f64393",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-9fbe68a6a115": {
+    "aceita": false,
+    "motivo": "duplicada:a2-e820d6f64393",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-ae196727fe07": {
+    "aceita": false,
+    "motivo": "duplicada:a2-50af67dc7ee1",
+    "justificativa": "Superfície (fundo branco + sombra) do card: mesmo observável (background-color e box-shadow) da superfície obrigatória já aceita; a área com conteúdo é a2-22f23447d6b2."
+  },
+  "a2-9e6a01fe6b6e": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Permissão: áreas em qualquer ordem ou não usadas."
+  },
+  "a2-d248bbf015ed": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Explica a ilustração (blocos são transparentes; fundo branco só no desenho); não impõe nada."
+  },
+  "a2-6a80438a4271": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Use com moderação' o conteúdo oculto: orientação de projeto."
+  },
+  "a2-274851b4d86a": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Avalie se é necessário' / princípio da simplicidade: orientação de processo de design."
+  },
+  "a2-5ea13d31e38d": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Diz quando o recurso é útil; não impõe nada."
+  },
+  "a2-d7a77e943da9": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Considere utilizar' um identificador: recomendação."
+  },
+  "a2-1cd7466dd609": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Pode ser interessante' usar outra cor de fundo: sugestão."
+  },
+  "a2-e61748284572": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "'Ter cuidado para que sejam sobre um único assunto' é cuidado de projeto; o card trata de um só requerimento e não há caso inequívoco de violação local."
+  },
+  "a2-f561cadcff5d": {
+    "aceita": true,
+    "justificativa": "Cada bloco do card (número, serviço, situação, prazo) tem espaço próprio, separado dos vizinhos. Medida: distância vertical entre as caixas (getBoundingClientRect) de blocos consecutivos dentro do card.",
+    "instancias": [
+      "crd-resumo"
+    ],
+    "variantes": [
+      {
+        "id": "blocos-colados",
+        "descricao": "Dois blocos consecutivos do card (ex.: serviço e situação) ficam sem margem entre si, um encostado no outro.",
+        "clausula": "é essencial dar um espaço para cada bloco do card"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-39158a0c0839": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite ao máximo' conteúdo demais: recomendação."
+  },
+  "a2-2abe4096244a": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Princípio de 'Melhores Práticas' introduzido por 'devem ser considerados' e justificado por 'ajuda a': orientação."
+  },
+  "a2-ff921f4bd41e": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Imperativo dentro do princípio 'Crie hierarquia', sob a introdução 'princípios que devem ser considerados' e seguido de 'funcionam melhor': orientação, não exigência."
+  },
+  "a2-db7c2b02cbe1": {
+    "aceita": false,
+    "motivo": "duplicada:a2-acc4801af71c",
+    "justificativa": "Navegação por teclado no card = recomendação 2.1 do e-MAG (mesmo predicado e observável; não nomeia tecla).",
+    "equivalenteEmag": "2.1"
+  },
+  "a2-1ade239e8d68": {
+    "aceita": true,
+    "justificativa": "Fica claro o que é interativo no card e que o próprio card não é (R-ED b: caso flagrante oposto). Medida: cursor computado e realce de hover/elevação no card, que não tem ação de clique.",
+    "instancias": [
+      "crd-resumo"
+    ],
+    "variantes": [
+      {
+        "id": "card-parece-clicavel",
+        "descricao": "O card, que não tem ação, ganha cursor de mão e realce de elevação ao passar o mouse, como se fosse clicável.",
+        "clausula": "Deixe claro quais elementos contidos no card são interativos e se o próprio card é interativo"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "interacao",
+      "medicao"
+    ]
+  },
+  "a2-9ce62fe422ee": {
+    "aceita": false,
+    "motivo": "duplicada:a2-bde476da44c9",
+    "justificativa": "Só há um card; o que resta é a ordem lógica de foco dos elementos internos = recomendação 1.4 do e-MAG.",
+    "equivalenteEmag": "1.4"
+  },
+  "a2-d04db7180b32": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "O card não tem imagem."
+  },
+  "a2-1826eeeb0e6c": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Utilize o Message quando…': orientação de uso."
+  },
+  "a2-b37cd347eb8e": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve que a superfície pode variar de tamanho."
+  },
+  "a2-1efbf2a4b525": {
+    "aceita": true,
+    "justificativa": "A mensagem contextual (texto de erro do campo, .feedback, em S2) não tem Botão Fechar. Medida: ausência de botão dentro do feedback do campo.",
+    "instancias": [
+      "sel-tipo-documento",
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "feedback-com-fechar",
+        "descricao": "O texto de erro do campo em S2 ganha um botão Fechar ao lado da mensagem.",
+        "clausula": "No tipo Mensagem Contextual, não existe a opção de utilização do Botão Fechar."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-e2f346a96f1d": {
+    "aceita": false,
+    "motivo": "duplicada:a2-1efbf2a4b525",
+    "justificativa": "Mesmo predicado (Fechar só no tipo padrão, nunca no contextual) e mesmo observável."
+  },
+  "a2-d227c295ae61": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Comportamento de responsividade (Grid de 4 colunas) quando a superfície cresce em altura; fora da janela 1280×900."
+  },
+  "a2-b141828d5580": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Mensagem de uso global; as mensagens da tela são de uso direcionado."
+  },
+  "a2-ba453bfa2ddb": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'É importante evitar' textos longos, seguido de 'O ideal é…': recomendação."
+  },
+  "a2-9fa10bfbf963": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Quando for necessário dar ênfase…, utilize': orientação de uso."
+  },
+  "a2-333cfef507cf": {
+    "aceita": false,
+    "motivo": "duplicada:a2-c5c20128d015",
+    "justificativa": "Mesmo predicado e observável (core.min.js incluído no HTML) da unidade do accordion."
+  },
+  "a2-8536d91ce5b9": {
+    "aceita": true,
+    "justificativa": "A mensagem é instanciada por BRMessage, que dá função ao Fechar. Medida: clicar em Fechar remove/oculta a mensagem.",
+    "instancias": [
+      "msg-pendencia",
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "mensagem-nao-instanciada",
+        "descricao": "A mensagem fica fora da instanciação do script: clicar em Fechar não a remove.",
+        "clausula": "Usar o seguinte código JavaScript para instanciar a classe BRMessage"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-1e85b4bb57f1": {
+    "aceita": false,
+    "motivo": "duplicada:a2-8536d91ce5b9",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-af81bfeb88e3": {
+    "aceita": false,
+    "motivo": "duplicada:a2-8536d91ce5b9",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-f8e02fcd7de2": {
+    "aceita": true,
+    "justificativa": "A mensagem de retorno do envio (S2) é anunciada de imediato ao leitor de tela. Medida: região viva (role=alert ou aria-live) na mensagem quando ela aparece.",
+    "instancias": [
+      "msg-retorno"
+    ],
+    "variantes": [
+      {
+        "id": "retorno-sem-regiao-viva",
+        "descricao": "A mensagem de retorno aparece em S2 sem role de alerta nem aria-live: o leitor de tela não a lê ao surgir.",
+        "clausula": "permita que o leitor de tela leia imediatamente a mensagem"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-14f2e6c3226f": {
+    "aceita": true,
+    "justificativa": "Ao fechar a mensagem, o foco volta ao ponto do fluxo de onde veio. Medida: document.activeElement depois de acionar Fechar pelo teclado.",
+    "instancias": [
+      "msg-retorno",
+      "msg-pendencia"
+    ],
+    "variantes": [
+      {
+        "id": "foco-perdido-ao-fechar",
+        "descricao": "Depois de fechar a mensagem pelo teclado, o foco cai no body (início do documento).",
+        "clausula": "após o fechamento da mensagem, o foco do navegador volte ao local original no fluxo de navegação"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-c6d37b34ba6b": {
+    "aceita": false,
+    "motivo": "duplicada:a2-db30195b0e66",
+    "justificativa": "Mesmo predicado (texto da mensagem claro) da unidade de design já julgada; ver nota sobre R-ED no relatório."
+  },
+  "a2-e194d3fe5a26": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite jargões': recomendação."
+  },
+  "a2-765215cf4d56": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite projetar mensagens que desapareçam': recomendação de projeto."
+  },
+  "a2-58de311dc67a": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Utilize o select quando…': orientação de uso."
+  },
+  "a2-6c797958acd3": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "'Forma lógica' admite várias ordens (alfabética, cronológica, frequência); nenhuma troca de ordem é inequivocamente ilógica pelo texto."
+  },
+  "a2-bc65f270eab7": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Multiselect; o select da tela é simples."
+  },
+  "a2-6802b0c228a8": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Diz que não há obrigação de largura máxima."
+  },
+  "a2-c0c09380b881": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Rolagem quando a lista excede a altura máxima; a lista de tipos de documento é curta."
+  },
+  "a2-59eeebe5c40d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Texto do item maior que o campo; os itens do select são curtos (como a2-dc529c1da67b)."
+  },
+  "a2-4f00f43853c9": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Mais de um item selecionado; select simples."
+  },
+  "a2-575b7d3ea8f9": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Texto extenso com vários itens selecionados; select simples."
+  },
+  "a2-7b690709168e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Pesquisa sem resultado (empty state); nenhum estado filtra o select."
+  },
+  "a2-2fbc06691f92": {
+    "aceita": false,
+    "motivo": "duplicada:a2-c5c20128d015",
+    "justificativa": "Mesmo predicado e observável (core.min.js incluído no HTML) da unidade do accordion."
+  },
+  "a2-a3eb3793d8de": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Sem instanciar BRSelect a lista não abre: viola também a2-41577e5f420c (setas na lista aberta) e a abertura pelo teclado."
+  },
+  "a2-a54a3257f7cb": {
+    "aceita": false,
+    "motivo": "duplicada:a2-a3eb3793d8de",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-26de6e75e4bc": {
+    "aceita": false,
+    "motivo": "duplicada:a2-a3eb3793d8de",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-366426ce7c1e": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Parâmetro opcional do construtor."
+  },
+  "a2-1ea0fb02f0f7": {
+    "aceita": true,
+    "justificativa": "O rótulo do select diz o propósito do controle (R-ED b: caso flagrante oposto). Medida: texto do rótulo visível associado ao select.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-generico",
+        "descricao": "O rótulo 'Tipo de documento' é trocado por 'Opções', que não diz o que se escolhe.",
+        "clausula": "Disponibilize um rótulo claro e intuitivo para o usuário, permitindo que compreendam o propósito do controle"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-9dac2e9de844": {
+    "aceita": false,
+    "motivo": "duplicada:a2-f4237d13520b",
+    "justificativa": "Associar o campo a <label> = recomendação 6.2 do e-MAG (associar etiquetas aos campos).",
+    "equivalenteEmag": "6.2"
+  },
+  "a2-73b63c7b9f87": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Condição 'sem rótulo visual' falsa: o select tem rótulo visível."
+  },
+  "a2-b3c32fcb1b12": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "'Caso seja necessário': uso opcional de aria-describedby; o select não tem texto de ajuda."
+  },
+  "a2-d69ff4c2d1f5": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Utilize as Tabs quando:' orientação de uso."
+  },
+  "a2-21a9d4c9095c": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item herdado de 'Utilize as Tabs quando:'."
+  },
+  "a2-f6b49e9056d5": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item herdado de 'Utilize as Tabs quando:'."
+  },
+  "a2-861377d8583b": {
+    "aceita": true,
+    "justificativa": "A largura de cada item acompanha a do rótulo mais os espaçamentos internos. Medida: largura do item menos a do texto do rótulo = padding horizontal computado.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "item-largura-fixa",
+        "descricao": "Os itens das abas ganham largura fixa muito maior que o rótulo (ex.: 320 px), sobrando espaço vazio.",
+        "clausula": "O tamanho do Item da Tab deverá sempre acompanhar a largura do Rótulo"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-baf995facf18": {
+    "aceita": false,
+    "motivo": "duplicada:a2-5a1a5ee261b9",
+    "justificativa": "Mesmo observável: superfície da tab se estende até o limite mesmo com poucos itens."
+  },
+  "a2-f4c48b6d11c8": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Itens só com ícone; as abas da tela têm rótulo."
+  },
+  "a2-a555e1def063": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Itens que excedem a largura; há 2 abas a 1280."
+  },
+  "a2-0dbe45bcdbf1": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Swipe com abas ocultas; não há (como a2-9871103d03e2)."
+  },
+  "a2-524f4fb4c503": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Utilize Baixa Densidade quando…': orientação."
+  },
+  "a2-de6bc58b7764": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Utilize Alta Densidade quando…': orientação."
+  },
+  "a2-09dff82e11ed": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Subdivisão de categorias dentro de aba; não há (como a2-3cb3de644c47)."
+  },
+  "a2-817ee892cb9c": {
+    "aceita": false,
+    "motivo": "duplicada:a2-c5c20128d015",
+    "justificativa": "Mesmo predicado e observável (core.min.js incluído no HTML) da unidade do accordion."
+  },
+  "a2-7cb0f2c9c451": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Sem instanciar BRTab as abas não alternam: viola também a2-f19f80da5bea (setas) e a troca de painel."
+  },
+  "a2-769d994c1b61": {
+    "aceita": false,
+    "motivo": "duplicada:a2-7cb0f2c9c451",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-9606afee2fc5": {
+    "aceita": false,
+    "motivo": "duplicada:a2-7cb0f2c9c451",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-ee7ddb80d33f": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Remete à diretriz do componente; não impõe nada próprio."
+  },
+  "a2-0218007cd760": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Área de toque em dispositivos móveis."
+  },
+  "a2-f684c1e9a26f": {
+    "aceita": true,
+    "justificativa": "A lista das abas tem role=tablist. Medida: role do <ul> raiz dos itens.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "lista-sem-tablist",
+        "descricao": "O <ul> que agrupa as abas fica sem role=tablist (as abas continuam com role=tab).",
+        "clausula": "Use marcação semântica adequada, como a propriedade role = tablist para a tag <ul> na raiz do componente"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "axe",
+      "medicao"
+    ]
+  },
+  "a2-42ed6f7a310c": {
+    "aceita": true,
+    "justificativa": "Cada aba tem role=tab e id, e o painel correspondente tem aria-labelledby com esse id. Medida: role/id das abas e aria-labelledby dos painéis.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "painel-sem-labelledby",
+        "descricao": "O painel Documentos fica sem aria-labelledby apontando para a aba.",
+        "clausula": "atribuindo o valor deste id à propriedade aria-labelledby na seção de conteúdo correspondente"
+      },
+      {
+        "id": "aba-sem-role-tab",
+        "descricao": "A aba Andamento perde role=tab (fica só como link).",
+        "clausula": "utilize a propriedade role = tab nos links das abas"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra",
+      "axe"
+    ]
+  },
+  "a2-fc8612404c77": {
+    "aceita": true,
+    "justificativa": "aria-selected=true na aba ativa e false nas demais, também depois de trocar de aba. Medida: aria-selected das abas em S0 e S1.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "ativa-sem-selected",
+        "descricao": "Na carga, a aba Andamento ativa fica sem aria-selected=true.",
+        "clausula": "Utilize o atributo aria-selectedcom valor true para aba ativa"
+      },
+      {
+        "id": "selected-nao-atualiza",
+        "descricao": "Ao selecionar Documentos (S1), aria-selected não muda: Andamento continua true e Documentos false.",
+        "clausula": "aria-selectedcom valor false para abas não ativas"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "medicao",
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-4615392d4a6b": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Utilize a Table quando…': orientação de uso."
+  },
+  "a2-455ec804be90": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ícones de ação na barra de título; a tabela não tem ações nem barra."
+  },
+  "a2-74a353f1ca5e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Barra contextual de linhas selecionadas; sem seleção."
+  },
+  "a2-df33691b7d30": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Item de lista que nomeia um tipo de conteúdo das linhas."
+  },
+  "a2-799664340861": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Item de lista que nomeia uma funcionalidade possível ('podem também conter')."
+  },
+  "a2-bacd563b175a": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Item de lista que nomeia uma funcionalidade possível ('podem também conter')."
+  },
+  "a2-eb8380521ff4": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Tabelas muito extensas sem interatividade; a tabela tem 5 linhas."
+  },
+  "a2-4ee36eb17570": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve o comportamento padrão de quebra de linha nas células."
+  },
+  "a2-0d46bf3395ee": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Rolagem vertical entre header e paginação; a tabela não rola nem pagina."
+  },
+  "a2-77c42ede8a75": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Rolagem horizontal; 3 colunas cabem a 1280."
+  },
+  "a2-b0c2dabfb3cd": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Conteúdo expandido de linha; não há linhas expansíveis."
+  },
+  "a2-fa23b03dc46d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Seleção de linhas; a tabela não tem seleção."
+  },
+  "a2-a2efd5f2f0f5": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Utilize baixa densidade quando…': orientação."
+  },
+  "a2-64555d5c5eac": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Utilize alta densidade quando…': orientação."
+  },
+  "a2-b79470f2ae21": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Sempre que possível opte por tabelas simples': recomendação."
+  },
+  "a2-f4ea8721c50b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ordenação; a tabela não é ordenável."
+  },
+  "a2-32832e3432b5": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Introdução de lista de recomendações."
+  },
+  "a2-97cb49e63e8f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Agrupamento de linhas/colunas; não há."
+  },
+  "a2-bbf97e72884a": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Evite' colunas com células vazias, numa lista anunciada como recomendações."
+  },
+  "a2-6db6a0b0498f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Coluna em ordenação; a tabela não é ordenável."
+  },
+  "a2-10860659e4bf": {
+    "aceita": true,
+    "justificativa": "Cabeçalho sem ordenação não usa a cor do estado interativo no rótulo. Medida: color computado dos th contra a cor interativa do DS.",
+    "instancias": [
+      "tbl-movimentacoes"
+    ],
+    "variantes": [
+      {
+        "id": "header-cor-interativa",
+        "descricao": "Os rótulos do cabeçalho (Data, Movimentação, Responsável), sem ordenação, ficam na cor azul interativa.",
+        "clausula": "o rótulo utilizado não deverá ser apresentado na cor do seu estado interativo"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-5383bce4f220": {
+    "aceita": false,
+    "motivo": "duplicada:a2-c5c20128d015",
+    "justificativa": "Mesmo predicado e observável (core.min.js incluído no HTML) da unidade do accordion."
+  },
+  "a2-0ea17af59c31": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Numa tabela estática sem campo de pesquisa, seleção, expansão nem densidade alternável, instanciar ou não BRTable não muda nada observável em S0."
+  },
+  "a2-ffb991e0c695": {
+    "aceita": false,
+    "motivo": "duplicada:a2-0ea17af59c31",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-3883993f5e7c": {
+    "aceita": false,
+    "motivo": "duplicada:a2-0ea17af59c31",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-0fd3c22ebad0": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "'Mantenha acessível' remete a um guia externo sem fixar predicado; as exigências concretas são as recomendações 3.9/3.10 do e-MAG já aceitas."
+  },
+  "a2-5bc8c6ac746e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Navegação por Tab dentro da tabela; a tabela não tem controles focáveis."
+  },
+  "a2-31ec17a5124a": {
+    "aceita": false,
+    "motivo": "duplicada:a2-bbf97e72884a",
+    "justificativa": "Mesmo texto (colunas com células vazias) na aba de acessibilidade; recomendação."
+  },
+  "a2-d1d209953ce6": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Ícone sort em colunas ordenáveis; não há ordenação."
+  },
+  "a2-32cc9d343561": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Coluna já ordenada; não há ordenação."
+  },
+  "a2-4ca9f75c813d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Coluna em ordenação; não há ordenação."
+  },
+  "a2-94bd7eba2c3c": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Controles interativos na tabela; não há."
+  },
+  "a2-46e12efae225": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Controles de ordenação; não há."
+  },
+  "a2-412a1314963a": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Utilize tooltip quando:' orientação de uso."
+  },
+  "a2-89e844b0a15e": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item herdado de 'Utilize tooltip quando:'."
+  },
+  "a2-1977fe0ef7bb": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item herdado de 'Utilize tooltip quando:'."
+  },
+  "a2-dc27d11b8ff7": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Posicionamento dinâmico só se manifesta junto às bordas da janela; os gatilhos ficam longe delas (como a2-a25a469451b7)."
+  },
+  "a2-8cdd5f3fc0b3": {
+    "aceita": true,
+    "justificativa": "O balão só aparece quando acionado (hover/foco) e some depois. Medida: visibilidade do balão na carga, sem interação, e depois de tirar o foco/ponteiro.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "balao-sempre-visivel",
+        "descricao": "O balão do tooltip fica visível desde a carga, sem nenhuma ação do usuário, e não some.",
+        "clausula": "Visibilidade dinâmica;"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "interacao",
+      "medicao"
+    ]
+  },
+  "a2-4a095eaf3d00": {
+    "aceita": true,
+    "justificativa": "O balão aberto fica por cima de todos os outros elementos. Medida: elementFromPoint no centro do balão aberto devolve o balão (ou descendente).",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "balao-por-baixo",
+        "descricao": "O balão aberto fica com z-index abaixo do conteúdo vizinho e é parcialmente coberto por ele.",
+        "clausula": "Flutua sobre todos os outros elementos da tela."
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-281b82e2e6be": {
+    "aceita": true,
+    "justificativa": "Com o balão acima/abaixo do gatilho, a seta fica centralizada horizontalmente no balão. Medida: centro x da seta contra o centro x do balão.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "seta-descentrada",
+        "descricao": "A seta do balão é deslocada para perto da borda esquerda do balão.",
+        "clausula": "esta deverá permanecer centralizada horizontalmente com o balão flutuante"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-650dd9127bab": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Nestes casos, utilize o tipo popover' = 'utilize popover quando o conteúdo for complexo': orientação de uso."
+  },
+  "a2-7ec47541f692": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Contraste do conteúdo do popover; os tooltips da tela são simples."
+  },
+  "a2-d43831ef1184": {
+    "aceita": true,
+    "justificativa": "Botão fechar só no tipo popover; o tooltip simples não tem botão fechar. Medida: ausência de botão dentro do balão simples.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "simples-com-fechar",
+        "descricao": "O balão do tooltip simples ganha um botão fechar no canto superior direito.",
+        "clausula": "Utilize o componente button circular com ênfase terciária de densidade alta apenas no tipo popover"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-25df7eb1399f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Uso do tipo popover; não há popover na tela."
+  },
+  "a2-9eb78d4d9644": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Restringe o mouse over ao tipo padrão; os tooltips da tela já são padrão e não há popover."
+  },
+  "a2-c6b7402991ad": {
+    "aceita": true,
+    "justificativa": "Acionamento por clique só no popover; o tooltip simples abre por mouse over/foco, não por clique. Medida: o balão abre ao passar o ponteiro e não depende de clique.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "simples-por-clique",
+        "descricao": "O tooltip simples passa a abrir só com clique no gatilho (o mouse over não abre mais).",
+        "clausula": "2- Clique: quando o usuário clicar no elemento. Use somente no tipo popover;"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-17a73c07609f": {
+    "aceita": true,
+    "justificativa": "O foco no gatilho abre o balão (todos os tipos). Medida: dar Tab até o gatilho e conferir o balão visível.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "foco-nao-abre",
+        "descricao": "Focar o gatilho pelo teclado não abre o balão (só o mouse over abre).",
+        "clausula": "3- Foco: quando o estado foco for acionado no elemento. Use em todos os tipos.;"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-a801a12af4c5": {
+    "aceita": false,
+    "motivo": "duplicada:a2-8cdd5f3fc0b3",
+    "justificativa": "Tooltip simples exibido automaticamente, sem ação do usuário: mesmo observável da visibilidade dinâmica (balão visível sem acionamento)."
+  },
+  "a2-db44c95366cb": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Utilize a que melhor se adequar': escolha livre."
+  },
+  "a2-9685c72ef71a": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estado Sucesso; nenhum tooltip da tela é de sucesso."
+  },
+  "a2-7c0206ec2106": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estado Erro; nenhum tooltip da tela é de erro."
+  },
+  "a2-4bf700fd3cfc": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Cor dos estados erro/alerta/sucesso do tooltip; não há tooltip com estado."
+  },
+  "a2-dbc20fca56bf": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Título de tooltip de erro/alerta/sucesso; não há."
+  },
+  "a2-c98589c511ae": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Use somente quando necessário': recomendação."
+  },
+  "a2-4b34832d7b71": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "'Não é a melhor solução': orientação de escolha de componente."
+  },
+  "a2-285de1b171b1": {
+    "aceita": true,
+    "justificativa": "No máximo um balão visível por vez. Medida: número de balões visíveis depois de abrir um e passar ao outro gatilho.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "dois-baloes",
+        "descricao": "Ao abrir o segundo tooltip, o primeiro não fecha: os dois balões ficam visíveis juntos.",
+        "clausula": "Use um tooltip por vez na tela."
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-5d2afeb7b676": {
+    "aceita": false,
+    "motivo": "duplicada:a2-c5c20128d015",
+    "justificativa": "Mesmo predicado e observável (core.min.js incluído no HTML) da unidade do accordion."
+  },
+  "a2-8ed5cfe3256e": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Sem instanciar BRTooltip o balão nunca aparece: viola também a2-17a73c07609f (foco abre) e a2-8cdd5f3fc0b3."
+  },
+  "a2-d304f5818f11": {
+    "aceita": false,
+    "motivo": "duplicada:a2-8ed5cfe3256e",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-d267e774432c": {
+    "aceita": false,
+    "motivo": "duplicada:a2-8ed5cfe3256e",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-288b527549d1": {
+    "aceita": false,
+    "motivo": "duplicada:a2-a62ff4649316",
+    "justificativa": "Mesmo predicado (texto do tooltip claro e direto ao ponto) da unidade de design já julgada; ver nota sobre R-ED no relatório."
+  },
+  "a2-1af478ed790b": {
+    "aceita": false,
+    "motivo": "duplicada:a2-acc4801af71c",
+    "justificativa": "Não depender só do hover para que usuários de teclado acionem = recomendação 2.1 do e-MAG; a exigência específica de abrir no foco fica em a2-17a73c07609f.",
+    "equivalenteEmag": "2.1"
+  },
+  "a2-c47ed59cb8bc": {
+    "aceita": true,
+    "justificativa": "O gatilho referencia o balão por aria-labelledby (atributo específico, além do nome acessível exigido em a2-c591eaacd1c2). Medida: aria-labelledby do gatilho aponta para o id do balão.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "gatilho-sem-labelledby",
+        "descricao": "O gatilho fica com aria-label copiando o texto do balão, sem aria-labelledby apontando para ele.",
+        "clausula": "Utilize aria-labelledby no elemento gatilho do tooltip"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-501b4cbfd555": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Consultar a equipe de design é processo."
+  },
+  "a2-75aeef10eb05": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Lista de arquivos; nenhum estado tem arquivo listado."
+  },
+  "a2-71d510ccb559": {
+    "aceita": false,
+    "motivo": "duplicada:a2-d720ea8520cb",
+    "justificativa": "Erro do upload identificado por mensagem = recomendação 6.6 do e-MAG (upl-documento já é hospedeiro); a classe da mensagem contextual é a2-b069c3031aa0.",
+    "equivalenteEmag": "6.6"
+  },
+  "a2-cbdb96e1d273": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Nome de arquivo truncado; nenhum arquivo listado."
+  },
+  "a2-6e7c9e436ad4": {
+    "aceita": false,
+    "motivo": "conflito",
+    "justificativa": "Upload de 1 arquivo: esta unidade exige rótulo no singular ('Envio de arquivo' ou variação, ex.: 'Envio de documento') e placeholder 'Selecione o arquivo'; o inventário fixa o rótulo plural 'Envio de documentos', no padrão listado em a2-963df6b848e6 (aceita). A página segue a2-963df6b848e6/inventário e, como está, violaria esta. Para aceitar, corrigir o rótulo da referência para o singular."
+  },
+  "a2-3d3beb699f29": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Substituição de arquivo já enviado; não ocorre em S0–S2 (como a2-23db25b5d497)."
+  },
+  "a2-537de329b1f4": {
+    "aceita": false,
+    "motivo": "duplicada:a2-c5c20128d015",
+    "justificativa": "Mesmo predicado e observável (core.min.js incluído no HTML) da unidade do accordion."
+  },
+  "a2-6e17ac8690e0": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Sem instanciar BRUpload o arrastar e a lista não funcionam: viola também a2-0e465d7adf07."
+  },
+  "a2-3bfff7332768": {
+    "aceita": false,
+    "motivo": "duplicada:a2-6e17ac8690e0",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-b0c0d10a8f6e": {
+    "aceita": false,
+    "motivo": "duplicada:a2-6e17ac8690e0",
+    "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio."
+  },
+  "a2-04999b47cd6f": {
+    "aceita": false,
+    "motivo": "duplicada:a2-963df6b848e6",
+    "justificativa": "Rótulo claro e descritivo do upload: a2-963df6b848e6 já exige rótulo 'claro, objetivo e informativo' no padrão."
+  },
+  "a2-5d7b9b4ac59e": {
+    "aceita": true,
+    "justificativa": "A mensagem de feedback do upload (erro em S2) fica associada ao campo e exposta às tecnologias assistivas. Medida: descrição acessível do input de arquivo (aria-describedby) contém o texto do feedback.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "feedback-solto",
+        "descricao": "O texto de erro do upload em S2 aparece na tela mas não é ligado ao input (sem aria-describedby).",
+        "clausula": "Identifique as mensagens de feedback (informação, sucesso, alerta e erro) associadas ao upload e exibidas pelas tecnologias assistivas."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-2dc0ad0d03f6": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Trocar o <input type=file> por outro elemento tira o seletor de arquivo: o upload perde a função (e a classe upload-input, a2-7c62d120e790)."
+  },
+  "a2-1460427a3f3e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Botão excluir de arquivo carregado; nenhum arquivo listado."
+  }
+}

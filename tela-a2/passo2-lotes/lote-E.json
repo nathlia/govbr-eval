@@ -1,0 +1,1697 @@
+{
+  "a2-9088f7e86716": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize botões quando for necessário…\" é orientação de quando usar o componente."
+  },
+  "a2-ff2696feca97": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Herda \"Utilize botões quando…\": orientação de uso, não exigência."
+  },
+  "a2-82d96f91ebdc": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Herda \"Utilize botões quando…\": orientação de uso, não exigência."
+  },
+  "a2-c0b6946dae13": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Herda \"Utilize botões quando…\": orientação de uso, não exigência."
+  },
+  "a2-b1f0ccda7cf2": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Herda \"Utilize botões quando…\": orientação de uso, não exigência."
+  },
+  "a2-246d862f42fb": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Herda \"Utilize botões quando…\": orientação de uso, não exigência."
+  },
+  "a2-2392b30732bb": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Herda \"Utilize botões quando…\": orientação de uso, não exigência."
+  },
+  "a2-65fac7fa5182": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Usar botões \"conforme a necessidade de interação\" é critério de projeto; não há medida na página."
+  },
+  "a2-52db9995fef0": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "\"Ao se projetar… planejar o posicionamento\" é processo de design, não observável."
+  },
+  "a2-68415d749b11": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "\"Definir o grau de importância e hierarquia das ações\" é decisão de projeto; o observável de ênfase está nas unidades de Ênfases."
+  },
+  "a2-d648407ac6bb": {
+    "aceita": false,
+    "motivo": "duplicada:a2-d495bfd02867",
+    "justificativa": "Mesmo predicado (rótulo obrigatório) e mesmo observável que a2-d495bfd02867."
+  },
+  "a2-21ca39426148": {
+    "aceita": false,
+    "motivo": "duplicada:a2-099a2401f473",
+    "justificativa": "Superfície do botão: nos botões embutidos só o de escolher arquivo tem superfície visível em repouso, e ela é a área de transferência do upload já aceita em a2-099a2401f473 (mesmo observável)."
+  },
+  "a2-1d8a2ddab3ea": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Ícone no botão padrão é opcional; a condição \"necessidade de enfatizar\" é juízo de projeto."
+  },
+  "a2-5b47246a41c1": {
+    "aceita": true,
+    "justificativa": "Botão circular (só ícone) tem ícone obrigatório: Fechar das mensagens, gatilho dos tooltips, gatilho do select. Medida: elemento de ícone visível dentro do botão.",
+    "instancias": [
+      "msg-pendencia",
+      "msg-retorno",
+      "tip-prazo",
+      "tip-protocolo",
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "fechar-sem-icone",
+        "descricao": "O botão Fechar da mensagem fica vazio, sem o ícone de fechar (aria-label mantido).",
+        "instancias": [
+          "msg-pendencia",
+          "msg-retorno"
+        ],
+        "clausula": "Nos botões do tipo circular a utilização é obrigatória"
+      },
+      {
+        "id": "gatilho-sem-icone",
+        "descricao": "O botão gatilho fica sem o ícone (círculo vazio), com o nome acessível mantido.",
+        "instancias": [
+          "tip-prazo",
+          "tip-protocolo",
+          "sel-tipo-documento"
+        ],
+        "clausula": "Nos botões do tipo circular a utilização é obrigatória"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-d495bfd02867": {
+    "aceita": true,
+    "justificativa": "Rótulo obrigatório no botão que não é circular; na tela, o botão de escolher arquivo do upload. Medida: texto visível dentro do botão.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "escolher-arquivo-so-icone",
+        "descricao": "O botão de escolher arquivo mostra só o ícone, sem texto visível (o nome acessível fica num aria-label).",
+        "clausula": "O rótulo é um elemento obrigatório."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-1a95eeb43d22": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Deve-se evitar\" três ou mais palavras, com \"o ideal é\" no mesmo bloco: recomendação."
+  },
+  "a2-59c1236e3ebd": {
+    "aceita": true,
+    "justificativa": "Proíbe quebra de linha no rótulo do botão; na tela, o botão de escolher arquivo. Medida: número de linhas do rótulo (altura do texto / line-height ou getClientRects).",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-em-duas-linhas",
+        "descricao": "O rótulo do botão de escolher arquivo quebra em duas linhas (largura do botão limitada).",
+        "clausula": "Nunca utilize quebra de linhas no rótulodo botão."
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-6d5f38f9bab8": {
+    "aceita": true,
+    "justificativa": "O botão cresce com o rótulo respeitando as margens internas. Medida: padding computado do botão de escolher arquivo e se o texto cabe sem corte.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "escolher-arquivo-sem-margem",
+        "descricao": "O botão de escolher arquivo fica com padding horizontal 0, texto encostado na borda.",
+        "clausula": "porém as margens internas devem ser respeitadas"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-a9890f9d0039": {
+    "aceita": true,
+    "justificativa": "R-ED (b): o rótulo deve orientar claramente qual ação se espera; caso flagrante oposto é um rótulo genérico. Medida: texto do botão de escolher arquivo.",
+    "instancias": [
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-generico",
+        "descricao": "O botão de escolher arquivo tem o rótulo \"OK\".",
+        "clausula": "orientar de forma clara qual ação esperada"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-7d805a2b0e75": {
+    "aceita": false,
+    "motivo": "duplicada:a2-099a2401f473",
+    "justificativa": "Mesmo predicado de a2-21ca39426148 (superfície obrigatória); observável igual ao de a2-099a2401f473."
+  },
+  "a2-9c7a5411e171": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Explica a finalidade das ênfases; não impõe nada."
+  },
+  "a2-4f6b7bd068c4": {
+    "aceita": true,
+    "justificativa": "Ênfase primária só em ação crucial da tela; Fechar a mensagem e abrir ajuda não são. Medida: classe/fundo de ênfase primária no botão embutido.",
+    "instancias": [
+      "msg-pendencia",
+      "msg-retorno",
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "fechar-primario",
+        "descricao": "O botão Fechar da mensagem recebe ênfase primária (fundo azul sólido).",
+        "instancias": [
+          "msg-pendencia",
+          "msg-retorno"
+        ],
+        "clausula": "devem ser aplicados em ações cruciais da tela"
+      },
+      {
+        "id": "gatilho-ajuda-primario",
+        "descricao": "O gatilho do tooltip no card recebe ênfase primária.",
+        "instancias": [
+          "tip-prazo",
+          "tip-protocolo"
+        ],
+        "clausula": "devem ser aplicados em ações cruciais da tela"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-27b5f22e0f91": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Exemplo (salvar × cancelar) que ilustra a regra de ênfase primária."
+  },
+  "a2-e60399fb0115": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize de forma limitada\" é orientação de uso."
+  },
+  "a2-2eb232425452": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Completa \"Utilize de forma limitada\" (orientação); o observável impositivo está em a2-4f6b7bd068c4."
+  },
+  "a2-a9e5968c6c71": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize para ações que não sejam…\" é orientação de uso da ênfase secundária."
+  },
+  "a2-f7ca1b786909": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize para ações de múltipla escolha…\" é orientação de uso da ênfase terciária."
+  },
+  "a2-72439446cf32": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "\"Atenção:\" só introduz itens que descrevem/permitem o comportamento bloco."
+  },
+  "a2-7c15fd8222c5": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve quais tipos de botão possuem o comportamento bloco."
+  },
+  "a2-6b2d74ccb7b9": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Permissão (\"pode ser utilizado\")."
+  },
+  "a2-564f707547af": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Permissão (\"pode ser utilizado\")."
+  },
+  "a2-53e24245542b": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Permissão (\"pode existir\")."
+  },
+  "a2-5f85eeafe863": {
+    "aceita": true,
+    "justificativa": "Rótulo e ícone sempre centralizados na largura e na altura do botão. Medida: centro do ícone/rótulo contra o centro do botão (getBoundingClientRect).",
+    "instancias": [
+      "msg-pendencia",
+      "msg-retorno",
+      "tip-prazo",
+      "tip-protocolo",
+      "sel-tipo-documento",
+      "upl-documento"
+    ],
+    "variantes": [
+      {
+        "id": "icone-descentralizado",
+        "descricao": "O ícone dentro do botão fica alinhado ao canto superior esquerdo, fora do centro.",
+        "instancias": [
+          "msg-pendencia",
+          "msg-retorno",
+          "tip-prazo",
+          "tip-protocolo",
+          "sel-tipo-documento"
+        ],
+        "clausula": "o rótulo do botão e o ícone permanecem sempre centralizados tanto na largura quanto na altura"
+      },
+      {
+        "id": "rotulo-alinhado-a-esquerda",
+        "descricao": "Ícone e rótulo do botão de escolher arquivo ficam alinhados à esquerda do botão.",
+        "instancias": [
+          "upl-documento"
+        ],
+        "clausula": "permanecem sempre centralizados tanto na largura quanto na altura"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-df449a7d5cd8": {
+    "aceita": false,
+    "motivo": "so-andaime",
+    "justificativa": "Posicionar botões por ênfase só se manifesta num grupo de botões; o único grupo é btn-enviar/btn-voltar (moldura)."
+  },
+  "a2-66f05213a674": {
+    "aceita": false,
+    "motivo": "so-andaime",
+    "justificativa": "\"Maior relevância à direita\" exige grupo de botões de ênfases diferentes; só btn-enviar/btn-voltar (moldura)."
+  },
+  "a2-c23f336807f4": {
+    "aceita": true,
+    "justificativa": "Botão próximo de outro componente mantém espaçamento mínimo para não confundir áreas de interação; o gatilho do tooltip fica no card, junto do texto. Medida: distância entre o gatilho e o elemento vizinho (getBoundingClientRect).",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "gatilho-colado-ao-texto",
+        "descricao": "O gatilho do tooltip fica encostado (0 px) ao valor do card, com sobreposição das caixas.",
+        "clausula": "mantenha um espaçamento mínimo"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-3241a9611f30": {
+    "aceita": true,
+    "justificativa": "O espaçamento de proteção do botão vem da escala de layout do Fundamento Espaçamento. Medida: margem computada do gatilho contra os valores da escala.",
+    "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "protecao-fora-da-escala",
+        "descricao": "A margem entre o gatilho do tooltip e o texto vizinho é 5 px, valor fora da escala.",
+        "clausula": "Utilize algum espaçamento da escala de layout"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-c7ac4e76783e": {
+    "aceita": true,
+    "justificativa": "Container do botão com a classe br-button (Fechar das mensagens e gatilhos dos tooltips; o do select já está em a2-879621000aa6). Medida: classe do botão.",
+    "instancias": [
+      "msg-pendencia",
+      "msg-retorno",
+      "tip-prazo",
+      "tip-protocolo"
+    ],
+    "variantes": [
+      {
+        "id": "botao-sem-br-button",
+        "descricao": "O botão embutido usa classe própria (aparência copiada à mão), sem br-button.",
+        "clausula": "class · string · br-button"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-923a3ee74050": {
+    "aceita": true,
+    "justificativa": "Ícone decorativo do botão com aria-hidden=\"true\". Medida: atributo aria-hidden no elemento do ícone.",
+    "instancias": [
+      "msg-pendencia",
+      "msg-retorno",
+      "tip-prazo",
+      "tip-protocolo",
+      "sel-tipo-documento",
+      "upl-documento",
+      "acc-duvidas"
+    ],
+    "variantes": [
+      {
+        "id": "icone-sem-aria-hidden",
+        "descricao": "O ícone dentro do botão fica sem aria-hidden=\"true\".",
+        "clausula": "Ícones decorativos precisam ter o atributo aria-hidden=\"true\""
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-1faa8ef238c0": {
+    "aceita": false,
+    "motivo": "duplicada:a2-679351f2635c",
+    "justificativa": "Texto alternativo para o botão só com ícone = e-MAG 3.6 (alternativa em texto para ícone único conteúdo de controle), mesmo observável (nome acessível).",
+    "equivalenteEmag": "3.6"
+  },
+  "a2-dc561d157556": {
+    "aceita": true,
+    "justificativa": "Botão circular com o nome no atributo aria-label (mais que nome acessível: o atributo). Medida: aria-label presente e não vazio no botão.",
+    "instancias": [
+      "msg-pendencia",
+      "msg-retorno",
+      "tip-prazo",
+      "tip-protocolo",
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "nome-so-em-title",
+        "descricao": "O botão só com ícone tem o nome apenas no atributo title, sem aria-label.",
+        "clausula": "Inclua o atributo aria-label no componente"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-be0b9ab18685": {
+    "aceita": true,
+    "justificativa": "Botão só com ícone mostra o rótulo em tooltip no hover e no foco. Medida: passar o mouse e focar o botão e ver se aparece balão com o rótulo.",
+    "instancias": [
+      "msg-pendencia",
+      "msg-retorno",
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "icone-sem-tooltip",
+        "descricao": "O botão só com ícone não exibe tooltip com o rótulo no hover nem no foco.",
+        "clausula": "certifique-se de exibir a informação do rótulo através do tooltip ao passar o mouse ou focar no botão"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-d4c134db1d65": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Área de toque em dispositivos mobile; o contrato é 1280×900 sem toque."
+  },
+  "a2-8d0a43ba3116": {
+    "aceita": false,
+    "motivo": "duplicada:a2-a6e2601837a7",
+    "justificativa": "Manter o foco visível = e-MAG 4.4, mesmo predicado e observável (indicador de foco).",
+    "equivalenteEmag": "4.4"
+  },
+  "a2-ff6a961f006f": {
+    "aceita": true,
+    "justificativa": "Ícone decorativo ao lado do rótulo sem atributo title (além de aria-hidden). Medida: ausência de title no ícone do botão com rótulo.",
+    "instancias": [
+      "upl-documento",
+      "acc-duvidas"
+    ],
+    "variantes": [
+      {
+        "id": "icone-com-title",
+        "descricao": "O ícone ao lado do rótulo recebe um atributo title repetindo o rótulo.",
+        "clausula": "não utilize atributo title"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-fee39db9eda4": {
+    "aceita": false,
+    "motivo": "duplicada:a2-679351f2635c",
+    "justificativa": "\"title ou aria-label\" no botão só com ícone = nome acessível do e-MAG 3.6; a exigência específica de aria-label fica em a2-dc561d157556.",
+    "equivalenteEmag": "3.6"
+  },
+  "a2-2bef68e79f2d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Nenhum botão embutido é de alternância (pressionado/não pressionado); o cabeçalho do accordion é de expansão e segue aria-expanded do próprio accordion."
+  },
+  "a2-7cd5c53bd8e0": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize divider quando…\" é orientação de uso."
+  },
+  "a2-d818b265b0b3": {
+    "aceita": false,
+    "motivo": "duplicada:a2-427870f3738e",
+    "justificativa": "Borda obrigatória do divider = divider obrigatório sob as abas já aceito (mesmo observável: linha visível sob a barra)."
+  },
+  "a2-c07cc45df5d4": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite o uso de cores aleatórias\" é recomendação."
+  },
+  "a2-130b2ae325da": {
+    "aceita": true,
+    "justificativa": "Divider é neutro e nunca muda de estado. Medida: estilo computado do divisor sob a barra de abas com e sem hover/foco.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "divisor-com-hover",
+        "descricao": "O divisor sob a barra de abas muda de cor ao passar o mouse.",
+        "clausula": "Em hipótese alguma devem se comportar com estados."
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-6e0575b5066a": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "\"Com moderação\" não tem caso inequívoco com um único divisor na instância."
+  },
+  "a2-7cb5d9acdf47": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "A condição (elementos que não podem ser separados por espaço) é juízo de layout."
+  },
+  "a2-c8a67f6357d7": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize o divider apenas para…\" é orientação de uso (Melhores Práticas)."
+  },
+  "a2-a83a8121b874": {
+    "aceita": true,
+    "justificativa": "Divider visível mas sem chamar mais atenção que o conteúdo; caso flagrante: linha grossa e saturada. Medida: border-width e cor computados do divisor.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "divisor-destoante",
+        "descricao": "O divisor sob a barra de abas fica com 8 px de espessura em vermelho saturado.",
+        "clausula": "não devem \"destoar\" chamando mais atenção que o próprio conteúdo"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-9ea827dc3326": {
+    "aceita": true,
+    "justificativa": "Proíbe usar dividers para circundar um item. Medida: elementos divisores em volta de um item da tab.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "aba-circundada",
+        "descricao": "A aba ativa fica cercada por divisores (um acima e um de cada lado), formando moldura em volta do item.",
+        "clausula": "Não utilize dividers para circundar um item."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-1d3af5fbb545": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Prefira bordas\" é recomendação."
+  },
+  "a2-b7a8eaa08776": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Opte por…\" é recomendação."
+  },
+  "a2-b8db536c1a83": {
+    "aceita": true,
+    "justificativa": "O divisor sob a barra de abas é um br-divider. Medida: classe do elemento divisor.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "divisor-sem-br-divider",
+        "descricao": "A linha sob a barra de abas é um elemento com classe própria (aparência copiada à mão), sem br-divider.",
+        "clausula": "class · string · br-divider"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-e85565a09df7": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Instrução de implementação (\"Usar utilitários…\") para quando se modifica o espaçamento; não impõe resultado na página."
+  },
+  "a2-7379726c1f90": {
+    "aceita": true,
+    "justificativa": "Divider decorativo: ignorado pelo leitor de tela e fora da sequência de foco. Medida: tabindex/foco por Tab e papel na árvore de acessibilidade do divisor.",
+    "instancias": [
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "divisor-focavel",
+        "descricao": "O divisor sob a barra de abas recebe tabindex=\"0\" e o Tab para nele.",
+        "clausula": "o foco não deve passar por ele"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao"
+    ]
+  },
+  "a2-e82dd3130c77": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite o uso excessivo\" é recomendação."
+  },
+  "a2-fccffbc814fd": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Recomenda <hr> mas admite <div> ou <span>; qualquer contêiner comum é aceito, nada inequívoco a violar."
+  },
+  "a2-e06e33122030": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize o componente input quando:\" é orientação de uso."
+  },
+  "a2-73066df76b6c": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Herda \"Utilize o componente input quando:\" (orientação de uso)."
+  },
+  "a2-e25387e89a38": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Herda \"Utilize o componente input quando:\" (orientação de uso)."
+  },
+  "a2-d004617ab085": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Herda \"Utilize o componente input quando:\" (orientação de uso)."
+  },
+  "a2-49acced70a42": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Tirar o campo de entrada desfaz o select inteiro (segunda violação na anatomia do select)."
+  },
+  "a2-2e625701f224": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve a função do rótulo."
+  },
+  "a2-3452a785e45d": {
+    "aceita": true,
+    "justificativa": "R-ED (b): rótulo curto e objetivo; caso flagrante oposto é rótulo longo. Medida: nº de palavras do rótulo do select.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-longo",
+        "descricao": "O rótulo do select vira uma frase de mais de 20 palavras explicando para que serve o tipo de documento.",
+        "clausula": "O texto do Rótulo deve ser curto e objetivo possível."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-ae8db33b4503": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve uma função do rótulo e remete ao Padrão de Formulário, onde está a regra de marcação de obrigatórios."
+  },
+  "a2-309fd2a0777a": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Remissão a outro documento."
+  },
+  "a2-d817fab151df": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Campo de entrada obrigatório: tirá-lo desfaz o select (mesmo caso de a2-49acced70a42)."
+  },
+  "a2-121e2f176704": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve para que serve o campo."
+  },
+  "a2-438a309adabe": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "O campo do select não tem ícone ilustrativo."
+  },
+  "a2-54dca6a2c217": {
+    "aceita": true,
+    "justificativa": "Ação interna do campo (o gatilho do select) com ícone que representa a ação de abrir a lista. Medida: classe do ícone do gatilho.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "gatilho-icone-errado",
+        "descricao": "O gatilho do select mostra uma lupa em vez da seta para baixo.",
+        "clausula": "o ícone deve representar a ação a ser realizada na interação"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-6b41cb544272": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Não há ação interna em botão textual (caso excepcional) na tela."
+  },
+  "a2-3312a3e57512": {
+    "aceita": true,
+    "justificativa": "R-ED (b): o placeholder traz informação mais completa que o rótulo; caso flagrante oposto é repetir o rótulo. Medida: placeholder do campo contra o texto do rótulo.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "placeholder-igual-rotulo",
+        "descricao": "O placeholder do campo do select repete exatamente o texto do rótulo.",
+        "clausula": "Deve trazer informações mais completas que a contida no Rótulo/Label"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-76f24d309b17": {
+    "aceita": true,
+    "justificativa": "Apagado o texto digitado (filtro do select), o placeholder volta. Medida: digitar e apagar no campo e ler o placeholder exibido.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "placeholder-nao-volta",
+        "descricao": "Depois que o usuário digita no campo do select, o script zera o placeholder e ele não reaparece ao apagar o texto.",
+        "clausula": "No caso de exclusão da do texto digitado, o placeholder deve reaparecer."
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao"
+    ]
+  },
+  "a2-55c2c29974e2": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Use o placeholder quando…\" é orientação de uso."
+  },
+  "a2-ea84b8ce983e": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "A condição (\"quando label e placeholder não foram suficientes\") é juízo de projeto."
+  },
+  "a2-27ced4974856": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Grid de 4 colunas (telas pequenas) e área de toque; contrato 1280×900."
+  },
+  "a2-aed330b42967": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "O select não exibe estado informativo na tela."
+  },
+  "a2-eec6bc910f55": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "O select não fica desabilitado em nenhum estado."
+  },
+  "a2-db9f9aa4a02e": {
+    "aceita": true,
+    "justificativa": "No hover sobre o campo o cursor vira o de texto. Medida: cursor computado do campo do select com hover.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "cursor-padrao-no-campo",
+        "descricao": "O campo do select mostra o cursor padrão (seta) no hover.",
+        "clausula": "O cursor deve mudar para o formato Text."
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "medicao",
+      "interacao"
+    ]
+  },
+  "a2-05e0365f1c3c": {
+    "aceita": true,
+    "justificativa": "Com o campo focado, o cursor continua mudando no hover (condição diferente de a2-db9f9aa4a02e). Medida: cursor computado do campo focado com hover.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "cursor-some-no-foco",
+        "descricao": "Quando o campo do select está focado, o cursor volta à seta no hover.",
+        "clausula": "o cursor do mouse ainda deve sofrer as alterações referentes"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao"
+    ]
+  },
+  "a2-ff5e306ed5d2": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite dividir o input\" é recomendação."
+  },
+  "a2-06f818bc75a5": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "O tipo de documento não é dado segmentado (telefone, CPF); não há campo a dividir."
+  },
+  "a2-eca300840220": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "O campo do select não usa máscara."
+  },
+  "a2-fc1517207533": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "O campo do select não usa máscara."
+  },
+  "a2-9a95fc4f7003": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de \"boas práticas\" de autocomplete: recomendação."
+  },
+  "a2-a64db0c373c8": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de \"boas práticas\" de autocomplete: recomendação."
+  },
+  "a2-6bdd82e245d3": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de \"boas práticas\" de autocomplete: recomendação."
+  },
+  "a2-703143614a12": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de \"boas práticas\" de autocomplete: recomendação."
+  },
+  "a2-5b0b407b140e": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de \"boas práticas\" de autocomplete: recomendação."
+  },
+  "a2-93c8e2f7bb50": {
+    "aceita": false,
+    "motivo": "duplicada:a2-bd84ff2497d5",
+    "justificativa": "Classe br-input no campo do select já aceita em a2-bd84ff2497d5 (mesmo observável; único hospedeiro do input)."
+  },
+  "a2-5ef3ffb3d9b1": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Tirar o core.min.js quebra todos os componentes da página, inclusive a moldura."
+  },
+  "a2-614b66b81ee0": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "O campo embutido é instanciado pelo script do select, não por BRInput avulso."
+  },
+  "a2-5574128c6a03": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Parâmetro da instanciação avulsa de BRInput; o campo do select não é instanciado assim."
+  },
+  "a2-501efb342336": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Parâmetro da instanciação avulsa de BRInput; o campo do select não é instanciado assim."
+  },
+  "a2-4aeca513aeeb": {
+    "aceita": true,
+    "justificativa": "O campo é ponto de foco alcançado pela tecla Tab (tecla específica). Medida: sequência de Tab para no campo do select.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "campo-fora-do-tab",
+        "descricao": "O campo do select recebe tabindex=\"-1\" e o Tab passa direto por ele.",
+        "clausula": "por meio da tecla Tab, onde cada input deve ser um ponto de foco na ordem da tabulação"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "axe"
+    ]
+  },
+  "a2-e1a8fbf8ec5c": {
+    "aceita": true,
+    "justificativa": "O campo focado usa a marcação de foco da diretriz de Estados do DS (não basta qualquer foco visível). Medida: outline computado do campo focado contra o estilo de foco do DS.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "foco-fora-do-padrao",
+        "descricao": "O campo do select focado mostra contorno sólido vermelho de 1 px no lugar do foco do DS.",
+        "clausula": "Utilize a marcação correta para o estado de foco, previsto na diretriz de estados"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-328f62cfe4ce": {
+    "aceita": true,
+    "justificativa": "Com o foco no campo, o usuário digita sem passo anterior. Medida: focar por Tab e digitar; o texto entra no campo.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "campo-readonly-ate-clique",
+        "descricao": "O campo do select fica readonly até o usuário clicar no gatilho; com foco por Tab não aceita digitação.",
+        "clausula": "permita que o usuário possa digitar o texto na sequência, sem necessidade de qualquer outro passo anterior"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao"
+    ]
+  },
+  "a2-81fd932c0990": {
+    "aceita": true,
+    "justificativa": "Controle interno do campo (gatilho do select) alcançável por Tab e acionado por Space. Medida: Tab até o gatilho e Space abre a lista.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "gatilho-fora-do-tab",
+        "descricao": "O gatilho do select recebe tabindex=\"-1\" e não é alcançado pelo Tab.",
+        "clausula": "acessados por teclado, via tecla Tab"
+      },
+      {
+        "id": "gatilho-ignora-space",
+        "descricao": "O gatilho do select abre a lista só com clique; Space não faz nada.",
+        "clausula": "acionados via tecla Space"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao"
+    ]
+  },
+  "a2-13c4de8de18e": {
+    "aceita": true,
+    "justificativa": "Ordem de tabulação: campo antes dos controles internos (diz mais que e-MAG 6.3: a ordem dentro do componente). Medida: ordem de Tab entre o campo e o gatilho do select.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "gatilho-antes-do-campo",
+        "descricao": "O gatilho do select vem antes do campo na sequência de Tab (tabindex positivo no gatilho).",
+        "clausula": "Por fim, input e seus controles internos"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-ec99c6922afa": {
+    "aceita": true,
+    "justificativa": "No campo, Ctrl+seta navega por palavras. Medida: digitar duas palavras, Ctrl+seta esquerda e ler a posição do cursor (selectionStart).",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "ctrl-seta-bloqueado",
+        "descricao": "Um script do campo do select cancela Ctrl+setas (preventDefault) e o cursor não pula palavras.",
+        "clausula": "navegar entre as palavras do texto digitado, com o uso das teclas Ctrl + left/right"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao"
+    ]
+  },
+  "a2-020f0b4f0964": {
+    "aceita": true,
+    "justificativa": "R-ED (b): rótulo claro e descritivo do propósito do campo; caso flagrante oposto é rótulo genérico. Medida: texto do rótulo do select.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-generico",
+        "descricao": "O rótulo do select é \"Campo 1\".",
+        "clausula": "Utilize rótulos (labels) claros e descritivos"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-01e8f41e5ef6": {
+    "aceita": false,
+    "motivo": "duplicada:a2-cd5cbf0f18dc",
+    "justificativa": "Ajuda contextual / instruções de preenchimento = e-MAG 6.5, mesmo predicado e observável (texto de instrução junto ao campo).",
+    "equivalenteEmag": "6.5"
+  },
+  "a2-5b4660cb8794": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"É importante fornecer feedback imediato\" em seção de recomendações: ênfase/recomendação; o observável impositivo (cor do estado) está em a2-7bdc66f1d99d."
+  },
+  "a2-7bdc66f1d99d": {
+    "aceita": true,
+    "justificativa": "Campo com problema marcado com a cor do estado de erro. Medida: em S2 (envio sem escolher tipo), border-color computado do campo do select contra a cor de erro do DS.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "erro-sem-cor",
+        "descricao": "Em S2 o campo do select mostra o texto de erro mas a borda continua na cor neutra.",
+        "clausula": "cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-59c41d3b1085": {
+    "aceita": true,
+    "justificativa": "Campo em <input> com type correspondente à função (texto/filtro). Medida: tagName e type do campo.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "type-errado",
+        "descricao": "O campo do select usa type=\"number\".",
+        "clausula": "com a tag <input> e o valor do atributo type correspondente a sua função"
+      },
+      {
+        "id": "campo-em-div",
+        "descricao": "O campo do select é uma div com contenteditable em vez de <input>.",
+        "clausula": "com a tag <input>"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-7c43824db106": {
+    "aceita": true,
+    "justificativa": "Associação rótulo–campo pelo par for/id (diz mais que e-MAG 6.2: o mecanismo). Medida: label[for] igual ao id do input.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-por-labelledby",
+        "descricao": "O rótulo do select é ligado ao campo só por aria-labelledby, sem for/id.",
+        "clausula": "usando o atributo for na tag <label> e um id com mesmo valor na tag <input>"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-56357b049872": {
+    "aceita": true,
+    "justificativa": "Texto de ajuda/erro do campo vinculado por aria-describedby. Medida: em S2, aria-describedby do campo aponta para o texto de erro.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "erro-sem-describedby",
+        "descricao": "Em S2 o texto de erro do select aparece, mas o campo não tem aria-describedby apontando para ele.",
+        "clausula": "use o atributo aria-describedby para vincular a um elemento de ajuda ou instrução"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-463fd1d8185a": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Devem ser utilizados quando se pretende…\" é orientação de quando usar o item."
+  },
+  "a2-b4c1596eb8e2": {
+    "aceita": true,
+    "justificativa": "Item com área de conteúdo com no mínimo um conteúdo. Medida: cada item da lista do select tem conteúdo (texto) não vazio.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "item-vazio",
+        "descricao": "A lista do select tem um item sem nenhum conteúdo (linha vazia).",
+        "clausula": "uma área com no mínimo um conteúdo contido"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-b090304b9dd6": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "A superfície do item não tem aparência própria em repouso nos hospedeiros (herda a da lista/barra); nada a medir."
+  },
+  "a2-bf22d6ac05ac": {
+    "aceita": false,
+    "motivo": "duplicada:a2-b4c1596eb8e2",
+    "justificativa": "Área de conteúdo obrigatória: mesmo predicado e observável de a2-b4c1596eb8e2."
+  },
+  "a2-db12ed1239a7": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "\"Levar em conta as características de cada componente\" é critério de diagramação, não medível."
+  },
+  "a2-e4ef78351d8e": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Só nomeia a parte (Superfície)."
+  },
+  "a2-40fe6a293a12": {
+    "aceita": true,
+    "justificativa": "Proíbe botão primário e componentes de navegação dentro do item. Medida: presença de botão primário/navegação dentro de um item.",
+    "instancias": [
+      "sel-tipo-documento",
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "primario-no-item",
+        "descricao": "Um item da lista do select ganha um botão primário \"Ver modelo\".",
+        "instancias": [
+          "sel-tipo-documento"
+        ],
+        "clausula": "exceto botões primários"
+      },
+      {
+        "id": "primario-na-aba",
+        "descricao": "O item da aba Documentos contém um botão primário.",
+        "instancias": [
+          "tab-requerimento"
+        ],
+        "clausula": "exceto botões primários"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-412284c6dcc9": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Use este recurso com cautela\" é recomendação."
+  },
+  "a2-0f969abfa232": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Informa que as larguras são flexíveis."
+  },
+  "a2-bb61fc345436": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite…\" é recomendação; a proibição medível está em a2-7339465391f7."
+  },
+  "a2-ece46f7d3792": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Legenda de imagem de exemplos."
+  },
+  "a2-e06d4991a48e": {
+    "aceita": true,
+    "justificativa": "Conteúdo do item respeita o padding interno da superfície. Medida: padding computado do item.",
+    "instancias": [
+      "sel-tipo-documento",
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "item-sem-padding",
+        "descricao": "Os itens da lista do select ficam com padding 0 e o texto encosta na borda.",
+        "instancias": [
+          "sel-tipo-documento"
+        ],
+        "clausula": "devem respeitar as margens internas (padding)"
+      },
+      {
+        "id": "aba-sem-padding",
+        "descricao": "O item da aba Andamento fica com padding horizontal 0.",
+        "instancias": [
+          "tab-requerimento"
+        ],
+        "clausula": "devem respeitar as margens internas (padding)"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-f9a04eef042d": {
+    "aceita": false,
+    "motivo": "duplicada:a2-e06d4991a48e",
+    "justificativa": "\"Só mídias podem sangrar\" = o mesmo padding obrigatório para o resto (mesmo observável)."
+  },
+  "a2-872ebc14bda0": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Remissão a outro documento."
+  },
+  "a2-e3c22c4d911a": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Declara que os comportamentos são opcionais."
+  },
+  "a2-f528988199db": {
+    "aceita": false,
+    "motivo": "duplicada:a2-419c091564b6",
+    "justificativa": "br-item nas opções do select já aceito em a2-419c091564b6 (as abas usam tab-item, não br-item)."
+  },
+  "a2-26d3db62e2ab": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Tirar o core.min.js quebra todos os componentes da página, inclusive a moldura."
+  },
+  "a2-9655683035eb": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Os itens embutidos são geridos pelo script do select/tab, não por BRItem avulso."
+  },
+  "a2-15cd0b55e268": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Parâmetro da instanciação avulsa de BRItem; não usada nos hospedeiros."
+  },
+  "a2-126e73d998e3": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Parâmetro da instanciação avulsa de BRItem; não usada nos hospedeiros."
+  },
+  "a2-f307529302ba": {
+    "aceita": false,
+    "motivo": "duplicada:a2-acc4801af71c",
+    "justificativa": "\"Navegação clara entre itens para quem tem deficiência física\" = e-MAG 2.1 (todas as funções via teclado), mesmo observável; as teclas específicas estão em unidades próprias.",
+    "equivalenteEmag": "2.1"
+  },
+  "a2-2c63891a8aa6": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Área de toque em dispositivos mobile; contrato 1280×900 sem toque."
+  },
+  "a2-f2ebf922f989": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "\"Deixe claro\" quais elementos são interativos não tem caso inequívoco além dos estados, cobertos por a2-2f900cc3509d."
+  },
+  "a2-2f900cc3509d": {
+    "aceita": true,
+    "justificativa": "Itens interativos aplicam os estados (hover, foco, selecionado) para dar feedback. Medida: estilo computado do item com e sem hover.",
+    "instancias": [
+      "sel-tipo-documento",
+      "tab-requerimento"
+    ],
+    "variantes": [
+      {
+        "id": "item-sem-hover",
+        "descricao": "Os itens da lista do select não mudam de aparência no hover.",
+        "instancias": [
+          "sel-tipo-documento"
+        ],
+        "clausula": "Aplique os estados corretamente para fornecer feedback."
+      },
+      {
+        "id": "aba-sem-hover",
+        "descricao": "A aba não ativa não muda de aparência no hover.",
+        "instancias": [
+          "tab-requerimento"
+        ],
+        "clausula": "Aplique os estados corretamente para fornecer feedback."
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao"
+    ]
+  },
+  "a2-95767259dad6": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize lists quando…\" é orientação de uso."
+  },
+  "a2-312e000d6784": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Tirar os itens da lista desfaz o select (sem opções)."
+  },
+  "a2-aa386be53f7e": {
+    "aceita": true,
+    "justificativa": "Lista com superfície própria. Medida: background computado da lista aberta do select (não transparente).",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "lista-sem-superficie",
+        "descricao": "A lista aberta do select fica com fundo transparente, deixando o conteúdo da página aparecer por baixo.",
+        "clausula": "5 · Superfície · Fundamento Superfície · Obrigatório"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-a14d31901423": {
+    "aceita": true,
+    "justificativa": "A altura do item varia com o conteúdo. Medida: scrollHeight contra clientHeight dos itens (sem corte).",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "item-altura-fixa-cortando",
+        "descricao": "Os itens da lista do select têm altura fixa menor que o texto, com overflow escondido cortando a opção mais longa.",
+        "clausula": "a altura deve variar de acordo com o conteúdo"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-871ffc90f87b": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Tenha cuidado…\" é recomendação."
+  },
+  "a2-22df7e6c59e8": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Use … com cautela\" é recomendação."
+  },
+  "a2-e258b3754ba3": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Os itens da lista do select não têm subtítulo."
+  },
+  "a2-56e1c02fed30": {
+    "aceita": true,
+    "justificativa": "Texto principal obrigatório no item da list. Medida: cada item da lista do select tem texto visível.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "item-sem-texto",
+        "descricao": "Um item da lista do select mostra só o controle de seleção, sem texto principal.",
+        "clausula": "Texto Principal: texto obrigatório"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-9184c2c1959b": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Introduzido por \"é recomendado utilizar as sugestões abaixo\"."
+  },
+  "a2-c6b6850137f2": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Permissão (\"é permitida a criação…\")."
+  },
+  "a2-bebc6bb692e0": {
+    "aceita": true,
+    "justificativa": "Posição e tipo dos recursos dos itens consistentes na lista. Medida: posição do controle de seleção em cada item.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "controle-fora-de-posicao",
+        "descricao": "Num dos itens da lista do select o controle de seleção fica à direita do texto; nos demais, à esquerda.",
+        "clausula": "mantenha a consistência de uma lista em relação ao posicionamento e tipos de recursos visuais/interativos utilizados"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-76fb32bbeb56": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Os itens da lista do select não têm recursos visuais (ícones, avatares, mídia)."
+  },
+  "a2-73892b5d0b84": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Os itens da lista do select não têm recursos complementares (metadados, ações extras)."
+  },
+  "a2-a6b6ebbef5fb": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "\"Reflita sempre\" é processo de design."
+  },
+  "a2-39c30a5ea7ee": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A lista do select não usa dividers entre os itens."
+  },
+  "a2-e07139c5eb2c": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Decisão \"com equilíbrio e bom senso\"; nenhum caso inequívoco."
+  },
+  "a2-b145544e8477": {
+    "aceita": true,
+    "justificativa": "Espaçamento entre itens da lista segue a escala de Fundamentos/Espaçamento. Medida: distância entre itens consecutivos contra os valores da escala.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "espaco-fora-da-escala",
+        "descricao": "Todos os itens da lista do select ficam separados por 3 px, valor fora da escala.",
+        "clausula": "os espaçamentos devem seguir as orientações especificadas no documento de Fundamentos/Espaçamentos"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-7339465391f7": {
+    "aceita": true,
+    "justificativa": "Proíbe variar o espaçamento entre itens de uma mesma list. Medida: distâncias entre itens consecutivos da lista do select iguais.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "espaco-irregular",
+        "descricao": "O 3º item da lista do select fica com margem superior maior que os outros.",
+        "clausula": "Não é permitido variar o espaçamento dos itens dentro de uma mesma list."
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-e1ab80e8601d": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Tenha sempre bom senso\" é orientação."
+  },
+  "a2-7453f15aa4b0": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Use … com moderação e bom senso\" é orientação."
+  },
+  "a2-f2e0d479ac82": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Resoluções abaixo de 4 colunas; contrato 1280×900."
+  },
+  "a2-273db6cae8f4": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Permissão de combinar exemplos."
+  },
+  "a2-ce9cc95278b0": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A lista do select não tem rótulos de agrupamento."
+  },
+  "a2-f59f88352907": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite criar lists com mais de um sub-nível\" é recomendação."
+  },
+  "a2-356e144e4de8": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A lista do select não tem itens expansíveis."
+  },
+  "a2-0fefcdc8528d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Refere-se à superfície do conteúdo expandido; a lista do select não tem expansão."
+  },
+  "a2-347d2e241fb3": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A lista do select não oferece reordenação."
+  },
+  "a2-86ae257e7085": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize lists quando…\" é orientação de uso."
+  },
+  "a2-e186e4296fe6": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Lista horizontal com expansão não existe na tela."
+  },
+  "a2-689fa6cd30b0": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Lista horizontal com expansão não existe na tela."
+  },
+  "a2-000fbf226374": {
+    "aceita": false,
+    "motivo": "duplicada:a2-0a6b97c41045",
+    "justificativa": "br-list na lista do select já aceito em a2-0a6b97c41045."
+  },
+  "a2-f843837bec78": {
+    "aceita": false,
+    "motivo": "duplicada:a2-419c091564b6",
+    "justificativa": "br-item nas opções do select já aceito em a2-419c091564b6."
+  },
+  "a2-ff2e6a346b2c": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Classe group é da lista horizontal com expansão, ausente na tela."
+  },
+  "a2-56623ea03d68": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Utilitários opcionais de densidade."
+  },
+  "a2-b9e8622b3002": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Tirar o core.min.js quebra todos os componentes da página, inclusive a moldura."
+  },
+  "a2-299fe3989b35": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A lista embutida é gerida pelo script do select, não por BRList avulso."
+  },
+  "a2-a3b624b67bf7": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Parâmetro da instanciação avulsa de BRList; não usada."
+  },
+  "a2-b0829f23c5f0": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Parâmetro da instanciação avulsa de BRList; não usada."
+  },
+  "a2-5daa95adef73": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Utilize lists quando…\" é orientação de uso."
+  },
+  "a2-869f294f6e29": {
+    "aceita": false,
+    "motivo": "duplicada:a2-41577e5f420c",
+    "justificativa": "Navegar pela lista com setas Up/Down = unidade do select já aceita (mesmas teclas, mesmo observável)."
+  },
+  "a2-9ca0ad49a63a": {
+    "aceita": true,
+    "justificativa": "Itens interativos da lista acionáveis por Space ou Enter (teclas específicas). Medida: com destaque num item da lista aberta, Enter/Space escolhe o item.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "item-nao-aciona-por-tecla",
+        "descricao": "Na lista aberta do select, Enter e Space não escolhem o item destacado; só o clique escolhe.",
+        "clausula": "acessíveis por teclado, com o uso das teclas Space ou Enter"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao"
+    ]
+  },
+  "a2-2ee1137ba80b": {
+    "aceita": true,
+    "justificativa": "R-ED (b): informação clara e concisa nos itens; caso flagrante oposto é opção muito longa. Medida: nº de palavras do texto de cada opção.",
+    "instancias": [
+      "sel-tipo-documento"
+    ],
+    "variantes": [
+      {
+        "id": "opcao-prolixa",
+        "descricao": "Uma opção da lista do select tem uma frase de mais de 30 palavras em vez do nome do tipo de documento.",
+        "clausula": "Forneça informações claras e concisas"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-09acac0aa16a": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "\"Sentido lógico\" da ordem das opções não tem caso inequívoco para uma lista de tipos de documento."
+  },
+  "a2-a720326087f7": {
+    "aceita": false,
+    "motivo": "duplicada:a2-66fbdcf13772",
+    "justificativa": "Legibilidade para baixa visão com cores recomendadas = e-MAG 4.1 (contraste mínimo), mesmo observável.",
+    "equivalenteEmag": "4.1"
+  },
+  "a2-f5698f1068ce": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A lista do select não tem imagens."
+  }
+}

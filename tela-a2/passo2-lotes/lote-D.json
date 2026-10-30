@@ -1,0 +1,1248 @@
+{
+  "a2-e1f7c014ea6f": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Orientação de uso (para que serve o checkbox), não exigência sobre a página."
+  },
+  "a2-7a9c33decf86": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Lista de opções muito extensa; a tela tem um único checkbox (e \"avaliar\" é processo de design)."
+  },
+  "a2-2dd5873f0f93": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Checkbox sem texto descritivo (ex.: linha de tabela); chk-avisos-todos tem texto \"Todos os avisos\"."
+  },
+  "a2-929a1fe54c6c": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Orientação de uso (quando usar o componente: respostas sim/não)."
+  },
+  "a2-0bd70096f78a": {
+    "aceita": true,
+    "justificativa": "Verbos do texto do checkbox sempre no imperativo afirmativo (R-ED a: forma verbal contável). O texto atual não tem verbo. Medida: forma do verbo no texto descritivo.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "verbo-no-infinitivo",
+        "descricao": "O texto descritivo do checkbox principal passa a \"Receber todos os avisos\" (verbo no infinitivo).",
+        "clausula": "Utilizar os verbos sempre na terceira pessoa do imperativo afirmativo."
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-cc1346924545": {
+    "aceita": true,
+    "justificativa": "Linha do item com até 10 palavras / 56 caracteres em média (R-ED a: contagem). Medida: nº de palavras e de caracteres do texto descritivo.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "texto-do-item-longo",
+        "descricao": "O texto descritivo do checkbox principal vira \"Todos os avisos sobre este requerimento, enviados por e-mail e por SMS durante todo o atendimento\" (16 palavras, mais de 90 caracteres).",
+        "clausula": "evitando uma largura de linha com mais de 10 palavras ou 56 caracteres em média"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-a70181ba5638": {
+    "aceita": true,
+    "justificativa": "Caixa de opção obrigatória. Medida: a caixa (pseudo-elemento do rótulo, 24×24 px com borda) existe e é visível.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "sem-caixa",
+        "descricao": "A caixa do checkbox principal fica oculta (sem tamanho nem borda); só o texto \"Todos os avisos\" aparece, ainda clicável.",
+        "clausula": "1 · Caixa de opção · --- · Obrigatório"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-7b104c662a4a": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Item de opção (caixa + texto) obrigatório: violar exige tirar o próprio checkbox da tela."
+  },
+  "a2-6ca8535f7cb1": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Lista de opções obrigatória: com um só item, violar exige tirar o checkbox inteiro."
+  },
+  "a2-b52ef12af607": {
+    "aceita": false,
+    "motivo": "duplicada:a2-a70181ba5638",
+    "justificativa": "O container é a própria caixa de opção; mesmo observável (caixa visível)."
+  },
+  "a2-bb59ed75a286": {
+    "aceita": true,
+    "justificativa": "Ícone de suporte visual da caixa de opção (anatomia obrigatória). Medida: com o checkbox marcado, o ícone de marcação aparece dentro da caixa.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "marcado-sem-icone",
+        "descricao": "Com os dois switches ligados, o checkbox principal fica com a caixa preenchida mas sem o ícone de marcação.",
+        "clausula": "Ícone de suporte visual."
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "interacao"
+    ]
+  },
+  "a2-0d520e5d4882": {
+    "aceita": true,
+    "justificativa": "O ícone identifica o estado do item (selecionado ou não). Medida: presença do ícone de marcação conforme o estado checked do input.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "icone-com-estado-errado",
+        "descricao": "Com os dois switches desligados (checkbox principal desmarcado), a caixa continua mostrando o ícone de marcação.",
+        "clausula": "deve ser utilizado para identificar o estado do item checkbox como selecionado ou válido a depender do seu estado"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao"
+    ]
+  },
+  "a2-4f6320b6e2ce": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Remete a largura mínima e máxima \"ver design tokens\", mas a tabela de tokens do checkbox não dá esses valores; sem referência para medir."
+  },
+  "a2-e0baecd2b386": {
+    "aceita": false,
+    "motivo": "duplicada:a2-a70181ba5638",
+    "justificativa": "Caixa de opção como parte do item; mesmo observável (caixa visível)."
+  },
+  "a2-e00d87909c65": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Texto descritivo declarado opcional."
+  },
+  "a2-ab26aea317f4": {
+    "aceita": true,
+    "justificativa": "Texto descritivo sempre à direita da caixa. Medida: left do texto maior que right da caixa.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "texto-a-esquerda",
+        "descricao": "O texto \"Todos os avisos\" passa para a esquerda da caixa (ordem invertida no layout).",
+        "clausula": "o texto descritivo deve se posicionar sempre à direita do container"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-d10f1fa60d46": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Permissão (\"pode ser suprimido\")."
+  },
+  "a2-b20217200810": {
+    "aceita": true,
+    "justificativa": "Texto descritivo com no máximo sete palavras (R-ED a: contagem). Medida: nº de palavras do texto descritivo.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "texto-com-oito-palavras",
+        "descricao": "O texto descritivo vira \"Todos os avisos sobre o andamento deste requerimento\" (8 palavras, menos de 56 caracteres).",
+        "clausula": "evitando um texto descritivo com mais de sete palavras"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-d3c2b4a7ca90": {
+    "aceita": true,
+    "justificativa": "Texto descritivo com primeira letra maiúscula e o resto minúsculo (R-ED a: caixa contável). Medida: caixa das letras do texto.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "inicial-minuscula",
+        "descricao": "O texto descritivo fica \"todos os avisos\" (inicial minúscula).",
+        "clausula": "primeira letra em maiúsculo e o restante em minúsculo"
+      },
+      {
+        "id": "texto-em-title-case",
+        "descricao": "O texto descritivo fica \"Todos Os Avisos\".",
+        "clausula": "o restante em minúsculo"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-eabd3bc103ca": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evitar\" (orientação); o caso concreto já está na exigência de caixa da unidade anterior."
+  },
+  "a2-c2b4d74c90dc": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Cabeçalho de opções; o checkbox é único (lista de um item) e não tem cabeçalho próprio; a legend é do fieldset dos avisos."
+  },
+  "a2-5e7e74a755f7": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Diz que não há restrição de largura/altura."
+  },
+  "a2-cf3894036e2e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Checkbox apresentado em lista de opções; na tela há um só checkbox, sem lista de checkboxes."
+  },
+  "a2-852ba62a1c6f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Rótulo do cabeçalho de opções; o checkbox único não tem cabeçalho."
+  },
+  "a2-1c770d87f6ed": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Rótulo do cabeçalho de opções; não existe na tela."
+  },
+  "a2-48556a285cff": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evitar\" (orientação); além disso o cabeçalho não existe na tela."
+  },
+  "a2-20d3debad4dd": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Informações adicionais do cabeçalho; não existem na tela."
+  },
+  "a2-b25925212291": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Informações adicionais do cabeçalho; não existem na tela."
+  },
+  "a2-854bf2363c29": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evitar\" (orientação); além disso o texto não existe na tela."
+  },
+  "a2-3a6fe8fd2ae3": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Lista de opções (mesma parte da anatomia de a2-6ca8535f7cb1): com um só item, violar exige tirar o checkbox inteiro."
+  },
+  "a2-8f26f1abc955": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Mensagem de feedback contextual do checkbox; o checkbox da tela não tem mensagem."
+  },
+  "a2-da8373940563": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Posição da mensagem de feedback; não há mensagem no checkbox."
+  },
+  "a2-957fd6b5ee78": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Permissão (\"pode ser aplicado\") do estado inválido."
+  },
+  "a2-783a007b58d0": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Permissão: itens vinculados ao principal podem ser outros componentes (é o caso dos switches)."
+  },
+  "a2-540a33161e30": {
+    "aceita": true,
+    "justificativa": "Caixa de opção com espaçamento lateral direito em relação ao texto (tokens: padding-right base da caixa + padding-left default do texto). Medida: distância horizontal entre a caixa e o início do texto.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "texto-colado-a-caixa",
+        "descricao": "O texto \"Todos os avisos\" fica encostado na caixa, sem espaço lateral.",
+        "clausula": "um espaçamento lateral direito (2) de qualquer outro elemento"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-4e62394ad999": {
+    "aceita": false,
+    "motivo": "duplicada:a2-ab26aea317f4",
+    "justificativa": "Mesmo predicado e observável (texto à direita da caixa)."
+  },
+  "a2-673b187d8412": {
+    "aceita": true,
+    "justificativa": "Espaçamento inferior do texto descritivo em relação ao elemento abaixo (token padding-bottom 2x). Medida: distância vertical entre o item do checkbox e o primeiro switch.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "sem-espaco-abaixo",
+        "descricao": "O checkbox principal perde o espaçamento inferior e o switch de e-mail encosta nele.",
+        "clausula": "Deve manter um espaçamento inferior dos elementos abaixo (3)."
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-79d59b8c6ba4": {
+    "aceita": true,
+    "justificativa": "Distâncias do item em relação aos vizinhos; além do inferior (unidade anterior), exige a distância acima (1). Medida: distância vertical entre a legend do grupo e o item do checkbox.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "sem-espaco-acima",
+        "descricao": "O checkbox principal perde o espaçamento superior e encosta na legenda \"Avisos sobre o requerimento\".",
+        "clausula": "deve manter uma distância à direita (4), abaixo (3) e acima (1) entre este e o próximo componente"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-b0cfe093bb55": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Rótulo e texto auxiliar do cabeçalho de opções; não existem na tela."
+  },
+  "a2-18a6f8cd9a86": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Espaçamento do cabeçalho de opções; não existe na tela."
+  },
+  "a2-cc57e93ad1bc": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Mensagem de feedback do checkbox; não há."
+  },
+  "a2-ad94f8737862": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Mensagem de feedback do checkbox; não há."
+  },
+  "a2-ef236bf0ced4": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Mensagem de feedback do conjunto; não há."
+  },
+  "a2-8aef493359ff": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Itens verticais com textos de alturas diferentes ou de mais de uma linha; há um só item, em uma linha."
+  },
+  "a2-fb3390e7f5d2": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Diz que não há limite de altura."
+  },
+  "a2-2a4f07fbff7d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Itens de larguras diferentes; há um só item."
+  },
+  "a2-2268736703c1": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Disposição horizontal com mais de um item; não há."
+  },
+  "a2-3d128e4ddb36": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Lista horizontal; não há."
+  },
+  "a2-feaca73bfd48": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Lista horizontal; não há."
+  },
+  "a2-3598932718e9": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Diz que não há limite de linhas."
+  },
+  "a2-df491d2f5c18": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Lista horizontal com itens de alturas diferentes; há um só item."
+  },
+  "a2-e1c6d1cde6ac": {
+    "aceita": true,
+    "justificativa": "Container br-checkbox. Medida: classe da raiz do checkbox.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "sem-br-checkbox",
+        "descricao": "A raiz do checkbox principal usa classe própria (aparência copiada à mão), sem a classe do componente.",
+        "clausula": "class · string · br-checkbox · Container do componente"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-146296de2050": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Listagem horizontal de checkboxes; não há."
+  },
+  "a2-743f3957fe72": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Checkbox desativado; o checkbox da tela fica habilitado."
+  },
+  "a2-d7128b5f0249": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Tirar o checkbox do grupo exige desfazer o vínculo com os switches, e com ele o próprio estado intermediário."
+  },
+  "a2-7c449a946697": {
+    "aceita": true,
+    "justificativa": "Checkbox \"pai\" com data-parent no input. Medida: atributo data-parent no input do checkbox principal.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "pai-sem-atributo",
+        "descricao": "O input do checkbox principal fica sem o atributo de amarração do pai; um script próprio da página reproduz o comportamento de selecionar todos.",
+        "clausula": "deve-se incluir o atributo data-parent no <input type=\"checkbox\">"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra",
+      "medicao"
+    ]
+  },
+  "a2-615adba6e634": {
+    "aceita": true,
+    "justificativa": "Filhos com data-child igual ao data-parent do pai. Medida: data-child dos inputs dos dois switches igual ao data-parent do principal.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "filho-com-grupo-errado",
+        "descricao": "O input do switch de SMS leva um valor de amarração diferente do do checkbox principal; ligar só o SMS não muda o principal.",
+        "clausula": "com o mesmo valor passado ao atributo data-parentdo checkbox \"pai\""
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-f97f63c9e220": {
+    "aceita": true,
+    "justificativa": "Instanciar BRCheckbox para que o comportamento do principal funcione. Medida: ligar um só switch deixa o principal em estado intermediário; clicar o principal liga/desliga os dois.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "checkbox-nao-instanciado",
+        "descricao": "A página instancia os demais componentes mas não o checkbox principal: ligar um switch não muda o principal e clicar nele não altera os switches.",
+        "clausula": "É necessário, também, instanciar a classe BRCheckbox, para que o comportamento funcione"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao"
+    ]
+  },
+  "a2-de961b8987dd": {
+    "aceita": false,
+    "motivo": "duplicada:a2-f97f63c9e220",
+    "justificativa": "Mesmo predicado (instanciar BRCheckbox) e mesmo observável."
+  },
+  "a2-1555934df05f": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve um parâmetro do código de instanciação."
+  },
+  "a2-92f33bbf2ff8": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve um parâmetro do código de instanciação."
+  },
+  "a2-3f671bc82fee": {
+    "aceita": true,
+    "justificativa": "Checkbox alcançável por Tab e acionado pela tecla Espaço (tecla específica; diz mais que o e-MAG 2.1). Medida: Tab para no checkbox; Espaço alterna o estado.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "espaco-nao-aciona",
+        "descricao": "O keydown de Espaço é cancelado no checkbox principal: o foco chega por Tab, o clique funciona, mas Espaço não alterna.",
+        "clausula": "acionados com a tecla Space"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao"
+    ]
+  },
+  "a2-db4714f28daf": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Quando possível\" (orientação)."
+  },
+  "a2-39fc90eaf361": {
+    "aceita": false,
+    "motivo": "duplicada:a2-f4237d13520b",
+    "justificativa": "Repete, para esta instância, a recomendação 6.2 do e-MAG; hospedeiros e variante passam para ela. (Rótulo associado ao checkbox principal. Medida: nome acessível do input vem do texto visível \"Todos os avisos\". Variante: o label deixa de estar associado ao input (sem for/id) e o checkbox fica sem nome acessível; instância chk-avisos-todos.)",
+    "equivalenteEmag": "6.2"
+  },
+  "a2-63df8a527ac9": {
+    "aceita": true,
+    "justificativa": "Mudança de estado com feedback audível: o estado (marcado, desmarcado, intermediário) é exposto à tecnologia assistiva. Medida: checked/indeterminate (ou aria-checked mixed) do principal na árvore de acessibilidade depois de ligar um só switch.",
+    "instancias": [
+      "chk-avisos-todos"
+    ],
+    "variantes": [
+      {
+        "id": "intermediario-so-visual",
+        "descricao": "Com só um switch ligado, o checkbox principal mostra o traço do estado intermediário, mas a árvore de acessibilidade o anuncia como \"não marcado\".",
+        "clausula": "ofereça sempre feedback de status claro e audível para o usuário"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao"
+    ]
+  },
+  "a2-b5448a750a03": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Abre a lista de quando usar Steps (orientação de uso)."
+  },
+  "a2-f1592f09ba73": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de \"Utilize Steps quando:\" (orientação de uso)."
+  },
+  "a2-7da24b825ab3": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de \"Utilize Steps quando:\" (orientação de uso)."
+  },
+  "a2-f95cc12b2ed5": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item de \"Utilize Steps quando:\" (orientação de uso)."
+  },
+  "a2-af0768dd9b50": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Uso de Steps sem sequência de progressão; a tela usa o step para a progressão do requerimento."
+  },
+  "a2-466e000cffd6": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Orientação de uso (relação do step com completar um fluxo)."
+  },
+  "a2-f87ca2c93f72": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve o que o indicador numérico oferece."
+  },
+  "a2-d80b335381c8": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Indicador iconográfico; o step da tela usa números."
+  },
+  "a2-9346c56c77db": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Abre \"boas práticas\" do indicador vazio (orientação)."
+  },
+  "a2-4af86011bd14": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Orientação de uso do indicador vazio (que a tela não usa)."
+  },
+  "a2-7c5caa861342": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Indicador sem rótulo; as etapas da tela têm rótulo."
+  },
+  "a2-a06552dd583d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Tooltip de erro/alerta sem rótulo; nenhuma etapa tem erro e todas têm rótulo."
+  },
+  "a2-b964a1347b6c": {
+    "aceita": true,
+    "justificativa": "Rótulo da etapa claro, direto e objetivo (R-ED b: caso flagrante oposto). Medida: texto do rótulo da etapa.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "rotulo-prolixo",
+        "descricao": "O rótulo da 2ª etapa vira uma frase de mais de 20 palavras (\"Nesta etapa o seu requerimento está sendo analisado pela equipe responsável e você deve aguardar até que ela termine\").",
+        "clausula": "O Rótulo deverá transmitir a informação, clara, direta e objetiva"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-fce854a6d55d": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Abre lista de boas práticas (orientação)."
+  },
+  "a2-dc1d40cacf6c": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"O ideal é\" (boa prática)."
+  },
+  "a2-5740916f6088": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item da lista de boas práticas."
+  },
+  "a2-5a9601628030": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item da lista de boas práticas."
+  },
+  "a2-ca141d123125": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item da lista de boas práticas (consistência de modelo de rótulo)."
+  },
+  "a2-69ad0bcb8109": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Item da lista de boas práticas; além disso o rótulo da tela fica abaixo, não à direita/esquerda."
+  },
+  "a2-9f8c5ad9173b": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve onde o posicionamento lateral é mais adequado."
+  },
+  "a2-4cc2ea4380eb": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Linha do tempo com indicadores ocultos; as 4 etapas ficam visíveis."
+  },
+  "a2-9b1b54fd68ba": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite\" (orientação), e trata do Step Simples, que a tela não usa."
+  },
+  "a2-72420e8293a2": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Orientação de uso (Step Textual para muitas etapas)."
+  },
+  "a2-05444c279d84": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Orientação de uso (quando usar o Step Textual)."
+  },
+  "a2-991a32fab8e8": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Define o que é a progressão."
+  },
+  "a2-17158a39d76d": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Declara que não é obrigatório; orientação vertical em móvel."
+  },
+  "a2-31557c3770b3": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve o modo de espaçamento dinâmico."
+  },
+  "a2-717b4148a235": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Orientação de uso da densidade alta."
+  },
+  "a2-618dc64505be": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Orientação de uso da densidade baixa."
+  },
+  "a2-d16c9b959692": {
+    "aceita": false,
+    "motivo": "duplicada:a2-ab4d44192527",
+    "justificativa": "Mesmo observável: a etapa concluída aparece no estado concluído (Tag de concluído)."
+  },
+  "a2-26fe09e0a119": {
+    "aceita": true,
+    "justificativa": "Estado interativo no indicador e rótulo das etapas com que o usuário interage (1ª concluída e 2ª atual). Medida: estilo computado com hover sobre a etapa difere do estilo em repouso.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "sem-estado-interativo",
+        "descricao": "Passar o mouse sobre a 1ª etapa não muda indicador nem rótulo (o realce de hover é suprimido).",
+        "clausula": "Utilize o estado interativo sobre os elementos nos quais o usuário irá interagir, nesse caso sobre o Indicador e o Rótulo."
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "interacao",
+      "medicao"
+    ]
+  },
+  "a2-22c5a0a805ae": {
+    "aceita": false,
+    "motivo": "duplicada:a2-aaac3112f76b",
+    "justificativa": "Mesmo observável (etapas não visitadas desabilitadas na progressão linear)."
+  },
+  "a2-0e9aad9dd1f6": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Tirar o core.min.js desliga o comportamento de todos os componentes da página, não só o do step."
+  },
+  "a2-22f61dc44546": {
+    "aceita": true,
+    "justificativa": "Instanciar BRStep. No core 3.7.0 a instância numera os indicadores e marca a etapa ativa (active, aria-current=\"step\"). Medida: número visível nos indicadores e aria-current na 2ª etapa.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "step-nao-instanciado",
+        "descricao": "A página instancia os demais componentes mas não o step: os indicadores ficam sem número e nenhuma etapa fica marcada como atual.",
+        "clausula": "Usar o seguinte código JavaScript para instanciar a classe BRStep"
+      }
+    ],
+    "tipo": "comportamento",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-b082b77569f0": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve um parâmetro do código de instanciação."
+  },
+  "a2-bc1d8f3c3c03": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve um parâmetro do código de instanciação."
+  },
+  "a2-2f350c064444": {
+    "aceita": false,
+    "motivo": "duplicada:a2-acc4801af71c",
+    "justificativa": "Repete, para esta instância, a recomendação 2.1 do e-MAG; hospedeiros e variante passam para ela (stp-andamento já é hospedeiro). (Step acessível por teclado. Medida: as etapas habilitadas recebem foco por Tab.)",
+    "equivalenteEmag": "2.1"
+  },
+  "a2-72279019c68f": {
+    "aceita": false,
+    "motivo": "duplicada:a2-a6e2601837a7",
+    "justificativa": "Repete, para esta instância, a recomendação 4.4 do e-MAG; hospedeiros e variante passam para ela. (Foco visível na etapa focada. Medida: outline/box-shadow da etapa com foco contra sem foco. Variante: o indicador de foco das etapas é suprimido; instância stp-andamento.)",
+    "equivalenteEmag": "4.4"
+  },
+  "a2-2b0d94306c83": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Feedback ao concluir etapa ou ocorrer erro; na tela nenhuma etapa é concluída nem falha durante a sessão (o step só mostra o andamento)."
+  },
+  "a2-c08308ff0df3": {
+    "aceita": false,
+    "motivo": "duplicada:a2-b964a1347b6c",
+    "justificativa": "Mesmo predicado e observável (rótulo claro e objetivo)."
+  },
+  "a2-902fb4a217d1": {
+    "aceita": true,
+    "justificativa": "Etapas apresentadas em ordem lógica (R-ED b: caso flagrante). Medida: sequência dos rótulos das etapas contra a ordem do processo.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "etapas-fora-de-ordem",
+        "descricao": "A 3ª e a 4ª etapas trocam de lugar: a etapa final do requerimento aparece antes da intermediária.",
+        "clausula": "É importante que as etapas sejam apresentadas em uma ordem lógica"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "leitura-da-regra"
+    ]
+  },
+  "a2-4cd6e43e71e3": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite\" (orientação); além disso trata do indicador simples, que a tela não usa."
+  },
+  "a2-ac2db92b4ebd": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Indicador simples como apoio de navegação; a tela usa o Step Complexo."
+  },
+  "a2-7f821b8fc385": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Step Simples/Textual com controles de navegação; a tela usa o Step Complexo."
+  },
+  "a2-01bfc4b13ae3": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Step em loop automático; o step da tela é estático."
+  },
+  "a2-9fdd7d02bd08": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Orientação de uso (quando usar switches)."
+  },
+  "a2-771cb345f19e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Rótulos de ligado/desligado (item 4 da anatomia); os switches da tela não os usam."
+  },
+  "a2-6990d98db92a": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Label distante do container; nos switches da tela o label fica ao lado."
+  },
+  "a2-f9e352b8a63d": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Remete ao documento de estados."
+  },
+  "a2-05d00b006222": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Diz que não há comportamento especial em resoluções menores."
+  },
+  "a2-bd01686c9a9b": {
+    "aceita": false,
+    "motivo": "escopo",
+    "justificativa": "Atenção à área de interação em resoluções menores e toque; fora de 1280×900."
+  },
+  "a2-d6f890f4ffd1": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite\" (orientação)."
+  },
+  "a2-89d5e6e47d30": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Rótulos de ligado/desligado; os switches da tela não os usam."
+  },
+  "a2-a383b23c7f75": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite\" (orientação); trata dos rótulos de ligado/desligado."
+  },
+  "a2-44a57ddcc53f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Posição dos rótulos de ligado/desligado; os switches da tela não os usam."
+  },
+  "a2-b94c40fd64db": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite\" (orientação)."
+  },
+  "a2-b20a134b4c05": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Rótulos de ligado/desligado; os switches da tela não os usam."
+  },
+  "a2-c0e948f338ec": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Posição dos rótulos de ligado/desligado; não há."
+  },
+  "a2-c1af8ea16c40": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Rótulos de ligado/desligado em pares; não há."
+  },
+  "a2-b867020c9bb6": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Prefira\" (orientação), sobre rótulos de ligado/desligado."
+  },
+  "a2-5b4b95d8e2e0": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Switch com rótulos adicionais de ligado/desligado; os switches da tela não os usam."
+  },
+  "a2-159612f619b5": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Switch com rótulos adicionais de ligado/desligado; os switches da tela não os usam."
+  },
+  "a2-4a2e16cecb19": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "\"Visual e/ou auditivo\": violar exige tirar ao mesmo tempo a indicação visual (chave/cor) e o estado exposto (aria-checked), já julgados em outras unidades."
+  },
+  "a2-56e837134425": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "\"Ampla o suficiente\" sem limiar; o label associado já estende a área clicável, e nenhuma mudança local dá caso inequívoco."
+  },
+  "a2-3a0cb4fc6e72": {
+    "aceita": false,
+    "motivo": "duplicada:a2-f4237d13520b",
+    "justificativa": "Repete, para estas instâncias, a recomendação 6.2 do e-MAG (switches já hospedeiros); hospedeiros e variante ficam nela.",
+    "equivalenteEmag": "6.2"
+  },
+  "a2-39facc03a025": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Define o componente."
+  },
+  "a2-9fa71e4d26a8": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Orientação de uso (para que usar tags)."
+  },
+  "a2-338cd66e9fc5": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Relação \"clara e útil\" com o conteúdo é julgamento; o caso flagrante (tag errada na etapa) já é o observável do estado concluído da etapa."
+  },
+  "a2-48c83afb3969": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Herda \"é recomendado\" da introdução; além disso a tag da tela não tem texto."
+  },
+  "a2-4d46a1340a2c": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Herda \"é recomendado o uso de informações discretas e objetivas\" da introdução."
+  },
+  "a2-7682991ef915": {
+    "aceita": true,
+    "justificativa": "Superfície obrigatória da tag de concluído (marcador circular com fundo de sucesso). Medida: background-color computado do marcador na 1ª etapa.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "tag-sem-superficie",
+        "descricao": "A tag de concluído da 1ª etapa fica com fundo transparente; só o ícone aparece.",
+        "clausula": "1 · Superfície · Fundamento Superfície · Obrigatório"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-b4c83403bb2f": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Advertência (\"cuidado\"), e sobre tags de cores personalizadas; a tag da tela usa as cores do DS."
+  },
+  "a2-81ddb21026ec": {
+    "aceita": false,
+    "motivo": "conflito",
+    "justificativa": "Diz que só tags de status e contagem podem ter borda; a2-ba9a65432baa diz que tags de ícone (o tipo da tela) possuem bordas. A página segue o CSS do step no core 3.7.0: tag de concluído sem borda na etapa não ativa; nenhuma variante de borda é sorteável."
+  },
+  "a2-27e932bb9636": {
+    "aceita": false,
+    "motivo": "conflito",
+    "justificativa": "Exige tooltip em tag só de ícone; a diretriz do step (Step Complexo) prevê tooltip no indicador só para erro/pendência e a sua implementação no core 3.7.0 não tem tooltip na tag de concluído. A página segue o step: tag de concluído sem tooltip, significado dado pelo rótulo e pelo estado da etapa."
+  },
+  "a2-042b7c5ecaa5": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Para complementar\" (orientação)."
+  },
+  "a2-a3fbcf0f1124": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Label da tag; a tag da tela é só ícone."
+  },
+  "a2-60e5f5483e8d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Botão terciário na tag; não há."
+  },
+  "a2-944d349d4717": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Tags de interação; não há."
+  },
+  "a2-9b4bfb9d7c93": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "Orientação de uso (quando usar tag de texto)."
+  },
+  "a2-ec8dc5ba8e4f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Tag de texto; a tag da tela é de ícone."
+  },
+  "a2-b0bf8731204a": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Tag de texto com ícone e label; a tag da tela é só ícone."
+  },
+  "a2-48bbec8bf9b9": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Tag de contagem; não há."
+  },
+  "a2-85bdd76328e2": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "Escolha de ícone de fácil assimilação é processo de design."
+  },
+  "a2-ba9a65432baa": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve quais tipos têm borda e as declara opcionais (\"podem ser omitidas\")."
+  },
+  "a2-2577fa0a202f": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Justificativa da frase anterior."
+  },
+  "a2-377cbccb52a7": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Variedade de cores entre tags; a tela tem uma única tag."
+  },
+  "a2-e2806a222736": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estados da tag de interação; a tag da tela é estática."
+  },
+  "a2-b198a436f45a": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estados com botão terciário; não há."
+  },
+  "a2-e699eefd755d": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Estados da tag de interação; não há."
+  },
+  "a2-efaa0c424279": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Tag arrastada; não há."
+  },
+  "a2-3584b59ba47f": {
+    "aceita": true,
+    "justificativa": "Tag com altura fixa: uma única linha de texto/ícone. Medida: altura computada do marcador de concluído igual à do token e um só ícone.",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "tag-em-duas-linhas",
+        "descricao": "A tag de concluído da 1ª etapa ganha um segundo ícone abaixo do primeiro e dobra de altura.",
+        "clausula": "não é permitida mais de uma linha de texto ou ícone no mesmo componente"
+      }
+    ],
+    "tipo": "visual-token",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-4a02e7b21785": {
+    "aceita": false,
+    "motivo": "duplicada:a2-3584b59ba47f",
+    "justificativa": "Mesmo predicado e observável (uma única linha de texto/ícone)."
+  },
+  "a2-7233b89cd712": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Texto com mais de cem caracteres; a tag não tem texto."
+  },
+  "a2-3af915022ed7": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Boa prática\" (orientação), sobre texto truncado que não existe."
+  },
+  "a2-469771b61063": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Remete às diretrizes do componente que contém a tag (o step), julgadas nas unidades do step."
+  },
+  "a2-29e84573bbac": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "\"Pode ser interessante\" (opcional)."
+  },
+  "a2-7350f8ce7321": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Entrada de tags por input/select; não há."
+  },
+  "a2-3da1760e69b1": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Tags adicionadas pelo usuário; não há."
+  },
+  "a2-e09b9af4e9fd": {
+    "aceita": false,
+    "motivo": "forca",
+    "justificativa": "\"Evite\" (orientação)."
+  },
+  "a2-7beeae2ee46f": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Mistura de tags de interação com estáticas; só há uma tag estática."
+  },
+  "a2-4f3edff677c8": {
+    "aceita": false,
+    "motivo": "sem-medicao",
+    "justificativa": "\"Não exagere\" sem limiar; com uma tag na tela, nenhuma variante local é caso inequívoco."
+  },
+  "a2-12b03150e426": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Justificativa da frase anterior."
+  },
+  "a2-d18891be6eb4": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Entrada de tags; não há."
+  },
+  "a2-9b8c5d496570": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Define o componente."
+  },
+  "a2-8b5cc7cc48fa": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "A tag embutida no Step Complexo é desenhada pela marcação do próprio step (marcador step-alert do core 3.7.0), não por um br-tag; não há container br-tag na tela."
+  },
+  "a2-396e08e12da9": {
+    "aceita": false,
+    "motivo": "acoplada",
+    "justificativa": "Tirar o core.min.js desliga todos os componentes da página."
+  },
+  "a2-dfd1b1162e5e": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "BRTag dá comportamento a tags de interação (seleção, fechar); a tag da tela é estática e desenhada pelo step."
+  },
+  "a2-3e6ce3165138": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve um parâmetro do código de instanciação."
+  },
+  "a2-57855d266834": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Descreve um parâmetro do código de instanciação."
+  },
+  "a2-d508a8d6d8b6": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Modificação de cores da tag; a tag usa as cores do step, sem modificação."
+  },
+  "a2-5019d89a9049": {
+    "aceita": false,
+    "motivo": "nao-normativa",
+    "justificativa": "Define o componente."
+  },
+  "a2-6ff22207cb61": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Controles interativos dentro da tag; não há."
+  },
+  "a2-dbdc868dde4b": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Textos da tag; a tag da tela é só ícone."
+  },
+  "a2-92df176237de": {
+    "aceita": false,
+    "motivo": "duplicada:a2-e5b4728ca51e",
+    "justificativa": "Repete, para esta instância, a recomendação 4.2 do e-MAG (stp-andamento já é hospedeiro); hospedeiros e variante passam para ela. (Concluído não só pela cor. Medida: além do verde, há ícone/texto. Variante: a tag de concluído perde o ícone e fica só o círculo verde.)",
+    "equivalenteEmag": "4.2"
+  },
+  "a2-86453e6d513e": {
+    "aceita": true,
+    "justificativa": "Diz mais que o e-MAG 4.2: a categoria da tag tem de ser identificável por leitor de tela. Medida: nome acessível/descrição da 1ª etapa contém \"concluída\" (texto oculto, aria).",
+    "instancias": [
+      "stp-andamento"
+    ],
+    "variantes": [
+      {
+        "id": "concluido-so-visual",
+        "descricao": "A 1ª etapa não expõe \"concluída\" à tecnologia assistiva: o nome acessível do botão é só o número e o rótulo; a tag continua visível.",
+        "clausula": "Utilize outras formas de categorização que podem ser identificadas por leitores de tela"
+      }
+    ],
+    "tipo": "estrutura-classe",
+    "caminhoDeteccao": [
+      "medicao",
+      "leitura-da-regra"
+    ]
+  },
+  "a2-fad772a30538": {
+    "aceita": false,
+    "motivo": "nao-se-aplica",
+    "justificativa": "Cores personalizadas na tag; a tag usa as cores do DS."
+  }
+}
