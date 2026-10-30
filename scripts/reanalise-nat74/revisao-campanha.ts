@@ -44,7 +44,7 @@ import { distingueComDeFerramentas, mascararTextoCego } from "../painel/mascara"
 import { POLITICA_PRINCIPAL, gravar, jsonTexto, lerJson, ordenar, sha, unicos } from "./comum";
 import { janelas, residuoDeBraco, verificarCegueira, type Falha } from "./e14-cegueira";
 import {
-  ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_1, FORMATO_LOTE, FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1,
+  ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_1, FORMATO_LOTE, FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_MANIFESTO_CAMPANHA_1_3,
   FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_1, NAO_PERGUNTADO, NORMA_PUBLICA, VAL, derivarClasse, validarResposta,
   type CartaoCego, type Derivado, type ItemChave, type Resposta,
 } from "./e14-comum";
@@ -168,9 +168,9 @@ export function lerPassada(dirArg: string, o: { analises?: string[] } = {}): Pas
   if (!existsSync(mAbs)) throw new Error(`${dir}: sem lotes/manifesto.json (não é uma passada preparada)`);
   const manifestoTxt = lerTexto(mAbs);
   const man = JSON.parse(manifestoTxt) as ManifestoPassada;
-  if (![FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1].includes(man.formato))
+  if (![FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_MANIFESTO_CAMPANHA_1_3].includes(man.formato))
     throw new Error(`${dir}: manifesto ${man.formato ?? "(sem formato)"} não é de primeira passada de campanha nova (o caminho histórico é e14-consistencia/e14-desempate)`);
-  const v12 = man.formato === FORMATO_MANIFESTO_CAMPANHA;
+  const v12 = man.formato === FORMATO_MANIFESTO_CAMPANHA || man.formato === FORMATO_MANIFESTO_CAMPANHA_1_3; // [D-156] 1.3.0 lida como 1.2.0
   const chaveTxt = lerTexto(join(dir, "chave", "fila-t3-chave.json"));
   if (sha(chaveTxt) !== man.chaveSha256) throw new Error(`${dir}: chave difere do manifesto`);
   const jAbs = join(dir, "julgamentos.json");
@@ -413,7 +413,7 @@ export function juizDePassada(p: Passada, dir: string, ids: string[]): { nome: s
   const abs = resolve(dir);
   const mTxt = lerTexto(join(abs, "lotes", "manifesto.json"));
   const man = JSON.parse(mTxt) as ManifestoPassada;
-  if (![FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1].includes(man.formato)) throw new Error(`--juiz-passada ${abs}: não é passada de campanha nova`);
+  if (![FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_MANIFESTO_CAMPANHA_1_3].includes(man.formato)) throw new Error(`--juiz-passada ${abs}: não é passada de campanha nova`);
   if (resolve(abs) === p.dir) throw new Error("--juiz-passada é a própria 1ª passada");
   const jTxt = lerTexto(join(abs, "julgamentos.json"));
   const sAbs = join(abs, "julgamentos.json.sha256");
@@ -441,7 +441,7 @@ export function juizDePassada(p: Passada, dir: string, ids: string[]): { nome: s
     const j = js.get(o2.id)!;
     julg.set(id, { juiz: nome, idOriginal: id, idAmostra: null, resposta: j.resposta, derivado: j.derivado });
   }
-  const v12 = man.formato === FORMATO_MANIFESTO_CAMPANHA;
+  const v12 = man.formato === FORMATO_MANIFESTO_CAMPANHA || man.formato === FORMATO_MANIFESTO_CAMPANHA_1_3; // [D-156] 1.3.0 lida como 1.2.0
   return { nome, julg, casamento: { pasta: basename(abs), formato: man.formato, versao: (man as { versao: string }).versao, julgamentosSha256: sha(jTxt),
     substitutoDeEnsaio: true, cartoesDaAmostra: ids.length, mesmoId, mesmaChave, mesmoCartaoOriginal: mesmoOriginal, mesmoCartaoCego: mesmoCego,
     cartoesCegosDiferentes: mesmoOriginal - mesmoCego, semPar: semPar.length, excluidos: semPar,

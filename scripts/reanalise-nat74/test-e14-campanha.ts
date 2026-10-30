@@ -20,6 +20,7 @@ import {
 import { bracoDoRun, enderecoDaTela, mascararTrio, passosLegiveis, prepararCampanha } from "./e14-campanha";
 import { FORCA_NO_VOCABULARIO, normasDaCampanha } from "./e14-fila";
 import { argumentosIngerir, contextoDe, ingerir } from "./e14-ingerir";
+import { testesReferencias } from "./test-e14-referencias";
 
 let n = 0, falhas = 0;
 const t = (nome: string, f: () => void) => { n++; try { f(); console.log(`  ok  ${nome}`); } catch (e) { falhas++; console.log(`  FALHA ${nome}\n       ${e instanceof Error ? e.message : e}`); } };
@@ -108,7 +109,8 @@ try {
     gravarJson(join(outro, "data"), "knowledge/manifest.json", { activeVersion: "3.7.0-literal-teste" });
     assert.throws(() => prepararCampanha([dir], { validador: outro }), /não é a do oráculo da campanha/);
   });
-  const p = prepararCampanha([dir], { validador: valDir, checkerAliases: aliasesAbs });
+  // Passada 1.2.0 (histórico, D-156: `--politica 1.2.0`); a 1.3.0 tem bloco próprio no fim.
+  const p = prepararCampanha([dir], { validador: valDir, checkerAliases: aliasesAbs, politica: "1.2.0" });
   const loteTxt = p.arquivosDoJuiz.get("lotes/lote-01.json")!;
   const lote = JSON.parse(loteTxt) as { respostaEm: string; cartoes: CartaoCego[];
     referencias: Record<string, { endereco: string; defeitos: { normas: { fonte: string; regrasDaBase?: { texto: string }[] }[] }[] }> };
@@ -315,6 +317,7 @@ try {
     gravarJson(f3, "respostas/lote-01.json", velho);
     const r3 = ingerir(f3); assert.deepEqual(r3.erros, []); assert.equal((r3.julgamentos as { porEstadoAlcancado?: unknown }).porEstadoAlcancado, undefined);
   });
+  await testesReferencias({ t, tmp, dir, valDir, aliasesAbs, prepararCampanha, cli });
 } finally { rmSync(tmp, { recursive: true, force: true }); }
 
 console.log(`\n${n - falhas}/${n} testes da E14 campanha passaram`);

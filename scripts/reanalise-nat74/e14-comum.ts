@@ -27,6 +27,15 @@ export const FORMATO_RESPOSTAS_CAMPANHA_1_1 = "nat78-primeira-passada-respostas-
  */
 export const FORMATO_MANIFESTO_CAMPANHA = "nat78-primeira-passada-manifesto-1.2.0";
 export const FORMATO_RESPOSTAS_CAMPANHA = "nat78-primeira-passada-respostas-1.2.0";
+/**
+ * [D-156] 1.3.0: o cartão pode trazer `referencias` (até 2, as referências secundárias do achado: `REF1`, `REF2`) e a
+ * resposta ganha o campo `referencias` (um julgamento de norma por referência). Política do juiz 1.3.0: as referências
+ * só contam quando a primária cai por citação, nunca por fato. Passadas 1.2.0 seguem o esquema 1.2.0, sem mudança.
+ */
+export const FORMATO_MANIFESTO_CAMPANHA_1_3 = "nat78-primeira-passada-manifesto-1.3.0";
+export const FORMATO_RESPOSTAS_CAMPANHA_1_3 = "nat78-primeira-passada-respostas-1.3.0";
+/** Ids das referências secundárias no cartão cego (na ordem do achado). */
+export const IDS_REFERENCIA = ["REF1", "REF2"] as const;
 /** [N] O juiz refez a receita do cartão: ela chega ao estado que ele descreve, ou não (R10: julga-se só no estado da receita). */
 export const ESTADO_ALCANCADO = ["receita", "nao-alcancado"] as const;
 /** Semente da ordem e dos ids opacos (ordem pelo hash, plano §6.6). */
@@ -120,6 +129,11 @@ export interface CartaoCego {
   perguntas: Pergunta[];
   /** Ids que a justificativa pode citar. */
   citaveis: string[];
+  /**
+   * [D-156, 1.3.0] Referências secundárias do achado (`references`, até 2), na ordem dele. Só existe quando o achado as
+   * traz e a passada foi preparada na política 1.3.0: cartão sem referência fica exatamente como antes.
+   */
+  referencias?: { id: typeof IDS_REFERENCIA[number]; regra: string | null; norma: NormaVista | null }[];
 }
 
 // ───────────────────────────────────────────────────────────────── esquema da resposta (listas fechadas)
@@ -152,6 +166,17 @@ export interface Resposta {
   justificativa: string;
   /** Só campanha nova 1.2.0 (achado N). */
   estadoAlcancado?: typeof ESTADO_ALCANCADO[number];
+  /**
+   * [D-156, 1.3.0] Só em cartão com `referencias`: um julgamento de norma por referência (mesmo vocabulário de `norma`),
+   * ou `nao-perguntado`. Obrigatório (lista) quando a primária cai por citação (fato verdadeiro + erro normativo).
+   */
+  referencias?: ReferenciaJulgada[] | typeof NAO_PERGUNTADO;
+}
+export interface ReferenciaJulgada {
+  id: typeof IDS_REFERENCIA[number];
+  forca: typeof VAL.forca[number];
+  aplicabilidade: typeof VAL.aplicabilidade[number] | typeof NAO_PERGUNTADO;
+  violada: typeof VAL.violada[number] | typeof NAO_PERGUNTADO;
 }
 export interface ArquivoRespostas { formato: string; lote: string; loteSha256: string; juiz: string; respostas: Resposta[] }
 
@@ -167,6 +192,13 @@ export interface ContextoDerivacao {
    * (R11 a; R11d com sugestão válida). Ausente no histórico e na 1.1.0.
    */
   forcasDaCitada?: (string | null)[];
+  /** [D-156] Ids das referências secundárias do cartão (`REF1`…); ausente em cartão sem referência. */
+  referencias?: string[];
+  /**
+   * [D-156] Política do juiz. `1.3.0` (padrão quando o cartão tem referências): referência julgada aplicável e violada
+   * resgata a citação que caiu. `1.2.0`: as referências são ignoradas (histórico byte a byte).
+   */
+  politica?: "1.2.0" | "1.3.0";
 }
 export interface Derivado {
   classe: "violacao-pagina" | "violacao-ds" | "violacao-origem-indeterminada" | "erro-factual" | "erro-normativo" | "observacao"
@@ -177,6 +209,11 @@ export interface Derivado {
    * `nenhuma` (Q1 a: cartão sem regra citada, fato de uma unidade); `null` sem crédito.
    */
   fundamentacao: "norma" | "mais-fraca" | "nenhuma" | null;
+  /**
+   * [D-156, 1.3.0] Só quando a primária caiu por citação e uma referência secundária, julgada aplicável e violada, deu a
+   * classe: o id dela (`REF1`/`REF2`). Ausente em todo outro caso (cartão sem referência fica como antes).
+   */
+  citacaoPor?: typeof IDS_REFERENCIA[number];
   /** Mesmo átomo na sensibilidade S5 (Q1 b: regra nula não credita). Igual à principal fora do caminho Q1. */
   s5: { classe: Derivado["classe"]; regraDaPolitica: string; spec: string | null };
 }
@@ -247,6 +284,21 @@ function esquemaCampanha(formato: string, estado: boolean) {
 export const ESQUEMA_RESPOSTAS_CAMPANHA_1_1 = esquemaCampanha(FORMATO_RESPOSTAS_CAMPANHA_1_1, false);
 /** Esquema 1.2.0 (achado N): 1.1.0 + `estadoAlcancado`. */
 export const ESQUEMA_RESPOSTAS_CAMPANHA = esquemaCampanha(FORMATO_RESPOSTAS_CAMPANHA, true);
+/**
+ * [D-156] Esquema 1.3.0: 1.2.0 + `referencias` opcional (só em cartão com referências; a exigência cruzada — lista
+ * quando a primária cai por citação, um item por referência do cartão — fica em `validarResposta(…, { v13: true })`).
+ */
+export const ESQUEMA_RESPOSTAS_CAMPANHA_1_3 = (() => {
+  const e = esquemaCampanha(FORMATO_RESPOSTAS_CAMPANHA_1_3, true) as unknown as { properties: { respostas: { items: { properties: Record<string, unknown> } } } };
+  const np = { const: NAO_PERGUNTADO };
+  e.properties.respostas.items.properties.referencias = { oneOf: [np, { type: "array", minItems: 1, maxItems: IDS_REFERENCIA.length, items: {
+    type: "object", additionalProperties: false, required: ["id", "forca", "aplicabilidade", "violada"], properties: {
+      id: { enum: [...IDS_REFERENCIA] }, forca: { enum: [...VAL.forca] },
+      aplicabilidade: { enum: [...VAL.aplicabilidade, NAO_PERGUNTADO] }, violada: { enum: [...VAL.violada, NAO_PERGUNTADO] } },
+    if: { properties: { forca: { const: "nenhuma" } }, required: ["forca"] },
+    then: { properties: { aplicabilidade: np, violada: np } }, else: { properties: { aplicabilidade: { not: np }, violada: { not: np } } } } }] };
+  return e;
+})();
 
 const isObj =(x: unknown): x is Record<string, unknown> => typeof x === "object" && x !== null && !Array.isArray(x);
 const em = <T extends readonly string[]>(xs: T, v: unknown): v is T[number] => typeof v === "string" && (xs as readonly string[]).includes(v);
@@ -284,10 +336,35 @@ export function preClasse(r: Resposta, c: ContextoDerivacao): Derivado["classe"]
  * referência é de origem página (§3) e o resto é `indeterminada (não medida)`.
  */
 export function derivarClasse(r: Resposta, c: ContextoDerivacao): Derivado {
-  const d = derivarPrincipal(r, c);
+  const d = resgatePorReferencia(r, c) ?? derivarPrincipal(r, c);
   // S5 (Q1 b): o crédito de detecção sem regra citada vira observação, sem crédito; o resto não muda.
   const s5 = d.regraDaPolitica === "Q1" ? { classe: "observacao" as const, regraDaPolitica: "R11b", spec: null } : { classe: d.classe, regraDaPolitica: d.regraDaPolitica, spec: d.spec };
   return { ...d, s5 };
+}
+
+/** A primária caiu por citação: fato verdadeiro e as respostas de norma dão erro normativo (R11a/R11d/R13). */
+export const caiPorCitacao = (r: Resposta, c: ContextoDerivacao): boolean =>
+  c.tipo !== "qualidade" && r.verdadeFactual === "verdadeira" && preClasse(r, c) === "erro-normativo";
+
+/**
+ * [D-156, política 1.3.0] Referência secundária. Só quando o cartão tem referências, a política é a 1.3.0 e a primária
+ * caiu por citação (nunca por fato: fato falso, indisponível ou indeterminado nunca chega aqui). As referências são lidas
+ * na ordem do achado; a primeira cuja norma, julgada como se fosse a citada, dá violação (obrigatória aplicável e violada;
+ * ou mais fraca aplicável e violada com vínculo, R15) decide a classe — a mesma derivação da primária correta — e o
+ * `citacaoPor` registra que a citação veio dela. Qualquer outra resposta (não se aplica, não violada, incerta,
+ * indeterminada, só permite) deixa a classe da primária. `null` = sem resgate (a derivação da primária vale).
+ */
+function resgatePorReferencia(r: Resposta, c: ContextoDerivacao): Omit<Derivado, "s5"> | null {
+  if (!c.referencias?.length || c.politica === "1.2.0" || !Array.isArray(r.referencias) || !caiPorCitacao(r, c)) return null;
+  for (const id of c.referencias) {
+    const ref = r.referencias.find(x => x.id === id);
+    if (!ref || ref.forca === "nenhuma" || ref.forca === "indeterminado") continue;
+    const rr: Resposta = { ...r, norma: { id: "citada", forca: ref.forca, aplicabilidade: ref.aplicabilidade, violada: ref.violada } as Resposta["norma"] };
+    const cc: ContextoDerivacao = { ...c, forcasDaCitada: undefined };
+    if (preClasse(rr, cc) !== "violacao-pagina") continue;
+    return { ...derivarPrincipal(rr, cc), citacaoPor: id as typeof IDS_REFERENCIA[number] };
+  }
+  return null;
 }
 
 function derivarPrincipal(r: Resposta, c: ContextoDerivacao): Omit<Derivado, "s5"> {
@@ -331,10 +408,12 @@ function derivarPrincipal(r: Resposta, c: ContextoDerivacao): Omit<Derivado, "s5
 }
 
 /** Valida uma resposta contra o esquema, as perguntas do átomo e os ids citáveis. Devolve a lista de erros (vazia = ok). */
-export function validarResposta(x: unknown, c: ContextoDerivacao, o: { normaNeutra?: boolean; v12?: boolean } = {}): string[] {
+export function validarResposta(x: unknown, c: ContextoDerivacao, o: { normaNeutra?: boolean; v12?: boolean; v13?: boolean } = {}): string[] {
   const e: string[] = [];
   if (!isObj(x)) return ["resposta não é objeto"];
-  const permitidos = ["id", "verdadeFactual", "norma", "vinculo", "sugestao", "forcaDoVeredito", "evidencias", "justificativa", ...(o.v12 ? ["estadoAlcancado"] : [])];
+  // [D-156] `referencias` só é campo da resposta na 1.3.0 e só em cartão que traz referências.
+  const comRef = !!o.v13 && !!c.referencias?.length;
+  const permitidos = ["id", "verdadeFactual", "norma", "vinculo", "sugestao", "forcaDoVeredito", "evidencias", "justificativa", ...(o.v12 ? ["estadoAlcancado"] : []), ...(comRef ? ["referencias"] : [])];
   for (const k of Object.keys(x)) if (!permitidos.includes(k)) e.push(`campo desconhecido: ${k}`);
   for (const k of permitidos) if (!(k in x)) e.push(`campo ausente: ${k}`);
   if (e.length) return e;
@@ -414,5 +493,25 @@ export function validarResposta(x: unknown, c: ContextoDerivacao, o: { normaNeut
   // sugestão condicional: exigida se as respostas dão erro normativo
   if (pede("sugestao-se-erro-normativo") && s === NAO_PERGUNTADO && preClasse(x as unknown as Resposta, c) === "erro-normativo")
     e.push("as respostas dão erro normativo: responda sugestao (P13 / R11d)");
+  // [D-156] referências: uma resposta por referência do cartão, na lista; exigida quando a primária cai por citação.
+  if (comRef) {
+    const rs = x.referencias;
+    if (rs === NAO_PERGUNTADO) {
+      if (caiPorCitacao(x as unknown as Resposta, c)) e.push("fato verdadeiro e a norma citada não vale (erro normativo): julgue cada referência em `referencias` (D-156)");
+    } else if (!Array.isArray(rs)) e.push(`referencias: lista de {id, forca, aplicabilidade, violada} ou "${NAO_PERGUNTADO}"`);
+    else {
+      const ids = rs.map(r => (isObj(r) ? r.id : null));
+      for (const id of c.referencias!) if (ids.filter(i => i === id).length !== 1) e.push(`referencias: julgue ${id} exatamente uma vez`);
+      for (const id of ids) if (!c.referencias!.includes(id as string)) e.push(`referencias: id que o cartão não traz: ${JSON.stringify(id)}`);
+      for (const r of rs) {
+        if (!isObj(r)) { e.push("referencias: item não é objeto"); continue; }
+        if (!em(VAL.forca, r.forca)) e.push(`referencias.${r.id}.forca fora da lista: ${JSON.stringify(r.forca)}`);
+        const neutra = r.forca === "nenhuma";
+        for (const [k, lista] of [["aplicabilidade", VAL.aplicabilidade], ["violada", VAL.violada]] as const) {
+          if (neutra ? r[k] !== NAO_PERGUNTADO : !em(lista, r[k])) e.push(`referencias.${r.id}.${k}: ${neutra ? `"${NAO_PERGUNTADO}" com forca "nenhuma"` : "fora da lista"}`);
+        }
+      }
+    }
+  }
   return e;
 }

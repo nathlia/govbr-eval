@@ -15,6 +15,19 @@ export const DERIVADO_VERSAO = "nat74-retrospectiva-1.0.0";
 export const FORMATO_RESULTADO = "nat74-resultado-1.0.0";
 export const POLITICA_PRINCIPAL = "politica-normativa-1.2.0";
 export const POLITICA_SENSIBILIDADE = "politica-normativa-1.1.0";
+/**
+ * [D-156] Política do juiz 1.3.0 das campanhas novas: a 1.2.0 + referências secundárias do achado (`references`, até 2),
+ * julgadas só quando a primária cai por citação, nunca por fato. Sem referência no cartão, deriva igual à 1.2.0.
+ * A NAT-74 retrospectiva (POLITICA_PRINCIPAL) não muda.
+ */
+export const POLITICA_REFERENCIAS = "politica-normativa-1.3.0";
+export type VersaoPolitica = "1.2.0" | "1.3.0";
+export const rotuloPolitica = (v: VersaoPolitica): string => (v === "1.3.0" ? POLITICA_REFERENCIAS : POLITICA_PRINCIPAL);
+export function versaoDaPolitica(x: string | null | undefined): VersaoPolitica {
+  if (x === "1.3.0" || x === POLITICA_REFERENCIAS) return "1.3.0";
+  if (x === "1.2.0" || x === POLITICA_PRINCIPAL || x === undefined || x === null) return "1.2.0";
+  throw new Error(`política desconhecida: ${x} (1.2.0 ou 1.3.0)`);
+}
 
 const AQUI = dirname(fileURLToPath(import.meta.url));
 /** Raiz do govbr-eval. */

@@ -286,7 +286,11 @@ function classificarT3(e: AtomoEntrada, variante: Variante, base: Pick<AtomoClas
   // [L3] julgamentos ingeridos antes da regra: erro normativo com qualidade indeterminada → pendente (R9).
   if (d.qualidadeDaSugestao === "indeterminada" && (classe === "erro-normativo" || classe === "observacao-norma-errada")) classe = "pendente";
   let spec = variante === "S5" ? d.s5.spec : d.spec;
-  const norma = r.norma === "nao-perguntado" ? null : r.norma;
+  // [D-156, política 1.3.0] Classe resgatada por referência secundária: a norma que vale (força, crédito Q1/R15) é a da
+  // referência; sem `citacaoPor` (todo julgamento até aqui), nada muda.
+  const refUsada = d.citacaoPor && Array.isArray(r.referencias) ? r.referencias.find(x => x.id === d.citacaoPor) ?? null : null;
+  const norma = refUsada ? { id: "citada", forca: refUsada.forca, aplicabilidade: refUsada.aplicabilidade, violada: refUsada.violada }
+    : r.norma === "nao-perguntado" ? null : r.norma;
   const q1 = norma?.forca === "nenhuma", r15 = !!norma && !q1 && norma.forca !== "obrigatorio";
   let origem: ParteClassificada["origem"] = null;
   if (ehViolacao(classe)) {
@@ -317,7 +321,7 @@ function classificarT3(e: AtomoEntrada, variante: Variante, base: Pick<AtomoClas
     origemJuiz: null, origem, origemRotulo: ehViolacao(classe) ? om ?? (spec ? "pagina (unidade da referência)" : "indeterminada (não medida)") : null,
     regraCitada: a.regra, forcaDaCitacao: forcaDaCitada(a.regra, e), aplicabilidadeDaCitada: norma && norma.id === "citada" ? norma.aplicabilidade : null,
     qualidadeDaSugestao: (d.qualidadeDaSugestao as Qualidade) ?? null, classe: pendente ? "pendente" : classe, spec, credito, regraDaPolitica: regra,
-    motivo: motivoFila ?? `T3 (LLM cego, D-130), ${j.id}: ${regra}${d.fundamentacao ? `, fundamentação ${d.fundamentacao}` : ""}` };
+    motivo: motivoFila ?? `T3 (LLM cego, D-130), ${j.id}: ${regra}${d.fundamentacao ? `, fundamentação ${d.fundamentacao}` : ""}${d.citacaoPor ? `, citação pela referência secundária ${d.citacaoPor} (política 1.3.0)` : ""}` };
   return { ...base, fontes: [...base.fontes, j.fonte], juiz: "llm-t3", tratamento: s7 ? "pendente" : pendente ? "T3" : "julgado", transporArquivo: false, partes: [parte],
     fila: pendente && !s7 ? "T3" : null, motivoFila };
 }

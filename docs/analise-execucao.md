@@ -261,6 +261,62 @@ cegos, que recebem só os arquivos indicados.
    respostas dela (crédito de qual spec, achado novo, DS, sem violação, falso) é igual ao da passada, e crédito ratificado não
    sai no S4'. Testes: `npm run test:revisao-material-autora`.
 
+### Referência secundária e política do juiz 1.3.0 (D-156)
+
+- **Contrato.** O achado pode trazer `references` (até 2, formato de `rule`; `rule` segue a principal). É o mesmo nos três
+  braços. O texto da skill `avaliar-tela` ganhou uma frase de procedimento (sem regra nem id), e o `templateSha256` novo é
+  o que as campanhas novas fixam em `protocolSha256`. O coletor valida pelo `findings.v1.schema.json` (campo novo,
+  opcional): imagens de coletor antigas recusam relatório com o campo, então a imagem do coletor tem de ser refeita
+  (`npm run runner:imagens`) antes da primeira campanha com a skill nova.
+- **Passada cega.** `e14-campanha.ts` prepara na política **1.3.0 por padrão** (`nat78-primeira-passada-1.4.0`, manifesto e
+  respostas `…-1.3.0`): o cartão de agente cujo achado traz referências ganha `referencias` (`REF1`, `REF2`, com o texto da
+  norma, como `normaCitada`; a que repete a `rule` sai), e `REF1`/`REF2` ficam citáveis. Cartão sem referência fica igual
+  ao da 1.2.0. `--politica 1.2.0` refaz a passada antiga byte a byte (referências ignoradas).
+- **Juiz.** A `norma` continua a julgar só a regra principal. Quando o fato é verdadeiro e a `norma` dá erro normativo (não
+  se aplica, não violada, mais fraca sem vínculo, ou só permite), a resposta tem de trazer `referencias`: um
+  `{id, forca, aplicabilidade, violada}` por referência (mesmo vocabulário de `norma`). Nos outros casos, `"nao-perguntado"`.
+  Em cartão sem referência o campo não existe.
+- **Derivação (R16).** Só na 1.3.0 e só quando a primária cai por citação: a primeira referência, na ordem do achado, que,
+  julgada como se fosse a citada, dá violação (obrigatória aplicável e violada; ou mais fraca aplicável e violada com
+  vínculo, R15) decide a classe, e com ela o crédito da detecção, exatamente como uma primária correta. O `derivado` grava
+  `citacaoPor: "REF1"|"REF2"`. Fato falso, indisponível ou indeterminado nunca consulta referência. Primária válida ou
+  incerta também não. Cartão sem referência deriva igual à 1.2.0 (sem o campo `citacaoPor`).
+- **Ingestão.** `e14-ingerir.ts --fila P` usa a política do manifesto da passada (1.2.0 se ausente). Para outra, use
+  `--politica 1.2.0|1.3.0`. `--gravar-em PASTA_NOVA` grava `julgamentos.json` + `.sha256` + `origem.json` (sha256 das
+  entradas) numa pasta nova, sem tocar na passada: é assim que se reingere uma passada congelada sob outra política. Na
+  1.3.0, `julgamentos.json` traz `citacaoPor` (quantos cartões a primária decidiu, quantos cada referência). A revisão §8
+  (`revisao-campanha.ts`, recálculo, material) lê passada 1.3.0. Ainda não pede referências aos juízes da consistência,
+  da confiabilidade e da adjudicação: para eles vale a primária (fechar antes da coleta da D).
+- **Regressão (30/10).** As duas passadas de 29/10 (`ensaio-trio-real-05`, `ensaio-trio-b-03`, sem referências) foram
+  reingeridas: com `--politica 1.2.0` o `julgamentos.json` sai byte a byte igual ao congelado. Com `1.3.0`
+  (`p01/reingestao-politica-1.3.0-20261030T1/`) todo `derivado` e toda resposta são iguais, e só o rótulo da política e o
+  `citacaoPor` mudam.
+
+### Specs achadas por braço: duas colunas e classe de spec (D-156)
+
+`npx tsx scripts/reanalise-nat74/e14-deteccao.ts --passada P [--julgamentos ARQ] --saida PASTA` grava `deteccao.json` e
+`deteccao.md`, com as entradas e seus sha256. Recusa sobrescrever. Por braço (da chave da passada):
+
+- **detecção**: a classe derivada credita a spec (`derivado.spec` com `violacao-pagina` ou `violacao-origem-indeterminada`,
+  ou seja R7, R15 e Q1; `violacao-ds` não credita, P3). Conta o fato observado mesmo sem norma (Q1) ou com norma mais fraca
+  (R15).
+- **detecção fundamentada**: fato `verdadeira`, norma `violada: "sim"` e vínculo à spec. Vale a norma citada ou, na 1.3.0, a
+  referência que deu a classe; esta última é listada em "fundamentada pela referência secundária".
+- **classe da spec**, fixada pelo vocabulário de `categories` da referência antes de ver número de braço:
+
+  | `categories` da spec | classe |
+  |---|---|
+  | todas em {`token`, `estrutura`} | específica do DS |
+  | alguma de {`acessibilidade`, `navegacao`, `formulario`} (mesmo junto de `token`/`estrutura`) | acessibilidade geral |
+  | categoria fora dessas cinco | para (a tabela tem de ser decidida antes) |
+
+  Razão: `token` e `estrutura` sozinhas são o que só a norma do DS diz (token, anatomia, variante, Template Base). Spec
+  que também é `acessibilidade`/`navegacao`/`formulario` é mensurável por critério geral (WCAG/e-MAG) sem o DS. A tela A
+  tem 5 específicas e 9 gerais; a B, 7 específicas e 22 gerais.
+
+Qual coluna é a principal na tese fica fixado antes da coleta da D (D-156 1). Testes: `test-e14-referencias.ts`, rodado por
+`test-e14-campanha.ts`.
+
 Código: `scripts/reanalise-nat74/revisao-campanha.ts`, `origem-campanha.ts` (+ `origem-sonda.ts`), `recalculo-campanha.ts`,
 `material-autora.ts` (+ `autora-respostas.ts`); testes: `npm run test:revisao-campanha`, `npm run test:revisao-origem`,
 `npm run test:revisao-recalculo`, `npm run test:revisao-material-autora`. O caminho retrospectivo (`reanalise:nat74:e14-consistencia` / `e14-desempate`,

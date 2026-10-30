@@ -56,6 +56,8 @@ requireText("avaliar-tela", avaliar, [
   "document.querySelectorAll",
   '"selector"', '"relatedSelectors"', '"observed"', '"expected"', '"state"', '"viewport"', '"steps"', '"evidence"',
   '"rule":null', '"rule": null', '"findings": []',
+  // D-156: referências secundárias opcionais, o mesmo contrato nos três braços.
+  "`references`: opcional, até duas",
   "O envio é obrigatório",
   "declare as incertezas",
   // O alvo da avaliação é escopo da tarefa, igual nos dois braços: nomes das normas e formatos de id.
@@ -74,7 +76,9 @@ const avaliarWords = words(avaliar);
 // conformidade), ~60 palavras; meta 1250 → 1300.
 // Oráculo 3.0.0 (NAT-99, nota de migração do validator): continuação por cursor ou id, próximo passo indicado em
 // erro/ausência/ambiguidade, ação da ferramenta é sugestão e não conclusão; ~45 palavras, iguais nos três braços; meta 1300 → 1350.
-if (avaliarWords < 800 || avaliarWords > 1350) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1350`);
+// D-156: campo opcional `references` (até duas referências secundárias, formato de `rule`), ~30 palavras de contrato,
+// iguais nos três braços e só procedimento (nenhum id nem regra); meta 1350 → 1400.
+if (avaliarWords < 800 || avaliarWords > 1400) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1400`);
 
 const screenWords = words(shared) + words(screen);
 // Oráculo 3.0.0 (NAT-99): continuação por cursor ou id + ação da ferramenta como sugestão, ~18 palavras; meta 800 → 820.

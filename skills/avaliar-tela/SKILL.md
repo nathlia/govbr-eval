@@ -76,6 +76,9 @@ outro critério.
   disso, uma referência normativa que você consiga justificar, no formato `emag:<seção>`,
   `wcag:<critério>` ou `ds:<regra>`; um critério amplo não justifica uma exigência mais
   específica. Na dúvida, `"rule": null`. Não invente um identificador plausível.
+- `references`: opcional, até duas outras referências normativas do mesmo achado, no formato de
+  `rule`, quando mais de uma justificar a exigência. `rule` continua sendo a citação principal.
+  Omita quando não houver.
 - `state.viewport`: largura e altura reais da área visível, inteiros em pixels, medidas no passo 1
   ou na largura alcançada pelo meio declarado.
 - `state.steps`: as interações desde o carregamento, em ordem; lista vazia se não houve interação.

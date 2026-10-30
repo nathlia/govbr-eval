@@ -35,7 +35,7 @@ import {
   FATO, FORMATO_CHAVE_AUTORA, FORMATO_RESPOSTAS_AUTORA, ORIGEM, VIOLA, desfechoDaAutora, desfechoDaPassada, lerTextoDaAutora,
   type CasoChave, type Desfecho,
 } from "./autora-respostas";
-import { TCC, jsonTexto, posix, sha } from "./comum";
+import { POLITICA_REFERENCIAS, TCC, jsonTexto, posix, sha } from "./comum";
 import { prepararCampanha } from "./e14-campanha";
 import { janelas } from "./e14-cegueira";
 import { IMAGENS_VERSAO, capturarCasos, type Captura } from "./material-imagens";
@@ -378,7 +378,9 @@ export async function prepararMaterial(o: OpcoesMaterial): Promise<Material> {
   const temOrigem = !!o.origens?.length;
   if (!temOrigem) avisos.push("sem --origem: o estrato 4 (origem DS) fica vazio por falta de medida, não por ausência de defeito do DS");
   // Cartões cegos com a máscara 1.3.0 (entrega 2), regenerados das análises pelo mesmo preparo da passada cega.
-  const prep = prepararCampanha(carga.analises.map(a => a.dir), { validador: o.validador });
+  // [D-156] Mesma política da passada (1.3.0 só se o manifesto dela for 1.3.0): o cartão regenerado é o do lote.
+  const politica13 = carga.passadas.some(p => (JSON.parse(p.manifestoTxt) as { politica?: string }).politica === POLITICA_REFERENCIAS);
+  const prep = prepararCampanha(carga.analises.map(a => a.dir), { validador: o.validador, politica: politica13 ? "1.3.0" : "1.2.0" });
   const chaveReg = JSON.parse(prep.arquivosInternos.get("chave/fila-t3-chave.json")!) as { itens: ItemChave[] };
   const cegoDe = new Map<string, CartaoCego>();
   for (const [rel, t] of prep.arquivosDoJuiz) if (/^lotes\/lote-\d+\.json$/.test(rel)) for (const c of (JSON.parse(t) as { cartoes: CartaoCego[] }).cartoes) cegoDe.set(c.id, c);

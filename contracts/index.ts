@@ -170,7 +170,10 @@ export function oracleOfCampaign(c: AnyCampaign, arm: ArmV2): { distSha256: Sha2
 
 /** Espelha FlowFinding (types.ts) no contrato achado-2 de scripts/flow-contract.ts. */
 export interface AgentFinding {
-  selector: string; relatedSelectors?: string[]; rule: string | null; observed: string; expected: string;
+  selector: string; relatedSelectors?: string[]; rule: string | null;
+  /** D-156: até duas referências secundárias (opcional); `rule` segue a principal. */
+  references?: string[];
+  observed: string; expected: string;
   description?: string; state: { viewport: { width: number; height: number }; steps: string[] }; evidence: string[];
 }
 export interface Findings extends Doc<"findings.v1"> {

@@ -41,6 +41,12 @@
           "description": "Id da regra, ou null quando a atribuição é incerta.",
           "oneOf": [{ "$ref": "common.v1.schema.json#/$defs/text" }, { "type": "null" }]
         },
+        "references": {
+          "description": "D-156: até duas referências normativas secundárias do mesmo achado, no formato de `rule`. Opcional (achados sem o campo são os de sempre). `rule` continua a citação principal e é a que o juiz julga; as referências só são julgadas quando a principal cai por citação (política do juiz 1.3.0), nunca quando o fato cai.",
+          "type": "array",
+          "maxItems": 2,
+          "items": { "$ref": "common.v1.schema.json#/$defs/text" }
+        },
         "observed": { "$ref": "common.v1.schema.json#/$defs/text" },
         "expected": { "$ref": "common.v1.schema.json#/$defs/text" },
         "description": { "type": "string" },

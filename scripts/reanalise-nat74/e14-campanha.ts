@@ -21,15 +21,20 @@
  * entrada que a referência mediu e os runs abriram; o `capture.json` da análise guarda só o pathname, e os juízes do
  * ensaio-trio-b-03 mediram a página nua (sem a sessão fictícia; um deles notou). Ingestão:
  *   npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila PASTA_DA_PASSADA
+ * 1.4.0 (D-156, política do juiz 1.3.0, padrão): o achado pode trazer `references` (até 2 referências secundárias); o cartão
+ * cego as mostra em `referencias` (`REF1`, `REF2`, com o texto da norma como em `normaCitada`) e a resposta ganha
+ * `referencias` (um julgamento de norma por referência), usadas só quando a primária cai por citação. Cartão sem referência
+ * fica igual. `--politica 1.2.0` refaz a passada 1.3.1 byte a byte (referências ignoradas, formatos 1.2.0).
  */
 import { existsSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import type { SemanticPackage } from "../semantic-flow";
 import { ID_DE_ACHADO, distingueComDeFerramentas, mascararNormaCega, mascararTextoCego } from "../painel/mascara";
-import { POLITICA_PRINCIPAL, TCC, bracoDoPerfil, gravar, jsonTexto, lerJson, ordenar, sha } from "./comum";
+import { POLITICA_PRINCIPAL, TCC, bracoDoPerfil, gravar, jsonTexto, lerJson, ordenar, rotuloPolitica, sha, versaoDaPolitica, type VersaoPolitica } from "./comum";
 import { CATEGORIAS_RESIDUO, residuoDeBraco, verificarCegueira, type Cegueira, type ResiduoDoCartao } from "./e14-cegueira";
 import {
-  ESQUEMA_RESPOSTAS_CAMPANHA, FORMATO_LOTE, FORMATO_MANIFESTO_CAMPANHA, FORMATO_RESPOSTAS, FORMATO_RESPOSTAS_CAMPANHA, NAO_PERGUNTADO,
+  ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_3, FORMATO_LOTE, FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_3, FORMATO_RESPOSTAS,
+  FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_3, IDS_REFERENCIA, NAO_PERGUNTADO,
   hashDaChave, idOpaco, mascarar, nomeLote, type CartaoCego, type ItemChave,
 } from "./e14-comum";
 import { TABELA_FORCAS, cartaoCego, normasDaCampanha, type Extracao } from "./e14-fila";
@@ -46,6 +51,24 @@ import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
  * 1.3.1 (D-154): `endereco` pela `_meta.url` da referência (`enderecoDaTela`), consulta incluída; formatos iguais aos da 1.3.0.
  */
 export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.3.1";
+/** [D-156] Versão da passada preparada na política 1.3.0 (referências secundárias). A 1.2.0 continua 1.3.1. */
+export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.0";
+/** Política das campanhas novas (D-156). `--politica 1.2.0` reproduz o histórico. */
+export const POLITICA_CAMPANHA_PADRAO: VersaoPolitica = "1.3.0";
+
+/**
+ * [D-156] Referências secundárias do achado do agente (`references`, findings.v1 + D-156), lidas do achado bruto que o
+ * pacote guarda em `reportedEvidence.finding`: só textos não vazios, sem repetir a `rule` nem entre si, até 2. Cartão
+ * da linha de base, achado sem o campo ou campo fora do formato → lista vazia (o cartão fica como sempre).
+ */
+export function referenciasDoAchado(card: Pick<Card, "origin" | "rule" | "reportedEvidence">): string[] {
+  if (card.origin !== "agente") return [];
+  const raw = (card.reportedEvidence as { finding?: { references?: unknown } } | null)?.finding?.references;
+  if (!Array.isArray(raw)) return [];
+  const out: string[] = [];
+  for (const x of raw) if (typeof x === "string" && x.trim() && x.trim() !== card.rule?.trim() && !out.includes(x.trim())) out.push(x.trim());
+  return out.slice(0, IDS_REFERENCIA.length);
+}
 export const FORMATO_RESIDUO = "nat78-residuo-de-braco-1.0.0";
 /** Validador cuja `data/` é conferida contra o `dataSha256` da campanha (pode ser outro checkout: `--validador`). */
 export const VALIDADOR_PADRAO = join(TCC, "govbr-ds-validator");
@@ -121,7 +144,8 @@ export function enderecoDaTela(meta: { url?: string }, urlDaCaptura: string): st
   return meta.url;
 }
 
-export function prepararCampanha(analises: string[], o: { validador?: string; checkerAliases?: string } = {}): PreparoCampanha {
+export function prepararCampanha(analises: string[], o: { validador?: string; checkerAliases?: string; politica?: VersaoPolitica } = {}): PreparoCampanha {
+  const politica = o.politica ?? POLITICA_CAMPANHA_PADRAO, v13 = politica === "1.3.0";
   const datas = [...new Set(analises.flatMap(d => dataDoOraculo(lerJson(join(d, "entradas", "campanha.json")))))];
   if (datas.length !== 1) throw new Error(`E14 campanha: esperado 1 dataSha256 de oráculo nas campanhas das análises, achei ${datas.length} (${datas.map(x => x.slice(0, 12)).join(", ")})`);
   const nr = normasDaCampanha({ dataSha256: datas[0], validador: resolve(o.validador ?? VALIDADOR_PADRAO), checkerAliases: o.checkerAliases });
@@ -164,6 +188,12 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
       idsDeAchado += (card.evidence ?? []).length - semAchado.length;
       const cego = cartaoCego(ex, { ...card, evidence: semAchado } as never, nr.resolver, [], specs.map(s => s.id));
       cego.alegacao.estado.passos = passosLegiveis(cego.alegacao.estado.passos, ref._meta).map(s => mascarar(s)!);
+      // [D-156] Referências secundárias (só na 1.3.0 e só se o achado as traz): REF1/REF2, com o texto da norma.
+      const refs = v13 ? referenciasDoAchado(card) : [];
+      if (refs.length) {
+        cego.referencias = refs.map((r, k) => ({ id: IDS_REFERENCIA[k], regra: mascarar(r), norma: nr.resolver(r) }));
+        cego.citaveis = [...cego.citaveis, ...cego.referencias.map(x => x.id)];
+      }
       const c = textoLivreCego(profundo(cego));
       c.telaNome = nome; c.citaveis = [...c.citaveis, "MEDIDA"];
       itens.push({ item, card, cartao: c });
@@ -175,12 +205,13 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   tamanhosDosLotes(ord.length).forEach((t, k) => { lotes.push({ lote: nomeLote(k), ids: ord.slice(i, i + t).map(x => x.item.id) }); i += t; });
   for (const l of lotes) for (const id of l.ids) ord.find(x => x.item.id === id)!.item.lote = l.lote;
   const nomes = Object.values(telas).map(t => t.nome).join(", ");
-  const leiame = leiameCampanha(ord.length, lotes.length, nomes);
-  const esquema = jsonTexto(ESQUEMA_RESPOSTAS_CAMPANHA);
+  const leiame = v13 ? leiameCampanha13(ord.length, lotes.length, nomes) : leiameCampanha(ord.length, lotes.length, nomes);
+  const esquema = jsonTexto(v13 ? ESQUEMA_RESPOSTAS_CAMPANHA_1_3 : ESQUEMA_RESPOSTAS_CAMPANHA);
+  const rotulo = v13 ? rotuloPolitica(politica) : POLITICA_PRINCIPAL, versao = v13 ? E14_CAMPANHA_VERSAO_1_4 : E14_CAMPANHA_VERSAO;
   const juiz = new Map<string, string>([["lotes/LEIAME-juiz.md", leiame], ["lotes/esquema-respostas.schema.json", esquema]]);
   for (const l of lotes) {
     const cs = l.ids.map(id => ord.find(x => x.item.id === id)!.cartao);
-    juiz.set(`lotes/${l.lote}.json`, jsonTexto({ formato: FORMATO_LOTE, lote: l.lote, politica: POLITICA_PRINCIPAL,
+    juiz.set(`lotes/${l.lote}.json`, jsonTexto({ formato: FORMATO_LOTE, lote: l.lote, politica: rotulo,
       instrucoes: { arquivo: "LEIAME-juiz.md", sha256: sha(leiame) }, esquema: { arquivo: "esquema-respostas.schema.json", sha256: sha(esquema) },
       respostaEm: `../respostas/${l.lote}.json`, n: cs.length,
       referencias: Object.fromEntries([...new Set(cs.map(c => c.tela))].map(t => [t, telas[t]])), cartoes: cs }));
@@ -194,16 +225,17 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   const relato12: Record<string, { cartoes: number; comSinal: number }> = {};
   ord.forEach((x, k) => { const b = (relato12[x.item.braco] ??= { cartoes: 0, comSinal: 0 }); b.cartoes++; if (cegueira.porCartao[k].sinais.length) b.comSinal++; });
   const porBraco = residuoPorBraco(ord.map(x => x.item.braco), residuo);
-  const residuoTxt = jsonTexto(residuoDaPassada(desenho ?? { arms: ["sem", "com"], comparisons: [] }, ord.map(x => x.item), residuo, porBraco, idsDeAchado));
+  const residuoTxt = jsonTexto(residuoDaPassada(desenho ?? { arms: ["sem", "com"], comparisons: [] }, ord.map(x => x.item), residuo, porBraco, idsDeAchado, versao));
   const chaveTxt = jsonTexto({ formato: "nat78-primeira-passada-chave-1.0.0", aviso: "NÃO entregar aos juízes: liga o id opaco ao braço, ao run e ao cartão",
-    versao: E14_CAMPANHA_VERSAO, total: ord.length, porBraco, itens: ord.map(x => x.item) });
+    versao, total: ord.length, porBraco, itens: ord.map(x => x.item) });
   const internos = new Map<string, string>([["chave/fila-t3-chave.json", chaveTxt],
     ["cegueira.json", jsonTexto({ resultado: cegueira.falhas.length || falhasTrio.length ? "FALHOU" : "OK", falhas: cegueira.falhas, falhasTrio,
       porBraco, relato12: { nota: "sinais de verificarCegueira (relato até a 1.2.0), para comparar com passadas anteriores", porBraco: relato12 },
       residuo: { arquivo: "residuo-de-braco.json", sha256: sha(residuoTxt) }, porCartao: cegueira.porCartao })],
     ["residuo-de-braco.json", residuoTxt],
-    ["lotes/manifesto.json", jsonTexto({ formato: FORMATO_MANIFESTO_CAMPANHA, versao: E14_CAMPANHA_VERSAO, politica: POLITICA_PRINCIPAL, total: ord.length,
-      respostas: { pasta: "respostas/", formato: FORMATO_RESPOSTAS_CAMPANHA, nota: "pasta da passada, ao lado de lotes/ (nunca lotes/respostas/)" },
+    ["lotes/manifesto.json", jsonTexto({ formato: v13 ? FORMATO_MANIFESTO_CAMPANHA_1_3 : FORMATO_MANIFESTO_CAMPANHA, versao, politica: rotulo, total: ord.length,
+      ...(v13 ? { cartoesComReferencias: ord.filter(x => x.cartao.referencias?.length).length } : {}),
+      respostas: { pasta: "respostas/", formato: v13 ? FORMATO_RESPOSTAS_CAMPANHA_1_3 : FORMATO_RESPOSTAS_CAMPANHA, nota: "pasta da passada, ao lado de lotes/ (nunca lotes/respostas/)" },
       analises: analises.map(d => ({ dir: basename(d), packageSha256: sha(readFileSync(join(d, "revisao", "package.json"))) })),
       arquivos: Object.fromEntries([...juiz].map(([rel, t]) => [rel, sha(t)])),
       lotes: lotes.map(l => ({ lote: l.lote, n: l.ids.length, sha256: sha(juiz.get(`lotes/${l.lote}.json`)!), ids: l.ids })), chaveSha256: sha(chaveTxt), residuoSha256: sha(residuoTxt), fontes })]]);
@@ -228,7 +260,7 @@ export function residuoPorBraco(bracos: string[], r: ResiduoDoCartao[]): PorBrac
  * as categorias em que os dois braços diferem. Arquivo interno (liga o id opaco ao braço): nunca vai ao juiz.
  */
 export function residuoDaPassada(desenho: { arms: string[]; comparisons: { id: string; arms: string[]; role?: string }[] }, itens: ItemChave[],
-  r: ResiduoDoCartao[], porBraco: PorBraco, idsDeAchado: number): Record<string, unknown> {
+  r: ResiduoDoCartao[], porBraco: PorBraco, idsDeAchado: number, versao = E14_CAMPANHA_VERSAO): Record<string, unknown> {
   const porComparacao = desenho.comparisons.map(c => {
     const [a, b] = c.arms, pa = porBraco[a], pb = porBraco[b];
     const cats = Object.keys(CATEGORIAS_RESIDUO).filter(k => (pa?.porCategoria[k] ?? 0) !== (pb?.porCategoria[k] ?? 0));
@@ -236,7 +268,7 @@ export function residuoDaPassada(desenho: { arms: string[]; comparisons: { id: s
       comSinal: { [a]: `${pa?.comSinal ?? 0}/${pa?.cartoes ?? 0}`, [b]: `${pb?.comSinal ?? 0}/${pb?.cartoes ?? 0}` },
       categoriasQueDiferem: Object.fromEntries(cats.map(k => [k, { [a]: pa?.porCategoria[k] ?? 0, [b]: pb?.porCategoria[k] ?? 0 }])) };
   });
-  return { formato: FORMATO_RESIDUO, versao: E14_CAMPANHA_VERSAO, aviso: "NÃO entregar aos juízes: liga o id opaco ao braço",
+  return { formato: FORMATO_RESIDUO, versao, aviso: "NÃO entregar aos juízes: liga o id opaco ao braço",
     nota: "Resíduo de braço depois da máscara, medido no que o juiz vê (o cartão cego do lote). Categoria com fica=true é informação de julgamento (mascará-la tiraria do juiz o que ele precisa para julgar o fato ou a norma) e fica visível de propósito; as demais são falha de máscara e devem ser 0. Insumo do S4' (sensibilidade sem os cartões com resíduo).",
     bracosDoDesenho: desenho.arms, categorias: CATEGORIAS_RESIDUO, retirados: { idsDeAchadoDasEvidencias: idsDeAchado },
     porBraco, porComparacao, porCartao: itens.map((it, k) => ({ id: it.id, braco: it.braco, categorias: r[k].categorias, detalhe: r[k].detalhe })) };
@@ -288,6 +320,42 @@ export function leiameCampanha(total: number, nLotes: number, nomes: string): st
   return t;
 }
 
+/**
+ * [D-156] LEIAME da política 1.3.0: o da 1.2.0 (`leiameCampanha`, que não muda) com o título, o formato das respostas,
+ * a seção das referências secundárias e as linhas da tabela de classes. Só procedimento de julgamento: nenhuma regra.
+ */
+export function leiameCampanha13(total: number, nLotes: number, nomes: string): string {
+  const NL = "\n";
+  let t = leiameCampanha(total, nLotes, nomes);
+  t = t.split("política normativa 1.2.0").join("política normativa 1.3.0");
+  t = t.split("política 1.2.0").join("política 1.3.0");
+  t = trocar(t, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA}"`, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA_1_3}"`);
+  t = trocar(t, "- `perguntas`: o que responder neste cartão (abaixo).", [
+    "- `referencias` (ids `REF1`, `REF2`, só em alguns cartões): outras normas que o autor do cartão citou para o mesmo fato,",
+    "  além da `regra` (que continua a principal). Cada uma traz `regra` e `norma` (o texto, como em `normaCitada`).",
+    "- `perguntas`: o que responder neste cartão (abaixo)."].join(NL));
+  t = trocar(t, "### Em todo cartão" + NL, LEIAME_REFERENCIAS + NL + NL + "### Em todo cartão" + NL);
+  const r15 = "| fato `verdadeira` + norma mais fraca (`recomendado`, `boa-pratica`, `exemplo`) + `aplica` + `sim` | com vínculo: credita a detecção do defeito, sem crédito de fundamentação (R15); sem vínculo: erro normativo (R13) |";
+  t = trocar(t, r15, [r15,
+    "| (só cartão com `referencias`) fato `verdadeira` + as respostas da `norma` dão erro normativo + uma referência, na ordem `REF1`, `REF2`, julgada como se fosse a citada, dá violação | a classe dessa violação, como se a referência fosse a norma citada; a citação fica registrada como vinda da referência (R16) |",
+    "| (só cartão com `referencias`) fato `falsa`, `indisponivel` ou `indeterminado` | as referências não mudam nada: a classe é a do fato (R16) |"].join(NL));
+  return t;
+}
+
+/** [D-156] Seção das referências secundárias no LEIAME 1.3.0. */
+const LEIAME_REFERENCIAS = [
+  "### `referencias` → campo `referencias` (só em cartão com `referencias`)",
+  "\"As outras normas que o cartão cita são obrigatórias, aplicam-se ao fato e foram violadas?\" A `norma` continua a julgar",
+  "**só** a regra principal (`regra`), como sempre. As referências entram só quando a principal cai por citação (R16).",
+  "- Quando o fato é `verdadeira` e as suas respostas da `norma` dão erro normativo (não se aplica, não violada, mais fraca",
+  "  sem vínculo, ou só permite), `referencias` é **obrigatório**: uma lista com um item por referência do cartão,",
+  "  `{ \"id\": \"REF1\", \"forca\": …, \"aplicabilidade\": …, \"violada\": … }`, com o mesmo vocabulário e as mesmas regras de",
+  "  `norma` (`forca: \"nenhuma\"` só quando a referência só permite, e então `aplicabilidade`/`violada` = `" + NAO_PERGUNTADO + "`).",
+  "- Nos outros casos use `\"" + NAO_PERGUNTADO + "\"` (ou julgue, se quiser registrar: não muda a classe). Em cartão sem `referencias`",
+  "  o campo não existe: não o escreva.",
+  "- Uma referência nunca muda o fato: com fato `falsa`, `indisponivel` ou `indeterminado` ela não é usada.",
+].join("\n");
+
 /** [M] Tabela fixa das forças da base literal, impressa a partir de TABELA_FORCAS (e14-fila.ts). */
 const LEIAME_FORCAS = [
   "- **Força declarada da base do DS → `forca`.** Cada regra da base em `normaCitada.regrasDaBase` (e nas normas dos",
@@ -329,9 +397,10 @@ if (process.argv[1] && /(?:^|[\\/])e14-campanha\.ts$/.test(process.argv[1])) {
     createSiteServer(loadSite(val("--servir"))).listen(porta, "127.0.0.1", () => console.log(`site congelado em http://127.0.0.1:${porta}/`));
   } else {
     const analises = a.flatMap((x, k) => (x === "--analise" ? [a[k + 1]] : [])), saida = val("--saida");
-    if (!analises.length || !a.includes("--saida")) { console.error("Uso: --analise DIR [--analise DIR ...] --saida PASTA_NOVA [--validador DIR] | --servir SITE [--porta N]"); process.exit(1); }
+    if (!analises.length || !a.includes("--saida")) { console.error("Uso: --analise DIR [--analise DIR ...] --saida PASTA_NOVA [--validador DIR] [--politica 1.3.0|1.2.0] | --servir SITE [--porta N]"); process.exit(1); }
     if (existsSync(saida)) { console.error(`--saida já existe: ${saida} (versão nova = pasta nova)`); process.exit(1); }
-    const p = prepararCampanha(analises, { validador: a.includes("--validador") ? val("--validador") : undefined });
+    const politica = a.includes("--politica") ? versaoDaPolitica(val("--politica")) : POLITICA_CAMPANHA_PADRAO;
+    const p = prepararCampanha(analises, { validador: a.includes("--validador") ? val("--validador") : undefined, politica });
     for (const [rel, t] of p.arquivosInternos) if (rel === "cegueira.json") gravar(saida, rel, t);
     if (p.cegueira.falhas.length || p.falhasTrio.length) {
       console.error(`CEGUEIRA FALHOU (${p.cegueira.falhas.length} + ${p.falhasTrio.length} com×ferramentas); nada gravado em lotes/. Ver ${saida}/cegueira.json`);

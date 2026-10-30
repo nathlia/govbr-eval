@@ -208,7 +208,7 @@ try {
       assert.throws(() => recalcular({ passadas: [ADJ], ...base, reamostragens: 200, ratificacoes: join(rd, "respostas-autora.json") }), /outra origem medida|nada usado/);
     });
     await t("máscara 1.3.0: o preparo das análises regenera os 40 cartões iguais aos do lote da passada T5 (1.3.0); determinismo", async () => {
-      const prep = prepararCampanha([join(T, "analisar-20261019T3")]); // a análise sobre a qual a T5 foi preparada (mesmo pacote)
+      const prep = prepararCampanha([join(T, "analisar-20261019T3")], { politica: "1.2.0" }); // a análise sobre a qual a T5 foi preparada (mesmo pacote)
       const reg = new Map<string, string>();
       for (const [rel, x] of prep.arquivosDoJuiz) if (/^lotes\/lote-\d+\.json$/.test(rel)) for (const c of (JSON.parse(x) as { cartoes: { id: string }[] }).cartoes) reg.set(c.id, JSON.stringify(c));
       const l5 = lerJson<{ cartoes: { id: string }[] }>(join(T5, "lotes", "lote-01.json")).cartoes;
