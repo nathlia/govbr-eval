@@ -1,7 +1,10 @@
 /**
  * Testes do derivado 1.1.0 (NAT-74): limites verdadeiros de D, medidas da T2, julgamentos da T3 na política e, de
  * ponta a ponta, o pipeline em pastas temporárias com julgamentos SINTÉTICOS (nunca lê fila-t3/respostas/ real).
- *   npm run test:reanalise-nat74-v110            (unidade + ponta a ponta: ~6 min, 5 execuções do pipeline)
+ *   npm run test:reanalise-nat74-v110            (unidade + ponta a ponta, 5 execuções do pipeline, SEM saída durante cada uma. Medido em
+ *                                                  30/10: execuções 1–2 ~7 min cada; a 3ª (julgamentos completos) passa de 40 min. ~90% do tempo
+ *                                                  é validatePackage/digest do semantic-flow, refeito a cada scoreSemanticPackage que a barreira
+ *                                                  de montar.ts chama cartão a cartão — lento, não travado. `--rapido` roda só a unidade)
  *   npm run test:reanalise-nat74-v110 -- --rapido (só os de unidade)
  */
 import assert from "node:assert/strict";
@@ -163,7 +166,7 @@ await t("L3: qualidade da sugestão indeterminada → pendente (R9) no caminho d
 if (process.argv.includes("--rapido")) { console.log(`\n${n - falhas}/${n} testes da 1.1.0 passaram (só unidade)`); process.exit(falhas ? 1 : 0); }
 
 // ───────────────────────────────────────────────────────────────── ponta a ponta (pastas temporárias, julgamentos sintéticos)
-console.log("1.1.0: ponta a ponta (pipeline em pasta temporária, julgamentos sintéticos; ~6 min)");
+console.log("1.1.0: ponta a ponta (pipeline em pasta temporária, julgamentos sintéticos; 5 execuções sem saída, de ~7 min a mais de 40 min cada: lento, não travado)");
 const tmp = mkdtempSync(join(tmpdir(), "nat74-v110-"));
 const medidasReais = join(RESULTADOS, CAMINHO_DERIVADO_110, CAMINHO_MEDIDAS_T2);
 const inv = inventarioDeAtomos();

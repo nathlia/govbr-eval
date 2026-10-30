@@ -64,6 +64,11 @@ export interface ParteClassificada {
   /** Crédito vem da R15/Q1 (detecção sem fundamentação)? */
   credito: "unidade" | "r15" | "q1" | null;
   regraDaPolitica: string; motivo: string;
+  /**
+   * [D-156, só quando uma referência secundária deu a classe] A referência efetivamente usada: id no cartão, regra pública,
+   * força, aplicabilidade e violação julgadas DELA. `regraCitada`/`aplicabilidadeDaCitada` seguem as da primária que caiu.
+   */
+  referenciaUsada?: { id: string; regra: string | null; forca: string; aplicabilidade: string; violada: string };
 }
 export interface AtomoClassificado {
   chave: string; juiz: string; tratamento: Tratamento; partes: ParteClassificada[];
@@ -287,10 +292,13 @@ function classificarT3(e: AtomoEntrada, variante: Variante, base: Pick<AtomoClas
   if (d.qualidadeDaSugestao === "indeterminada" && (classe === "erro-normativo" || classe === "observacao-norma-errada")) classe = "pendente";
   let spec = variante === "S5" ? d.s5.spec : d.spec;
   // [D-156, política 1.3.0] Classe resgatada por referência secundária: a norma que vale (força, crédito Q1/R15) é a da
-  // referência; sem `citacaoPor` (todo julgamento até aqui), nada muda.
+  // referência, com a proveniência em campos próprios (`referenciaUsada`): id público dela, força e aplicabilidade julgadas
+  // dela; a regra citada e a aplicabilidade julgada da citada continuam as da primária. Sem `citacaoPor`, nada muda.
   const refUsada = d.citacaoPor && Array.isArray(r.referencias) ? r.referencias.find(x => x.id === d.citacaoPor) ?? null : null;
-  const norma = refUsada ? { id: "citada", forca: refUsada.forca, aplicabilidade: refUsada.aplicabilidade, violada: refUsada.violada }
-    : r.norma === "nao-perguntado" ? null : r.norma;
+  if (d.citacaoPor && !refUsada) throw new Error(`${j.id}: derivado com citacaoPor ${d.citacaoPor} sem o julgamento dessa referência na resposta`);
+  const primaria = r.norma === "nao-perguntado" ? null : r.norma;
+  const referenciaUsada = refUsada ? { id: refUsada.id, regra: d.citacao?.referencia.regra ?? null, forca: refUsada.forca, aplicabilidade: refUsada.aplicabilidade, violada: refUsada.violada } : null;
+  const norma = referenciaUsada ?? primaria;
   const q1 = norma?.forca === "nenhuma", r15 = !!norma && !q1 && norma.forca !== "obrigatorio";
   let origem: ParteClassificada["origem"] = null;
   if (ehViolacao(classe)) {
@@ -316,12 +324,14 @@ function classificarT3(e: AtomoEntrada, variante: Variante, base: Pick<AtomoClas
     : pendente ? `T3 indeterminado: ${[d.classe, ...d.pendencias].join("; ")}: a julgar de novo (T3)` : null;
   const om = variante === "S2" ? e.origem370 : e.origem341;
   const parte: ParteClassificada = { indice: 0, parte: "o cartão inteiro", sujeitos: [...a.sujeitos],
-    verdadeFactual: r.verdadeFactual === "nao-perguntado" ? null : r.verdadeFactual, normaId: norma ? (norma.id === "citada" ? a.regra : norma.id) : null,
+    verdadeFactual: r.verdadeFactual === "nao-perguntado" ? null : r.verdadeFactual,
+    normaId: referenciaUsada ? referenciaUsada.regra ?? referenciaUsada.id : primaria ? (primaria.id === "citada" ? a.regra : primaria.id) : null,
     normaForca: norma?.forca ?? null, normaAplicabilidade: norma?.aplicabilidade ?? null, normaViolada: norma?.violada ?? null,
     origemJuiz: null, origem, origemRotulo: ehViolacao(classe) ? om ?? (spec ? "pagina (unidade da referência)" : "indeterminada (não medida)") : null,
-    regraCitada: a.regra, forcaDaCitacao: forcaDaCitada(a.regra, e), aplicabilidadeDaCitada: norma && norma.id === "citada" ? norma.aplicabilidade : null,
+    regraCitada: a.regra, forcaDaCitacao: forcaDaCitada(a.regra, e), aplicabilidadeDaCitada: primaria && primaria.id === "citada" ? primaria.aplicabilidade : null,
     qualidadeDaSugestao: (d.qualidadeDaSugestao as Qualidade) ?? null, classe: pendente ? "pendente" : classe, spec, credito, regraDaPolitica: regra,
-    motivo: motivoFila ?? `T3 (LLM cego, D-130), ${j.id}: ${regra}${d.fundamentacao ? `, fundamentação ${d.fundamentacao}` : ""}${d.citacaoPor ? `, citação pela referência secundária ${d.citacaoPor} (política 1.3.0)` : ""}` };
+    motivo: motivoFila ?? `T3 (LLM cego, D-130), ${j.id}: ${regra}${d.fundamentacao ? `, fundamentação ${d.fundamentacao}` : ""}${d.citacaoPor ? `, citação pela referência secundária ${d.citacaoPor} (política 1.3.0)` : ""}`,
+    ...(referenciaUsada ? { referenciaUsada } : {}) };
   return { ...base, fontes: [...base.fontes, j.fonte], juiz: "llm-t3", tratamento: s7 ? "pendente" : pendente ? "T3" : "julgado", transporArquivo: false, partes: [parte],
     fila: pendente && !s7 ? "T3" : null, motivoFila };
 }

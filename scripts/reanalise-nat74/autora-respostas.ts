@@ -7,7 +7,7 @@
  * Ratificar = o desfecho das respostas dela (julgadas às cegas, sem ver o braço nem a decisão da passada) é IGUAL ao
  * desfecho da passada. Desacordo não sobrescreve nada (como na NAT-73): só deixa o cartão sem ratificação.
  */
-import type { Derivado } from "./e14-comum";
+import type { CitacaoPorReferencia, Derivado } from "./e14-comum";
 
 export const FORMATO_RESPOSTAS_AUTORA = "nat78-respostas-autora-1.0.0";
 
@@ -114,6 +114,8 @@ export interface CasoChave {
   caso: string; id: string; chave: string; braco: string; estrato: number; passada: string; julgamentosSha256: string;
   /** Desfecho da passada (1.2.0, com a origem medida quando dada) no vocabulário da autora. */
   desfechoPassada: Desfecho;
+  /** [D-156] Só quando uma referência secundária deu a classe: regra citada que caiu × referência usada (campos distintos). */
+  citacao?: CitacaoPorReferencia;
 }
 export interface ChaveAutora { formato: string; aviso: string; selecaoSha256: string; casos: CasoChave[] }
 

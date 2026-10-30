@@ -13,8 +13,10 @@ import {
 } from "./e14-comum";
 import type { prepararCampanha as Preparar } from "./e14-campanha";
 import { referenciasDoAchado } from "./e14-campanha";
-import { classeDaSpec, specFundamentada, tabular, type Julgamento } from "./e14-deteccao";
+import { classeDaSpec, estadoDosBracos, specDetectada, specFundamentada, tabelaMd, tabular, type Coluna, type Julgamento } from "./e14-deteccao";
 import { argumentosIngerir, ingerir } from "./e14-ingerir";
+import { classificar } from "./politica";
+import { proveniencia } from "./recalculo-campanha";
 
 type T = (nome: string, f: () => void) => void;
 interface Ctx { t: T; tmp: string; dir: string; valDir: string; aliasesAbs: string; prepararCampanha: typeof Preparar;
@@ -22,13 +24,13 @@ interface Ctx { t: T; tmp: string; dir: string; valDir: string; aliasesAbs: stri
 
 const sug = { trataOFato: "nao", especificaDoSujeito: "sim", naoViolaNormaObrigatoria: "sim", qualidade: "invalida" } as const;
 const ctxBase = (x: Partial<ContextoDerivacao> = {}): ContextoDerivacao => ({ tipo: "sensivel", citaRegra: true, temEsperado: true, specsDaTela: ["A-01", "A-02"],
-  citaveis: ["OBS", "ESP", "REGRA", "NORMA", "REF1", "REF2", "MEDIDA", "A-01", "A-02"], origemMedida: null, classeRegistrada: null, referencias: ["REF1", "REF2"], ...x });
+  citaveis: ["OBS", "ESP", "REGRA", "NORMA", "REF1", "REF2", "MEDIDA", "A-01", "A-02"], origemMedida: null, classeRegistrada: null, referencias: ["REF1", "REF2"], politica: "1.3.0", ...x });
 const ref = (id: "REF1" | "REF2", forca = "obrigatorio", aplicabilidade = "aplica", violada = "sim") => ({ id, forca, aplicabilidade, violada });
 const resp = (x: Record<string, unknown> = {}): Resposta => ({ id: "T3-0000000000", verdadeFactual: "verdadeira",
   norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "nao-aplica", violada: "nao" }, vinculo: { spec: "A-01", relacao: "direta" },
   sugestao: sug, forcaDoVeredito: "medido", evidencias: ["MEDIDA"], justificativa: "MEDIDA mostra o fato; a NORMA citada não se aplica a ele.",
   estadoAlcancado: "receita", referencias: [ref("REF1")], ...x }) as unknown as Resposta;
-const semRefs = ({ referencias: _r, ...c }: ContextoDerivacao): ContextoDerivacao => c;
+const semRefs = ({ referencias: _r, politica: _p, ...c }: ContextoDerivacao): ContextoDerivacao => c;
 const semCampo = ({ referencias: _r, ...r }: Resposta): Resposta => r as Resposta;
 
 export async function testesReferencias(o: Ctx): Promise<void> {
@@ -160,10 +162,10 @@ export async function testesReferencias(o: Ctx): Promise<void> {
     // tabulação: detecção e fundamentada pela referência (braço do C-aaaa: sem)
     const braco = new Map(chave.itens.map(i => [i.chave, i.braco]));
     const tab = tabular(j.julgamentos, k => braco.get(k)!, [{ id: "A-01", categories: ["formulario", "acessibilidade"] }], j.politica, ["sem", "ferramentas", "com"]);
-    assert.deepEqual(tab.porBraco.sem.deteccao, ["A-01"]); assert.deepEqual(tab.porBraco.sem.fundamentada, ["A-01"]);
-    assert.deepEqual(tab.porBraco.sem.viaReferencia.map(v => v.referencia), ["REF1"]); assert.equal(tab.porBraco.sem.porClasse.geral.deteccao, 1);
+    assert.deepEqual(tab.porBraco.sem!.deteccao, ["A-01"]); assert.deepEqual(tab.porBraco.sem!.fundamentada, ["A-01"]);
+    assert.deepEqual(tab.porBraco.sem!.viaReferencia.map(v => v.referencia), ["REF1"]); assert.equal(tab.porBraco.sem!.porClasse.geral.deteccao, 1);
     const tab12 = tabular(j12.julgamentos, k => braco.get(k)!, [{ id: "A-01", categories: ["formulario", "acessibilidade"] }], j12.politica, ["sem", "ferramentas", "com"]);
-    assert.deepEqual([tab12.porBraco.sem.deteccao, tab12.porBraco.sem.fundamentada], [[], []]);
+    assert.deepEqual([tab12.porBraco.sem!.deteccao, tab12.porBraco.sem!.fundamentada], [[], []]);
     assert.deepEqual(specFundamentada(a), { spec: "A-01", via: "REF1" });
   });
   t("ingestão: --politica 1.3.0 sobre passada 1.2.0 sem referências deriva igual; --politica 1.2.0 = saída padrão byte a byte", () => {
@@ -187,5 +189,103 @@ export async function testesReferencias(o: Ctx): Promise<void> {
     assert.match(argumentosIngerir(["--politica", "1.3.0"]).erro!, /só com --fila/);
     assert.match(argumentosIngerir(["--fila", "a", "--politica", "9.9.9"]).erro!, /desconhecida/);
     assert.deepEqual(argumentosIngerir(["--fila", "a"]), { fila: argumentosIngerir(["--fila", "a"]).fila, refazer: false, erro: null });
+  });
+
+  // ── revisão Codex (NAT-112): fundamentada ⊆ detecção, política explícita, proveniência, braços sem achado
+  const jul = (r: Resposta, c: ContextoDerivacao, id = "T3-0000000001"): Julgamento => ({ id, chave: `k|${id}`, resposta: r, derivado: derivarClasse(r, c) });
+  const prim = (forca: string, aplicabilidade: string, violada: string) => ({ id: "citada", forca, aplicabilidade, violada });
+  const c0 = semRefs(ctxBase()), r0 = (x: Record<string, unknown> = {}) => semCampo(resp(x));
+  t("fundamentada: negativos — norma inaplicável (Codex: nao-aplica + violada sim), incerta, origem DS, pendente, vínculo sem crédito, Q1; e R15 conta (sem exigir força obrigatória)", () => {
+    const ambos = (j: Julgamento) => [specDetectada(j.derivado), specFundamentada(j)?.spec ?? null];
+    assert.deepEqual(ambos(jul(r0({ norma: prim("obrigatorio", "nao-aplica", "sim") }), c0)), [null, null], "inaplicável");
+    assert.deepEqual(ambos(jul(r0({ norma: prim("obrigatorio", "incerta", "sim") }), c0)), [null, null], "aplicabilidade incerta");
+    assert.deepEqual(ambos(jul(r0({ norma: prim("obrigatorio", "aplica", "incerto") }), c0)), [null, null], "violação incerta");
+    const ds = jul(r0({ norma: prim("obrigatorio", "aplica", "sim") }), { ...c0, origemMedida: "ds-entregue" });
+    assert.equal(ds.derivado.classe, "violacao-ds"); assert.deepEqual(ambos(ds), [null, null], "origem DS (P3)");
+    assert.deepEqual(ambos(jul(r0({ norma: prim("obrigatorio", "aplica", "sim"), vinculo: "indeterminado" }), c0)), [null, null], "vínculo indeterminado (pendente)");
+    assert.deepEqual(ambos(jul(r0({ verdadeFactual: "indeterminado", norma: prim("obrigatorio", "aplica", "sim") }), c0)), [null, null], "fato indeterminado (pendente)");
+    assert.deepEqual(ambos(jul(r0({ norma: prim("recomendado", "aplica", "sim"), vinculo: "nenhum" }), c0)), [null, null], "R15 sem vínculo = erro normativo");
+    const forjado: Julgamento = { id: "T3-x", chave: "k", resposta: r0({ norma: prim("obrigatorio", "aplica", "sim") }),
+      derivado: { classe: "violacao-pagina", regraDaPolitica: "R7", spec: "A-01", qualidadeDaSugestao: null, pendencias: [], fundamentacao: null, s5: { classe: "violacao-pagina", regraDaPolitica: "R7", spec: "A-01" } } };
+    assert.deepEqual(ambos(forjado), [null, null], "vínculo sem crédito (fundamentação nula)");
+    assert.equal(specFundamentada({ ...jul(r0({ norma: prim("obrigatorio", "aplica", "sim") }), c0), resposta: r0({ norma: prim("obrigatorio", "aplica", "sim"), vinculo: { spec: "A-02", relacao: "direta" } }) }), null, "vínculo a outra spec");
+    const q1 = jul(r0({ norma: { id: "nenhuma", forca: "nenhuma", aplicabilidade: NAO_PERGUNTADO, violada: NAO_PERGUNTADO } }), { ...c0, citaRegra: false });
+    assert.deepEqual(ambos(q1), ["A-01", null], "Q1: detecção sem fundamentação");
+    assert.deepEqual(ambos(jul(r0({ norma: prim("recomendado", "aplica", "sim") }), c0)), ["A-01", "A-01"], "R15 com vínculo é fundamentada (decisão da autora; sem força obrigatória)");
+    assert.deepEqual(ambos(jul(r0({ norma: prim("obrigatorio", "aplica", "sim") }), c0)), ["A-01", "A-01"]);
+    // referência: só quando deu a classe
+    assert.deepEqual(specFundamentada(jul(resp(), ctxBase())), { spec: "A-01", via: "REF1" });
+    assert.deepEqual(specFundamentada(jul(resp({ norma: prim("obrigatorio", "aplica", "sim"), referencias: [ref("REF1", "obrigatorio", "nao-aplica", "nao")] }), ctxBase())), { spec: "A-01", via: "primaria" });
+    const semRef = jul(resp(), ctxBase());
+    assert.throws(() => specFundamentada({ ...semRef, resposta: semCampo(semRef.resposta) }), /citacaoPor REF1 sem o julgamento/);
+  });
+  t("propriedade fundamentada ⊆ detecção: varredura exaustiva das respostas (fato × força × aplicabilidade × violação × vínculo × origem × referências × política × regra citada)", () => {
+    let total = 0, fund = 0;
+    const refsOps: unknown[] = [NAO_PERGUNTADO, [ref("REF1")], [ref("REF1", "obrigatorio", "nao-aplica", "nao"), ref("REF2", "recomendado")], [ref("REF1", "obrigatorio", "incerta", "incerto"), ref("REF2", "obrigatorio", "aplica", "nao")]];
+    for (const vf of ["verdadeira", "falsa", "indisponivel", "indeterminado"]) for (const forca of ["obrigatorio", "recomendado", "nenhuma", "indeterminado"])
+    for (const ap of ["aplica", "nao-aplica", "incerta"]) for (const vi of ["sim", "nao", "incerto"]) for (const vinculo of [{ spec: "A-01", relacao: "direta" }, "nenhum", "indeterminado"])
+    for (const origemMedida of [null, "pagina", "ds-entregue", "indeterminada"]) for (const refs of refsOps) for (const politica of ["1.2.0", "1.3.0"] as const) for (const citaRegra of [true, false]) {
+      if (forca === "nenhuma" && (ap !== "aplica" || vi !== "sim")) continue;
+      const norma = forca === "nenhuma" ? { id: citaRegra ? "citada" : "nenhuma", forca, aplicabilidade: NAO_PERGUNTADO, violada: NAO_PERGUNTADO } : prim(forca, ap, vi);
+      const j = jul(resp({ verdadeFactual: vf, norma, vinculo, referencias: refs }), ctxBase({ origemMedida, politica, citaRegra }));
+      const d = specDetectada(j.derivado), f = specFundamentada(j);
+      total++; if (f) { fund++; assert.equal(f.spec, d, JSON.stringify({ vf, norma, vinculo, origemMedida, refs, politica })); }
+      if (politica === "1.2.0") assert.equal(j.derivado.citacaoPor, undefined);
+    }
+    assert.ok(total > 10000 && fund > 0, `${total} combinações, ${fund} fundamentadas`);
+  });
+  t("política do juiz explícita: cartão com referências sem política para a derivação; sem referências, nada muda", () => {
+    const { politica: _p, ...semPol } = ctxBase();
+    assert.throws(() => derivarClasse(resp(), semPol as ContextoDerivacao), /sem a política do juiz declarada/);
+    assert.deepEqual(derivarClasse(semCampo(resp()), semRefs(ctxBase())), derivarClasse(semCampo(resp()), { ...semRefs(ctxBase()), politica: "1.2.0" }));
+  });
+  t("proveniência do resgate: regra citada e julgamento dela × referência usada (id, regra pública, força/aplicabilidade/violação dela), no derivado, na classificação e no texto do recálculo", () => {
+    const c = ctxBase({ regraCitada: "wcag:1.3.1", regrasDasReferencias: { REF1: "emag:2.2", REF2: "emag:6.2" } });
+    const d = derivarClasse(resp({ referencias: [ref("REF1", "obrigatorio", "nao-aplica", "nao"), ref("REF2", "recomendado")] }), c);
+    assert.deepEqual(d.citacao, { regraCitada: "wcag:1.3.1", primaria: { forca: "obrigatorio", aplicabilidade: "nao-aplica", violada: "nao" },
+      referencia: { id: "REF2", regra: "emag:6.2", forca: "recomendado", aplicabilidade: "aplica", violada: "sim" } });
+    assert.equal(derivarClasse(semCampo(resp()), semRefs(ctxBase())).citacao, undefined);
+    // politica.ts (classificarT3): normaId = regra da referência, nunca "citada" nem a regra citada; a citada segue a primária
+    const r = resp({ referencias: [ref("REF1")] }), dd = derivarClasse(r, ctxBase({ regraCitada: "wcag:1.3.1", regrasDasReferencias: { REF1: "emag:2.2" } }));
+    const entrada = (j: { resposta: Resposta; derivado: typeof dd }) => ({ atomo: { chave: "k", sujeitos: ["s1"], regra: "wcag:1.3.1", tela: "A" }, veredito: null, origem341: null, origem370: null,
+      sugestaoLinhaDeBase: null, equivalentes: () => [], axeBoaPratica: () => null, t3: { id: "T3-0000000009", tipo: "sensivel", fonte: "teste", ...j } }) as never;
+    const p = classificar(entrada({ resposta: r, derivado: dd }), "principal").partes[0];
+    assert.deepEqual([p.normaId, p.normaForca, p.normaAplicabilidade, p.normaViolada, p.regraCitada, p.aplicabilidadeDaCitada, p.credito, p.spec],
+      ["emag:2.2", "obrigatorio", "aplica", "sim", "wcag:1.3.1", "nao-aplica", "unidade", "A-01"]);
+    assert.deepEqual(p.referenciaUsada, { id: "REF1", regra: "emag:2.2", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" });
+    const rp = semCampo(resp({ norma: prim("obrigatorio", "aplica", "sim") })), dp = derivarClasse(rp, semRefs(ctxBase()));
+    const pp = classificar(entrada({ resposta: rp, derivado: dp }), "principal").partes[0];
+    assert.deepEqual([pp.normaId, pp.aplicabilidadeDaCitada, "referenciaUsada" in pp], ["wcag:1.3.1", "aplica", false]);
+    assert.match(proveniencia(dd), /referência secundária REF1 \(regra emag:2\.2: força obrigatorio, aplica, violada sim\); a regra citada wcag:1\.3\.1 caiu \(força obrigatorio, nao-aplica, violada nao\)/);
+    assert.equal(proveniencia(dp), "");
+  });
+  t("tabular: todo braço do desenho aparece; coleta válida sem achado = 0; ausente/incompleta como tal (sem número); sem estado para braço vazio, para", () => {
+    const js = [jul(r0({ norma: prim("obrigatorio", "aplica", "sim") }), c0, "T3-a"), jul(r0({ norma: prim("obrigatorio", "nao-aplica", "sim") }), c0, "T3-b")];
+    const specs = [{ id: "A-01", categories: ["formulario"] }], b = () => "sem", des = ["sem", "ferramentas", "com"];
+    assert.throws(() => tabular(js, b, specs, "politica-normativa-1.2.0", des), /sem cartão e sem estado/);
+    const tb = tabular(js, b, specs, "politica-normativa-1.2.0", des, { estado: { ferramentas: "valida", com: "ausente" } });
+    assert.deepEqual(tb.bracos, des); assert.deepEqual(tb.estado, { sem: "valida", ferramentas: "valida", com: "ausente" });
+    assert.deepEqual([tb.porBraco.ferramentas!.cartoes, tb.porBraco.ferramentas!.deteccao, tb.porBraco.ferramentas!.fundamentada], [0, [], []]);
+    assert.equal(tb.porBraco.com, null); assert.deepEqual(tb.porBraco.sem!.deteccao, ["A-01"]);
+    const md = tabelaMd(tb, "teste");
+    assert.ok(md.includes("| **detecção** | **1** | **0** | coleta ausente |"), md);
+    assert.ok(md.includes("| coleta | válida | válida | **ausente** |"));
+    assert.ok(md.includes("- **com** — coleta ausente: sem contagem (não é zero)"));
+    const ti = tabular(js, b, specs, "politica-normativa-1.2.0", des, { estado: { ferramentas: "incompleta", com: "valida" } });
+    assert.equal(ti.porBraco.ferramentas, null); assert.equal(ti.porBraco.com!.deteccao.length, 0);
+    assert.ok(tabelaMd(ti, "t").includes("| **detecção** | **1** | coleta incompleta | **0** |"));
+    assert.throws(() => tabular(js, b, specs, "x", des, { estado: { sem: "ausente", ferramentas: "valida", com: "valida" } }), /com cartões mas coleta ausente/);
+    assert.deepEqual(estadoDosBracos([{ id: "r-sem", braco: "sem" }, { id: "r-f", braco: "ferramentas" }, { id: "lb", braco: "lb-axe" }],
+      [{ braco: "sem", escolhida: "r-sem" }, { braco: "ferramentas", escolhida: "outra" }, { braco: "com", escolhida: null }], ["sem", "ferramentas", "com", "x"]),
+      { sem: "valida", ferramentas: "incompleta", com: "incompleta", x: "ausente", "lb-axe": "valida" });
+  });
+  t("coluna principal vem da configuração (qualquer das duas); sem ela, o relatório diz que não foi fixada; valor fora da lista para; 1.2.0 com citacaoPor para", () => {
+    const js = [jul(r0({ norma: prim("obrigatorio", "aplica", "sim") }), c0, "T3-a")], specs = [{ id: "A-01", categories: ["token"] }];
+    const md = (x: Coluna | null) => tabelaMd(tabular(js, () => "sem", specs, "p", ["sem"], { colunaPrincipal: x }), "t");
+    assert.match(md(null), /Coluna principal: \*\*ainda não fixada\*\*/);
+    assert.ok(md("deteccao").includes("| **detecção** (principal) |") && !md("deteccao").includes("fundamentada** (principal)"));
+    assert.ok(md("fundamentada").includes("| **detecção fundamentada** (principal) |"));
+    assert.throws(() => tabular(js, () => "sem", specs, "p", ["sem"], { colunaPrincipal: "outra" as Coluna }), /desconhecida/);
+    assert.throws(() => tabular([jul(resp(), ctxBase(), "T3-r")], () => "sem", [{ id: "A-01", categories: ["token"] }], "politica-normativa-1.2.0", ["sem"]), /só a 1\.3\.0/);
   });
 }

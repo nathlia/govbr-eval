@@ -879,7 +879,7 @@ export function aplicarOrigem(p: Passada, doc: DocOrigem | null): { derivados: M
   for (const it of p.itens) {
     const j = p.julgados.get(it.id)!, cego = p.cartao.get(it.id)!;
     const specs = p.referencias[cego.tela].defeitos.map(d => d.id);
-    const ctx = contextoDe(cego, it, specs);
+    const ctx = contextoDe(cego, it, specs, p.politica); // [D-156] política do juiz da passada
     const sem = derivarClasse(j.resposta, ctx);
     if (JSON.stringify(sem) !== JSON.stringify(j.derivado)) throw new Error(`${it.id}: a derivação não reproduz o derivado gravado na passada (deriva entre ingestão e origem)`);
     const o = med.get(it.id);

@@ -194,11 +194,26 @@ export interface ContextoDerivacao {
   forcasDaCitada?: (string | null)[];
   /** [D-156] Ids das referências secundárias do cartão (`REF1`…); ausente em cartão sem referência. */
   referencias?: string[];
+  /** [D-156, proveniência] Regra pública de cada referência do cartão, como o juiz a viu (`referencias[k].regra`). */
+  regrasDasReferencias?: Record<string, string | null>;
+  /** [D-156, proveniência] A regra que o cartão cita (a principal, `alegacao.regra`), só em cartão com referências. */
+  regraCitada?: string | null;
   /**
-   * [D-156] Política do juiz. `1.3.0` (padrão quando o cartão tem referências): referência julgada aplicável e violada
-   * resgata a citação que caiu. `1.2.0`: as referências são ignoradas (histórico byte a byte).
+   * [D-156] Política do juiz. Obrigatória em cartão com referências (`derivarClasse` para se faltar: nenhum caminho decide
+   * a política por omissão). `1.3.0`: referência julgada aplicável e violada resgata a citação que caiu. `1.2.0`: as
+   * referências são ignoradas (histórico byte a byte).
    */
   politica?: "1.2.0" | "1.3.0";
+}
+/**
+ * [D-156, proveniência] Quando uma referência secundária deu a classe: a regra originalmente citada e o julgamento dela
+ * (que caiu), e — em campos próprios — a referência efetivamente usada (id no cartão, regra pública, força, aplicabilidade
+ * e violação julgadas DELA). Nada aqui se confunde com a primária.
+ */
+export interface CitacaoPorReferencia {
+  regraCitada: string | null;
+  primaria: { forca: string; aplicabilidade: string; violada: string };
+  referencia: { id: typeof IDS_REFERENCIA[number]; regra: string | null; forca: string; aplicabilidade: string; violada: string };
 }
 export interface Derivado {
   classe: "violacao-pagina" | "violacao-ds" | "violacao-origem-indeterminada" | "erro-factual" | "erro-normativo" | "observacao"
@@ -214,6 +229,8 @@ export interface Derivado {
    * classe: o id dela (`REF1`/`REF2`). Ausente em todo outro caso (cartão sem referência fica como antes).
    */
   citacaoPor?: typeof IDS_REFERENCIA[number];
+  /** [D-156] Proveniência do resgate (só junto de `citacaoPor`): regra citada que caiu × referência usada. */
+  citacao?: CitacaoPorReferencia;
   /** Mesmo átomo na sensibilidade S5 (Q1 b: regra nula não credita). Igual à principal fora do caminho Q1. */
   s5: { classe: Derivado["classe"]; regraDaPolitica: string; spec: string | null };
 }
@@ -336,6 +353,10 @@ export function preClasse(r: Resposta, c: ContextoDerivacao): Derivado["classe"]
  * referência é de origem página (§3) e o resto é `indeterminada (não medida)`.
  */
 export function derivarClasse(r: Resposta, c: ContextoDerivacao): Derivado {
+  // [D-156] Cartão com referências: a política do juiz tem de vir declarada por quem deriva (manifesto/passada), nunca por
+  // omissão — senão uma revisão podia desfazer um resgate válido, ou criar um sob a 1.2.0.
+  if (c.referencias?.length && c.politica !== "1.2.0" && c.politica !== "1.3.0")
+    throw new Error("derivarClasse: cartão com referências sem a política do juiz declarada (1.2.0 ou 1.3.0)");
   const d = resgatePorReferencia(r, c) ?? derivarPrincipal(r, c);
   // S5 (Q1 b): o crédito de detecção sem regra citada vira observação, sem crédito; o resto não muda.
   const s5 = d.regraDaPolitica === "Q1" ? { classe: "observacao" as const, regraDaPolitica: "R11b", spec: null } : { classe: d.classe, regraDaPolitica: d.regraDaPolitica, spec: d.spec };
@@ -355,14 +376,18 @@ export const caiPorCitacao = (r: Resposta, c: ContextoDerivacao): boolean =>
  * indeterminada, só permite) deixa a classe da primária. `null` = sem resgate (a derivação da primária vale).
  */
 function resgatePorReferencia(r: Resposta, c: ContextoDerivacao): Omit<Derivado, "s5"> | null {
-  if (!c.referencias?.length || c.politica === "1.2.0" || !Array.isArray(r.referencias) || !caiPorCitacao(r, c)) return null;
+  if (!c.referencias?.length || c.politica !== "1.3.0" || !Array.isArray(r.referencias) || !caiPorCitacao(r, c)) return null;
+  const prim = r.norma as Exclude<Resposta["norma"], typeof NAO_PERGUNTADO>;
   for (const id of c.referencias) {
     const ref = r.referencias.find(x => x.id === id);
     if (!ref || ref.forca === "nenhuma" || ref.forca === "indeterminado") continue;
     const rr: Resposta = { ...r, norma: { id: "citada", forca: ref.forca, aplicabilidade: ref.aplicabilidade, violada: ref.violada } as Resposta["norma"] };
     const cc: ContextoDerivacao = { ...c, forcasDaCitada: undefined };
     if (preClasse(rr, cc) !== "violacao-pagina") continue;
-    return { ...derivarPrincipal(rr, cc), citacaoPor: id as typeof IDS_REFERENCIA[number] };
+    const rid = id as typeof IDS_REFERENCIA[number];
+    return { ...derivarPrincipal(rr, cc), citacaoPor: rid, citacao: {
+      regraCitada: c.regraCitada ?? null, primaria: { forca: prim.forca, aplicabilidade: prim.aplicabilidade, violada: prim.violada },
+      referencia: { id: rid, regra: c.regrasDasReferencias?.[id] ?? null, forca: ref.forca, aplicabilidade: ref.aplicabilidade, violada: ref.violada } } };
   }
   return null;
 }

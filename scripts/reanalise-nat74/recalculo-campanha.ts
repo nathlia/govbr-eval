@@ -48,8 +48,8 @@ import {
 import {
   FORMATO_CHAVE_AUTORA, FORMATO_RESPOSTAS_AUTORA, desfechoDaAutora, desfechoDaPassada, ratifica, type ChaveAutora, type DocRespostasAutora,
 } from "./autora-respostas";
-import { POLITICA_PRINCIPAL, POLITICA_SENSIBILIDADE, TCC, jsonTexto, ordenar, posix, sha } from "./comum";
-import { bracoDoRun } from "./e14-campanha";
+import { POLITICA_SENSIBILIDADE, TCC, jsonTexto, ordenar, posix, rotuloPolitica, sha, type VersaoPolitica } from "./comum";
+import { bracoDoRun, referenciasDoAchado } from "./e14-campanha";
 import type { Derivado, Resposta } from "./e14-comum";
 import { relacaoMedida, relacaoNoDominioMedido } from "./montar";
 import { aplicarOrigem, lerOrigem, type AplicacaoOrigem } from "./origem-campanha";
@@ -179,6 +179,18 @@ export function unidadesDaSpec(card: Card, units: Unit[], spec: string, sujeitos
 }
 
 export interface CartaoJulgado { id: string; cardId: string; braco: string; runId: string; derivado: Derivado; resposta: Resposta }
+
+/**
+ * [D-156] Proveniência de um crédito resgatado pela referência secundária, em texto (vai ao `rationale` da decisão do
+ * scorer): a referência usada (id, regra pública, força/aplicabilidade/violação julgadas dela) separada da regra citada que
+ * caiu (e o julgamento dela). Vazio quando a primária deu a classe.
+ */
+export function proveniencia(d: Derivado): string {
+  const c = d.citacao;
+  if (!c) return d.citacaoPor ? ` · citação pela referência secundária ${d.citacaoPor} (sem proveniência gravada)` : "";
+  const r = c.referencia, p = c.primaria;
+  return ` · citação pela referência secundária ${r.id} (regra ${r.regra ?? "?"}: força ${r.forca}, ${r.aplicabilidade}, violada ${r.violada}); a regra citada ${c.regraCitada ?? "(nenhuma)"} caiu (força ${p.forca}, ${p.aplicabilidade}, violada ${p.violada})`;
+}
 export interface BracoCredito { runId: string; confirmadas: string[]; admissiveis: string[]; pendentes: string[]; recusados: { id: string; motivo: string }[];
   creditados: string[] }
 export interface CreditosDoTrio { porBraco: Record<string, BracoCredito>; recusados: { id: string; cardId: string; motivo: string }[] }
@@ -204,11 +216,11 @@ export function creditosDoTrio(pkg: SemanticPackage, julgados: CartaoJulgado[], 
     const base = { id: "cartao", text: (card.observed ?? card.description ?? "").trim() || card.id, subjects: subs.map(s => s.id) };
     let atom: ReviewAtom;
     if (v.veredito === "reference") {
-      const r = unidadesDaSpec(card, pkg.units, v.spec!, subs, `${j.id}: ${v.motivo}`, o.reviewer, [o.fonte]);
+      const r = unidadesDaSpec(card, pkg.units, v.spec!, subs, `${j.id}: ${v.motivo}${proveniencia(j.derivado)}`, o.reviewer, [o.fonte]);
       if ("falhou" in r) { decisoes.set(j.cardId, pendente(j.cardId)); pend.add(j.cardId); recusados.push({ id: j.id, cardId: j.cardId, motivo: r.falhou }); continue; }
       atom = { ...base, verdict: "reference", unitIds: r.unitIds, citation: j.derivado.fundamentacao === "norma" ? "supported" : "uncertain", ...(r.links.length ? { links: r.links } : {}) };
     } else atom = { ...base, verdict: v.veredito, unitIds: [], citation: "uncertain" };
-    decisoes.set(j.cardId, { cardId: j.cardId, status: "reviewed", reviewer: o.reviewer, rationale: `${j.id}: ${v.motivo}`, complete: true,
+    decisoes.set(j.cardId, { cardId: j.cardId, status: "reviewed", reviewer: o.reviewer, rationale: `${j.id}: ${v.motivo}${proveniencia(j.derivado)}`, complete: true,
       evidenceRefs: [o.fonte, j.id], atoms: [atom] });
   }
   const montadas = (): SemanticReviews => ({ version: pkg.version, decisions: [...decisoes.values()] });
@@ -384,6 +396,8 @@ export type OrigemInfo = { passada: string; arquivo: string; sha256: string; ver
 export interface CargaCampanha {
   passadas: Passada[]; derivadoNa: (p: Passada, id: string) => Derivado; origemInfo: OrigemInfo[];
   analises: AnaliseLida[]; camp: CampanhaJson; regra: RegraDesfecho; bracos: string[]; comps: Comparacao[];
+  /** [D-156] Política do juiz das passadas (a mesma em todas, senão para): a do derivado que o recálculo lê. */
+  politicaDoJuiz: VersaoPolitica;
 }
 
 /**
@@ -403,6 +417,8 @@ export function carregarCampanha(o: Pick<OpcoesRecalculo, "passadas" | "analises
   }
   const campanha = passadas[0].campanha;
   if (passadas.some(p => JSON.stringify(p.campanha) !== JSON.stringify(campanha))) throw new Error("passadas de campanhas diferentes");
+  const politicaDoJuiz = passadas[0].politica;
+  if (passadas.some(p => p.politica !== politicaDoJuiz)) throw new Error(`passadas em políticas do juiz diferentes (${passadas.map(p => `${p.nome}: ${p.politica}`).join(", ")}): um recálculo, uma política`);
   // Origem medida (entrega 5): uma pasta por passada, casada pelo sha256 dos julgamentos; derivados pela própria ingestão.
   const derivadoDe = new Map<string, Map<string, Derivado>>();
   const origemInfo: OrigemInfo[] = [];
@@ -459,7 +475,7 @@ export function carregarCampanha(o: Pick<OpcoesRecalculo, "passadas" | "analises
   });
   if (!comps.length) throw new Error("campanha sem design.comparisons");
   comps.sort((x, y) => (x.role === "primary" ? 0 : 1) - (y.role === "primary" ? 0 : 1));
-  return { passadas, derivadoNa, origemInfo, analises, camp, regra, bracos, comps };
+  return { passadas, derivadoNa, origemInfo, analises, camp, regra, bracos, comps, politicaDoJuiz };
 }
 
 /** Cartões julgados de um trio, com o derivado da passada (com a origem medida aplicada, se houver). */
@@ -472,7 +488,7 @@ export function julgadosDoTrio(a: AnaliseLida, derivadoNa: CargaCampanha["deriva
 export function recalcular(o: OpcoesRecalculo): Recalculo {
   if (!o.passadas.length) throw new Error("--passada obrigatório (uma ou mais)");
   const E = new Entradas();
-  const { passadas, derivadoNa, origemInfo, analises, camp, regra, bracos, comps } = carregarCampanha(o, E);
+  const { passadas, derivadoNa, origemInfo, analises, camp, regra, bracos, comps, politicaDoJuiz } = carregarCampanha(o, E);
 
   // Contestados (S4'), ratificações, resíduo.
   const contestados: (Contestado & { passada: string })[] = [];
@@ -580,7 +596,8 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   const json: Record<string, unknown> = {
     formato: FORMATO_RECALCULO, versao: RECALCULO_VERSAO, campanha: camp.campaignId, tela: regra.tela, referencia: regra.referencia,
     aviso: ensaio ? "ENSAIO fora da amostra (§7.4): nenhum número daqui é resultado; prova só que o caminho produz a tabela" : null,
-    politicas: { principal: POLITICA_PRINCIPAL, aoLado: POLITICA_SENSIBILIDADE },
+    politicas: { principal: rotuloPolitica(politicaDoJuiz), aoLado: POLITICA_SENSIBILIDADE },
+    ...(politicaDoJuiz === "1.3.0" ? { notaPolitica: NOTA_POLITICA_13, citacoesPorReferencia: citacoesPorReferencia(analises, derivadoNa) } : {}),
     regraDoDesfecho: regra, delta: { valor: DELTA, unidade: regra.unidadeDelta },
     passadas: passadas.map(p => ({ nome: p.nome, dir: E.rel(p.dir), versao: p.versao, julgamentosSha256: p.julgSha, adjudicada: existsSync(join(p.dir, "contestados.json")) })),
     sementes: { base: sementeBase, regra: "sementeOrigem = base|recalculo|<comparação>|<variante>|<política>|<conjunto> (mulberry32 via sementeDoTexto, estatistica-pareada)" },
@@ -594,6 +611,33 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   json.entradas = E.manifesto();
   E.conferir(json.entradas as Record<string, string>);
   return { json, md: tabelaMd(json, tabelas, regra, comps, s4.disponivel) };
+}
+
+/** [D-156] As chaves `principal|1.2.0|…` continuam as de sempre; na política do juiz 1.3.0 elas leem o derivado 1.3.0. */
+export const NOTA_POLITICA_13 = "política do juiz 1.3.0 (R16: a referência secundária só resgata a citação, nunca o fato): as tabelas 'principal|1.2.0|…' usam o derivado da passada (1.3.0, crédito da 1.2.0 + R16) e as '…|1.1.0|…' tiram desse mesmo derivado o crédito da R15 e da Q1 a";
+
+/**
+ * [D-156] Cartões cuja classe veio de uma referência secundária, com a proveniência em campos distintos: a regra
+ * originalmente citada (no cartão cego e no achado) e o julgamento dela, e a referência efetivamente usada (id no cartão,
+ * regra pública, regra como o agente a escreveu, força/aplicabilidade/violação julgadas dela).
+ */
+export function citacoesPorReferencia(analises: AnaliseLida[], derivadoNa: CargaCampanha["derivadoNa"]): Record<string, unknown>[] {
+  const out: Record<string, unknown>[] = [];
+  for (const a of ordenar(analises, x => x.coleta.trio)) {
+    const cards = new Map(a.pkg.cards.map(c => [c.id, c]));
+    for (const j of julgadosDoTrio(a, derivadoNa)) {
+      const d = j.derivado;
+      if (!d.citacaoPor) continue;
+      const card = cards.get(j.cardId)!, k = ["REF1", "REF2"].indexOf(d.citacaoPor);
+      const c = d.citacao ?? null;
+      out.push({ id: j.id, trio: a.coleta.trio, braco: j.braco, passada: a.passada.nome, classe: d.classe, spec: d.spec, fundamentacao: d.fundamentacao,
+        regraCitada: { cartao: c?.regraCitada ?? null, achado: card.rule ?? null, julgada: c?.primaria ?? null },
+        referenciaUsada: { id: d.citacaoPor, regra: c?.referencia.regra ?? null, achado: referenciasDoAchado(card)[k] ?? null,
+          forca: c?.referencia.forca ?? null, aplicabilidade: c?.referencia.aplicabilidade ?? null, violada: c?.referencia.violada ?? null },
+        credita: vereditoNaPolitica(d, "1.2.0").veredito === "reference" });
+    }
+  }
+  return ordenar(out, x => x.id as string);
 }
 
 /**
@@ -657,7 +701,12 @@ export function tabelaMd(j: Record<string, unknown>, tab: Record<string, TabelaC
     `Valores "x [≤y]" = confirmado [máximo com os pendentes]. Todas as entradas com sha256 em \`recalculo.json › entradas\`.`, "");
   const tr = j.trios as { trio: string; ordem: string[]; linhaDeBase: { baselineId?: string; slot?: string } | null }[];
   L.push("Trios: " + tr.map(t => `${t.trio} (ordem ${t.ordem.join(" → ")}; linha de base ${t.linhaDeBase?.baselineId ?? "n/d"} do slot ${t.linhaDeBase?.slot ?? "n/d"})`).join("; ") + ".", "");
-  L.push("## Política 1.2.0 (principal)", "");
+  if (j.notaPolitica) {
+    const cr = j.citacoesPorReferencia as { id: string; braco: string; spec: string | null; referenciaUsada: { id: string; regra: string | null }; regraCitada: { cartao: string | null }; credita: boolean }[];
+    L.push(`> **Política do juiz: \`${(j.politicas as { principal: string }).principal}\`.** ${j.notaPolitica}.`, "",
+      `Citações pela referência secundária: ${cr.length}${cr.length ? ` — ${cr.map(c => `${c.id} (${c.braco}${c.credita ? `, credita ${c.spec}` : ""}): ${c.referenciaUsada.id} ${c.referenciaUsada.regra ?? "?"} no lugar de ${c.regraCitada.cartao ?? "(nenhuma)"}`).join("; ")}` : ""} (proveniência em \`recalculo.json › citacoesPorReferencia\`).`, "");
+  }
+  L.push(j.notaPolitica ? "## Política 1.3.0 do juiz (principal; crédito da 1.2.0 + R16)" : "## Política 1.2.0 (principal)", "");
   for (const t of tab["principal|1.2.0|primario"]) L.push(...blocoComparacao(t));
   for (const c of regra.conjuntos.filter(x => x.tipo !== "primario")) {
     L.push(`### ${c.tipo === "a-parte" ? "À parte (nunca somada)" : "Sensibilidade"} — ${c.rotulo}`, "",

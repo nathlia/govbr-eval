@@ -6,12 +6,12 @@
  *   2. ensaio (D-138, fora da amostra; só leitura): seleção na passada adjudicada com a origem medida, estrato 1 medido pelo
  *      recálculo, material cego (sem vazamento de braço; vazamento injetado é pego), máscara 1.3.0 regenerada igual à da
  *      passada T5, determinismo, e o S4' consumindo respostas SINTÉTICAS (pasta temporária). Pula se o ensaio não existir.
- *   npx tsx scripts/reanalise-nat74/test-material-autora.ts
+ *   [VALIDADOR_ENSAIO=<checkout com a data/ do oráculo do ensaio>] npx tsx scripts/reanalise-nat74/test-material-autora.ts
  */
 import assert from "node:assert/strict";
 import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { desfechoDaAutora, desfechoDaPassada, lerTextoDaAutora, ratifica, type RespostaAutora } from "./autora-respostas";
 import { RESULTADOS, lerJson, sha } from "./comum";
 import { prepararCampanha } from "./e14-campanha";
@@ -147,7 +147,9 @@ try {
   const ADJ = join(T, "revisao-20261019T7", "adjudicada-20261020T1"), T5 = join(T, "primeira-passada-20261019T5"), ORIG = join(T, "origem-20261020T2");
   if (![ADJ, T5, ORIG].every(d => existsSync(d))) { pulados++; console.log("  PULADO ensaio ausente"); }
   else {
-    const base = { analises: [join(T, "analisar-20261019T1")], coletas: [join(T, "analisar-20261019T3", "coleta-trio.json")] };
+    // VALIDADOR_ENSAIO: checkout cuja data/ é a do oráculo da campanha do ensaio (o validador vivo pode ter avançado).
+    const validador = process.env.VALIDADOR_ENSAIO ? resolve(process.env.VALIDADOR_ENSAIO) : undefined;
+    const base = { analises: [join(T, "analisar-20261019T1")], coletas: [join(T, "analisar-20261019T3", "coleta-trio.json")], validador };
     const m = await prepararMaterial({ passadas: [ADJ], origens: [ORIG], ...base });
     const sel = m.selecao as { estratos: { n: number; candidatos: number; porBraco: Record<string, number>; selecionados: string[]; repassadoAo1: number; recebido: number }[];
       paraAutora: { caso: string; id: string; braco: string; estrato: number }[]; julgadoSoPorLLM: { id: string; rotulo: string }[]; efeitosNoDfc: { id: string; delta: number }[] };
@@ -208,7 +210,7 @@ try {
       assert.throws(() => recalcular({ passadas: [ADJ], ...base, reamostragens: 200, ratificacoes: join(rd, "respostas-autora.json") }), /outra origem medida|nada usado/);
     });
     await t("máscara 1.3.0: o preparo das análises regenera os 40 cartões iguais aos do lote da passada T5 (1.3.0); determinismo", async () => {
-      const prep = prepararCampanha([join(T, "analisar-20261019T3")], { politica: "1.2.0" }); // a análise sobre a qual a T5 foi preparada (mesmo pacote)
+      const prep = prepararCampanha([join(T, "analisar-20261019T3")], { politica: "1.2.0", validador }); // a análise sobre a qual a T5 foi preparada (mesmo pacote)
       const reg = new Map<string, string>();
       for (const [rel, x] of prep.arquivosDoJuiz) if (/^lotes\/lote-\d+\.json$/.test(rel)) for (const c of (JSON.parse(x) as { cartoes: { id: string }[] }).cartoes) reg.set(c.id, JSON.stringify(c));
       const l5 = lerJson<{ cartoes: { id: string }[] }>(join(T5, "lotes", "lote-01.json")).cartoes;

@@ -279,14 +279,33 @@ cegos, que recebem só os arquivos indicados.
 - **Derivação (R16).** Só na 1.3.0 e só quando a primária cai por citação: a primeira referência, na ordem do achado, que,
   julgada como se fosse a citada, dá violação (obrigatória aplicável e violada; ou mais fraca aplicável e violada com
   vínculo, R15) decide a classe, e com ela o crédito da detecção, exatamente como uma primária correta. O `derivado` grava
-  `citacaoPor: "REF1"|"REF2"`. Fato falso, indisponível ou indeterminado nunca consulta referência. Primária válida ou
-  incerta também não. Cartão sem referência deriva igual à 1.2.0 (sem o campo `citacaoPor`).
+  `citacaoPor: "REF1"|"REF2"` e, em `citacao`, a proveniência em campos distintos: a regra originalmente citada e o
+  julgamento dela (que caiu), e a referência usada (id no cartão, regra pública, força, aplicabilidade e violação julgadas
+  DELA). Fato falso, indisponível ou indeterminado nunca consulta referência. Primária válida ou incerta também não. Cartão
+  sem referência deriva igual à 1.2.0 (sem `citacaoPor` nem `citacao`).
+- **Política sempre explícita.** Em cartão com referências, `derivarClasse` recusa derivar sem a política do juiz declarada
+  (`contextoDe(…, politica)`). Ninguém decide a política por omissão: a ingestão usa a do manifesto (ou `--politica`), e a
+  revisão, a origem, o recálculo e o material usam a do `julgamentos.json` da passada que leem.
 - **Ingestão.** `e14-ingerir.ts --fila P` usa a política do manifesto da passada (1.2.0 se ausente). Para outra, use
   `--politica 1.2.0|1.3.0`. `--gravar-em PASTA_NOVA` grava `julgamentos.json` + `.sha256` + `origem.json` (sha256 das
   entradas) numa pasta nova, sem tocar na passada: é assim que se reingere uma passada congelada sob outra política. Na
-  1.3.0, `julgamentos.json` traz `citacaoPor` (quantos cartões a primária decidiu, quantos cada referência). A revisão §8
-  (`revisao-campanha.ts`, recálculo, material) lê passada 1.3.0. Ainda não pede referências aos juízes da consistência,
-  da confiabilidade e da adjudicação: para eles vale a primária (fechar antes da coleta da D).
+  1.3.0, `julgamentos.json` traz `citacaoPor` (quantos cartões a primária decidiu, quantos cada referência).
+- **Revisão §8 com o mesmo mecanismo (revisão Codex NAT-112).** `lerPassada` lê a política do `julgamentos.json` da passada
+  (e o formato 1.3.0 do manifesto) e a usa em toda a revisão: a amostra de confiabilidade e a adjudicação entregam o cartão
+  com as referências, o esquema de resposta 1.3.0 (com `referencias`) e o formato 1.3.0; as respostas dos juízes e dos
+  adjudicadores passam pela mesma validação (referências exigidas quando a primária cai) e pela mesma derivação; o LEIAME
+  da adjudicação ganha a seção das referências (as do cartão, nunca outra norma; o mesmo fato, estado e vínculo da
+  resposta). Na adjudicação, referência com campo a mais ou id que o cartão não traz é recusada, e o cartão tem de ser o
+  da 1ª passada. A passada adjudicada é ingerida na política da passada lida. O juiz substituto de ensaio
+  (`--juiz-passada`) só entra se foi derivado na mesma política. Assim a revisão nunca desfaz um resgate válido por ignorar
+  REF1/REF2, nem cria um sob a 1.2.0 (passada 1.2.0, ou 1.3.0 reingerida na 1.2.0).
+- **Recálculo e material.** O recálculo recusa passadas em políticas diferentes, rotula `politicas.principal` com a da
+  passada e, na 1.3.0, grava `notaPolitica` (as chaves `principal|1.2.0|…` leem o derivado 1.3.0) e
+  `citacoesPorReferencia` (por cartão: regra citada no cartão e no achado + julgamento dela; referência usada: id, regra
+  pública, regra como o agente a escreveu, força/aplicabilidade/violação dela; se credita). O `rationale` da decisão do
+  scorer traz a mesma proveniência. O material da autora grava `citacao` na seleção e na chave (só nos cartões
+  resgatados); o caso mostra as outras normas do cartão, e a pergunta 2 do LEIAME diz quando elas contam (só se algum caso
+  as tem). Na 1.2.0 nada disso aparece (saídas byte a byte as de antes).
 - **Regressão (30/10).** As duas passadas de 29/10 (`ensaio-trio-real-05`, `ensaio-trio-b-03`, sem referências) foram
   reingeridas: com `--politica 1.2.0` o `julgamentos.json` sai byte a byte igual ao congelado. Com `1.3.0`
   (`p01/reingestao-politica-1.3.0-20261030T1/`) todo `derivado` e toda resposta são iguais, e só o rótulo da política e o
@@ -297,11 +316,19 @@ cegos, que recebem só os arquivos indicados.
 `npx tsx scripts/reanalise-nat74/e14-deteccao.ts --passada P [--julgamentos ARQ] --saida PASTA` grava `deteccao.json` e
 `deteccao.md`, com as entradas e seus sha256. Recusa sobrescrever. Por braço (da chave da passada):
 
-- **detecção**: a classe derivada credita a spec (`derivado.spec` com `violacao-pagina` ou `violacao-origem-indeterminada`,
-  ou seja R7, R15 e Q1; `violacao-ds` não credita, P3). Conta o fato observado mesmo sem norma (Q1) ou com norma mais fraca
-  (R15).
-- **detecção fundamentada**: fato `verdadeira`, norma `violada: "sim"` e vínculo à spec. Vale a norma citada ou, na 1.3.0, a
-  referência que deu a classe; esta última é listada em "fundamentada pela referência secundária".
+- **detecção**: o crédito elegível de detecção, a mesma regra do recálculo: `derivado.spec` com `violacao-pagina` ou
+  `violacao-origem-indeterminada` e fundamentação (R7, R15 e Q1). Fora: origem DS (`violacao-ds`, P3), pendente, vínculo sem
+  crédito. Conta o fato observado mesmo sem norma (Q1) ou com norma mais fraca (R15).
+- **detecção fundamentada**: subconjunto da detecção (a tabulação para se não for). Parte do crédito elegível e exige, da
+  norma que efetivamente deu a classe, `aplicabilidade: "aplica"` e `violada: "sim"`, com o vínculo do juiz à mesma spec.
+  A norma que deu a classe é a citada ou, só quando `derivado.citacaoPor` diz que uma referência deu a classe (1.3.0),
+  essa referência (listada em "fundamentada pela referência secundária"). **Não exige força obrigatória**: norma mais
+  fraca aplicável e violada com vínculo (R15) conta como fundamentada, como a autora decidiu; Q1 não conta. O relatório
+  diz isso. Contar também casos excluídos por origem seria outra medida, com outro nome.
+- **braços**: todos os do desenho aparecem, na ordem dele, com o estado da coleta (`coleta-trio.json` + runs do pacote):
+  `válida` (zero achados = 0), `ausente` ou `incompleta` (sem número; nunca 0). Os da linha de base vêm depois.
+- **coluna principal**: `--coluna-principal deteccao|fundamentada`, senão `design.colunaPrincipal` da campanha; sem ela, o
+  relatório diz "ainda não fixada". A escolha é da autora (D-156 1).
 - **classe da spec**, fixada pelo vocabulário de `categories` da referência antes de ver número de braço:
 
   | `categories` da spec | classe |
@@ -315,7 +342,10 @@ cegos, que recebem só os arquivos indicados.
   tem 5 específicas e 9 gerais; a B, 7 específicas e 22 gerais.
 
 Qual coluna é a principal na tese fica fixado antes da coleta da D (D-156 1). Testes: `test-e14-referencias.ts`, rodado por
-`test-e14-campanha.ts`.
+`test-e14-campanha.ts` (inclui a varredura exaustiva fundamentada ⊆ detecção), e `test-referencias-revisao.ts`: a política
+1.3.0 de ponta a ponta numa cópia do `ensaio-trio-real-05` (preparação → ingestão → consistência → confiabilidade →
+adjudicação → aplicar → recálculo → material, mais o controle 1.2.0). Este último precisa de `VALIDADOR_ENSAIO` com a
+`data/` do oráculo da campanha (validador `e15b1b1`); sem ele, pula e diz.
 
 Código: `scripts/reanalise-nat74/revisao-campanha.ts`, `origem-campanha.ts` (+ `origem-sonda.ts`), `recalculo-campanha.ts`,
 `material-autora.ts` (+ `autora-respostas.ts`); testes: `npm run test:revisao-campanha`, `npm run test:revisao-origem`,

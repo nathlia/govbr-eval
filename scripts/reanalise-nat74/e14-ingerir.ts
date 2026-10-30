@@ -37,15 +37,24 @@ interface Lote { lote: string; referencias: Record<string, { defeitos: { id: str
 
 export interface Ingestao { erros: string[]; julgamentos: Record<string, unknown> | null; texto: string | null }
 
-/** Contexto de derivação de um átomo: o cartão cego (o que o juiz viu) + tipo e origem medida (da chave). */
-export function contextoDe(c: CartaoCego, it: ItemChave, specsDaTela: string[]): ContextoDerivacao {
+/**
+ * Contexto de derivação de um átomo: o cartão cego (o que o juiz viu) + tipo e origem medida (da chave). [D-156] Em cartão
+ * com referências, a política do juiz (`politica`) entra no contexto — quem chama passa a da passada (ingestão, revisão,
+ * origem, recálculo); sem ela, `derivarClasse` recusa o cartão com referências. Cartão sem referência não muda.
+ */
+export function contextoDe(c: CartaoCego, it: ItemChave, specsDaTela: string[], politica?: VersaoPolitica): ContextoDerivacao {
   const ctx: ContextoDerivacao = { tipo: it.tipo, citaRegra: c.alegacao.regra !== null, temEsperado: !!c.alegacao.esperado?.trim(), specsDaTela, citaveis: c.citaveis,
     origemMedida: it.origemMedida341, classeRegistrada: c.vereditoRegistrado ? "erro-normativo" : null };
   // [M, 1.2.0] Forças da regra citada já no vocabulário (só cartões que as trazem; o histórico não muda).
   const rs = c.normaCitada?.regrasDaBase ?? [];
   if (rs.length && rs.every(r => r.forcaNoVocabulario !== undefined)) ctx.forcasDaCitada = rs.map(r => r.forcaNoVocabulario ?? null);
   // [D-156] Referências secundárias do cartão (só cartões 1.3.0 que as trazem; o resto não muda).
-  if (c.referencias?.length) ctx.referencias = c.referencias.map(r => r.id);
+  if (c.referencias?.length) {
+    ctx.referencias = c.referencias.map(r => r.id);
+    ctx.regrasDasReferencias = Object.fromEntries(c.referencias.map(r => [r.id, r.regra]));
+    ctx.regraCitada = c.alegacao.regra;
+    if (politica) ctx.politica = politica;
+  }
   return ctx;
 }
 
@@ -118,8 +127,7 @@ export function ingerir(fila: string, o: { refazer?: boolean; politica?: VersaoP
       if (!c || !it) continue;
       if (vistos.has(r.id)) { erros.push(`respostas/${f}: ${r.id} já respondido em ${vistos.get(r.id)}`); continue; }
       vistos.set(r.id, f);
-      const ctx = contextoDe(c, it, lote.l.referencias[c.tela].defeitos.map(d => d.id));
-      if (ctx.referencias) ctx.politica = politica;
+      const ctx = contextoDe(c, it, lote.l.referencias[c.tela].defeitos.map(d => d.id), politica);
       const e = validarResposta(r, ctx, v12 ? { normaNeutra: true, v12: true, ...(v13 ? { v13: true } : {}) } : campanha ? { normaNeutra: true } : {});
       if (e.length) { for (const x of e) erros.push(`respostas/${f}: ${r.id}: ${x}`); continue; }
       julg.push({ id: r.id, chave: it.chave, tipo: it.tipo, lote: nome, juiz: doc.juiz, resposta: r, derivado: derivarClasse(r as Resposta, ctx) });

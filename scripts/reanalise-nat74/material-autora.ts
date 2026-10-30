@@ -35,13 +35,13 @@ import {
   FATO, FORMATO_CHAVE_AUTORA, FORMATO_RESPOSTAS_AUTORA, ORIGEM, VIOLA, desfechoDaAutora, desfechoDaPassada, lerTextoDaAutora,
   type CasoChave, type Desfecho,
 } from "./autora-respostas";
-import { POLITICA_REFERENCIAS, TCC, jsonTexto, posix, sha } from "./comum";
+import { TCC, jsonTexto, posix, sha } from "./comum";
 import { prepararCampanha } from "./e14-campanha";
 import { janelas } from "./e14-cegueira";
 import { IMAGENS_VERSAO, capturarCasos, type Captura } from "./material-imagens";
 import { loadSite } from "../measurement-surface";
 import { createRequire } from "node:module";
-import type { CartaoCego, Derivado, ItemChave } from "./e14-comum";
+import type { CartaoCego, CitacaoPorReferencia, Derivado, ItemChave } from "./e14-comum";
 import {
   Entradas, RECALCULO_VERSAO, carregarCampanha, contar, creditosDoTrio, julgadosDoTrio, vereditoNaPolitica,
   type AnaliseLida, type CargaCampanha, type CartaoJulgado, type Comparacao,
@@ -207,6 +207,16 @@ export function casoMd(caso: string, c: CartaoCego, tela: Tela, k: CapturaMd | n
     if (n.etiquetas?.length) L.push(`> etiquetas: ${esc(n.etiquetas.join(", "))}`);
     L.push("");
   }
+  // [D-156] Cartão com referências: as outras normas que o cartão cita para o mesmo fato (valem só se a citada não valer).
+  if (c.referencias?.length) {
+    L.push("**Outras normas que o cartão cita para o mesmo fato** (só contam se a regra citada não valer para ele):");
+    for (const r of c.referencias) {
+      const nv = r.norma;
+      L.push(`- ${r.id}: ${esc([nv?.fonte, r.regra, nv?.titulo, nv?.nivel ? `nível ${nv.nivel}` : null].filter(Boolean).join(" · ") || "(sem texto na base)")}`);
+      if (nv?.texto) L.push(`  > ${esc(nv.texto)}`);
+    }
+    L.push("");
+  }
   L.push("**Onde:**");
   for (const s of a.sujeitos) L.push(`- ${cod(s.rotulo)}${s.chave ? ` — seletor ${cod(s.chave)}` : ""}`);
   if (a.sujeitosNaoListados) L.push(`- (mais ${a.sujeitosNaoListados} elemento(s) do mesmo cartão, não listados)`);
@@ -242,7 +252,13 @@ export function casosMd(casos: { caso: string; cartao: CartaoCego }[], tela: Tel
   return L.join("\n");
 }
 
-export function leiameAutora(o: { n: number; tela: Tela; servir: string | null; imagens?: boolean }): string {
+/** [D-156] Pergunta 2 quando algum caso traz outras normas (referências): a mesma pergunta de resgate do juiz. */
+const DESCUMPRE_REFERENCIAS = `
+   Se o caso lista **outras normas que o cartão cita para o mesmo fato** e a regra citada não vale para ele, responda
+   \`sim\` quando uma dessas outras normas vale para o elemento e foi descumprida (o fato continua o mesmo: elas não mudam o
+   fato nem o defeito).`;
+
+export function leiameAutora(o: { n: number; tela: Tela; servir: string | null; imagens?: boolean; referencias?: boolean }): string {
   const ex = o.tela.defeitos[0]?.id ?? "A-01";
   return `# Julgamento cego da autora — como responder
 
@@ -276,7 +292,7 @@ ${o.imagens ? "Cada caso já traz a página fotografada depois dos passos do car
    \`${FATO.join("` · `")}\`. Se \`nao\` ou \`nao-sei\`, **pare aqui**.
 2. **descumpre** — Isso descumpre a regra citada (ela vale para esse elemento e foi descumprida)? Se o cartão não cita
    regra: descumpre uma norma pública (WCAG, e-MAG)? Recomendação conta como \`sim\`; regra que só *permite* algo, não.
-   \`${VIOLA.join("` · `")}\`. Se \`nao\` ou \`nao-sei\`, **pare aqui**.
+   \`${VIOLA.join("` · `")}\`. Se \`nao\` ou \`nao-sei\`, **pare aqui**.${o.referencias ? DESCUMPRE_REFERENCIAS : ""}
 3. **defeito** — É qual defeito da lista da tela (mesmo elemento, mesmo estado, mesmo fato)? O id (\`${ex}\`…), ou
    \`nenhum\` (defeito real que não está na lista), ou \`nao-sei\`.
 4. **quem-escreveu** — O que está errado foi escrito pela página ou veio pronto do Design System (o componente ou o CSS
@@ -378,9 +394,9 @@ export async function prepararMaterial(o: OpcoesMaterial): Promise<Material> {
   const temOrigem = !!o.origens?.length;
   if (!temOrigem) avisos.push("sem --origem: o estrato 4 (origem DS) fica vazio por falta de medida, não por ausência de defeito do DS");
   // Cartões cegos com a máscara 1.3.0 (entrega 2), regenerados das análises pelo mesmo preparo da passada cega.
-  // [D-156] Mesma política da passada (1.3.0 só se o manifesto dela for 1.3.0): o cartão regenerado é o do lote.
-  const politica13 = carga.passadas.some(p => (JSON.parse(p.manifestoTxt) as { politica?: string }).politica === POLITICA_REFERENCIAS);
-  const prep = prepararCampanha(carga.analises.map(a => a.dir), { validador: o.validador, politica: politica13 ? "1.3.0" : "1.2.0" });
+  // [D-156] Mesmo formato da passada (cartões com referências só se ela é 1.3.0): o cartão regenerado é o do lote.
+  if (carga.passadas.some(p => p.v13) && carga.passadas.some(p => !p.v13)) throw new Error("material sobre passadas 1.3.0 e 1.2.0 misturadas");
+  const prep = prepararCampanha(carga.analises.map(a => a.dir), { validador: o.validador, politica: carga.passadas.some(p => p.v13) ? "1.3.0" : "1.2.0" });
   const chaveReg = JSON.parse(prep.arquivosInternos.get("chave/fila-t3-chave.json")!) as { itens: ItemChave[] };
   const cegoDe = new Map<string, CartaoCego>();
   for (const [rel, t] of prep.arquivosDoJuiz) if (/^lotes\/lote-\d+\.json$/.test(rel)) for (const c of (JSON.parse(t) as { cartoes: CartaoCego[] }).cartoes) cegoDe.set(c.id, c);
@@ -417,7 +433,8 @@ export async function prepararMaterial(o: OpcoesMaterial): Promise<Material> {
     imagens.push([`autora/img/${k}-tela.png`, v.tela], [`autora/img/${k}-tela-sem-marca.png`, v.telaSemMarca]);
     if (v.recorte) imagens.push([`autora/img/${k}-recorte.png`, v.recorte]);
   }
-  const autora: [string, string][] = [["autora/LEIAME.md", leiameAutora({ n: casos.length, tela, servir, imagens: !!capturas })], ["autora/casos.md", casosMd(casos, tela, capMd)]];
+  const comRefs = casos.some(c => c.cartao.referencias?.length);
+  const autora: [string, string][] = [["autora/LEIAME.md", leiameAutora({ n: casos.length, tela, servir, imagens: !!capturas, ...(comRefs ? { referencias: true } : {}) })], ["autora/casos.md", casosMd(casos, tela, capMd)]];
   const conferir0 = (arquivos: [string, string][]) => cegueiraDoMaterial({ autora: arquivos, casos, passadas: carga.passadas, passadaDe, publicos: [JSON.stringify([...cegoDe.values()]), JSON.stringify([...telaDe.values()])], lerTexto: f => E.texto(f) });
   // A cegueira cobre também as imagens: os nomes (só R-NN-tela/-tela-sem-marca/-recorte.png, todos citados no casos.md)
   // entram como texto na mesma conferência; o conteúdo é a página congelada, igual para qualquer execução.
@@ -432,6 +449,11 @@ export async function prepararMaterial(o: OpcoesMaterial): Promise<Material> {
   const cegueira = conferir(autora);
   // Chave, seleção e manifesto (internos).
   const desfecho = (id: string): Desfecho => { const d = carga.derivadoNa(passadaDe.get(id)!, id); return desfechoDaPassada(d, vereditoNaPolitica(d, "1.2.0").veredito === "reference"); };
+  // [D-156] Proveniência do resgate pela referência secundária (só nesses cartões): regra citada que caiu × referência usada.
+  const citacao = (id: string): { citacao?: CitacaoPorReferencia } => { const d = carga.derivadoNa(passadaDe.get(id)!, id);
+    if (!d.citacaoPor) return {};
+    if (!d.citacao) throw new Error(`${id}: derivado com citacaoPor sem a proveniência (citacao): reingira a passada`);
+    return { citacao: d.citacao }; };
   const cand = new Map(cands.map(c => [c.id, c]));
   const casoDe = new Map(casos.map(c => [c.id, c.caso]));
   const corpoSel = { formato: FORMATO_SELECAO, versao: MATERIAL_VERSAO, aviso: "NÃO entregar à autora: liga o cartão ao braço e ao estrato",
@@ -450,11 +472,11 @@ export async function prepararMaterial(o: OpcoesMaterial): Promise<Material> {
     comparacao: { id: comp.id, bracos: par, dBasePorTrio: dBase }, avisos,
     estratos: sel.estratos, semUso: sel.semUso,
     efeitosNoDfc: [...efeitos.values()].sort((a, b) => (a.id < b.id ? -1 : 1)),
-    paraAutora: casos.map(c => ({ caso: c.caso, id: c.id, braco: cand.get(c.id)!.braco, trio: cand.get(c.id)!.trio, estrato: cand.get(c.id)!.estrato, motivo: cand.get(c.id)!.motivo, classe: cand.get(c.id)!.classe, desfechoPassada: desfecho(c.id) })),
-    julgadoSoPorLLM: cands.filter(c => !casoDe.has(c.id)).sort((a, b) => (a.id < b.id ? -1 : 1)).map(c => ({ id: c.id, braco: c.braco, trio: c.trio, estrato: c.estrato, motivo: c.motivo, classe: c.classe, rotulo: ROTULO_SO_LLM })),
+    paraAutora: casos.map(c => ({ caso: c.caso, id: c.id, braco: cand.get(c.id)!.braco, trio: cand.get(c.id)!.trio, estrato: cand.get(c.id)!.estrato, motivo: cand.get(c.id)!.motivo, classe: cand.get(c.id)!.classe, desfechoPassada: desfecho(c.id), ...citacao(c.id) })),
+    julgadoSoPorLLM: cands.filter(c => !casoDe.has(c.id)).sort((a, b) => (a.id < b.id ? -1 : 1)).map(c => ({ id: c.id, braco: c.braco, trio: c.trio, estrato: c.estrato, motivo: c.motivo, classe: c.classe, rotulo: ROTULO_SO_LLM, ...citacao(c.id) })),
   };
   const selTxt = jsonTexto(corpoSel);
-  const casosChave: CasoChave[] = casos.map(c => { const p = passadaDe.get(c.id)!; return { caso: c.caso, id: c.id, chave: p.item.get(c.id)!.chave, braco: p.item.get(c.id)!.braco, estrato: cand.get(c.id)!.estrato!, passada: p.nome, julgamentosSha256: p.julgSha, desfechoPassada: desfecho(c.id) }; });
+  const casosChave: CasoChave[] = casos.map(c => { const p = passadaDe.get(c.id)!; return { caso: c.caso, id: c.id, chave: p.item.get(c.id)!.chave, braco: p.item.get(c.id)!.braco, estrato: cand.get(c.id)!.estrato!, passada: p.nome, julgamentosSha256: p.julgSha, desfechoPassada: desfecho(c.id), ...citacao(c.id) }; });
   const chaveTxt = jsonTexto({ formato: FORMATO_CHAVE_AUTORA, aviso: "NÃO entregar à autora: liga o caso ao cartão, ao braço, ao estrato e à decisão da passada", selecaoSha256: sha(selTxt), casos: casosChave });
   const cegTxt = jsonTexto(cegueira);
   const internos: [string, string][] = [["selecao.json", selTxt], ["selecao.json.sha256", `${sha(selTxt)}  selecao.json\n`], ["selecao.md", selecaoMd(corpoSel)],

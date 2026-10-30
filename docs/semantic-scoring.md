@@ -223,8 +223,9 @@ Cada achado separa o que foi constatado do que deveria valer e diz em que estado
 - `references` (D-156, opcional): até duas referências normativas secundárias do mesmo achado, no
   formato de `rule`. `rule` continua a citação principal. O campo é o mesmo nos três braços (skill
   `avaliar-tela`, `findings.v1.schema.json`), não entra em `flow-contract.ts` nem no hash do scorer:
-  o pacote o guarda no achado bruto (`reportedEvidence.finding.references`), e só a primeira passada
-  cega o lê (política do juiz 1.3.0; ver `analise-execucao.md`). Achado sem o campo é o de sempre.
+  o pacote o guarda no achado bruto (`reportedEvidence.finding.references`), e a leitura cega o lê na política do juiz
+  1.3.0: primeira passada, consistência, confiabilidade, adjudicação, recálculo e material da autora, todos com o mesmo
+  mecanismo (ver `analise-execucao.md`). Achado sem o campo é o de sempre.
 - `state` são a janela e as interações desde o carregamento, nas palavras do agente — nunca um id de
   estado do gabarito.
 - `evidence` são caminhos ou identificadores devolvidos pelas ferramentas. O coletor recusa relatório
