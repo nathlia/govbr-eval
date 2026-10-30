@@ -6,9 +6,9 @@
       "D-141",
       "R4 (thesis-workspace/planejamento/atual/revisao-oraculo-2.15-2026-10-22/parecer.md)"
     ],
-    "status": "RASCUNHO",
+    "status": "CONGELADO",
     "nota": "O sorteio de verdade só roda com status CONGELADO, no commit que é a semente. Mudar status, cotas ou qualquer arquivo de 'congelados' depois do commit da semente faz o script recusar.",
-    "revisao": "Revisões Codex 1 e 2 (NAT-110, 2026-10-30) aplicadas; ver plano §§ 13 e 14 (a § 14 manda onde diverge)."
+    "revisao": "Revisões Codex 1–4 (NAT-110, 2026-10-30) aplicadas; revisão 4 aceitou e liberou a selagem; ver plano §§ 13–15."
   },
   "regra": {
     "universo": "Corpus literal oficial ds-rules/govbr-ds-3.7.0-corpus (DS 3.7.0 publicado em gov.br/ds nos commits de COLETA.json; e-MAG 3.1 por recomendação, força pela Portaria SLTI/MP nº 3/2007 arquivada em tela-a2/fontes). Candidatos: frase com marcador de força, imperativo de lista fechada, requisito herdado de introdução/título/coluna, tabela de especificação (uma unidade por tabela) e as frases/tabelas achadas pela auditoria de leitura completa (tela-a2/universo-auditoria.json). Nenhuma fonte do oráculo.",
@@ -56,7 +56,20 @@
   "sha256": {
     "_nota": "Gravado por --selar antes do commit da semente; o script recusa se algum arquivo diferir. parametros.json e draw-tela-a2.ts são conferidos pelo git contra a semente.",
     "corpusManifest": "f211b83f2a0c931a2a92ae7767999b3a1b4efd1af5c45cea546910bd5f8ff77c",
-    "arquivos": {}
+    "arquivos": {
+      "tela-a2/inventario.json": "18fd72c202692bec7c1bd562c2543b430f6e47a0b5ed81cc8ceb32730c2243ff",
+      "tela-a2/universo.json": "7f11977f6b4b582cd40e14b4389a6fcedd79169d7662e2398face0b61c4a8e3e",
+      "tela-a2/universo-auditoria.json": "fe70f3a9dd47f719a119d9429c0cca894e894acd9e3afff194980bd0ba6f7370",
+      "tela-a2/elegibilidade-passo2.json": "071187f9f91baa64b6b526da3bb44430e344b89109cf3ec769c9aaf072506117",
+      "tela-a2/elegibilidade.json": "b5d5dd184ce6ff3dcb4d53d7eed50f97753172a17ff8107dfdd8de8e5a2f8637",
+      "tela-a2/efeitos.json": "d78d19ad0c9501a50fa74425f36ccfa5764a82bead0d41dc7f65c54d381cf25f",
+      "tela-a2/efeitos-lotes/VOCABULARIO.json": "4a1346df5c4631f507616998947514b6ee2dcfc872b677607c51cd28777d957c",
+      "tela-a2/auditoria-duplicatas.json": "eb1cf426cacfc498c620734ef772405d4ca7b2d6e8b8912300aefc775af10832",
+      "tela-a2/fontes/PROVENIENCIA.json": "4545bf97ed5917a1113e3d681510f156fa61d0a3c8ddf06a691ccb73889a49aa",
+      "tela-a2/fontes/portaria3-2007-emag.pdf": "872fbc4f63e3094c2b5957b323b4fea08f6d04988ebb244b76eac891f385a530",
+      "tela-a2/fontes/select-behavior-size.png": "8dadbd7e0c408164a69d16da2e8f2ec5aab553d6ec5db3af9e724a4a2419bd5a",
+      "scripts/tela-a2-universo.ts": "3dde8f53d6221b39937eeba8b6c5cdbaece10cc4bae186e2ea6e41fcdc70914e"
+    }
   },
   "aninhamento": {
     "crd-resumo": [
