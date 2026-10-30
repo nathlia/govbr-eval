@@ -5,6 +5,8 @@
 //   1. rodada 0 (b1..b4.mjs, julgamento de 2026-10-30 antes da revisão do Codex), com a fusão
 //      automática DS→e-MAG daquela rodada;
 //   2. lotes novos lote-*.json (unidades que a extração ampliada trouxe), entradas completas;
+//   4. revisao-2.mjs (Revisão Codex 2): decisões por bloqueio + acoplamentos confirmados das declarações de
+//      efeitos (efeitos-lotes/lote-*.json, classe "distinto"); log em revisao-2-log.json.
 //   3. revisao-1.json (Revisão Codex 1): substitui por inteiro as entradas listadas — inclusive as
 //      recomendações do e-MAG, reescritas com cláusula literal por variante, o que anula a fusão da rodada 0.
 // Uso: node tela-a2/passo2-lotes/montar.mjs
@@ -65,6 +67,13 @@ for (const f of lots) for (const id of Object.keys(loadJson(f))) if (out[full(id
     if (e._patch) { const { _patch, ...rest } = e; if (!out[k]?.aceita) throw new Error("patch em não aceita: " + k); out[k] = { ...out[k], ...rest }; }
     else { out[k] = e; origem[k] = "revisao-1"; }
   }
+}
+
+{
+  const rev2 = (await import("./revisao-2.mjs")).default;
+  const log = rev2(out, origem);
+  writeFileSync(join(HERE, "revisao-2-log.json"), JSON.stringify(log, null, 2) + "\n");
+  console.log(`revisão 2: ${log.manuais.length} decisões manuais, ${log.acoplamentos.length} variantes acopladas (${log.acoplamentos.filter(a => a.regraSaiu).length} regras saem)`);
 }
 
 const missing = [...pending].filter(id => !out[id]);

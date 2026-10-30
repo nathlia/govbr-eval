@@ -1,0 +1,1614 @@
+[
+ {
+  "id": "a2-557812293319",
+  "componente": "tab",
+  "arquivo": "componentes/tab__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Ao acessar o componente tabs, o foco inicial deve cair sobre a primeira aba interativa;",
+  "justificativa": "Foco inicial na primeira aba interativa. Medida: o primeiro Tab que entra no componente para na 1ª aba.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "foco-na-segunda",
+    "descricao": "Ao entrar no componente por Tab, o foco cai primeiro na 2ª aba (tabindex na ordem trocada).",
+    "clausula": "Ao acessar o componente tabs, o foco inicial deve cair sobre a primeira aba interativa;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5a1a5ee261b9",
+  "componente": "tab",
+  "arquivo": "componentes/tab__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "O Componente Tab deve se adequar à largura da página, estendendo a Superfície da Tab até o limite na extremidade direita.",
+  "justificativa": "A tab ocupa a largura da página até a extremidade direita. Medida: largura da barra de abas contra a do contêiner.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "superficie-curta",
+    "descricao": "A barra de abas fica com a largura só dos itens (width: max-content).",
+    "clausula": "O Componente Tab deve se adequar à largura da página, estendendo a Superfície da Tab até o limite na extremidade direita."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7f464d337bb8",
+  "componente": "tab",
+  "arquivo": "componentes/tab__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Os Itens de Tabs devem, por padrão, manter o alinhamento à esquerda na Superfície da Tab.",
+  "justificativa": "Itens alinhados à esquerda. Medida: posição do primeiro item contra a borda esquerda da barra.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "itens-centralizados",
+    "descricao": "Os itens das abas ficam centralizados na barra.",
+    "clausula": "Os Itens de Tabs devem, por padrão, manter o alinhamento à esquerda na Superfície da Tab."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-861377d8583b",
+  "componente": "tab",
+  "arquivo": "componentes/tab__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "O tamanho do Item da Tab deverá sempre acompanhar a largura do Rótulo, respeitando os espaçamentos internos.",
+  "justificativa": "A largura de cada item acompanha a do rótulo mais os espaçamentos internos. Medida: largura do item menos a do texto do rótulo = padding horizontal computado.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "item-largura-fixa",
+    "descricao": "Os itens das abas ganham largura fixa muito maior que o rótulo (ex.: 320 px), sobrando espaço vazio.",
+    "clausula": "O tamanho do Item da Tab deverá sempre acompanhar a largura do Rótulo"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-9b0884458d35",
+  "componente": "tab",
+  "arquivo": "componentes/tab__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Tab (Abas) › Especificações › Cores",
+  "justificativa": "Cores da tab em fundo claro: rótulo --gray-80, item e superfície --pure-0. Medida: cores computadas da barra de abas e das abas.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "superficie-cinza",
+    "descricao": "A superfície da tab fica com fundo --gray-5.",
+    "clausula": "Superfície da Tab · background · --pure-0"
+   },
+   {
+    "id": "rotulo-azul-claro",
+    "descricao": "O rótulo da aba inativa fica --blue-warm-vivid-40.",
+    "clausula": "Rótulo da Tab · color · --gray-80"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c376f69acac5",
+  "componente": "tab",
+  "arquivo": "componentes/tab__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Tab (Abas) › Especificações › Borda",
+  "justificativa": "Aba ativa com borda inferior sólida --surface-width-lg em --blue-warm-vivid-90 (fundo claro). Medida: border-bottom computado da aba ativa.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "indicador-fino",
+    "descricao": "A borda inferior da aba ativa fica com 1px (--surface-width-sm).",
+    "clausula": "item do Tab · solid · --surface-width-lg · --blue-warm-vivid-90 · bottom"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c42d0d7c0e9c",
+  "componente": "tab",
+  "arquivo": "componentes/tab__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · tab-panel · Conteúdo de cada aba",
+  "justificativa": "Cada painel tab-panel. Medida: classe de cada painel.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-tab-panel",
+    "descricao": "O painel da 1ª aba não tem tab-panel.",
+    "clausula": "class · string · tab-panel · Conteúdo de cada aba"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ce8b978a9842",
+  "componente": "tab",
+  "arquivo": "componentes/tab__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-tab · Container do componente",
+  "justificativa": "Container br-tab. Medida: classe da raiz.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-br-tab",
+    "descricao": "A raiz das abas usa classe própria, sem br-tab (aparência copiada à mão).",
+    "clausula": "class · string · br-tab · Container do componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-dc61ba2bcbd7",
+  "componente": "tab",
+  "arquivo": "componentes/tab__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · tab-nav · Container das abas",
+  "justificativa": "Container das abas tab-nav. Medida: classe do contêiner dos itens.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-tab-nav",
+    "descricao": "O contêiner dos itens não tem tab-nav.",
+    "clausula": "class · string · tab-nav · Container das abas"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f19f80da5bea",
+  "componente": "tab",
+  "arquivo": "componentes/tab__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Os usuários devem conseguir navegar pelas abas através do teclado por meio das teclas Tab e setas direcionais left e right;",
+  "justificativa": "Navegação entre abas por Tab e setas esquerda/direita. Medida: seta direita com foco na 1ª aba move o foco para a 2ª.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "setas-inertes",
+    "descricao": "As setas não movem o foco entre as abas (só Tab funciona).",
+    "clausula": "Os usuários devem conseguir navegar pelas abas através do teclado por meio das teclas Tab e setas direcionais left e right;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f684c1e9a26f",
+  "componente": "tab",
+  "arquivo": "componentes/tab__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Use marcação semântica adequada, como a propriedade role = tablist para a tag <ul> na raiz do componente;",
+  "justificativa": "A lista das abas tem role=tablist. Medida: role do <ul> raiz dos itens.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "lista-sem-tablist",
+    "descricao": "O <ul> que agrupa as abas fica sem role=tablist (as abas continuam com role=tab).",
+    "clausula": "Use marcação semântica adequada, como a propriedade role = tablist para a tag <ul> na raiz do componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-fc8612404c77",
+  "componente": "tab",
+  "arquivo": "componentes/tab__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Utilize o atributo aria-selectedcom valor true para aba ativa e aria-selectedcom valor false para abas não ativas;",
+  "justificativa": "aria-selected=true na aba ativa e false nas demais, também depois de trocar de aba. Medida: aria-selected das abas em S0 e S1.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "ativa-sem-selected",
+    "descricao": "Na carga, a aba Andamento ativa fica sem aria-selected=true.",
+    "clausula": "Utilize o atributo aria-selectedcom valor true para aba ativa"
+   },
+   {
+    "id": "selected-nao-atualiza",
+    "descricao": "Ao selecionar Documentos (S1), aria-selected não muda: Andamento continua true e Documentos false.",
+    "clausula": "aria-selectedcom valor false para abas não ativas"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-10011779df50",
+  "componente": "table",
+  "arquivo": "componentes/table__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "A navegação deve seguir de célula em célula do componente table, começando pela primeira célula na coluna à esquerda e na linha do topo, e seguindo para a próxima célula à direita até alcançar a última célula na coluna à direita.",
+  "justificativa": "Navegação célula a célula, da esquerda para a direita e de cima para baixo (ordem prescrita pelo DS). Medida: ordem das células no DOM contra a visual.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "ordem-visual-trocada",
+    "descricao": "Por CSS, a coluna que vem primeiro no DOM é exibida por último em cada linha.",
+    "clausula": "A navegação deve seguir de célula em célula do componente table, começando pela primeira célula na coluna à esquerda e na linha do topo, e seguindo para a próxima célula à direita até alcançar a última célula na coluna à direita."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-10860659e4bf",
+  "componente": "table",
+  "arquivo": "componentes/table__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Quando o cabeçalho da tabela não disponibilizar a funcionalidade de ordenação, o rótulo utilizado não deverá ser apresentado na cor do seu estado interativo.",
+  "justificativa": "Cabeçalho sem ordenação não usa a cor do estado interativo no rótulo. Medida: color computado dos th contra a cor interativa do DS.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "header-cor-interativa",
+    "descricao": "Os rótulos do cabeçalho (Data, Movimentação, Responsável), sem ordenação, ficam na cor azul interativa.",
+    "clausula": "o rótulo utilizado não deverá ser apresentado na cor do seu estado interativo"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1a936b76e1e0",
+  "componente": "table",
+  "arquivo": "componentes/table__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "6 · Colunas · Divider · Obrigatório",
+  "justificativa": "Colunas com divider (anatomia). Medida: divisor entre colunas visível.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "colunas-sem-divisor",
+    "descricao": "O divisor entre colunas é removido.",
+    "clausula": "6 · Colunas · Divider · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-24082cba4782",
+  "componente": "table",
+  "arquivo": "componentes/table__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Sempre utilize a estrutura de tags semânticas para o table (<table>, <thead>, <tbody>, <th>, <tr>, <td>).",
+  "justificativa": "Estrutura semântica de tabela (table, thead, tbody, th, tr, td) — mais ampla que o e-MAG 3.10. Medida: tagName dos elementos da tabela.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "tabela-de-divs",
+    "descricao": "A tabela é montada com div e CSS grid, sem table/th/td; a aparência fica igual.",
+    "clausula": "Sempre utilize a estrutura de tags semânticas para o table (<table>, <thead>, <tbody>, <th>, <tr>, <td>)."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-4f4391ced0cc",
+  "componente": "table",
+  "arquivo": "componentes/table__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "3 · Header da Tabela · Header · Obrigatório",
+  "justificativa": "Header (cabeçalho) da tabela é elemento obrigatório da anatomia. Medida: a tabela tem a linha de nomes de coluna.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "cabecalho-como-linha",
+    "descricao": "A linha com os nomes das colunas vira a primeira linha do corpo, com td em negrito.",
+    "clausula": "3 · Header da Tabela · Header · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5494f8781b7a",
+  "componente": "table",
+  "arquivo": "componentes/table__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Table (Tabela) › Especificações › Espaçamentos",
+  "justificativa": "Densidade padrão: header e linhas com padding vertical 2x e lateral 3x. Medida: padding computado de th e td.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "celulas-apertadas",
+    "descricao": "As células das linhas ficam com padding --spacing-scale-half em todos os lados.",
+    "clausula": "Linhas (Densidade Padrão) · padding-left · --spacing-scale-3x"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-54d2e08c5e0f",
+  "componente": "table",
+  "arquivo": "componentes/table__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "4 · Linhas · Divider · Obrigatório",
+  "justificativa": "Linhas separadas por divider. Medida: borda inferior computada das linhas.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "linhas-sem-divisor",
+    "descricao": "As linhas perdem o divisor (sem borda entre elas).",
+    "clausula": "4 · Linhas · Divider · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-62c0f42b9631",
+  "componente": "table",
+  "arquivo": "componentes/table__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "O nome da coluna, texto que descreve o tipo de conteúdo exibido, deve ser conciso de modo a comunicar a sua mensagem de maneira mais eficiente possível.",
+  "justificativa": "R-ED (b). Nome de coluna conciso. Medida: palavras do cabeçalho da coluna.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "cabecalho-prolixo",
+    "descricao": "A coluna 'Data' vira 'Data em que a movimentação foi registrada no sistema pelo servidor responsável' (13 palavras).",
+    "clausula": "O nome da coluna, texto que descreve o tipo de conteúdo exibido, deve ser conciso de modo a comunicar a sua mensagem de maneira mais eficiente possível."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d6629d53e00f",
+  "componente": "table",
+  "arquivo": "componentes/table__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Table (Tabela) › Especificações › Cores",
+  "justificativa": "Cores da tabela em fundo claro: header com fundo --gray-5, linhas com texto --gray-80 em fundo --pure-0. Medida: background/color computados de th e td. (A linha 'Header da Tabela · color' não é usada em variante: o rótulo sem ordenação não leva a cor interativa, a2-10860659e4bf.)",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "header-fundo-branco",
+    "descricao": "O cabeçalho da tabela fica com fundo --pure-0 (igual às linhas).",
+    "clausula": "Header da Tabela · background · --gray-5"
+   },
+   {
+    "id": "linhas-fundo-cinza",
+    "descricao": "As linhas da tabela ficam com fundo --gray-10.",
+    "clausula": "Linhas · background · --pure-0"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ecd5c7233ac6",
+  "componente": "table",
+  "arquivo": "componentes/table__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-table · Container do componente",
+  "justificativa": "Container br-table. Medida: classe da raiz.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "sem-br-table",
+    "descricao": "A raiz da tabela usa classe própria (aparência copiada à mão), sem br-table.",
+    "clausula": "class · string · br-table · Container do componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f1d8dc1cb4f4",
+  "componente": "table",
+  "arquivo": "componentes/table__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Table (Tabela) › Especificações › Tipografia",
+  "justificativa": "Header em --font-size-scale-base semi-bold; linhas em base medium. Medida: font-size/font-weight computados de th e td.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "header-regular",
+    "descricao": "O cabeçalho da tabela fica em --font-weight-regular.",
+    "clausula": "Header da Tabela · --font-size-scale-base · --font-weight-semi-bold"
+   },
+   {
+    "id": "linhas-negrito",
+    "descricao": "As células das linhas ficam em --font-weight-bold.",
+    "clausula": "Linhas · --font-size-scale-base · --font-weight-medium"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3584b59ba47f",
+  "componente": "tag",
+  "arquivo": "componentes/tag__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "O componente tag possui uma altura fixa e por isso não é permitida mais de uma linha de texto ou ícone no mesmo componente.",
+  "justificativa": "Tag com altura fixa: uma única linha de texto/ícone. Medida: altura computada do marcador de concluído igual à do token e um só ícone.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "tag-em-duas-linhas",
+    "descricao": "A tag de concluído da 1ª etapa ganha um segundo ícone abaixo do primeiro e dobra de altura.",
+    "clausula": "não é permitida mais de uma linha de texto ou ícone no mesmo componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5f5d70c647f1",
+  "componente": "tag",
+  "arquivo": "componentes/tag__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "A tag interativa é o único tipo em que é possível incluir um botão terciário para a sua remoção ou exclusão.",
+  "justificativa": "Só a tag interativa pode ter botão terciário de remoção; a tag de concluído não. Medida: botão dentro do marcador de concluído.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "tag-com-fechar",
+    "descricao": "O marcador de concluído da 1ª etapa ganha um pequeno botão \"x\" de remover.",
+    "clausula": "A tag interativa é o único tipo em que é possível incluir um botão terciário para a sua remoção ou exclusão."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7682991ef915",
+  "componente": "tag",
+  "arquivo": "componentes/tag__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "1 · Superfície · Fundamento Superfície · Obrigatório",
+  "justificativa": "Superfície obrigatória da tag de concluído (marcador circular com fundo de sucesso). Medida: background-color computado do marcador na 1ª etapa.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "tag-sem-superficie",
+    "descricao": "A tag de concluído da 1ª etapa fica com fundo transparente; só o ícone aparece.",
+    "clausula": "1 · Superfície · Fundamento Superfície · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-86453e6d513e",
+  "componente": "tag",
+  "arquivo": "componentes/tag__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Utilize outras formas de categorização que podem ser identificadas por leitores de tela;",
+  "justificativa": "Diz mais que o e-MAG 4.2: a categoria da tag tem de ser identificável por leitor de tela. Medida: nome acessível/descrição da 1ª etapa contém \"concluída\" (texto oculto, aria).",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "concluido-so-visual",
+    "descricao": "A 1ª etapa não expõe \"concluída\" à tecnologia assistiva: o nome acessível do botão é só o número e o rótulo; a tag continua visível.",
+    "clausula": "Utilize outras formas de categorização que podem ser identificadas por leitores de tela"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-04f08959f854",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Tooltip (Alertas Flutuantes) › Especificações › Dimensões",
+  "justificativa": "Balão com largura mínima 108px e seta 16×8px. Medida: largura do balão e dimensões da seta ao abrir o tooltip.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "seta-grande",
+    "descricao": "A seta direcional fica com 28×14px.",
+    "clausula": "Seta Direcional · Width · 16px"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-09eb42d69b01",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "São contextuais e devem apresentar informações curtas e concisas.",
+  "justificativa": "R-ED (b). Tooltip com informação curta e concisa. Medida: número de palavras do balão.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "tooltip-longo",
+    "descricao": "O balão de ajuda traz um parágrafo de 80 palavras sobre o procedimento.",
+    "clausula": "São contextuais e devem apresentar informações curtas e concisas."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-17a73c07609f",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Use em todos os tipos.;",
+  "justificativa": "O foco no gatilho abre o balão (todos os tipos). Medida: dar Tab até o gatilho e conferir o balão visível.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "foco-nao-abre",
+    "descricao": "Focar o gatilho pelo teclado não abre o balão (só o mouse over abre).",
+    "clausula": "3- Foco: quando o estado foco for acionado no elemento. Use em todos os tipos.;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1dc4d20a651c",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Tooltips não devem receber foco durante a navegação por teclado, pois seu conteúdo será lido pelas tecnologias assistivas no elemento gatilho;",
+  "justificativa": "Balão não recebe foco no teclado. Medida: sequência de Tab não para no balão.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "balao-focavel",
+    "descricao": "O balão recebe tabindex=0 e entra na ordem de Tab.",
+    "clausula": "Tooltips não devem receber foco durante a navegação por teclado, pois seu conteúdo será lido pelas tecnologias assistivas no elemento gatilho;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-22d1b7628da2",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Tooltips desaparecem quando o usuário pressionar a tecla Esc ou quando o foco for removido de seu elemento gatilho.",
+  "justificativa": "Balão some com a tecla Esc ou quando o foco sai do gatilho (tecla prescrita: Esc). Medida: com o balão aberto por foco, pressionar Esc e conferir que fica oculto.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "esc-nao-fecha",
+    "descricao": "Com o balão aberto pelo foco no gatilho, a tecla Esc não o fecha; só tirar o foco fecha.",
+    "clausula": "Tooltips desaparecem quando o usuário pressionar a tecla Esc"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-281b82e2e6be",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Atenção: caso a seta seja utilizada no topo ou na base do balão flutuante, esta deverá permanecer centralizada horizontalmente com o balão flutuante.",
+  "justificativa": "Com o balão acima/abaixo do gatilho, a seta fica centralizada horizontalmente no balão. Medida: centro x da seta contra o centro x do balão.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "seta-descentrada",
+    "descricao": "A seta do balão é deslocada para perto da borda esquerda do balão.",
+    "clausula": "esta deverá permanecer centralizada horizontalmente com o balão flutuante"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-285de1b171b1",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Use um tooltip por vez na tela.",
+  "justificativa": "No máximo um balão visível por vez. Medida: número de balões visíveis depois de abrir um e passar ao outro gatilho.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "dois-baloes",
+    "descricao": "Ao abrir o segundo tooltip, o primeiro não fecha: os dois balões ficam visíveis juntos.",
+    "clausula": "Use um tooltip por vez na tela."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2b6979e5363b",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Atenção: nunca utilize o título com função de texto informativo.",
+  "justificativa": "Título nunca faz a função de texto informativo. Medida: o balão tem o texto informativo no corpo (.text), não só num título.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "so-titulo",
+    "descricao": "O texto informativo do balão vai num elemento de título e o corpo fica vazio.",
+    "clausula": "Atenção: nunca utilize o título com função de texto informativo."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2dd74ca2fbb7",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Largura mínima do tooltip: corresponde a um conteúdo de texto informativo de 12 caracteres",
+  "justificativa": "Largura mínima do balão = texto informativo de 12 caracteres (108 px na tabela de dimensões). Medida: largura computada do balão aberto.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "balao-estreito",
+    "descricao": "O balão do tooltip recebe largura fixa de 60 px, abaixo do mínimo, e o texto quebra palavra a palavra.",
+    "clausula": "Largura mínima do tooltip: corresponde a um conteúdo de texto informativo de 12 caracteres"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-43895f300d37",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Tooltip (Alertas Flutuantes) › Especificações › Cores › Cores do Estado Informativo",
+  "justificativa": "Tooltip informativo (padrão): balão e seta --blue-warm-vivid-60, texto --pure-0. Medida: cores computadas do balão, da seta e do texto ao abrir.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "seta-de-outra-cor",
+    "descricao": "A seta direcional fica --gray-80 enquanto o balão continua azul.",
+    "clausula": "Seta Direcional · background · --blue-warm-vivid-60"
+   },
+   {
+    "id": "texto-tooltip-escuro",
+    "descricao": "O texto do tooltip fica --gray-80 sobre o balão azul.",
+    "clausula": "Texto Informativo · color · --pure-0"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-4a095eaf3d00",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Flutua sobre todos os outros elementos da tela.",
+  "justificativa": "O balão aberto fica por cima de todos os outros elementos. Medida: elementFromPoint no centro do balão aberto devolve o balão (ou descendente).",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "balao-por-baixo",
+    "descricao": "O balão aberto fica com z-index abaixo do conteúdo vizinho e é parcialmente coberto por ele.",
+    "clausula": "Flutua sobre todos os outros elementos da tela."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-61f57f2a7ff5",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Por princípio, as setas direcionais devem estar apontadas para o elemento ao qual o tooltip se refere e o tooltip deve estar posicionado próximo a este elemento.",
+  "justificativa": "Seta aponta para o gatilho e o balão fica junto dele. Medida: distância entre o balão e o gatilho e direção da seta.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "longe-do-gatilho",
+    "descricao": "O balão abre deslocado 160px para a direita do gatilho, com a seta apontando para o vazio.",
+    "clausula": "Por princípio, as setas direcionais devem estar apontadas para o elemento ao qual o tooltip se refere e o tooltip deve estar posicionado próximo a este elemento."
+   }
+  ],
+  "alternativasValidas": [
+   {
+    "id": "balao-abaixo",
+    "descricao": "O balão de ajuda abre ABAIXO do gatilho (não acima), junto dele, com a seta apontando para o gatilho.",
+    "clausula": "as setas direcionais devem estar apontadas para o elemento ao qual o tooltip se refere e o tooltip deve estar posicionado próximo a este elemento.",
+    "instancias": [
+     "tip-prazo",
+     "tip-protocolo"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2-71e548b6d3b6",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "1 · Balão Flutuante · Fundamento Superfície · Obrigatório",
+  "justificativa": "Balão flutuante obrigatório. Medida: o conteúdo aparece numa camada posicionada (position absolute/fixed) sobre a página.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "texto-inline",
+    "descricao": "O conteúdo da ajuda é mostrado como texto estático ao lado do ícone, sem balão flutuante.",
+    "clausula": "1 · Balão Flutuante · Fundamento Superfície · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-80678e4f069c",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "A seta direcional é elemento obrigatório, e tem por finalidade indicar o elemento da interface ao qual o tooltip se refere.",
+  "justificativa": "Seta direcional obrigatória. Medida: elemento da seta presente e visível.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "sem-seta",
+    "descricao": "A seta do balão fica oculta (display none).",
+    "clausula": "A seta direcional é elemento obrigatório, e tem por finalidade indicar o elemento da interface ao qual o tooltip se refere."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8cdd5f3fc0b3",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Visibilidade dinâmica;",
+  "justificativa": "O balão só aparece quando acionado (hover/foco) e some depois. Medida: visibilidade do balão na carga, sem interação, e depois de tirar o foco/ponteiro.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "balao-sempre-visivel",
+    "descricao": "O balão do tooltip fica visível desde a carga, sem nenhuma ação do usuário, e não some.",
+    "clausula": "Visibilidade dinâmica;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-918de33955df",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Tooltip (Alertas Flutuantes) › Especificações › Espaçamentos",
+  "justificativa": "Balão com padding da densidade (média: --spacing-scale-baseh) e afastado do gatilho por --spacing-scale-base. Medida: padding computado do balão e distância ao gatilho.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "balao-sem-padding",
+    "descricao": "O balão fica com padding de 2px (texto quase encostado na borda).",
+    "clausula": "Balão Flutuante (dens. média) · padding-top/bottom · --spacing-scale-baseh"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-bf446a3f5b0e",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Tooltip (Alertas Flutuantes) › Especificações › Sombra",
+  "justificativa": "Balão com sombra --shadow-xl (o token, além da presença de sombra já aceita em a2-ec15e0beefba). Medida: box-shadow computado do balão aberto contra o token.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "balao-sombra-leve",
+    "descricao": "O balão fica com sombra --shadow-sm em vez de --shadow-xl.",
+    "clausula": "Balão Flutuante · --shadow-xl"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c47ed59cb8bc",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Utilize aria-labelledby no elemento gatilho do tooltip para fornecer a descrição de ajuda.",
+  "justificativa": "O gatilho referencia o balão por aria-labelledby (atributo específico, além do nome acessível exigido em a2-c591eaacd1c2). Medida: aria-labelledby do gatilho aponta para o id do balão.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-sem-labelledby",
+    "descricao": "O gatilho fica com aria-label copiando o texto do balão, sem aria-labelledby apontando para ele.",
+    "clausula": "Utilize aria-labelledby no elemento gatilho do tooltip"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c591eaacd1c2",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "O texto de conteúdo do tooltip também deve estar presente em seu elemento gatilho para ser lido pelos leitores de tela;",
+  "justificativa": "O texto do balão também está no gatilho para leitor de tela. Medida: nome ou descrição acessível do gatilho contém o texto do balão.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-sem-descricao",
+    "descricao": "O gatilho perde a ligação com o texto do balão (sem aria-describedby); mantém o nome 'Ajuda'.",
+    "clausula": "O texto de conteúdo do tooltip também deve estar presente em seu elemento gatilho para ser lido pelos leitores de tela;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c6b7402991ad",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Use somente no tipo popover;",
+  "justificativa": "Acionamento por clique só no popover; o tooltip simples abre por mouse over/foco, não por clique. Medida: o balão abre ao passar o ponteiro e não depende de clique.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "simples-por-clique",
+    "descricao": "O tooltip simples passa a abrir só com clique no gatilho (o mouse over não abre mais).",
+    "clausula": "2- Clique: quando o usuário clicar no elemento. Use somente no tipo popover;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d1287ec712df",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": ".text · classe · Texto principal a ser exibido",
+  "justificativa": "Texto principal em .text. Medida: balão > .text com o texto.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "texto-sem-classe",
+    "descricao": "O texto do balão fica direto na raiz, sem o elemento .text.",
+    "clausula": ".text · classe · Texto principal a ser exibido"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d43831ef1184",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Utilize o componente button circular com ênfase terciária de densidade alta apenas no tipo popover e posicione-o sempre no canto superior direito do balão flutuante.",
+  "justificativa": "Botão fechar só no tipo popover; o tooltip simples não tem botão fechar. Medida: ausência de botão dentro do balão simples.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "simples-com-fechar",
+    "descricao": "O balão do tooltip simples ganha um botão fechar no canto superior direito.",
+    "clausula": "Utilize o componente button circular com ênfase terciária de densidade alta apenas no tipo popover"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-df29e959c20b",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": ".br-tooltip · classe · Container do componente",
+  "justificativa": "Container com a classe br-tooltip. Medida: classe da raiz do balão.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "sem-br-tooltip",
+    "descricao": "A raiz do balão usa classe própria (aparência copiada à mão), sem br-tooltip.",
+    "clausula": ".br-tooltip · classe · Container do componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-e505a4cf48ee",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Tooltip (Alertas Flutuantes) › Especificações › Tipografia",
+  "justificativa": "Texto informativo do tooltip em --font-size-scale-down-01 regular. Medida: font-size/font-weight computados do texto do balão.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "texto-tooltip-grande",
+    "descricao": "O texto do tooltip fica em --font-size-scale-up-01.",
+    "clausula": "Texto Informativo · size · --font-size-scale-down-01"
+   },
+   {
+    "id": "texto-tooltip-negrito",
+    "descricao": "O texto do tooltip fica em --font-weight-semi-bold.",
+    "clausula": "Texto Informativo · font-weight · --font-weight-regular"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ec15e0beefba",
+  "componente": "tooltip",
+  "arquivo": "componentes/tooltip__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Atenção: por ser um elemento flutuante e se encontrar na camada 4 de elevação, o tooltip deve sempre apresentar sombras.",
+  "justificativa": "Tooltip sempre com sombra. Medida: box-shadow computado do balão.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "sem-sombra",
+    "descricao": "O balão fica com box-shadow none.",
+    "clausula": "Atenção: por ser um elemento flutuante e se encontrar na camada 4 de elevação, o tooltip deve sempre apresentar sombras."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-008f17394a91",
+  "componente": "upload",
+  "arquivo": "componentes/upload__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Uploads podem ser acessados via navegação por teclado, por meio da tecla Tab, e acionados por meio das teclas Enter ou Space;",
+  "justificativa": "Upload alcançado por Tab e acionado por Enter ou Space (teclas específicas). Medida: Tab para no botão de escolher arquivo; Enter/Espaço abre o seletor.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "upload-nao-aciona-por-tecla",
+    "descricao": "Com foco no botão de escolher arquivo, Enter e Espaço não abrem o seletor; só o clique.",
+    "clausula": "acionados por meio das teclas Enter ou Space"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-043deee1ee88",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Upload (Envio de Arquivos) › Especificações › Cor",
+  "justificativa": "Cores do upload: label --gray-80, placeholder e ícone --blue-warm-vivid-70, container --pure-0 com borda --blue-warm-vivid-70. Medida: cores computadas da área de upload.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "borda-upload-cinza",
+    "descricao": "A borda da área de upload fica --gray-40.",
+    "clausula": "container (borda) · background-color · --blue-warm-vivid-70"
+   },
+   {
+    "id": "placeholder-cinza",
+    "descricao": "O placeholder e o ícone ficam --gray-80.",
+    "clausula": "Placeholder · text color · --blue-warm-vivid-70"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-099a2401f473",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "2 · Superfície (Área de Transferência) · Fundamento Superfície · Obrigatório",
+  "justificativa": "Superfície (área de transferência) obrigatória. Medida: área de soltar visível (borda/fundo) com tamanho não nulo.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-area",
+    "descricao": "A área de transferência fica sem borda e sem fundo; só o botão aparece.",
+    "clausula": "2 · Superfície (Área de Transferência) · Fundamento Superfície · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0e465d7adf07",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "O componente upload deve disponibilizar o recurso de arrastar arquivos.",
+  "justificativa": "Recurso de arrastar arquivos. Medida: soltar um arquivo sintético (DataTransfer) na área adiciona o arquivo.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-arrastar",
+    "descricao": "A área não aceita soltar arquivo (sem os manipuladores de dragover/drop).",
+    "clausula": "O componente upload deve disponibilizar o recurso de arrastar arquivos."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-17970a9e717d",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Upload (Envio de Arquivos) › Especificações › Espaçamento",
+  "justificativa": "Espaçamentos do upload: padding lateral 2x e vertical base da superfície, ícone a 2x do placeholder, margens inferiores base. Medida: padding/margens computados da área de upload.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "icone-colado-placeholder",
+    "descricao": "O ícone fica encostado no texto \"Selecione o arquivo\" (margin-right 0).",
+    "clausula": "Ícone Upload · margin-right · --spacing-scale-2x"
+   },
+   {
+    "id": "superficie-sem-padding",
+    "descricao": "A área de upload fica sem padding lateral.",
+    "clausula": "Superfície · padding-left / padding-right · --spacing-scale-2x"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2d3ff6e2d648",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Se arrastar mais de um arquivo, o componente não aceitará a ação e retornará uma mensagem ao usuário deixando claro que só será permitido realizar upload de um único arquivo.",
+  "justificativa": "Upload de arquivo único: soltar mais de um arquivo é recusado com mensagem que explica o limite. Medida: soltar dois arquivos sintéticos e conferir recusa e mensagem.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "aceita-dois-arquivos",
+    "descricao": "Soltar dois arquivos na área aceita ambos.",
+    "clausula": "Se arrastar mais de um arquivo, o componente não aceitará a ação"
+   },
+   {
+    "id": "recusa-muda",
+    "descricao": "Soltar dois arquivos é recusado sem nenhuma mensagem ao usuário.",
+    "clausula": "retornará uma mensagem ao usuário deixando claro que só será permitido realizar upload de um único arquivo"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2e8e53cf16ef",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Esta funcionalidade deve ser informada ao usuário na mensagem abaixo do campo.",
+  "justificativa": "Arrastar informado na mensagem abaixo do campo. Medida: texto de apoio abaixo do campo menciona arrastar.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-aviso-arrastar",
+    "descricao": "O texto de apoio abaixo do campo não menciona que se pode arrastar o arquivo.",
+    "clausula": "Esta funcionalidade deve ser informada ao usuário na mensagem abaixo do campo."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-48b225deace0",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Upload (Envio de Arquivos) › Especificações › Iconografia",
+  "justificativa": "Ícone de upload fa-upload em --icon-size-lg (diz o tamanho, além do ícone fixo já aceito). Medida: tamanho computado do ícone na área de upload.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "icone-upload-pequeno",
+    "descricao": "O ícone fa-upload fica em --icon-size-sm.",
+    "clausula": "Ícone Upload · <i class=\"fas fa-upload\"></i> · --icon-size-lg · fa-upload"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5d7b9b4ac59e",
+  "componente": "upload",
+  "arquivo": "componentes/upload__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Identifique as mensagens de feedback (informação, sucesso, alerta e erro) associadas ao upload e exibidas pelas tecnologias assistivas.",
+  "justificativa": "A mensagem de feedback do upload (erro em S2) fica associada ao campo e exposta às tecnologias assistivas. Medida: descrição acessível do input de arquivo (aria-describedby) contém o texto do feedback.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "feedback-solto",
+    "descricao": "O texto de erro do upload em S2 aparece na tela mas não é ligado ao input (sem aria-describedby).",
+    "clausula": "Identifique as mensagens de feedback (informação, sucesso, alerta e erro) associadas ao upload e exibidas pelas tecnologias assistivas."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-6e7c9e436ad4",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Se o site/sistema permitir o envio de apenas um único arquivo, o label do componente deverá ser alterado para \"Envio de arquivo\" e o placeholder para \"Selecione o arquivo\" (ou variações).",
+  "justificativa": "Upload de um único arquivo: rótulo no singular ('Envio de arquivo' ou variação) e placeholder 'Selecione o arquivo'. Resolve a tensão com a2-963df6b848e6 (lista de exemplos no plural) e a2-6f9602b239cc (placeholder fixo): esta é a regra específica do envio único; a página conforme usa 'Envio de documento' e 'Selecione o arquivo'. Medida: texto do rótulo e do placeholder.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-plural-envio-unico",
+    "descricao": "O upload aceita um arquivo só, mas o rótulo fica 'Envio de documentos' (plural).",
+    "clausula": "Se o site/sistema permitir o envio de apenas um único arquivo, o label do componente deverá ser alterado para \"Envio de arquivo\" e o placeholder para \"Selecione o arquivo\" (ou variações)."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-6f9602b239cc",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "O texto do placeholder e o ícone ilustrativo (fa-upload) são únicos e não podem ser alterados.",
+  "justificativa": "Texto do placeholder e ícone fa-upload não podem ser alterados. Medida: classe do ícone e texto do placeholder.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "placeholder-alterado",
+    "descricao": "O ícone vira fa-paperclip e o texto do placeholder muda para 'Anexe aqui'.",
+    "clausula": "O texto do placeholder e o ícone ilustrativo (fa-upload) são únicos e não podem ser alterados."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7c62d120e790",
+  "componente": "upload",
+  "arquivo": "componentes/upload__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · upload-input · Entrada de arquivo(s)",
+  "justificativa": "Entrada upload-input. Medida: classe do input de arquivo.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "input-sem-classe",
+    "descricao": "O input de arquivo não tem upload-input (a abertura do seletor é ligada à mão).",
+    "clausula": "class · string · upload-input · Entrada de arquivo(s)"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8a3ceb94046c",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Upload (Envio de Arquivos) › Especificações › Tipografia",
+  "justificativa": "Label do upload em --font-size-scale-base semi-bold; placeholder em base regular itálico. Medida: font-weight/font-style computados do label e do texto \"Selecione o arquivo\".",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "label-upload-regular",
+    "descricao": "O label \"Envio de documento\" fica em --font-weight-regular.",
+    "clausula": "Label · --font-size-scale-base · --font-weight-semi-bold · uppercase · -"
+   },
+   {
+    "id": "placeholder-reto",
+    "descricao": "O placeholder \"Selecione o arquivo\" fica sem itálico.",
+    "clausula": "Placeholder · --font-size-scale-base · --font-weight-regular · uppercase · font-style: italic"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-963df6b848e6",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Já o texto do label deve ser claro, objetivo e informativo seguindo o seguinte padrão: \"Envio de arquivos\", \"Envio de vídeos\", \"Envio de imagens\", \"Envio de documentos\" e assim por diante.",
+  "justificativa": "Rótulo no padrão 'Envio de ...'. Medida: texto do rótulo.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-fora-do-padrao",
+    "descricao": "O rótulo fica 'Arquivo' em vez do padrão 'Envio de documentos'.",
+    "clausula": "Já o texto do label deve ser claro, objetivo e informativo seguindo o seguinte padrão: \"Envio de arquivos\", \"Envio de vídeos\", \"Envio de imagens\", \"Envio de documentos\" e assim por diante."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a09116df2aa7",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Upload (Envio de Arquivos) › Especificações › Superfície",
+  "justificativa": "Superfície do upload com borda tracejada (--surface-border-dashed-sm). Medida: border-style computado da área de upload.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "borda-solida",
+    "descricao": "A borda da área de upload fica sólida.",
+    "clausula": "Superfície · border · --surface-border-dashed-sm"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a2591de5315f",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Upload (Envio de Arquivos) › Especificações › Dimensões",
+  "justificativa": "Superfície do upload com 550px de largura. Medida: width computado da área de upload a 1280.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "upload-largura-total",
+    "descricao": "A área de upload ocupa toda a largura do conteúdo (bem acima de 550px).",
+    "clausula": "Superfície · width · 550px"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-caf6bc80cb4b",
+  "componente": "upload",
+  "arquivo": "componentes/upload__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "a cor da borda do componente muda para verde quando o usuário arrasta o mouse (dragging) com os arquivos selecionados corretamente para a área tracejada",
+  "justificativa": "Ao arrastar arquivo válido sobre a área tracejada, a borda do upload fica verde. Medida: cor da borda durante dragenter/dragover com arquivo sintético válido.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "borda-sem-feedback",
+    "descricao": "Arrastar um arquivo válido sobre a área não muda a cor da borda.",
+    "clausula": "a cor da borda do componente muda para verde quando o usuário arrasta o mouse (dragging) com os arquivos selecionados corretamente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ccec3c8c199e",
+  "componente": "upload",
+  "arquivo": "componentes/upload__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · upload-label · Label do componente",
+  "justificativa": "Rótulo upload-label. Medida: classe do rótulo.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-sem-classe",
+    "descricao": "O rótulo do upload não tem upload-label.",
+    "clausula": "class · string · upload-label · Label do componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ec34646ce97f",
+  "componente": "upload",
+  "arquivo": "componentes/upload__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-upload · Container do componente",
+  "justificativa": "Container br-upload. Medida: classe da raiz.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-br-upload",
+    "descricao": "A raiz do upload usa classe própria (aparência copiada à mão), sem br-upload.",
+    "clausula": "class · string · br-upload · Container do componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-015f84774222",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Não deixe o texto todo em caixa alta.",
+  "justificativa": "R-ED (a): rótulo de elemento de entrada de dados não pode estar todo em caixa alta (contável). Medida: texto renderizado do rótulo (incl. text-transform) não é todo maiúsculo.",
+  "instancias": [
+   "sel-tipo-documento",
+   "upl-documento",
+   "swt-aviso-email",
+   "swt-aviso-sms",
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-campo-caixa-alta",
+    "descricao": "O rótulo do campo é escrito inteiro em maiúsculas (ex.: 'TIPO DE DOCUMENTO', 'RECEBER AVISOS POR SMS').",
+    "clausula": "Não deixe o texto todo em caixa alta."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-02ccd4221688",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Importante: dentro do Design System, o Fieldset é usado somente como um elemento semântico dentro de um formulário, não tendo nenhum tipo de estilização visual (delimitação de uma borda visual).",
+  "justificativa": "Fieldset só semântico, sem delimitação visual (borda). Medida: border-style/border-width computados do fieldset dos avisos.",
+  "instancias": [
+   "swt-aviso-email"
+  ],
+  "variantes": [
+   {
+    "id": "fieldset-com-moldura",
+    "descricao": "O fieldset \"Avisos sobre o requerimento\" ganha borda visível de 1px sólida cinza em volta do grupo.",
+    "clausula": "o Fieldset é usado somente como um elemento semântico dentro de um formulário, não tendo nenhum tipo de estilização visual (delimitação de uma borda visual)"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-03216e12bb96",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela normativa — Tipografia Rawline › Line-height (entrelinha) (a partir da linha 139)",
+  "justificativa": "Entrelinhas só nos tokens da tabela: 1.15 (low), 1.45 (medium), 1.85 (high). A unidade relativa já está em a2-b66ac3a5b212; aqui é o valor. Medida: line-height computado / font-size dos textos da instância ∈ {1,15; 1,45; 1,85}.",
+  "instancias": [
+   "crd-resumo",
+   "tbl-movimentacoes",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "entrelinha-fora-do-token",
+    "descricao": "O texto do card (ou das células da tabela, ou do painel do accordion) usa line-height 1.3 (relativo) em vez de 1.45.",
+    "clausula": "1.45 · --font-lineheight-medium"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-033815886ead",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Além disso, nos elementos Interativos, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\".",
+  "justificativa": "Cursor 'mão' nos interativos. Medida: cursor computado.",
+  "instancias": [
+   "tab-requerimento",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "cursor-padrao",
+    "descricao": "Os itens interativos mostram o cursor padrão (seta).",
+    "clausula": "Além disso, nos elementos Interativos, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\"."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0383076211e0",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/cores.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Para texto grande a taxa de contraste mínimo deve ser de pelo menos 3:1.",
+  "justificativa": "Texto grande com contraste mínimo de 3:1 (limiar do fundamento Cores do DS). Medida: contraste do título do card (texto grande).",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-grande-baixo-contraste",
+    "descricao": "O título do card (texto grande) fica #BDBDBD sobre branco (≈1,9:1).",
+    "clausula": "Para texto grande a taxa de contraste mínimo deve ser de pelo menos 3:1."
+   }
+  ],
+  "alternativasValidas": []
+ }
+]

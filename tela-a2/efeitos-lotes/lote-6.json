@@ -1,0 +1,2505 @@
+{
+ "a2-6a791128da6a": {
+  "variantes": {
+   "alerta-fundo-fora": {
+    "toca": [
+     "$:raiz"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "background-color da superfície da mensagem de pendência passa a --yellow-5."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "alerta-fundo-fora",
+    "viola": "a2-5606a51d1ba1",
+    "porque": "A tabela de cores do Message Alerta exige superfície --yellow-vivid-5; --yellow-5 a viola também.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo background-color da raiz da mensagem, citado pela tabela do Message Alerta."
+   }
+  ]
+ },
+ "a2-6a99b79819ae": {
+  "variantes": {
+   "ultrapassa-margem": {
+    "porHospedeiro": {
+     "tbl-movimentacoes": {
+      "toca": [
+       "$:raiz"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "margem negativa na raiz da tabela, que passa da margem da grid."
+     },
+     "crd-resumo": {
+      "toca": [
+       "$:raiz"
+      ],
+      "remove": [],
+      "cascata": [
+       "tip-prazo",
+       "tip-protocolo"
+      ],
+      "estado": null,
+      "nota": "margem negativa na raiz do card, que passa da margem da grid e desloca os gatilhos das tooltips contidos."
+     }
+    }
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "ultrapassa-margem",
+    "viola": "a2-7cf0838736be",
+    "porque": "Com o card ou a tabela passando da margem, o conteúdo informativo (texto/células) invade a área de sangria, que só fundos podem ocupar.",
+    "classe": "mesmo-observavel",
+    "razao": "O mesmo deslocamento para fora da margem da grid é o conteúdo invadindo a sangria."
+   }
+  ]
+ },
+ "a2-6afb3201269f": {
+  "variantes": {
+   "estilo-embutido": {
+    "toca": [
+     "pagina:estilos",
+     "pagina:head"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "uma regra de CSS da página sai do arquivo e vai para um bloco style no head, mesmo valor."
+   },
+   "script-embutido": {
+    "toca": [
+     "pagina:scripts"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o script de inicialização vira bloco script embutido no fim do body, mesmo conteúdo."
+   }
+  }
+ },
+ "a2-6c531e6437e8": {
+  "variantes": {
+   "tooltip-outro-nome-do-numero": {
+    "toca": [
+     "$:balao-texto"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "texto do balão da tooltip do protocolo chama o número de 'código do processo'."
+   }
+  }
+ },
+ "a2-6f122899cebf": {
+  "variantes": {
+   "input-peso-fora": {
+    "toca": [
+     "$:campo"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "font-weight do texto do campo do select passa a 400."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "input-peso-fora",
+    "viola": "a2-bc172ac96406",
+    "porque": "A tabela de tipografia do Input (valor do campo do select) exige peso medium; 400 a viola também.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo font-weight do valor do campo, citado pela tabela de tipografia do Input."
+   }
+  ]
+ },
+ "a2-7278a9812cac": {
+  "variantes": {
+   "rotulo-negativo": {
+    "toca": [
+     "$:rotulo"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "texto do rótulo do select vira frase negativa longa."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "rotulo-negativo",
+    "viola": "a2-3452a785e45d",
+    "porque": "O rótulo descrito tem 12 palavras: deixa de ser curto e objetivo.",
+    "classe": "mesmo-observavel",
+    "razao": "O comprimento do rótulo já é parte da regra da variante (breves); mesmo texto."
+   },
+   {
+    "variante": "rotulo-negativo",
+    "viola": "a2-3778203c3941",
+    "porque": "O mesmo rótulo longo deixa de ser conciso.",
+    "classe": "mesmo-observavel",
+    "razao": "O comprimento do rótulo já é parte da regra da variante (breves); mesmo texto."
+   }
+  ]
+ },
+ "a2-728b1f066902": {
+  "variantes": {
+   "desabilitado-opacidade-fora": {
+    "toca": [
+     "$:indicadores",
+     "$:rotulos"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "opacity das etapas 3 e 4 (indicador e rótulo) passa a 0,3."
+   }
+  }
+ },
+ "a2-73dfd62f0816": {
+  "variantes": {
+   "desabilitada-com-enfase": {
+    "toca": [
+     "$:indicadores",
+     "$:rotulos"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "etapas 3 e 4 ficam com a cor e a opacidade das habilitadas."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "desabilitada-com-enfase",
+    "viola": "a2-728b1f066902",
+    "porque": "Com a opacidade das habilitadas (1), as etapas desabilitadas deixam de ter opacity 0,45 (--surface-opacity-md).",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma opacidade das etapas 3 e 4."
+   }
+  ]
+ },
+ "a2-7562e56b2290": {
+  "variantes": {
+   "titulo-form-vago": {
+    "toca": [
+     "pagina:titulo-form"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "texto do título do formulário da aba Documentos vira 'Formulário'."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "titulo-form-vago",
+    "viola": "a2-489a52bad95a",
+    "porque": "'Formulário' é genérico: o título deixa de ser específico, como a regra exige.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo texto genérico do título do formulário."
+   }
+  ]
+ },
+ "a2-76c8506bbc99": {
+  "variantes": {
+   "icone-semantico-exposto": {
+    "porHospedeiro": {
+     "tip-prazo": {
+      "toca": [
+       "$:gatilho-icone"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o <i> do gatilho da tooltip perde aria-hidden."
+     },
+     "tip-protocolo": {
+      "toca": [
+       "$:gatilho-icone"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o <i> do gatilho da tooltip perde aria-hidden."
+     },
+     "msg-pendencia": {
+      "toca": [
+       "$:fechar-icone"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o <i> do botão Fechar perde aria-hidden."
+     },
+     "msg-retorno": {
+      "toca": [
+       "$:fechar-icone"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o <i> do botão Fechar perde aria-hidden."
+     },
+     "sel-tipo-documento": {
+      "toca": [
+       "$:gatilho"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o <i> dentro do botão gatilho do select perde aria-hidden."
+     }
+    }
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "icone-semantico-exposto",
+    "viola": "a2-923a3ee74050",
+    "porque": "A regra dos ícones de botão com aria-hidden=\"true\" (mesmos hospedeiros) mede exatamente o mesmo atributo no mesmo <i>.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo atributo aria-hidden no mesmo <i>."
+   }
+  ]
+ },
+ "a2-76dbeded6662": {
+  "variantes": {
+   "ativa-sem-estado": {
+    "toca": [
+     "$:aba-1",
+     "$:aba-2"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "a aba ativa perde classe/estilo de ativa e fica igual à interativa; a troca de painel continua."
+   },
+   "atual-sem-destaque": {
+    "toca": [
+     "$:indicadores",
+     "$:rotulos"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "a etapa 2 (atual) fica com o visual das concluídas, sem destaque de ativa."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "ativa-sem-estado",
+    "viola": "a2-7ecb601ffa09",
+    "porque": "Sem o estilo de ativa, a aba ativa perde a cor --blue-warm-vivid-80 e a borda de 4px da tabela do estado Ativo.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma cor/borda de ativa da aba ativa."
+   },
+   {
+    "variante": "ativa-sem-estado",
+    "viola": "a2-c376f69acac5",
+    "porque": "A borda inferior sólida --surface-width-lg da aba ativa (tabela Borda da Tab) some com o estilo de ativa.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma borda inferior da aba ativa."
+   },
+   {
+    "variante": "atual-sem-destaque",
+    "viola": "a2-e5b4728ca51e",
+    "porque": "Igual às concluídas, a etapa atual não se distingue por nada além da cor (nem por cor).",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo visual da etapa atual, que deixa de se distinguir."
+   },
+   {
+    "variante": "atual-sem-destaque",
+    "viola": "a2-c47edccf787c",
+    "porque": "A etapa 2 deixa de ter rótulo --blue-warm-vivid-80 e indicador preenchido (cores do estado Ativo do step).",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmas cores da etapa atual."
+   },
+   {
+    "variante": "atual-sem-destaque",
+    "viola": "a2-cf6773605348",
+    "porque": "O indicador da etapa atual deixa de estar no estado ativo.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo estilo de ativo do indicador da etapa atual."
+   },
+   {
+    "variante": "atual-sem-destaque",
+    "viola": "a2-efb2d4b6d23d",
+    "porque": "A cor do rótulo da etapa atual deixa de seguir a diretriz do step.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma cor do rótulo da etapa atual."
+   }
+  ]
+ },
+ "a2-78f11cbcb280": {
+  "variantes": {
+   "pressionado-apaga-estado": {
+    "porHospedeiro": {
+     "tab-requerimento": {
+      "toca": [
+       "$:aba-1",
+       "$:aba-2"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "no :active, o estilo de pressionado substitui a cor/borda de ativa da aba ativa."
+     },
+     "swt-aviso-email": {
+      "toca": [
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "no :active, o switch ligado perde a cor de ligado na chave/trilho."
+     },
+     "swt-aviso-sms": {
+      "toca": [
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "no :active, o switch ligado perde a cor de ligado na chave/trilho."
+     },
+     "chk-avisos-todos": {
+      "toca": [
+       "$:caixa"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "no :active, a caixa marcada/intermediária perde fundo e marca."
+     }
+    }
+   }
+  }
+ },
+ "a2-7cf0838736be": {
+  "variantes": {
+   "conteudo-na-sangria": {
+    "porHospedeiro": {
+     "crd-resumo": {
+      "toca": [
+       "$:raiz",
+       "$:conteudo"
+      ],
+      "remove": [],
+      "cascata": [
+       "tip-prazo",
+       "tip-protocolo"
+      ],
+      "estado": null,
+      "nota": "o card ocupa a largura da janela e o texto encosta na borda esquerda da viewport; os gatilhos das tooltips são deslocados."
+     },
+     "tbl-movimentacoes": {
+      "toca": [
+       "$:raiz",
+       "$:celulas",
+       "$:cabecalho"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "a tabela ocupa a largura da janela e o texto das células encosta na borda da viewport."
+     },
+     "msg-pendencia": {
+      "toca": [
+       "$:raiz",
+       "$:titulo",
+       "$:texto"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "a mensagem ocupa a largura da janela e o texto encosta na borda da viewport."
+     }
+    }
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "conteudo-na-sangria",
+    "viola": "a2-6a99b79819ae",
+    "porque": "No card e na tabela (hospedeiros comuns), o texto encostado na viewport passa da margem da grid.",
+    "classe": "mesmo-observavel",
+    "razao": "O mesmo texto encostado na viewport é o conteúdo fora da margem da grid."
+   }
+  ]
+ },
+ "a2-7e05c5c8e09c": {
+  "variantes": {
+   "expressao-regional": {
+    "toca": [
+     "$:texto"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "texto da mensagem vira 'Bah, tá faltando um documento'."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "expressao-regional",
+    "viola": "a2-61f7e680f11b",
+    "porque": "Em msg-retorno, o texto descrito não diz o que fazer para contornar o erro.",
+    "classe": "distinto",
+    "razao": "Além da expressão regional, a mensagem de erro perde a instrução do que fazer: outro conteúdo ausente."
+   },
+   {
+    "variante": "expressao-regional",
+    "viola": "a2-a6d3b956c667",
+    "porque": "Em msg-retorno, o texto descrito não traz a diretiva para remediar a ação.",
+    "classe": "distinto",
+    "razao": "Além da expressão regional, a mensagem de erro perde a diretiva de remediação: outro conteúdo ausente."
+   },
+   {
+    "variante": "expressao-regional",
+    "viola": "a2-db30195b0e66",
+    "porque": "Em msg-pendencia, o texto descrito perde a informação necessária (qual documento e o prazo).",
+    "classe": "distinto",
+    "razao": "Além da expressão regional, a pendência perde qual documento falta e o prazo: outro conteúdo ausente."
+   }
+  ]
+ },
+ "a2-7ecb601ffa09": {
+  "variantes": {
+   "ativo-borda-fina": {
+    "toca": [
+     "$:aba-1",
+     "$:aba-2"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "border-bottom da aba ativa passa a 1px, mesma cor."
+   },
+   "ativo-cor-fora": {
+    "toca": [
+     "$:aba-1",
+     "$:aba-2"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "texto e borda da aba ativa passam a #1351B4."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "ativo-borda-fina",
+    "viola": "a2-c376f69acac5",
+    "porque": "A tabela Borda da Tab exige borda inferior --surface-width-lg na aba ativa; 1px a viola.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma espessura da borda inferior da aba ativa."
+   },
+   {
+    "variante": "ativo-cor-fora",
+    "viola": "a2-c376f69acac5",
+    "porque": "A borda da aba ativa sai de --blue-warm-vivid-90 (tabela Borda da Tab) para #1351B4.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma cor da borda inferior da aba ativa."
+   }
+  ]
+ },
+ "a2-83ec838a289a": {
+  "variantes": {
+   "sem-caption": {
+    "toca": [
+     "$:titulo",
+     "$:raiz",
+     "tab-requerimento:painel-1"
+    ],
+    "remove": [
+     "$:titulo"
+    ],
+    "cascata": [],
+    "estado": null,
+    "nota": "o caption sai da tabela; um h3 com o título é inserido antes dela no painel Andamento."
+   }
+  }
+ },
+ "a2-855a016067f1": {
+  "variantes": {
+   "titulo-generico": {
+    "toca": [
+     "pagina:title"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "document.title passa a 'Página'."
+   }
+  }
+ },
+ "a2-8f86684de1e2": {
+  "variantes": {
+   "texto-alinhado-a-direita": {
+    "toca": [
+     "$:celulas"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "text-align right nas células da coluna Movimentação."
+   }
+  }
+ },
+ "a2-909e5f61d661": {
+  "variantes": {
+   "retorno-zombeteiro": {
+    "toca": [
+     "$:texto"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "texto da mensagem de erro do envio vira frase zombeteira."
+   },
+   "alerta-zombeteiro": {
+    "toca": [
+     "$:texto"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "texto do alerta de pendência vira frase zombeteira."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "retorno-zombeteiro",
+    "viola": "a2-0ea33ff35779",
+    "porque": "'Esqueceu o arquivo de novo? Tente prestar atenção' culpa o usuário pelo erro.",
+    "classe": "mesmo-observavel",
+    "razao": "A frase que zomba é a mesma que culpa o usuário; um fato de tom."
+   },
+   {
+    "variante": "retorno-zombeteiro",
+    "viola": "a2-a6d3b956c667",
+    "porque": "O texto novo não traz diretiva específica do que fazer para remediar.",
+    "classe": "distinto",
+    "razao": "Além do tom, a mensagem de erro perde a diretiva de remediação: outro conteúdo ausente."
+   },
+   {
+    "variante": "alerta-zombeteiro",
+    "viola": "a2-db30195b0e66",
+    "porque": "O texto novo perde a informação necessária (qual documento e o prazo).",
+    "classe": "distinto",
+    "razao": "Além do tom, a pendência perde qual documento falta e o prazo: outro conteúdo ausente."
+   }
+  ]
+ },
+ "a2-9250e991e04f": {
+  "variantes": {
+   "concluida-so-cor-e-icone": {
+    "toca": [
+     "$:marcador",
+     "$:indicadores"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "some o texto 'concluída' (visível e acessível) da 1ª etapa; ficam cor e ícone da Tag."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "concluida-so-cor-e-icone",
+    "viola": "a2-86453e6d513e",
+    "porque": "Sem texto acessível 'concluída', a categoria da Tag deixa de ser identificável por leitor de tela.",
+    "classe": "mesmo-observavel",
+    "razao": "A variante já tira o texto acessível 'concluída'; mesmo fato."
+   }
+  ]
+ },
+ "a2-94e76e38c85b": {
+  "variantes": {
+   "sem-modo-compatibilidade": {
+    "toca": [
+     "pagina:head"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "a meta X-UA-Compatible sai do head."
+   }
+  }
+ },
+ "a2-952e88a5af0d": {
+  "variantes": {
+   "icone-de-tipo-trocado": {
+    "toca": [
+     "$:icone"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "classe do ícone semântico: alerta vira fa-info-circle, erro vira fa-check-circle."
+   },
+   "icone-fora-da-tabela": {
+    "porHospedeiro": {
+     "acc-duvidas": {
+      "toca": [
+       "$:icones"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o indicador de expandir dos cabeçalhos vira fa-plus."
+     },
+     "upl-documento": {
+      "toca": [
+       "$:botao",
+       "$:area"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o ícone do botão/área de escolher arquivo vira fa-paperclip."
+     }
+    }
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "icone-de-tipo-trocado",
+    "viola": "a2-b889b938c32d",
+    "porque": "O ícone semântico deixa de seguir a tabela de uso de ícones do DS.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone semântico."
+   },
+   {
+    "variante": "icone-de-tipo-trocado",
+    "viola": "a2-b13bd6797498",
+    "porque": "A tabela de Iconografia do Message exige exclamation-triangle (Alerta) e times-circle (Erro).",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone semântico."
+   },
+   {
+    "variante": "icone-fora-da-tabela",
+    "viola": "a2-d159e0f4acdf",
+    "porque": "No accordion, fa-plus substitui o angle-down exigido para expandir.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone de expandir."
+   },
+   {
+    "variante": "icone-fora-da-tabela",
+    "viola": "a2-6f9602b239cc",
+    "porque": "No upload, o ícone fa-upload não pode ser alterado; fa-paperclip o altera.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone do upload."
+   }
+  ]
+ },
+ "a2-959ca4537add": {
+  "variantes": {
+   "cabecalho-em-td": {
+    "toca": [
+     "$:cabecalho"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "as células do cabeçalho viram td em negrito dentro do thead."
+   },
+   "sem-thead": {
+    "toca": [
+     "$:cabecalho",
+     "$:raiz"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "a linha de th sai do thead e fica direto no tbody."
+   }
+  },
+  "alternativas": {
+   "associacao-por-headers": {
+    "toca": [
+     "$:celulas",
+     "$:cabecalho"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "td ganham headers apontando para ids dos th, no lugar de scope."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "cabecalho-em-td",
+    "viola": "a2-24082cba4782",
+    "porque": "A estrutura semântica de tabela exige th no cabeçalho.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo tagName das células do cabeçalho."
+   },
+   {
+    "variante": "sem-thead",
+    "viola": "a2-24082cba4782",
+    "porque": "A estrutura semântica de tabela exige thead.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma ausência do thead."
+   }
+  ]
+ },
+ "a2-971db6a57c75": {
+  "variantes": {
+   "aba-estado-desatualizado": {
+    "toca": [
+     "$:aba-1",
+     "$:aba-2"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "após selecionar Documentos, aria-selected fica true em Andamento e false em Documentos."
+   },
+   "item-expandido-sem-estado": {
+    "toca": [
+     "$:cabecalhos"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "ao abrir um item, o cabeçalho mantém aria-expanded=false."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "aba-estado-desatualizado",
+    "viola": "a2-fc8612404c77",
+    "porque": "aria-selected deixa de ser true na aba ativa e false nas demais depois de trocar de aba.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo aria-selected das abas depois da troca."
+   },
+   {
+    "variante": "item-expandido-sem-estado",
+    "viola": "a2-8e97b7f2c2b6",
+    "porque": "A medida dessa regra lê aria-expanded do item expandido, que fica false.",
+    "classe": "rejeitado",
+    "razao": "O painel continua aparecendo ao expandir; só o aria-expanded fica errado, que é o fato da variante."
+   }
+  ]
+ },
+ "a2-99d29fc4b1bf": {
+  "variantes": {
+   "aba-com-selecao": {
+    "toca": [
+     "$:aba-1",
+     "$:aba-2"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "a aba ativa ganha fundo --blue-warm-vivid-50 e ícone de check no lugar do estilo de ativa."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "aba-com-selecao",
+    "viola": "a2-7ecb601ffa09",
+    "porque": "O estilo de aba ativa (cor e borda de 4px do estado Ativo) é substituído.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo estilo da aba ativa, trocado pelo de Selecionado."
+   },
+   {
+    "variante": "aba-com-selecao",
+    "viola": "a2-c376f69acac5",
+    "porque": "A borda inferior da aba ativa (tabela Borda da Tab) é substituída.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma borda da aba ativa, trocada pelo estilo de Selecionado."
+   },
+   {
+    "variante": "aba-com-selecao",
+    "viola": "a2-9b0884458d35",
+    "porque": "A tabela de cores da Tab exige item --pure-0; o fundo azul a viola.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo fundo azul da aba ativa que a variante descreve."
+   }
+  ]
+ },
+ "a2-9bc102ab300b": {
+  "variantes": {
+   "card-em-tabela": {
+    "toca": [
+     "$:conteudo"
+    ],
+    "remove": [],
+    "cascata": [
+     "tip-prazo",
+     "tip-protocolo"
+    ],
+    "estado": null,
+    "nota": "os dados do card passam a ser dispostos numa table de diagramação; os gatilhos das tooltips ficam dentro das células."
+   }
+  }
+ },
+ "a2-9bcf4f01a6bb": {
+  "variantes": {
+   "selecionado-so-fundo": {
+    "toca": [
+     "$:itens"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o item escolhido da lista perde a marca gráfica; fica só o fundo."
+   }
+  }
+ },
+ "a2-a02a690a8d63": {
+  "variantes": {
+   "tooltip-selecionada": {
+    "toca": [
+     "$:balao",
+     "$:balao-texto"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o balão aberto ganha fundo --blue-warm-vivid-50 e ícone de check ao lado do texto."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "tooltip-selecionada",
+    "viola": "a2-f0e069600ad6",
+    "porque": "O fundo do balão deixa de ser #155BCB (feedback informação).",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo background do balão."
+   },
+   {
+    "variante": "tooltip-selecionada",
+    "viola": "a2-43895f300d37",
+    "porque": "As cores do tooltip informativo exigem balão --blue-warm-vivid-60.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo background do balão."
+   }
+  ]
+ },
+ "a2-a39f3ad397d4": {
+  "variantes": {
+   "fonte-do-sistema": {
+    "porHospedeiro": {
+     "crd-resumo": {
+      "toca": [
+       "$:raiz",
+       "$:titulo",
+       "$:conteudo"
+      ],
+      "remove": [],
+      "cascata": [
+       "tip-prazo",
+       "tip-protocolo"
+      ],
+      "estado": null,
+      "nota": "font-family Arial no card, herdada pelo texto das tooltips contidas."
+     },
+     "tbl-movimentacoes": {
+      "toca": [
+       "$:raiz",
+       "$:titulo",
+       "$:cabecalho",
+       "$:celulas"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "font-family Arial na tabela."
+     },
+     "acc-duvidas": {
+      "toca": [
+       "$:raiz",
+       "$:titulos",
+       "$:paineis"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "font-family Arial no accordion."
+     },
+     "msg-pendencia": {
+      "toca": [
+       "$:raiz",
+       "$:titulo",
+       "$:texto"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "font-family Arial na mensagem de pendência."
+     }
+    }
+   }
+  }
+ },
+ "a2-a3ed861cbd65": {
+  "variantes": {
+   "script-com-type": {
+    "toca": [
+     "pagina:scripts"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o script do DS ganha type=\"text/javascript\"."
+   },
+   "script-com-language": {
+    "toca": [
+     "pagina:scripts"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o script do DS ganha language=\"javascript\"."
+   }
+  }
+ },
+ "a2-a6d3b956c667": {
+  "variantes": {
+   "erro-sem-instrucao": {
+    "toca": [
+     "$:texto"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "texto da mensagem de erro fica só a causa, sem instrução."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "erro-sem-instrucao",
+    "viola": "a2-61f7e680f11b",
+    "porque": "A mensagem de erro deixa de dizer o que fazer para contornar a situação.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma ausência de instrução no texto da mensagem de erro."
+   }
+  ]
+ },
+ "a2-a6e2601837a7": {
+  "variantes": {
+   "foco-invisivel": {
+    "porHospedeiro": {
+     "sel-tipo-documento": {
+      "toca": [
+       "$:campo",
+       "$:gatilho"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "outline/box-shadow/borda de foco suprimidos no campo do select."
+     },
+     "swt-aviso-email": {
+      "toca": [
+       "$:input",
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "indicador de foco suprimido no switch."
+     },
+     "swt-aviso-sms": {
+      "toca": [
+       "$:input",
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "indicador de foco suprimido no switch."
+     },
+     "acc-duvidas": {
+      "toca": [
+       "$:cabecalhos"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "indicador de foco suprimido nos cabeçalhos."
+     },
+     "chk-avisos-todos": {
+      "toca": [
+       "$:input",
+       "$:caixa"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "indicador de foco suprimido no checkbox."
+     }
+    }
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "foco-invisivel",
+    "viola": "a2-2b5c2bc4358b",
+    "porque": "Sem indicador, não há borda de foco --gold-vivid-40 (todos os hospedeiros).",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo indicador de foco removido, citado pela tabela de Foco."
+   },
+   {
+    "variante": "foco-invisivel",
+    "viola": "a2-63e7d8f1a47d",
+    "porque": "Em select e accordion, some a borda de foco dashed de 4px.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo indicador de foco removido, citado pela tabela do Estado Foco."
+   },
+   {
+    "variante": "foco-invisivel",
+    "viola": "a2-e1a8fbf8ec5c",
+    "porque": "No select, o campo focado deixa de usar a marcação de foco do DS.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo indicador de foco removido no campo do select."
+   },
+   {
+    "variante": "foco-invisivel",
+    "viola": "a2-0cb58cc75f6f",
+    "porque": "Em select e switches, some a borda de foco com espaçamento de segurança.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo indicador de foco removido, com seu espaçamento."
+   }
+  ]
+ },
+ "a2-a8421dd4efff": {
+  "variantes": {
+   "alerta-amarelo-fora": {
+    "toca": [
+     "$:icone"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "color do ícone da mensagem de alerta passa a --orange-vivid-30."
+   }
+  }
+ },
+ "a2-acc4801af71c": {
+  "variantes": {
+   "item-so-mouse": {
+    "toca": [
+     "$:cabecalhos",
+     "$:titulos",
+     "$:icones"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o cabeçalho do 3º item vira span com clique, sem foco nem teclado."
+   },
+   "botao-upload-so-mouse": {
+    "toca": [
+     "$:botao"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o botão de escolher arquivo vira span com clique, sem foco nem teclado."
+   },
+   "gatilho-so-mouse": {
+    "toca": [
+     "tip-protocolo:gatilho",
+     "$:conteudo"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o gatilho da tooltip do protocolo, no card, vira span com clique, fora da ordem de Tab."
+   },
+   "aba-so-mouse": {
+    "toca": [
+     "$:aba-2"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "a 2ª aba vira span com clique, sem foco nem teclado."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "item-so-mouse",
+    "viola": "a2-4e067f770cee",
+    "porque": "O cabeçalho do item deixa de ser <button>.",
+    "classe": "mesmo-observavel",
+    "razao": "A variante já troca o button do cabeçalho por span; mesmo elemento."
+   },
+   {
+    "variante": "botao-upload-so-mouse",
+    "viola": "a2-008f17394a91",
+    "porque": "O upload deixa de ser alcançado por Tab e acionado por Enter/Espaço.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo acesso por teclado ao botão de escolher arquivo."
+   },
+   {
+    "variante": "gatilho-so-mouse",
+    "viola": "a2-17a73c07609f",
+    "porque": "Sem foco no gatilho, o foco não pode abrir o balão da tooltip do protocolo.",
+    "classe": "distinto",
+    "razao": "Sem foco no gatilho, o balão da tooltip do protocolo deixa de abrir pelo teclado: outro comportamento, de outra instância."
+   },
+   {
+    "variante": "gatilho-so-mouse",
+    "viola": "a2-2d9c1da2ceca",
+    "porque": "O controle do card deixa de ser navegável por Tab e acionável por Enter/Espaço.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo acesso por Tab/Enter ao gatilho do card."
+   },
+   {
+    "variante": "aba-so-mouse",
+    "viola": "a2-f19f80da5bea",
+    "porque": "A seta direita na 1ª aba não leva o foco à 2ª, que não recebe foco.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo acesso por teclado à 2ª aba."
+   },
+   {
+    "variante": "aba-so-mouse",
+    "viola": "a2-2e96af5b4635",
+    "porque": "A aba Documentos não pode ser acionada por Enter/Espaço.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo acionamento por teclado da 2ª aba."
+   }
+  ]
+ },
+ "a2-affdd8fad576": {
+  "variantes": {
+   "codificacao-latin": {
+    "toca": [
+     "pagina:head",
+     "pagina:html"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o documento é gravado em windows-1252 e o meta charset declara windows-1252; texto aparece normal."
+   }
+  }
+ },
+ "a2-b015ac9d3146": {
+  "variantes": {
+   "superficie-fora-do-container": {
+    "porHospedeiro": {
+     "crd-resumo": {
+      "toca": [
+       "$:raiz"
+      ],
+      "remove": [],
+      "cascata": [
+       "tip-prazo",
+       "tip-protocolo"
+      ],
+      "estado": null,
+      "nota": "background do card passa a #F0F0F0; os gatilhos das tooltips ficam sobre o fundo novo."
+     },
+     "tbl-movimentacoes": {
+      "toca": [
+       "$:celulas"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "background das linhas da tabela passa a #F0F0F0."
+     },
+     "acc-duvidas": {
+      "toca": [
+       "$:paineis"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "background do painel do accordion passa a #F0F0F0."
+     }
+    }
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "superficie-fora-do-container",
+    "viola": "a2-7a556a4c6423",
+    "porque": "No card, a tabela de cor do Card exige fundo --pure-0.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo background do card."
+   },
+   {
+    "variante": "superficie-fora-do-container",
+    "viola": "a2-d6629d53e00f",
+    "porque": "Na tabela, as cores da Table exigem linhas em fundo --pure-0.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo background das linhas da tabela."
+   }
+  ]
+ },
+ "a2-b1113ccfbc0a": {
+  "variantes": {
+   "sigla-so-com-title": {
+    "toca": [
+     "$:conteudo"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "a primeira ocorrência da sigla no card fica só 'NUP' num abbr com title, sem o nome completo no texto."
+   }
+  }
+ },
+ "a2-b1de44d95577": {
+  "variantes": {
+   "dropzone-borda-solida": {
+    "toca": [
+     "$:area"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "border-style da área de transferência passa a solid."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "dropzone-borda-solida",
+    "viola": "a2-a09116df2aa7",
+    "porque": "A tabela Superfície do Upload exige borda tracejada.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo border-style da área de transferência."
+   }
+  ]
+ },
+ "a2-b66ac3a5b212": {
+  "variantes": {
+   "entrelinha-em-px": {
+    "porHospedeiro": {
+     "crd-resumo": {
+      "toca": [
+       "$:conteudo"
+      ],
+      "remove": [],
+      "cascata": [
+       "tip-prazo",
+       "tip-protocolo"
+      ],
+      "estado": null,
+      "nota": "line-height declarado em px fixo no texto do card (herdável pelo texto das tooltips contidas)."
+     },
+     "tbl-movimentacoes": {
+      "toca": [
+       "$:celulas"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "line-height declarado em px fixo nas células."
+     },
+     "acc-duvidas": {
+      "toca": [
+       "$:paineis"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "line-height declarado em px fixo no conteúdo do accordion."
+     }
+    }
+   }
+  }
+ },
+ "a2-b889b938c32d": {
+  "variantes": {
+   "icone-trocado": {
+    "toca": [
+     "$:icone"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "classe do ícone semântico da mensagem vira fa-bell."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "icone-trocado",
+    "viola": "a2-952e88a5af0d",
+    "porque": "fa-bell não é o ícone da Tabela de Orientações (exclamation-triangle / times-circle).",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone semântico."
+   },
+   {
+    "variante": "icone-trocado",
+    "viola": "a2-b13bd6797498",
+    "porque": "A tabela de Iconografia do Message exige exclamation-triangle (Alerta) e times-circle (Erro).",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone semântico."
+   }
+  ]
+ },
+ "a2-b8a08dfb8771": {
+  "variantes": {
+   "foco-preso": {
+    "porHospedeiro": {
+     "tab-requerimento": {
+      "toca": [
+       "$:aba-1",
+       "$:aba-2"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o contorno de foco fica permanente num item de aba."
+     },
+     "acc-duvidas": {
+      "toca": [
+       "$:cabecalhos"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o contorno de foco fica permanente num cabeçalho de item."
+     },
+     "sel-tipo-documento": {
+      "toca": [
+       "$:campo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o contorno de foco fica permanente no campo do select."
+     }
+    }
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "foco-preso",
+    "viola": "a2-1754a39d9a39",
+    "porque": "Em aba e accordion, o contorno permanente aparece também depois de um clique de mouse no item.",
+    "classe": "mesmo-observavel",
+    "razao": "O mesmo contorno permanente é o que aparece depois do clique."
+   }
+  ]
+ },
+ "a2-bc2dd4c6ab14": {
+  "variantes": {
+   "peso-fora-da-tabela": {
+    "porHospedeiro": {
+     "crd-resumo": {
+      "toca": [
+       "$:titulo",
+       "$:conteudo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "font-weight 650 no texto de destaque do card."
+     },
+     "tbl-movimentacoes": {
+      "toca": [
+       "$:cabecalho"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "font-weight 650 no cabeçalho da tabela."
+     },
+     "acc-duvidas": {
+      "toca": [
+       "$:titulos"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "font-weight 650 no título dos itens."
+     }
+    }
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "peso-fora-da-tabela",
+    "viola": "a2-f1d8dc1cb4f4",
+    "porque": "Na tabela, o header deixa de ser semi-bold (600).",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo font-weight do cabeçalho da tabela."
+   },
+   {
+    "variante": "peso-fora-da-tabela",
+    "viola": "a2-fd151cae3c9e",
+    "porque": "No accordion, o título fechado deixa de ter peso medium (500).",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo font-weight do título dos itens."
+   }
+  ]
+ },
+ "a2-bde476da44c9": {
+  "variantes": {
+   "ordem-visual-trocada": {
+    "toca": [
+     "$:raiz",
+     "$:cabecalhos",
+     "$:paineis"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o 3º item vem primeiro no DOM e é exibido por último via order; a ordem de Tab diverge da visual."
+   }
+  }
+ },
+ "a2-bfb3c1909154": {
+  "variantes": {
+   "largura-cresce": {
+    "toca": [
+     "$:campo",
+     "$:raiz"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "a largura do campo do select acompanha o texto escolhido."
+   }
+  }
+ },
+ "a2-bfc5ebd36c20": {
+  "variantes": {
+   "duas-abas-ativas": {
+    "toca": [
+     "$:aba-1",
+     "$:aba-2"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "as duas abas ficam com estilo e marcação de ativa."
+   },
+   "duas-etapas-atuais": {
+    "toca": [
+     "$:indicadores",
+     "$:rotulos"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "as etapas 2 e 3 ficam marcadas como atuais."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "duas-etapas-atuais",
+    "viola": "a2-3e410f36c0cd",
+    "porque": "Se a etapa 3 continua desabilitada, ela recebe o estado Ativo (proibido); senão viola a2-aaac3112f76b (não visitada desabilitada): uma das duas é necessária.",
+    "classe": "rejeitado",
+    "razao": "Só vale se a etapa 3 continuar desabilitada; a variante pode tirar o disabled (aí viola a aaac3112f76b), então não é necessária."
+   },
+   {
+    "variante": "duas-etapas-atuais",
+    "viola": "a2-aaac3112f76b",
+    "porque": "Se a etapa 3 deixa de estar desabilitada para ser atual, a etapa não visitada deixa de estar desabilitada (alternativa à a2-3e410f36c0cd).",
+    "classe": "rejeitado",
+    "razao": "Só vale se a etapa 3 perder o disabled; a variante pode mantê-lo (aí viola a 3e410f36c0cd), então não é necessária."
+   }
+  ]
+ },
+ "a2-c0b99a02cf6b": {
+  "variantes": {
+   "pergunta-com-regionalismo": {
+    "toca": [
+     "$:titulos",
+     "$:cabecalhos"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "texto do cabeçalho do 2º item vira 'Oxe, e se o prazo vencer, visse?'."
+   }
+  }
+ },
+ "a2-c63c63e831f9": {
+  "variantes": {
+   "link-com-type": {
+    "toca": [
+     "pagina:estilos"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o link da folha do DS ganha type=\"text/css\"."
+   }
+  }
+ },
+ "a2-c678d7f46286": {
+  "variantes": {
+   "rotulo-title-case": {
+    "toca": [
+     "$:aba-2"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "rótulo da 2ª aba vira 'Enviar Documentos'."
+   }
+  }
+ },
+ "a2-c72a64d5d504": {
+  "variantes": {
+   "icone-fora-da-escala": {
+    "porHospedeiro": {
+     "tip-prazo": {
+      "toca": [
+       "$:gatilho-icone"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "font-size 1.1em no ícone do gatilho."
+     },
+     "tip-protocolo": {
+      "toca": [
+       "$:gatilho-icone"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "font-size 1.1em no ícone do gatilho."
+     },
+     "msg-pendencia": {
+      "toca": [
+       "$:icone"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "font-size 1.1em no ícone da mensagem."
+     },
+     "msg-retorno": {
+      "toca": [
+       "$:icone"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "font-size 1.1em no ícone da mensagem."
+     },
+     "acc-duvidas": {
+      "toca": [
+       "$:icones"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "font-size 1.1em no chevron dos cabeçalhos."
+     }
+    }
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "icone-fora-da-escala",
+    "viola": "a2-b13bd6797498",
+    "porque": "Nas mensagens, o ícone semântico deixa de ter --icon-size-lg.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo font-size do ícone da mensagem."
+   },
+   {
+    "variante": "icone-fora-da-escala",
+    "viola": "a2-72ddeddc1ac8",
+    "porque": "Nas tooltips, o ícone do botão circular deixa de ter --icon-size-base.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo font-size do ícone do gatilho."
+   }
+  ]
+ },
+ "a2-cad7cafa42d7": {
+  "variantes": {
+   "rotulo-so-leitor-de-tela": {
+    "porHospedeiro": {
+     "sel-tipo-documento": {
+      "toca": [
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o rótulo fica recortado 1×1px (sr-only); associação e nome acessível mantidos."
+     },
+     "upl-documento": {
+      "toca": [
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o rótulo fica recortado 1×1px (sr-only); associação e nome acessível mantidos."
+     },
+     "swt-aviso-email": {
+      "toca": [
+       "$:rotulo",
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o label fica recortado 1×1px; trilho/chave desenhados no label são recortados junto."
+     },
+     "swt-aviso-sms": {
+      "toca": [
+       "$:rotulo",
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o label fica recortado 1×1px; trilho/chave desenhados no label são recortados junto."
+     },
+     "chk-avisos-todos": {
+      "toca": [
+       "$:rotulo",
+       "$:caixa"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o label fica recortado 1×1px; a caixa (pseudo-elemento do label) é recortada junto."
+     }
+    }
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "rotulo-so-leitor-de-tela",
+    "viola": "a2-20a2754d88ff",
+    "porque": "No select, deixa de haver rótulo visível além do placeholder.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma ausência de rótulo visível no select."
+   },
+   {
+    "variante": "rotulo-so-leitor-de-tela",
+    "viola": "a2-a70181ba5638",
+    "porque": "No checkbox, a caixa é pseudo-elemento do rótulo: recortar o rótulo some com a caixa obrigatória.",
+    "classe": "distinto",
+    "razao": "A caixa do checkbox, pseudo-elemento do rótulo, some junto: outro nó, visível e obrigatório."
+   },
+   {
+    "variante": "rotulo-so-leitor-de-tela",
+    "viola": "a2-402eef83153c",
+    "porque": "Nos switches, a chave é pseudo-elemento do label no DS: recortar o label a torna invisível.",
+    "classe": "distinto",
+    "razao": "Nos switches, a chave desenhada no label some junto: outro nó, visível e obrigatório."
+   }
+  ]
+ },
+ "a2-cc3d7bd5342f": {
+  "variantes": {
+   "icone-sem-contraste": {
+    "toca": [
+     "$:gatilho-icone"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "color do ícone do gatilho passa a #D9D9D9."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "icone-sem-contraste",
+    "viola": "a2-9fc840ceb22d",
+    "porque": "O ícone do botão terciário deixa de ser --blue-warm-vivid-70.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma cor do ícone do gatilho."
+   },
+   {
+    "variante": "icone-sem-contraste",
+    "viola": "a2-36dcfef2c39b",
+    "porque": "O elemento interativo deixa de usar a cor de interação --blue-warm-vivid-70.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma cor do ícone do gatilho."
+   }
+  ]
+ },
+ "a2-cd5cbf0f18dc": {
+  "variantes": {
+   "sem-formato": {
+    "toca": [
+     "$:mensagem"
+    ],
+    "remove": [
+     "$:mensagem"
+    ],
+    "cascata": [],
+    "estado": null,
+    "nota": "o texto de apoio com formatos e tamanho máximo sai do upload."
+   }
+  }
+ },
+ "a2-cdd2382da97b": {
+  "variantes": {
+   "hover-apaga-estado": {
+    "porHospedeiro": {
+     "tab-requerimento": {
+      "toca": [
+       "$:aba-1",
+       "$:aba-2"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "no :hover, a aba ativa perde cor e borda de ativa."
+     },
+     "swt-aviso-email": {
+      "toca": [
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "no :hover, o switch ligado aparece desligado."
+     },
+     "swt-aviso-sms": {
+      "toca": [
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "no :hover, o switch ligado aparece desligado."
+     },
+     "chk-avisos-todos": {
+      "toca": [
+       "$:caixa"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "no :hover, o checkbox marcado/intermediário aparece desmarcado."
+     }
+    }
+   }
+  }
+ },
+ "a2-d0179dc6bd81": {
+  "variantes": {
+   "hover-na-desabilitada": {
+    "toca": [
+     "$:indicadores",
+     "$:rotulos"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "a 4ª etapa (desabilitada) ganha realce de hover."
+   }
+  }
+ },
+ "a2-d45711a55b6c": {
+  "variantes": {
+   "fechar-div": {
+    "toca": [
+     "$:fechar"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o botão Fechar vira div role=button tabindex=0 com Enter/Espaço."
+   }
+  }
+ },
+ "a2-d47f4c470491": {
+  "variantes": {
+   "ajuda-com-icone-lixeira": {
+    "toca": [
+     "$:gatilho-icone"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o ícone do gatilho de ajuda vira lixeira."
+   },
+   "fechar-com-icone-de-adicionar": {
+    "toca": [
+     "$:fechar-icone"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o ícone do Fechar vira '+'."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "ajuda-com-icone-lixeira",
+    "viola": "a2-460f5696acde",
+    "porque": "O acesso à ajuda só com ícone deixa de usar o símbolo de interrogação de referência.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone do gatilho de ajuda."
+   },
+   {
+    "variante": "fechar-com-icone-de-adicionar",
+    "viola": "a2-db50df136f86",
+    "porque": "O ícone do Fechar deixa de representar a ação (fa-times).",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone do Fechar."
+   },
+   {
+    "variante": "fechar-com-icone-de-adicionar",
+    "viola": "a2-b13bd6797498",
+    "porque": "A tabela de Iconografia do Message exige Fechar com times.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone do Fechar."
+   }
+  ]
+ },
+ "a2-d4db34492294": {
+  "variantes": {
+   "icone-de-fechar": {
+    "toca": [
+     "$:icones"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o ícone dos cabeçalhos vira fa-times."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "icone-de-fechar",
+    "viola": "a2-952e88a5af0d",
+    "porque": "Expandir/Retrair deixa de usar chevron, como a Tabela de Orientações exige.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone dos cabeçalhos."
+   },
+   {
+    "variante": "icone-de-fechar",
+    "viola": "a2-d159e0f4acdf",
+    "porque": "O ícone deixa de ser angle-down/up.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone dos cabeçalhos."
+   }
+  ]
+ },
+ "a2-d6b3f0e36943": {
+  "variantes": {
+   "jargao-tecnico": {
+    "toca": [
+     "$:texto"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "texto da mensagem de retorno vira jargão HTTP 422."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "jargao-tecnico",
+    "viola": "a2-a6d3b956c667",
+    "porque": "O texto novo não diz o que o usuário precisa fazer.",
+    "classe": "distinto",
+    "razao": "Além do jargão, a mensagem perde a diretiva do que fazer: outro conteúdo ausente."
+   },
+   {
+    "variante": "jargao-tecnico",
+    "viola": "a2-61f7e680f11b",
+    "porque": "O texto novo não permite entender por que houve erro nem o que fazer.",
+    "classe": "distinto",
+    "razao": "Além do jargão, a mensagem deixa de dizer o que fazer: outro conteúdo ausente."
+   }
+  ]
+ },
+ "a2-d720ea8520cb": {
+  "variantes": {
+   "erro-so-borda": {
+    "porHospedeiro": {
+     "sel-tipo-documento": {
+      "toca": [
+       "$:campo",
+       "$:mensagem"
+      ],
+      "remove": [
+       "$:mensagem"
+      ],
+      "cascata": [],
+      "estado": null,
+      "nota": "em S2, o campo do select só ganha borda vermelha; o texto de erro sai."
+     },
+     "upl-documento": {
+      "toca": [
+       "$:campo",
+       "$:area",
+       "$:mensagem"
+      ],
+      "remove": [
+       "$:mensagem"
+      ],
+      "cascata": [],
+      "estado": null,
+      "nota": "em S2, o upload só ganha borda vermelha; o texto de erro sai."
+     }
+    }
+   },
+   "erro-generico": {
+    "toca": [
+     "$:texto",
+     "sel-tipo-documento:mensagem",
+     "upl-documento:mensagem"
+    ],
+    "remove": [
+     "sel-tipo-documento:mensagem",
+     "upl-documento:mensagem"
+    ],
+    "cascata": [],
+    "estado": null,
+    "nota": "a mensagem de retorno vira 'Erro.' e os textos de erro dos campos saem."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "erro-generico",
+    "viola": "a2-a6d3b956c667",
+    "porque": "'Erro.' não traz diretiva para remediar.",
+    "classe": "distinto",
+    "razao": "Além de não identificar o item, 'Erro.' perde a diretiva de remediação: outro conteúdo ausente."
+   },
+   {
+    "variante": "erro-generico",
+    "viola": "a2-61f7e680f11b",
+    "porque": "'Erro.' não diz por que ocorreu nem o que fazer.",
+    "classe": "distinto",
+    "razao": "Além de não identificar o item, 'Erro.' não diz o que fazer: outro conteúdo ausente."
+   }
+  ]
+ },
+ "a2-d7e91aa996b7": {
+  "variantes": {
+   "doctype-html4-strict": {
+    "toca": [
+     "pagina:doctype"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o DOCTYPE vira HTML 4.01 Strict com publicId/systemId; modo padrão mantido."
+   }
+  }
+ },
+ "a2-d89456b2b61e": {
+  "variantes": {
+   "fieldset-margem-reduzida": {
+    "toca": [
+     "grupo-avisos:fieldset"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "margin-bottom do fieldset dos avisos passa a --spacing-scale-2x."
+   }
+  }
+ },
+ "a2-db50df136f86": {
+  "variantes": {
+   "icone-de-outra-acao": {
+    "porHospedeiro": {
+     "msg-pendencia": {
+      "toca": [
+       "$:fechar-icone"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o ícone do Fechar vira fa-trash."
+     },
+     "msg-retorno": {
+      "toca": [
+       "$:fechar-icone"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o ícone do Fechar vira fa-trash."
+     },
+     "sel-tipo-documento": {
+      "toca": [
+       "$:gatilho"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o ícone do gatilho do select vira download."
+     }
+    }
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "icone-de-outra-acao",
+    "viola": "a2-d47f4c470491",
+    "porque": "Nas mensagens, o Fechar só de ícone passa a ter ícone alheio à ação.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone do Fechar."
+   },
+   {
+    "variante": "icone-de-outra-acao",
+    "viola": "a2-b13bd6797498",
+    "porque": "Nas mensagens, a tabela de Iconografia exige Fechar com times.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma classe do ícone do Fechar."
+   }
+  ]
+ },
+ "a2-dd1a39bcd50b": {
+  "variantes": {
+   "pressionado-na-desabilitada": {
+    "toca": [
+     "$:indicadores",
+     "$:rotulos"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "a 4ª etapa (desabilitada) ganha realce de pressionado."
+   }
+  }
+ },
+ "a2-dea6a58c22c4": {
+  "variantes": {
+   "hover-overlay-forte": {
+    "porHospedeiro": {
+     "tab-requerimento": {
+      "toca": [
+       "$:aba-1",
+       "$:aba-2"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "overlay de hover das abas com opacidade 0,30."
+     },
+     "acc-duvidas": {
+      "toca": [
+       "$:cabecalhos"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "overlay de hover dos cabeçalhos com opacidade 0,30."
+     }
+    }
+   }
+  }
+ },
+ "a2-e0663017fccc": {
+  "variantes": {
+   "importante-no-fim": {
+    "toca": [
+     "$:texto"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "texto da mensagem ganha três frases de contexto antes do documento pendente e do prazo."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "importante-no-fim",
+    "viola": "a2-db30195b0e66",
+    "porque": "Três frases a mais tiram o texto de curto e objetivo.",
+    "classe": "distinto",
+    "razao": "Além da ordem, as três frases de contexto acrescidas tornam o texto longo: outra propriedade do texto."
+   },
+   {
+    "variante": "importante-no-fim",
+    "viola": "a2-5610d5df55f0",
+    "porque": "Três frases de contexto vão contra o mínimo de palavras.",
+    "classe": "distinto",
+    "razao": "Além da ordem, as três frases de contexto acrescidas excedem o mínimo de palavras: outra propriedade do texto."
+   }
+  ]
+ },
+ "a2-e5b4728ca51e": {
+  "variantes": {
+   "atual-so-pela-cor": {
+    "toca": [
+     "$:indicadores",
+     "$:rotulos"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "a etapa atual perde peso, forma, texto e ícone distintivos; resta a cor do indicador."
+   }
+  },
+  "alternativas": {
+   "prefixo-textual-visivel": {
+    "toca": [
+     "$:texto"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "o texto da mensagem ganha no início 'Atenção:'/'Erro:'; ícone do DS mantido."
+   }
+  }
+ },
+ "a2-e99c92f13ac0": {
+  "variantes": {
+   "texto-alternativo-visivel": {
+    "porHospedeiro": {
+     "tip-prazo": {
+      "toca": [
+       "$:gatilho"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o span de texto alternativo do gatilho perde o sr-only e aparece ao lado do ícone."
+     },
+     "tip-protocolo": {
+      "toca": [
+       "$:gatilho"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o span de texto alternativo do gatilho perde o sr-only e aparece ao lado do ícone."
+     },
+     "msg-pendencia": {
+      "toca": [
+       "$:fechar"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o span de texto alternativo do Fechar perde o sr-only e aparece ao lado do ícone."
+     },
+     "msg-retorno": {
+      "toca": [
+       "$:fechar"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o span de texto alternativo do Fechar perde o sr-only e aparece ao lado do ícone."
+     }
+    }
+   },
+   "texto-alternativo-inacessivel": {
+    "porHospedeiro": {
+     "tip-prazo": {
+      "toca": [
+       "$:gatilho"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o span de texto alternativo do gatilho fica display:none, fora da árvore de acessibilidade."
+     },
+     "tip-protocolo": {
+      "toca": [
+       "$:gatilho"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o span de texto alternativo do gatilho fica display:none, fora da árvore de acessibilidade."
+     },
+     "msg-pendencia": {
+      "toca": [
+       "$:fechar"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o span de texto alternativo do Fechar fica display:none, fora da árvore de acessibilidade."
+     },
+     "msg-retorno": {
+      "toca": [
+       "$:fechar"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o span de texto alternativo do Fechar fica display:none, fora da árvore de acessibilidade."
+     }
+    }
+   }
+  }
+ },
+ "a2-eb4a9da83395": {
+  "variantes": {
+   "pressionado-sem-feedback": {
+    "toca": [
+     "$:cabecalhos"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "os cabeçalhos não mudam no :active."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "pressionado-sem-feedback",
+    "viola": "a2-13efc60bb6b6",
+    "porque": "Sem feedback, não há overlay de pressionado com opacidade 0,45 no cabeçalho.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma ausência de overlay de pressionado no cabeçalho."
+   }
+  ]
+ },
+ "a2-ec1111e4b2a1": {
+  "variantes": {
+   "hover-sem-feedback": {
+    "toca": [
+     "$:cabecalhos"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "os cabeçalhos não mudam no :hover."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "hover-sem-feedback",
+    "viola": "a2-dea6a58c22c4",
+    "porque": "Sem feedback, não há overlay de hover 0,16 no cabeçalho.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma ausência de overlay de hover no cabeçalho."
+   },
+   {
+    "variante": "hover-sem-feedback",
+    "viola": "a2-fd6aa918efcc",
+    "porque": "Sem feedback, o fundo azul-claro de hover do item não aparece.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma ausência de fundo de hover no cabeçalho."
+   }
+  ]
+ },
+ "a2-ef29db5bb4ac": {
+  "variantes": {
+   "mensagem-selecionada": {
+    "toca": [
+     "$:raiz",
+     "$:texto"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "a mensagem ganha fundo --blue-warm-vivid-50 e ícone de check à esquerda do texto."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "mensagem-selecionada",
+    "viola": "a2-5606a51d1ba1",
+    "porque": "Em msg-pendencia, a superfície deixa de ser --yellow-vivid-5.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo background da mensagem."
+   },
+   {
+    "variante": "mensagem-selecionada",
+    "viola": "a2-6a791128da6a",
+    "porque": "Em msg-pendencia, a superfície deixa de ser #FFF5C2.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo background da mensagem."
+   },
+   {
+    "variante": "mensagem-selecionada",
+    "viola": "a2-90ea0bde7e04",
+    "porque": "Em msg-retorno, a superfície deixa de ser --red-vivid-10.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo background da mensagem."
+   },
+   {
+    "variante": "mensagem-selecionada",
+    "viola": "a2-19a22fa26e63",
+    "porque": "Em msg-retorno, a superfície deixa de ser #FDE0DB.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo background da mensagem."
+   }
+  ]
+ },
+ "a2-f0e069600ad6": {
+  "variantes": {
+   "informacao-azul-fora": {
+    "toca": [
+     "$:balao"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "background do balão aberto passa a #1351B4."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "informacao-azul-fora",
+    "viola": "a2-43895f300d37",
+    "porque": "As cores do tooltip informativo exigem balão --blue-warm-vivid-60.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo background do balão."
+   }
+  ]
+ },
+ "a2-f2afb51765c7": {
+  "variantes": {
+   "rotulo-afastado": {
+    "toca": [
+     "$:rotulo"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "margem inferior de ~120px entre o rótulo e o campo."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "rotulo-afastado",
+    "viola": "a2-8fcc793aaed1",
+    "porque": "No select, a margem inferior do rótulo deixa de ser o token da tabela de espaçamentos do Input.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma margem inferior do rótulo."
+   },
+   {
+    "variante": "rotulo-afastado",
+    "viola": "a2-0cb2e580195d",
+    "porque": "A distância rótulo→campo deixa de ser constante entre os campos do formulário.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma distância rótulo-campo, vista como inconsistência."
+   }
+  ]
+ },
+ "a2-f4237d13520b": {
+  "variantes": {
+   "rotulo-desassociado": {
+    "porHospedeiro": {
+     "upl-documento": {
+      "toca": [
+       "$:rotulo",
+       "$:campo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o label do upload perde for/id."
+     },
+     "sel-tipo-documento": {
+      "toca": [
+       "$:rotulo",
+       "$:campo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o label do select perde for/id."
+     },
+     "swt-aviso-email": {
+      "toca": [
+       "$:rotulo",
+       "$:input"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o label do switch perde for/id."
+     },
+     "swt-aviso-sms": {
+      "toca": [
+       "$:rotulo",
+       "$:input"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o label do switch perde for/id."
+     },
+     "chk-avisos-todos": {
+      "toca": [
+       "$:rotulo",
+       "$:input"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "o label do checkbox perde for/id."
+     }
+    }
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "rotulo-desassociado",
+    "viola": "a2-7c43824db106",
+    "porque": "No select, o par for/id exigido deixa de existir.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesmo par for/id."
+   },
+   {
+    "variante": "rotulo-desassociado",
+    "viola": "a2-14fa162258a8",
+    "porque": "Nos switches, clicar no rótulo deixa de alternar o switch.",
+    "classe": "distinto",
+    "razao": "Clicar no rótulo deixa de alternar o switch: outro comportamento."
+   },
+   {
+    "variante": "rotulo-desassociado",
+    "viola": "a2-33e661bc4435",
+    "porque": "Nos switches, o leitor de tela deixa de anunciar o rótulo.",
+    "classe": "mesmo-observavel",
+    "razao": "O rótulo não anunciado é a mesma falta de associação; o estado, parte própria da regra, continua anunciado."
+   },
+   {
+    "variante": "rotulo-desassociado",
+    "viola": "a2-8465edac53a3",
+    "porque": "No checkbox, clicar no texto descritivo deixa de marcá-lo.",
+    "classe": "distinto",
+    "razao": "Clicar no texto descritivo deixa de marcar o checkbox: outro comportamento."
+   }
+  ]
+ },
+ "a2-f50e5a28b0c9": {
+  "variantes": {
+   "paragrafo-entrelinha-fora": {
+    "toca": [
+     "$:paineis"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "line-height dos parágrafos do painel passa a 1.15."
+   }
+  }
+ },
+ "a2-fe133882c34a": {
+  "variantes": {
+   "erro-vermelho-fora": {
+    "toca": [
+     "$:icone"
+    ],
+    "remove": [],
+    "cascata": [],
+    "estado": null,
+    "nota": "color do ícone da mensagem de erro passa a #A23737."
+   }
+  },
+  "acoplamentoSuspeito": [
+   {
+    "variante": "erro-vermelho-fora",
+    "viola": "a2-90ea0bde7e04",
+    "porque": "As cores do Message Erro exigem ícone --red-vivid-50.",
+    "classe": "mesmo-observavel",
+    "razao": "Mesma cor do ícone da mensagem de erro."
+   }
+  ]
+ }
+}

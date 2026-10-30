@@ -1,0 +1,278 @@
+{
+  "_meta": {
+    "revisao": "Revisão Codex 2 (NAT-110, 2026-10-30), bloqueio 1",
+    "regra": "Toda duplicata cuja cadeia não termina numa unidade aceita está aqui: herda a exclusão da representante só quando o predicado e a aplicabilidade são os mesmos (porque). O --validar de scripts/draw-tela-a2.ts recusa cadeia aberta sem auditoria ou com destino/motivo diferente do registrado.",
+    "total": 32,
+    "desfeitas": {
+      "a2-1faa8ef238c0": "agora duplicada:a2-35afb7e6ee7c (aceita): o mesmo predicado (botão só com ícone tem alternativa em texto) e o mesmo observável (nome acessível vazio)",
+      "a2-fee39db9eda4": "restaurada como predicado DS próprio (title ou aria-label no botão só com ícone), com variante que não multiplica o observável de a2-dc561d157556 nem o de a2-35afb7e6ee7c"
+    },
+    "dc561": "a2-dc561d157556 continua aceita com a exigência específica do atributo aria-label; não sustenta nenhuma equivalência com alt de imagem",
+    "nota": "25 cadeias da revisão 1 auditadas + as que o isolamento da revisão 2 abriu (representante que saiu por acoplamento distinto)."
+  },
+  "cadeias": [
+    {
+      "unidade": "a2-5c92b7258f94",
+      "texto": "Nome da classe (br-accordion)",
+      "destino": "a2-e820d6f64393",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Parâmetro do código de instanciação (nome da classe / raiz do componente): não tem observável próprio; é parte da mesma instrução de instanciar BRAccordion. Herda a exclusão (acoplada) pelo mesmo predicado."
+    },
+    {
+      "unidade": "a2-9fbe68a6a115",
+      "texto": "Objeto referenciando a raiz do componente DOM",
+      "destino": "a2-e820d6f64393",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Parâmetro do código de instanciação (nome da classe / raiz do componente): não tem observável próprio; é parte da mesma instrução de instanciar BRAccordion. Herda a exclusão (acoplada) pelo mesmo predicado."
+    },
+    {
+      "unidade": "a2-92f3d5de1e4b",
+      "texto": "A mensagem é o elemento essencial e obrigatório do Componente Message.",
+      "destino": "a2-50affb0576ef",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesmo elemento obrigatório da anatomia (a mensagem do Message): mesmo predicado e observável da linha 4 da anatomia. Herda acoplada: tirar o texto apaga também a informação (segunda violação)."
+    },
+    {
+      "unidade": "a2-333cfef507cf",
+      "texto": "Incluir o arquivo core.min.js no html.",
+      "destino": "a2-c5c20128d015",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesma frase (\"Incluir o arquivo core.min.js no html\") na aba de desenvolvimento de outro componente: o predicado e o observável são um só, de nível de página (o script do DS incluído). Herda a exclusão da representante pelo mesmo predicado e a mesma aplicabilidade: tirar o core.min.js desliga todos os componentes (acoplada)."
+    },
+    {
+      "unidade": "a2-2fbc06691f92",
+      "texto": "Incluir o arquivo core.min.js no html.",
+      "destino": "a2-c5c20128d015",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesma frase (\"Incluir o arquivo core.min.js no html\") na aba de desenvolvimento de outro componente: o predicado e o observável são um só, de nível de página (o script do DS incluído). Herda a exclusão da representante pelo mesmo predicado e a mesma aplicabilidade: tirar o core.min.js desliga todos os componentes (acoplada)."
+    },
+    {
+      "unidade": "a2-a54a3257f7cb",
+      "texto": "Nome da classe (br-select)",
+      "destino": "a2-a3eb3793d8de",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Parâmetro do código de instanciação de BRSelect: parte da mesma instrução, sem observável próprio. Herda a exclusão (acoplada) pelo mesmo predicado."
+    },
+    {
+      "unidade": "a2-26de6e75e4bc",
+      "texto": "Objeto referenciando a raiz do componente DOM",
+      "destino": "a2-a3eb3793d8de",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Parâmetro do código de instanciação de BRSelect: parte da mesma instrução, sem observável próprio. Herda a exclusão (acoplada) pelo mesmo predicado."
+    },
+    {
+      "unidade": "a2-38b4aee96463",
+      "texto": "O Item da Tab é o elemento obrigatório que poderá conter ícone e informação textual correspondente à categoria ou seção.",
+      "destino": "a2-82b6ab674069",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesmo elemento obrigatório (o item da Tab): mesmo predicado e observável da linha 1 da anatomia. Herda acoplada: sem item não existe aba."
+    },
+    {
+      "unidade": "a2-817ee892cb9c",
+      "texto": "Incluir o arquivo core.min.js no html.",
+      "destino": "a2-c5c20128d015",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesma frase (\"Incluir o arquivo core.min.js no html\") na aba de desenvolvimento de outro componente: o predicado e o observável são um só, de nível de página (o script do DS incluído). Herda a exclusão da representante pelo mesmo predicado e a mesma aplicabilidade: tirar o core.min.js desliga todos os componentes (acoplada)."
+    },
+    {
+      "unidade": "a2-769d994c1b61",
+      "texto": "Nome da classe (br-tab)",
+      "destino": "a2-7cb0f2c9c451",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Parâmetro do código de instanciação de BRTab: parte da mesma instrução, sem observável próprio. Herda a exclusão (acoplada) pelo mesmo predicado."
+    },
+    {
+      "unidade": "a2-9606afee2fc5",
+      "texto": "Objeto referenciando a raiz do componente DOM",
+      "destino": "a2-7cb0f2c9c451",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Parâmetro do código de instanciação de BRTab: parte da mesma instrução, sem observável próprio. Herda a exclusão (acoplada) pelo mesmo predicado."
+    },
+    {
+      "unidade": "a2-5383bce4f220",
+      "texto": "Incluir o arquivo core.min.js no html.",
+      "destino": "a2-c5c20128d015",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesma frase (\"Incluir o arquivo core.min.js no html\") na aba de desenvolvimento de outro componente: o predicado e o observável são um só, de nível de página (o script do DS incluído). Herda a exclusão da representante pelo mesmo predicado e a mesma aplicabilidade: tirar o core.min.js desliga todos os componentes (acoplada)."
+    },
+    {
+      "unidade": "a2-ffb991e0c695",
+      "texto": "Nome da classe (br-table)",
+      "destino": "a2-0ea17af59c31",
+      "motivoDestino": "sem-medicao",
+      "decisao": "herda",
+      "porque": "Parâmetro do código de instanciação de BRTable: parte da mesma instrução; numa tabela estática a instanciação não tem efeito observável em S0 e o parâmetro também não. Herda sem-medicao pelo mesmo predicado e aplicabilidade."
+    },
+    {
+      "unidade": "a2-3883993f5e7c",
+      "texto": "Objeto referenciando a raiz do componente DOM",
+      "destino": "a2-0ea17af59c31",
+      "motivoDestino": "sem-medicao",
+      "decisao": "herda",
+      "porque": "Parâmetro do código de instanciação de BRTable: parte da mesma instrução; numa tabela estática a instanciação não tem efeito observável em S0 e o parâmetro também não. Herda sem-medicao pelo mesmo predicado e aplicabilidade."
+    },
+    {
+      "unidade": "a2-31ec17a5124a",
+      "texto": "Evite o uso de colunas com células vazias;",
+      "destino": "a2-bbf97e72884a",
+      "motivoDestino": "forca",
+      "decisao": "herda",
+      "porque": "Mesmo texto (\"Evite o uso de colunas com células vazias\") na aba de acessibilidade, com o mesmo verbo \"Evite\": a mesma força de recomendação. Herda forca pelo mesmo predicado."
+    },
+    {
+      "unidade": "a2-5d2afeb7b676",
+      "texto": "Incluir o arquivo core.min.js no html.",
+      "destino": "a2-c5c20128d015",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesma frase (\"Incluir o arquivo core.min.js no html\") na aba de desenvolvimento de outro componente: o predicado e o observável são um só, de nível de página (o script do DS incluído). Herda a exclusão da representante pelo mesmo predicado e a mesma aplicabilidade: tirar o core.min.js desliga todos os componentes (acoplada)."
+    },
+    {
+      "unidade": "a2-d304f5818f11",
+      "texto": "Nome da classe (br-tooltip)",
+      "destino": "a2-8ed5cfe3256e",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Parâmetro do código de instanciação de BRTooltip: parte da mesma instrução, sem observável próprio. Herda a exclusão (acoplada) pelo mesmo predicado."
+    },
+    {
+      "unidade": "a2-d267e774432c",
+      "texto": "Objeto referenciando a raiz do componente DOM",
+      "destino": "a2-8ed5cfe3256e",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Parâmetro do código de instanciação de BRTooltip: parte da mesma instrução, sem observável próprio. Herda a exclusão (acoplada) pelo mesmo predicado."
+    },
+    {
+      "unidade": "a2-537de329b1f4",
+      "texto": "Incluir o arquivo core.min.js no html.",
+      "destino": "a2-c5c20128d015",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesma frase (\"Incluir o arquivo core.min.js no html\") na aba de desenvolvimento de outro componente: o predicado e o observável são um só, de nível de página (o script do DS incluído). Herda a exclusão da representante pelo mesmo predicado e a mesma aplicabilidade: tirar o core.min.js desliga todos os componentes (acoplada)."
+    },
+    {
+      "unidade": "a2-3bfff7332768",
+      "texto": "Nome da classe (br-upload)",
+      "destino": "a2-6e17ac8690e0",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Parâmetro do código de instanciação de BRUpload: parte da mesma instrução, sem observável próprio. Herda a exclusão (acoplada) pelo mesmo predicado."
+    },
+    {
+      "unidade": "a2-b0c0d10a8f6e",
+      "texto": "Objeto referenciando a raiz do componente DOM",
+      "destino": "a2-6e17ac8690e0",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Parâmetro do código de instanciação de BRUpload: parte da mesma instrução, sem observável próprio. Herda a exclusão (acoplada) pelo mesmo predicado."
+    },
+    {
+      "unidade": "a2-5b623d8a8789",
+      "texto": "Forneça descrição para as imagens, vídeos e áudios.",
+      "destino": "a2-679351f2635c",
+      "motivoDestino": "nao-se-aplica",
+      "decisao": "herda",
+      "porque": "Alternativa em texto para IMAGENS (atributo alt, descrição de imagem/vídeo/áudio): mesmo predicado e condição da recomendação 3.6. A tela não tem imagem de conteúdo nas instâncias sorteáveis (ícones de fonte dentro de botões; logotipo é moldura), então a mesma aplicabilidade a exclui (nao-se-aplica). Diferente de a2-1faa8ef238c0 e a2-fee39db9eda4, que falam de nome de botão com ícone e foram desfeitas na revisão 2."
+    },
+    {
+      "unidade": "a2-5c314e764482",
+      "texto": "Utilize texto alternativo para imagens.",
+      "destino": "a2-679351f2635c",
+      "motivoDestino": "nao-se-aplica",
+      "decisao": "herda",
+      "porque": "Alternativa em texto para IMAGENS (atributo alt, descrição de imagem/vídeo/áudio): mesmo predicado e condição da recomendação 3.6. A tela não tem imagem de conteúdo nas instâncias sorteáveis (ícones de fonte dentro de botões; logotipo é moldura), então a mesma aplicabilidade a exclui (nao-se-aplica). Diferente de a2-1faa8ef238c0 e a2-fee39db9eda4, que falam de nome de botão com ícone e foram desfeitas na revisão 2."
+    },
+    {
+      "unidade": "a2-6dc87e28972f",
+      "texto": "Deve ser fornecida uma descrição para as imagens da página, utilizando-se, para tanto o atributo alt.",
+      "destino": "a2-679351f2635c",
+      "motivoDestino": "nao-se-aplica",
+      "decisao": "herda",
+      "porque": "Alternativa em texto para IMAGENS (atributo alt, descrição de imagem/vídeo/áudio): mesmo predicado e condição da recomendação 3.6. A tela não tem imagem de conteúdo nas instâncias sorteáveis (ícones de fonte dentro de botões; logotipo é moldura), então a mesma aplicabilidade a exclui (nao-se-aplica). Diferente de a2-1faa8ef238c0 e a2-fee39db9eda4, que falam de nome de botão com ícone e foram desfeitas na revisão 2."
+    },
+    {
+      "unidade": "a2-2c791b329734",
+      "texto": "Reforce a identidade visual com o conteúdo utilizando",
+      "destino": "a2-2df7bf5e2fa2",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Continuação da mesma frase-título (\"utilize os componentes já disponíveis no Design System\"): sem predicado próprio. Herda acoplada: violar exige trocar um componente inteiro por marcação própria."
+    },
+    {
+      "unidade": "a2-5b5edee6f2a7",
+      "texto": "class · string · card-content · Conteúdo do Card",
+      "destino": "a2-22f23447d6b2",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesmo predicado e observável (o contêiner .card-content da área de conteúdo, obrigatória na anatomia). Toda manifestação é tirar ou trocar esse contêiner, que leva junto o padding e a margem interna do conteúdo (outra propriedade): herda a exclusão por isolamento da revisão 2 (acoplada).",
+      "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
+    },
+    {
+      "unidade": "a2-93c8e2f7bb50",
+      "texto": "class · string · br-input · Container do componente.",
+      "destino": "a2-bd84ff2497d5",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesmo predicado e observável (classe br-input no contêiner do campo do select, único hospedeiro). Tirar a classe muda junto altura, raio e espaçamentos do campo (outras propriedades): herda acoplada (revisão 2, isolamento).",
+      "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
+    },
+    {
+      "unidade": "a2-f528988199db",
+      "texto": "class · string · br-item · Container do componente.",
+      "destino": "a2-419c091564b6",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesmo predicado e observável (classe br-item nas opções da lista do select). Tirar a classe tira junto os estados de hover/foco/selecionado e o espaçamento do item (outros observáveis): herda acoplada (revisão 2, isolamento).",
+      "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
+    },
+    {
+      "unidade": "a2-000fbf226374",
+      "texto": "br-list · classe · Container do componente List",
+      "destino": "a2-0a6b97c41045",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesmo predicado e observável (classe br-list na lista do select). Tirar a classe tira junto a abertura e a entrega da escolha pelo BRSelect (outro comportamento): herda acoplada (revisão 2, isolamento).",
+      "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
+    },
+    {
+      "unidade": "a2-f843837bec78",
+      "texto": "br-item · classe · Container do componente Item",
+      "destino": "a2-419c091564b6",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesmo predicado e observável (classe br-item nas opções da lista do select). Tirar a classe tira junto os estados de hover/foco/selecionado e o espaçamento do item (outros observáveis): herda acoplada (revisão 2, isolamento).",
+      "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
+    },
+    {
+      "unidade": "a2-774d96866ae5",
+      "texto": "É importante que os tables sejam projetados de forma acessível, o que significa que devem possuir cabeçalho de linha e colunas claramente identificáveis, rótulos de célula claros e navegação por teclado consistente;",
+      "destino": "a2-24082cba4782",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesmo predicado e observável (estrutura semântica de tabela com cabeçalhos th). Toda manifestação desfaz a marcação de tabela e leva junto o papel de título da tabela (caption, e-MAG 3.9): herda acoplada (revisão 2, isolamento).",
+      "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
+    },
+    {
+      "unidade": "a2-870d1ce7439e",
+      "texto": "Clique: quando o usuário clicar no elemento. Use somente no tipo popover",
+      "destino": "a2-c6b7402991ad",
+      "motivoDestino": "acoplada",
+      "decisao": "herda",
+      "porque": "Mesmo predicado (clique só no tipo popover; o tooltip simples não depende de clique) da representante. A manifestação (abrir só por clique) tira junto a abertura por foco exigida em a2-17a73c07609f (outro comportamento): herda acoplada (revisão 2, isolamento).",
+      "revisao2": "cadeia aberta pelo isolamento (a representante saiu por acoplamento distinto)"
+    }
+  ]
+}

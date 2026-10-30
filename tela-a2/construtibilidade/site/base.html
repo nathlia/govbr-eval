@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--HEAD-->
+<title>Acompanhar requerimento</title>
+<link rel="stylesheet" href="/rawline/css/rawline.css">
+<link rel="stylesheet" href="/fa/css/all.min.css">
+<link rel="stylesheet" href="/core/core.min.css">
+<link rel="stylesheet" href="pagina.css">
+</head>
+<body>
+<main id="main-content" class="container-lg my-3">
+<h1>Acompanhar Requerimento</h1>
+
+<div class="br-message warning" id="msg-pendencia">
+  <div class="icon"><i class="fas fa-exclamation-triangle fa-lg" aria-hidden="true"></i></div>
+  <div class="content"><span class="message-title">Atenção:</span><span class="message-body"> há um documento pendente neste requerimento.</span></div>
+  <div class="close">
+    <button class="br-button circle small" type="button" id="msg-pendencia-fechar" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i></button>
+    <div class="br-tooltip" role="tooltip" info="info" place="top" id="msg-pendencia-dica"><span class="text" role="tooltip">Fechar</span></div>
+  </div>
+</div>
+
+<div class="br-card" id="crd-resumo">
+  <div class="card-header"><div class="text-weight-semi-bold text-up-02">Requerimento nº 2026.000123</div></div>
+  <div class="card-content">
+    <div class="d-flex align-items-center">Prazo de análise: 30 dias
+      <button class="br-button circle" type="button" id="tip-prazo-gatilho" aria-label="Ajuda sobre o prazo" aria-labelledby="tip-prazo-texto"><i class="fas fa-question-circle" aria-hidden="true"></i></button>
+      <div class="br-tooltip" role="tooltip" info="info" place="top" id="tip-prazo"><span class="text" role="tooltip" id="tip-prazo-texto">Prazo em dias corridos</span></div>
+    </div>
+    <div class="d-flex align-items-center">Protocolo: <abbr title="Número Único de Protocolo">NUP</abbr> 00123
+      <button class="br-button circle" type="button" id="tip-protocolo-gatilho" aria-label="Ajuda sobre o protocolo" aria-labelledby="tip-protocolo-texto"><i class="fas fa-question-circle" aria-hidden="true"></i></button>
+      <div class="br-tooltip" role="tooltip" info="info" place="bottom" id="tip-protocolo"><span class="text" role="tooltip" id="tip-protocolo-texto">Guarde este número</span></div>
+    </div>
+  </div>
+</div>
+
+<nav class="br-step" id="stp-andamento" data-initial="2" data-label="bottom" role="none">
+  <div class="step-progress" role="listbox" aria-orientation="horizontal" aria-label="Etapas do requerimento">
+    <button class="step-progress-btn" role="option" aria-posinset="1" aria-setsize="4" type="button" data-alert="success" id="stp-1"><span class="step-info">Envio<!--SR1--></span><span class="step-alert"><!--MARCADOR--></span></button>
+    <button class="step-progress-btn" role="option" aria-posinset="2" aria-setsize="4" type="button" id="stp-2"><span class="step-info">Análise</span></button>
+    <button class="step-progress-btn" role="option" aria-posinset="3" aria-setsize="4" type="button" disabled="disabled"><span class="step-info">Decisão</span></button>
+    <button class="step-progress-btn" role="option" aria-posinset="4" aria-setsize="4" type="button" disabled="disabled"><span class="step-info">Conclusão</span></button>
+  </div>
+</nav>
+
+<div class="br-select" id="sel-tipo-documento">
+  <div class="br-input">
+    <label for="sel-campo">Tipo de documento</label>
+    <input id="sel-campo" type="text" placeholder="Selecione o tipo do documento pendente"/>
+    <button class="br-button" type="button" aria-label="Exibir lista"<!--SELTAB--> data-trigger="data-trigger" id="sel-gatilho"><i class="fas fa-angle-down" aria-hidden="true"></i></button>
+  </div>
+  <div class="br-list" tabindex="0">
+    <div class="br-item" tabindex="-1"><div class="br-radio"><input id="rb0" type="radio" name="tipo" value="rg"/><label for="rb0">Documento de identidade</label></div></div>
+    <div class="br-item" tabindex="-1"><div class="br-radio"><input id="rb1" type="radio" name="tipo" value="cr"/><label for="rb1">Comprovante de residência</label></div></div>
+    <div class="br-item" tabindex="-1"><div class="br-radio"><input id="rb2" type="radio" name="tipo" value="pr"/><label for="rb2">Procuração</label></div></div>
+  </div>
+</div>
+<!--SELDICA-->
+
+<fieldset id="fs-avisos">
+  <legend>Avisos sobre o requerimento</legend>
+  <div class="br-checkbox" id="chk-avisos-todos"><input id="chk-todos" name="chk-todos" type="checkbox" data-parent="avisos"/><label for="chk-todos">Todos os avisos</label></div>
+  <div class="br-switch" role="presentation" id="swt-aviso-email"><input id="swt-email" type="checkbox" name="swt-email" role="switch" data-child="avisos"/><label for="swt-email">Receber avisos por e-mail</label></div>
+  <div class="br-switch" role="presentation" id="swt-aviso-sms"><input id="swt-sms" type="checkbox" name="swt-sms" role="switch" data-child="<!--SMSCHILD-->"/><label for="swt-sms">Receber avisos por SMS</label></div>
+</fieldset>
+
+<section id="secao-duvidas">
+  <h2>Dúvidas Frequentes</h2>
+  <div class="br-accordion" id="acc-duvidas" single="single">
+    <div class="item"><button class="header" type="button" aria-controls="acc-1"><span class="icon"><i class="fas fa-angle-down" aria-hidden="true"></i></span><span class="title">Como envio o documento?</span></button></div>
+    <div class="content" id="acc-1"><p>Escolha o tipo, selecione o arquivo e use Enviar documento.</p></div>
+    <div class="item"><button class="header" type="button" aria-controls="acc-2"><span class="icon"><i class="fas fa-angle-down" aria-hidden="true"></i></span><span class="title">Qual é o prazo?</span></button></div>
+    <div class="content" id="acc-2"><p>O prazo de análise é de 30 dias corridos.</p></div>
+  </div>
+</section>
+</main>
+<script src="/core/core.min.js"></script>
+<script src="init.js"></script>
+<!--BODYEND-->
+</body>
+</html>

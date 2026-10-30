@@ -1,0 +1,1591 @@
+[
+ {
+  "id": "a2-12888369bd0f",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-select · Container do componente Select",
+  "justificativa": "Container br-select. Medida: classe da raiz.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-br-select",
+    "descricao": "A raiz do select usa classe própria (aparência copiada à mão), sem br-select.",
+    "clausula": "class · string · br-select · Container do componente Select"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1f3279c0e6a1",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "O componente list será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo.",
+  "justificativa": "Lista flutuante com sombra. Medida: box-shadow computado da lista aberta.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "lista-sem-sombra",
+    "descricao": "A lista aberta fica com box-shadow none.",
+    "clausula": "O componente list será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-30278caa77da",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Este botão deve estar posicionado na extremidade direita ao componente input.",
+  "justificativa": "Botão na extremidade direita do campo. Medida: posição do botão contra a do campo.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-a-esquerda",
+    "descricao": "O botão de abrir a lista fica à esquerda do campo.",
+    "clausula": "Este botão deve estar posicionado na extremidade direita ao componente input."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-41577e5f420c",
+  "componente": "select",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Após aberta a lista de itens, o usuário deve conseguir navegar através dela por meio das teclas de seta Up e Down;",
+  "justificativa": "Na lista aberta, setas para cima/baixo navegam. Medida: seta para baixo move o foco/destaque para o próximo item.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "setas-inertes",
+    "descricao": "Com a lista aberta, as setas não movem entre os itens.",
+    "clausula": "Após aberta a lista de itens, o usuário deve conseguir navegar através dela por meio das teclas de seta Up e Down;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-419c091564b6",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-item · Container do componente Item",
+  "justificativa": "Opções em br-item. Medida: classe de cada opção.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "opcao-sem-br-item",
+    "descricao": "As opções da lista não têm br-item.",
+    "clausula": "class · string · br-item · Container do componente Item"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-45a090bca496",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "atributo · string · trigger · Configura o button como gatilho de abertura da lista de itens",
+  "justificativa": "Atributo obrigatório 'trigger' no botão. Medida: atributo data-trigger no botão do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-sem-atributo",
+    "descricao": "O botão não tem o atributo trigger; a abertura é ligada à mão.",
+    "clausula": "atributo · string · trigger · Configura o button como gatilho de abertura da lista de itens"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-482ab9c4a4b1",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "4 · Modos de seleção · Estados · Obrigatório",
+  "justificativa": "Modos de seleção (estados) obrigatórios. Medida: depois de escolher, o item escolhido tem o estado selecionado (classe/aria-selected/checked).",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "escolhido-sem-estado",
+    "descricao": "O item escolhido não recebe o estado selecionado na lista.",
+    "clausula": "4 · Modos de seleção · Estados · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-4c2ef1bf747e",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "atributo · string · name · Deve ser inseridos nos inputs radio e checkbox",
+  "justificativa": "name nos inputs das opções. Medida: atributo name dos inputs radio das opções.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "opcao-sem-name",
+    "descricao": "Os inputs radio das opções ficam sem name.",
+    "clausula": "atributo · string · name · Deve ser inseridos nos inputs radio e checkbox"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-4d99afd1c618",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Para abrir o componente select ou multiselect o usuário poderá clicar em toda a extensão no campo input.",
+  "justificativa": "Clicar em qualquer ponto da extensão do campo abre o select. Medida: clicar no meio do campo e conferir a lista aberta.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "so-gatilho-abre",
+    "descricao": "Clicar no campo do select não abre a lista; só o botão gatilho abre.",
+    "clausula": "o usuário poderá clicar em toda a extensão no campo input"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5250515a0c00",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Select (Campo de Seleção) › Especificações › Espaçamento",
+  "justificativa": "Espaçamentos do select: input margin-bottom base, lista com margin-top default em relação ao input. Medida: distância computada entre o input e a lista aberta.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "lista-sobre-o-campo",
+    "descricao": "A lista aberta fica sobreposta ao campo (margin-top negativo, cobrindo a borda inferior do input).",
+    "clausula": "Componente List · margin-top · --spacing-scale-default"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5d641612382a",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "2 · Componente button · Button · Obrigatório",
+  "justificativa": "Botão (gatilho) obrigatório. Medida: botão dentro do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-gatilho",
+    "descricao": "O botão de abrir a lista é removido; a lista abre ao clicar no campo.",
+    "clausula": "2 · Componente button · Button · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-654520f6ba0e",
+  "componente": "select",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "O select pode ser recolhido por meio da tecla Esc, sem selecionar qualquer item de opção.",
+  "justificativa": "Esc recolhe o select sem escolher item (tecla específica). Medida: abrir a lista, pressionar Esc, conferir lista fechada e valor inalterado.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "esc-nao-fecha-lista",
+    "descricao": "Com a lista do select aberta, Esc não a fecha.",
+    "clausula": "O select pode ser recolhido por meio da tecla Esc, sem selecionar qualquer item de opção."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-684e49bfcc90",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Ao clicar no componente input, este assumirá seu estado foco e o cursor ficará ativo em seu interior habilitando a funcionalidade de filtro de pesquisa por autocomplete.",
+  "justificativa": "Ao clicar no campo do select ele assume o foco e a digitação filtra a lista (autocomplete). Medida: clicar no campo, digitar o início de uma opção e conferir a lista filtrada.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-filtro",
+    "descricao": "Digitar no campo do select não filtra a lista; todas as opções continuam visíveis.",
+    "clausula": "habilitando a funcionalidade de filtro de pesquisa por autocomplete"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-6eb568d6dd94",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "atributo · string · value · Deve ser inseridos nos inputs radio e checkbox",
+  "justificativa": "value nos inputs das opções. Medida: atributo value dos inputs radio das opções.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "opcao-sem-value",
+    "descricao": "Os inputs radio das opções ficam sem value.",
+    "clausula": "atributo · string · value · Deve ser inseridos nos inputs radio e checkbox"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7348bce34289",
+  "componente": "select",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Certifique-se de seguir as recomendações de cores e estados na diretriz do componente, garantindo a qualidade de contraste e legibilidade para usuários com baixa visão.",
+  "justificativa": "Seguir cores e estados da diretriz do select. Medida: cor do texto do campo contra a da diretriz e contraste.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "texto-baixo-contraste",
+    "descricao": "O texto do campo fica #AAAAAA sobre branco.",
+    "clausula": "Certifique-se de seguir as recomendações de cores e estados na diretriz do componente, garantindo a qualidade de contraste e legibilidade para usuários com baixa visão."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-83611c221e13",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Select: dez itens;",
+  "justificativa": "Altura máxima da lista do select = dez itens; com menos itens, todos aparecem sem rolagem. Medida: altura máxima computada da lista contra a altura de 10 itens.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "lista-curta-com-rolagem",
+    "descricao": "A lista aberta do select fica limitada à altura de 2 itens, com barra de rolagem para os demais.",
+    "clausula": "Select: dez itens;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-879621000aa6",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-button · Container do componente Button",
+  "justificativa": "Gatilho em br-button. Medida: classe do botão.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-sem-br-button",
+    "descricao": "O botão de abrir a lista não tem br-button.",
+    "clausula": "class · string · br-button · Container do componente Button"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8c3b5176e2a3",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Select (Campo de Seleção) › Especificações › Sombra",
+  "justificativa": "Lista flutuante com sombra --surface-shadow-md (o token, além da presença de sombra já aceita em a2-1f3279c0e6a1). Medida: box-shadow computado da lista aberta contra o token.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "lista-sombra-forte",
+    "descricao": "A lista aberta fica com sombra de nível xl em vez de md.",
+    "clausula": "Superfície · --surface-shadow-md"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8e13c46672f5",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "É um botão terciário que tem a função de acionar a exibição ou ocultação da lista dropdown, apresentando um feedback visual através da alternância em seu ícone interno",
+  "justificativa": "O gatilho do select é botão terciário que abre/fecha a lista e alterna o ícone (toggle). Medida: ícone do gatilho com a lista fechada e aberta; ênfase do botão.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "icone-nao-alterna",
+    "descricao": "Com a lista aberta, o ícone do gatilho continua o de abrir (seta para baixo).",
+    "clausula": "apresentando um feedback visual através da alternância em seu ícone interno"
+   },
+   {
+    "id": "gatilho-secundario",
+    "descricao": "O gatilho do select recebe ênfase secundária (contorno).",
+    "clausula": "É um botão terciário"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a451e00d7b63",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "O estado foco ocorre sobre o campo input quando o usuário clicar sobre ele ou sobre o botão terciário.",
+  "justificativa": "O campo do select assume o estado de foco ao clicar nele ou no botão gatilho. Medida: estilo de foco do campo depois de clicar no gatilho.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-nao-foca-campo",
+    "descricao": "Clicar no gatilho abre a lista, mas o campo não mostra o estado de foco.",
+    "clausula": "O estado foco ocorre sobre o campo input quando o usuário clicar sobre ele ou sobre o botão terciário."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-adae4a234fdd",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "O componente list deve apresentar os itens a serem escolhidos pelo usuário.",
+  "justificativa": "A lista do select apresenta os itens a serem escolhidos (requisito, não descrição). Medida: cada opção exibida na lista aberta pode ser escolhida e passa ao campo.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "opcao-nao-escolhivel",
+    "descricao": "O 3º item aparece na lista aberta, mas clicar nele (ou Enter) não o escolhe: o campo não muda.",
+    "clausula": "O componente list deve apresentar os itens a serem escolhidos pelo usuário."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-bd84ff2497d5",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-input · Container do componente Input",
+  "justificativa": "Campo interno em br-input. Medida: classe do contêiner do campo.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "campo-sem-br-input",
+    "descricao": "O contêiner do campo dentro do select não tem br-input.",
+    "clausula": "class · string · br-input · Container do componente Input"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d1039a4016fe",
+  "componente": "select",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "O componente select deve ser acessado via navegação por teclado por meio da tecla Tab;",
+  "justificativa": "Select alcançado pela tecla Tab (tecla prescrita). Medida: sequência de Tab para no campo do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "select-fora-do-tab",
+    "descricao": "O campo do select recebe tabindex=-1.",
+    "clausula": "O componente select deve ser acessado via navegação por teclado por meio da tecla Tab;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-daf3655caedf",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Tabela de especificação — Select (Campo de Seleção) › Especificações › Iconografia",
+  "justificativa": "Ícone do gatilho aponta para baixo com a lista fechada e para cima com a lista aberta. Medida: ícone do gatilho antes e depois de abrir a lista.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "icone-nao-vira",
+    "descricao": "Com a lista aberta, o ícone do gatilho continua apontando para baixo.",
+    "clausula": "Ícone - componente button · Aberto · <i class=\"fas fa-caret-up\"></i> · fa-caret-up"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-e85eefb9d6f2",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "O tipo select é utilizado para as opções de seleção única. O item selecionado será apresentado no \"Campo de Entrada de Texto\" seguindo as diretrizes do componente input.",
+  "justificativa": "No select simples, o item escolhido aparece no campo de entrada. Medida: valor do campo depois de escolher uma opção.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "campo-nao-mostra-escolha",
+    "descricao": "Depois de escolher uma opção, a lista fecha e o campo continua vazio.",
+    "clausula": "O item selecionado será apresentado no \"Campo de Entrada de Texto\""
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-00ac06519e7d",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "O texto do Rótulo deve possuir alinhamento centralizado;",
+  "justificativa": "Rótulo abaixo do indicador centralizado. Medida: text-align computado do rótulo.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-a-esquerda",
+    "descricao": "Os rótulos abaixo dos indicadores ficam com text-align left.",
+    "clausula": "O texto do Rótulo deve possuir alinhamento centralizado;"
+   }
+  ],
+  "alternativasValidas": [
+   {
+    "id": "rotulos-acima",
+    "descricao": "Todos os rótulos das 4 etapas ficam centralizados ACIMA dos indicadores (um modelo só no step).",
+    "clausula": "Centralizado acima do Indicador, como posicionamento alternativo. O texto do Rótulo deve possuir alinhamento centralizado;",
+    "instancias": [
+     "stp-andamento"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2-118542cd2b4a",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Steps (Navegação Passo a Passo) › Especificações › Cores › Cores do Estado Concluído",
+  "justificativa": "Etapa concluída: rótulo --green-cool-vivid-50. Medida: color computado do rótulo da etapa 1.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "concluida-rotulo-azul",
+    "descricao": "O rótulo da etapa 1 (concluída) fica --blue-warm-vivid-70.",
+    "clausula": "Rótulos · color · --green-cool-vivid-50"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1a7bffe3be23",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Isto é feito com a utilização do Componente Tag, do tipo Ícone. Esta Tag é posicionada no topo e à direita do Indicador, e pode representar os Estados Alert, Error e Concluído.",
+  "justificativa": "A tag de estado (concluído) fica no topo e à direita do indicador. Medida: posição do marcador de concluído da 1ª etapa contra a caixa do indicador.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "tag-embaixo-a-esquerda",
+    "descricao": "O marcador de concluído da 1ª etapa fica no canto inferior esquerdo do indicador.",
+    "clausula": "Esta Tag é posicionada no topo e à direita do Indicador"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1da96248e217",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Steps (Navegação Passo a Passo) › Especificações › Cores › Cores do Estado Interativo",
+  "justificativa": "Estado interativo do step (etapa clicável não atual, aqui a etapa 1 concluída): rótulo e indicador --blue-warm-vivid-70, borda sólida --surface-width-sm; linha do tempo --blue-warm-vivid-70. Medida: cores e borda computadas do indicador/rótulo da etapa 1.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "indicador-borda-cinza",
+    "descricao": "O indicador da etapa 1 fica com borda --gray-20.",
+    "clausula": "Indicador · border-color · --blue-warm-vivid-70"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-20dae307ea61",
+  "componente": "step",
+  "arquivo": "componentes/step__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-step · Container do componente",
+  "justificativa": "Container br-step. Medida: classe da raiz.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-br-step",
+    "descricao": "A raiz do step usa classe própria (aparência copiada à mão), sem br-step.",
+    "clausula": "class · string · br-step · Container do componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-22f61dc44546",
+  "componente": "step",
+  "arquivo": "componentes/step__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Usar o seguinte código JavaScript para instanciar a classe BRStep, passando os seguintes parâmetros:",
+  "justificativa": "Instanciar BRStep. No core 3.7.0 a instância numera os indicadores e marca a etapa ativa (active, aria-current=\"step\"). Medida: número visível nos indicadores e aria-current na 2ª etapa.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "step-nao-instanciado",
+    "descricao": "A página instancia os demais componentes mas não o step: os indicadores ficam sem número e nenhuma etapa fica marcada como atual.",
+    "clausula": "Usar o seguinte código JavaScript para instanciar a classe BRStep"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-26eb8a6b8ca0",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Este formato tem a finalidade exclusiva de representar as etapas concluídas. Ou seja, a tarefa referente àquela etapa precisa estar finalizada.",
+  "justificativa": "O formato concluído é exclusivo de etapas cuja tarefa terminou; a 2ª etapa (atual) não pode tê-lo. Medida: marcador de concluído só na 1ª etapa.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "atual-como-concluida",
+    "descricao": "A 2ª etapa, em andamento, também recebe o marcador de concluído.",
+    "clausula": "Este formato tem a finalidade exclusiva de representar as etapas concluídas."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-26fe09e0a119",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Utilize o estado interativo sobre os elementos nos quais o usuário irá interagir, nesse caso sobre o Indicador e o Rótulo.",
+  "justificativa": "Estado interativo no indicador e rótulo das etapas com que o usuário interage (1ª concluída e 2ª atual). Medida: estilo computado com hover sobre a etapa difere do estilo em repouso.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-estado-interativo",
+    "descricao": "Passar o mouse sobre a 1ª etapa não muda indicador nem rótulo (o realce de hover é suprimido).",
+    "clausula": "Utilize o estado interativo sobre os elementos nos quais o usuário irá interagir, nesse caso sobre o Indicador e o Rótulo."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2737953e2513",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Steps (Navegação Passo a Passo) › Especificações › Iconografia",
+  "justificativa": "Marcador de concluído com ícone check em --icon-size-base. Medida: glifo e tamanho do ícone do marcador da etapa 1.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "concluido-icone-grande",
+    "descricao": "O ícone de concluído da etapa 1 fica em --icon-size-lg.",
+    "clausula": "Ícone Estado Concluído · -- · <i class=\"fas fa-check\"></i> · --icon-size-base · .fa-check"
+   },
+   {
+    "id": "concluido-icone-circulo",
+    "descricao": "O marcador de concluído mostra fa-circle em vez de fa-check.",
+    "clausula": "Ícone Estado Concluído · -- · <i class=\"fas fa-check\"></i> · --icon-size-base · .fa-check"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-52ea5c58a080",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "1 · Indicador · --- · Obrigatório",
+  "justificativa": "Indicador obrigatório. Medida: cada etapa tem o indicador visível.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-indicador",
+    "descricao": "O indicador da 3ª etapa fica oculto; o rótulo continua.",
+    "clausula": "1 · Indicador · --- · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-87c66cfdfa74",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Esta se posiciona entre os Indicadores e acompanha o espaçamento entre eles.",
+  "justificativa": "A linha do tempo fica entre os indicadores e acompanha o espaçamento entre eles. Medida: extremos da linha contra as bordas dos indicadores vizinhos (getBoundingClientRect).",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "linha-deslocada",
+    "descricao": "A linha do tempo desce para a altura dos rótulos, abaixo dos indicadores, em vez de ligar um indicador ao outro.",
+    "clausula": "Esta se posiciona entre os Indicadores e acompanha o espaçamento entre eles."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-902fb4a217d1",
+  "componente": "step",
+  "arquivo": "componentes/step__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "É importante que as etapas sejam apresentadas em uma ordem lógica, evitando confundir os usuários durante o fluxo das tarefas;",
+  "justificativa": "Etapas apresentadas em ordem lógica (R-ED b: caso flagrante). Medida: sequência dos rótulos das etapas contra a ordem do processo.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "etapas-fora-de-ordem",
+    "descricao": "A 3ª e a 4ª etapas trocam de lugar: a etapa final do requerimento aparece antes da intermediária.",
+    "clausula": "É importante que as etapas sejam apresentadas em uma ordem lógica"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-904b2a1868bd",
+  "componente": "step",
+  "arquivo": "componentes/step__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Os controles interativos do componente step, podem ser acionados a partir das teclas Enter ou Space;",
+  "justificativa": "Controles interativos do step acionáveis por Enter ou Space (teclas específicas; além de Tab/Shift+Tab de a2-d5cac68068e5). Medida: com foco na 1ª etapa, Enter/Espaço a aciona.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "etapa-nao-aciona-por-tecla",
+    "descricao": "Com foco na 1ª etapa, Enter e Espaço não a acionam; só o clique.",
+    "clausula": "Os controles interativos do componente step, podem ser acionados a partir das teclas Enter ou Space;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-aaac3112f76b",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "A - As etapas não visitadas deverão permanecer em estado desabilitado até a conclusão da etapa anterior;",
+  "justificativa": "Progressão linear: etapas não visitadas desabilitadas. Medida: disabled/aria-disabled das etapas 3 e 4.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "etapa-futura-habilitada",
+    "descricao": "A 4ª etapa fica habilitada e clicável.",
+    "clausula": "A - As etapas não visitadas deverão permanecer em estado desabilitado até a conclusão da etapa anterior;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ab4d44192527",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "B - As etapas concluídas devem ser apresentadas no estado concluído.",
+  "justificativa": "Etapas concluídas no estado concluído. Medida: estado/classe da 1ª etapa.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "concluida-sem-estado",
+    "descricao": "A 1ª etapa aparece no estado interativo comum, sem o estado concluído.",
+    "clausula": "B - As etapas concluídas devem ser apresentadas no estado concluído."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-afb226dcb3e4",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Steps (Navegação Passo a Passo) › Especificações › Tipografia",
+  "justificativa": "Rótulos do step em --font-size-scale-up-01, --font-weight-medium. Medida: font-size/font-weight computados dos rótulos.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulos-negrito",
+    "descricao": "Os rótulos das etapas ficam em --font-weight-bold.",
+    "clausula": "Rótulos · -font-size-scale-up-01 · --font-weight-medium"
+   },
+   {
+    "id": "rotulos-pequenos",
+    "descricao": "Os rótulos das etapas ficam em --font-size-scale-down-01.",
+    "clausula": "Rótulos · -font-size-scale-up-01 · --font-weight-medium"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b964a1347b6c",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "O Rótulo deverá transmitir a informação, clara, direta e objetiva ao usuário da ação ou etapa que representa.",
+  "justificativa": "Rótulo da etapa claro, direto e objetivo (R-ED b: caso flagrante oposto). Medida: texto do rótulo da etapa.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-prolixo",
+    "descricao": "O rótulo da 2ª etapa vira uma frase de mais de 20 palavras (\"Nesta etapa o seu requerimento está sendo analisado pela equipe responsável e você deve aguardar até que ela termine\").",
+    "clausula": "O Rótulo deverá transmitir a informação, clara, direta e objetiva"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c47edccf787c",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Steps (Navegação Passo a Passo) › Especificações › Cores › Cores do Estado Ativo",
+  "justificativa": "Etapa atual (estado ativo): rótulo --blue-warm-vivid-80, indicador preenchido com número --pure-0. Medida: cores computadas da etapa 2.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "atual-rotulo-cinza",
+    "descricao": "O rótulo da etapa 2 (atual) fica --gray-80.",
+    "clausula": "Rótulos · color · --blue-warm-vivid-80"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c4affd889cea",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Steps (Navegação Passo a Passo) › Especificações › Espaçamentos",
+  "justificativa": "Indicador com margin-right e margin-bottom --spacing-scale-2x (horizontal, rótulo abaixo). Medida: distância computada entre indicador e rótulo.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-colado-indicador",
+    "descricao": "Os rótulos ficam encostados no indicador (margin-bottom 0).",
+    "clausula": "Indicador · margin-botton · --spacing-scale-2x"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-cf6773605348",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "O estado ativo ocorre sobre o Indicador que representa a etapa que o usuário se encontra.",
+  "justificativa": "O indicador da etapa em que o usuário se encontra (2ª) está no estado ativo. Medida: estado/atributo de etapa atual e estilo do indicador da 2ª etapa.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "atual-sem-ativo",
+    "descricao": "A 2ª etapa (atual) aparece com o mesmo estilo das etapas comuns, sem o estado ativo.",
+    "clausula": "O estado ativo ocorre sobre o Indicador que representa a etapa que o usuário se encontra."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d5cac68068e5",
+  "componente": "step",
+  "arquivo": "componentes/step__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Os usuários de tecnologias assistivas devem conseguir navegar por meio das teclas Tab e Shift + Tab, para avançar e retroceder na navegação;",
+  "justificativa": "Etapas navegáveis por Tab e Shift+Tab (tecla prescrita). Medida: sequência de Tab/Shift+Tab passa pela etapa concluída.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "etapa-fora-do-tab",
+    "descricao": "A 1ª etapa (concluída, navegável) recebe tabindex=-1.",
+    "clausula": "Os usuários de tecnologias assistivas devem conseguir navegar por meio das teclas Tab e Shift + Tab, para avançar e retroceder na navegação;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-efb2d4b6d23d",
+  "componente": "step",
+  "arquivo": "componentes/step__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Certifique-se de seguir as recomendações de cores e contrastes indicados na diretriz do componente step.",
+  "justificativa": "Seguir cores e contraste da diretriz do step (remete ao DS, não ao e-MAG). Medida: cor do rótulo da etapa atual contra a da diretriz e contraste.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-baixo-contraste",
+    "descricao": "O rótulo da 2ª etapa (atual) fica #9E9E9E sobre branco.",
+    "clausula": "Certifique-se de seguir as recomendações de cores e contrastes indicados na diretriz do componente step."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f0e00f432762",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "3 · Linha do Tempo · --- · Obrigatório",
+  "justificativa": "Linha do tempo obrigatória. Medida: a linha entre indicadores existe e é visível (elemento ou pseudo-elemento com tamanho não nulo).",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-linha",
+    "descricao": "A linha do tempo entre os indicadores é removida.",
+    "clausula": "3 · Linha do Tempo · --- · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f44bca2e863f",
+  "componente": "step",
+  "arquivo": "componentes/step__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · step-progress-btn · Cada etapa",
+  "justificativa": "Cada etapa com step-progress-btn. Medida: classe de cada etapa.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "etapa-sem-classe",
+    "descricao": "A 3ª etapa é um botão sem step-progress-btn, com a aparência copiada à mão.",
+    "clausula": "class · string · step-progress-btn · Cada etapa"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-fd54ad1670be",
+  "componente": "step",
+  "arquivo": "componentes/step__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Steps (Navegação Passo a Passo) › Especificações › Dimensões",
+  "justificativa": "Indicador na densidade padrão com 40×40px. Medida: width/height computados dos indicadores.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "indicador-28",
+    "descricao": "Os indicadores ficam com 28×28px (nenhuma densidade).",
+    "clausula": "Indicador (Densidade Padrão) · width · 40px"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-002bf9be74ec",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "O Switch deve ser posicionado na interface de forma firme e consistente durante o movimento da chave de alternância ou alternância de labels e surgimento de bordas de foco, evitando mudar o posicionamento do seu container.",
+  "justificativa": "Posição firme durante a alternância. Medida: getBoundingClientRect do contêiner antes e depois de alternar.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "container-se-move",
+    "descricao": "Alternar muda a largura do contêiner e desloca o switch.",
+    "clausula": "O Switch deve ser posicionado na interface de forma firme e consistente durante o movimento da chave de alternância ou alternância de labels e surgimento de bordas de foco, evitando mudar o posicionamento do seu container."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-14fa162258a8",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente.",
+  "justificativa": "A área interativa do switch inclui o container e o label. Medida: clicar no texto do rótulo alterna o switch.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-nao-clicavel",
+    "descricao": "Clicar no texto do rótulo do switch não o alterna (o rótulo ignora o ponteiro), só a chave.",
+    "clausula": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1854c7b2badd",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Alinhamento",
+  "justificativa": "Label do switch centrado na vertical em relação à chave e alinhado à esquerda. Medida: posição vertical do texto em relação ao centro da chave.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "label-no-topo",
+    "descricao": "O texto do switch fica alinhado ao topo da chave, deslocado do centro vertical.",
+    "clausula": "Label · --spacing-vertical-center"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2a5f1cb5a078",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Espaçamento",
+  "justificativa": "Espaçamentos do switch: label afastado da chave por --spacing-scale-2x, container com margin-bottom base, chave à direita quando ligado e à esquerda quando desligado. Medida: distância label–chave e posição da chave.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "label-colado",
+    "descricao": "O label fica encostado na chave (margem 0).",
+    "clausula": "Label (depende da posição) · margin-right/margin-left/margin-botton · --spacing-scale-2x"
+   },
+   {
+    "id": "chave-ligada-a-esquerda",
+    "descricao": "Ao ligar, a chave de alternância permanece à esquerda (só a cor muda).",
+    "clausula": "Chave (ligado) · horizontal align · right"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-33de62f95ce7",
+  "componente": "switch",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-switch · Container do componente",
+  "justificativa": "Container br-switch. Medida: classe da raiz.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "sem-br-switch",
+    "descricao": "A raiz do switch usa classe própria (aparência copiada à mão), sem br-switch.",
+    "clausula": "class · string · br-switch · Container do componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-33e661bc4435",
+  "componente": "switch",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Para que usuários com deficiência visual possam entender completamente a opção selecionada, os leitores de tela devem anunciar o rótulo descritivo e o estado atual do switch.",
+  "justificativa": "Leitor de tela anuncia rótulo E estado atual; a parte residual, que o e-MAG 6.2 não cobre, é o estado. Medida: estado (checked/aria-checked) exposto na árvore de acessibilidade igual ao visual.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "estado-nao-exposto",
+    "descricao": "O switch é um div estilizado com role=switch e nome, mas sem aria-checked: o estado ligado/desligado não chega à árvore de acessibilidade.",
+    "clausula": "os leitores de tela devem anunciar o rótulo descritivo e o estado atual do switch."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3c18fb6c1dbc",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "No entanto, quando utilizados de forma agrupada, deverão vir associados a um componente checkbox principal, permitindo ao usuário selecionar e desselecionar todas, além de ter o feedback relacionado ao estado intermediário.",
+  "justificativa": "Switches agrupados vêm com checkbox principal que seleciona/desseleciona todos e mostra o estado intermediário (inventário emendado). Medida: com só um switch ligado, o checkbox principal fica intermediário; marcar/desmarcar o principal liga/desliga os dois.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "principal-sem-intermediario",
+    "descricao": "Com só um switch ligado, o checkbox principal aparece desmarcado (sem o estado intermediário).",
+    "clausula": "No entanto, quando utilizados de forma agrupada, deverão vir associados a um componente checkbox principal, permitindo ao usuário selecionar e desselecionar todas, além de ter o feedback relacionado ao estado intermediário."
+   },
+   {
+    "id": "principal-inerte",
+    "descricao": "Marcar o checkbox principal não liga os switches.",
+    "clausula": "No entanto, quando utilizados de forma agrupada, deverão vir associados a um componente checkbox principal, permitindo ao usuário selecionar e desselecionar todas"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-402eef83153c",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "3 · Chave de alternância · --- · Obrigatório",
+  "justificativa": "Chave de alternância obrigatória. Medida: a chave (pseudo-elemento) tem tamanho e cor visíveis.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "sem-chave",
+    "descricao": "A chave de alternância fica oculta; só o trilho aparece.",
+    "clausula": "3 · Chave de alternância · --- · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-41f0168a6cbb",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "2 · container · Superfície · Obrigatório",
+  "justificativa": "Container (superfície/trilho) obrigatório. Medida: fundo e borda computados do trilho.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "sem-trilho",
+    "descricao": "O trilho do switch fica transparente e sem borda; só a chave aparece.",
+    "clausula": "2 · container · Superfície · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-463dea60790d",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Tipografia",
+  "justificativa": "Label do switch em --font-size-scale-base semi-bold. Medida: font-size/font-weight computados do label.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "label-regular",
+    "descricao": "O label do switch fica em --font-weight-regular.",
+    "clausula": "Label · font-weight · --font-weight-semi-bold"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-86176aff4a89",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Cor",
+  "justificativa": "Cores do switch: superfície --pure-0, label --gray-80, chave ligada --blue-warm-vivid-40, desligada --gray-20. Medida: cores computadas no estado desligado e ligado.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "desligado-escuro",
+    "descricao": "O switch desligado fica com a cor de alternância --gray-80.",
+    "clausula": "chave de alternância - off · icon · --gray-20"
+   },
+   {
+    "id": "ligado-verde",
+    "descricao": "O switch ligado fica com a cor --green-cool-vivid-50.",
+    "clausula": "chave de alternância - on · icon · --blue-warm-vivid-40"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-89b4537e8260",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Dimensão",
+  "justificativa": "Switch de densidade média: container 52×30px, chave 22×22px. Medida: dimensões computadas do trilho e da chave.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "chave-pequena",
+    "descricao": "A chave de alternância fica com 14×14px dentro do container 52×30.",
+    "clausula": "Chave de alternância (média) · width · 22px"
+   },
+   {
+    "id": "trilho-largo",
+    "descricao": "O container fica com 64×30px.",
+    "clausula": "container (média) · width · 52px"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8f7b9c91d55e",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Switches devem ter efeito imediato e não devem exigir que o usuário clique em botões de \"Salvar\" ou \"Enviar\" para aplicar o novo estado.",
+  "justificativa": "Efeito imediato, sem exigir Salvar/Enviar. Medida: depois de alternar, o estado é aplicado (aviso de preferência salva) sem outro clique.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "so-com-enviar",
+    "descricao": "Alternar não aplica nada; o texto de apoio diz que a preferência será salva ao clicar em Enviar documento.",
+    "clausula": "Switches devem ter efeito imediato e não devem exigir que o usuário clique em botões de \"Salvar\" ou \"Enviar\" para aplicar o novo estado."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ae1397ab72d5",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Uma vez definido como serão aplicados os labels em seu produto, mantenha sempre a consistência.",
+  "justificativa": "Consistência na aplicação dos rótulos. Medida: posição do rótulo de cada switch em relação à chave.",
+  "instancias": [
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-do-outro-lado",
+    "descricao": "O rótulo do switch de SMS fica à esquerda da chave; o de e-mail, à direita.",
+    "clausula": "Uma vez definido como serão aplicados os labels em seu produto, mantenha sempre a consistência."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c5776632fd52",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada.",
+  "justificativa": "R-ED (b). Rótulo do switch diz o que ele faz ligado/desligado. Medida: o texto do rótulo nomeia a ação.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-neutro",
+    "descricao": "O rótulo do switch fica 'Opção'.",
+    "clausula": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-e9ded28efe9c",
+  "componente": "switch",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Quando ativado, o elemento switch deve ter o atributo aria-checked definido como true e quando desativado, o atributo aria-checked definido como false;",
+  "justificativa": "aria-checked acompanha o estado. Medida: aria-checked depois de ligar e de desligar.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "aria-checked-fixo",
+    "descricao": "aria-checked fica 'false' mesmo com o switch ligado.",
+    "clausula": "Quando ativado, o elemento switch deve ter o atributo aria-checked definido como true e quando desativado, o atributo aria-checked definido como false;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f2a468af452d",
+  "componente": "switch",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Os usuários devem poder acessar o switch por meio da tecla Tab e alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter;",
+  "justificativa": "Switch por Tab e alternado por Espaço ou Enter (teclas prescritas). Medida: Tab para no switch; Espaço e Enter alternam.",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "switch-fora-do-tab",
+    "descricao": "O input do switch recebe tabindex=-1.",
+    "clausula": "Os usuários devem poder acessar o switch por meio da tecla Tab e alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter;"
+   },
+   {
+    "id": "enter-inerte",
+    "descricao": "Com foco no switch, Enter não alterna (só Espaço).",
+    "clausula": "Os usuários devem poder acessar o switch por meio da tecla Tab e alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0188ff1cc2ec",
+  "componente": "tab",
+  "arquivo": "componentes/tab__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "A Superfície da Tab é um elemento obrigatório e conterá todos os Itens da Tab.",
+  "justificativa": "Superfície obrigatória contendo os itens. Medida: background computado da barra de abas e itens dentro dela.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-superficie",
+    "descricao": "A barra de abas fica sem superfície (fundo transparente).",
+    "clausula": "A Superfície da Tab é um elemento obrigatório e conterá todos os Itens da Tab."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-065e3131ac2b",
+  "componente": "tab",
+  "arquivo": "componentes/tab__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · tab-content · Container dos conteúdos",
+  "justificativa": "Container dos conteúdos tab-content. Medida: classe do contêiner dos painéis.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-tab-content",
+    "descricao": "O contêiner dos painéis não tem tab-content.",
+    "clausula": "class · string · tab-content · Container dos conteúdos"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0a7a74e7f711",
+  "componente": "tab",
+  "arquivo": "componentes/tab__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · tab-item · Rótulo de cada aba",
+  "justificativa": "Cada aba tab-item. Medida: classe de cada item.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-tab-item",
+    "descricao": "A 2ª aba não tem tab-item (aparência copiada à mão).",
+    "clausula": "class · string · tab-item · Rótulo de cada aba"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-10aee59f9c1b",
+  "componente": "tab",
+  "arquivo": "componentes/tab__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Tab (Abas) › Especificações › Tipografia",
+  "justificativa": "Rótulo da aba em --font-size-scale-up-02, --font-weight-medium. Medida: font-size/font-weight computados dos rótulos das abas.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-aba-pequeno",
+    "descricao": "Os rótulos das abas ficam em --font-size-scale-base.",
+    "clausula": "Rótulo da Tab · --font-size-scale-up-02 · --font-weight-medium"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1fedaa9b08e5",
+  "componente": "tab",
+  "arquivo": "componentes/tab__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Tab (Abas) › Especificações › Espaçamentos",
+  "justificativa": "Item da tab na densidade padrão com padding lateral 3x e vertical 2x; superfície com margin-bottom 2x. Medida: padding computado das abas.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "aba-padding-curto",
+    "descricao": "As abas ficam com padding lateral --spacing-scale-half.",
+    "clausula": "Item da Tab Densidade Padrão · padding-left · --spacing-scale-3x"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2e96af5b4635",
+  "componente": "tab",
+  "arquivo": "componentes/tab__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Os itens do componente tabs podem ser acionadas por meio das teclas Enter ou Space;",
+  "justificativa": "Itens da tab acionáveis pelas teclas Enter ou Space (teclas específicas; além de Tab/setas de a2-f19f80da5bea). Medida: com foco na aba Documentos, Enter/Espaço a ativa.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "aba-nao-ativa-por-tecla",
+    "descricao": "Com foco na aba Documentos, Enter e Espaço não a ativam; só o clique ativa.",
+    "clausula": "Os itens do componente tabs podem ser acionadas por meio das teclas Enter ou Space;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3a963eafc55d",
+  "componente": "tab",
+  "arquivo": "componentes/tab__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Certifique-se de que cada aba contenha um rótulo claro e útil, de modo que seja fácil para o usuário entender o conteúdo que se encontra dentro da aba;",
+  "justificativa": "R-ED (b). Cada aba com rótulo claro e útil. Medida: o rótulo diz o conteúdo da aba.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-sem-sentido",
+    "descricao": "A 2ª aba se chama 'Aba 2'.",
+    "clausula": "Certifique-se de que cada aba contenha um rótulo claro e útil, de modo que seja fácil para o usuário entender o conteúdo que se encontra dentro da aba;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-427870f3738e",
+  "componente": "tab",
+  "arquivo": "componentes/tab__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "6 · Componente Divider · Divider · Obrigatório",
+  "justificativa": "Divider obrigatório sob as abas. Medida: borda/divisor inferior da barra de abas visível.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-divisor",
+    "descricao": "O divisor sob a barra de abas é removido.",
+    "clausula": "6 · Componente Divider · Divider · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-42ed6f7a310c",
+  "componente": "tab",
+  "arquivo": "componentes/tab__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Relacione semanticamente o item de aba à seção de conteúdo correspondente: utilize a propriedade role = tab nos links das abas e um id próprio, atribuindo o valor deste id à propriedade aria-labelledby na seção de conteúdo correspondente;",
+  "justificativa": "Cada aba tem role=tab e id, e o painel correspondente tem aria-labelledby com esse id. Medida: role/id das abas e aria-labelledby dos painéis.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "painel-sem-labelledby",
+    "descricao": "O painel Documentos fica sem aria-labelledby apontando para a aba.",
+    "clausula": "atribuindo o valor deste id à propriedade aria-labelledby na seção de conteúdo correspondente"
+   },
+   {
+    "id": "aba-sem-role-tab",
+    "descricao": "A aba Andamento perde role=tab (fica só como link).",
+    "clausula": "utilize a propriedade role = tab nos links das abas"
+   }
+  ],
+  "alternativasValidas": []
+ }
+]

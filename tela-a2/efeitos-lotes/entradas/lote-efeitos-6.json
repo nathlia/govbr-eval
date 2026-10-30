@@ -1,0 +1,1724 @@
+[
+ {
+  "id": "a2-6a791128da6a",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/cores.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Cores › Função das Cores › 3. Função Feedback (Estados) › Função de Avisos › Especificação Avisos › Feedback Alerta",
+  "justificativa": "Feedback alerta: principal #FFCD07 (--yellow-vivid-20, já na tabela do estado Alerta) e alternativa #FFF5C2 (--yellow-vivid-5) como superfície. Medida: background-color computado da mensagem de pendência = #FFF5C2.",
+  "instancias": [
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "alerta-fundo-fora",
+    "descricao": "A superfície da mensagem de pendência fica --yellow-5 (família Yellow, não Vivid) em vez de #FFF5C2 (--yellow-vivid-5).",
+    "clausula": "A · Cor Alternativa · #FFF5C2 · --yellow-vivid-5"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-6a99b79819ae",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/grid.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Os conteúdos informativos devem respeitar as margens da grid.",
+  "justificativa": "Conteúdo dentro das margens da grid. Medida: borda do elemento contra a margem do contêiner da grid.",
+  "instancias": [
+   "tbl-movimentacoes",
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "ultrapassa-margem",
+    "descricao": "A instância ganha margem negativa e passa da margem da grid.",
+    "clausula": "Os conteúdos informativos devem respeitar as margens da grid."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-6afb3201269f",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Escrever estilos e scripts em seus próprios arquivos",
+  "justificativa": "Estilos e scripts da página ficam em arquivos próprios (link/script src), sem bloco style ou script embutido no HTML. Medida: no HTML servido, querySelectorAll('style, script:not([src])') vazio.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "estilo-embutido",
+    "descricao": "Uma regra de CSS da página (por exemplo, o espaçamento entre seções do conteúdo) sai do arquivo .css e passa para um bloco style no head, com o mesmo valor.",
+    "clausula": "Escrever estilos e scripts em seus próprios arquivos"
+   },
+   {
+    "id": "script-embutido",
+    "descricao": "O código que inicializa os componentes da página sai do arquivo .js próprio e passa para um bloco script no fim do body, com o mesmo conteúdo.",
+    "clausula": "Escrever estilos e scripts em seus próprios arquivos"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-6c531e6437e8",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "O conteúdo precisa manter consistência quanto ao estilo, tom, voz e terminologias.",
+  "justificativa": "R-ED (b): terminologia consistente. Caso flagrante: o mesmo dado chamado por dois nomes diferentes na mesma tela. Medida: nome usado para o número no card e no texto da tooltip do protocolo.",
+  "instancias": [
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "tooltip-outro-nome-do-numero",
+    "descricao": "O texto da tooltip do protocolo chama o número de 'código do processo', enquanto o card o rotula como número do requerimento/protocolo.",
+    "clausula": "O conteúdo precisa manter consistência quanto ao estilo, tom, voz e terminologias."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-6f122899cebf",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Campo de Entrada de Texto (Input) (a partir da linha 330)",
+  "justificativa": "Estilo Input: --font-size-scale-up-01, peso medium, line-height low, cor --gray-80. Na tela: o campo do select. Medida: font-size/font-weight computados do input.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "input-peso-fora",
+    "descricao": "O texto do campo do select fica com font-weight 400 em vez de medium (500).",
+    "clausula": "Weight · --font-weight-medium"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7278a9812cac",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Os textos dos rótulos devem ser positivos, breves, claros e diretos.",
+  "justificativa": "R-ED (a/b). Rótulos positivos, breves, claros. Medida: o rótulo do select é afirmativo e curto.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-negativo",
+    "descricao": "O rótulo do select fica 'Não deixe de informar o tipo do documento que não foi enviado'.",
+    "clausula": "Os textos dos rótulos devem ser positivos, breves, claros e diretos."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-728b1f066902",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Desabilitado › Especificação para Estado Desabilitado",
+  "justificativa": "Tabela do estado Desabilitado: opacidade --surface-opacity-md (0,45), cursor not-allowed, sem sombra. Cursor e sombra já têm unidades aceitas (a2-5da1dcbf7d0a, a2-1c18ad657e0d); a linha nova é o valor da opacidade. Medida: opacity computada das etapas 3 e 4 do step = 0,45.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "desabilitado-opacidade-fora",
+    "descricao": "As etapas 3 e 4 (desabilitadas) ficam com opacity 0,3 em vez de 0,45; continuam com baixa ênfase, só o valor sai do token.",
+    "clausula": "background/foreground · opacity · --surface-opacity-md"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-73dfd62f0816",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "O estado Desabilitado deve ter baixa ênfase ou ser amenizado dentro de uma interface.",
+  "justificativa": "Desabilitado com baixa ênfase. Medida: opacidade/cor computada das etapas desabilitadas contra as habilitadas.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "desabilitada-com-enfase",
+    "descricao": "As etapas 3 e 4 (desabilitadas) ficam com a mesma cor e opacidade das habilitadas.",
+    "clausula": "O estado Desabilitado deve ter baixa ênfase ou ser amenizado dentro de uma interface."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7562e56b2290",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Os títulos dos formulários devem explicar clara e rapidamente o objetivo do formulário.",
+  "justificativa": "R-ED (b). Título do formulário explica o objetivo. Medida: texto do título do formulário da aba Documentos.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-form-vago",
+    "descricao": "O título do formulário fica 'Formulário'.",
+    "clausula": "Os títulos dos formulários devem explicar clara e rapidamente o objetivo do formulário."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-76c8506bbc99",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Atributo aria-hidden.",
+  "justificativa": "Ícone semântico (botão só com ícone) leva aria-hidden no próprio ícone; o nome vem do texto alternativo. Medida: aria-hidden=\"true\" no <i> dentro dos botões só com ícone.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo",
+   "msg-pendencia",
+   "msg-retorno",
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "icone-semantico-exposto",
+    "descricao": "O ícone dentro do botão só com ícone (gatilho da tooltip, Fechar da mensagem ou gatilho do select) fica sem aria-hidden.",
+    "clausula": "Atributo aria-hidden."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-76dbeded6662",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "O estado deve ter uma alta ênfase entre os demais elementos do seu conjunto mas uma média ênfase entre os outros elementos em uma interface.",
+  "justificativa": "Estado ativo com alta ênfase no conjunto. Medida: o item ativo se distingue (classe e aparência) dos demais do conjunto.",
+  "instancias": [
+   "tab-requerimento",
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "ativa-sem-estado",
+    "descricao": "A aba ativa perde o estado ativo e fica igual às interativas (o painel continua trocando).",
+    "instancias": [
+     "tab-requerimento"
+    ],
+    "clausula": "O estado deve ter uma alta ênfase entre os demais elementos do seu conjunto mas uma média ênfase entre os outros elementos em uma interface."
+   },
+   {
+    "id": "atual-sem-destaque",
+    "descricao": "A etapa atual fica igual às concluídas, sem o destaque do estado ativo.",
+    "instancias": [
+     "stp-andamento"
+    ],
+    "clausula": "O estado deve ter uma alta ênfase entre os demais elementos do seu conjunto mas uma média ênfase entre os outros elementos em uma interface."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-78f11cbcb280",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "É importante manter heranças de outros Estados mesmo com Pressionado.",
+  "justificativa": "Pressionado por overlay, mantendo os outros estados do elemento. Medida: durante o pressionar (mousedown) na aba ativa, no switch ligado ou no checkbox marcado/intermediário, o indicador do estado continua visível.",
+  "instancias": [
+   "tab-requerimento",
+   "swt-aviso-email",
+   "swt-aviso-sms",
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "pressionado-apaga-estado",
+    "descricao": "Durante o pressionar, o estilo de pressionado substitui o do estado: a aba ativa perde a marcação de ativa; o switch ligado e o checkbox marcado perdem a cor/marca de ligado/marcado.",
+    "clausula": "É importante manter heranças de outros Estados mesmo com Pressionado."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7cf0838736be",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/grid.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Atenção: somente elementos com funções visuais podem utilizar a sangria (como um container/background, por exemplo).",
+  "justificativa": "Em 1280, só fundos/containers podem invadir a margem da grid (sangria); o conteúdo informativo fica dentro das margens. Medida: getBoundingClientRect do texto/células da instância contido na área de conteúdo do container (left/right dentro das margens da grid).",
+  "instancias": [
+   "crd-resumo",
+   "tbl-movimentacoes",
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "conteudo-na-sangria",
+    "descricao": "O card de resumo (ou a tabela, ou a mensagem de pendência) passa a ocupar a largura total da janela e seu texto começa encostado na borda esquerda da viewport, invadindo a margem da grid.",
+    "clausula": "Os conteúdos informativos devem respeitar as margens da grid."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7e05c5c8e09c",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Não utilize palavras, expressões e gírias típicas de regiões do país.",
+  "justificativa": "Sem expressões regionais. Medida: texto da instância.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "expressao-regional",
+    "descricao": "A mensagem diz 'Bah, tá faltando um documento'.",
+    "clausula": "Não utilize palavras, expressões e gírias típicas de regiões do país."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7ecb601ffa09",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Ativo › Especificação para Estado Ativo",
+  "justificativa": "Tabela do estado Ativo: cor --blue-warm-vivid-80, borda --surface-width-lg (4px) sólida. Na tela: a aba ativa. Medida: border-bottom-width/style e color computados do item de aba ativo.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "ativo-borda-fina",
+    "descricao": "A marcação da aba ativa fica com borda inferior de 1px em vez de 4px (--surface-width-lg), mesma cor.",
+    "clausula": "border · width · --surface-width-lg"
+   },
+   {
+    "id": "ativo-cor-fora",
+    "descricao": "O texto e a borda da aba ativa ficam #1351B4 (--blue-warm-vivid-70) em vez de --blue-warm-vivid-80.",
+    "clausula": "background/foreground/border · color · --blue-warm-vivid-80"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-83ec838a289a",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 3.9 – Em tabelas, utilizar títulos e resumos de forma apropriada",
+  "justificativa": "e-MAG 3.1, Recomendação 3.9. Título da tabela em CAPTION, primeiro elemento depois de TABLE. Medida: table > caption como primeiro filho.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "sem-caption",
+    "descricao": "A tabela perde o caption; o título visível fica num h3 antes dela.",
+    "clausula": "O título da tabela deve ser definido pelo elemento CAPTION e deve ser o primeiro elemento utilizado após a declaração do elemento TABLE."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-855a016067f1",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 3.3 – Oferecer um título descritivo e informativo à página",
+  "justificativa": "e-MAG 3.1, Recomendação 3.3. Título descritivo que represente o conteúdo principal. Medida: document.title.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-generico",
+    "descricao": "O title da página fica 'Página'.",
+    "clausula": "O título da página deve ser descritivo e informativo, devendo representar o conteúdo principal da página"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8f86684de1e2",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Mantenha o alinhamento dos elementos de uma tabela consistentes conforme a orientação a seguir:",
+  "justificativa": "R-ED (a): alinhamento na tabela conforme a orientação (texto à esquerda; números que não se somam, como datas/IDs, à esquerda). Na tela todas as colunas (Data, Movimentação, Responsável) ficam à esquerda. Medida: text-align computado de th/td por coluna.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "texto-alinhado-a-direita",
+    "descricao": "As células da coluna Movimentação (texto) ficam com text-align right.",
+    "clausula": "Mantenha o alinhamento dos elementos de uma tabela consistentes conforme a orientação a seguir:"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-909e5f61d661",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Não zombe de seus usuários.",
+  "justificativa": "R-ED (b): proibição de zombar do usuário em mensagens (contexto: humor em mensagem de erro). Caso flagrante: mensagem que ridiculariza o usuário. Medida: texto da mensagem.",
+  "instancias": [
+   "msg-retorno",
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "retorno-zombeteiro",
+    "descricao": "A mensagem de erro do envio passa a dizer 'Esqueceu o arquivo de novo? Tente prestar atenção desta vez.'",
+    "instancias": [
+     "msg-retorno"
+    ],
+    "clausula": "Não zombe de seus usuários."
+   },
+   {
+    "id": "alerta-zombeteiro",
+    "descricao": "O alerta de pendência passa a dizer 'Ainda não mandou o documento? Até uma tartaruga já teria enviado.'",
+    "instancias": [
+     "msg-pendencia"
+    ],
+    "clausula": "Não zombe de seus usuários."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-9250e991e04f",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Qualquer classificação importante feita por meio de cores deve possuir também uma identificação textual.",
+  "justificativa": "Classificação importante por cor exige identificação TEXTUAL (mais estrito que o e-MAG 4.2, que aceita forma). Medida: a situação/tipo marcada por cor tem texto.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "concluida-so-cor-e-icone",
+    "descricao": "A etapa concluída é marcada só pela cor e pelo ícone da Tag, sem texto 'concluída' (nem visível nem acessível).",
+    "clausula": "Qualquer classificação importante feita por meio de cores deve possuir também uma identificação textual."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-94e76e38c85b",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Incluir modo de compatibilidade para o Internet Explorer.",
+  "justificativa": "Meta de compatibilidade X-UA-Compatible (IE=edge) presente. Medida: querySelector('meta[http-equiv=X-UA-Compatible]').",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "sem-modo-compatibilidade",
+    "descricao": "O head fica sem a meta X-UA-Compatible.",
+    "clausula": "Incluir modo de compatibilidade para o Internet Explorer."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-952e88a5af0d",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Sendo assim, é imprescindível que o designer e o desenvolvedor priorizem a utilização dos ícones, como demonstrado na Tabela de Orientações de Uso.",
+  "justificativa": "Ícones com os significados da Tabela de Orientações de Uso (texto): Mensagem Alerta = fa-exclamation-triangle, Mensagem Erro = fa-times-circle, Expandir/Retrair = fa-chevron-down/up, Upload = fa-upload. Medida: classe do ícone em cada instância.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno",
+   "acc-duvidas",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "icone-de-tipo-trocado",
+    "descricao": "A mensagem de alerta usa o ícone de mensagem informativa (fa-info-circle) e a de erro usa o de sucesso (fa-check-circle).",
+    "instancias": [
+     "msg-pendencia",
+     "msg-retorno"
+    ],
+    "clausula": "É fundamental atribuir os significados recomendados na tabela"
+   },
+   {
+    "id": "icone-fora-da-tabela",
+    "descricao": "O indicador de expandir do accordion usa fa-plus em vez de chevron, e o botão do upload usa fa-paperclip em vez de fa-upload.",
+    "instancias": [
+     "acc-duvidas",
+     "upl-documento"
+    ],
+    "clausula": "priorizem a utilização dos ícones, como demonstrado na Tabela de Orientações de Uso"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-959ca4537add",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 3.10 – Associar células de dados às células de cabeçalho",
+  "justificativa": "e-MAG 3.1, Recomendação 3.10. TH para cabeçalhos, TD para dados; THEAD/TBODY quando há cabeçalho. Medida: tagName das células do cabeçalho e presença de thead.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "cabecalho-em-td",
+    "descricao": "As células do cabeçalho viram td em negrito (dentro do thead).",
+    "clausula": "Em tabelas de dados simples, o uso apropriado do elemento TH para os cabeçalhos e do elemento TD para as células de dados é essencial para torná-las acessíveis."
+   },
+   {
+    "id": "sem-thead",
+    "descricao": "A linha de cabeçalho (th) fica direto no tbody, sem thead.",
+    "clausula": "deve-se utilizar os elementos THEAD, TBODY e TFOOT, para agrupar as linhas de cabeçalho, do corpo da tabela e do final, respectivamente, com exceção de quando a tabela possuir apenas o corpo"
+   }
+  ],
+  "alternativasValidas": [
+   {
+    "id": "associacao-por-headers",
+    "descricao": "As células de dados usam headers apontando para os ids dos th (th/td, thead/tbody e caption mantidos) em vez de scope.",
+    "clausula": "Em tabelas de dados simples, o uso apropriado do elemento TH para os cabeçalhos e do elemento TD para as células de dados é essencial",
+    "instancias": [
+     "tbl-movimentacoes"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2-971db6a57c75",
+  "componente": null,
+  "arquivo": "guias/wai-aria.md",
+  "estrato": "G",
+  "tipo": "comportamento",
+  "texto": "Os autores precisam associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos, a menos que os elementos já tenham a semântica WAI-ARIA implícita apropriada para os states e properties.",
+  "justificativa": "Role e states/properties ARIA mantidos durante o ciclo de vida do elemento. Medida: após interagir, o estado ARIA reflete o estado visual (aria-selected da aba, aria-expanded do item).",
+  "instancias": [
+   "tab-requerimento",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "aba-estado-desatualizado",
+    "descricao": "Ao selecionar a aba Documentos, aria-selected continua true em Andamento e false em Documentos.",
+    "instancias": [
+     "tab-requerimento"
+    ],
+    "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos"
+   },
+   {
+    "id": "item-expandido-sem-estado",
+    "descricao": "Ao abrir um item do accordion, o cabeçalho continua com aria-expanded=false.",
+    "instancias": [
+     "acc-duvidas"
+    ],
+    "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-99d29fc4b1bf",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Componentes de Navegação (Menu, Abas...)",
+  "justificativa": "Proibição herdada de \"O estado Selecionado não pode ser aplicado nos seguintes componentes\" a navegação (Abas). Estado Selecionado = fundo --blue-warm-vivid-50 + ícone fa-check. Medida: nenhum item de aba com esse fundo/ícone de seleção.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "aba-com-selecao",
+    "descricao": "A aba ativa passa a exibir fundo azul --blue-warm-vivid-50 e um ícone de check (estado Selecionado) no lugar do estilo de aba ativa.",
+    "clausula": "Componentes de Navegação (Menu, Abas...)"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-9bc102ab300b",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 1.6 – Não utilizar tabelas para diagramação",
+  "justificativa": "e-MAG 3.1, Recomendação 1.6. Tabela só para dados tabulares. Medida: table usada para dispor conteúdo.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "card-em-tabela",
+    "descricao": "Os dados do card (número, serviço, situação, prazo) são dispostos com uma table de diagramação, sem cabeçalhos.",
+    "clausula": "As tabelas devem ser utilizadas apenas para dados tabulares e não para efeitos de disposição dos elementos na página."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-9bcf4f01a6bb",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Cor de fundo e um elemento gráfico devem ser utilizados para representar o estado.",
+  "justificativa": "Selecionado = cor de fundo + elemento gráfico. Medida: no item escolhido, fundo e marca gráfica.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "selecionado-so-fundo",
+    "descricao": "O item escolhido mostra só a cor de fundo, sem a marca gráfica.",
+    "clausula": "Cor de fundo e um elemento gráfico devem ser utilizados para representar o estado."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a02a690a8d63",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tooltip",
+  "justificativa": "Proibição herdada de \"O estado Selecionado não pode ser aplicado nos seguintes componentes\" a tooltip. Medida: tooltip aberta sem fundo --blue-warm-vivid-50 e sem ícone fa-check de seleção.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "tooltip-selecionada",
+    "descricao": "Ao abrir, a tooltip aparece com fundo azul --blue-warm-vivid-50 e um ícone de check ao lado do texto (visual de Selecionado).",
+    "clausula": "Tooltip"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a39f3ad397d4",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+  "justificativa": "Família tipográfica Rawline. Medida: font-family computado do texto da instância.",
+  "instancias": [
+   "crd-resumo",
+   "tbl-movimentacoes",
+   "acc-duvidas",
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "fonte-do-sistema",
+    "descricao": "O texto da instância passa a usar a fonte Arial (pilha sans-serif do sistema) em vez de Rawline.",
+    "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a3ed861cbd65",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Omitir atributos de tipo e linguagem nas tags script",
+  "justificativa": "As tags script não levam atributo type nem language. Atributos ficam no DOM. Medida: document.querySelectorAll('script[type], script[language]') vazio.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "script-com-type",
+    "descricao": "A tag script que carrega o JavaScript do DS ganha type=\"text/javascript\" (o comportamento não muda).",
+    "clausula": "Omitir atributos de tipo e linguagem nas tags script"
+   },
+   {
+    "id": "script-com-language",
+    "descricao": "A tag script que carrega o JavaScript do DS ganha language=\"javascript\".",
+    "clausula": "Omitir atributos de tipo e linguagem nas tags script"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a6d3b956c667",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Em vez disso, mantenha as diretivas específicas sobre o que o usuário precisa fazer para remediar a ação problemática.",
+  "justificativa": "R-ED (b): a mensagem de erro diz o que o usuário precisa fazer para remediar. Diz mais que e-MAG 6.6 (descrever o erro): erro descrito sem instrução viola só esta. Medida: texto da mensagem de erro de S2 contém a ação corretiva.",
+  "instancias": [
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "erro-sem-instrucao",
+    "descricao": "A mensagem de erro passa a dizer só 'O envio falhou porque nenhum arquivo foi anexado.', sem dizer o que fazer.",
+    "clausula": "mantenha as diretivas específicas sobre o que o usuário precisa fazer para remediar a ação problemática"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a6e2601837a7",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "visual-token",
+  "texto": "Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente",
+  "justificativa": "e-MAG 3.1, Recomendação 4.4. Foco claramente marcado; a borda pode mudar mas não pode ser removida. Medida: indicador de foco computado no foco por teclado.",
+  "instancias": [
+   "sel-tipo-documento",
+   "swt-aviso-email",
+   "swt-aviso-sms",
+   "acc-duvidas",
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "foco-invisivel",
+    "descricao": "O indicador de foco do controle é suprimido (outline none, sem box-shadow nem borda de foco).",
+    "clausula": "Essa borda pode ser modificada via CSS para melhorar o destaque, mas não deverá ser removida."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a8421dd4efff",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Alerta › Especificação para Estado Alerta",
+  "justificativa": "Tabela do estado Alerta: cor --yellow-vivid-20 e ícone exclamation-triangle (ícone já em a2-952e88a5af0d). Na tela: a mensagem de pendência. Medida: color computado do ícone da mensagem = --yellow-vivid-20 (#FFCD07).",
+  "instancias": [
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "alerta-amarelo-fora",
+    "descricao": "O ícone da mensagem de alerta fica --orange-vivid-30 (laranja) em vez de #FFCD07 (--yellow-vivid-20).",
+    "clausula": "background/foreground · color · --yellow-vivid-20"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-acc4801af71c",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "comportamento",
+  "texto": "Recomendação 2.1 - Disponibilizar todas as funções da página via teclado",
+  "justificativa": "e-MAG 3.1, Recomendação 2.1. Funções em script programadas primeiro para o teclado. Medida: alcançar por Tab e acionar por Enter/Espaço.",
+  "instancias": [
+   "acc-duvidas",
+   "upl-documento",
+   "crd-resumo",
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "item-so-mouse",
+    "descricao": "O cabeçalho do 3º item do accordion vira span com clique: sem foco e sem teclado.",
+    "instancias": [
+     "acc-duvidas"
+    ],
+    "clausula": "Todas as funções da página desenvolvidas utilizando-se linguagens de script (javascript) devem ser programadas, primeiramente, para o uso com teclado."
+   },
+   {
+    "id": "botao-upload-so-mouse",
+    "descricao": "O botão de escolher arquivo vira span com clique: sem foco e sem teclado.",
+    "instancias": [
+     "upl-documento"
+    ],
+    "clausula": "Todas as funções da página desenvolvidas utilizando-se linguagens de script (javascript) devem ser programadas, primeiramente, para o uso com teclado."
+   },
+   {
+    "id": "gatilho-so-mouse",
+    "descricao": "O gatilho de ajuda do protocolo, dentro do card, vira span com clique, fora da ordem de Tab.",
+    "instancias": [
+     "crd-resumo"
+    ],
+    "clausula": "Todas as funções da página desenvolvidas utilizando-se linguagens de script (javascript) devem ser programadas, primeiramente, para o uso com teclado."
+   },
+   {
+    "id": "aba-so-mouse",
+    "descricao": "A 2ª aba vira span com clique: não recebe foco nem responde ao teclado.",
+    "instancias": [
+     "tab-requerimento"
+    ],
+    "clausula": "Todas as funções da página desenvolvidas utilizando-se linguagens de script (javascript) devem ser programadas, primeiramente, para o uso com teclado."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-affdd8fad576",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Definir a codificação de caracteres para UTF-8",
+  "justificativa": "Codificação de caracteres declarada UTF-8. Medida: document.characterSet / meta charset.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "codificacao-latin",
+    "descricao": "O documento é gravado e declarado em windows-1252 (meta charset), com o texto aparecendo normal.",
+    "clausula": "Definir a codificação de caracteres para UTF-8"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b015ac9d3146",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/cores.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Cores › Função das Cores › 1. Função Container (Superfícies) › Especificação › Fundo Claro",
+  "justificativa": "Superfícies em fundo claro: principal #FFFFFF (--pure-0) ou alternativa #F8F8F8 (--gray-2). Medida: background-color computado da superfície da instância ∈ {#FFFFFF, #F8F8F8}.",
+  "instancias": [
+   "crd-resumo",
+   "tbl-movimentacoes",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "superficie-fora-do-container",
+    "descricao": "A superfície do card (ou o fundo das linhas da tabela, ou do painel do accordion) fica #F0F0F0 (--gray-5, cor da paleta) em vez de #FFFFFF/#F8F8F8.",
+    "clausula": "P · Cor Principal · #ffffff · --pure-0"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b1113ccfbc0a",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Por isso, na primeira vez, escreva o nome completo e mencione a sigla entre parênteses.",
+  "justificativa": "R-ED (a): na primeira ocorrência, nome completo seguido da sigla entre parênteses (formato contável). Diz mais que e-MAG 3.12 (que aceita abbr title): sigla só com abbr title viola só esta. Medida: texto da primeira ocorrência da sigla no card.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "sigla-so-com-title",
+    "descricao": "A primeira ocorrência no card mostra só a sigla (ex.: 'NUP') com a expansão apenas no title de um abbr, sem o nome completo no texto.",
+    "clausula": "na primeira vez, escreva o nome completo e mencione a sigla entre parênteses"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b1de44d95577",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Dropzone › Especificação para Dropzone",
+  "justificativa": "Tabela do Dropzone: borda na cor de interação, --surface-width-sm, estilo dashed. Na tela: a área de transferência do upload. Medida: border-style/width/color computados da área.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "dropzone-borda-solida",
+    "descricao": "A borda da área de transferência do upload fica solid em vez de dashed, mesma cor e espessura.",
+    "clausula": "border · style · dashed"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b66ac3a5b212",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Para utilizar corretamente o valor do entrelinhamento é preciso trabalhar com valores em porcentagem ou relativos (como rem ou em), pois o valor vai depender do tamanho da fonte que ele está sendo aplicado.",
+  "justificativa": "Entrelinha em valor relativo (sem unidade, %, em ou rem), nunca px fixo. Medida: valor declarado de line-height na folha de estilo (CSSOM) para os textos da instância.",
+  "instancias": [
+   "crd-resumo",
+   "tbl-movimentacoes",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "entrelinha-em-px",
+    "descricao": "O texto do card (ou das células da tabela, ou do conteúdo do accordion) tem line-height declarado em px fixo (ex.: 20.3px).",
+    "clausula": "é preciso trabalhar com valores em porcentagem ou relativos (como rem ou em)"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b889b938c32d",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "No final deste documento, foi incluído as orientações de uso de alguns dos ícones e essa tabela deve ser seguida para que haja consistência entre os sistemas do governo.",
+  "justificativa": "Seguir a tabela de uso de ícones do DS. Medida: classe do ícone semântico contra a tabela de iconografia.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "icone-trocado",
+    "descricao": "O ícone semântico da mensagem é trocado por fa-bell.",
+    "clausula": "No final deste documento, foi incluído as orientações de uso de alguns dos ícones e essa tabela deve ser seguida para que haja consistência entre os sistemas do governo."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b8a08dfb8771",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Só pode existir um elemento com foco por vez na tela.",
+  "justificativa": "Só um elemento exibe indicação de foco por vez. Medida: após Tab, apenas document.activeElement tem o contorno de foco (borda dashed --gold-vivid-40); nenhum outro elemento o mantém.",
+  "instancias": [
+   "tab-requerimento",
+   "acc-duvidas",
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "foco-preso",
+    "descricao": "O contorno de foco fica aplicado de forma permanente a um item de aba (ou ao cabeçalho de item do accordion, ou ao campo do select) e continua visível quando o foco vai para outro elemento, que também mostra seu contorno.",
+    "clausula": "Só pode existir um elemento com foco por vez na tela."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-bc2dd4c6ab14",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Utilize os valores abaixo para representar os diferentes estilos da fonte Rawline em uma interface web.",
+  "justificativa": "Pesos de fonte só entre os valores da tabela (100, 200, ..., 900). Medida: font-weight computado dos textos da instância pertence a {100..900 de 100 em 100}.",
+  "instancias": [
+   "crd-resumo",
+   "tbl-movimentacoes",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "peso-fora-da-tabela",
+    "descricao": "O texto de destaque do card (ou o cabeçalho da tabela, ou o título dos itens do accordion) usa font-weight 650.",
+    "clausula": "Utilize os valores abaixo para representar os diferentes estilos da fonte Rawline"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-bde476da44c9",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "comportamento",
+  "texto": "Recomendação 1.4 – Ordenar de forma lógica e intuitiva a leitura e tabulação",
+  "justificativa": "e-MAG 3.1, Recomendação 1.4. Sequência lógica de leitura determinada pela ordem no código. Medida: ordem no DOM contra a ordem visual dos itens.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "ordem-visual-trocada",
+    "descricao": "O 3º item do accordion vem primeiro no código e é exibido por último via CSS (order); a ordem de Tab não segue a visual.",
+    "clausula": "Deve-se criar o código HTML com uma sequência lógica de leitura para percorrer links, controles de formulários e objetos. Essa sequência é determinada pela ordem que se encontra no código HTML."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-bfb3c1909154",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido.",
+  "justificativa": "Largura do campo não muda com o texto. Medida: largura do campo antes e depois de escolher a opção mais longa.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "largura-cresce",
+    "descricao": "A largura do campo do select acompanha o texto escolhido.",
+    "clausula": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-bfc5ebd36c20",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Apenas um item pode ser ativado por vez.",
+  "justificativa": "Num conjunto de opções, só um item ativo por vez. Medida: número de itens de aba com marcação/estilo de ativo = 1; número de etapas do step marcadas como atuais (ativas) = 1.",
+  "instancias": [
+   "tab-requerimento",
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "duas-abas-ativas",
+    "descricao": "As abas Andamento e Documentos aparecem ambas com o estilo e a marcação de aba ativa.",
+    "instancias": [
+     "tab-requerimento"
+    ],
+    "clausula": "Apenas um item pode ser ativado por vez."
+   },
+   {
+    "id": "duas-etapas-atuais",
+    "descricao": "As etapas 2 e 3 do step aparecem ambas como etapa atual (ativa).",
+    "instancias": [
+     "stp-andamento"
+    ],
+    "clausula": "Apenas um item pode ser ativado por vez."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c0b99a02cf6b",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Escreva em Língua Portuguesa neutra.",
+  "justificativa": "R-ED (b): português neutro, sem regionalismo (o contexto proíbe palavras e gírias regionais). Caso flagrante: título de item com expressão regional marcada. Medida: texto do cabeçalho do item do accordion.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "pergunta-com-regionalismo",
+    "descricao": "O cabeçalho do 2º item passa a dizer 'Oxe, e se o prazo vencer, visse?'.",
+    "clausula": "Escreva em Língua Portuguesa neutra."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c63c63e831f9",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Omitir atributos de tipo na tag link",
+  "justificativa": "As tags link não levam atributo type. Medida: document.querySelectorAll('link[type]') vazio.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "link-com-type",
+    "descricao": "A tag link da folha de estilo do DS ganha type=\"text/css\" (a aparência não muda).",
+    "clausula": "Omitir atributos de tipo na tag link"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c678d7f46286",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Apenas a primeira letra do rótulo deve ser maiúscula.",
+  "justificativa": "Rótulo de ação só com a primeira letra maiúscula (button é exceção). Medida: texto dos rótulos das abas.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-title-case",
+    "descricao": "O rótulo da 2ª aba fica 'Enviar Documentos'.",
+    "clausula": "Apenas a primeira letra do rótulo deve ser maiúscula."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c72a64d5d504",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela normativa — Iconografia › Anatomia e Comportamento › Tamanho Padrão no Design System (a partir da linha 212)",
+  "justificativa": "Tamanhos de ícone só na escala de tokens (16px base; .5em, .75em, 1.25em, 2em…10em). Medida: valor declarado de font-size dos ícones da instância (CSSOM) pertence à tabela.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo",
+   "msg-pendencia",
+   "msg-retorno",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "icone-fora-da-escala",
+    "descricao": "O ícone do gatilho da tooltip (ou o ícone da mensagem, ou o chevron do cabeçalho do accordion) fica com font-size 1.1em, fora da escala de tokens.",
+    "clausula": "--icon-size-base | 16px (1em)"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-cad7cafa42d7",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Mantenha os rótulos sempre visíveis e precisos.",
+  "justificativa": "Rótulo sempre visível (vai além da 6.2: a etiqueta pode estar associada e escondida). Medida: rótulo do campo renderizado com área visível (sem recorte/clip, dentro da tela).",
+  "instancias": [
+   "sel-tipo-documento",
+   "upl-documento",
+   "swt-aviso-email",
+   "swt-aviso-sms",
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-so-leitor-de-tela",
+    "descricao": "O rótulo do campo fica visualmente oculto (recorte 1×1px), mantendo a associação e o nome acessível; na tela o campo aparece sem rótulo.",
+    "clausula": "Mantenha os rótulos sempre visíveis e precisos."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-cc3d7bd5342f",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/cores.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Também devem proporcionar contraste com o texto e elementos interativos, assim como qualquer outro elemento de comunicação visual na interface, como imagens, ilustrações, ícones, etc.",
+  "justificativa": "Cores com contraste também para ícones e elementos interativos (o e-MAG 4.1 trata de texto). Medida: contraste do ícone do gatilho contra o fundo.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "icone-sem-contraste",
+    "descricao": "O ícone do gatilho de ajuda fica #D9D9D9 sobre branco.",
+    "clausula": "Também devem proporcionar contraste com o texto e elementos interativos, assim como qualquer outro elemento de comunicação visual na interface, como imagens, ilustrações, ícones, etc."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-cd5cbf0f18dc",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 6.5 – Fornecer instruções para entrada de dados",
+  "justificativa": "e-MAG 3.1, Recomendação 6.5. Instruções de preenchimento junto da etiqueta quando necessárias — a condição vale: o upload aceita só alguns formatos e tamanho. Medida: texto de apoio com formatos e tamanho ligado ao campo.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-formato",
+    "descricao": "O texto de apoio com formatos e tamanho máximo aceitos é removido (a restrição continua valendo no envio).",
+    "clausula": "Para conteúdo que exigir entrada de dados por parte do usuário, devem ser fornecidas quando necessário, instruções de preenchimento juntamente com as etiquetas"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-cdd2382da97b",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "É importante a possibilidade de herança com outros estados mesmo com hover.",
+  "justificativa": "Hover aplicado por overlay preservando os outros estados do elemento (herança). Medida: ao passar o ponteiro sobre a aba ativa, sobre um switch ligado ou sobre o checkbox marcado/intermediário, o indicador do estado (cor/borda de ativo, trilho ligado, marca) continua visível e só se soma o overlay.",
+  "instancias": [
+   "tab-requerimento",
+   "swt-aviso-email",
+   "swt-aviso-sms",
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "hover-apaga-estado",
+    "descricao": "Em hover, o estilo de hover substitui o do estado: a aba ativa perde a cor e a borda de ativa; o switch ligado e o checkbox marcado aparecem com o visual de desligado/desmarcado enquanto o ponteiro está sobre eles.",
+    "clausula": "É importante a possibilidade de herança com outros estados mesmo com hover."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d0179dc6bd81",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Elementos desabilitados não podem receber hover .",
+  "justificativa": "Desabilitado não recebe hover. Medida: estilo computado com hover sobre etapa desabilitada.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "hover-na-desabilitada",
+    "descricao": "Passar o mouse sobre a 4ª etapa (desabilitada) mostra o realce de hover.",
+    "clausula": "Elementos desabilitados não podem receber hover ."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d45711a55b6c",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 1.2 – Organizar o código HTML de forma lógica e semântica",
+  "justificativa": "e-MAG 3.1, Recomendação 1.2. Elemento usado para o fim para que foi criado. Medida: tagName do controle.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "fechar-div",
+    "descricao": "O botão Fechar da mensagem vira div role=button tabindex=0 com Enter/Espaço (teclado intacto).",
+    "clausula": "Cada elemento HTML deve ser utilizado para o fim que ele foi criado."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d47f4c470491",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada.",
+  "justificativa": "R-ED (b): componente de ação sem texto deve ter ícone que expresse a ação. Na tela: gatilhos só de ícone das tooltips e botão Fechar (só ícone) das mensagens. Caso flagrante: ícone de significado alheio à ação. Medida: classe/glifo do ícone do controle.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo",
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "ajuda-com-icone-lixeira",
+    "descricao": "O gatilho de ajuda (botão só com ícone) passa a mostrar o ícone de lixeira no lugar do ícone de informação/ajuda.",
+    "instancias": [
+     "tip-prazo",
+     "tip-protocolo"
+    ],
+    "clausula": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada."
+   },
+   {
+    "id": "fechar-com-icone-de-adicionar",
+    "descricao": "O botão Fechar da mensagem passa a mostrar o ícone '+' (adicionar) no lugar do 'x'.",
+    "instancias": [
+     "msg-pendencia",
+     "msg-retorno"
+    ],
+    "clausula": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d4db34492294",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Observação: Lembre-se que quando utilizado para representar uma ação, o ícone deve corresponder a ação que será executada ao interagir com o elemento.",
+  "justificativa": "Ícone corresponde à ação. Medida: classe do ícone do cabeçalho do item contra a ação (expandir/recolher).",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "icone-de-fechar",
+    "descricao": "O ícone dos cabeçalhos do accordion vira fa-times (fechar) em vez do de expandir.",
+    "clausula": "Observação: Lembre-se que quando utilizado para representar uma ação, o ícone deve corresponder a ação que será executada ao interagir com o elemento."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d6b3f0e36943",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos.",
+  "justificativa": "R-ED (b). Linguagem simples para usuário não técnico. Medida: termos técnicos no texto da mensagem.",
+  "instancias": [
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "jargao-tecnico",
+    "descricao": "A mensagem de retorno diz 'HTTP 422: payload inválido (multipart/form-data sem part file)'.",
+    "clausula": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d720ea8520cb",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "comportamento",
+  "texto": "Recomendação 6.6 – Identificar e descrever erros de entrada de dados e confirmar o envio das informações",
+  "justificativa": "e-MAG 3.1, Recomendação 6.6. Erro detectado automaticamente: item identificado e descrito por texto. Medida: em S2, texto que identifica o campo e descreve o erro.",
+  "instancias": [
+   "sel-tipo-documento",
+   "upl-documento",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "erro-so-borda",
+    "descricao": "Em S2 o campo inválido só fica com borda vermelha, sem texto de erro.",
+    "instancias": [
+     "sel-tipo-documento",
+     "upl-documento"
+    ],
+    "clausula": "Quando um erro de entrada de dados for automaticamente detectado, o item que apresenta erro deve ser identificado e descrito ao usuário por texto."
+   },
+   {
+    "id": "erro-generico",
+    "descricao": "A mensagem de retorno diz só 'Erro.' e os campos não dizem nada: nenhum texto identifica qual item falhou.",
+    "instancias": [
+     "msg-retorno"
+    ],
+    "clausula": "Quando um erro de entrada de dados for automaticamente detectado, o item que apresenta erro deve ser identificado e descrito ao usuário por texto."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d7e91aa996b7",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Especificar o DOCTYPE para a linguagem HTML5",
+  "justificativa": "A página declara o DOCTYPE do HTML5 (<!DOCTYPE html>). O nó DocumentType fica no DOM. Medida: document.doctype.name === 'html', com publicId e systemId vazios.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "doctype-html4-strict",
+    "descricao": "O documento passa a começar com o DOCTYPE do HTML 4.01 Strict (com identificador público e de sistema), que mantém o modo padrão de renderização, sem mudar a aparência.",
+    "clausula": "Especificar o DOCTYPE para a linguagem HTML5"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d89456b2b61e",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela normativa — Formulário › Layout e Estrutura › 2. Fieldset e Legend › Estilização do Fieldset (a partir da linha 304)",
+  "justificativa": "Estilização do fieldset dos avisos pela tabela. A linha border (--surface-width-none) já está em a2-02ccd4221688; a variante usa a linha margin-bottom. Medida: margin-bottom computado do fieldset = valor de --spacing-scale-5x.",
+  "instancias": [
+   "swt-aviso-email"
+  ],
+  "variantes": [
+   {
+    "id": "fieldset-margem-reduzida",
+    "descricao": "O fieldset 'Avisos sobre o requerimento' fica com margin-bottom igual a --spacing-scale-2x em vez de --spacing-scale-5x.",
+    "clausula": "l.307: margin-bottom | --spacing-scale-5x"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-db50df136f86",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Quando utilizado como um elemento de ação (seja um hiperlink, um botão ou qualquer outro elemento interativo) é importante que o ícone represente a ação a ser executada.",
+  "justificativa": "Ícone de elemento de ação representa a ação executada (R-ED b: caso flagrante e oposto). Medida: classe do ícone do botão vs ação (Fechar = fa-times; abrir lista = chevron/caret para baixo).",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno",
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "icone-de-outra-acao",
+    "descricao": "O botão Fechar da mensagem mostra um ícone de lixeira (fa-trash); o botão que abre a lista do select mostra um ícone de download.",
+    "clausula": "é importante que o ícone represente a ação a ser executada"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-dd1a39bcd50b",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Elementos desabilitados não podem receber Pressionado .",
+  "justificativa": "Desabilitado não recebe Pressionado. Medida: estilo computado com o botão do mouse pressionado sobre etapa desabilitada.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "pressionado-na-desabilitada",
+    "descricao": "Pressionar a 4ª etapa (desabilitada) mostra o realce de pressionado.",
+    "clausula": "Elementos desabilitados não podem receber Pressionado ."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-dea6a58c22c4",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Hover › Especificação para Estado Hover",
+  "justificativa": "Tabela do estado Hover: overlay na cor do primeiro plano com opacidade --surface-opacity-xs (0,16) em fundo claro e cursor pointer (cursor já aceito em a2-033815886ead). Medida: com o ponteiro sobre o item de aba ou o cabeçalho do item do accordion, opacidade do overlay de hover = 0,16.",
+  "instancias": [
+   "tab-requerimento",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "hover-overlay-forte",
+    "descricao": "O overlay de hover do item de aba (ou do cabeçalho do item do accordion) usa opacidade 0,30 em vez de 0,16.",
+    "clausula": "background (Sobre um fundo Claro) · opacity · --surface-opacity-xs"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-e0663017fccc",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo.",
+  "justificativa": "R-ED (b). O mais importante primeiro. Medida: posição da informação do documento pendente no texto da mensagem.",
+  "instancias": [
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "importante-no-fim",
+    "descricao": "A mensagem de pendência começa com três frases de contexto e só no fim diz qual documento falta e o prazo.",
+    "clausula": "A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-e5b4728ca51e",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "visual-token",
+  "texto": "Recomendação 4.2 – Não utilizar apenas cor ou outras características sensoriais para diferenciar elementos",
+  "justificativa": "e-MAG 3.1, Recomendação 4.2. Cor não é o único meio de distinguir. Medida: a etapa atual se distingue por algo além da cor (forma, peso, texto, ícone).",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "atual-so-pela-cor",
+    "descricao": "A etapa atual só se distingue pela cor do indicador: mesmo peso, mesma forma, sem texto ou ícone que a marque.",
+    "clausula": "A cor ou outras características sensoriais, como forma, tamanho, localização visual, orientação ou som não devem ser utilizadas como o único meio para transmitir informações, indicar uma ação, pedir uma resposta ao usuário ou distinguir um elemento visual."
+   }
+  ],
+  "alternativasValidas": [
+   {
+    "id": "prefixo-textual-visivel",
+    "descricao": "A mensagem mantém o ícone do DS e ganha, no início do texto, a palavra visível do tipo ('Atenção:' / 'Erro:').",
+    "clausula": "A cor ou outras características sensoriais [...] não devem ser utilizadas como o único meio para transmitir informações",
+    "instancias": [
+     "msg-pendencia",
+     "msg-retorno"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2-e99c92f13ac0",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Inclua também o CSS apropriado para ocultar visualmente o elemento, mantendo-o acessível a tecnologias assistivas.",
+  "justificativa": "Quando a alternativa em texto do ícone semântico é um span, ele é ocultado visualmente e continua acessível. Medida: span da alternativa com recorte/posição de ocultação (sr-only) e presente na árvore de acessibilidade.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo",
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "texto-alternativo-visivel",
+    "descricao": "O texto alternativo do botão só com ícone é um span sem a ocultação visual, e aparece escrito ao lado do ícone.",
+    "clausula": "Inclua também o CSS apropriado para ocultar visualmente o elemento"
+   },
+   {
+    "id": "texto-alternativo-inacessivel",
+    "descricao": "O span de texto alternativo é ocultado com display:none, sumindo também da árvore de acessibilidade.",
+    "clausula": "mantendo-o acessível a tecnologias assistivas"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-eb4a9da83395",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "O feedback visual deve ser feito no objeto que está em estado Pressionado.",
+  "justificativa": "Feedback de pressionado no próprio objeto. Medida: estilo computado com o mouse pressionado.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "pressionado-sem-feedback",
+    "descricao": "Os cabeçalhos do accordion não mudam ao serem pressionados.",
+    "clausula": "O feedback visual deve ser feito no objeto que está em estado Pressionado."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ec1111e4b2a1",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "O feedback visual deve ser feito no objeto que está em hover.",
+  "justificativa": "Feedback de hover no próprio objeto. Medida: estilo computado do cabeçalho do item com e sem hover.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "hover-sem-feedback",
+    "descricao": "Os cabeçalhos do accordion não mudam com hover.",
+    "clausula": "O feedback visual deve ser feito no objeto que está em hover."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ef29db5bb4ac",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Message",
+  "justificativa": "Proibição herdada de \"O estado Selecionado não pode ser aplicado nos seguintes componentes\" message. Medida: a mensagem não exibe fundo --blue-warm-vivid-50 nem ícone fa-check de seleção.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-selecionada",
+    "descricao": "A mensagem recebe fundo --blue-warm-vivid-50 e ícone de check de seleção à esquerda do texto, além do seu ícone de tipo.",
+    "clausula": "Message"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f0e069600ad6",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/cores.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Cores › Função das Cores › 3. Função Feedback (Estados) › Função de Avisos › Especificação Avisos › Feedback Informação",
+  "justificativa": "Feedback de informação: cor principal #155BCB (--blue-warm-vivid-60). Na tela: o fundo do balão das tooltips. Medida: background-color computado do balão aberto = #155BCB.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "informacao-azul-fora",
+    "descricao": "O balão da tooltip abre com fundo #1351B4 (--blue-warm-vivid-70) em vez de #155BCB (--blue-warm-vivid-60).",
+    "clausula": "P · Cor Principal · #155BCB · --blue-warm-vivid-60"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f2afb51765c7",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Posicione os rótulos sempre próximos aos campos que os descrevem.",
+  "justificativa": "Rótulo próximo do campo que descreve. Medida: distância vertical entre a base do rótulo e o topo do campo (getBoundingClientRect).",
+  "instancias": [
+   "sel-tipo-documento",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-afastado",
+    "descricao": "O rótulo fica separado do seu campo por ~120px de espaço vazio (margem inferior grande).",
+    "clausula": "Posicione os rótulos sempre próximos aos campos que os descrevem."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f4237d13520b",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 6.2 – Associar etiquetas aos seus campos",
+  "justificativa": "e-MAG 3.1, Recomendação 6.2. LABEL associado ao campo por for/id. Medida: label[for] = id do campo.",
+  "instancias": [
+   "upl-documento",
+   "sel-tipo-documento",
+   "swt-aviso-email",
+   "swt-aviso-sms",
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-desassociado",
+    "descricao": "O rótulo visível do campo continua lá, mas sem for/id: não está associado ao campo.",
+    "clausula": "As etiquetas de texto (elemento LABEL) devem estar associadas aos seus campos (elementos INPUT, SELECT e TEXTAREA, à exceção do elemento BUTTON) correspondentes no formulário, através dos atributos for do label e id do input"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f50e5a28b0c9",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Parágrafo (P) (a partir da linha 296)",
+  "justificativa": "Estilo Parágrafo: peso regular, line-height medium (1.45), cor --gray-80. Medida: estilos computados dos parágrafos do painel do accordion. (A linha Size, scale-up-01, não é usada nas variantes: o core aplica scale-base ao p.)",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "paragrafo-entrelinha-fora",
+    "descricao": "Os parágrafos do painel do accordion ficam com line-height 1.15 (low) em vez de 1.45 (medium).",
+    "clausula": "Line-height · --font-line-height-medium"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-fe133882c34a",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Erro › Especificação para Estado Erro",
+  "justificativa": "Tabela do estado Erro: cor --red-vivid-50 e ícone times-circle (o ícone já está em a2-952e88a5af0d). Na tela: a mensagem de erro. Medida: color computado do ícone da mensagem de erro = --red-vivid-50 (#E52207).",
+  "instancias": [
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "erro-vermelho-fora",
+    "descricao": "O ícone da mensagem de erro fica #A23737 (--red-60) em vez de #E52207 (--red-vivid-50).",
+    "clausula": "background/foreground · color · --red-vivid-50"
+   }
+  ],
+  "alternativasValidas": []
+ }
+]

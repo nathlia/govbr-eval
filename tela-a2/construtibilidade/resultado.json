@@ -1,0 +1,357 @@
+{
+  "_meta": {
+    "quando": "2026-10-30T09:51:11.813Z",
+    "core": "3.7.0",
+    "playwright": "1.61.1",
+    "viewport": "1280x900",
+    "nota": "Páginas de rascunho, não a tela construída. Nenhuma ferramenta do govbr-ds-validator nem axe."
+  },
+  "itens": {
+    "erros-js-conforme": [],
+    "rawline-conforme": {
+      "fonteUsadaParagrafo": [
+        "Rawline"
+      ],
+      "fonteUsadaH1": [
+        "Rawline Light"
+      ],
+      "fontsCheck": true,
+      "familiaComputada": "Rawline, Raleway, sans-serif"
+    },
+    "estilo-script-conforme": {
+      "servido": {
+        "styleOuScriptEmbutido": 0,
+        "scriptComTypeOuLanguage": 0,
+        "linkComType": 0
+      },
+      "emExecucao": {
+        "style": 0,
+        "scriptSemSrc": 0
+      }
+    },
+    "tooltip-gatilho-conforme": {
+      "visivelNaCarga": [
+        false,
+        false
+      ],
+      "nomeGatilho": {
+        "name": "Prazo em dias corridos",
+        "role": "button",
+        "ignored": false,
+        "checked": null
+      },
+      "ariaLabelPresente": "Ajuda sobre o prazo",
+      "labelledbyAponta": true,
+      "focoAbre": true,
+      "balaoesVisiveisDepoisDeTrocar": 1,
+      "balaoFocavel": false,
+      "fecharHoverMostraRotulo": true,
+      "gatilhoSelectFocoMostraRotulo": true
+    },
+    "select-conforme": {
+      "tabindexGatilho": 0,
+      "tabDoCampoVaiAoGatilho": "sel-gatilho",
+      "spaceNoGatilhoAbre": true,
+      "setaNoCampoAbre": true,
+      "setaMoveDestaque": "Comprovante de residência",
+      "enterEscolhe": "Comprovante de residência",
+      "dicaNaoQuebraSelect": true
+    },
+    "switch-grupo-conforme": {
+      "tokens": {
+        "gray-20": "#ccc",
+        "gray-40": "#888",
+        "blue-warm-vivid-40": "#5992ed",
+        "success": "#168821",
+        "green-cool-vivid-50": "#168821",
+        "pure-0": "#fff"
+      },
+      "desligado": {
+        "trilhoBefore": "rgb(255, 255, 255)",
+        "chaveAfter": "rgb(204, 204, 204)",
+        "bordaBefore": "rgb(204, 204, 204)",
+        "tokenOn": "#5992ed",
+        "tokenOff": "#ccc"
+      },
+      "soEmailLigado": {
+        "principal": "intermediario",
+        "email": true,
+        "sms": false,
+        "ariaEmail": "true"
+      },
+      "ligado": {
+        "trilhoBefore": "rgb(255, 255, 255)",
+        "chaveAfter": "rgb(89, 146, 237)",
+        "bordaBefore": "rgb(204, 204, 204)",
+        "tokenOn": "#5992ed",
+        "tokenOff": "#ccc"
+      },
+      "osDoisLigados": {
+        "principal": "marcado",
+        "email": true,
+        "sms": true,
+        "ariaEmail": "true"
+      },
+      "soSmsLigado": {
+        "principal": "intermediario",
+        "email": false,
+        "sms": true,
+        "ariaEmail": "false"
+      },
+      "principalNoIntermediarioClicado": {
+        "principal": "marcado",
+        "email": true,
+        "sms": true,
+        "ariaEmail": "true"
+      },
+      "principalDesmarcado": {
+        "principal": "desmarcado",
+        "email": false,
+        "sms": false,
+        "ariaEmail": "false"
+      },
+      "spaceAlterna": {
+        "principal": "intermediario",
+        "email": false,
+        "sms": true,
+        "ariaEmail": "false"
+      },
+      "axSwitch": {
+        "name": "Receber avisos por SMS",
+        "role": "switch",
+        "ignored": false,
+        "checked": "true"
+      },
+      "axPrincipal": {
+        "name": "Todos os avisos",
+        "role": "checkbox",
+        "ignored": false,
+        "checked": "mixed"
+      }
+    },
+    "step-tag-conforme": {
+      "marcadorFundo": "rgb(22, 136, 33)",
+      "marcadorAltura": 29.03125,
+      "marcadorLargura": 29.03125,
+      "raio": "50%",
+      "alinhamento": "center/center",
+      "corIcone": "rgb(255, 255, 255)",
+      "conteudoIcone": "\"\"",
+      "tamanhoIcone": "16px",
+      "filhosNoMarcador": 0,
+      "marcadorVsIndicador": {
+        "indTop": 373.625,
+        "indRight": 335.28125,
+        "mTop": 369.28125,
+        "mRight": 236.15625,
+        "mCentroX": 221.640625,
+        "mCentroY": 383.796875
+      },
+      "ativo2": "step",
+      "numero1": "\"1\"",
+      "nome1": {
+        "name": "1 Envio , etapa concluída ",
+        "role": "option",
+        "ignored": false,
+        "checked": null
+      },
+      "indicador": {
+        "w": "40px",
+        "h": "40px",
+        "top": "0px",
+        "left": "0px"
+      },
+      "contrasteIconeSobreFundoBranco_casoVerde": 4.59
+    },
+    "paragrafo-conforme": {
+      "fontSize": "16.8px",
+      "lineHeight": "24.36px",
+      "fontWeight": "400",
+      "color": "rgb(51, 51, 51)",
+      "upOne": "16.8px",
+      "base": "14px"
+    },
+    "v-a2-a39f3ad397d4-fonte-do-sistema": {
+      "fonteUsada": [
+        "Segoe UI"
+      ],
+      "errosJs": []
+    },
+    "v-a2-6afb3201269f-estilo-embutido": {
+      "styleOuScriptEmbutido": 1,
+      "errosJs": []
+    },
+    "v-a2-81fd932c0990-gatilho-fora-do-tab": {
+      "focoDepoisDoCampo": "chk-todos",
+      "errosJs": []
+    },
+    "v-a2-dc561d157556-sem-aria-label": {
+      "ariaLabel": null,
+      "nome": {
+        "name": "Fechar",
+        "role": "button",
+        "ignored": false,
+        "checked": null
+      },
+      "errosJs": []
+    },
+    "v-a2-615adba6e634-filho-com-grupo-errado-compensado": {
+      "dataChildSms": "avisos-sms",
+      "dataParent": "avisos",
+      "soEmailLigado": {
+        "principal": "intermediario",
+        "email": true,
+        "sms": false
+      },
+      "osDoisLigados": {
+        "principal": "marcado",
+        "email": true,
+        "sms": true
+      },
+      "soSmsLigado": {
+        "principal": "intermediario",
+        "email": false,
+        "sms": true
+      },
+      "principalNoIntermediarioClicado": {
+        "principal": "marcado",
+        "email": true,
+        "sms": true
+      },
+      "principalDesmarcado": {
+        "principal": "intermediario",
+        "email": false,
+        "sms": true
+      },
+      "spaceAlternaSms": {
+        "principal": "desmarcado",
+        "email": false,
+        "sms": false
+      },
+      "spaceNoPrincipal": {
+        "principal": "marcado",
+        "email": true,
+        "sms": true
+      },
+      "axPrincipal": {
+        "name": "Todos os avisos",
+        "role": "checkbox",
+        "ignored": false,
+        "checked": "true"
+      },
+      "errosJs": []
+    },
+    "v-a2-615adba6e634-sem-compensacao": {
+      "soSmsLigado": {
+        "principal": "desmarcado",
+        "email": false,
+        "sms": true
+      },
+      "principalClicado": {
+        "principal": "marcado",
+        "email": true,
+        "sms": true
+      },
+      "errosJs": []
+    },
+    "v-a2-7682991ef915-tag-sem-superficie": {
+      "fundo": "rgba(0, 0, 0, 0)",
+      "corIcone": "rgb(22, 136, 33)",
+      "corAfter": "rgb(22, 136, 33)",
+      "errosJs": []
+    },
+    "v-a2-3584b59ba47f-tag-em-duas-linhas": {
+      "altura": 58.0625,
+      "icones": 2,
+      "errosJs": []
+    },
+    "v-a2-86453e6d513e-concluido-so-visual": {
+      "nome1": {
+        "name": "1 Envio ",
+        "role": "option",
+        "ignored": false,
+        "checked": null
+      },
+      "errosJs": []
+    },
+    "v-a2-5f5d70c647f1-tag-com-fechar-markup": {
+      "botaoDentroDoMarcador": false,
+      "botoesDeEtapa": 4,
+      "filhosDoProgress": [
+        "BUTTON.step-progress-btn",
+        "BUTTON.br-button circle small",
+        "BUTTON.step-progress-btn",
+        "BUTTON.step-progress-btn",
+        "BUTTON.step-progress-btn"
+      ],
+      "errosJs": []
+    },
+    "v-a2-5f5d70c647f1-tag-com-fechar-dom": {
+      "botaoAninhadoEmBotao": true,
+      "serializacaoReparseada": 0,
+      "errosJs": []
+    },
+    "x-core-sem-sync-aria-checked": {
+      "ariaCheckedAtributo": null,
+      "ax": {
+        "name": "Receber avisos por e-mail",
+        "role": "switch",
+        "ignored": false,
+        "checked": "true"
+      },
+      "errosJs": []
+    },
+    "v-a2-e9ded28efe9c-aria-checked-fixo": {
+      "ariaCheckedAtributo": "false",
+      "ax": {
+        "name": "Receber avisos por e-mail",
+        "role": "switch",
+        "ignored": false,
+        "checked": "true"
+      },
+      "errosJs": []
+    },
+    "x-message-instancia-e-fechar": {
+      "BRMessage": "undefined",
+      "BRAlert": "function",
+      "mensagemRemovidaAoFechar": true,
+      "errosJs": []
+    },
+    "v-a2-22240b8959ba-recarga-periodica": {
+      "meta": "<meta http-equiv=\"refresh\" content=\"5\">",
+      "cargas": [
+        {
+          "seg": 0.1,
+          "caminho": "/v-a2-22240b8959ba-recarga-periodica.html"
+        },
+        {
+          "seg": 5.2,
+          "caminho": "/v-a2-22240b8959ba-recarga-periodica.html"
+        },
+        {
+          "seg": 10.2,
+          "caminho": "/v-a2-22240b8959ba-recarga-periodica.html"
+        }
+      ],
+      "caminhoFinal": "/v-a2-22240b8959ba-recarga-periodica.html",
+      "estadoS1LogoDepoisDaCarga": true,
+      "estadoS1DepoisDaJanela": false
+    },
+    "v-a2-31b4a3f89649-redireciona-outra-pagina": {
+      "meta": "<meta http-equiv=\"refresh\" content=\"4;url=outra.html\">",
+      "cargas": [
+        {
+          "seg": 0.1,
+          "caminho": "/v-a2-31b4a3f89649-redireciona-outra-pagina.html"
+        },
+        {
+          "seg": 4.1,
+          "caminho": "/outra.html"
+        }
+      ],
+      "caminhoFinal": "/outra.html",
+      "estadoS1LogoDepoisDaCarga": true,
+      "estadoS1DepoisDaJanela": null
+    }
+  }
+}

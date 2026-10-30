@@ -13,9 +13,9 @@
     "chegaramPasso2": 2025,
     "pendentesPasso2": 0,
     "rejeitadasPasso2": {
-      "nao-se-aplica": 557,
+      "nao-se-aplica": 556,
       "forca": 247,
-      "acoplada": 31,
+      "acoplada": 50,
       "duplicada": 289,
       "sem-medicao": 134,
       "nao-normativa": 229,
@@ -23,9 +23,9 @@
       "conflito": 6,
       "escopo": 55
     },
-    "elegiveis": 455,
+    "elegiveis": 437,
     "elegiveisPorEstrato": {
-      "DS": 429,
+      "DS": 411,
       "G": 26
     }
   },
@@ -2927,14 +2927,14 @@
       "forca": "obrigatoria",
       "passo1": "aceita",
       "passo2": "rejeitada",
-      "motivo": "duplicada:a2-679351f2635c",
-      "justificativa": "Texto alternativo para o botão só com ícone = e-MAG 3.6 (alternativa em texto para ícone único conteúdo de controle), mesmo observável (nome acessível).",
+      "motivo": "duplicada:a2-35afb7e6ee7c",
+      "justificativa": "Revisão 2: 'O Tipo Circular precisa de texto alternativo para o ícone' tem o mesmo predicado (botão só com ícone tem alternativa em texto), a mesma condição (ícone carrega o sentido do botão) e o mesmo observável (nome acessível vazio) de a2-35afb7e6ee7c, que já é aceita com os mesmos hospedeiros (Fechar das mensagens, gatilhos dos tooltips e do select). A equivalência antiga com e-MAG 3.6 caiu: 3.6 trata de alt de imagem.",
       "instancias": [],
       "variantes": [],
       "tipo": null,
       "caminhoDeteccao": null,
       "alternativasValidas": [],
-      "equivalenteEmag": "3.6",
+      "equivalenteEmag": null,
       "estrato": null
     },
     {
@@ -2957,7 +2957,7 @@
       "variantes": [
         {
           "id": "nome-so-em-title",
-          "descricao": "O botão só com ícone tem o nome apenas no atributo title, sem aria-label.",
+          "descricao": "O botão só com ícone perde o atributo aria-label; o mesmo nome fica no atributo title e no texto oculto (span sr-only), de modo que o nome acessível não muda (medido: 'Fechar', tela-a2/construtibilidade/resultado.json).",
           "clausula": "Inclua o atributo aria-label no componente"
         }
       ],
@@ -3146,16 +3146,31 @@
       "texto": "Ao utilizar botões com apenas ícones, certifique-se de usar os atributos title ou aria-label;",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "rejeitada",
-      "motivo": "duplicada:a2-679351f2635c",
-      "justificativa": "\"title ou aria-label\" no botão só com ícone = nome acessível do e-MAG 3.6; a exigência específica de aria-label fica em a2-dc561d157556.",
-      "instancias": [],
-      "variantes": [],
-      "tipo": null,
-      "caminhoDeteccao": null,
+      "passo2": "aceita",
+      "motivo": null,
+      "justificativa": "Revisão 2: restaurada como predicado DS próprio. 'title ou aria-label' no botão só com ícone exige um dos dois ATRIBUTOS, além de o botão ter nome. Não multiplica observável: a2-35afb7e6ee7c é o botão sem nome algum; a2-dc561d157556 é o botão sem aria-label mas com title; aqui o botão fica sem os dois atributos e com nome só pelo texto oculto. Medida: atributos title e aria-label ausentes no botão; nome acessível continua não vazio.",
+      "instancias": [
+        "msg-pendencia",
+        "msg-retorno",
+        "tip-prazo",
+        "tip-protocolo",
+        "sel-tipo-documento"
+      ],
+      "variantes": [
+        {
+          "id": "nome-so-no-texto-oculto",
+          "descricao": "O botão só com ícone fica sem title e sem aria-label; o nome acessível continua vindo do texto oculto (span sr-only) dentro do botão (nos gatilhos dos tooltips, também do aria-labelledby).",
+          "clausula": "Ao utilizar botões com apenas ícones, certifique-se de usar os atributos title ou aria-label;"
+        }
+      ],
+      "tipo": "estrutura-classe",
+      "caminhoDeteccao": [
+        "medicao",
+        "leitura-da-regra"
+      ],
       "alternativasValidas": [],
-      "equivalenteEmag": "3.6",
-      "estrato": null
+      "equivalenteEmag": null,
+      "estrato": "DS"
     },
     {
       "id": "a2-940c6600f021",
@@ -3282,26 +3297,16 @@
       "texto": "2 · Área · --- · Obrigatório",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Área (conteúdo) obrigatória, que no código é .card-content. Medida: .br-card > .card-content contém o conteúdo.",
-      "instancias": [
-        "crd-resumo"
-      ],
-      "variantes": [
-        {
-          "id": "conteudo-sem-card-content",
-          "descricao": "O conteúdo do card fica direto no .br-card, sem o contêiner .card-content.",
-          "clausula": "2 · Área · --- · Obrigatório"
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — conteudo-sem-card-content → a2-3404d04d4b7b (a variante tira um contêiner; o padding do conteúdo é outra propriedade que se perde junto); a2-7dd282607ce8 (a variante tira um contêiner; a margem interna do conteúdo é outra propriedade que se perde junto). (Antes: Área (conteúdo) obrigatória, que no código é .card-content. Medida: .br-card > .card-content contém o conteúdo.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-9e6a01fe6b6e",
@@ -7184,27 +7189,16 @@
       "texto": "class · string · br-checkbox · Container do componente",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Container br-checkbox. Medida: classe da raiz do checkbox.",
-      "instancias": [
-        "chk-avisos-todos"
-      ],
-      "variantes": [
-        {
-          "id": "sem-br-checkbox",
-          "descricao": "A raiz do checkbox principal usa classe própria (aparência copiada à mão), sem a classe do componente.",
-          "clausula": "class · string · br-checkbox · Container do componente"
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "leitura-da-regra",
-        "medicao"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — sem-br-checkbox → a2-f97f63c9e220 (A variante muda a classe da raiz; o principal ficar sem comportamento é outro fato, de comportamento.); a2-3c18fb6c1dbc (Além da classe, o vínculo principal–switches e o estado intermediário deixam de funcionar.). (Antes: Container br-checkbox. Medida: classe da raiz do checkbox.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-146296de2050",
@@ -7298,14 +7292,14 @@
       "passo1": "aceita",
       "passo2": "aceita",
       "motivo": null,
-      "justificativa": "Filhos com data-child igual ao data-parent do pai. Medida: data-child dos inputs dos dois switches igual ao data-parent do principal.",
+      "justificativa": "Filhos com data-child igual ao data-parent do pai. Medida: data-child do input do switch de SMS contra o data-parent do principal. Revisão 2 (isolamento): a variante vem com implementação independente do vínculo, como a de a2-7c449a946697; a conferência mediu o grupo com a variante e o script próprio em 7 situações (só e-mail, os dois, só SMS, clique no principal intermediário, desmarcar, Espaço no SMS, Espaço no principal) e o comportamento é igual ao da página conforme; sem o script, o principal fica desmarcado com só o SMS ligado (tela-a2/construtibilidade/resultado.json).",
       "instancias": [
         "chk-avisos-todos"
       ],
       "variantes": [
         {
           "id": "filho-com-grupo-errado",
-          "descricao": "O input do switch de SMS leva um valor de amarração diferente do do checkbox principal; ligar só o SMS não muda o principal.",
+          "descricao": "O input do switch de SMS leva data-child com valor diferente do data-parent do principal; um script próprio da página, em arquivo .js, refaz o vínculo do SMS com o principal (estado intermediário, selecionar e desselecionar todos, teclado), de modo que o comportamento do grupo fica igual ao da página conforme.",
           "clausula": "com o mesmo valor passado ao atributo data-parentdo checkbox \"pai\""
         }
       ],
@@ -14144,32 +14138,16 @@
       "texto": "Utilize a marcação semântica correta no código HTML, com a tag <input> e o valor do atributo type correspondente a sua função.",
       "forca": "a-julgar",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Campo em <input> com type correspondente à função (texto/filtro). Medida: tagName e type do campo.",
-      "instancias": [
-        "sel-tipo-documento"
-      ],
-      "variantes": [
-        {
-          "id": "type-errado",
-          "descricao": "O campo do select usa type=\"number\".",
-          "clausula": "com a tag <input> e o valor do atributo type correspondente a sua função"
-        },
-        {
-          "id": "campo-em-div",
-          "descricao": "O campo do select é uma div com contenteditable em vez de <input>.",
-          "clausula": "com a tag <input>"
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "medicao",
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — type-errado → a2-684e49bfcc90 (A variante muda o atributo type; o filtro por digitação de letras quebrar é outro comportamento.); a2-328f62cfe4ce (Além do type, o texto digitado (letras) deixa de entrar no campo, outro comportamento.) | campo-em-div → a2-7c43824db106 (Além da tag do campo, o rótulo deixa de estar associado por for/id, outro nó e outra propriedade.). (Antes: Campo em <input> com type correspondente à função (texto/filtro). Medida: tagName e type do campo.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-7c43824db106",
@@ -14359,8 +14337,7 @@
       "motivo": null,
       "justificativa": "Proíbe botão primário e componentes de navegação dentro do item. Medida: presença de botão primário/navegação dentro de um item.",
       "instancias": [
-        "sel-tipo-documento",
-        "tab-requerimento"
+        "sel-tipo-documento"
       ],
       "variantes": [
         {
@@ -14368,14 +14345,6 @@
           "descricao": "Um item da lista do select ganha um botão primário \"Ver modelo\".",
           "instancias": [
             "sel-tipo-documento"
-          ],
-          "clausula": "exceto botões primários"
-        },
-        {
-          "id": "primario-na-aba",
-          "descricao": "O item da aba Documentos contém um botão primário.",
-          "instancias": [
-            "tab-requerimento"
           ],
           "clausula": "exceto botões primários"
         }
@@ -20351,27 +20320,16 @@
       "texto": "class · string · br-message · Container para Tipo Padrão",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Container br-message. Medida: classe da raiz da mensagem.",
-      "instancias": [
-        "msg-pendencia",
-        "msg-retorno"
-      ],
-      "variantes": [
-        {
-          "id": "sem-br-message",
-          "descricao": "A raiz da mensagem usa classe própria (aparência copiada à mão), sem br-message.",
-          "clausula": "class · string · br-message · Container para Tipo Padrão"
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — sem-br-message → a2-8536d91ce5b9 (A variante muda a classe da raiz; o Fechar parar de remover a mensagem é outro comportamento.). (Antes: Container br-message. Medida: classe da raiz da mensagem.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-b069c3031aa0",
@@ -26117,26 +26075,16 @@
       "texto": "class · string · br-select · Container do componente Select",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Container br-select. Medida: classe da raiz.",
-      "instancias": [
-        "sel-tipo-documento"
-      ],
-      "variantes": [
-        {
-          "id": "sem-br-select",
-          "descricao": "A raiz do select usa classe própria (aparência copiada à mão), sem br-select.",
-          "clausula": "class · string · br-select · Container do componente Select"
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — sem-br-select → a2-4d99afd1c618 (A variante muda a classe da raiz; a lista que não abre ao clicar no campo é outro comportamento, perdido porque o BRSelect não é instanciado.). (Antes: Container br-select. Medida: classe da raiz.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-bd84ff2497d5",
@@ -26145,26 +26093,16 @@
       "texto": "class · string · br-input · Container do componente Input",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Campo interno em br-input. Medida: classe do contêiner do campo.",
-      "instancias": [
-        "sel-tipo-documento"
-      ],
-      "variantes": [
-        {
-          "id": "campo-sem-br-input",
-          "descricao": "O contêiner do campo dentro do select não tem br-input.",
-          "clausula": "class · string · br-input · Container do componente Input"
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — campo-sem-br-input → a2-3169f339a8e1 (Além da classe, altura e raio computados do campo mudam: outra propriedade.); a2-8fcc793aaed1 (Além da classe, paddings e margens do campo e do rótulo mudam: outras propriedades.). (Antes: Campo interno em br-input. Medida: classe do contêiner do campo.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-879621000aa6",
@@ -26173,26 +26111,16 @@
       "texto": "class · string · br-button · Container do componente Button",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Gatilho em br-button. Medida: classe do botão.",
-      "instancias": [
-        "sel-tipo-documento"
-      ],
-      "variantes": [
-        {
-          "id": "gatilho-sem-br-button",
-          "descricao": "O botão de abrir a lista não tem br-button.",
-          "clausula": "class · string · br-button · Container do componente Button"
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — gatilho-sem-br-button → a2-9fc840ceb22d (Além da classe, o fundo e a cor do ícone computados do botão mudam: outra propriedade.); a2-b0f874b8b2cf (Além da classe, as dimensões computadas do botão saem do 32×32: outra propriedade.). (Antes: Gatilho em br-button. Medida: classe do botão.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-0a6b97c41045",
@@ -26201,26 +26129,16 @@
       "texto": "class · string · br-list · Container do componente List",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Lista em br-list. Medida: classe do contêiner da lista.",
-      "instancias": [
-        "sel-tipo-documento"
-      ],
-      "variantes": [
-        {
-          "id": "lista-sem-br-list",
-          "descricao": "O contêiner da lista não tem br-list.",
-          "clausula": "class · string · br-list · Container do componente List"
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — lista-sem-br-list → a2-adae4a234fdd (Além da classe, a lista deixar de abrir e de entregar a escolha é outro comportamento, se o BRSelect localiza a lista por .br-list.). (Antes: Lista em br-list. Medida: classe do contêiner da lista.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-419c091564b6",
@@ -26229,26 +26147,16 @@
       "texto": "class · string · br-item · Container do componente Item",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Opções em br-item. Medida: classe de cada opção.",
-      "instancias": [
-        "sel-tipo-documento"
-      ],
-      "variantes": [
-        {
-          "id": "opcao-sem-br-item",
-          "descricao": "As opções da lista não têm br-item.",
-          "clausula": "class · string · br-item · Container do componente Item"
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — opcao-sem-br-item → a2-2f900cc3509d (Além da classe, o item perde o realce de hover/foco/selecionado, que é outro observável.); a2-b30ded4687e3 (Além da classe, o padding computado do item sai do token, que é outra propriedade.). (Antes: Opções em br-item. Medida: classe de cada opção.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-ee58999db029",
@@ -31412,28 +31320,16 @@
       "texto": "Para que usuários com deficiência visual possam entender completamente a opção selecionada, os leitores de tela devem anunciar o rótulo descritivo e o estado atual do switch.",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Leitor de tela anuncia rótulo E estado atual; a parte residual, que o e-MAG 6.2 não cobre, é o estado. Medida: estado (checked/aria-checked) exposto na árvore de acessibilidade igual ao visual.",
-      "instancias": [
-        "swt-aviso-email",
-        "swt-aviso-sms"
-      ],
-      "variantes": [
-        {
-          "id": "estado-nao-exposto",
-          "descricao": "O switch é um div estilizado com role=switch e nome, mas sem aria-checked: o estado ligado/desligado não chega à árvore de acessibilidade.",
-          "clausula": "os leitores de tela devem anunciar o rótulo descritivo e o estado atual do switch."
-        }
-      ],
-      "tipo": "comportamento",
-      "caminhoDeteccao": [
-        "axe",
-        "medicao"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — estado-nao-exposto → a2-3c18fb6c1dbc (O checkbox principal, outro nó, deixa de ir ao intermediário porque o div não tem estado checked.); a2-f4237d13520b (A associação label[for]/id, outra propriedade, se perde porque um div não é rotulável por for.). (Antes: Leitor de tela anuncia rótulo E estado atual; a parte residual, que o e-MAG 6.2 não cobre, é o estado. Medida: estado (checked/aria-checked) exposto na árvore de acessibilidade igual ao visual.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-3403920b2fa1",
@@ -32316,26 +32212,16 @@
       "texto": "class · string · tab-item · Rótulo de cada aba",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Cada aba tab-item. Medida: classe de cada item.",
-      "instancias": [
-        "tab-requerimento"
-      ],
-      "variantes": [
-        {
-          "id": "sem-tab-item",
-          "descricao": "A 2ª aba não tem tab-item (aparência copiada à mão).",
-          "clausula": "class · string · tab-item · Rótulo de cada aba"
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — sem-tab-item → a2-fc8612404c77 (Além da classe, a troca de aba e o aria-selected deixam de funcionar porque o BRTab liga o clique por .tab-item.); a2-2e96af5b4635 (A ativação por teclado da 2ª aba é outro comportamento perdido junto com a ligação do BRTab.). (Antes: Cada aba tab-item. Medida: classe de cada item.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-065e3131ac2b",
@@ -34123,27 +34009,16 @@
       "texto": "Sempre utilize a estrutura de tags semânticas para o table (<table>, <thead>, <tbody>, <th>, <tr>, <td>).",
       "forca": "a-julgar",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Estrutura semântica de tabela (table, thead, tbody, th, tr, td) — mais ampla que o e-MAG 3.10. Medida: tagName dos elementos da tabela.",
-      "instancias": [
-        "tbl-movimentacoes"
-      ],
-      "variantes": [
-        {
-          "id": "tabela-de-divs",
-          "descricao": "A tabela é montada com div e CSS grid, sem table/th/td; a aparência fica igual.",
-          "clausula": "Sempre utilize a estrutura de tags semânticas para o table (<table>, <thead>, <tbody>, <th>, <tr>, <td>)."
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "axe",
-        "medicao"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — tabela-de-divs → a2-83ec838a289a (o título da tabela é outro nó: sem table ele perde o papel de caption, além das células.). (Antes: Estrutura semântica de tabela (table, thead, tbody, th, tr, td) — mais ampla que o e-MAG 3.10. Medida: tagName dos elementos da tabela.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-94bd7eba2c3c",
@@ -34298,14 +34173,14 @@
       "passo1": "aceita",
       "passo2": "aceita",
       "motivo": null,
-      "justificativa": "Superfície obrigatória da tag de concluído (marcador circular com fundo de sucesso). Medida: background-color computado do marcador na 1ª etapa.",
+      "justificativa": "Superfície obrigatória da Tag, herdada pelo marcador de concluído (princípio Tag/Step). Medida: background-color computado do marcador na 1ª etapa (conforme: --success, tela-a2/construtibilidade/resultado.json). Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [
         "stp-andamento"
       ],
       "variantes": [
         {
           "id": "tag-sem-superficie",
-          "descricao": "A tag de concluído da 1ª etapa fica com fundo transparente; só o ícone aparece.",
+          "descricao": "A tag de concluído da 1ª etapa fica sem superfície (fundo transparente); o ícone passa para a cor --success para continuar visível (contraste 4,59:1 sobre o branco, medido), sem tocar outro requisito.",
           "clausula": "1 · Superfície · Fundamento Superfície · Obrigatório"
         }
       ],
@@ -34345,7 +34220,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "conflito",
-      "justificativa": "Diz que só tags de status e contagem podem ter borda; a2-ba9a65432baa diz que tags de ícone (o tipo da tela) possuem bordas. A página segue o CSS do step no core 3.7.0: tag de concluído sem borda na etapa não ativa; nenhuma variante de borda é sorteável.",
+      "justificativa": "Diz que só tags de status e contagem podem ter borda; a2-ba9a65432baa, no mesmo documento, diz que as de ícone (o tipo do marcador) possuem bordas opcionais: contradição interna da Tag. O Step só pede borda no marcador da etapa ATIVA (step__designer.md, § Uso de Alertas, Atenção); a 1ª etapa não é a ativa, e a página segue o CSS do Step no core 3.7.0 (sem borda). Nenhuma variante de borda é sorteável. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -34363,7 +34238,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "conflito",
-      "justificativa": "Exige tooltip em tag só de ícone; a diretriz do step (Step Complexo) prevê tooltip no indicador só para erro/pendência e a sua implementação no core 3.7.0 não tem tooltip na tag de concluído. A página segue o step: tag de concluído sem tooltip, significado dado pelo rótulo e pelo estado da etapa.",
+      "justificativa": "Exige tooltip em tag só de ícone. Pelo princípio Tag/Step, o Step regula quando o seu marcador leva tooltip: só para erro/alerta quando não há rótulo (step__designer.md, § Indicador, atenção sobre Tooltip; § Uso de Alertas). A tela tem rótulos e o estado é Concluído; a página segue o Step, e a regra da Tag cede (tag__designer.md, § Distribuição: a tag contida segue as orientações do componente). Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -34759,7 +34634,7 @@
       "passo1": "aceita",
       "passo2": "aceita",
       "motivo": null,
-      "justificativa": "Tag com altura fixa: uma única linha de texto/ícone. Medida: altura computada do marcador de concluído igual à do token e um só ícone.",
+      "justificativa": "Tag com altura fixa: uma única linha de texto/ícone, herdada pelo marcador de concluído (princípio Tag/Step). Medida: altura do marcador (conforme 29,04 px) e número de ícones (conforme 1); a variante construída mede 58,06 px e 2 ícones (tela-a2/construtibilidade/resultado.json). Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [
         "stp-andamento"
       ],
@@ -35022,7 +34897,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35040,7 +34915,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35058,7 +34933,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35076,7 +34951,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35094,7 +34969,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35112,7 +34987,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35130,7 +35005,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35148,7 +35023,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35166,7 +35041,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35184,7 +35059,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35202,7 +35077,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35220,7 +35095,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35238,7 +35113,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35255,8 +35130,8 @@
       "forca": "a-julgar",
       "passo1": "aceita",
       "passo2": "rejeitada",
-      "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "motivo": "duplicada:a2-2737953e2513",
+      "justificativa": "Tabela Iconografia da Tag: a linha 'tag de ícone' (--icon-size-base) coincide com a Iconografia do Step para o ícone do estado Concluído (fa-check, --icon-size-base), que já é aceita no marcador: mesmo predicado e observável. As demais linhas são de tipos que a tela não tem. Construção: o core 3.7.0 desenha o ícone em 16,8 px; a página conforme fixa --icon-size-base (16 px), medido em tela-a2/construtibilidade/resultado.json. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35274,7 +35149,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35292,7 +35167,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35310,7 +35185,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35328,7 +35203,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35346,7 +35221,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35364,7 +35239,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35382,7 +35257,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35400,7 +35275,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35418,7 +35293,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35436,7 +35311,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35454,7 +35329,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35472,7 +35347,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A 'Tag de concluído' do Step é o marcador .step-alert do próprio step, não um br-tag; não há tag desse tipo na tela, então nenhuma linha da tabela tem hospedeiro.",
+      "justificativa": "Tabela de especificação da Tag: não se aplica ao marcador do Step pelo princípio Tag/Step (b); tabelas de tipos que a tela não tem (interação, texto, status, contagem, entrada) também não têm hospedeiro. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35508,7 +35383,7 @@
       "passo1": "aceita",
       "passo2": "rejeitada",
       "motivo": "nao-se-aplica",
-      "justificativa": "A tag embutida no Step Complexo é desenhada pela marcação do próprio step (marcador step-alert do core 3.7.0), não por um br-tag; não há container br-tag na tela.",
+      "justificativa": "Classe br-tag: pertence só à implementação do componente Tag. O marcador é desenhado pela marcação oficial do Step no core 3.7.0 (.step-alert dentro de .step-progress-btn, medido em tela-a2/construtibilidade/resultado.json). Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [],
       "variantes": [],
       "tipo": null,
@@ -35706,7 +35581,7 @@
       "passo1": "aceita",
       "passo2": "aceita",
       "motivo": null,
-      "justificativa": "Diz mais que o e-MAG 4.2: a categoria da tag tem de ser identificável por leitor de tela. Medida: nome acessível/descrição da 1ª etapa contém \"concluída\" (texto oculto, aria).",
+      "justificativa": "Categoria da Tag identificável por leitor de tela, herdada pelo marcador (princípio Tag/Step). Construção: a página conforme acrescenta texto oculto ', etapa concluída' ao botão da 1ª etapa (o core 3.7.0 não expõe o estado). Medida: nome acessível da 1ª etapa contém 'concluída' (conforme: '1 Envio , etapa concluída'; variante: '1 Envio', tela-a2/construtibilidade/resultado.json). Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
       "instancias": [
         "stp-andamento"
       ],
@@ -37124,28 +36999,16 @@
       "texto": "Use somente no tipo popover;",
       "forca": "a-julgar",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Acionamento por clique só no popover; o tooltip simples abre por mouse over/foco, não por clique. Medida: o balão abre ao passar o ponteiro e não depende de clique.",
-      "instancias": [
-        "tip-prazo",
-        "tip-protocolo"
-      ],
-      "variantes": [
-        {
-          "id": "simples-por-clique",
-          "descricao": "O tooltip simples passa a abrir só com clique no gatilho (o mouse over não abre mais).",
-          "clausula": "2- Clique: quando o usuário clicar no elemento. Use somente no tipo popover;"
-        }
-      ],
-      "tipo": "comportamento",
-      "caminhoDeteccao": [
-        "interacao",
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — simples-por-clique → a2-17a73c07609f (além do hover, a abertura por foco no teclado passa a falhar: outro comportamento.). (Antes: Acionamento por clique só no popover; o tooltip simples abre por mouse over/foco, não por clique. Medida: o balão abre ao passar o ponteiro e não depende de clique.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-17a73c07609f",
@@ -38172,26 +38035,16 @@
       "texto": "O componente upload deve disponibilizar o recurso de arrastar arquivos.",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Recurso de arrastar arquivos. Medida: soltar um arquivo sintético (DataTransfer) na área adiciona o arquivo.",
-      "instancias": [
-        "upl-documento"
-      ],
-      "variantes": [
-        {
-          "id": "sem-arrastar",
-          "descricao": "A área não aceita soltar arquivo (sem os manipuladores de dragover/drop).",
-          "clausula": "O componente upload deve disponibilizar o recurso de arrastar arquivos."
-        }
-      ],
-      "tipo": "comportamento",
-      "caminhoDeteccao": [
-        "interacao"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — sem-arrastar → a2-caf6bc80cb4b (o feedback visual durante o arraste é outro estado, além de soltar não funcionar.); a2-5612fb499d07 (o estado Dropzone Ativo ao arrastar é outro estado visual da área, além do drop.); a2-253f67dc1b85 (a resposta visual ao arrastar é outro estado, distinto de aceitar o arquivo.). (Antes: Recurso de arrastar arquivos. Medida: soltar um arquivo sintético (DataTransfer) na área adiciona o arquivo.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-2e8e53cf16ef",
@@ -42600,7 +42453,7 @@
       "passo1": "aceita",
       "passo2": "aceita",
       "motivo": null,
-      "justificativa": "Tabela Ligado/Desligado: ligado = --blue-warm-vivid-40. Na tela: os dois switches. Medida: cor computada do trilho/chave do switch ligado. (A linha Desligado, --gray-40, não é usada nas variantes: ver dúvida.)",
+      "justificativa": "Tabela Ligado/Desligado: ligado = --blue-warm-vivid-40. Na tela: os dois switches. Medida: cor computada da chave do switch ligado (conforme: #5992ed = --blue-warm-vivid-40, tela-a2/construtibilidade/resultado.json). Conflito registrado na conferência de construtibilidade: a linha Desligado desta tabela (--gray-40) contradiz a tabela Cor do próprio Switch (desligada --gray-20, a2-86176aff4a89); o core 3.7.0 desenha a chave desligada em #ccc = --gray-20 (medido). A página segue a especificação do componente (mais específica) e o core; a linha Desligado é conflito declarado, não defeito, e não tem variante.",
       "instancias": [
         "swt-aviso-email",
         "swt-aviso-sms"
@@ -42970,31 +42823,16 @@
       "texto": "Mantenha os rótulos sempre visíveis e precisos.",
       "forca": "a-julgar",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Rótulo sempre visível (vai além da 6.2: a etiqueta pode estar associada e escondida). Medida: rótulo do campo renderizado com área visível (sem recorte/clip, dentro da tela).",
-      "instancias": [
-        "sel-tipo-documento",
-        "upl-documento",
-        "swt-aviso-email",
-        "swt-aviso-sms",
-        "chk-avisos-todos"
-      ],
-      "variantes": [
-        {
-          "id": "rotulo-so-leitor-de-tela",
-          "descricao": "O rótulo do campo fica visualmente oculto (recorte 1×1px), mantendo a associação e o nome acessível; na tela o campo aparece sem rótulo.",
-          "clausula": "Mantenha os rótulos sempre visíveis e precisos."
-        }
-      ],
-      "tipo": "visual-token",
-      "caminhoDeteccao": [
-        "medicao",
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — rotulo-so-leitor-de-tela → a2-a70181ba5638 (A caixa do checkbox, pseudo-elemento do rótulo, some junto: outro nó, visível e obrigatório.); a2-402eef83153c (Nos switches, a chave desenhada no label some junto: outro nó, visível e obrigatório.). (Antes: Rótulo sempre visível (vai além da 6.2: a etiqueta pode estar associada e escondida). Medida: rótulo do campo renderizado com área visível (sem recorte/clip, dentro da tela).)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-f9bd4feb338d",
@@ -45487,7 +45325,7 @@
       "variantes": [
         {
           "id": "rotulo-de-aba-longo",
-          "descricao": "O rótulo da 2ª aba fica 'Aqui você pode consultar e também enviar os seus documentos pendentes' (12 palavras).",
+          "descricao": "O rótulo da 2ª aba fica 'Consultar e enviar documentos pendentes deste requerimento agora mesmo' (9 palavras, sem artigo).",
           "clausula": "Portanto, esse tipo de microcopy precisa ser bem assertivo, conciso e com as palavras certas para impactar quem lê."
         }
       ],
@@ -46686,7 +46524,7 @@
       "variantes": [
         {
           "id": "jargao-tecnico",
-          "descricao": "A mensagem de retorno diz 'HTTP 422: payload inválido (multipart/form-data sem part file)'.",
+          "descricao": "A frase que diz por que o envio falhou vira jargão técnico ('Requisição sem a parte file do multipart.'); a frase do que fazer para enviar de novo fica igual à conforme.",
           "clausula": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos."
         }
       ],
@@ -47095,7 +46933,7 @@
       "variantes": [
         {
           "id": "retorno-zombeteiro",
-          "descricao": "A mensagem de erro do envio passa a dizer 'Esqueceu o arquivo de novo? Tente prestar atenção desta vez.'",
+          "descricao": "A primeira frase da mensagem de erro do envio vira zombeteira ('Esqueceu o arquivo de novo?'), com o mesmo tamanho; por que ocorreu e o que fazer continuam no texto.",
           "instancias": [
             "msg-retorno"
           ],
@@ -47103,7 +46941,7 @@
         },
         {
           "id": "alerta-zombeteiro",
-          "descricao": "O alerta de pendência passa a dizer 'Ainda não mandou o documento? Até uma tartaruga já teria enviado.'",
+          "descricao": "A frase de abertura do alerta de pendência vira zombeteira ('Ainda não mandou?'), com o mesmo tamanho; qual documento falta e o prazo continuam no texto.",
           "instancias": [
             "msg-pendencia"
           ],
@@ -47152,7 +46990,7 @@
       "variantes": [
         {
           "id": "erro-culpa-usuario",
-          "descricao": "A mensagem de erro passa a dizer 'Você não anexou o arquivo e esqueceu de escolher o tipo de documento.'",
+          "descricao": "A primeira frase da mensagem de erro passa a culpar a pessoa ('Você esqueceu de anexar o arquivo.'); o resto do texto conforme fica igual (por que ocorreu e o que fazer para enviar de novo), com o mesmo número de frases.",
           "clausula": "Não culpe o usuário."
         }
       ],
@@ -50427,7 +50265,7 @@
       "variantes": [
         {
           "id": "importante-no-fim",
-          "descricao": "A mensagem de pendência começa com três frases de contexto e só no fim diz qual documento falta e o prazo.",
+          "descricao": "A mensagem de pendência troca a ordem das frases conformes: começa pela frase de contexto e só no fim diz qual documento falta e o prazo; nenhuma palavra é acrescentada nem retirada.",
           "clausula": "A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo."
         }
       ],
@@ -51579,7 +51417,7 @@
       "variantes": [
         {
           "id": "expressao-regional",
-          "descricao": "A mensagem diz 'Bah, tá faltando um documento'.",
+          "descricao": "A mensagem ganha uma expressão regional no lugar de uma palavra neutra da abertura ('Bah, falta …' no lugar de 'Falta …'); todo o conteúdo conforme fica (o que falta, o que fazer e o prazo), sem frase nova.",
           "clausula": "Não utilize palavras, expressões e gírias típicas de regiões do país."
         }
       ],
@@ -56816,7 +56654,6 @@
       "instancias": [
         "acc-duvidas",
         "upl-documento",
-        "crd-resumo",
         "tab-requerimento"
       ],
       "variantes": [
@@ -56834,14 +56671,6 @@
           "clausula": "Todas as funções da página desenvolvidas utilizando-se linguagens de script (javascript) devem ser programadas, primeiramente, para o uso com teclado.",
           "instancias": [
             "upl-documento"
-          ]
-        },
-        {
-          "id": "gatilho-so-mouse",
-          "descricao": "O gatilho de ajuda do protocolo, dentro do card, vira span com clique, fora da ordem de Tab.",
-          "clausula": "Todas as funções da página desenvolvidas utilizando-se linguagens de script (javascript) devem ser programadas, primeiramente, para o uso com teclado.",
-          "instancias": [
-            "crd-resumo"
           ]
         },
         {
@@ -56888,21 +56717,21 @@
       "passo1": "aceita",
       "passo2": "aceita",
       "motivo": null,
-      "justificativa": "e-MAG 3.1, Recomendação 2.3 (de volta à elegibilidade, item 5). Sem atualização automática periódica, e sem aviso. Medida em sessão isolada: carga limpa, janela fixa de 90 s, contar substituições do conteúdo da tabela (MutationObserver) e procurar aviso de atualização automática.",
+      "justificativa": "e-MAG 3.1, Recomendação 2.3. Revisão 2: a manifestação é a atualização automática periódica da PÁGINA, no exemplo literal da cláusula (meta http-equiv=\"refresh\" com período, sem url), e não mutação parcial do DOM. Medida em sessão isolada (plano § 14.5): carga limpa, janela de 360 s, contar eventos load do documento (≥ 2 = recarga periódica) e ler a meta; sem aviso de atualização automática na página. A conferência mostrou o mecanismo com período reduzido: recargas aos 5,2 s e 10,2 s, e o estado S1 perdido depois da recarga (tela-a2/construtibilidade/resultado.json).",
       "instancias": [
-        "tbl-movimentacoes"
+        "pagina"
       ],
       "variantes": [
         {
-          "id": "tabela-se-atualiza",
-          "descricao": "A tabela de movimentações é recarregada sozinha a cada 30 s (setInterval que refaz as linhas com os mesmos dados), sem botão e sem aviso.",
+          "id": "recarga-periodica",
+          "descricao": "O head ganha <meta http-equiv=\"refresh\" content=\"300\">: a página se recarrega sozinha a cada 300 s, sem aviso e sem controle para a pessoa.",
           "clausula": "Não criar páginas com atualização automática periódica"
         }
       ],
       "tipo": "comportamento",
       "caminhoDeteccao": [
-        "interacao",
-        "medicao"
+        "medicao",
+        "interacao"
       ],
       "alternativasValidas": [],
       "equivalenteEmag": null,
@@ -56917,21 +56746,21 @@
       "passo1": "aceita",
       "passo2": "aceita",
       "motivo": null,
-      "justificativa": "e-MAG 3.1, Recomendação 2.4 (de volta à elegibilidade, item 5). Sem marcação de redirecionamento. Medida em sessão isolada: meta http-equiv=refresh com url no head, e navegação observada dentro de janela fixa.",
+      "justificativa": "e-MAG 3.1, Recomendação 2.4. Revisão 2: a manifestação é redirecionamento automático para OUTRA página por marcação, como diz a cláusula ('redirecionar a uma nova página ... http-equiv com conteúdo refresh'); não é recarga da própria página nem fragmento. Medida em sessão isolada (plano § 14.5): meta refresh com url de outro documento no head e navegação do quadro principal para outro caminho dentro da janela de 660 s. A conferência mostrou o mecanismo com atraso reduzido: navegação para /outra.html aos 4,2 s (tela-a2/construtibilidade/resultado.json).",
       "instancias": [
         "pagina"
       ],
       "variantes": [
         {
-          "id": "redireciona-com-meta",
-          "descricao": "O head ganha meta http-equiv=refresh content='600;url=acompanhamento.html#inicio' (redireciona para a própria página depois de 10 min).",
+          "id": "redireciona-para-outra-pagina",
+          "descricao": "O head ganha <meta http-equiv=\"refresh\" content=\"600;url=meus-requerimentos.html\">: depois de 600 s na página, o navegador é levado sozinho para a página 'Meus requerimentos' (outro documento, o mesmo do link da trilha).",
           "clausula": "Não devem ser utilizadas marcações para redirecionar a uma nova página, como o uso do atributo http-equiv com conteúdo “refresh” do elemento META."
         }
       ],
       "tipo": "comportamento",
       "caminhoDeteccao": [
-        "axe",
-        "medicao"
+        "medicao",
+        "interacao"
       ],
       "alternativasValidas": [],
       "equivalenteEmag": null,
@@ -57280,16 +57109,7 @@
       "caminhoDeteccao": [
         "leitura-da-regra"
       ],
-      "alternativasValidas": [
-        {
-          "id": "sigla-com-abbr",
-          "descricao": "A forma completa de 'NUP' vem num elemento abbr com title na primeira ocorrência, em vez de entre parênteses no texto.",
-          "clausula": "Essa explicação pode estar expressa no próprio texto, pode estar presente em um glossário ou, então, através da utilização do elemento abbr",
-          "instancias": [
-            "crd-resumo"
-          ]
-        }
-      ],
+      "alternativasValidas": [],
       "equivalenteEmag": null,
       "estrato": "G"
     },
@@ -57555,16 +57375,17 @@
       "justificativa": "e-MAG 3.1, Recomendação 6.2. LABEL associado ao campo por for/id. Medida: label[for] = id do campo.",
       "instancias": [
         "upl-documento",
-        "sel-tipo-documento",
-        "swt-aviso-email",
-        "swt-aviso-sms",
-        "chk-avisos-todos"
+        "sel-tipo-documento"
       ],
       "variantes": [
         {
           "id": "rotulo-desassociado",
           "descricao": "O rótulo visível do campo continua lá, mas sem for/id: não está associado ao campo.",
-          "clausula": "As etiquetas de texto (elemento LABEL) devem estar associadas aos seus campos (elementos INPUT, SELECT e TEXTAREA, à exceção do elemento BUTTON) correspondentes no formulário, através dos atributos for do label e id do input"
+          "clausula": "As etiquetas de texto (elemento LABEL) devem estar associadas aos seus campos (elementos INPUT, SELECT e TEXTAREA, à exceção do elemento BUTTON) correspondentes no formulário, através dos atributos for do label e id do input",
+          "instancias": [
+            "upl-documento",
+            "sel-tipo-documento"
+          ]
         }
       ],
       "tipo": "estrutura-classe",
@@ -57679,8 +57500,7 @@
       "justificativa": "e-MAG 3.1, Recomendação 6.6. Erro detectado automaticamente: item identificado e descrito por texto. Medida: em S2, texto que identifica o campo e descreve o erro.",
       "instancias": [
         "sel-tipo-documento",
-        "upl-documento",
-        "msg-retorno"
+        "upl-documento"
       ],
       "variantes": [
         {
@@ -57690,14 +57510,6 @@
           "instancias": [
             "sel-tipo-documento",
             "upl-documento"
-          ]
-        },
-        {
-          "id": "erro-generico",
-          "descricao": "A mensagem de retorno diz só 'Erro.' e os campos não dizem nada: nenhum texto identifica qual item falhou.",
-          "clausula": "Quando um erro de entrada de dados for automaticamente detectado, o item que apresenta erro deve ser identificado e descrito ao usuário por texto.",
-          "instancias": [
-            "msg-retorno"
           ]
         }
       ],
@@ -57838,26 +57650,16 @@
       "texto": "3. Área de ações: exclusivo para botões e links.",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "A área de ações do card, quando existe, só leva botões e links. Medida: conteúdo do rodapé de ações do card.",
-      "instancias": [
-        "crd-resumo"
-      ],
-      "variantes": [
-        {
-          "id": "texto-na-area-de-acoes",
-          "descricao": "O card ganha uma área de ações no rodapé que contém só o parágrafo de texto do prazo, sem botão nem link.",
-          "clausula": "3. Área de ações: exclusivo para botões e links."
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — texto-na-area-de-acoes → a2-66cc8c46f14a (a variante cria um rodapé com texto; o gatilho de ajuda separado do seu dado é outro nó e outra posição). (Antes: A área de ações do card, quando existe, só leva botões e links. Medida: conteúdo do rodapé de ações do card.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-3d0e191fdf80",
@@ -61096,27 +60898,16 @@
       "texto": "Todos os itens do accordion estão dentro do br-accordion.",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Todos os itens do accordion ficam dentro do br-accordion. Medida: cada item é descendente da raiz.",
-      "instancias": [
-        "acc-duvidas"
-      ],
-      "variantes": [
-        {
-          "id": "item-fora-da-raiz",
-          "descricao": "O 3º item fica fora da raiz do accordion, num bloco irmão logo abaixo, com a mesma aparência.",
-          "clausula": "Todos os itens do accordion estão dentro do br-accordion."
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "leitura-da-regra",
-        "medicao"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — item-fora-da-raiz → a2-a4429f532c6c (a variante muda a posição do item no DOM; dois itens abertos ao mesmo tempo é outro comportamento). (Antes: Todos os itens do accordion ficam dentro do br-accordion. Medida: cada item é descendente da raiz.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-41c27bf1953d",
@@ -61125,27 +60916,16 @@
       "texto": "Cada item do accordion é identificado pela classe item. Quando o item está ativo ele contém o atributo active",
       "forca": "obrigatoria",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Item ativo leva o atributo active (a classe item é a2-2956c4c250cb). Medida: atributo active no item expandido.",
-      "instancias": [
-        "acc-duvidas"
-      ],
-      "variantes": [
-        {
-          "id": "aberto-sem-active",
-          "descricao": "O item expandido mostra o painel, mas o agrupador não recebe o atributo active.",
-          "clausula": "Quando o item está ativo ele contém o atributo active"
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "interacao",
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (isolamento): toda variante força segunda infração distinta — aberto-sem-active → a2-46e26a19b8ee (a variante muda o atributo do agrupador; o peso do título aberto, outra propriedade de outro nó, depende desse atributo na folha do DS). (Antes: Item ativo leva o atributo active (a classe item é a2-2956c4c250cb). Medida: atributo active no item expandido.)",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-c93ceefb1fdb",
@@ -61965,26 +61745,16 @@
       "texto": "A tag interativa é o único tipo em que é possível incluir um botão terciário para a sua remoção ou exclusão.",
       "forca": "proibida",
       "passo1": "aceita",
-      "passo2": "aceita",
-      "motivo": null,
-      "justificativa": "Só a tag interativa pode ter botão terciário de remoção; a tag de concluído não. Medida: botão dentro do marcador de concluído.",
-      "instancias": [
-        "stp-andamento"
-      ],
-      "variantes": [
-        {
-          "id": "tag-com-fechar",
-          "descricao": "O marcador de concluído da 1ª etapa ganha um pequeno botão \"x\" de remover.",
-          "clausula": "A tag interativa é o único tipo em que é possível incluir um botão terciário para a sua remoção ou exclusão."
-        }
-      ],
-      "tipo": "estrutura-classe",
-      "caminhoDeteccao": [
-        "leitura-da-regra"
-      ],
+      "passo2": "rejeitada",
+      "motivo": "acoplada",
+      "justificativa": "Revisão 2 (princípio Tag/Step): a cláusula é herdada, mas toda violação põe um botão dentro do marcador, que fica dentro do <button> da etapa (marcação oficial do Step no core 3.7.0). Botão dentro de botão não é HTML válido (conteúdo interativo proibido no modelo de conteúdo de button): na marcação, o analisador HTML tira o botão de dentro e o põe ao lado do botão da etapa; inserido por script, o botão fica aninhado e muda o nome e a sequência de foco da etapa (tela-a2/construtibilidade/resultado.json). Viola junto e-MAG 1.1 (a2-671056d628cb, padrões web) e a interação da etapa: segunda infração. Princípio Tag/Step (revisão 2, aplicado a todas as unidades do componente tag): o marcador de concluído do Step é 'Componente Tag, do tipo Ícone' (step__designer.md, § Uso de Alertas). Herda as cláusulas QUALITATIVAS de desenho da Tag que valem para o tipo Ícone e que o texto do Step não regula de outro modo (superfície obrigatória, altura fixa de uma linha, tipologia do botão terciário, categoria identificável por leitor de tela). Não herda: (a) o que pertence só à implementação do br-tag (classe br-tag, BRTag, utilitários de cor); (b) as tabelas de especificação (tokens de alinhamento, cor, arredondamento, densidade, borda, iconografia), porque a tag contida em outro componente 'deve respeitar as orientações desses componentes' (tag__designer.md, § Distribuição) e o Step fixa o seu marcador — no texto (Iconografia do Step: fa-check, --icon-size-base, a2-2737953e2513) e na marcação oficial do core 3.7.0, medida em tela-a2/construtibilidade/resultado.json (.step-alert 29,04 px, raio 50%, fundo --success, ícone centrado e branco); (c) o que o texto do Step regula de outro modo (tooltip só para erro/alerta sem rótulo, step__designer.md, § Indicador e § Uso de Alertas).",
+      "instancias": [],
+      "variantes": [],
+      "tipo": null,
+      "caminhoDeteccao": null,
       "alternativasValidas": [],
       "equivalenteEmag": null,
-      "estrato": "DS"
+      "estrato": null
     },
     {
       "id": "a2-b6edb870548c",

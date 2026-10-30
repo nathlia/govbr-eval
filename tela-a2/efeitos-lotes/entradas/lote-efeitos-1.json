@@ -1,0 +1,1667 @@
+[
+ {
+  "id": "a2-12a200d36fcb",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "O título do item DEVE ficar em title , o ícone em icon.",
+  "justificativa": "Título em .title e ícone em .icon. Medida: cabeçalho > .title e > .icon.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-sem-title",
+    "descricao": "O texto do título do 3º item fica direto no botão, sem o span .title.",
+    "clausula": "O título do item DEVE ficar em title , o ícone em icon."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2956c4c250cb",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "item : agrupa o item icone(icon) e título(title);",
+  "justificativa": "Cada item agrupado num elemento item. Medida: classe item no agrupador de cada item.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "item-sem-classe",
+    "descricao": "O 2º item do accordion fica num agrupador sem a classe item (aparência copiada à mão).",
+    "clausula": "item : agrupa o item icone(icon) e título(title);"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-41c27bf1953d",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Cada item do accordion é identificado pela classe item. Quando o item está ativo ele contém o atributo active",
+  "justificativa": "Item ativo leva o atributo active (a classe item é a2-2956c4c250cb). Medida: atributo active no item expandido.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "aberto-sem-active",
+    "descricao": "O item expandido mostra o painel, mas o agrupador não recebe o atributo active.",
+    "clausula": "Quando o item está ativo ele contém o atributo active"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-44c54f019703",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "A cor da fonte deve seguir a cor do estado ativo, pois é importante criar essa uniformidade com os outros componentes ativos da interface.",
+  "justificativa": "Título do item aberto na cor do estado ativo. Medida: color computado do título do item expandido contra a cor do estado ativo do DS.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-aberto-cor-padrao",
+    "descricao": "O título do item expandido mantém a cor do texto padrão (não muda para a cor do estado ativo).",
+    "clausula": "A cor da fonte deve seguir a cor do estado ativo, pois é importante criar essa uniformidade com os outros componentes ativos da interface."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-46e26a19b8ee",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Nessa situação o texto fica semibold e assume cor Primary Darken 01. O ícone \"angle-down” é substituído pelo de “angle-up“",
+  "justificativa": "Item aberto com o texto em semibold (a cor do estado ativo é a2-44c54f019703; o ícone é a2-d159e0f4acdf). Medida: font-weight do título do item expandido.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "aberto-sem-semibold",
+    "descricao": "O título do item expandido continua no peso medium.",
+    "clausula": "Nessa situação o texto fica semibold"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-4e067f770cee",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "O header DEVE ser aplicado em uma tag button.",
+  "justificativa": "Cabeçalho do item em <button>. Medida: tagName do cabeçalho de cada item.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "cabecalho-div",
+    "descricao": "O cabeçalho do 1º item vira div role=button tabindex=0 com Enter/Espaço (teclado intacto).",
+    "clausula": "O header DEVE ser aplicado em uma tag button."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-56613b3be80b",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Todos os itens do accordion estão dentro do br-accordion.",
+  "justificativa": "Todos os itens do accordion ficam dentro do br-accordion. Medida: cada item é descendente da raiz.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "item-fora-da-raiz",
+    "descricao": "O 3º item fica fora da raiz do accordion, num bloco irmão logo abaixo, com a mesma aparência.",
+    "clausula": "Todos os itens do accordion estão dentro do br-accordion."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-6b857febb914",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Todas as medidas foram definidas com valores múltiplos de 4px.",
+  "justificativa": "Espaçamentos do accordion em múltiplos de 4 px. Medida: padding/margin computados do cabeçalho e do conteúdo.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "padding-fora-da-escala",
+    "descricao": "O cabeçalho dos itens recebe padding vertical de 10 px.",
+    "clausula": "Todas as medidas foram definidas com valores múltiplos de 4px."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8056dd4c745b",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Os itens aparecem separados por uma linha de contorno cinza e os ícones de retrair e expandir aparecem alinhados entre si à esquerda, antes do texto.",
+  "justificativa": "Itens separados por linha cinza; ícones alinhados à esquerda, antes do texto. Medida: borda entre itens e posição do ícone contra o título.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "icone-depois-do-texto",
+    "descricao": "O ícone de expandir fica à direita, depois do título.",
+    "clausula": "os ícones de retrair e expandir aparecem alinhados entre si à esquerda, antes do texto"
+   },
+   {
+    "id": "sem-linha-entre-itens",
+    "descricao": "Os itens do accordion ficam sem a linha cinza que os separa.",
+    "clausula": "Os itens aparecem separados por uma linha de contorno cinza"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8857d7885090",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "header : área do cabeçalho;",
+  "justificativa": "Área do cabeçalho com a classe header. Medida: classe do botão de cabeçalho de cada item.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "cabecalho-sem-header",
+    "descricao": "O botão de cabeçalho do 3º item não tem a classe header (aparência copiada à mão).",
+    "clausula": "header : área do cabeçalho;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8e97b7f2c2b6",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "O detalhe de cada item deve aparecer quando o item for expandido.",
+  "justificativa": "O detalhe do item tem de aparecer ao expandir. Medida: clicar no cabeçalho do item, ler aria-expanded e a visibilidade do painel.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "painel-nao-abre",
+    "descricao": "No 2º item, o cabeçalho passa a aria-expanded=true ao clicar, mas o painel continua oculto.",
+    "clausula": "O detalhe de cada item deve aparecer quando o item for expandido."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a4429f532c6c",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Para que o accordion abra apenas um item por vez, basta adicionar o atributo sigle na tag do br-accordion",
+  "justificativa": "Para abrir um item por vez o br-accordion leva o atributo single (a tela usa um por vez). Medida: atributo na raiz; abrir dois itens seguidos e contar os abertos.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "sem-single",
+    "descricao": "A raiz do accordion fica sem o atributo single e dois itens podem ficar abertos ao mesmo tempo.",
+    "clausula": "Para que o accordion abra apenas um item por vez, basta adicionar o atributo sigle na tag do br-accordion"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ab377e910464",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "br-accordion : container do componente;",
+  "justificativa": "Container do accordion com br-accordion. Medida: classe da raiz.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "sem-br-accordion",
+    "descricao": "A raiz do accordion usa classe própria (aparência e comportamento copiados à mão), sem br-accordion.",
+    "clausula": "br-accordion : container do componente;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-cfc50765d5f6",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Não exceder uma linha de texto.",
+  "justificativa": "O título de cada item do accordion não passa de uma linha de texto (R-ED a: contagem de linhas). Medida: altura do título do cabeçalho dividida pelo line-height computado, a 1280.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-em-duas-linhas",
+    "descricao": "O título de um item do accordion é trocado por uma frase longa que quebra em duas linhas a 1280 px.",
+    "clausula": "Não exceder uma linha de texto."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d159e0f4acdf",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Um ícone de sinal de angle-down ” é utilizado para indicar a ação “expandir e de “angle-up“ para recolher, embora toda a área de um item da lista seja clicável.",
+  "justificativa": "Ícone angle-down indica expandir e angle-up recolher; toda a área do item é clicável. Medida: classe do ícone fechado/aberto; clicar no texto do título abre o item.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "icone-nao-troca",
+    "descricao": "Ao abrir um item, o ícone continua angle-down.",
+    "clausula": "Um ícone de sinal de angle-down ” é utilizado para indicar a ação “expandir e de “angle-up“ para recolher"
+   },
+   {
+    "id": "so-icone-clicavel",
+    "descricao": "Só o ícone do item abre o item; clicar no título não faz nada.",
+    "clausula": "embora toda a área de um item da lista seja clicável"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-e262242d2ee1",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "content : área do conteúdo.",
+  "justificativa": "Área de conteúdo com a classe content. Medida: classe do painel de cada item.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "painel-sem-content",
+    "descricao": "O painel do 1º item usa classe própria em vez de content (aparência copiada à mão).",
+    "clausula": "content : área do conteúdo."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-fd151cae3c9e",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Os textos dos itens foram formatados em letras minúsculas com a primeira letra maiúscula no estilo medium. Ao ser clicado o item passa a se apresentar no estilo semibold",
+  "justificativa": "Títulos dos itens em minúsculas com a primeira maiúscula, peso medium (R-ED a: caixa e peso contáveis). Medida: caixa das letras e font-weight do título fechado.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-caixa-alta",
+    "descricao": "O título do 2º item é escrito todo em maiúsculas.",
+    "clausula": "Os textos dos itens foram formatados em letras minúsculas com a primeira letra maiúscula"
+   },
+   {
+    "id": "titulo-bold-fechado",
+    "descricao": "Os títulos dos itens fechados ficam em negrito (700) em vez de medium.",
+    "clausula": "no estilo medium"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-fd6aa918efcc",
+  "componente": "accordion",
+  "arquivo": "componentes/accordion__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "o item recebe tratamento gráfico de hover, (um background azul claro aparece embaixo do item)",
+  "justificativa": "Hover no item do accordion mostra fundo azul-claro. Medida: background-color do cabeçalho com e sem hover.",
+  "instancias": [
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "hover-sem-fundo",
+    "descricao": "Passar o mouse sobre o cabeçalho de um item não muda o fundo.",
+    "clausula": "o item recebe tratamento gráfico de hover, (um background azul claro aparece embaixo do item)"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3241a9611f30",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Utilize algum espaçamento da escala de layout, listado no Fundamento Espaçamento, de forma consistente ao longo de sua interface.",
+  "justificativa": "O espaçamento de proteção do botão vem da escala de layout do Fundamento Espaçamento. Medida: margem computada do gatilho contra os valores da escala.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "protecao-fora-da-escala",
+    "descricao": "A margem entre o gatilho do tooltip e o texto vizinho é 5 px, valor fora da escala.",
+    "clausula": "Utilize algum espaçamento da escala de layout"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-4f6b7bd068c4",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Utilizados com maior frequência, devem ser aplicados em ações cruciais da tela, informando ao usuário sua importância.",
+  "justificativa": "Ênfase primária só em ação crucial da tela; Fechar a mensagem e abrir ajuda não são. Medida: classe/fundo de ênfase primária no botão embutido.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno",
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "fechar-primario",
+    "descricao": "O botão Fechar da mensagem recebe ênfase primária (fundo azul sólido).",
+    "instancias": [
+     "msg-pendencia",
+     "msg-retorno"
+    ],
+    "clausula": "devem ser aplicados em ações cruciais da tela"
+   },
+   {
+    "id": "gatilho-ajuda-primario",
+    "descricao": "O gatilho do tooltip no card recebe ênfase primária.",
+    "instancias": [
+     "tip-prazo",
+     "tip-protocolo"
+    ],
+    "clausula": "devem ser aplicados em ações cruciais da tela"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-59c1236e3ebd",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Nunca utilize quebra de linhas no rótulodo botão.",
+  "justificativa": "Proíbe quebra de linha no rótulo do botão; na tela, o botão de escolher arquivo. Medida: número de linhas do rótulo (altura do texto / line-height ou getClientRects).",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-em-duas-linhas",
+    "descricao": "O rótulo do botão de escolher arquivo quebra em duas linhas (largura do botão limitada).",
+    "clausula": "Nunca utilize quebra de linhas no rótulodo botão."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5b47246a41c1",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Nos botões do tipo circular a utilização é obrigatória, visto que a mensagem da ação é transmitida apenas pelo ícone.",
+  "justificativa": "Botão circular (só ícone) tem ícone obrigatório: Fechar das mensagens, gatilho dos tooltips, gatilho do select. Medida: elemento de ícone visível dentro do botão.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno",
+   "tip-prazo",
+   "tip-protocolo",
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "fechar-sem-icone",
+    "descricao": "O botão Fechar da mensagem fica vazio, sem o ícone de fechar (aria-label mantido).",
+    "instancias": [
+     "msg-pendencia",
+     "msg-retorno"
+    ],
+    "clausula": "Nos botões do tipo circular a utilização é obrigatória"
+   },
+   {
+    "id": "gatilho-sem-icone",
+    "descricao": "O botão gatilho fica sem o ícone (círculo vazio), com o nome acessível mantido.",
+    "instancias": [
+     "tip-prazo",
+     "tip-protocolo",
+     "sel-tipo-documento"
+    ],
+    "clausula": "Nos botões do tipo circular a utilização é obrigatória"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5f85eeafe863",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Importante: é importante observar que o rótulo do botão e o ícone permanecem sempre centralizados tanto na largura quanto na altura, e seus tamanhos inalterados.",
+  "justificativa": "Rótulo e ícone sempre centralizados na largura e na altura do botão. Medida: centro do ícone/rótulo contra o centro do botão (getBoundingClientRect).",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno",
+   "tip-prazo",
+   "tip-protocolo",
+   "sel-tipo-documento",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "icone-descentralizado",
+    "descricao": "O ícone dentro do botão fica alinhado ao canto superior esquerdo, fora do centro.",
+    "instancias": [
+     "msg-pendencia",
+     "msg-retorno",
+     "tip-prazo",
+     "tip-protocolo",
+     "sel-tipo-documento"
+    ],
+    "clausula": "o rótulo do botão e o ícone permanecem sempre centralizados tanto na largura quanto na altura"
+   },
+   {
+    "id": "rotulo-alinhado-a-esquerda",
+    "descricao": "Ícone e rótulo do botão de escolher arquivo ficam alinhados à esquerda do botão.",
+    "instancias": [
+     "upl-documento"
+    ],
+    "clausula": "permanecem sempre centralizados tanto na largura quanto na altura"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-6d5f38f9bab8",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Importante: o crescimento do botão deve acompanhar o tamanho do rótulo, porém as margens internas devem ser respeitadas.",
+  "justificativa": "O botão cresce com o rótulo respeitando as margens internas. Medida: padding computado do botão de escolher arquivo e se o texto cabe sem corte.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "escolher-arquivo-sem-margem",
+    "descricao": "O botão de escolher arquivo fica com padding horizontal 0, texto encostado na borda.",
+    "clausula": "porém as margens internas devem ser respeitadas"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-72ddeddc1ac8",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Button (Botão) › Especificações › Iconografia",
+  "justificativa": "Ícone de botão circular no tamanho --icon-size-base. Medida: font-size/largura computada do ícone dentro dos botões circulares (gatilhos dos tooltips, gatilho do select, Fechar das mensagens).",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno",
+   "tip-prazo",
+   "tip-protocolo",
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "icone-do-gatilho-maior",
+    "descricao": "O ícone do botão-gatilho fica com --icon-size-lg (maior que o base); o botão circular continua do mesmo tamanho.",
+    "instancias": [
+     "tip-prazo",
+     "tip-protocolo",
+     "sel-tipo-documento"
+    ],
+    "clausula": "Ícone (Circular) · --icon-size-base"
+   },
+   {
+    "id": "icone-fechar-maior",
+    "descricao": "O ícone do botão Fechar da mensagem fica com --icon-size-lg.",
+    "instancias": [
+     "msg-pendencia",
+     "msg-retorno"
+    ],
+    "clausula": "Ícone (Circular) · --icon-size-base"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-923a3ee74050",
+  "componente": "button",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Ícones decorativos precisam ter o atributo aria-hidden=\"true\"",
+  "justificativa": "Ícone decorativo do botão com aria-hidden=\"true\". Medida: atributo aria-hidden no elemento do ícone.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno",
+   "tip-prazo",
+   "tip-protocolo",
+   "sel-tipo-documento",
+   "upl-documento",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "icone-sem-aria-hidden",
+    "descricao": "O ícone dentro do botão fica sem aria-hidden=\"true\".",
+    "clausula": "Ícones decorativos precisam ter o atributo aria-hidden=\"true\""
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-9fc840ceb22d",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Button (Botão) › Especificações › Cor",
+  "justificativa": "Botão terciário (circular) em fundo claro: ícone --blue-warm-vivid-70 e superfície transparente (opacidade 0%). Vale para os gatilhos dos tooltips e do select; o Fechar das mensagens segue a cor própria do Message. Medida: color e background-color computados do botão.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo",
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-icone-cinza",
+    "descricao": "O ícone do botão-gatilho fica em --gray-80 em vez do azul terciário.",
+    "clausula": "Ícone, Rótulo (Terciária) · text color · --blue-warm-vivid-70"
+   },
+   {
+    "id": "gatilho-com-fundo",
+    "descricao": "A superfície do botão-gatilho ganha fundo --gray-5 em repouso (deixa de ser transparente).",
+    "clausula": "Superfície (Terciária) · - · - · 0%"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a9890f9d0039",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Deve estar alinhado com o tom de voz da sua marca, além de orientar de forma clara qual ação esperada.",
+  "justificativa": "R-ED (b): o rótulo deve orientar claramente qual ação se espera; caso flagrante oposto é um rótulo genérico. Medida: texto do botão de escolher arquivo.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-generico",
+    "descricao": "O botão de escolher arquivo tem o rótulo \"OK\".",
+    "clausula": "orientar de forma clara qual ação esperada"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b0f874b8b2cf",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Button (Botão) › Especificações › Dimensões",
+  "justificativa": "Botão circular é quadrado no tamanho da densidade: 40×40 (padrão) ou 32×32 (alta: gatilho do select e Fechar das mensagens). Medida: width/height computados do botão.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo",
+   "sel-tipo-documento",
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-tooltip-36",
+    "descricao": "O botão-gatilho do tooltip fica com 36×36 px (fora das três densidades).",
+    "instancias": [
+     "tip-prazo",
+     "tip-protocolo"
+    ],
+    "clausula": "Superfície (Circular - Densidade Padrão) · 40px · 40px"
+   },
+   {
+    "id": "botao-alta-oval",
+    "descricao": "O botão circular de densidade alta fica com 32 px de altura e 44 px de largura.",
+    "instancias": [
+     "sel-tipo-documento",
+     "msg-pendencia",
+     "msg-retorno"
+    ],
+    "clausula": "Superfície (Circular - Densidade Alta) · 32px · 32px"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-be0b9ab18685",
+  "componente": "button",
+  "arquivo": "componentes/button__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Quando utilizar botões com apenas ícones, certifique-se de exibir a informação do rótulo através do tooltip ao passar o mouse ou focar no botão;",
+  "justificativa": "Botão só com ícone mostra o rótulo em tooltip no hover e no foco. Medida: passar o mouse e focar o botão e ver se aparece balão com o rótulo.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno",
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "icone-sem-tooltip",
+    "descricao": "O botão só com ícone não exibe tooltip com o rótulo no hover nem no foco.",
+    "clausula": "certifique-se de exibir a informação do rótulo através do tooltip ao passar o mouse ou focar no botão"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c23f336807f4",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Quando o botão estiver próximo a algum outro componente, mantenha um espaçamento mínimo para que a o botão seja notado na tela e que sua área de interação não se confunda com as de outros componentes.",
+  "justificativa": "Botão próximo de outro componente mantém espaçamento mínimo para não confundir áreas de interação; o gatilho do tooltip fica no card, junto do texto. Medida: distância entre o gatilho e o elemento vizinho (getBoundingClientRect).",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-colado-ao-texto",
+    "descricao": "O gatilho do tooltip fica encostado (0 px) ao valor do card, com sobreposição das caixas.",
+    "clausula": "mantenha um espaçamento mínimo"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c7ac4e76783e",
+  "componente": "button",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-button · Container do componente.",
+  "justificativa": "Container do botão com a classe br-button (Fechar das mensagens e gatilhos dos tooltips; o do select já está em a2-879621000aa6). Medida: classe do botão.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno",
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "botao-sem-br-button",
+    "descricao": "O botão embutido usa classe própria (aparência copiada à mão), sem br-button.",
+    "clausula": "class · string · br-button"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-d495bfd02867",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "O rótulo é um elemento obrigatório.",
+  "justificativa": "Rótulo obrigatório no botão que não é circular; na tela, o botão de escolher arquivo do upload. Medida: texto visível dentro do botão.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "escolher-arquivo-so-icone",
+    "descricao": "O botão de escolher arquivo mostra só o ícone, sem texto visível (o nome acessível fica num aria-label).",
+    "clausula": "O rótulo é um elemento obrigatório."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-dc561d157556",
+  "componente": "button",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Inclua o atributo aria-label no componente",
+  "justificativa": "Botão circular com o nome no atributo aria-label (mais que nome acessível: o atributo). Medida: aria-label presente e não vazio no botão.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno",
+   "tip-prazo",
+   "tip-protocolo",
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "nome-so-em-title",
+    "descricao": "O botão só com ícone tem o nome apenas no atributo title, sem aria-label.",
+    "clausula": "Inclua o atributo aria-label no componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ff6a961f006f",
+  "componente": "button",
+  "arquivo": "componentes/button__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Caso seja utilizado um ícone decorativo, aquele que é usado como apoio ao lado do rótulo do botão, utilize aria-hidden=true e não utilize atributo title, evitando que os leitores de tela leiam duas vezes a mesma informação;",
+  "justificativa": "Ícone decorativo ao lado do rótulo sem atributo title (além de aria-hidden). Medida: ausência de title no ícone do botão com rótulo.",
+  "instancias": [
+   "upl-documento",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "icone-com-title",
+    "descricao": "O ícone ao lado do rótulo recebe um atributo title repetindo o rótulo.",
+    "clausula": "não utilize atributo title"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0b05d89c4a81",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "1. Área de títulos: exclusivo para títulos, subtítulos, ícones, avatares e tags.",
+  "justificativa": "A área de títulos do card só leva títulos, subtítulos, ícones, avatares e tags. Medida: elementos dentro do cabeçalho do card (tipo de componente).",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "botao-na-area-de-titulo",
+    "descricao": "O botão de ajuda do prazo (gatilho do tooltip) e o parágrafo do prazo passam para dentro da área de títulos do card.",
+    "clausula": "1. Área de títulos: exclusivo para títulos, subtítulos, ícones, avatares e tags."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-102453b77ab4",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "a largura mínima permitida são três colunas.",
+  "justificativa": "Card flexível com largura mínima de três colunas do grid. Medida: largura do card contra a largura de 3 colunas (com gutters) do grid a 1280.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "card-estreito",
+    "descricao": "O card passa a ocupar só 2 colunas do grid (cerca de 190 px de largura).",
+    "clausula": "a largura mínima permitida são três colunas."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-145128527d93",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Um card em hipótese alguma deve possuir rolagens.",
+  "justificativa": "Card sem rolagem. Medida: overflow computado e scrollHeight > clientHeight no card.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "rolagem-interna",
+    "descricao": "O card ganha altura máxima e overflow:auto, e o conteúdo passa a rolar dentro dele.",
+    "clausula": "Um card em hipótese alguma deve possuir rolagens."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1ade239e8d68",
+  "componente": "card",
+  "arquivo": "componentes/card__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Deixe claro quais elementos contidos no card são interativos e se o próprio card é interativo;",
+  "justificativa": "Fica claro o que é interativo no card e que o próprio card não é (R-ED b: caso flagrante oposto). Medida: cursor computado e realce de hover/elevação no card, que não tem ação de clique.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "card-parece-clicavel",
+    "descricao": "O card, que não tem ação, ganha cursor de mão e realce de elevação ao passar o mouse, como se fosse clicável.",
+    "clausula": "Deixe claro quais elementos contidos no card são interativos e se o próprio card é interativo"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-22f23447d6b2",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "2 · Área · --- · Obrigatório",
+  "justificativa": "Área (conteúdo) obrigatória, que no código é .card-content. Medida: .br-card > .card-content contém o conteúdo.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "conteudo-sem-card-content",
+    "descricao": "O conteúdo do card fica direto no .br-card, sem o contêiner .card-content.",
+    "clausula": "2 · Área · --- · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2d9c1da2ceca",
+  "componente": "card",
+  "arquivo": "componentes/card__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Os usuários devem poder navegar usando a tecla Tab e Shift + Tab e acionar os controles interativos por meio das teclas Space ou Enter.",
+  "justificativa": "Teclas específicas no card: Tab/Shift+Tab para navegar e Espaço/Enter para acionar os controles. Medida: com foco no gatilho do card, Enter e Espaço abrem a ajuda; Shift+Tab volta.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "so-enter",
+    "descricao": "O gatilho de ajuda do card responde ao Enter mas não ao Espaço (manipulador próprio só para Enter).",
+    "clausula": "Os usuários devem poder navegar usando a tecla Tab e Shift + Tab e acionar os controles interativos por meio das teclas Space ou Enter."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3404d04d4b7b",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Card › Especificações › Espaçamento",
+  "justificativa": "Conteúdo do card com padding 16px (diz o valor, além da regra geral de respeitar margens dos tokens). Medida: padding computado do conteúdo de crd-resumo.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "card-padding-4",
+    "descricao": "O conteúdo do card fica com padding de 4px.",
+    "clausula": "Conteúdo (geral) · padding · 16px"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3b44b773c1ee",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Não use cards dentro de cards.",
+  "justificativa": "Card dentro de card é proibido. Medida: .br-card descendente de .br-card.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "card-aninhado",
+    "descricao": "O bloco do prazo, dentro do card, é envolvido por outro .br-card.",
+    "clausula": "Não use cards dentro de cards."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-50af67dc7ee1",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "1 · Superfície · Superfície · Obrigatório",
+  "justificativa": "Superfície obrigatória. Medida: background-color e box-shadow computados do card.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "sem-superficie",
+    "descricao": "O card fica sem superfície: fundo transparente e sem sombra.",
+    "clausula": "1 · Superfície · Superfície · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-66a04dbcde9c",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Limite de conteúdo: O card deve conter apenas informações essenciais e oferecer um caminho para mais detalhes, em vez de detalhes completos logo de cara.",
+  "justificativa": "R-ED (b). Card só com o essencial e um caminho para detalhes. Medida: conteúdo do card e presença do caminho.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "card-com-tudo",
+    "descricao": "O card passa a listar todas as 12 movimentações e o texto integral do requerimento, sem link para detalhes.",
+    "clausula": "Limite de conteúdo: O card deve conter apenas informações essenciais e oferecer um caminho para mais detalhes, em vez de detalhes completos logo de cara."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7a556a4c6423",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Card › Especificações › Cor",
+  "justificativa": "Superfície do card com fundo --pure-0 (o --gray-2 é só do verso). Medida: background-color computado de crd-resumo.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "card-fundo-cinza",
+    "descricao": "O card de resumo fica com fundo --gray-2 (cor do verso) na face.",
+    "clausula": "Superfície · background · --pure-0"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7a831709525b",
+  "componente": "card",
+  "arquivo": "componentes/card__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-card · Container do componente",
+  "justificativa": "Container com a classe br-card. Medida: classe da raiz do card.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "sem-br-card",
+    "descricao": "A raiz do card usa classe própria (aparência copiada à mão), sem br-card.",
+    "clausula": "class · string · br-card · Container do componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7d680beb8c97",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "3. Área de ações: exclusivo para botões e links.",
+  "justificativa": "A área de ações do card, quando existe, só leva botões e links. Medida: conteúdo do rodapé de ações do card.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "texto-na-area-de-acoes",
+    "descricao": "O card ganha uma área de ações no rodapé que contém só o parágrafo de texto do prazo, sem botão nem link.",
+    "clausula": "3. Área de ações: exclusivo para botões e links."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7dd282607ce8",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Os componentes dentro dos cards devem respeitar as margens definida nos tokens entre cada um dos lados da superfície.",
+  "justificativa": "Margens internas pelos tokens. Medida: padding computado do conteúdo do card contra o token de espaçamento do DS.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "margem-fora-do-token",
+    "descricao": "O padding interno do card vira 5px em todos os lados.",
+    "clausula": "Os componentes dentro dos cards devem respeitar as margens definida nos tokens entre cada um dos lados da superfície."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-9679ff15765b",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Os cards devem possuir ainda uma área de respiro, isto é, o espaço mínimo entre dois cards ou qualquer outro componente próximo.",
+  "justificativa": "Área de respiro entre o card e o componente vizinho. Medida: distância entre a borda do card e o próximo componente.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "sem-respiro",
+    "descricao": "O card encosta no componente seguinte (margem inferior 0, sem espaço entre os dois).",
+    "clausula": "Os cards devem possuir ainda uma área de respiro, isto é, o espaço mínimo entre dois cards ou qualquer outro componente próximo."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-addcc77d9a3e",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "exceto componentes relacionados à navegação, como: carrossel, paginação, abas e menu.",
+  "justificativa": "A área de conteúdo do card não pode conter componente de navegação (carrossel, paginação, abas, menu). Medida: presença de componente de navegação dentro do conteúdo do card.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "abas-dentro-do-card",
+    "descricao": "O conteúdo do card ganha uma barra de abas própria (\"Resumo\" / \"Detalhes\").",
+    "clausula": "exceto componentes relacionados à navegação, como: carrossel, paginação, abas e menu."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-bbc88b2acdec",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Os cards podem apresentar apenas os estados: desabilitado, arrastando e hover. Todos os componentes contidos devem herdar o mesmo comportamento do card.",
+  "justificativa": "O card só pode apresentar os estados desabilitado, arrastando e hover. Medida: estilos/atributos de estado aplicados ao card (selecionado, ativo, foco) fora dos três permitidos.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "card-selecionado",
+    "descricao": "O card aparece desde a carga com a aparência de estado selecionado/ativo (borda azul de 2 px e fundo azul-claro).",
+    "clausula": "Os cards podem apresentar apenas os estados: desabilitado, arrastando e hover."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c5b3a0f5f819",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Card › Especificações › Sombra",
+  "justificativa": "Card com sombra --shadow-sm. Medida: box-shadow computado de crd-resumo contra o token.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "card-sombra-forte",
+    "descricao": "O card fica com sombra de nível alto (--shadow-xl) em vez de --shadow-sm.",
+    "clausula": "Superfície · --shadow-sm"
+   },
+   {
+    "id": "card-sem-sombra",
+    "descricao": "O card fica com box-shadow none.",
+    "clausula": "Superfície · --shadow-sm"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f561cadcff5d",
+  "componente": "card",
+  "arquivo": "componentes/card__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Por isso é essencial dar um espaço para cada bloco do card, assim pode ser lido e entendido com maior facilidade.",
+  "justificativa": "Cada bloco do card (número, serviço, situação, prazo) tem espaço próprio, separado dos vizinhos. Medida: distância vertical entre as caixas (getBoundingClientRect) de blocos consecutivos dentro do card.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "blocos-colados",
+    "descricao": "Dois blocos consecutivos do card (ex.: serviço e situação) ficam sem margem entre si, um encostado no outro.",
+    "clausula": "é essencial dar um espaço para cada bloco do card"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0bd70096f78a",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Utilizar os verbos sempre na terceira pessoa do imperativo afirmativo.",
+  "justificativa": "Verbos do texto do checkbox sempre no imperativo afirmativo (R-ED a: forma verbal contável). O texto atual não tem verbo. Medida: forma do verbo no texto descritivo.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "verbo-no-infinitivo",
+    "descricao": "O texto descritivo do checkbox principal passa a \"Receber todos os avisos\" (verbo no infinitivo).",
+    "clausula": "Utilizar os verbos sempre na terceira pessoa do imperativo afirmativo."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0d520e5d4882",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "O Ícone de suporte visual é um elemento que se encontra dentro da área do container e deve ser utilizado para identificar o estado do item checkbox como selecionado ou válido a depender do seu estado.",
+  "justificativa": "O ícone identifica o estado do item (selecionado ou não). Medida: presença do ícone de marcação conforme o estado checked do input.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "icone-com-estado-errado",
+    "descricao": "Com os dois switches desligados (checkbox principal desmarcado), a caixa continua mostrando o ícone de marcação.",
+    "clausula": "deve ser utilizado para identificar o estado do item checkbox como selecionado ou válido a depender do seu estado"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1e5bb656150a",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Checkbox (Caixa de Seleção) › Especificações › Tipografia",
+  "justificativa": "Texto descritivo do checkbox em --font-size-scale-base, --font-weight-medium, família base. Medida: font-size/font-weight computados do label de chk-avisos-todos.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "texto-descritivo-negrito",
+    "descricao": "O texto descritivo \"Todos os avisos\" fica em --font-weight-bold.",
+    "clausula": "Texto descritivo · -–font-family-base · --font-size-scale-base · --font-weight-medium"
+   },
+   {
+    "id": "texto-descritivo-pequeno",
+    "descricao": "O texto descritivo fica em --font-size-scale-down-01.",
+    "clausula": "Texto descritivo · -–font-family-base · --font-size-scale-base · --font-weight-medium"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-311162831549",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Se todos os checkboxes \"filhos\" estiverem desmarcados, o checkbox \"pai\" estará desmarcado também.",
+  "justificativa": "Com todos os filhos desmarcados, o principal fica desmarcado. Medida: desligar os dois switches e ler o estado do principal.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "principal-marcado-sem-filhos",
+    "descricao": "Com os dois switches desligados, o principal continua marcado.",
+    "clausula": "Se todos os checkboxes \"filhos\" estiverem desmarcados, o checkbox \"pai\" estará desmarcado também."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3bacb9f074e2",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Se todos os checkboxes \"filhos\" estiverem marcados, o checkbox \"pai\" estará marcado também,",
+  "justificativa": "Com todos os filhos marcados, o principal fica marcado. Medida: ligar os dois switches um a um e ler o estado do principal.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "principal-intermediario-com-todos",
+    "descricao": "Ligando os dois switches um a um, o principal fica no estado intermediário.",
+    "clausula": "Se todos os checkboxes \"filhos\" estiverem marcados, o checkbox \"pai\" estará marcado também,"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3f671bc82fee",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "O checkboxes devem ser navegáveis pelo teclado através da tecla Tab e acionados com a tecla Space;",
+  "justificativa": "Checkbox alcançável por Tab e acionado pela tecla Espaço (tecla específica; diz mais que o e-MAG 2.1). Medida: Tab para no checkbox; Espaço alterna o estado.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "espaco-nao-aciona",
+    "descricao": "O keydown de Espaço é cancelado no checkbox principal: o foco chega por Tab, o clique funciona, mas Espaço não alterna.",
+    "clausula": "acionados com a tecla Space"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-4b7121d39b1f",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Caso o usuário clique no Checkbox Principal no Estado Intermediário, o Checkbox Principal assumirá o Estado Selecionado e realizará a seleção de todos os itens vinculados a ele.",
+  "justificativa": "Clicar no principal em estado intermediário leva-o a selecionado e marca todos os vinculados. Medida: ligar um switch, clicar no principal, conferir principal marcado e os dois switches ligados.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "intermediario-vai-a-desmarcado",
+    "descricao": "Com só um switch ligado, clicar no principal o deixa desmarcado e desliga tudo.",
+    "clausula": "Caso o usuário clique no Checkbox Principal no Estado Intermediário, o Checkbox Principal assumirá o Estado Selecionado"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-540a33161e30",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "A caixa de opção do item do checkbox deve manter uma distância superior e inferior (1) e um espaçamento lateral direito (2) de qualquer outro elemento.",
+  "justificativa": "Caixa de opção com espaçamento lateral direito em relação ao texto (tokens: padding-right base da caixa + padding-left default do texto). Medida: distância horizontal entre a caixa e o início do texto.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "texto-colado-a-caixa",
+    "descricao": "O texto \"Todos os avisos\" fica encostado na caixa, sem espaço lateral.",
+    "clausula": "um espaçamento lateral direito (2) de qualquer outro elemento"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-615adba6e634",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Nos checkboxes \"filhos\" deve-se incluir o atributo data-child no <input type=\"checkbox\">, com o mesmo valor passado ao atributo data-parentdo checkbox \"pai\".",
+  "justificativa": "Filhos com data-child igual ao data-parent do pai. Medida: data-child dos inputs dos dois switches igual ao data-parent do principal.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "filho-com-grupo-errado",
+    "descricao": "O input do switch de SMS leva um valor de amarração diferente do do checkbox principal; ligar só o SMS não muda o principal.",
+    "clausula": "com o mesmo valor passado ao atributo data-parentdo checkbox \"pai\""
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-63df8a527ac9",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Quando houver mudança de estado no checkbox, ofereça sempre feedback de status claro e audível para o usuário;",
+  "justificativa": "Mudança de estado com feedback audível: o estado (marcado, desmarcado, intermediário) é exposto à tecnologia assistiva. Medida: checked/indeterminate (ou aria-checked mixed) do principal na árvore de acessibilidade depois de ligar um só switch.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "intermediario-so-visual",
+    "descricao": "Com só um switch ligado, o checkbox principal mostra o traço do estado intermediário, mas a árvore de acessibilidade o anuncia como \"não marcado\".",
+    "clausula": "ofereça sempre feedback de status claro e audível para o usuário"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-673b187d8412",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Deve manter um espaçamento inferior dos elementos abaixo (3).",
+  "justificativa": "Espaçamento inferior do texto descritivo em relação ao elemento abaixo (token padding-bottom 2x). Medida: distância vertical entre o item do checkbox e o primeiro switch.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "sem-espaco-abaixo",
+    "descricao": "O checkbox principal perde o espaçamento inferior e o switch de e-mail encosta nele.",
+    "clausula": "Deve manter um espaçamento inferior dos elementos abaixo (3)."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-79d59b8c6ba4",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Cada item do checkbox, composto pela caixa de opção à esquerda e seu texto descritivo à direita, deve manter uma distância à direita (4), abaixo (3) e acima (1) entre este e o próximo componente.",
+  "justificativa": "Distâncias do item em relação aos vizinhos; além do inferior (unidade anterior), exige a distância acima (1). Medida: distância vertical entre a legend do grupo e o item do checkbox.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "sem-espaco-acima",
+    "descricao": "O checkbox principal perde o espaçamento superior e encosta na legenda \"Avisos sobre o requerimento\".",
+    "clausula": "deve manter uma distância à direita (4), abaixo (3) e acima (1) entre este e o próximo componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7c449a946697",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Para indicar que um checkbox é \"pai\", deve-se incluir o atributo data-parent no <input type=\"checkbox\">, com um valor que será o nome de \"amarração\" do grupo.",
+  "justificativa": "Checkbox \"pai\" com data-parent no input. Medida: atributo data-parent no input do checkbox principal.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "pai-sem-atributo",
+    "descricao": "O input do checkbox principal fica sem o atributo de amarração do pai; um script próprio da página reproduz o comportamento de selecionar todos.",
+    "clausula": "deve-se incluir o atributo data-parent no <input type=\"checkbox\">"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8465edac53a3",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "2. Pelo clique do mouse ou toque na tela na região do componente (incluindo seu texto descritivo, quando houver);",
+  "justificativa": "O clique no texto descritivo do checkbox também o marca. Medida: clicar em \"Todos os avisos\" e conferir o estado.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "texto-nao-clicavel",
+    "descricao": "Clicar no texto \"Todos os avisos\" não marca o checkbox; só a caixa.",
+    "clausula": "Pelo clique do mouse ou toque na tela na região do componente (incluindo seu texto descritivo, quando houver)"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a70181ba5638",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "1 · Caixa de opção · --- · Obrigatório",
+  "justificativa": "Caixa de opção obrigatória. Medida: a caixa (pseudo-elemento do rótulo, 24×24 px com borda) existe e é visível.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "sem-caixa",
+    "descricao": "A caixa do checkbox principal fica oculta (sem tamanho nem borda); só o texto \"Todos os avisos\" aparece, ainda clicável.",
+    "clausula": "1 · Caixa de opção · --- · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ab26aea317f4",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Para proporcionar um maior conforto visual ao usuário o texto descritivo deve se posicionar sempre à direita do container respeitando o espaçamento lateral da caixa de opção.",
+  "justificativa": "Texto descritivo sempre à direita da caixa. Medida: left do texto maior que right da caixa.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "texto-a-esquerda",
+    "descricao": "O texto \"Todos os avisos\" passa para a esquerda da caixa (ordem invertida no layout).",
+    "clausula": "o texto descritivo deve se posicionar sempre à direita do container"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-afcf1e6a2889",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Checkbox (Caixa de Seleção) › Especificações › Iconografia",
+  "justificativa": "Marca do estado intermediário é o traço (fa-minus) e a do selecionado é o check, em tamanho sm. Medida: forma da marca na caixa no estado intermediário (ligar só um switch).",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "intermediario-com-check",
+    "descricao": "No estado intermediário a caixa mostra a marca de check (igual ao selecionado) em vez do traço.",
+    "clausula": "Ícone intermediário · -- · <i class=\"fas fa-minus\"></i>"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b20217200810",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Deve-se manter uma coerência entre as larguras dos itens evitando um texto descritivo com mais de sete palavras.",
+  "justificativa": "Texto descritivo com no máximo sete palavras (R-ED a: contagem). Medida: nº de palavras do texto descritivo.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "texto-com-oito-palavras",
+    "descricao": "O texto descritivo vira \"Todos os avisos sobre o andamento deste requerimento\" (8 palavras, menos de 56 caracteres).",
+    "clausula": "evitando um texto descritivo com mais de sete palavras"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-bb59ed75a286",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Ícone de suporte visual.",
+  "justificativa": "Ícone de suporte visual da caixa de opção (anatomia obrigatória). Medida: com o checkbox marcado, o ícone de marcação aparece dentro da caixa.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "marcado-sem-icone",
+    "descricao": "Com os dois switches ligados, o checkbox principal fica com a caixa preenchida mas sem o ícone de marcação.",
+    "clausula": "Ícone de suporte visual."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c309914a9c1a",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Checkbox (Caixa de Seleção) › Especificações › Cores",
+  "justificativa": "Cores da caixa (fundo --pure-0, borda --gray-20), do estado intermediário (fundo e borda --blue-warm-vivid-50, marca --pure-0) e do texto descritivo (--gray-80). Medida: cores computadas da caixa e do label em repouso e no estado intermediário.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "intermediario-cinza",
+    "descricao": "No estado intermediário (um só switch ligado) a caixa fica com fundo --gray-20 em vez do azul.",
+    "clausula": "Caixa de opção (Estado Intermediário) · background · --blue-warm-vivid-50"
+   },
+   {
+    "id": "caixa-borda-escura",
+    "descricao": "A borda da caixa em repouso fica --gray-80.",
+    "clausula": "Caixa de opção · border · --gray-20"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-c77fe74304b6",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Checkbox (Caixa de Seleção) › Especificações › Espaçamentos",
+  "justificativa": "Espaçamentos da caixa de opção e do texto descritivo do checkbox (padding da caixa e do texto em tokens). Medida: distância/padding computados entre caixa e texto descritivo.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "texto-colado-caixa-token",
+    "descricao": "O texto descritivo fica sem padding-left (encostado na caixa).",
+    "clausula": "Texto descritivo · padding-left · --spacing-scale-default"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-cc1346924545",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Deve-se manter uma coerência entre as larguras dos itens evitando uma largura de linha com mais de 10 palavras ou 56 caracteres em média.",
+  "justificativa": "Linha do item com até 10 palavras / 56 caracteres em média (R-ED a: contagem). Medida: nº de palavras e de caracteres do texto descritivo.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "texto-do-item-longo",
+    "descricao": "O texto descritivo do checkbox principal vira \"Todos os avisos sobre este requerimento, enviados por e-mail e por SMS durante todo o atendimento\" (16 palavras, mais de 90 caracteres).",
+    "clausula": "evitando uma largura de linha com mais de 10 palavras ou 56 caracteres em média"
+   }
+  ],
+  "alternativasValidas": []
+ }
+]

@@ -1,0 +1,1672 @@
+[
+ {
+  "id": "a2-d3c2b4a7ca90",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Os textos descritivos deverão ser escritos com sua primeira letra em maiúsculo e o restante em minúsculo.",
+  "justificativa": "Texto descritivo com primeira letra maiúscula e o resto minúsculo (R-ED a: caixa contável). Medida: caixa das letras do texto.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "inicial-minuscula",
+    "descricao": "O texto descritivo fica \"todos os avisos\" (inicial minúscula).",
+    "clausula": "primeira letra em maiúsculo e o restante em minúsculo"
+   },
+   {
+    "id": "texto-em-title-case",
+    "descricao": "O texto descritivo fica \"Todos Os Avisos\".",
+    "clausula": "o restante em minúsculo"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-e1c6d1cde6ac",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-checkbox · Container do componente",
+  "justificativa": "Container br-checkbox. Medida: classe da raiz do checkbox.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "sem-br-checkbox",
+    "descricao": "A raiz do checkbox principal usa classe própria (aparência copiada à mão), sem a classe do componente.",
+    "clausula": "class · string · br-checkbox · Container do componente"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-e258f246fc8f",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Checkbox (Caixa de Seleção) › Especificações › Dimensões",
+  "justificativa": "Caixa de opção 24×24 px, raio 4px, borda 1px. Medida: dimensões, border-radius e border-width computados da caixa (pseudo-elemento) do chk-avisos-todos.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "caixa-16",
+    "descricao": "A caixa de opção fica com 16×16 px.",
+    "clausula": "Caixa de opção · width · 24px"
+   },
+   {
+    "id": "caixa-quadrada",
+    "descricao": "A caixa de opção fica com border-radius 0.",
+    "clausula": "Caixa de opção · border-radius · 4px"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f97f63c9e220",
+  "componente": "checkbox",
+  "arquivo": "componentes/checkbox__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "> É necessário, também, instanciar a classe BRCheckbox, para que o comportamento funcione",
+  "justificativa": "Instanciar BRCheckbox para que o comportamento do principal funcione. Medida: ligar um só switch deixa o principal em estado intermediário; clicar o principal liga/desliga os dois.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "checkbox-nao-instanciado",
+    "descricao": "A página instancia os demais componentes mas não o checkbox principal: ligar um switch não muda o principal e clicar nele não altera os switches.",
+    "clausula": "É necessário, também, instanciar a classe BRCheckbox, para que o comportamento funcione"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-130b2ae325da",
+  "componente": "divider",
+  "arquivo": "componentes/divider__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Em hipótese alguma devem se comportar com estados.",
+  "justificativa": "Divider é neutro e nunca muda de estado. Medida: estilo computado do divisor sob a barra de abas com e sem hover/foco.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "divisor-com-hover",
+    "descricao": "O divisor sob a barra de abas muda de cor ao passar o mouse.",
+    "clausula": "Em hipótese alguma devem se comportar com estados."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1f2bd2f78e2e",
+  "componente": "divider",
+  "arquivo": "componentes/divider__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Divider (Divisor) › Especificações › Cor",
+  "justificativa": "Divider em fundo claro na cor --gray-20. Medida: cor computada da linha do divider sob a barra de abas.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "divider-escuro",
+    "descricao": "O divider sob a barra de abas fica em --gray-80.",
+    "clausula": "Divider (fundo claro) · background · --gray-20"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-41cd27de9c89",
+  "componente": "divider",
+  "arquivo": "componentes/divider__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Divider (Divisor) › Especificações › Espaçamento",
+  "justificativa": "Divider horizontal com espaço --spacing-scale-2x acima/abaixo. Medida: margem computada entre o divider sob a barra e o conteúdo do painel.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "painel-colado-divider",
+    "descricao": "O conteúdo do painel da aba fica encostado no divider (margem inferior 0).",
+    "clausula": "Divider horizontal · top/bottom · --spacing-scale-2x"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7379726c1f90",
+  "componente": "divider",
+  "arquivo": "componentes/divider__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Por se tratar de um elemento decorativo, o divider deve ser ignorado pelos leitores de tela e o foco não deve passar por ele.",
+  "justificativa": "Divider decorativo: ignorado pelo leitor de tela e fora da sequência de foco. Medida: tabindex/foco por Tab e papel na árvore de acessibilidade do divisor.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "divisor-focavel",
+    "descricao": "O divisor sob a barra de abas recebe tabindex=\"0\" e o Tab para nele.",
+    "clausula": "o foco não deve passar por ele"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-9ea827dc3326",
+  "componente": "divider",
+  "arquivo": "componentes/divider__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Não utilize dividers para circundar um item.",
+  "justificativa": "Proíbe usar dividers para circundar um item. Medida: elementos divisores em volta de um item da tab.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "aba-circundada",
+    "descricao": "A aba ativa fica cercada por divisores (um acima e um de cada lado), formando moldura em volta do item.",
+    "clausula": "Não utilize dividers para circundar um item."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a83a8121b874",
+  "componente": "divider",
+  "arquivo": "componentes/divider__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Os dividers devem ser visíveis em um layout, porém não devem \"destoar\" chamando mais atenção que o próprio conteúdo.",
+  "justificativa": "Divider visível mas sem chamar mais atenção que o conteúdo; caso flagrante: linha grossa e saturada. Medida: border-width e cor computados do divisor.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "divisor-destoante",
+    "descricao": "O divisor sob a barra de abas fica com 8 px de espessura em vermelho saturado.",
+    "clausula": "não devem \"destoar\" chamando mais atenção que o próprio conteúdo"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b8db536c1a83",
+  "componente": "divider",
+  "arquivo": "componentes/divider__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-divider · Container do componente",
+  "justificativa": "O divisor sob a barra de abas é um br-divider. Medida: classe do elemento divisor.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "divisor-sem-br-divider",
+    "descricao": "A linha sob a barra de abas é um elemento com classe própria (aparência copiada à mão), sem br-divider.",
+    "clausula": "class · string · br-divider"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-020f0b4f0964",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Utilize rótulos (labels) claros e descritivos para que o usuário compreenda o propósito do campo de texto;",
+  "justificativa": "R-ED (b): rótulo claro e descritivo do propósito do campo; caso flagrante oposto é rótulo genérico. Medida: texto do rótulo do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-generico",
+    "descricao": "O rótulo do select é \"Campo 1\".",
+    "clausula": "Utilize rótulos (labels) claros e descritivos"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-05e0365f1c3c",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Além disso, quando está \"focado\", o estado hover não precisa ser aplicado na superfície do componente, porém, o cursor do mouse ainda deve sofrer as alterações referentes.",
+  "justificativa": "Com o campo focado, o cursor continua mudando no hover (condição diferente de a2-db9f9aa4a02e). Medida: cursor computado do campo focado com hover.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "cursor-some-no-foco",
+    "descricao": "Quando o campo do select está focado, o cursor volta à seta no hover.",
+    "clausula": "o cursor do mouse ainda deve sofrer as alterações referentes"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-13c4de8de18e",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Siga uma ordem lógica para tabulação, focando primeiramente o rótulo associado ao input.",
+  "justificativa": "Ordem de tabulação: campo antes dos controles internos (diz mais que e-MAG 6.3: a ordem dentro do componente). Medida: ordem de Tab entre o campo e o gatilho do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-antes-do-campo",
+    "descricao": "O gatilho do select vem antes do campo na sequência de Tab (tabindex positivo no gatilho).",
+    "clausula": "Por fim, input e seus controles internos"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3169f339a8e1",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Input (Campo de Entrada de Texto) › Especificações › Dimensões",
+  "justificativa": "Campo de densidade média com altura --spacing-scale-5x, raio --surface-rounder-sm, ação interna em densidade alta. Medida: height e border-radius computados do input do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "campo-sem-raio",
+    "descricao": "O campo do select fica com border-radius 0.",
+    "clausula": "Campo de texto · border-radius · --surface-rounder-sm"
+   },
+   {
+    "id": "campo-alto",
+    "descricao": "O campo do select fica com 52px de altura.",
+    "clausula": "Campo de texto - Densidade Média · height · --spacing-scale-5x"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-328f62cfe4ce",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Após o input receber o foco, permita que o usuário possa digitar o texto na sequência, sem necessidade de qualquer outro passo anterior;",
+  "justificativa": "Com o foco no campo, o usuário digita sem passo anterior. Medida: focar por Tab e digitar; o texto entra no campo.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "campo-readonly-ate-clique",
+    "descricao": "O campo do select fica readonly até o usuário clicar no gatilho; com foco por Tab não aceita digitação.",
+    "clausula": "permita que o usuário possa digitar o texto na sequência, sem necessidade de qualquer outro passo anterior"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3312a3e57512",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Deve trazer informações mais completas que a contida no Rótulo/Label, e desaparece quando o usuário iniciar o preenchimento do campo.",
+  "justificativa": "R-ED (b): o placeholder traz informação mais completa que o rótulo; caso flagrante oposto é repetir o rótulo. Medida: placeholder do campo contra o texto do rótulo.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "placeholder-igual-rotulo",
+    "descricao": "O placeholder do campo do select repete exatamente o texto do rótulo.",
+    "clausula": "Deve trazer informações mais completas que a contida no Rótulo/Label"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3452a785e45d",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "O texto do Rótulo deve ser curto e objetivo possível.",
+  "justificativa": "R-ED (b): rótulo curto e objetivo; caso flagrante oposto é rótulo longo. Medida: nº de palavras do rótulo do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-longo",
+    "descricao": "O rótulo do select vira uma frase de mais de 20 palavras explicando para que serve o tipo de documento.",
+    "clausula": "O texto do Rótulo deve ser curto e objetivo possível."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-4aeca513aeeb",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Os inputs ou input Text devem ser acessíveis por meio de navegação via teclado, por meio da tecla Tab, onde cada input deve ser um ponto de foco na ordem da tabulação;",
+  "justificativa": "O campo é ponto de foco alcançado pela tecla Tab (tecla específica). Medida: sequência de Tab para no campo do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "campo-fora-do-tab",
+    "descricao": "O campo do select recebe tabindex=\"-1\" e o Tab passa direto por ele.",
+    "clausula": "por meio da tecla Tab, onde cada input deve ser um ponto de foco na ordem da tabulação"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-54dca6a2c217",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Por padrão é utilizado um Button de enfase terciária do tipo circular sempre com densidade alta, e o ícone deve representar a ação a ser realizada na interação.",
+  "justificativa": "Ação interna do campo (o gatilho do select) com ícone que representa a ação de abrir a lista. Medida: classe do ícone do gatilho.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-icone-errado",
+    "descricao": "O gatilho do select mostra uma lupa em vez da seta para baixo.",
+    "clausula": "o ícone deve representar a ação a ser realizada na interação"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-56357b049872",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Caso seja necessário, use o atributo aria-describedby para vincular a um elemento de ajuda ou instrução e fornecer informações adicionais aos usuários que podem precisar de mais contexto.",
+  "justificativa": "Texto de ajuda/erro do campo vinculado por aria-describedby. Medida: em S2, aria-describedby do campo aponta para o texto de erro.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "erro-sem-describedby",
+    "descricao": "Em S2 o texto de erro do select aparece, mas o campo não tem aria-describedby apontando para ele.",
+    "clausula": "use o atributo aria-describedby para vincular a um elemento de ajuda ou instrução"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-59c41d3b1085",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Utilize a marcação semântica correta no código HTML, com a tag <input> e o valor do atributo type correspondente a sua função.",
+  "justificativa": "Campo em <input> com type correspondente à função (texto/filtro). Medida: tagName e type do campo.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "type-errado",
+    "descricao": "O campo do select usa type=\"number\".",
+    "clausula": "com a tag <input> e o valor do atributo type correspondente a sua função"
+   },
+   {
+    "id": "campo-em-div",
+    "descricao": "O campo do select é uma div com contenteditable em vez de <input>.",
+    "clausula": "com a tag <input>"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-76f24d309b17",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "No caso de exclusão da do texto digitado, o placeholder deve reaparecer.",
+  "justificativa": "Apagado o texto digitado (filtro do select), o placeholder volta. Medida: digitar e apagar no campo e ler o placeholder exibido.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "placeholder-nao-volta",
+    "descricao": "Depois que o usuário digita no campo do select, o script zera o placeholder e ele não reaparece ao apagar o texto.",
+    "clausula": "No caso de exclusão da do texto digitado, o placeholder deve reaparecer."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7bdc66f1d99d",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Marque o input com a cor correspondente ao estado de sucesso, se o usuário preencher corretamente, ou cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo.",
+  "justificativa": "Campo com problema marcado com a cor do estado de erro. Medida: em S2 (envio sem escolher tipo), border-color computado do campo do select contra a cor de erro do DS.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "erro-sem-cor",
+    "descricao": "Em S2 o campo do select mostra o texto de erro mas a borda continua na cor neutra.",
+    "clausula": "cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7c43824db106",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Associe o input ao rótulo usando o atributo for na tag <label> e um id com mesmo valor na tag <input>;",
+  "justificativa": "Associação rótulo–campo pelo par for/id (diz mais que e-MAG 6.2: o mecanismo). Medida: label[for] igual ao id do input.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-por-labelledby",
+    "descricao": "O rótulo do select é ligado ao campo só por aria-labelledby, sem for/id.",
+    "clausula": "usando o atributo for na tag <label> e um id com mesmo valor na tag <input>"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-81fd932c0990",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Permita que os controles internos ao input também possam ser acessados por teclado, via tecla Tab e acionados via tecla Space.",
+  "justificativa": "Controle interno do campo (gatilho do select) alcançável por Tab e acionado por Space. Medida: Tab até o gatilho e Space abre a lista.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-fora-do-tab",
+    "descricao": "O gatilho do select recebe tabindex=\"-1\" e não é alcançado pelo Tab.",
+    "clausula": "acessados por teclado, via tecla Tab"
+   },
+   {
+    "id": "gatilho-ignora-space",
+    "descricao": "O gatilho do select abre a lista só com clique; Space não faz nada.",
+    "clausula": "acionados via tecla Space"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8424f75a80a8",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Input (Campo de Entrada de Texto) › Especificações › Cores",
+  "justificativa": "Cores do campo do select em fundo claro: rótulo, placeholder e texto auxiliar --gray-80, campo --pure-0, borda --gray-40. Medida: cores computadas do input de sel-tipo-documento.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "borda-campo-clara",
+    "descricao": "A borda do campo do select fica --gray-20.",
+    "clausula": "Borda campo de texto · background · --gray-40"
+   },
+   {
+    "id": "placeholder-claro",
+    "descricao": "O placeholder do select fica --gray-40.",
+    "clausula": "Placeholder · color · --gray-80"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8da85415cc63",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Por tanto, o estado \"pressionado padrão\" não existe neste componente.",
+  "justificativa": "O campo não tem estado pressionado. Medida: estilo computado do campo do select durante mousedown (:active) igual ao de foco.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "campo-com-pressionado",
+    "descricao": "Pressionar o mouse sobre o campo do select escurece o fundo dele (estado pressionado).",
+    "clausula": "Por tanto, o estado \"pressionado padrão\" não existe neste componente."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8fcc793aaed1",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Input (Campo de Entrada de Texto) › Especificações › Espaçamentos",
+  "justificativa": "Espaçamentos do campo: rótulo topo margin-bottom half, padding-left 2x, padding-right half etc. Medida: padding/margens computados do input e do label do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "texto-colado-borda",
+    "descricao": "O campo do select fica com padding-left 0 (texto encostado na borda).",
+    "clausula": "Campo de entrada de texto · padding-left · --spacing-scale-2x"
+   },
+   {
+    "id": "rotulo-afastado",
+    "descricao": "O rótulo fica com margin-bottom de 24px acima do campo.",
+    "clausula": "Rótulo/Label topo · margin-bottom · --spacing-scale-half"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-bc172ac96406",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Input (Campo de Entrada de Texto) › Especificações › Tipografia",
+  "justificativa": "Rótulo do campo no estilo Label e placeholder/valor nos estilos da tabela de tipografia. Medida: font-size/font-weight computados do label \"Tipo de documento\" contra o estilo Label.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-peso-regular",
+    "descricao": "O rótulo \"Tipo de documento\" fica em peso regular (fora do estilo Label).",
+    "clausula": "Rótulo/Label · - · - · Label"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-db9f9aa4a02e",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "O cursor deve mudar para o formato Text.",
+  "justificativa": "No hover sobre o campo o cursor vira o de texto. Medida: cursor computado do campo do select com hover.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "cursor-padrao-no-campo",
+    "descricao": "O campo do select mostra o cursor padrão (seta) no hover.",
+    "clausula": "O cursor deve mudar para o formato Text."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-e1a8fbf8ec5c",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Utilize a marcação correta para o estado de foco, previsto na diretriz de estados, quando o foco estiver ativo no input;",
+  "justificativa": "O campo focado usa a marcação de foco da diretriz de Estados do DS (não basta qualquer foco visível). Medida: outline computado do campo focado contra o estilo de foco do DS.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "foco-fora-do-padrao",
+    "descricao": "O campo do select focado mostra contorno sólido vermelho de 1 px no lugar do foco do DS.",
+    "clausula": "Utilize a marcação correta para o estado de foco, previsto na diretriz de estados"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-ec99c6922afa",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Por padrão, o usuário deve conseguir navegar entre as palavras do texto digitado, com o uso das teclas Ctrl + left/right no Windows ou Option + left/right no Mac.",
+  "justificativa": "No campo, Ctrl+seta navega por palavras. Medida: digitar duas palavras, Ctrl+seta esquerda e ler a posição do cursor (selectionStart).",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "ctrl-seta-bloqueado",
+    "descricao": "Um script do campo do select cancela Ctrl+setas (preventDefault) e o cursor não pula palavras.",
+    "clausula": "navegar entre as palavras do texto digitado, com o uso das teclas Ctrl + left/right"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-145591b8b938",
+  "componente": "item",
+  "arquivo": "componentes/item__designer.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Um item pode ser interativo. Neste caso, toda a superfície do item é interativa e assume o estado hover.",
+  "justificativa": "Item interativo: toda a superfície é clicável e recebe hover. Medida: clicar na parte vazia do item (à direita do texto) e conferir a ação.",
+  "instancias": [
+   "sel-tipo-documento",
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "so-texto-do-item-clicavel",
+    "descricao": "Na lista do select, clicar na parte vazia à direita do texto de um item não o escolhe; só o texto.",
+    "instancias": [
+     "sel-tipo-documento"
+    ],
+    "clausula": "toda a superfície do item é interativa"
+   },
+   {
+    "id": "so-texto-da-aba-clicavel",
+    "descricao": "Na aba Documentos, clicar no espaçamento interno fora do texto não ativa a aba; só o texto.",
+    "instancias": [
+     "tab-requerimento"
+    ],
+    "clausula": "toda a superfície do item é interativa"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2f900cc3509d",
+  "componente": "item",
+  "arquivo": "componentes/item__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Aplique os estados corretamente para fornecer feedback.",
+  "justificativa": "Itens interativos aplicam os estados (hover, foco, selecionado) para dar feedback. Medida: estilo computado do item com e sem hover.",
+  "instancias": [
+   "sel-tipo-documento",
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "item-sem-hover",
+    "descricao": "Os itens da lista do select não mudam de aparência no hover.",
+    "instancias": [
+     "sel-tipo-documento"
+    ],
+    "clausula": "Aplique os estados corretamente para fornecer feedback."
+   },
+   {
+    "id": "aba-sem-hover",
+    "descricao": "A aba não ativa não muda de aparência no hover.",
+    "instancias": [
+     "tab-requerimento"
+    ],
+    "clausula": "Aplique os estados corretamente para fornecer feedback."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-40fe6a293a12",
+  "componente": "item",
+  "arquivo": "componentes/item__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Área de conteúdo: qualquer componente é aceitável, exceto botões primários e componentes relacionados à navegação, como: carrossel, pagination, tab, menu, etc.",
+  "justificativa": "Proíbe botão primário e componentes de navegação dentro do item. Medida: presença de botão primário/navegação dentro de um item.",
+  "instancias": [
+   "sel-tipo-documento",
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "primario-no-item",
+    "descricao": "Um item da lista do select ganha um botão primário \"Ver modelo\".",
+    "instancias": [
+     "sel-tipo-documento"
+    ],
+    "clausula": "exceto botões primários"
+   },
+   {
+    "id": "primario-na-aba",
+    "descricao": "O item da aba Documentos contém um botão primário.",
+    "instancias": [
+     "tab-requerimento"
+    ],
+    "clausula": "exceto botões primários"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-648f8c6d407b",
+  "componente": "item",
+  "arquivo": "componentes/item__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Item › Especificações › Cor",
+  "justificativa": "Superfície do item em --pure-0. Medida: background-color computado dos itens da lista do select (aberta) e das abas em repouso.",
+  "instancias": [
+   "sel-tipo-documento",
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "item-lista-cinza",
+    "descricao": "Os itens da lista do select ficam com fundo --gray-5 em repouso.",
+    "instancias": [
+     "sel-tipo-documento"
+    ],
+    "clausula": "Superfície · color · --pure-0"
+   },
+   {
+    "id": "aba-inativa-cinza",
+    "descricao": "A aba inativa fica com fundo --gray-5.",
+    "instancias": [
+     "tab-requerimento"
+    ],
+    "clausula": "Superfície · color · --pure-0"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b4c1596eb8e2",
+  "componente": "item",
+  "arquivo": "componentes/item__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Para construir um item é necessário uma superfície, uma área com no mínimo um conteúdo contido e opcionalmente um separador na extremidade inferior da superfície.",
+  "justificativa": "Item com área de conteúdo com no mínimo um conteúdo. Medida: cada item da lista do select tem conteúdo (texto) não vazio.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "item-vazio",
+    "descricao": "A lista do select tem um item sem nenhum conteúdo (linha vazia).",
+    "clausula": "uma área com no mínimo um conteúdo contido"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-e06d4991a48e",
+  "componente": "item",
+  "arquivo": "componentes/item__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Os componentes dentro dos itens devem respeitar as margens internas (padding) entre cada um dos lados da superfície, conforme definido no documento de Fundamentos.",
+  "justificativa": "Conteúdo do item respeita o padding interno da superfície. Medida: padding computado do item.",
+  "instancias": [
+   "sel-tipo-documento",
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "item-sem-padding",
+    "descricao": "Os itens da lista do select ficam com padding 0 e o texto encosta na borda.",
+    "instancias": [
+     "sel-tipo-documento"
+    ],
+    "clausula": "devem respeitar as margens internas (padding)"
+   },
+   {
+    "id": "aba-sem-padding",
+    "descricao": "O item da aba Andamento fica com padding horizontal 0.",
+    "instancias": [
+     "tab-requerimento"
+    ],
+    "clausula": "devem respeitar as margens internas (padding)"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1f12ca328b9e",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — List (Lista) › Especificações › Cor",
+  "justificativa": "Superfície da lista em --pure-0. Medida: background-color computado da lista aberta do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "lista-fundo-cinza",
+    "descricao": "A lista aberta do select fica com fundo --gray-10.",
+    "clausula": "Superfície · background · --pure-0"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2d40da60ce61",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — List (Lista) › Especificações › Espaçamento › Alinhamento",
+  "justificativa": "Textos da lista centrados na vertical e alinhados à esquerda. Medida: text-align/align-items computados dos itens da lista do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "itens-centralizados",
+    "descricao": "Os textos dos itens da lista do select ficam centralizados horizontalmente.",
+    "clausula": "Textos · --spacing-horizontal-left"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2ee1137ba80b",
+  "componente": "list",
+  "arquivo": "componentes/list__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Forneça informações claras e concisas que sejam de fácil entendimento para os usuários;",
+  "justificativa": "R-ED (b): informação clara e concisa nos itens; caso flagrante oposto é opção muito longa. Medida: nº de palavras do texto de cada opção.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "opcao-prolixa",
+    "descricao": "Uma opção da lista do select tem uma frase de mais de 30 palavras em vez do nome do tipo de documento.",
+    "clausula": "Forneça informações claras e concisas"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-56e1c02fed30",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Texto Principal: texto obrigatório, onde o conteúdo principal da list será exibido;",
+  "justificativa": "Texto principal obrigatório no item da list. Medida: cada item da lista do select tem texto visível.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "item-sem-texto",
+    "descricao": "Um item da lista do select mostra só o controle de seleção, sem texto principal.",
+    "clausula": "Texto Principal: texto obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-66f76b92ffb0",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "No entanto, esteja atento em manter a formatação e consistência dentro de uma mesma list.",
+  "justificativa": "Formatação consistente entre os itens da mesma lista. Medida: font-size/peso/cor computados do texto de cada item da lista do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "item-formatado-diferente",
+    "descricao": "Um item da lista do select aparece em negrito e fonte maior que os demais.",
+    "clausula": "esteja atento em manter a formatação e consistência dentro de uma mesma list."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-7339465391f7",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Não é permitido variar o espaçamento dos itens dentro de uma mesma list.",
+  "justificativa": "Proíbe variar o espaçamento entre itens de uma mesma list. Medida: distâncias entre itens consecutivos da lista do select iguais.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "espaco-irregular",
+    "descricao": "O 3º item da lista do select fica com margem superior maior que os outros.",
+    "clausula": "Não é permitido variar o espaçamento dos itens dentro de uma mesma list."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8ed2a1b99cae",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — List (Lista) › Especificações › Tipografia",
+  "justificativa": "Tipografia da lista: texto principal --font-size-scale-base regular. Medida: font-size/font-weight computados do texto dos itens da lista do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "itens-negrito",
+    "descricao": "O texto principal dos itens da lista fica em --font-weight-bold.",
+    "clausula": "Texto principal · font-weight · --font-weight-regular"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-9ca0ad49a63a",
+  "componente": "list",
+  "arquivo": "componentes/list__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Certifique-se de que os elementos interativos dentro do list sejam acessíveis por teclado, com o uso das teclas Space ou Enter.",
+  "justificativa": "Itens interativos da lista acionáveis por Space ou Enter (teclas específicas). Medida: com destaque num item da lista aberta, Enter/Space escolhe o item.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "item-nao-aciona-por-tecla",
+    "descricao": "Na lista aberta do select, Enter e Space não escolhem o item destacado; só o clique escolhe.",
+    "clausula": "acessíveis por teclado, com o uso das teclas Space ou Enter"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a14d31901423",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Atenção: os itens de uma list podem apresentar a quantidade de conteúdo que for necessária e consequentemente a altura deve variar de acordo com o conteúdo.",
+  "justificativa": "A altura do item varia com o conteúdo. Medida: scrollHeight contra clientHeight dos itens (sem corte).",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "item-altura-fixa-cortando",
+    "descricao": "Os itens da lista do select têm altura fixa menor que o texto, com overflow escondido cortando a opção mais longa.",
+    "clausula": "a altura deve variar de acordo com o conteúdo"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-aa386be53f7e",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "5 · Superfície · Fundamento Superfície · Obrigatório",
+  "justificativa": "Lista com superfície própria. Medida: background computado da lista aberta do select (não transparente).",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "lista-sem-superficie",
+    "descricao": "A lista aberta do select fica com fundo transparente, deixando o conteúdo da página aparecer por baixo.",
+    "clausula": "5 · Superfície · Fundamento Superfície · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b145544e8477",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Atenção: os espaçamentos devem seguir as orientações especificadas no documento de Fundamentos/Espaçamentos.",
+  "justificativa": "Espaçamento entre itens da lista segue a escala de Fundamentos/Espaçamento. Medida: distância entre itens consecutivos contra os valores da escala.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "espaco-fora-da-escala",
+    "descricao": "Todos os itens da lista do select ficam separados por 3 px, valor fora da escala.",
+    "clausula": "os espaçamentos devem seguir as orientações especificadas no documento de Fundamentos/Espaçamentos"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b30ded4687e3",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — List (Lista) › Especificações › Espaçamento › Spacing",
+  "justificativa": "Espaço do item conforme a densidade (média: --spacing-scale-2x). Medida: padding computado dos itens da lista do select.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "item-espaco-fora-da-escala",
+    "descricao": "Os itens da lista ficam com padding vertical de 2px (nenhuma densidade).",
+    "clausula": "Item - densidade média · --spacing-scale-2x"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-bebc6bb692e0",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Atenção: mantenha a consistência de uma lista em relação ao posicionamento e tipos de recursos visuais/interativos utilizados.",
+  "justificativa": "Posição e tipo dos recursos dos itens consistentes na lista. Medida: posição do controle de seleção em cada item.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "controle-fora-de-posicao",
+    "descricao": "Num dos itens da lista do select o controle de seleção fica à direita do texto; nos demais, à esquerda.",
+    "clausula": "mantenha a consistência de uma lista em relação ao posicionamento e tipos de recursos visuais/interativos utilizados"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-14f2e6c3226f",
+  "componente": "message",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "É importante que após o fechamento da mensagem, o foco do navegador volte ao local original no fluxo de navegação.",
+  "justificativa": "Ao fechar a mensagem, o foco volta ao ponto do fluxo de onde veio. Medida: document.activeElement depois de acionar Fechar pelo teclado.",
+  "instancias": [
+   "msg-retorno",
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "foco-perdido-ao-fechar",
+    "descricao": "Depois de fechar a mensagem pelo teclado, o foco cai no body (início do documento).",
+    "clausula": "após o fechamento da mensagem, o foco do navegador volte ao local original no fluxo de navegação"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1adbb9c1a3ca",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Deve ser usado quando o objetivo da mensagem for transmitir um alerta de erro por parte do sistema ou por parte do usuário.",
+  "justificativa": "Erro usa o tipo Erro. Medida: classe/tipo da mensagem de retorno contra o conteúdo de erro.",
+  "instancias": [
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "erro-com-tipo-info",
+    "descricao": "A mensagem de retorno do envio usa o tipo Informação (cor e ícone de informação), com o mesmo texto de erro.",
+    "clausula": "Deve ser usado quando o objetivo da mensagem for transmitir um alerta de erro por parte do sistema ou por parte do usuário."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1efbf2a4b525",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "No tipo Mensagem Contextual, não existe a opção de utilização do Botão Fechar.",
+  "justificativa": "A mensagem contextual (texto de erro do campo, .feedback, em S2) não tem Botão Fechar. Medida: ausência de botão dentro do feedback do campo.",
+  "instancias": [
+   "sel-tipo-documento",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "feedback-com-fechar",
+    "descricao": "O texto de erro do campo em S2 ganha um botão Fechar ao lado da mensagem.",
+    "clausula": "No tipo Mensagem Contextual, não existe a opção de utilização do Botão Fechar."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-4124b4181a77",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Message (Mensagem) › Especificações › Espaçamentos",
+  "justificativa": "Espaçamentos do Message tipo padrão (padding da superfície, margens do ícone, do título/texto e do Fechar). Medida: padding/margens computados das mensagens.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-sem-padding-vertical",
+    "descricao": "A superfície da mensagem fica com padding-top e padding-bottom 0.",
+    "clausula": "Superfície do Message Tipo Padrão · padding-top · --spacing-scale-3x"
+   },
+   {
+    "id": "icone-colado-texto",
+    "descricao": "O ícone semântico fica sem margin-right (encostado no texto).",
+    "clausula": "Ícone Tipo Padrão · margin-right · --spacing-scale-2x"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-507dbd6cdee4",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Este elemento é o Componente Botão - Ênfase Terciária de Alta Densidade.",
+  "justificativa": "O Fechar da mensagem é um botão de ênfase terciária e densidade alta. Medida: classes de ênfase/densidade e altura computada do botão Fechar.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "fechar-densidade-padrao",
+    "descricao": "O botão Fechar da mensagem fica na densidade padrão (40 px) em vez da alta.",
+    "clausula": "Este elemento é o Componente Botão - Ênfase Terciária de Alta Densidade."
+   },
+   {
+    "id": "fechar-secundario",
+    "descricao": "O botão Fechar recebe ênfase secundária (contorno azul).",
+    "clausula": "Este elemento é o Componente Botão - Ênfase Terciária de Alta Densidade."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-544adb3c8b26",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "1 · Superfície do Message · Fundamento Superfície · Obrigatório",
+  "justificativa": "Superfície do message obrigatória. Medida: background-color computado da raiz da mensagem.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "sem-superficie",
+    "descricao": "A mensagem fica com fundo transparente (sem a superfície do tipo).",
+    "clausula": "1 · Superfície do Message · Fundamento Superfície · Obrigatório"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-55dab9d0155c",
+  "componente": "message",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Lembre-se que o uso de cores semânticas não atende a todos os públicos, sempre forneça uma alternativa para usuários de leitores de tela;",
+  "justificativa": "Alternativa às cores semânticas para usuários de leitor de tela (o e-MAG 4.2 trata da percepção visual; esta exige o leitor de tela). Medida: nome acessível do ícone ou texto que diga o tipo.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "tipo-mudo-no-leitor",
+    "descricao": "O ícone da mensagem fica aria-hidden e nenhum texto (visível ou não) diz o tipo: o leitor de tela não sabe se é alerta ou erro.",
+    "clausula": "Lembre-se que o uso de cores semânticas não atende a todos os públicos, sempre forneça uma alternativa para usuários de leitores de tela;"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5606a51d1ba1",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Message (Mensagem) › Especificações › Cores › Cores do Estado Alerta",
+  "justificativa": "Mensagem de Alerta (tipo padrão): superfície --yellow-vivid-5, título, texto e botão Fechar --gray-80. Medida: cores computadas de msg-pendencia.",
+  "instancias": [
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "alerta-fundo-forte",
+    "descricao": "A superfície de msg-pendencia fica --yellow-vivid-20 (cor do tipo contextual).",
+    "clausula": "Superfície do Message · background · --yellow-vivid-5"
+   },
+   {
+    "id": "alerta-fechar-azul",
+    "descricao": "O botão Fechar de msg-pendencia fica --blue-warm-vivid-70.",
+    "clausula": "Botão Fechar · color · --gray-80"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5df30996e1c5",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Os ícones de função semântica devem ser posicionados à esquerda na Superfície do Message, enquanto o Botão Fechar, deve ser posicionado no topo e à direita.",
+  "justificativa": "Ícone semântico à esquerda; Fechar no topo à direita. Medida: posição (getBoundingClientRect) do ícone e do botão Fechar na mensagem.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "fechar-a-esquerda",
+    "descricao": "O botão Fechar troca de lado com o ícone: Fechar à esquerda, ícone à direita.",
+    "clausula": "Os ícones de função semântica devem ser posicionados à esquerda na Superfície do Message, enquanto o Botão Fechar, deve ser posicionado no topo e à direita."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-77f3dd74508b",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Deve ser usado quando o objetivo da mensagem for transmitir uma ideia de advertência ao usuário.",
+  "justificativa": "Advertência usa o tipo Alerta. Medida: classe/tipo da mensagem de pendência contra o conteúdo de advertência.",
+  "instancias": [
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "aviso-com-tipo-sucesso",
+    "descricao": "A mensagem de pendência usa o tipo Sucesso (cor e ícone de sucesso), com o mesmo texto de advertência.",
+    "clausula": "Deve ser usado quando o objetivo da mensagem for transmitir uma ideia de advertência ao usuário."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-8536d91ce5b9",
+  "componente": "message",
+  "arquivo": "componentes/message__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Usar o seguinte código JavaScript para instanciar a classe BRMessage, passando os seguintes parâmetros:",
+  "justificativa": "A mensagem é instanciada por BRMessage, que dá função ao Fechar. Medida: clicar em Fechar remove/oculta a mensagem.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-nao-instanciada",
+    "descricao": "A mensagem fica fora da instanciação do script: clicar em Fechar não a remove.",
+    "clausula": "Usar o seguinte código JavaScript para instanciar a classe BRMessage"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-90ea0bde7e04",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Message (Mensagem) › Especificações › Cores › Cores do Estado Erro",
+  "justificativa": "Mensagem de Erro (tipo padrão): superfície --red-vivid-10, ícone e Fechar --red-vivid-50, texto --gray-80. Medida: cores computadas de msg-retorno.",
+  "instancias": [
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "erro-icone-cinza",
+    "descricao": "O ícone de msg-retorno fica --gray-80.",
+    "clausula": "Ícone · color · --red-vivid-50"
+   },
+   {
+    "id": "erro-fundo-branco",
+    "descricao": "A superfície de msg-retorno fica --pure-0.",
+    "clausula": "Superfície do Message · background · --red-vivid-10"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-9e3f0f34fd0a",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "porém a Superfície do Message tem seu limite relacionado à largura do Componente ao qual se refere",
+  "justificativa": "A mensagem contextual (texto de erro do campo em S2) não passa da largura do componente a que se refere. Medida: largura do feedback contra a do campo.",
+  "instancias": [
+   "sel-tipo-documento",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "feedback-mais-largo",
+    "descricao": "O texto de erro do campo em S2 fica com largura maior que a do próprio campo, ultrapassando sua borda direita.",
+    "clausula": "a Superfície do Message tem seu limite relacionado à largura do Componente ao qual se refere"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-a7417adc8e5b",
+  "componente": "message",
+  "arquivo": "componentes/message__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-message · Container para Tipo Padrão",
+  "justificativa": "Container br-message. Medida: classe da raiz da mensagem.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "sem-br-message",
+    "descricao": "A raiz da mensagem usa classe própria (aparência copiada à mão), sem br-message.",
+    "clausula": "class · string · br-message · Container para Tipo Padrão"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b069c3031aa0",
+  "componente": "message",
+  "arquivo": "componentes/message__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · feedback · Container para Tipo Contextual",
+  "justificativa": "Mensagem contextual em .feedback (texto de erro do campo no estado inválido). Medida: classe do texto de erro do campo em S2.",
+  "instancias": [
+   "sel-tipo-documento",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "feedback-sem-classe",
+    "descricao": "O texto de erro do campo em S2 é um span com cor vermelha, sem .feedback.",
+    "clausula": "class · string · feedback · Container para Tipo Contextual"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-b13bd6797498",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Message (Mensagem) › Especificações › Iconografia",
+  "justificativa": "Ícones do Message: Alerta padrão exclamation-triangle e Erro padrão times-circle em --icon-size-lg; Fechar times em --icon-size-base. Medida: glifo/classe e tamanho do ícone de cada mensagem.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "alerta-icone-info",
+    "descricao": "msg-pendencia usa o ícone info-circle em vez de exclamation-triangle.",
+    "instancias": [
+     "msg-pendencia"
+    ],
+    "clausula": "Ícone Alerta - Tipo Padrão · <i class=\"exclamation-triangle\"></i> · --icon-size-lg · exclamation-triangle"
+   },
+   {
+    "id": "erro-icone-pequeno",
+    "descricao": "O ícone times-circle de msg-retorno fica em --icon-size-base.",
+    "instancias": [
+     "msg-retorno"
+    ],
+    "clausula": "Ícone Erro - Tipo Padrão · <i class=\"times-circle\"></i> · --icon-size-lg · times-circle"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-db25bc1d1653",
+  "componente": "message",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "No momento da exibição da mensagem, o foco do navegador deve estar sobre o botão fechar, quando houver.",
+  "justificativa": "Ao exibir a mensagem, o foco vai para o Fechar. Medida: document.activeElement logo depois do envio vazio.",
+  "instancias": [
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "foco-fica-no-enviar",
+    "descricao": "Depois do envio vazio, o foco continua no botão Enviar.",
+    "clausula": "No momento da exibição da mensagem, o foco do navegador deve estar sobre o botão fechar, quando houver."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-db30195b0e66",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Deve-se optar por um texto curto, claro e objetivo, compreendendo toda informação necessária ao usuário.",
+  "justificativa": "R-ED (b). Texto da mensagem curto, claro e objetivo. Medida: número de palavras e presença da informação necessária.",
+  "instancias": [
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-prolixa",
+    "descricao": "A mensagem de pendência ganha 90 palavras de explicação institucional antes de dizer qual documento falta.",
+    "clausula": "Deve-se optar por um texto curto, claro e objetivo, compreendendo toda informação necessária ao usuário."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-e175765df557",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "A Superfície do Message se estenderá até o limite à direita da tela, oferecendo espaço ao texto da mensagem.",
+  "justificativa": "A superfície da mensagem padrão se estende até o limite direito do contêiner. Medida: largura/right da mensagem contra o right do contêiner de conteúdo.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-encolhida",
+    "descricao": "A mensagem fica com largura do texto (fit-content), terminando bem antes do limite direito do conteúdo.",
+    "clausula": "A Superfície do Message se estenderá até o limite à direita da tela"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-f8e02fcd7de2",
+  "componente": "message",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Ao exibir uma mensagem de feedback em resposta à ação do usuário, permita que o leitor de tela leia imediatamente a mensagem;",
+  "justificativa": "A mensagem de retorno do envio (S2) é anunciada de imediato ao leitor de tela. Medida: região viva (role=alert ou aria-live) na mensagem quando ela aparece.",
+  "instancias": [
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "retorno-sem-regiao-viva",
+    "descricao": "A mensagem de retorno aparece em S2 sem role de alerta nem aria-live: o leitor de tela não a lê ao surgir.",
+    "clausula": "permita que o leitor de tela leia imediatamente a mensagem"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-fb8e73f4ce50",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Message (Mensagem) › Especificações › Tipografia",
+  "justificativa": "Texto da mensagem padrão em --font-size-scale-up-01 regular (título semi-bold). Medida: font-size/font-weight computados do texto das mensagens.",
+  "instancias": [
+   "msg-pendencia",
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-pequena",
+    "descricao": "O texto da mensagem fica em --font-size-scale-base.",
+    "clausula": "Mensagem · --font-size-scale-up-01 · --font-weight-regular"
+   },
+   {
+    "id": "mensagem-negrito",
+    "descricao": "O texto da mensagem fica em --font-weight-bold.",
+    "clausula": "Mensagem · --font-size-scale-up-01 · --font-weight-regular"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0a6b97c41045",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "class · string · br-list · Container do componente List",
+  "justificativa": "Lista em br-list. Medida: classe do contêiner da lista.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "lista-sem-br-list",
+    "descricao": "O contêiner da lista não tem br-list.",
+    "clausula": "class · string · br-list · Container do componente List"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0d25882c88ba",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Select (Campo de Seleção) › Especificações › Dimensões",
+  "justificativa": "Select simples: input entre 100 e 400px de largura, 40px de altura; itens da lista com 56px. Medida: width/height computados do input e dos itens.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "select-largura-total",
+    "descricao": "O campo do select ocupa a largura do conteúdo (bem acima de 400px a 1280).",
+    "clausula": "Componente Input - Select · variável · 400px · 100px · 40px"
+   },
+   {
+    "id": "itens-baixos",
+    "descricao": "Os itens da lista aberta ficam com 36px de altura.",
+    "clausula": "Item List - Select · variável · 400px · 100px · 56px"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-126c376799cd",
+  "componente": "select",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Quando o foco estiver sobre o select, o mesmo deve ser acionado e exibir a lista de itens;",
+  "justificativa": "Com foco no select, ele é acionado e exibe a lista (comportamento próprio do DS). Medida: com foco no campo, Enter/seta para baixo abre a lista.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "teclado-nao-abre",
+    "descricao": "A lista só abre com clique; com foco no campo, Enter e seta para baixo não fazem nada.",
+    "clausula": "Quando o foco estiver sobre o select, o mesmo deve ser acionado e exibir a lista de itens;"
+   }
+  ],
+  "alternativasValidas": []
+ }
+]

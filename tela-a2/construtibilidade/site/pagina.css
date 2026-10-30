@@ -1,0 +1,5 @@
+#crd-resumo { margin: 16px 0; }
+#stp-andamento { margin: 24px 0; }
+#fs-avisos { border: 0; padding: 0; margin: 16px 0; }
+/* decisão de construção (conferência de construtibilidade): o core 3.7.0 desenha o ícone do marcador em --font-size-scale-up-01 (16,8 px); a Iconografia do Step (a2-2737953e2513) fixa --icon-size-base */
+#stp-andamento .step-alert::after { font-size: var(--icon-size-base); }

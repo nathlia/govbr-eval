@@ -1,0 +1,1671 @@
+[
+ {
+  "id": "a2-04639abccf53",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Button",
+  "justificativa": "Proibição herdada de \"O estado Selecionado não pode ser aplicado nos seguintes componentes\" botões. Medida: botões embutidos (cabeçalho de item do accordion, gatilho da tooltip) não recebem fundo --blue-warm-vivid-50 + fa-check após acionados.",
+  "instancias": [
+   "acc-duvidas",
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "botao-selecionado",
+    "descricao": "Depois de acionado, o botão do cabeçalho do item aberto do accordion (ou o botão-gatilho da tooltip) fica com fundo --blue-warm-vivid-50 e ícone de check, como item selecionado.",
+    "clausula": "Button"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-04a4c3ea1b70",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "visual-token",
+  "texto": "Recomendação 2.6 – Não incluir situações com intermitência de tela",
+  "justificativa": "e-MAG 3.1, Recomendação 2.6. Sem efeito piscante. Medida: animação CSS de opacidade/visibilidade em loop.",
+  "instancias": [
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "pisca",
+    "descricao": "O ícone da mensagem de pendência pisca 2 vezes por segundo (animação CSS infinita de opacidade).",
+    "clausula": "Não devem ser utilizados efeitos visuais piscantes, intermitentes ou cintilantes."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-05a3253b3a06",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Com exceção da fonte base, utilize a unidade em para todos os outros valores da escala.",
+  "justificativa": "Tamanhos da escala (exceto a base) em unidade relativa em, não em px fixo. Medida: valor declarado de font-size na folha de estilo (CSSOM) para os textos da instância.",
+  "instancias": [
+   "crd-resumo",
+   "acc-duvidas",
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "tamanho-em-px",
+    "descricao": "O título do card (ou o título dos itens do accordion, ou o cabeçalho da tabela) tem font-size declarado em px absoluto (ex.: 20.16px), com o mesmo tamanho visual.",
+    "clausula": "Com exceção da fonte base, utilize a unidade em para todos os outros valores da escala."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0895138d72a0",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Selecionado › Especificação para Estado Selecionado",
+  "justificativa": "Tabela do estado Selecionado: fundo --blue-warm-vivid-50 (e marca gráfica, já tratada em a2-9bcf4f01a6bb). Na tela: o item escolhido na lista do select. Medida: background-color computado do item escolhido = --blue-warm-vivid-50.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "selecionado-fundo-claro",
+    "descricao": "O item escolhido na lista do select fica com fundo #D4E5FF (--blue-warm-vivid-10) em vez de --blue-warm-vivid-50, mantendo a marca gráfica.",
+    "clausula": "background/foreground · color · --blue-warm-vivid-50"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0b634b5de510",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Legendas (Legend) (a partir da linha 360)",
+  "justificativa": "Estilo Legend: --font-size-scale-up-01, peso semi-bold, line-height low, cor --gray-80. Na tela: a legend 'Avisos sobre o requerimento'. Medida: estilos computados da legend.",
+  "instancias": [
+   "swt-aviso-email",
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "legend-peso-fora",
+    "descricao": "A legend 'Avisos sobre o requerimento' fica com font-weight 400 em vez de semi-bold (600), mesmo tamanho.",
+    "clausula": "Weight · --font-weight-semi-bold"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0cb2e580195d",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela e em todo o produto.",
+  "justificativa": "Espaçamentos constantes para a mesma função. Medida: distância rótulo→campo em cada campo do formulário.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "espaco-irregular",
+    "descricao": "A distância entre o rótulo e o campo do upload fica 2px, diferente dos demais campos.",
+    "clausula": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela e em todo o produto."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0cb58cc75f6f",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança (para que a borda não se confunda com qualquer outra propriedade do elemento \"focado\", ou com a herança de outros estados).",
+  "justificativa": "Borda de foco em volta, com espaçamento de segurança. Medida: outline-offset/afastamento do indicador de foco.",
+  "instancias": [
+   "sel-tipo-documento",
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "foco-colado",
+    "descricao": "O indicador de foco fica colado ao elemento (sem espaçamento de segurança).",
+    "clausula": "Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança (para que a borda não se confunda com qualquer outra propriedade do elemento \"focado\", ou com a herança de outros estados)."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0d50ac5f7083",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Título (H1) (a partir da linha 160)",
+  "justificativa": "Estilo H1 (grid de 12 colunas, vale em 1280): --font-size-scale-up-06, peso light, line-height low, cor --gray-80, margem inferior --spacing-scale-4x. Medida: estilos computados do h1 da página.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "h1-peso-fora",
+    "descricao": "O h1 da página fica com font-weight 700 (bold) em vez de light (300), mesmo tamanho.",
+    "clausula": "Weight · --font-weight-light"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0ea33ff35779",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Não culpe o usuário.",
+  "justificativa": "R-ED (b): não culpar o usuário na mensagem de erro (o próprio contexto dá o caso: 'você fez'/'você não fez'). Medida: texto da mensagem de erro de S2.",
+  "instancias": [
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "erro-culpa-usuario",
+    "descricao": "A mensagem de erro passa a dizer 'Você não anexou o arquivo e esqueceu de escolher o tipo de documento.'",
+    "clausula": "Não culpe o usuário."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-0f20577609d3",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "comportamento",
+  "texto": "Recomendação 6.3 – Estabelecer uma ordem lógica de navegação",
+  "justificativa": "e-MAG 3.1, Recomendação 6.3. Ordem lógica no código do formulário; tabindex só com real necessidade. Medida: ordem de Tab entre os campos do formulário contra a ordem visual.",
+  "instancias": [
+   "sel-tipo-documento",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "ordem-codigo-trocada",
+    "descricao": "O upload vem antes do select no código e é exibido depois por CSS (order); o Tab passa pelo upload primeiro.",
+    "clausula": "Os elementos do formulário devem ser distribuídos corretamente através do código HTML, criando, assim, uma sequência lógica de navegação."
+   },
+   {
+    "id": "tabindex-positivo",
+    "descricao": "O controle recebe tabindex=1 e sai da ordem do formulário.",
+    "clausula": "O atributo tabindex (ver recomendação 4) somente deverá ser utilizado quando existir real necessidade."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-11b459a3885c",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "NÃO incluir valor nos atributos boleanos",
+  "justificativa": "Atributo booleano sem valor. Medida: getAttribute(attr) === '' nos atributos booleanos (single do accordion, disabled das etapas desabilitadas).",
+  "instancias": [
+   "acc-duvidas",
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "single-com-valor",
+    "descricao": "O atributo single do accordion passa a ser single=\"true\".",
+    "instancias": [
+     "acc-duvidas"
+    ],
+    "clausula": "NÃO incluir valor nos atributos boleanos"
+   },
+   {
+    "id": "disabled-com-valor",
+    "descricao": "As etapas 3 e 4 desabilitadas passam a ter disabled=\"disabled\".",
+    "instancias": [
+     "stp-andamento"
+    ],
+    "clausula": "NÃO incluir valor nos atributos boleanos"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-12afa1f3c1f0",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Use verbos que especifiquem claramente a ação pretendida.",
+  "justificativa": "R-ED (a): rótulo de ação com verbo que especifica a ação (presença de verbo é contável). Medida: o rótulo do botão de escolher arquivo contém verbo de ação.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-sem-verbo",
+    "descricao": "O botão de escolher arquivo passa a dizer só 'Arquivo'.",
+    "clausula": "Use verbos que especifiquem claramente a ação pretendida."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-12ee2ce5c650",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "As datas devem ser formatadas com a mesma quantidade de dígitos (por exemplo: 01/01/89 ao invés de 1/1/89) para garantir que todas as datas tenham o mesmo peso visual.",
+  "justificativa": "Datas com a mesma quantidade de dígitos. Medida: texto das células de data.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "data-sem-zero",
+    "descricao": "Uma das datas aparece como 5/9/2026, as demais como dd/mm/aaaa.",
+    "clausula": "As datas devem ser formatadas com a mesma quantidade de dígitos (por exemplo: 01/01/89 ao invés de 1/1/89) para garantir que todas as datas tenham o mesmo peso visual."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-13efc60bb6b6",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Pressionado › Especificação para Estado Pressionado",
+  "justificativa": "Tabela do estado Pressionado: overlay na cor do primeiro plano com opacidade --surface-opacity-md (0,45) em fundo claro, cursor pointer, sem sombra. Medida: durante o mousedown no item de aba ou no cabeçalho do item do accordion, opacidade do overlay = 0,45.",
+  "instancias": [
+   "tab-requerimento",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "pressionado-overlay-fora",
+    "descricao": "Durante o pressionar, o overlay do item de aba (ou do cabeçalho do item do accordion) usa opacidade 0,70 em vez de 0,45.",
+    "clausula": "background (Sobre um fundo Claro) · opacity · --surface-opacity-md"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-15a1e5d58ef7",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/cores.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "É necessário que estas cores se destaquem sobre os outros elementos ou informações textuais na interface.",
+  "justificativa": "Elementos interativos usam a cor de interação, que deve se destacar do texto e demais elementos. Medida: color computado do ícone-gatilho da tooltip e do botão do upload = cor de interação (azul) e diferente da cor de leitura do texto (--gray-80/#333).",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "interativo-cor-de-texto",
+    "descricao": "O ícone do gatilho da tooltip (ou o texto/ícone do botão de escolher arquivo) usa a mesma cor cinza do texto corrido, sem a cor de interação.",
+    "clausula": "É necessário que estas cores se destaquem sobre os outros elementos ou informações textuais na interface."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1754a39d9a39",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Por padrão, a ação de \"clicar/tocar\" em um elemento não deve gerar foco visual.",
+  "justificativa": "Clicar não gera foco visual. Medida: indicador de foco depois de clique de mouse.",
+  "instancias": [
+   "acc-duvidas",
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "foco-no-clique",
+    "descricao": "O indicador de foco aparece também depois de clique de mouse (:focus em vez de :focus-visible).",
+    "clausula": "Por padrão, a ação de \"clicar/tocar\" em um elemento não deve gerar foco visual."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-18acbf7b4c9c",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 3.12 – Disponibilizar uma explicação para siglas, abreviaturas e palavras incomuns",
+  "justificativa": "e-MAG 3.1, Recomendação 3.12. Sigla explicada na primeira ocorrência. Medida: primeira ocorrência de 'NUP' tem forma completa (texto, abbr ou glossário).",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "sigla-sem-explicacao",
+    "descricao": "O card mostra 'NUP' sem forma completa em lugar nenhum da página.",
+    "clausula": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa."
+   }
+  ],
+  "alternativasValidas": [
+   {
+    "id": "sigla-com-abbr",
+    "descricao": "A forma completa de 'NUP' vem num elemento abbr com title na primeira ocorrência, em vez de entre parênteses no texto.",
+    "clausula": "Essa explicação pode estar expressa no próprio texto, pode estar presente em um glossário ou, então, através da utilização do elemento abbr",
+    "instancias": [
+     "crd-resumo"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2-18bccce4132a",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 6.7 – Agrupar campos de formulário",
+  "justificativa": "e-MAG 3.1, Recomendação 6.7. O FIELDSET é recomendado; a parte exigível é: agrupamento feito associando LEGEND que explique o propósito. A variante viola só essa parte (o fieldset existe). Medida: fieldset dos avisos tem legend com texto.",
+  "instancias": [
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "grupo-sem-legend",
+    "descricao": "O fieldset dos avisos fica sem legend; o texto 'Avisos sobre o requerimento' vira um p antes dele.",
+    "clausula": "O agrupamento deverá ser feito de maneira lógica, associando o elemento LEGEND explicando claramente o propósito ou natureza dos agrupamentos."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-19a22fa26e63",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/cores.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Cores › Função das Cores › 3. Função Feedback (Estados) › Função de Avisos › Especificação Avisos › Feedback Erro",
+  "justificativa": "Feedback erro: principal #E52207 (--red-vivid-50, já na tabela do estado Erro) e alternativa #FDE0DB (--red-vivid-10) como superfície. Medida: background-color computado da mensagem de erro = #FDE0DB.",
+  "instancias": [
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "erro-fundo-fora",
+    "descricao": "A superfície da mensagem de erro fica #F8E1DE (--red-10, família Red) em vez de #FDE0DB (--red-vivid-10).",
+    "clausula": "A · Cor Alternativa · #FDE0DB · --red-vivid-10"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1c18ad657e0d",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Características visuais referentes à elevação do componente na tela, como sombra por exemplo, devem ser retiradas ou amenizadas.",
+  "justificativa": "Desabilitado sem elevação (sombra). Medida: box-shadow computado das etapas desabilitadas.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "desabilitada-com-sombra",
+    "descricao": "Os indicadores das etapas desabilitadas ganham sombra de elevação.",
+    "clausula": "Características visuais referentes à elevação do componente na tela, como sombra por exemplo, devem ser retiradas ou amenizadas."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1d6a18d52408",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Se os ícones são puramente decorativos é necessário adicionar manualmente um atributo aria-hidden a cada um deles para que sejam acessíveis.",
+  "justificativa": "Ícones decorativos (ao lado de texto que já diz o mesmo) recebem aria-hidden. Medida: atributo aria-hidden nos <i> do chevron do cabeçalho do accordion e do ícone do botão de escolher arquivo.",
+  "instancias": [
+   "acc-duvidas",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "decorativo-exposto",
+    "descricao": "O ícone de chevron do cabeçalho do item do accordion (ou o ícone ao lado do texto do botão do upload) fica sem aria-hidden.",
+    "clausula": "é necessário adicionar manualmente um atributo aria-hidden a cada um deles"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1ea2f43d76db",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 3.1 – Identificar o idioma principal da página",
+  "justificativa": "e-MAG 3.1, Recomendação 3.1. Idioma principal no atributo lang. Medida: lang do html.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "sem-lang",
+    "descricao": "O html fica sem lang.",
+    "clausula": "Deve-se identificar o principal idioma utilizado nos documentos. A identificação é feita por meio do atributo lang do HTML"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-1f45d0dc0c3a",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Mantenha a consistência: se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário.",
+  "justificativa": "R-ED (a): uso de ':' no fim do rótulo consistente em todos os campos do formulário (contável). Medida: rótulos do formulário terminam todos com ':' ou nenhum termina.",
+  "instancias": [
+   "sel-tipo-documento",
+   "upl-documento",
+   "swt-aviso-email",
+   "swt-aviso-sms",
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "dois-pontos-em-um-rotulo",
+    "descricao": "Só o rótulo deste campo passa a terminar com ':'; os demais rótulos do formulário ficam sem.",
+    "clausula": "se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-20a2754d88ff",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Atenção: não utilize placeholders no lugar de rótulos.",
+  "justificativa": "Proibição específica: placeholder no lugar de rótulo (o e-MAG 6.2 trata da associação do LABEL). Medida: rótulo visível presente além do placeholder.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "placeholder-como-rotulo",
+    "descricao": "O rótulo visível do select some; 'Tipo de documento' fica só como placeholder (com aria-label).",
+    "clausula": "Atenção: não utilize placeholders no lugar de rótulos."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-22240b8959ba",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "comportamento",
+  "texto": "Recomendação 2.3 - Não criar páginas com atualização automática periódica",
+  "justificativa": "e-MAG 3.1, Recomendação 2.3 (de volta à elegibilidade, item 5). Sem atualização automática periódica, e sem aviso. Medida em sessão isolada: carga limpa, janela fixa de 90 s, contar substituições do conteúdo da tabela (MutationObserver) e procurar aviso de atualização automática.",
+  "instancias": [
+   "tbl-movimentacoes"
+  ],
+  "variantes": [
+   {
+    "id": "tabela-se-atualiza",
+    "descricao": "A tabela de movimentações é recarregada sozinha a cada 30 s (setInterval que refaz as linhas com os mesmos dados), sem botão e sem aviso.",
+    "clausula": "Não criar páginas com atualização automática periódica"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-22573246d936",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 1.8 – Dividir as áreas de informação",
+  "justificativa": "e-MAG 3.1, Recomendação 1.8. Divisão de conteúdo com significado em SECTION, não DIV. A variante 'sem main' da rodada 0 saiu a priori: main é moldura protegida (item 7 da revisão). Medida: elemento que delimita a seção 'Dúvidas frequentes'.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "secao-como-div",
+    "descricao": "A seção 'Dúvidas frequentes' (título + accordion) é delimitada por div em vez de section.",
+    "clausula": "Toda divisão de conteúdo que possua um significado importante deve ser feita utilizando o elemento SECTION no lugar do elemento DIV"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-235056fad007",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Ligado e Desligado › Especificação para Ligado e Desligado",
+  "justificativa": "Tabela Ligado/Desligado: ligado = --blue-warm-vivid-40. Na tela: os dois switches. Medida: cor computada do trilho/chave do switch ligado. (A linha Desligado, --gray-40, não é usada nas variantes: ver dúvida.)",
+  "instancias": [
+   "swt-aviso-email",
+   "swt-aviso-sms"
+  ],
+  "variantes": [
+   {
+    "id": "ligado-cor-fora",
+    "descricao": "Quando ligado, o switch usa #1351B4 (--blue-warm-vivid-70) em vez de --blue-warm-vivid-40.",
+    "clausula": "background/foreground (Ligado) · color · --blue-warm-vivid-40"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-253f67dc1b85",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Utilize o estado Dropzone Ativo (veja adiante) para gerar uma resposta clara para o usuário.",
+  "justificativa": "A área de soltura do upload deve responder com o estado Dropzone Ativo quando um arquivo é arrastado sobre ela. Medida: disparar dragenter/dragover com DataTransfer de arquivo sobre a área e verificar mudança visual (borda/classe de dropzone ativo).",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "arrastar-sem-resposta",
+    "descricao": "Ao arrastar um arquivo sobre a área do upload, nada muda no visual (sem estado de dropzone ativo), embora soltar ainda funcione.",
+    "clausula": "Utilize o estado Dropzone Ativo (veja adiante) para gerar uma resposta clara para o usuário."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-25ddbebf4f1a",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Elementos desabilitados não podem receber foco.",
+  "justificativa": "Desabilitado não recebe foco. Medida: sequência de Tab não para nas etapas desabilitadas.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "desabilitada-focavel",
+    "descricao": "A 4ª etapa fica só com aria-disabled e tabindex=0: recebe foco.",
+    "clausula": "Elementos desabilitados não podem receber foco."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-274ebf4959e8",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Escreva rótulos curtos, objetivos e claros.",
+  "justificativa": "R-ED (b): rótulo de componente de ação curto (ideal até 2 palavras, 3 se inevitável). Na tela: botão de escolher arquivo do upload. Medida: nº de palavras do rótulo do botão.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-acao-prolixo",
+    "descricao": "O botão de escolher arquivo passa a dizer 'Clique aqui para selecionar no seu computador o arquivo do documento que você deseja enviar' (15 palavras).",
+    "clausula": "Escreva rótulos curtos, objetivos e claros."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-276e1210af43",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Escreva siglas, com até três letras, com todas as letras maiúsculas.",
+  "justificativa": "R-ED (a): sigla de até 3 letras toda em maiúsculas (contável). Medida: grafia de SMS e da sigla do protocolo no texto renderizado.",
+  "instancias": [
+   "swt-aviso-sms",
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "sigla-curta-em-minusculas",
+    "descricao": "A sigla de 3 letras aparece como 'Sms' no rótulo do switch.",
+    "instancias": [
+     "swt-aviso-sms"
+    ],
+    "clausula": "Escreva siglas, com até três letras, com todas as letras maiúsculas."
+   },
+   {
+    "id": "sigla-protocolo-em-minusculas",
+    "descricao": "A sigla de 3 letras do protocolo aparece como 'Nup' no card.",
+    "instancias": [
+     "crd-resumo"
+    ],
+    "clausula": "Escreva siglas, com até três letras, com todas as letras maiúsculas."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2b5c2bc4358b",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Foco › Especificação para Foco",
+  "justificativa": "Tabela de Foco: em fundo claro, a borda de foco tem a cor --gold-vivid-40. As unidades aceitas sobre foco tratam de existir (a2-a6e2601837a7), espaçamento (a2-0cb58cc75f6f) e unicidade; a cor do token é nova. Medida: outline-color computado no foco por teclado.",
+  "instancias": [
+   "sel-tipo-documento",
+   "acc-duvidas",
+   "tab-requerimento",
+   "swt-aviso-email",
+   "swt-aviso-sms",
+   "chk-avisos-todos"
+  ],
+  "variantes": [
+   {
+    "id": "foco-cor-fora",
+    "descricao": "O contorno de foco do controle fica na cor #1351B4 (azul de interação) em vez de --gold-vivid-40; continua visível e tracejado.",
+    "clausula": "border (Sobre um fundo Claro) · color · --gold-vivid-40"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2bc503ea01f1",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "comportamento",
+  "texto": "Recomendação 6.4 – Não provocar automaticamente alteração no contexto",
+  "justificativa": "e-MAG 3.1, Recomendação 6.4. Sem mudança automática; mudanças pelo acionamento de botão. Medida: escolher uma opção não envia nem troca de aba.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "muda-contexto",
+    "descricao": "Escolher uma opção no select envia o formulário sozinho (sem acionar o botão).",
+    "clausula": "Quando um elemento de formulário receber o foco, não deve ser iniciada uma mudança automática na página que confunda ou desoriente o usuário. Assim, as mudanças devem ocorrer através do acionamento de um botão."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2c134632f410",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/cores.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Elementos gráficos e componentes da interface (como ícones e bordas) seguem as mesmas regras de texto grande.",
+  "justificativa": "Elementos gráficos (ícones, bordas) seguem a regra de texto grande: contraste mínimo de 3:1. Ícones já estão em a2-cc3d7bd5342f; a parte nova é a borda de componente. Medida: contraste da borda do campo do select contra o fundo ≥ 3:1.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "borda-campo-apagada",
+    "descricao": "A borda do campo do select fica #DCDCDC sobre branco (≈1,4:1).",
+    "clausula": "Elementos gráficos e componentes da interface (como ícones e bordas) seguem as mesmas regras de texto grande."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2ceedc253459",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Atenção: textos auxiliares devem ser compactos e objetivos.",
+  "justificativa": "R-ED (b). Textos auxiliares compactos e objetivos. Medida: palavras do texto de apoio do upload.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "apoio-prolixo",
+    "descricao": "O texto de apoio do upload vira um parágrafo de 110 palavras.",
+    "clausula": "Atenção: textos auxiliares devem ser compactos e objetivos."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2db211927f15",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Descrição em Campo de Texto (Placeholder) (a partir da linha 344)",
+  "justificativa": "Estilo Placeholder: scale-base, peso regular, itálico. Na tela: o placeholder do campo do select. Medida: estilos computados de ::placeholder do input.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "placeholder-sem-italico",
+    "descricao": "O placeholder do campo do select fica com font-style normal em vez de italic.",
+    "clausula": "Font-style · italic"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2e4efd30789f",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Seu tamanho deve ter menos ênfase do que o título do formulário e deve manter a consistência sem variação no tamanho do corpo de texto em todo o formulário, a menos que tenha conceitos de hierarquia envolvidos (veja \"4- Indentação e Subagrupamentos\").",
+  "justificativa": "Legend com menos ênfase que o título do formulário. Medida: font-size do legend dos avisos contra o do título do formulário.",
+  "instancias": [
+   "swt-aviso-email"
+  ],
+  "variantes": [
+   {
+    "id": "legend-maior",
+    "descricao": "O legend dos avisos fica com font-size maior que o título do formulário.",
+    "clausula": "Seu tamanho deve ter menos ênfase do que o título do formulário e deve manter a consistência sem variação no tamanho do corpo de texto em todo o formulário, a menos que tenha conceitos de hierarquia envolvidos (veja \"4- Indentação e Subagrupamentos\")."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2e6f1c681ecd",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Só pode existir um elemento com hover por vez na tela.",
+  "justificativa": "Só um elemento pode exibir hover por vez. Medida: com o ponteiro sobre um elemento, nenhum outro elemento exibe o overlay de hover (background primeiro plano com --surface-opacity-xs).",
+  "instancias": [
+   "acc-duvidas",
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "hover-preso",
+    "descricao": "Depois que o ponteiro sai do cabeçalho de um item do accordion (ou de um item de aba), o overlay de hover permanece nele; ao passar o ponteiro sobre outro elemento, dois elementos exibem hover ao mesmo tempo.",
+    "clausula": "Só pode existir um elemento com hover por vez na tela."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-2f4eadc23b2c",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Dessa forma, nenhuma fonte deve estar fora da escala definida no DS: Minor Third.",
+  "justificativa": "Nenhuma fonte fora da escala Minor Third. Medida: font-size computado contra os valores da escala.",
+  "instancias": [
+   "crd-resumo",
+   "acc-duvidas",
+   "tbl-movimentacoes",
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "fonte-fora-da-escala",
+    "descricao": "O texto principal da instância fica com font-size 15px.",
+    "clausula": "Dessa forma, nenhuma fonte deve estar fora da escala definida no DS: Minor Third."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-312798bd96aa",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Independente da forma utilizada, deve-se seguir todas as características visuais de construção já padronizadas do Font Awesome Solid.",
+  "justificativa": "Ícones no estilo Font Awesome Solid. Medida: classe/família do ícone.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "icone-regular",
+    "descricao": "O ícone do gatilho usa a família Regular (far) em vez da Solid.",
+    "clausula": "Independente da forma utilizada, deve-se seguir todas as características visuais de construção já padronizadas do Font Awesome Solid."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-31b4a3f89649",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "comportamento",
+  "texto": "Recomendação 2.4 – Não utilizar redirecionamento automático de páginas",
+  "justificativa": "e-MAG 3.1, Recomendação 2.4 (de volta à elegibilidade, item 5). Sem marcação de redirecionamento. Medida em sessão isolada: meta http-equiv=refresh com url no head, e navegação observada dentro de janela fixa.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "redireciona-com-meta",
+    "descricao": "O head ganha meta http-equiv=refresh content='600;url=acompanhamento.html#inicio' (redireciona para a própria página depois de 10 min).",
+    "clausula": "Não devem ser utilizadas marcações para redirecionar a uma nova página, como o uso do atributo http-equiv com conteúdo “refresh” do elemento META."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-31c6d22fa5eb",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Mantenha a consistência: se optar pelos dois pontos \":\" no final do rótulo mantenha esse padrão em todos os formulários do sistema.",
+  "justificativa": "Uso consistente de ':' no fim dos rótulos. R-ED (a): presença do caractere é contável. Medida: último caractere de cada rótulo do formulário.",
+  "instancias": [
+   "sel-tipo-documento",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "dois-pontos-em-um-so",
+    "descricao": "Só o rótulo deste campo termina com ':'; os demais rótulos do formulário ficam sem.",
+    "clausula": "se optar pelos dois pontos \":\" no final do rótulo mantenha esse padrão em todos os formulários do sistema"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-329f74d7646c",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Utilize a tabela de estilo para determinar o visual de cada estilo de tipografia utilizada.",
+  "justificativa": "Elementos nativos seguem a Tabela de Estilos (valores em texto): H2 = --font-size-scale-up-05, peso regular, line-height low; Label = scale-base, semi-bold. Medida: font-size/font-weight/line-height computados dos títulos da página e dos rótulos do select e do upload.",
+  "instancias": [
+   "pagina",
+   "sel-tipo-documento",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-fora-da-tabela",
+    "descricao": "Um h2 da página fica com font-weight 700 e font-size de 16px.",
+    "instancias": [
+     "pagina"
+    ],
+    "clausula": "Utilize a tabela de estilo para determinar o visual de cada estilo de tipografia utilizada."
+   },
+   {
+    "id": "rotulo-fora-da-tabela",
+    "descricao": "O rótulo do select (ou o rótulo \"Envio de documentos\" do upload) fica com font-weight 400 em vez de semi-bold.",
+    "instancias": [
+     "sel-tipo-documento",
+     "upl-documento"
+    ],
+    "clausula": "Utilize a tabela de estilo para determinar o visual de cada estilo de tipografia utilizada."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-33f8d78aa04b",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Dropzone ativo › Estado dropzone ativo e arrastando › Especificação para Dropzone Ativo e Arrastando",
+  "justificativa": "Tabela do Dropzone ativo: fundo na cor do estado Interativo com opacidade --surface-opacity-sm, cursor copy. A exibição do estado já está aceita (a2-5612fb499d07); aqui é o valor. Medida: com dragenter/dragover de arquivo sobre a área, background computado (cor e alfa).",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "dropzone-ativo-cor-fora",
+    "descricao": "Ao arrastar um arquivo sobre a área do upload, o overlay de dropzone ativo aparece em verde (--green-cool-vivid-50) em vez da cor de interação.",
+    "clausula": "background · color · Cor do Estado Interativo"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-35afb7e6ee7c",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar).",
+  "justificativa": "Ícone semântico sem texto ao lado precisa de alternativa em texto (span oculto ou similar, p.ex. aria-label no botão). Medida: nome acessível não vazio dos botões só com ícone.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo",
+   "msg-pendencia",
+   "msg-retorno",
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "botao-icone-sem-texto",
+    "descricao": "O botão só com ícone (gatilho da tooltip, Fechar da mensagem ou gatilho do select) fica sem nenhuma alternativa em texto: sem span oculto e sem aria-label.",
+    "clausula": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar)."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-36013fffe17a",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Utilize termos familiares para os usuários.",
+  "justificativa": "R-ED (b): termos familiares no rótulo de ação. Caso flagrante: jargão técnico de informática no botão do cidadão. Medida: leitura do rótulo do botão de escolher arquivo.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-jargao-tecnico",
+    "descricao": "O botão de escolher arquivo passa a dizer 'Carregar binário'.",
+    "clausula": "Utilize termos familiares para os usuários."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-36dcfef2c39b",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Interativo › Especificação para Estado Interativo",
+  "justificativa": "Tabela do estado Interativo: em fundo claro, a cor de interação dos elementos interativos é --blue-warm-vivid-70 (#1351B4); a linha de sublinhado vale para hiperlinks (não há no conteúdo sorteável) e a de fundo escuro não conta. Medida: color computado do ícone do gatilho da tooltip e do texto/ícone do botão de escolher arquivo = #1351B4.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "interacao-tom-vizinho",
+    "descricao": "O ícone do gatilho da tooltip (ou o texto e o ícone do botão de escolher arquivo) usa #155BCB (--blue-warm-vivid-60) em vez de #1351B4 (--blue-warm-vivid-70); continua azul e com contraste suficiente.",
+    "clausula": "background/foreground (Sobre um fundo Claro) · color · --blue-warm-vivid-70"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-372068e40fd2",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 1.3 – Utilizar corretamente os níveis de cabeçalho",
+  "justificativa": "e-MAG 3.1, Recomendação 1.3. Níveis de cabeçalho hierárquicos. Medida: sequência de h1–h6.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "salto-de-nivel",
+    "descricao": "O título 'Dúvidas frequentes' vira h4 logo depois de um h2 (pula o h3).",
+    "clausula": "Os níveis de cabeçalho (elementos HTML H1 a H6) devem ser utilizados de forma hierárquica"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3778203c3941",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Utilize rótulos concisos e que auxiliem os usuários a entender quais informações estão sendo solicitadas.",
+  "justificativa": "Rótulos concisos. R-ED (b): rótulo-parágrafo é flagrante e oposto a \"concisos\". Medida: nº de palavras do rótulo.",
+  "instancias": [
+   "sel-tipo-documento",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-prolixo",
+    "descricao": "O rótulo do campo vira uma frase de ~25 palavras (ex.: 'Selecione abaixo, dentre as opções disponíveis, qual é o tipo de documento que você pretende anexar a este requerimento agora').",
+    "clausula": "Utilize rótulos concisos"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-386b2c116eb3",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/grid.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Observação: é importante que o elemento temporário esteja localizado próxima da área de conteúdo (Max-width) ou no limite do tamanho mínimo da margem da grid principalmente quando utilizadas grids fixas que podem possuir margens muito extensas.",
+  "justificativa": "Objeto temporário (tooltip flutuante) aparece junto à área de conteúdo (max-width do container), não deslocado para longe dela. Medida: getBoundingClientRect da tooltip aberta dentro da área de conteúdo do container (ou no limite da margem) e junto ao gatilho.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "tooltip-fora-da-area",
+    "descricao": "A tooltip abre fixada no canto superior direito da janela, sobre o cabeçalho e fora da área de conteúdo, longe do gatilho no card.",
+    "clausula": "é importante que o elemento temporário esteja localizado próxima da área de conteúdo (Max-width) ou no limite do tamanho mínimo da margem da grid"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3a4b0fa9ed9e",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Só pode existir 1 tipo de Foco por elemento.",
+  "justificativa": "Um elemento focado mostra um único tipo de foco (padrão: borda dashed --surface-width-lg com espaçamento; ou tênue: borda solid --surface-width-md), nunca os dois. Medida: estilos computados do elemento focado (outline e border).",
+  "instancias": [
+   "sel-tipo-documento",
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "dois-focos",
+    "descricao": "Ao receber foco, o campo do select (ou o botão do upload) exibe ao mesmo tempo o contorno dashed de foco padrão e uma borda solid dourada de foco tênue.",
+    "clausula": "Só pode existir 1 tipo de Foco por elemento."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3d935c4b833a",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Os títulos e subtítulos do formulário são textos que descrevem o objetivo do formulário e devem ter o maior tamanho de texto entre todos os elementos do formulário.",
+  "justificativa": "Título do formulário com o maior tamanho de texto do formulário. Medida: font-size do título do formulário contra rótulos e textos do formulário.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-form-menor",
+    "descricao": "O título do formulário da aba Documentos fica com font-size menor que os rótulos dos campos.",
+    "clausula": "Os títulos e subtítulos do formulário são textos que descrevem o objetivo do formulário e devem ter o maior tamanho de texto entre todos os elementos do formulário."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3e410f36c0cd",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Elementos desabilitados não podem receber Ativo.",
+  "justificativa": "Desabilitado não recebe Ativo. Medida: estado/classe ativo em etapa desabilitada.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "desabilitada-ativa",
+    "descricao": "A 3ª etapa (desabilitada) também carrega o estado ativo.",
+    "clausula": "Elementos desabilitados não podem receber Ativo."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3f23afca6972",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Os títulos e subtítulos precisam ser objetivos e concisos.",
+  "justificativa": "R-ED (b). Títulos objetivos e concisos. Medida: palavras do h1.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "h1-prolixo",
+    "descricao": "O h1 vira uma frase de 28 palavras sobre o acompanhamento do requerimento.",
+    "clausula": "Os títulos e subtítulos precisam ser objetivos e concisos."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-3fb37eb25f3c",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/cores.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Interfaces digitais do governo devem utilizar sempre as cores pré-definidas.",
+  "justificativa": "Usar sempre as cores pré-definidas. Medida: cores computadas da instância contra a paleta do DS.",
+  "instancias": [
+   "crd-resumo",
+   "acc-duvidas",
+   "tbl-movimentacoes",
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "cor-fora-da-paleta",
+    "descricao": "A cor do texto principal da instância vira #334333 (canal verde +16 sobre #333333).",
+    "clausula": "Interfaces digitais do governo devem utilizar sempre as cores pré-definidas."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-45f0252cdcc1",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Só pode existir um elemento com pressionado por vez na tela.",
+  "justificativa": "Só um elemento pode exibir o estado Pressionado por vez. Medida: após soltar o botão do mouse, o overlay de pressionado (--surface-opacity-md) não permanece; nunca dois elementos com ele.",
+  "instancias": [
+   "acc-duvidas",
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "pressionado-preso",
+    "descricao": "O cabeçalho de item do accordion (ou o item de aba) mantém o overlay de pressionado depois do clique; ao pressionar outro elemento, dois aparecem pressionados.",
+    "clausula": "Só pode existir um elemento com pressionado por vez na tela."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-460f5696acde",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "É importante seguir esta referência dentro do contexto do Design System, desta forma pode-se deixar bem claro aos usuários o acesso à ajuda apenas com o uso de ícone, sem necessidade de textos explicativos adicionais.",
+  "justificativa": "Acesso à ajuda só com ícone segue a referência do símbolo de interrogação (question/question-circle; info/info-circle admitido em ajuda contextual). Medida: classe do ícone do gatilho de ajuda.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "ajuda-com-icone-estranho",
+    "descricao": "O gatilho de ajuda (botão só com ícone no card) usa o ícone de lâmpada (lightbulb) em vez de interrogação ou informação.",
+    "clausula": "É importante seguir esta referência dentro do contexto do Design System, desta forma pode-se deixar bem claro aos usuários o acesso à ajuda apenas com o uso de ícone"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-46523775b9da",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Importante que o estado persista até até que seja resolvido o erro.",
+  "justificativa": "O estado de erro persiste até o erro ser resolvido. Na tela: a mensagem de erro do envio sem arquivo (S2). Medida: esperar sem alterar o formulário e verificar que a mensagem de erro continua exibida.",
+  "instancias": [
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "erro-some-sozinho",
+    "descricao": "A mensagem de erro do envio desaparece sozinha 4 segundos depois de exibida, sem que nenhum arquivo tenha sido escolhido.",
+    "clausula": "Importante que o estado persista até até que seja resolvido o erro."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-46c418f28680",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Portanto, esse tipo de microcopy precisa ser bem assertivo, conciso e com as palavras certas para impactar quem lê.",
+  "justificativa": "R-ED (b). Microcopy de elementos de ação assertivo e conciso. Medida: número de palavras do rótulo da aba.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-de-aba-longo",
+    "descricao": "O rótulo da 2ª aba fica 'Aqui você pode consultar e também enviar os seus documentos pendentes' (12 palavras).",
+    "clausula": "Portanto, esse tipo de microcopy precisa ser bem assertivo, conciso e com as palavras certas para impactar quem lê."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-489a52bad95a",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Faça com que títulos e subtítulos sejam os mais breves e específicos possíveis.",
+  "justificativa": "Título/subtítulo do formulário breve e específico. R-ED (b): caso flagrante e oposto ao texto. Medida: nº de palavras do título do formulário da aba Documentos.",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-form-prolixo",
+    "descricao": "O título do formulário da aba Documentos vira uma frase de ~30 palavras explicando todo o processo de envio.",
+    "clausula": "Faça com que títulos e subtítulos sejam os mais breves e específicos possíveis."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5432c282d0d7",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "visual-token",
+  "texto": "Recomendação 4.3 – Permitir redimensionamento sem perda de funcionalidade",
+  "justificativa": "e-MAG 3.1, Recomendação 4.3. Legível e funcional a 200%, sem sobreposição. Condição da cláusula: zoom da página a 200% na janela 1280×900 (é a condição que o texto define; não é outro breakpoint). Medida: com zoom 200%, o conteúdo do card não é cortado nem sobreposto.",
+  "instancias": [
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "altura-fixa-corta",
+    "descricao": "O card tem altura fixa em px e overflow hidden: a 200% o texto é cortado.",
+    "clausula": "A página deve continuar legível e funcional mesmo quando redimensionada para até 200%. Assim, é preciso garantir que, quando a página for redimensionada, não ocorram sobreposições"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5542b7528b3d",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Essa área, deve ser de no mínimo 24x24px.",
+  "justificativa": "Área mínima de interação de 24×24px no ícone interativo. Medida: getBoundingClientRect do gatilho.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "area-pequena",
+    "descricao": "O gatilho só de ícone fica com 16×16px.",
+    "clausula": "Essa área, deve ser de no mínimo 24x24px."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5610d5df55f0",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível.",
+  "justificativa": "R-ED (b): escrever o necessário com o mínimo de palavras. Caso flagrante (o da rubrica): tooltip/mensagem curtas inchadas para dezenas de palavras redundantes. Medida: nº de palavras do texto.",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo",
+   "msg-pendencia"
+  ],
+  "variantes": [
+   {
+    "id": "tooltip-prolixa",
+    "descricao": "O texto da tooltip passa a ter ~80 palavras, repetindo a mesma informação em frases redundantes.",
+    "instancias": [
+     "tip-prazo",
+     "tip-protocolo"
+    ],
+    "clausula": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível."
+   },
+   {
+    "id": "alerta-prolixo",
+    "descricao": "O alerta de pendência passa a ter ~70 palavras, repetindo três vezes que há documento pendente.",
+    "instancias": [
+     "msg-pendencia"
+    ],
+    "clausula": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5612fb499d07",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "Sempre que estiver Arrastando um objeto sobre uma dropzone, o estado Dropzone Ativo deve ser imediatamente exibido!",
+  "justificativa": "Dropzone ativo exibido ao arrastar sobre a área. Medida: classe/estilo da área depois de dragenter sintético.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "sem-dropzone-ativo",
+    "descricao": "Arrastar um arquivo sobre a área não muda a aparência dela.",
+    "clausula": "Sempre que estiver Arrastando um objeto sobre uma dropzone, o estado Dropzone Ativo deve ser imediatamente exibido!"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-590d318946bc",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "comportamento",
+  "texto": "A área/zona de \"soltura\" do elemento pode ser maior, mas não menor, do que a área visível/exibida na tela.",
+  "justificativa": "A zona de soltura não pode ser menor que a área visível do dropzone. Medida: disparar dragenter/dragover/drop com arquivo perto dos cantos da área tracejada do upload e ver se a área responde.",
+  "instancias": [
+   "upl-documento"
+  ],
+  "variantes": [
+   {
+    "id": "soltura-menor",
+    "descricao": "Só o botão central do upload aceita o arquivo arrastado; perto das bordas da área tracejada visível nada acontece (sem dropzone ativo e sem receber o arquivo).",
+    "clausula": "A área/zona de \"soltura\" do elemento pode ser maior, mas não menor, do que a área visível/exibida na tela."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-598ca56880b1",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Títulos e subtítulos são escritos com iniciais das palavras em maiúsculas (exceto artigos, preposições, etc).",
+  "justificativa": "Títulos e subtítulos da página com a inicial de cada palavra em maiúscula, menos artigos e preposições. R-ED (a): maiúsculas contáveis. Medida: caixa da inicial de cada palavra de conteúdo nos h1/h2 da página. Obs.: a referência precisa escrever seus títulos assim (ex.: 'Acompanhar Requerimento', 'Dúvidas Frequentes').",
+  "instancias": [
+   "pagina"
+  ],
+  "variantes": [
+   {
+    "id": "subtitulo-caixa-de-sentenca",
+    "descricao": "O título da seção de dúvidas passa a 'Dúvidas frequentes' (só a primeira palavra com maiúscula).",
+    "clausula": "Títulos e subtítulos são escritos com iniciais das palavras em maiúsculas (exceto artigos, preposições, etc)."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5a1fcf660ae1",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Não use artigos.",
+  "justificativa": "Sem artigos no rótulo de ação. Medida: texto dos rótulos das abas.",
+  "instancias": [
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-com-artigo",
+    "descricao": "O rótulo da 2ª aba fica 'Os documentos'.",
+    "clausula": "Não use artigos."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-5da1dcbf7d0a",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "O cursor do mouse deve ser alterado para a símbolo de não permitido: \"círculo com traço diagonal\".",
+  "justificativa": "Cursor 'não permitido' no desabilitado. Medida: cursor computado das etapas desabilitadas.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "cursor-mao",
+    "descricao": "As etapas desabilitadas mostram cursor pointer.",
+    "clausula": "O cursor do mouse deve ser alterado para a símbolo de não permitido: \"círculo com traço diagonal\"."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-61f7e680f11b",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "As mensagens de erro devem permitir que os usuários entendam que ocorreu um erro, por que ocorreu e o que fazer para contornar a situação.",
+  "justificativa": "Mensagem de erro diz que houve erro, por quê e o que fazer (mais que o e-MAG 6.6). Medida: texto da mensagem de retorno em S2.",
+  "instancias": [
+   "msg-retorno"
+  ],
+  "variantes": [
+   {
+    "id": "erro-sem-o-que-fazer",
+    "descricao": "A mensagem de retorno diz 'Não foi possível enviar.' sem dizer por quê nem o que fazer.",
+    "clausula": "As mensagens de erro devem permitir que os usuários entendam que ocorreu um erro, por que ocorreu e o que fazer para contornar a situação."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-622c6c318ee6",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Sucesso › Especificação para Estado Sucesso",
+  "justificativa": "Tabela do estado Sucesso: cor --green-cool-vivid-50 e ícone check-circle. Na tela: o marcador de concluído da 1ª etapa do step (data-alert=\"success\"). Medida: color computado do marcador = #168821 e classe/conteúdo do ícone.",
+  "instancias": [
+   "stp-andamento"
+  ],
+  "variantes": [
+   {
+    "id": "sucesso-verde-fora",
+    "descricao": "O marcador de concluído da 1ª etapa fica em --green-50 (família Green) em vez de #168821 (--green-cool-vivid-50).",
+    "clausula": "background/foreground · color · --green-cool-vivid-50"
+   },
+   {
+    "id": "sucesso-icone-fora",
+    "descricao": "O marcador de concluído da 1ª etapa usa o ícone check (sem círculo) em vez de check-circle.",
+    "clausula": "icon · class · check-circle"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-624afa51bbaf",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "estrato": "DS",
+  "tipo": "estrutura-classe",
+  "texto": "Atenção: não utilize as regras acima concomitantemente; isto é, evite sinalizar ao mesmo tempo os campos obrigatórios e opcionais.",
+  "justificativa": "Não marcar ao mesmo tempo campos obrigatórios e opcionais. Medida: textos de marcação nos rótulos do formulário.",
+  "instancias": [
+   "sel-tipo-documento"
+  ],
+  "variantes": [
+   {
+    "id": "marca-os-dois",
+    "descricao": "O rótulo do select ganha '(obrigatório)' e o do switch de SMS, '(opcional)'.",
+    "clausula": "Atenção: não utilize as regras acima concomitantemente; isto é, evite sinalizar ao mesmo tempo os campos obrigatórios e opcionais."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-63e7d8f1a47d",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Estados › Foco › Especificação para Foco › Especificação para Estado Foco",
+  "justificativa": "Tabela do Estado Foco (padrão): borda --surface-width-lg (4px), estilo dashed, espaçamento --spacing-scale-half. Medida: outline-style e outline-width computados no foco por teclado (o espaçamento já está em a2-0cb58cc75f6f).",
+  "instancias": [
+   "sel-tipo-documento",
+   "acc-duvidas",
+   "tab-requerimento"
+  ],
+  "variantes": [
+   {
+    "id": "foco-pontilhado",
+    "descricao": "O contorno de foco do controle fica dotted em vez de dashed, com a mesma cor e espessura.",
+    "clausula": "border · style · dashed"
+   },
+   {
+    "id": "foco-fino",
+    "descricao": "O contorno de foco do controle fica com 1px em vez de 4px (--surface-width-lg), mantendo dashed e a cor.",
+    "clausula": "border · width · --surface-width-lg"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-66cc8c46f14a",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda.",
+  "justificativa": "O ícone de ajuda contextual fica junto do elemento a que a ajuda se refere. Na tela: os gatilhos das tooltips de prazo e protocolo, ao lado do dado que explicam no card. R-ED (b): caso flagrante e oposto, o ícone longe do seu dado e junto de outro. Medida: getBoundingClientRect do gatilho contra o do dado referido (mesma linha, poucos px de distância).",
+  "instancias": [
+   "tip-prazo",
+   "tip-protocolo"
+  ],
+  "variantes": [
+   {
+    "id": "ajuda-longe-do-dado",
+    "descricao": "O ícone de ajuda do prazo sai do lado do valor do prazo e vai para o canto superior direito do card, ao lado do número do requerimento.",
+    "instancias": [
+     "tip-prazo"
+    ],
+    "clausula": "Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda."
+   },
+   {
+    "id": "ajuda-protocolo-deslocada",
+    "descricao": "O ícone de ajuda do protocolo sai do lado do número do protocolo e vai para o pé do card, abaixo do prazo.",
+    "instancias": [
+     "tip-protocolo"
+    ],
+    "clausula": "Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-66fbdcf13772",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "visual-token",
+  "texto": "Recomendação 4.1 - Oferecer contraste mínimo entre plano de fundo e primeiro plano",
+  "justificativa": "e-MAG 3.1, Recomendação 4.1. Contraste suficiente; a variante fica abaixo de 3:1, o piso que o próprio texto cita (o texto recomenda 4,5:1), para não depender de qual limiar se adota. Medida: razão de contraste computada.",
+  "instancias": [
+   "crd-resumo",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "texto-baixo-contraste",
+    "descricao": "O texto secundário do card fica #C8C8C8 sobre branco (≈1,7:1).",
+    "instancias": [
+     "crd-resumo"
+    ],
+    "clausula": "As cores do plano de fundo e do primeiro plano deverão ser suficientemente contrastantes para que possam ser visualizadas, também, por pessoas com baixa visão"
+   },
+   {
+    "id": "conteudo-baixo-contraste",
+    "descricao": "O texto do painel do 1º item do accordion fica #C8C8C8 sobre branco (≈1,7:1).",
+    "instancias": [
+     "acc-duvidas"
+    ],
+    "clausula": "As cores do plano de fundo e do primeiro plano deverão ser suficientemente contrastantes para que possam ser visualizadas, também, por pessoas com baixa visão"
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-671056d628cb",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "estrato": "G",
+  "tipo": "estrutura-classe",
+  "texto": "Recomendação 1.1 – Respeitar os Padrões Web",
+  "justificativa": "e-MAG 3.1, Recomendação 1.1. Camadas separadas: apresentação em CSS, não na marcação. Medida: atributos/elementos de apresentação no HTML da instância.",
+  "instancias": [
+   "msg-pendencia",
+   "crd-resumo"
+  ],
+  "variantes": [
+   {
+    "id": "apresentacao-no-html",
+    "descricao": "A cor e o alinhamento do texto da instância vêm de atributos de apresentação no HTML (elemento font com color, atributo align), não do CSS.",
+    "clausula": "As camadas lógicas deverão ser separadas, de acordo com o objetivo para o qual elas foram desenvolvidas."
+   }
+  ],
+  "alternativasValidas": []
+ },
+ {
+  "id": "a2-67d855f2c6d2",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/cores.md",
+  "estrato": "DS",
+  "tipo": "visual-token",
+  "texto": "Tabela de especificação — Cores › Função das Cores › 2. Função Leitura (Tipografia e Iconografia) › Especificação Leitura › Fundo Claro para Leitura",
+  "justificativa": "Cor de leitura em fundo claro: #333333 (--gray-80) para texto. Medida: color computado do texto corrido da instância = #333333.",
+  "instancias": [
+   "crd-resumo",
+   "tbl-movimentacoes",
+   "acc-duvidas"
+  ],
+  "variantes": [
+   {
+    "id": "leitura-cinza-fora",
+    "descricao": "O texto corrido do card (ou das células da tabela, ou do painel do accordion) fica #636363 (--gray-60, cor da paleta, contraste ainda acima de 4,5:1) em vez de #333333.",
+    "clausula": "P · Cor Principal · #333333 · --gray-80"
+   }
+  ],
+  "alternativasValidas": []
+ }
+]

@@ -1,0 +1,1851 @@
+{
+  "a2-12a200d36fcb": {
+    "variantes": {
+      "titulo-sem-title": {
+        "toca": [
+          "$:titulos",
+          "$:cabecalhos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "3º item: o texto do título passa a ser filho direto do botão de cabeçalho, sem o span .title"
+      }
+    }
+  },
+  "a2-2956c4c250cb": {
+    "variantes": {
+      "item-sem-classe": {
+        "toca": [
+          "$:raiz",
+          "$:cabecalhos",
+          "$:paineis",
+          "$:divisores"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "2º item: agrupador sem a classe item; aparência (borda, exibição do painel irmão) refeita em CSS próprio"
+      }
+    }
+  },
+  "a2-41c27bf1953d": {
+    "variantes": {
+      "aberto-sem-active": {
+        "toca": [
+          "$:raiz",
+          "$:paineis",
+          "$:titulos",
+          "$:icones",
+          "$:divisores"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "item expandido: o agrupador não recebe active; o painel é exibido por outro meio e os estilos ligados a .item[active] deixam de valer"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "aberto-sem-active",
+        "viola": "a2-46e26a19b8ee",
+        "porque": "o semibold do título do item aberto vem da regra .item[active] da folha do DS; sem active o título aberto fica no peso medium, salvo CSS próprio que a variante não descreve",
+        "classe": "distinto",
+        "razao": "a variante muda o atributo do agrupador; o peso do título aberto, outra propriedade de outro nó, depende desse atributo na folha do DS"
+      }
+    ]
+  },
+  "a2-44c54f019703": {
+    "variantes": {
+      "titulo-aberto-cor-padrao": {
+        "toca": [
+          "$:titulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "título do item expandido mantém a cor do texto padrão em vez da cor do estado ativo"
+      }
+    }
+  },
+  "a2-46e26a19b8ee": {
+    "variantes": {
+      "aberto-sem-semibold": {
+        "toca": [
+          "$:titulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "título do item expandido continua com font-weight medium"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "aberto-sem-semibold",
+        "viola": "a2-fd151cae3c9e",
+        "porque": "o texto aceito de a2-fd151cae3c9e diz que, ao ser clicado, o item passa ao estilo semibold; o título aberto em medium contraria essa cláusula também",
+        "classe": "mesmo-observavel",
+        "razao": "o mesmo font-weight do título aberto, citado por outra frase do DS"
+      }
+    ]
+  },
+  "a2-4e067f770cee": {
+    "variantes": {
+      "cabecalho-div": {
+        "toca": [
+          "$:cabecalhos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "1º item: cabeçalho trocado de button para div role=button tabindex=0 com manipuladores de Enter/Espaço"
+      }
+    }
+  },
+  "a2-56613b3be80b": {
+    "variantes": {
+      "item-fora-da-raiz": {
+        "toca": [
+          "$:raiz",
+          "$:cabecalhos",
+          "$:titulos",
+          "$:icones",
+          "$:paineis",
+          "$:divisores",
+          "pagina:secao-duvidas"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "3º item (agrupador e painel) sai da raiz do accordion para um bloco irmão logo abaixo, dentro da seção de dúvidas"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "item-fora-da-raiz",
+        "viola": "a2-a4429f532c6c",
+        "porque": "o atributo single só governa os itens dentro da raiz; o 3º item, fora dela, pode ficar aberto junto com um item de dentro (dois abertos ao mesmo tempo)",
+        "classe": "distinto",
+        "razao": "a variante muda a posição do item no DOM; dois itens abertos ao mesmo tempo é outro comportamento"
+      }
+    ]
+  },
+  "a2-6b857febb914": {
+    "variantes": {
+      "padding-fora-da-escala": {
+        "toca": [
+          "$:cabecalhos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "padding vertical de 10 px nos botões de cabeçalho dos itens"
+      }
+    }
+  },
+  "a2-8056dd4c745b": {
+    "variantes": {
+      "icone-depois-do-texto": {
+        "toca": [
+          "$:icones",
+          "$:cabecalhos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "ícone de expandir passa para a direita do título dentro do cabeçalho"
+      },
+      "sem-linha-entre-itens": {
+        "toca": [
+          "$:divisores"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "remove a borda cinza que separa os itens"
+      }
+    }
+  },
+  "a2-8857d7885090": {
+    "variantes": {
+      "cabecalho-sem-header": {
+        "toca": [
+          "$:cabecalhos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "3º item: botão de cabeçalho sem a classe header; aparência refeita em CSS próprio"
+      }
+    }
+  },
+  "a2-8e97b7f2c2b6": {
+    "variantes": {
+      "painel-nao-abre": {
+        "toca": [
+          "$:cabecalhos",
+          "$:paineis"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "2º item: ao clicar o cabeçalho vai a aria-expanded=true mas o painel continua oculto"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "painel-nao-abre",
+        "viola": "a2-971db6a57c75",
+        "porque": "aria-expanded=true com o painel oculto é estado ARIA que não reflete o estado visual do item",
+        "classe": "mesmo-observavel",
+        "razao": "a variante já é o descompasso entre aria-expanded e o painel visível, o mesmo fato que essa regra mede"
+      }
+    ]
+  },
+  "a2-a4429f532c6c": {
+    "variantes": {
+      "sem-single": {
+        "toca": [
+          "$:raiz",
+          "$:cabecalhos",
+          "$:paineis",
+          "$:titulos",
+          "$:icones"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "raiz sem o atributo single; abrir um item não fecha o outro, dois ficam abertos"
+      }
+    }
+  },
+  "a2-ab377e910464": {
+    "variantes": {
+      "sem-br-accordion": {
+        "toca": [
+          "$:raiz",
+          "$:cabecalhos",
+          "$:icones",
+          "$:titulos",
+          "$:paineis",
+          "$:divisores"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "raiz com classe própria em vez de br-accordion; aparência e comportamento de todas as partes refeitos à mão"
+      }
+    }
+  },
+  "a2-cfc50765d5f6": {
+    "variantes": {
+      "titulo-em-duas-linhas": {
+        "toca": [
+          "$:titulos",
+          "$:cabecalhos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto do título de um item trocado por frase longa que quebra em duas linhas a 1280 (cabeçalho mais alto)"
+      }
+    }
+  },
+  "a2-d159e0f4acdf": {
+    "variantes": {
+      "icone-nao-troca": {
+        "toca": [
+          "$:icones"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "ao abrir o item o ícone continua angle-down"
+      },
+      "so-icone-clicavel": {
+        "toca": [
+          "$:cabecalhos",
+          "$:titulos",
+          "$:icones"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "só o ícone aciona a abertura; clique no título não faz nada"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "icone-nao-troca",
+        "viola": "a2-d4db34492294",
+        "porque": "no item aberto, cuja ação é recolher, o ícone angle-down continua indicando expandir: o ícone deixa de corresponder à ação",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma classe do ícone do item aberto"
+      }
+    ]
+  },
+  "a2-e262242d2ee1": {
+    "variantes": {
+      "painel-sem-content": {
+        "toca": [
+          "$:paineis"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "painel do 1º item com classe própria em vez de content; aparência refeita à mão"
+      }
+    }
+  },
+  "a2-fd151cae3c9e": {
+    "variantes": {
+      "titulo-caixa-alta": {
+        "toca": [
+          "$:titulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "título do 2º item escrito todo em maiúsculas"
+      },
+      "titulo-bold-fechado": {
+        "toca": [
+          "$:titulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "títulos dos itens fechados em font-weight 700"
+      }
+    }
+  },
+  "a2-fd6aa918efcc": {
+    "variantes": {
+      "hover-sem-fundo": {
+        "toca": [
+          "$:cabecalhos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "o fundo do cabeçalho não muda no hover"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "hover-sem-fundo",
+        "viola": "a2-ec1111e4b2a1",
+        "porque": "sem a mudança de fundo, o cabeçalho deixa de dar feedback de hover no próprio objeto",
+        "classe": "mesmo-observavel",
+        "razao": "o mesmo fundo do cabeçalho que não muda no hover"
+      },
+      {
+        "variante": "hover-sem-fundo",
+        "viola": "a2-dea6a58c22c4",
+        "porque": "o overlay de hover (opacidade 0,16) é o fundo que muda; sem ele não há overlay a medir",
+        "classe": "mesmo-observavel",
+        "razao": "o overlay de hover é o mesmo fundo do cabeçalho que a variante deixa de mudar"
+      }
+    ]
+  },
+  "a2-3241a9611f30": {
+    "variantes": {
+      "protecao-fora-da-escala": {
+        "toca": [
+          "$:gatilho",
+          "crd-resumo:conteudo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "margem de 5 px entre o gatilho do tooltip e o texto vizinho no conteúdo do card"
+      }
+    }
+  },
+  "a2-4f6b7bd068c4": {
+    "variantes": {
+      "fechar-primario": {
+        "toca": [
+          "$:fechar",
+          "$:fechar-icone"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "botão Fechar da mensagem com ênfase primária (fundo azul sólido, ícone claro)"
+      },
+      "gatilho-ajuda-primario": {
+        "toca": [
+          "$:gatilho",
+          "$:gatilho-icone"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "gatilho do tooltip no card com ênfase primária (fundo azul sólido, ícone claro)"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "fechar-primario",
+        "viola": "a2-507dbd6cdee4",
+        "porque": "o Fechar da mensagem tem de ser de ênfase terciária; ênfase primária a contraria",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma ênfase do botão Fechar"
+      },
+      {
+        "variante": "fechar-primario",
+        "viola": "a2-5606a51d1ba1",
+        "porque": "em msg-pendencia o Fechar deve ser --gray-80; o ícone claro sobre fundo azul muda essa cor",
+        "classe": "mesmo-observavel",
+        "razao": "a cor do Fechar faz parte da ênfase primária que a variante aplica ao mesmo botão"
+      },
+      {
+        "variante": "fechar-primario",
+        "viola": "a2-90ea0bde7e04",
+        "porque": "em msg-retorno o Fechar deve ser --red-vivid-50; o ícone claro sobre fundo azul muda essa cor",
+        "classe": "mesmo-observavel",
+        "razao": "a cor do Fechar faz parte da ênfase primária que a variante aplica ao mesmo botão"
+      },
+      {
+        "variante": "gatilho-ajuda-primario",
+        "viola": "a2-9fc840ceb22d",
+        "porque": "o gatilho circular terciário exige ícone --blue-warm-vivid-70 e superfície transparente; fundo azul sólido viola as duas",
+        "classe": "mesmo-observavel",
+        "razao": "fundo e cor do mesmo gatilho que a ênfase primária altera"
+      }
+    ]
+  },
+  "a2-59c1236e3ebd": {
+    "variantes": {
+      "rotulo-em-duas-linhas": {
+        "toca": [
+          "$:botao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "botão de escolher arquivo com largura limitada; o rótulo quebra em duas linhas"
+      }
+    }
+  },
+  "a2-5b47246a41c1": {
+    "variantes": {
+      "fechar-sem-icone": {
+        "toca": [
+          "$:fechar"
+        ],
+        "remove": [
+          "$:fechar-icone"
+        ],
+        "cascata": [],
+        "estado": null,
+        "nota": "botão Fechar fica vazio, sem o ícone (aria-label mantido)"
+      },
+      "gatilho-sem-icone": {
+        "porHospedeiro": {
+          "tip-prazo": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [
+              "$:gatilho-icone"
+            ],
+            "cascata": [],
+            "estado": null,
+            "nota": "gatilho do tooltip fica sem o ícone (círculo vazio), nome acessível mantido"
+          },
+          "tip-protocolo": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [
+              "$:gatilho-icone"
+            ],
+            "cascata": [],
+            "estado": null,
+            "nota": "gatilho do tooltip fica sem o ícone (círculo vazio), nome acessível mantido"
+          },
+          "sel-tipo-documento": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "botão gatilho do select fica sem o ícone (círculo vazio), nome acessível mantido"
+          }
+        }
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "fechar-sem-icone",
+        "viola": "a2-d47f4c470491",
+        "porque": "botão de ação sem texto tem de ter ícone que expresse a ação; o Fechar vazio não tem",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma ausência do ícone no Fechar"
+      },
+      {
+        "variante": "fechar-sem-icone",
+        "viola": "a2-db50df136f86",
+        "porque": "o ícone do Fechar deve representar a ação (fa-times); sem ícone não há o que represente",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma ausência do ícone no Fechar"
+      },
+      {
+        "variante": "gatilho-sem-icone",
+        "viola": "a2-d47f4c470491",
+        "porque": "nos gatilhos dos tooltips, botão de ação sem texto fica sem ícone que expresse a ação",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma ausência do ícone no gatilho"
+      },
+      {
+        "variante": "gatilho-sem-icone",
+        "viola": "a2-54dca6a2c217",
+        "porque": "no select, a ação interna do campo tem de ter ícone de abrir a lista; o gatilho vazio não tem",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma ausência do ícone no gatilho do select"
+      },
+      {
+        "variante": "gatilho-sem-icone",
+        "viola": "a2-daf3655caedf",
+        "porque": "no select, sem ícone no gatilho não há ícone apontando para baixo/cima conforme a lista",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma ausência do ícone no gatilho do select, lida pela troca de direção"
+      }
+    ]
+  },
+  "a2-5f85eeafe863": {
+    "variantes": {
+      "icone-descentralizado": {
+        "porHospedeiro": {
+          "msg-pendencia": {
+            "toca": [
+              "$:fechar-icone",
+              "$:fechar"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do Fechar alinhado ao canto superior esquerdo do botão"
+          },
+          "msg-retorno": {
+            "toca": [
+              "$:fechar-icone",
+              "$:fechar"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do Fechar alinhado ao canto superior esquerdo do botão"
+          },
+          "tip-prazo": {
+            "toca": [
+              "$:gatilho-icone",
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do gatilho alinhado ao canto superior esquerdo do botão"
+          },
+          "tip-protocolo": {
+            "toca": [
+              "$:gatilho-icone",
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do gatilho alinhado ao canto superior esquerdo do botão"
+          },
+          "sel-tipo-documento": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do gatilho do select alinhado ao canto superior esquerdo do botão"
+          }
+        }
+      },
+      "rotulo-alinhado-a-esquerda": {
+        "toca": [
+          "$:botao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "ícone e rótulo do botão de escolher arquivo alinhados à esquerda do botão"
+      }
+    }
+  },
+  "a2-6d5f38f9bab8": {
+    "variantes": {
+      "escolher-arquivo-sem-margem": {
+        "toca": [
+          "$:botao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "botão de escolher arquivo com padding horizontal 0"
+      }
+    }
+  },
+  "a2-72ddeddc1ac8": {
+    "variantes": {
+      "icone-do-gatilho-maior": {
+        "porHospedeiro": {
+          "tip-prazo": {
+            "toca": [
+              "$:gatilho-icone"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do gatilho do tooltip em --icon-size-lg; botão do mesmo tamanho"
+          },
+          "tip-protocolo": {
+            "toca": [
+              "$:gatilho-icone"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do gatilho do tooltip em --icon-size-lg; botão do mesmo tamanho"
+          },
+          "sel-tipo-documento": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do gatilho do select em --icon-size-lg; botão do mesmo tamanho"
+          }
+        }
+      },
+      "icone-fechar-maior": {
+        "toca": [
+          "$:fechar-icone"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "ícone do Fechar da mensagem em --icon-size-lg"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "icone-fechar-maior",
+        "viola": "a2-b13bd6797498",
+        "porque": "o ícone times do Fechar do Message tem de ser --icon-size-base; lg o contraria",
+        "classe": "mesmo-observavel",
+        "razao": "o mesmo tamanho do ícone do Fechar"
+      }
+    ]
+  },
+  "a2-923a3ee74050": {
+    "variantes": {
+      "icone-sem-aria-hidden": {
+        "porHospedeiro": {
+          "msg-pendencia": {
+            "toca": [
+              "$:fechar-icone"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do Fechar sem aria-hidden=true"
+          },
+          "msg-retorno": {
+            "toca": [
+              "$:fechar-icone"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do Fechar sem aria-hidden=true"
+          },
+          "tip-prazo": {
+            "toca": [
+              "$:gatilho-icone"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do gatilho do tooltip sem aria-hidden=true"
+          },
+          "tip-protocolo": {
+            "toca": [
+              "$:gatilho-icone"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do gatilho do tooltip sem aria-hidden=true"
+          },
+          "sel-tipo-documento": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do gatilho do select sem aria-hidden=true"
+          },
+          "upl-documento": {
+            "toca": [
+              "$:botao"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do botão de escolher arquivo sem aria-hidden=true"
+          },
+          "acc-duvidas": {
+            "toca": [
+              "$:icones"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do cabeçalho dos itens sem aria-hidden=true"
+          }
+        }
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "icone-sem-aria-hidden",
+        "viola": "a2-76c8506bbc99",
+        "porque": "nos botões só de ícone (Fechar, gatilhos dos tooltips e do select) o ícone tem de levar aria-hidden; é o mesmo atributo retirado",
+        "classe": "mesmo-observavel",
+        "razao": "o mesmo aria-hidden no mesmo ícone"
+      },
+      {
+        "variante": "icone-sem-aria-hidden",
+        "viola": "a2-1d6a18d52408",
+        "porque": "no chevron do accordion e no ícone do botão do upload o ícone decorativo tem de levar aria-hidden; é o mesmo atributo retirado",
+        "classe": "mesmo-observavel",
+        "razao": "o mesmo aria-hidden no mesmo ícone"
+      }
+    ]
+  },
+  "a2-9fc840ceb22d": {
+    "variantes": {
+      "gatilho-icone-cinza": {
+        "porHospedeiro": {
+          "tip-prazo": {
+            "toca": [
+              "$:gatilho-icone"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do gatilho do tooltip em --gray-80"
+          },
+          "tip-protocolo": {
+            "toca": [
+              "$:gatilho-icone"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do gatilho do tooltip em --gray-80"
+          },
+          "sel-tipo-documento": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do gatilho do select em --gray-80"
+          }
+        }
+      },
+      "gatilho-com-fundo": {
+        "porHospedeiro": {
+          "tip-prazo": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "superfície do gatilho do tooltip com fundo --gray-5 em repouso"
+          },
+          "tip-protocolo": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "superfície do gatilho do tooltip com fundo --gray-5 em repouso"
+          },
+          "sel-tipo-documento": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "superfície do gatilho do select com fundo --gray-5 em repouso"
+          }
+        }
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "gatilho-icone-cinza",
+        "viola": "a2-36dcfef2c39b",
+        "porque": "nos gatilhos dos tooltips a cor de interação do ícone tem de ser #1351B4; --gray-80 a contraria",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma cor do ícone do gatilho"
+      },
+      {
+        "variante": "gatilho-icone-cinza",
+        "viola": "a2-15a1e5d58ef7",
+        "porque": "nos gatilhos dos tooltips o ícone fica na cor de leitura do texto (#333), sem a cor de interação",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma cor do ícone do gatilho"
+      }
+    ]
+  },
+  "a2-a9890f9d0039": {
+    "variantes": {
+      "rotulo-generico": {
+        "toca": [
+          "$:botao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "rótulo do botão de escolher arquivo trocado por \"OK\""
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "rotulo-generico",
+        "viola": "a2-12afa1f3c1f0",
+        "porque": "\"OK\" não contém verbo de ação, que o rótulo de ação tem de conter",
+        "classe": "mesmo-observavel",
+        "razao": "o mesmo texto do rótulo do botão"
+      }
+    ]
+  },
+  "a2-b0f874b8b2cf": {
+    "variantes": {
+      "gatilho-tooltip-36": {
+        "toca": [
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "gatilho do tooltip com 36×36 px"
+      },
+      "botao-alta-oval": {
+        "porHospedeiro": {
+          "sel-tipo-documento": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "gatilho do select com 32 px de altura e 44 px de largura"
+          },
+          "msg-pendencia": {
+            "toca": [
+              "$:fechar"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "botão Fechar com 32 px de altura e 44 px de largura"
+          },
+          "msg-retorno": {
+            "toca": [
+              "$:fechar"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "botão Fechar com 32 px de altura e 44 px de largura"
+          }
+        }
+      }
+    }
+  },
+  "a2-be0b9ab18685": {
+    "variantes": {
+      "icone-sem-tooltip": {
+        "porHospedeiro": {
+          "msg-pendencia": {
+            "toca": [
+              "$:fechar"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "botão Fechar deixa de exibir tooltip com o rótulo no hover e no foco"
+          },
+          "msg-retorno": {
+            "toca": [
+              "$:fechar"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "botão Fechar deixa de exibir tooltip com o rótulo no hover e no foco"
+          },
+          "sel-tipo-documento": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "gatilho do select deixa de exibir tooltip com o rótulo no hover e no foco"
+          }
+        }
+      }
+    }
+  },
+  "a2-c23f336807f4": {
+    "variantes": {
+      "gatilho-colado-ao-texto": {
+        "toca": [
+          "$:gatilho",
+          "crd-resumo:conteudo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "gatilho do tooltip encostado (0 px, caixas sobrepostas) ao valor no conteúdo do card"
+      }
+    }
+  },
+  "a2-c7ac4e76783e": {
+    "variantes": {
+      "botao-sem-br-button": {
+        "porHospedeiro": {
+          "msg-pendencia": {
+            "toca": [
+              "$:fechar",
+              "$:fechar-icone"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "botão Fechar com classe própria em vez de br-button; aparência refeita à mão"
+          },
+          "msg-retorno": {
+            "toca": [
+              "$:fechar",
+              "$:fechar-icone"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "botão Fechar com classe própria em vez de br-button; aparência refeita à mão"
+          },
+          "tip-prazo": {
+            "toca": [
+              "$:gatilho",
+              "$:gatilho-icone"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "gatilho do tooltip com classe própria em vez de br-button; aparência refeita à mão"
+          },
+          "tip-protocolo": {
+            "toca": [
+              "$:gatilho",
+              "$:gatilho-icone"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "gatilho do tooltip com classe própria em vez de br-button; aparência refeita à mão"
+          }
+        }
+      }
+    }
+  },
+  "a2-d495bfd02867": {
+    "variantes": {
+      "escolher-arquivo-so-icone": {
+        "toca": [
+          "$:botao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "botão de escolher arquivo só com ícone, sem texto visível; nome em aria-label"
+      }
+    }
+  },
+  "a2-dc561d157556": {
+    "variantes": {
+      "nome-so-em-title": {
+        "porHospedeiro": {
+          "msg-pendencia": {
+            "toca": [
+              "$:fechar"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "botão Fechar com o nome só no atributo title, sem aria-label"
+          },
+          "msg-retorno": {
+            "toca": [
+              "$:fechar"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "botão Fechar com o nome só no atributo title, sem aria-label"
+          },
+          "tip-prazo": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "gatilho do tooltip com o nome só no atributo title, sem aria-label"
+          },
+          "tip-protocolo": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "gatilho do tooltip com o nome só no atributo title, sem aria-label"
+          },
+          "sel-tipo-documento": {
+            "toca": [
+              "$:gatilho"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "gatilho do select com o nome só no atributo title, sem aria-label"
+          }
+        }
+      }
+    }
+  },
+  "a2-ff6a961f006f": {
+    "variantes": {
+      "icone-com-title": {
+        "porHospedeiro": {
+          "upl-documento": {
+            "toca": [
+              "$:botao"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do botão de escolher arquivo recebe title repetindo o rótulo"
+          },
+          "acc-duvidas": {
+            "toca": [
+              "$:icones"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "ícone do cabeçalho dos itens recebe title repetindo o título"
+          }
+        }
+      }
+    }
+  },
+  "a2-0b05d89c4a81": {
+    "variantes": {
+      "botao-na-area-de-titulo": {
+        "toca": [
+          "$:area-titulo",
+          "$:conteudo",
+          "tip-prazo:gatilho"
+        ],
+        "remove": [],
+        "cascata": [
+          "tip-prazo"
+        ],
+        "estado": null,
+        "nota": "gatilho do tooltip do prazo e o parágrafo do prazo saem do conteúdo para a área de títulos do card"
+      }
+    }
+  },
+  "a2-102453b77ab4": {
+    "variantes": {
+      "card-estreito": {
+        "toca": [
+          "$:raiz",
+          "$:conteudo"
+        ],
+        "remove": [],
+        "cascata": [
+          "tip-prazo",
+          "tip-protocolo"
+        ],
+        "estado": null,
+        "nota": "card reduzido a 2 colunas (~190 px); conteúdo refluído"
+      }
+    }
+  },
+  "a2-145128527d93": {
+    "variantes": {
+      "rolagem-interna": {
+        "toca": [
+          "$:raiz",
+          "$:conteudo"
+        ],
+        "remove": [],
+        "cascata": [
+          "tip-prazo",
+          "tip-protocolo"
+        ],
+        "estado": null,
+        "nota": "card com altura máxima e overflow:auto; o conteúdo rola dentro dele (pode recortar o que fica abaixo)"
+      }
+    }
+  },
+  "a2-1ade239e8d68": {
+    "variantes": {
+      "card-parece-clicavel": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "card ganha cursor pointer e elevação no hover sem ter ação"
+      }
+    }
+  },
+  "a2-22f23447d6b2": {
+    "variantes": {
+      "conteudo-sem-card-content": {
+        "toca": [
+          "$:raiz",
+          "$:conteudo"
+        ],
+        "remove": [
+          "$:conteudo"
+        ],
+        "cascata": [
+          "tip-prazo",
+          "tip-protocolo"
+        ],
+        "estado": null,
+        "nota": "contêiner .card-content retirado; o conteúdo fica direto no .br-card"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "conteudo-sem-card-content",
+        "viola": "a2-3404d04d4b7b",
+        "porque": "o padding de 16 px do conteúdo vem do .card-content; sem ele o conteúdo fica sem esse padding",
+        "classe": "distinto",
+        "razao": "a variante tira um contêiner; o padding do conteúdo é outra propriedade que se perde junto"
+      },
+      {
+        "variante": "conteudo-sem-card-content",
+        "viola": "a2-7dd282607ce8",
+        "porque": "sem o .card-content some a margem interna por token entre o conteúdo e as bordas da superfície",
+        "classe": "distinto",
+        "razao": "a variante tira um contêiner; a margem interna do conteúdo é outra propriedade que se perde junto"
+      }
+    ]
+  },
+  "a2-2d9c1da2ceca": {
+    "variantes": {
+      "so-enter": {
+        "toca": [
+          "tip-prazo:gatilho",
+          "tip-protocolo:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "gatilho de ajuda do card com manipulador próprio que responde a Enter e cancela Espaço"
+      }
+    }
+  },
+  "a2-3404d04d4b7b": {
+    "variantes": {
+      "card-padding-4": {
+        "toca": [
+          "$:conteudo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "padding do conteúdo do card reduzido a 4 px"
+      }
+    }
+  },
+  "a2-3b44b773c1ee": {
+    "variantes": {
+      "card-aninhado": {
+        "toca": [
+          "$:conteudo"
+        ],
+        "remove": [],
+        "cascata": [
+          "tip-prazo"
+        ],
+        "estado": null,
+        "nota": "o bloco do prazo, dentro do conteúdo, é embrulhado num .br-card"
+      }
+    }
+  },
+  "a2-50af67dc7ee1": {
+    "variantes": {
+      "sem-superficie": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "card com fundo transparente e sem sombra"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-superficie",
+        "viola": "a2-c5b3a0f5f819",
+        "porque": "box-shadow none contraria a sombra --shadow-sm exigida",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma sombra da superfície que a variante retira"
+      },
+      {
+        "variante": "sem-superficie",
+        "viola": "a2-7a556a4c6423",
+        "porque": "fundo transparente contraria o fundo --pure-0 exigido da face do card",
+        "classe": "mesmo-observavel",
+        "razao": "o mesmo fundo da superfície que a variante retira"
+      },
+      {
+        "variante": "sem-superficie",
+        "viola": "a2-b015ac9d3146",
+        "porque": "fundo transparente não é nenhuma das superfícies permitidas (#FFFFFF ou #F8F8F8)",
+        "classe": "mesmo-observavel",
+        "razao": "o mesmo fundo da superfície que a variante retira"
+      }
+    ]
+  },
+  "a2-66a04dbcde9c": {
+    "variantes": {
+      "card-com-tudo": {
+        "toca": [
+          "$:conteudo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "conteúdo do card passa a listar as 12 movimentações e o texto integral, sem link para detalhes"
+      }
+    }
+  },
+  "a2-7a556a4c6423": {
+    "variantes": {
+      "card-fundo-cinza": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "fundo da face do card em --gray-2"
+      }
+    }
+  },
+  "a2-7a831709525b": {
+    "variantes": {
+      "sem-br-card": {
+        "toca": [
+          "$:raiz",
+          "$:area-titulo",
+          "$:titulo",
+          "$:conteudo"
+        ],
+        "remove": [],
+        "cascata": [
+          "tip-prazo",
+          "tip-protocolo"
+        ],
+        "estado": null,
+        "nota": "raiz do card com classe própria em vez de br-card; estilos da raiz e das partes refeitos à mão"
+      }
+    }
+  },
+  "a2-7d680beb8c97": {
+    "variantes": {
+      "texto-na-area-de-acoes": {
+        "toca": [
+          "$:rodape",
+          "$:conteudo",
+          "tip-prazo:gatilho"
+        ],
+        "remove": [],
+        "cascata": [
+          "tip-prazo"
+        ],
+        "estado": null,
+        "nota": "card ganha rodapé de ações com só o parágrafo do prazo; o gatilho do tooltip do prazo fica no conteúdo"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "texto-na-area-de-acoes",
+        "viola": "a2-66cc8c46f14a",
+        "porque": "o parágrafo do prazo vai ao rodapé sem botão, então o gatilho de ajuda do prazo deixa de ficar junto do dado que explica",
+        "classe": "distinto",
+        "razao": "a variante cria um rodapé com texto; o gatilho de ajuda separado do seu dado é outro nó e outra posição"
+      }
+    ]
+  },
+  "a2-7dd282607ce8": {
+    "variantes": {
+      "margem-fora-do-token": {
+        "toca": [
+          "$:conteudo",
+          "$:area-titulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "padding interno do card em 5 px de todos os lados"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "margem-fora-do-token",
+        "viola": "a2-3404d04d4b7b",
+        "porque": "padding de 5 px no conteúdo contraria o valor de 16 px exigido",
+        "classe": "mesmo-observavel",
+        "razao": "o mesmo padding do conteúdo do card"
+      }
+    ]
+  },
+  "a2-9679ff15765b": {
+    "variantes": {
+      "sem-respiro": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "margem inferior do card 0; encosta no componente seguinte"
+      }
+    }
+  },
+  "a2-addcc77d9a3e": {
+    "variantes": {
+      "abas-dentro-do-card": {
+        "toca": [
+          "$:conteudo"
+        ],
+        "remove": [],
+        "cascata": [
+          "tip-prazo",
+          "tip-protocolo"
+        ],
+        "estado": null,
+        "nota": "conteúdo do card ganha barra de abas própria (Resumo/Detalhes), repartindo os blocos"
+      }
+    }
+  },
+  "a2-bbc88b2acdec": {
+    "variantes": {
+      "card-selecionado": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "card com borda azul de 2 px e fundo azul-claro desde a carga"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "card-selecionado",
+        "viola": "a2-7a556a4c6423",
+        "porque": "fundo azul-claro contraria o fundo --pure-0 exigido da face do card",
+        "classe": "mesmo-observavel",
+        "razao": "o mesmo fundo azul-claro que a variante aplica"
+      },
+      {
+        "variante": "card-selecionado",
+        "viola": "a2-b015ac9d3146",
+        "porque": "fundo azul-claro não é nenhuma das superfícies permitidas (#FFFFFF ou #F8F8F8)",
+        "classe": "mesmo-observavel",
+        "razao": "o mesmo fundo azul-claro que a variante aplica"
+      }
+    ]
+  },
+  "a2-c5b3a0f5f819": {
+    "variantes": {
+      "card-sombra-forte": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "box-shadow do card em --shadow-xl"
+      },
+      "card-sem-sombra": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "box-shadow do card none"
+      }
+    }
+  },
+  "a2-f561cadcff5d": {
+    "variantes": {
+      "blocos-colados": {
+        "toca": [
+          "$:conteudo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "dois blocos consecutivos do conteúdo sem margem entre si"
+      }
+    }
+  },
+  "a2-0bd70096f78a": {
+    "variantes": {
+      "verbo-no-infinitivo": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto descritivo passa a \"Receber todos os avisos\""
+      }
+    }
+  },
+  "a2-0d520e5d4882": {
+    "variantes": {
+      "icone-com-estado-errado": {
+        "toca": [
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "com o principal desmarcado a caixa continua mostrando o ícone de marcação"
+      }
+    }
+  },
+  "a2-1e5bb656150a": {
+    "variantes": {
+      "texto-descritivo-negrito": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto descritivo em --font-weight-bold"
+      },
+      "texto-descritivo-pequeno": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto descritivo em --font-size-scale-down-01"
+      }
+    }
+  },
+  "a2-311162831549": {
+    "variantes": {
+      "principal-marcado-sem-filhos": {
+        "toca": [
+          "$:input",
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "com os dois switches desligados o principal continua marcado"
+      }
+    }
+  },
+  "a2-3bacb9f074e2": {
+    "variantes": {
+      "principal-intermediario-com-todos": {
+        "toca": [
+          "$:input",
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "com os dois switches ligados o principal fica intermediário"
+      }
+    }
+  },
+  "a2-3f671bc82fee": {
+    "variantes": {
+      "espaco-nao-aciona": {
+        "toca": [
+          "$:input"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "keydown de Espaço cancelado no input do principal"
+      }
+    }
+  },
+  "a2-4b7121d39b1f": {
+    "variantes": {
+      "intermediario-vai-a-desmarcado": {
+        "toca": [
+          "$:input",
+          "$:caixa",
+          "swt-aviso-email:input",
+          "swt-aviso-email:chave",
+          "swt-aviso-sms:input",
+          "swt-aviso-sms:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "clique no principal intermediário o desmarca e desliga os dois switches"
+      }
+    }
+  },
+  "a2-540a33161e30": {
+    "variantes": {
+      "texto-colado-a-caixa": {
+        "toca": [
+          "$:rotulo",
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto descritivo encostado na caixa, sem espaço lateral"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "texto-colado-a-caixa",
+        "viola": "a2-c77fe74304b6",
+        "porque": "o espaçamento entre caixa e texto em tokens é a mesma distância zerada",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma distância entre caixa e texto"
+      },
+      {
+        "variante": "texto-colado-a-caixa",
+        "viola": "a2-ab26aea317f4",
+        "porque": "o texto à direita tem de respeitar o espaçamento lateral da caixa; encostado, o left do texto não fica maior que o right da caixa",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma distância entre caixa e texto, lida pela posição relativa"
+      }
+    ]
+  },
+  "a2-615adba6e634": {
+    "variantes": {
+      "filho-com-grupo-errado": {
+        "toca": [
+          "swt-aviso-sms:input",
+          "$:input",
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "data-child do input do switch de SMS com valor diferente do data-parent; o principal deixa de acompanhar o SMS"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "filho-com-grupo-errado",
+        "viola": "a2-3c18fb6c1dbc",
+        "porque": "com o SMS fora do grupo, ligar só um switch não deixa o principal intermediário (só o e-mail conta: ligado → marcado), então o feedback do estado intermediário some",
+        "classe": "distinto",
+        "razao": "a variante muda um atributo do switch; o estado intermediário do principal é outro nó e outro estado"
+      },
+      {
+        "variante": "filho-com-grupo-errado",
+        "viola": "a2-f97f63c9e220",
+        "porque": "a medida de a2-f97f63c9e220 (um só switch ligado → principal intermediário; clicar o principal liga/desliga os dois) falha: o principal não liga/desliga nem acompanha o SMS",
+        "classe": "distinto",
+        "razao": "a variante muda um atributo do switch; o comportamento do principal com um só switch ligado é outro fato"
+      }
+    ]
+  },
+  "a2-63df8a527ac9": {
+    "variantes": {
+      "intermediario-so-visual": {
+        "toca": [
+          "$:input"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "no estado intermediário o traço aparece mas a árvore de acessibilidade anuncia \"não marcado\""
+      }
+    }
+  },
+  "a2-673b187d8412": {
+    "variantes": {
+      "sem-espaco-abaixo": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "principal sem espaçamento inferior; o switch de e-mail encosta nele"
+      }
+    }
+  },
+  "a2-79d59b8c6ba4": {
+    "variantes": {
+      "sem-espaco-acima": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "principal sem espaçamento superior; encosta na legend do grupo"
+      }
+    }
+  },
+  "a2-7c449a946697": {
+    "variantes": {
+      "pai-sem-atributo": {
+        "toca": [
+          "$:input",
+          "pagina:scripts"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "input do principal sem data-parent; script próprio da página reproduz o selecionar todos"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "pai-sem-atributo",
+        "viola": "a2-615adba6e634",
+        "porque": "sem data-parent no principal, o data-child dos switches não pode ser igual ao valor do pai",
+        "classe": "mesmo-observavel",
+        "razao": "a igualdade data-child/data-parent falha pelo mesmo atributo ausente no principal"
+      }
+    ]
+  },
+  "a2-8465edac53a3": {
+    "variantes": {
+      "texto-nao-clicavel": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "clique no texto descritivo não marca o checkbox; só a caixa"
+      }
+    }
+  },
+  "a2-a70181ba5638": {
+    "variantes": {
+      "sem-caixa": {
+        "toca": [
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "caixa de opção oculta (sem tamanho nem borda); texto ainda clicável"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-caixa",
+        "viola": "a2-e258f246fc8f",
+        "porque": "caixa sem tamanho nem borda contraria as dimensões 24×24 e a borda de 1 px exigidas",
+        "classe": "mesmo-observavel",
+        "razao": "o mesmo tamanho e borda da caixa"
+      }
+    ]
+  },
+  "a2-ab26aea317f4": {
+    "variantes": {
+      "texto-a-esquerda": {
+        "toca": [
+          "$:rotulo",
+          "$:caixa",
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "ordem invertida no layout: texto descritivo à esquerda da caixa"
+      }
+    }
+  },
+  "a2-afcf1e6a2889": {
+    "variantes": {
+      "intermediario-com-check": {
+        "toca": [
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "no estado intermediário a caixa mostra o check em vez do traço"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "intermediario-com-check",
+        "viola": "a2-0d520e5d4882",
+        "porque": "o ícone de marcação aparece com o input não marcado (intermediário), então o ícone deixa de identificar o estado",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma marca exibida na caixa"
+      }
+    ]
+  },
+  "a2-b20217200810": {
+    "variantes": {
+      "texto-com-oito-palavras": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto descritivo com 8 palavras"
+      }
+    }
+  },
+  "a2-bb59ed75a286": {
+    "variantes": {
+      "marcado-sem-icone": {
+        "toca": [
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "com o principal marcado a caixa fica preenchida sem o ícone de marcação"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "marcado-sem-icone",
+        "viola": "a2-0d520e5d4882",
+        "porque": "com o input marcado sem ícone, o ícone deixa de identificar o estado selecionado",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma marca ausente na caixa"
+      }
+    ]
+  },
+  "a2-c309914a9c1a": {
+    "variantes": {
+      "intermediario-cinza": {
+        "toca": [
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "no estado intermediário a caixa fica com fundo --gray-20"
+      },
+      "caixa-borda-escura": {
+        "toca": [
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "borda da caixa em repouso em --gray-80"
+      }
+    }
+  },
+  "a2-c77fe74304b6": {
+    "variantes": {
+      "texto-colado-caixa-token": {
+        "toca": [
+          "$:rotulo",
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto descritivo sem padding-left; encostado ou sobreposto à caixa (pseudo-elemento do rótulo)"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "texto-colado-caixa-token",
+        "viola": "a2-540a33161e30",
+        "porque": "o espaçamento lateral direito entre a caixa e o texto é a mesma distância zerada",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma distância entre caixa e texto"
+      },
+      {
+        "variante": "texto-colado-caixa-token",
+        "viola": "a2-ab26aea317f4",
+        "porque": "sem padding-left o texto não fica à direita da caixa respeitando o espaçamento lateral (left do texto não maior que o right da caixa)",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma distância entre caixa e texto, lida pela posição relativa"
+      }
+    ]
+  },
+  "a2-cc1346924545": {
+    "variantes": {
+      "texto-do-item-longo": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto descritivo com 16 palavras e mais de 90 caracteres"
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "texto-do-item-longo",
+        "viola": "a2-b20217200810",
+        "porque": "16 palavras passam do limite de sete palavras do texto descritivo",
+        "classe": "mesmo-observavel",
+        "razao": "a mesma contagem de palavras do texto descritivo"
+      }
+    ]
+  }
+}

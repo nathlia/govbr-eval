@@ -1,0 +1,1535 @@
+{
+  "a2-d3c2b4a7ca90": {
+    "variantes": {
+      "inicial-minuscula": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto do rótulo do checkbox principal vira 'todos os avisos'."
+      },
+      "texto-em-title-case": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto do rótulo do checkbox principal vira 'Todos Os Avisos'."
+      }
+    }
+  },
+  "a2-e1c6d1cde6ac": {
+    "variantes": {
+      "sem-br-checkbox": {
+        "toca": [
+          "$:raiz",
+          "$:caixa",
+          "$:input",
+          "swt-aviso-email:input",
+          "swt-aviso-sms:input"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Raiz perde br-checkbox (estilo copiado); a instanciação por .br-checkbox deixa de pegar o principal e o vínculo com os switches some."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-br-checkbox",
+        "viola": "a2-f97f63c9e220",
+        "porque": "BRCheckbox é instanciado por querySelectorAll('.br-checkbox'); sem a classe o principal fica sem comportamento.",
+        "classe": "distinto",
+        "razao": "A variante muda a classe da raiz; o principal ficar sem comportamento é outro fato, de comportamento."
+      },
+      {
+        "variante": "sem-br-checkbox",
+        "viola": "a2-3c18fb6c1dbc",
+        "porque": "Sem instância, o principal deixa de selecionar/desselecionar os switches e de mostrar o estado intermediário.",
+        "classe": "distinto",
+        "razao": "Além da classe, o vínculo principal–switches e o estado intermediário deixam de funcionar."
+      }
+    ]
+  },
+  "a2-e258f246fc8f": {
+    "variantes": {
+      "caixa-16": {
+        "toca": [
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Pseudo-elemento da caixa do checkbox passa a 16x16 px."
+      },
+      "caixa-quadrada": {
+        "toca": [
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Pseudo-elemento da caixa do checkbox passa a border-radius 0."
+      }
+    }
+  },
+  "a2-f97f63c9e220": {
+    "variantes": {
+      "checkbox-nao-instanciado": {
+        "toca": [
+          "$:input",
+          "$:caixa",
+          "swt-aviso-email:input",
+          "swt-aviso-sms:input",
+          "pagina:scripts"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Script de inicialização deixa o principal sem BRCheckbox: principal e switches deixam de se atualizar mutuamente."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "checkbox-nao-instanciado",
+        "viola": "a2-3c18fb6c1dbc",
+        "porque": "Sem instância o principal não seleciona/desseleciona os switches nem mostra o estado intermediário.",
+        "classe": "mesmo-observavel",
+        "razao": "A variante descreve exatamente o principal não acompanhar os switches nem comandá-los; é o mesmo comportamento."
+      },
+      {
+        "variante": "checkbox-nao-instanciado",
+        "viola": "a2-4b7121d39b1f",
+        "porque": "Sem estado intermediário nem vínculo, clicar no principal não marca todos os switches.",
+        "classe": "mesmo-observavel",
+        "razao": "Clicar no principal não alterar os switches já é o fato descrito pela variante."
+      },
+      {
+        "variante": "checkbox-nao-instanciado",
+        "viola": "a2-3bacb9f074e2",
+        "porque": "Ligar os dois switches não marca o principal.",
+        "classe": "mesmo-observavel",
+        "razao": "Ligar os switches não mudar o principal já é o fato descrito pela variante."
+      },
+      {
+        "variante": "checkbox-nao-instanciado",
+        "viola": "a2-63df8a527ac9",
+        "porque": "Ligar um só switch não expõe estado intermediário do principal à tecnologia assistiva.",
+        "classe": "mesmo-observavel",
+        "razao": "O principal não entrar em estado intermediário é o mesmo fato, lido na árvore de acessibilidade."
+      }
+    ]
+  },
+  "a2-130b2ae325da": {
+    "variantes": {
+      "divisor-com-hover": {
+        "toca": [
+          "$:divisor"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "CSS :hover muda a cor do divisor sob a barra de abas."
+      }
+    }
+  },
+  "a2-1f2bd2f78e2e": {
+    "variantes": {
+      "divider-escuro": {
+        "toca": [
+          "$:divisor"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Cor do divisor sob a barra de abas passa a --gray-80."
+      }
+    }
+  },
+  "a2-41cd27de9c89": {
+    "variantes": {
+      "painel-colado-divider": {
+        "toca": [
+          "$:divisor",
+          "$:nav"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Margem inferior do divisor/barra de abas vai a 0 e o conteúdo do painel encosta nele (sem estilo herdado)."
+      }
+    }
+  },
+  "a2-7379726c1f90": {
+    "variantes": {
+      "divisor-focavel": {
+        "toca": [
+          "$:divisor"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Divisor sob a barra de abas recebe tabindex=0 e entra na sequência de Tab."
+      }
+    }
+  },
+  "a2-9ea827dc3326": {
+    "variantes": {
+      "aba-circundada": {
+        "toca": [
+          "$:nav",
+          "$:aba-1",
+          "$:aba-2",
+          "$:divisor"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Divisores extras acima e dos lados da aba ativa formam moldura em volta dela na barra de abas."
+      }
+    }
+  },
+  "a2-a83a8121b874": {
+    "variantes": {
+      "divisor-destoante": {
+        "toca": [
+          "$:divisor"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Divisor sob a barra de abas passa a 8 px vermelho saturado."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "divisor-destoante",
+        "viola": "a2-1f2bd2f78e2e",
+        "porque": "Vermelho saturado não é --gray-20, a cor exigida para o divider em fundo claro.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo nó e mesma propriedade (cor do divisor) que a variante altera."
+      }
+    ]
+  },
+  "a2-b8db536c1a83": {
+    "variantes": {
+      "divisor-sem-br-divider": {
+        "toca": [
+          "$:divisor"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Linha sob a barra de abas troca br-divider por classe própria com aparência copiada."
+      }
+    }
+  },
+  "a2-020f0b4f0964": {
+    "variantes": {
+      "rotulo-generico": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto do rótulo do select vira 'Campo 1'."
+      }
+    }
+  },
+  "a2-05e0365f1c3c": {
+    "variantes": {
+      "cursor-some-no-foco": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "CSS do campo focado com hover volta o cursor à seta."
+      }
+    }
+  },
+  "a2-13c4de8de18e": {
+    "variantes": {
+      "gatilho-antes-do-campo": {
+        "toca": [
+          "$:gatilho",
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Gatilho do select recebe tabindex positivo e passa à frente do campo na ordem de Tab."
+      }
+    }
+  },
+  "a2-3169f339a8e1": {
+    "variantes": {
+      "campo-sem-raio": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Campo do select passa a border-radius 0."
+      },
+      "campo-alto": {
+        "toca": [
+          "$:campo",
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Campo do select passa a 52px de altura (gatilho reposicionado dentro dele)."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "campo-alto",
+        "viola": "a2-0d25882c88ba",
+        "porque": "52px de altura viola os 40px de altura do input do select simples.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesma altura do mesmo campo, por outra tabela de especificação."
+      }
+    ]
+  },
+  "a2-328f62cfe4ce": {
+    "variantes": {
+      "campo-readonly-ate-clique": {
+        "toca": [
+          "$:campo",
+          "$:gatilho",
+          "pagina:scripts"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Campo do select fica readonly até o clique no gatilho; foco por Tab não aceita digitação."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "campo-readonly-ate-clique",
+        "viola": "a2-684e49bfcc90",
+        "porque": "Clicar no campo (não no gatilho) o deixa readonly, sem cursor ativo nem filtro por autocomplete.",
+        "classe": "mesmo-observavel",
+        "razao": "O campo readonly que não aceita digitação é o mesmo fato, só que acionado por clique."
+      }
+    ]
+  },
+  "a2-3312a3e57512": {
+    "variantes": {
+      "placeholder-igual-rotulo": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Placeholder do campo do select repete o texto do rótulo."
+      }
+    }
+  },
+  "a2-3452a785e45d": {
+    "variantes": {
+      "rotulo-longo": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Rótulo do select vira frase de mais de 20 palavras."
+      }
+    }
+  },
+  "a2-4aeca513aeeb": {
+    "variantes": {
+      "campo-fora-do-tab": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Campo do select recebe tabindex=-1 e sai da sequência de Tab."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "campo-fora-do-tab",
+        "viola": "a2-d1039a4016fe",
+        "porque": "A medida dessa regra é a sequência de Tab parar no campo do select, que deixa de acontecer.",
+        "classe": "mesmo-observavel",
+        "razao": "O Tab pular o campo é o mesmo fato que a variante produz."
+      }
+    ]
+  },
+  "a2-54dca6a2c217": {
+    "variantes": {
+      "gatilho-icone-errado": {
+        "toca": [
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Ícone do gatilho do select vira lupa em vez de seta para baixo."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "gatilho-icone-errado",
+        "viola": "a2-daf3655caedf",
+        "porque": "Lupa no lugar da seta viola a iconografia do gatilho (seta para baixo fechada, para cima aberta).",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo ícone do mesmo gatilho."
+      }
+    ]
+  },
+  "a2-56357b049872": {
+    "variantes": {
+      "erro-sem-describedby": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Em S2 o campo do select fica sem aria-describedby para o texto de erro."
+      }
+    }
+  },
+  "a2-59c41d3b1085": {
+    "variantes": {
+      "type-errado": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Campo do select passa a type=number."
+      },
+      "campo-em-div": {
+        "toca": [
+          "$:campo",
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Campo do select vira div contenteditable; o label[for] deixa de rotular um controle."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "type-errado",
+        "viola": "a2-684e49bfcc90",
+        "porque": "Input number não aceita letras: digitar o início de uma opção não filtra a lista.",
+        "classe": "distinto",
+        "razao": "A variante muda o atributo type; o filtro por digitação de letras quebrar é outro comportamento."
+      },
+      {
+        "variante": "type-errado",
+        "viola": "a2-328f62cfe4ce",
+        "porque": "Com foco por Tab, o texto digitado (letras) não entra no campo number.",
+        "classe": "distinto",
+        "razao": "Além do type, o texto digitado (letras) deixa de entrar no campo, outro comportamento."
+      },
+      {
+        "variante": "campo-em-div",
+        "viola": "a2-7c43824db106",
+        "porque": "Sem tag <input>, não há par label[for]/id de input; a associação for/id deixa de existir.",
+        "classe": "distinto",
+        "razao": "Além da tag do campo, o rótulo deixa de estar associado por for/id, outro nó e outra propriedade."
+      }
+    ]
+  },
+  "a2-76f24d309b17": {
+    "variantes": {
+      "placeholder-nao-volta": {
+        "toca": [
+          "$:campo",
+          "pagina:scripts"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Script zera o placeholder do campo do select depois da digitação."
+      }
+    }
+  },
+  "a2-7bdc66f1d99d": {
+    "variantes": {
+      "erro-sem-cor": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Em S2 a borda do campo do select fica na cor neutra."
+      }
+    }
+  },
+  "a2-7c43824db106": {
+    "variantes": {
+      "rotulo-por-labelledby": {
+        "toca": [
+          "$:rotulo",
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Rótulo perde for e campo ganha aria-labelledby (sem par for/id)."
+      }
+    }
+  },
+  "a2-81fd932c0990": {
+    "variantes": {
+      "gatilho-fora-do-tab": {
+        "toca": [
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Gatilho do select recebe tabindex=-1."
+      },
+      "gatilho-ignora-space": {
+        "toca": [
+          "$:gatilho",
+          "pagina:scripts"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Gatilho do select deixa de abrir a lista com Space (só clique)."
+      }
+    }
+  },
+  "a2-8424f75a80a8": {
+    "variantes": {
+      "borda-campo-clara": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Borda do campo do select passa a --gray-20."
+      },
+      "placeholder-claro": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Cor do placeholder do campo do select passa a --gray-40."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "placeholder-claro",
+        "viola": "a2-7348bce34289",
+        "porque": "Placeholder --gray-40 sai da cor da diretriz e perde contraste em fundo branco.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesma cor do mesmo placeholder, pela frase geral de cores e contraste."
+      }
+    ]
+  },
+  "a2-8da85415cc63": {
+    "variantes": {
+      "campo-com-pressionado": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "CSS :active escurece o fundo do campo do select."
+      }
+    }
+  },
+  "a2-8fcc793aaed1": {
+    "variantes": {
+      "texto-colado-borda": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Campo do select passa a padding-left 0."
+      },
+      "rotulo-afastado": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Rótulo do select passa a margin-bottom 24px."
+      }
+    }
+  },
+  "a2-bc172ac96406": {
+    "variantes": {
+      "rotulo-peso-regular": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Rótulo 'Tipo de documento' passa a peso regular."
+      }
+    }
+  },
+  "a2-db9f9aa4a02e": {
+    "variantes": {
+      "cursor-padrao-no-campo": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Cursor do campo do select vira seta no hover."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "cursor-padrao-no-campo",
+        "viola": "a2-05e0365f1c3c",
+        "porque": "Com o cursor sempre em seta, o campo focado também não muda o cursor no hover.",
+        "classe": "mesmo-observavel",
+        "razao": "Um só fato (cursor em seta no campo), visto também com o campo focado."
+      }
+    ]
+  },
+  "a2-e1a8fbf8ec5c": {
+    "variantes": {
+      "foco-fora-do-padrao": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Campo do select focado mostra contorno vermelho sólido de 1 px."
+      }
+    }
+  },
+  "a2-ec99c6922afa": {
+    "variantes": {
+      "ctrl-seta-bloqueado": {
+        "toca": [
+          "$:campo",
+          "pagina:scripts"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Script cancela Ctrl+setas no campo do select."
+      }
+    }
+  },
+  "a2-145591b8b938": {
+    "variantes": {
+      "so-texto-do-item-clicavel": {
+        "porHospedeiro": {
+          "sel-tipo-documento": {
+            "toca": [
+              "$:itens"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "Só o texto dos itens da lista do select escolhe a opção."
+          }
+        }
+      },
+      "so-texto-da-aba-clicavel": {
+        "porHospedeiro": {
+          "tab-requerimento": {
+            "toca": [
+              "$:aba-2"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "Só o texto da aba Documentos ativa a aba."
+          }
+        }
+      }
+    }
+  },
+  "a2-2f900cc3509d": {
+    "variantes": {
+      "item-sem-hover": {
+        "porHospedeiro": {
+          "sel-tipo-documento": {
+            "toca": [
+              "$:itens"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "Itens da lista do select sem estilo de hover."
+          }
+        }
+      },
+      "aba-sem-hover": {
+        "porHospedeiro": {
+          "tab-requerimento": {
+            "toca": [
+              "$:aba-1",
+              "$:aba-2"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "Aba não ativa sem estilo de hover."
+          }
+        }
+      }
+    }
+  },
+  "a2-40fe6a293a12": {
+    "variantes": {
+      "primario-no-item": {
+        "porHospedeiro": {
+          "sel-tipo-documento": {
+            "toca": [
+              "$:itens"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "Um item da lista do select ganha botão primário 'Ver modelo'."
+          }
+        }
+      },
+      "primario-na-aba": {
+        "porHospedeiro": {
+          "tab-requerimento": {
+            "toca": [
+              "$:aba-2",
+              "$:nav"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "Item da aba Documentos ganha botão primário."
+          }
+        }
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "primario-na-aba",
+        "viola": "a2-861377d8583b",
+        "porque": "Com o botão dentro do item, a largura da aba deixa de ser rótulo + espaçamentos internos.",
+        "classe": "distinto",
+        "razao": "Além da presença do botão, a largura do item deixa de acompanhar o rótulo, outra propriedade."
+      }
+    ]
+  },
+  "a2-648f8c6d407b": {
+    "variantes": {
+      "item-lista-cinza": {
+        "porHospedeiro": {
+          "sel-tipo-documento": {
+            "toca": [
+              "$:itens"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "Itens da lista do select com fundo --gray-5 em repouso."
+          }
+        }
+      },
+      "aba-inativa-cinza": {
+        "porHospedeiro": {
+          "tab-requerimento": {
+            "toca": [
+              "$:aba-1",
+              "$:aba-2"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "Aba inativa com fundo --gray-5."
+          }
+        }
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "aba-inativa-cinza",
+        "viola": "a2-9b0884458d35",
+        "porque": "A cor da tab exige item --pure-0; --gray-5 viola.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo fundo da mesma aba, pela tabela de cores da tab."
+      }
+    ]
+  },
+  "a2-b4c1596eb8e2": {
+    "variantes": {
+      "item-vazio": {
+        "toca": [
+          "$:itens",
+          "$:lista"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Lista do select ganha um item sem conteúdo."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "item-vazio",
+        "viola": "a2-56e1c02fed30",
+        "porque": "Item sem conteúdo não tem o texto principal obrigatório.",
+        "classe": "mesmo-observavel",
+        "razao": "Item sem conteúdo e item sem texto principal são o mesmo fato."
+      }
+    ]
+  },
+  "a2-e06d4991a48e": {
+    "variantes": {
+      "item-sem-padding": {
+        "porHospedeiro": {
+          "sel-tipo-documento": {
+            "toca": [
+              "$:itens"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "Itens da lista do select com padding 0."
+          }
+        }
+      },
+      "aba-sem-padding": {
+        "porHospedeiro": {
+          "tab-requerimento": {
+            "toca": [
+              "$:aba-1"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "Item da aba Andamento com padding horizontal 0."
+          }
+        }
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "item-sem-padding",
+        "viola": "a2-b30ded4687e3",
+        "porque": "Padding 0 viola o espaço do item na densidade média (--spacing-scale-2x).",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo padding dos mesmos itens, por outra tabela."
+      },
+      {
+        "variante": "aba-sem-padding",
+        "viola": "a2-1fedaa9b08e5",
+        "porque": "Padding horizontal 0 viola o padding lateral 3x do item da tab.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo padding da mesma aba, pela tabela de espaçamentos da tab."
+      }
+    ]
+  },
+  "a2-1f12ca328b9e": {
+    "variantes": {
+      "lista-fundo-cinza": {
+        "toca": [
+          "$:lista"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Lista aberta do select com fundo --gray-10."
+      }
+    }
+  },
+  "a2-2d40da60ce61": {
+    "variantes": {
+      "itens-centralizados": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto dos itens da lista do select centralizado."
+      }
+    }
+  },
+  "a2-2ee1137ba80b": {
+    "variantes": {
+      "opcao-prolixa": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Uma opção da lista do select vira frase de mais de 30 palavras."
+      }
+    }
+  },
+  "a2-56e1c02fed30": {
+    "variantes": {
+      "item-sem-texto": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Um item da lista do select fica só com o controle, sem texto."
+      }
+    }
+  },
+  "a2-66f76b92ffb0": {
+    "variantes": {
+      "item-formatado-diferente": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Um item da lista do select em negrito e fonte maior."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "item-formatado-diferente",
+        "viola": "a2-8ed2a1b99cae",
+        "porque": "Negrito no texto principal viola o --font-weight-regular da tipografia da lista.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo peso de fonte do mesmo item."
+      }
+    ]
+  },
+  "a2-7339465391f7": {
+    "variantes": {
+      "espaco-irregular": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "3º item da lista do select com margem superior maior."
+      }
+    }
+  },
+  "a2-8ed2a1b99cae": {
+    "variantes": {
+      "itens-negrito": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto principal dos itens da lista em --font-weight-bold."
+      }
+    }
+  },
+  "a2-9ca0ad49a63a": {
+    "variantes": {
+      "item-nao-aciona-por-tecla": {
+        "toca": [
+          "$:itens",
+          "$:lista",
+          "pagina:scripts"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Enter/Space deixam de escolher o item destacado da lista do select."
+      }
+    }
+  },
+  "a2-a14d31901423": {
+    "variantes": {
+      "item-altura-fixa-cortando": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Itens da lista do select com altura fixa e overflow escondido."
+      }
+    }
+  },
+  "a2-aa386be53f7e": {
+    "variantes": {
+      "lista-sem-superficie": {
+        "toca": [
+          "$:lista"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Lista aberta do select com fundo transparente."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "lista-sem-superficie",
+        "viola": "a2-1f12ca328b9e",
+        "porque": "Fundo transparente viola a superfície --pure-0 da lista.",
+        "classe": "mesmo-observavel",
+        "razao": "Tirar a superfície contra o token da superfície: mesmo fundo da lista."
+      }
+    ]
+  },
+  "a2-b145544e8477": {
+    "variantes": {
+      "espaco-fora-da-escala": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Itens da lista do select separados por 3 px."
+      }
+    }
+  },
+  "a2-b30ded4687e3": {
+    "variantes": {
+      "item-espaco-fora-da-escala": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Itens da lista do select com padding vertical 2px."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "item-espaco-fora-da-escala",
+        "viola": "a2-e06d4991a48e",
+        "porque": "Padding vertical de 2px não respeita o padding interno de Fundamentos.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo padding dos mesmos itens, por outra frase."
+      }
+    ]
+  },
+  "a2-bebc6bb692e0": {
+    "variantes": {
+      "controle-fora-de-posicao": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Num item da lista do select o controle fica à direita do texto."
+      }
+    }
+  },
+  "a2-14f2e6c3226f": {
+    "variantes": {
+      "foco-perdido-ao-fechar": {
+        "toca": [
+          "$:fechar",
+          "$:raiz",
+          "pagina:scripts"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Ao fechar a mensagem pelo teclado o foco cai no body."
+      }
+    }
+  },
+  "a2-1adbb9c1a3ca": {
+    "variantes": {
+      "erro-com-tipo-info": {
+        "toca": [
+          "$:raiz",
+          "$:icone",
+          "$:fechar",
+          "$:fechar-icone"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "msg-retorno passa ao tipo Informação (classe, cor e ícone)."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "erro-com-tipo-info",
+        "viola": "a2-90ea0bde7e04",
+        "porque": "Tipo Informação troca superfície, ícone e Fechar das cores do estado Erro.",
+        "classe": "mesmo-observavel",
+        "razao": "As cores de informação já fazem parte do que a variante descreve."
+      },
+      {
+        "variante": "erro-com-tipo-info",
+        "viola": "a2-b13bd6797498",
+        "porque": "Ícone de informação substitui o times-circle exigido para Erro.",
+        "classe": "mesmo-observavel",
+        "razao": "O ícone de informação já faz parte do que a variante descreve."
+      }
+    ]
+  },
+  "a2-1efbf2a4b525": {
+    "variantes": {
+      "feedback-com-fechar": {
+        "toca": [
+          "$:mensagem"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto de erro do campo em S2 ganha botão Fechar."
+      }
+    }
+  },
+  "a2-4124b4181a77": {
+    "variantes": {
+      "mensagem-sem-padding-vertical": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Superfície da mensagem com padding-top/bottom 0."
+      },
+      "icone-colado-texto": {
+        "toca": [
+          "$:icone"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Ícone semântico da mensagem sem margin-right."
+      }
+    }
+  },
+  "a2-507dbd6cdee4": {
+    "variantes": {
+      "fechar-densidade-padrao": {
+        "toca": [
+          "$:fechar"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Botão Fechar da mensagem na densidade padrão (40 px)."
+      },
+      "fechar-secundario": {
+        "toca": [
+          "$:fechar",
+          "$:fechar-icone"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Botão Fechar da mensagem com ênfase secundária (contorno azul)."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "fechar-secundario",
+        "viola": "a2-5606a51d1ba1",
+        "porque": "Em msg-pendencia, a ênfase secundária deixa o Fechar azul, fora do --gray-80 do Alerta.",
+        "classe": "mesmo-observavel",
+        "razao": "A cor azul do Fechar é a própria ênfase secundária que a variante aplica."
+      },
+      {
+        "variante": "fechar-secundario",
+        "viola": "a2-90ea0bde7e04",
+        "porque": "Em msg-retorno, a ênfase secundária deixa o Fechar azul, fora do --red-vivid-50 do Erro.",
+        "classe": "mesmo-observavel",
+        "razao": "A cor azul do Fechar é a própria ênfase secundária que a variante aplica."
+      }
+    ]
+  },
+  "a2-544adb3c8b26": {
+    "variantes": {
+      "sem-superficie": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Fundo da mensagem transparente."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-superficie",
+        "viola": "a2-5606a51d1ba1",
+        "porque": "Em msg-pendencia, fundo transparente viola a superfície --yellow-vivid-5.",
+        "classe": "mesmo-observavel",
+        "razao": "Tirar a superfície contra o token da superfície: mesmo fundo."
+      },
+      {
+        "variante": "sem-superficie",
+        "viola": "a2-90ea0bde7e04",
+        "porque": "Em msg-retorno, fundo transparente viola a superfície --red-vivid-10.",
+        "classe": "mesmo-observavel",
+        "razao": "Tirar a superfície contra o token da superfície: mesmo fundo."
+      }
+    ]
+  },
+  "a2-55dab9d0155c": {
+    "variantes": {
+      "tipo-mudo-no-leitor": {
+        "toca": [
+          "$:icone",
+          "$:texto"
+        ],
+        "remove": [
+          "$:icone"
+        ],
+        "cascata": [],
+        "estado": null,
+        "nota": "Ícone da mensagem fica aria-hidden e nenhum texto diz o tipo."
+      }
+    }
+  },
+  "a2-5606a51d1ba1": {
+    "variantes": {
+      "alerta-fundo-forte": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Superfície de msg-pendencia passa a --yellow-vivid-20."
+      },
+      "alerta-fechar-azul": {
+        "toca": [
+          "$:fechar",
+          "$:fechar-icone"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Botão Fechar de msg-pendencia passa a --blue-warm-vivid-70."
+      }
+    }
+  },
+  "a2-5df30996e1c5": {
+    "variantes": {
+      "fechar-a-esquerda": {
+        "toca": [
+          "$:fechar",
+          "$:icone",
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Fechar e ícone trocam de lado na mensagem."
+      }
+    }
+  },
+  "a2-77f3dd74508b": {
+    "variantes": {
+      "aviso-com-tipo-sucesso": {
+        "toca": [
+          "$:raiz",
+          "$:icone",
+          "$:fechar",
+          "$:fechar-icone"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "msg-pendencia passa ao tipo Sucesso (classe, cor e ícone)."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "aviso-com-tipo-sucesso",
+        "viola": "a2-5606a51d1ba1",
+        "porque": "Tipo Sucesso troca superfície e cores das do estado Alerta.",
+        "classe": "mesmo-observavel",
+        "razao": "As cores de sucesso já fazem parte do que a variante descreve."
+      },
+      {
+        "variante": "aviso-com-tipo-sucesso",
+        "viola": "a2-b13bd6797498",
+        "porque": "Ícone de sucesso substitui o exclamation-triangle exigido para Alerta.",
+        "classe": "mesmo-observavel",
+        "razao": "O ícone de sucesso já faz parte do que a variante descreve."
+      }
+    ]
+  },
+  "a2-8536d91ce5b9": {
+    "variantes": {
+      "mensagem-nao-instanciada": {
+        "toca": [
+          "$:fechar",
+          "pagina:scripts"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Script deixa a mensagem sem BRMessage: Fechar não a remove."
+      }
+    }
+  },
+  "a2-90ea0bde7e04": {
+    "variantes": {
+      "erro-icone-cinza": {
+        "toca": [
+          "$:icone"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Ícone de msg-retorno passa a --gray-80."
+      },
+      "erro-fundo-branco": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Superfície de msg-retorno passa a --pure-0."
+      }
+    }
+  },
+  "a2-9e3f0f34fd0a": {
+    "variantes": {
+      "feedback-mais-largo": {
+        "toca": [
+          "$:mensagem"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto de erro do campo em S2 mais largo que o campo."
+      }
+    }
+  },
+  "a2-a7417adc8e5b": {
+    "variantes": {
+      "sem-br-message": {
+        "toca": [
+          "$:raiz",
+          "$:fechar"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Raiz da mensagem troca br-message por classe própria; a instanciação por .br-message não a pega."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-br-message",
+        "viola": "a2-8536d91ce5b9",
+        "porque": "BRMessage é instanciado por querySelectorAll('.br-message'); sem a classe, Fechar não remove a mensagem.",
+        "classe": "distinto",
+        "razao": "A variante muda a classe da raiz; o Fechar parar de remover a mensagem é outro comportamento."
+      }
+    ]
+  },
+  "a2-b069c3031aa0": {
+    "variantes": {
+      "feedback-sem-classe": {
+        "toca": [
+          "$:mensagem"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto de erro do campo em S2 vira span vermelho sem .feedback."
+      }
+    }
+  },
+  "a2-b13bd6797498": {
+    "variantes": {
+      "alerta-icone-info": {
+        "toca": [
+          "$:icone"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Ícone de msg-pendencia vira info-circle."
+      },
+      "erro-icone-pequeno": {
+        "toca": [
+          "$:icone"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Ícone times-circle de msg-retorno em --icon-size-base."
+      }
+    }
+  },
+  "a2-db25bc1d1653": {
+    "variantes": {
+      "foco-fica-no-enviar": {
+        "toca": [
+          "$:fechar",
+          "pagina:scripts"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Depois do envio vazio o script não move o foco para o Fechar de msg-retorno."
+      }
+    }
+  },
+  "a2-db30195b0e66": {
+    "variantes": {
+      "mensagem-prolixa": {
+        "toca": [
+          "$:texto"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto de msg-pendencia ganha 90 palavras antes do documento pendente."
+      }
+    }
+  },
+  "a2-e175765df557": {
+    "variantes": {
+      "mensagem-encolhida": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Mensagem com largura fit-content."
+      }
+    }
+  },
+  "a2-f8e02fcd7de2": {
+    "variantes": {
+      "retorno-sem-regiao-viva": {
+        "toca": [
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "msg-retorno sem role=alert nem aria-live."
+      }
+    }
+  },
+  "a2-fb8e73f4ce50": {
+    "variantes": {
+      "mensagem-pequena": {
+        "toca": [
+          "$:texto"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto da mensagem em --font-size-scale-base."
+      },
+      "mensagem-negrito": {
+        "toca": [
+          "$:texto"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto da mensagem em --font-weight-bold."
+      }
+    }
+  },
+  "a2-0a6b97c41045": {
+    "variantes": {
+      "lista-sem-br-list": {
+        "toca": [
+          "$:lista",
+          "$:itens",
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Contêiner da lista do select perde br-list (estilo e o BRSelect que localiza a lista por ele)."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "lista-sem-br-list",
+        "viola": "a2-adae4a234fdd",
+        "porque": "BRSelect localiza a lista por .br-list; sem ela a lista não abre/apresenta os itens para escolha.",
+        "classe": "distinto",
+        "razao": "Além da classe, a lista deixar de abrir e de entregar a escolha é outro comportamento, se o BRSelect localiza a lista por .br-list."
+      }
+    ]
+  },
+  "a2-0d25882c88ba": {
+    "variantes": {
+      "select-largura-total": {
+        "toca": [
+          "$:raiz",
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Campo do select ocupa a largura do conteúdo."
+      },
+      "itens-baixos": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Itens da lista aberta com 36px de altura."
+      }
+    }
+  },
+  "a2-126c376799cd": {
+    "variantes": {
+      "teclado-nao-abre": {
+        "toca": [
+          "$:campo",
+          "$:lista",
+          "pagina:scripts"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Enter/seta para baixo no campo focado não abrem a lista."
+      }
+    }
+  }
+}

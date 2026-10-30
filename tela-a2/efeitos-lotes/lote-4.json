@@ -1,0 +1,1563 @@
+{
+  "a2-557812293319": {
+    "variantes": {
+      "foco-na-segunda": {
+        "toca": [
+          "$:aba-1",
+          "$:aba-2"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "tabindex das duas abas trocado: o primeiro Tab no componente para na 2ª aba."
+      }
+    }
+  },
+  "a2-5a1a5ee261b9": {
+    "variantes": {
+      "superficie-curta": {
+        "toca": [
+          "$:nav",
+          "$:divisor"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "barra de abas (tab-nav) com width max-content; o divisor/linha da barra pode encurtar junto."
+      }
+    }
+  },
+  "a2-7f464d337bb8": {
+    "variantes": {
+      "itens-centralizados": {
+        "toca": [
+          "$:nav",
+          "$:aba-1",
+          "$:aba-2"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "justificação da barra muda para centro e as duas abas deslocam."
+      }
+    }
+  },
+  "a2-861377d8583b": {
+    "variantes": {
+      "item-largura-fixa": {
+        "toca": [
+          "$:aba-1",
+          "$:aba-2",
+          "$:nav"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cada aba recebe largura fixa (ex.: 320px) muito maior que o rótulo; a barra se redistribui."
+      }
+    }
+  },
+  "a2-9b0884458d35": {
+    "variantes": {
+      "superficie-cinza": {
+        "toca": [
+          "$:nav",
+          "$:aba-1",
+          "$:aba-2"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "fundo da superfície da tab vira --gray-5 (abas sem fundo próprio aparecem cinza)."
+      },
+      "rotulo-azul-claro": {
+        "toca": [
+          "$:aba-1",
+          "$:aba-2"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor do rótulo da aba inativa vira --blue-warm-vivid-40 (Documentos em S0, Andamento em S1)."
+      }
+    }
+  },
+  "a2-c376f69acac5": {
+    "variantes": {
+      "indicador-fino": {
+        "toca": [
+          "$:aba-1",
+          "$:aba-2"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "border-bottom da aba ativa passa a 1px (--surface-width-sm)."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "indicador-fino",
+        "viola": "a2-7ecb601ffa09",
+        "porque": "a tabela do Estado Ativo exige borda --surface-width-lg (4px) na aba ativa; 1px a viola necessariamente (é a variante ativo-borda-fina).",
+        "classe": "mesmo-observavel",
+        "razao": "mesma borda inferior da aba ativa, mesma espessura medida pelas duas regras."
+      }
+    ]
+  },
+  "a2-c42d0d7c0e9c": {
+    "variantes": {
+      "sem-tab-panel": {
+        "toca": [
+          "$:painel-1"
+        ],
+        "remove": [],
+        "cascata": [
+          "stp-andamento",
+          "tbl-movimentacoes"
+        ],
+        "estado": null,
+        "nota": "painel da 1ª aba perde a classe tab-panel; estilos/exibição do DS ligados à classe deixam de valer sobre o painel e seu conteúdo."
+      }
+    }
+  },
+  "a2-ce8b978a9842": {
+    "variantes": {
+      "sem-br-tab": {
+        "toca": [
+          "$:nav",
+          "$:aba-1",
+          "$:aba-2",
+          "$:painel-1",
+          "$:painel-2",
+          "$:divisor"
+        ],
+        "remove": [],
+        "cascata": [
+          "stp-andamento",
+          "tbl-movimentacoes",
+          "sel-tipo-documento",
+          "upl-documento",
+          "grupo-avisos",
+          "swt-aviso-email",
+          "swt-aviso-sms",
+          "chk-avisos-todos"
+        ],
+        "estado": null,
+        "nota": "raiz das abas troca br-tab por classe própria com aparência e troca de painel feitas à mão; contêiner dos dois painéis muda."
+      }
+    }
+  },
+  "a2-dc61ba2bcbd7": {
+    "variantes": {
+      "sem-tab-nav": {
+        "toca": [
+          "$:nav",
+          "$:divisor"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "contêiner dos itens perde a classe tab-nav (layout/linha da barra vindos da classe)."
+      }
+    }
+  },
+  "a2-f19f80da5bea": {
+    "variantes": {
+      "setas-inertes": {
+        "toca": [
+          "$:aba-1",
+          "$:aba-2"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "manipulador de seta esquerda/direita nas abas removido; só Tab move o foco."
+      }
+    }
+  },
+  "a2-f684c1e9a26f": {
+    "variantes": {
+      "lista-sem-tablist": {
+        "toca": [
+          "$:nav"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "o ul da barra perde role=tablist; as abas mantêm role=tab."
+      }
+    }
+  },
+  "a2-fc8612404c77": {
+    "variantes": {
+      "ativa-sem-selected": {
+        "toca": [
+          "$:aba-1"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "na carga (S0) a aba Andamento ativa fica sem aria-selected=true."
+      },
+      "selected-nao-atualiza": {
+        "toca": [
+          "$:aba-1",
+          "$:aba-2"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "ao ir para Documentos (S1) aria-selected das duas abas não é atualizado."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "selected-nao-atualiza",
+        "viola": "a2-971db6a57c75",
+        "porque": "estado ARIA desatualizado depois da interação é exatamente o que a regra do ciclo de vida WAI-ARIA mede (variante aba-estado-desatualizado).",
+        "classe": "mesmo-observavel",
+        "razao": "mesmo aria-selected desatualizado em S1 nas mesmas abas."
+      }
+    ]
+  },
+  "a2-10011779df50": {
+    "variantes": {
+      "ordem-visual-trocada": {
+        "toca": [
+          "$:cabecalho",
+          "$:celulas"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "CSS order leva a 1ª coluna do DOM para o fim de cada linha (cabeçalho e corpo)."
+      }
+    }
+  },
+  "a2-10860659e4bf": {
+    "variantes": {
+      "header-cor-interativa": {
+        "toca": [
+          "$:cabecalho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor dos rótulos th (sem ordenação) vira o azul interativo."
+      }
+    }
+  },
+  "a2-1a936b76e1e0": {
+    "variantes": {
+      "colunas-sem-divisor": {
+        "toca": [
+          "$:cabecalho",
+          "$:celulas"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "borda vertical entre colunas removida em th e td."
+      }
+    }
+  },
+  "a2-24082cba4782": {
+    "variantes": {
+      "tabela-de-divs": {
+        "toca": [
+          "$:raiz",
+          "$:titulo",
+          "$:cabecalho",
+          "$:celulas"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "table/thead/tbody/th/tr/td trocados por div com CSS grid; semântica de tabela some da árvore de acessibilidade, aparência igual."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "tabela-de-divs",
+        "viola": "a2-959ca4537add",
+        "porque": "sem th nem thead não há células de cabeçalho associadas às de dados (e-MAG 3.10).",
+        "classe": "mesmo-observavel",
+        "razao": "a falta de th/thead é a própria troca de tags que a variante descreve."
+      },
+      {
+        "variante": "tabela-de-divs",
+        "viola": "a2-83ec838a289a",
+        "porque": "sem elemento table não pode haver caption como primeiro filho de table (e-MAG 3.9).",
+        "classe": "distinto",
+        "razao": "o título da tabela é outro nó: sem table ele perde o papel de caption, além das células."
+      }
+    ]
+  },
+  "a2-4f4391ced0cc": {
+    "variantes": {
+      "cabecalho-como-linha": {
+        "toca": [
+          "$:cabecalho",
+          "$:celulas"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "a linha de nomes de coluna sai do thead e vira a 1ª linha do tbody, com td em negrito."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "cabecalho-como-linha",
+        "viola": "a2-959ca4537add",
+        "porque": "os nomes de coluna viram td e o thead deixa de existir, o que a regra e-MAG 3.10 mede (th + thead).",
+        "classe": "mesmo-observavel",
+        "razao": "mesma linha de cabeçalho virando td fora do thead."
+      },
+      {
+        "variante": "cabecalho-como-linha",
+        "viola": "a2-24082cba4782",
+        "porque": "a tabela fica sem thead e sem th, tags exigidas pela estrutura semântica medida por tagName.",
+        "classe": "mesmo-observavel",
+        "razao": "mesma ausência de th e thead na mesma linha."
+      }
+    ]
+  },
+  "a2-5494f8781b7a": {
+    "variantes": {
+      "celulas-apertadas": {
+        "toca": [
+          "$:celulas"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "padding dos td vira --spacing-scale-half em todos os lados."
+      }
+    }
+  },
+  "a2-54d2e08c5e0f": {
+    "variantes": {
+      "linhas-sem-divisor": {
+        "toca": [
+          "$:celulas"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "borda inferior das linhas do corpo removida."
+      }
+    }
+  },
+  "a2-62c0f42b9631": {
+    "variantes": {
+      "cabecalho-prolixo": {
+        "toca": [
+          "$:cabecalho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto do th 'Data' vira frase de 13 palavras."
+      }
+    }
+  },
+  "a2-d6629d53e00f": {
+    "variantes": {
+      "header-fundo-branco": {
+        "toca": [
+          "$:cabecalho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "fundo do cabeçalho vira --pure-0."
+      },
+      "linhas-fundo-cinza": {
+        "toca": [
+          "$:celulas"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "fundo das linhas do corpo vira --gray-10."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "linhas-fundo-cinza",
+        "viola": "a2-b015ac9d3146",
+        "porque": "a superfície das linhas da tabela tem de ser #FFFFFF ou #F8F8F8; --gray-10 fica fora necessariamente.",
+        "classe": "mesmo-observavel",
+        "razao": "mesmo background das linhas, só outra frase de cor."
+      }
+    ]
+  },
+  "a2-ecd5c7233ac6": {
+    "variantes": {
+      "sem-br-table": {
+        "toca": [
+          "$:raiz",
+          "$:titulo",
+          "$:cabecalho",
+          "$:celulas"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "raiz da tabela troca br-table por classe própria; estilos do DS recopiados à mão em toda a tabela."
+      }
+    }
+  },
+  "a2-f1d8dc1cb4f4": {
+    "variantes": {
+      "header-regular": {
+        "toca": [
+          "$:cabecalho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-weight do th vira --font-weight-regular."
+      },
+      "linhas-negrito": {
+        "toca": [
+          "$:celulas"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-weight dos td vira --font-weight-bold."
+      }
+    }
+  },
+  "a2-3584b59ba47f": {
+    "variantes": {
+      "tag-em-duas-linhas": {
+        "toca": [
+          "$:marcador"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "a tag de concluído da 1ª etapa ganha um 2º ícone abaixo e dobra de altura."
+      }
+    }
+  },
+  "a2-5f5d70c647f1": {
+    "variantes": {
+      "tag-com-fechar": {
+        "toca": [
+          "$:marcador"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "um botão 'x' de remover é inserido dentro da tag de concluído da 1ª etapa."
+      }
+    }
+  },
+  "a2-7682991ef915": {
+    "variantes": {
+      "tag-sem-superficie": {
+        "toca": [
+          "$:marcador"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "fundo da tag de concluído vira transparente; só o ícone fica."
+      }
+    }
+  },
+  "a2-86453e6d513e": {
+    "variantes": {
+      "concluido-so-visual": {
+        "toca": [
+          "$:indicadores",
+          "$:marcador"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto oculto/aria 'concluída' sai da 1ª etapa; nome acessível do botão fica número + rótulo."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "concluido-so-visual",
+        "viola": "a2-9250e991e04f",
+        "porque": "a tag é do tipo ícone; sem o texto acessível, a situação concluída fica marcada só por cor e ícone, sem identificação textual.",
+        "classe": "mesmo-observavel",
+        "razao": "mesma falta do texto concluída na 1ª etapa."
+      }
+    ]
+  },
+  "a2-04f08959f854": {
+    "variantes": {
+      "seta-grande": {
+        "toca": [
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "seta do balão passa a 28×14px."
+      }
+    }
+  },
+  "a2-09eb42d69b01": {
+    "variantes": {
+      "tooltip-longo": {
+        "toca": [
+          "$:balao-texto",
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto do balão vira parágrafo de 80 palavras; o balão cresce."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "tooltip-longo",
+        "viola": "a2-5610d5df55f0",
+        "porque": "a regra mede o número de palavras da tooltip; 80 palavras é o caso flagrante que ela pune (variante tooltip-prolixa).",
+        "classe": "mesmo-observavel",
+        "razao": "mesmo número de palavras do texto do balão."
+      }
+    ]
+  },
+  "a2-17a73c07609f": {
+    "variantes": {
+      "foco-nao-abre": {
+        "toca": [
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "manipulador de focus do gatilho removido; só mouseover abre o balão."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "foco-nao-abre",
+        "viola": "a2-acc4801af71c",
+        "porque": "abrir a ajuda passa a depender só do mouse: a função do gatilho (no card) deixa de estar disponível pelo teclado (e-MAG 2.1).",
+        "classe": "rejeitado",
+        "razao": "Enter/Espaço no gatilho não mudam e o texto segue exposto pela descrição do gatilho; dá para ter a variante sem ferir o e-MAG 2.1."
+      }
+    ]
+  },
+  "a2-1dc4d20a651c": {
+    "variantes": {
+      "balao-focavel": {
+        "toca": [
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "balão recebe tabindex=0 e entra na ordem de Tab."
+      }
+    }
+  },
+  "a2-22d1b7628da2": {
+    "variantes": {
+      "esc-nao-fecha": {
+        "toca": [
+          "$:gatilho",
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "manipulador de Esc removido; o balão aberto pelo foco só fecha no blur."
+      }
+    }
+  },
+  "a2-281b82e2e6be": {
+    "variantes": {
+      "seta-descentrada": {
+        "toca": [
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "seta do balão deslocada para perto da borda esquerda."
+      }
+    }
+  },
+  "a2-285de1b171b1": {
+    "variantes": {
+      "dois-baloes": {
+        "porHospedeiro": {
+          "tip-prazo": {
+            "toca": [
+              "$:balao",
+              "$:gatilho",
+              "tip-protocolo:balao"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "o balão do prazo não fecha ao abrir o do protocolo; os dois ficam visíveis."
+          },
+          "tip-protocolo": {
+            "toca": [
+              "$:balao",
+              "$:gatilho",
+              "tip-prazo:balao"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "o balão do protocolo não fecha ao abrir o do prazo; os dois ficam visíveis."
+          }
+        }
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "dois-baloes",
+        "viola": "a2-8cdd5f3fc0b3",
+        "porque": "o primeiro balão continua visível depois que o ponteiro sai do seu gatilho, o que viola a visibilidade dinâmica medida após tirar foco/ponteiro.",
+        "classe": "mesmo-observavel",
+        "razao": "o primeiro balão que não fecha é o próprio fato descrito pela variante."
+      }
+    ]
+  },
+  "a2-2b6979e5363b": {
+    "variantes": {
+      "so-titulo": {
+        "toca": [
+          "$:balao",
+          "$:balao-texto"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto informativo vai para um elemento de título no balão; o corpo .text fica vazio."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "so-titulo",
+        "viola": "a2-d1287ec712df",
+        "porque": "a regra mede balão > .text com o texto; com o corpo vazio o texto principal não está em .text.",
+        "classe": "mesmo-observavel",
+        "razao": "mesmo texto fora do .text no mesmo balão."
+      }
+    ]
+  },
+  "a2-2dd74ca2fbb7": {
+    "variantes": {
+      "balao-estreito": {
+        "toca": [
+          "$:balao",
+          "$:balao-texto"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "balão com width fixo de 60px; texto quebra palavra a palavra."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "balao-estreito",
+        "viola": "a2-04f08959f854",
+        "porque": "a tabela de dimensões exige largura mínima de 108px no balão; 60px a viola necessariamente.",
+        "classe": "mesmo-observavel",
+        "razao": "mesma largura do balão contra o mínimo de 108px."
+      }
+    ]
+  },
+  "a2-43895f300d37": {
+    "variantes": {
+      "seta-de-outra-cor": {
+        "toca": [
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor da seta vira --gray-80; balão segue azul."
+      },
+      "texto-tooltip-escuro": {
+        "toca": [
+          "$:balao-texto"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor do texto do balão vira --gray-80 sobre o azul."
+      }
+    }
+  },
+  "a2-4a095eaf3d00": {
+    "variantes": {
+      "balao-por-baixo": {
+        "toca": [
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "z-index do balão abaixo do conteúdo vizinho do card, que o cobre em parte."
+      }
+    }
+  },
+  "a2-61f57f2a7ff5": {
+    "variantes": {
+      "longe-do-gatilho": {
+        "toca": [
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "balão aberto deslocado 160px à direita do gatilho; seta aponta para o vazio."
+      }
+    },
+    "alternativas": {
+      "balao-abaixo": {
+        "toca": [
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "balão posicionado abaixo do gatilho, junto dele, com a seta para cima."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "longe-do-gatilho",
+        "viola": "a2-918de33955df",
+        "porque": "a tabela de espaçamentos mede a distância balão–gatilho = --spacing-scale-base; o deslocamento de 160px a viola necessariamente.",
+        "classe": "mesmo-observavel",
+        "razao": "mesma distância balão–gatilho."
+      }
+    ]
+  },
+  "a2-71e548b6d3b6": {
+    "variantes": {
+      "texto-inline": {
+        "toca": [
+          "$:balao",
+          "$:balao-texto",
+          "$:gatilho",
+          "crd-resumo:conteudo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "conteúdo da ajuda vira texto estático ao lado do ícone, no fluxo do card, sem camada flutuante."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "texto-inline",
+        "viola": "a2-8cdd5f3fc0b3",
+        "porque": "texto estático fica visível desde a carga sem acionamento, contra a visibilidade dinâmica.",
+        "classe": "mesmo-observavel",
+        "razao": "o texto estático sempre visível é o próprio fato de não haver balão flutuante."
+      }
+    ]
+  },
+  "a2-80678e4f069c": {
+    "variantes": {
+      "sem-seta": {
+        "toca": [
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "seta do balão (parte do nó balao) com display none; o balão em si fica."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-seta",
+        "viola": "a2-04f08959f854",
+        "porque": "a regra de dimensões mede a seta 16×8px ao abrir; com display none a seta não tem caixa (0×0).",
+        "classe": "mesmo-observavel",
+        "razao": "mesma seta: ocultá-la é o que zera suas dimensões."
+      }
+    ]
+  },
+  "a2-8cdd5f3fc0b3": {
+    "variantes": {
+      "balao-sempre-visivel": {
+        "toca": [
+          "$:balao",
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "balão visível desde a carga e nunca oculto (handlers de ocultar removidos)."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "balao-sempre-visivel",
+        "viola": "a2-285de1b171b1",
+        "porque": "com este balão sempre aberto, abrir o outro tooltip deixa dois balões visíveis.",
+        "classe": "mesmo-observavel",
+        "razao": "os dois balões visíveis decorrem do mesmo balão que nunca oculta."
+      },
+      {
+        "variante": "balao-sempre-visivel",
+        "viola": "a2-22d1b7628da2",
+        "porque": "um balão que nunca some não desaparece com Esc nem quando o foco sai do gatilho.",
+        "classe": "mesmo-observavel",
+        "razao": "não sumir com Esc está contido em nunca sumir, mesmo balão e mesma visibilidade."
+      }
+    ]
+  },
+  "a2-918de33955df": {
+    "variantes": {
+      "balao-sem-padding": {
+        "toca": [
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "padding do balão vira 2px."
+      }
+    }
+  },
+  "a2-bf446a3f5b0e": {
+    "variantes": {
+      "balao-sombra-leve": {
+        "toca": [
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "box-shadow do balão vira --shadow-sm."
+      }
+    }
+  },
+  "a2-c47ed59cb8bc": {
+    "variantes": {
+      "gatilho-sem-labelledby": {
+        "toca": [
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "gatilho perde aria-labelledby para o balão e ganha aria-label com cópia do texto."
+      }
+    }
+  },
+  "a2-c591eaacd1c2": {
+    "variantes": {
+      "gatilho-sem-descricao": {
+        "toca": [
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "gatilho perde a referência ARIA ao texto do balão; nome acessível fica só 'Ajuda'."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "gatilho-sem-descricao",
+        "viola": "a2-c47ed59cb8bc",
+        "porque": "para nem nome nem descrição conterem o texto do balão, o gatilho não pode ter aria-labelledby apontando para ele.",
+        "classe": "mesmo-observavel",
+        "razao": "mesma ligação ARIA do gatilho ao texto do balão, ausente."
+      }
+    ]
+  },
+  "a2-c6b7402991ad": {
+    "variantes": {
+      "simples-por-clique": {
+        "toca": [
+          "$:gatilho",
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "abertura do balão passa a ser por click no gatilho; mouseover/focus não abrem."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "simples-por-clique",
+        "viola": "a2-17a73c07609f",
+        "porque": "abrindo só por clique, o foco no gatilho deixa de abrir o balão.",
+        "classe": "distinto",
+        "razao": "além do hover, a abertura por foco no teclado passa a falhar: outro comportamento."
+      }
+    ]
+  },
+  "a2-d1287ec712df": {
+    "variantes": {
+      "texto-sem-classe": {
+        "toca": [
+          "$:balao",
+          "$:balao-texto"
+        ],
+        "remove": [
+          "$:balao-texto"
+        ],
+        "cascata": [],
+        "estado": null,
+        "nota": "elemento .text removido; o texto fica direto na raiz do balão."
+      }
+    }
+  },
+  "a2-d43831ef1184": {
+    "variantes": {
+      "simples-com-fechar": {
+        "toca": [
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "botão fechar inserido no canto superior direito do balão simples."
+      }
+    }
+  },
+  "a2-df29e959c20b": {
+    "variantes": {
+      "sem-br-tooltip": {
+        "toca": [
+          "$:balao",
+          "$:balao-texto"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "raiz do balão troca br-tooltip por classe própria com aparência copiada à mão."
+      }
+    }
+  },
+  "a2-e505a4cf48ee": {
+    "variantes": {
+      "texto-tooltip-grande": {
+        "toca": [
+          "$:balao-texto",
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-size do texto do balão vira --font-size-scale-up-01."
+      },
+      "texto-tooltip-negrito": {
+        "toca": [
+          "$:balao-texto"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-weight do texto do balão vira --font-weight-semi-bold."
+      }
+    }
+  },
+  "a2-ec15e0beefba": {
+    "variantes": {
+      "sem-sombra": {
+        "toca": [
+          "$:balao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "box-shadow do balão vira none."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-sombra",
+        "viola": "a2-bf446a3f5b0e",
+        "porque": "a regra mede box-shadow = --shadow-xl; none fica fora do token necessariamente.",
+        "classe": "mesmo-observavel",
+        "razao": "mesmo box-shadow do balão, ausência contra token."
+      }
+    ]
+  },
+  "a2-008f17394a91": {
+    "variantes": {
+      "upload-nao-aciona-por-tecla": {
+        "toca": [
+          "$:botao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Enter/Espaço no botão de escolher arquivo não abrem o seletor; só o clique."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "upload-nao-aciona-por-tecla",
+        "viola": "a2-acc4801af71c",
+        "porque": "a escolha de arquivo deixa de ser acionável pelo teclado, o que a regra e-MAG 2.1 mede (Tab + Enter/Espaço) no upload.",
+        "classe": "mesmo-observavel",
+        "razao": "mesmo botão que não responde a Enter/Espaço."
+      }
+    ]
+  },
+  "a2-043deee1ee88": {
+    "variantes": {
+      "borda-upload-cinza": {
+        "toca": [
+          "$:area"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor da borda da área de upload vira --gray-40."
+      },
+      "placeholder-cinza": {
+        "toca": [
+          "$:area",
+          "$:botao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor do texto 'Selecione o arquivo' e do ícone fa-upload vira --gray-80."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "borda-upload-cinza",
+        "viola": "a2-b1de44d95577",
+        "porque": "a tabela do Dropzone exige borda na cor de interação; --gray-40 a viola.",
+        "classe": "mesmo-observavel",
+        "razao": "mesma cor da borda da área."
+      },
+      {
+        "variante": "placeholder-cinza",
+        "viola": "a2-15a1e5d58ef7",
+        "porque": "texto/ícone do botão de escolher arquivo passa a ter a mesma cor (#333) do texto corrido, sem a cor de interação.",
+        "classe": "mesmo-observavel",
+        "razao": "mesma cor do texto e ícone do botão."
+      },
+      {
+        "variante": "placeholder-cinza",
+        "viola": "a2-36dcfef2c39b",
+        "porque": "a cor de interação do botão do upload deixa de ser #1351B4.",
+        "classe": "mesmo-observavel",
+        "razao": "mesma cor do texto e ícone do botão."
+      }
+    ]
+  },
+  "a2-099a2401f473": {
+    "variantes": {
+      "sem-area": {
+        "toca": [
+          "$:area"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "área de transferência sem borda e sem fundo; só o botão fica visível."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-area",
+        "viola": "a2-a09116df2aa7",
+        "porque": "sem borda, o border-style da área não é tracejado (--surface-border-dashed-sm).",
+        "classe": "mesmo-observavel",
+        "razao": "mesma borda da área, ausente."
+      },
+      {
+        "variante": "sem-area",
+        "viola": "a2-b1de44d95577",
+        "porque": "a tabela do Dropzone exige borda dashed na cor de interação, que deixa de existir.",
+        "classe": "mesmo-observavel",
+        "razao": "mesma borda da área, ausente."
+      }
+    ]
+  },
+  "a2-0e465d7adf07": {
+    "variantes": {
+      "sem-arrastar": {
+        "toca": [
+          "$:area"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "manipuladores de dragover/drop da área removidos; soltar arquivo não faz nada."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-arrastar",
+        "viola": "a2-caf6bc80cb4b",
+        "porque": "sem manipulador de dragover a borda não fica verde ao arrastar arquivo válido.",
+        "classe": "distinto",
+        "razao": "o feedback visual durante o arraste é outro estado, além de soltar não funcionar."
+      },
+      {
+        "variante": "sem-arrastar",
+        "viola": "a2-5612fb499d07",
+        "porque": "sem dragover/dragenter tratados, o estado Dropzone Ativo não aparece ao arrastar.",
+        "classe": "distinto",
+        "razao": "o estado Dropzone Ativo ao arrastar é outro estado visual da área, além do drop."
+      },
+      {
+        "variante": "sem-arrastar",
+        "viola": "a2-253f67dc1b85",
+        "porque": "arrastar sobre a área não produz resposta visual de Dropzone Ativo.",
+        "classe": "distinto",
+        "razao": "a resposta visual ao arrastar é outro estado, distinto de aceitar o arquivo."
+      },
+      {
+        "variante": "sem-arrastar",
+        "viola": "a2-2d3ff6e2d648",
+        "porque": "soltar dois arquivos não produz a mensagem que explica o limite de um arquivo.",
+        "classe": "mesmo-observavel",
+        "razao": "a falta de mensagem com dois arquivos é o mesmo drop sem tratamento."
+      },
+      {
+        "variante": "sem-arrastar",
+        "viola": "a2-590d318946bc",
+        "porque": "a zona de soltura deixa de existir, menor que a área visível tracejada.",
+        "classe": "mesmo-observavel",
+        "razao": "a zona de soltura inexistente é o mesmo drop desligado."
+      }
+    ]
+  },
+  "a2-17970a9e717d": {
+    "variantes": {
+      "icone-colado-placeholder": {
+        "toca": [
+          "$:botao",
+          "$:area"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "margin-right do ícone fa-upload vira 0, encostado em 'Selecione o arquivo'."
+      },
+      "superficie-sem-padding": {
+        "toca": [
+          "$:area"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "padding lateral da área de upload vira 0."
+      }
+    }
+  },
+  "a2-2d3ff6e2d648": {
+    "variantes": {
+      "aceita-dois-arquivos": {
+        "toca": [
+          "$:area",
+          "$:lista",
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "drop com dois arquivos aceita ambos e lista os dois."
+      },
+      "recusa-muda": {
+        "toca": [
+          "$:area",
+          "$:mensagem"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "drop com dois arquivos é recusado sem exibir mensagem ao usuário."
+      }
+    }
+  },
+  "a2-2e8e53cf16ef": {
+    "variantes": {
+      "sem-aviso-arrastar": {
+        "toca": [
+          "$:mensagem"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto de apoio abaixo do campo deixa de mencionar arrastar."
+      }
+    }
+  },
+  "a2-48b225deace0": {
+    "variantes": {
+      "icone-upload-pequeno": {
+        "toca": [
+          "$:botao",
+          "$:area"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "ícone fa-upload passa a --icon-size-sm."
+      }
+    }
+  },
+  "a2-5d7b9b4ac59e": {
+    "variantes": {
+      "feedback-solto": {
+        "toca": [
+          "$:campo",
+          "$:mensagem"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "em S2 o input de arquivo fica sem aria-describedby para o texto de erro, que segue visível."
+      }
+    }
+  },
+  "a2-6e7c9e436ad4": {
+    "variantes": {
+      "rotulo-plural-envio-unico": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto do rótulo vira 'Envio de documentos' (plural) com envio único."
+      }
+    }
+  },
+  "a2-6f9602b239cc": {
+    "variantes": {
+      "placeholder-alterado": {
+        "toca": [
+          "$:botao",
+          "$:area"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "ícone vira fa-paperclip e o placeholder vira 'Anexe aqui'."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "placeholder-alterado",
+        "viola": "a2-6e7c9e436ad4",
+        "porque": "no envio único o placeholder tem de ser 'Selecione o arquivo' (ou variação); 'Anexe aqui' o troca.",
+        "classe": "mesmo-observavel",
+        "razao": "mesmo texto do placeholder."
+      },
+      {
+        "variante": "placeholder-alterado",
+        "viola": "a2-952e88a5af0d",
+        "porque": "o ícone do upload deixa de ser fa-upload (é a variante icone-fora-da-tabela do upload).",
+        "classe": "mesmo-observavel",
+        "razao": "mesma classe do ícone do upload."
+      }
+    ]
+  },
+  "a2-7c62d120e790": {
+    "variantes": {
+      "input-sem-classe": {
+        "toca": [
+          "$:campo",
+          "$:botao"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "input de arquivo sem upload-input; abertura do seletor ligada à mão ao botão."
+      }
+    }
+  },
+  "a2-8a3ceb94046c": {
+    "variantes": {
+      "label-upload-regular": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-weight do label 'Envio de documento' vira regular."
+      },
+      "placeholder-reto": {
+        "toca": [
+          "$:botao",
+          "$:area"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-style do placeholder 'Selecione o arquivo' vira normal."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "label-upload-regular",
+        "viola": "a2-329f74d7646c",
+        "porque": "a Tabela de Estilos exige Label semi-bold; o rótulo do upload em 400 é a variante rotulo-fora-da-tabela.",
+        "classe": "mesmo-observavel",
+        "razao": "mesmo font-weight do rótulo."
+      }
+    ]
+  },
+  "a2-963df6b848e6": {
+    "variantes": {
+      "rotulo-fora-do-padrao": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto do rótulo vira 'Arquivo'."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "rotulo-fora-do-padrao",
+        "viola": "a2-6e7c9e436ad4",
+        "porque": "no envio único o rótulo tem de ser 'Envio de arquivo' ou variação; 'Arquivo' não é.",
+        "classe": "mesmo-observavel",
+        "razao": "mesmo texto do rótulo."
+      }
+    ]
+  },
+  "a2-a09116df2aa7": {
+    "variantes": {
+      "borda-solida": {
+        "toca": [
+          "$:area"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "border-style da área de upload vira solid."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "borda-solida",
+        "viola": "a2-b1de44d95577",
+        "porque": "a tabela do Dropzone exige borda dashed; solid é a variante dropzone-borda-solida.",
+        "classe": "mesmo-observavel",
+        "razao": "mesmo border-style da área."
+      }
+    ]
+  },
+  "a2-a2591de5315f": {
+    "variantes": {
+      "upload-largura-total": {
+        "toca": [
+          "$:area",
+          "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "largura da área de upload vira 100% do conteúdo (bem acima de 550px)."
+      }
+    }
+  },
+  "a2-caf6bc80cb4b": {
+    "variantes": {
+      "borda-sem-feedback": {
+        "toca": [
+          "$:area"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "no dragover com arquivo válido a cor da borda da área não muda."
+      }
+    }
+  },
+  "a2-ccec3c8c199e": {
+    "variantes": {
+      "rotulo-sem-classe": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "rótulo do upload perde a classe upload-label."
+      }
+    }
+  },
+  "a2-ec34646ce97f": {
+    "variantes": {
+      "sem-br-upload": {
+        "toca": [
+          "$:raiz",
+          "$:rotulo",
+          "$:campo",
+          "$:area",
+          "$:botao",
+          "$:lista",
+          "$:mensagem"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "raiz troca br-upload por classe própria; aparência e comportamento do DS recopiados à mão no componente inteiro."
+      }
+    }
+  },
+  "a2-015f84774222": {
+    "variantes": {
+      "rotulo-campo-caixa-alta": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto do rótulo do campo reescrito todo em maiúsculas."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "rotulo-campo-caixa-alta",
+        "viola": "a2-d3c2b4a7ca90",
+        "porque": "no hospedeiro chk-avisos-todos, o texto descritivo todo em maiúsculas viola 'primeira letra maiúscula e o resto minúsculo'.",
+        "classe": "mesmo-observavel",
+        "razao": "mesma caixa das letras do texto do checkbox."
+      }
+    ]
+  },
+  "a2-02ccd4221688": {
+    "variantes": {
+      "fieldset-com-moldura": {
+        "toca": [
+          "grupo-avisos:fieldset"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "fieldset dos avisos ganha border 1px sólida cinza (borda não é herdada pelos controles internos)."
+      }
+    }
+  },
+  "a2-03216e12bb96": {
+    "variantes": {
+      "entrelinha-fora-do-token": {
+        "porHospedeiro": {
+          "crd-resumo": {
+            "toca": [
+              "$:conteudo"
+            ],
+            "remove": [],
+            "cascata": [
+              "tip-prazo",
+              "tip-protocolo"
+            ],
+            "estado": null,
+            "nota": "line-height do texto do card vira 1.3; herdado pelos tooltips dentro do conteúdo."
+          },
+          "tbl-movimentacoes": {
+            "toca": [
+              "$:celulas"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "line-height das células vira 1.3."
+          },
+          "acc-duvidas": {
+            "toca": [
+              "$:paineis"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "line-height do texto dos painéis do accordion vira 1.3."
+          }
+        }
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "entrelinha-fora-do-token",
+        "viola": "a2-f50e5a28b0c9",
+        "porque": "no hospedeiro acc-duvidas, os parágrafos do painel com line-height 1.3 saem do 1.45 exigido pelo estilo Parágrafo.",
+        "classe": "mesmo-observavel",
+        "razao": "mesmo line-height dos parágrafos do painel."
+      }
+    ]
+  },
+  "a2-033815886ead": {
+    "variantes": {
+      "cursor-padrao": {
+        "porHospedeiro": {
+          "tab-requerimento": {
+            "toca": [
+              "$:aba-1",
+              "$:aba-2"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "cursor das abas vira default (seta)."
+          },
+          "acc-duvidas": {
+            "toca": [
+              "$:cabecalhos"
+            ],
+            "remove": [],
+            "cascata": [],
+            "estado": null,
+            "nota": "cursor dos cabeçalhos do accordion vira default (seta)."
+          }
+        }
+      }
+    }
+  },
+  "a2-0383076211e0": {
+    "variantes": {
+      "titulo-grande-baixo-contraste": {
+        "toca": [
+          "$:titulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor do título do card vira #BDBDBD sobre branco (≈1,9:1)."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "titulo-grande-baixo-contraste",
+        "viola": "a2-66fbdcf13772",
+        "porque": "1,9:1 fica abaixo até do piso de 3:1 da recomendação e-MAG 4.1, hospedada no card.",
+        "classe": "mesmo-observavel",
+        "razao": "mesmo contraste do título do card."
+      },
+      {
+        "variante": "titulo-grande-baixo-contraste",
+        "viola": "a2-3fb37eb25f3c",
+        "porque": "#BDBDBD não é cor da paleta do DS (Gray 20 = #CCCCCC, Gray 30 = #ADADAD).",
+        "classe": "mesmo-observavel",
+        "razao": "mesma cor do título do card, fora da paleta."
+      }
+    ]
+  }
+}

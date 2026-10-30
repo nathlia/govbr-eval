@@ -1,0 +1,1619 @@
+{
+  "a2-12888369bd0f": {
+    "variantes": {
+      "sem-br-select": {
+        "toca": [
+          "$:raiz",
+          "$:campo",
+          "$:gatilho",
+          "$:lista",
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Troca a classe da raiz (br-select por classe própria com estilo copiado); sem .br-select o core não instancia BRSelect, o que altera o comportamento de campo, gatilho, lista e itens."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-br-select",
+        "viola": "a2-4d99afd1c618",
+        "porque": "Como descrita, só a aparência é copiada; sem .br-select o BRSelect não é instanciado e clicar no campo deixa de abrir a lista.",
+        "classe": "distinto",
+        "razao": "A variante muda a classe da raiz; a lista que não abre ao clicar no campo é outro comportamento, perdido porque o BRSelect não é instanciado."
+      }
+    ]
+  },
+  "a2-1f3279c0e6a1": {
+    "variantes": {
+      "lista-sem-sombra": {
+        "toca": [
+          "$:lista"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "box-shadow none na lista aberta do select."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "lista-sem-sombra",
+        "viola": "a2-8c3b5176e2a3",
+        "porque": "Sem sombra alguma, a lista também deixa de ter a sombra --surface-shadow-md exigida pelo token.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo box-shadow da mesma lista; a ausência de sombra já contraria o token."
+      }
+    ]
+  },
+  "a2-30278caa77da": {
+    "variantes": {
+      "gatilho-a-esquerda": {
+        "toca": [
+          "$:gatilho",
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Posiciona o botão gatilho à esquerda do campo (posição do botão e área/padding do campo)."
+      }
+    }
+  },
+  "a2-41577e5f420c": {
+    "variantes": {
+      "setas-inertes": {
+        "toca": [
+          "$:campo",
+          "$:lista",
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Remove o tratamento das setas Up/Down na lista aberta (foco/destaque não passa entre itens)."
+      }
+    }
+  },
+  "a2-419c091564b6": {
+    "variantes": {
+      "opcao-sem-br-item": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Retira a classe br-item das opções da lista do select."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "opcao-sem-br-item",
+        "viola": "a2-2f900cc3509d",
+        "porque": "Os estados de hover/foco/selecionado do item vêm das regras de .br-item; sem a classe o item perde esse feedback.",
+        "classe": "distinto",
+        "razao": "Além da classe, o item perde o realce de hover/foco/selecionado, que é outro observável."
+      },
+      {
+        "variante": "opcao-sem-br-item",
+        "viola": "a2-b30ded4687e3",
+        "porque": "O padding de densidade do item é dado por .br-item; sem a classe o espaço interno do item sai do token.",
+        "classe": "distinto",
+        "razao": "Além da classe, o padding computado do item sai do token, que é outra propriedade."
+      }
+    ]
+  },
+  "a2-45a090bca496": {
+    "variantes": {
+      "gatilho-sem-atributo": {
+        "toca": [
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Remove data-trigger do botão gatilho; abertura da lista ligada por script próprio."
+      }
+    }
+  },
+  "a2-482ab9c4a4b1": {
+    "variantes": {
+      "escolhido-sem-estado": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "O item escolhido não recebe classe/aria-selected/checked de selecionado na lista."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "escolhido-sem-estado",
+        "viola": "a2-9bcf4f01a6bb",
+        "porque": "Sem o estado selecionado, o item escolhido não mostra o fundo e a marca gráfica de Selecionado.",
+        "classe": "mesmo-observavel",
+        "razao": "O fundo e a marca são a forma visível do mesmo estado selecionado que a variante retira."
+      },
+      {
+        "variante": "escolhido-sem-estado",
+        "viola": "a2-0895138d72a0",
+        "porque": "O fundo --blue-warm-vivid-50 do item escolhido depende do estado selecionado que a variante retira.",
+        "classe": "mesmo-observavel",
+        "razao": "O fundo do item escolhido é o mesmo fato: item escolhido sem estado selecionado."
+      }
+    ]
+  },
+  "a2-4c2ef1bf747e": {
+    "variantes": {
+      "opcao-sem-name": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Remove o atributo name dos inputs radio das opções."
+      }
+    }
+  },
+  "a2-4d99afd1c618": {
+    "variantes": {
+      "so-gatilho-abre": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Clique no campo do select deixa de abrir a lista (só o gatilho abre)."
+      }
+    }
+  },
+  "a2-5250515a0c00": {
+    "variantes": {
+      "lista-sobre-o-campo": {
+        "toca": [
+          "$:lista",
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "margin-top negativo na lista aberta, que cobre a borda inferior do campo."
+      }
+    }
+  },
+  "a2-5d641612382a": {
+    "variantes": {
+      "sem-gatilho": {
+        "toca": [
+          "$:gatilho",
+          "$:campo"
+        ],
+        "remove": [
+          "$:gatilho"
+        ],
+        "cascata": [],
+        "estado": null,
+        "nota": "Remove o botão gatilho do select; o clique no campo passa a abrir a lista."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-gatilho",
+        "viola": "a2-8e13c46672f5",
+        "porque": "Sem o botão não há botão terciário que abra/feche a lista nem ícone que alterne.",
+        "classe": "mesmo-observavel",
+        "razao": "Um fato só: o botão gatilho não existe."
+      },
+      {
+        "variante": "sem-gatilho",
+        "viola": "a2-daf3655caedf",
+        "porque": "Sem o botão não existe ícone do gatilho que aponte para baixo/cima.",
+        "classe": "mesmo-observavel",
+        "razao": "O ícone ausente é parte do mesmo botão removido."
+      },
+      {
+        "variante": "sem-gatilho",
+        "viola": "a2-54dca6a2c217",
+        "porque": "A ação interna do campo com ícone de abrir a lista deixa de existir.",
+        "classe": "mesmo-observavel",
+        "razao": "A ação interna com ícone é o próprio botão removido."
+      },
+      {
+        "variante": "sem-gatilho",
+        "viola": "a2-81fd932c0990",
+        "porque": "Não há controle interno alcançável por Tab e acionado por Space.",
+        "classe": "mesmo-observavel",
+        "razao": "O controle interno alcançável por Tab é o mesmo botão que deixou de existir."
+      }
+    ]
+  },
+  "a2-654520f6ba0e": {
+    "variantes": {
+      "esc-nao-fecha-lista": {
+        "toca": [
+          "$:campo",
+          "$:lista"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Tecla Esc deixa de recolher a lista aberta do select."
+      }
+    }
+  },
+  "a2-684e49bfcc90": {
+    "variantes": {
+      "sem-filtro": {
+        "toca": [
+          "$:campo",
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Digitar no campo não filtra os itens da lista."
+      }
+    }
+  },
+  "a2-6eb568d6dd94": {
+    "variantes": {
+      "opcao-sem-value": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Remove o atributo value dos inputs radio das opções."
+      }
+    }
+  },
+  "a2-7348bce34289": {
+    "variantes": {
+      "texto-baixo-contraste": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Cor do texto do campo do select #AAAAAA sobre branco."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "texto-baixo-contraste",
+        "viola": "a2-6f122899cebf",
+        "porque": "O estilo Input exige cor --gray-80 no texto do campo; #AAAAAA a contraria (embora a medida dessa regra seja fonte/peso).",
+        "classe": "mesmo-observavel",
+        "razao": "Mesma cor do texto do mesmo campo, citada por outra frase."
+      }
+    ]
+  },
+  "a2-83611c221e13": {
+    "variantes": {
+      "lista-curta-com-rolagem": {
+        "toca": [
+          "$:lista"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "max-height da lista aberta = 2 itens, com rolagem."
+      }
+    }
+  },
+  "a2-879621000aa6": {
+    "variantes": {
+      "gatilho-sem-br-button": {
+        "toca": [
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Retira a classe br-button do botão gatilho do select."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "gatilho-sem-br-button",
+        "viola": "a2-9fc840ceb22d",
+        "porque": "Sem br-button o botão nativo volta com fundo próprio, perdendo a superfície transparente e o ícone azul do terciário.",
+        "classe": "distinto",
+        "razao": "Além da classe, o fundo e a cor do ícone computados do botão mudam: outra propriedade."
+      },
+      {
+        "variante": "gatilho-sem-br-button",
+        "viola": "a2-b0f874b8b2cf",
+        "porque": "O tamanho quadrado 32×32 da densidade vem de .br-button.circle; sem a classe o botão toma o tamanho do conteúdo.",
+        "classe": "distinto",
+        "razao": "Além da classe, as dimensões computadas do botão saem do 32×32: outra propriedade."
+      }
+    ]
+  },
+  "a2-8c3b5176e2a3": {
+    "variantes": {
+      "lista-sombra-forte": {
+        "toca": [
+          "$:lista"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Sombra da lista aberta no nível xl em vez de md."
+      }
+    }
+  },
+  "a2-8e13c46672f5": {
+    "variantes": {
+      "icone-nao-alterna": {
+        "toca": [
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Ícone do gatilho não alterna com a lista aberta (fica seta para baixo)."
+      },
+      "gatilho-secundario": {
+        "toca": [
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Gatilho com ênfase secundária (contorno e superfície do secundário)."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "icone-nao-alterna",
+        "viola": "a2-daf3655caedf",
+        "porque": "Ícone que não alterna continua apontando para baixo com a lista aberta, exatamente o que a regra de iconografia proíbe.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo ícone do gatilho que não muda com a lista aberta."
+      },
+      {
+        "variante": "gatilho-secundario",
+        "viola": "a2-9fc840ceb22d",
+        "porque": "O secundário tem superfície e contorno próprios, não a superfície transparente exigida do terciário.",
+        "classe": "mesmo-observavel",
+        "razao": "A ênfase secundária é justamente a superfície e o contorno do mesmo botão."
+      }
+    ]
+  },
+  "a2-a451e00d7b63": {
+    "variantes": {
+      "gatilho-nao-foca-campo": {
+        "toca": [
+          "$:gatilho",
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Clique no gatilho abre a lista sem levar o estado de foco ao campo."
+      }
+    }
+  },
+  "a2-adae4a234fdd": {
+    "variantes": {
+      "opcao-nao-escolhivel": {
+        "toca": [
+          "$:itens"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "O 3º item da lista ignora clique e Enter; o campo não muda."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "opcao-nao-escolhivel",
+        "viola": "a2-9ca0ad49a63a",
+        "porque": "A variante diz que Enter no 3º item não o escolhe, o que viola a regra de itens acionáveis por Enter/Space.",
+        "classe": "mesmo-observavel",
+        "razao": "Enter que não escolhe o 3º item já está descrito na variante."
+      }
+    ]
+  },
+  "a2-bd84ff2497d5": {
+    "variantes": {
+      "campo-sem-br-input": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Retira a classe br-input do contêiner do campo do select."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "campo-sem-br-input",
+        "viola": "a2-3169f339a8e1",
+        "porque": "Altura e raio do campo vêm das regras de .br-input; sem a classe o input nativo perde esses tokens.",
+        "classe": "distinto",
+        "razao": "Além da classe, altura e raio computados do campo mudam: outra propriedade."
+      },
+      {
+        "variante": "campo-sem-br-input",
+        "viola": "a2-8fcc793aaed1",
+        "porque": "Os paddings/margens do campo e do rótulo são dados por .br-input; sem a classe saem dos tokens.",
+        "classe": "distinto",
+        "razao": "Além da classe, paddings e margens do campo e do rótulo mudam: outras propriedades."
+      }
+    ]
+  },
+  "a2-d1039a4016fe": {
+    "variantes": {
+      "select-fora-do-tab": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "tabindex=-1 no campo do select (sai da sequência de Tab)."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "select-fora-do-tab",
+        "viola": "a2-4aeca513aeeb",
+        "porque": "A regra do input exige que o campo seja alcançado por Tab; tabindex=-1 o tira.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo campo fora da sequência de Tab."
+      },
+      {
+        "variante": "select-fora-do-tab",
+        "viola": "a2-0f20577609d3",
+        "porque": "tabindex sem necessidade tira o campo da ordem do formulário.",
+        "classe": "mesmo-observavel",
+        "razao": "O mesmo tabindex=-1 no mesmo campo."
+      },
+      {
+        "variante": "select-fora-do-tab",
+        "viola": "a2-328f62cfe4ce",
+        "porque": "Sem foco por Tab no campo, não há como focar por Tab e digitar.",
+        "classe": "mesmo-observavel",
+        "razao": "Não focar por Tab é o mesmo fato da variante."
+      }
+    ]
+  },
+  "a2-daf3655caedf": {
+    "variantes": {
+      "icone-nao-vira": {
+        "toca": [
+          "$:gatilho"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Ícone do gatilho continua para baixo com a lista aberta."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "icone-nao-vira",
+        "viola": "a2-8e13c46672f5",
+        "porque": "Sem a virada do ícone some o feedback visual de alternância exigido do botão terciário.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo ícone do gatilho que não alterna."
+      }
+    ]
+  },
+  "a2-e85eefb9d6f2": {
+    "variantes": {
+      "campo-nao-mostra-escolha": {
+        "toca": [
+          "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Depois da escolha, a lista fecha e o valor não é escrito no campo."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "campo-nao-mostra-escolha",
+        "viola": "a2-adae4a234fdd",
+        "porque": "A medida dessa regra é a opção escolhida passar ao campo, o que a variante impede.",
+        "classe": "mesmo-observavel",
+        "razao": "A opção que não passa ao campo é o mesmo fato."
+      }
+    ]
+  },
+  "a2-00ac06519e7d": {
+    "variantes": {
+      "rotulo-a-esquerda": {
+        "toca": [
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "text-align left nos rótulos abaixo dos indicadores."
+      }
+    },
+    "alternativas": {
+      "rotulos-acima": {
+        "toca": [
+          "$:rotulos",
+          "$:indicadores",
+          "$:linha"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Rótulos centrados acima dos indicadores; indicadores e linha descem no layout do step."
+      }
+    }
+  },
+  "a2-118542cd2b4a": {
+    "variantes": {
+      "concluida-rotulo-azul": {
+        "toca": [
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Cor do rótulo da etapa 1 (concluída) --blue-warm-vivid-70."
+      }
+    }
+  },
+  "a2-1a7bffe3be23": {
+    "variantes": {
+      "tag-embaixo-a-esquerda": {
+        "toca": [
+          "$:marcador"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Marcador de concluído da 1ª etapa no canto inferior esquerdo do indicador."
+      }
+    }
+  },
+  "a2-1da96248e217": {
+    "variantes": {
+      "indicador-borda-cinza": {
+        "toca": [
+          "$:indicadores"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Borda do indicador da etapa 1 em --gray-20."
+      }
+    }
+  },
+  "a2-20dae307ea61": {
+    "variantes": {
+      "sem-br-step": {
+        "toca": [
+          "$:raiz",
+          "$:indicadores",
+          "$:rotulos",
+          "$:marcador",
+          "$:linha"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Raiz do step com classe própria e estilo copiado; sem .br-step o BRStep e o CSS do DS deixam de agir em indicadores, rótulos, marcador e linha."
+      }
+    }
+  },
+  "a2-22f61dc44546": {
+    "variantes": {
+      "step-nao-instanciado": {
+        "toca": [
+          "pagina:scripts",
+          "$:indicadores",
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Script de inicialização deixa de instanciar BRStep: indicadores sem número e nenhuma etapa active/aria-current."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "step-nao-instanciado",
+        "viola": "a2-cf6773605348",
+        "porque": "Sem etapa marcada como atual, o indicador da 2ª etapa não fica no estado ativo.",
+        "classe": "mesmo-observavel",
+        "razao": "A etapa 2 sem estado ativo já está descrita na variante."
+      },
+      {
+        "variante": "step-nao-instanciado",
+        "viola": "a2-c47edccf787c",
+        "porque": "As cores do estado ativo da etapa 2 dependem da marca de etapa atual que deixa de existir.",
+        "classe": "mesmo-observavel",
+        "razao": "As cores do ativo são a aparência da mesma marca de etapa atual ausente."
+      },
+      {
+        "variante": "step-nao-instanciado",
+        "viola": "a2-bfc5ebd36c20",
+        "porque": "O número de etapas atuais passa a ser 0, não 1.",
+        "classe": "mesmo-observavel",
+        "razao": "Zero etapas atuais é o mesmo fato: nenhuma etapa marcada."
+      },
+      {
+        "variante": "step-nao-instanciado",
+        "viola": "a2-76dbeded6662",
+        "porque": "Nenhuma etapa se distingue como ativa com alta ênfase.",
+        "classe": "mesmo-observavel",
+        "razao": "A falta de destaque do ativo é a mesma ausência de etapa atual."
+      },
+      {
+        "variante": "step-nao-instanciado",
+        "viola": "a2-e5b4728ca51e",
+        "porque": "A etapa atual deixa de se distinguir por qualquer meio, inclusive além da cor.",
+        "classe": "mesmo-observavel",
+        "razao": "A etapa atual indistinta é a mesma ausência de marca de etapa atual."
+      }
+    ]
+  },
+  "a2-26eb8a6b8ca0": {
+    "variantes": {
+      "atual-como-concluida": {
+        "toca": [
+          "$:marcador",
+          "$:indicadores"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "A 2ª etapa também recebe o marcador/estado de concluído."
+      }
+    }
+  },
+  "a2-26fe09e0a119": {
+    "variantes": {
+      "sem-estado-interativo": {
+        "toca": [
+          "$:indicadores",
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Realce de hover suprimido no indicador e rótulo da 1ª etapa."
+      }
+    }
+  },
+  "a2-2737953e2513": {
+    "variantes": {
+      "concluido-icone-grande": {
+        "toca": [
+          "$:marcador"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Ícone do marcador de concluído em --icon-size-lg."
+      },
+      "concluido-icone-circulo": {
+        "toca": [
+          "$:marcador"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Glifo do marcador de concluído fa-circle em vez de fa-check."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "concluido-icone-circulo",
+        "viola": "a2-622c6c318ee6",
+        "porque": "O estado Sucesso exige o ícone check-circle; fa-circle tira o check do marcador.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo glifo do mesmo marcador."
+      }
+    ]
+  },
+  "a2-52ea5c58a080": {
+    "variantes": {
+      "sem-indicador": {
+        "toca": [
+          "$:indicadores",
+          "$:linha"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Indicador da 3ª etapa oculto (rótulo mantido); a linha perde o ponto de ligação nessa etapa."
+      }
+    }
+  },
+  "a2-87c66cfdfa74": {
+    "variantes": {
+      "linha-deslocada": {
+        "toca": [
+          "$:linha"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Linha do tempo desce à altura dos rótulos, fora do eixo dos indicadores."
+      }
+    }
+  },
+  "a2-902fb4a217d1": {
+    "variantes": {
+      "etapas-fora-de-ordem": {
+        "toca": [
+          "$:indicadores",
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "3ª e 4ª etapas trocam de lugar no DOM (indicador e rótulo)."
+      }
+    }
+  },
+  "a2-904b2a1868bd": {
+    "variantes": {
+      "etapa-nao-aciona-por-tecla": {
+        "toca": [
+          "$:indicadores"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Enter/Espaço bloqueados no botão da 1ª etapa; só clique aciona."
+      }
+    }
+  },
+  "a2-aaac3112f76b": {
+    "variantes": {
+      "etapa-futura-habilitada": {
+        "toca": [
+          "$:indicadores",
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "4ª etapa sem disabled: habilitada, clicável e sem a baixa ênfase."
+      }
+    }
+  },
+  "a2-ab4d44192527": {
+    "variantes": {
+      "concluida-sem-estado": {
+        "toca": [
+          "$:indicadores",
+          "$:rotulos",
+          "$:marcador"
+        ],
+        "remove": [
+          "$:marcador"
+        ],
+        "cascata": [],
+        "estado": null,
+        "nota": "1ª etapa sem o estado concluído (sem data-alert/Tag de concluído), com estilo interativo comum."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "concluida-sem-estado",
+        "viola": "a2-118542cd2b4a",
+        "porque": "Sem o estado concluído, o rótulo da etapa 1 deixa de ter a cor --green-cool-vivid-50 do concluído.",
+        "classe": "mesmo-observavel",
+        "razao": "A cor do rótulo concluído faz parte do mesmo estado concluído retirado."
+      },
+      {
+        "variante": "concluida-sem-estado",
+        "viola": "a2-622c6c318ee6",
+        "porque": "O marcador de Sucesso (data-alert=success) da 1ª etapa deixa de existir.",
+        "classe": "mesmo-observavel",
+        "razao": "O marcador de sucesso é a forma visível do mesmo estado concluído."
+      },
+      {
+        "variante": "concluida-sem-estado",
+        "viola": "a2-7682991ef915",
+        "porque": "A superfície da tag de concluído desaparece com o estado concluído.",
+        "classe": "mesmo-observavel",
+        "razao": "A superfície da tag some com o mesmo estado concluído."
+      }
+    ]
+  },
+  "a2-afb226dcb3e4": {
+    "variantes": {
+      "rotulos-negrito": {
+        "toca": [
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-weight bold nos rótulos das etapas."
+      },
+      "rotulos-pequenos": {
+        "toca": [
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-size scale-down-01 nos rótulos das etapas."
+      }
+    }
+  },
+  "a2-b964a1347b6c": {
+    "variantes": {
+      "rotulo-prolixo": {
+        "toca": [
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto do rótulo da 2ª etapa vira frase de mais de 20 palavras."
+      }
+    }
+  },
+  "a2-c47edccf787c": {
+    "variantes": {
+      "atual-rotulo-cinza": {
+        "toca": [
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Cor do rótulo da etapa 2 (atual) --gray-80."
+      }
+    }
+  },
+  "a2-c4affd889cea": {
+    "variantes": {
+      "rotulo-colado-indicador": {
+        "toca": [
+          "$:indicadores",
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "margin-bottom 0 no indicador: rótulos encostados nele."
+      }
+    }
+  },
+  "a2-cf6773605348": {
+    "variantes": {
+      "atual-sem-ativo": {
+        "toca": [
+          "$:indicadores",
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "2ª etapa sem o estado ativo (classe/estilo), igual às etapas comuns."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "atual-sem-ativo",
+        "viola": "a2-c47edccf787c",
+        "porque": "Sem estado ativo, a etapa 2 perde as cores do estado ativo (rótulo --blue-warm-vivid-80, indicador preenchido).",
+        "classe": "mesmo-observavel",
+        "razao": "As cores do ativo são o próprio estilo que a variante retira."
+      },
+      {
+        "variante": "atual-sem-ativo",
+        "viola": "a2-bfc5ebd36c20",
+        "porque": "O número de etapas com estilo de ativo passa a 0.",
+        "classe": "mesmo-observavel",
+        "razao": "Zero etapas ativas é o mesmo fato."
+      },
+      {
+        "variante": "atual-sem-ativo",
+        "viola": "a2-76dbeded6662",
+        "porque": "A etapa atual deixa de se distinguir com alta ênfase das demais.",
+        "classe": "mesmo-observavel",
+        "razao": "Falta de destaque do ativo é o que a variante descreve."
+      },
+      {
+        "variante": "atual-sem-ativo",
+        "viola": "a2-e5b4728ca51e",
+        "porque": "Com o mesmo estilo das comuns, a etapa atual não se distingue por nenhum meio além da cor.",
+        "classe": "mesmo-observavel",
+        "razao": "A etapa atual indistinta é o mesmo estilo comum aplicado à etapa 2."
+      }
+    ]
+  },
+  "a2-d5cac68068e5": {
+    "variantes": {
+      "etapa-fora-do-tab": {
+        "toca": [
+          "$:indicadores"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "tabindex=-1 no botão da 1ª etapa."
+      }
+    }
+  },
+  "a2-efb2d4b6d23d": {
+    "variantes": {
+      "rotulo-baixo-contraste": {
+        "toca": [
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Cor do rótulo da 2ª etapa #9E9E9E sobre branco."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "rotulo-baixo-contraste",
+        "viola": "a2-c47edccf787c",
+        "porque": "O rótulo da etapa atual deixa de ter a cor --blue-warm-vivid-80 do estado ativo.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesma cor do mesmo rótulo."
+      }
+    ]
+  },
+  "a2-f0e00f432762": {
+    "variantes": {
+      "sem-linha": {
+        "toca": [
+          "$:linha"
+        ],
+        "remove": [
+          "$:linha"
+        ],
+        "cascata": [],
+        "estado": null,
+        "nota": "Linha do tempo entre os indicadores removida."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-linha",
+        "viola": "a2-87c66cfdfa74",
+        "porque": "Sem linha não há linha entre os indicadores acompanhando o espaçamento.",
+        "classe": "mesmo-observavel",
+        "razao": "Um fato só: a linha não existe."
+      }
+    ]
+  },
+  "a2-f44bca2e863f": {
+    "variantes": {
+      "etapa-sem-classe": {
+        "toca": [
+          "$:indicadores",
+          "$:rotulos"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "3ª etapa é botão sem step-progress-btn, estilo copiado à mão (indicador e rótulo dessa etapa)."
+      }
+    }
+  },
+  "a2-fd54ad1670be": {
+    "variantes": {
+      "indicador-28": {
+        "toca": [
+          "$:indicadores",
+          "$:linha"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Indicadores 28×28px; a linha entre eles acompanha o novo tamanho."
+      }
+    }
+  },
+  "a2-002bf9be74ec": {
+    "variantes": {
+      "container-se-move": {
+        "toca": [
+          "$:raiz",
+          "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Ao alternar, a largura do contêiner do switch muda e a chave/switch se desloca."
+      }
+    }
+  },
+  "a2-14fa162258a8": {
+    "variantes": {
+      "rotulo-nao-clicavel": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "pointer-events none no texto do rótulo do switch."
+      }
+    }
+  },
+  "a2-1854c7b2badd": {
+    "variantes": {
+      "label-no-topo": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto do switch alinhado ao topo da chave."
+      }
+    }
+  },
+  "a2-2a5f1cb5a078": {
+    "variantes": {
+      "label-colado": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Margem 0 entre o label e a chave."
+      },
+      "chave-ligada-a-esquerda": {
+        "toca": [
+          "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "No estado ligado a chave não se desloca para a direita (só a cor muda)."
+      }
+    }
+  },
+  "a2-33de62f95ce7": {
+    "variantes": {
+      "sem-br-switch": {
+        "toca": [
+          "$:raiz",
+          "$:input",
+          "$:rotulo",
+          "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Raiz do switch com classe própria e estilo copiado; sem .br-switch o CSS do DS deixa de agir em input, rótulo e chave."
+      }
+    }
+  },
+  "a2-33e661bc4435": {
+    "variantes": {
+      "estado-nao-exposto": {
+        "toca": [
+          "$:raiz",
+          "$:input",
+          "$:rotulo",
+          "$:chave",
+          "chk-avisos-todos:input",
+          "chk-avisos-todos:caixa"
+        ],
+        "remove": [
+          "$:input"
+        ],
+        "cascata": [],
+        "estado": null,
+        "nota": "Input nativo trocado por div role=switch com nome e sem aria-checked; o principal perde o filho data-child correspondente."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "estado-nao-exposto",
+        "viola": "a2-e9ded28efe9c",
+        "porque": "Sem aria-checked, o atributo não acompanha o estado ligado/desligado.",
+        "classe": "mesmo-observavel",
+        "razao": "A ausência de aria-checked é o próprio fato descrito."
+      },
+      {
+        "variante": "estado-nao-exposto",
+        "viola": "a2-615adba6e634",
+        "porque": "Sem input não há data-child no input do switch amarrado ao data-parent do principal.",
+        "classe": "rejeitado",
+        "razao": "O div pode carregar o mesmo data-child; a variante não obriga a perdê-lo."
+      },
+      {
+        "variante": "estado-nao-exposto",
+        "viola": "a2-3c18fb6c1dbc",
+        "porque": "O BRCheckbox acompanha inputs data-child; com o div, ligar só esse switch não leva o principal ao intermediário.",
+        "classe": "distinto",
+        "razao": "O checkbox principal, outro nó, deixa de ir ao intermediário porque o div não tem estado checked."
+      },
+      {
+        "variante": "estado-nao-exposto",
+        "viola": "a2-f4237d13520b",
+        "porque": "Um div não é campo associável por label[for]/id.",
+        "classe": "distinto",
+        "razao": "A associação label[for]/id, outra propriedade, se perde porque um div não é rotulável por for."
+      }
+    ]
+  },
+  "a2-3c18fb6c1dbc": {
+    "variantes": {
+      "principal-sem-intermediario": {
+        "toca": [
+          "$:input",
+          "$:caixa"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Com um só switch ligado, o checkbox principal fica desmarcado (sem indeterminate nem marca de intermediário)."
+      },
+      "principal-inerte": {
+        "toca": [
+          "$:input",
+          "swt-aviso-email:input",
+          "swt-aviso-sms:input"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Marcar o principal não liga os inputs dos dois switches."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "principal-sem-intermediario",
+        "viola": "a2-f97f63c9e220",
+        "porque": "A medida dessa regra é exatamente ligar um só switch e ver o principal intermediário.",
+        "classe": "mesmo-observavel",
+        "razao": "A medida da outra regra é o mesmo principal sem intermediário."
+      },
+      {
+        "variante": "principal-sem-intermediario",
+        "viola": "a2-63df8a527ac9",
+        "porque": "Sem estado intermediário, a tecnologia assistiva não recebe indeterminate/mixed.",
+        "classe": "mesmo-observavel",
+        "razao": "Se o principal não é intermediário, a árvore anuncia o mesmo estado desmarcado."
+      },
+      {
+        "variante": "principal-sem-intermediario",
+        "viola": "a2-afcf1e6a2889",
+        "porque": "Sem estado intermediário a caixa não mostra o traço fa-minus.",
+        "classe": "mesmo-observavel",
+        "razao": "O traço ausente é a forma visível do mesmo estado ausente."
+      },
+      {
+        "variante": "principal-inerte",
+        "viola": "a2-f97f63c9e220",
+        "porque": "A regra mede que clicar o principal liga/desliga os dois switches.",
+        "classe": "mesmo-observavel",
+        "razao": "Clicar no principal sem ligar os switches é o mesmo fato."
+      },
+      {
+        "variante": "principal-inerte",
+        "viola": "a2-4b7121d39b1f",
+        "porque": "Clicar no principal no intermediário deixa de marcar os switches vinculados.",
+        "classe": "mesmo-observavel",
+        "razao": "O mesmo clique no principal que não marca os vinculados."
+      }
+    ]
+  },
+  "a2-402eef83153c": {
+    "variantes": {
+      "sem-chave": {
+        "toca": [
+          "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Chave de alternância (pseudo-elemento) oculta; só o trilho aparece."
+      }
+    }
+  },
+  "a2-41f0168a6cbb": {
+    "variantes": {
+      "sem-trilho": {
+        "toca": [
+          "$:raiz",
+          "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Trilho (superfície do container) transparente e sem borda; só a chave aparece."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-trilho",
+        "viola": "a2-86176aff4a89",
+        "porque": "A superfície do switch deixa de ser --pure-0 (fica transparente).",
+        "classe": "mesmo-observavel",
+        "razao": "Tirar a superfície contra o token da superfície: o mesmo fato."
+      }
+    ]
+  },
+  "a2-463dea60790d": {
+    "variantes": {
+      "label-regular": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-weight regular no label do switch."
+      }
+    }
+  },
+  "a2-86176aff4a89": {
+    "variantes": {
+      "desligado-escuro": {
+        "toca": [
+          "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Cor de alternância do switch desligado --gray-80."
+      },
+      "ligado-verde": {
+        "toca": [
+          "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Cor do switch ligado --green-cool-vivid-50."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "ligado-verde",
+        "viola": "a2-235056fad007",
+        "porque": "A tabela Ligado exige --blue-warm-vivid-40 no switch ligado.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesma cor do switch ligado."
+      }
+    ]
+  },
+  "a2-89b4537e8260": {
+    "variantes": {
+      "chave-pequena": {
+        "toca": [
+          "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Chave 14×14px dentro do container 52×30."
+      },
+      "trilho-largo": {
+        "toca": [
+          "$:raiz",
+          "$:chave",
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Container 64×30px; a chave percorre mais e o rótulo é empurrado."
+      }
+    }
+  },
+  "a2-8f7b9c91d55e": {
+    "variantes": {
+      "so-com-enviar": {
+        "toca": [
+          "$:input",
+          "$:raiz",
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Alternar não aplica a preferência; texto de apoio do switch diz que ela será salva ao clicar em Enviar documento."
+      }
+    }
+  },
+  "a2-ae1397ab72d5": {
+    "variantes": {
+      "rotulo-do-outro-lado": {
+        "toca": [
+          "$:rotulo",
+          "$:raiz",
+          "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "No switch de SMS o rótulo passa para a esquerda da chave."
+      }
+    }
+  },
+  "a2-c5776632fd52": {
+    "variantes": {
+      "rotulo-neutro": {
+        "toca": [
+          "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Texto do rótulo do switch vira 'Opção'."
+      }
+    }
+  },
+  "a2-e9ded28efe9c": {
+    "variantes": {
+      "aria-checked-fixo": {
+        "toca": [
+          "$:input"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "aria-checked fixo 'false' no input do switch, também quando ligado."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "aria-checked-fixo",
+        "viola": "a2-33e661bc4435",
+        "porque": "aria-checked=false prevalece no papel switch e a árvore de acessibilidade anuncia desligado com o switch ligado.",
+        "classe": "mesmo-observavel",
+        "razao": "O estado errado na árvore é o próprio aria-checked fixo."
+      }
+    ]
+  },
+  "a2-f2a468af452d": {
+    "variantes": {
+      "switch-fora-do-tab": {
+        "toca": [
+          "$:input"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "tabindex=-1 no input do switch."
+      },
+      "enter-inerte": {
+        "toca": [
+          "$:input"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Com foco no switch, Enter não alterna (só Espaço)."
+      }
+    }
+  },
+  "a2-0188ff1cc2ec": {
+    "variantes": {
+      "sem-superficie": {
+        "toca": [
+          "$:nav"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Fundo transparente na barra de abas."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-superficie",
+        "viola": "a2-9b0884458d35",
+        "porque": "A superfície da tab deixa de ser --pure-0 (fica transparente).",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo fundo da mesma barra de abas."
+      }
+    ]
+  },
+  "a2-065e3131ac2b": {
+    "variantes": {
+      "sem-tab-content": {
+        "toca": [
+          "$:painel-1",
+          "$:painel-2"
+        ],
+        "remove": [],
+        "cascata": [
+          "stp-andamento",
+          "tbl-movimentacoes",
+          "sel-tipo-documento",
+          "upl-documento",
+          "grupo-avisos",
+          "swt-aviso-email",
+          "swt-aviso-sms",
+          "chk-avisos-todos"
+        ],
+        "estado": null,
+        "nota": "Contêiner dos painéis sem tab-content; cascata declarada por segurança, caso a exibição/espaçamento dos painéis dependa dessa classe."
+      }
+    }
+  },
+  "a2-0a7a74e7f711": {
+    "variantes": {
+      "sem-tab-item": {
+        "toca": [
+          "$:aba-2",
+          "$:painel-2"
+        ],
+        "remove": [],
+        "cascata": [
+          "sel-tipo-documento",
+          "upl-documento",
+          "grupo-avisos",
+          "swt-aviso-email",
+          "swt-aviso-sms",
+          "chk-avisos-todos"
+        ],
+        "estado": null,
+        "nota": "2ª aba sem tab-item (estilo copiado); o BRTab liga o clique por .tab-item, então a troca para o painel Documentos pode deixar de ocorrer."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-tab-item",
+        "viola": "a2-fc8612404c77",
+        "porque": "Se a troca não for religada à mão, selecionar Documentos não atualiza aria-selected (a aba não ativa).",
+        "classe": "distinto",
+        "razao": "Além da classe, a troca de aba e o aria-selected deixam de funcionar porque o BRTab liga o clique por .tab-item."
+      },
+      {
+        "variante": "sem-tab-item",
+        "viola": "a2-2e96af5b4635",
+        "porque": "Sem o comportamento do BRTab na 2ª aba, Enter/Espaço não a ativam.",
+        "classe": "distinto",
+        "razao": "A ativação por teclado da 2ª aba é outro comportamento perdido junto com a ligação do BRTab."
+      }
+    ]
+  },
+  "a2-10aee59f9c1b": {
+    "variantes": {
+      "rotulo-aba-pequeno": {
+        "toca": [
+          "$:aba-1",
+          "$:aba-2"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-size scale-base nos rótulos das abas."
+      }
+    }
+  },
+  "a2-1fedaa9b08e5": {
+    "variantes": {
+      "aba-padding-curto": {
+        "toca": [
+          "$:aba-1",
+          "$:aba-2"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Padding lateral --spacing-scale-half nas abas."
+      }
+    }
+  },
+  "a2-2e96af5b4635": {
+    "variantes": {
+      "aba-nao-ativa-por-tecla": {
+        "toca": [
+          "$:aba-2",
+          "$:aba-1"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Enter/Espaço bloqueados na aba Documentos (handler de teclado das abas); só o clique ativa."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "aba-nao-ativa-por-tecla",
+        "viola": "a2-acc4801af71c",
+        "porque": "O e-MAG 2.1 hospedado na tab exige acionar por Enter/Espaço, o que a aba Documentos deixa de permitir.",
+        "classe": "mesmo-observavel",
+        "razao": "Mesmo Enter/Espaço inerte na mesma aba."
+      }
+    ]
+  },
+  "a2-3a963eafc55d": {
+    "variantes": {
+      "rotulo-sem-sentido": {
+        "toca": [
+          "$:aba-2",
+          "$:painel-2"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Rótulo da 2ª aba vira 'Aba 2' (e o nome acessível do painel Documentos, via aria-labelledby)."
+      }
+    }
+  },
+  "a2-427870f3738e": {
+    "variantes": {
+      "sem-divisor": {
+        "toca": [
+          "$:divisor"
+        ],
+        "remove": [
+          "$:divisor"
+        ],
+        "cascata": [],
+        "estado": null,
+        "nota": "Divisor sob a barra de abas removido."
+      }
+    },
+    "acoplamentoSuspeito": [
+      {
+        "variante": "sem-divisor",
+        "viola": "a2-a83a8121b874",
+        "porque": "Sem divisor não há divider visível sob as abas.",
+        "classe": "mesmo-observavel",
+        "razao": "Um fato só: o divisor não existe."
+      },
+      {
+        "variante": "sem-divisor",
+        "viola": "a2-b8db536c1a83",
+        "porque": "Sem o elemento não há br-divider sob a barra de abas.",
+        "classe": "mesmo-observavel",
+        "razao": "Um fato só: o divisor não existe."
+      },
+      {
+        "variante": "sem-divisor",
+        "viola": "a2-1f2bd2f78e2e",
+        "porque": "Sem o elemento não há linha --gray-20 sob a barra de abas.",
+        "classe": "mesmo-observavel",
+        "razao": "Um fato só: o divisor não existe."
+      }
+    ]
+  },
+  "a2-42ed6f7a310c": {
+    "variantes": {
+      "painel-sem-labelledby": {
+        "toca": [
+          "$:painel-2"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "Painel Documentos sem aria-labelledby (atributo sem herança, não cascateia)."
+      },
+      "aba-sem-role-tab": {
+        "toca": [
+          "$:aba-1"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "A aba Andamento perde role=tab (fica só link)."
+      }
+    }
+  }
+}

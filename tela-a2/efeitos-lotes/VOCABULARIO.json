@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "objetivo": "Vocabulário fechado de nós da página A2 para declarar, por variante e por alternativa, os efeitos da mutação (Revisão Codex 2, bloqueio 3). Fixado antes de qualquer semente, a partir do inventário (tela-a2/inventario.json) e da anatomia dos componentes; não depende do sorteio.",
+    "notacao": "Nó = '<instancia>:<parte>'. Nas declarações por variante, '$' é o hospedeiro em que a variante é colocada ('$:fechar' = parte 'fechar' do hospedeiro). Nós de outras instâncias são escritos por extenso.",
+    "partesPorComponente": "Cada componente tem as partes abaixo; toda instância do componente tem as mesmas partes."
+  },
+  "partes": {
+    "card": ["raiz", "area-titulo", "titulo", "conteudo", "rodape"],
+    "tooltip": ["gatilho", "gatilho-icone", "balao", "balao-texto"],
+    "message": ["raiz", "icone", "titulo", "texto", "fechar", "fechar-icone"],
+    "tab": ["nav", "aba-1", "aba-2", "painel-1", "painel-2", "divisor"],
+    "step": ["raiz", "indicadores", "rotulos", "marcador", "linha"],
+    "table": ["raiz", "titulo", "cabecalho", "celulas"],
+    "select": ["raiz", "rotulo", "campo", "gatilho", "lista", "itens", "mensagem"],
+    "upload": ["raiz", "rotulo", "campo", "area", "botao", "lista", "mensagem"],
+    "switch": ["raiz", "input", "rotulo", "chave"],
+    "checkbox": ["raiz", "input", "rotulo", "caixa"],
+    "accordion": ["raiz", "cabecalhos", "icones", "titulos", "paineis", "divisores"],
+    "pagina": ["doctype", "html", "head", "title", "scripts", "estilos", "body", "h1", "titulo-form", "titulo-duvidas", "secao-duvidas", "regioes"],
+    "grupo": ["fieldset", "legend"]
+  },
+  "instancias": {
+    "crd-resumo": "card", "tip-prazo": "tooltip", "tip-protocolo": "tooltip", "msg-pendencia": "message", "msg-retorno": "message",
+    "tab-requerimento": "tab", "stp-andamento": "step", "tbl-movimentacoes": "table", "sel-tipo-documento": "select", "upl-documento": "upload",
+    "swt-aviso-email": "switch", "swt-aviso-sms": "switch", "chk-avisos-todos": "checkbox", "acc-duvidas": "accordion", "pagina": "pagina",
+    "grupo-avisos": "grupo"
+  },
+  "notasDePartes": {
+    "pagina:head": "meta, link e script do head (charset, X-UA-Compatible, refresh)",
+    "pagina:scripts": "elementos script da página (os do DS e o arquivo de inicialização)",
+    "pagina:estilos": "elementos link/style da página",
+    "pagina:body": "estilos globais herdados por todo o conteúdo (fonte, cor de texto do body)",
+    "pagina:titulo-form": "título do formulário da aba Documentos (fica DENTRO de tab-requerimento:painel-2)",
+    "pagina:titulo-duvidas": "h2 'Dúvidas Frequentes' (fica dentro de pagina:secao-duvidas, antes do accordion)",
+    "pagina:secao-duvidas": "section que contém o título das dúvidas e o accordion",
+    "pagina:regioes": "landmarks e seções da página fora da seção de dúvidas (main é moldura protegida e não pode ser tocado)",
+    "grupo-avisos": "fieldset fs-avisos com legend 'Avisos sobre o requerimento'; contém os dois switches e o checkbox principal; não é instância sorteável, é nó compartilhado",
+    "tab:painel-1": "painel da aba Andamento (contém stp-andamento e tbl-movimentacoes)",
+    "tab:painel-2": "painel da aba Documentos (contém sel-tipo-documento, upl-documento, grupo-avisos e pagina:titulo-form)",
+    "step:marcador": "a Tag de concluído (.step-alert) da 1ª etapa",
+    "step:indicadores": "os botões/indicadores das 4 etapas (número, cor, estado, nome acessível)",
+    "select:gatilho": "botão circular que abre a lista",
+    "message:fechar": "botão circular Fechar",
+    "tooltip:gatilho": "botão só de ícone no card que abre o balão"
+  },
+  "contem": {
+    "_nota": "Nó → instâncias que ficam dentro dele. Uma mudança de estrutura, visibilidade ou estilo herdado nesse nó atinge essas instâncias (campo 'cascata').",
+    "crd-resumo:conteudo": ["tip-prazo", "tip-protocolo"],
+    "crd-resumo:raiz": ["tip-prazo", "tip-protocolo"],
+    "tab-requerimento:painel-1": ["stp-andamento", "tbl-movimentacoes"],
+    "tab-requerimento:painel-2": ["sel-tipo-documento", "upl-documento", "grupo-avisos", "swt-aviso-email", "swt-aviso-sms", "chk-avisos-todos"],
+    "grupo-avisos:fieldset": ["swt-aviso-email", "swt-aviso-sms", "chk-avisos-todos"],
+    "pagina:secao-duvidas": ["acc-duvidas"],
+    "pagina:body": ["*"],
+    "pagina:html": ["*"]
+  }
+}

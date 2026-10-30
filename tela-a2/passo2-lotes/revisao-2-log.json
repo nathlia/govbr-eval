@@ -1,0 +1,246 @@
+{
+  "manuais": [
+    "a2-1faa8ef238c0",
+    "a2-fee39db9eda4",
+    "a2-dc561d157556",
+    "a2-615adba6e634",
+    "a2-7682991ef915",
+    "a2-3584b59ba47f",
+    "a2-86453e6d513e",
+    "a2-5f5d70c647f1",
+    "a2-27e932bb9636",
+    "a2-81ddb21026ec",
+    "a2-8b5cc7cc48fa",
+    "a2-396037bd7d96",
+    "a2-22240b8959ba",
+    "a2-31b4a3f89649",
+    "a2-235056fad007",
+    "a2-18acbf7b4c9c",
+    "a2-0ea33ff35779",
+    "a2-7e05c5c8e09c",
+    "a2-909e5f61d661",
+    "a2-d6b3f0e36943",
+    "a2-46c418f28680",
+    "a2-e0663017fccc",
+    "a2-ef322e43e7c5",
+    "a2-0288cf4209b9",
+    "a2-a33bec804e30",
+    "a2-f2c48361423c",
+    "a2-90f5049294e7",
+    "a2-7e5cbc48ee9a",
+    "a2-1f088653ff0a",
+    "a2-d95c5823f272",
+    "a2-c98b9e26385b",
+    "a2-0231cdc1d1bc",
+    "a2-7e63220aef3a",
+    "a2-bc353cefba8b",
+    "a2-e106ddc07170",
+    "a2-e30e6fb780f0",
+    "a2-cee53d7f09fa",
+    "a2-0c44f5dd2a2f",
+    "a2-74585f5c74a0",
+    "a2-86551a3f4898",
+    "a2-23194b4dd378",
+    "a2-0d6b24457a2b",
+    "a2-ae8b8bf99efa",
+    "a2-3e4b18b0d25f",
+    "a2-8a5e5baa74dc",
+    "a2-c443d14116ab",
+    "a2-2862ce89b2e5"
+  ],
+  "acoplamentos": [
+    {
+      "regra": "a2-41c27bf1953d",
+      "variante": "aberto-sem-active",
+      "hospedeirosRetirados": [
+        "acc-duvidas"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-56613b3be80b",
+      "variante": "item-fora-da-raiz",
+      "hospedeirosRetirados": [
+        "acc-duvidas"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-22f23447d6b2",
+      "variante": "conteudo-sem-card-content",
+      "hospedeirosRetirados": [
+        "crd-resumo"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-7d680beb8c97",
+      "variante": "texto-na-area-de-acoes",
+      "hospedeirosRetirados": [
+        "crd-resumo"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-e1c6d1cde6ac",
+      "variante": "sem-br-checkbox",
+      "hospedeirosRetirados": [
+        "chk-avisos-todos"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-59c41d3b1085",
+      "variante": "type-errado",
+      "hospedeirosRetirados": [
+        "sel-tipo-documento"
+      ],
+      "regraSaiu": false
+    },
+    {
+      "regra": "a2-59c41d3b1085",
+      "variante": "campo-em-div",
+      "hospedeirosRetirados": [
+        "sel-tipo-documento"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-40fe6a293a12",
+      "variante": "primario-na-aba",
+      "hospedeirosRetirados": [
+        "tab-requerimento"
+      ],
+      "regraSaiu": false
+    },
+    {
+      "regra": "a2-a7417adc8e5b",
+      "variante": "sem-br-message",
+      "hospedeirosRetirados": [
+        "msg-pendencia",
+        "msg-retorno"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-0a6b97c41045",
+      "variante": "lista-sem-br-list",
+      "hospedeirosRetirados": [
+        "sel-tipo-documento"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-12888369bd0f",
+      "variante": "sem-br-select",
+      "hospedeirosRetirados": [
+        "sel-tipo-documento"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-419c091564b6",
+      "variante": "opcao-sem-br-item",
+      "hospedeirosRetirados": [
+        "sel-tipo-documento"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-879621000aa6",
+      "variante": "gatilho-sem-br-button",
+      "hospedeirosRetirados": [
+        "sel-tipo-documento"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-bd84ff2497d5",
+      "variante": "campo-sem-br-input",
+      "hospedeirosRetirados": [
+        "sel-tipo-documento"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-33e661bc4435",
+      "variante": "estado-nao-exposto",
+      "hospedeirosRetirados": [
+        "swt-aviso-email",
+        "swt-aviso-sms"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-0a7a74e7f711",
+      "variante": "sem-tab-item",
+      "hospedeirosRetirados": [
+        "tab-requerimento"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-24082cba4782",
+      "variante": "tabela-de-divs",
+      "hospedeirosRetirados": [
+        "tbl-movimentacoes"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-c6b7402991ad",
+      "variante": "simples-por-clique",
+      "hospedeirosRetirados": [
+        "tip-prazo",
+        "tip-protocolo"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-0e465d7adf07",
+      "variante": "sem-arrastar",
+      "hospedeirosRetirados": [
+        "upl-documento"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-acc4801af71c",
+      "variante": "gatilho-so-mouse",
+      "hospedeirosRetirados": [
+        "crd-resumo"
+      ],
+      "regraSaiu": false
+    },
+    {
+      "regra": "a2-cad7cafa42d7",
+      "variante": "rotulo-so-leitor-de-tela",
+      "hospedeirosRetirados": [
+        "sel-tipo-documento",
+        "upl-documento",
+        "swt-aviso-email",
+        "swt-aviso-sms",
+        "chk-avisos-todos"
+      ],
+      "regraSaiu": true
+    },
+    {
+      "regra": "a2-d720ea8520cb",
+      "variante": "erro-generico",
+      "hospedeirosRetirados": [
+        "msg-retorno"
+      ],
+      "regraSaiu": false
+    },
+    {
+      "regra": "a2-f4237d13520b",
+      "variante": "rotulo-desassociado",
+      "hospedeirosRetirados": [
+        "swt-aviso-email",
+        "swt-aviso-sms",
+        "chk-avisos-todos"
+      ],
+      "regraSaiu": false
+    }
+  ]
+}
