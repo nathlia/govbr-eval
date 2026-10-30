@@ -24,15 +24,27 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
 /**
  * Ferramentas que cada perfil registra, em ordem alfabética, e o sha256 de `JSON.stringify(tools)` do
  * tools/list (cliente MCP 1.29.0, o mesmo da ponte). Os pins VIGENTES (só para campanhas NOVAS) são os do
- * validator 3.4.0 (994dec6), medidos em 2026-10-28 contra o dist/ construído de 994dec6 com o
+ * validator 3.5.0 (4c3b2ab), medidos em 2026-10-30 contra o dist/ construído de 4c3b2ab com o
  * SDK 1.29.0 da ponte (stdio, GOVBR_VALIDATOR_TOOL_PROFILE=<perfil>, sem GOVBR_RETRIEVAL_MODE = busca
  * léxica padrão, sha256 de JSON.stringify(tools)) e de novo dentro da imagem do oráculo travada.
+ * Da 3.4.x para a 3.5.0 mudaram evaluation, full e normative; knowledge-free, deterministic e evidence
+ * ficaram iguais.
  * Da 3.0.0 para a 3.2.0 mudaram evaluation, full e normative (o get_ds_rules ganhou o parâmetro opcional
  * `retrieval`); knowledge-free, deterministic e evidence ficaram iguais.
  * As campanhas históricas guardam os próprios pins no campaign.json (2.14.0: evaluation 3d70162f…,
  * knowledge-free 72abd549…); a tabela da 3.0.0 fica abaixo só como registro.
  * Mudou de propósito? Mude aqui E no validator, e declare: é diferença de tratamento do braço.
  */
+export const TOOLS_LIST_SHA256_3_5_0 = {
+  "knowledge-free": "f358152ab77b8b6930687c1b12206f3821170600d52c0fda0a3dde8d0774bf44",
+  evaluation: "61177aa7f89b77801e4d8236a376361ffe4c57d574e3e67bf23678174b397f38",
+  full: "fde63c047a3265114ef22a19bc541375f1ae42496b3b0d82b5336cff0069ef0c",
+  normative: "9028ac6d3574020532135e2e3ce34d20debaa1695dd2ef8b8fd8d3f0206f0f57",
+  deterministic: "145b51e4da8ae7fb58a5cefc7b031352bfbf0ca1f53f983e26ac817f9a6c115a",
+  evidence: "4b4f82499cfe923b26f178c9dff3f5dcf233512ddbee6128b5a6bd0cc7a81ba7",
+} as const;
+
+/** Registro: pins do validator 3.4.0 (994dec6, medidos em 2026-10-28), vigentes até a 3.4.4 (b6e0663). Não usados pelo runner. */
 export const TOOLS_LIST_SHA256_3_4_0 = {
   "knowledge-free": "f358152ab77b8b6930687c1b12206f3821170600d52c0fda0a3dde8d0774bf44",
   evaluation: "adc4266162781cb6239ee4e84ae852889ceeb209556bf7270c267b015884c6b2",
@@ -65,11 +77,11 @@ export const TOOLS_LIST_SHA256_3_0_0 = {
 export const PERFIS: Readonly<Record<PerfilOraculo, { tools: readonly string[]; toolsListSha256: string }>> = {
   evaluation: {
     tools: ["get_component_spec", "get_design_tokens", "get_ds_rules", "get_emag_rules", "get_finding_details", "get_page_rules", "scan_page", "verify_finding"],
-    toolsListSha256: TOOLS_LIST_SHA256_3_4_0.evaluation,
+    toolsListSha256: TOOLS_LIST_SHA256_3_5_0.evaluation,
   },
   "knowledge-free": {
     tools: ["get_finding_details", "scan_page", "verify_finding"],
-    toolsListSha256: TOOLS_LIST_SHA256_3_4_0["knowledge-free"],
+    toolsListSha256: TOOLS_LIST_SHA256_3_5_0["knowledge-free"],
   },
 };
 
@@ -107,7 +119,7 @@ export function perfilMedido(inv: InventarioOraculo | null, telemetria: Record<s
   let perfil: PerfilOraculo | null = porNomes.length === 1 && porHash.length === 1 && porNomes[0] === porHash[0] ? porNomes[0] : null;
   if (!perfil) problemas.push(`tools/list do servidor (${nomes.join(", ")}; sha256 ${String(inv.childToolsSha256 ?? "ausente").slice(0, 12)}) não é o de nenhum perfil fixado`);
   // Segunda medida do servidor (validator ≥ 2.17.1): serverInfo.description = "toolProfile=<perfil>". Ausente ou
-  // diferente do perfil do tools/list = falha fechada (o validator 3.4.0 que as campanhas novas fixam sempre a anuncia).
+  // diferente do perfil do tools/list = falha fechada (o validator 3.5.0 que as campanhas novas fixam sempre a anuncia).
   const declarado = /(?:^|\s)toolProfile=(\S+)/.exec(inv.serverInfo?.description ?? "")?.[1] ?? null;
   if (!declarado) { problemas.push(`serverInfo.description sem toolProfile=<perfil> (${JSON.stringify(inv.serverInfo?.description ?? null)})`); perfil = null; }
   else if (perfil && declarado !== perfil) { problemas.push(`serverInfo diz toolProfile=${declarado}, tools/list diz ${perfil}`); perfil = null; }
