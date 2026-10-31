@@ -133,6 +133,9 @@ const TROCAS_NORMA_CEGA: readonly { re: RegExp; por: string }[] = [
 const TROCAS_TEXTO_CEGO: readonly { re: RegExp; por: string }[] = [
   { re: /\b(?:mcp__[A-Za-z0-9_-]+__)?browser_[a-z_]+\b/g, por: FERRAMENTA_CITADA },
   { re: new RegExp(ID_DE_ACHADO.source, "g"), por: FERRAMENTA_CITADA },
+  // ids de sessão de ferramenta no texto livre ("F-081..F-090", "V-001 unverifiable", "S-page-001"): mesma forma que a
+  // cegueira barra (e14-cegueira "id de sessão de ferramenta"); dev-362-b-01, 2026-10-31.
+  { re: /\bS-[a-z]+-\d+\b|\b[FV]-\d{1,4}\b/g, por: FERRAMENTA_CITADA },
   { re: /\baxe(?:-core)?\b/gi, por: FERRAMENTA_CITADA },
 ];
 const aplicar = (t: string, trocas: readonly { re: RegExp; por: string }[]) => trocas.reduce((s, { re, por }) => s.replace(re, por), t);

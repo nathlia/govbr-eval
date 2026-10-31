@@ -144,6 +144,12 @@ try {
     const i = cartao("C-iiii").alegacao.observado!;
     assert.ok(i.includes("Rawline") && i.includes("modelo de página do DS") && !i.includes("[termo citado]"), i);
   });
+  t("[B] ids de sessão de ferramenta no texto livre viram marcador (dev-362-b-01: 'F-081..F-090', 'V-001 unverifiable', 'S-page-001')", () => {
+    const m = mascararTrio("O mesmo ocorre na aba Concluídos (F-081..F-090); o termo não tem predicado (V-001 unverifiable); ver S-page-001.")!;
+    assert.ok(!/\bS-[a-z]+-\d+\b|\b[FV]-\d{1,4}\b/.test(m), m);
+    assert.equal((m.match(/\[ferramenta citada\]/g) ?? []).length, 4, m);
+    assert.equal(mascararTrio("Campo CPF-1 e F1 ficam; WCAG 2.4.3 fica."), "Campo CPF-1 e F1 ficam; WCAG 2.4.3 fica.");
+  });
   t("[B] resíduo de braço contado por braço, categoria e comparação; emag-N.N não conta como regra do axe; falhas de máscara 0", () => {
     const r = JSON.parse(p.arquivosInternos.get("residuo-de-braco.json")!) as { formato: string; bracosDoDesenho: string[];
       porBraco: Record<string, { cartoes: number; comSinal: number; porCategoria: Record<string, number> }>;
