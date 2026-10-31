@@ -1,0 +1,192 @@
+{
+  "o_que_e": "NAT-86: detectores do validator sobre os controles, linha a linha da matriz congelada (sem modelo).",
+  "divisao": "desenvolvimento",
+  "perfil": "evaluation",
+  "janela": {
+    "width": 1280,
+    "height": 900
+  },
+  "matriz": {
+    "versao": "portao-nat86-matriz-1.0.0",
+    "sha256": "d35b33f5aeee08031666da18c78c71d930b82cfecdfaf8289da2f4583ae6822e"
+  },
+  "expectativasSha256": "c57b3ff722f21907f6714ed20157f117f67e2b70b280c939e131a9dd5037f2cf",
+  "validator": "3.6.3",
+  "node": "v25.2.1",
+  "chromium": "149.0.7827.55",
+  "linhas": 171,
+  "alegacoes": 294,
+  "d1PorLinha": {
+    "F1": {
+      "TP": 9,
+      "fora-do-escopo": 2,
+      "TN": 27,
+      "preservado": 5
+    },
+    "total": {
+      "TP": 23,
+      "fora-do-escopo": 25,
+      "TN": 98,
+      "preservado": 15,
+      "nao-exercitado": 10
+    },
+    "F2": {
+      "TP": 7,
+      "TN": 14,
+      "preservado": 3
+    },
+    "F3": {
+      "TP": 7,
+      "preservado": 4,
+      "TN": 12,
+      "nao-exercitado": 4
+    },
+    "F4": {
+      "fora-do-escopo": 6,
+      "TN": 9,
+      "nao-exercitado": 3,
+      "preservado": 2
+    },
+    "F5": {
+      "fora-do-escopo": 6,
+      "TN": 17,
+      "preservado": 1
+    },
+    "F6": {
+      "fora-do-escopo": 3,
+      "TN": 6
+    },
+    "F7": {
+      "nao-exercitado": 1,
+      "TN": 11,
+      "fora-do-escopo": 3
+    },
+    "F8": {
+      "fora-do-escopo": 1,
+      "TN": 2,
+      "nao-exercitado": 2
+    },
+    "T": {
+      "fora-do-escopo": 4
+    }
+  },
+  "d1PorCelula": {
+    "F1": {
+      "TP": 5,
+      "fora-do-escopo": 1,
+      "TN": 14,
+      "preservado": 3
+    },
+    "total": {
+      "TP": 18,
+      "fora-do-escopo": 17,
+      "TN": 67,
+      "preservado": 13,
+      "nao-exercitado": 9
+    },
+    "F2": {
+      "TP": 6,
+      "TN": 14,
+      "preservado": 3
+    },
+    "F3": {
+      "TP": 7,
+      "preservado": 4,
+      "TN": 12,
+      "nao-exercitado": 3
+    },
+    "F4": {
+      "fora-do-escopo": 5,
+      "TN": 8,
+      "nao-exercitado": 3,
+      "preservado": 2
+    },
+    "F5": {
+      "fora-do-escopo": 3,
+      "TN": 8,
+      "preservado": 1
+    },
+    "F6": {
+      "fora-do-escopo": 2,
+      "TN": 4
+    },
+    "F7": {
+      "nao-exercitado": 1,
+      "TN": 5,
+      "fora-do-escopo": 1
+    },
+    "F8": {
+      "fora-do-escopo": 1,
+      "TN": 2,
+      "nao-exercitado": 2
+    },
+    "T": {
+      "fora-do-escopo": 4
+    }
+  },
+  "d2PorLinha": {
+    "F1": {
+      "-": 11,
+      "TN": 28
+    },
+    "total": {
+      "-": 41,
+      "TN": 116,
+      "TP": 7
+    },
+    "F2": {
+      "TP": 7,
+      "TN": 16
+    },
+    "F3": {
+      "-": 7,
+      "TN": 18
+    },
+    "F4": {
+      "-": 6,
+      "TN": 14
+    },
+    "F5": {
+      "-": 6,
+      "TN": 18
+    },
+    "F6": {
+      "-": 3,
+      "TN": 6
+    },
+    "F7": {
+      "TN": 12,
+      "-": 3
+    },
+    "F8": {
+      "-": 1,
+      "TN": 4
+    },
+    "T": {
+      "-": 4
+    }
+  },
+  "falhas": {
+    "bloqueantes": [],
+    "aceite": []
+  },
+  "decisao": {
+    "resultado": "go",
+    "motivos": [],
+    "exercitadas": {
+      "confirmar": {
+        "exercitadas": 23,
+        "total": 23
+      },
+      "nao-confirmar": {
+        "exercitadas": 98,
+        "total": 99
+      },
+      "so-unverifiable": {
+        "exercitadas": 15,
+        "total": 24
+      }
+    }
+  },
+  "segundos": 455
+}
