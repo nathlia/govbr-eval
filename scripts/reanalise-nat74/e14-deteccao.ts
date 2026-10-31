@@ -203,29 +203,51 @@ if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   const cAbs = join(passada, "chave", "fila-t3-chave.json"), mAbs = join(passada, "lotes", "manifesto.json");
   const chave = new Map(ler<{ itens: ItemChave[] }>(cAbs).itens.map(i => [i.chave, i.braco]));
   const m = ler<{ analises: { dir: string }[] }>(mAbs);
-  if (m.analises.length !== 1) { console.error("uma análise (uma tela) por tabulação"); process.exit(1); }
-  const anal = join(dirname(resolve(passada)), m.analises[0].dir);
+  // Várias análises (os trios de uma campanha numa passada só): uma tabela por análise, filtrando os julgamentos pelo
+  // rótulo da análise na chave (`campanha|rótulo|cartão`), e um resumo com a mediana por braço. Todas da mesma tela.
+  const multi = m.analises.length > 1;
+  const cli = val("--coluna-principal");
+  const resumo: { analise: string; porBraco: Record<string, { deteccao: number; fundamentada: number; ds: number; geral: number } | null> }[] = [];
+  let refSha: string | null = null;
+  for (const a0 of m.analises) {
+  const anal = join(dirname(resolve(passada)), a0.dir);
   const refAbs = join(anal, "entradas", "referencia.json"), campAbs = join(anal, "entradas", "campanha.json"), pkgAbs = join(anal, "revisao", "package.json");
   const coletaAbs = join(anal, "coleta-trio.json");
+  if (refSha && sha(readFileSync(refAbs)) !== refSha) { console.error("análises de telas/referências diferentes: uma tela por tabulação"); process.exit(1); }
+  refSha = sha(readFileSync(refAbs));
   const ref = ler<{ violations: { id: string; categories: string[] }[] }>(refAbs);
   const camp = ler<{ design: { arms?: string[]; colunaPrincipal?: string } }>(campAbs);
   const arms = camp.design.arms ?? ["sem", "com"];
   const pkg = ler<SemanticPackage>(pkgAbs);
   const slots = existsSync(coletaAbs) ? ler<{ slots: { braco: string; escolhida: string | null }[] }>(coletaAbs).slots : null;
   const estado = estadoDosBracos(pkg.runs.map(r => ({ id: r.id, braco: bracoDoRun(r, arms) })), slots, arms);
-  const cli = val("--coluna-principal");
   let colunaPrincipal: Coluna | null;
   try { colunaPrincipal = colunaDe(cli ?? camp.design.colunaPrincipal); } catch (e) { console.error((e as Error).message); process.exit(1); }
-  const t = tabular(j.julgamentos, k => { const b = chave.get(k); if (!b) throw new Error(`cartão fora da chave: ${k}`); return b; }, ref.violations, j.politica, arms,
+  const js = multi ? j.julgamentos.filter(x => x.chave.split("|")[1] === a0.dir) : j.julgamentos;
+  const t = tabular(js, k => { const b = chave.get(k); if (!b) throw new Error(`cartão fora da chave: ${k}`); return b; }, ref.violations, j.politica, arms,
     { estado, colunaPrincipal });
   const lidos = [jAbs, cAbs, mAbs, refAbs, campAbs, pkgAbs, ...(slots ? [coletaAbs] : [])];
   const entradas = Object.fromEntries(lidos.map(p => [p.replace(/\\/g, "/"), sha(readFileSync(p))]));
-  const doc = { ...t, colunaPrincipalOrigem: cli ? "--coluna-principal" : camp.design.colunaPrincipal ? "campanha.design.colunaPrincipal" : null, entradas };
-  gravar(saida, "deteccao.json", jsonTexto(doc));
-  gravar(saida, "deteccao.md", tabelaMd(t, `Specs achadas por braço — ${basename(dirname(dirname(resolve(passada))))}/${basename(dirname(resolve(passada)))}/${basename(resolve(passada))}`));
+  const doc = { ...t, ...(multi ? { analise: a0.dir, cartoesDaAnalise: js.length } : {}), colunaPrincipalOrigem: cli ? "--coluna-principal" : camp.design.colunaPrincipal ? "campanha.design.colunaPrincipal" : null, entradas };
+  const dest = multi ? join(saida, a0.dir.split("/")[0]) : saida;
+  const titulo = `Specs achadas por braço — ${basename(dirname(dirname(resolve(passada))))}/${basename(dirname(resolve(passada)))}/${basename(resolve(passada))}${multi ? ` · ${a0.dir}` : ""}`;
+  gravar(dest, "deteccao.json", jsonTexto(doc));
+  gravar(dest, "deteccao.md", tabelaMd(t, titulo));
+  if (multi) console.log(`— ${a0.dir} (${js.length} cartões)`);
   for (const b of t.bracos) {
     const c = t.porBraco[b];
     console.log(c ? `${b}: detecção ${c.deteccao.length} (DS ${c.porClasse.ds.deteccao} · geral ${c.porClasse.geral.deteccao}) · fundamentada ${c.fundamentada.length} (DS ${c.porClasse.ds.fundamentada} · geral ${c.porClasse.geral.fundamentada})`
       : `${b}: coleta ${t.estado[b]} (sem contagem)`);
+  }
+  resumo.push({ analise: a0.dir, porBraco: Object.fromEntries(t.bracos.map(b => { const c = t.porBraco[b];
+    return [b, c ? { deteccao: c.deteccao.length, fundamentada: c.fundamentada.length, ds: c.porClasse.ds.deteccao, geral: c.porClasse.geral.deteccao } : null]; })) });
+  }
+  if (multi) {
+    const mediana = (xs: number[]) => { const o = [...xs].sort((x, y) => x - y), n = o.length; return n ? (n % 2 ? o[(n - 1) / 2] : (o[n / 2 - 1] + o[n / 2]) / 2) : null; };
+    const bracos = [...new Set(resumo.flatMap(r => Object.keys(r.porBraco)))];
+    const med = Object.fromEntries(bracos.map(b => { const v = resumo.map(r => r.porBraco[b]).filter((x): x is NonNullable<typeof x> => !!x);
+      return [b, { trios: v.length, deteccao: mediana(v.map(x => x.deteccao)), fundamentada: mediana(v.map(x => x.fundamentada)), ds: mediana(v.map(x => x.ds)), geral: mediana(v.map(x => x.geral)) }]; }));
+    gravar(saida, "resumo.json", jsonTexto({ politica: j.politica, nota: "mediana por braço sobre as análises com coleta válida; braço sem contagem fica fora da mediana e aparece com null na análise", porAnalise: resumo, mediana: med }));
+    for (const b of bracos) console.log(`mediana ${b}: detecção ${med[b].deteccao} · fundamentada ${med[b].fundamentada} · DS ${med[b].ds} · geral ${med[b].geral} (${med[b].trios} trios)`);
   }
 }

@@ -27,7 +27,7 @@
  * fica igual. `--politica 1.2.0` refaz a passada 1.3.1 byte a byte (referências ignoradas, formatos 1.2.0).
  */
 import { existsSync, readFileSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import type { SemanticPackage } from "../semantic-flow";
 import { ID_DE_ACHADO, distingueComDeFerramentas, mascararNormaCega, mascararTextoCego } from "../painel/mascara";
 import { POLITICA_PRINCIPAL, TCC, bracoDoPerfil, gravar, jsonTexto, lerJson, ordenar, rotuloPolitica, sha, versaoDaPolitica, type VersaoPolitica } from "./comum";
@@ -154,6 +154,13 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   const fontes: Record<string, string> = { ...nr.fontes };
   let desenho: { arms: string[]; comparisons: { id: string; arms: string[]; role?: string }[] } | null = null;
   let idsDeAchado = 0;
+  // Rótulo da análise na chave: o nome da pasta, como sempre; se duas análises têm o mesmo nome (os trios de uma
+  // campanha saem todos `analisar-<carimbo>`), entra a pasta do trio. Sem isso, os cartões da linha de base, iguais
+  // nos três trios, colidiam no mesmo id opaco (dev-350-a-01, 2026-10-30). Nomes únicos: byte a byte como antes.
+  const nomesRepetidos = new Set(analises.map(d => basename(d)).filter((n, i, a) => a.indexOf(n) !== i));
+  const rotuloDe = (dir: string) => nomesRepetidos.has(basename(dir)) ? `${basename(dirname(dir))}/${basename(dir)}` : basename(dir);
+  const rotulos = analises.map(rotuloDe);
+  if (new Set(rotulos).size !== rotulos.length) throw new Error(`E14 campanha: análises com o mesmo rótulo (${rotulos.join(", ")})`);
   for (const dir of analises) {
     const pkg = lerJson<SemanticPackage>(join(dir, "revisao", "package.json"));
     const camp = lerJson<{ campaignId: string; design: { screens: { id: string; label: string }[]; arms?: string[]; comparisons?: { id: string; arms: string[]; role?: string }[] } }>(join(dir, "entradas", "campanha.json"));
@@ -169,15 +176,15 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
       normas: v.rules.map(nr.resolver).filter(Boolean) }));
     const endereco = enderecoDaTela(ref._meta, lerJson<{ url: string }>(join(dir, "revisao", "capture.json")).url);
     const refAbs = join(dir, "entradas", "referencia.json");
-    fontes[`${basename(dir)}/entradas/referencia.json`] = sha(readFileSync(refAbs));
+    fontes[`${rotuloDe(dir)}/entradas/referencia.json`] = sha(readFileSync(refAbs));
     telas[telaId] ??= { nome, versao: ref._meta.version, endereco, defeitos: specs };
     const specDe = new Map(pkg.units.map(u => [u.id, u.specId]));
     const runDe = new Map(pkg.runs.flatMap(r => r.cardIds.map(id => [id, r] as const)));
     for (const card of pkg.cards) {
       const run = runDe.get(card.id);
       if (!run) throw new Error(`cartão sem run: ${card.id}`);
-      const chave = `${camp.campaignId}|${basename(dir)}|${card.id}`;
-      const item: ItemChave = { id: idOpaco(chave), hash: hashDaChave(chave), chave, campanha: camp.campaignId, tela: telaId as "A", par: basename(dir),
+      const chave = `${camp.campaignId}|${rotuloDe(dir)}|${card.id}`;
+      const item: ItemChave = { id: idOpaco(chave), hash: hashDaChave(chave), chave, campanha: camp.campaignId, tela: telaId as "A", par: rotuloDe(dir),
         braco: bracoDoRun(run, arms), runId: run.id, cardIdOriginal: card.id, atomoId: "cartao", cardSha256: sha(JSON.stringify(card)), mId: null,
         tipo: "sensivel", motivoFila: "primeira passada cega (§8.1)", decisaoAntiga: "", unidadesAntigas: "", origemMedida341: null, origemMedida370: null, lote: null };
       const atomo = { sujeitos: card.subjects.map(s => s.key ?? s.id), candidatasSpecs: [...new Set(card.candidateUnitIds.map(u => specDe.get(u)!))].sort() };
@@ -199,6 +206,8 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
       itens.push({ item, card, cartao: c });
     }
   }
+  const repetidos = itens.map(x => x.item.id).filter((id, i, a) => a.indexOf(id) !== i);
+  if (repetidos.length) throw new Error(`E14 campanha: id opaco repetido (${[...new Set(repetidos)].join(", ")})`);
   const ord = ordenar(itens, x => x.item.hash);
   const lotes: { lote: string; ids: string[] }[] = [];
   let i = 0;
@@ -236,7 +245,7 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
     ["lotes/manifesto.json", jsonTexto({ formato: v13 ? FORMATO_MANIFESTO_CAMPANHA_1_3 : FORMATO_MANIFESTO_CAMPANHA, versao, politica: rotulo, total: ord.length,
       ...(v13 ? { cartoesComReferencias: ord.filter(x => x.cartao.referencias?.length).length } : {}),
       respostas: { pasta: "respostas/", formato: v13 ? FORMATO_RESPOSTAS_CAMPANHA_1_3 : FORMATO_RESPOSTAS_CAMPANHA, nota: "pasta da passada, ao lado de lotes/ (nunca lotes/respostas/)" },
-      analises: analises.map(d => ({ dir: basename(d), packageSha256: sha(readFileSync(join(d, "revisao", "package.json"))) })),
+      analises: analises.map(d => ({ dir: rotuloDe(d), packageSha256: sha(readFileSync(join(d, "revisao", "package.json"))) })),
       arquivos: Object.fromEntries([...juiz].map(([rel, t]) => [rel, sha(t)])),
       lotes: lotes.map(l => ({ lote: l.lote, n: l.ids.length, sha256: sha(juiz.get(`lotes/${l.lote}.json`)!), ids: l.ids })), chaveSha256: sha(chaveTxt), residuoSha256: sha(residuoTxt), fontes })]]);
   return { arquivosDoJuiz: juiz, arquivosInternos: internos, cegueira, falhasTrio, fontes };

@@ -109,6 +109,16 @@ try {
     gravarJson(join(outro, "data"), "knowledge/manifest.json", { activeVersion: "3.7.0-literal-teste" });
     assert.throws(() => prepararCampanha([dir], { validador: outro }), /não é a do oráculo da campanha/);
   });
+  t("trios com a mesma pasta de análise (p01/analisar-X, p02/analisar-X): ids distintos, rótulo com o trio; mesma análise duas vezes para", () => {
+    const d1 = join(tmp, "multi", "p01", "analisar-X"), d2 = join(tmp, "multi", "p02", "analisar-X");
+    cpSync(dir, d1, { recursive: true }); cpSync(dir, d2, { recursive: true });
+    const pm = prepararCampanha([d1, d2], { validador: valDir, checkerAliases: aliasesAbs });
+    const ch = JSON.parse(pm.arquivosInternos.get("chave/fila-t3-chave.json")!) as { itens: { id: string; par: string }[] };
+    assert.equal(ch.itens.length, 2 * cards.length);
+    assert.equal(new Set(ch.itens.map(i => i.id)).size, ch.itens.length);
+    assert.deepEqual([...new Set(ch.itens.map(i => i.par))].sort(), ["p01/analisar-X", "p02/analisar-X"]);
+    assert.throws(() => prepararCampanha([d1, d1], { validador: valDir, checkerAliases: aliasesAbs }), /mesmo rótulo/);
+  });
   // Passada 1.2.0 (histórico, D-156: `--politica 1.2.0`); a 1.3.0 tem bloco próprio no fim.
   const p = prepararCampanha([dir], { validador: valDir, checkerAliases: aliasesAbs, politica: "1.2.0" });
   const loteTxt = p.arquivosDoJuiz.get("lotes/lote-01.json")!;
