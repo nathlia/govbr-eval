@@ -111,7 +111,8 @@
     "pool:bm25": "tsx scripts/pool-referencia-bm25.ts",
     "test:pool-bm25": "tsx scripts/test-pool-referencia-bm25.ts",
     "tela-a2:universo": "tsx scripts/tela-a2-universo.ts",
-    "tela-a2:sorteio": "tsx scripts/draw-tela-a2.ts"
+    "tela-a2:sorteio": "tsx scripts/draw-tela-a2.ts",
+    "test:tela-a2-revisao": "tsx scripts/test-draw-tela-a2-revisao.ts"
   },
   "dependencies": {
     "@axe-core/playwright": "4.11.1",

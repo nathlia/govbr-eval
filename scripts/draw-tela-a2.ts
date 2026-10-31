@@ -63,7 +63,7 @@ const EFEITOS = "tela-a2/efeitos.json";
 const VOCAB = "tela-a2/efeitos-lotes/VOCABULARIO.json";
 const DUPS = "tela-a2/auditoria-duplicatas.json";
 const MATRIZ = "tela-a2/compatibilidade.json";
-const NODE_LIMIT = 5_000_000;
+const NODE_LIMIT = 1_000_000_000;
 /** Conferidos por sha256 gravado (parametros e este script são conferidos pelo git contra a semente). */
 const HASHED = ["tela-a2/inventario.json", "tela-a2/universo.json", "tela-a2/universo-auditoria.json", "tela-a2/elegibilidade-passo2.json", "tela-a2/elegibilidade.json",
   EFEITOS, VOCAB, DUPS,
@@ -101,6 +101,190 @@ const gitOk = (...a: string[]) => { try { git(...a); return true; } catch { retu
 const args = process.argv.slice(2);
 const mode = args.includes("--selar") ? "selar" : args.includes("--validar") ? "validar" : args.includes("--semente") ? "sortear" : null;
 if (!mode) fail("uso: --validar | --selar | --semente <commit de 40 hex>");
+//#region revisao-formal-1
+/**
+ * REVISÃO FORMAL 1 (NAT-110; parecer Codex a82a9728; thesis-workspace/decisoes-do-assistente.md, 2026-10-31).
+ * Emenda POSTERIOR à falha preservada em 80f7863 e relatada como emenda: mesma semente, NODE_LIMIT fixo de
+ * 1.000.000.000 nós, UMA execução adicional e nenhuma terceira. Se falhar de novo, a A2 encerra sem sorteio.
+ *
+ * Tudo o que a emenda acrescenta está entre linhas `//#region revisao-formal-1` e `//#endregion revisao-formal-1`.
+ * Tirando esses blocos (marcadores inclusive) e voltando a linha do NODE_LIMIT a `const NODE_LIMIT = 5_000_000;`, o
+ * texto é byte a byte o blob selado `git show <semente>:scripts/draw-tela-a2.ts` — a execução com --revisao confere
+ * isso antes de qualquer outra coisa, e scripts/test-draw-tela-a2-revisao.ts confere por um caminho independente.
+ * Logo solve(), ordem/keys, compatibilidade/clash, cotas, variantes, hospedeiros, alternativas/chamarizes e
+ * verifySolution são os do script selado. Sem --revisao o caminho é o original (e --semente recusa: o script mudou
+ * depois da semente e sorteio-falha.json existe).
+ *
+ * Uso: npm run tela-a2:sorteio -- --semente <40 hex> --revisao tela-a2/revisao-formal-1.json [--so-guardas]
+ *   --so-guardas  confere só as guardas de identidade abaixo e sai 0: não lê insumos, não ordena nada pela semente.
+ *
+ * A exceção vale para UMA identidade, escrita AQUI e não no manifesto: semente, commits da autorização e da falha,
+ * sha256 dos registros originais e do script selado, os dois limites. O manifesto tem de repetir exatamente esses
+ * valores e acrescentar o sha256 do script revisado e o commit em que ele entrou (o manifesto vive fora do script:
+ * não há circularidade). Únicas relaxações, e só com o manifesto validado: a deriva permitida dos congelados é
+ * scripts/draw-tela-a2.ts (no sha256 do manifesto, num único commit depois da semente) e a única falha anterior
+ * aceita é a registrada aqui. Saídas: caminhos novos (RF1_EXEC, RF1_FAIL); a solução, se houver, vai para
+ * tela-a2/sorteio.json, o caminho canônico que a construção cita e que nunca existiu (a guarda confere).
+ */
+// identidade:início
+const RF1 = {
+  manifesto: "tela-a2/revisao-formal-1.json",
+  semente: "876024a331d8e9cc05837554f11aeda01aa8b2ff",
+  commitAutorizacao: "d7a9ddd9b434138a36715773603f93e2827dd869",
+  commitFalha: "80f7863f715882c7aab8e1af0b8d3ce6012edbb5",
+  limiteNosOriginal: 5_000_000,
+  limiteNosNovo: 1_000_000_000,
+  scriptOriginalSha256: "a0664ef9e6a29337541bcf5e03664223274f69b2252cb5188e278947bf240a00",
+  registros: {
+    "tela-a2/sorteio-falha.json": "fed2d90182411be7ee53c658fd490eeece93aac21bb00a642ad3ebddc3ed3b64",
+    "tela-a2/sorteio-execucao.json": "f327e0f338d94b2d8315f302864913e0985410bb4abeed28a08b5288aeb2773d",
+    "tela-a2/semente-autorizada.json": "bd8770c4637a6c3266d2986ca22641a488d42e87164592afbbfe54fe14ef6ff4",
+  } as Record<string, string>,
+};
+// identidade:fim
+const RF1_SCRIPT = "scripts/draw-tela-a2.ts";
+const RF1_EXEC = "tela-a2/revisao-formal-1-execucao.json";
+const RF1_FAIL = "tela-a2/revisao-formal-1-falha.json";
+const RF1_BEGIN = "//#region revisao-formal-1";
+const RF1_END = "//#endregion revisao-formal-1";
+const revisaoArg = args.includes("--revisao") ? (args[args.indexOf("--revisao") + 1] ?? "") : null;
+const soGuardas = args.includes("--so-guardas");
+if (revisaoArg !== null && mode !== "sortear") fail("--revisao só vale com --semente");
+if (revisaoArg !== null && revisaoArg !== RF1.manifesto) fail(`--revisao aceita só ${RF1.manifesto}`);
+if (soGuardas && revisaoArg === null) fail("--so-guardas só vale com --revisao");
+const revisao = revisaoArg !== null;
+let rf1Info: { manifestoSha256: string; manifestoCommit: string; scriptRevisadoCommit: string } | null = null;
+
+/** Tira os blocos da emenda e volta o limite: tem de dar o texto do script selado. */
+function normalizarRevisao(text: string): string {
+  if (text.includes("\r")) fail(`${RF1_SCRIPT} tem CR (o arquivo é eol=lf)`);
+  const out: string[] = [];
+  let inside = false, limite = 0;
+  for (const l of text.split("\n")) {
+    if (l === RF1_BEGIN) { if (inside) fail("bloco da emenda aninhado"); inside = true; continue; }
+    if (l === RF1_END) { if (!inside) fail("fim de bloco da emenda sem início"); inside = false; continue; }
+    if (/^\s*\/\/#(end)?region\b/.test(l)) fail(`marcador de bloco fora do formato exato: ${l}`);
+    if (inside) continue;
+    if (l === "const NODE_LIMIT = 1_000_000_000;") { limite++; out.push("const NODE_LIMIT = 5_000_000;"); continue; }
+    out.push(l);
+  }
+  if (inside) fail("bloco da emenda sem fim");
+  if (limite !== 1) fail("a linha do NODE_LIMIT revisado tem de aparecer exatamente uma vez, fora dos blocos");
+  return out.join("\n");
+}
+
+/** Chave canônica (ordem de chaves irrelevante) para comparar os campos estruturais do manifesto. */
+const canon = (v: unknown): string => Array.isArray(v) ? `[${v.map(canon).join(",")}]`
+  : v && typeof v === "object" ? `{${Object.keys(v as object).sort().map(k => `${JSON.stringify(k)}:${canon((v as Record<string, unknown>)[k])}`).join(",")}}`
+  : JSON.stringify(v);
+
+/** Guardas da execução adicional: identidade da semente (as do caminho original), da falha, do script e do manifesto. */
+function identidadeRevisao(seed: string) {
+  const gitRaw = (...a: string[]) => execFileSync("git", a, { cwd: ROOT, maxBuffer: 1 << 28 });
+  const blobSha = (rev: string, f: string) => { try { return sha256(gitRaw("show", `${rev}:${f}`)); } catch { return null; } };
+  const ancestor = (a: string, b: string) => gitOk("merge-base", "--is-ancestor", a, b);
+  const lines = (s: string) => s.split("\n").filter(Boolean);
+  if (seed !== RF1.semente) fail(`a revisão formal 1 vale só para a semente ${RF1.semente}`);
+  if (NODE_LIMIT !== RF1.limiteNosNovo) fail(`NODE_LIMIT (${NODE_LIMIT}) não é o limite da revisão (${RF1.limiteNosNovo})`);
+
+  // (a) identidade da semente: as mesmas conferências do caminho original
+  if (!existsSync(join(ROOT, AUTH))) fail(`${AUTH} não existe`);
+  const auth = readJson<{ semente: string }>(AUTH);
+  if (auth.semente !== seed) fail(`semente diferente da autorizada (${auth.semente})`);
+  if (!gitOk("cat-file", "-e", `HEAD:${AUTH}`)) fail(`${AUTH} não está commitado`);
+  if (git("show", `HEAD:${AUTH}`) !== readRaw(AUTH).toString("utf8").trim()) fail(`${AUTH} difere do commitado`);
+  const authCommits = lines(git("log", "--format=%H", "--", AUTH));
+  if (authCommits.length !== 1) fail(`${AUTH} foi mexido em ${authCommits.length} commits; tem de ser adicionado uma vez e nunca alterado`);
+  if (authCommits[0] !== RF1.commitAutorizacao) fail(`${AUTH} entrou em ${authCommits[0]}, não em ${RF1.commitAutorizacao}`);
+  if (!gitOk("cat-file", "-e", `${seed}^{commit}`)) fail(`${seed} não é commit deste repositório`);
+  if (!ancestor(seed, authCommits[0])) fail("o commit que autoriza a semente não descende dela");
+  if (seed === authCommits[0]) fail("a semente não pode ser o próprio commit de autorização");
+  if (!ancestor(seed, "HEAD")) fail("a semente não é ancestral do HEAD");
+  const statusAt = (rev: string) => { try { return JSON.parse(git("show", `${rev}:${PARAMS}`))._meta?.status; } catch { return null; } };
+  if (statusAt(seed) !== "CONGELADO") fail("parametros.json não está CONGELADO no commit da semente");
+  if (statusAt(`${seed}^`) === "CONGELADO") fail("a semente não é o primeiro commit de congelamento (o pai já estava CONGELADO)");
+  const firstFreeze = lines(git("log", "--reverse", "--format=%H", "-S", '"status": "CONGELADO"', "--", PARAMS))[0];
+  if (firstFreeze !== seed) fail(`o primeiro congelamento no histórico é ${firstFreeze}, não a semente`);
+  for (const f of params.congelados) if (!gitOk("cat-file", "-e", `${seed}:${f}`)) fail(`arquivo congelado ausente do commit da semente: ${f}`);
+
+  // (b) a falha original: exatamente a registrada aqui, preservada byte a byte (disco, HEAD e commit da falha)
+  if (!gitOk("cat-file", "-e", `${RF1.commitFalha}^{commit}`)) fail(`${RF1.commitFalha} não é commit deste repositório`);
+  if (!ancestor(RF1.commitAutorizacao, RF1.commitFalha) || !ancestor(RF1.commitFalha, "HEAD")) fail("o commit da falha não está entre a autorização e o HEAD");
+  for (const [f, want] of Object.entries(RF1.registros)) {
+    if (!existsSync(join(ROOT, f)) || sha256(readRaw(f)) !== want) fail(`${f} no disco não é o registro preservado (sha256 ${want})`);
+    if (blobSha("HEAD", f) !== want) fail(`${f} no HEAD não é o registro preservado`);
+    if (blobSha(RF1.commitFalha, f) !== want) fail(`${f} no commit da falha não é o registro preservado`);
+  }
+  for (const f of [FAIL, EXEC]) {
+    const cs = lines(git("log", "--all", "--format=%H", "--", f));
+    if (cs.length !== 1 || cs[0] !== RF1.commitFalha) fail(`${f} tem de ter entrado só no commit da falha ${RF1.commitFalha} e nunca mudado (achados: ${cs.join(", ")})`);
+  }
+  const falha = readJson<{ semente: string; erro: string; nos: number }>(FAIL);
+  if (falha.semente !== seed || falha.erro !== "limite de nós" || falha.nos !== RF1.limiteNosOriginal + 1) fail(`${FAIL} não é a falha por limite de nós desta semente`);
+  const exec0 = readJson<{ semente: string; script: string; resultado: string }>(EXEC);
+  if (exec0.semente !== seed || exec0.script !== RF1.scriptOriginalSha256 || exec0.resultado !== "FALHA: limite de nós") fail(`${EXEC} não é a execução original do script selado`);
+
+  // (c) o script: só os blocos da emenda e o limite mudaram em relação ao selado
+  const sealed = gitRaw("show", `${seed}:${RF1_SCRIPT}`);
+  if (sha256(sealed) !== RF1.scriptOriginalSha256) fail(`${RF1_SCRIPT} na semente não tem o sha256 selado`);
+  const current = readRaw(RF1_SCRIPT);
+  if (normalizarRevisao(current.toString("utf8")) !== sealed.toString("utf8")) fail(`${RF1_SCRIPT}, sem os blocos da emenda e com o limite original, difere do blob selado: a busca mudou`);
+  const scriptSha = sha256(current);
+  const scriptCommits = lines(git("log", "--format=%H", `${seed}..HEAD`, "--", RF1_SCRIPT));
+  if (scriptCommits.length !== 1) fail(`${RF1_SCRIPT} tem de mudar num único commit depois da semente (achados: ${scriptCommits.length})`);
+  const S = scriptCommits[0];
+  if (S === RF1.commitFalha || !ancestor(RF1.commitFalha, S)) fail("o commit da revisão do script não descende do commit da falha");
+  if (blobSha(S, RF1_SCRIPT) !== scriptSha || blobSha("HEAD", RF1_SCRIPT) !== scriptSha) fail(`${RF1_SCRIPT} no disco difere do commit da revisão`);
+
+  // (d) deriva dos congelados: a única permitida é o script
+  const drift = lines(git("diff", "--name-only", seed, "HEAD", "--", ...params.congelados));
+  if (drift.length !== 1 || drift[0] !== RF1_SCRIPT) fail(`a única deriva permitida é ${RF1_SCRIPT}; mudaram:\n${drift.join("\n")}`);
+  const dirty = git("status", "--porcelain", "--", ...params.congelados);
+  if (dirty) fail(`arquivos congelados com mudança não commitada:\n${dirty}`);
+
+  // (e) o manifesto: commitado uma vez, num commit só dele, depois da revisão do script; igual ao commitado
+  const M = RF1.manifesto;
+  if (!existsSync(join(ROOT, M))) fail(`${M} não existe`);
+  const manifestoSha = sha256(readRaw(M));
+  if (blobSha("HEAD", M) !== manifestoSha) fail(`${M} difere do commitado no HEAD (ou não está commitado)`);
+  if (git("status", "--porcelain", "--", M)) fail(`${M} com mudança não commitada`);
+  const mCommits = lines(git("log", "--all", "--format=%H", "--", M));
+  if (mCommits.length !== 1) fail(`${M} foi mexido em ${mCommits.length} commits; tem de ser adicionado uma vez e nunca alterado`);
+  const MC = mCommits[0];
+  if (!ancestor(MC, "HEAD")) fail(`o commit de ${M} não é ancestral do HEAD`);
+  if (MC === S || !ancestor(S, MC)) fail(`${M} tem de ser commitado DEPOIS da revisão do script, em commit próprio`);
+  if (!ancestor(RF1.commitFalha, MC)) fail(`${M} não descende do commit da falha`);
+  const mFiles = git("diff-tree", "--no-commit-id", "--name-status", "-r", MC);
+  if (mFiles !== `A\t${M}`) fail(`o commit de ${M} tem de só adicioná-lo:\n${mFiles}`);
+  const man = readJson<Record<string, unknown>>(M);
+  const prosa = ["tela", "motivo", "provaDeIdentidade", "ratificacao", "regraDeParada", "revisaoIndependente"];
+  const esperado: Record<string, unknown> = {
+    revisao: "revisao-formal-1",
+    semente: RF1.semente,
+    limiteNos: { original: RF1.limiteNosOriginal, novo: RF1.limiteNosNovo },
+    execucoesAdicionais: 1,
+    falhaOriginal: { commit: RF1.commitFalha, registros: { [FAIL]: RF1.registros[FAIL], [EXEC]: RF1.registros[EXEC] } },
+    sementeAutorizada: { arquivo: AUTH, commit: RF1.commitAutorizacao, sha256: RF1.registros[AUTH] },
+    scriptOriginal: { arquivo: RF1_SCRIPT, commit: RF1.semente, sha256: RF1.scriptOriginalSha256 },
+    scriptRevisado: { arquivo: RF1_SCRIPT, commit: S, sha256: scriptSha },
+    saidas: { execucao: RF1_EXEC, falha: RF1_FAIL, sorteio: OUT },
+  };
+  const keys = Object.keys(man).sort();
+  const want = [...Object.keys(esperado), ...prosa].sort();
+  if (canon(keys) !== canon(want)) fail(`${M}: campos ${keys.join(", ")}; esperados ${want.join(", ")}`);
+  for (const k of prosa) if (typeof man[k] !== "string" || !(man[k] as string).trim()) fail(`${M}: ${k} vazio`);
+  for (const [k, v] of Object.entries(esperado)) if (canon(man[k]) !== canon(v)) fail(`${M}: ${k} = ${canon(man[k])}; esperado ${canon(v)}`);
+
+  // (f) execução adicional única: nada dela no disco nem no histórico
+  for (const f of [OUT, RF1_EXEC, RF1_FAIL]) {
+    if (existsSync(join(ROOT, f))) fail(`${f} já existe: a execução adicional é única`);
+    if (git("log", "--all", "--format=%H", "--", f)) fail(`${f} já existiu no histórico: a execução adicional é única`);
+  }
+  console.log(`revisão formal 1: guardas OK — semente ${seed}, falha ${RF1.commitFalha}, script revisado ${S} (${scriptSha}), manifesto ${MC} (${manifestoSha}), limite ${NODE_LIMIT}`);
+  if (soGuardas) { console.log("--so-guardas: nada lido além das guardas, nada ordenado pela semente."); process.exit(0); }
+  return { manifestoSha256: manifestoSha, manifestoCommit: MC, scriptRevisadoCommit: S };
+}
+//#endregion revisao-formal-1
 
 interface RegraCompleta extends Regra { texto?: string }
 /** Cadeias de duplicata (Revisão 2, bloqueio 1): toda cadeia termina numa aceita ou está auditada com o mesmo destino e motivo. */
@@ -164,6 +348,9 @@ let seed = "";
 if (mode === "sortear") {
   seed = args[args.indexOf("--semente") + 1] ?? "";
   if (!/^[0-9a-f]{40}$/.test(seed)) fail("a semente é o hash completo (40 hex) do commit que congela a regra");
+//#region revisao-formal-1
+  if (revisao) rf1Info = identidadeRevisao(seed); else {
+//#endregion revisao-formal-1
   // --- identidade da semente (Revisão 1, item 9a) ---
   if (!existsSync(join(ROOT, AUTH))) fail(`${AUTH} não existe: a semente só é autorizada depois de publicada na NAT-110 e commitada`);
   const auth = readJson<{ semente: string }>(AUTH);
@@ -190,6 +377,9 @@ if (mode === "sortear") {
     if (existsSync(join(ROOT, f))) fail(`${f} já existe: o sorteio é único`);
     if (git("log", "--all", "--format=%H", "--", f)) fail(`${f} já existiu no histórico: o sorteio é único`);
   }
+//#region revisao-formal-1
+  }
+//#endregion revisao-formal-1
 }
 
 const all = checkInputs(params, mode === "sortear");
@@ -512,6 +702,59 @@ if (mode === "validar") {
   process.exit(0);
 }
 
+//#region revisao-formal-1
+if (revisao) {
+  // Execução adicional única da revisão formal 1: a MESMA key e a MESMA chamada solve(key) do caminho original
+  // (só NODE_LIMIT mudou); os registros vão para caminhos novos e apontam os originais pelo sha256.
+  const info = rf1Info!;
+  const started = new Date().toISOString();
+  const key = (label: string, id: string) => sha256(`${seed}|${label}|${id}`);
+  const ligacao = {
+    manifesto: RF1.manifesto, manifestoSha256: info.manifestoSha256, manifestoCommit: info.manifestoCommit,
+    scriptRevisadoCommit: info.scriptRevisadoCommit, limiteNos: NODE_LIMIT, limiteNosOriginal: RF1.limiteNosOriginal,
+    falhaOriginal: { commit: RF1.commitFalha, registros: RF1.registros },
+  };
+  const base = {
+    semente: seed, head: git("rev-parse", "HEAD"), inicio: started,
+    node: process.version, plataforma: `${process.platform} ${process.arch}`,
+    script: sha256(readRaw(RF1_SCRIPT)), insumos: Object.fromEntries(params.congelados.map(f => [f, sha256(readRaw(f))])),
+    revisaoFormal: ligacao,
+  };
+  // A tentativa é marcada ANTES da busca: uma execução interrompida deixa este arquivo e a próxima chamada recusa.
+  writeFileSync(join(ROOT, RF1_EXEC), JSON.stringify({ ...base, resultado: "EM EXECUÇÃO — se ficou assim, a execução adicional foi interrompida e não há outra" }, null, 2) + "\n");
+  const result = solve(key);
+  const nota = "Execução adicional única da revisão formal 1 (NAT-110). Não há terceira: se falhou, a A2 encerra sem sorteio; os registros originais ficam como estão.";
+  const execRecord = { ...base, fim: new Date().toISOString(), nos: result.nodes, resultado: "erro" in result ? `FALHA: ${result.erro}` : OUT, nota };
+  if ("erro" in result) {
+    writeFileSync(join(ROOT, RF1_FAIL), JSON.stringify({ semente: seed, erro: result.erro, nos: result.nodes, revisaoFormal: ligacao }, null, 2) + "\n");
+    writeFileSync(join(ROOT, RF1_EXEC), JSON.stringify(execRecord, null, 2) + "\n");
+    console.error(`FALHA gravada em ${RF1_FAIL}; revisão formal 1 esgotada: a A2 encerra sem sorteio.`);
+    process.exit(1);
+  }
+  const byKeyQ = (s: Estrato) => [...eligible.filter(r => r.estrato === s)].sort((a, b) => key("regra", a.id).localeCompare(key("regra", b.id))).map(r => r.id);
+  const out = {
+    _meta: { regra: PARAMS, semente: seed, sha256: execRecord.insumos, corpusManifest: params.sha256.corpusManifest, revisaoFormal: ligacao },
+    ordemPorEstrato: Object.fromEntries(params.ordemEstratos.map(s => [s, byKeyQ(s)])),
+    specs: result.specs,
+    alternativasValidas: result.alternatives,
+    chamarizes: result.decoys,
+    reparos: result.repairs,
+    nos: result.nodes,
+  };
+  const inv = [params.ordemEstratos.every(s => result.specs.filter(x => x.estrato === s).length === params.cotas[s]),
+    result.specs.filter(s => s.compartilhadaCom.length).length === params.compartilhadas,
+    result.alternatives.length === params.alternativasValidas, result.decoys.length === params.chamarizes];
+  if (inv.some(x => !x)) {
+    writeFileSync(join(ROOT, RF1_FAIL), JSON.stringify({ semente: seed, erro: "invariante final violada", inv, nos: result.nodes, revisaoFormal: ligacao }, null, 2) + "\n");
+    writeFileSync(join(ROOT, RF1_EXEC), JSON.stringify({ ...execRecord, resultado: "FALHA: invariante final violada" }, null, 2) + "\n");
+    process.exit(1);
+  }
+  writeFileSync(join(ROOT, OUT), JSON.stringify(out, null, 2) + "\n");
+  writeFileSync(join(ROOT, RF1_EXEC), JSON.stringify({ ...execRecord, sorteioSha256: sha256(readRaw(OUT)) }, null, 2) + "\n");
+  console.log(`${OUT} gravado (revisão formal 1) — specs ${result.specs.length} · compartilhadas ${params.compartilhadas} · alternativas ${result.alternatives.length} · chamarizes ${result.decoys.length} · reparos ${result.repairs} · nós ${result.nodes}`);
+  process.exit(0);
+} else {
+//#endregion revisao-formal-1
 // ---- sorteio único ----
 const started = new Date().toISOString();
 const key = (label: string, id: string) => sha256(`${seed}|${label}|${id}`);
@@ -546,3 +789,6 @@ if (inv.some(x => !x)) { writeFileSync(join(ROOT, FAIL), JSON.stringify({ sement
 writeFileSync(join(ROOT, OUT), JSON.stringify(out, null, 2) + "\n");
 writeFileSync(join(ROOT, EXEC), JSON.stringify({ ...execRecord, sorteioSha256: sha256(readRaw(OUT)) }, null, 2) + "\n");
 console.log(`${OUT} gravado — specs ${result.specs.length} · compartilhadas ${params.compartilhadas} · alternativas ${result.alternatives.length} · chamarizes ${result.decoys.length} · reparos ${result.repairs}`);
+//#region revisao-formal-1
+}
+//#endregion revisao-formal-1
