@@ -24,7 +24,7 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
 /**
  * Ferramentas que cada perfil registra, em ordem alfabética, e o sha256 de `JSON.stringify(tools)` do
  * tools/list (cliente MCP 1.29.0, o mesmo da ponte). Os pins VIGENTES (só para campanhas NOVAS) são os do
- * validator 3.6.1 (3e0897b), medidos em 2026-10-31 contra o dist/ construído de 3e0897b com o
+ * validator 3.6.1 (3e0897b), medidos em 2026-10-31; vigentes também na 3.6.2 (3801924), que não muda tools/list nem instructions contra o dist/ construído de 3e0897b com o
  * SDK 1.29.0 da ponte (stdio, GOVBR_VALIDATOR_TOOL_PROFILE=<perfil>, sem GOVBR_RETRIEVAL_MODE = busca
  * léxica padrão, sha256 de JSON.stringify(tools)) e de novo dentro da imagem do oráculo travada.
  * Da 3.6.0 para a 3.6.1 mudaram evaluation, full, normative e deterministic; knowledge-free e evidence
