@@ -24,9 +24,11 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
 /**
  * Ferramentas que cada perfil registra, em ordem alfabética, e o sha256 de `JSON.stringify(tools)` do
  * tools/list (cliente MCP 1.29.0, o mesmo da ponte). Os pins VIGENTES (só para campanhas NOVAS) são os do
- * validator 3.6.0 (ee08428), medidos em 2026-10-30 contra o dist/ construído de ee08428 com o
+ * validator 3.6.1 (3e0897b), medidos em 2026-10-31 contra o dist/ construído de 3e0897b com o
  * SDK 1.29.0 da ponte (stdio, GOVBR_VALIDATOR_TOOL_PROFILE=<perfil>, sem GOVBR_RETRIEVAL_MODE = busca
  * léxica padrão, sha256 de JSON.stringify(tools)) e de novo dentro da imagem do oráculo travada.
+ * Da 3.6.0 para a 3.6.1 mudaram evaluation, full, normative e deterministic; knowledge-free e evidence
+ * ficaram iguais (o instructionsSha256 do knowledge-free mudou — instruções do servidor, fora do tools/list).
  * Da 3.5.0 para a 3.6.0 mudaram evaluation, full e normative; knowledge-free, deterministic e evidence
  * ficaram iguais.
  * Da 3.4.x para a 3.5.0 mudaram evaluation, full e normative; knowledge-free, deterministic e evidence
@@ -37,6 +39,16 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
  * knowledge-free 72abd549…); a tabela da 3.0.0 fica abaixo só como registro.
  * Mudou de propósito? Mude aqui E no validator, e declare: é diferença de tratamento do braço.
  */
+export const TOOLS_LIST_SHA256_3_6_1 = {
+  "knowledge-free": "f358152ab77b8b6930687c1b12206f3821170600d52c0fda0a3dde8d0774bf44",
+  evaluation: "3807ad9534e64155cc8d38bdcdfb16413ec195d482d119cedb16776420aa8063",
+  full: "575634a0295e2a7d7c3c4e573e589a63409bcc013685695b97598694a196a2fe",
+  normative: "4ad616d86c8d480cd253b13990310f1b321e817e8937ff0da9181ac7371f4645",
+  deterministic: "af7f8264d063cce3f5eda0604cff5e7dfb200de3f9d848fc797e210dafebb656",
+  evidence: "4b4f82499cfe923b26f178c9dff3f5dcf233512ddbee6128b5a6bd0cc7a81ba7",
+} as const;
+
+/** Registro: pins do validator 3.6.0 (ee08428, medidos em 2026-10-30), vigentes até a 3.6.1 (3e0897b). Não usados pelo runner. */
 export const TOOLS_LIST_SHA256_3_6_0 = {
   "knowledge-free": "f358152ab77b8b6930687c1b12206f3821170600d52c0fda0a3dde8d0774bf44",
   evaluation: "cbfffb0deee45e1df35d2c1d44738f2a2065abd3385d467adbb252f79dc022f0",
@@ -89,11 +101,11 @@ export const TOOLS_LIST_SHA256_3_0_0 = {
 export const PERFIS: Readonly<Record<PerfilOraculo, { tools: readonly string[]; toolsListSha256: string }>> = {
   evaluation: {
     tools: ["get_component_spec", "get_design_tokens", "get_ds_rules", "get_emag_rules", "get_finding_details", "get_page_rules", "scan_page", "verify_finding"],
-    toolsListSha256: TOOLS_LIST_SHA256_3_6_0.evaluation,
+    toolsListSha256: TOOLS_LIST_SHA256_3_6_1.evaluation,
   },
   "knowledge-free": {
     tools: ["get_finding_details", "scan_page", "verify_finding"],
-    toolsListSha256: TOOLS_LIST_SHA256_3_6_0["knowledge-free"],
+    toolsListSha256: TOOLS_LIST_SHA256_3_6_1["knowledge-free"],
   },
 };
 
@@ -131,7 +143,7 @@ export function perfilMedido(inv: InventarioOraculo | null, telemetria: Record<s
   let perfil: PerfilOraculo | null = porNomes.length === 1 && porHash.length === 1 && porNomes[0] === porHash[0] ? porNomes[0] : null;
   if (!perfil) problemas.push(`tools/list do servidor (${nomes.join(", ")}; sha256 ${String(inv.childToolsSha256 ?? "ausente").slice(0, 12)}) não é o de nenhum perfil fixado`);
   // Segunda medida do servidor (validator ≥ 2.17.1): serverInfo.description = "toolProfile=<perfil>". Ausente ou
-  // diferente do perfil do tools/list = falha fechada (o validator 3.6.0 que as campanhas novas fixam sempre a anuncia).
+  // diferente do perfil do tools/list = falha fechada (o validator 3.6.1 que as campanhas novas fixam sempre a anuncia).
   const declarado = /(?:^|\s)toolProfile=(\S+)/.exec(inv.serverInfo?.description ?? "")?.[1] ?? null;
   if (!declarado) { problemas.push(`serverInfo.description sem toolProfile=<perfil> (${JSON.stringify(inv.serverInfo?.description ?? null)})`); perfil = null; }
   else if (perfil && declarado !== perfil) { problemas.push(`serverInfo diz toolProfile=${declarado}, tools/list diz ${perfil}`); perfil = null; }
