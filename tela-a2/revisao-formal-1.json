@@ -1,0 +1,42 @@
+{
+  "revisao": "revisao-formal-1",
+  "tela": "A2 — acompanhamento (NAT-110)",
+  "motivo": "O sorteio único com a semente 876024a parou no limite de 5.000.000 nós (5.000.001), sem solução e sem resultado visto (80f7863); a ordem neutra precisara de 123.995 nós. A busca é determinística e devolve a primeira solução completa na ordem da semente; o limite só decide se ela é alcançada, não qual é. Esta emenda posterior à falha sobe o limite, mantém a semente, a busca e todos os insumos, e autoriza uma única execução adicional.",
+  "semente": "876024a331d8e9cc05837554f11aeda01aa8b2ff",
+  "limiteNos": {
+    "original": 5000000,
+    "novo": 1000000000
+  },
+  "execucoesAdicionais": 1,
+  "falhaOriginal": {
+    "commit": "80f7863f715882c7aab8e1af0b8d3ce6012edbb5",
+    "registros": {
+      "tela-a2/sorteio-falha.json": "fed2d90182411be7ee53c658fd490eeece93aac21bb00a642ad3ebddc3ed3b64",
+      "tela-a2/sorteio-execucao.json": "f327e0f338d94b2d8315f302864913e0985410bb4abeed28a08b5288aeb2773d"
+    }
+  },
+  "sementeAutorizada": {
+    "arquivo": "tela-a2/semente-autorizada.json",
+    "commit": "d7a9ddd9b434138a36715773603f93e2827dd869",
+    "sha256": "bd8770c4637a6c3266d2986ca22641a488d42e87164592afbbfe54fe14ef6ff4"
+  },
+  "scriptOriginal": {
+    "arquivo": "scripts/draw-tela-a2.ts",
+    "commit": "876024a331d8e9cc05837554f11aeda01aa8b2ff",
+    "sha256": "a0664ef9e6a29337541bcf5e03664223274f69b2252cb5188e278947bf240a00"
+  },
+  "scriptRevisado": {
+    "arquivo": "scripts/draw-tela-a2.ts",
+    "commit": "a415e332cb50c3fa53606950e3c6eda49a83b5da",
+    "sha256": "79ec66fa4b521c3fe3c58b7c6d0898b665e0bf3d9b1332da9a567abae406223b"
+  },
+  "saidas": {
+    "execucao": "tela-a2/revisao-formal-1-execucao.json",
+    "falha": "tela-a2/revisao-formal-1-falha.json",
+    "sorteio": "tela-a2/sorteio.json"
+  },
+  "provaDeIdentidade": "Tirando de scripts/draw-tela-a2.ts as linhas entre //#region revisao-formal-1 e //#endregion revisao-formal-1 (marcadores inclusive) e trocando a única linha const NODE_LIMIT = 1_000_000_000; por const NODE_LIMIT = 5_000_000;, o texto é igual byte a byte ao blob selado git show 876024a:scripts/draw-tela-a2.ts (sha256 a0664ef…). A execução com --revisao refaz essa conferência antes de buscar; scripts/test-draw-tela-a2-revisao.ts a refaz por implementação própria e confere que nenhum outro arquivo de congelados difere da semente.",
+  "ratificacao": "Emenda ratificada pela autora por delegação (thesis-workspace/decisoes-do-assistente.md, 2026-10-31; parecer Codex NAT-110 a82a9728, 6 condições). É emenda posterior à falha e é relatada assim, não como cumprimento do protocolo original.",
+  "regraDeParada": "Uma execução adicional, com a mesma semente e limite fixo de 1.000.000.000 nós; nenhuma terceira, nenhuma outra semente, nenhum outro limite. Se falhar (limite, sem solução ou invariante), a falha é preservada em tela-a2/revisao-formal-1-falha.json e a A2 encerra sem sorteio. A tentativa é marcada em tela-a2/revisao-formal-1-execucao.json antes da busca: uma execução interrompida conta como a execução adicional.",
+  "revisaoIndependente": "Conferência independente do patch por agente revisor (Opus, só leitura) sobre a árvore NÃO commitada (script, teste, este manifesto) em 2026-10-31 ~00:05Z: ACCEPT-WITH-FIXES, todos procedimentais (publicar C1/C2 antes da execução, executar só neste checkout, commitar o marcador e as saídas logo, manifesto sem CRLF, commit do manifesto sozinho, máquina acordada). Prova de identidade refeita pelo revisor por implementação própria (cmp contra 876024a); --validar e teste sintético 55/55. A chamada real só depois de --so-guardas sair 0."
+}
