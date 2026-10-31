@@ -13,7 +13,8 @@
  * (ex.: `git -C govbr-ds-validator archive e15b1b1 data | tar -x -C <pasta>`). Sem ele, ou com outra data/, PULA e diz.
  */
 import assert from "node:assert/strict";
-import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { sha256Tree } from "../collection-manifest";
@@ -50,6 +51,14 @@ else {
   try {
     const raiz = join(tmp, "p01"), A = join(raiz, ANALISE), P13 = join(raiz, "passada-13");
     cpSync(join(ORIG, ANALISE), A, { recursive: true });
+    // A passada congelada foi preparada com o checker-aliases.json de 6a6ef6a (sha nas fontes do manifesto dos lotes); o
+    // regerado contra o validator 3.6.1 muda o `basis` de ds:page-header/footer, que vai ao texto da norma no cartão.
+    // Reproduzir a passada é usar a entrada dela: o arquivo daquele commit, conferido pelo sha que a passada gravou.
+    const chkCongelado = execFileSync("git", ["show", "6a6ef6a:checker-aliases.json"], { cwd: resolve(RESULTADOS, "..", "govbr-eval") });
+    const chkFonte = lerJson<{ fontes: Record<string, string> }>(join(ORIG, PASSADA, "lotes", "manifesto.json")).fontes["govbr-eval/checker-aliases.json"];
+    assert.equal(sha(chkCongelado), chkFonte, "checker-aliases.json de 6a6ef6a não é o que a passada congelada gravou");
+    const chkAbs = join(tmp, "checker-aliases.json");
+    writeFileSync(chkAbs, chkCongelado);
     // O achado do cartão X ganha duas referências (o resto do pacote fica igual).
     // O id do cartão é derivado do conteúdo (semantic-flow): o cartão com `references` ganha id novo (trocado em todo o
     // pacote) e o pacote, packageHash novo — como se o agente tivesse escrito o achado assim.
@@ -64,7 +73,7 @@ else {
     const pkg = JSON.parse(JSON.stringify(pkg0).split(cardX0).join(cardX)) as Pkg;
     { const { packageHash: _h, ...corpo } = pkg; pkg.packageHash = digest(corpo); }
     gravarJson(A, "revisao/package.json", pkg);
-    const prep = prepararCampanha([A], { validador: val, politica: "1.3.0" });
+    const prep = prepararCampanha([A], { validador: val, politica: "1.3.0", checkerAliases: chkAbs });
     for (const [rel, x] of [...prep.arquivosDoJuiz, ...prep.arquivosInternos]) gravar(P13, rel, x);
     const X = lerJson<{ itens: ItemChave[] }>(join(P13, "chave", "fila-t3-chave.json")).itens.find(i => i.cardIdOriginal === cardX)!.id;
     const lote = lerJson<{ cartoes: CartaoCego[] }>(join(P13, "lotes", "lote-01.json"));

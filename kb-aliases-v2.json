@@ -13,7 +13,7 @@
       },
       {
         "path": "govbr-ds-validator/data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/rules.jsonl",
-        "sha256": "ef113237bb6bd1870978a5709314d8593fcf90d8fa4b5fe349f3edf9626a659e"
+        "sha256": "c8c4327d3b4c9eea173f96ce2ee72d0eeddbb534f5da6409627c921d30879a0f"
       },
       {
         "path": "govbr-ds-validator/data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/carried-over.jsonl",
@@ -25,7 +25,7 @@
       }
     ],
     "semantica": "um id da KB expande para as chaves emag:/wcag: que o próprio registro declara (emagReferences/wcagReferences; no e-MAG sem emagReferences, o número da recomendação em source.section) e para os ids ligados por substituição declarada (legacy-ids supersededBy, supersedes/supersededBy/legacy no registro), nos dois sentidos, só dentro do mesmo componente e da mesma família de norma. Id presente nas duas versões: união das chaves. Um salto, aplicado aos dois lados.",
-    "ids": 3114,
+    "ids": 3117,
     "idsComChaveDeNorma": 270,
     "chavesDaSecaoDaFonte": 0,
     "substituicoes": {
@@ -4144,10 +4144,13 @@
     "govbr-3.7.0-pattern-global-fd25d5d167c2": [],
     "govbr-3.7.0-pattern-global-fd2f2ff644f9": [],
     "govbr-3.7.0-pattern-global-ff0477e333cf": [],
+    "govbr-3.7.0-template-global-10b091d3e7d1": [],
     "govbr-3.7.0-template-global-19f93475dc5e": [],
     "govbr-3.7.0-template-global-2387114907b1": [],
     "govbr-3.7.0-template-global-3d795df32a0e": [],
+    "govbr-3.7.0-template-global-79cf9ea963ee": [],
     "govbr-3.7.0-template-global-8e553b2c8bc7": [],
-    "govbr-3.7.0-template-global-9cbfa5906031": []
+    "govbr-3.7.0-template-global-9cbfa5906031": [],
+    "govbr-3.7.0-template-global-c21ff1c7eefc": []
   }
 }
