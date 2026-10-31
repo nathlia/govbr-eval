@@ -25,7 +25,7 @@ import { pathToFileURL } from "node:url";
 import { createRequire } from "node:module";
 import { argValues, buildDictionary, classify, hitsInText, leaves, termIn, type Classification, type Dictionary, type Hit, type Provenance, type ScanResult } from "./nucleo";
 
-export const VARREDURA_VERSAO = "vazamento-conhecimento-1.2.0";
+export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.0";
 
 /**
  * 1.2.0 (D-154): eco do SELETOR DE AÇÃO da mesma chamada. Desde o validator 3.4.3 a resposta encolhida do

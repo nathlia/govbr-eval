@@ -105,16 +105,17 @@ contêiner (`test:runner` confere). Etiquetas: `govbr.oracle.commit` (validador 
 inteiro — é o que o preflight recalcula; baixar ou apagar os modelos no host muda esse hash e o preflight
 recusa até reconstruir a imagem (falha fechada).
 
-**Oráculo 3.4.x / 3.5.0 (NAT-100).** Desde a 3.3.0 (D-152) o validator não tem mais busca densa nem
+**Oráculo 3.4.x / 3.5.0 / 3.6.0 (NAT-100).** Desde a 3.3.0 (D-152) o validator não tem mais busca densa nem
 `data/models/`; a conferência do build aceita a pasta ausente. A imagem `govbr-runner-oracle:3.4.1-fae724d1127a`
 foi construída de um clone limpo no commit `e15b1b1` (3.4.1; tools/list igual ao da 3.4.0, pins `TOOLS_LIST_SHA256_3_4_0`) (`npm ci` + `tsc`, sem `dist/` antigo nem modelos no
 `data/`), o mesmo estado que o checkout por SHA do CI produz: `GOVBR_VALIDATOR_DIR=<clone>` no build e no
 `run-once`/testes. O checkout de trabalho do validator só serve ao preflight se o `dist/` e o `data/` dele
 forem os do commit (sem arquivos de builds antigos nem `data/models/`).
-A imagem vigente é `govbr-runner-oracle:3.5.0-2d2c4981aa16` (commit `4c3b2ab`; pins
-`TOOLS_LIST_SHA256_3_5_0` — evaluation, full e normative mudaram em relação à 3.4.x, knowledge-free igual),
+A imagem vigente é `govbr-runner-oracle:3.6.0-4f5600ea6ee0` (commit `ee08428`; pins
+`TOOLS_LIST_SHA256_3_6_0` — evaluation, full e normative mudaram em relação à 3.5.0, knowledge-free igual),
 construída do checkout de trabalho: o `dist/` dele é byte a byte o de um clone limpo do mesmo commit
-(`npm ci` + `tsc`, conferido em 2026-10-30), então o padrão vale sem `GOVBR_VALIDATOR_DIR`. A anterior era
+(`npm ci` + `tsc`, conferido em 2026-10-30), então o padrão vale sem `GOVBR_VALIDATOR_DIR`. As anteriores eram
+`govbr-runner-oracle:3.5.0-2d2c4981aa16` (commit `4c3b2ab`, pins `TOOLS_LIST_SHA256_3_5_0`) e
 `govbr-runner-oracle:3.4.4-3de4033bdef2` (commit `b6e0663`, pins `TOOLS_LIST_SHA256_3_4_0`).
 Rebuild do validator com a bateria ou o `test:runner` rodando muda o `dist/` e faz o preflight recusar os
 braços com oráculo (`oraculo: <dist novo> × <dist da imagem>`); o pacote `not-run` desses braços é válido
@@ -243,9 +244,9 @@ perfis fixados (nomes + sha256 do `tools/list`) ficam em `runner/perfis-oraculo.
   (depois, com a telemetria: o knowledge-free marca todo evento com `knowledgeLockAttempts`). Desde o
   validator 2.17.1 o servidor declara o perfil efetivo em `serverInfo.description` (`toolProfile=<p>`):
   a ponte grava (inventário 1.2.0) e o perfil medido exige que bata com o do `tools/list`; ausente ou
-  divergente = falha fechada. Campanhas novas fixam os sha da 3.5.0 (evaluation `61177aa7…`,
-  knowledge-free `f358152a…`; `TOOLS_LIST_SHA256_3_5_0` em `runner/perfis-oraculo.ts`); as tabelas da
-  3.4.0 (evaluation `adc42661…`), 3.2.0 (evaluation `f1529268…`, knowledge-free `8bdb5e35…`) e 3.0.0
+  divergente = falha fechada. Campanhas novas fixam os sha da 3.6.0 (evaluation `cbfffb0d…`,
+  knowledge-free `f358152a…`; `TOOLS_LIST_SHA256_3_6_0` em `runner/perfis-oraculo.ts`); as tabelas da
+  3.5.0 (evaluation `61177aa7…`), 3.4.0 (evaluation `adc42661…`), 3.2.0 (evaluation `f1529268…`, knowledge-free `8bdb5e35…`) e 3.0.0
   ficam lá como registro; as campanhas históricas mantêm os seus.
   `run.json` passa a `run.v2` em todos os braços; `intervention.oracle.profile` é o medido.
 - **Só no `ferramentas`:** `trava-de-conhecimento` (contador da trava = 0 em todo evento) e
