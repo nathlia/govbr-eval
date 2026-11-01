@@ -155,6 +155,13 @@ export function stubRoteiro(cenario: string, braco: Braco, inputs: TaskInputs, p
           { calls: [pw("browser_click", { element: "inexistente", ref: "e-nao-existe" })] },
           ...(braco === "com" ? [{ calls: [or("get_component_spec", { component: "componente-que-nao-existe" })] }, { calls: [or("scan_page", { url: "http://example.com/" })] }] : []),
           ...(braco === "ferramentas" ? [{ calls: [or("scan_page", { url: "http://example.com/" })] }] : []),
+          // dev-362-b-01 p01: entrada recusada pelo esquema do oráculo (enum, intervalo, campo desconhecido) — cada uma tem
+          // de virar evento de telemetria (validator ≥ 3.6.3), senão a trava de conhecimento vê menos eventos que chamadas
+          ...(braco !== "sem" ? [
+            { calls: [or("scan_page", { url, view: "diff" })] },
+            { calls: [or("get_finding_details", { scanId: "S-page-001", cursor: -3 })] },
+            { calls: [or("scan_page", { url, campoQueNaoExiste: true })] },
+          ] : []),
           { calls: [pw("browser_snapshot")] },
           { calls: [pw("browser_navigate", { url: origem })] },
           { calls: [submitCall(caminho, reportOf(url, [], `roteiro com erros de ferramenta, braço ${braco}`))] },

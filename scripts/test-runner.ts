@@ -625,6 +625,21 @@ async function main(): Promise<void> {
     for (const t of ["mcp__playwright__browser_evaluate", "mcp__playwright__browser_navigate", "mcp__playwright__browser_click", "mcp__govbr-ds-validator__scan_page"]) assert.ok(errs.includes(t), `erro devolvido ao modelo: ${t}`);
   });
 
+  await test("cliente real erros ferramentas: entrada recusada pelo esquema do oráculo não derruba o isolamento (dev-362-b-01 p01)", async () => {
+    const o = await run({ braco: "ferramentas", ...claude("erros") }, "cliente-erros-ferramentas");
+    const { run: r } = assertPackage(o);
+    assert.equal(r.status.technical, "passed");
+    assert.equal(r.status.isolation, "passed", "trava de conhecimento: eventos de telemetria = chamadas, também as recusadas");
+    assert.equal(r.status.oracleUsage, "used-with-errors");
+    const iso = read<{ checks: { id: string; outcome: string; detail?: string }[] }>(o.runDir, "isolation.json");
+    const trava = iso.checks.find((c) => c.id === "trava-de-conhecimento");
+    assert.equal(trava?.outcome, "passed", trava?.detail);
+    const events = ndjson(join(o.runDir, "tool-events.ndjson"));
+    const recusadas = events.filter((e) => e.kind === "call" && e.server === "oracle" && e.outcome === "tool-error"
+      && /invalid-argument|unknown-parameter|parâmetro desconhecido|entrada inválida/i.test(JSON.stringify(e.result ?? "")));
+    assert.ok(recusadas.length >= 3, `3 chamadas recusadas pelo esquema chegaram ao modelo como erro (vi ${recusadas.length})`);
+  });
+
   await test("cliente real 429: interrupted/rate-limited, artefatos preservados, nunca zero achados", async () => {
     const o = await run({ braco: "sem", ...claude("429") }, "cliente-429");
     const { run: r, findings } = assertPackage(o);
