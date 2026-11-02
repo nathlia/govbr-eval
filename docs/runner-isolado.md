@@ -111,10 +111,12 @@ foi construída de um clone limpo no commit `e15b1b1` (3.4.1; tools/list igual a
 `data/`), o mesmo estado que o checkout por SHA do CI produz: `GOVBR_VALIDATOR_DIR=<clone>` no build e no
 `run-once`/testes. O checkout de trabalho do validator só serve ao preflight se o `dist/` e o `data/` dele
 forem os do commit (sem arquivos de builds antigos nem `data/models/`).
-A imagem vigente é `govbr-runner-oracle:3.6.4-69406de33ad5` (commit `b93fe4f`; tools/list e instructions iguais aos da 3.6.1,
+A imagem vigente é `govbr-runner-oracle:3.6.5-2e2db77304cc` (commit `597db58`; tools/list e instructions iguais aos da 3.6.1,
 então os pins seguem `TOOLS_LIST_SHA256_3_6_1`; só o `dist/` mudou; base com a emenda-1, `dataSha256` `ffe79da7…`),
+construída do checkout de trabalho no commit `597db58` (árvore limpa, salvo `debug.log` não versionado; `npm run build`
+depois do último `src/`), sem `GOVBR_VALIDATOR_DIR`. Antes dela: `govbr-runner-oracle:3.6.4-69406de33ad5` (commit `b93fe4f`),
 construída do checkout de trabalho: o `dist/` dele é byte a byte o de um clone limpo do mesmo commit
-(`npm ci` + `tsc`, conferido em 2026-10-31), então o padrão vale sem `GOVBR_VALIDATOR_DIR`. As anteriores eram
+(`npm ci` + `tsc`, conferido em 2026-10-31). As anteriores eram
 `govbr-runner-oracle:3.6.2-a2d84d8211a9` (commit `3801924`, pins `TOOLS_LIST_SHA256_3_6_1`),
 `govbr-runner-oracle:3.6.1-6a317015aabd` (commit `3e0897b`, pins `TOOLS_LIST_SHA256_3_6_1`),
 `govbr-runner-oracle:3.6.0-4f5600ea6ee0` (commit `ee08428`, pins `TOOLS_LIST_SHA256_3_6_0`),
