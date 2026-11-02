@@ -1,0 +1,97 @@
+{
+ "_meta": {
+  "estado": "S2",
+  "medidoEm": "2026-11-02T21:57:09.535Z",
+  "viewport": "1280x900",
+  "headless": true
+ },
+ "dados": {
+  "erro-identificacao": {
+   "regra": "e-MAG 6.6 / WCAG 3.3.1, 1.4.1: campo com erro identificado e descrito por texto",
+   "_ms_desde_carga": 1222,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "select": {
+    "classes": "br-input danger",
+    "ariaInvalid": null,
+    "descricao": [],
+    "feedback": [],
+    "bordaCampo": "2px solid rgb(229, 34, 7)",
+    "corRotulo": "rgb(51, 51, 51)",
+    "iconeErro": false
+   },
+   "upload": {
+    "dataDanger": "data-danger",
+    "ariaInvalid": null,
+    "descricao": [
+     "Você também pode arrastar o arquivo até a área acima.",
+     "Selecione o arquivo do documento."
+    ],
+    "feedback": [
+     {
+      "texto": "Selecione o arquivo do documento.",
+      "visivel": true,
+      "cor": "rgb(255, 255, 255)"
+     }
+    ]
+   },
+   "mensagemGeral": "Erro: documento não enviado. Há campos obrigatórios sem preenchimento ou com problema. Corrija os campos indicados e envie novamente.",
+   "linksParaCampos": []
+  },
+  "retorno-fechar-enter": {
+   "regra": "message (S2): fechar (div role=button) com Enter",
+   "_ms_desde_carga": 1730,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "focoInicial": "div.br-button.circle.small.fechar-mensagem[aria-label=Fechar] \"Fechar\"",
+   "depois": {
+    "mensagem": {
+     "presente": false
+    },
+    "ativo": "button.br-button.primary.acao-enviar \"Enviar documento\""
+   }
+  },
+  "retorno-fechar-espaco": {
+   "regra": "message (S2): fechar (div role=button) com Space",
+   "_ms_desde_carga": 1719,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "mensagem": {
+    "presente": false
+   },
+   "ativo": "button.br-button.primary.acao-enviar \"Enviar documento\"",
+   "rolou": false
+  },
+  "retorno-fechar-clique": {
+   "regra": "message (S2): fechar com clique",
+   "_ms_desde_carga": 1749,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "mensagem": {
+    "presente": false
+   },
+   "ativo": "button.br-button.primary.acao-enviar \"Enviar documento\""
+  },
+  "retorno-tooltip": {
+   "regra": "tooltip do fechar (S2) visível ao chegar no estado; posição",
+   "_ms_desde_carga": 1223,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "visivel": true,
+   "placement": "top",
+   "acima": true,
+   "sombra": "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px",
+   "gatilho": {
+    "x": 1180,
+    "y": 197.03125
+   },
+   "tooltip": {
+    "x": 1157,
+    "y": 136.703125,
+    "w": 77.296875,
+    "h": 52.296875
+   },
+   "dentroDaJanela": true
+  }
+ }
+}

@@ -1,0 +1,212 @@
+{
+ "_meta": {
+  "entrada": "/acompanhamento.html",
+  "waitFor": "#tab-requerimento",
+  "setup": [
+   {
+    "action": "click",
+    "selector": "#aba-documentos"
+   },
+   {
+    "action": "wait",
+    "selector": "#painel-documentos.active"
+   },
+   {
+    "action": "click",
+    "selector": ".acao-enviar"
+   },
+   {
+    "action": "wait",
+    "selector": "#msg-retorno"
+   }
+  ],
+  "protocolo": {
+   "estados": "Cada estado é alcançado a partir de carga nova pelos passos do setup, e as medidas dele terminam em até 120 s depois da carga; se a página recarregar ou navegar durante uma medida, só essa medida é refeita de carga nova.",
+   "observacaoLonga": {
+    "janela_s": 360,
+    "como": "Em contexto de navegador próprio, carga limpa, sem interagir: observe a página por 360 s."
+   }
+  }
+ },
+ "estados": {
+  "S0": {
+   "id": "S0",
+   "afterStep": 0,
+   "passos": [],
+   "path": "/acompanhamento.html",
+   "nota": "carga inicial (aba Andamento ativa)",
+   "medido": {
+    "path": "/acompanhamento.html",
+    "focoNaChegada": "body",
+    "ms_desde_carga": 1104,
+    "ms_desde_carga_tab": 8582,
+    "navegacoes": 1,
+    "externos": [],
+    "escritas": [],
+    "errosDePagina": [],
+    "paradasTab": 17
+   }
+  },
+  "S1": {
+   "id": "S1",
+   "afterStep": 2,
+   "passos": [
+    {
+     "action": "click",
+     "selector": "#aba-documentos"
+    },
+    {
+     "action": "wait",
+     "selector": "#painel-documentos.active"
+    }
+   ],
+   "path": "/acompanhamento.html",
+   "nota": "aba Documentos selecionada",
+   "medido": {
+    "path": "/acompanhamento.html",
+    "focoNaChegada": "#aba-documentos",
+    "ms_desde_carga": 1552,
+    "ms_desde_carga_tab": 11971,
+    "navegacoes": 1,
+    "externos": [],
+    "escritas": [],
+    "errosDePagina": [],
+    "paradasTab": 22
+   }
+  },
+  "S2": {
+   "id": "S2",
+   "afterStep": 4,
+   "passos": [
+    {
+     "action": "click",
+     "selector": "#aba-documentos"
+    },
+    {
+     "action": "wait",
+     "selector": "#painel-documentos.active"
+    },
+    {
+     "action": "click",
+     "selector": ".acao-enviar"
+    },
+    {
+     "action": "wait",
+     "selector": "#msg-retorno"
+    }
+   ],
+   "path": "/acompanhamento.html",
+   "nota": "Enviar documento acionado com o formulário vazio",
+   "medido": {
+    "path": "/acompanhamento.html",
+    "focoNaChegada": "#msg-retorno > div:nth-of-type(3) > div:nth-of-type(1)",
+    "ms_desde_carga": 2123,
+    "ms_desde_carga_tab": 12840,
+    "navegacoes": 1,
+    "externos": [],
+    "escritas": [],
+    "errosDePagina": [],
+    "paradasTab": 23
+   }
+  }
+ },
+ "observacaoLonga": {
+  "janela_s": 360,
+  "inicio": "2026-11-02T21:18:59.063Z",
+  "metaHttpEquiv": [
+   {
+    "httpEquiv": "X-UA-Compatible",
+    "content": "IE=edge"
+   },
+   {
+    "httpEquiv": "refresh",
+    "content": "300"
+   }
+  ],
+  "navegacoes": [
+   {
+    "t_ms": 9,
+    "url": "http://127.0.0.1:3218/acompanhamento.html"
+   },
+   {
+    "t_ms": 300129,
+    "url": "http://127.0.0.1:3218/acompanhamento.html"
+   }
+  ],
+  "eventos": [
+   {
+    "t_ms": 14,
+    "tipo": "documento-novo",
+    "extra": {
+     "timeOrigin": 1793654339066
+    }
+   },
+   {
+    "t_ms": 89,
+    "tipo": "DOMContentLoaded",
+    "extra": null
+   },
+   {
+    "t_ms": 118,
+    "tipo": "load",
+    "extra": null
+   },
+   {
+    "t_ms": 300123,
+    "tipo": "beforeunload",
+    "extra": null
+   },
+   {
+    "t_ms": 300132,
+    "tipo": "documento-novo",
+    "extra": {
+     "timeOrigin": 1793654639186.6
+    }
+   },
+   {
+    "t_ms": 300170,
+    "tipo": "DOMContentLoaded",
+    "extra": null
+   },
+   {
+    "t_ms": 300174,
+    "tipo": "load",
+    "extra": null
+   }
+  ],
+  "documentosNovos": 2,
+  "recargas": 1,
+  "errosDePagina": []
+ },
+ "recargaComEstadoPreenchido": {
+  "medida": "recarga automática × estado preenchido",
+  "janela_ms": 330000,
+  "antes": {
+   "t_ms": 1948,
+   "abaAtiva": "aba-documentos",
+   "painelAtivo": "painel-documentos",
+   "select": "Comprovante de residência",
+   "switchEmail": true,
+   "timeOrigin": 1793654743999.1
+  },
+  "depois": {
+   "t_ms": 330001,
+   "abaAtiva": "aba-andamento",
+   "painelAtivo": "painel-andamento",
+   "select": "",
+   "switchEmail": false,
+   "timeOrigin": 1793655044147.8
+  },
+  "navegacoes": [
+   {
+    "t_ms": 10,
+    "url": "http://127.0.0.1:3218/acompanhamento.html"
+   },
+   {
+    "t_ms": 300157,
+    "url": "http://127.0.0.1:3218/acompanhamento.html"
+   }
+  ],
+  "errosDePagina": []
+ }
+}

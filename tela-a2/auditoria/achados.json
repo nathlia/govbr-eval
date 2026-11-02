@@ -1,0 +1,908 @@
+{
+ "_meta": {
+  "tela": "acompanhamento (A2)",
+  "auditoria": "cega, por medição (sem oráculo, sem axe)",
+  "geradoPor": "tela-a2/auditoria/montar-decisoes.mjs",
+  "base": "govbr-ds-validator/data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/rules.jsonl",
+  "baseSha256": "c8c4327d3b4c9eea173f96ce2ee72d0eeddbb534f5da6409627c921d30879a0f",
+  "filtro": "force ∈ {required, prohibited} e (component ∈ componentesPresentes da lista neutra ou component = null)",
+  "resumo": {
+   "universo": {
+    "regras": 900,
+    "componentes": [
+     "accordion",
+     "breadcrumb",
+     "button",
+     "card",
+     "checkbox",
+     "divider",
+     "footer",
+     "header",
+     "input",
+     "item",
+     "list",
+     "message",
+     "radio",
+     "select",
+     "skiplink",
+     "step",
+     "switch",
+     "tab",
+     "table",
+     "tag",
+     "tooltip",
+     "upload"
+    ],
+    "linhas": 908
+   },
+   "vereditos": {
+    "incerto": 170,
+    "nao-se-aplica": 273,
+    "conforme": 421,
+    "violada": 44
+   },
+   "incertosPorTipo": {
+    "sem-observavel": 44,
+    "medido-ambiguo": 38,
+    "nao-medida": 88
+   },
+   "semDecisaoExplicita": 88,
+   "achados": 34,
+   "achadosPorFonte": {
+    "e-MAG": 12,
+    "DS": 15,
+    "WCAG": 7
+   },
+   "achadosPorComponente": {
+    "pagina": 4,
+    "message": 1,
+    "skiplink": 2,
+    "breadcrumb": 4,
+    "button": 7,
+    "tooltip": 5,
+    "accordion": 1,
+    "step": 1,
+    "select": 2,
+    "upload": 2,
+    "switch": 3,
+    "checkbox / switch (grupo)": 1,
+    "pagina (tipografia)": 1
+   },
+   "regrasDaBaseVioladas": 38,
+   "criteriosWcagCitados": [
+    "WCAG-2.1-3.2.5",
+    "WCAG-2.1-2.2.1",
+    "WCAG-2.1-4.1.2",
+    "WCAG-2.1-3.1.2",
+    "WCAG-2.1-2.5.3",
+    "WCAG-2.1-1.4.10",
+    "WCAG-2.1-1.4.13",
+    "WCAG-2.1-1.3.1",
+    "WCAG-2.1-3.3.1"
+   ]
+  },
+  "nota": "um item por unidade violada (regra principal × elemento × estados); 'tambemViola' = outras regras do mesmo fato"
+ },
+ "achados": [
+  {
+   "id": "A2-01",
+   "estado": "S0 S1 S2 (observação de 360 s)",
+   "seletor": "head > meta[http-equiv=refresh]",
+   "componente": "pagina",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-6021746e010c",
+    "texto": "Não devem ser utilizadas marcações para redirecionar a uma nova página, como o uso do atributo http-equiv com conteúdo “refresh” do elemento META.",
+    "fonte": "e-MAG 3.1 rec. 2.4 (via base DS 3.7.0)",
+    "wcag": [
+     "3.2.5"
+    ]
+   },
+   "medida": "<meta http-equiv=\"refresh\" content=\"300\"> no HTML servido; na observação de 360 s sem interação o documento foi recarregado aos 300,1 s (beforeunload 300 123 ms, documento novo 300 132 ms, load 300 174 ms) — 2 documentos na janela, 1 recarga.",
+   "esperado": "nenhuma atualização/redirecionamento automático por meta refresh (e-MAG 2.3 e 2.4)",
+   "forca": "prohibited",
+   "justificativa": "Proibição literal (force prohibited) do uso de http-equiv refresh; a recarga periódica foi observada com carimbo.",
+   "tambemViola": [
+    {
+     "id": "govbr-3.7.0-accessibility-global-6b0032e5c8b1",
+     "fonte": "e-MAG 2.4",
+     "forca": "prohibited"
+    },
+    {
+     "id": "govbr-3.7.0-accessibility-global-53236e27ac9c",
+     "fonte": "e-MAG 2.3",
+     "forca": "prohibited"
+    },
+    {
+     "id": "govbr-3.7.0-accessibility-global-e47b4f4c0b26",
+     "fonte": "e-MAG 2.4",
+     "forca": "required"
+    },
+    {
+     "id": "WCAG-2.1-3.2.5",
+     "fonte": "WCAG 2.1 3.2.5 (AAA)",
+     "forca": "WCAG AAA"
+    }
+   ],
+   "evidencia": "medidas/observacao-360.json; medidas/html-servido.json › metaRefresh",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-02",
+   "estado": "S1 (observação complementar de 330 s)",
+   "seletor": "head > meta[http-equiv=refresh]",
+   "componente": "pagina",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-7bb1e5ca34ff",
+    "texto": "Em uma página onde há limite de tempo para realizar uma tarefa deve haver a opção de desligar, ajustar ou prolongar esse limite.",
+    "fonte": "e-MAG 3.1 rec. 2.5 (via base DS 3.7.0)",
+    "wcag": [
+     "2.2.1"
+    ]
+   },
+   "medida": "Em S1, com 'Comprovante de residência' escolhido no select e o switch de e-mail ligado, a recarga dos 300,2 s devolveu a página ao estado inicial: aba ativa aba-andamento, select vazio, switch desligado. Nenhum texto visível com 'atualiz…' em 36 amostras; nenhum controle para desligar, ajustar ou prolongar o limite.",
+   "esperado": "limite de tempo informado e com opção de desligar/ajustar/prolongar; tempo suficiente para preencher o formulário de consulta a processo",
+   "forca": "required",
+   "justificativa": "A recarga de 300 s funciona como limite de tempo não anunciado que descarta o preenchimento (dados perdidos medidos).",
+   "tambemViola": [
+    {
+     "id": "govbr-3.7.0-accessibility-global-31cf88f381f6",
+     "fonte": "e-MAG 2.5",
+     "forca": "required"
+    },
+    {
+     "id": "govbr-3.7.0-accessibility-global-8d14c83c9686",
+     "fonte": "e-MAG 2.5",
+     "forca": "required"
+    },
+    {
+     "id": "govbr-3.7.0-accessibility-global-29482716b19d",
+     "fonte": "e-MAG 2.5",
+     "forca": "required"
+    },
+    {
+     "id": "govbr-3.7.0-accessibility-global-3a0935b60260",
+     "fonte": "e-MAG 2.3",
+     "forca": "required"
+    },
+    {
+     "id": "WCAG-2.1-2.2.1",
+     "fonte": "WCAG 2.1 2.2.1 (A)",
+     "forca": "WCAG A"
+    }
+   ],
+   "evidencia": "medidas/observacao-recarga-estado.json; medidas/observacao-360.json › amostras",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-03",
+   "estado": "S0 S1 S2",
+   "seletor": "#msg-pendencia > div:nth-of-type(2) (align=\"left\") e #msg-pendencia > div:nth-of-type(2) > font",
+   "componente": "message",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-19cbc02f51c6",
+    "texto": "Dessa forma, um código HTML escrito de acordo com os padrões de desenvolvimento Web, deve seguir as normas HTML definidas pelo W3C, seguindo as regras de formatação sintática.",
+    "fonte": "DS 3.7.0 (guias/acessibilidade-html/acessibilidade-html.md)",
+    "wcag": []
+   },
+   "medida": "o conteúdo da mensagem de pendência usa <div align=\"left\"> e <font color=\"#333333\"> (obsoletos no HTML vigente do W3C); presentes no HTML servido.",
+   "esperado": "HTML conforme às normas do W3C, apresentação só por CSS (camadas separadas)",
+   "forca": "required",
+   "justificativa": "font e o atributo align são marcação apresentacional obsoleta.",
+   "tambemViola": [
+    {
+     "id": "govbr-3.7.0-accessibility-global-1f1370424402",
+     "fonte": "e-MAG 1.1",
+     "forca": "required"
+    },
+    {
+     "id": "govbr-3.7.0-accessibility-global-49089865cd5d",
+     "fonte": "DS 3.7.0",
+     "forca": "required"
+    }
+   ],
+   "evidencia": "medidas/S0/pagina.json › apresentacional; medidas/html-servido.json › elementosApresentacionais",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-04",
+   "estado": "HTML servido",
+   "seletor": "img (2) e input (8) com '/>' — linhas 18, 156, 163, 169, 175, 186, 201, 207, 213, 257",
+   "componente": "pagina",
+   "regra": {
+    "id": "govbr-3.7.0-development-global-a4f97ebb50c5",
+    "texto": "NÃO fechar tags de fecho automático.",
+    "fonte": "DS 3.7.0 (guias/boas-praticas-de-html/boas-praticas-de-html.md)",
+    "wcag": []
+   },
+   "medida": "10 elementos vazios fechados com '/>' no HTML servido (2 img, 8 input); os meta/link não.",
+   "esperado": "elementos de fecho automático sem '/>'",
+   "forca": "prohibited",
+   "justificativa": "Proibição literal (NÃO fechar tags de fecho automático), medida nos bytes servidos.",
+   "tambemViola": [],
+   "evidencia": "medidas/html-servido.json › autoFechados",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-05",
+   "estado": "S0 S1 S2",
+   "seletor": "html",
+   "componente": "pagina",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-748eb01e1800",
+    "texto": "E o elemento NOSCRIPT deve ser utilizado para abranger os casos em que scripts não são suportados.",
+    "fonte": "e-MAG 3.1 rec. 2.2 (via base DS 3.7.0)",
+    "wcag": [
+     "2.1.1",
+     "2.1.2"
+    ]
+   },
+   "medida": "0 elementos <noscript>; abas, select (lista de opções), botão do upload e mensagens dependem de script (origem.json: 31 elementos com atributos postos por script; 12 elementos da lista do select são refeitos por script).",
+   "esperado": "elemento NOSCRIPT cobrindo os casos em que scripts não são suportados",
+   "forca": "required",
+   "justificativa": "Obrigação literal do e-MAG 2.2; ausência medida.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/pagina.json › noscript; medidas/origem.json",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-06",
+   "estado": "S0 S1 S2",
+   "seletor": ".atalhos-pagina (role=menubar) > a (role=menuitem)",
+   "componente": "skiplink",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-7c91abad32ce",
+    "texto": "Cada elemento HTML deve ser utilizado para o fim que ele foi criado.",
+    "fonte": "e-MAG 3.1 rec. 1.2 (via base DS 3.7.0)",
+    "wcag": [
+     "1.3.1"
+    ]
+   },
+   "medida": "o skiplink é <nav role=\"menubar\"> com links role=\"menuitem\"; com foco no 1º item, ArrowRight e ArrowDown não movem o foco (continua em 'Ir para o conteúdo'); a árvore AX expõe menubar/menuitem.",
+   "esperado": "papel de acordo com a função (lista de links de atalho), sem papel de widget cujo modelo de teclado não é implementado",
+   "forca": "required",
+   "justificativa": "menubar promete navegação por setas que não existe; o papel não corresponde ao propósito.",
+   "tambemViola": [
+    {
+     "id": "WCAG-2.1-4.1.2",
+     "fonte": "WCAG 2.1 4.1.2 (A)",
+     "forca": "WCAG A"
+    }
+   ],
+   "evidencia": "medidas/S0/interacoes.json › skiplink-setas; medidas/S0/instancias.json (AX)",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-07",
+   "estado": "S0",
+   "seletor": ".atalhos-pagina > a",
+   "componente": "skiplink",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-skiplink-fc59fbdac2c2",
+    "texto": "O skip link também precisa estar visível para usuários que navegam com mouse, pois pode ser útil para os atalhos de navegação.",
+    "fonte": "DS 3.7.0 (Skip Link (Atalhos Acessíveis) › acessibilidade)",
+    "wcag": []
+   },
+   "medida": "ponteiro em (20,5), (100,20) e (200,10): os dois itens continuam em y = −900 (não visíveis); só aparecem com foco de teclado.",
+   "esperado": "skip link visível também para quem navega com mouse",
+   "forca": "required",
+   "justificativa": "Obrigação literal; o skiplink nunca aparece para o ponteiro.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/interacoes.json › skiplink-mouse",
+   "origem": "estilo computado da folha servida (um só bundle CSS; DS e autoral inseparáveis sem ler fontes)"
+  },
+  {
+   "id": "A2-08",
+   "estado": "S0 S1 S2",
+   "seletor": ".trilha-servico [aria-current=page] (span tabindex=0)",
+   "componente": "breadcrumb",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-742fd4c4f54b",
+    "texto": "No entanto, se houver a necessidade de utilizar o tabindex, o mesmo deverá ser utilizado com a semântica correta.",
+    "fonte": "e-MAG 3.1 rec. 1.4 (via base DS 3.7.0)",
+    "wcag": [
+     "1.3.2",
+     "2.4.3"
+    ]
+   },
+   "medida": "o item atual 'Acompanhar requerimento' é <span tabindex=\"0\">: recebe foco (3ª parada de Tab depois do skiplink), papel AX genérico, Enter não faz nada, cursor auto.",
+   "esperado": "tabindex só com semântica correta e real necessidade (elemento não interativo fora da ordem de Tab)",
+   "forca": "required",
+   "justificativa": "Parada de Tab sem função num elemento sem papel interativo.",
+   "tambemViola": [
+    {
+     "id": "govbr-3.7.0-accessibility-global-fefed87ed8b9",
+     "fonte": "e-MAG 6.3",
+     "forca": "required"
+    }
+   ],
+   "evidencia": "medidas/S0/tab.json; medidas/S0/interacoes.json › breadcrumb-atual; medidas/S0/pagina.json › tabindexNaoInterativo",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-09",
+   "estado": "S0 S1 S2",
+   "seletor": ".trilha-servico [aria-current=page]",
+   "componente": "breadcrumb",
+   "regra": {
+    "id": "govbr-3.7.0-component-breadcrumb-8c4ff87d861a",
+    "texto": "Deve estar em destaque (semi bold).",
+    "fonte": "DS 3.7.0 (Breadcrumb (Migalhas de Pão) › designer)",
+    "wcag": []
+   },
+   "medida": "font-weight computado 500 (Medium) no título da página atual; o link 'Meus requerimentos' também 500.",
+   "esperado": "título da página atual em destaque, semi bold (600)",
+   "forca": "required",
+   "justificativa": "Peso medido difere do exigido.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/interacoes.json › breadcrumb-atual.estilo",
+   "origem": "estilo computado da folha servida (um só bundle CSS; DS e autoral inseparáveis sem ler fontes)"
+  },
+  {
+   "id": "A2-10",
+   "estado": "S0 S1 S2",
+   "seletor": "nav.trilha-servico[aria-label=Breadcrumbs]",
+   "componente": "breadcrumb",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-9751560f0ae6",
+    "texto": "Se algum elemento de uma página possuir conteúdo em um idioma diferente do principal, este deverá estar identificado pelo atributo lang.",
+    "fonte": "e-MAG 3.1 rec. 3.2 (via base DS 3.7.0)",
+    "wcag": [
+     "3.1.2"
+    ]
+   },
+   "medida": "nome acessível do breadcrumb = 'Breadcrumbs' (inglês), sem atributo lang; página lang=pt-BR.",
+   "esperado": "conteúdo em outro idioma identificado com lang (ou nome em português)",
+   "forca": "required",
+   "justificativa": "O nome lido pelo leitor de tela está em inglês e herda pt-BR.",
+   "tambemViola": [
+    {
+     "id": "govbr-3.7.0-accessibility-global-b18c7684019f",
+     "fonte": "DS 3.7.0",
+     "forca": "required"
+    },
+    {
+     "id": "WCAG-2.1-3.1.2",
+     "fonte": "WCAG 2.1 3.1.2 (AA)",
+     "forca": "WCAG AA"
+    }
+   ],
+   "evidencia": "medidas/S0/instancias.json (.trilha-servico AX nome)",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-11",
+   "estado": "S0 S1 S2",
+   "seletor": ".home > a ('Página inicial') e .crumb:nth-of-type(2) > a ('Meus requerimentos')",
+   "componente": "breadcrumb",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-a54fe3e9b8d7",
+    "texto": "Da mesma forma, links que remetem ao mesmo destino devem ter a mesma descrição.",
+    "fonte": "e-MAG 3.1 rec. 3.5 (via base DS 3.7.0)",
+    "wcag": [
+     "2.4.4",
+     "2.4.9"
+    ]
+   },
+   "medida": "os dois links apontam para meus-requerimentos.html com descrições diferentes ('Página inicial' × 'Meus requerimentos'); o botão 'Voltar para meus requerimentos' também vai ao mesmo destino.",
+   "esperado": "links para o mesmo destino com a mesma descrição",
+   "forca": "required",
+   "justificativa": "Destino idêntico medido (href), descrições distintas.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/pagina.json › links",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-12",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-protocolo-gatilho",
+   "componente": "button",
+   "regra": {
+    "id": "WCAG-2.1-2.5.3",
+    "texto": "Rótulo no nome: o nome acessível de um componente com rótulo visível contém o texto do rótulo.",
+    "fonte": "WCAG 2.1 critério 2.5.3 (nível A)",
+    "wcag": [
+     "2.5.3"
+    ]
+   },
+   "medida": "rótulo visível 'Ajuda sobre o NUP' (span.rotulo-botao visível, 16,8 px, à direita do ícone); nome acessível = 'Use o NUP para consultar' (aria-labelledby → tooltip sobrepõe o aria-label 'Ajuda sobre o NUP').",
+   "esperado": "nome acessível contendo o texto visível do rótulo",
+   "forca": "WCAG A",
+   "justificativa": "O texto visível não aparece no nome computado (CDP).",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/instancias.json (AX nome, fonteNome relatedElement); medidas/S0/interacoes.json › card-ajuda-click.rotuloVisivel",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-13",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-protocolo-gatilho",
+   "componente": "button",
+   "regra": {
+    "id": "govbr-3.7.0-component-button-81f5e26ec0ef",
+    "texto": "O crescimento do botão deve acompanhar o tamanho do rótulo.",
+    "fonte": "DS 3.7.0 (Button (Botão) › designer)",
+    "wcag": []
+   },
+   "medida": "botão circular de 40×40 px com rótulo visível 'Ajuda sobre o NUP' de 149 px de largura posicionado fora da superfície (position absolute, white-space nowrap).",
+   "esperado": "o botão cresce com o rótulo (rótulo dentro da superfície)",
+   "forca": "required",
+   "justificativa": "O rótulo extrapola a superfície; o botão não acompanha seu tamanho.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/interacoes.json › card-ajuda-click; medidas/S0/instancias.json",
+   "origem": "estilo computado da folha servida (um só bundle CSS; DS e autoral inseparáveis sem ler fontes)"
+  },
+  {
+   "id": "A2-14",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-prazo-gatilho",
+   "componente": "button",
+   "regra": {
+    "id": "WCAG-2.1-2.5.3",
+    "texto": "Rótulo no nome: o nome acessível de um componente com rótulo visível contém o texto do rótulo.",
+    "fonte": "WCAG 2.1 critério 2.5.3 (nível A)",
+    "wcag": [
+     "2.5.3"
+    ]
+   },
+   "medida": "rótulo visível 'Ajuda sobre o prazo' (span.rotulo-botao visível, 16,8 px, à direita do ícone); nome acessível = 'Prazo em dias corridos' (aria-labelledby → tooltip sobrepõe o aria-label 'Ajuda sobre o prazo').",
+   "esperado": "nome acessível contendo o texto visível do rótulo",
+   "forca": "WCAG A",
+   "justificativa": "O texto visível não aparece no nome computado (CDP).",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/instancias.json (AX nome, fonteNome relatedElement); medidas/S0/interacoes.json › card-ajuda-click.rotuloVisivel",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-15",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-prazo-gatilho",
+   "componente": "button",
+   "regra": {
+    "id": "govbr-3.7.0-component-button-81f5e26ec0ef",
+    "texto": "O crescimento do botão deve acompanhar o tamanho do rótulo.",
+    "fonte": "DS 3.7.0 (Button (Botão) › designer)",
+    "wcag": []
+   },
+   "medida": "botão circular de 40×40 px com rótulo visível 'Ajuda sobre o prazo' de 158 px de largura posicionado fora da superfície (position absolute, white-space nowrap).",
+   "esperado": "o botão cresce com o rótulo (rótulo dentro da superfície)",
+   "forca": "required",
+   "justificativa": "O rótulo extrapola a superfície; o botão não acompanha seu tamanho.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/interacoes.json › card-ajuda-click; medidas/S0/instancias.json",
+   "origem": "estilo computado da folha servida (um só bundle CSS; DS e autoral inseparáveis sem ler fontes)"
+  },
+  {
+   "id": "A2-16",
+   "estado": "S0 (janela 640×450 = 200%)",
+   "seletor": "#tip-protocolo-gatilho > span.rotulo-botao",
+   "componente": "button",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-24ee65d5b46b",
+    "texto": "Assim, é preciso garantir que, quando a página for redimensionada, não ocorram sobreposições nem o aparecimento de uma barra horizontal.",
+    "fonte": "e-MAG 3.1 rec. 4.3 (via base DS 3.7.0)",
+    "wcag": [
+     "1.4.4"
+    ]
+   },
+   "medida": "a 640×450 CSS px: scrollWidth 648 > clientWidth 640 (barra horizontal); o único elemento além da borda é o rótulo 'Ajuda sobre o NUP' (direita em 648 px).",
+   "esperado": "sem barra horizontal nem sobreposição a 200%",
+   "forca": "required",
+   "justificativa": "Rolagem horizontal medida, causada por um elemento.",
+   "tambemViola": [
+    {
+     "id": "WCAG-2.1-1.4.10",
+     "fonte": "WCAG 2.1 1.4.10 (AA)",
+     "forca": "WCAG AA"
+    }
+   ],
+   "evidencia": "medidas/S0/interacoes.json › redimensionar-200, rotulo-largo-200",
+   "origem": "estilo computado da folha servida (um só bundle CSS; DS e autoral inseparáveis sem ler fontes)"
+  },
+  {
+   "id": "A2-17",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-protocolo",
+   "componente": "tooltip",
+   "regra": {
+    "id": "govbr-3.7.0-component-tooltip-187fe90aeefd",
+    "texto": "Atenção: caso a seta seja utilizada no topo ou na base do balão flutuante, esta deverá permanecer centralizada horizontalmente com o balão flutuante.",
+    "fonte": "DS 3.7.0 (Tooltip (Alertas Flutuantes) › designer)",
+    "wcag": []
+   },
+   "medida": "seta na base/topo do balão: balão x 370–571,5 (centro 470,8); seta centro 480,0 → 9,2 px fora do centro (hover no gatilho, 1280×900).",
+   "esperado": "seta no topo/base centralizada horizontalmente com o balão",
+   "forca": "required",
+   "justificativa": "Deslocamento medido; no #tip-prazo a seta fica centrada (0 px), o que mostra que a centragem é atingível.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover",
+   "origem": "posto por script (origem.json: o core.min.js sozinho não muda o DOM; core do DS instanciado pela página e script autoral são inseparáveis por ablação)"
+  },
+  {
+   "id": "A2-18",
+   "estado": "S0 S1 S2",
+   "seletor": "#msg-pendencia > div:nth-of-type(3) > div",
+   "componente": "tooltip",
+   "regra": {
+    "id": "govbr-3.7.0-component-tooltip-187fe90aeefd",
+    "texto": "Atenção: caso a seta seja utilizada no topo ou na base do balão flutuante, esta deverá permanecer centralizada horizontalmente com o balão flutuante.",
+    "fonte": "DS 3.7.0 (Tooltip (Alertas Flutuantes) › designer)",
+    "wcag": []
+   },
+   "medida": "seta na base/topo do balão: balão x 1157–1234,3 (centro 1195,6); seta centro 1204,0 → 8,4 px fora do centro (hover no gatilho, 1280×900).",
+   "esperado": "seta no topo/base centralizada horizontalmente com o balão",
+   "forca": "required",
+   "justificativa": "Deslocamento medido; no #tip-prazo a seta fica centrada (0 px), o que mostra que a centragem é atingível.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover",
+   "origem": "posto por script (origem.json: o core.min.js sozinho não muda o DOM; core do DS instanciado pela página e script autoral são inseparáveis por ablação)"
+  },
+  {
+   "id": "A2-19",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-protocolo-gatilho",
+   "componente": "tooltip",
+   "regra": {
+    "id": "WCAG-2.1-1.4.13",
+    "texto": "Conteúdo em hover/foco: dispensável, pairável (o ponteiro pode ir sobre ele sem que desapareça) e persistente.",
+    "fonte": "WCAG 2.1 critério 1.4.13 (nível AA)",
+    "wcag": [
+     "1.4.13"
+    ]
+   },
+   "medida": "hover no gatilho mostra o tooltip; mover o ponteiro (5 passos) até o centro do balão → tooltip some (visível = false). Escape fecha (dispensável: ok).",
+   "esperado": "tooltip permanece enquanto o ponteiro está sobre ele",
+   "forca": "WCAG AA",
+   "justificativa": "Falha medida da condição 'pairável'.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover #tip-protocolo-gatilho",
+   "origem": "posto por script (origem.json: o core.min.js sozinho não muda o DOM; core do DS instanciado pela página e script autoral são inseparáveis por ablação)"
+  },
+  {
+   "id": "A2-20",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-prazo-gatilho",
+   "componente": "tooltip",
+   "regra": {
+    "id": "WCAG-2.1-1.4.13",
+    "texto": "Conteúdo em hover/foco: dispensável, pairável (o ponteiro pode ir sobre ele sem que desapareça) e persistente.",
+    "fonte": "WCAG 2.1 critério 1.4.13 (nível AA)",
+    "wcag": [
+     "1.4.13"
+    ]
+   },
+   "medida": "hover no gatilho mostra o tooltip; mover o ponteiro (5 passos) até o centro do balão → tooltip some (visível = false). Escape fecha (dispensável: ok).",
+   "esperado": "tooltip permanece enquanto o ponteiro está sobre ele",
+   "forca": "WCAG AA",
+   "justificativa": "Falha medida da condição 'pairável'.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover #tip-prazo-gatilho",
+   "origem": "posto por script (origem.json: o core.min.js sozinho não muda o DOM; core do DS instanciado pela página e script autoral são inseparáveis por ablação)"
+  },
+  {
+   "id": "A2-21",
+   "estado": "S0 S1 S2",
+   "seletor": "#msg-pendencia > div:nth-of-type(3) > button",
+   "componente": "tooltip",
+   "regra": {
+    "id": "WCAG-2.1-1.4.13",
+    "texto": "Conteúdo em hover/foco: dispensável, pairável (o ponteiro pode ir sobre ele sem que desapareça) e persistente.",
+    "fonte": "WCAG 2.1 critério 1.4.13 (nível AA)",
+    "wcag": [
+     "1.4.13"
+    ]
+   },
+   "medida": "hover no gatilho mostra o tooltip; mover o ponteiro (5 passos) até o centro do balão → tooltip some (visível = false). Escape fecha (dispensável: ok).",
+   "esperado": "tooltip permanece enquanto o ponteiro está sobre ele",
+   "forca": "WCAG AA",
+   "justificativa": "Falha medida da condição 'pairável'.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover #msg-pendencia > div:nth-of-type(3) > button",
+   "origem": "posto por script (origem.json: o core.min.js sozinho não muda o DOM; core do DS instanciado pela página e script autoral são inseparáveis por ablação)"
+  },
+  {
+   "id": "A2-22",
+   "estado": "S0 S1 S2",
+   "seletor": "#acc-duvidas button.header (3)",
+   "componente": "accordion",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-5817ddd685a6",
+    "texto": "Os autores precisam associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos, a menos que os elementos já tenham a semântica WAI-",
+    "fonte": "DS 3.7.0 (guias/wai-aria/wai-aria.md)",
+    "wcag": []
+   },
+   "medida": "Enter/Space/clique expandem o item (conteúdo passa a display:block, ícone vira fa-angle-up), mas aria-expanded continua 'false' e a árvore AX diz expanded=false.",
+   "esperado": "aria-expanded=true / expanded na AX enquanto o item está aberto",
+   "forca": "required",
+   "justificativa": "Estado do widget não acompanha o ciclo de vida.",
+   "tambemViola": [
+    {
+     "id": "govbr-3.7.0-accessibility-global-6a2b33a873d8",
+     "fonte": "e-MAG 2.2",
+     "forca": "required"
+    },
+    {
+     "id": "WCAG-2.1-4.1.2",
+     "fonte": "WCAG 2.1 4.1.2 (A)",
+     "forca": "WCAG A"
+    }
+   ],
+   "evidencia": "medidas/S0/interacoes.json › acordeao, acordeao-ativo, acordeao-ax",
+   "origem": "posto por script (origem.json: o core.min.js sozinho não muda o DOM; core do DS instanciado pela página e script autoral são inseparáveis por ablação)"
+  },
+  {
+   "id": "A2-23",
+   "estado": "S0",
+   "seletor": "#stp-andamento .etapa-decisao",
+   "componente": "step",
+   "regra": {
+    "id": "govbr-3.7.0-component-step-518405a28697",
+    "texto": "1 | Indicador | --- | Obrigatório.",
+    "fonte": "DS 3.7.0 (Steps (Navegação Passo a Passo) › designer)",
+    "wcag": []
+   },
+   "medida": "o indicador (::before, content \"3\") da etapa 'Decisão' tem visibility:hidden; os das outras três etapas são visíveis (captura: só os círculos 1, 2 e 4).",
+   "esperado": "indicador presente em toda etapa",
+   "forca": "required",
+   "justificativa": "Elemento obrigatório da anatomia invisível numa etapa.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/interacoes.json › etapa-indicadores, etapas",
+   "origem": "estilo computado da folha servida (um só bundle CSS; DS e autoral inseparáveis sem ler fontes)"
+  },
+  {
+   "id": "A2-24",
+   "estado": "S1 S2",
+   "seletor": "#sel-tipo-documento > div:nth-of-type(1) (role=combobox)",
+   "componente": "select",
+   "regra": {
+    "id": "WCAG-2.1-4.1.2",
+    "texto": "Nome, função, valor: componentes de interface têm nome e função determináveis por programa.",
+    "fonte": "WCAG 2.1 critério 4.1.2 (nível A)",
+    "wcag": [
+     "4.1.2"
+    ]
+   },
+   "medida": "o contêiner .br-input recebe role=combobox (aria-expanded, aria-controls) e na árvore AX é combobox de nome '' (o label 'Tipo de documento' nomeia só o input interno).",
+   "esperado": "combobox com nome acessível",
+   "forca": "WCAG A",
+   "justificativa": "Componente com papel de widget sem nome.",
+   "tambemViola": [],
+   "evidencia": "medidas/S2/instancias.json (AX); medidas/origem.json (role posto por script)",
+   "origem": "posto por script (origem.json: o core.min.js sozinho não muda o DOM; core do DS instanciado pela página e script autoral são inseparáveis por ablação)"
+  },
+  {
+   "id": "A2-25",
+   "estado": "S1 S2",
+   "seletor": "#upl-documento > button.upload-button",
+   "componente": "upload",
+   "regra": {
+    "id": "WCAG-2.1-4.1.2",
+    "texto": "Nome, função, valor: controles focáveis não podem estar ocultos da tecnologia assistiva (aria-hidden).",
+    "fonte": "WCAG 2.1 critério 4.1.2 (nível A)",
+    "wcag": [
+     "4.1.2"
+    ]
+   },
+   "medida": "o botão 'Selecione o arquivo' tem aria-hidden=\"true\" e tabIndex 0: é a parada de Tab do upload (Enter abre o seletor de arquivo); o input[type=file] tem display:none e não é alcançável.",
+   "esperado": "controle operável exposto à AT (sem aria-hidden)",
+   "forca": "WCAG A",
+   "justificativa": "Elemento focável e operável marcado como oculto para AT.",
+   "tambemViola": [],
+   "evidencia": "medidas/S1/pagina.json › ariaHiddenFocavel; medidas/S1/interacoes.json › upload-teclado",
+   "origem": "posto por script (origem.json: o core.min.js sozinho não muda o DOM; core do DS instanciado pela página e script autoral são inseparáveis por ablação)"
+  },
+  {
+   "id": "A2-26",
+   "estado": "S1 S2",
+   "seletor": "#upl-documento label.upload-label → #arquivo-documento",
+   "componente": "upload",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-25887e6e360f",
+    "texto": "As etiquetas de texto (elemento LABEL) devem estar associadas aos seus campos (elementos INPUT, SELECT e TEXTAREA, à exceção do elemento BUTTON) correspondentes no formulário, através dos atributos for do label e id do i",
+    "fonte": "e-MAG 3.1 rec. 6.2 (via base DS 3.7.0)",
+    "wcag": [
+     "1.3.1"
+    ]
+   },
+   "medida": "a etiqueta 'Envio de documento' (for=arquivo-documento) está associada a um input com display:none (AX ignorado: notRendered); o controle que recebe foco é o botão aria-hidden, sem etiqueta associada; em S2 a mensagem de erro é descrita (aria-describedby) só no input não renderizado.",
+   "esperado": "etiqueta associada ao campo operável",
+   "forca": "required",
+   "justificativa": "Associação existe só com elemento que não é percebido nem operável.",
+   "tambemViola": [],
+   "evidencia": "medidas/S1/interacoes.json › upload-teclado; medidas/S2/pagina.json › campos",
+   "origem": "posto por script (origem.json: o core.min.js sozinho não muda o DOM; core do DS instanciado pela página e script autoral são inseparáveis por ablação)"
+  },
+  {
+   "id": "A2-27",
+   "estado": "S1 S2",
+   "seletor": "#aviso-email",
+   "componente": "switch",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-switch-364149c5aea4",
+    "texto": "Quando ativado, o elemento switch deve ter o atributo aria-checked definido como true e quando desativado, o atributo aria-checked definido como false.",
+    "fonte": "DS 3.7.0 (Switch (Controle Interruptor) › acessibilidade)",
+    "wcag": []
+   },
+   "medida": "ligado por Space, por clique no rótulo e pelo checkbox pai: checked=true, mas o atributo aria-checked continua \"false\" (o Chromium expõe checked=true pela propriedade nativa).",
+   "esperado": "aria-checked=\"true\" quando ligado, \"false\" quando desligado",
+   "forca": "required",
+   "justificativa": "Obrigação literal sobre o atributo (estratégia dom); o atributo nunca muda.",
+   "tambemViola": [
+    {
+     "id": "govbr-3.7.0-accessibility-global-5817ddd685a6",
+     "fonte": "DS 3.7.0",
+     "forca": "required"
+    }
+   ],
+   "evidencia": "medidas/S1/interacoes.json › switch-teclado, switch-clique, switch-ax-ligado, checkbox-pai",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado); não atualizado por script"
+  },
+  {
+   "id": "A2-28",
+   "estado": "S1 S2",
+   "seletor": "#aviso-sms",
+   "componente": "switch",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-switch-364149c5aea4",
+    "texto": "Quando ativado, o elemento switch deve ter o atributo aria-checked definido como true e quando desativado, o atributo aria-checked definido como false.",
+    "fonte": "DS 3.7.0 (Switch (Controle Interruptor) › acessibilidade)",
+    "wcag": []
+   },
+   "medida": "ligado por Space, por clique no rótulo e pelo checkbox pai: checked=true, mas o atributo aria-checked continua \"false\" (o Chromium expõe checked=true pela propriedade nativa).",
+   "esperado": "aria-checked=\"true\" quando ligado, \"false\" quando desligado",
+   "forca": "required",
+   "justificativa": "Obrigação literal sobre o atributo (estratégia dom); o atributo nunca muda.",
+   "tambemViola": [
+    {
+     "id": "govbr-3.7.0-accessibility-global-5817ddd685a6",
+     "fonte": "DS 3.7.0",
+     "forca": "required"
+    }
+   ],
+   "evidencia": "medidas/S1/interacoes.json › switch-teclado, switch-clique, switch-ax-ligado, checkbox-pai",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado); não atualizado por script"
+  },
+  {
+   "id": "A2-29",
+   "estado": "S1 S2",
+   "seletor": "#fs-avisos",
+   "componente": "checkbox / switch (grupo)",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-4d5b05a1c29c",
+    "texto": "O agrupamento deverá ser feito de maneira lógica, associando o elemento LEGEND explicando claramente o propósito ou natureza dos agrupamentos.",
+    "fonte": "e-MAG 3.1 rec. 6.7 (via base DS 3.7.0)",
+    "wcag": [
+     "1.3.1"
+    ]
+   },
+   "medida": "<fieldset id=fs-avisos> sem <legend> (nem aria-label/labelledby); o título visual 'Avisos sobre o requerimento' é um <p> (16,8 px, 600) fora do fieldset.",
+   "esperado": "agrupamento com LEGEND explicando o propósito",
+   "forca": "required",
+   "justificativa": "Grupo sem legenda programática.",
+   "tambemViola": [
+    {
+     "id": "govbr-3.7.0-pattern-global-c648efdf7201",
+     "fonte": "DS 3.7.0",
+     "forca": "required"
+    },
+    {
+     "id": "WCAG-2.1-1.3.1",
+     "fonte": "WCAG 2.1 1.3.1 (A)",
+     "forca": "WCAG A"
+    }
+   ],
+   "evidencia": "medidas/S1/pagina.json › fieldsets, textosComoTitulo",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-30",
+   "estado": "S2",
+   "seletor": "#sel-tipo-documento .br-input.danger / #tipo-documento",
+   "componente": "select",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-271582e4fbe8",
+    "texto": "Quando um erro de entrada de dados for automaticamente detectado, o item que apresenta erro deve ser identificado e descrito ao usuário por texto.",
+    "fonte": "e-MAG 3.1 rec. 6.6 (via base DS 3.7.0)",
+    "wcag": [
+     "3.3.1"
+    ]
+   },
+   "medida": "depois de 'Enviar documento' com o formulário vazio, o campo 'Tipo de documento' ganha só a classe danger (borda 1 px #888 → 2 px #e52207): nenhum texto de erro, nenhum ícone, sem aria-invalid nem aria-describedby; a mensagem geral diz 'Corrija os campos indicados' sem nomear o campo. O upload, ao contrário, recebe 'Selecione o arquivo do documento.'.",
+   "esperado": "item com erro identificado e descrito por texto",
+   "forca": "required",
+   "justificativa": "Erro do select só por cor/espessura de borda.",
+   "tambemViola": [
+    {
+     "id": "govbr-3.7.0-pattern-global-dc80c4e7406b",
+     "fonte": "DS 3.7.0",
+     "forca": "required"
+    },
+    {
+     "id": "WCAG-2.1-3.3.1",
+     "fonte": "WCAG 2.1 3.3.1 (A)",
+     "forca": "WCAG A"
+    }
+   ],
+   "evidencia": "medidas/S2/interacoes.json › erro-identificacao; medidas/S1/interacoes.json › erro-borda-S1",
+   "origem": "posto por script (origem.json: o core.min.js sozinho não muda o DOM; core do DS instanciado pela página e script autoral são inseparáveis por ablação)"
+  },
+  {
+   "id": "A2-31",
+   "estado": "S0 S1 S2",
+   "seletor": "#titulo-duvidas (h2 'Dúvidas Frequentes')",
+   "componente": "pagina (tipografia)",
+   "regra": {
+    "id": "govbr-3.7.0-foundation-global-21fb08664799",
+    "texto": "Dessa forma, nenhuma fonte deve estar fora da escala definida no DS: Minor Third.",
+    "fonte": "DS 3.7.0 (Tipografia Rawline)",
+    "wcag": []
+   },
+   "medida": "font-size computado 16px (peso 700); todos os outros textos usam valores da escala Minor Third (11,662 · 14 · 16,8 · 20,16 · 24,192 · 34,832 · 41,804 px). O outro h2 da página tem 34,832 px.",
+   "esperado": "tamanho dentro da escala Minor Third (…14 · 16,8…)",
+   "forca": "required",
+   "justificativa": "16 px não pertence à escala de base 14 px × 1,2ⁿ.",
+   "tambemViola": [],
+   "evidencia": "medidas/S0/pagina.json › tamanhosUsados, titulos; medidas/S0/contraste.json",
+   "origem": "estilo computado da folha servida (um só bundle CSS; DS e autoral inseparáveis sem ler fontes)"
+  },
+  {
+   "id": "A2-32",
+   "estado": "S1 S2",
+   "seletor": ".acao-enviar",
+   "componente": "button",
+   "regra": {
+    "id": "govbr-3.7.0-pattern-global-f4a0aa1ba9c3",
+    "texto": "Nos buttons, as letras iniciais de todas as palavras devem ser maiúsculas, exceto artigos e preposições.",
+    "fonte": "DS 3.7.0 (Microcopy)",
+    "wcag": []
+   },
+   "medida": "rótulo 'Enviar documento': palavras que não são artigo/preposição começam com minúscula.",
+   "esperado": "iniciais maiúsculas (ex.: 'Enviar Documento')",
+   "forca": "required",
+   "justificativa": "Regra de microcopy específica de buttons (required).",
+   "tambemViola": [],
+   "evidencia": "medidas/S1/pagina.json › botoes; medidas/S0/pagina.json › links",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-33",
+   "estado": "S0 S1 S2",
+   "seletor": ".acao-voltar",
+   "componente": "button",
+   "regra": {
+    "id": "govbr-3.7.0-pattern-global-f4a0aa1ba9c3",
+    "texto": "Nos buttons, as letras iniciais de todas as palavras devem ser maiúsculas, exceto artigos e preposições.",
+    "fonte": "DS 3.7.0 (Microcopy)",
+    "wcag": []
+   },
+   "medida": "rótulo 'Voltar para meus requerimentos': palavras que não são artigo/preposição começam com minúscula.",
+   "esperado": "iniciais maiúsculas (ex.: 'Voltar para Meus Requerimentos')",
+   "forca": "required",
+   "justificativa": "Regra de microcopy específica de buttons (required).",
+   "tambemViola": [],
+   "evidencia": "medidas/S1/pagina.json › botoes; medidas/S0/pagina.json › links",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  },
+  {
+   "id": "A2-34",
+   "estado": "S1 S2",
+   "seletor": "label[for=aviso-sms] ('Receber avisos por SMS')",
+   "componente": "switch",
+   "regra": {
+    "id": "govbr-3.7.0-accessibility-global-37aeaff46667",
+    "texto": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa.",
+    "fonte": "e-MAG 3.1 rec. 3.12 (via base DS 3.7.0)",
+    "wcag": [
+     "3.1.3",
+     "3.1.4"
+    ]
+   },
+   "medida": "única ocorrência da sigla 'SMS' na página, sem forma completa nem explicação (sem <abbr>/title/texto). A sigla NUP é expandida ('Número Único de Protocolo (NUP)').",
+   "esperado": "explicação ou forma completa na primeira ocorrência",
+   "forca": "required",
+   "justificativa": "Obrigação literal do e-MAG 3.12.",
+   "tambemViola": [],
+   "evidencia": "medidas/S1/pagina.json › campos (rótulos)",
+   "origem": "marcação servida (origem.json: presente com JavaScript desligado)"
+  }
+ ]
+}

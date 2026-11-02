@@ -1,0 +1,31 @@
+{
+ "medida": "recarga automática × estado preenchido",
+ "janela_ms": 330000,
+ "antes": {
+  "t_ms": 1948,
+  "abaAtiva": "aba-documentos",
+  "painelAtivo": "painel-documentos",
+  "select": "Comprovante de residência",
+  "switchEmail": true,
+  "timeOrigin": 1793654743999.1
+ },
+ "depois": {
+  "t_ms": 330001,
+  "abaAtiva": "aba-andamento",
+  "painelAtivo": "painel-andamento",
+  "select": "",
+  "switchEmail": false,
+  "timeOrigin": 1793655044147.8
+ },
+ "navegacoes": [
+  {
+   "t_ms": 10,
+   "url": "http://127.0.0.1:3218/acompanhamento.html"
+  },
+  {
+   "t_ms": 300157,
+   "url": "http://127.0.0.1:3218/acompanhamento.html"
+  }
+ ],
+ "errosDePagina": []
+}
