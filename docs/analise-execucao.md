@@ -268,7 +268,7 @@ cegos, que recebem só os arquivos indicados.
   o que as campanhas novas fixam em `protocolSha256`. O coletor valida pelo `findings.v1.schema.json` (campo novo,
   opcional): imagens de coletor antigas recusam relatório com o campo, então a imagem do coletor tem de ser refeita
   (`npm run runner:imagens`) antes da primeira campanha com a skill nova.
-- **Passada cega.** `e14-campanha.ts` prepara na política **1.3.0 por padrão** (`nat78-primeira-passada-1.4.0`, manifesto e
+- **Passada cega.** `e14-campanha.ts` prepara na política **1.3.0 por padrão** (`nat78-primeira-passada-1.4.1`: desde a 1.4.1 o LEIAME diz que receita vazia é a página como carrega, julgada nela; manifesto e
   respostas `…-1.3.0`): o cartão de agente cujo achado traz referências ganha `referencias` (`REF1`, `REF2`, com o texto da
   norma, como `normaCitada`; a que repete a `rule` sai), e `REF1`/`REF2` ficam citáveis. Cartão sem referência fica igual
   ao da 1.2.0. `--politica 1.2.0` refaz a passada antiga byte a byte (referências ignoradas).

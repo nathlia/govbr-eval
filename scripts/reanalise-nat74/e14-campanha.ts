@@ -49,10 +49,13 @@ import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
  * marcador nos três braços), resíduo de braço contado por braço, categoria e comparação (`residuo-de-braco.json`, insumo do
  * S4') e braços pelo desenho da campanha (`design.arms`). Formato do lote, do manifesto e das respostas: o mesmo da 1.2.0.
  * 1.3.1 (D-154): `endereco` pela `_meta.url` da referência (`enderecoDaTela`), consulta incluída; formatos iguais aos da 1.3.0.
+ * 1.4.1 (leitura dev-360-a-01 §Cuidados 1; decisão da autora de 01/11): o LEIAME passa a dizer que receita vazia = a página
+ * como carrega no `endereco`, sem passo (julgar nela, `estadoAlcancado: "receita"`); até a 1.4.0 isso só ia no pedido ao juiz,
+ * fora do artefato. Formatos do lote, do manifesto e das respostas iguais aos da 1.4.0.
  */
 export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.3.1";
 /** [D-156] Versão da passada preparada na política 1.3.0 (referências secundárias). A 1.2.0 continua 1.3.1. */
-export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.0";
+export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.1";
 /** Política das campanhas novas (D-156). `--politica 1.2.0` reproduz o histórico. */
 export const POLITICA_CAMPANHA_PADRAO: VersaoPolitica = "1.3.0";
 
@@ -388,6 +391,8 @@ const LEIAME_ESTADO = [
   "  tal campo…). `nao-alcancado` = ela não chega a esse estado: então `verdadeFactual` = `indisponivel` (evidência",
   "  indisponível, R9/R10), mesmo que, com outros passos, você veja o fato. O que viu noutro estado pode ir à",
   "  `justificativa`, mas nunca muda a resposta.",
+  "- **Receita vazia** (lista de passos vazia): o estado é a página tal como carrega no `endereco`, janela 1280×900, sem",
+  "  nenhum passo. Julgue nela e responda `estadoAlcancado: \"receita\"`; receita vazia nunca é `nao-alcancado`.",
 ].join("\n");
 
 const LEIAME_MEDIDA = `**Use o lote e a página congelada.** O lote traz o texto do cartão, a norma citada e os defeitos da referência da tela.
