@@ -1,0 +1,831 @@
+{
+ "_meta": {
+  "tela": "acompanhamento",
+  "titulo": "Acompanhar requerimento",
+  "finalidade": "Entrada da auditoria cega por medição: a página, como servi-la, os estados e o inventário de instâncias. Lista neutra: componentes do DS presentes na página, em ordem do documento, com seletor estável. Não diz o que cada instância deveria ser.",
+  "geradoEm": "2026-11-02",
+  "nota": "Seletores medidos na página construída (dist/), depois da inicialização do core.js. \"presente-nao-visivel\" = no DOM, mas sem caixa visível no estado (ex.: balões fechados, painel da aba inativa, atalho fora da tela até receber foco)."
+ },
+ "entrada": "/acompanhamento.html",
+ "servir": {
+  "montar": "cd govbr-corpus && npm run build",
+  "servir": "cd govbr-eval && node tela-a2/servir.mjs 3218",
+  "url": "http://127.0.0.1:3218/acompanhamento.html",
+  "nota": "Servidor estático do dist/ do corpus, sem fallback de SPA; nenhum recurso externo."
+ },
+ "navegador": {
+  "motor": "chromium",
+  "headless": true,
+  "viewport": {
+   "width": 1280,
+   "height": 900
+  }
+ },
+ "waitFor": "#tab-requerimento",
+ "setup": [
+  {
+   "action": "click",
+   "selector": "#aba-documentos"
+  },
+  {
+   "action": "wait",
+   "selector": "#painel-documentos.active"
+  },
+  {
+   "action": "click",
+   "selector": ".acao-enviar"
+  },
+  {
+   "action": "wait",
+   "selector": "#msg-retorno"
+  }
+ ],
+ "states": [
+  {
+   "id": "S0",
+   "afterStep": 0,
+   "path": "/acompanhamento.html",
+   "note": "carga inicial (aba Andamento ativa)"
+  },
+  {
+   "id": "S1",
+   "afterStep": 2,
+   "path": "/acompanhamento.html",
+   "note": "aba Documentos selecionada"
+  },
+  {
+   "id": "S2",
+   "afterStep": 4,
+   "path": "/acompanhamento.html",
+   "note": "Enviar documento acionado com o formulário vazio"
+  }
+ ],
+ "protocolo": {
+  "estados": "Cada estado é alcançado a partir de carga nova pelos passos do setup, e as medidas dele terminam em até 120 s depois da carga; se a página recarregar ou navegar durante uma medida, só essa medida é refeita de carga nova.",
+  "observacaoLonga": {
+   "janela_s": 360,
+   "como": "Em contexto de navegador próprio, carga limpa, sem interagir: observe a página por 360 s."
+  }
+ },
+ "componentesPresentes": [
+  "accordion",
+  "breadcrumb",
+  "button",
+  "card",
+  "checkbox",
+  "divider",
+  "footer",
+  "header",
+  "input",
+  "item",
+  "list",
+  "message",
+  "radio",
+  "select",
+  "skiplink",
+  "step",
+  "switch",
+  "tab",
+  "table",
+  "tag",
+  "tooltip",
+  "upload"
+ ],
+ "contagem": {
+  "S0": {
+   "presentes": 42,
+   "visiveis": 22
+  },
+  "S1": {
+   "presentes": 42,
+   "visiveis": 28
+  },
+  "S2": {
+   "presentes": 45,
+   "visiveis": 31
+  },
+  "total": 45
+ },
+ "pagina": {
+  "S0": {
+   "titulo": "Acompanhar requerimento — Atendimento gov.br",
+   "lang": "pt-BR",
+   "cabeca": [
+    "meta",
+    "meta",
+    "meta",
+    "meta",
+    "title",
+    "link"
+   ],
+   "regioes": [
+    {
+     "tag": "nav",
+     "papel": "menubar",
+     "seletor": ".atalhos-pagina",
+     "visivel": false
+    },
+    {
+     "tag": "header",
+     "papel": null,
+     "seletor": "#cabecalho",
+     "visivel": true
+    },
+    {
+     "tag": "main",
+     "papel": null,
+     "seletor": "#main-content",
+     "visivel": true
+    },
+    {
+     "tag": "nav",
+     "papel": null,
+     "seletor": ".trilha-servico",
+     "visivel": true
+    },
+    {
+     "tag": "nav",
+     "papel": null,
+     "seletor": ".tab-nav",
+     "visivel": true
+    },
+    {
+     "tag": "nav",
+     "papel": "none",
+     "seletor": "#stp-andamento",
+     "visivel": true
+    },
+    {
+     "tag": "form",
+     "papel": null,
+     "seletor": ".formulario-documento",
+     "visivel": false
+    },
+    {
+     "tag": "fieldset",
+     "papel": null,
+     "seletor": "#fs-avisos",
+     "visivel": false
+    },
+    {
+     "tag": "section",
+     "papel": null,
+     "seletor": ".secao-duvidas",
+     "visivel": true
+    },
+    {
+     "tag": "footer",
+     "papel": null,
+     "seletor": "#rodape",
+     "visivel": true
+    }
+   ],
+   "titulos": [
+    {
+     "nivel": "h1",
+     "texto": "Acompanhar Requerimento",
+     "seletor": ".titulo-pagina"
+    },
+    {
+     "nivel": "h2",
+     "texto": "Dúvidas Frequentes",
+     "seletor": "#titulo-duvidas"
+    }
+   ]
+  },
+  "S1": {
+   "titulo": "Acompanhar requerimento — Atendimento gov.br",
+   "lang": "pt-BR",
+   "cabeca": [
+    "meta",
+    "meta",
+    "meta",
+    "meta",
+    "title",
+    "link"
+   ],
+   "regioes": [
+    {
+     "tag": "nav",
+     "papel": "menubar",
+     "seletor": ".atalhos-pagina",
+     "visivel": false
+    },
+    {
+     "tag": "header",
+     "papel": null,
+     "seletor": "#cabecalho",
+     "visivel": true
+    },
+    {
+     "tag": "main",
+     "papel": null,
+     "seletor": "#main-content",
+     "visivel": true
+    },
+    {
+     "tag": "nav",
+     "papel": null,
+     "seletor": ".trilha-servico",
+     "visivel": true
+    },
+    {
+     "tag": "nav",
+     "papel": null,
+     "seletor": ".tab-nav",
+     "visivel": true
+    },
+    {
+     "tag": "nav",
+     "papel": "none",
+     "seletor": "#stp-andamento",
+     "visivel": false
+    },
+    {
+     "tag": "form",
+     "papel": null,
+     "seletor": ".formulario-documento",
+     "visivel": true
+    },
+    {
+     "tag": "fieldset",
+     "papel": null,
+     "seletor": "#fs-avisos",
+     "visivel": true
+    },
+    {
+     "tag": "section",
+     "papel": null,
+     "seletor": ".secao-duvidas",
+     "visivel": true
+    },
+    {
+     "tag": "footer",
+     "papel": null,
+     "seletor": "#rodape",
+     "visivel": true
+    }
+   ],
+   "titulos": [
+    {
+     "nivel": "h1",
+     "texto": "Acompanhar Requerimento",
+     "seletor": ".titulo-pagina"
+    },
+    {
+     "nivel": "h2",
+     "texto": "Enviar Documento Pendente",
+     "seletor": ".titulo-formulario"
+    },
+    {
+     "nivel": "h2",
+     "texto": "Dúvidas Frequentes",
+     "seletor": "#titulo-duvidas"
+    }
+   ]
+  },
+  "S2": {
+   "titulo": "Acompanhar requerimento — Atendimento gov.br",
+   "lang": "pt-BR",
+   "cabeca": [
+    "meta",
+    "meta",
+    "meta",
+    "meta",
+    "title",
+    "link"
+   ],
+   "regioes": [
+    {
+     "tag": "nav",
+     "papel": "menubar",
+     "seletor": ".atalhos-pagina",
+     "visivel": false
+    },
+    {
+     "tag": "header",
+     "papel": null,
+     "seletor": "#cabecalho",
+     "visivel": true
+    },
+    {
+     "tag": "main",
+     "papel": null,
+     "seletor": "#main-content",
+     "visivel": true
+    },
+    {
+     "tag": "nav",
+     "papel": null,
+     "seletor": ".trilha-servico",
+     "visivel": true
+    },
+    {
+     "tag": "nav",
+     "papel": null,
+     "seletor": ".tab-nav",
+     "visivel": true
+    },
+    {
+     "tag": "nav",
+     "papel": "none",
+     "seletor": "#stp-andamento",
+     "visivel": false
+    },
+    {
+     "tag": "form",
+     "papel": null,
+     "seletor": ".formulario-documento",
+     "visivel": true
+    },
+    {
+     "tag": "fieldset",
+     "papel": null,
+     "seletor": "#fs-avisos",
+     "visivel": true
+    },
+    {
+     "tag": "section",
+     "papel": null,
+     "seletor": ".secao-duvidas",
+     "visivel": true
+    },
+    {
+     "tag": "footer",
+     "papel": null,
+     "seletor": "#rodape",
+     "visivel": true
+    }
+   ],
+   "titulos": [
+    {
+     "nivel": "h1",
+     "texto": "Acompanhar Requerimento",
+     "seletor": ".titulo-pagina"
+    },
+    {
+     "nivel": "h2",
+     "texto": "Enviar Documento Pendente",
+     "seletor": ".titulo-formulario"
+    },
+    {
+     "nivel": "h2",
+     "texto": "Dúvidas Frequentes",
+     "seletor": "#titulo-duvidas"
+    }
+   ]
+  }
+ },
+ "instancias": [
+  {
+   "componente": "skiplink",
+   "seletor": ".atalhos-pagina",
+   "dentroDe": null,
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "item",
+   "seletor": ".atalhos-pagina > a:nth-of-type(1)",
+   "dentroDe": ".atalhos-pagina",
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "tag",
+   "seletor": ".atalhos-pagina > a:nth-of-type(1) > span:nth-of-type(2)",
+   "dentroDe": ".atalhos-pagina > a:nth-of-type(1)",
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "item",
+   "seletor": ".atalhos-pagina > a:nth-of-type(2)",
+   "dentroDe": ".atalhos-pagina",
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "tag",
+   "seletor": ".atalhos-pagina > a:nth-of-type(2) > span:nth-of-type(2)",
+   "dentroDe": ".atalhos-pagina > a:nth-of-type(2)",
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "header",
+   "seletor": "#cabecalho",
+   "dentroDe": null,
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "divider",
+   "seletor": ".header-logo > span",
+   "dentroDe": "#cabecalho",
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "breadcrumb",
+   "seletor": ".trilha-servico",
+   "dentroDe": null,
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "button",
+   "seletor": ".home > a",
+   "dentroDe": ".trilha-servico",
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "message",
+   "seletor": "#msg-pendencia",
+   "dentroDe": null,
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "button",
+   "seletor": "#msg-pendencia > div:nth-of-type(3) > button",
+   "dentroDe": "#msg-pendencia",
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "tooltip",
+   "seletor": "#msg-pendencia > div:nth-of-type(3) > div",
+   "dentroDe": "#msg-pendencia",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "card",
+   "seletor": "#crd-resumo",
+   "dentroDe": null,
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "button",
+   "seletor": "#tip-protocolo-gatilho",
+   "dentroDe": "#crd-resumo",
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "tooltip",
+   "seletor": "#tip-protocolo",
+   "dentroDe": "#crd-resumo",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "button",
+   "seletor": "#tip-prazo-gatilho",
+   "dentroDe": "#crd-resumo",
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "tooltip",
+   "seletor": "#tip-prazo",
+   "dentroDe": "#crd-resumo",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "tab",
+   "seletor": "#tab-requerimento",
+   "dentroDe": null,
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "divider",
+   "seletor": ".separador-abas",
+   "dentroDe": "#tab-requerimento",
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "step",
+   "seletor": "#stp-andamento",
+   "dentroDe": "#tab-requerimento",
+   "estados": {
+    "S0": "visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "table",
+   "seletor": "#tbl-movimentacoes",
+   "dentroDe": "#tab-requerimento",
+   "estados": {
+    "S0": "visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "message",
+   "seletor": "#msg-retorno",
+   "dentroDe": "#tab-requerimento",
+   "estados": {
+    "S0": "ausente",
+    "S1": "ausente",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "button",
+   "seletor": "#msg-retorno > div:nth-of-type(3) > div:nth-of-type(1)",
+   "dentroDe": "#msg-retorno",
+   "estados": {
+    "S0": "ausente",
+    "S1": "ausente",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "tooltip",
+   "seletor": "#msg-retorno > div:nth-of-type(3) > div:nth-of-type(2)",
+   "dentroDe": "#msg-retorno",
+   "estados": {
+    "S0": "ausente",
+    "S1": "ausente",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "select",
+   "seletor": "#sel-tipo-documento",
+   "dentroDe": "#tab-requerimento",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "input",
+   "seletor": "#sel-tipo-documento > div:nth-of-type(1)",
+   "dentroDe": "#sel-tipo-documento",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "button",
+   "seletor": "#sel-tipo-documento > div:nth-of-type(1) > button",
+   "dentroDe": "#sel-tipo-documento > div:nth-of-type(1)",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "tooltip",
+   "seletor": "#sel-tipo-documento > div:nth-of-type(1) > div:nth-of-type(2)",
+   "dentroDe": "#sel-tipo-documento > div:nth-of-type(1)",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "list",
+   "seletor": "#sel-tipo-documento > .br-list",
+   "dentroDe": "#sel-tipo-documento",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "item",
+   "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(1)",
+   "dentroDe": "#sel-tipo-documento > .br-list",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "radio",
+   "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(1) > div",
+   "dentroDe": "#sel-tipo-documento > .br-list > div:nth-of-type(1)",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "item",
+   "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(2)",
+   "dentroDe": "#sel-tipo-documento > .br-list",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "radio",
+   "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(2) > div",
+   "dentroDe": "#sel-tipo-documento > .br-list > div:nth-of-type(2)",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "item",
+   "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(3)",
+   "dentroDe": "#sel-tipo-documento > .br-list",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "radio",
+   "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(3) > div",
+   "dentroDe": "#sel-tipo-documento > .br-list > div:nth-of-type(3)",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "presente-nao-visivel",
+    "S2": "presente-nao-visivel"
+   }
+  },
+  {
+   "componente": "upload",
+   "seletor": "#upl-documento",
+   "dentroDe": "#tab-requerimento",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "button",
+   "seletor": ".acao-enviar",
+   "dentroDe": "#tab-requerimento",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "checkbox",
+   "seletor": "#chk-avisos-todos",
+   "dentroDe": "#tab-requerimento",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "switch",
+   "seletor": "#swt-aviso-email",
+   "dentroDe": "#tab-requerimento",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "switch",
+   "seletor": "#swt-aviso-sms",
+   "dentroDe": "#tab-requerimento",
+   "estados": {
+    "S0": "presente-nao-visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "divider",
+   "seletor": "#div-secoes",
+   "dentroDe": null,
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "accordion",
+   "seletor": "#acc-duvidas",
+   "dentroDe": null,
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "button",
+   "seletor": ".acao-voltar",
+   "dentroDe": null,
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "footer",
+   "seletor": "#rodape",
+   "dentroDe": null,
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  },
+  {
+   "componente": "divider",
+   "seletor": "#rodape > span",
+   "dentroDe": "#rodape",
+   "estados": {
+    "S0": "visivel",
+    "S1": "visivel",
+    "S2": "visivel"
+   }
+  }
+ ]
+}
