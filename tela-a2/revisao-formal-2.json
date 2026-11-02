@@ -1,0 +1,72 @@
+{
+  "revisao": "revisao-formal-2",
+  "decisao": "D-160",
+  "tela": "A2 — acompanhamento (NAT-110)",
+  "motivo": "O sorteio único com a semente 876024a parou no limite de 5.000.000 nós (80f7863) e a execução adicional da revisão formal 1 parou no limite de 1.000.000.000 (5c17a96), sem solução e sem resultado visto; a ordem neutra achara solução em 123.995 nós. A busca é completa e determinística, então a primeira solução na ordem da semente existe e é fixa; faltava alcançá-la. A autora reabriu a A2 (D-160) com uma única mudança: poda sólida, que corta só subárvores sem solução completa e deixa a ordem de visita do resto igual, de modo que a solução devolvida é a mesma que a busca sem limite devolveria.",
+  "semente": "876024a331d8e9cc05837554f11aeda01aa8b2ff",
+  "limiteNos": 1000000000,
+  "execucoesAdicionais": 1,
+  "falhaOriginal": {
+    "commit": "80f7863f715882c7aab8e1af0b8d3ce6012edbb5",
+    "registros": {
+      "tela-a2/sorteio-falha.json": "fed2d90182411be7ee53c658fd490eeece93aac21bb00a642ad3ebddc3ed3b64",
+      "tela-a2/sorteio-execucao.json": "f327e0f338d94b2d8315f302864913e0985410bb4abeed28a08b5288aeb2773d"
+    }
+  },
+  "revisaoFormal1": {
+    "manifesto": {
+      "arquivo": "tela-a2/revisao-formal-1.json",
+      "commit": "d4c21b5b97ba714c5d6305d4717b96d2faa38fa6",
+      "sha256": "e0445ce3c7d7739700a928254acbb64ef579f7a16448c9fbe5d207b2d77f8fb6"
+    },
+    "scriptRevisado": {
+      "arquivo": "scripts/draw-tela-a2.ts",
+      "commit": "a415e332cb50c3fa53606950e3c6eda49a83b5da",
+      "sha256": "79ec66fa4b521c3fe3c58b7c6d0898b665e0bf3d9b1332da9a567abae406223b"
+    },
+    "falha": {
+      "commit": "5c17a9652f71a3e78f47600c4537abd2cdd4e5fd",
+      "nos": 1000000001,
+      "registros": {
+        "tela-a2/revisao-formal-1-execucao.json": "146f635c5d488c37aa4f4e1c27d37ff769c20f6a40044e392d499897476d25ea",
+        "tela-a2/revisao-formal-1-falha.json": "80b9c66d439370cd31ce7f6711cc41af60235ba49e9b77947f5b69658f90ce2e"
+      }
+    }
+  },
+  "sementeAutorizada": {
+    "arquivo": "tela-a2/semente-autorizada.json",
+    "commit": "d7a9ddd9b434138a36715773603f93e2827dd869",
+    "sha256": "bd8770c4637a6c3266d2986ca22641a488d42e87164592afbbfe54fe14ef6ff4"
+  },
+  "scriptOriginal": {
+    "arquivo": "scripts/draw-tela-a2.ts",
+    "commit": "876024a331d8e9cc05837554f11aeda01aa8b2ff",
+    "sha256": "a0664ef9e6a29337541bcf5e03664223274f69b2252cb5188e278947bf240a00"
+  },
+  "scriptRevisado": {
+    "arquivo": "scripts/draw-tela-a2.ts",
+    "commit": "e0fa24b065241824ff26a7de2dc2ebb651387da0",
+    "sha256": "291fd413f7536968c738111f102b8d57d32d6ad5ae35c585671317596f33802d"
+  },
+  "buscaPodada": {
+    "arquivo": "scripts/tela-a2-busca-podada.ts",
+    "commit": "e0fa24b065241824ff26a7de2dc2ebb651387da0",
+    "sha256": "989c1b4b21cdfd89ab7a9542108d0641e991fdca47a05aa9f47e6b81a03fdaf0"
+  },
+  "saidas": {
+    "execucao": "tela-a2/sorteio-execucao-2.json",
+    "falha": "tela-a2/sorteio-falha-2.json",
+    "sorteio": "tela-a2/sorteio-2.json"
+  },
+  "poda": "scripts/tela-a2-busca-podada.ts: buscar(ctx, key, \"podada\") é o corpo de solve() copiado byte a byte com 3 ganchos `if (poda && …) return null` (entrada de dfs, de tryShared e de tryAlt). Cada gancho só corta quando falha uma condição necessária para existir solução completa na subárvore; as restrições são monótonas (mais colocações nunca tornam possível o que já era impossível; a contaminação só cresce) e o conflito entre colocações é simétrico (conferido na matriz inteira ao começar). (Q) cotas: emparelhamento regra → hospedeiro distinto entre as regras ainda disponíveis do estrato, só com colocações que passam em canPlace, ≥ o que falta. (D) chamarizes: livres − mínimo de livres que as specs que faltam ocupam ≥ 8. (A×D) existe trinca exata de alternativas compatível com as colocações com a qual (D) ainda vale. (C) existe par de compartilhadas (postas com cópias cabendo, ou futuras de regra disponível) compatíveis entre si, com o qual, cópias na página, (A×D) vale. (R) enquanto a busca está no estrato DS: existe escolha das specs G que faltam com (Q)(D)(A×D)(C) a cada passo (memo por conjunto posto; acima de 50.000 nós, não corta). Em finish(), (A) e (D) de novo com cópias e alternativas escolhidas. Nenhuma ordem de variável, de valor ou desempate muda; nós e reparos contam só o que a busca podada visitou (inclusive os nós cortados).",
+  "provaDeSolidez": "Ordem neutra do --validar (npm run tela-a2:sorteio -- --validar --comparar-neutra, insumos reais, sem semente): solve() do script, a cópia cega do módulo e a busca podada devolvem a mesma solução (sha256 canônico 90d5dc63…); a cópia cega reproduz solve() nó a nó (123.995 nós, 14.758 reparos); a podada chega a ela em 441 nós. Propriedade: em instâncias pequenas sorteadas com as mesmas espécies de restrição (gerador determinístico, scripts/test-tela-a2-busca-podada.ts), busca cega e podada devolvem a mesma primeira solução em todas — 400 no teste (npm run test:tela-a2-revisao, parte com chamarizes no aperto), 4.000 numa rodada à parte (2.263 com solução, 1.737 sem; cega 35.171.444 nós, podada 223.656) e 400 com chamarizes no aperto — e a podada nunca visita mais nós. Mutantes deliberadamente não sólidos da poda (chamarizes +1, emparelhamento com ≤, compartilhadas sem as postas, relaxação que pula uma regra, tipo sem aninhamento nas alternativas; e, antes, cota/compartilhadas com ≤) divergem em ≥10 de 200 instâncias cada: o teste tem dentes. Um sexto mutante (sem descontar a futura da falta em (D)) não diverge porque é equivalente a um limite correto (o hospedeiro da futura fica indisponível ao estrato). Ensaios na ordem da semente: ver o campo ensaios.",
+  "ensaios": "Ensaios na ordem da semente, todos ANTES da selagem e a pedido do orquestrador — desvio divulgado dos termos do D-160 (uma execução, depois do manifesto). Nenhum gravou a solução nem nada em tela-a2/. (1) 2026-11-02 18:50–19:11Z, primeira versão da poda (cotas por contagem, chamarizes, alternativas e compartilhadas otimistas; sem emparelhamento, sem (R), sem (C) exata): parou no limite de 21 min, sem solução e sem nenhuma folha; o processo foi morto antes de gravar o registro, então nós e sha256 do script e do módulo dessa versão não ficaram registrados. (2)–(7) seis corridas curtas de diagnóstico (100–170 s cada, mortas por timeout salvo a última), com --progresso, enquanto a poda era reforçada. O --progresso imprimia contagens de cortes e folhas e `posicoes`: as posições, na fila da semente, das specs postas naquele instante — com a semente pública, posições identificam regras. Registros: versão 1 com saída por tail, nada impresso; versão 1, 14,7 milhões de entradas de dfs em 150 s, 0 folhas, as quatro primeiras DS da fila fixas o tempo todo; versão 2 (+emparelhamento, +(R)), 6,3 milhões em 150 s, folhas alcançadas, todas mortas em finish; versão 3 (+cópias de compartilhadas), nenhuma linha em 170 s e depois 62 mil entradas em 100 s; versão 4 ((C) exata), 3,8 milhões em 120 s; versão 5 ((A×D)), achou em 458 nós e 12,2 s (script 109b0294…, módulo d891ef31…), compromisso d6bf6092…, com UMA linha de progresso, na entrada 256, mostrando 7 posições DS. Essa linha pode coincidir com a parte DS da solução. O assistente leu as linhas como diagnóstico do motor: não converteu posições em ids nem as tratou como solução, e nenhum id de regra sorteada foi visto. Os logs (.tmp-eval/a2-diag*.log, fora do repositório) foram apagados pelo orquestrador em 2026-11-02 21:55Z sem serem lidos, para que as posições nunca fossem convertidas em ids. Depois disso `posicoes` saiu do --progresso, que agora só imprime contagens. (8) Ensaio final sem --progresso, 2026-11-02 19:43Z: achou em 458 nós, 14,8 s (script 109b0294…, módulo 6800f352…), compromisso solucaoSha256 = d6bf6092011026bcfd533788ce9b7f11a3fc549abcafbb6c9650a7f8adad0078, registrado só em .tmp-eval/a2-rf2/ensaio-rf2.json (fora do repositório, sobrescrito a cada ensaio). O módulo selado difere desse só na linha de diagnóstico (posições → contagens) e na função conferirCompromisso; a busca é a mesma. Nós e reparos de todos os ensaios e da execução contam só o que a busca podada visitou. A execução selada confere o sha256 da solução contra compromissoEnsaio: se divergir, grava tela-a2/sorteio-falha-2.json com erro hash-do-ensaio-diverge e NÃO grava tela-a2/sorteio-2.json — conta como falha de solidez, não como sorteio. Depois de selado o manifesto, --ensaio recusa.",
+  "compromissoEnsaio": {
+    "solucaoSha256": "d6bf6092011026bcfd533788ce9b7f11a3fc549abcafbb6c9650a7f8adad0078",
+    "seDivergir": "tela-a2/sorteio-falha-2.json com erro hash-do-ensaio-diverge, sem tela-a2/sorteio-2.json"
+  },
+  "provaDeIdentidade": "Tirando de scripts/draw-tela-a2.ts as linhas entre //#region revisao-formal-2 e //#endregion revisao-formal-2 (marcadores inclusive), o texto é byte a byte git show a415e33:scripts/draw-tela-a2.ts (o script da revisão formal 1, sha256 79ec66fa…), que por sua vez se reduz ao blob selado na semente pela regra da revisão 1. A execução com --revisao2 refaz isso antes de buscar; scripts/test-draw-tela-a2-revisao.ts refaz por implementação própria e confere que o módulo, sem as 4 linhas marcadas // PODA, é o corpo de solve() byte a byte. Selagem: script e módulo num único commit (nenhum arquivo de tela-a2/ nele); este manifesto, com os dois commit = esse hash e nenhum campo ainda por preencher, num commit só dele, depois.",
+  "ratificacao": "Decisão da autora D-160 (2026-11-02, \"A2 sim\"; thesis-workspace/tcc2-decisions-log.md), termos (a)–(e) registrados antes de qualquer execução. É emenda posterior a duas falhas e é relatada assim.",
+  "regraDeParada": "Uma execução adicional, com a mesma semente, a mesma ordem e limite fixo de 1.000.000.000 nós da busca podada; nenhuma outra, nenhuma outra semente, nenhum outro limite. Se falhar (limite, sem solução, invariante, verifySolution ou hash-do-ensaio-diverge), a falha é preservada em tela-a2/sorteio-falha-2.json e a A2 encerra de vez. A tentativa é marcada em tela-a2/sorteio-execucao-2.json antes da busca: uma execução interrompida conta como a execução adicional.",
+  "revisaoIndependente": "Revisão independente do patch antes da selagem (agente revisor Opus, só leitura, 2026-11-02 ~21:20Z; sondas em F:/Dev Nath/TCC/.tmp-eval/rev-a2/, fora do repositório). Veredito: selar; nenhum achado HIGH; nenhum corte não sólido encontrado. Conferido por conta própria: (1) o corpo de solve() extraído do blob a415e33 é igual à cópia do módulo sem as linhas // PODA, exceto o try/catch final que passa a gravar estat.folhas; os ganchos só devolvem null — ordem de variáveis, de valores e desempates inalterados; (2) o script sem os blocos revisao-formal-2 devolve o blob 10a485d6…, o mesmo de a415e33; (3) (Q), (D), (A×D), (C), (R) e mortoNoFim rastreados à mão contra canPlace, tryShared e tryAlt: direções de conflito iguais às originais, alternativas corretamente não bloqueadas pelo teto por instância nem pela regra de uma por estrato, (D) toma o máximo entre estratos (não a soma), (R) com ULT antes das demais depende da simetria dos conflitos (conferida no início) e o memo ignora k mas usa ultimaPos+1, mais frouxo, logo sólido; os tetos (600 candidatos, 50 mil nós) nunca cortam; (4) tsc limpo, test-draw-tela-a2-revisao 124/124 (antes das correções LOW; 134/134 depois), propriedade com outro gerador (4.000 instâncias, 1.929 com solução, 0 divergências, podada nunca visita mais nós), sonda própria mais dura (3 estratos, compartilhamento até 3, cascatas de curinga, instâncias duplicadas, chamarizes no aperto): 593 comparadas, 124 com solução, 0 divergências; (5) insumos reais, ordem neutra: 123.995 = 123.995 nós, sha 90d5dc63…, podada 441; (6) insumos reais com 8 sementes falsas (cópia remendada fora do repositório): a busca cega terminou em 3 das 8 dentro de 25 milhões de nós (0,29 M, 8,5 M, 15,2 M) e as 3 coincidem com a podada (440–545 nós) — a evidência mais forte no caso real; (7) todas as recusas anteriores mantidas, saídas em *-2.json, registros antigos presos por sha e por commit. Pedidos MED atendidos antes do selo: divulgação dos ensaios (campo ensaios), --progresso só com contagens; LOW: conferência automática do compromisso (hash-do-ensaio-diverge), recusa de --ensaio depois do selo, semântica de nós/reparos nos registros. Parecer do Codex: pedido pela autora por relé manual (não bloqueante, D-160); se chegar antes da execução, entra aqui por commit próprio; se não, fica como registro posterior."
+}
