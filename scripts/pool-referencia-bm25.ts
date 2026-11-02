@@ -71,7 +71,7 @@ export function buildIndex(rules: Rule[]): Index {
   });
   return { docs, df, avgdl: docs.reduce((n, d) => n + d.len, 0) / (docs.length || 1) };
 }
-export function search(ix: Index, query: string, component: string | null, depth = PARAMS.depth): string[] {
+export function search(ix: Index, query: string, component: string | null, depth: number = PARAMS.depth): string[] {
   const q = tokenize(query), N = ix.docs.length, { k1, b } = PARAMS;
   const scored: { id: string; s: number }[] = [];
   for (const d of ix.docs) {
