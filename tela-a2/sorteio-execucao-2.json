@@ -1,0 +1,68 @@
+{
+  "semente": "876024a331d8e9cc05837554f11aeda01aa8b2ff",
+  "head": "3794148068853672231bb0579733bc4c70769c6d",
+  "inicio": "2026-11-02T20:42:06.886Z",
+  "node": "v25.2.1",
+  "plataforma": "win32 x64",
+  "script": "291fd413f7536968c738111f102b8d57d32d6ad5ae35c585671317596f33802d",
+  "modulo": "989c1b4b21cdfd89ab7a9542108d0641e991fdca47a05aa9f47e6b81a03fdaf0",
+  "insumos": {
+    "tela-a2/inventario.json": "18fd72c202692bec7c1bd562c2543b430f6e47a0b5ed81cc8ceb32730c2243ff",
+    "tela-a2/universo.json": "7f11977f6b4b582cd40e14b4389a6fcedd79169d7662e2398face0b61c4a8e3e",
+    "tela-a2/universo-auditoria.json": "fe70f3a9dd47f719a119d9429c0cca894e894acd9e3afff194980bd0ba6f7370",
+    "tela-a2/elegibilidade-passo2.json": "071187f9f91baa64b6b526da3bb44430e344b89109cf3ec769c9aaf072506117",
+    "tela-a2/elegibilidade.json": "b5d5dd184ce6ff3dcb4d53d7eed50f97753172a17ff8107dfdd8de8e5a2f8637",
+    "tela-a2/efeitos.json": "d78d19ad0c9501a50fa74425f36ccfa5764a82bead0d41dc7f65c54d381cf25f",
+    "tela-a2/efeitos-lotes/VOCABULARIO.json": "4a1346df5c4631f507616998947514b6ee2dcfc872b677607c51cd28777d957c",
+    "tela-a2/auditoria-duplicatas.json": "eb1cf426cacfc498c620734ef772405d4ca7b2d6e8b8912300aefc775af10832",
+    "tela-a2/parametros.json": "82e329bb43c5497f96d2619d690b8512a154e9317467b11d4597c15dfc5ed41d",
+    "tela-a2/fontes/PROVENIENCIA.json": "4545bf97ed5917a1113e3d681510f156fa61d0a3c8ddf06a691ccb73889a49aa",
+    "tela-a2/fontes/portaria3-2007-emag.pdf": "872fbc4f63e3094c2b5957b323b4fea08f6d04988ebb244b76eac891f385a530",
+    "tela-a2/fontes/select-behavior-size.png": "8dadbd7e0c408164a69d16da2e8f2ec5aab553d6ec5db3af9e724a4a2419bd5a",
+    "scripts/tela-a2-universo.ts": "3dde8f53d6221b39937eeba8b6c5cdbaece10cc4bae186e2ea6e41fcdc70914e",
+    "scripts/draw-tela-a2.ts": "291fd413f7536968c738111f102b8d57d32d6ad5ae35c585671317596f33802d"
+  },
+  "revisaoFormal": {
+    "manifesto": "tela-a2/revisao-formal-2.json",
+    "manifestoSha256": "d0d5e58031e91d749fa6bfe2b2900c92da668465639229469f281c84330bfb70",
+    "manifestoCommit": "3794148068853672231bb0579733bc4c70769c6d",
+    "decisao": "D-160",
+    "scriptRevisadoCommit": "e0fa24b065241824ff26a7de2dc2ebb651387da0",
+    "buscaPodada": {
+      "arquivo": "scripts/tela-a2-busca-podada.ts",
+      "sha256": "989c1b4b21cdfd89ab7a9542108d0641e991fdca47a05aa9f47e6b81a03fdaf0"
+    },
+    "limiteNos": 1000000000,
+    "falhaOriginal": {
+      "commit": "80f7863f715882c7aab8e1af0b8d3ce6012edbb5",
+      "registros": {
+        "tela-a2/sorteio-falha.json": "fed2d90182411be7ee53c658fd490eeece93aac21bb00a642ad3ebddc3ed3b64",
+        "tela-a2/sorteio-execucao.json": "f327e0f338d94b2d8315f302864913e0985410bb4abeed28a08b5288aeb2773d",
+        "tela-a2/semente-autorizada.json": "bd8770c4637a6c3266d2986ca22641a488d42e87164592afbbfe54fe14ef6ff4"
+      }
+    },
+    "revisaoFormal1": {
+      "falhaCommit": "5c17a9652f71a3e78f47600c4537abd2cdd4e5fd",
+      "registros": {
+        "tela-a2/revisao-formal-1.json": "e0445ce3c7d7739700a928254acbb64ef579f7a16448c9fbe5d207b2d77f8fb6",
+        "tela-a2/revisao-formal-1-execucao.json": "146f635c5d488c37aa4f4e1c27d37ff769c20f6a40044e392d499897476d25ea",
+        "tela-a2/revisao-formal-1-falha.json": "80b9c66d439370cd31ce7f6711cc41af60235ba49e9b77947f5b69658f90ce2e"
+      }
+    },
+    "compromissoEnsaio": "d6bf6092011026bcfd533788ce9b7f11a3fc549abcafbb6c9650a7f8adad0078",
+    "semanticaNos": "nos e reparos contam só o que a busca PODADA visitou (inclusive os nós cortados); não se comparam com os de solve() nem com os limites das execuções anteriores"
+  },
+  "fim": "2026-11-02T20:42:18.640Z",
+  "nos": 458,
+  "folhas": 1,
+  "cortesDfs": {
+    "relaxacao-ultimo-estrato": 8,
+    "compartilhadas": 14,
+    "alternativas": 5
+  },
+  "cortesFim": {},
+  "resultado": "tela-a2/sorteio-2.json",
+  "nota": "Execução adicional única da revisão formal 2 (NAT-110, D-160): busca podada (só subárvores sem solução), mesma semente e mesma ordem. Não há outra: se falhou, a A2 encerra de vez; os registros anteriores ficam como estão.",
+  "solucaoSha256": "d6bf6092011026bcfd533788ce9b7f11a3fc549abcafbb6c9650a7f8adad0078",
+  "sorteioSha256": "86e7a78be41d907c6c7213ee05709de668731abdd14ae14cde5e035bdffcf381"
+}
