@@ -2,6 +2,7 @@
  * Medição independente das páginas de controle (catálogo NAT-85/NAT-77) — sem modelo e sem oráculo.
  *
  *   node controles/medir.mjs [--raiz ../govbr-corpus/dist] [--saida controles/medicoes] [--so desenvolvimento|reservado]
+ *   node controles/medir.mjs --extensao controles/extensao-370/expectativas.json   (só a extensão; nada dos dois conjuntos)
  *
  * Nada aqui vem do govbr-ds-validator. A medição lê controles/expectativas.json (desenvolvimento) e
  * controles/reserva/expectativas.json (reserva) e, para cada gêmeo:
@@ -52,10 +53,14 @@ const servidor = createServer((req, res) => {
 await new Promise((ok) => servidor.listen(0, "127.0.0.1", ok));
 const BASE = `http://127.0.0.1:${servidor.address().port}`;
 
-const conjuntos = [
-  { divisao: "desenvolvimento", arquivo: join(AQUI, "expectativas.json") },
-  { divisao: "reservado", arquivo: join(AQUI, "reserva", "expectativas.json") },
-].filter((c) => !SO || c.divisao === SO);
+// 3.7.0 (extensão de desenvolvimento, fora do catálogo congelado): com --extensao, mede SÓ aquele arquivo.
+const EXTENSAO = arg("--extensao", null);
+const conjuntos = EXTENSAO
+  ? [{ divisao: "extensao", arquivo: resolve(EXTENSAO) }]
+  : [
+      { divisao: "desenvolvimento", arquivo: join(AQUI, "expectativas.json") },
+      { divisao: "reservado", arquivo: join(AQUI, "reserva", "expectativas.json") },
+    ].filter((c) => !SO || c.divisao === SO);
 
 const bytes = (caminhoWeb) => readFileSync(join(RAIZ, caminhoWeb));
 const manifestos = new Map();
@@ -337,7 +342,7 @@ const axeCache = new Map();
 
 for (const { divisao, arquivo } of conjuntos) {
   const exp = JSON.parse(readFileSync(arquivo, "utf8"));
-  const sub = divisao === "reservado" ? "reserva" : "desenvolvimento";
+  const sub = divisao === "reservado" ? "reserva" : divisao === "extensao" ? "extensao" : "desenvolvimento";
   const pastaDiv = join(PASTA, sub);
   mkdirSync(pastaDiv, { recursive: true });
   const linhas = [];

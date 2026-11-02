@@ -1,0 +1,389 @@
+{
+  "_meta": {
+    "o_que_e": "EXTENSÃO de desenvolvimento do catálogo de controles (validator 3.7.0, C01): expectativas por gêmeo, no formato de controles/expectativas.json. Fora do catálogo 1.0.0 congelado e da matriz do portão NAT-86; não toca a reserva.",
+    "divisao": "desenvolvimento",
+    "familias": [
+      {
+        "caso": "F5-06",
+        "familia": "F5",
+        "titulo": "Botão só com ícone fora da variante circular (rótulo do Button)"
+      }
+    ],
+    "fonte": {
+      "norma": "ds:button-7ef75d42ac65",
+      "texto": "O rótulo é um elemento obrigatório.",
+      "excecaoPerdida": {
+        "legado": "govbr-3.7.0-component-button-4d7b5f978df1",
+        "texto": "A exceção ocorre na versão tipo circular uma vez que não existe rótulo."
+      }
+    },
+    "corpus": {
+      "ala": "/controles/c/",
+      "manifesto": "public/controles/c/manifesto.json (cópia idêntica em dist/)",
+      "alaManifestoSha256": "596575a950995d7ac5ab97a661578a663259c6eb0d0923ac646aed75529d92a2"
+    },
+    "construcao": "node controles/extensao-370/construir.mjs; medição: node controles/medir.mjs --extensao controles/extensao-370/expectativas.json"
+  },
+  "gemeos": [
+    {
+      "gemeo": "F5-06-D",
+      "caso": "F5-06",
+      "familia": "F5",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "br-button só com ícone (fa-print), sem a classe circle, nomeado por aria-label='Imprimir comprovante'.",
+      "celulas": [
+        {
+          "sujeito": "button#imprimir",
+          "normas": [
+            "ds:button-7ef75d42ac65"
+          ],
+          "esperado": "confirmed",
+          "nota": "só ícone e sem circle: falta o rótulo visível; o nome acessível existe (não é o caso da 4.1.2)"
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-9b45110f14",
+        "caminho": "/controles/c/c-9b45110f14.html",
+        "sha256": "4e327d729e3fbb88247a6befd408c55ec2f6ef5aeb00a6a84d94b3ccfd540e72"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('imprimir').innerText.trim()",
+            "op": "igual",
+            "valor": "",
+            "nota": "nenhum texto no botão"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.querySelectorAll('#imprimir i.fas').length",
+            "op": "igual",
+            "valor": 1,
+            "nota": "um ícone"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('imprimir').classList.contains('circle')",
+            "op": "igual",
+            "valor": false,
+            "nota": "sem a classe circle"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#imprimir",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Imprimir comprovante",
+            "nota": "nome acessível pelo aria-label"
+          }
+        ]
+      },
+      "axePermitido": []
+    },
+    {
+      "gemeo": "F5-06-C1",
+      "caso": "F5-06",
+      "familia": "F5",
+      "papel": "conforme",
+      "descricaoCatalogo": "o mesmo botão na variante circular (classe circle).",
+      "celulas": [
+        {
+          "sujeito": "button#imprimir",
+          "normas": [
+            "ds:button-7ef75d42ac65"
+          ],
+          "esperado": "conforme",
+          "nota": "a variante circular é a forma só com ícone que o DS admite"
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-309bc0cd86",
+        "caminho": "/controles/c/c-309bc0cd86.html",
+        "sha256": "ac720907c1f406968cc24063cc818046ae2d7a53a9458842649ae30503d2720e"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('imprimir').innerText.trim()",
+            "op": "igual",
+            "valor": ""
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('imprimir').classList.contains('circle')",
+            "op": "igual",
+            "valor": true
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#imprimir",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Imprimir comprovante"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F5-06-D",
+        "paginaDe": "/controles/c/c-9b45110f14.html",
+        "mudanca": "acrescenta só a classe circle",
+        "trocas": [
+          [
+            "<button class=\"br-button\" type=\"button\" id=\"imprimir\"",
+            "<button class=\"br-button circle\" type=\"button\" id=\"imprimir\""
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F5-06-C2",
+      "caso": "F5-06",
+      "familia": "F5",
+      "papel": "conforme",
+      "descricaoCatalogo": "botão não circular com rótulo visível ao lado do ícone.",
+      "celulas": [
+        {
+          "sujeito": "button#imprimir",
+          "normas": [
+            "ds:button-7ef75d42ac65"
+          ],
+          "esperado": "conforme",
+          "nota": ""
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-4476aaa96a",
+        "caminho": "/controles/c/c-4476aaa96a.html",
+        "sha256": "588505a5bf65ec234e179624416b75411b17a98b105d88b265bc107fdba1df76"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('imprimir').innerText.trim()",
+            "op": "igual",
+            "valor": "Imprimir comprovante"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('imprimir').classList.contains('circle')",
+            "op": "igual",
+            "valor": false
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#imprimir",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Imprimir comprovante"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F5-06-D",
+        "paginaDe": "/controles/c/c-9b45110f14.html",
+        "mudanca": "troca só o botão: texto visível no lugar do aria-label",
+        "trocas": [
+          [
+            "<button class=\"br-button\" type=\"button\" id=\"imprimir\" aria-label=\"Imprimir comprovante\"><i class=\"fas fa-print\" aria-hidden=\"true\"></i></button>",
+            "<button class=\"br-button secondary\" type=\"button\" id=\"imprimir\"><i class=\"fas fa-print\" aria-hidden=\"true\"></i> Imprimir comprovante</button>"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F5-06-D2",
+      "caso": "F5-06",
+      "familia": "F5",
+      "papel": "defeituoso",
+      "descricaoCatalogo": "br-button só com ícone e o texto só para leitor de tela (recortado em 1px), sem circle.",
+      "celulas": [
+        {
+          "sujeito": "button#imprimir",
+          "normas": [
+            "ds:button-7ef75d42ac65"
+          ],
+          "esperado": "confirmed",
+          "nota": "o texto existe só para a tecnologia assistiva: na tela, o botão é só ícone"
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-a5f933830c",
+        "caminho": "/controles/c/c-a5f933830c.html",
+        "sha256": "31fd993d39aea1f55c24702d563ddd2e9247500e1d7e5d9f5068ecdeadfa82d9"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "(() => { const r = document.querySelector('#imprimir .texto-leitor').getBoundingClientRect(); return r.width <= 1 && r.height <= 1; })()",
+            "op": "igual",
+            "valor": true,
+            "nota": "o texto não tem caixa visível"
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('imprimir').classList.contains('circle')",
+            "op": "igual",
+            "valor": false
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#imprimir",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Imprimir comprovante"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F5-06-D",
+        "paginaDe": "/controles/c/c-9b45110f14.html",
+        "mudanca": "troca só o botão (texto recortado no lugar do aria-label) e acrescenta a folha que recorta o texto",
+        "trocas": [
+          [
+            "</head>",
+            "<style>\n.texto-leitor{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}\n</style>\n</head>"
+          ],
+          [
+            "<button class=\"br-button\" type=\"button\" id=\"imprimir\" aria-label=\"Imprimir comprovante\"><i class=\"fas fa-print\" aria-hidden=\"true\"></i></button>",
+            "<button class=\"br-button\" type=\"button\" id=\"imprimir\"><i class=\"fas fa-print\" aria-hidden=\"true\"></i><span class=\"texto-leitor\">Imprimir comprovante</span></button>"
+          ]
+        ],
+        "trocasJs": []
+      }
+    },
+    {
+      "gemeo": "F5-06-N",
+      "caso": "F5-06",
+      "familia": "F5",
+      "papel": "conforme",
+      "descricaoCatalogo": "o botão só com ícone sem circle como parte do Input do DS (botão de ação do campo, marcação dos exemplos oficiais).",
+      "celulas": [
+        {
+          "sujeito": "button#imprimir",
+          "normas": [
+            "ds:button-7ef75d42ac65"
+          ],
+          "esperado": "conforme",
+          "nota": "parte da anatomia publicada do Input (exemplo oficial input-buttons), não um Button avulso"
+        }
+      ],
+      "alegacoes": [],
+      "pagina": {
+        "id": "c-35c7f832c2",
+        "caminho": "/controles/c/c-35c7f832c2.html",
+        "sha256": "02e21b7c89a9c37528c7dd99ebbb757799b677e2e0b9c95f4abeaac5fe79a911"
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "toque": false,
+      "receita": [
+        {
+          "acao": "capturar",
+          "nome": "inicial"
+        }
+      ],
+      "fatos": {
+        "inicial": [
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('imprimir').innerText.trim()",
+            "op": "igual",
+            "valor": ""
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('imprimir').classList.contains('circle')",
+            "op": "igual",
+            "valor": false
+          },
+          {
+            "tipo": "dom",
+            "expr": "document.getElementById('imprimir').closest('.br-input') !== null",
+            "op": "igual",
+            "valor": true,
+            "nota": "dentro do Input"
+          },
+          {
+            "tipo": "ax",
+            "alvo": "#imprimir",
+            "prop": "nome",
+            "op": "igual",
+            "valor": "Buscar exemplar"
+          }
+        ]
+      },
+      "axePermitido": [],
+      "derivacao": {
+        "de": "F5-06-D",
+        "paginaDe": "/controles/c/c-9b45110f14.html",
+        "mudanca": "troca só o botão por um Input com botão de ação",
+        "trocas": [
+          [
+            "<button class=\"br-button\" type=\"button\" id=\"imprimir\" aria-label=\"Imprimir comprovante\"><i class=\"fas fa-print\" aria-hidden=\"true\"></i></button>",
+            "<div class=\"br-input input-button\"><label for=\"codigo\">Código do exemplar</label><input id=\"codigo\" type=\"text\"><button class=\"br-button\" type=\"button\" id=\"imprimir\" aria-label=\"Buscar exemplar\"><i class=\"fas fa-search\" aria-hidden=\"true\"></i></button></div>"
+          ]
+        ],
+        "trocasJs": []
+      }
+    }
+  ]
+}
