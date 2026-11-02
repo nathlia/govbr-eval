@@ -51,6 +51,11 @@ import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { buildUniverse, CORPUS } from "./tela-a2-universo.js";
+//#region revisao-formal-2
+import { isAbsolute, relative, resolve } from "path";
+import { mkdirSync } from "fs";
+import { buscar, conferirCompromisso, solucaoCanonica, type ContextoBusca, type EstatPoda, type SolucaoBusca } from "./tela-a2-busca-podada.js";
+//#endregion revisao-formal-2
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -285,6 +290,265 @@ function identidadeRevisao(seed: string) {
   return { manifestoSha256: manifestoSha, manifestoCommit: MC, scriptRevisadoCommit: S };
 }
 //#endregion revisao-formal-1
+//#region revisao-formal-2
+/**
+ * REVISÃO FORMAL 2 (NAT-110, D-160, 2026-11-02). A revisão formal 1 falhou por limite de nós (1.000.000.001; 5c17a96).
+ * A autora reabriu a A2 com estes termos: mesma semente, mesmo universo, mesmas cotas e invariantes, MESMA ordem
+ * de valores; a única mudança é PODA SÓLIDA — scripts/tela-a2-busca-podada.ts, `buscar(ctx, key, "podada")`, que é
+ * a cópia de solve() com ganchos que só cortam subárvores sem solução completa (prova no cabeçalho do módulo). A
+ * primeira solução na ordem da semente é, portanto, a mesma que solve() sem limite devolveria; nós e reparos contam
+ * só o que a busca podada visitou. solve() continua aqui, intocada, e --comparar-neutra a confronta com as duas
+ * buscas do módulo na ordem neutra do --validar.
+ *
+ * Tudo o que esta emenda acrescenta está entre `//#region revisao-formal-2` e `//#endregion revisao-formal-2`.
+ * Tirando esses blocos (marcadores inclusive), o texto é byte a byte o script da revisão formal 1
+ * (`git show a415e33:scripts/draw-tela-a2.ts`, sha256 79ec66fa…) — a execução com --revisao2 confere isso antes de
+ * tudo, e scripts/test-draw-tela-a2-revisao.ts confere por implementação própria. NODE_LIMIT fica 1.000.000.000
+ * (conta as chamadas de dfs da busca podada, inclusive as cortadas).
+ *
+ * Uso:
+ *   npm run tela-a2:sorteio -- --validar --comparar-neutra
+ *       ordem neutra: solve() × buscar cega × buscar podada; mesma solução e, cega × solve(), mesmos nós. Não grava nada.
+ *   npm run tela-a2:sorteio -- --semente <40 hex> --ensaio <pasta fora do repositório>
+ *       ensaio da busca podada na ordem da semente autorizada (insumos congelados conferidos contra a semente). Grava
+ *       só <pasta>/ensaio-rf2.json: achou ou não, nós, tempo e o sha256 da forma canônica da solução — NUNCA a
+ *       solução. Nada em tela-a2/.
+ *   npm run tela-a2:sorteio -- --semente <40 hex> --revisao2 tela-a2/revisao-formal-2.json [--so-guardas2]
+ *       a execução adicional única. --so-guardas2 confere só as guardas e sai 0, sem ler insumos nem ordenar nada.
+ */
+// identidade-2:início
+const RF2 = {
+  manifesto: "tela-a2/revisao-formal-2.json",
+  decisao: "D-160",
+  modulo: "scripts/tela-a2-busca-podada.ts",
+  limiteNos: 1_000_000_000,
+  /** sha256 da forma canônica da solução achada pelo ensaio na ordem da semente (antes da selagem, divulgado no manifesto) */
+  compromissoEnsaio: "d6bf6092011026bcfd533788ce9b7f11a3fc549abcafbb6c9650a7f8adad0078",
+  rf1: {
+    scriptCommit: "a415e332cb50c3fa53606950e3c6eda49a83b5da",
+    scriptSha256: "79ec66fa4b521c3fe3c58b7c6d0898b665e0bf3d9b1332da9a567abae406223b",
+    manifestoCommit: "d4c21b5b97ba714c5d6305d4717b96d2faa38fa6",
+    marcadorCommit: "4ddb30426ca53bae7f713843de4bdde5a55b95bd",
+    falhaCommit: "5c17a9652f71a3e78f47600c4537abd2cdd4e5fd",
+    nosFalha: 1_000_000_001,
+  },
+  registrosRF1: {
+    "tela-a2/revisao-formal-1.json": "e0445ce3c7d7739700a928254acbb64ef579f7a16448c9fbe5d207b2d77f8fb6",
+    "tela-a2/revisao-formal-1-execucao.json": "146f635c5d488c37aa4f4e1c27d37ff769c20f6a40044e392d499897476d25ea",
+    "tela-a2/revisao-formal-1-falha.json": "80b9c66d439370cd31ce7f6711cc41af60235ba49e9b77947f5b69658f90ce2e",
+  } as Record<string, string>,
+};
+// identidade-2:fim
+const RF2_EXEC = "tela-a2/sorteio-execucao-2.json";
+const RF2_FAIL = "tela-a2/sorteio-falha-2.json";
+const RF2_OUT = "tela-a2/sorteio-2.json";
+const RF2_BEGIN = "//#region revisao-formal-2";
+const RF2_END = "//#endregion revisao-formal-2";
+const revisao2Arg = args.includes("--revisao2") ? (args[args.indexOf("--revisao2") + 1] ?? "") : null;
+const ensaioArg = args.includes("--ensaio") ? (args[args.indexOf("--ensaio") + 1] ?? "") : null;
+const soGuardas2 = args.includes("--so-guardas2");
+const compararNeutra = args.includes("--comparar-neutra");
+if (revisao2Arg !== null && (mode !== "sortear" || revisao)) fail("--revisao2 só vale com --semente e sem --revisao");
+if (revisao2Arg !== null && revisao2Arg !== RF2.manifesto) fail(`--revisao2 aceita só ${RF2.manifesto}`);
+if (soGuardas2 && revisao2Arg === null) fail("--so-guardas2 só vale com --revisao2");
+if (ensaioArg !== null && (mode !== "sortear" || revisao || revisao2Arg !== null)) fail("--ensaio só vale com --semente, sem --revisao nem --revisao2");
+if (compararNeutra && mode !== "validar") fail("--comparar-neutra só vale com --validar");
+const revisao2 = revisao2Arg !== null;
+const ensaio2 = ensaioArg !== null;
+let rf2Info: { manifestoSha256: string; manifestoCommit: string; scriptRevisadoCommit: string; moduloSha256: string } | null = null;
+
+/** Tira os blocos da revisão formal 2: tem de dar o script da revisão formal 1. */
+function normalizarRevisao2(text: string): string {
+  if (text.includes("\r")) fail(`${RF1_SCRIPT} tem CR (o arquivo é eol=lf)`);
+  const out: string[] = [];
+  let inside = false;
+  for (const l of text.split("\n")) {
+    if (l === RF2_BEGIN) { if (inside) fail("bloco da revisão 2 aninhado"); inside = true; continue; }
+    if (l === RF2_END) { if (!inside) fail("fim de bloco da revisão 2 sem início"); inside = false; continue; }
+    if (/^\s*\/\/#(end)?region\s+revisao-formal-2\b/.test(l)) fail(`marcador da revisão 2 fora do formato exato: ${l}`);
+    if (inside) { if (l === "//#region revisao-formal-1" || l === "//#endregion revisao-formal-1") fail("bloco da revisão 1 dentro de um bloco da revisão 2"); continue; }
+    out.push(l);
+  }
+  if (inside) fail("bloco da revisão 2 sem fim");
+  return out.join("\n");
+}
+
+/** As conferências de identidade da semente do caminho original (as mesmas da revisão 1, item a). */
+function identidadeSemente2(seed: string) {
+  const lines = (s: string) => s.split("\n").filter(Boolean);
+  if (!existsSync(join(ROOT, AUTH))) fail(`${AUTH} não existe`);
+  const auth = readJson<{ semente: string }>(AUTH);
+  if (auth.semente !== seed) fail(`semente diferente da autorizada (${auth.semente})`);
+  if (!gitOk("cat-file", "-e", `HEAD:${AUTH}`)) fail(`${AUTH} não está commitado`);
+  if (git("show", `HEAD:${AUTH}`) !== readRaw(AUTH).toString("utf8").trim()) fail(`${AUTH} difere do commitado`);
+  const authCommits = lines(git("log", "--format=%H", "--", AUTH));
+  if (authCommits.length !== 1) fail(`${AUTH} foi mexido em ${authCommits.length} commits; tem de ser adicionado uma vez e nunca alterado`);
+  if (authCommits[0] !== RF1.commitAutorizacao) fail(`${AUTH} entrou em ${authCommits[0]}, não em ${RF1.commitAutorizacao}`);
+  if (!gitOk("cat-file", "-e", `${seed}^{commit}`)) fail(`${seed} não é commit deste repositório`);
+  if (!gitOk("merge-base", "--is-ancestor", seed, authCommits[0])) fail("o commit que autoriza a semente não descende dela");
+  if (seed === authCommits[0]) fail("a semente não pode ser o próprio commit de autorização");
+  if (!gitOk("merge-base", "--is-ancestor", seed, "HEAD")) fail("a semente não é ancestral do HEAD");
+  const statusAt = (rev: string) => { try { return JSON.parse(git("show", `${rev}:${PARAMS}`))._meta?.status; } catch { return null; } };
+  if (statusAt(seed) !== "CONGELADO") fail("parametros.json não está CONGELADO no commit da semente");
+  if (statusAt(`${seed}^`) === "CONGELADO") fail("a semente não é o primeiro commit de congelamento (o pai já estava CONGELADO)");
+  const firstFreeze = lines(git("log", "--reverse", "--format=%H", "-S", '"status": "CONGELADO"', "--", PARAMS))[0];
+  if (firstFreeze !== seed) fail(`o primeiro congelamento no histórico é ${firstFreeze}, não a semente`);
+  for (const f of params.congelados) if (!gitOk("cat-file", "-e", `${seed}:${f}`)) fail(`arquivo congelado ausente do commit da semente: ${f}`);
+}
+
+/** Guardas do ensaio: semente autorizada, insumos congelados (menos o script) iguais aos da semente, pasta fora do repositório. */
+function identidadeEnsaio2(seed: string): string {
+  if (seed !== RF1.semente) fail(`o ensaio vale só para a semente ${RF1.semente}`);
+  // depois de selado o manifesto (commits preenchidos) ou começada a execução, não há mais ensaio
+  if (existsSync(join(ROOT, RF2.manifesto))) {
+    const m = readJson<{ scriptRevisado?: { commit?: unknown }; buscaPodada?: { commit?: unknown } }>(RF2.manifesto);
+    const selado = (c: unknown) => typeof c === "string" && /^[0-9a-f]{40}$/.test(c);
+    if (selado(m.scriptRevisado?.commit) || selado(m.buscaPodada?.commit)) fail(`${RF2.manifesto} já está selado: o ensaio não roda mais`);
+  }
+  for (const f of [RF2_EXEC, RF2_FAIL, RF2_OUT]) if (existsSync(join(ROOT, f))) fail(`${f} existe: a execução da revisão 2 já começou, o ensaio não roda mais`);
+  const auth = readJson<{ semente: string }>(AUTH);
+  if (auth.semente !== seed) fail(`semente diferente da autorizada (${auth.semente})`);
+  for (const f of params.congelados) {
+    if (f === RF1_SCRIPT) continue;
+    const want = sha256(execFileSync("git", ["show", `${seed}:${f}`], { cwd: ROOT, maxBuffer: 1 << 28 }));
+    if (sha256(readRaw(f)) !== want) fail(`${f} difere do commit da semente`);
+  }
+  if (!ensaioArg) fail("--ensaio pede a pasta de saída");
+  const dir = resolve(ensaioArg);
+  const rel = relative(ROOT, dir);
+  if (rel === "" || (!rel.startsWith("..") && !isAbsolute(rel))) fail(`a pasta do ensaio tem de ficar fora do repositório (${dir})`);
+  return dir;
+}
+
+/** Guardas da execução adicional da revisão formal 2. */
+function identidadeRevisao2(seed: string) {
+  const gitRaw = (...a: string[]) => execFileSync("git", a, { cwd: ROOT, maxBuffer: 1 << 28 });
+  const blobSha = (rev: string, f: string) => { try { return sha256(gitRaw("show", `${rev}:${f}`)); } catch { return null; } };
+  const ancestor = (a: string, b: string) => gitOk("merge-base", "--is-ancestor", a, b);
+  const lines = (s: string) => s.split("\n").filter(Boolean);
+  const logAll = (f: string) => lines(git("log", "--all", "--format=%H", "--", f));
+  if (seed !== RF1.semente) fail(`a revisão formal 2 vale só para a semente ${RF1.semente}`);
+  if (NODE_LIMIT !== RF2.limiteNos) fail(`NODE_LIMIT (${NODE_LIMIT}) não é o limite da revisão 2 (${RF2.limiteNos})`);
+
+  // (a) identidade da semente
+  identidadeSemente2(seed);
+
+  // (b) a falha original, preservada byte a byte (disco, HEAD e commit da falha)
+  for (const [f, want] of Object.entries(RF1.registros)) {
+    if (!existsSync(join(ROOT, f)) || sha256(readRaw(f)) !== want) fail(`${f} no disco não é o registro preservado (sha256 ${want})`);
+    if (blobSha("HEAD", f) !== want) fail(`${f} no HEAD não é o registro preservado`);
+    if (blobSha(RF1.commitFalha, f) !== want) fail(`${f} no commit da falha não é o registro preservado`);
+  }
+  for (const f of [FAIL, EXEC]) {
+    const cs = logAll(f);
+    if (cs.length !== 1 || cs[0] !== RF1.commitFalha) fail(`${f} tem de ter entrado só no commit da falha ${RF1.commitFalha} e nunca mudado (achados: ${cs.join(", ")})`);
+  }
+  const falha0 = readJson<{ semente: string; erro: string; nos: number }>(FAIL);
+  if (falha0.semente !== seed || falha0.erro !== "limite de nós" || falha0.nos !== RF1.limiteNosOriginal + 1) fail(`${FAIL} não é a falha por limite de nós desta semente`);
+
+  // (c) a revisão formal 1: manifesto, marcador e falha preservados, cada um nos commits em que entrou
+  if (!ancestor(RF1.commitFalha, RF2.rf1.scriptCommit) || !ancestor(RF2.rf1.scriptCommit, RF2.rf1.manifestoCommit) || !ancestor(RF2.rf1.manifestoCommit, RF2.rf1.marcadorCommit) || !ancestor(RF2.rf1.marcadorCommit, RF2.rf1.falhaCommit) || !ancestor(RF2.rf1.falhaCommit, "HEAD"))
+    fail("a cadeia da revisão formal 1 (script → manifesto → marcador → falha → HEAD) não está no histórico");
+  for (const [f, want] of Object.entries(RF2.registrosRF1)) {
+    if (!existsSync(join(ROOT, f)) || sha256(readRaw(f)) !== want) fail(`${f} no disco não é o registro preservado da revisão 1 (sha256 ${want})`);
+    if (blobSha("HEAD", f) !== want) fail(`${f} no HEAD não é o registro preservado da revisão 1`);
+  }
+  const esperadoLog: Record<string, string[]> = {
+    [RF1.manifesto]: [RF2.rf1.manifestoCommit],
+    [RF1_EXEC]: [RF2.rf1.falhaCommit, RF2.rf1.marcadorCommit],
+    [RF1_FAIL]: [RF2.rf1.falhaCommit],
+  };
+  for (const [f, want] of Object.entries(esperadoLog)) { const cs = logAll(f); if (canon(cs) !== canon(want)) fail(`${f}: histórico ${cs.join(", ")}; esperado ${want.join(", ")}`); }
+  if (blobSha(RF2.rf1.falhaCommit, RF1_FAIL) !== RF2.registrosRF1[RF1_FAIL] || blobSha(RF2.rf1.falhaCommit, RF1_EXEC) !== RF2.registrosRF1[RF1_EXEC]) fail("registros da revisão 1 diferem do commit da falha dela");
+  const falha1 = readJson<{ semente: string; erro: string; nos: number }>(RF1_FAIL);
+  if (falha1.semente !== seed || falha1.erro !== "limite de nós" || falha1.nos !== RF2.rf1.nosFalha) fail(`${RF1_FAIL} não é a falha por limite de nós da revisão 1`);
+  const exec1 = readJson<{ semente: string; script: string; resultado: string }>(RF1_EXEC);
+  if (exec1.semente !== seed || exec1.script !== RF2.rf1.scriptSha256 || exec1.resultado !== "FALHA: limite de nós") fail(`${RF1_EXEC} não é a execução da revisão 1`);
+  if (existsSync(join(ROOT, OUT)) || git("log", "--all", "--format=%H", "--", OUT)) fail(`${OUT} existe ou existiu: a revisão 1 não gravou sorteio, e a 2 grava em ${RF2_OUT}`);
+
+  // (d) o script: sem os blocos da revisão 2, é o script da revisão 1; mudou num único commit depois da falha da 1
+  const rf1Blob = gitRaw("show", `${RF2.rf1.scriptCommit}:${RF1_SCRIPT}`);
+  if (sha256(rf1Blob) !== RF2.rf1.scriptSha256) fail(`${RF1_SCRIPT} em ${RF2.rf1.scriptCommit} não tem o sha256 da revisão 1`);
+  const current = readRaw(RF1_SCRIPT);
+  if (normalizarRevisao2(current.toString("utf8")) !== rf1Blob.toString("utf8")) fail(`${RF1_SCRIPT}, sem os blocos da revisão 2, difere do script da revisão 1: algo fora dos blocos mudou`);
+  const scriptSha = sha256(current);
+  const scriptCommits = lines(git("log", "--format=%H", `${RF2.rf1.falhaCommit}..HEAD`, "--", RF1_SCRIPT));
+  if (scriptCommits.length !== 1) fail(`${RF1_SCRIPT} tem de mudar num único commit depois da falha da revisão 1 (achados: ${scriptCommits.length})`);
+  const before = lines(git("log", "--format=%H", `${seed}..${RF2.rf1.falhaCommit}`, "--", RF1_SCRIPT));
+  if (canon(before) !== canon([RF2.rf1.scriptCommit])) fail(`${RF1_SCRIPT} mudou entre a semente e a falha da revisão 1 fora do commit ${RF2.rf1.scriptCommit}`);
+  const S = scriptCommits[0];
+  if (S === RF2.rf1.falhaCommit || !ancestor(RF2.rf1.falhaCommit, S)) fail("o commit da revisão 2 do script não descende da falha da revisão 1");
+  if (blobSha(S, RF1_SCRIPT) !== scriptSha || blobSha("HEAD", RF1_SCRIPT) !== scriptSha) fail(`${RF1_SCRIPT} no disco difere do commit da revisão 2`);
+
+  // (e) o módulo da busca podada: entrou no mesmo commit do script e nunca mudou
+  const M2 = RF2.modulo;
+  if (!existsSync(join(ROOT, M2))) fail(`${M2} não existe`);
+  const moduloSha = sha256(readRaw(M2));
+  if (readRaw(M2).includes(13)) fail(`${M2} tem CR (o arquivo é eol=lf)`);
+  const modCommits = logAll(M2);
+  if (canon(modCommits) !== canon([S])) fail(`${M2} tem de entrar no commit da revisão 2 do script (${S}) e nunca mudar (achados: ${modCommits.join(", ")})`);
+  if (blobSha("HEAD", M2) !== moduloSha) fail(`${M2} no disco difere do HEAD`);
+  const sFiles = lines(git("diff-tree", "--no-commit-id", "--name-only", "-r", S));
+  if (sFiles.some(f => f.startsWith("tela-a2/"))) fail(`o commit da revisão 2 do script não pode mexer em tela-a2/: ${sFiles.filter(f => f.startsWith("tela-a2/")).join(", ")}`);
+
+  // (f) deriva dos congelados: a única permitida é o script; nada sujo
+  const drift = lines(git("diff", "--name-only", seed, "HEAD", "--", ...params.congelados));
+  if (drift.length !== 1 || drift[0] !== RF1_SCRIPT) fail(`a única deriva permitida é ${RF1_SCRIPT}; mudaram:\n${drift.join("\n")}`);
+  const dirty = git("status", "--porcelain", "--", ...params.congelados, M2);
+  if (dirty) fail(`arquivos congelados (ou o módulo) com mudança não commitada:\n${dirty}`);
+
+  // (g) o manifesto: commitado uma vez, num commit só dele, depois da revisão 2 do script; selado (nada a PREENCHER)
+  const M = RF2.manifesto;
+  if (!existsSync(join(ROOT, M))) fail(`${M} não existe`);
+  const manifestoSha = sha256(readRaw(M));
+  if (readRaw(M).includes(13)) fail(`${M} tem CR`);
+  if (blobSha("HEAD", M) !== manifestoSha) fail(`${M} difere do commitado no HEAD (ou não está commitado)`);
+  if (git("status", "--porcelain", "--", M)) fail(`${M} com mudança não commitada`);
+  const mCommits = logAll(M);
+  if (mCommits.length !== 1) fail(`${M} foi mexido em ${mCommits.length} commits; tem de ser adicionado uma vez e nunca alterado`);
+  const MC = mCommits[0];
+  if (!ancestor(MC, "HEAD")) fail(`o commit de ${M} não é ancestral do HEAD`);
+  if (MC === S || !ancestor(S, MC)) fail(`${M} tem de ser commitado DEPOIS da revisão 2 do script, em commit próprio`);
+  const mFiles = git("diff-tree", "--no-commit-id", "--name-status", "-r", MC);
+  if (mFiles !== `A\t${M}`) fail(`o commit de ${M} tem de só adicioná-lo:\n${mFiles}`);
+  const man = readJson<Record<string, unknown>>(M);
+  const prosa = ["tela", "motivo", "poda", "provaDeSolidez", "ensaios", "provaDeIdentidade", "ratificacao", "regraDeParada", "revisaoIndependente"];
+  const esperado: Record<string, unknown> = {
+    revisao: "revisao-formal-2",
+    decisao: RF2.decisao,
+    semente: RF1.semente,
+    limiteNos: RF2.limiteNos,
+    execucoesAdicionais: 1,
+    falhaOriginal: { commit: RF1.commitFalha, registros: { [FAIL]: RF1.registros[FAIL], [EXEC]: RF1.registros[EXEC] } },
+    revisaoFormal1: {
+      manifesto: { arquivo: RF1.manifesto, commit: RF2.rf1.manifestoCommit, sha256: RF2.registrosRF1[RF1.manifesto] },
+      scriptRevisado: { arquivo: RF1_SCRIPT, commit: RF2.rf1.scriptCommit, sha256: RF2.rf1.scriptSha256 },
+      falha: { commit: RF2.rf1.falhaCommit, nos: RF2.rf1.nosFalha, registros: { [RF1_EXEC]: RF2.registrosRF1[RF1_EXEC], [RF1_FAIL]: RF2.registrosRF1[RF1_FAIL] } },
+    },
+    sementeAutorizada: { arquivo: AUTH, commit: RF1.commitAutorizacao, sha256: RF1.registros[AUTH] },
+    scriptOriginal: { arquivo: RF1_SCRIPT, commit: RF1.semente, sha256: RF1.scriptOriginalSha256 },
+    scriptRevisado: { arquivo: RF1_SCRIPT, commit: S, sha256: scriptSha },
+    buscaPodada: { arquivo: M2, commit: S, sha256: moduloSha },
+    saidas: { execucao: RF2_EXEC, falha: RF2_FAIL, sorteio: RF2_OUT },
+    compromissoEnsaio: { solucaoSha256: RF2.compromissoEnsaio, seDivergir: `${RF2_FAIL} com erro hash-do-ensaio-diverge, sem ${RF2_OUT}` },
+  };
+  const keys = Object.keys(man).sort();
+  const want = [...Object.keys(esperado), ...prosa].sort();
+  if (canon(keys) !== canon(want)) fail(`${M}: campos ${keys.join(", ")}; esperados ${want.join(", ")}`);
+  for (const k of prosa) if (typeof man[k] !== "string" || !(man[k] as string).trim()) fail(`${M}: ${k} vazio`);
+  for (const k of prosa) if (/PREENCHER/.test(man[k] as string)) fail(`${M}: ${k} ainda por PREENCHER (manifesto não selado)`);
+  for (const [k, v] of Object.entries(esperado)) if (canon(man[k]) !== canon(v)) fail(`${M}: ${k} = ${canon(man[k])}; esperado ${canon(v)}`);
+
+  // (h) execução adicional única: nada dela no disco nem no histórico
+  for (const f of [RF2_OUT, RF2_EXEC, RF2_FAIL]) {
+    if (existsSync(join(ROOT, f))) fail(`${f} já existe: a execução da revisão 2 é única`);
+    if (git("log", "--all", "--format=%H", "--", f)) fail(`${f} já existiu no histórico: a execução da revisão 2 é única`);
+  }
+  console.log(`revisão formal 2: guardas OK — semente ${seed}, falhas ${RF1.commitFalha} e ${RF2.rf1.falhaCommit}, script revisado ${S} (${scriptSha}), módulo ${moduloSha}, manifesto ${MC} (${manifestoSha}), limite ${NODE_LIMIT}`);
+  if (soGuardas2) { console.log("--so-guardas2: nada lido além das guardas, nada ordenado pela semente."); process.exit(0); }
+  return { manifestoSha256: manifestoSha, manifestoCommit: MC, scriptRevisadoCommit: S, moduloSha256: moduloSha };
+}
+//#endregion revisao-formal-2
 
 interface RegraCompleta extends Regra { texto?: string }
 /** Cadeias de duplicata (Revisão 2, bloqueio 1): toda cadeia termina numa aceita ou está auditada com o mesmo destino e motivo. */
@@ -348,6 +612,9 @@ let seed = "";
 if (mode === "sortear") {
   seed = args[args.indexOf("--semente") + 1] ?? "";
   if (!/^[0-9a-f]{40}$/.test(seed)) fail("a semente é o hash completo (40 hex) do commit que congela a regra");
+//#region revisao-formal-2
+  if (revisao2) rf2Info = identidadeRevisao2(seed); else if (ensaio2) identidadeEnsaio2(seed); else
+//#endregion revisao-formal-2
 //#region revisao-formal-1
   if (revisao) rf1Info = identidadeRevisao(seed); else {
 //#endregion revisao-formal-1
@@ -683,6 +950,31 @@ function feasibility() {
   return report;
 }
 
+//#region revisao-formal-2
+/** Contexto da busca do módulo: os mesmos params, elegíveis, inventário e funções do contrato deste script. */
+const ctx2: ContextoBusca<RegraCompleta> = { params, eligible, componentOf, drawable, scaffold, nodeLimit: NODE_LIMIT, related, appliesTo, fxOf, clash, touchedInstances, canPlace };
+const novaEstat = (): EstatPoda => ({ cortesDfs: {}, cortesFim: {}, folhas: 0 });
+const resumo = (r: SolucaoBusca | { erro: string; nodes: number }) => "erro" in r ? { erro: r.erro, nos: r.nodes } : { nos: r.nodes, reparos: r.repairs, solucaoSha256: sha256(solucaoCanonica(r)) };
+if (mode === "validar" && compararNeutra) {
+  // Solidez na ordem neutra do --validar: solve() (intocada) × buscar cega × buscar podada. Nada é gravado.
+  const neutral = (label: string, id: string) => `${label}|${id}`;
+  const t0 = Date.now(); const original = solve(neutral); const t1 = Date.now();
+  const cega = buscar(ctx2, neutral, "cega"); const t2 = Date.now();
+  const estat = novaEstat(); const podada = buscar(ctx2, neutral, "podada", estat); const t3 = Date.now();
+  const ok = !("erro" in original) && !("erro" in cega) && !("erro" in podada)
+    && solucaoCanonica(original as SolucaoBusca) === solucaoCanonica(cega) && solucaoCanonica(cega) === solucaoCanonica(podada)
+    && original.nodes === cega.nodes && (original as Solution).repairs === cega.repairs;
+  if (!("erro" in podada)) verifySolution(podada as unknown as Solution);
+  console.log(JSON.stringify({
+    ordem: "neutra (label|id)",
+    solveOriginal: { ...resumo(original), ms: t1 - t0 },
+    buscaCega: { ...resumo(cega), ms: t2 - t1 },
+    buscaPodada: { ...resumo(podada), ms: t3 - t2, folhas: estat.folhas, cortesDfs: estat.cortesDfs, cortesFim: estat.cortesFim },
+    mesmaSolucao: ok,
+  }, null, 2));
+  process.exit(ok ? 0 : 1);
+}
+//#endregion revisao-formal-2
 if (mode === "validar") {
   const motivos: Record<string, number> = {};
   for (const r of all) if (r.passo2 !== "aceita") { const k = (r.motivo ?? "").split(":")[0]; motivos[k] = (motivos[k] ?? 0) + 1; }
@@ -702,6 +994,98 @@ if (mode === "validar") {
   process.exit(0);
 }
 
+//#region revisao-formal-2
+if (ensaio2) {
+  // Ensaio da busca podada na ordem da semente: grava só o compromisso (sha256 da solução canônica), nunca a solução.
+  const dir = identidadeEnsaio2(seed);
+  const key = (label: string, id: string) => sha256(`${seed}|${label}|${id}`);
+  const estat = novaEstat();
+  if (args.includes("--progresso")) estat.progresso = info => console.error(JSON.stringify(info));
+  const t0 = Date.now(); const inicio = new Date().toISOString();
+  const result = buscar(ctx2, key, "podada", estat);
+  const ms = Date.now() - t0;
+  if (!("erro" in result)) verifySolution(result as unknown as Solution);
+  const inv = "erro" in result ? null : [params.ordemEstratos.every(s => result.specs.filter(x => x.estrato === s).length === params.cotas[s]),
+    result.specs.filter(s => s.compartilhadaCom.length).length === params.compartilhadas,
+    result.alternatives.length === params.alternativasValidas, result.decoys.length === params.chamarizes];
+  const rec = {
+    ensaio: "revisão formal 2 — busca podada na ordem da semente; NÃO é o sorteio e não grava nada em tela-a2/",
+    semente: seed, head: git("rev-parse", "HEAD"), inicio, ms, node: process.version, plataforma: `${process.platform} ${process.arch}`,
+    script: sha256(readRaw(RF1_SCRIPT)), modulo: sha256(readRaw(RF2.modulo)), limiteNos: NODE_LIMIT,
+    encontrou: !("erro" in result), ...resumo(result), invariantes: inv, folhas: estat.folhas, cortesDfs: estat.cortesDfs, cortesFim: estat.cortesFim,
+  };
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, "ensaio-rf2.json"), JSON.stringify(rec, null, 2) + "\n");
+  console.log(JSON.stringify(rec, null, 2));
+  process.exit("erro" in result ? 1 : 0);
+}
+if (revisao2) {
+  // Execução adicional única da revisão formal 2: a MESMA key; a busca é buscar(ctx2, key, "podada").
+  const info = rf2Info!;
+  const started = new Date().toISOString();
+  const key = (label: string, id: string) => sha256(`${seed}|${label}|${id}`);
+  const ligacao = {
+    manifesto: RF2.manifesto, manifestoSha256: info.manifestoSha256, manifestoCommit: info.manifestoCommit, decisao: RF2.decisao,
+    scriptRevisadoCommit: info.scriptRevisadoCommit, buscaPodada: { arquivo: RF2.modulo, sha256: info.moduloSha256 }, limiteNos: NODE_LIMIT,
+    falhaOriginal: { commit: RF1.commitFalha, registros: RF1.registros },
+    revisaoFormal1: { falhaCommit: RF2.rf1.falhaCommit, registros: RF2.registrosRF1 },
+    compromissoEnsaio: RF2.compromissoEnsaio,
+    semanticaNos: "nos e reparos contam só o que a busca PODADA visitou (inclusive os nós cortados); não se comparam com os de solve() nem com os limites das execuções anteriores",
+  };
+  const base = {
+    semente: seed, head: git("rev-parse", "HEAD"), inicio: started,
+    node: process.version, plataforma: `${process.platform} ${process.arch}`,
+    script: sha256(readRaw(RF1_SCRIPT)), modulo: info.moduloSha256, insumos: Object.fromEntries(params.congelados.map(f => [f, sha256(readRaw(f))])),
+    revisaoFormal: ligacao,
+  };
+  // A tentativa é marcada ANTES da busca: uma execução interrompida deixa este arquivo e a próxima chamada recusa.
+  writeFileSync(join(ROOT, RF2_EXEC), JSON.stringify({ ...base, resultado: "EM EXECUÇÃO — se ficou assim, a execução da revisão 2 foi interrompida e não há outra" }, null, 2) + "\n");
+  const estat = novaEstat();
+  const result = buscar(ctx2, key, "podada", estat);
+  const nota = "Execução adicional única da revisão formal 2 (NAT-110, D-160): busca podada (só subárvores sem solução), mesma semente e mesma ordem. Não há outra: se falhou, a A2 encerra de vez; os registros anteriores ficam como estão.";
+  const execRecord = { ...base, fim: new Date().toISOString(), nos: result.nodes, folhas: estat.folhas, cortesDfs: estat.cortesDfs, cortesFim: estat.cortesFim, resultado: "erro" in result ? `FALHA: ${result.erro}` : RF2_OUT, nota };
+  const gravarFalha = (erro: string, extra: Record<string, unknown> = {}) => {
+    writeFileSync(join(ROOT, RF2_FAIL), JSON.stringify({ semente: seed, erro, nos: result.nodes, ...extra, revisaoFormal: ligacao }, null, 2) + "\n");
+    writeFileSync(join(ROOT, RF2_EXEC), JSON.stringify({ ...execRecord, resultado: `FALHA: ${erro}` }, null, 2) + "\n");
+  };
+  if ("erro" in result) {
+    gravarFalha(result.erro);
+    console.error(`FALHA gravada em ${RF2_FAIL}; revisão formal 2 esgotada: a A2 encerra sem sorteio.`);
+    process.exit(1);
+  }
+  const inv = [params.ordemEstratos.every(s => result.specs.filter(x => x.estrato === s).length === params.cotas[s]),
+    result.specs.filter(s => s.compartilhadaCom.length).length === params.compartilhadas,
+    result.alternatives.length === params.alternativasValidas, result.decoys.length === params.chamarizes];
+  if (inv.some(x => !x)) { gravarFalha("invariante final violada", { inv }); process.exit(1); }
+  // verifySolution sai por fail(): se sair, a falha fica gravada antes
+  let verificada = false;
+  process.once("exit", code => { if (code !== 0 && !verificada) gravarFalha("solução não passou em verifySolution"); });
+  verifySolution(result as unknown as Solution);
+  verificada = true;
+  const solucaoSha256 = sha256(solucaoCanonica(result));
+  // a solução tem de ser a do ensaio divulgado: divergência é falha de solidez, não sorteio
+  const divergencia = conferirCompromisso(solucaoSha256, RF2.compromissoEnsaio);
+  if (divergencia) {
+    gravarFalha(divergencia, { solucaoSha256, esperado: RF2.compromissoEnsaio });
+    console.error(`FALHA gravada em ${RF2_FAIL}: a solução (${solucaoSha256}) não é a do compromisso do ensaio (${RF2.compromissoEnsaio}); nada gravado em ${RF2_OUT}.`);
+    process.exit(1);
+  }
+  const byKeyQ = (s: Estrato) => [...eligible.filter(r => r.estrato === s)].sort((a, b) => key("regra", a.id).localeCompare(key("regra", b.id))).map(r => r.id);
+  const out = {
+    _meta: { regra: PARAMS, semente: seed, sha256: base.insumos, corpusManifest: params.sha256.corpusManifest, revisaoFormal: ligacao, solucaoSha256 },
+    ordemPorEstrato: Object.fromEntries(params.ordemEstratos.map(s => [s, byKeyQ(s)])),
+    specs: result.specs,
+    alternativasValidas: result.alternatives,
+    chamarizes: result.decoys,
+    reparos: result.repairs,
+    nos: result.nodes,
+  };
+  writeFileSync(join(ROOT, RF2_OUT), JSON.stringify(out, null, 2) + "\n");
+  writeFileSync(join(ROOT, RF2_EXEC), JSON.stringify({ ...execRecord, solucaoSha256, sorteioSha256: sha256(readRaw(RF2_OUT)) }, null, 2) + "\n");
+  console.log(`${RF2_OUT} gravado (revisão formal 2) — specs ${result.specs.length} · compartilhadas ${params.compartilhadas} · alternativas ${result.alternatives.length} · chamarizes ${result.decoys.length} · reparos ${result.repairs} · nós ${result.nodes} · solução ${solucaoSha256}`);
+  process.exit(0);
+}
+//#endregion revisao-formal-2
 //#region revisao-formal-1
 if (revisao) {
   // Execução adicional única da revisão formal 1: a MESMA key e a MESMA chamada solve(key) do caminho original
