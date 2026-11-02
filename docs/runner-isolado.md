@@ -111,10 +111,10 @@ foi construída de um clone limpo no commit `e15b1b1` (3.4.1; tools/list igual a
 `data/`), o mesmo estado que o checkout por SHA do CI produz: `GOVBR_VALIDATOR_DIR=<clone>` no build e no
 `run-once`/testes. O checkout de trabalho do validator só serve ao preflight se o `dist/` e o `data/` dele
 forem os do commit (sem arquivos de builds antigos nem `data/models/`).
-A imagem vigente é `govbr-runner-oracle:3.6.5-2e2db77304cc` (commit `597db58`; tools/list e instructions iguais aos da 3.6.1,
+A imagem vigente é `govbr-runner-oracle:3.6.6-163c51e1eee2` (commit `67c2ce9`; tools/list e instructions iguais aos da 3.6.1,
 então os pins seguem `TOOLS_LIST_SHA256_3_6_1`; só o `dist/` mudou; base com a emenda-1, `dataSha256` `ffe79da7…`),
-construída do checkout de trabalho no commit `597db58` (árvore limpa, salvo `debug.log` não versionado; `npm run build`
-depois do último `src/`), sem `GOVBR_VALIDATOR_DIR`. Antes dela: `govbr-runner-oracle:3.6.4-69406de33ad5` (commit `b93fe4f`),
+construída de uma worktree limpa no commit `67c2ce9` (`GOVBR_VALIDATOR_DIR`, `npm ci` + `tsc`), em 02/11 à tarde, depois de as imagens
+locais sumirem outra vez do Docker; o mesmo `dist` (`163c51e1eee2…`) foi compilado pelo GitHub Actions no preflight do dublê. Antes dela: `govbr-runner-oracle:3.6.5-2e2db77304cc` (commit `597db58`, nunca usada em campanha: a revisão de delta pediu a 3.6.6) e `govbr-runner-oracle:3.6.4-69406de33ad5` (commit `b93fe4f`),
 construída do checkout de trabalho: o `dist/` dele é byte a byte o de um clone limpo do mesmo commit
 (`npm ci` + `tsc`, conferido em 2026-10-31). As anteriores eram
 `govbr-runner-oracle:3.6.2-a2d84d8211a9` (commit `3801924`, pins `TOOLS_LIST_SHA256_3_6_1`),
