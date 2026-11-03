@@ -221,6 +221,62 @@ async function testesSemDocker(): Promise<void> {
     const norm = (p: string) => readFileSync(p, "utf8").replace(/\r\n/g, "\n");
     assert.equal(norm(join(ROOT_EVAL, "scripts", "vazamento", "nucleo.ts")), norm(original), "scripts/vazamento/nucleo.ts divergiu do validator: copie de novo e declare");
   });
+  await test("detector de vazamento 1.3.1 (dev-366-b-01): tag RENDERIZADA em seletor citado é página; nome nu, não renderizado, variante como tag, receita e título não", async () => {
+    if (!existsSync(join(DEFAULT_VALIDATOR_DIR, "dist", "checkers", "grounding.js"))) { console.log("     · validator sem dist/: varredura não exercitada"); return; }
+    const base = { validatorDir: DEFAULT_VALIDATOR_DIR, telasDir: DEFAULT_TELAS_DIR, tela: "vistorias", toolsList: null, ler: () => null };
+    const call = (seq: number, tool: string, result: unknown, args: unknown = {}) => ({ kind: "call", seq, tool, args: { text: JSON.stringify(args), truncated: false }, result: { text: JSON.stringify(result), truncated: false } });
+    // as formas reais da 3.6.5/3.6.6 que derrubaram p01/p02-ferramentas (Vistorias: <br-input>, <br-button> estão na página)
+    const detalhe = "WCAG 2.2 3.3.1 Error Identification. Limitação: o estado alegado não foi reproduzido. Nenhum elemento para 'br-button[label=\"Editar\"]' no passo 2.";
+    const formas = [
+      call(1, "scan_page", { checksRun: { pageLevel: { notMeasured: [{ measured: [{ locator: 'br-input[label="Longitude"] >>> #br-input-146' }] }] } } }),
+      call(2, "verify_finding", { verification: { detail: detalhe, binding: { state: { failure: { selector: 'br-button[label="Editar"]', detail: "Nenhum elemento para 'br-button[label=\"Editar\"]' no passo 2." } } } }, reasons: [{ detail: detalhe }] },
+        { finding: { rule: { id: "3.3.1", source: "wcag" } } }),
+      call(3, "verify_finding", { verification: { detail: "A mensagem de erro 'br-input[formcontrolname=\"nomeEmbarcacao\"] .feedback' não existe no estado reproduzido." } }),
+      call(4, "verify_finding", { verification: { binding: { context: { trace: [{ active: "<input#br-input-147.focus-visible.ng-touched>" }] } } } }),
+    ];
+    const limpas = await varrerPayloadsDoOraculo({ ...base, eventos: formas });
+    assert.equal(limpas.inventario.status, "ok", JSON.stringify(limpas.inventario));
+    assert.equal(limpas.semExplicacao.length, 0, JSON.stringify(limpas.semExplicacao));
+    assert.equal(limpas.porClasse.pagina, 7, JSON.stringify(limpas.porClasse));
+    assert.ok(limpas.canarios.every((c) => c.ok) && limpas.canarios.length === 23, JSON.stringify(limpas.canarios));
+    // falha fechada: as mesmas formas sem a tela (sem inventário do DOM) não são perdoadas
+    const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: formas });
+    assert.equal(semTela.inventario.status, "sem-tela");
+    assert.equal(semTela.porClasse.pagina ?? 0, 0, JSON.stringify(semTela.porClasse));
+    // classe dinâmica (revisão de delta): `focus-visible` só aparece no foco por teclado na Solicitação → classesDinamicas
+    const dinamica = await varrerPayloadsDoOraculo({ ...base, tela: "solicitacao", eventos: [call(1, "verify_finding", { verification: { binding: { context: { trace: [{ active: "<input#nome.focus-visible>" }] } } } })] });
+    assert.ok(dinamica.inventario.classesDinamicas > 0, JSON.stringify(dinamica.inventario));
+    assert.equal(dinamica.semExplicacao.length, 0, JSON.stringify(dinamica.semExplicacao));
+    assert.equal(dinamica.porClasse.pagina, 1, JSON.stringify(dinamica.porClasse));
+    // estrito: título da base no detalhe ao lado do seletor, a tag solta na prosa e o id da base entre aspas continuam sem explicação
+    const dict = await import("./vazamento/conhecimento").then((m) => m.dicionarioDoValidator(DEFAULT_VALIDATOR_DIR));
+    const titulo = [...dict.phrases.values()].find((t) => t.source === "kb:title")!.term;
+    const id = [...dict.exact.values()].find((t) => t.source === "kb:id")!.term;
+    const sujas = await varrerPayloadsDoOraculo({ ...base, eventos: [
+      call(1, "verify_finding", { verification: { detail: `${titulo}. Nenhum elemento para 'br-button[label="Editar"]'.` } }),
+      call(2, "verify_finding", { reasons: [{ detail: "O br-button exige rótulo visível." }] }),
+      call(3, "verify_finding", { verification: { detail: `Nenhum elemento para '${id}'.` } }),
+      call(4, "scan_page", { checksRun: { pageLevel: { notMeasured: [{ measured: [{ locator: `br-button — ${titulo}` }] }] } } }),
+      // revisão adversarial: nome nu entre aspas, componente dos bundles que a Vistorias não renderiza, variante como tag,
+      // seletor reescrito em receita fora do scan_page
+      call(5, "verify_finding", { reasons: [{ detail: "Esperado 'br-button' antes do cabeçalho." }] }),
+      call(6, "verify_finding", { verification: { detail: "Regra: 'br-carousel[aria-live]' não deve ser usado." } }),
+      call(7, "verify_finding", { verification: { detail: "Use 'is-primary[x]'." } }),
+      call(8, "verify_finding", { verification: { binding: { state: { recipe: { actions: [{ selector: 'br-button[label="x"]' }] } } } } }),
+      call(9, "get_finding_details", { ledger: { state: { recipe: { actions: [{ selector: 'br-input[label="x"]' }] } } } }),
+    ] });
+    const sem = (path: string, source: string) => sujas.semExplicacao.some((u) => u.path === path && u.source === source);
+    assert.ok(sem("$.verification.detail", "kb:title"), "título da base no detalhe do verify");
+    assert.ok(sem("$.reasons[*].detail", "specs:rootClass"), "tag solta na prosa");
+    assert.ok(sem("$.verification.detail", "kb:id"), "id da base entre aspas");
+    assert.ok(sem("$.checksRun.pageLevel.notMeasured[*].measured[*].locator", "specs:rootClass"), "localizador que não é seletor (prosa)");
+    assert.ok(sujas.semExplicacao.some((u) => u.path === "$.reasons[*].detail" && u.term === "br-button" && u.count === 2), "nome nu entre aspas + tag solta");
+    assert.ok(sem("$.verification.detail", "specs:rootClass"), "br-carousel não renderizado");
+    assert.ok(sujas.semExplicacao.some((u) => u.term === "is-primary"), "variante como tag");
+    assert.ok(sem("$.verification.binding.state.recipe.actions[*].selector", "specs:rootClass"), "receita do verify");
+    assert.ok(sem("$.ledger.state.recipe.actions[*].selector", "specs:rootClass"), "receita do get_finding_details");
+    assert.equal(sujas.porClasse.pagina ?? 0, 1, `só a tag do seletor citado ao lado do título é página: ${JSON.stringify(sujas.porClasse)}`);
+  });
   await test("varredura: resposta neutra passa; título da base, id enriquecido e payload cortado não", async () => {
     if (!existsSync(join(DEFAULT_VALIDATOR_DIR, "dist", "checkers", "grounding.js"))) { console.log("     · validator sem dist/: varredura não exercitada"); return; }
     const call = (tool: string, result: unknown, extra: Record<string, unknown> = {}) => ({ kind: "call", seq: 1, tool, args: { text: "{}", truncated: false }, result: { text: JSON.stringify(result), truncated: false }, ...extra });

@@ -13,7 +13,8 @@
  *     ferramenta (ou o nome da própria ferramenta no texto de erro);
  *   - pagina: campo medido da página declarado para a ferramenta E o termo existe nos bytes SERVIDOS do site congelado (govbr-telas
  *     site/). O DOM renderizado não é capturado aqui: um termo que só existisse nele fica sem explicação
- *     (falha conservadora, nunca aprovação silenciosa);
+ *     (falha conservadora, nunca aprovação silenciosa); 1.3.1: também o nome de componente em posição de tipo/classe
+ *     de um seletor citado (folha `…locator`/`…selector` ou trecho entre aspas), com o termo nos bytes servidos;
  *   - axe: campo declarado da saída do axe-core E o termo existe no bundle do axe-core do validator;
  *   - excecao-nomeada: as duas normalizações de fingerprint e o enum RuleSource (plano §3, decisões 8–9).
  * Aceite no braço ferramentas: 0 ocorrências `sem-explicacao`, todos os payloads integrais (truncado ou
@@ -21,11 +22,28 @@
  */
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { extname, join } from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { createRequire } from "node:module";
-import { argValues, buildDictionary, classify, hitsInText, leaves, termIn, type Classification, type Dictionary, type Hit, type Provenance, type ScanResult } from "./nucleo";
+import { argValues, buildDictionary, classify, exactTokens, hitsInText, leaves, termIn, type Classification, type Dictionary, type Hit, type PageElements, type Provenance, type ScanResult } from "./nucleo";
 
-export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.0";
+/**
+ * 1.3.1 (dev-366-b-01 p01/p02-ferramentas, oráculo 3.6.6): duas execuções falharam o isolamento só pela TAG dos web
+ * components da tela B (`br-input`, `br-button` = classe raiz do componente no dicionário) em formas de resposta novas da
+ * 3.6.5/3.6.6 — `checksRun.pageLevel.notMeasured[*].measured[*].locator`, `verification.binding.state.failure.selector`
+ * e o seletor citado entre aspas em `verification.detail`/`reasons[*].detail`/`…failure.detail`/`…limitation.detail`.
+ * O 1.3.0 perdoava a tag só nos caminhos declarados um a um (D-157). O núcleo (cópia do validator) ganha uma regra
+ * ESTRUTURAL, `pagina` por seletor de elemento da página (ver o cabeçalho do núcleo): nome de componente
+ * (specs:rootClass/variantClass) só em posição de tipo/classe de um seletor bem-formado — a folha inteira num campo
+ * `…locator`/`…selector`, ou um trecho entre aspas COM sintaxe de seletor — e RENDERIZADO pela tela naquela posição.
+ * Ids, títulos, trechos da base e tokens nunca entram por ela; o nome solto na prosa ou nu entre aspas continua sem
+ * explicação; variante só em posição de classe; caminhos de receita/replay/passo/ação de qualquer ferramenta ficam fora.
+ * Revisão adversarial (02/11): "fato da página" = inventário do DOM RENDERIZADO da tela (`inventario-dom/<tela>.json`,
+ * gerado por `inventario-dom.ts` nas paradas declaradas da referência, preso ao siteSha256 do site), nunca os bytes
+ * servidos (os bundles do DS trazem 124 dos 126 nomes de componente). Sem inventário da tela, ou com inventário de outro
+ * site, a regra não perdoa nada. Dez canários novos marcam as bordas (23 no total).
+ * Rechecagem offline (`scripts/portao-vazamento-reexecucao.ts --revarrer`): p01/p02 3/5 → 0 sem explicação.
+ */
+export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.1";
 
 /**
  * 1.2.0 (D-154): eco do SELETOR DE AÇÃO da mesma chamada. Desde o validator 3.4.3 a resposta encolhida do
@@ -38,22 +56,55 @@ export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.0";
  * está nela. Seletor ausente dos argumentos, presente só noutro argumento (ex.: `arrival.visible`) ou
  * reescrito pelo servidor continua `sem-explicacao`.
  */
-export const ECO_SELETOR_DE_ACAO: Record<string, { arg: string; paths: string[] }> = {
-  scan_page: {
-    arg: "actions[*].selector",
-    paths: ["$.state.recipe.actions[*].selector", "$.state.replay.steps[*].selector", "$.state.replay.failure.selector", "$.coverage.actionsApplied[*].selector"],
-  },
+export const ECO_SELETOR_DE_ACAO: Record<string, Array<{ arg: string; paths: string[]; lista?: boolean; citado?: boolean }>> = {
+  scan_page: [
+    { arg: "actions[*].selector", paths: ["$.state.recipe.actions[*].selector", "$.state.replay.steps[*].selector", "$.state.replay.failure.selector", "$.coverage.actionsApplied[*].selector"] },
+    // 1.3.1 (revisão de 02/11): com `exactTokens` separando compostos com ponto, `.br-tag.interaction` passou a ser
+    // ocorrência; os mesmos seletores do AGENTE voltam na condição de chegada e no escopo do scan. Mesma regra: a folha
+    // inteira é idêntica ao argumento da mesma chamada (o escopo é `selectors.join(", ")`, como o validator o monta).
+    { arg: "arrival.visible", paths: ["$.state.recipe.arrival.visible", "$.state.arrival.conditions[*].expected"] },
+    { arg: "selectors[*]", paths: ["$.state.recipe.selectors[*]", "$.coverage.selectors[*]"] },
+    { arg: "selectors[*]", paths: ["$.coverage.axeScope", "$.checksRun.executed[*].scope"], lista: true },
+    // o texto da falha do replay CITA entre aspas o seletor do passo que falhou ("'.br-tag.interaction:first-of-type'
+    // resolveu 4 elementos…"): eco só se TODA ocorrência do termo está entre aspas idênticas a um seletor do agente
+    { arg: "actions[*].selector", paths: ["$.state.replay.failure.detail", "$.state.replay.steps[*].detail"], citado: true },
+  ],
+  verify_finding: [
+    { arg: "actions[*].selector", paths: ["$.verification.binding.state.recipe.actions[*].selector", "$.verification.binding.state.replay.steps[*].selector", "$.verification.binding.state.replay.failure.selector"] },
+    { arg: "arrival.visible", paths: ["$.verification.binding.state.recipe.arrival.visible", "$.verification.binding.state.arrival.conditions[*].expected"] },
+    { arg: "actions[*].selector", paths: ["$.verification.binding.state.replay.failure.detail", "$.verification.binding.state.replay.steps[*].detail"], citado: true },
+  ],
 };
 
+const CITACAO = /'([^'\n]+)'|"([^"\n]+)"|`([^`\n]+)`/g;
+
 function ecoDeSeletor(hit: Hit, folha: string, prov: Provenance): { class: Classification; why: string } | null {
-  const decl = ECO_SELETOR_DE_ACAO[prov.tool];
-  if (!decl || !decl.paths.includes(hit.path)) return null;
-  if (!argValues(prov.args, decl.arg).includes(folha) || !termIn(folha, hit)) return null;
-  return { class: "eco", why: `seletor de ação ecoado: a folha ${hit.path} é idêntica a um ${decl.arg} dos argumentos desta chamada de ${prov.tool} (D-154)` };
+  for (const decl of ECO_SELETOR_DE_ACAO[prov.tool] ?? []) {
+    if (!decl.paths.includes(hit.path) || !termIn(folha, hit)) continue;
+    const valores = argValues(prov.args, decl.arg);
+    if (decl.citado) {
+      if (hit.kind !== "exact") continue;
+      let citou = false;
+      const resto = folha.replace(CITACAO, (inteiro: string, a?: string, b?: string, c?: string) => {
+        const v = a ?? b ?? c ?? "";
+        if (!valores.includes(v) || !termIn(v, hit)) return inteiro;
+        citou = true;
+        return " ";
+      });
+      if (citou && !exactTokens(resto).includes(hit.term)) {
+        return { class: "eco", why: `seletor do agente citado: toda ocorrência em ${hit.path} está entre aspas idênticas a um ${decl.arg} desta chamada de ${prov.tool} (D-154)` };
+      }
+      continue;
+    }
+    if (decl.lista ? valores.length > 0 && valores.join(", ") === folha : valores.includes(folha)) {
+      return { class: "eco", why: `seletor do agente ecoado: a folha ${hit.path} é idêntica a ${decl.lista ? `${decl.arg} unidos por ", "` : `um ${decl.arg}`} dos argumentos desta chamada de ${prov.tool} (D-154)` };
+    }
+  }
+  return null;
 }
 
 /** A varredura do núcleo (mesmas folhas, mesma classificação) + a camada de eco do seletor de ação (1.2.0). */
-export function varrerResposta(dict: Dictionary, text: string, prov: Provenance): ScanResult {
+export function varrerResposta(dict: Dictionary, text: string, prov: Provenance): { hits: Array<ScanResult["hits"][number] & { folha: string }> } {
   let parsed: unknown;
   try {
     parsed = JSON.parse(text);
@@ -61,12 +112,16 @@ export function varrerResposta(dict: Dictionary, text: string, prov: Provenance)
     parsed = text;
   }
   const cache = new Map<string, string>();
-  const hits: ScanResult["hits"] = [];
+  const hits: Array<ScanResult["hits"][number] & { folha: string }> = [];
   for (const leaf of leaves(parsed)) {
     for (const hit of hitsInText(dict, leaf.text, leaf.path)) {
+      // ordem do 1.3.0 intacta (núcleo sem a folha → eco do seletor de ação); só o que ficaria sem explicação passa pela
+      // regra do seletor de elemento da página (1.3.1), que precisa do texto da folha e do inventário do DOM da tela. Os
+      // caminhos de receita/replay/passo/ação ficam fora dela no próprio núcleo (qualquer ferramenta).
       let c = classify(hit, prov, cache);
       if (c.class === "sem-explicacao") c = ecoDeSeletor(hit, leaf.text, prov) ?? c;
-      hits.push({ ...hit, ...c });
+      if (c.class === "sem-explicacao") c = classify(hit, prov, cache, leaf.text);
+      hits.push({ ...hit, ...c, folha: leaf.text });
     }
   }
   return { hits };
@@ -128,6 +183,37 @@ export function textoDoSite(telasDir: string): string {
   return texto;
 }
 
+export interface EstadoInventario {
+  tela: string | null;
+  status: "ok" | "sem-tela" | "ausente" | "site-diverge";
+  arquivo: string | null;
+  siteSha256: string | null;
+  tags: number;
+  classes: number;
+  /** Classes vistas só em tempo de execução (foco por teclado, hover, transições do setup), aceitas em posição de classe. */
+  classesDinamicas: number;
+}
+
+/**
+ * Inventário do DOM renderizado da tela (`inventario-dom/<tela>.json`), aceito só se foi medido sobre ESTE site
+ * (siteSha256 = item.sha256 do site-manifest.json em telasDir, o mesmo que o images.lock fixa). Falha fechada: tela não
+ * informada, arquivo ausente ou site diferente → `elements` null e a regra do seletor de elemento não perdoa nada.
+ */
+export function inventarioDaTela(tela: string | null | undefined, telasDir: string): { elements: PageElements | null; estado: EstadoInventario } {
+  const vazio = (status: EstadoInventario["status"], arquivo: string | null = null, siteSha256: string | null = null) =>
+    ({ elements: null, estado: { tela: tela ?? null, status, arquivo, siteSha256, tags: 0, classes: 0, classesDinamicas: 0 } });
+  if (!tela) return vazio("sem-tela");
+  const arquivo = fileURLToPath(new URL(`./inventario-dom/${tela}.json`, import.meta.url));
+  if (!existsSync(arquivo)) return vazio("ausente", arquivo);
+  const inv = JSON.parse(readFileSync(arquivo, "utf8")) as { site: { siteSha256: string }; tags: string[]; classes: string[]; classesDinamicas?: Record<string, string> };
+  const dinamicas = Object.keys(inv.classesDinamicas ?? {});
+  const manifesto = join(telasDir, "site-manifest.json");
+  const site = existsSync(manifesto) ? (JSON.parse(readFileSync(manifesto, "utf8")) as { item?: { sha256?: string } }).item?.sha256 ?? null : null;
+  if (!site || site !== inv.site.siteSha256) return vazio("site-diverge", arquivo, inv.site.siteSha256);
+  return { elements: { tags: new Set(inv.tags), classes: new Set([...inv.classes, ...dinamicas]) },
+    estado: { tela, status: "ok", arquivo, siteSha256: site, tags: inv.tags.length, classes: inv.classes.length, classesDinamicas: dinamicas.length } };
+}
+
 /** Canários: o detector precisa disparar onde deve e perdoar só onde a proveniência sustenta (os do inventário do validator). */
 export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boolean; detalhe: string }[] {
   const kbId = [...dict.exact.values()].find((t) => t.source === "kb:id")?.term;
@@ -140,8 +226,15 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
   const seletor = `tbody tr:nth-child(1) ${rootClass}[icon="trash"]`;
   const receita = JSON.stringify({ state: { recipe: { actions: [{ action: "click", selector: seletor }] } } });
   const page = `<html><body><div style="color: var(${token})">x</div></body></html>`;
+  // 1.3.1: inventário sintético do DOM renderizado (a 1ª classe raiz e a 1ª variante renderizadas; a 2ª classe raiz
+  // existe nos "bytes" da página, como nos bundles do DS, mas a tela não a renderiza)
+  const roots = [...dict.exact.values()].filter((t) => t.source === "specs:rootClass").map((t) => t.term);
+  const variante = [...dict.exact.values()].find((t) => t.source === "specs:variantClass")?.term ?? "is-primary";
+  const naoRenderizado = roots.find((r) => r !== rootClass) ?? `${rootClass}-x`;
+  const pageComTag = `<html><body><${rootClass} label="Editar" class="${variante}"></${rootClass}><script>customElements.define("${naoRenderizado}", class {})</script></body></html>`;
+  const elements: PageElements = { tags: new Set(["html", "body", rootClass]), classes: new Set([variante]) };
   // 1.1.0: casos por ferramenta, campo declarado e eco exato (os mesmos do inventário do validator 2.14.1).
-  const casos: { nome: string; tool: string; texto: string; args: unknown; page: string | null; espera: Classification }[] = [
+  const casos: { nome: string; tool: string; texto: string; args: unknown; page: string | null; espera: Classification; elements?: PageElements | null }[] = [
     { nome: "título da base numa nota do servidor", tool: "verify_finding", texto: JSON.stringify({ note: `Veja ${kbTitle}.` }), args: {}, page, espera: "sem-explicacao" },
     { nome: "id da base enriquecido pelo servidor", tool: "verify_finding", texto: JSON.stringify({ next: { ruleId: kbId } }), args: {}, page, espera: "sem-explicacao" },
     { nome: "título e-MAG anexado à descrição", tool: "scan_page", texto: JSON.stringify({ findings: [{ rule: { description: `x (e-MAG 1.1: ${emagTitle})` } }] }), args: {}, page, espera: "sem-explicacao" },
@@ -155,9 +248,20 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
     { nome: "classe raiz na receita ecoada dos actions da mesma chamada", tool: "scan_page", texto: receita, args: { actions: [{ action: "click", selector: seletor }] }, page, espera: "eco" },
     { nome: "classe raiz na receita SEM o seletor nos argumentos da chamada", tool: "scan_page", texto: receita, args: { actions: [{ action: "click", selector: "#outro" }] }, page, espera: "sem-explicacao" },
     { nome: "classe raiz na receita com o seletor só noutro argumento (arrival)", tool: "scan_page", texto: receita, args: { actions: [{ action: "click", selector: "#outro" }], arrival: { visible: seletor } }, page, espera: "sem-explicacao" },
+    // 1.3.1: seletor de elemento da página (regra estrutural do núcleo; prova = inventário do DOM renderizado).
+    { nome: "tag renderizada num seletor citado no detalhe do verify", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Nenhum elemento para '${rootClass}[label="Editar"]' no passo 2.` } }), args: {}, page: pageComTag, elements, espera: "pagina" },
+    { nome: "variante renderizada em posição de classe num seletor citado", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Nenhum elemento para '${rootClass}.${variante}'.` } }), args: {}, page: pageComTag, elements, espera: "pagina" },
+    { nome: "componente nos bytes da página (bundle) mas NÃO renderizado pela tela", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Nenhum elemento para '${naoRenderizado}[label="Editar"]'.` } }), args: {}, page: pageComTag, elements, espera: "sem-explicacao" },
+    { nome: "seletor citado sem inventário da tela (falha fechada)", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Nenhum elemento para '${rootClass}[label="Editar"]'.` } }), args: {}, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "nome renderizado nu entre aspas (sem sintaxe de seletor)", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Esperado '${rootClass}' antes do cabeçalho.` } }), args: {}, page: pageComTag, elements, espera: "sem-explicacao" },
+    { nome: "variante usada como tag num seletor citado", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Use '${variante}[x]'.` } }), args: {}, page: pageComTag, elements: { tags: new Set([...elements.tags, variante]), classes: elements.classes }, espera: "sem-explicacao" },
+    { nome: "tag renderizada solta na prosa do detalhe (fora de seletor)", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `O ${rootClass} exige rótulo: '${rootClass}[label="x"]'.` } }), args: {}, page: pageComTag, elements, espera: "sem-explicacao" },
+    { nome: "classe raiz na receita SEM o seletor nos argumentos, tag renderizada (eco D-154 não vira página)", tool: "scan_page", texto: receita, args: { actions: [{ action: "click", selector: "#outro" }] }, page: pageComTag, elements, espera: "sem-explicacao" },
+    { nome: "seletor reescrito numa receita fora do scan_page (verify binding.state.recipe), tag renderizada", tool: "verify_finding", texto: JSON.stringify({ verification: { binding: { state: { recipe: { actions: [{ selector: `${rootClass}[label="x"]` }] } } } } }), args: {}, page: pageComTag, elements, espera: "sem-explicacao" },
+    { nome: "id da base citado entre aspas como se fosse seletor, com o id na página", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Nenhum elemento para '${kbId}'.` } }), args: {}, page: `${pageComTag}<!-- ${kbId} -->`, elements, espera: "sem-explicacao" },
   ];
   return casos.map((c) => {
-    const { hits } = varrerResposta(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe });
+    const { hits } = varrerResposta(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe, elements: c.elements ?? null });
     const got = hits.map((h) => h.class);
     return { nome: c.nome, ok: got.length > 0 && got.every((g) => g === c.espera), detalhe: `esperado ${c.espera}, obtido [${got.join(", ") || "nenhuma ocorrência"}]` };
   });
@@ -172,12 +276,15 @@ export interface RelatorioVazamento {
   dicionario: Record<string, number>;
   axe: string;
   pagina: string;
+  /** Inventário do DOM renderizado usado pela regra do seletor de elemento da página (1.3.1). */
+  inventario: EstadoInventario;
   canarios: { nome: string; ok: boolean; detalhe: string }[];
   respostas: number;
   /** Respostas que não puderam ser lidas inteiras (projeção cortada sem payload completo). */
   incompletas: { seq: unknown; tool: string; lado: "args" | "result"; motivo: string }[];
   porClasse: Record<string, number>;
-  semExplicacao: { term: string; source: string; path: string; tool: string; count: number }[];
+  /** `exemplo`: começo da 1ª folha em que o termo ficou sem explicação (diagnóstico). */
+  semExplicacao: { term: string; source: string; path: string; tool: string; count: number; exemplo: string }[];
   perdoadas: { class: string; why: string; term: string; path: string; tool: string; count: number }[];
 }
 
@@ -187,10 +294,13 @@ export interface RelatorioVazamento {
  */
 export async function varrerPayloadsDoOraculo(o: {
   validatorDir: string; telasDir: string; eventos: Evento[]; toolsList: unknown[] | null; ler: (path: string) => string | null;
+  /** Tela da execução (solicitacao | vistorias): escolhe o inventário do DOM renderizado; ausente = regra do seletor fechada. */
+  tela?: string | null;
 }): Promise<RelatorioVazamento> {
   const dict = await dicionarioDoValidator(o.validatorDir);
   const axe = bundleDoAxe(o.validatorDir);
   const pagina = textoDoSite(o.telasDir);
+  const inventario = inventarioDaTela(o.tela, o.telasDir);
   const incompletas: RelatorioVazamento["incompletas"] = [];
   const integral = (e: Evento, lado: "args" | "result"): string | null => {
     const s = e[lado] as Lado | undefined;
@@ -207,11 +317,11 @@ export async function varrerPayloadsDoOraculo(o: {
   const sem = new Map<string, RelatorioVazamento["semExplicacao"][number]>();
   const perd = new Map<string, RelatorioVazamento["perdoadas"][number]>();
   const varrer = (texto: string, args: unknown, pg: string | null, tool: string): void => {
-    for (const h of varrerResposta(dict, texto, { tool, args, page: pg, axe: axe.texto }).hits) {
+    for (const h of varrerResposta(dict, texto, { tool, args, page: pg, axe: axe.texto, elements: pg === null ? null : inventario.elements }).hits) {
       porClasse[h.class] = (porClasse[h.class] ?? 0) + 1;
       const k = `${h.class}|${h.term}|${h.path}|${tool}`;
       if (h.class === "sem-explicacao") {
-        const u = sem.get(k) ?? { term: h.term, source: h.source, path: h.path, tool, count: 0 };
+        const u = sem.get(k) ?? { term: h.term, source: h.source, path: h.path, tool, count: 0, exemplo: h.folha.slice(0, 240) };
         u.count += 1; sem.set(k, u);
       } else {
         const p = perd.get(k) ?? { class: h.class, why: h.why, term: h.term, path: h.path, tool, count: 0 };
@@ -237,7 +347,7 @@ export async function varrerPayloadsDoOraculo(o: {
   return {
     versao: VARREDURA_VERSAO,
     nucleo: (await import("node:crypto")).createHash("sha256").update(nucleo).digest("hex"),
-    dicionario: dict.counts, axe: axe.origem, pagina: `govbr-telas/site (${pagina.length} caracteres de texto servido)`,
+    dicionario: dict.counts, axe: axe.origem, pagina: `govbr-telas/site (${pagina.length} caracteres de texto servido)`, inventario: inventario.estado,
     canarios: canarios(dict, axe.texto), respostas, incompletas, porClasse,
     semExplicacao: [...sem.values()], perdoadas: [...perd.values()],
   };

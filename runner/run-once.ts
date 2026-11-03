@@ -925,7 +925,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
         // base quando o agente consultou a base; informativo, nunca falha o isolamento do braço com
         const normativas = calls.filter((e) => ["get_ds_rules", "get_emag_rules", "get_page_rules", "get_component_spec", "get_design_tokens"].includes(String(e.tool)) && e.outcome === "ok").length;
         try {
-          const rel = await varrerPayloadsDoOraculo({ validatorDir: opts.validatorDir, telasDir: opts.telasDir, eventos: oracleEvents, toolsList: oracleInv?.toolsList ?? null,
+          const rel = await varrerPayloadsDoOraculo({ validatorDir: opts.validatorDir, telasDir: opts.telasDir, tela: opts.tela, eventos: oracleEvents, toolsList: oracleInv?.toolsList ?? null,
             ler: (p) => (existsSync(join(runDir, p)) ? readFileSync(join(runDir, p), "utf8") : null) });
           evidence("vazamento-conhecimento.json", rel);
           const sem = rel.semExplicacao.reduce((n, u) => n + u.count, 0);
@@ -952,7 +952,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       let rel: RelatorioVazamento | null = null;
       let erro: string | null = null;
       try {
-        rel = await varrerPayloadsDoOraculo({ validatorDir: opts.validatorDir, telasDir: opts.telasDir, eventos: oracleEvents, toolsList: oracleInv?.toolsList ?? null,
+        rel = await varrerPayloadsDoOraculo({ validatorDir: opts.validatorDir, telasDir: opts.telasDir, tela: opts.tela, eventos: oracleEvents, toolsList: oracleInv?.toolsList ?? null,
           ler: (p) => (existsSync(join(runDir, p)) ? readFileSync(join(runDir, p), "utf8") : null) });
         evidence("vazamento-conhecimento.json", rel);
       } catch (e) { erro = (e as Error).message; }
@@ -963,7 +963,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       rows.push({ id: "vazamento-de-conhecimento", category: "tools", required: true, evidence: rel ? "evidence/vazamento-conhecimento.json" : null,
         outcome: ok ? "passed" : "failed",
         target: "dicionário gerado do data/ do validator travado: 0 ocorrências sem explicação nos payloads integrais do oráculo e no tools/list exposto; canários do detector disparando",
-        detail: erro || !rel ? `varredura falhou: ${erro}` : `${rel.respostas} respostas; sem explicação ${sem}; perdoadas ${JSON.stringify(rel.porClasse)}; incompletas ${rel.incompletas.length}; canários ${rel.canarios.filter((c) => c.ok).length}/${rel.canarios.length}${exemplos}` });
+        detail: erro || !rel ? `varredura falhou: ${erro}` : `${rel.respostas} respostas; sem explicação ${sem}; perdoadas ${JSON.stringify(rel.porClasse)}; incompletas ${rel.incompletas.length}; canários ${rel.canarios.filter((c) => c.ok).length}/${rel.canarios.length}; inventário do DOM ${rel.inventario.tela ?? "-"} ${rel.inventario.status}${exemplos}` });
       return rows;
     }
   }
