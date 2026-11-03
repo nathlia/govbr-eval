@@ -1,10 +1,13 @@
 /**
- * Portão do detector de vazamento ANTES de uma campanha (detector 1.3.1, dev-366-b-01).
+ * Portão do detector de vazamento ANTES de uma campanha (detector 1.3.1, dev-366-b-01; vale para o 1.3.2, dev-371-b-01).
  *
  * Por quê: duas execuções do braço ferramentas da `dev-366-b-01` (oráculo 3.6.6) falharam o isolamento só porque a
  * 3.6.5/3.6.6 passou a devolver formas de resposta que o detector não conhecia (localizador medido em
  * `checksRun.pageLevel.notMeasured[*].measured[*].locator`, seletor citado no texto do verify, seletor da falha do
- * replay). O falso positivo só apareceu depois de gastar a execução. Este portão pega a classe de erro antes:
+ * replay). O falso positivo só apareceu depois de gastar a execução. Na `dev-371-b-01` (oráculo 3.7.1) o mesmo aconteceu
+ * com o ledger do get_finding_details (seletores de um scan_page anterior) e com o seletor de aspas internas citado na
+ * prosa do verify_finding (detector 1.3.2). Na reexecução os scanId trocados também chegam ao vínculo do ledger: o
+ * detector casa o scanId pedido com o que o scan_page reexecutado devolveu. Este portão pega a classe de erro antes:
  *
  *   --chamadas <pasta>   chamadas REAIS de uma reexecução (formato `calls/*.json` das pastas
  *                        `thesis-workspace/planejamento/atual/reexecucao-*`: { campaign, rep, screen, calls: [{ name,

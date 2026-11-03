@@ -8,7 +8,9 @@
  * texto a texto de `govbr-ds-validator/scripts/lib/vazamento.ts` (`./nucleo.ts`, guarda de deriva no
  * test:runner-unidade). Política de perdão POR CAMPO e POR PROVENIÊNCIA (nunca subtração global); 1.1.0
  * (validator 2.14.1, revisão Codex db6d022d): campos declarados por ferramenta pelo caminho inteiro e eco
- * só como valor exato; 1.2.0 (D-154): eco do seletor de ação da mesma chamada, ver ECO_SELETOR_DE_ACAO. Detector AUXILIAR, não prova universal (a garantia é a trava de carregamento):
+ * só como valor exato; 1.2.0 (D-154): eco do seletor de ação da mesma chamada, ver ECO_SELETOR_DE_ACAO; 1.3.2: eco do
+ * seletor de ação de um scan_page ANTERIOR vinculado pelo scanId pedido, e citação com aspas internas. Detector AUXILIAR,
+ * não prova universal (a garantia é a trava de carregamento):
  *   - eco: o termo é o valor inteiro de um argumento declarado, no campo declarado para ecoá-lo naquela
  *     ferramenta (ou o nome da própria ferramenta no texto de erro);
  *   - pagina: campo medido da página declarado para a ferramenta E o termo existe nos bytes SERVIDOS do site congelado (govbr-telas
@@ -42,8 +44,28 @@ import { argValues, buildDictionary, classify, exactTokens, hitsInText, leaves, 
  * servidos (os bundles do DS trazem 124 dos 126 nomes de componente). Sem inventário da tela, ou com inventário de outro
  * site, a regra não perdoa nada. Dez canários novos marcam as bordas (23 no total).
  * Rechecagem offline (`scripts/portao-vazamento-reexecucao.ts --revarrer`): p01/p02 3/5 → 0 sem explicação.
+ *
+ * 1.3.2 (dev-371-b-01 rep-01/rep-03-ferramentas, oráculo 3.7.1): duas execuções falharam o isolamento por duas formas de
+ * resposta em que o termo é um seletor que o PRÓPRIO AGENTE mandou (ele lê o DOM e compõe seletores com classes do DS),
+ * nada da base `data/`:
+ *   (1) `get_finding_details(scanId)` devolve o `ledger` do lote — receita, replay, cobertura e chegada de um scan_page
+ *       ANTERIOR, com os seletores dos argumentos daquele scan (`.br-select.position-absolute .br-item:nth-child(2) label`).
+ *       A regra 1.2.0 exige argumento da MESMA chamada. Agora a varredura guarda, na ordem dos payloads, os argumentos de
+ *       cada scan_page pelo `scanId` que a RESPOSTA daquele scan devolveu; no ledger o eco vale só se a folha inteira é
+ *       idêntica a um valor do scan_page cujo scanId é o `scanId` dos argumentos desta chamada E o `$.scanId` desta
+ *       resposta (o servidor só manda o ledger com scanId, nunca por `ids`, e é o do lote pedido). Mesmo seletor vindo de
+ *       outro scan, scanId ausente ou divergente, ou seletor reescrito pelo servidor continuam sem explicação.
+ *   (2) `verify_finding` cita o seletor do passo que falhou em prosa (`reasons[*].detail`, `verification.detail`,
+ *       `binding.state.failure.detail`, `binding.state.limitation.detail`), fora dos caminhos declarados, e o seletor tem
+ *       aspas internas (`'br-input[formcontrolname='portoDesembarque'] >>> input'`), que a regex de citação da 1.2.0
+ *       cortava. Os caminhos entram como citados, e a citação passa a ser: para cada `actions[*].selector` da chamada que
+ *       contém o termo, tirar da folha as ocorrências literais do valor INTEIRO entre aspas idênticas (aspa simples, dupla
+ *       ou crase); eco só se o termo sumiu da folha. Prefixo do valor entre aspas, valor de outro argumento ou termo solto
+ *       na prosa continuam sem explicação.
+ * O núcleo (cópia do validator) não muda. Dez canários novos marcam os dois lados das duas formas (33 no total).
+ * Rechecagem offline (`--revarrer`): rep-01 10 → 0, rep-03 4 → 0 sem explicação; rep-02 segue 0.
  */
-export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.1";
+export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.2";
 
 /**
  * 1.2.0 (D-154): eco do SELETOR DE AÇÃO da mesma chamada. Desde o validator 3.4.3 a resposta encolhida do
@@ -55,8 +77,12 @@ export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.1";
  * FOLHA INTEIRA é idêntica (byte a byte) a um `actions[*].selector` dos argumentos DA MESMA chamada e o termo
  * está nela. Seletor ausente dos argumentos, presente só noutro argumento (ex.: `arrival.visible`) ou
  * reescrito pelo servidor continua `sem-explicacao`.
+ *
+ * 1.3.2: `vinculo: "scanId"` = os valores vêm dos argumentos do scan_page ANTERIOR da sessão que devolveu o scanId pedido
+ * em `scanId` nesta chamada (igual ao `$.scanId` desta resposta), não dos argumentos desta chamada.
  */
-export const ECO_SELETOR_DE_ACAO: Record<string, Array<{ arg: string; paths: string[]; lista?: boolean; citado?: boolean }>> = {
+export interface EcoDeSeletorDeclarado { arg: string; paths: string[]; lista?: boolean; citado?: boolean; vinculo?: "scanId" }
+export const ECO_SELETOR_DE_ACAO: Record<string, EcoDeSeletorDeclarado[]> = {
   scan_page: [
     { arg: "actions[*].selector", paths: ["$.state.recipe.actions[*].selector", "$.state.replay.steps[*].selector", "$.state.replay.failure.selector", "$.coverage.actionsApplied[*].selector"] },
     // 1.3.1 (revisão de 02/11): com `exactTokens` separando compostos com ponto, `.br-tag.interaction` passou a ser
@@ -70,47 +96,93 @@ export const ECO_SELETOR_DE_ACAO: Record<string, Array<{ arg: string; paths: str
     { arg: "actions[*].selector", paths: ["$.state.replay.failure.detail", "$.state.replay.steps[*].detail"], citado: true },
   ],
   verify_finding: [
-    { arg: "actions[*].selector", paths: ["$.verification.binding.state.recipe.actions[*].selector", "$.verification.binding.state.replay.steps[*].selector", "$.verification.binding.state.replay.failure.selector"] },
+    // 1.3.2: na 3.7.1 a falha do replay vem em `binding.state.failure` (sem o nível `replay`)
+    { arg: "actions[*].selector", paths: ["$.verification.binding.state.recipe.actions[*].selector", "$.verification.binding.state.replay.steps[*].selector", "$.verification.binding.state.replay.failure.selector", "$.verification.binding.state.failure.selector"] },
     { arg: "arrival.visible", paths: ["$.verification.binding.state.recipe.arrival.visible", "$.verification.binding.state.arrival.conditions[*].expected"] },
     { arg: "actions[*].selector", paths: ["$.verification.binding.state.replay.failure.detail", "$.verification.binding.state.replay.steps[*].detail"], citado: true },
+    // 1.3.2 (dev-371-b-01 rep-03): a prosa do veredito e da limitação cita o seletor do passo que falhou
+    { arg: "actions[*].selector", paths: ["$.reasons[*].detail", "$.verification.detail", "$.verification.binding.state.failure.detail", "$.verification.binding.state.limitation.detail"], citado: true },
+  ],
+  // 1.3.2 (dev-371-b-01 rep-01): o ledger do lote pedido repete os argumentos do scan_page que o criou (as mesmas formas do
+  // scan_page acima, sob `$.ledger`), vinculado pelo scanId
+  get_finding_details: [
+    { arg: "actions[*].selector", vinculo: "scanId", paths: ["$.ledger.state.recipe.actions[*].selector", "$.ledger.state.replay.steps[*].selector", "$.ledger.state.replay.failure.selector", "$.ledger.coverage.actionsApplied[*].selector"] },
+    { arg: "arrival.visible", vinculo: "scanId", paths: ["$.ledger.state.recipe.arrival.visible", "$.ledger.state.arrival.conditions[*].expected"] },
+    { arg: "selectors[*]", vinculo: "scanId", paths: ["$.ledger.state.recipe.selectors[*]", "$.ledger.coverage.selectors[*]"] },
+    { arg: "selectors[*]", vinculo: "scanId", paths: ["$.ledger.coverage.axeScope"], lista: true },
+    { arg: "actions[*].selector", vinculo: "scanId", paths: ["$.ledger.state.replay.failure.detail", "$.ledger.state.replay.steps[*].detail"], citado: true },
   ],
 };
 
-const CITACAO = /'([^'\n]+)'|"([^"\n]+)"|`([^`\n]+)`/g;
+/** 1.3.2: argumentos de cada scan_page da sessão, pelo scanId que a RESPOSTA daquele scan devolveu (na ordem dos payloads). */
+export interface SessaoDeScans { argsDoScan: ReadonlyMap<string, unknown> }
 
-function ecoDeSeletor(hit: Hit, folha: string, prov: Provenance): { class: Classification; why: string } | null {
+const ASPAS = ["'", "\"", "`"];
+
+function ecoDeSeletor(hit: Hit, folha: string, prov: Provenance, sessao: SessaoDeScans | undefined, respostaScanId: string | null): { class: Classification; why: string } | null {
   for (const decl of ECO_SELETOR_DE_ACAO[prov.tool] ?? []) {
     if (!decl.paths.includes(hit.path) || !termIn(folha, hit)) continue;
-    const valores = argValues(prov.args, decl.arg);
+    let fonte: unknown = prov.args;
+    let origem = `desta chamada de ${prov.tool}`;
+    if (decl.vinculo === "scanId") {
+      // 1.3.2: o scan_page anterior que devolveu o scanId pedido; a resposta tem de ser a do mesmo lote
+      const pedidos = argValues(prov.args, "scanId");
+      const pedido = pedidos.length === 1 ? pedidos[0] : null;
+      if (!pedido || respostaScanId !== pedido || !sessao?.argsDoScan.has(pedido)) continue;
+      fonte = sessao.argsDoScan.get(pedido);
+      origem = `do scan_page que devolveu ${pedido}, o scanId pedido nesta chamada de ${prov.tool}`;
+    }
+    const valores = argValues(fonte, decl.arg);
     if (decl.citado) {
       if (hit.kind !== "exact") continue;
+      // 1.3.2: tira da folha o valor INTEIRO entre aspas idênticas (cobre aspas internas: 'a[x='y'] >>> b'); os mais longos
+      // primeiro, para um valor curto não partir a citação de um longo que o contém. Só valores que contêm o termo.
+      let resto = folha;
       let citou = false;
-      const resto = folha.replace(CITACAO, (inteiro: string, a?: string, b?: string, c?: string) => {
-        const v = a ?? b ?? c ?? "";
-        if (!valores.includes(v) || !termIn(v, hit)) return inteiro;
-        citou = true;
-        return " ";
-      });
+      for (const v of [...new Set(valores)].filter((x) => x.length > 0 && termIn(x, hit)).sort((a, b) => b.length - a.length)) {
+        for (const q of ASPAS) {
+          const citacao = `${q}${v}${q}`;
+          if (!resto.includes(citacao)) continue;
+          resto = resto.split(citacao).join(" ");
+          citou = true;
+        }
+      }
       if (citou && !exactTokens(resto).includes(hit.term)) {
-        return { class: "eco", why: `seletor do agente citado: toda ocorrência em ${hit.path} está entre aspas idênticas a um ${decl.arg} desta chamada de ${prov.tool} (D-154)` };
+        return { class: "eco", why: `seletor do agente citado: toda ocorrência em ${hit.path} é um ${decl.arg} inteiro ${origem}, entre aspas idênticas (D-154, 1.3.2)` };
       }
       continue;
     }
     if (decl.lista ? valores.length > 0 && valores.join(", ") === folha : valores.includes(folha)) {
-      return { class: "eco", why: `seletor do agente ecoado: a folha ${hit.path} é idêntica a ${decl.lista ? `${decl.arg} unidos por ", "` : `um ${decl.arg}`} dos argumentos desta chamada de ${prov.tool} (D-154)` };
+      return { class: "eco", why: `seletor do agente ecoado: a folha ${hit.path} é idêntica a ${decl.lista ? `${decl.arg} unidos por ", "` : `um ${decl.arg}`} dos argumentos ${origem} (D-154${decl.vinculo ? ", 1.3.2" : ""})` };
     }
   }
   return null;
 }
 
-/** A varredura do núcleo (mesmas folhas, mesma classificação) + a camada de eco do seletor de ação (1.2.0). */
-export function varrerResposta(dict: Dictionary, text: string, prov: Provenance): { hits: Array<ScanResult["hits"][number] & { folha: string }> } {
+/** scanId de topo de uma resposta JSON (o do lote: scan_page devolve o novo, get_finding_details o pedido), ou null. */
+export function scanIdDaResposta(text: string): string | null {
+  try {
+    const r = JSON.parse(text) as unknown;
+    if (!r || typeof r !== "object" || Array.isArray(r)) return null;
+    const id = (r as Record<string, unknown>).scanId;
+    return typeof id === "string" ? id : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * A varredura do núcleo (mesmas folhas, mesma classificação) + a camada de eco do seletor de ação (1.2.0; 1.3.2: também
+ * com os argumentos dos scan_page anteriores da sessão, pelo scanId).
+ */
+export function varrerResposta(dict: Dictionary, text: string, prov: Provenance, sessao?: SessaoDeScans): { hits: Array<ScanResult["hits"][number] & { folha: string }> } {
   let parsed: unknown;
   try {
     parsed = JSON.parse(text);
   } catch {
     parsed = text;
   }
+  const respostaScanId = scanIdDaResposta(text);
   const cache = new Map<string, string>();
   const hits: Array<ScanResult["hits"][number] & { folha: string }> = [];
   for (const leaf of leaves(parsed)) {
@@ -119,7 +191,7 @@ export function varrerResposta(dict: Dictionary, text: string, prov: Provenance)
       // regra do seletor de elemento da página (1.3.1), que precisa do texto da folha e do inventário do DOM da tela. Os
       // caminhos de receita/replay/passo/ação ficam fora dela no próprio núcleo (qualquer ferramenta).
       let c = classify(hit, prov, cache);
-      if (c.class === "sem-explicacao") c = ecoDeSeletor(hit, leaf.text, prov) ?? c;
+      if (c.class === "sem-explicacao") c = ecoDeSeletor(hit, leaf.text, prov, sessao, respostaScanId) ?? c;
       if (c.class === "sem-explicacao") c = classify(hit, prov, cache, leaf.text);
       hits.push({ ...hit, ...c, folha: leaf.text });
     }
@@ -234,7 +306,14 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
   const pageComTag = `<html><body><${rootClass} label="Editar" class="${variante}"></${rootClass}><script>customElements.define("${naoRenderizado}", class {})</script></body></html>`;
   const elements: PageElements = { tags: new Set(["html", "body", rootClass]), classes: new Set([variante]) };
   // 1.1.0: casos por ferramenta, campo declarado e eco exato (os mesmos do inventário do validator 2.14.1).
-  const casos: { nome: string; tool: string; texto: string; args: unknown; page: string | null; espera: Classification; elements?: PageElements | null }[] = [
+  // 1.3.2: ledger de um scan_page anterior (vínculo por scanId) e seletor do agente com aspas internas citado na prosa
+  const ledger = (scanId: string, sel: string) => JSON.stringify({ scanId, ledger: { coverage: { actionsApplied: [{ action: "click", selector: sel }] }, state: { recipe: { actions: [{ action: "click", selector: sel }] }, replay: { steps: [{ index: 0, selector: sel }] } } } });
+  const doScan = (sel: string) => ({ url: "http://x/", actions: [{ action: "click", selector: sel }] });
+  const scans = (...pares: [string, unknown][]) => new Map<string, unknown>(pares);
+  const selInterno = `${rootClass}[formcontrolname='porto'] >>> input`;
+  const falhou = `Nenhum elemento para '${selInterno}' no passo 4.`;
+  const prosa = JSON.stringify({ reasons: [{ detail: `Limitação: ${falhou}` }], verification: { detail: `Limitação: ${falhou}`, binding: { state: { failure: { detail: falhou }, limitation: { detail: `Passo 4 (fill) falhou. ${falhou}` } } } } });
+  const casos: { nome: string; tool: string; texto: string; args: unknown; page: string | null; espera: Classification; elements?: PageElements | null; scans?: Map<string, unknown> }[] = [
     { nome: "título da base numa nota do servidor", tool: "verify_finding", texto: JSON.stringify({ note: `Veja ${kbTitle}.` }), args: {}, page, espera: "sem-explicacao" },
     { nome: "id da base enriquecido pelo servidor", tool: "verify_finding", texto: JSON.stringify({ next: { ruleId: kbId } }), args: {}, page, espera: "sem-explicacao" },
     { nome: "título e-MAG anexado à descrição", tool: "scan_page", texto: JSON.stringify({ findings: [{ rule: { description: `x (e-MAG 1.1: ${emagTitle})` } }] }), args: {}, page, espera: "sem-explicacao" },
@@ -259,9 +338,21 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
     { nome: "classe raiz na receita SEM o seletor nos argumentos, tag renderizada (eco D-154 não vira página)", tool: "scan_page", texto: receita, args: { actions: [{ action: "click", selector: "#outro" }] }, page: pageComTag, elements, espera: "sem-explicacao" },
     { nome: "seletor reescrito numa receita fora do scan_page (verify binding.state.recipe), tag renderizada", tool: "verify_finding", texto: JSON.stringify({ verification: { binding: { state: { recipe: { actions: [{ selector: `${rootClass}[label="x"]` }] } } } } }), args: {}, page: pageComTag, elements, espera: "sem-explicacao" },
     { nome: "id da base citado entre aspas como se fosse seletor, com o id na página", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Nenhum elemento para '${kbId}'.` } }), args: {}, page: `${pageComTag}<!-- ${kbId} -->`, elements, espera: "sem-explicacao" },
+    // 1.3.2 (dev-371-b-01): ledger do get_finding_details vinculado pelo scanId ao scan_page que o criou
+    { nome: "classe raiz no ledger, ecoada do scan_page cujo scanId é o pedido", tool: "get_finding_details", texto: ledger("S-page-002", seletor), args: { scanId: "S-page-002" }, page: pageComTag, elements, scans: scans(["S-page-002", doScan(seletor)]), espera: "eco" },
+    { nome: "chegada do scan no ledger vinculado (arrival.visible)", tool: "get_finding_details", texto: JSON.stringify({ scanId: "S-page-002", ledger: { state: { recipe: { arrival: { visible: `button.${rootClass}.inverted` } }, arrival: { conditions: [{ expected: `button.${rootClass}.inverted` }] } } } }), args: { scanId: "S-page-002" }, page: pageComTag, elements, scans: scans(["S-page-002", { url: "http://x/", arrival: { visible: `button.${rootClass}.inverted` } }]), espera: "eco" },
+    { nome: "mesmo seletor no ledger, mas ele veio de OUTRO scan_page (não o do scanId pedido)", tool: "get_finding_details", texto: ledger("S-page-002", seletor), args: { scanId: "S-page-002" }, page: pageComTag, elements, scans: scans(["S-page-001", doScan(seletor)], ["S-page-002", doScan("#outro")]), espera: "sem-explicacao" },
+    { nome: "ledger pedido sem scanId nos argumentos (só ids)", tool: "get_finding_details", texto: ledger("S-page-002", seletor), args: { ids: ["F-001"] }, page: pageComTag, elements, scans: scans(["S-page-002", doScan(seletor)]), espera: "sem-explicacao" },
+    { nome: "ledger com scanId da resposta diferente do pedido", tool: "get_finding_details", texto: ledger("S-page-002", seletor), args: { scanId: "S-page-001" }, page: pageComTag, elements, scans: scans(["S-page-001", doScan(seletor)], ["S-page-002", doScan(seletor)]), espera: "sem-explicacao" },
+    { nome: "seletor do scan reescrito pelo servidor no ledger", tool: "get_finding_details", texto: ledger("S-page-002", `${seletor} >>> button`), args: { scanId: "S-page-002" }, page: pageComTag, elements, scans: scans(["S-page-002", doScan(seletor)]), espera: "sem-explicacao" },
+    // 1.3.2: seletor do agente com aspas internas citado na prosa do verify (valor inteiro entre aspas idênticas)
+    { nome: "seletor com aspa interna citado na prosa do verify (reasons, detail, failure, limitation)", tool: "verify_finding", texto: prosa, args: { actions: [{ action: "fill", selector: selInterno, value: "" }] }, page: pageComTag, elements: null, espera: "eco" },
+    { nome: "classe raiz solta na prosa além da citação do seletor do agente", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `O ${rootClass} falhou: '${selInterno}'.` } }), args: { actions: [{ action: "fill", selector: selInterno }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "só um prefixo do seletor do agente entre aspas (não é o valor inteiro)", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Nenhum elemento para '${rootClass}[formcontrolname='porto']'.` } }), args: { actions: [{ action: "fill", selector: selInterno }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "seletor com aspa interna citado, mas só em finding.element.locator (não em actions)", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: falhou } }), args: { finding: { element: { locator: selInterno } } }, page: pageComTag, elements: null, espera: "sem-explicacao" },
   ];
   return casos.map((c) => {
-    const { hits } = varrerResposta(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe, elements: c.elements ?? null });
+    const { hits } = varrerResposta(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe, elements: c.elements ?? null }, { argsDoScan: c.scans ?? new Map() });
     const got = hits.map((h) => h.class);
     return { nome: c.nome, ok: got.length > 0 && got.every((g) => g === c.espera), detalhe: `esperado ${c.espera}, obtido [${got.join(", ") || "nenhuma ocorrência"}]` };
   });
@@ -316,8 +407,10 @@ export async function varrerPayloadsDoOraculo(o: {
   const porClasse: Record<string, number> = {};
   const sem = new Map<string, RelatorioVazamento["semExplicacao"][number]>();
   const perd = new Map<string, RelatorioVazamento["perdoadas"][number]>();
+  // 1.3.2: argumentos de cada scan_page pelo scanId que a resposta dele devolveu (só scans JÁ vistos; o 1º fica com o id)
+  const argsDoScan = new Map<string, unknown>();
   const varrer = (texto: string, args: unknown, pg: string | null, tool: string): void => {
-    for (const h of varrerResposta(dict, texto, { tool, args, page: pg, axe: axe.texto, elements: pg === null ? null : inventario.elements }).hits) {
+    for (const h of varrerResposta(dict, texto, { tool, args, page: pg, axe: axe.texto, elements: pg === null ? null : inventario.elements }, { argsDoScan }).hits) {
       porClasse[h.class] = (porClasse[h.class] ?? 0) + 1;
       const k = `${h.class}|${h.term}|${h.path}|${tool}`;
       if (h.class === "sem-explicacao") {
@@ -342,6 +435,10 @@ export async function varrerPayloadsDoOraculo(o: {
     // proveniência por ferramenta: eco só como valor exato no campo declarado; o nome da ferramenta pode
     // voltar no texto de erro (ex.: "get_ds_rules não está disponível")
     varrer(res, args, pagina, tool);
+    if (tool === "scan_page") {
+      const id = scanIdDaResposta(res);
+      if (id !== null && !argsDoScan.has(id)) argsDoScan.set(id, args);
+    }
   }
   const nucleo = readFileSync(new URL("./nucleo.ts", import.meta.url), "utf8").replace(/\r\n/g, "\n");
   return {

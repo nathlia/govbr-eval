@@ -238,7 +238,7 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(limpas.inventario.status, "ok", JSON.stringify(limpas.inventario));
     assert.equal(limpas.semExplicacao.length, 0, JSON.stringify(limpas.semExplicacao));
     assert.equal(limpas.porClasse.pagina, 7, JSON.stringify(limpas.porClasse));
-    assert.ok(limpas.canarios.every((c) => c.ok) && limpas.canarios.length === 23, JSON.stringify(limpas.canarios));
+    assert.ok(limpas.canarios.every((c) => c.ok) && limpas.canarios.length === 33, JSON.stringify(limpas.canarios));
     // falha fechada: as mesmas formas sem a tela (sem inventário do DOM) não são perdoadas
     const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: formas });
     assert.equal(semTela.inventario.status, "sem-tela");
@@ -303,6 +303,39 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(eco.porClasse.eco, 3, JSON.stringify(eco.porClasse));
     const fora = await varrerPayloadsDoOraculo({ ...base, eventos: [call({ url: "http://x/", actions: [{ action: "click", selector: "#outro" }], arrival: { visible: sel } })] });
     assert.equal(fora.semExplicacao.reduce((n, u) => n + u.count, 0), 3, JSON.stringify(fora.semExplicacao));
+  });
+  await test("varredura 1.3.2 (dev-371-b-01): ledger do get_finding_details vinculado pelo scanId ao scan_page anterior; seletor com aspa interna citado no verify", async () => {
+    if (!existsSync(join(DEFAULT_VALIDATOR_DIR, "dist", "checkers", "grounding.js"))) { console.log("     · validator sem dist/: varredura não exercitada"); return; }
+    const call = (seq: number, tool: string, args: unknown, result: unknown) => ({ kind: "call", seq, tool, args: { text: JSON.stringify(args), truncated: false }, result: { text: JSON.stringify(result), truncated: false } });
+    const base = { validatorDir: DEFAULT_VALIDATOR_DIR, telasDir: DEFAULT_TELAS_DIR, tela: "vistorias", toolsList: null, ler: () => null };
+    // as formas reais de rep-01 (seq 9 → seq 10) e rep-03 (seq 12)
+    const sel = ".br-select.position-absolute .br-item:nth-child(2) label";
+    const chegada = "button.br-button.inverted.circle";
+    const scan = (seq: number, scanId: string, s: string) => call(seq, "scan_page", { url: "http://x/", actions: [{ action: "click", selector: s }], arrival: { visible: chegada } }, { kind: "scan", scanId, state: { reached: true } });
+    const ledger = (seq: number, pedido: unknown, scanId: string, s = sel) => call(seq, "get_finding_details", pedido, { kind: "finding-details", scanId, ledger: {
+      coverage: { actionsApplied: [{ action: "click", selector: s }] },
+      state: { recipe: { actions: [{ action: "click", selector: s }], arrival: { visible: chegada } }, replay: { steps: [{ index: 0, selector: s, matched: 1 }] }, arrival: { conditions: [{ expected: chegada }] } } } });
+    const vinculado = await varrerPayloadsDoOraculo({ ...base, eventos: [scan(1, "S-page-003", sel), ledger(2, { scanId: "S-page-003", view: "families" }, "S-page-003")] });
+    assert.equal(vinculado.semExplicacao.length, 0, JSON.stringify(vinculado.semExplicacao));
+    assert.ok(vinculado.perdoadas.some((p) => p.tool === "get_finding_details" && p.path === "$.ledger.state.recipe.actions[*].selector" && p.class === "eco"), JSON.stringify(vinculado.perdoadas));
+    assert.ok(vinculado.canarios.every((c) => c.ok) && vinculado.canarios.length === 33, JSON.stringify(vinculado.canarios));
+    // estrito: ledger pedido ANTES do scan, de outro scanId, sem scanId (ids) e com o seletor reescrito continuam sem explicação
+    const conta = async (eventos: unknown[]) => (await varrerPayloadsDoOraculo({ ...base, eventos: eventos as Record<string, unknown>[] })).semExplicacao.filter((u) => u.tool === "get_finding_details").reduce((n, u) => n + u.count, 0);
+    assert.ok(await conta([ledger(1, { scanId: "S-page-003" }, "S-page-003"), scan(2, "S-page-003", sel)]) > 0, "ledger antes do scan que o criou");
+    assert.ok(await conta([scan(1, "S-page-001", sel), scan(2, "S-page-003", "#outro"), ledger(3, { scanId: "S-page-003" }, "S-page-003")]) > 0, "seletor veio de outro scan_page");
+    assert.ok(await conta([scan(1, "S-page-003", sel), ledger(2, { ids: ["F-001"] }, "S-page-003")]) > 0, "sem scanId nos argumentos");
+    assert.ok(await conta([scan(1, "S-page-003", sel), ledger(2, { scanId: "S-page-003" }, "S-page-003", `${sel} >>> input`)]) > 0, "seletor reescrito pelo servidor");
+    const falhou = "Nenhum elemento para 'br-input[formcontrolname='portoDesembarque'] >>> input' no passo 4.";
+    const verify = (args: unknown, detail = falhou) => call(1, "verify_finding", args, { reasons: [{ detail: `Limitação: ${detail}` }], verification: { detail: `Limitação: ${detail}`,
+      binding: { state: { failure: { selector: "br-input[formcontrolname='portoDesembarque'] >>> input", detail }, limitation: { detail: `Passo 4 (fill) falhou. ${detail}` } } } } });
+    const acoes = { actions: [{ action: "fill", selector: "br-input[formcontrolname='portoDesembarque'] >>> input", value: "" }] };
+    const citado = await varrerPayloadsDoOraculo({ ...base, eventos: [verify(acoes)] });
+    assert.equal(citado.semExplicacao.length, 0, JSON.stringify(citado.semExplicacao));
+    // o mesmo seletor só no localizador do achado (não em actions), ou o nome solto na prosa ao lado da citação, não
+    const soLocalizador = await varrerPayloadsDoOraculo({ ...base, eventos: [verify({ finding: { element: { locator: "br-input[formcontrolname='portoDesembarque'] >>> input" } } })] });
+    assert.ok(soLocalizador.semExplicacao.some((u) => u.path === "$.verification.binding.state.failure.detail"), JSON.stringify(soLocalizador.semExplicacao));
+    const solto = await varrerPayloadsDoOraculo({ ...base, eventos: [verify(acoes, `O br-input falhou. ${falhou}`)] });
+    assert.equal(solto.semExplicacao.filter((u) => u.term === "br-input").length, 4, JSON.stringify(solto.semExplicacao));
   });
 }
 

@@ -268,6 +268,17 @@ perfis fixados (nomes + sha256 do `tools/list`) ficam em `runner/perfis-oraculo.
   segue idêntico ao do validator) classifica como `eco` a ocorrência nesses caminhos quando a folha inteira
   é idêntica a um `actions[*].selector` da MESMA chamada; seletor fora desses argumentos (ou só em
   `arrival`) continua `sem-explicacao`. Três canários novos (13 no total) cobrem os dois lados.
+  **1.3.2 (`dev-371-b-01`, oráculo 3.7.1):** duas formas novas derrubaram rep-01 e rep-03 do `ferramentas`,
+  ambas com seletores que o próprio agente mandou. (1) `get_finding_details(scanId)` devolve o `ledger` do
+  lote, com receita, replay, cobertura e chegada de um `scan_page` ANTERIOR: a varredura guarda os argumentos
+  de cada `scan_page` pelo `scanId` que a resposta dele devolveu, e no ledger só é `eco` a folha idêntica a
+  um valor do scan cujo `scanId` é o pedido nesta chamada (e o `$.scanId` da resposta). Seletor de outro
+  scan, sem `scanId` ou reescrito pelo servidor continua `sem-explicacao`. (2) `verify_finding` cita o
+  seletor do passo que falhou na prosa (`reasons[*].detail`, `verification.detail`,
+  `binding.state.failure.detail`, `binding.state.limitation.detail`), com aspas internas
+  (`'br-input[formcontrolname='portoDesembarque'] >>> input'`): esses caminhos entram como citados, e a
+  citação passa a tirar da folha o valor INTEIRO de um `actions[*].selector` entre aspas idênticas antes de
+  conferir que o termo sumiu. Dez canários novos (33 no total). Revarredura: rep-01 10 → 0, rep-03 4 → 0.
 - **Aderência:** no `ferramentas` a consulta normativa é "não aplicável"; o gate é scan + verificação
   quando há candidato com regra.
 - **Texto da tarefa:** o mesmo sha256 nos três braços (`test:avaliar-tela`, `test:runner`).
