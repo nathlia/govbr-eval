@@ -1,0 +1,891 @@
+{
+ "_meta": {
+  "version": "1.0.0",
+  "status": "1.0.0 congelada — 2026-11-03 (D-162, NAT-113): escaladas decididas pela autora (padrão: todas conforme a recomendação), correções F-01…F-10 na página (govbr-corpus 1abcc50), re-medida cega sem achado novo (tela-a2/auditoria/remedida-2026-11-02), conferir:referencia zero problemas (S0 → S1 → S2, 14 specs, 16 unidades; 6 predicados sustentam, 8 specs sem predicado), ids de norma conferidos contra a base 3.7.0-literal-2026-10-15 (activeVersion do govbr-ds-validator e da cópia validator-371; rules.jsonl sha256 c8c4327d…, carried-over.jsonl 16e0a764…, as mesmas de kb-aliases-v2.json): 31 ids govbr-* (27 em rules e conformes + 4 de E-05 fora) encontrados, nenhum ausente. 14 specs / 16 unidades; sem a exposta 13 / 15, famílias F1, F3, F4, 11 conformes.",
+  "version_note": "1.0.0 (2026-11-03, D-162): congelamento da 1.0.0-candidata (tela-a2/candidata/ground-truth-acompanhamento.json, guardada intacta como registro). A autora aceitou a recomendação do assistente para os 9 itens escalados: U-01, U-02, U-05, U-07, U-08, U-11 e U-12 passaram de _meta.aDecidir a violations (E-01, E-02), a U-11 ficou exposta (E-03), as normas do mesmo fato entraram como aliases (E-04), a perda de estado na recarga ficou fora (E-05), os padrões do core ficaram como fundo (E-08), e as correções F-01…F-10 foram aplicadas e re-medidas (E-06, E-07, E-09), o que fez K-07…K-11 contarem. Candidata: rascunho a partir do sorteio (tela-a2/sorteio-2.json, semente 876024a331d8e9cc05837554f11aeda01aa8b2ff, D-160), da construção (tela-a2/construcao.md, conferir-construcao 79/79; 90/90 depois das correções) e da auditoria cega por medição (tela-a2/auditoria/, 34 achados). Ids U-* = unidades sorteadas; A2-* = achados da auditoria. Escrita antes de qualquer execução de agente sobre a tela; a A2 é tela de desenvolvimento (plano § 11). Única mudança de texto numa spec: a descrição da U-12 deixou de repetir palavra por palavra a frase de restrição do upload que é texto visível da tela A (o portão de vazamento de test:export-telas lê toda referência da raiz e a acusava no pacote da A); o sentido não mudou.",
+  "page": "Acompanhar requerimento — tela A2 (NAT-110), tela de desenvolvimento irmã da A",
+  "url": "/acompanhamento.html",
+  "waitFor": "#tab-requerimento",
+  "suite": "acompanhamento",
+  "ds": "gov.br Design System 3.7.0 (página com @govbr-ds/core 3.7.0)",
+  "unit_of_evaluation": "(elemento × defeito), no estado aplicável — a mesma unidade da tela de fluxo e das telas A, B e D. Uma spec 'todos' vira uma unidade por elemento; 'composicao' vale uma unidade com vários participantes.",
+  "viewport": {
+   "width": 1280,
+   "height": 900
+  },
+  "setup": [
+   {
+    "action": "click",
+    "selector": "#aba-documentos"
+   },
+   {
+    "action": "wait",
+    "selector": "#painel-documentos.active"
+   },
+   {
+    "action": "click",
+    "selector": ".acao-enviar"
+   },
+   {
+    "action": "wait",
+    "selector": "#msg-retorno"
+   }
+  ],
+  "setup_rationale": "Os passos da lista neutra (ancoras-neutras.json): clicar a aba Documentos e esperar o painel (S1); clicar Enviar documento com o formulário vazio e esperar a mensagem de retorno (S2). Sequência aditiva: tudo o que a referência ancora em S0 e S1 continua na árvore em S2.",
+  "states": [
+   {
+    "id": "S0",
+    "afterStep": 0,
+    "path": "/acompanhamento.html",
+    "note": "carga inicial (aba Andamento ativa)"
+   },
+   {
+    "id": "S1",
+    "afterStep": 2,
+    "path": "/acompanhamento.html",
+    "note": "aba Documentos selecionada"
+   },
+   {
+    "id": "S2",
+    "afterStep": 4,
+    "path": "/acompanhamento.html",
+    "note": "Enviar documento acionado com o formulário vazio"
+   }
+  ],
+  "protocoloTempo": "plano § 14.5: cada estado medido de carga nova e em até 120 s; a meta refresh (U-10) recarrega a página a cada 300 s também na bateria — efeito real do defeito; uma recarga só força a reentrada pelo setup, nenhum estado fica inalcançável.",
+  "sorteio": {
+   "arquivo": "tela-a2/sorteio-2.json",
+   "sha256": "86e7a78be41d907c6c7213ee05709de668731abdd14ae14cde5e035bdffcf381",
+   "semente": "876024a331d8e9cc05837554f11aeda01aa8b2ff",
+   "decisao": "D-160"
+  },
+  "chamarizes": {
+   "note": "Instâncias conformes sorteadas como chamariz (sorteio-2.json). Não são unidades; alegação sobre elas é adjudicada como qualquer outra fora da referência (D-48).",
+   "selectors": [
+    ".acao-enviar",
+    "#cabecalho",
+    ".trilha-servico",
+    ".atalhos-pagina",
+    "#rodape",
+    "#div-secoes",
+    "#crd-resumo",
+    ".acao-voltar"
+   ]
+  },
+  "conformes": {
+   "note": "Controles conformes: chamarizes + alternativas válidas, todos com status 'conta' (denominador de falso alarme). K-07…K-11 eram 'a-corrigir' na candidata; passaram a contar depois das correções F-01…F-10 na página (govbr-corpus 1abcc50; E-06, E-07, E-09 e as correções sem decisão, D-162) e da re-medida cega sem achado novo (tela-a2/auditoria/remedida-2026-11-02: 12 achados sumiram, 22 persistem, 0 novos).",
+   "itens": [
+    {
+     "id": "K-01",
+     "state": "S0",
+     "selector": "#cabecalho",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "chamariz hdr-govbr: .br-header visível, y = 0, antes do main (construção; auditoria sem achado)."
+    },
+    {
+     "id": "K-02",
+     "state": "S0",
+     "selector": "#rodape",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "chamariz ftr-govbr: .br-footer visível depois do main (construção; auditoria sem achado)."
+    },
+    {
+     "id": "K-03",
+     "state": "S0",
+     "selector": "#div-secoes",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "chamariz div-secoes: borda sólida 1 px --gray-20 entre as abas e as dúvidas, fora do foco."
+    },
+    {
+     "id": "K-04",
+     "state": "S0",
+     "selector": "#crd-resumo",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "chamariz crd-resumo: .br-card, superfície #fff com sombra, NUP por extenso na 1ª ocorrência, caminho para detalhes, sem font/align (os gatilhos aninhados são hospedeiros da U-06)."
+    },
+    {
+     "id": "K-05",
+     "state": "S0",
+     "selector": "#tbl-movimentacoes table",
+     "count": 1,
+     "rules": [
+      "govbr-3.7.0-accessibility-global-9b31bc6b5b43",
+      "emag:3.10"
+     ],
+     "status": "conta",
+     "medida": "alternativa válida associacao-por-headers (a2-959ca4537add): caption 1º filho, 3 th no thead, 15 td com headers que resolvem, nenhum scope; auditoria: conforme."
+    },
+    {
+     "id": "K-06",
+     "state": "S2",
+     "selector": "#msg-retorno",
+     "count": 1,
+     "rules": [
+      "govbr-3.7.0-accessibility-global-21f137078108",
+      "govbr-3.7.0-accessibility-global-b396d1fcdadc",
+      "emag:4.2"
+     ],
+     "status": "conta",
+     "medida": "alternativa válida prefixo-textual-visivel (a2-e5b4728ca51e): texto começa com 'Erro:' visível, ícone times-circle mantido; auditoria sem achado."
+    },
+    {
+     "id": "K-07",
+     "state": "S0",
+     "selector": "#tip-protocolo",
+     "count": 1,
+     "rules": [
+      "govbr-3.7.0-component-tooltip-ffbac5193e02"
+     ],
+     "status": "conta",
+     "medida": "alternativa válida balao-abaixo (a2-61f57f2a7ff5): place=bottom, balão abaixo do gatilho, seta dentro do gatilho. Depois de F-07 (posição recalculada ao abrir; core.min.js intocado) a seta fica centrada: re-medida A2-17 — balão x 390–591,5 (centro 490,8), seta centro 491,0 → 0,2 px (tela-a2/auditoria/remedida-2026-11-02/corrigidos.json A2-17; o mesmo no Fechar da pendência, A2-18 → 0,4 px)."
+    },
+    {
+     "id": "K-08",
+     "state": "S0",
+     "selector": ".atalhos-pagina",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "chamariz skp-conteudo: 1º filho do body, 1º Tab, leva a #main-content. Depois de F-01, sem role=menubar/menuitem: AX navigation com 2 links (re-medida, corrigidos.json A2-06). Fica o skiplink invisível para o ponteiro até o foco, que é CSS do core (A2-07, fundo, E-08)."
+    },
+    {
+     "id": "K-09",
+     "state": "S0",
+     "selector": ".trilha-servico",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "chamariz brd-trilha: 1º conteúdo do main, item atual com aria-current. Depois de F-02…F-04 (re-medida, corrigidos.json): item atual <span aria-current=page> sem tabindex, fora da ordem de Tab (A2-08); nome acessível 'Trilha de navegação' (A2-10); Home 'Página Inicial' → inicio.html e 'Meus Requerimentos' na trilha e no botão para o mesmo destino (A2-11). Fica o peso medium do item atual, CSS do core (A2-09, fundo, E-08)."
+    },
+    {
+     "id": "K-10",
+     "state": "S1",
+     "selector": ".acao-enviar",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "chamariz btn-enviar: button.br-button.primary type=submit, 40 px. Depois de F-05 o rótulo é 'Enviar Documento' (re-medida, corrigidos.json A2-32)."
+    },
+    {
+     "id": "K-11",
+     "state": "S0",
+     "selector": ".acao-voltar",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "chamariz btn-voltar: a.br-button.secondary para meus-requerimentos.html. Depois de F-04/F-05 o rótulo é 'Meus Requerimentos', a mesma descrição da trilha para o mesmo destino (re-medida, corrigidos.json A2-33, A2-11). A re-medida registrou um incerto, não achado: o botão agora nomeia o destino e não a ação (component-button-a4d904dedad5; remedida auditoria.md)."
+    }
+   ]
+  },
+  "fundo": "Condições do core 3.7.0 ou da marcação oficial que não são unidades (alegação correta = descoberta; decisão E-08): skiplink invisível para o ponteiro até receber foco (core CSS, A2-07); peso medium do item atual do breadcrumb (core CSS, A2-09); balão do tooltip some quando o ponteiro sai do gatilho (BRTooltip hideEvents, A2-19…A2-21); role=combobox sem nome no contêiner do select (BRSelect, A2-24); botão do upload focável com aria-hidden e rótulo preso ao input escondido (BRUpload, A2-25, A2-26); BRTooltip calcula a posição na criação (A2-17/18, a corrigir por F-07); BRStep marca como ativa a etapa concluída clicada; BRSelect acrescenta ícone de busca; caption com opacity 0 no core.",
+  "fora_de_escopo": "Outras janelas e zoom (salvo os 200 % medidos pela auditoria), outros navegadores, leitor de tela real, arrasto e envio com sucesso (fora dos estados), redação e microcopy salvo as regras sorteadas, normas que saíram antes da semente (elegibilidade.json). Alegação correta sobre o que está fora vira descoberta.",
+  "nunca_agregar_com": "ground-truth-solicitacao.json (tela A, irmã), ground-truth-processos.json (tela D), ground-truth-fluxo.json, ground-truth-vistorias.json, ground-truth-cadastrar-empresa.json, ground-truth-privacidade.json, ground-truth-pnip-login.json, ground-truth.json, organic-ground-truth.json — páginas ou instrumentos diferentes (D-13, D-49). A A2 é tela de desenvolvimento: não serve de evidência de generalização (plano § 11).",
+  "baselines": "MEDIDAS sob o carimbo de cada bateria; nenhuma expectativa de detecção por ferramenta é declarada aqui (D-06).",
+  "rules_nota": "Ids de norma da base literal 3.7.0-literal-2026-10-15 (a que o auditor cego leu e que o oráculo serve: activeVersion do govbr-ds-validator), conferidos em 2026-11-03: os 27 ids govbr-* de rules e de conformes (e os 4 de E-05 fora) existem em rules.jsonl/carried-over.jsonl dessa versão e em kb-aliases-v2.json; aliases emag:/wcag: pela convenção das outras telas. Nenhuma expansão de kb-aliases-v2 de uma spec chega aos ids de E-05. U-01, U-02 e U-05 não têm frase correspondente nessa base (rules vazio): só casam por elemento e fato; U-03 e U-06 só têm a frase sorteada como 'recommended' (os aliases E-04 trazem a obrigatória que o auditor citou).",
+  "coincideComCore": {
+   "specs": [
+    "U-02",
+    "U-07",
+    "U-08"
+   ],
+   "nota": "A página conforme precisaria de código próprio que o core 3.7.0 não traz (construcao.md). Unidades (E-01, D-162); recall relatado com e sem elas."
+  },
+  "exposto": {
+   "nota": "E-03 (D-162): a U-11 é a mesma variante (nativo-para-div), no mesmo componente e com a mesma norma (e-MAG 1.2) da A-06 da tela A (ground-truth-solicitacao.json). O recall é dado com e sem ela, e o piso conta sem ela.",
+   "specs": [
+    "U-11"
+   ]
+  },
+  "escaladas": {
+   "fonte": "tela-a2/recomendacoes-escaladas.md (E-01…E-09, proposta do assistente; detalhes em tela-a2/reconciliacao.md); decisão da autora em 2026-11-03: \"padrão\" = todas conforme a recomendação (D-162, NAT-113)",
+   "unidade": {
+    "E-01": "U-07 (aria-checked fixo nos dois switches) e U-08 (aria-expanded fixo no accordion) são unidades, marcadas coincideComCore com a U-02; recall relatado com e sem elas",
+    "E-02": "U-01, U-02, U-05, U-11 e U-12, sorteadas e não achadas pela auditoria cega, são unidades com a medida da conferência de construção (predicado em U-01, U-05, U-11) ⚠ U-12: o auditor deu o e-MAG 6.5 como conforme sem olhar a restrição do upload"
+   },
+   "exposto": {
+    "E-03": "U-11 (Fechar em div role=button) é a mesma variante, componente e norma (e-MAG 1.2) da A-06 da tela A: exposto — recall com e sem ela; o piso conta sem ela"
+   },
+   "aliases": {
+    "E-04": "normas que o auditor citou para o MESMO fato (mesmo elemento, estado e observável; plano § 14.2) entram em rules de U-03, U-06, U-07, U-08, U-09, U-10, U-13 e U-14 (porSpec.<id>.aliases)"
+   },
+   "fora": {
+    "E-05": {
+     "nota": "A2-02: a recarga de 300 s apaga o que a pessoa fez em S1 (observado fora do protocolo). Consequência da U-10, que está na referência: nem unidade nem citação aceita; estes ids não estão em rules de spec nenhuma. Numa bateria, uma sessão que passe de 300 s em S1/S2 volta ao S0 (plano § 14.5).",
+     "rules": [
+      "govbr-3.7.0-accessibility-global-7bb1e5ca34ff",
+      "govbr-3.7.0-accessibility-global-31cf88f381f6",
+      "govbr-3.7.0-accessibility-global-8d14c83c9686",
+      "govbr-3.7.0-accessibility-global-29482716b19d",
+      "emag:2.5",
+      "wcag:2.2.1"
+     ]
+    },
+    "E-08": "padrões do core 3.7.0 achados pela auditoria (A2-07, A2-09, A2-19…A2-21, A2-24, A2-25, A2-26) ficam como fundo (_meta.fundo): alegação certa vira descoberta ⚠ A2-26 (e-MAG 6.2 elegível, mas o fato é do BRUpload)"
+   },
+   "corrigido": {
+    "E-06": "F-01…F-03: skiplink sem role=menubar (A2-06), item atual da trilha sem tabindex (A2-08), aria-label da trilha em português (A2-10) — desvio declarado dos exemplos oficiais do pacote",
+    "E-07": "F-07: a seta do tooltip é recalculada ao abrir (comportamento.js; core.min.js intocado) — A2-17, A2-18",
+    "E-09": "F-09, F-10: sem '/>' nos 10 elementos vazios (A2-04) e com noscript (A2-05)",
+    "semDecisao": "F-04 (A2-11), F-05 (A2-32, A2-33), F-06 (A2-16), F-08 (A2-34): defeitos de construção (plano § 4)",
+    "onde": "govbr-corpus 1abcc50; conferir-construcao 90/90; re-medida cega tela-a2/auditoria/remedida-2026-11-02 (12 achados sumiram, 22 persistem, 0 novos)"
+   }
+  },
+  "piso": {
+   "regra": "plano § 14 / adendo da D § A: ≥ 8 specs, ≥ 3 das 4 famílias (F1 componente · F2 página · F3 fundamentos · F4 e-MAG), ≥ 3 tipos de componente do DS, ≥ 4 controles conformes — sem as unidades exposto",
+   "preRegistrado": "plano § 14 / adendo da D § A: ≥ 8 specs, ≥ 3 das 4 famílias, ≥ 3 tipos de componente do DS, ≥ 4 conformes — sem as unidades exposto",
+   "medido": {
+    "specs": 13,
+    "unidades": 15,
+    "comExpostas": {
+     "specs": 14,
+     "unidades": 16
+    },
+    "familias": [
+     "F1",
+     "F3",
+     "F4"
+    ],
+    "semFamilia": [
+     "U-08 (G-guia (WAI-ARIA do site do DS))"
+    ],
+    "tiposDeComponente": [
+     "tab",
+     "upload",
+     "step",
+     "message",
+     "button",
+     "switch",
+     "accordion",
+     "select",
+     "checkbox"
+    ],
+    "tipoPorSpec": {
+     "U-01": "tab",
+     "U-02": "upload",
+     "U-03": "pagina",
+     "U-04": "step",
+     "U-05": "message",
+     "U-06": "button",
+     "U-07": "switch",
+     "U-08": "accordion",
+     "U-09": "select",
+     "U-10": "pagina",
+     "U-12": "upload",
+     "U-13": "message",
+     "U-14": "checkbox"
+    },
+    "conformes": 11,
+    "passa": true
+   },
+   "resumo": "13 specs não expostas (15 unidades; com a U-11 exposta, 14 / 16), 3 famílias (F1, F3, F4; a U-08 é do guia WAI-ARIA e não entra em nenhuma), 9 tipos do DS (tab, upload, step, message, button, switch, accordion, select, checkbox; mais 'pagina' em U-03 e U-10), 11 conformes — passa."
+  },
+  "porSpec": {
+   "U-01": {
+    "regra": "a2-10aee59f9c1b",
+    "estrato": "DS",
+    "tipo": "visual-token",
+    "variante": "rotulo-aba-pequeno",
+    "instancia": "tab-requerimento",
+    "compartilhadaCom": [],
+    "familia": "F1",
+    "auditoria": {
+     "resultado": "nao-detectada",
+     "achados": [],
+     "porque": "norma-fora-do-universo-do-auditor: a tabela de especificação de Tipografia da Tab não existe na base literal 3.7.0-literal-2026-10-15 (nenhuma linha de tab sobre tamanho do rótulo nas 908 de decisoes.json; o auditor declara que não confrontou tokens, auditoria.md § 9). O valor medido, 14 px, está na escala Minor Third, então a regra que pegou o h2 (A2-31) não o pega."
+    },
+    "medida": "construção (conferir-construcao.mjs, 79/79): font-size dos dois botões = --font-size-scale-base (14 px) em vez de --font-size-scale-up-02 (20,16 px); peso medium mantido.",
+    "coincideComCore": false,
+    "aliases": [],
+    "decisao": "unidade (E-02, D-162)"
+   },
+   "U-02": {
+    "regra": "a2-caf6bc80cb4b",
+    "estrato": "DS",
+    "tipo": "comportamento",
+    "variante": "borda-sem-feedback",
+    "instancia": "upl-documento",
+    "compartilhadaCom": [],
+    "familia": "F1",
+    "auditoria": {
+     "resultado": "nao-detectada",
+     "achados": [],
+     "porque": "norma-fora-do-universo-do-auditor + nao-observada: a frase 'a cor da borda muda para verde quando o usuário arrasta…' não existe na base literal (nenhuma regra com 'verde'); o auditor também não simulou arrasto (incertos medido-ambíguo em component-upload-f0d98f9e5880 e foundation-global-c0052af42790). Construção: coincide com o core 3.7.0 (o BRUpload só põe .dragging; o CSS do pacote só muda o fundo); a página escreve o estilo do arrasto (fundo, cursor) e deixa a borda de fora."
+    },
+    "medida": "construção: dragenter+dragover sintéticos com DataTransfer de um PDF no botão da área (S1) → classe dragging presente e border-top-color = rgb(19, 81, 180) (repouso), não --success (#168821); o estado Dropzone ativo da página (fundo --surface-opacity-sm, cursor copy) aparece.",
+    "coincideComCore": true,
+    "aliases": [],
+    "decisao": "unidade (E-01, E-02, D-162) · coincide com o core"
+   },
+   "U-03": {
+    "regra": "a2-329f74d7646c",
+    "estrato": "DS",
+    "tipo": "visual-token",
+    "variante": "titulo-fora-da-tabela",
+    "instancia": "pagina",
+    "compartilhadaCom": [],
+    "familia": "F3",
+    "auditoria": {
+     "resultado": "detectada-com-outra-norma",
+     "achados": [
+      "A2-31"
+     ],
+     "porque": "o auditor citou foundation-global-21fb08664799 (nenhuma fonte fora da escala Minor Third; no universo da A2 é a2-2f4eadc23b2c, elegível, não sorteada) — mesmo elemento, mesmo estado, mesmo observável (font-size 16 px). A frase sorteada existe na base só como 'recommended' (foundation-global-7b7256828c9c) e ficou fora do filtro required/prohibited do auditor."
+    },
+    "medida": "auditoria A2-31: font-size computado 16px (peso 700); todos os outros textos na escala (11,662 · 14 · 16,8 · 20,16 · 24,192 · 34,832 · 41,804 px); o outro h2 tem 34,832 px.",
+    "coincideComCore": false,
+    "aliases": [
+     "govbr-3.7.0-foundation-global-21fb08664799"
+    ],
+    "decisao": "alias aceito (E-04, D-162)"
+   },
+   "U-04": {
+    "regra": "a2-52ea5c58a080",
+    "estrato": "DS",
+    "tipo": "estrutura-classe",
+    "variante": "sem-indicador",
+    "instancia": "stp-andamento",
+    "compartilhadaCom": [],
+    "familia": "F1",
+    "auditoria": {
+     "resultado": "detectada",
+     "achados": [
+      "A2-23"
+     ],
+     "porque": "mesma regra (component-step-518405a28697 = a2-52ea5c58a080), mesmo elemento e estado."
+    },
+    "medida": "auditoria A2-23: o indicador (::before, content \"3\") da etapa 'Decisão' tem visibility:hidden; os das etapas 1, 2 e 4 visíveis (40×40).",
+    "coincideComCore": false,
+    "aliases": [],
+    "decisao": null
+   },
+   "U-05": {
+    "regra": "a2-5f85eeafe863",
+    "estrato": "DS",
+    "tipo": "visual-token",
+    "variante": "icone-descentralizado",
+    "instancia": "msg-pendencia",
+    "compartilhadaCom": [],
+    "familia": "F1",
+    "auditoria": {
+     "resultado": "nao-detectada",
+     "achados": [],
+     "porque": "norma-fora-do-universo-do-auditor: a frase do Button › Densidade ('o rótulo do botão e o ícone permanecem sempre centralizados…') não existe na base literal; o auditor mediu o Fechar (posição no topo à direita, nome, tooltip) sem norma de centragem do ícone."
+    },
+    "medida": "construção: justify-content/align-items flex-start no botão 32×32; maior desvio entre o centro do <i> e o do botão = 8 px (> 3 px); gatilhos das tooltips, do select e Fechar de msg-retorno com desvio ≤ 1 px.",
+    "coincideComCore": false,
+    "aliases": [],
+    "decisao": "unidade (E-02, D-162)"
+   },
+   "U-06": {
+    "regra": "a2-e99c92f13ac0",
+    "estrato": "DS",
+    "tipo": "estrutura-classe",
+    "variante": "texto-alternativo-visivel",
+    "instancia": "tip-protocolo",
+    "compartilhadaCom": [
+     "tip-prazo"
+    ],
+    "familia": "F3",
+    "auditoria": {
+     "resultado": "detectada-com-outra-norma",
+     "achados": [
+      "A2-12",
+      "A2-13",
+      "A2-14",
+      "A2-15"
+     ],
+     "porque": "o auditor citou WCAG 2.5.3 (A2-12/14: rótulo visível fora do nome acessível) e component-button-81f5e26ec0ef (A2-13/15: rótulo visível fora da superfície do botão; no universo da A2 é a2-6d5f38f9bab8, elegível, não sorteada) — mesmo elemento (o span visível), mesmo estado. A frase sorteada ('Inclua também o CSS apropriado para ocultar visualmente o elemento') existe na base só como 'recommended' (foundation-global-afb62719493b), fora do filtro do auditor. O reflow a 640 px (A2-16) é efeito da colocação do span, não da variante: correção F-06."
+    },
+    "medida": "auditoria A2-12…A2-15 + sonda card-ajuda-click: span.rotulo-botao visível (149/158 × 24 px), clip auto, position absolute à direita do botão de 40×40, 16,8 px; nome acessível = texto do balão (aria-labelledby).",
+    "coincideComCore": false,
+    "aliases": [
+     "govbr-3.7.0-component-button-81f5e26ec0ef",
+     "wcag:2.5.3"
+    ],
+    "decisao": "alias aceito (E-04, D-162)"
+   },
+   "U-07": {
+    "regra": "a2-e9ded28efe9c",
+    "estrato": "DS",
+    "tipo": "comportamento",
+    "variante": "aria-checked-fixo",
+    "instancia": "swt-aviso-email",
+    "compartilhadaCom": [
+     "swt-aviso-sms"
+    ],
+    "familia": "F1",
+    "auditoria": {
+     "resultado": "detectada",
+     "achados": [
+      "A2-27",
+      "A2-28"
+     ],
+     "porque": "mesma regra (accessibility-switch-364149c5aea4 = a2-e9ded28efe9c), mesmos elementos e estado, nas duas cópias."
+    },
+    "medida": "auditoria A2-27/28: ligado por Space, clique no rótulo e pelo checkbox pai → checked=true, atributo aria-checked continua \"false\" (o Chromium expõe checked pela propriedade nativa).",
+    "coincideComCore": true,
+    "aliases": [
+     "govbr-3.7.0-accessibility-global-5817ddd685a6",
+     "wcag:4.1.2"
+    ],
+    "decisao": "unidade (E-01, D-162) · coincide com o core · alias aceito (E-04)"
+   },
+   "U-08": {
+    "regra": "a2-971db6a57c75",
+    "estrato": "G",
+    "tipo": "comportamento",
+    "variante": "item-expandido-sem-estado",
+    "instancia": "acc-duvidas",
+    "compartilhadaCom": [],
+    "familia": "G-guia (WAI-ARIA do site do DS)",
+    "auditoria": {
+     "resultado": "detectada",
+     "achados": [
+      "A2-22"
+     ],
+     "porque": "mesma regra (accessibility-global-5817ddd685a6 = a2-971db6a57c75), mesmo elemento e estado."
+    },
+    "medida": "auditoria A2-22: Enter/Space/clique expandem o item (conteúdo display:block, ícone fa-angle-up), aria-expanded continua 'false' e a árvore AX diz expanded=false.",
+    "coincideComCore": true,
+    "aliases": [
+     "govbr-3.7.0-accessibility-global-6a2b33a873d8",
+     "emag:2.2"
+    ],
+    "decisao": "unidade (E-01, D-162) · coincide com o core · alias aceito (E-04)"
+   },
+   "U-09": {
+    "regra": "a2-d720ea8520cb",
+    "estrato": "G",
+    "tipo": "comportamento",
+    "variante": "erro-so-borda",
+    "instancia": "sel-tipo-documento",
+    "compartilhadaCom": [],
+    "familia": "F4",
+    "auditoria": {
+     "resultado": "detectada",
+     "achados": [
+      "A2-30"
+     ],
+     "porque": "mesma recomendação (e-MAG 6.6: accessibility-global-271582e4fbe8 = a2-d720ea8520cb), mesmo elemento e estado."
+    },
+    "medida": "auditoria A2-30: depois de Enviar vazio, só a classe danger (borda 1 px #888 → 2 px #e52207); nenhum texto de erro, nenhum ícone, sem aria-invalid nem aria-describedby; a mensagem geral não nomeia o campo; o upload recebe 'Selecione o arquivo do documento.'.",
+    "coincideComCore": false,
+    "aliases": [
+     "govbr-3.7.0-pattern-global-dc80c4e7406b"
+    ],
+    "decisao": "alias aceito (E-04, D-162)"
+   },
+   "U-10": {
+    "regra": "a2-22240b8959ba",
+    "estrato": "G",
+    "tipo": "comportamento",
+    "variante": "recarga-periodica",
+    "instancia": "pagina",
+    "compartilhadaCom": [],
+    "familia": "F4",
+    "auditoria": {
+     "resultado": "detectada",
+     "achados": [
+      "A2-01",
+      "A2-02"
+     ],
+     "porque": "A2-01 traz a recomendação sorteada (e-MAG 2.3: accessibility-global-53236e27ac9c) em tambemViola; a principal citada foi a 2.4 (6021746e010c, frase que nomeia http-equiv refresh) — mesmo elemento, mesmo observável. A2-02 (e-MAG 2.5, WCAG 2.2.1) é o mesmo elemento, observado fora do protocolo (complemento de 330 s em S1): ver E-05."
+    },
+    "medida": "auditoria A2-01: <meta http-equiv=\"refresh\" content=\"300\"> no HTML servido; observação de 360 s em contexto próprio: recarga aos 300,1 s (beforeunload 300 123 ms, documento novo 300 132 ms, load 300 174 ms), nenhum aviso. Construção: cargas aos 0,1 s e 300,2 s.",
+    "coincideComCore": false,
+    "aliases": [
+     "govbr-3.7.0-accessibility-global-6021746e010c",
+     "govbr-3.7.0-accessibility-global-6b0032e5c8b1",
+     "emag:2.4",
+     "wcag:3.2.5"
+    ],
+    "decisao": "alias aceito (E-04, D-162) · E-05 fora (a perda de estado na recarga não é unidade nem alias)"
+   },
+   "U-11": {
+    "regra": "a2-d45711a55b6c",
+    "estrato": "G",
+    "tipo": "estrutura-classe",
+    "variante": "fechar-div",
+    "instancia": "msg-retorno",
+    "compartilhadaCom": [],
+    "familia": "F4",
+    "auditoria": {
+     "resultado": "nao-detectada",
+     "achados": [],
+     "porque": "escopo-do-auditor: a norma estava no universo dele (accessibility-global-7c91abad32ce, e-MAG 1.2 — aplicada só ao skiplink, A2-06); para o Fechar de msg-retorno o auditor conferiu classe br-button (development-button-b77ff20ad216), nome, foco e teclado (Enter/Espaço/clique), não o tagName."
+    },
+    "medida": "construção: tagName DIV, role=button, tabIndex 0, nome; Enter fecha e o foco volta ao Enviar; o Fechar de msg-pendencia é BUTTON.",
+    "coincideComCore": false,
+    "aliases": [],
+    "decisao": "unidade (E-02, D-162) · exposto (E-03)"
+   },
+   "U-12": {
+    "regra": "a2-cd5cbf0f18dc",
+    "estrato": "G",
+    "tipo": "estrutura-classe",
+    "variante": "sem-formato",
+    "instancia": "upl-documento",
+    "compartilhadaCom": [],
+    "familia": "F4",
+    "auditoria": {
+     "resultado": "nao-detectada",
+     "achados": [],
+     "porque": "julgamento-do-auditor: a norma estava no universo dele (accessibility-global-d301511184d7, e-MAG 6.5) e ele a deu conforme pela instrução geral ('Todos os campos são obrigatórios.') e pelo placeholder do select, sem confrontar a restrição de formato e tamanho do upload (que só aparece ao enviar um .txt)."
+    },
+    "medida": "construção: o texto ligado ao input por aria-describedby ('Você também pode arrastar o arquivo até a área acima.') não cita PDF/JPG/PNG/MB/formato/tamanho; enviar comprovante.txt → recusa 'O arquivo deve estar em PDF, JPG ou PNG e ter até 5 MB.'.",
+    "coincideComCore": false,
+    "aliases": [],
+    "decisao": "unidade (E-02, D-162) ⚠"
+   },
+   "U-13": {
+    "regra": "a2-671056d628cb",
+    "estrato": "G",
+    "tipo": "estrutura-classe",
+    "variante": "apresentacao-no-html",
+    "instancia": "msg-pendencia",
+    "compartilhadaCom": [],
+    "familia": "F4",
+    "auditoria": {
+     "resultado": "detectada",
+     "achados": [
+      "A2-03"
+     ],
+     "porque": "a cláusula da variante ('As camadas lógicas deverão ser separadas…', accessibility-global-1f1370424402, e-MAG 1.1) está em tambemViola; a principal citada (19cbc02f51c6, normas HTML do W3C) é no universo da A2 duplicada da própria a2-671056d628cb (a2-ed21800a3c0b). Mesmo elemento e estado."
+    },
+    "medida": "auditoria A2-03: <div align=\"left\"> e <font color=\"#333333\"> no conteúdo da mensagem de pendência, presentes no HTML servido.",
+    "coincideComCore": false,
+    "aliases": [
+     "govbr-3.7.0-accessibility-global-49089865cd5d"
+    ],
+    "decisao": "alias aceito (E-04, D-162)"
+   },
+   "U-14": {
+    "regra": "a2-18bccce4132a",
+    "estrato": "G",
+    "tipo": "estrutura-classe",
+    "variante": "grupo-sem-legend",
+    "instancia": "chk-avisos-todos",
+    "compartilhadaCom": [],
+    "familia": "F4",
+    "auditoria": {
+     "resultado": "detectada",
+     "achados": [
+      "A2-29"
+     ],
+     "porque": "mesma recomendação (e-MAG 6.7: accessibility-global-4d5b05a1c29c = a2-18bccce4132a), mesmo elemento e estado."
+    },
+    "medida": "auditoria A2-29: <fieldset id=fs-avisos> sem <legend> (nem aria-label/labelledby); o título visual 'Avisos sobre o requerimento' é um <p> fora do fieldset.",
+    "coincideComCore": false,
+    "aliases": [
+     "govbr-3.7.0-pattern-global-c648efdf7201"
+    ],
+    "decisao": "alias aceito (E-04, D-162)"
+   }
+  },
+  "auditoria": "tela-a2/auditoria/ (auditoria.md · achados.json · decisoes.json · conformes.json · incertos.json · medidas/) · conferência: node tela-a2/auditoria/conferir-auditoria.mjs (34/34)",
+  "construcao": "tela-a2/construcao.md · node tela-a2/conferir-construcao.mjs (79/79 na construção; 90/90 depois de F-01…F-10)",
+  "reconciliacao": "tela-a2/reconciliacao.md · reconciliacao.json",
+  "remedida": "tela-a2/auditoria/remedida-2026-11-02/ (auditoria.md · corrigidos.json · achados.json · conformes.json · incertos.json · medidas/) · página govbr-corpus 1abcc50 · 12 achados sumiram, 22 persistem (22/34 em conferir-auditoria), 0 novos",
+  "candidata": "tela-a2/candidata/ground-truth-acompanhamento.json (1.0.0-candidata, intacta)"
+ },
+ "violations": [
+  {
+   "id": "U-01",
+   "anchor": "#tab-requerimento .tab-item button",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 2,
+   "state": "sempre",
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "font-size"
+    ],
+    "allowed": [
+     "20.16px"
+    ],
+    "note": "Tabela Tab › Especificações › Tipografia: Rótulo da Tab = --font-size-scale-up-02 (20,16 px no core 3.7.0, o que o core dá sem a folha da tela). pagina.css: .abas-requerimento .tab-item button { font-size: var(--font-size-scale-base) } = 14 px."
+   },
+   "rules": [],
+   "categories": [
+    "token",
+    "tipografia"
+   ],
+   "description": "Estrato DS · variante rotulo-aba-pequeno · sorteada (a2-10aee59f9c1b). Os rótulos das duas abas (Andamento, Documentos) computam 14 px (--font-size-scale-base, posto pela folha da tela); a tabela de Tipografia da Tab pede --font-size-scale-up-02 (20,16 px), peso medium. Só o tamanho muda. A auditoria cega não tinha a tabela no universo dela; a medida é da conferência de construção e o predicado a refaz."
+  },
+  {
+   "id": "U-02",
+   "anchor": "#upl-documento .upload-button",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "S1",
+   "rules": [],
+   "categories": [
+    "componente",
+    "comportamento"
+   ],
+   "description": "Estrato DS · variante borda-sem-feedback · sorteada (a2-caf6bc80cb4b) · coincide com o core 3.7.0. Arrastar um arquivo válido (PDF) sobre a área do upload liga o estado Dropzone ativo da página (fundo de interação, cursor copy) mas a borda continua na cor de interação rgb(19, 81, 180); a norma pede borda verde. Sem predicado na referência (o observável pede arrasto sintético dentro de S1); medido em tela-a2/conferir-construcao.mjs."
+  },
+  {
+   "id": "U-03",
+   "anchor": "#titulo-duvidas",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "font-size"
+    ],
+    "forbidden": [
+     "16px"
+    ],
+    "note": "pagina.css: .titulo-duvidas { font-size: 16px } (valor literal da variante); o h2 do formulário computa --font-size-scale-up-05 (34,832 px)."
+   },
+   "rules": [
+    "govbr-3.7.0-foundation-global-7b7256828c9c",
+    "govbr-3.7.0-foundation-global-21fb08664799"
+   ],
+   "categories": [
+    "token",
+    "tipografia"
+   ],
+   "description": "Estrato DS · variante titulo-fora-da-tabela · sorteada (a2-329f74d7646c). O h2 'Dúvidas Frequentes' computa 16px / 700 — valor fora da tabela de estilos tipográficos (e fora da escala Minor Third); o outro h2 da página ('Enviar Documento Pendente') segue a tabela (34,832 px, regular)."
+  },
+  {
+   "id": "U-04",
+   "anchor": "#stp-andamento .etapa-decisao",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "S0",
+   "rules": [
+    "govbr-3.7.0-component-step-518405a28697"
+   ],
+   "categories": [
+    "componente",
+    "estrutura"
+   ],
+   "description": "Estrato DS · variante sem-indicador · sorteada (a2-52ea5c58a080). O indicador da 3ª etapa ('Decisão') — o ::before do .step-progress-btn com o número — fica visibility:hidden; rótulo e linha do tempo continuam. As etapas 1, 2 e 4 mostram o indicador (40×40, número). Sem predicado na referência (o observável é um pseudo-elemento); medido em tela-a2/auditoria/conferir-auditoria.mjs e tela-a2/conferir-construcao.mjs."
+  },
+  {
+   "id": "U-05",
+   "anchor": "#msg-pendencia .fechar-mensagem",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "justify-content",
+     "align-items"
+    ],
+    "forbidden": [
+     "flex-start"
+    ],
+    "quantifier": "alguma",
+    "note": "pagina.css: .aviso-pendencia .fechar-mensagem { justify-content: flex-start; align-items: flex-start } (construcao.md); o .br-button circular do core centra o ícone (center/center)."
+   },
+   "rules": [],
+   "categories": [
+    "componente",
+    "token"
+   ],
+   "description": "Estrato DS · variante icone-descentralizado · sorteada (a2-5f85eeafe863). No botão Fechar da mensagem de pendência (32×32) o ícone fica no canto superior esquerdo (justify-content/align-items flex-start): o centro do ícone desvia 8 px do centro do botão. Os outros botões só de ícone da página (gatilhos das tooltips, do select, Fechar da mensagem de retorno) têm o ícone centrado (≤ 1 px)."
+  },
+  {
+   "id": "U-06",
+   "anchor": "#tip-protocolo-gatilho .rotulo-botao, #tip-prazo-gatilho .rotulo-botao",
+   "scope": "todos",
+   "expectedCount": 2,
+   "state": "sempre",
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "clip"
+    ],
+    "allowed": [
+     "rect(0px, 0px, 0px, 0px)"
+    ],
+    "note": "Ocultação visual (.sr-only da folha da tela; o core 3.7.0 não define a classe): os spans conformes da página (Fechar de msg-pendencia e de msg-retorno) computam clip rect(0px, 0px, 0px, 0px), 1×1 px."
+   },
+   "rules": [
+    "govbr-3.7.0-foundation-global-afb62719493b",
+    "govbr-3.7.0-component-button-81f5e26ec0ef",
+    "wcag:2.5.3"
+   ],
+   "categories": [
+    "estrutura",
+    "acessibilidade"
+   ],
+   "description": "Estrato DS · variante texto-alternativo-visivel · COMPARTILHADA pelos dois gatilhos de ajuda do card (NUP e prazo). O texto alternativo do botão só de ícone é um span.rotulo-botao sem a ocultação visual: aparece escrito ao lado do ícone ('Ajuda sobre o NUP', 'Ajuda sobre o prazo', clip auto, largura > 20 px). Os spans dos dois Fechar estão ocultos visualmente (sr-only, 1×1, clip rect(0px, 0px, 0px, 0px)). O nome acessível dos gatilhos continua vindo do balão (aria-labelledby)."
+  },
+  {
+   "id": "U-07",
+   "anchor": "#aviso-email, #aviso-sms",
+   "scope": "todos",
+   "expectedCount": 2,
+   "state": "S1",
+   "rules": [
+    "govbr-3.7.0-accessibility-switch-364149c5aea4",
+    "govbr-3.7.0-accessibility-global-5817ddd685a6",
+    "wcag:4.1.2"
+   ],
+   "categories": [
+    "acessibilidade",
+    "comportamento"
+   ],
+   "description": "Estrato DS · variante aria-checked-fixo · COMPARTILHADA pelos dois switches (e-mail, SMS) · coincide com o core 3.7.0 (o pacote não mantém aria-checked; os exemplos oficiais do Switch não trazem o atributo). A marcação traz aria-checked=\"false\" e nada o atualiza: ligado o switch (Space, clique no rótulo ou checkbox principal), checked=true e aria-checked continua \"false\". Sem predicado na referência (o observável pede ligar o switch); medido em tela-a2/auditoria/conferir-auditoria.mjs."
+  },
+  {
+   "id": "U-08",
+   "anchor": "#acc-duvidas button.header",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 3,
+   "state": "S0",
+   "rules": [
+    "govbr-3.7.0-accessibility-global-5817ddd685a6",
+    "wcag:4.1.2",
+    "govbr-3.7.0-accessibility-global-6a2b33a873d8",
+    "emag:2.2"
+   ],
+   "categories": [
+    "acessibilidade",
+    "comportamento"
+   ],
+   "description": "Estrato G · variante item-expandido-sem-estado · coincide com o core 3.7.0 (o BRAccordion só alterna [active] e o ícone; os exemplos oficiais não trazem aria-expanded). Os três cabeçalhos do accordion trazem aria-expanded=\"false\" na marcação e nada o atualiza: aberto o item (clique, Enter ou Espaço), o painel aparece e aria-expanded continua \"false\". As abas, ao contrário, atualizam aria-selected. Uma unidade (um único conserto repara os três). Sem predicado na referência; medido em tela-a2/auditoria/conferir-auditoria.mjs."
+  },
+  {
+   "id": "U-09",
+   "anchor": "#tipo-documento",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "S2",
+   "acceptance": {
+    "kind": "atributos-ausentes",
+    "attributes": [
+     "aria-describedby",
+     "aria-invalid"
+    ]
+   },
+   "rules": [
+    "govbr-3.7.0-accessibility-global-271582e4fbe8",
+    "emag:6.6",
+    "wcag:3.3.1",
+    "govbr-3.7.0-pattern-global-dc80c4e7406b"
+   ],
+   "categories": [
+    "formulario",
+    "acessibilidade"
+   ],
+   "description": "Estrato G · variante erro-so-borda. Depois de Enviar documento com o formulário vazio, o campo 'Tipo de documento' só ganha a borda de erro (--danger, 2 px): nenhum texto identifica e descreve o erro, nada o liga ao campo (sem aria-describedby, sem aria-invalid), e a mensagem de retorno diz que há campos com problema sem nomeá-lo. O upload inválido, na mesma tela, tem texto de erro ligado por aria-describedby. O predicado cobre a parte da associação; a ausência de texto está medida em tela-a2/auditoria/conferir-auditoria.mjs."
+  },
+  {
+   "id": "U-10",
+   "anchor": "meta[http-equiv=\"refresh\"]",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "rules": [
+    "govbr-3.7.0-accessibility-global-53236e27ac9c",
+    "govbr-3.7.0-accessibility-global-3a0935b60260",
+    "emag:2.3",
+    "govbr-3.7.0-accessibility-global-6021746e010c",
+    "govbr-3.7.0-accessibility-global-6b0032e5c8b1",
+    "emag:2.4",
+    "wcag:3.2.5"
+   ],
+   "categories": [
+    "acessibilidade",
+    "comportamento"
+   ],
+   "description": "Estrato G · variante recarga-periodica. O head tem <meta http-equiv=\"refresh\" content=\"300\">, sem url e sem aviso: a página se recarrega sozinha a cada 300 s (observado aos 300,1 s numa janela de 360 s em contexto próprio, plano § 14.5). A recarga devolve a página ao estado inicial (aba Andamento, select vazio, switch desligado). A âncora é o próprio meta; a existência dele é o defeito. Sem predicado na referência; medido em tela-a2/auditoria/observar-360.mjs e tela-a2/conferir-construcao.mjs."
+  },
+  {
+   "id": "U-11",
+   "anchor": "#msg-retorno div.br-button[role=button]",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "S2",
+   "conditional": true,
+   "acceptance": {
+    "kind": "classe-no-elemento",
+    "classe": "br-button",
+    "tag": "div"
+   },
+   "rules": [
+    "govbr-3.7.0-accessibility-global-7c91abad32ce",
+    "govbr-3.7.0-accessibility-global-2afc99353c13",
+    "emag:1.2"
+   ],
+   "categories": [
+    "estrutura",
+    "acessibilidade"
+   ],
+   "description": "Estrato G · variante fechar-div. O botão Fechar da mensagem de retorno é <div class=\"br-button circle small\" role=\"button\" tabindex=\"0\"> com Enter e Espaço tratados, no lugar do <button> do exemplo oficial; continua operável por teclado e nomeado — o defeito é só o elemento. O Fechar da mensagem de pendência é <button>. Mesma variante da A-06 da tela A (ver E-03)."
+  },
+  {
+   "id": "U-12",
+   "anchor": "#arquivo-apoio",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "S1",
+   "rules": [
+    "govbr-3.7.0-accessibility-global-d301511184d7",
+    "emag:6.5",
+    "wcag:3.3.2"
+   ],
+   "categories": [
+    "formulario",
+    "acessibilidade"
+   ],
+   "description": "Estrato G · variante sem-formato. O campo de envio só aceita PDF, JPG ou PNG, com no máximo 5 MB (o envio de um .txt é recusado com essa restrição), mas a instrução junto do campo (texto de apoio ligado por aria-describedby) só diz que se pode arrastar o arquivo: formatos e tamanho máximo não são informados antes do envio. Sem predicado na referência (o observável é o conteúdo do texto); medido em tela-a2/conferir-construcao.mjs."
+  },
+  {
+   "id": "U-13",
+   "anchor": "#msg-pendencia font[color], #msg-pendencia [align]",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 2,
+   "state": "sempre",
+   "rules": [
+    "govbr-3.7.0-accessibility-global-1f1370424402",
+    "govbr-3.7.0-accessibility-global-19cbc02f51c6",
+    "govbr-3.7.0-accessibility-global-9282ff8b00ff",
+    "emag:1.1",
+    "govbr-3.7.0-accessibility-global-49089865cd5d"
+   ],
+   "categories": [
+    "estrutura",
+    "acessibilidade"
+   ],
+   "description": "Estrato G · variante apresentacao-no-html. A cor e o alinhamento do texto da mensagem de pendência vêm de atributos de apresentação no HTML — <div class=\"content\" align=\"left\"> e o texto dentro de <font color=\"#333333\"> — com os mesmos valores que o CSS já dá. Nenhum font/align no card nem na mensagem de retorno. Uma unidade com dois participantes. Sem predicado na referência; a âncora só resolve com o defeito presente."
+  },
+  {
+   "id": "U-14",
+   "anchor": "#fs-avisos",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "S1",
+   "rules": [
+    "govbr-3.7.0-accessibility-global-4d5b05a1c29c",
+    "emag:6.7",
+    "wcag:1.3.1",
+    "govbr-3.7.0-pattern-global-c648efdf7201"
+   ],
+   "categories": [
+    "formulario",
+    "estrutura"
+   ],
+   "description": "Estrato G · variante grupo-sem-legend. O fieldset dos avisos (checkbox principal e os dois switches) não tem legend; 'Avisos sobre o requerimento' é um p logo antes dele, sem ligação programática. Sem predicado na referência (as espécies existentes não medem ausência de filho); medido em tela-a2/auditoria/conferir-auditoria.mjs."
+  }
+ ]
+}

@@ -109,5 +109,25 @@
         "nota": "SPA, mesmas regras da tela B (vistorias.isolamento.site) sobre a árvore pnip-d/: árvore inteira congelada (chunks lazy montados em tempo de execução), índice a todo GET sem extensão sob /pnip-d/, e o único alias é o ícone do \"Sair\" (sob <base href=\"/pnip-d/\"> o template sai do prefixo). O manifesto da ala é proveniência e fica fora do site."
       }
     }
+  },
+  "acompanhamento": {
+    "titulo": "tela A2 — acompanhar requerimento (tela de desenvolvimento irmã da A, D-160)",
+    "entry": "acompanhamento.html",
+    "reference": "ground-truth-acompanhamento.json",
+    "sources": [],
+    "runs": { "com": "results/runs-acompanhamento", "sem": "results/runs-acompanhamento-ablacao", "smoke": "results/runs-acompanhamento-smoke" },
+    "review": "results/semantic-review-acompanhamento",
+    "nota": "Tela A2 (NAT-110), de desenvolvimento, irmã da A: \"Acompanhar requerimento\", construída do sorteio da revisão formal 2 (tela-a2/sorteio-2.json, D-160) com a marcação oficial e o core.js do @govbr-ds/core 3.7.0. Referência ground-truth-acompanhamento.json 1.0.0 congelada em 2026-11-03 (D-162, NAT-113): 14 specs / 16 unidades, sem a exposta 13 / 15; preparação (sorteio, construção, auditoria cega, re-medida, reconciliação) em tela-a2/. Entrada Vite, mas HTML escrito à mão com scripts clássicos de public/acompanhamento/ (o único arquivo que o Vite processa é a folha src/acompanhamento/acompanhamento.css): não há TSX para o ESLint ler (sources vazio). Página comum, não SPA: a superfície congela o fechamento de arquivos da entrada, sem site. Para servir o dist/ a conferir:referencia: node tela-a2/servir.mjs (porta 3218).",
+    "isolamento": {
+      "texto": "Acompanhar Requerimento",
+      "alvo": "#tab-requerimento",
+      "fonte": "/src/acompanhamento/acompanhamento.css",
+      "interacao": {
+        "clicar": "#aba-documentos",
+        "esperar": "#painel-documentos.active",
+        "nota": "Prova de vida, não estado de gabarito: a aba Documentos troca o painel (S1 da referência é alcançado pelo _meta.setup dela, não por aqui). A meta refresh de 300 s (U-10) recarrega a página também na superfície."
+      },
+      "externos": []
+    }
   }
 }
