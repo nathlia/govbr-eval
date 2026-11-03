@@ -1,0 +1,681 @@
+{
+ "_meta": {
+  "estado": "S1",
+  "medidoEm": "2026-11-02T23:13:57.417Z",
+  "viewport": "1280x900",
+  "headless": true
+ },
+ "dados": {
+  "cursores": {
+   "0": {
+    "el": "a.br-button.circle",
+    "texto": "Página Inicial",
+    "disabled": null,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "1": {
+    "el": "a",
+    "texto": "Meus Requerimentos",
+    "disabled": null,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "2": {
+    "el": "button.br-button.circle.small.fechar-mensagem",
+    "texto": "Fechar",
+    "disabled": false,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "3": {
+    "el": "button#tip-protocolo-gatilho.br-button.circle.ajuda-resumo.ajuda-protocolo",
+    "texto": "Ajuda sobre o NUP",
+    "disabled": false,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "4": {
+    "el": "button#tip-prazo-gatilho.br-button.circle.ajuda-resumo.ajuda-prazo",
+    "texto": "Ajuda sobre o prazo",
+    "disabled": false,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "5": {
+    "el": "a.detalhe-resumo",
+    "texto": "Ver andamento detalhado",
+    "disabled": null,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "6": {
+    "el": "button#aba-andamento",
+    "texto": "Andamento",
+    "disabled": false,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "7": {
+    "el": "button#aba-documentos",
+    "texto": "Documentos",
+    "disabled": false,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "8": {
+    "el": "label",
+    "texto": "Tipo de documento",
+    "disabled": null,
+    "cursor": "default",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "9": {
+    "el": "input#tipo-documento",
+    "texto": "",
+    "disabled": false,
+    "cursor": "text",
+    "cursorRotulo": "default",
+    "visivel": true
+   },
+   "10": {
+    "el": "button.br-button",
+    "texto": "",
+    "disabled": false,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "11": {
+    "el": "input#tipo-documento-op0",
+    "texto": "",
+    "disabled": false,
+    "cursor": "default",
+    "cursorRotulo": "pointer",
+    "visivel": false
+   },
+   "12": {
+    "el": "input#tipo-documento-op1",
+    "texto": "",
+    "disabled": false,
+    "cursor": "default",
+    "cursorRotulo": "pointer",
+    "visivel": false
+   },
+   "13": {
+    "el": "input#tipo-documento-op2",
+    "texto": "",
+    "disabled": false,
+    "cursor": "default",
+    "cursorRotulo": "pointer",
+    "visivel": false
+   },
+   "14": {
+    "el": "label.upload-label",
+    "texto": "Envio de documento",
+    "disabled": null,
+    "cursor": "default",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "15": {
+    "el": "input#arquivo-documento.upload-input",
+    "texto": "",
+    "disabled": false,
+    "cursor": "default",
+    "cursorRotulo": "default",
+    "visivel": false
+   },
+   "16": {
+    "el": "button.upload-button",
+    "texto": "Selecione o arquivo",
+    "disabled": false,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "17": {
+    "el": "button.br-button.primary.acao-enviar",
+    "texto": "Enviar Documento",
+    "disabled": false,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "18": {
+    "el": "input#avisos-todos",
+    "texto": "",
+    "disabled": false,
+    "cursor": "default",
+    "cursorRotulo": "pointer",
+    "visivel": false
+   },
+   "19": {
+    "el": "label",
+    "texto": "Todos os avisos",
+    "disabled": null,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "20": {
+    "el": "input#aviso-email",
+    "texto": "",
+    "disabled": false,
+    "cursor": "default",
+    "cursorRotulo": "pointer",
+    "visivel": false
+   },
+   "21": {
+    "el": "label",
+    "texto": "Receber avisos por e-mail",
+    "disabled": null,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "22": {
+    "el": "input#aviso-sms",
+    "texto": "",
+    "disabled": false,
+    "cursor": "default",
+    "cursorRotulo": "pointer",
+    "visivel": false
+   },
+   "23": {
+    "el": "label",
+    "texto": "Receber avisos por SMS (mensag",
+    "disabled": null,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "24": {
+    "el": "button.header",
+    "texto": "Como envio o documento pendent",
+    "disabled": false,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "25": {
+    "el": "button.header",
+    "texto": "Quanto tempo leva a análise?",
+    "disabled": false,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "26": {
+    "el": "button.header",
+    "texto": "Como recebo os avisos do reque",
+    "disabled": false,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "27": {
+    "el": "a.br-button.secondary.acao-voltar",
+    "texto": "Meus Requerimentos",
+    "disabled": null,
+    "cursor": "pointer",
+    "cursorRotulo": null,
+    "visivel": true
+   },
+   "regra": "estados: cursor mão em interativos; não-permitido em desabilitados",
+   "_ms_desde_carga": 771,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0
+  },
+  "select-teclado": {
+   "regra": "select: Tab, abrir com foco, setas, Enter/Escape",
+   "_ms_desde_carga": 3387,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "tabs": 11,
+   "foco": "input#tipo-documento",
+   "aoFocar": {
+    "visivel": false,
+    "expandedCombobox": "false",
+    "expandedBotao": "false",
+    "activedescendant": null,
+    "itensFocados": [
+     false,
+     false,
+     false
+    ],
+    "valor": ""
+   },
+   "setaBaixo1": {
+    "ativo": "div.br-item \"Comprovante de residência\"",
+    "visivel": true,
+    "expandedCombobox": "true",
+    "expandedBotao": "true",
+    "activedescendant": null,
+    "itensFocados": [
+     true,
+     false,
+     false
+    ],
+    "valor": ""
+   },
+   "setaBaixo2": {
+    "ativo": "div.br-item \"Documento de identidade\"",
+    "visivel": true,
+    "expandedCombobox": "true",
+    "expandedBotao": "true",
+    "activedescendant": null,
+    "itensFocados": [
+     false,
+     true,
+     false
+    ],
+    "valor": ""
+   },
+   "espaco": {
+    "ativo": "body",
+    "visivel": false,
+    "expandedCombobox": "false",
+    "expandedBotao": "false",
+    "activedescendant": null,
+    "itensFocados": [
+     false,
+     false,
+     false
+    ],
+    "valor": "Documento de identidade"
+   },
+   "enter": {
+    "ativo": "body",
+    "visivel": false,
+    "expandedCombobox": "false",
+    "expandedBotao": "false",
+    "activedescendant": null,
+    "itensFocados": [
+     false,
+     false,
+     false
+    ],
+    "valor": "Documento de identidade"
+   },
+   "escape": {
+    "ativo": "body",
+    "visivel": false,
+    "expandedCombobox": "false",
+    "expandedBotao": "false",
+    "activedescendant": null,
+    "itensFocados": [
+     false,
+     false,
+     false
+    ],
+    "valor": "Documento de identidade"
+   }
+  },
+  "select-enter-no-campo": {
+   "regra": "select: Enter/Space com foco no campo abrem a lista?",
+   "_ms_desde_carga": 2432,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "enter": false,
+   "ativo": "div.br-button.circle.small.fechar-mensagem[aria-label=Fechar] \"Fechar\"",
+   "altSetaBaixo": false
+  },
+  "select-clique": {
+   "regra": "select: botão abre lista; sombra; posição; escolha",
+   "_ms_desde_carga": 1704,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "lista": {
+    "visivel": true,
+    "sombra": "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px",
+    "posicao": "absolute",
+    "zIndex": "1",
+    "abaixoDoCampo": true,
+    "caixa": {
+     "x": 60,
+     "y": 471.671875,
+     "w": 400,
+     "h": 158.890625
+    },
+    "campo": {
+     "x": 60,
+     "w": 400
+    },
+    "itens": [
+     {
+      "texto": "Comprovante de residência",
+      "padding": "16px",
+      "h": 53.296875,
+      "papel": "option",
+      "radioName": "tipo-documento-opcoes",
+      "radioValue": "comprovante-residencia"
+     },
+     {
+      "texto": "Documento de identidade",
+      "padding": "16px",
+      "h": 53.296875,
+      "papel": "option",
+      "radioName": "tipo-documento-opcoes",
+      "radioValue": "documento-identidade"
+     },
+     {
+      "texto": "Procuração",
+      "padding": "16px",
+      "h": 52.296875,
+      "papel": "option",
+      "radioName": "tipo-documento-opcoes",
+      "radioValue": "procuracao"
+     }
+    ]
+   },
+   "ativo": "button.br-button[aria-label=Ocultar lista]",
+   "hoverItem": {
+    "fundo": "rgb(255, 255, 255)",
+    "fundoImagem": "linear-gradient(rgba(51, 51, 51, 0.16), rgba(51, 51, 51, 0.16))"
+   },
+   "tabComListaAberta": {
+    "ativo": "input#tipo-documento-op0",
+    "lista": true
+   }
+  },
+  "select-escolha": {
+   "regra": "select: escolher com clique preenche o campo",
+   "_ms_desde_carga": 1568,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "valor": "Procuração",
+   "lista": false,
+   "ativo": "body"
+  },
+  "checkbox-pai": {
+   "regra": "checkbox: Tab + Space; pai/filho; estado intermediário",
+   "_ms_desde_carga": 3232,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "tabs": 15,
+   "inicial": {
+    "todos": [
+     false,
+     false,
+     null
+    ],
+    "email": [
+     false,
+     "false"
+    ],
+    "sms": [
+     false,
+     "false"
+    ],
+    "viva": ""
+   },
+   "espacoPai": {
+    "todos": [
+     true,
+     false,
+     null
+    ],
+    "email": [
+     true,
+     "false"
+    ],
+    "sms": [
+     true,
+     "false"
+    ],
+    "viva": "Preferência salva."
+   },
+   "espacoPai2": {
+    "todos": [
+     false,
+     false,
+     null
+    ],
+    "email": [
+     false,
+     "false"
+    ],
+    "sms": [
+     false,
+     "false"
+    ],
+    "viva": "Preferência salva."
+   },
+   "focoFilho": "input#aviso-email",
+   "espacoFilho": {
+    "todos": [
+     true,
+     true,
+     null
+    ],
+    "email": [
+     true,
+     "false"
+    ],
+    "sms": [
+     false,
+     "false"
+    ],
+    "viva": "Preferência salva."
+   }
+  },
+  "switch-teclado": {
+   "regra": "switch: Tab, Space e Enter alternam; aria-checked acompanha; efeito imediato",
+   "_ms_desde_carga": 3528,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "tabs": 16,
+   "inicial": {
+    "checked": false,
+    "ariaChecked": "false",
+    "dataEnabled": null,
+    "dataDisabled": null,
+    "classes": "br-switch aviso-email",
+    "viva": ""
+   },
+   "espaco": {
+    "checked": true,
+    "ariaChecked": "false",
+    "dataEnabled": null,
+    "dataDisabled": null,
+    "classes": "br-switch aviso-email",
+    "viva": "Preferência salva."
+   },
+   "enter": {
+    "checked": true,
+    "ariaChecked": "false",
+    "dataEnabled": null,
+    "dataDisabled": null,
+    "classes": "br-switch aviso-email",
+    "viva": "Preferência salva."
+   },
+   "espaco2": {
+    "checked": false,
+    "ariaChecked": "false",
+    "dataEnabled": null,
+    "dataDisabled": null,
+    "classes": "br-switch aviso-email",
+    "viva": "Preferência salva."
+   },
+   "ax": {
+    "papel": "switch",
+    "nome": "Receber avisos por e-mail",
+    "props": {
+     "invalid": "false",
+     "focusable": true,
+     "focused": true,
+     "checked": "false"
+    }
+   }
+  },
+  "switch-clique": {
+   "regra": "switch: clique no rótulo alterna; aria-checked acompanha",
+   "_ms_desde_carga": 1219,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "checked": true,
+   "ariaChecked": "false",
+   "viva": "Preferência salva.",
+   "pai": [
+    true,
+    true
+   ]
+  },
+  "upload-teclado": {
+   "regra": "upload: alcançável e operável por teclado; nome acessível",
+   "_ms_desde_carga": 6376,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "tabsAteBotao": 13,
+   "inputFile": {
+    "tabIndex": 0,
+    "display": "none",
+    "visibility": "visible",
+    "opacity": "1",
+    "w": 0,
+    "h": 0,
+    "alcancadoPorTab": false
+   },
+   "enterAbreSeletor": true,
+   "ax": {
+    "#upl-documento .upload-button": {
+     "ignorado": false,
+     "motivo": [],
+     "papel": "button",
+     "nome": "Selecione o arquivo"
+    },
+    "#arquivo-documento": {
+     "ignorado": true,
+     "motivo": [
+      "notRendered"
+     ],
+     "papel": "none"
+    }
+   },
+   "estiloSuperficie": {
+    "borda": "1px dashed rgb(19, 81, 180)",
+    "fundo": "rgba(0, 0, 0, 0)",
+    "raio": "4px",
+    "w": 550,
+    "h": 40,
+    "texto": "Selecione o arquivo",
+    "icone": "fas fa-upload"
+   }
+  },
+  "enviar-enter": {
+   "regra": "form: Enter no botão Enviar → mesma resposta do clique; foco",
+   "_ms_desde_carga": 2720,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "mensagem": {
+    "presente": true,
+    "visivel": true,
+    "caixa": {
+     "x": 60,
+     "y": 841,
+     "w": 1160,
+     "h": 96.7
+    }
+   },
+   "ativo": "div.br-button.circle.small.fechar-mensagem[aria-label=Fechar] \"Fechar\"",
+   "url": "http://127.0.0.1:3218/acompanhamento.html"
+  },
+  "erro-borda-S1": {
+   "regra": "referência S1: borda do campo do select antes do erro",
+   "_ms_desde_carga": 780,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "bordaCampo": "1px solid rgb(136, 136, 136)",
+   "corRotulo": "rgb(51, 51, 51)"
+  },
+  "switch-ax-ligado": {
+   "regra": "switch: aria-checked e estado AX com o switch ligado",
+   "_ms_desde_carga": 1220,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "#aviso-email": {
+    "checkedDom": true,
+    "indeterminateDom": false,
+    "ariaChecked": "false",
+    "papel": "switch",
+    "nome": "Receber avisos por e-mail",
+    "axChecked": "true"
+   },
+   "#aviso-sms": {
+    "checkedDom": false,
+    "indeterminateDom": false,
+    "ariaChecked": "false",
+    "papel": "switch",
+    "nome": "Receber avisos por SMS (mensagem de texto no celular)",
+    "axChecked": "false"
+   },
+   "#avisos-todos": {
+    "checkedDom": true,
+    "indeterminateDom": true,
+    "ariaChecked": null,
+    "papel": "checkbox",
+    "nome": "Todos os avisos",
+    "axChecked": "mixed"
+   }
+  },
+  "select-foco-depois-escolha": {
+   "regra": "select: para onde vai o Tab depois de escolher com Space",
+   "_ms_desde_carga": 2761,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "depoisEscolha": "body",
+   "valor": "Comprovante de residência",
+   "tab": "button.upload-button \"Selecione o arquivo\"",
+   "shiftTab": "button.br-button[aria-label=Exibir lista]"
+  },
+  "select-digitar": {
+   "regra": "select: o ícone de lupa corresponde a uma ação (digitar filtra?)",
+   "_ms_desde_carga": 1710,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "digitado": "pro",
+   "lista": {
+    "visivel": true,
+    "itensVisiveis": [
+     "Comprovante de residência",
+     "Procuração"
+    ]
+   },
+   "apagado": {
+    "valor": "",
+    "placeholderVisivel": true
+   }
+  },
+  "select-sem-resultado": {
+   "regra": "select: pesquisa sem resultado mostra feedback (Empty State / item not-found)?",
+   "_ms_desde_carga": 1503,
+   "_navegacoesDuranteSonda": 0,
+   "_documentosNovosDuranteSonda": 0,
+   "listaVisivel": true,
+   "itensVisiveis": [
+    {
+     "texto": "Não encontramos o que você está procurando!",
+     "classes": "br-item not-found"
+    }
+   ],
+   "notFound": [
+    {
+     "texto": "Não encontramos o que você está procurando!",
+     "classes": "br-item not-found",
+     "visivel": true
+    }
+   ],
+   "feedbackAbaixo": []
+  }
+ }
+}

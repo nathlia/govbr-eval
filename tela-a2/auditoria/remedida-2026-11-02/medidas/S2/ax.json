@@ -1,0 +1,1752 @@
+{
+ "_meta": {
+  "estado": "S2",
+  "nota": "Enviar documento acionado com o formulário vazio",
+  "afterStep": 4,
+  "path": "/acompanhamento.html",
+  "medidoEm": "2026-11-02T23:11:58.387Z",
+  "ms_desde_carga": 2004,
+  "navegacoes": 1,
+  "externos": [],
+  "escritas": [],
+  "errosDePagina": [],
+  "ms_desde_carga_tab": 12671
+ },
+ "dados": [
+  {
+   "id": "2",
+   "papel": "RootWebArea",
+   "nome": "Acompanhar requerimento — Atendimento gov.br",
+   "fonteNome": "relatedElement",
+   "descricao": null,
+   "backend": 2,
+   "props": {
+    "focusable": true,
+    "focused": true,
+    "url": "http://127.0.0.1:3218/acompanhamento.html"
+   }
+  },
+  {
+   "id": "64",
+   "pai": "63",
+   "papel": "navigation",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 64,
+   "props": {}
+  },
+  {
+   "id": "81",
+   "pai": "63",
+   "papel": "banner",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 81,
+   "props": {}
+  },
+  {
+   "id": "92",
+   "pai": "63",
+   "papel": "main",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 92,
+   "props": {}
+  },
+  {
+   "id": "360",
+   "pai": "63",
+   "papel": "contentinfo",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 360,
+   "props": {}
+  },
+  {
+   "id": "65",
+   "pai": "64",
+   "papel": "link",
+   "nome": "Ir para o conteúdo",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 65,
+   "props": {
+    "focusable": true,
+    "url": "http://127.0.0.1:3218/acompanhamento.html#main-content",
+    "keyshortcuts": "Alt+1"
+   }
+  },
+  {
+   "id": "72",
+   "pai": "64",
+   "papel": "link",
+   "nome": "Ir para o rodapé",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 72,
+   "props": {
+    "focusable": true,
+    "url": "http://127.0.0.1:3218/acompanhamento.html#rodape",
+    "keyshortcuts": "Alt+2"
+   }
+  },
+  {
+   "id": "5",
+   "pai": "84",
+   "papel": "image",
+   "nome": "gov.br",
+   "fonteNome": "attribute",
+   "descricao": null,
+   "backend": 5,
+   "props": {
+    "url": "http://127.0.0.1:3218/acompanhamento/marca-govbr.svg"
+   }
+  },
+  {
+   "id": "86",
+   "pai": "84",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 86,
+   "props": {}
+  },
+  {
+   "id": "91",
+   "pai": "90",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 91,
+   "props": {}
+  },
+  {
+   "id": "93",
+   "pai": "52",
+   "papel": "navigation",
+   "nome": "Trilha de navegação",
+   "fonteNome": "attribute",
+   "descricao": null,
+   "backend": 93,
+   "props": {}
+  },
+  {
+   "id": "109",
+   "pai": "52",
+   "papel": "heading",
+   "nome": "Acompanhar Requerimento",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 109,
+   "props": {
+    "focusable": true,
+    "level": 1
+   }
+  },
+  {
+   "id": "110",
+   "pai": "52",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 110,
+   "props": {}
+  },
+  {
+   "id": "132",
+   "pai": "52",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 132,
+   "props": {}
+  },
+  {
+   "id": "18",
+   "pai": "52",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 18,
+   "props": {}
+  },
+  {
+   "id": "48",
+   "pai": "52",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 48,
+   "props": {}
+  },
+  {
+   "id": "49",
+   "pai": "52",
+   "papel": "region",
+   "nome": "Dúvidas Frequentes",
+   "fonteNome": "relatedElement",
+   "descricao": null,
+   "backend": 49,
+   "props": {}
+  },
+  {
+   "id": "357",
+   "pai": "52",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 357,
+   "props": {}
+  },
+  {
+   "id": "362",
+   "pai": "361",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 362,
+   "props": {}
+  },
+  {
+   "id": "366",
+   "pai": "365",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 366,
+   "props": {}
+  },
+  {
+   "id": "67",
+   "pai": "65",
+   "papel": "StaticText",
+   "nome": "Ir para o conteúdo",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 67,
+   "props": {}
+  },
+  {
+   "id": "74",
+   "pai": "72",
+   "papel": "StaticText",
+   "nome": "Ir para o rodapé",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 74,
+   "props": {}
+  },
+  {
+   "id": "87",
+   "pai": "86",
+   "papel": "StaticText",
+   "nome": "Atendimento ao Cidadão",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 87,
+   "props": {}
+  },
+  {
+   "id": "11",
+   "pai": "91",
+   "papel": "StaticText",
+   "nome": "Acompanhamento de Requerimentos",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 11,
+   "props": {}
+  },
+  {
+   "id": "94",
+   "pai": "93",
+   "papel": "list",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 94,
+   "props": {}
+  },
+  {
+   "id": "12",
+   "pai": "109",
+   "papel": "StaticText",
+   "nome": "Acompanhar Requerimento",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 12,
+   "props": {}
+  },
+  {
+   "id": "115",
+   "pai": "114",
+   "papel": "StaticText",
+   "nome": "Alerta",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 115,
+   "props": {}
+  },
+  {
+   "id": "116",
+   "pai": "110",
+   "papel": "alert",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 116,
+   "props": {
+    "live": "assertive",
+    "atomic": true,
+    "relevant": "additions text"
+   }
+  },
+  {
+   "id": "122",
+   "pai": "110",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 122,
+   "props": {}
+  },
+  {
+   "id": "134",
+   "pai": "133",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 134,
+   "props": {}
+  },
+  {
+   "id": "137",
+   "pai": "136",
+   "papel": "StaticText",
+   "nome": "Número Único de Protocolo (NUP): 00190.000123/2026-41",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 137,
+   "props": {}
+  },
+  {
+   "id": "14",
+   "pai": "136",
+   "papel": "button",
+   "nome": "Use o NUP para consultar",
+   "fonteNome": "relatedElement",
+   "descricao": null,
+   "backend": 14,
+   "props": {
+    "invalid": "false",
+    "focusable": true
+   }
+  },
+  {
+   "id": "145",
+   "pai": "144",
+   "papel": "StaticText",
+   "nome": "Serviço: Revisão de benefício assistencial",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 145,
+   "props": {}
+  },
+  {
+   "id": "147",
+   "pai": "146",
+   "papel": "StaticText",
+   "nome": "Situação: Em análise",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 147,
+   "props": {}
+  },
+  {
+   "id": "149",
+   "pai": "148",
+   "papel": "StaticText",
+   "nome": "Prazo de análise: até 30 dias",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 149,
+   "props": {}
+  },
+  {
+   "id": "150",
+   "pai": "148",
+   "papel": "button",
+   "nome": "Prazo em dias corridos",
+   "fonteNome": "relatedElement",
+   "descricao": null,
+   "backend": 150,
+   "props": {
+    "invalid": "false",
+    "focusable": true
+   }
+  },
+  {
+   "id": "159",
+   "pai": "132",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 159,
+   "props": {}
+  },
+  {
+   "id": "162",
+   "pai": "18",
+   "papel": "navigation",
+   "nome": "Seções do requerimento",
+   "fonteNome": "attribute",
+   "descricao": null,
+   "backend": 162,
+   "props": {}
+  },
+  {
+   "id": "21",
+   "pai": "19",
+   "papel": "tabpanel",
+   "nome": "Documentos",
+   "fonteNome": "relatedElement",
+   "descricao": null,
+   "backend": 21,
+   "props": {}
+  },
+  {
+   "id": "324",
+   "pai": "49",
+   "papel": "heading",
+   "nome": "Dúvidas Frequentes",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 324,
+   "props": {
+    "level": 2
+   }
+  },
+  {
+   "id": "326",
+   "pai": "49",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 326,
+   "props": {}
+  },
+  {
+   "id": "358",
+   "pai": "357",
+   "papel": "link",
+   "nome": "Meus Requerimentos",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 358,
+   "props": {
+    "focusable": true,
+    "url": "http://127.0.0.1:3218/meus-requerimentos.html"
+   }
+  },
+  {
+   "id": "3",
+   "pai": "362",
+   "papel": "image",
+   "nome": "gov.br",
+   "fonteNome": "attribute",
+   "descricao": null,
+   "backend": 3,
+   "props": {
+    "url": "http://127.0.0.1:3218/acompanhamento/marca-govbr-negativa.svg"
+   }
+  },
+  {
+   "id": "367",
+   "pai": "366",
+   "papel": "StaticText",
+   "nome": "Todo o conteúdo deste site está publicado sob a licença ",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 367,
+   "props": {}
+  },
+  {
+   "id": "368",
+   "pai": "366",
+   "papel": "strong",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 368,
+   "props": {}
+  },
+  {
+   "id": "-1000000047",
+   "pai": "67",
+   "papel": "InlineTextBox",
+   "nome": "Ir para o conteúdo",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000048",
+   "pai": "74",
+   "papel": "InlineTextBox",
+   "nome": "Ir para o rodapé",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000049",
+   "pai": "87",
+   "papel": "InlineTextBox",
+   "nome": "Atendimento ao Cidadão",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000050",
+   "pai": "11",
+   "papel": "InlineTextBox",
+   "nome": "Acompanhamento de Requerimentos",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "95",
+   "pai": "94",
+   "papel": "listitem",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 95,
+   "props": {
+    "level": 1
+   }
+  },
+  {
+   "id": "101",
+   "pai": "94",
+   "papel": "listitem",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 101,
+   "props": {
+    "level": 1
+   }
+  },
+  {
+   "id": "7",
+   "pai": "94",
+   "papel": "listitem",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 7,
+   "props": {
+    "level": 1
+   }
+  },
+  {
+   "id": "-1000000054",
+   "pai": "12",
+   "papel": "InlineTextBox",
+   "nome": "Acompanhar Requerimento",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000055",
+   "pai": "115",
+   "papel": "InlineTextBox",
+   "nome": "Alerta",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "119",
+   "pai": "116",
+   "papel": "StaticText",
+   "nome": "Documento pendente.",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 119,
+   "props": {}
+  },
+  {
+   "id": "121",
+   "pai": "116",
+   "papel": "StaticText",
+   "nome": " Envie o comprovante de residência na aba Documentos até 20/11/2026.",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 121,
+   "props": {}
+  },
+  {
+   "id": "123",
+   "pai": "122",
+   "papel": "button",
+   "nome": "Fechar",
+   "fonteNome": "attribute",
+   "descricao": null,
+   "backend": 123,
+   "props": {
+    "invalid": "false",
+    "focusable": true
+   }
+  },
+  {
+   "id": "13",
+   "pai": "134",
+   "papel": "StaticText",
+   "nome": "Revisão de Benefício Assistencial",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 13,
+   "props": {}
+  },
+  {
+   "id": "-1000000060",
+   "pai": "137",
+   "papel": "InlineTextBox",
+   "nome": "Número Único de Protocolo (NUP): 00190.000123/2026-41",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "16",
+   "pai": "15",
+   "papel": "StaticText",
+   "nome": "Ajuda sobre o NUP",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 16,
+   "props": {}
+  },
+  {
+   "id": "-1000000062",
+   "pai": "145",
+   "papel": "InlineTextBox",
+   "nome": "Serviço: Revisão de benefício assistencial",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000063",
+   "pai": "147",
+   "papel": "InlineTextBox",
+   "nome": "Situação: Em análise",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000064",
+   "pai": "149",
+   "papel": "InlineTextBox",
+   "nome": "Prazo de análise: até 30 dias",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "154",
+   "pai": "153",
+   "papel": "StaticText",
+   "nome": "Ajuda sobre o prazo",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 154,
+   "props": {}
+  },
+  {
+   "id": "160",
+   "pai": "159",
+   "papel": "link",
+   "nome": "Ver andamento detalhado",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 160,
+   "props": {
+    "focusable": true,
+    "url": "http://127.0.0.1:3218/acompanhamento.html#tab-requerimento"
+   }
+  },
+  {
+   "id": "163",
+   "pai": "162",
+   "papel": "tablist",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 163,
+   "props": {
+    "multiselectable": false,
+    "orientation": "horizontal"
+   }
+  },
+  {
+   "id": "239",
+   "pai": "21",
+   "papel": "heading",
+   "nome": "Enviar Documento Pendente",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 239,
+   "props": {
+    "level": 2
+   }
+  },
+  {
+   "id": "241",
+   "pai": "21",
+   "papel": "form",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 241,
+   "props": {}
+  },
+  {
+   "id": "34",
+   "pai": "21",
+   "papel": "paragraph",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 34,
+   "props": {}
+  },
+  {
+   "id": "35",
+   "pai": "21",
+   "papel": "group",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 35,
+   "props": {
+    "invalid": "false"
+   }
+  },
+  {
+   "id": "323",
+   "pai": "21",
+   "papel": "paragraph",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 323,
+   "props": {
+    "live": "polite",
+    "atomic": false,
+    "relevant": "additions text"
+   }
+  },
+  {
+   "id": "325",
+   "pai": "324",
+   "papel": "StaticText",
+   "nome": "Dúvidas Frequentes",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 325,
+   "props": {}
+  },
+  {
+   "id": "328",
+   "pai": "327",
+   "papel": "button",
+   "nome": "Como envio o documento pendente?",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 328,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "expanded": false
+   }
+  },
+  {
+   "id": "338",
+   "pai": "337",
+   "papel": "button",
+   "nome": "Quanto tempo leva a análise?",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 338,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "expanded": false
+   }
+  },
+  {
+   "id": "348",
+   "pai": "347",
+   "papel": "button",
+   "nome": "Como recebo os avisos do requerimento?",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 348,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "expanded": false
+   }
+  },
+  {
+   "id": "359",
+   "pai": "358",
+   "papel": "StaticText",
+   "nome": "Meus Requerimentos",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 359,
+   "props": {}
+  },
+  {
+   "id": "-1000000090",
+   "pai": "367",
+   "papel": "InlineTextBox",
+   "nome": "Todo o conteúdo deste site está publicado sob a licença ",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "369",
+   "pai": "368",
+   "papel": "StaticText",
+   "nome": "Creative Commons Atribuição-SemDerivações 3.0 Não Adaptada.",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 369,
+   "props": {}
+  },
+  {
+   "id": "96",
+   "pai": "95",
+   "papel": "link",
+   "nome": "Página Inicial",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 96,
+   "props": {
+    "focusable": true,
+    "url": "http://127.0.0.1:3218/inicio.html"
+   }
+  },
+  {
+   "id": "104",
+   "pai": "101",
+   "papel": "link",
+   "nome": "Meus Requerimentos",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 104,
+   "props": {
+    "focusable": true,
+    "url": "http://127.0.0.1:3218/meus-requerimentos.html"
+   }
+  },
+  {
+   "id": "108",
+   "pai": "7",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 108,
+   "props": {}
+  },
+  {
+   "id": "-1000000056",
+   "pai": "119",
+   "papel": "InlineTextBox",
+   "nome": "Documento pendente.",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000057",
+   "pai": "121",
+   "papel": "InlineTextBox",
+   "nome": " Envie o comprovante de residência na aba Documentos até 20/11/2026.",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "127",
+   "pai": "126",
+   "papel": "StaticText",
+   "nome": "Fechar",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 127,
+   "props": {}
+  },
+  {
+   "id": "-1000000059",
+   "pai": "13",
+   "papel": "InlineTextBox",
+   "nome": "Revisão de Benefício Assistencial",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000061",
+   "pai": "16",
+   "papel": "InlineTextBox",
+   "nome": "Ajuda sobre o NUP",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000065",
+   "pai": "154",
+   "papel": "InlineTextBox",
+   "nome": "Ajuda sobre o prazo",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "161",
+   "pai": "160",
+   "papel": "StaticText",
+   "nome": "Ver andamento detalhado",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 161,
+   "props": {}
+  },
+  {
+   "id": "165",
+   "pai": "163",
+   "papel": "tab",
+   "nome": "Andamento",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 165,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "selected": false
+   }
+  },
+  {
+   "id": "20",
+   "pai": "163",
+   "papel": "tab",
+   "nome": "Documentos",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 20,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "selected": true,
+    "controls": "painel-documentos"
+   }
+  },
+  {
+   "id": "240",
+   "pai": "239",
+   "papel": "StaticText",
+   "nome": "Enviar Documento Pendente",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 240,
+   "props": {}
+  },
+  {
+   "id": "50",
+   "pai": "242",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 50,
+   "props": {}
+  },
+  {
+   "id": "22",
+   "pai": "241",
+   "papel": "paragraph",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 22,
+   "props": {}
+  },
+  {
+   "id": "24",
+   "pai": "23",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 24,
+   "props": {}
+  },
+  {
+   "id": "51",
+   "pai": "29",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 51,
+   "props": {}
+  },
+  {
+   "id": "308",
+   "pai": "29",
+   "papel": "alert",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 308,
+   "props": {
+    "live": "assertive",
+    "atomic": true,
+    "relevant": "additions text"
+   }
+  },
+  {
+   "id": "31",
+   "pai": "29",
+   "papel": "paragraph",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 31,
+   "props": {}
+  },
+  {
+   "id": "32",
+   "pai": "241",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 32,
+   "props": {}
+  },
+  {
+   "id": "314",
+   "pai": "34",
+   "papel": "StaticText",
+   "nome": "Avisos sobre o requerimento",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 314,
+   "props": {}
+  },
+  {
+   "id": "37",
+   "pai": "36",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 37,
+   "props": {}
+  },
+  {
+   "id": "40",
+   "pai": "35",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 40,
+   "props": {}
+  },
+  {
+   "id": "44",
+   "pai": "35",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 44,
+   "props": {}
+  },
+  {
+   "id": "-1000000085",
+   "pai": "325",
+   "papel": "InlineTextBox",
+   "nome": "Dúvidas Frequentes",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "333",
+   "pai": "332",
+   "papel": "StaticText",
+   "nome": "Como envio o documento pendente?",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 333,
+   "props": {}
+  },
+  {
+   "id": "343",
+   "pai": "342",
+   "papel": "StaticText",
+   "nome": "Quanto tempo leva a análise?",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 343,
+   "props": {}
+  },
+  {
+   "id": "353",
+   "pai": "352",
+   "papel": "StaticText",
+   "nome": "Como recebo os avisos do requerimento?",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 353,
+   "props": {}
+  },
+  {
+   "id": "-1000000089",
+   "pai": "359",
+   "papel": "InlineTextBox",
+   "nome": "Meus Requerimentos",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000091",
+   "pai": "369",
+   "papel": "InlineTextBox",
+   "nome": "Creative Commons Atribuição-SemDerivações 3.0 Não Adaptada.",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "98",
+   "pai": "97",
+   "papel": "StaticText",
+   "nome": "Página Inicial",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 98,
+   "props": {}
+  },
+  {
+   "id": "105",
+   "pai": "104",
+   "papel": "StaticText",
+   "nome": "Meus Requerimentos",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 105,
+   "props": {}
+  },
+  {
+   "id": "8",
+   "pai": "108",
+   "papel": "StaticText",
+   "nome": "Acompanhar requerimento",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 8,
+   "props": {}
+  },
+  {
+   "id": "-1000000058",
+   "pai": "127",
+   "papel": "InlineTextBox",
+   "nome": "Fechar",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000066",
+   "pai": "161",
+   "papel": "InlineTextBox",
+   "nome": "Ver andamento detalhado",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "167",
+   "pai": "165",
+   "papel": "StaticText",
+   "nome": "Andamento",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 167,
+   "props": {}
+  },
+  {
+   "id": "10",
+   "pai": "20",
+   "papel": "StaticText",
+   "nome": "Documentos",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 10,
+   "props": {}
+  },
+  {
+   "id": "-1000000069",
+   "pai": "240",
+   "papel": "InlineTextBox",
+   "nome": "Enviar Documento Pendente",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "246",
+   "pai": "50",
+   "papel": "alert",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 246,
+   "props": {
+    "live": "assertive",
+    "atomic": true,
+    "relevant": "additions text"
+   }
+  },
+  {
+   "id": "251",
+   "pai": "50",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 251,
+   "props": {}
+  },
+  {
+   "id": "261",
+   "pai": "22",
+   "papel": "StaticText",
+   "nome": "Todos os campos são obrigatórios.",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 261,
+   "props": {}
+  },
+  {
+   "id": "25",
+   "pai": "24",
+   "papel": "combobox",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 25,
+   "props": {
+    "hasPopup": "listbox",
+    "required": false,
+    "expanded": false
+   }
+  },
+  {
+   "id": "293",
+   "pai": "51",
+   "papel": "LabelText",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 293,
+   "props": {}
+  },
+  {
+   "id": "307",
+   "pai": "51",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 307,
+   "props": {}
+  },
+  {
+   "id": "311",
+   "pai": "308",
+   "papel": "StaticText",
+   "nome": "Selecione o arquivo do documento.",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 311,
+   "props": {}
+  },
+  {
+   "id": "312",
+   "pai": "31",
+   "papel": "StaticText",
+   "nome": "Você também pode arrastar o arquivo até a área acima.",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 312,
+   "props": {}
+  },
+  {
+   "id": "33",
+   "pai": "32",
+   "papel": "button",
+   "nome": "Enviar Documento",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 33,
+   "props": {
+    "invalid": "false",
+    "focusable": true
+   }
+  },
+  {
+   "id": "-1000000081",
+   "pai": "314",
+   "papel": "InlineTextBox",
+   "nome": "Avisos sobre o requerimento",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "315",
+   "pai": "37",
+   "papel": "checkbox",
+   "nome": "Todos os avisos",
+   "fonteNome": "relatedElement",
+   "descricao": null,
+   "backend": 315,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "checked": "false"
+   }
+  },
+  {
+   "id": "318",
+   "pai": "40",
+   "papel": "switch",
+   "nome": "Receber avisos por e-mail",
+   "fonteNome": "relatedElement",
+   "descricao": null,
+   "backend": 318,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "checked": "false"
+   }
+  },
+  {
+   "id": "321",
+   "pai": "44",
+   "papel": "switch",
+   "nome": "Receber avisos por SMS (mensagem de texto no celular)",
+   "fonteNome": "relatedElement",
+   "descricao": null,
+   "backend": 321,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "checked": "false"
+   }
+  },
+  {
+   "id": "-1000000086",
+   "pai": "333",
+   "papel": "InlineTextBox",
+   "nome": "Como envio o documento pendente?",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000087",
+   "pai": "343",
+   "papel": "InlineTextBox",
+   "nome": "Quanto tempo leva a análise?",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000088",
+   "pai": "353",
+   "papel": "InlineTextBox",
+   "nome": "Como recebo os avisos do requerimento?",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000051",
+   "pai": "98",
+   "papel": "InlineTextBox",
+   "nome": "Página Inicial",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000052",
+   "pai": "105",
+   "papel": "InlineTextBox",
+   "nome": "Meus Requerimentos",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000053",
+   "pai": "8",
+   "papel": "InlineTextBox",
+   "nome": "Acompanhar requerimento",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000067",
+   "pai": "167",
+   "papel": "InlineTextBox",
+   "nome": "Andamento",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000068",
+   "pai": "10",
+   "papel": "InlineTextBox",
+   "nome": "Documentos",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "248",
+   "pai": "246",
+   "papel": "StaticText",
+   "nome": "Erro: documento não enviado.",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 248,
+   "props": {}
+  },
+  {
+   "id": "250",
+   "pai": "246",
+   "papel": "StaticText",
+   "nome": " Há campos obrigatórios sem preenchimento ou com problema. Corrija os campos indicados e envie novamente.",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 250,
+   "props": {}
+  },
+  {
+   "id": "252",
+   "pai": "251",
+   "papel": "button",
+   "nome": "Fechar",
+   "fonteNome": "attribute",
+   "descricao": null,
+   "backend": 252,
+   "props": {
+    "focusable": true,
+    "focused": true
+   }
+  },
+  {
+   "id": "257",
+   "pai": "251",
+   "papel": "tooltip",
+   "nome": "Fechar",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 257,
+   "props": {}
+  },
+  {
+   "id": "-1000000075",
+   "pai": "261",
+   "papel": "InlineTextBox",
+   "nome": "Todos os campos são obrigatórios.",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "262",
+   "pai": "25",
+   "papel": "LabelText",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 262,
+   "props": {}
+  },
+  {
+   "id": "26",
+   "pai": "25",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 26,
+   "props": {}
+  },
+  {
+   "id": "28",
+   "pai": "25",
+   "papel": "button",
+   "nome": "Exibir lista",
+   "fonteNome": "attribute",
+   "descricao": null,
+   "backend": 28,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "expanded": false
+   }
+  },
+  {
+   "id": "295",
+   "pai": "293",
+   "papel": "StaticText",
+   "nome": "Envio de documento",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 295,
+   "props": {}
+  },
+  {
+   "id": "-1000000078",
+   "pai": "311",
+   "papel": "InlineTextBox",
+   "nome": "Selecione o arquivo do documento.",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000079",
+   "pai": "312",
+   "papel": "InlineTextBox",
+   "nome": "Você também pode arrastar o arquivo até a área acima.",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "313",
+   "pai": "33",
+   "papel": "StaticText",
+   "nome": "Enviar Documento",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 313,
+   "props": {}
+  },
+  {
+   "id": "-1000000070",
+   "pai": "248",
+   "papel": "InlineTextBox",
+   "nome": "Erro: documento não enviado.",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000071",
+   "pai": "250",
+   "papel": "InlineTextBox",
+   "nome": " Há campos obrigatórios sem preenchimento ou com problema. Corrija os campos indicados e envie ",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000072",
+   "pai": "250",
+   "papel": "InlineTextBox",
+   "nome": "novamente.",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "256",
+   "pai": "255",
+   "papel": "StaticText",
+   "nome": "Fechar",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 256,
+   "props": {}
+  },
+  {
+   "id": "258",
+   "pai": "257",
+   "papel": "tooltip",
+   "nome": "Fechar",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 258,
+   "props": {}
+  },
+  {
+   "id": "260",
+   "pai": "257",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 260,
+   "props": {}
+  },
+  {
+   "id": "263",
+   "pai": "262",
+   "papel": "StaticText",
+   "nome": "Tipo de documento",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 263,
+   "props": {}
+  },
+  {
+   "id": "27",
+   "pai": "26",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 27,
+   "props": {}
+  },
+  {
+   "id": "266",
+   "pai": "26",
+   "papel": "textbox",
+   "nome": "Tipo de documento",
+   "fonteNome": "relatedElement",
+   "descricao": null,
+   "backend": 266,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "editable": "plaintext",
+    "settable": true,
+    "multiline": false,
+    "readonly": false,
+    "required": false
+   }
+  },
+  {
+   "id": "-1000000077",
+   "pai": "295",
+   "papel": "InlineTextBox",
+   "nome": "Envio de documento",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000080",
+   "pai": "313",
+   "papel": "InlineTextBox",
+   "nome": "Enviar Documento",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "-1000000073",
+   "pai": "256",
+   "papel": "InlineTextBox",
+   "nome": "Fechar",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "259",
+   "pai": "258",
+   "papel": "StaticText",
+   "nome": "Fechar",
+   "fonteNome": "contents",
+   "descricao": null,
+   "backend": 259,
+   "props": {}
+  },
+  {
+   "id": "-1000000076",
+   "pai": "263",
+   "papel": "InlineTextBox",
+   "nome": "Tipo de documento",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  },
+  {
+   "id": "270",
+   "pai": "266",
+   "papel": "generic",
+   "nome": "",
+   "fonteNome": null,
+   "descricao": null,
+   "backend": 270,
+   "props": {
+    "editable": "plaintext"
+   }
+  },
+  {
+   "id": "-1000000074",
+   "pai": "259",
+   "papel": "InlineTextBox",
+   "nome": "Fechar",
+   "fonteNome": null,
+   "descricao": null,
+   "props": {}
+  }
+ ]
+}

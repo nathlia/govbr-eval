@@ -6,7 +6,7 @@
  */
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join } from "path";
-import { AQUI, MEDIDAS, ANCORAS, ESTADOS, SETUP } from "./comum.mjs";
+import { AQUI, SAIDA, MEDIDAS, ANCORAS, ESTADOS, SETUP } from "./comum.mjs";
 
 const ler = (...p) => JSON.parse(readFileSync(join(MEDIDAS, ...p), "utf8"));
 const origem = existsSync(join(MEDIDAS, "origem.json")) ? ler("origem.json") : null;
@@ -53,6 +53,6 @@ if (existsSync(join(MEDIDAS, "observacao-360.json"))) {
   estados.observacaoLonga = { janela_s: o.janela_s, inicio: o.inicio, metaHttpEquiv: o.metaHttpEquiv, navegacoes: o.navegacoes, eventos: o.eventos, documentosNovos: o.recargas + 1, recargas: o.recargas, errosDePagina: o.errosDePagina };
 }
 if (existsSync(join(MEDIDAS, "observacao-recarga-estado.json"))) estados.recargaComEstadoPreenchido = ler("observacao-recarga-estado.json");
-writeFileSync(join(AQUI, "inventario.json"), JSON.stringify(inventario, null, 1) + "\n");
-writeFileSync(join(AQUI, "estados.json"), JSON.stringify(estados, null, 1) + "\n");
+writeFileSync(join(SAIDA, "inventario.json"), JSON.stringify(inventario, null, 1) + "\n");
+writeFileSync(join(SAIDA, "estados.json"), JSON.stringify(estados, null, 1) + "\n");
 for (const [id, e] of Object.entries(inventario.estados)) console.log(`${id}: presentes ${e.contagem.presentes} visíveis ${e.contagem.visiveis} (lista ${e.contagem.listaNeutra.presentes}/${e.contagem.listaNeutra.visiveis}) · divergências ${e.divergencias.length} · Tab ${e.ordemTab.length}`);

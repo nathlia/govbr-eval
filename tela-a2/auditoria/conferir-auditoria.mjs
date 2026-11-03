@@ -6,10 +6,12 @@
  */
 import { readFileSync } from "fs";
 import { join } from "path";
-import { AQUI, MEDIDAS, ESTADOS, abrirNavegador, irPara } from "./comum.mjs";
+import { AQUI, SAIDA, MEDIDAS, ESTADOS, abrirNavegador, irPara } from "./comum.mjs";
 import { UTIL } from "./util-navegador.mjs";
 
-const achados = JSON.parse(readFileSync(join(AQUI, "achados.json"), "utf8")).achados;
+/** CONFERIR_ACHADOS=<arquivo> confere uma lista de achados de outra rodada (ex.: a 1ª auditoria) na página atual. */
+const ARQ_ACHADOS = process.env.CONFERIR_ACHADOS || join(SAIDA, "achados.json");
+const achados = JSON.parse(readFileSync(ARQ_ACHADOS, "utf8")).achados;
 const E = Object.fromEntries(ESTADOS.map(e => [e.id, e]));
 const curto = id => id.replace("govbr-3.7.0-", "");
 const tab = async (p, sel, max = 45) => { await p.evaluate(() => { const m = document.createElement("span"); m.tabIndex = -1; document.body.prepend(m); m.focus(); m.remove(); }); for (let i = 0; i < max; i++) { await p.keyboard.press("Tab"); await p.waitForTimeout(70); if (await p.evaluate(s => document.activeElement?.matches(s), sel)) return true; } return false; };
@@ -55,7 +57,7 @@ const PRED = [
   ["foundation-global-21fb08664799", null, "S0", async p => { const f = await p.evaluate(() => getComputedStyle(document.querySelector("#titulo-duvidas")).fontSize); return [f === "16px", `font-size ${f}`]; }],
   ["pattern-global-f4a0aa1ba9c3", ".acao-enviar", "S1", async p => { const t = await p.evaluate(() => document.querySelector(".acao-enviar").textContent.trim()); return [t === "Enviar documento", t]; }],
   ["pattern-global-f4a0aa1ba9c3", ".acao-voltar", "S0", async p => { const t = await p.evaluate(() => document.querySelector(".acao-voltar").textContent.trim()); return [t === "Voltar para meus requerimentos", t]; }],
-  ["accessibility-global-37aeaff46667", null, "S1", async p => { const r = await p.evaluate(() => [(document.body.innerText.match(/\bSMS\b/g) || []).length, document.querySelectorAll("abbr").length]); return [r[0] >= 1 && r[1] === 0, `ocorrências SMS ${r[0]}, abbr ${r[1]}`]; }],
+  ["accessibility-global-37aeaff46667", null, "S1", async p => { const r = await p.evaluate(() => { const t = document.body.innerText; const i = t.search(/\bSMS\b/); return [i >= 0, document.querySelectorAll("abbr").length, i >= 0 ? t.slice(i, i + 60).replace(/\s+/g, " ") : ""]; }); const explicada = /^SMS\s*\(/.test(r[2]); return [r[0] && r[1] === 0 && !explicada, `1ª ocorrência: "${r[2]}" · abbr ${r[1]} · expansão logo após: ${explicada}`]; }],
 ];
 
 const navegador = await abrirNavegador();

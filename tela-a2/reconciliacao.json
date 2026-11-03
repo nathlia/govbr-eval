@@ -1,0 +1,1196 @@
+{
+ "_meta": {
+  "tela": "acompanhamento (A2, NAT-110)",
+  "geradoEm": "2026-11-02",
+  "geradoPor": "assistente (reconciliação; leu a construção e a auditoria depois das duas)",
+  "status": "proposta: nada aplicado à página nem à referência; escaladas E-01…E-09 para a autora (recomendacoes-escaladas.md)",
+  "criterio": "casamento por elemento × estado × regra: 'detectada' = mesma norma do sorteio (principal ou em tambemViola); 'detectada-com-outra-norma' = mesmo elemento e estado, outra norma para o mesmo observável; 'nao-detectada' = nenhum achado no elemento. Ids do auditor: base literal 3.7.0-literal-2026-10-15 (a que ele leu); a correspondência com o universo da A2 (a2-*) foi feita pelo texto da frase.",
+  "restricoes": "sem ferramenta do govbr-ds-validator, sem axe; nenhuma medida nova de página — só leitura dos registros, do core do pacote @govbr-ds/core 3.7.0 (para atribuir causa) e da base literal (para resolver ids)",
+  "entradas": {
+   "tela-a2/sorteio-2.json": "86e7a78be41d907c6c7213ee05709de668731abdd14ae14cde5e035bdffcf381",
+   "tela-a2/parametros.json": "82e329bb43c5497f96d2619d690b8512a154e9317467b11d4597c15dfc5ed41d",
+   "tela-a2/construcao.md": "f3cbdd807024b677bb3f33a58fa9715576150ed976b21df2a988cc8c52fa3a18",
+   "tela-a2/conferir-construcao.mjs": "050816be6fba5f6ac35108097cfb394c31194b629af40783664e1e08d91aed53",
+   "tela-a2/ancoras-neutras.json": "458ab104afc182d3e51346dea21dfb9cbaca796234087e640a12d58d5562c828",
+   "tela-a2/universo.json": "7f11977f6b4b582cd40e14b4389a6fcedd79169d7662e2398face0b61c4a8e3e",
+   "tela-a2/elegibilidade.json": "b5d5dd184ce6ff3dcb4d53d7eed50f97753172a17ff8107dfdd8de8e5a2f8637",
+   "tela-a2/efeitos.json": "d78d19ad0c9501a50fa74425f36ccfa5764a82bead0d41dc7f65c54d381cf25f",
+   "tela-a2/auditoria/auditoria.md": "11ab37a610880ba93bf1d6c0025b161d64dd385c26132e834c889d159b059a56",
+   "tela-a2/auditoria/achados.json": "c3111baac7d8310f97aaa4933e9fa7c04d45e9a382df2d7cb26f297753f54f89",
+   "tela-a2/auditoria/decisoes.json": "20aacbc2662de8640fad9b65b761ba5bdfd48d9991cecf89eeb54af4f97b2747",
+   "tela-a2/auditoria/conformes.json": "95c688a053f82890f75cf94fdd06094a9a71006aec7d4eceeceb951e04ca2667",
+   "tela-a2/auditoria/incertos.json": "5b625a44273e9e80f295791add9b00fc7307531c9fc1fe86a9cb72baa05be901",
+   "tela-a2/auditoria/medidas/observacao-360.json": "c8532e8dbf5119eeddaca7108357c6b58c671de0d1f09dbf1dd49eb7288d40fa",
+   "tela-a2/auditoria/medidas/observacao-recarga-estado.json": "af95e4efffcfd6fc652bc2a099f979a89327aac787418b9ba91e0c223c4639b0"
+  }
+ },
+ "contagens": {
+  "sorteadasPorSpec": {
+   "nao-detectada": 5,
+   "detectada-com-outra-norma": 2,
+   "detectada": 7
+  },
+  "sorteadasPorUnidade": {
+   "nao-detectada": 5,
+   "detectada-com-outra-norma": 3,
+   "detectada": 8
+  },
+  "achados": 34,
+  "achadosPorClasse": {
+   "sorteada": 14,
+   "nao-planejada": 11,
+   "controle-conforme-violado": 9
+  },
+  "achadosPorSubclasse": {
+   "nao-planejada · defeito-de-construcao": 4,
+   "controle-conforme-violado · marcacao-oficial-do-DS": 3,
+   "controle-conforme-violado · padrao-do-core-3.7.0": 2,
+   "controle-conforme-violado · defeito-de-construcao": 3,
+   "controle-conforme-violado · padrao-do-core-3.7.0 (corrigível pela página)": 1,
+   "nao-planejada · padrao-do-core-3.7.0 (corrigível pela página)": 1,
+   "nao-planejada · padrao-do-core-3.7.0": 6
+  },
+  "correcoes": 10,
+  "correcoesIncondicionais": 4,
+  "escaladas": 9
+ },
+ "sorteadas": [
+  {
+   "spec": "U-01",
+   "regra": "a2-10aee59f9c1b",
+   "estrato": "DS",
+   "tipo": "visual-token",
+   "variante": "rotulo-aba-pequeno",
+   "instancia": "tab-requerimento",
+   "compartilhadaCom": [],
+   "seletor": "#tab-requerimento .tab-item button",
+   "estado": "sempre",
+   "resultado": "nao-detectada",
+   "achados": [],
+   "porque": "norma-fora-do-universo-do-auditor: a tabela de especificação de Tipografia da Tab não existe na base literal 3.7.0-literal-2026-10-15 (nenhuma linha de tab sobre tamanho do rótulo nas 908 de decisoes.json; o auditor declara que não confrontou tokens, auditoria.md § 9). O valor medido, 14 px, está na escala Minor Third, então a regra que pegou o h2 (A2-31) não o pega.",
+   "medida": "construção (conferir-construcao.mjs, 79/79): font-size dos dois botões = --font-size-scale-base (14 px) em vez de --font-size-scale-up-02 (20,16 px); peso medium mantido.",
+   "coincideComCore": false,
+   "decisao": "E-02"
+  },
+  {
+   "spec": "U-02",
+   "regra": "a2-caf6bc80cb4b",
+   "estrato": "DS",
+   "tipo": "comportamento",
+   "variante": "borda-sem-feedback",
+   "instancia": "upl-documento",
+   "compartilhadaCom": [],
+   "seletor": "#upl-documento .upload-button",
+   "estado": "S1",
+   "resultado": "nao-detectada",
+   "achados": [],
+   "porque": "norma-fora-do-universo-do-auditor + nao-observada: a frase 'a cor da borda muda para verde quando o usuário arrasta…' não existe na base literal (nenhuma regra com 'verde'); o auditor também não simulou arrasto (incertos medido-ambíguo em component-upload-f0d98f9e5880 e foundation-global-c0052af42790). Construção: coincide com o core 3.7.0 (o BRUpload só põe .dragging; o CSS do pacote só muda o fundo); a página escreve o estilo do arrasto (fundo, cursor) e deixa a borda de fora.",
+   "medida": "construção: dragenter+dragover sintéticos com DataTransfer de um PDF no botão da área (S1) → classe dragging presente e border-top-color = rgb(19, 81, 180) (repouso), não --success (#168821); o estado Dropzone ativo da página (fundo --surface-opacity-sm, cursor copy) aparece.",
+   "coincideComCore": true,
+   "decisao": "E-01, E-02"
+  },
+  {
+   "spec": "U-03",
+   "regra": "a2-329f74d7646c",
+   "estrato": "DS",
+   "tipo": "visual-token",
+   "variante": "titulo-fora-da-tabela",
+   "instancia": "pagina",
+   "compartilhadaCom": [],
+   "seletor": "#titulo-duvidas",
+   "estado": "sempre",
+   "resultado": "detectada-com-outra-norma",
+   "achados": [
+    "A2-31"
+   ],
+   "porque": "o auditor citou foundation-global-21fb08664799 (nenhuma fonte fora da escala Minor Third; no universo da A2 é a2-2f4eadc23b2c, elegível, não sorteada) — mesmo elemento, mesmo estado, mesmo observável (font-size 16 px). A frase sorteada existe na base só como 'recommended' (foundation-global-7b7256828c9c) e ficou fora do filtro required/prohibited do auditor.",
+   "medida": "auditoria A2-31: font-size computado 16px (peso 700); todos os outros textos na escala (11,662 · 14 · 16,8 · 20,16 · 24,192 · 34,832 · 41,804 px); o outro h2 tem 34,832 px.",
+   "coincideComCore": false,
+   "decisao": "E-04 (alias)"
+  },
+  {
+   "spec": "U-04",
+   "regra": "a2-52ea5c58a080",
+   "estrato": "DS",
+   "tipo": "estrutura-classe",
+   "variante": "sem-indicador",
+   "instancia": "stp-andamento",
+   "compartilhadaCom": [],
+   "seletor": "#stp-andamento .etapa-decisao",
+   "estado": "S0",
+   "resultado": "detectada",
+   "achados": [
+    "A2-23"
+   ],
+   "porque": "mesma regra (component-step-518405a28697 = a2-52ea5c58a080), mesmo elemento e estado.",
+   "medida": "auditoria A2-23: o indicador (::before, content \"3\") da etapa 'Decisão' tem visibility:hidden; os das etapas 1, 2 e 4 visíveis (40×40).",
+   "coincideComCore": false,
+   "decisao": null
+  },
+  {
+   "spec": "U-05",
+   "regra": "a2-5f85eeafe863",
+   "estrato": "DS",
+   "tipo": "visual-token",
+   "variante": "icone-descentralizado",
+   "instancia": "msg-pendencia",
+   "compartilhadaCom": [],
+   "seletor": "#msg-pendencia .fechar-mensagem",
+   "estado": "sempre",
+   "resultado": "nao-detectada",
+   "achados": [],
+   "porque": "norma-fora-do-universo-do-auditor: a frase do Button › Densidade ('o rótulo do botão e o ícone permanecem sempre centralizados…') não existe na base literal; o auditor mediu o Fechar (posição no topo à direita, nome, tooltip) sem norma de centragem do ícone.",
+   "medida": "construção: justify-content/align-items flex-start no botão 32×32; maior desvio entre o centro do <i> e o do botão = 8 px (> 3 px); gatilhos das tooltips, do select e Fechar de msg-retorno com desvio ≤ 1 px.",
+   "coincideComCore": false,
+   "decisao": "E-02"
+  },
+  {
+   "spec": "U-06",
+   "regra": "a2-e99c92f13ac0",
+   "estrato": "DS",
+   "tipo": "estrutura-classe",
+   "variante": "texto-alternativo-visivel",
+   "instancia": "tip-protocolo",
+   "compartilhadaCom": [
+    "tip-prazo"
+   ],
+   "seletor": "#tip-protocolo-gatilho .rotulo-botao, #tip-prazo-gatilho .rotulo-botao",
+   "estado": "sempre",
+   "resultado": "detectada-com-outra-norma",
+   "achados": [
+    "A2-12",
+    "A2-13",
+    "A2-14",
+    "A2-15"
+   ],
+   "porque": "o auditor citou WCAG 2.5.3 (A2-12/14: rótulo visível fora do nome acessível) e component-button-81f5e26ec0ef (A2-13/15: rótulo visível fora da superfície do botão; no universo da A2 é a2-6d5f38f9bab8, elegível, não sorteada) — mesmo elemento (o span visível), mesmo estado. A frase sorteada ('Inclua também o CSS apropriado para ocultar visualmente o elemento') existe na base só como 'recommended' (foundation-global-afb62719493b), fora do filtro do auditor. O reflow a 640 px (A2-16) é efeito da colocação do span, não da variante: correção F-06.",
+   "medida": "auditoria A2-12…A2-15 + sonda card-ajuda-click: span.rotulo-botao visível (149/158 × 24 px), clip auto, position absolute à direita do botão de 40×40, 16,8 px; nome acessível = texto do balão (aria-labelledby).",
+   "coincideComCore": false,
+   "decisao": "E-04 (alias)"
+  },
+  {
+   "spec": "U-07",
+   "regra": "a2-e9ded28efe9c",
+   "estrato": "DS",
+   "tipo": "comportamento",
+   "variante": "aria-checked-fixo",
+   "instancia": "swt-aviso-email",
+   "compartilhadaCom": [
+    "swt-aviso-sms"
+   ],
+   "seletor": "#aviso-email, #aviso-sms",
+   "estado": "S1",
+   "resultado": "detectada",
+   "achados": [
+    "A2-27",
+    "A2-28"
+   ],
+   "porque": "mesma regra (accessibility-switch-364149c5aea4 = a2-e9ded28efe9c), mesmos elementos e estado, nas duas cópias.",
+   "medida": "auditoria A2-27/28: ligado por Space, clique no rótulo e pelo checkbox pai → checked=true, atributo aria-checked continua \"false\" (o Chromium expõe checked pela propriedade nativa).",
+   "coincideComCore": true,
+   "decisao": "E-01, E-04 (alias)"
+  },
+  {
+   "spec": "U-08",
+   "regra": "a2-971db6a57c75",
+   "estrato": "G",
+   "tipo": "comportamento",
+   "variante": "item-expandido-sem-estado",
+   "instancia": "acc-duvidas",
+   "compartilhadaCom": [],
+   "seletor": "#acc-duvidas button.header",
+   "estado": "S0",
+   "resultado": "detectada",
+   "achados": [
+    "A2-22"
+   ],
+   "porque": "mesma regra (accessibility-global-5817ddd685a6 = a2-971db6a57c75), mesmo elemento e estado.",
+   "medida": "auditoria A2-22: Enter/Space/clique expandem o item (conteúdo display:block, ícone fa-angle-up), aria-expanded continua 'false' e a árvore AX diz expanded=false.",
+   "coincideComCore": true,
+   "decisao": "E-01, E-04 (alias)"
+  },
+  {
+   "spec": "U-09",
+   "regra": "a2-d720ea8520cb",
+   "estrato": "G",
+   "tipo": "comportamento",
+   "variante": "erro-so-borda",
+   "instancia": "sel-tipo-documento",
+   "compartilhadaCom": [],
+   "seletor": "#tipo-documento",
+   "estado": "S2",
+   "resultado": "detectada",
+   "achados": [
+    "A2-30"
+   ],
+   "porque": "mesma recomendação (e-MAG 6.6: accessibility-global-271582e4fbe8 = a2-d720ea8520cb), mesmo elemento e estado.",
+   "medida": "auditoria A2-30: depois de Enviar vazio, só a classe danger (borda 1 px #888 → 2 px #e52207); nenhum texto de erro, nenhum ícone, sem aria-invalid nem aria-describedby; a mensagem geral não nomeia o campo; o upload recebe 'Selecione o arquivo do documento.'.",
+   "coincideComCore": false,
+   "decisao": "E-04 (alias)"
+  },
+  {
+   "spec": "U-10",
+   "regra": "a2-22240b8959ba",
+   "estrato": "G",
+   "tipo": "comportamento",
+   "variante": "recarga-periodica",
+   "instancia": "pagina",
+   "compartilhadaCom": [],
+   "seletor": "meta[http-equiv=\"refresh\"]",
+   "estado": "sempre",
+   "resultado": "detectada",
+   "achados": [
+    "A2-01",
+    "A2-02"
+   ],
+   "porque": "A2-01 traz a recomendação sorteada (e-MAG 2.3: accessibility-global-53236e27ac9c) em tambemViola; a principal citada foi a 2.4 (6021746e010c, frase que nomeia http-equiv refresh) — mesmo elemento, mesmo observável. A2-02 (e-MAG 2.5, WCAG 2.2.1) é o mesmo elemento, observado fora do protocolo (complemento de 330 s em S1): ver E-05.",
+   "medida": "auditoria A2-01: <meta http-equiv=\"refresh\" content=\"300\"> no HTML servido; observação de 360 s em contexto próprio: recarga aos 300,1 s (beforeunload 300 123 ms, documento novo 300 132 ms, load 300 174 ms), nenhum aviso. Construção: cargas aos 0,1 s e 300,2 s.",
+   "coincideComCore": false,
+   "decisao": "E-04 (alias), E-05"
+  },
+  {
+   "spec": "U-11",
+   "regra": "a2-d45711a55b6c",
+   "estrato": "G",
+   "tipo": "estrutura-classe",
+   "variante": "fechar-div",
+   "instancia": "msg-retorno",
+   "compartilhadaCom": [],
+   "seletor": "#msg-retorno div.br-button[role=button]",
+   "estado": "S2",
+   "resultado": "nao-detectada",
+   "achados": [],
+   "porque": "escopo-do-auditor: a norma estava no universo dele (accessibility-global-7c91abad32ce, e-MAG 1.2 — aplicada só ao skiplink, A2-06); para o Fechar de msg-retorno o auditor conferiu classe br-button (development-button-b77ff20ad216), nome, foco e teclado (Enter/Espaço/clique), não o tagName.",
+   "medida": "construção: tagName DIV, role=button, tabIndex 0, nome; Enter fecha e o foco volta ao Enviar; o Fechar de msg-pendencia é BUTTON.",
+   "coincideComCore": false,
+   "decisao": "E-02, E-03"
+  },
+  {
+   "spec": "U-12",
+   "regra": "a2-cd5cbf0f18dc",
+   "estrato": "G",
+   "tipo": "estrutura-classe",
+   "variante": "sem-formato",
+   "instancia": "upl-documento",
+   "compartilhadaCom": [],
+   "seletor": "#arquivo-apoio",
+   "estado": "S1",
+   "resultado": "nao-detectada",
+   "achados": [],
+   "porque": "julgamento-do-auditor: a norma estava no universo dele (accessibility-global-d301511184d7, e-MAG 6.5) e ele a deu conforme pela instrução geral ('Todos os campos são obrigatórios.') e pelo placeholder do select, sem confrontar a restrição de formato e tamanho do upload (que só aparece ao enviar um .txt).",
+   "medida": "construção: o texto ligado ao input por aria-describedby ('Você também pode arrastar o arquivo até a área acima.') não cita PDF/JPG/PNG/MB/formato/tamanho; enviar comprovante.txt → recusa 'O arquivo deve estar em PDF, JPG ou PNG e ter até 5 MB.'.",
+   "coincideComCore": false,
+   "decisao": "E-02"
+  },
+  {
+   "spec": "U-13",
+   "regra": "a2-671056d628cb",
+   "estrato": "G",
+   "tipo": "estrutura-classe",
+   "variante": "apresentacao-no-html",
+   "instancia": "msg-pendencia",
+   "compartilhadaCom": [],
+   "seletor": "#msg-pendencia font[color], #msg-pendencia [align]",
+   "estado": "sempre",
+   "resultado": "detectada",
+   "achados": [
+    "A2-03"
+   ],
+   "porque": "a cláusula da variante ('As camadas lógicas deverão ser separadas…', accessibility-global-1f1370424402, e-MAG 1.1) está em tambemViola; a principal citada (19cbc02f51c6, normas HTML do W3C) é no universo da A2 duplicada da própria a2-671056d628cb (a2-ed21800a3c0b). Mesmo elemento e estado.",
+   "medida": "auditoria A2-03: <div align=\"left\"> e <font color=\"#333333\"> no conteúdo da mensagem de pendência, presentes no HTML servido.",
+   "coincideComCore": false,
+   "decisao": "E-04 (alias)"
+  },
+  {
+   "spec": "U-14",
+   "regra": "a2-18bccce4132a",
+   "estrato": "G",
+   "tipo": "estrutura-classe",
+   "variante": "grupo-sem-legend",
+   "instancia": "chk-avisos-todos",
+   "compartilhadaCom": [],
+   "seletor": "#fs-avisos",
+   "estado": "S1",
+   "resultado": "detectada",
+   "achados": [
+    "A2-29"
+   ],
+   "porque": "mesma recomendação (e-MAG 6.7: accessibility-global-4d5b05a1c29c = a2-18bccce4132a), mesmo elemento e estado.",
+   "medida": "auditoria A2-29: <fieldset id=fs-avisos> sem <legend> (nem aria-label/labelledby); o título visual 'Avisos sobre o requerimento' é um <p> fora do fieldset.",
+   "coincideComCore": false,
+   "decisao": "E-04 (alias)"
+  }
+ ],
+ "alternativas": [
+  {
+   "regra": "a2-959ca4537add",
+   "alternativa": "associacao-por-headers",
+   "instancia": "tbl-movimentacoes",
+   "seletor": "#tbl-movimentacoes table",
+   "estado": "S0",
+   "resultado": "conforme",
+   "achados": [],
+   "medida": "auditoria (conformes): tabela com caption, thead, headers=; construção: caption 1º filho, 3 th no thead, 15 td com headers que resolvem, nenhum scope."
+  },
+  {
+   "regra": "a2-e5b4728ca51e",
+   "alternativa": "prefixo-textual-visivel",
+   "instancia": "msg-retorno",
+   "seletor": "#msg-retorno",
+   "estado": "S2",
+   "resultado": "conforme",
+   "achados": [],
+   "medida": "nenhum achado sobre a mensagem de retorno; construção: texto começa com 'Erro:' visível, ícone times-circle do DS mantido."
+  },
+  {
+   "regra": "a2-61f57f2a7ff5",
+   "alternativa": "balao-abaixo",
+   "instancia": "tip-protocolo",
+   "seletor": "#tip-protocolo",
+   "estado": "S0",
+   "resultado": "controle-conforme-violado",
+   "achados": [
+    "A2-17"
+   ],
+   "medida": "a norma da alternativa (component-tooltip-ffbac5193e02: seta aponta para o gatilho, balão junto dele) se mantém — seta com centro x 480 dentro do gatilho (470,8–510,8), balão 8,3 px abaixo; mas o balão viola component-tooltip-187fe90aeefd (a2-281b82e2e6be, elegível, não sorteada): seta 9,2 px fora do centro do balão (A2-17). Correção F-07 (E-07)."
+  }
+ ],
+ "chamarizes": [
+  {
+   "instancia": "btn-enviar",
+   "selector": ".acao-enviar",
+   "state": "S1",
+   "resultado": "controle-conforme-violado",
+   "achados": [
+    "A2-32"
+   ],
+   "correcao": "F-05"
+  },
+  {
+   "instancia": "hdr-govbr",
+   "selector": "#cabecalho",
+   "state": "S0",
+   "resultado": "conforme",
+   "achados": [],
+   "nota": "A2-04 inclui o img da marca do header nos bytes do HTML (norma fora do universo); a correção F-09 não muda o DOM."
+  },
+  {
+   "instancia": "brd-trilha",
+   "selector": ".trilha-servico",
+   "state": "S0",
+   "resultado": "controle-conforme-violado",
+   "achados": [
+    "A2-08",
+    "A2-09",
+    "A2-10",
+    "A2-11"
+   ],
+   "correcao": "F-02, F-03, F-04 (A2-09 fica fundo, E-08)"
+  },
+  {
+   "instancia": "skp-conteudo",
+   "selector": ".atalhos-pagina",
+   "state": "S0",
+   "resultado": "controle-conforme-violado",
+   "achados": [
+    "A2-06",
+    "A2-07"
+   ],
+   "correcao": "F-01 (A2-07 fica fundo, E-08)"
+  },
+  {
+   "instancia": "ftr-govbr",
+   "selector": "#rodape",
+   "state": "S0",
+   "resultado": "conforme",
+   "achados": [],
+   "nota": "A2-04 inclui o img da marca do footer nos bytes; ver F-09."
+  },
+  {
+   "instancia": "div-secoes",
+   "selector": "#div-secoes",
+   "state": "S0",
+   "resultado": "conforme",
+   "achados": []
+  },
+  {
+   "instancia": "crd-resumo",
+   "selector": "#crd-resumo",
+   "state": "S0",
+   "resultado": "conforme",
+   "achados": [],
+   "nota": "os achados dos gatilhos de ajuda (A2-12…A2-20) são do conteúdo aninhado (hospedeiros tip-*), não do card."
+  },
+  {
+   "instancia": "btn-voltar",
+   "selector": ".acao-voltar",
+   "state": "S0",
+   "resultado": "controle-conforme-violado",
+   "achados": [
+    "A2-33",
+    "A2-11"
+   ],
+   "correcao": "F-04, F-05"
+  }
+ ],
+ "achados": [
+  {
+   "id": "A2-01",
+   "estado": "S0 S1 S2 (observação de 360 s)",
+   "seletor": "head > meta[http-equiv=refresh]",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-6021746e010c",
+   "fonte": "e-MAG 3.1 rec. 2.4 (via base DS 3.7.0)",
+   "classe": "sorteada",
+   "unidade": "U-10 (a2-22240b8959ba)",
+   "nota": "2.3 em tambemViola; principal 2.4 = alias a decidir (E-04)"
+  },
+  {
+   "id": "A2-02",
+   "estado": "S1 (observação complementar de 330 s)",
+   "seletor": "head > meta[http-equiv=refresh]",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-7bb1e5ca34ff",
+   "fonte": "e-MAG 3.1 rec. 2.5 (via base DS 3.7.0)",
+   "classe": "sorteada",
+   "unidade": "U-10 (a2-22240b8959ba)",
+   "nota": "mesmo elemento; norma 2.5 (a2-491250eb915c) saiu antes da semente como nao-se-aplica; observação fora do protocolo (E-05)",
+   "escalada": "E-05"
+  },
+  {
+   "id": "A2-03",
+   "estado": "S0 S1 S2",
+   "seletor": "#msg-pendencia > div:nth-of-type(2) (align=\"left\") e #msg-pendencia > div:nth-of-type(2) > font",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-19cbc02f51c6",
+   "fonte": "DS 3.7.0 (guias/acessibilidade-html/acessibilidade-html.md)",
+   "classe": "sorteada",
+   "unidade": "U-13 (a2-671056d628cb)"
+  },
+  {
+   "id": "A2-04",
+   "estado": "HTML servido",
+   "seletor": "img (2) e input (8) com '/>' — linhas 18, 156, 163, 169, 175, 186, 201, 207, 213, 257",
+   "regraPrincipal": "govbr-3.7.0-development-global-a4f97ebb50c5",
+   "fonte": "DS 3.7.0 (guias/boas-praticas-de-html/boas-praticas-de-html.md)",
+   "classe": "nao-planejada",
+   "subclasse": "defeito-de-construcao",
+   "normaA2": "a2-de88a511d760 (rejeitada sem-medicao antes da semente)",
+   "causa": "HTML escrito à mão: 10 elementos vazios fechados com '/>' (2 img das marcas, 8 input)",
+   "correcao": "F-09",
+   "escalada": "E-09"
+  },
+  {
+   "id": "A2-05",
+   "estado": "S0 S1 S2",
+   "seletor": "html",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-748eb01e1800",
+   "fonte": "e-MAG 3.1 rec. 2.2 (via base DS 3.7.0)",
+   "classe": "nao-planejada",
+   "subclasse": "defeito-de-construcao",
+   "normaA2": "a2-028b81485587 e-MAG 2.2 (rejeitada nao-se-aplica antes da semente)",
+   "causa": "a página depende de script (abas, select, upload, mensagens) e não tem noscript",
+   "correcao": "F-10",
+   "escalada": "E-09"
+  },
+  {
+   "id": "A2-06",
+   "estado": "S0 S1 S2",
+   "seletor": ".atalhos-pagina (role=menubar) > a (role=menuitem)",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-7c91abad32ce",
+   "fonte": "e-MAG 3.1 rec. 1.2 (via base DS 3.7.0)",
+   "classe": "controle-conforme-violado",
+   "chamariz": "skp-conteudo",
+   "subclasse": "marcacao-oficial-do-DS",
+   "normaA2": "a2-d45711a55b6c (e-MAG 1.2, a MESMA norma da U-11, sorteada noutro elemento)",
+   "causa": "exemplo oficial skiplink-*.html usa role=menubar/menuitem (no pacote: 2 menubar, 8 menuitem); setas não movem o foco",
+   "correcao": "F-01",
+   "escalada": "E-06"
+  },
+  {
+   "id": "A2-07",
+   "estado": "S0",
+   "seletor": ".atalhos-pagina > a",
+   "regraPrincipal": "govbr-3.7.0-accessibility-skiplink-fc59fbdac2c2",
+   "fonte": "DS 3.7.0 (Skip Link (Atalhos Acessíveis) › acessibilidade)",
+   "classe": "controle-conforme-violado",
+   "chamariz": "skp-conteudo",
+   "subclasse": "padrao-do-core-3.7.0",
+   "normaA2": "a2-49eed426bd35 (rejeitada andaime no passo 1)",
+   "causa": "core.min.css: .br-skiplink a { position:absolute; top:-100vh }; só :focus põe top:0",
+   "correcao": null,
+   "escalada": "E-08"
+  },
+  {
+   "id": "A2-08",
+   "estado": "S0 S1 S2",
+   "seletor": ".trilha-servico [aria-current=page] (span tabindex=0)",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-742fd4c4f54b",
+   "fonte": "e-MAG 3.1 rec. 1.4 (via base DS 3.7.0)",
+   "classe": "controle-conforme-violado",
+   "chamariz": "brd-trilha",
+   "subclasse": "marcacao-oficial-do-DS",
+   "normaA2": "a2-bde476da44c9 (e-MAG 1.4, elegível, não sorteada)",
+   "causa": "exemplo oficial breadcrumb-default.html: <span tabindex=\"0\" aria-current=\"page\">",
+   "correcao": "F-02",
+   "escalada": "E-06"
+  },
+  {
+   "id": "A2-09",
+   "estado": "S0 S1 S2",
+   "seletor": ".trilha-servico [aria-current=page]",
+   "regraPrincipal": "govbr-3.7.0-component-breadcrumb-8c4ff87d861a",
+   "fonte": "DS 3.7.0 (Breadcrumb (Migalhas de Pão) › designer)",
+   "classe": "controle-conforme-violado",
+   "chamariz": "brd-trilha",
+   "subclasse": "padrao-do-core-3.7.0",
+   "normaA2": "a2-28c12175478f (rejeitada andaime no passo 1)",
+   "causa": "core.min.css: .br-breadcrumb .crumb:last-child span { font-weight: var(--font-weight-medium) }",
+   "correcao": null,
+   "escalada": "E-08"
+  },
+  {
+   "id": "A2-10",
+   "estado": "S0 S1 S2",
+   "seletor": "nav.trilha-servico[aria-label=Breadcrumbs]",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-9751560f0ae6",
+   "fonte": "e-MAG 3.1 rec. 3.2 (via base DS 3.7.0)",
+   "classe": "controle-conforme-violado",
+   "chamariz": "brd-trilha",
+   "subclasse": "marcacao-oficial-do-DS",
+   "normaA2": "a2-bf351d1b1f1e e-MAG 3.2 (rejeitada nao-se-aplica antes da semente: 'não há trecho em outro idioma')",
+   "causa": "exemplo oficial: aria-label=\"Breadcrumbs\"",
+   "correcao": "F-03",
+   "escalada": "E-06"
+  },
+  {
+   "id": "A2-11",
+   "estado": "S0 S1 S2",
+   "seletor": ".home > a ('Página inicial') e .crumb:nth-of-type(2) > a ('Meus requerimentos')",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-a54fe3e9b8d7",
+   "fonte": "e-MAG 3.1 rec. 3.5 (via base DS 3.7.0)",
+   "classe": "controle-conforme-violado",
+   "chamariz": "brd-trilha + btn-voltar",
+   "subclasse": "defeito-de-construcao",
+   "normaA2": "a2-7ea9cf524b85 e-MAG 3.5 (rejeitada nao-se-aplica antes da semente)",
+   "causa": "a construção apontou Home, 'Meus requerimentos' e Voltar para meus-requerimentos.html com três descrições (o exemplo oficial usa javascript:void(0))",
+   "correcao": "F-04"
+  },
+  {
+   "id": "A2-12",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-protocolo-gatilho",
+   "regraPrincipal": "WCAG-2.1-2.5.3",
+   "fonte": "WCAG 2.1 critério 2.5.3 (nível A)",
+   "classe": "sorteada",
+   "unidade": "U-06 @tip-protocolo (a2-e99c92f13ac0)",
+   "nota": "outra norma: WCAG 2.5.3 (alias a decidir, E-04)"
+  },
+  {
+   "id": "A2-13",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-protocolo-gatilho",
+   "regraPrincipal": "govbr-3.7.0-component-button-81f5e26ec0ef",
+   "fonte": "DS 3.7.0 (Button (Botão) › designer)",
+   "classe": "sorteada",
+   "unidade": "U-06 @tip-protocolo",
+   "nota": "outra norma: component-button-81f5e26ec0ef = a2-6d5f38f9bab8 (alias a decidir, E-04)"
+  },
+  {
+   "id": "A2-14",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-prazo-gatilho",
+   "regraPrincipal": "WCAG-2.1-2.5.3",
+   "fonte": "WCAG 2.1 critério 2.5.3 (nível A)",
+   "classe": "sorteada",
+   "unidade": "U-06 @tip-prazo (compartilhada)",
+   "nota": "WCAG 2.5.3"
+  },
+  {
+   "id": "A2-15",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-prazo-gatilho",
+   "regraPrincipal": "govbr-3.7.0-component-button-81f5e26ec0ef",
+   "fonte": "DS 3.7.0 (Button (Botão) › designer)",
+   "classe": "sorteada",
+   "unidade": "U-06 @tip-prazo (compartilhada)",
+   "nota": "component-button-81f5e26ec0ef"
+  },
+  {
+   "id": "A2-16",
+   "estado": "S0 (janela 640×450 = 200%)",
+   "seletor": "#tip-protocolo-gatilho > span.rotulo-botao",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-24ee65d5b46b",
+   "fonte": "e-MAG 3.1 rec. 4.3 (via base DS 3.7.0)",
+   "classe": "nao-planejada",
+   "subclasse": "defeito-de-construcao",
+   "normaA2": "a2-5432c282d0d7 e-MAG 4.3 (elegível, não sorteada)",
+   "causa": "colocação escolhida na construção para o span visível da U-06 (position absolute, left:100%, white-space nowrap): a 640×450 o rótulo do NUP termina em 648 px; o do prazo, em 453 px. Outro observável (barra horizontal), não o da variante",
+   "correcao": "F-06"
+  },
+  {
+   "id": "A2-17",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-protocolo",
+   "regraPrincipal": "govbr-3.7.0-component-tooltip-187fe90aeefd",
+   "fonte": "DS 3.7.0 (Tooltip (Alertas Flutuantes) › designer)",
+   "classe": "controle-conforme-violado",
+   "alternativa": "a2-61f57f2a7ff5 balao-abaixo @tip-protocolo",
+   "subclasse": "padrao-do-core-3.7.0 (corrigível pela página)",
+   "normaA2": "a2-281b82e2e6be (elegível, não sorteada)",
+   "causa": "BRTooltip cria a instância Popper uma vez em _create e _show não a atualiza (core.min.js; construcao.md › condições de fundo); balão centrado em 470,8, gatilho em 490,8, seta em 480,0. tip-prazo sai centrado (287,0 × 287,0)",
+   "correcao": "F-07",
+   "escalada": "E-07"
+  },
+  {
+   "id": "A2-18",
+   "estado": "S0 S1 S2",
+   "seletor": "#msg-pendencia > div:nth-of-type(3) > div",
+   "regraPrincipal": "govbr-3.7.0-component-tooltip-187fe90aeefd",
+   "fonte": "DS 3.7.0 (Tooltip (Alertas Flutuantes) › designer)",
+   "classe": "nao-planejada",
+   "subclasse": "padrao-do-core-3.7.0 (corrigível pela página)",
+   "normaA2": "a2-281b82e2e6be (elegível, não sorteada)",
+   "causa": "mesmo mecanismo do A2-17: balão do Fechar de msg-pendencia centrado no gatilho (1195,6 × 1196) e seta transladada 8 px (left 0 + translate 39px calculado na criação)",
+   "correcao": "F-07",
+   "escalada": "E-07"
+  },
+  {
+   "id": "A2-19",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-protocolo-gatilho",
+   "regraPrincipal": "WCAG-2.1-1.4.13",
+   "fonte": "WCAG 2.1 critério 1.4.13 (nível AA)",
+   "classe": "nao-planejada",
+   "subclasse": "padrao-do-core-3.7.0",
+   "normaA2": "nenhuma (WCAG 1.4.13 não é fonte do universo, plano § 11)",
+   "causa": "BRTooltip: hideEvents=['mouseleave'] no ativador — o balão some quando o ponteiro sai do gatilho, em todo tooltip simples",
+   "correcao": null,
+   "escalada": "E-08"
+  },
+  {
+   "id": "A2-20",
+   "estado": "S0 S1 S2",
+   "seletor": "#tip-prazo-gatilho",
+   "regraPrincipal": "WCAG-2.1-1.4.13",
+   "fonte": "WCAG 2.1 critério 1.4.13 (nível AA)",
+   "classe": "nao-planejada",
+   "subclasse": "padrao-do-core-3.7.0",
+   "normaA2": "nenhuma (WCAG 1.4.13)",
+   "causa": "idem A2-19",
+   "correcao": null,
+   "escalada": "E-08"
+  },
+  {
+   "id": "A2-21",
+   "estado": "S0 S1 S2",
+   "seletor": "#msg-pendencia > div:nth-of-type(3) > button",
+   "regraPrincipal": "WCAG-2.1-1.4.13",
+   "fonte": "WCAG 2.1 critério 1.4.13 (nível AA)",
+   "classe": "nao-planejada",
+   "subclasse": "padrao-do-core-3.7.0",
+   "normaA2": "nenhuma (WCAG 1.4.13)",
+   "causa": "idem A2-19",
+   "correcao": null,
+   "escalada": "E-08"
+  },
+  {
+   "id": "A2-22",
+   "estado": "S0 S1 S2",
+   "seletor": "#acc-duvidas button.header (3)",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-5817ddd685a6",
+   "fonte": "DS 3.7.0 (guias/wai-aria/wai-aria.md)",
+   "classe": "sorteada",
+   "unidade": "U-08 (a2-971db6a57c75)"
+  },
+  {
+   "id": "A2-23",
+   "estado": "S0",
+   "seletor": "#stp-andamento .etapa-decisao",
+   "regraPrincipal": "govbr-3.7.0-component-step-518405a28697",
+   "fonte": "DS 3.7.0 (Steps (Navegação Passo a Passo) › designer)",
+   "classe": "sorteada",
+   "unidade": "U-04 (a2-52ea5c58a080)"
+  },
+  {
+   "id": "A2-24",
+   "estado": "S1 S2",
+   "seletor": "#sel-tipo-documento > div:nth-of-type(1) (role=combobox)",
+   "regraPrincipal": "WCAG-2.1-4.1.2",
+   "fonte": "WCAG 2.1 critério 4.1.2 (nível A)",
+   "classe": "nao-planejada",
+   "subclasse": "padrao-do-core-3.7.0",
+   "normaA2": "nenhuma (só WCAG 4.1.2)",
+   "causa": "BRSelect: setAttribute('role','combobox') no contêiner .br-input (core.min.js); o label nomeia só o input interno",
+   "correcao": null,
+   "escalada": "E-08"
+  },
+  {
+   "id": "A2-25",
+   "estado": "S1 S2",
+   "seletor": "#upl-documento > button.upload-button",
+   "regraPrincipal": "WCAG-2.1-4.1.2",
+   "fonte": "WCAG 2.1 critério 4.1.2 (nível A)",
+   "classe": "nao-planejada",
+   "subclasse": "padrao-do-core-3.7.0",
+   "normaA2": "nenhuma (só WCAG 4.1.2)",
+   "causa": "BRUpload cria o botão com aria-hidden='true' (core.min.js; construcao.md › condições de fundo; também fundo da tela A)",
+   "correcao": null,
+   "escalada": "E-08"
+  },
+  {
+   "id": "A2-26",
+   "estado": "S1 S2",
+   "seletor": "#upl-documento label.upload-label → #arquivo-documento",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-25887e6e360f",
+   "fonte": "e-MAG 3.1 rec. 6.2 (via base DS 3.7.0)",
+   "classe": "nao-planejada",
+   "subclasse": "padrao-do-core-3.7.0",
+   "normaA2": "a2-f4237d13520b e-MAG 6.2 (elegível, não sorteada)",
+   "causa": "BRUpload esconde o input e põe o botão criado por ele como controle operável; o label do exemplo oficial continua no input",
+   "correcao": null,
+   "escalada": "E-08"
+  },
+  {
+   "id": "A2-27",
+   "estado": "S1 S2",
+   "seletor": "#aviso-email",
+   "regraPrincipal": "govbr-3.7.0-accessibility-switch-364149c5aea4",
+   "fonte": "DS 3.7.0 (Switch (Controle Interruptor) › acessibilidade)",
+   "classe": "sorteada",
+   "unidade": "U-07 @swt-aviso-email (a2-e9ded28efe9c)"
+  },
+  {
+   "id": "A2-28",
+   "estado": "S1 S2",
+   "seletor": "#aviso-sms",
+   "regraPrincipal": "govbr-3.7.0-accessibility-switch-364149c5aea4",
+   "fonte": "DS 3.7.0 (Switch (Controle Interruptor) › acessibilidade)",
+   "classe": "sorteada",
+   "unidade": "U-07 @swt-aviso-sms (compartilhada)"
+  },
+  {
+   "id": "A2-29",
+   "estado": "S1 S2",
+   "seletor": "#fs-avisos",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-4d5b05a1c29c",
+   "fonte": "e-MAG 3.1 rec. 6.7 (via base DS 3.7.0)",
+   "classe": "sorteada",
+   "unidade": "U-14 (a2-18bccce4132a)"
+  },
+  {
+   "id": "A2-30",
+   "estado": "S2",
+   "seletor": "#sel-tipo-documento .br-input.danger / #tipo-documento",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-271582e4fbe8",
+   "fonte": "e-MAG 3.1 rec. 6.6 (via base DS 3.7.0)",
+   "classe": "sorteada",
+   "unidade": "U-09 (a2-d720ea8520cb)"
+  },
+  {
+   "id": "A2-31",
+   "estado": "S0 S1 S2",
+   "seletor": "#titulo-duvidas (h2 'Dúvidas Frequentes')",
+   "regraPrincipal": "govbr-3.7.0-foundation-global-21fb08664799",
+   "fonte": "DS 3.7.0 (Tipografia Rawline)",
+   "classe": "sorteada",
+   "unidade": "U-03 (a2-329f74d7646c)",
+   "nota": "outra norma: foundation-global-21fb08664799 = a2-2f4eadc23b2c (alias a decidir, E-04)"
+  },
+  {
+   "id": "A2-32",
+   "estado": "S1 S2",
+   "seletor": ".acao-enviar",
+   "regraPrincipal": "govbr-3.7.0-pattern-global-f4a0aa1ba9c3",
+   "fonte": "DS 3.7.0 (Microcopy)",
+   "classe": "controle-conforme-violado",
+   "chamariz": "btn-enviar",
+   "subclasse": "defeito-de-construcao",
+   "normaA2": "a2-73e03945d5cc (rejeitada so-andaime; plano § 4: andaime não conforme é defeito de construção)",
+   "causa": "rótulo escrito na construção: 'Enviar documento'",
+   "correcao": "F-05"
+  },
+  {
+   "id": "A2-33",
+   "estado": "S0 S1 S2",
+   "seletor": ".acao-voltar",
+   "regraPrincipal": "govbr-3.7.0-pattern-global-f4a0aa1ba9c3",
+   "fonte": "DS 3.7.0 (Microcopy)",
+   "classe": "controle-conforme-violado",
+   "chamariz": "btn-voltar",
+   "subclasse": "defeito-de-construcao",
+   "normaA2": "a2-73e03945d5cc (idem)",
+   "causa": "rótulo escrito na construção: 'Voltar para meus requerimentos'",
+   "correcao": "F-05"
+  },
+  {
+   "id": "A2-34",
+   "estado": "S1 S2",
+   "seletor": "label[for=aviso-sms] ('Receber avisos por SMS')",
+   "regraPrincipal": "govbr-3.7.0-accessibility-global-37aeaff46667",
+   "fonte": "e-MAG 3.1 rec. 3.12 (via base DS 3.7.0)",
+   "classe": "nao-planejada",
+   "subclasse": "defeito-de-construcao",
+   "normaA2": "a2-18acbf7b4c9c e-MAG 3.12 (elegível, não sorteada)",
+   "causa": "rótulo 'Receber avisos por SMS': 1ª ocorrência da sigla sem forma completa (a NUP é expandida)",
+   "correcao": "F-08"
+  }
+ ],
+ "correcoes": [
+  {
+   "id": "F-01",
+   "achados": [
+    "A2-06"
+   ],
+   "condicao": "E-06",
+   "elemento": ".atalhos-pagina (skp-conteudo)",
+   "estado": "S0–S2",
+   "mudar": "tirar role=\"menubar\" do nav e role=\"menuitem\" dos dois a.br-item (fica nav com links); manter classes br-skiplink/br-item, accesskey, tags e destinos; registrar em construcao.md o desvio do exemplo oficial.",
+   "naoTocar": "nenhuma unidade; o 1º Tab continua no atalho e leva a #main-content (pontos conformes do skiplink).",
+   "verificar": "árvore AX sem menubar/menuitem; conferir-construcao: skiplink 1º filho, 1º Tab, destino."
+  },
+  {
+   "id": "F-02",
+   "achados": [
+    "A2-08"
+   ],
+   "condicao": "E-06",
+   "elemento": ".trilha-servico [aria-current=page] (brd-trilha)",
+   "estado": "S0–S2",
+   "mudar": "tirar tabindex=\"0\" do span do item atual (fica <span aria-current=\"page\">); registrar o desvio do exemplo oficial.",
+   "naoTocar": "nenhuma unidade; a ordem de Tab perde uma parada (17 → 16 em S0): ajustar a conferência se ela conta paradas.",
+   "verificar": "o item atual não recebe foco; aria-current=page mantido."
+  },
+  {
+   "id": "F-03",
+   "achados": [
+    "A2-10"
+   ],
+   "condicao": "E-06",
+   "elemento": "nav.trilha-servico",
+   "estado": "S0–S2",
+   "mudar": "aria-label=\"Breadcrumbs\" → rótulo em português (p. ex. \"Trilha de navegação\").",
+   "naoTocar": "nenhuma unidade.",
+   "verificar": "nome acessível do nav em pt-BR."
+  },
+  {
+   "id": "F-04",
+   "achados": [
+    "A2-11"
+   ],
+   "condicao": null,
+   "elemento": ".trilha-servico .home > a, .crumb > a, .acao-voltar (brd-trilha, btn-voltar)",
+   "estado": "S0–S2",
+   "mudar": "links para o mesmo destino com a mesma descrição: Home aponta para uma página própria (p. ex. public/inicio.html mínima; texto oculto 'Página Inicial'); o item 'Meus requerimentos' e o botão Voltar, que vão a meus-requerimentos.html, passam a ter a mesma descrição (recomendado: os dois 'Meus Requerimentos'; o botão pode manter um ícone de seta à esquerda com aria-hidden).",
+   "naoTocar": "nenhuma unidade; btn-voltar continua a.br-button.secondary com destino meus-requerimentos.html (plano § 14.5).",
+   "verificar": "nenhum par de links com mesmo href e textos diferentes; destinos existem no dist/ (sem 4xx)."
+  },
+  {
+   "id": "F-05",
+   "achados": [
+    "A2-32",
+    "A2-33"
+   ],
+   "condicao": null,
+   "elemento": ".acao-enviar (btn-enviar), .acao-voltar (btn-voltar)",
+   "estado": "S1 / S0–S2",
+   "mudar": "iniciais maiúsculas exceto artigos e preposições: 'Enviar Documento'; o Voltar conforme F-04 ('Meus Requerimentos').",
+   "naoTocar": "U-09 e U-12 (S2 e o texto da mensagem de retorno: ela não pode passar a nomear 'Tipo de documento'); o setup usa .acao-enviar (classe), não o texto.",
+   "verificar": "rótulos dos dois botões; o envio vazio continua gerando o mesmo S2."
+  },
+  {
+   "id": "F-06",
+   "achados": [
+    "A2-16"
+   ],
+   "condicao": null,
+   "elemento": "#tip-protocolo-gatilho > span.rotulo-botao (U-06)",
+   "estado": "S0 (640×450)",
+   "mudar": "recolocar o rótulo visível para que a 640×450 nenhum elemento passe de clientWidth (p. ex. .dado-resumo com flex-wrap e reserva da largura do rótulo, ou quebra do rótulo em janela estreita); continua visível ao lado do ícone.",
+   "naoTocar": "U-06 nas duas cópias (span visível, clip auto, largura > 20 px, elementFromPoint no centro = o span; botão 40×40 com ícone centrado, sem sr-only) e a alternativa balao-abaixo (balão abaixo, ≤ 16 px, seta dentro do gatilho).",
+   "verificar": "sonda rotulo-largo-200 sem elemento além de 640 px; as medidas da U-06 e da alternativa iguais."
+  },
+  {
+   "id": "F-07",
+   "achados": [
+    "A2-17",
+    "A2-18"
+   ],
+   "condicao": "E-07",
+   "elemento": "comportamento.js: instâncias BRTooltip (tip-protocolo, tip-prazo, Fechar de msg-pendencia, gatilho do select, Fechar de msg-retorno)",
+   "estado": "S0–S2",
+   "mudar": "ao mostrar o balão (os mesmos eventos de abertura do core: mouseenter/focus do ativador), chamar instancia.popperInstance.update() — script da página, sem tocar no core.min.js; nada mais muda no tooltip (hideEvents, Esc, top/bottom).",
+   "naoTocar": "alternativa balao-abaixo (continua place=bottom, ≤ 16 px, seta apontando para o gatilho); U-06 (aria-labelledby dos gatilhos); U-05 (o ícone do Fechar de msg-pendencia continua em flex-start; só o balão é recalculado).",
+   "verificar": "centro x da seta = centro x do balão (±1 px) em todo tooltip simples; balão junto do gatilho; acrescentar à conferência o ponto conforme a2-281b82e2e6be."
+  },
+  {
+   "id": "F-08",
+   "achados": [
+    "A2-34"
+   ],
+   "condicao": null,
+   "elemento": "label[for=aviso-sms] (hospedeiro da cópia compartilhada da U-07)",
+   "estado": "S1",
+   "mudar": "forma completa na 1ª ocorrência, em texto: p. ex. 'Receber avisos por SMS (mensagem de texto no celular)'. Não usar só abbr (seria a infração de a2-b1113ccfbc0a, plano § 14.3).",
+   "naoTocar": "U-07: o input #aviso-sms (role=switch, aria-checked=\"false\", data-child) não muda; o clique no rótulo continua ligando o switch.",
+   "verificar": "1ª ocorrência de 'SMS' no DOM com forma completa; medidas da U-07 iguais."
+  },
+  {
+   "id": "F-09",
+   "achados": [
+    "A2-04"
+   ],
+   "condicao": "E-09",
+   "elemento": "HTML servido: 2 img (marcas do header e do footer) e 8 input",
+   "estado": "bytes",
+   "mudar": "tirar a barra de '/>' dos 10 elementos vazios em acompanhamento.html; conferir que o dist/ sai igual (o Vite não reescreve).",
+   "naoTocar": "o DOM não muda (o parser descarta a barra): #tipo-documento (U-09), #arquivo-documento (U-02/U-12), #aviso-email/#aviso-sms (U-07) mantêm todos os atributos.",
+   "verificar": "html-servido.json › autoFechados vazio; sha256 novo do dist/ registrado."
+  },
+  {
+   "id": "F-10",
+   "achados": [
+    "A2-05"
+   ],
+   "condicao": "E-09",
+   "elemento": "body",
+   "estado": "S0–S2",
+   "mudar": "acrescentar <noscript> com aviso curto (a página precisa de JavaScript para abas, lista de tipos e envio), DEPOIS do skiplink e sem style/script embutido.",
+   "naoTocar": "skiplink como 1º filho do body (ponto conforme); nenhuma unidade.",
+   "verificar": "1 noscript; skiplink continua 1º filho; nada visível muda com JS ligado."
+  }
+ ],
+ "escaladas": [
+  {
+   "id": "E-01",
+   "sobre": [
+    "U-07",
+    "U-08"
+   ],
+   "pergunta": "Manter como unidades as duas sorteadas que coincidem com o core 3.7.0 (aria-checked fixo dos switches, aria-expanded fixo do accordion), marcadas coincideComCore, com recall dado com e sem elas?",
+   "recomendacao": "sim"
+  },
+  {
+   "id": "E-02",
+   "sobre": [
+    "U-01",
+    "U-02",
+    "U-05",
+    "U-11",
+    "U-12"
+   ],
+   "pergunta": "Manter as 5 sorteadas que a auditoria cega não detectou, com a medida da conferência de construção (e predicado onde há)?",
+   "recomendacao": "sim (⚠ U-12)"
+  },
+  {
+   "id": "E-03",
+   "sobre": [
+    "U-11"
+   ],
+   "pergunta": "Marcar a U-11 (Fechar em div) como 'exposto', por ser a mesma variante da A-06 da tela A?",
+   "recomendacao": "sim"
+  },
+  {
+   "id": "E-04",
+   "sobre": [
+    "U-03",
+    "U-06",
+    "U-07",
+    "U-08",
+    "U-09",
+    "U-10",
+    "U-13",
+    "U-14"
+   ],
+   "pergunta": "Aceitar como aliases da unidade as normas que o auditor citou para o MESMO fato (aliasesADecidir)?",
+   "recomendacao": "sim"
+  },
+  {
+   "id": "E-05",
+   "sobre": [
+    "U-10",
+    "A2-02"
+   ],
+   "pergunta": "A perda de estado na recarga (e-MAG 2.5, WCAG 2.2.1) fica fora da referência (nem unidade nem alias)?",
+   "recomendacao": "sim, fora"
+  },
+  {
+   "id": "E-06",
+   "sobre": [
+    "A2-06",
+    "A2-08",
+    "A2-10"
+   ],
+   "pergunta": "Corrigir a marcação oficial do skiplink e do breadcrumb que viola norma (F-01…F-03), desviando do exemplo do pacote?",
+   "recomendacao": "sim, corrigir"
+  },
+  {
+   "id": "E-07",
+   "sobre": [
+    "A2-17",
+    "A2-18"
+   ],
+   "pergunta": "Corrigir na página a seta fora do centro dos tooltips (F-07: recalcular a posição ao abrir), em vez de deixar como fundo do core?",
+   "recomendacao": "sim, corrigir"
+  },
+  {
+   "id": "E-08",
+   "sobre": [
+    "A2-07",
+    "A2-09",
+    "A2-19",
+    "A2-20",
+    "A2-21",
+    "A2-24",
+    "A2-25",
+    "A2-26"
+   ],
+   "pergunta": "Os padrões do core 3.7.0 achados pela auditoria ficam como fundo (fora, como a E-03 da D)?",
+   "recomendacao": "sim, fora (⚠ A2-26)"
+  },
+  {
+   "id": "E-09",
+   "sobre": [
+    "A2-04",
+    "A2-05"
+   ],
+   "pergunta": "Corrigir também os dois defeitos autorais cujas normas saíram antes da semente ('/>' e noscript)?",
+   "recomendacao": "sim, corrigir"
+  }
+ ],
+ "piso": {
+  "regra": "plano § 14 / adendo da D § A: ≥ 8 specs, ≥ 3 das 4 famílias (F1 componente · F2 página · F3 fundamentos · F4 e-MAG), ≥ 3 tipos de componente do DS, ≥ 4 controles conformes — sem as unidades exposto",
+  "contadaAgora": {
+   "specs": 7,
+   "unidades": 8,
+   "familias": [
+    "F1",
+    "F3",
+    "F4"
+   ],
+   "tiposDeComponente": [
+    "pagina",
+    "step",
+    "button",
+    "select",
+    "message",
+    "checkbox"
+   ],
+   "conformes": 6,
+   "passa": false
+  },
+  "comE01": {
+   "specs": 9,
+   "unidades": 11,
+   "familias": [
+    "F1",
+    "F3",
+    "F4"
+   ],
+   "tiposDeComponente": [
+    "pagina",
+    "step",
+    "button",
+    "switch",
+    "accordion",
+    "select",
+    "message",
+    "checkbox"
+   ],
+   "conformes": 6,
+   "passa": true
+  },
+  "comE02": {
+   "specs": 12,
+   "unidades": 13,
+   "familias": [
+    "F1",
+    "F3",
+    "F4"
+   ],
+   "tiposDeComponente": [
+    "tab",
+    "upload",
+    "pagina",
+    "step",
+    "button",
+    "select",
+    "message",
+    "checkbox"
+   ],
+   "conformes": 6,
+   "passa": true
+  },
+  "comE01eE02": {
+   "specs": 14,
+   "unidades": 16,
+   "familias": [
+    "F1",
+    "F3",
+    "F4"
+   ],
+   "tiposDeComponente": [
+    "tab",
+    "upload",
+    "pagina",
+    "step",
+    "button",
+    "switch",
+    "accordion",
+    "select",
+    "message",
+    "checkbox"
+   ],
+   "conformes": 6,
+   "passa": true
+  },
+  "comE01eE02eE03exposto": {
+   "specs": 13,
+   "unidades": 15,
+   "familias": [
+    "F1",
+    "F3",
+    "F4"
+   ],
+   "tiposDeComponente": [
+    "tab",
+    "upload",
+    "pagina",
+    "step",
+    "button",
+    "switch",
+    "accordion",
+    "select",
+    "message",
+    "checkbox"
+   ],
+   "conformes": 6,
+   "passa": true
+  },
+  "comTudoECorrecoes": {
+   "specs": 13,
+   "unidades": 15,
+   "familias": [
+    "F1",
+    "F3",
+    "F4"
+   ],
+   "tiposDeComponente": [
+    "tab",
+    "upload",
+    "pagina",
+    "step",
+    "button",
+    "switch",
+    "accordion",
+    "select",
+    "message",
+    "checkbox"
+   ],
+   "conformes": 11,
+   "passa": true
+  },
+  "conformes": {
+   "agora": 6,
+   "depoisDeF01aF07": 11,
+   "nota": "agora: hdr-govbr, ftr-govbr, div-secoes, crd-resumo + alternativas tbl-movimentacoes e msg-retorno; a corrigir: skp-conteudo (F-01), brd-trilha (F-02…F-04), btn-enviar (F-05), btn-voltar (F-04, F-05), alternativa tip-protocolo (F-07)"
+  }
+ }
+}

@@ -13,8 +13,8 @@
  */
 import { readFileSync, writeFileSync } from "fs";
 import { createHash } from "crypto";
-import { join } from "path";
-import { AQUI, KB_DIR, ANCORAS } from "./comum.mjs";
+import { join, basename } from "path";
+import { AQUI, SAIDA, KB_DIR, ANCORAS } from "./comum.mjs";
 
 const KB = join(KB_DIR, "rules.jsonl");
 const textoKB = readFileSync(KB, "utf8");
@@ -37,7 +37,23 @@ const NAS = (rids, motivo) => rids.forEach(r => NA(r, motivo));
 const OKS = (rids, medida, evid) => rids.forEach(r => OK(r, medida, evid));
 
 /** Achado: `regra` é uma regra da base (id curto) ou um critério WCAG ({ wcag: "2.5.3", nivel: "A", texto }). */
+/* ---------- re-medida (AUDITORIA_SAIDA ≠ esta pasta): achados da 1ª rodada que a nova medida não sustenta ----------
+ * Chave = id do achado na 1ª rodada (a ordem das chamadas V é fixa). Valor = a medida nova que o desfaz; a regra
+ * principal e as de 'tambemViola' viram conforme com essa medida. Os achados que persistem mantêm o id da 1ª rodada. */
+const REMEDIDA = SAIDA !== AQUI;
+const CORRIGIDOS = REMEDIDA ? JSON.parse(readFileSync(join(SAIDA, "corrigidos.json"), "utf8")) : {};
+const WCAG_CORRIGIDOS = [];
+let nV = 0;
 function V({ regra, tambem = [], estado, seletor, componente, medida, esperado, justificativa, evidencia, origem }) {
+  const idPrimeira = `A2-${String(++nV).padStart(2, "0")}`;
+  if (CORRIGIDOS[idPrimeira]) {
+    const c = CORRIGIDOS[idPrimeira];
+    for (const t of [regra, ...tambem]) {
+      if (typeof t === "string") add(t, { veredito: "conforme", estados: estado, medida: c.medida, evidencia: c.evidencia, corrigeAchadoDaPrimeiraRodada: idPrimeira });
+      else WCAG_CORRIGIDOS.push({ wcag: t.wcag, medida: c.medida, evidencia: c.evidencia, corrige: idPrimeira });
+    }
+    return null;
+  }
   let r;
   if (typeof regra === "string") {
     const k = id(regra); const base = PORID.get(k); if (!base) throw new Error("regra inexistente: " + k);
@@ -45,7 +61,7 @@ function V({ regra, tambem = [], estado, seletor, componente, medida, esperado, 
     add(regra, { veredito: "violada", estados: estado, medida, achado: null });
   } else r = { id: `WCAG-2.1-${regra.wcag}`, texto: regra.texto, fonte: `WCAG 2.1 critério ${regra.wcag} (nível ${regra.nivel})`, forca: `WCAG ${regra.nivel}`, wcag: [regra.wcag] };
   const tb = tambem.map(t => typeof t === "string" ? (() => { const k = id(t); const b = PORID.get(k); if (!b) throw new Error("regra inexistente: " + k); add(t, { veredito: "violada", estados: estado, medida: "mesmo fato do achado principal", achado: null }); return { id: k, fonte: b.emagReferences.length ? `e-MAG ${b.emagReferences.join(",")}` : "DS 3.7.0", forca: b.force }; })() : { id: `WCAG-2.1-${t.wcag}`, fonte: `WCAG 2.1 ${t.wcag} (${t.nivel})`, forca: `WCAG ${t.nivel}` });
-  const a = { id: `A2-${String(ACHADOS.length + 1).padStart(2, "0")}`, estado, seletor, componente, regra: { id: r.id, texto: r.texto, fonte: r.fonte, wcag: r.wcag }, medida, esperado, forca: r.forca, justificativa, tambemViola: tb, evidencia, origem: origem ?? null };
+  const a = { id: idPrimeira, estado, seletor, componente, regra: { id: r.id, texto: r.texto, fonte: r.fonte, wcag: r.wcag }, medida, esperado, forca: r.forca, justificativa, tambemViola: tb, evidencia, origem: origem ?? null };
   ACHADOS.push(a);
   for (const k of [r.id, ...tb.map(x => x.id)]) { const ds = D.get(k); if (ds) ds.filter(x => x.veredito === "violada" && !x.achado).forEach(x => (x.achado = a.id)); }
   return a;
@@ -179,7 +195,7 @@ OKS(["component-breadcrumb-dad867cfc7f2", "component-breadcrumb-c744e5494795", "
 NA("component-breadcrumb-027aa0651590", "medida em 1280 px (12 colunas), não em 4 colunas");
 NAS(["component-breadcrumb-a1455eff9c4f", "component-breadcrumb-ee4751cc40d4", "component-breadcrumb-7690bbe5ccc7"], PROC);
 OK("component-breadcrumb-80443ce3ae3e", "nenhum item truncado (3 itens, texto inteiro)", "medidas/S0/instancias.json");
-INC("component-breadcrumb-27095244993c", "Home presente; destino meus-requerimentos.html (o mesmo do 2º item)", "não há como saber pela página se meus-requerimentos.html é a tela inicial do sistema", "medidas/S0/pagina.json › links");
+if (REMEDIDA) OK("component-breadcrumb-27095244993c", "Home (br-button circle, 'Página Inicial') presente e aponta para inicio.html (HTTP 200), destino distinto do 2º item (meus-requerimentos.html)", "remedida: medidas/S0/pagina.json › links"); else INC("component-breadcrumb-27095244993c", "Home presente; destino meus-requerimentos.html (o mesmo do 2º item)", "não há como saber pela página se meus-requerimentos.html é a tela inicial do sistema", "medidas/S0/pagina.json › links");
 OK("component-breadcrumb-660169599b49", "título 'Acompanhar requerimento' = h1 'Acompanhar Requerimento' (tela atual)", "medidas/S0/pagina.json");
 INC("component-breadcrumb-daf213d9a2cf", "o header não tem menu principal (só logo, assinatura e título); o breadcrumb é a única navegação além do 'Voltar'", "não há menu principal para comparar; substituição ou não é julgamento de arquitetura", "medidas/S0/instancias.json #cabecalho");
 INC("component-breadcrumb-73c2c42378d7", "idem: sem menu principal na página", "idem", "medidas/S0/instancias.json #cabecalho");
@@ -199,6 +215,7 @@ OK("component-button-b1c0168342fb", "'Enviar documento': padding 24px/24px, altu
 OK("component-button-f13d992a7903", "superfície distinta por tipo (primário cheio, secundário contorno, terciário sem fundo)", "medidas/S1/instancias.json");
 NA("component-button-77dfc156b422", "nenhum grupo de botões com ênfases diferentes lado a lado (Enviar sozinho no formulário; Voltar em outra seção)");
 
+if (REMEDIDA) INC("component-button-a4d904dedad5", "re-medida: o botão secundário (link) do fim da página passou de 'Voltar para meus requerimentos' a 'Meus Requerimentos' — nomeia o destino, não a ação", "se um rótulo de destino 'orienta de forma clara qual ação esperada' é julgamento de redação", "medidas/S0/pagina.json › links");
 // card
 OK("accessibility-card-c5958e0e9380", "controles do card (2 botões de ajuda, link) alcançados por Tab/Shift+Tab; link e botões acionam com Enter", "medidas/S0/tab.json; medidas/S0/interacoes.json › card-link, tooltip-foco");
 OKS(["development-card-d31bdeb4823b", "development-card-f913a1ba1944"], "br-card com card-header, card-content, card-footer", "medidas/S0/instancias.json #crd-resumo");
@@ -628,6 +645,7 @@ for (const r of UNIVERSO) {
   }
 }
 for (const k of D.keys()) if (!UNIVERSO.some(r => r.id === k)) throw new Error("decisão para regra fora do universo: " + k);
+for (const w of WCAG_CORRIGIDOS) WCAG_OK.push({ wcag: w.wcag + " (corrige " + w.corrige + ")", medida: w.medida, evidencia: w.evidencia });
 for (const w of WCAG_OK) conformes.push({ regra: `WCAG-2.1-${w.wcag}`, componente: "pagina", fonte: "WCAG 2.1", estados: "S0 S1 S2", medida: w.medida, evidencia: w.evidencia });
 
 const conta = f => linhas.reduce((o, l) => ((o[f(l)] = (o[f(l)] || 0) + 1), o), {});
@@ -643,10 +661,10 @@ const resumo = {
   regrasDaBaseVioladas: [...new Set(linhas.filter(l => l.veredito === "violada").map(l => l.id))].length,
   criteriosWcagCitados: [...new Set(ACHADOS.flatMap(a => [a.regra.id, ...a.tambemViola.map(t => t.id)]).filter(x => x.startsWith("WCAG")))],
 };
-const meta = { tela: "acompanhamento (A2)", auditoria: "cega, por medição (sem oráculo, sem axe)", geradoPor: "tela-a2/auditoria/montar-decisoes.mjs",
+const meta = { ...(REMEDIDA ? { rodada: "re-medida " + basename(SAIDA), corrigidosDaPrimeiraRodada: Object.keys(CORRIGIDOS) } : {}), tela: "acompanhamento (A2)", auditoria: "cega, por medição (sem oráculo, sem axe)", geradoPor: "tela-a2/auditoria/montar-decisoes.mjs",
   base: "govbr-ds-validator/data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/rules.jsonl", baseSha256: createHash("sha256").update(textoKB).digest("hex"),
   filtro: "force ∈ {required, prohibited} e (component ∈ componentesPresentes da lista neutra ou component = null)", resumo };
-const grava = (n, o) => writeFileSync(join(AQUI, n), JSON.stringify(o, null, 1) + "\n");
+const grava = (n, o) => writeFileSync(join(SAIDA, n), JSON.stringify(o, null, 1) + "\n");
 grava("achados.json", { _meta: { ...meta, nota: "um item por unidade violada (regra principal × elemento × estados); 'tambemViola' = outras regras do mesmo fato" }, achados: ACHADOS });
 grava("conformes.json", { _meta: { ...meta, nota: "pontos verificados por medição; regras da base e critérios WCAG" }, conformes });
 grava("incertos.json", { _meta: { ...meta, nota: "medido-ambiguo = medida feita, norma não decide; sem-observavel = julgamento de projeto/redação sem observável; nao-medida = sem decisão explícita" }, incertos });

@@ -1,0 +1,3709 @@
+{
+ "_meta": {
+  "rodada": "re-medida remedida-2026-11-02",
+  "corrigidosDaPrimeiraRodada": [
+   "A2-04",
+   "A2-05",
+   "A2-06",
+   "A2-08",
+   "A2-10",
+   "A2-11",
+   "A2-16",
+   "A2-17",
+   "A2-18",
+   "A2-32",
+   "A2-33",
+   "A2-34"
+  ],
+  "tela": "acompanhamento (A2)",
+  "auditoria": "cega, por medição (sem oráculo, sem axe)",
+  "geradoPor": "tela-a2/auditoria/montar-decisoes.mjs",
+  "base": "govbr-ds-validator/data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/rules.jsonl",
+  "baseSha256": "c8c4327d3b4c9eea173f96ce2ee72d0eeddbb534f5da6409627c921d30879a0f",
+  "filtro": "force ∈ {required, prohibited} e (component ∈ componentesPresentes da lista neutra ou component = null)",
+  "resumo": {
+   "universo": {
+    "regras": 900,
+    "componentes": [
+     "accordion",
+     "breadcrumb",
+     "button",
+     "card",
+     "checkbox",
+     "divider",
+     "footer",
+     "header",
+     "input",
+     "item",
+     "list",
+     "message",
+     "radio",
+     "select",
+     "skiplink",
+     "step",
+     "switch",
+     "tab",
+     "table",
+     "tag",
+     "tooltip",
+     "upload"
+    ],
+    "linhas": 909
+   },
+   "vereditos": {
+    "incerto": 170,
+    "nao-se-aplica": 273,
+    "conforme": 436,
+    "violada": 30
+   },
+   "incertosPorTipo": {
+    "sem-observavel": 44,
+    "medido-ambiguo": 38,
+    "nao-medida": 88
+   },
+   "semDecisaoExplicita": 88,
+   "achados": 22,
+   "achadosPorFonte": {
+    "e-MAG": 5,
+    "DS": 10,
+    "WCAG": 7
+   },
+   "achadosPorComponente": {
+    "pagina": 2,
+    "message": 1,
+    "skiplink": 1,
+    "breadcrumb": 1,
+    "button": 4,
+    "tooltip": 3,
+    "accordion": 1,
+    "step": 1,
+    "select": 2,
+    "upload": 2,
+    "switch": 2,
+    "checkbox / switch (grupo)": 1,
+    "pagina (tipografia)": 1
+   },
+   "regrasDaBaseVioladas": 26,
+   "criteriosWcagCitados": [
+    "WCAG-2.1-3.2.5",
+    "WCAG-2.1-2.2.1",
+    "WCAG-2.1-2.5.3",
+    "WCAG-2.1-1.4.13",
+    "WCAG-2.1-4.1.2",
+    "WCAG-2.1-1.3.1",
+    "WCAG-2.1-3.3.1"
+   ]
+  },
+  "nota": "pontos verificados por medição; regras da base e critérios WCAG"
+ },
+ "conformes": [
+  {
+   "regra": "govbr-3.7.0-development-accordion-c00fa869bb69",
+   "componente": "accordion",
+   "fonte": "DS Accordion",
+   "estados": "S0 S1 S2",
+   "medida": "os 3 headers são <button class=header type=button>",
+   "evidencia": "medidas/S0/instancias.json #acc-duvidas"
+  },
+  {
+   "regra": "govbr-3.7.0-development-accordion-54d50ff04589",
+   "componente": "accordion",
+   "fonte": "DS Accordion",
+   "estados": "S0 S1 S2",
+   "medida": "título em span.title nos 3 itens",
+   "evidencia": "medidas/S0/instancias.json #acc-duvidas"
+  },
+  {
+   "regra": "govbr-3.7.0-development-accordion-10bc63ecbc3e",
+   "componente": "accordion",
+   "fonte": "DS Accordion",
+   "estados": "S0 S1 S2",
+   "medida": "ícone em span.icon (fa-angle-down/up, aria-hidden)",
+   "evidencia": "medidas/S0/instancias.json #acc-duvidas"
+  },
+  {
+   "regra": "govbr-3.7.0-component-accordion-8f58dd30c6bb",
+   "componente": "accordion",
+   "fonte": "DS Accordion",
+   "estados": "S0 S1 S2",
+   "medida": "Enter/Space/clique: conteúdo passa de display:none a block (h 49 px); single fecha o anterior",
+   "evidencia": "medidas/S0/interacoes.json › acordeao"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-breadcrumb-1fff147d3cfd",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "Home e 'Meus requerimentos' alcançados por Tab (paradas 3 e 4)",
+   "evidencia": "medidas/S0/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-breadcrumb-a532cd44b675",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "todos os interativos (2 links) percorridos",
+   "evidencia": "medidas/S0/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-breadcrumb-c252cce23b3b",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "chevrons <i aria-hidden> fora da ordem de Tab",
+   "evidencia": "medidas/S0/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-breadcrumb-7e348f84b5b6",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "visível no topo do conteúdo (y 131–187, logo abaixo do header)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-breadcrumb-53db61fa81f9",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "item atual é <span aria-current=page>, não link",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-breadcrumb-41145c4140ac",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "item atual: cor #333 (texto), sem sublinhado, cursor auto (links: #1351b4, cursor pointer)",
+   "evidencia": "medidas/S0/interacoes.json › breadcrumb-atual"
+  },
+  {
+   "regra": "govbr-3.7.0-development-breadcrumb-4ae0c4a60862",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "classes br-breadcrumb, crumb-list, crumb (3), home, icon (2) presentes",
+   "evidencia": "medidas/S0/instancias.json .trilha-servico"
+  },
+  {
+   "regra": "govbr-3.7.0-development-breadcrumb-4f1c2a2a3712",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "classes br-breadcrumb, crumb-list, crumb (3), home, icon (2) presentes",
+   "evidencia": "medidas/S0/instancias.json .trilha-servico"
+  },
+  {
+   "regra": "govbr-3.7.0-development-breadcrumb-09dcc61e7e47",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "classes br-breadcrumb, crumb-list, crumb (3), home, icon (2) presentes",
+   "evidencia": "medidas/S0/instancias.json .trilha-servico"
+  },
+  {
+   "regra": "govbr-3.7.0-development-breadcrumb-c2d45d767aaf",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "classes br-breadcrumb, crumb-list, crumb (3), home, icon (2) presentes",
+   "evidencia": "medidas/S0/instancias.json .trilha-servico"
+  },
+  {
+   "regra": "govbr-3.7.0-development-breadcrumb-b326df7e278b",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "classes br-breadcrumb, crumb-list, crumb (3), home, icon (2) presentes",
+   "evidencia": "medidas/S0/instancias.json .trilha-servico"
+  },
+  {
+   "regra": "govbr-3.7.0-component-breadcrumb-dad867cfc7f2",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "anatomia: botão Home (br-button circle), separadores, link, título da página atual",
+   "evidencia": "medidas/S0/instancias.json .trilha-servico"
+  },
+  {
+   "regra": "govbr-3.7.0-component-breadcrumb-c744e5494795",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "anatomia: botão Home (br-button circle), separadores, link, título da página atual",
+   "evidencia": "medidas/S0/instancias.json .trilha-servico"
+  },
+  {
+   "regra": "govbr-3.7.0-component-breadcrumb-a907794f4b16",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "anatomia: botão Home (br-button circle), separadores, link, título da página atual",
+   "evidencia": "medidas/S0/instancias.json .trilha-servico"
+  },
+  {
+   "regra": "govbr-3.7.0-component-breadcrumb-478cffdbb111",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "anatomia: botão Home (br-button circle), separadores, link, título da página atual",
+   "evidencia": "medidas/S0/instancias.json .trilha-servico"
+  },
+  {
+   "regra": "govbr-3.7.0-component-breadcrumb-80443ce3ae3e",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum item truncado (3 itens, texto inteiro)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-breadcrumb-27095244993c",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "Home (br-button circle, 'Página Inicial') presente e aponta para inicio.html (HTTP 200), destino distinto do 2º item (meus-requerimentos.html)",
+   "evidencia": "remedida: medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-component-breadcrumb-660169599b49",
+   "componente": "breadcrumb",
+   "fonte": "DS Breadcrumb (Migalhas de Pão)",
+   "estados": "S0 S1 S2",
+   "medida": "título 'Acompanhar requerimento' = h1 'Acompanhar Requerimento' (tela atual)",
+   "evidencia": "medidas/S0/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-button-23e3cfbf49f3",
+   "componente": "button",
+   "fonte": "DS Button (Botão)",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum botão/link com atributo title",
+   "evidencia": "medidas/S0/pagina.json › botoes, links; S1; S2"
+  },
+  {
+   "regra": "govbr-3.7.0-development-button-b77ff20ad216",
+   "componente": "button",
+   "fonte": "DS Button (Botão)",
+   "estados": "S0 S1 S2",
+   "medida": "botões do DS com classe br-button (Home, Fechar, ajuda ×2, Exibir lista, Enviar, Voltar)",
+   "evidencia": "medidas/S*/pagina.json › botoes"
+  },
+  {
+   "regra": "govbr-3.7.0-development-button-cce88702f880",
+   "componente": "button",
+   "fonte": "DS Button (Botão)",
+   "estados": "S0 S1 S2",
+   "medida": "todos os <i> de ícone têm aria-hidden=\"true\"",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-button-323bef5db0fd",
+   "componente": "button",
+   "fonte": "DS Button (Botão)",
+   "estados": "S0 S1 S2",
+   "medida": "circulares com nome: Home 'Página inicial' (sr-only), Fechar (aria-label), ajuda (aria-label/labelledby), 'Exibir lista'",
+   "evidencia": "medidas/S2/pagina.json › botoes; AX"
+  },
+  {
+   "regra": "govbr-3.7.0-component-button-9d77803305c0",
+   "componente": "button",
+   "fonte": "DS Button (Botão)",
+   "estados": "S0 S1 S2",
+   "medida": "rótulos em Rawline 16,8 px/600 (Enviar, Voltar)",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-button-3acf0a99f2d8",
+   "componente": "button",
+   "fonte": "DS Button (Botão)",
+   "estados": "S0 S1 S2",
+   "medida": "superfície: primário fundo #1351b4; secundário borda 1px #1351b4, raio de pílula",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-button-627dd3089562",
+   "componente": "button",
+   "fonte": "DS Button (Botão)",
+   "estados": "S0 S1 S2",
+   "medida": "todos os circulares têm ícone (fa-home, fa-times, fa-question-circle, fa-angle-down)",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-button-7ef75d42ac65",
+   "componente": "button",
+   "fonte": "DS Button (Botão)",
+   "estados": "S0 S1 S2",
+   "medida": "botões não circulares têm rótulo de texto",
+   "evidencia": "medidas/S2/pagina.json › botoes"
+  },
+  {
+   "regra": "govbr-3.7.0-component-button-5c08566d1bf9",
+   "componente": "button",
+   "fonte": "DS Button (Botão)",
+   "estados": "S0 S1 S2",
+   "medida": "rótulos em uma linha (altura 40 px)",
+   "evidencia": "medidas/S2/pagina.json › botoes"
+  },
+  {
+   "regra": "govbr-3.7.0-component-button-b1c0168342fb",
+   "componente": "button",
+   "fonte": "DS Button (Botão)",
+   "estados": "S0 S1 S2",
+   "medida": "'Enviar documento': padding 24px/24px, altura 40 px",
+   "evidencia": "medidas/S1/instancias.json .acao-enviar"
+  },
+  {
+   "regra": "govbr-3.7.0-component-button-f13d992a7903",
+   "componente": "button",
+   "fonte": "DS Button (Botão)",
+   "estados": "S0 S1 S2",
+   "medida": "superfície distinta por tipo (primário cheio, secundário contorno, terciário sem fundo)",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-card-c5958e0e9380",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "controles do card (2 botões de ajuda, link) alcançados por Tab/Shift+Tab; link e botões acionam com Enter",
+   "evidencia": "medidas/S0/tab.json; medidas/S0/interacoes.json › card-link, tooltip-foco"
+  },
+  {
+   "regra": "govbr-3.7.0-development-card-d31bdeb4823b",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "br-card com card-header, card-content, card-footer",
+   "evidencia": "medidas/S0/instancias.json #crd-resumo"
+  },
+  {
+   "regra": "govbr-3.7.0-development-card-f913a1ba1944",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "br-card com card-header, card-content, card-footer",
+   "evidencia": "medidas/S0/instancias.json #crd-resumo"
+  },
+  {
+   "regra": "govbr-3.7.0-component-card-3961fedc0963",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "superfície #fff com sombra rgba(0,0,0,.16) 0 1px 6px; conteúdo presente",
+   "evidencia": "medidas/S0/instancias.json #crd-resumo"
+  },
+  {
+   "regra": "govbr-3.7.0-component-card-c6aeb922f827",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "superfície e área de conteúdo presentes",
+   "evidencia": "medidas/S0/instancias.json #crd-resumo"
+  },
+  {
+   "regra": "govbr-3.7.0-component-card-e57096a3169c",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "superfície e área de conteúdo presentes",
+   "evidencia": "medidas/S0/instancias.json #crd-resumo"
+  },
+  {
+   "regra": "govbr-3.7.0-component-card-c9a64038bcbf",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "padding interno 16 px (header/content/footer)",
+   "evidencia": "medidas/S0/instancias.json #crd-resumo"
+  },
+  {
+   "regra": "govbr-3.7.0-component-card-529693b92469",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "respiro: 24 px acima (mensagem) e 32 px abaixo (abas)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-card-8188b01a738a",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "overflow visible nos dois eixos; sem rolagem",
+   "evidencia": "medidas/S0/instancias.json #crd-resumo"
+  },
+  {
+   "regra": "govbr-3.7.0-component-card-4d7c0c35a536",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "card estático, sem estado aplicado",
+   "evidencia": "medidas/S0/instancias.json #crd-resumo"
+  },
+  {
+   "regra": "govbr-3.7.0-component-card-d9e849ec168c",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum .br-card dentro do card",
+   "evidencia": "medidas/S0/instancias.json #crd-resumo"
+  },
+  {
+   "regra": "govbr-3.7.0-component-card-1c234d0e6df9",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "um card único, inteiro",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-card-27d2c467f699",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "blocos .dado-resumo separados (48 px entre linhas)",
+   "evidencia": "medidas/S0/instancias.json #crd-resumo"
+  },
+  {
+   "regra": "govbr-3.7.0-component-card-f5cfc40d615e",
+   "componente": "card",
+   "fonte": "DS Card",
+   "estados": "S0 S1 S2",
+   "medida": "resumo + caminho para detalhes ('Ver andamento detalhado' → #tab-requerimento)",
+   "evidencia": "medidas/S0/interacoes.json › card-link"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-checkbox-364a3d387f68",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S1 S2",
+   "medida": "Tab alcança #avisos-todos; Space marca/desmarca",
+   "evidencia": "medidas/S1/interacoes.json › checkbox-pai"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-checkbox-69b527fe644d",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S1 S2",
+   "medida": "label for=avisos-todos 'Todos os avisos'; nome AX 'Todos os avisos'",
+   "evidencia": "medidas/S1/interacoes.json › switch-ax-ligado"
+  },
+  {
+   "regra": "govbr-3.7.0-development-checkbox-20cf87708f54",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S1 S2",
+   "medida": "div.br-checkbox",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-checkbox-8044feffaa99",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S1 S2",
+   "medida": "pai com 2 filhos; 1 filho ligado → pai indeterminate (AX mixed)",
+   "evidencia": "medidas/S1/interacoes.json › switch-ax-ligado, checkbox-pai"
+  },
+  {
+   "regra": "govbr-3.7.0-development-checkbox-9ac846bae733",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S1 S2",
+   "medida": "data-parent=\"avisos\" no input pai",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-checkbox-b82b029f0076",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S1 S2",
+   "medida": "data-child=\"avisos\" nos dois filhos",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-checkbox-5d277fc52e91",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S1 S2",
+   "medida": "comportamento pai/filho funciona (Space no pai liga os dois filhos)",
+   "evidencia": "medidas/S1/interacoes.json › checkbox-pai"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-6923ae0af84f",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S1 S2",
+   "medida": "usado para selecionar um conjunto (todos os avisos)",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-52a2a389c47a",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S1 S2",
+   "medida": "'Todos os avisos' — 3 palavras",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-941b80a2d2a1",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "caixa de opção (label::before) e item presentes",
+   "evidencia": "medidas/S1/instancias.json #chk-avisos-todos"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-250744748eea",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "caixa de opção (label::before) e item presentes",
+   "evidencia": "medidas/S1/instancias.json #chk-avisos-todos"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-e753f086d316",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "texto à direita da caixa",
+   "evidencia": "medidas/S1/instancias.json #chk-avisos-todos"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-298dabadba22",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "textos com só a primeira letra maiúscula ('Todos os avisos')",
+   "evidencia": "medidas/S1/pagina.json › campos"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-0eb7a992d8f8",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S1 S2",
+   "medida": "'Todos os avisos' é o primeiro item do grupo",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-bbda812a72bd",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "rótulo do grupo 'Avisos sobre o requerimento' acima e à esquerda (x 60)",
+   "evidencia": "medidas/S1/pagina.json › textosComoTitulo"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-55135cc6ee8e",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "rótulo do grupo 'Avisos sobre o requerimento' acima e à esquerda (x 60)",
+   "evidencia": "medidas/S1/pagina.json › textosComoTitulo"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-c1b531588ba2",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "textos com só a primeira letra maiúscula ('Todos os avisos')",
+   "evidencia": "medidas/S1/pagina.json › campos"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-800e6838e2f2",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "textos com só a primeira letra maiúscula ('Todos os avisos')",
+   "evidencia": "medidas/S1/pagina.json › campos"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-65d783ab477f",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "texto à direita da caixa",
+   "evidencia": "medidas/S1/instancias.json #chk-avisos-todos"
+  },
+  {
+   "regra": "govbr-3.7.0-component-checkbox-670f12e1eb3b",
+   "componente": "checkbox",
+   "fonte": "DS Checkbox (Caixa de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "rótulo do grupo 'Avisos sobre o requerimento' acima e à esquerda (x 60)",
+   "evidencia": "medidas/S1/pagina.json › textosComoTitulo"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-divider-8af696e7c150",
+   "componente": "divider",
+   "fonte": "DS Divider (Divisor)",
+   "estados": "S0 S1 S2",
+   "medida": "3 divisores ignorados na AX; #div-secoes é nó 'generic' sem nome (não anunciado)",
+   "evidencia": "medidas/S0/instancias.json (AX)"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-divider-4fe076bfdc93",
+   "componente": "divider",
+   "fonte": "DS Divider (Divisor)",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum divisor na ordem de Tab",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-divider-b718d9699939",
+   "componente": "divider",
+   "fonte": "DS Divider (Divisor)",
+   "estados": "S0 S1 S2",
+   "medida": "4 span.br-divider",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-divider-c7e96a24a522",
+   "componente": "divider",
+   "fonte": "DS Divider (Divisor)",
+   "estados": "S0 S1 S2",
+   "medida": "borda 1px solid #ccc (horizontais); vertical no header",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-divider-dd36acf0251e",
+   "componente": "divider",
+   "fonte": "DS Divider (Divisor)",
+   "estados": "S0 S1 S2",
+   "medida": "sem estados (sem hover/foco/cursor)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-divider-3bb3d8b5127f",
+   "componente": "divider",
+   "fonte": "DS Divider (Divisor)",
+   "estados": "S0 S1 S2",
+   "medida": "visíveis (1 px #ccc sobre #fff)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-divider-463500ec9aba",
+   "componente": "divider",
+   "fonte": "DS Divider (Divisor)",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum divisor circunda item",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-footer-f4bc700322d9",
+   "componente": "footer",
+   "fonte": "DS Footer (Rodapé)",
+   "estados": "S0 S1 S2",
+   "medida": "footer.br-footer com div.logo e container (fundo #071d41)",
+   "evidencia": "medidas/S0/instancias.json #rodape"
+  },
+  {
+   "regra": "govbr-3.7.0-development-footer-98828ad43cff",
+   "componente": "footer",
+   "fonte": "DS Footer (Rodapé)",
+   "estados": "S0 S1 S2",
+   "medida": "footer.br-footer com div.logo e container (fundo #071d41)",
+   "evidencia": "medidas/S0/instancias.json #rodape"
+  },
+  {
+   "regra": "govbr-3.7.0-component-footer-e8c03172ffeb",
+   "componente": "footer",
+   "fonte": "DS Footer (Rodapé)",
+   "estados": "S0 S1 S2",
+   "medida": "último elemento da página (fecha o conteúdo), papel contentinfo",
+   "evidencia": "medidas/S0/instancias.json #rodape"
+  },
+  {
+   "regra": "govbr-3.7.0-component-footer-6dce32688f49",
+   "componente": "footer",
+   "fonte": "DS Footer (Rodapé)",
+   "estados": "S0 S1 S2",
+   "medida": "footer.br-footer com div.logo e container (fundo #071d41)",
+   "evidencia": "medidas/S0/instancias.json #rodape"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-header-c6e9d6acd201",
+   "componente": "header",
+   "fonte": "DS Header (Cabeçalho)",
+   "estados": "S0 S1 S2",
+   "medida": "header com logo, assinatura e título; sem funcionalidades",
+   "evidencia": "medidas/S0/instancias.json #cabecalho"
+  },
+  {
+   "regra": "govbr-3.7.0-development-header-be1225dcac60",
+   "componente": "header",
+   "fonte": "DS Header (Cabeçalho)",
+   "estados": "S0 S1 S2",
+   "medida": "classes br-header, header-bottom, header-menu, header-title",
+   "evidencia": "medidas/S0/instancias.json #cabecalho"
+  },
+  {
+   "regra": "govbr-3.7.0-development-header-1bd49622d7d5",
+   "componente": "header",
+   "fonte": "DS Header (Cabeçalho)",
+   "estados": "S0 S1 S2",
+   "medida": "classes br-header, header-bottom, header-menu, header-title",
+   "evidencia": "medidas/S0/instancias.json #cabecalho"
+  },
+  {
+   "regra": "govbr-3.7.0-development-header-1b37e73f42fb",
+   "componente": "header",
+   "fonte": "DS Header (Cabeçalho)",
+   "estados": "S0 S1 S2",
+   "medida": "classes br-header, header-bottom, header-menu, header-title",
+   "evidencia": "medidas/S0/instancias.json #cabecalho"
+  },
+  {
+   "regra": "govbr-3.7.0-development-header-b732799fe313",
+   "componente": "header",
+   "fonte": "DS Header (Cabeçalho)",
+   "estados": "S0 S1 S2",
+   "medida": "classes br-header, header-bottom, header-menu, header-title",
+   "evidencia": "medidas/S0/instancias.json #cabecalho"
+  },
+  {
+   "regra": "govbr-3.7.0-component-header-296a09e0ff45",
+   "componente": "header",
+   "fonte": "DS Header (Cabeçalho)",
+   "estados": "S0 S1 S2",
+   "medida": "título 'Acompanhamento de Requerimentos' em Rawline 24,192 px",
+   "evidencia": "medidas/S0/pagina.json › textosComoTitulo"
+  },
+  {
+   "regra": "govbr-3.7.0-component-header-85b52544095a",
+   "componente": "header",
+   "fonte": "DS Header (Cabeçalho)",
+   "estados": "S0 S1 S2",
+   "medida": "superfície #fff com sombra",
+   "evidencia": "medidas/S0/instancias.json #cabecalho"
+  },
+  {
+   "regra": "govbr-3.7.0-component-header-6e2c3f6cb9b5",
+   "componente": "header",
+   "fonte": "DS Header (Cabeçalho)",
+   "estados": "S0 S1 S2",
+   "medida": "divider vertical entre logo e assinatura",
+   "evidencia": "medidas/S0/instancias.json .header-logo > span"
+  },
+  {
+   "regra": "govbr-3.7.0-component-header-f072ec1a3cb6",
+   "componente": "header",
+   "fonte": "DS Header (Cabeçalho)",
+   "estados": "S0 S1 S2",
+   "medida": "título presente e identifica o sistema",
+   "evidencia": "medidas/S0/instancias.json #cabecalho"
+  },
+  {
+   "regra": "govbr-3.7.0-component-header-e58979706103",
+   "componente": "header",
+   "fonte": "DS Header (Cabeçalho)",
+   "estados": "S0 S1 S2",
+   "medida": "título presente e identifica o sistema",
+   "evidencia": "medidas/S0/instancias.json #cabecalho"
+  },
+  {
+   "regra": "govbr-3.7.0-component-header-d86b5ba96fa8",
+   "componente": "header",
+   "fonte": "DS Header (Cabeçalho)",
+   "estados": "S0 S1 S2",
+   "medida": "título em 1 linha",
+   "evidencia": "medidas/S0/instancias.json #cabecalho"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-input-01715e9e2fde",
+   "componente": "input",
+   "fonte": "DS Input (Campo de Entrada de Texto)",
+   "estados": "S1 S2",
+   "medida": "input#tipo-documento é parada de Tab",
+   "evidencia": "medidas/S1/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-input-007f596c3906",
+   "componente": "input",
+   "fonte": "DS Input (Campo de Entrada de Texto)",
+   "estados": "S1 S2",
+   "medida": "input nativo type=text (navegação por palavra do próprio navegador)",
+   "evidencia": "medidas/S1/pagina.json › campos"
+  },
+  {
+   "regra": "govbr-3.7.0-development-input-cfa9708df3b8",
+   "componente": "input",
+   "fonte": "DS Input (Campo de Entrada de Texto)",
+   "estados": "S0 S1 S2",
+   "medida": "div.br-input com campo de texto",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-input-f20d6d45078d",
+   "componente": "input",
+   "fonte": "DS Input (Campo de Entrada de Texto)",
+   "estados": "S0 S1 S2",
+   "medida": "div.br-input com campo de texto",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-input-7d99eb1f25e1",
+   "componente": "input",
+   "fonte": "DS Input (Campo de Entrada de Texto)",
+   "estados": "S1 S2",
+   "medida": "rótulo 'Tipo de documento'",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-input-acbd0e607b75",
+   "componente": "input",
+   "fonte": "DS Input (Campo de Entrada de Texto)",
+   "estados": "S0 S1 S2",
+   "medida": "div.br-input com campo de texto",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-input-2e96ef63caba",
+   "componente": "input",
+   "fonte": "DS Input (Campo de Entrada de Texto)",
+   "estados": "S1 S2",
+   "medida": "ícone de lupa em .input-icon à esquerda do placeholder",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-input-1aec5265dab8",
+   "componente": "input",
+   "fonte": "DS Input (Campo de Entrada de Texto)",
+   "estados": "S1 S2",
+   "medida": "lupa: digitar 'pro' filtra a lista (2 itens); 'xyz' mostra 'Não encontramos…'",
+   "evidencia": "medidas/S1/interacoes.json › select-digitar, select-sem-resultado"
+  },
+  {
+   "regra": "govbr-3.7.0-component-input-67fb902a01f7",
+   "componente": "input",
+   "fonte": "DS Input (Campo de Entrada de Texto)",
+   "estados": "S1 S2",
+   "medida": "placeholder 'Selecione o tipo do documento pendente' mais completo que o rótulo",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-input-650701a11fbe",
+   "componente": "input",
+   "fonte": "DS Input (Campo de Entrada de Texto)",
+   "estados": "S1 S2",
+   "medida": "ao apagar o texto o placeholder volta (:placeholder-shown)",
+   "evidencia": "medidas/S1/interacoes.json › select-digitar"
+  },
+  {
+   "regra": "govbr-3.7.0-component-input-d7a1ddee8372",
+   "componente": "input",
+   "fonte": "DS Input (Campo de Entrada de Texto)",
+   "estados": "S1 S2",
+   "medida": "cursor text no campo",
+   "evidencia": "medidas/S1/interacoes.json › cursores"
+  },
+  {
+   "regra": "govbr-3.7.0-development-item-dc1b64ecec36",
+   "componente": "item",
+   "fonte": "DS Item",
+   "estados": "S0 S1 S2",
+   "medida": "br-item nos itens do skiplink e da lista do select",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-item-da62b1dff8c5",
+   "componente": "item",
+   "fonte": "DS Item",
+   "estados": "S0 S1 S2",
+   "medida": "itens repetidos (opções) com superfície e área de conteúdo",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-item-8a27ddc76060",
+   "componente": "item",
+   "fonte": "DS Item",
+   "estados": "S0 S1 S2",
+   "medida": "itens repetidos (opções) com superfície e área de conteúdo",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-item-f5ef182cb289",
+   "componente": "item",
+   "fonte": "DS Item",
+   "estados": "S0 S1 S2",
+   "medida": "itens repetidos (opções) com superfície e área de conteúdo",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-item-e3c7c972fb5f",
+   "componente": "item",
+   "fonte": "DS Item",
+   "estados": "S0 S1 S2",
+   "medida": "itens repetidos (opções) com superfície e área de conteúdo",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-item-ac625d05a747",
+   "componente": "item",
+   "fonte": "DS Item",
+   "estados": "S0 S1 S2",
+   "medida": "padding 16 px nos 3 itens da lista",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-list-300a3d636087",
+   "componente": "list",
+   "fonte": "DS List (Lista)",
+   "estados": "S1 S2",
+   "medida": "ArrowDown percorre os itens da lista do select; Tab com a lista aberta vai ao 1º rádio",
+   "evidencia": "medidas/S1/interacoes.json › select-teclado, select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-development-list-962aaf818c10",
+   "componente": "list",
+   "fonte": "DS List (Lista)",
+   "estados": "S0 S1 S2",
+   "medida": "div.br-list com br-item e texto principal; superfície com sombra",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-development-list-1fe48e54a02e",
+   "componente": "list",
+   "fonte": "DS List (Lista)",
+   "estados": "S0 S1 S2",
+   "medida": "div.br-list com br-item e texto principal; superfície com sombra",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-list-ca8054947d88",
+   "componente": "list",
+   "fonte": "DS List (Lista)",
+   "estados": "S0 S1 S2",
+   "medida": "div.br-list com br-item e texto principal; superfície com sombra",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-list-4358446c3587",
+   "componente": "list",
+   "fonte": "DS List (Lista)",
+   "estados": "S0 S1 S2",
+   "medida": "div.br-list com br-item e texto principal; superfície com sombra",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-list-d129e19b56dc",
+   "componente": "list",
+   "fonte": "DS List (Lista)",
+   "estados": "S0 S1 S2",
+   "medida": "div.br-list com br-item e texto principal; superfície com sombra",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-list-1355e21fcfbc",
+   "componente": "list",
+   "fonte": "DS List (Lista)",
+   "estados": "S0 S1 S2",
+   "medida": "padding idêntico (16 px) nos 3 itens",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-list-01ffe281dd61",
+   "componente": "list",
+   "fonte": "DS List (Lista)",
+   "estados": "S0 S1 S2",
+   "medida": "padding idêntico (16 px) nos 3 itens",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-list-899d8219f3d2",
+   "componente": "list",
+   "fonte": "DS List (Lista)",
+   "estados": "S0 S1 S2",
+   "medida": "padding idêntico (16 px) nos 3 itens",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-list-bec85875d664",
+   "componente": "list",
+   "fonte": "DS List (Lista)",
+   "estados": "S0 S1 S2",
+   "medida": "hover do item: sobreposição cinza (gradiente rgba(51,51,51,.16)), não cor de estado",
+   "evidencia": "medidas/S1/interacoes.json › select-clique.hoverItem"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-message-ad83724b777f",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S2",
+   "medida": "ao exibir #msg-retorno (Enviar com o formulário vazio, por clique ou Enter) o foco vai para o botão Fechar dela",
+   "evidencia": "medidas/S2/pagina.json › focoNaChegada; medidas/S1/interacoes.json › enviar-enter"
+  },
+  {
+   "regra": "govbr-3.7.0-development-message-6bd70842446f",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S0 S1 S2",
+   "medida": "br-message (pendência, retorno) e .feedback (erro do upload)",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-message-0cf7ad61e509",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S0 S1 S2",
+   "medida": "br-message (pendência, retorno) e .feedback (erro do upload)",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-message-91274eb7d1b6",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S0 S1 S2",
+   "medida": "superfície (#fff5c2 / #fde0db), mensagem em Rawline, texto presente",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-message-d0c7ed3f91af",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S0 S1 S2",
+   "medida": "superfície (#fff5c2 / #fde0db), mensagem em Rawline, texto presente",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-message-add10093ae9f",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S0 S1 S2",
+   "medida": "ícone semântico à esquerda (x 76) nas duas mensagens",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-message-4bfd5a220fb8",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S0 S1 S2",
+   "medida": "fechar no topo à direita (x 1180–1212, y topo+8)",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-message-829632c90fd3",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S0 S1 S2",
+   "medida": "superfície (#fff5c2 / #fde0db), mensagem em Rawline, texto presente",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-message-b88d6c2bf01d",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S0 S1 S2",
+   "medida": "conteúdo dentro das margens da área útil",
+   "evidencia": "medidas/S0/instancias.json #msg-pendencia"
+  },
+  {
+   "regra": "govbr-3.7.0-component-message-93618f9100f5",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S2",
+   "medida": "mensagem de retorno do formulário dentro do formulário (.retorno-formulario)",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-message-14e2d886d429",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S0 S1 S2",
+   "medida": "warning para advertência ('Documento pendente')",
+   "evidencia": "medidas/S0/instancias.json #msg-pendencia"
+  },
+  {
+   "regra": "govbr-3.7.0-component-message-07540d5e07e5",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S2",
+   "medida": "danger para erro ('Erro: documento não enviado')",
+   "evidencia": "medidas/S2/instancias.json #msg-retorno"
+  },
+  {
+   "regra": "govbr-3.7.0-component-message-b9fc27b83897",
+   "componente": "message",
+   "fonte": "DS Message (Mensagem)",
+   "estados": "S2",
+   "medida": "erro: título em semi bold + descrição complementar em regular",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-radio-77230de0d493",
+   "componente": "radio",
+   "fonte": "DS Radio (Caixa de Opção)",
+   "estados": "S1 S2",
+   "medida": "lista aberta: Tab chega ao 1º rádio; Space escolhe a opção focada (valor 'Documento de identidade')",
+   "evidencia": "medidas/S1/interacoes.json › select-clique, select-teclado"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-radio-cdfeb185e64a",
+   "componente": "radio",
+   "fonte": "DS Radio (Caixa de Opção)",
+   "estados": "S1 S2",
+   "medida": "3 rádios com label for= (texto da opção)",
+   "evidencia": "medidas/S1/pagina.json › campos"
+  },
+  {
+   "regra": "govbr-3.7.0-development-radio-b6fc1fab228c",
+   "componente": "radio",
+   "fonte": "DS Radio (Caixa de Opção)",
+   "estados": "S1 S2",
+   "medida": "div.br-radio nos 3 itens",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-radio-218b7e051a16",
+   "componente": "radio",
+   "fonte": "DS Radio (Caixa de Opção)",
+   "estados": "S1 S2",
+   "medida": "seleção única com rádios de mesmo name",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-radio-d5ca3424ae8f",
+   "componente": "radio",
+   "fonte": "DS Radio (Caixa de Opção)",
+   "estados": "S1 S2",
+   "medida": "textos curtos (≤ 3 palavras)",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-radio-f290ff178142",
+   "componente": "radio",
+   "fonte": "DS Radio (Caixa de Opção)",
+   "estados": "S0 S1 S2",
+   "medida": "primeira letra maiúscula, resto minúsculo",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-radio-383a77d3f0de",
+   "componente": "radio",
+   "fonte": "DS Radio (Caixa de Opção)",
+   "estados": "S0 S1 S2",
+   "medida": "primeira letra maiúscula, resto minúsculo",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-radio-383a77d3f0de-2",
+   "componente": "radio",
+   "fonte": "DS Radio (Caixa de Opção)",
+   "estados": "S0 S1 S2",
+   "medida": "primeira letra maiúscula, resto minúsculo",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-select-b1d8722f293a",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S1 S2",
+   "medida": "campo do select é parada de Tab",
+   "evidencia": "medidas/S1/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-select-6f5756164710",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S1 S2",
+   "medida": "com foco no campo, ArrowDown abre a lista (aria-expanded true) e foca o 1º item; Enter no campo submete o formulário (não abre)",
+   "evidencia": "medidas/S1/interacoes.json › select-teclado, select-enter-no-campo"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-select-fadca364b240",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S1 S2",
+   "medida": "ArrowDown move entre itens (1º → 2º)",
+   "evidencia": "medidas/S1/interacoes.json › select-teclado"
+  },
+  {
+   "regra": "govbr-3.7.0-development-select-89c58184619d",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "br-select > br-input + br-button + br-list > br-item",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-select-30d5a5a78675",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "br-select > br-input + br-button + br-list > br-item",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-select-0dfad0565a80",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "br-select > br-input + br-button + br-list > br-item",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-select-a91eb310313b",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "br-select > br-input + br-button + br-list > br-item",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-select-c30dbdfa715c",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "br-select > br-input + br-button + br-list > br-item",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-select-33023f40d1fd",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S1 S2",
+   "medida": "botão com data-trigger",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-select-6936d523e5a3",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "rádios com name=tipo-documento-opcoes e value",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-development-select-2ebc5246d07d",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "rádios com name=tipo-documento-opcoes e value",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-development-select-228ce7fb15c3",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "pesquisa sem resultado mostra div.br-item.not-found",
+   "evidencia": "medidas/S1/interacoes.json › select-sem-resultado"
+  },
+  {
+   "regra": "govbr-3.7.0-component-select-9484a812fe9f",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "input, button, list e modo de seleção (rádio) presentes",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-select-a0222f08c249",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "input, button, list e modo de seleção (rádio) presentes",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-select-4ccd859c7e6a",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "input, button, list e modo de seleção (rádio) presentes",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-select-0681c950ba25",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "input, button, list e modo de seleção (rádio) presentes",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-select-b6e7bf2e8831",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "botão na extremidade direita do campo (x 424–456 de 60–460)",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-select-9e153556ac33",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "a lista apresenta os 3 tipos de documento",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-select-ba2187bb7906",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "lista flutuante (absolute, z-index 1) com sombra rgba(0,0,0,.16) 0 3px 6px",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-select-9f18a23f8cd2",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "lista com a largura do campo (400 px)",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-select-7888b92deb88",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "textos curtos",
+   "evidencia": "medidas/S1/interacoes.json › select-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-component-select-98a0287c6fdd",
+   "componente": "select",
+   "fonte": "DS Select (Campo de Seleção)",
+   "estados": "S0 S1 S2",
+   "medida": "pesquisa 'xyz': logo abaixo do campo, item 'Não encontramos o que você está procurando!'",
+   "evidencia": "medidas/S1/interacoes.json › select-sem-resultado"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-skiplink-b0641993618f",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "1ª parada de Tab = 'Ir para o conteúdo'",
+   "evidencia": "medidas/S0/tab.json; S1; S2"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-skiplink-459233c263d7",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "com foco o item aparece em (16,0) 300×44",
+   "evidencia": "medidas/S0/interacoes.json › skiplink-tab"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-skiplink-410f86810464",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "posicionado no topo (y 0)",
+   "evidencia": "medidas/S0/interacoes.json › skiplink-tab"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-skiplink-e3375c2e682b",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "alvos são regiões semânticas: main#main-content e footer#rodape (contentinfo)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-skiplink-b7fd536dad96",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "nav.br-skiplink; href #main-content/#rodape; accesskey 1 e 2",
+   "evidencia": "medidas/S0/pagina.json › accesskeys, links"
+  },
+  {
+   "regra": "govbr-3.7.0-development-skiplink-4bfa33bc6e65",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "nav.br-skiplink; href #main-content/#rodape; accesskey 1 e 2",
+   "evidencia": "medidas/S0/pagina.json › accesskeys, links"
+  },
+  {
+   "regra": "govbr-3.7.0-development-skiplink-df8758eefe30",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "nav.br-skiplink; href #main-content/#rodape; accesskey 1 e 2",
+   "evidencia": "medidas/S0/pagina.json › accesskeys, links"
+  },
+  {
+   "regra": "govbr-3.7.0-component-skiplink-7e0a659e413b",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "superfície, item e rótulo presentes",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-skiplink-cf02184ecd2a",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "superfície, item e rótulo presentes",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-skiplink-4efe84e7d11e",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "superfície, item e rótulo presentes",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-skiplink-c28eba2ff50c",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "os dois itens com 300×44 px",
+   "evidencia": "medidas/S0/interacoes.json › skiplink-tab"
+  },
+  {
+   "regra": "govbr-3.7.0-component-skiplink-6751802e3b57",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "2º item aparece na mesma posição (16,0) do 1º",
+   "evidencia": "medidas/S0/interacoes.json › skiplink-tab"
+  },
+  {
+   "regra": "govbr-3.7.0-component-skiplink-cb53759c476c",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "3º Tab (Home): os dois itens voltam a y −900",
+   "evidencia": "medidas/S0/interacoes.json › skiplink-tab"
+  },
+  {
+   "regra": "govbr-3.7.0-component-skiplink-a8808aa08483",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "Enter leva a #main-content (scrollY 115) e a #rodape (scrollY 968)",
+   "evidencia": "medidas/S0/interacoes.json › skiplink-enter, skiplink-enter-rodape"
+  },
+  {
+   "regra": "govbr-3.7.0-component-skiplink-4f5b52d5b9b1",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "itens habilitados",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-component-skiplink-5100f5c691fe",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "todos os interativos visíveis alcançados por Tab nos 3 estados (o upload pelo botão; os rádios com a lista aberta)",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-skiplink-bfd1512ea126",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "todos os interativos visíveis alcançados por Tab nos 3 estados (o upload pelo botão; os rádios com a lista aberta)",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-skiplink-02c2e513d936",
+   "componente": "skiplink",
+   "fonte": "DS Skip Link (Atalhos Acessíveis)",
+   "estados": "S0 S1 S2",
+   "medida": "primeiro filho do <body>",
+   "evidencia": "medidas/S0/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-step-487fd8ea1fa2",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0",
+   "medida": "Tab/Shift+Tab entre 'Envio' e 'Análise' (habilitadas); desabilitadas fora do Tab",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-development-step-27f34abaf745",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0 S1 S2",
+   "medida": "nav.br-step com 4 button.step-progress-btn",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-step-c0eead3701dd",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0 S1 S2",
+   "medida": "nav.br-step com 4 button.step-progress-btn",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-22ddef1501cc",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0 S1 S2",
+   "medida": "sequência linear de 4 etapas relacionadas, um só tipo (numérico)",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-6eae53e95696",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0 S1 S2",
+   "medida": "sequência linear de 4 etapas relacionadas, um só tipo (numérico)",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-51d21c25c517",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0",
+   "medida": "linha do tempo (::after 1 px #1351b4) entre as etapas",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-136cde4b8c25",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0",
+   "medida": "4 etapas",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-8ee37ee83dac",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0",
+   "medida": "rótulos de uma palavra (Envio, Análise, Decisão, Conclusão)",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-6536cf8355a8",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0 S1 S2",
+   "medida": "rótulo abaixo do indicador, text-align center",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-6536cf8355a8-2",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0 S1 S2",
+   "medida": "rótulo abaixo do indicador, text-align center",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-8bd1dd9babc2",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0 S1 S2",
+   "medida": "sequência linear de 4 etapas relacionadas, um só tipo (numérico)",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-f63d9a82d5ae",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0 S1 S2",
+   "medida": "etapas não visitadas (Decisão, Conclusão) disabled, cursor not-allowed",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-42ddeda15674",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0 S1 S2",
+   "medida": "etapas não visitadas (Decisão, Conclusão) disabled, cursor not-allowed",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-ad6625a017ad",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0 S1 S2",
+   "medida": "etapa concluída 'Envio' com data-alert=success e sr-only ', etapa concluída'",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-f1607f6b89c1",
+   "componente": "step",
+   "fonte": "DS Steps (Navegação Passo a Passo)",
+   "estados": "S0 S1 S2",
+   "medida": "etapa concluída 'Envio' com data-alert=success e sr-only ', etapa concluída'",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-switch-56c3754b5e04",
+   "componente": "switch",
+   "fonte": "DS Switch (Controle Interruptor)",
+   "estados": "S1 S2",
+   "medida": "Tab alcança; Space alterna (Enter não alterna — a regra aceita Space ou Enter)",
+   "evidencia": "medidas/S1/interacoes.json › switch-teclado"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-switch-98c995a6b199",
+   "componente": "switch",
+   "fonte": "DS Switch (Controle Interruptor)",
+   "estados": "S1 S2",
+   "medida": "AX: papel switch, nome 'Receber avisos por e-mail', checked true/false acompanhando o estado nativo",
+   "evidencia": "medidas/S1/interacoes.json › switch-ax-ligado, switch-teclado"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-switch-adfcdbfe51b1",
+   "componente": "switch",
+   "fonte": "DS Switch (Controle Interruptor)",
+   "estados": "S1 S2",
+   "medida": "rótulos 'Receber avisos por e-mail' / 'por SMS'",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-switch-1c141c58c929",
+   "componente": "switch",
+   "fonte": "DS Switch (Controle Interruptor)",
+   "estados": "S0 S1 S2",
+   "medida": "div.br-switch com container e chave",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-switch-58bafaddd0a7",
+   "componente": "switch",
+   "fonte": "DS Switch (Controle Interruptor)",
+   "estados": "S0 S1 S2",
+   "medida": "div.br-switch com container e chave",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-switch-423879360423",
+   "componente": "switch",
+   "fonte": "DS Switch (Controle Interruptor)",
+   "estados": "S0 S1 S2",
+   "medida": "div.br-switch com container e chave",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-switch-76a01f06b97d",
+   "componente": "switch",
+   "fonte": "DS Switch (Controle Interruptor)",
+   "estados": "S0 S1 S2",
+   "medida": "rótulos descrevem o efeito quando ligado",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-switch-3ce79e28735b",
+   "componente": "switch",
+   "fonte": "DS Switch (Controle Interruptor)",
+   "estados": "S1 S2",
+   "medida": "switches agrupados sob o checkbox principal 'Todos os avisos' (pai/filho, estado intermediário)",
+   "evidencia": "medidas/S1/interacoes.json › checkbox-pai"
+  },
+  {
+   "regra": "govbr-3.7.0-component-switch-f35a757c9366",
+   "componente": "switch",
+   "fonte": "DS Switch (Controle Interruptor)",
+   "estados": "S0 S1 S2",
+   "medida": "efeito imediato: região aria-live mostra 'Preferência salva.' sem botão Salvar",
+   "evidencia": "medidas/S1/interacoes.json › switch-teclado"
+  },
+  {
+   "regra": "govbr-3.7.0-component-switch-1febec360d2a",
+   "componente": "switch",
+   "fonte": "DS Switch (Controle Interruptor)",
+   "estados": "S0 S1 S2",
+   "medida": "efeito imediato: região aria-live mostra 'Preferência salva.' sem botão Salvar",
+   "evidencia": "medidas/S1/interacoes.json › switch-teclado"
+  },
+  {
+   "regra": "govbr-3.7.0-component-switch-b89ef612e3d8",
+   "componente": "switch",
+   "fonte": "DS Switch (Controle Interruptor)",
+   "estados": "S0 S1 S2",
+   "medida": "rótulos descrevem o efeito quando ligado",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-switch-121944aa658b",
+   "componente": "switch",
+   "fonte": "DS Switch (Controle Interruptor)",
+   "estados": "S0 S1 S2",
+   "medida": "rótulos descrevem o efeito quando ligado",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-tab-14789c5ef831",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "Tab chega às abas; ArrowRight/ArrowLeft movem o foco entre elas",
+   "evidencia": "medidas/S0/interacoes.json › abas-teclado"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-tab-0ceb168206ca",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "primeira parada no componente = 1ª aba 'Andamento'",
+   "evidencia": "medidas/S0/interacoes.json › abas-teclado"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-tab-e282c450c32d",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "foco visível nas abas (contorno tracejado 4 px #c2850c; 1040–1048 px alterados)",
+   "evidencia": "medidas/S0/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-tab-883480e0295b",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "br-tab, tab-nav, tab-item, tab-content, tab-panel",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-development-tab-3f9ad5ebe1c2",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "br-tab, tab-nav, tab-item, tab-content, tab-panel",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-development-tab-3dd6810ecaf4",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "br-tab, tab-nav, tab-item, tab-content, tab-panel",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-development-tab-bd97709a288d",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "br-tab, tab-nav, tab-item, tab-content, tab-panel",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-development-tab-80096e965bc6",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "br-tab, tab-nav, tab-item, tab-content, tab-panel",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tab-7ce162b3416f",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "itens, superfície e divider (.separador-abas) presentes",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tab-7083f9fe58fa",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "itens, superfície e divider (.separador-abas) presentes",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tab-e1fb11053f17",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "itens, superfície e divider (.separador-abas) presentes",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tab-e7a1619979e5",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "itens, superfície e divider (.separador-abas) presentes",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tab-8a02522a6502",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "ativo (borda inferior 4 px #0c326f, cor #0c326f) e interativo (#333, sem borda)",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tab-57671d0e6635",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "largura = rótulo + padding 24/24 (124,9 e 132 px)",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tab-baf5e964f88b",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "rótulos de uma palavra",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tab-df53a74bf6e7",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "rótulos de uma palavra",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tab-a94224c7dcba",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "itens, superfície e divider (.separador-abas) presentes",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tab-fe674ea8f675",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "tab-nav com 1160 px (largura do container)",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tab-c67819d62d0c",
+   "componente": "tab",
+   "fonte": "DS Tab (Abas)",
+   "estados": "S0 S1 S2",
+   "medida": "itens alinhados à esquerda (x 60)",
+   "evidencia": "medidas/S0/instancias.json #tab-requerimento"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-table-1402cdab7058",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0 S1 S2",
+   "medida": "tabela nativa (table/caption/thead/th/tbody/td headers=) navegável célula a célula pela AT",
+   "evidencia": "medidas/S0/instancias.json #tbl-movimentacoes"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-table-570dd0af2a17",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0 S1 S2",
+   "medida": "tabela nativa (table/caption/thead/th/tbody/td headers=) navegável célula a célula pela AT",
+   "evidencia": "medidas/S0/instancias.json #tbl-movimentacoes"
+  },
+  {
+   "regra": "govbr-3.7.0-development-table-ac6aff401d8d",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0",
+   "medida": "div.br-table",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-table-54d5095fb447",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0 S1 S2",
+   "medida": "cabeçalho com 3 th concisos (Data, Movimentação, Responsável)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-table-21f11e056a5a",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0 S1 S2",
+   "medida": "5 linhas com borda inferior 1px #ccc",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-table-c555acbca17d",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0",
+   "medida": "título 'Movimentações do Requerimento'",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-table-56b4e3aa164f",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0 S1 S2",
+   "medida": "cabeçalho com 3 th concisos (Data, Movimentação, Responsável)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-table-f01c42eed45b",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0 S1 S2",
+   "medida": "cabeçalho com 3 th concisos (Data, Movimentação, Responsável)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-table-4f4d94c1f942",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0 S1 S2",
+   "medida": "cabeçalho com 3 th concisos (Data, Movimentação, Responsável)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-table-710f3fb2bcd6",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0 S1 S2",
+   "medida": "5 linhas com borda inferior 1px #ccc",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-table-98034d8758a2",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0",
+   "medida": "cursor auto nas células (padrão)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-table-7c605ca2f85e",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0",
+   "medida": "3 colunas",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-table-b53cb7e903ef",
+   "componente": "table",
+   "fonte": "DS Table (Tabela)",
+   "estados": "S0",
+   "medida": "th sem ordenação em #333 (não na cor interativa)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-tag-cb1c2b36c92f",
+   "componente": "tag",
+   "fonte": "DS Tag (Etiqueta)",
+   "estados": "S0 S1 S2",
+   "medida": "span.br-tag.text",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tag-b7c0bc2ec1f1",
+   "componente": "tag",
+   "fonte": "DS Tag (Etiqueta)",
+   "estados": "S0 S1 S2",
+   "medida": "tag mostra a tecla de atalho do item; superfície #1351b4",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tag-60344762a4ac",
+   "componente": "tag",
+   "fonte": "DS Tag (Etiqueta)",
+   "estados": "S0 S1 S2",
+   "medida": "tag mostra a tecla de atalho do item; superfície #1351b4",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tag-78ee2401dfe8",
+   "componente": "tag",
+   "fonte": "DS Tag (Etiqueta)",
+   "estados": "S0 S1 S2",
+   "medida": "tag de texto sem borda (border 0)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tag-4b136ecea1d5",
+   "componente": "tag",
+   "fonte": "DS Tag (Etiqueta)",
+   "estados": "S0 S1 S2",
+   "medida": "sem verbos, uma cor, só tags estáticas, uma linha (28 px)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tag-d6209e720791",
+   "componente": "tag",
+   "fonte": "DS Tag (Etiqueta)",
+   "estados": "S0 S1 S2",
+   "medida": "a tag de texto não recebe foco nem ação própria (aria-hidden; o link pai é o interativo)",
+   "evidencia": "medidas/S0/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tag-3395ecf77ec3",
+   "componente": "tag",
+   "fonte": "DS Tag (Etiqueta)",
+   "estados": "S0 S1 S2",
+   "medida": "sem verbos, uma cor, só tags estáticas, uma linha (28 px)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tag-05981542d609",
+   "componente": "tag",
+   "fonte": "DS Tag (Etiqueta)",
+   "estados": "S0 S1 S2",
+   "medida": "sem verbos, uma cor, só tags estáticas, uma linha (28 px)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tag-b4c3c322f9f3",
+   "componente": "tag",
+   "fonte": "DS Tag (Etiqueta)",
+   "estados": "S0 S1 S2",
+   "medida": "sem verbos, uma cor, só tags estáticas, uma linha (28 px)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tag-e7e47c24dca0",
+   "componente": "tag",
+   "fonte": "DS Tag (Etiqueta)",
+   "estados": "S0 S1 S2",
+   "medida": "sem verbos, uma cor, só tags estáticas, uma linha (28 px)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-tooltip-3159f024fb6d",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum tooltip na ordem de Tab",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-tooltip-3d28dab9faa5",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "o texto de cada tooltip está no nome do gatilho (protocolo/prazo via aria-labelledby; 'Fechar'; 'Exibir lista')",
+   "evidencia": "medidas/S0/instancias.json (AX)"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-tooltip-47b0445fec0e",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "os 3 tooltips medidos aparecem com foco de teclado e somem com Escape",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-foco"
+  },
+  {
+   "regra": "govbr-3.7.0-development-tooltip-28d5ef864d9b",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": ".br-tooltip com span.text",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-tooltip-3bce7ef644ea",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": ".br-tooltip com span.text",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-f9dc5d35b7ed",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "balão, seta (.arrow 16×8) e conteúdo",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-53ea06a3f0cf",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "balão, seta (.arrow 16×8) e conteúdo",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-fd1b375690ae",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "balão, seta (.arrow 16×8) e conteúdo",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-277f2b36bcb3",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "sombra rgba(0,0,0,.16) 0 3px 6px",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-43cefdddb2d8",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "balão, seta (.arrow 16×8) e conteúdo",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-187fe90aeefd",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "#tip-protocolo: balão x 390–591,5 (centro 490,8); seta centro 491,0 → 0,2 px",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover #tip-protocolo-gatilho"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-187fe90aeefd",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "tooltip do Fechar de #msg-pendencia: centro do balão 1195,6; seta centro 1196,0 → 0,4 px",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover #msg-pendencia .close button"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-187fe90aeefd",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0",
+   "medida": "#tip-prazo: seta centrada no balão (287,0 × 287,0)",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover #tip-prazo-gatilho"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-3b61e743a9ea",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "texto informativo curto (1–5 palavras)",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-9dbb38ee90da",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "texto informativo curto (1–5 palavras)",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-b235b4010a48",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "texto informativo curto (1–5 palavras)",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-ffbac5193e02",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "seta aponta para dentro do gatilho nos 3 casos (centro da seta dentro da largura do gatilho)",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-d624cba3faab",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "balão a ~8 px do gatilho",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-beb34d5e8c7f",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "tooltips só informativos (cor não carrega significado)",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover"
+  },
+  {
+   "regra": "govbr-3.7.0-component-tooltip-85757a53fd4e",
+   "componente": "tooltip",
+   "fonte": "DS Tooltip (Alertas Flutuantes)",
+   "estados": "S0 S1 S2",
+   "medida": "texto informativo curto (1–5 palavras)",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-hover"
+  },
+  {
+   "regra": "govbr-3.7.0-development-upload-fce124a3079e",
+   "componente": "upload",
+   "fonte": "DS Upload (Envio de Arquivos)",
+   "estados": "S0 S1 S2",
+   "medida": "br-upload, label.upload-label, input.upload-input",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-upload-b8546e243b2e",
+   "componente": "upload",
+   "fonte": "DS Upload (Envio de Arquivos)",
+   "estados": "S0 S1 S2",
+   "medida": "br-upload, label.upload-label, input.upload-input",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-upload-c379e1665c57",
+   "componente": "upload",
+   "fonte": "DS Upload (Envio de Arquivos)",
+   "estados": "S0 S1 S2",
+   "medida": "br-upload, label.upload-label, input.upload-input",
+   "evidencia": "medidas/S1/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-upload-10b79d5d8a0a",
+   "componente": "upload",
+   "fonte": "DS Upload (Envio de Arquivos)",
+   "estados": "S1 S2",
+   "medida": "placeholder 'Selecione o arquivo' e ícone fa-upload",
+   "evidencia": "medidas/S1/interacoes.json › upload-teclado"
+  },
+  {
+   "regra": "govbr-3.7.0-component-upload-1c4131f455f4",
+   "componente": "upload",
+   "fonte": "DS Upload (Envio de Arquivos)",
+   "estados": "S0 S1 S2",
+   "medida": "label 'Envio de documento' (variação de 'Envio de arquivo' para um único arquivo), placeholder 'Selecione o arquivo'",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-upload-4d6c1f1860ec",
+   "componente": "upload",
+   "fonte": "DS Upload (Envio de Arquivos)",
+   "estados": "S1 S2",
+   "medida": "superfície (área tracejada 1px dashed #1351b4, 550×40)",
+   "evidencia": "medidas/S1/interacoes.json › upload-teclado"
+  },
+  {
+   "regra": "govbr-3.7.0-component-upload-a54eed419af5",
+   "componente": "upload",
+   "fonte": "DS Upload (Envio de Arquivos)",
+   "estados": "S1 S2",
+   "medida": "'Você também pode arrastar o arquivo até a área acima.' abaixo do campo",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-component-upload-ad04631e3e0e",
+   "componente": "upload",
+   "fonte": "DS Upload (Envio de Arquivos)",
+   "estados": "S2",
+   "medida": "erro de envio sem arquivo tratado com feedback de mensagem ('Selecione o arquivo do documento.', .feedback.danger)",
+   "evidencia": "medidas/S2/interacoes.json › erro-identificacao"
+  },
+  {
+   "regra": "govbr-3.7.0-component-upload-600760f31d74",
+   "componente": "upload",
+   "fonte": "DS Upload (Envio de Arquivos)",
+   "estados": "S0 S1 S2",
+   "medida": "label 'Envio de documento' (variação de 'Envio de arquivo' para um único arquivo), placeholder 'Selecione o arquivo'",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-9282ff8b00ff",
+   "componente": "global",
+   "fonte": "e-MAG 1.1",
+   "estados": "S0 S1 S2",
+   "medida": "conteúdo em HTML",
+   "evidencia": "medidas/html-servido.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-2afc99353c13",
+   "componente": "global",
+   "fonte": "e-MAG 1.2",
+   "estados": "S0 S1 S2",
+   "medida": "cabeçalhos h1/h2, listas ol/ul, tabela de dados, strong, form/fieldset, main/nav/header/footer",
+   "evidencia": "medidas/S*/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-7c91abad32ce",
+   "componente": "global",
+   "fonte": "e-MAG 1.2",
+   "estados": "S0 S1 S2",
+   "medida": "skiplink sem role: AX navigation com 2 links (eram menubar/menuitem)",
+   "evidencia": "medidas/S0/instancias.json (.atalhos-pagina AX)"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-01554d3d9446",
+   "componente": "global",
+   "fonte": "e-MAG 1.2",
+   "estados": "S0 S1 S2",
+   "medida": "cabeçalhos h1/h2, listas ol/ul, tabela de dados, strong, form/fieldset, main/nav/header/footer",
+   "evidencia": "medidas/S*/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-e436bded3d73",
+   "componente": "global",
+   "fonte": "e-MAG 1.3",
+   "estados": "S0 S1 S2",
+   "medida": "um h1 ('Acompanhar Requerimento', conteúdo principal); h2 subordinados; sem salto",
+   "evidencia": "medidas/S*/pagina.json › titulos"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-88d6a1a5da75",
+   "componente": "global",
+   "fonte": "e-MAG 1.3",
+   "estados": "S0 S1 S2",
+   "medida": "um h1 ('Acompanhar Requerimento', conteúdo principal); h2 subordinados; sem salto",
+   "evidencia": "medidas/S*/pagina.json › titulos"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-fb9dfcacbb34",
+   "componente": "global",
+   "fonte": "e-MAG 1.4",
+   "estados": "S0 S1 S2",
+   "medida": "ordem de Tab = ordem do DOM = ordem visual (skiplink, breadcrumb, mensagem, card, abas, conteúdo da aba, accordion, voltar)",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-742fd4c4f54b",
+   "componente": "global",
+   "fonte": "e-MAG 1.4",
+   "estados": "S0 S1 S2",
+   "medida": "item atual do breadcrumb é <span aria-current=page> sem tabindex; fora da ordem de Tab (16/21/22 paradas)",
+   "evidencia": "medidas/S0/pagina.json › tabindexNaoInterativo (vazio); medidas/S0/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-87639c7875d6",
+   "componente": "global",
+   "fonte": "e-MAG 1.5",
+   "estados": "S0 S1 S2",
+   "medida": "skiplink no início: 1º link 'Ir para o conteúdo', 2º 'Ir para o rodapé'; accesskeys 1 e 2 únicas; oculto mas na AX",
+   "evidencia": "medidas/S0/pagina.json; medidas/S0/interacoes.json › skiplink-tab"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-0a487b46e706",
+   "componente": "global",
+   "fonte": "e-MAG 1.5",
+   "estados": "S0 S1 S2",
+   "medida": "skiplink no início: 1º link 'Ir para o conteúdo', 2º 'Ir para o rodapé'; accesskeys 1 e 2 únicas; oculto mas na AX",
+   "evidencia": "medidas/S0/pagina.json; medidas/S0/interacoes.json › skiplink-tab"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-538e57855252",
+   "componente": "global",
+   "fonte": "e-MAG 1.5",
+   "estados": "S0 S1 S2",
+   "medida": "skiplink no início: 1º link 'Ir para o conteúdo', 2º 'Ir para o rodapé'; accesskeys 1 e 2 únicas; oculto mas na AX",
+   "evidencia": "medidas/S0/pagina.json; medidas/S0/interacoes.json › skiplink-tab"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-370be2b830da",
+   "componente": "global",
+   "fonte": "e-MAG 1.5",
+   "estados": "S0 S1 S2",
+   "medida": "skiplink no início: 1º link 'Ir para o conteúdo', 2º 'Ir para o rodapé'; accesskeys 1 e 2 únicas; oculto mas na AX",
+   "evidencia": "medidas/S0/pagina.json; medidas/S0/interacoes.json › skiplink-tab"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-2eb5a14f268c",
+   "componente": "global",
+   "fonte": "e-MAG 1.5",
+   "estados": "S0 S1 S2",
+   "medida": "skiplink no início: 1º link 'Ir para o conteúdo', 2º 'Ir para o rodapé'; accesskeys 1 e 2 únicas; oculto mas na AX",
+   "evidencia": "medidas/S0/pagina.json; medidas/S0/interacoes.json › skiplink-tab"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-6441869aa9dc",
+   "componente": "global",
+   "fonte": "e-MAG 1.6",
+   "estados": "S0 S1 S2",
+   "medida": "a única tabela é de dados",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-0b5865596a8d",
+   "componente": "global",
+   "fonte": "e-MAG 1.6",
+   "estados": "S0 S1 S2",
+   "medida": "a única tabela é de dados",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-2c9bfe2a1ce8",
+   "componente": "global",
+   "fonte": "e-MAG 1.7",
+   "estados": "S0 S1 S2",
+   "medida": "links adjacentes do breadcrumb em li separados por ícone separador",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-de4271a11af7",
+   "componente": "global",
+   "fonte": "e-MAG 1.8",
+   "estados": "S0 S1 S2",
+   "medida": "regiões banner (header), main, navigation, contentinfo (footer); títulos h1/h2",
+   "evidencia": "medidas/S*/ax.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-9e7607ee8724",
+   "componente": "global",
+   "fonte": "e-MAG 1.8",
+   "estados": "S0 S1 S2",
+   "medida": "regiões banner (header), main, navigation, contentinfo (footer); títulos h1/h2",
+   "evidencia": "medidas/S*/ax.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-0a8d4701a05b",
+   "componente": "global",
+   "fonte": "e-MAG 1.8",
+   "estados": "S0 S1 S2",
+   "medida": "regiões banner (header), main, navigation, contentinfo (footer); títulos h1/h2",
+   "evidencia": "medidas/S*/ax.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-b524f2350f1a",
+   "componente": "global",
+   "fonte": "e-MAG 1.8",
+   "estados": "S0 S1 S2",
+   "medida": "regiões banner (header), main, navigation, contentinfo (footer); títulos h1/h2",
+   "evidencia": "medidas/S*/ax.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-5cdb30e93a18",
+   "componente": "global",
+   "fonte": "e-MAG 1.8",
+   "estados": "S0 S1 S2",
+   "medida": "skiplink no início: 1º link 'Ir para o conteúdo', 2º 'Ir para o rodapé'; accesskeys 1 e 2 únicas; oculto mas na AX",
+   "evidencia": "medidas/S0/pagina.json; medidas/S0/interacoes.json › skiplink-tab"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-f217a4680edd",
+   "componente": "global",
+   "fonte": "e-MAG 1.9",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum target, pop-up ou janela nova",
+   "evidencia": "medidas/S*/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-fbf3730eb056",
+   "componente": "global",
+   "fonte": "e-MAG 1.9",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum target, pop-up ou janela nova",
+   "evidencia": "medidas/S*/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-b3ec53516611",
+   "componente": "global",
+   "fonte": "e-MAG 1.9",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum target, pop-up ou janela nova",
+   "evidencia": "medidas/S*/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-c11ae4dea1e2",
+   "componente": "global",
+   "fonte": "e-MAG 1.9",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum target, pop-up ou janela nova",
+   "evidencia": "medidas/S*/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-1405b3ed2bf5",
+   "componente": "global",
+   "fonte": "e-MAG 1.9",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum target, pop-up ou janela nova",
+   "evidencia": "medidas/S*/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-b2964e6923f0",
+   "componente": "global",
+   "fonte": "e-MAG 1.9",
+   "estados": "S0 S1 S2",
+   "medida": "o foco só muda por ação da pessoa (Enviar → Fechar da mensagem; fechar → h1/Enviar); na carga fica no body",
+   "evidencia": "medidas/S*/interacoes.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-f47bc235ae0c",
+   "componente": "global",
+   "fonte": "e-MAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "todas as funções operáveis por teclado: abas, accordion, select (setas), checkbox/switch (Space), upload (Enter no botão), mensagens (Enter/Space)",
+   "evidencia": "medidas/S*/interacoes.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-ec99df81a596",
+   "componente": "global",
+   "fonte": "e-MAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "sem armadilha: Tab percorre até o fim e sai para o body",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-7a97103ce64c",
+   "componente": "global",
+   "fonte": "e-MAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "todas as funções operáveis por teclado: abas, accordion, select (setas), checkbox/switch (Space), upload (Enter no botão), mensagens (Enter/Space)",
+   "evidencia": "medidas/S*/interacoes.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-748eb01e1800",
+   "componente": "global",
+   "fonte": "e-MAG 2.2",
+   "estados": "S0 S1 S2",
+   "medida": "1 <noscript> no início do body: 'Esta página precisa de JavaScript para exibir as abas, a lista de tipos de documento e o envio do documento.'",
+   "evidencia": "medidas/S0/pagina.json › noscript; medidas/html-servido.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-ea6c205acc54",
+   "componente": "global",
+   "fonte": "e-MAG 2.6",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum conteúdo piscante, em movimento ou animado nas 36 amostras de 360 s nem nos estados",
+   "evidencia": "medidas/observacao-360.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-5077c5ea2ad1",
+   "componente": "global",
+   "fonte": "e-MAG 2.6",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum conteúdo piscante, em movimento ou animado nas 36 amostras de 360 s nem nos estados",
+   "evidencia": "medidas/observacao-360.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-ed75d8d915ba",
+   "componente": "global",
+   "fonte": "e-MAG 2.7",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum conteúdo piscante, em movimento ou animado nas 36 amostras de 360 s nem nos estados",
+   "evidencia": "medidas/observacao-360.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-3b17bcc16108",
+   "componente": "global",
+   "fonte": "e-MAG 2.7",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum conteúdo piscante, em movimento ou animado nas 36 amostras de 360 s nem nos estados",
+   "evidencia": "medidas/observacao-360.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-b5195c8fdcb7",
+   "componente": "global",
+   "fonte": "e-MAG 2.7",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum conteúdo piscante, em movimento ou animado nas 36 amostras de 360 s nem nos estados",
+   "evidencia": "medidas/observacao-360.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-8170ddf527be",
+   "componente": "global",
+   "fonte": "e-MAG 3.1",
+   "estados": "S0 S1 S2",
+   "medida": "<html lang=\"pt-BR\">",
+   "evidencia": "medidas/S0/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-8dca38b3d6d8",
+   "componente": "global",
+   "fonte": "e-MAG 3.1",
+   "estados": "S0 S1 S2",
+   "medida": "<html lang=\"pt-BR\">",
+   "evidencia": "medidas/S0/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-9751560f0ae6",
+   "componente": "global",
+   "fonte": "e-MAG 3.2",
+   "estados": "S0 S1 S2",
+   "medida": "nome acessível do breadcrumb = 'Trilha de navegação' (português)",
+   "evidencia": "medidas/S0/instancias.json (.trilha-servico AX)"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-9a6edd7d551e",
+   "componente": "global",
+   "fonte": "e-MAG 3.3",
+   "estados": "S0 S1 S2",
+   "medida": "título 'Acompanhar requerimento — Atendimento gov.br'",
+   "evidencia": "medidas/S0/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-e177af0de858",
+   "componente": "global",
+   "fonte": "e-MAG 3.4",
+   "estados": "S0 S1 S2",
+   "medida": "breadcrumb em ol; caminho como links, exceto a página atual",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-b20da5827b28",
+   "componente": "global",
+   "fonte": "e-MAG 3.4",
+   "estados": "S0 S1 S2",
+   "medida": "breadcrumb em ol; caminho como links, exceto a página atual",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-cf4fe5bb4b7e",
+   "componente": "global",
+   "fonte": "e-MAG 3.5",
+   "estados": "S0 S1 S2",
+   "medida": "textos de link descritivos; nenhum 'clique aqui'; nenhum title; nenhum texto repetido para destinos diferentes",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-a95b1d3bc496",
+   "componente": "global",
+   "fonte": "e-MAG 3.5",
+   "estados": "S0 S1 S2",
+   "medida": "textos de link descritivos; nenhum 'clique aqui'; nenhum title; nenhum texto repetido para destinos diferentes",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-74f4438054c2",
+   "componente": "global",
+   "fonte": "e-MAG 3.5",
+   "estados": "S0 S1 S2",
+   "medida": "textos de link descritivos; nenhum 'clique aqui'; nenhum title; nenhum texto repetido para destinos diferentes",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-a54fe3e9b8d7",
+   "componente": "global",
+   "fonte": "e-MAG 3.5",
+   "estados": "S0 S1 S2",
+   "medida": "Home 'Página Inicial' → inicio.html; 'Meus Requerimentos' (breadcrumb) e 'Meus Requerimentos' (botão) → meus-requerimentos.html: mesmo destino, mesma descrição",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-3f41d7ddc85a",
+   "componente": "global",
+   "fonte": "e-MAG 3.5",
+   "estados": "S0 S1 S2",
+   "medida": "textos de link descritivos; nenhum 'clique aqui'; nenhum title; nenhum texto repetido para destinos diferentes",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-5538932e545e",
+   "componente": "global",
+   "fonte": "e-MAG 3.5",
+   "estados": "S0 S1 S2",
+   "medida": "textos de link descritivos; nenhum 'clique aqui'; nenhum title; nenhum texto repetido para destinos diferentes",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-72ab4a3bffee",
+   "componente": "global",
+   "fonte": "e-MAG 3.6",
+   "estados": "S0 S1 S2",
+   "medida": "2 imagens (marca) com alt 'gov.br'",
+   "evidencia": "medidas/S0/pagina.json › imagens"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-bb4c4848ebed",
+   "componente": "global",
+   "fonte": "e-MAG 3.6",
+   "estados": "S0 S1 S2",
+   "medida": "2 imagens (marca) com alt 'gov.br'",
+   "evidencia": "medidas/S0/pagina.json › imagens"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-e5b40ebae74d",
+   "componente": "global",
+   "fonte": "e-MAG 3.6",
+   "estados": "S0 S1 S2",
+   "medida": "ícones decorativos por fonte (Font Awesome) com aria-hidden; as únicas <img> são informativas",
+   "evidencia": "medidas/S0/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-29bd6bf04fc5",
+   "componente": "global",
+   "fonte": "e-MAG 3.9",
+   "estados": "S0 S1 S2",
+   "medida": "caption primeiro filho da table; thead/tbody; td headers= ids dos th",
+   "evidencia": "medidas/S0/instancias.json #tbl-movimentacoes"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-d2b8f974a815",
+   "componente": "global",
+   "fonte": "e-MAG 3.9",
+   "estados": "S0 S1 S2",
+   "medida": "caption primeiro filho da table; thead/tbody; td headers= ids dos th",
+   "evidencia": "medidas/S0/instancias.json #tbl-movimentacoes"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-00290bc67eb5",
+   "componente": "global",
+   "fonte": "e-MAG 3.10",
+   "estados": "S0 S1 S2",
+   "medida": "caption primeiro filho da table; thead/tbody; td headers= ids dos th",
+   "evidencia": "medidas/S0/instancias.json #tbl-movimentacoes"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-abddec330caf",
+   "componente": "global",
+   "fonte": "e-MAG 3.10",
+   "estados": "S0 S1 S2",
+   "medida": "caption primeiro filho da table; thead/tbody; td headers= ids dos th",
+   "evidencia": "medidas/S0/instancias.json #tbl-movimentacoes"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-37aeaff46667",
+   "componente": "global",
+   "fonte": "e-MAG 3.12",
+   "estados": "S1 S2",
+   "medida": "1ª e única ocorrência: 'Receber avisos por SMS (mensagem de texto no celular)' — sigla seguida da explicação",
+   "evidencia": "medidas/S1/pagina.json › campos"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-9068b253efd7",
+   "componente": "global",
+   "fonte": "e-MAG 4.1",
+   "estados": "S0 S1 S2",
+   "medida": "contraste de todos os textos visíveis ≥ 4,5:1 (mín. 4,59 'Envio' verde; 4,60 feedback branco sobre #e52207; placeholder 12,63)",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-5f1552e3f4ff",
+   "componente": "global",
+   "fonte": "e-MAG 4.1",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum texto sobre imagem de fundo",
+   "evidencia": "medidas/S*/contraste.json (imagemFundo null)"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-24ee65d5b46b",
+   "componente": "global",
+   "fonte": "e-MAG 4.3",
+   "estados": "S0 (janela 640×450 = 200%)",
+   "medida": "a 640×450: scrollWidth 640 = clientWidth 640; rótulo 'Ajuda sobre o NUP' termina em 565 px",
+   "evidencia": "medidas/S0/interacoes.json › redimensionar-200, rotulo-largo-200"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-bc492500708d",
+   "componente": "global",
+   "fonte": "e-MAG 4.4",
+   "estados": "S0 S1 S2",
+   "medida": "todas as paradas de Tab (18/23/24) mudam visualmente com foco (300–7296 px diferentes); contorno tracejado 4 px #c2850c ou anel 2 px no campo",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-2a241e6b0ff6",
+   "componente": "global",
+   "fonte": "e-MAG 4.4",
+   "estados": "S0 S1 S2",
+   "medida": "todas as paradas de Tab (18/23/24) mudam visualmente com foco (300–7296 px diferentes); contorno tracejado 4 px #c2850c ou anel 2 px no campo",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-5f3ebabe87e6",
+   "componente": "global",
+   "fonte": "e-MAG 4.4",
+   "estados": "S0 S1 S2",
+   "medida": "todas as paradas de Tab (18/23/24) mudam visualmente com foco (300–7296 px diferentes); contorno tracejado 4 px #c2850c ou anel 2 px no campo",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-5cf090705f78",
+   "componente": "global",
+   "fonte": "e-MAG 5.5",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum conteúdo piscante, em movimento ou animado nas 36 amostras de 360 s nem nos estados",
+   "evidencia": "medidas/observacao-360.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-76b4b213047e",
+   "componente": "global",
+   "fonte": "e-MAG 6.3",
+   "estados": "S0 S1 S2",
+   "medida": "ordem do formulário: tipo → arquivo → Enviar → avisos (DOM = visual = Tab)",
+   "evidencia": "medidas/S1/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-f2edbc796e74",
+   "componente": "global",
+   "fonte": "e-MAG 6.3",
+   "estados": "S0 S1 S2",
+   "medida": "ordem do formulário: tipo → arquivo → Enviar → avisos (DOM = visual = Tab)",
+   "evidencia": "medidas/S1/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-fefed87ed8b9",
+   "componente": "global",
+   "fonte": "e-MAG 6.3",
+   "estados": "S0 S1 S2",
+   "medida": "item atual do breadcrumb é <span aria-current=page> sem tabindex; fora da ordem de Tab (16/21/22 paradas)",
+   "evidencia": "medidas/S0/pagina.json › tabindexNaoInterativo (vazio); medidas/S0/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-9e7fb4dfa31c",
+   "componente": "global",
+   "fonte": "e-MAG 6.4",
+   "estados": "S0 S1 S2",
+   "medida": "foco em campo não muda contexto; o envio só pelo botão (ou Enter no campo)",
+   "evidencia": "medidas/S1/interacoes.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-1131c20a8b5d",
+   "componente": "global",
+   "fonte": "e-MAG 6.4",
+   "estados": "S0 S1 S2",
+   "medida": "foco em campo não muda contexto; o envio só pelo botão (ou Enter no campo)",
+   "evidencia": "medidas/S1/interacoes.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-711bf7223f5c",
+   "componente": "global",
+   "fonte": "e-MAG 6.4",
+   "estados": "S0 S1 S2",
+   "medida": "foco em campo não muda contexto; o envio só pelo botão (ou Enter no campo)",
+   "evidencia": "medidas/S1/interacoes.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-d301511184d7",
+   "componente": "global",
+   "fonte": "e-MAG 6.5",
+   "estados": "S0 S1 S2",
+   "medida": "'Todos os campos são obrigatórios.' antes dos campos; placeholder orienta o select",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-0e9cecc8b4d7",
+   "componente": "global",
+   "fonte": "e-MAG 6.5",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum campo pré-preenchido",
+   "evidencia": "medidas/S1/pagina.json › campos"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-bbe29662febf",
+   "componente": "global",
+   "fonte": "e-MAG 6.5",
+   "estados": "S0 S1 S2",
+   "medida": "'Todos os campos são obrigatórios.' antes dos campos; placeholder orienta o select",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-606524c94570",
+   "componente": "global",
+   "fonte": "DS Cores",
+   "estados": "S0 S1 S2",
+   "medida": "contraste de todos os textos visíveis ≥ 4,5:1 (mín. 4,59 'Envio' verde; 4,60 feedback branco sobre #e52207; placeholder 12,63)",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-5dbaa4947aa9",
+   "componente": "global",
+   "fonte": "DS Cores",
+   "estados": "S0 S1 S2",
+   "medida": "contraste de todos os textos visíveis ≥ 4,5:1 (mín. 4,59 'Envio' verde; 4,60 feedback branco sobre #e52207; placeholder 12,63)",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+   "componente": "global",
+   "fonte": "DS Cores",
+   "estados": "S0 S1 S2",
+   "medida": "todas as cores computadas visíveis estão na paleta (#000, #333, #fff, #ccc, #1351b4, #155bcb, #0c326f, #071d41, #fff5c2, #168821, #f0f0f0, #888, #fde0db, #e52207); rgba(16,16,16,.3) é a cor do agente nos botões de etapa desabilitados, sem texto próprio",
+   "evidencia": "medidas/S*/pagina.json › coresUsadas; corpus fundamentos-visuais/cores.md"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-865b0ffb9e2a",
+   "componente": "global",
+   "fonte": "DS Cores",
+   "estados": "S0 S1 S2",
+   "medida": "superfícies (#fff, #fff5c2, #fde0db, #071d41) contrastam com texto e interativos (≥ 4,59:1)",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-7429b5798c99",
+   "componente": "global",
+   "fonte": "DS Cores",
+   "estados": "S0 S1 S2",
+   "medida": "cor de interação #1351b4 a 7,33:1 sobre #fff",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-8dc5ad0d4f07",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "etapas desabilitadas sem sombra",
+   "evidencia": "medidas/S0/interacoes.json › etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-85acc17bb79e",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "etapas desabilitadas com cursor not-allowed",
+   "evidencia": "medidas/S0/interacoes.json › cursores-S0"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-18aac6974d3e",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "hover realça o próprio objeto (item da lista)",
+   "evidencia": "medidas/S1/interacoes.json › select-clique.hoverItem"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-65281f15cfbb",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "cursor pointer em todos os interativos visíveis (links, botões, abas, rótulos de checkbox/switch/rádio)",
+   "evidencia": "medidas/S1/interacoes.json › cursores; medidas/S0/interacoes.json › cursores-S0"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-638a80845429",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "cursor pointer nos interativos",
+   "evidencia": "medidas/S1/interacoes.json › cursores"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-d9a6863df99b",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "foco por teclado: contorno tracejado 4 px #c2850c em volta do elemento com afastamento (offset 4 px; −4 px nas abas e skiplink), um só tipo por elemento",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-6cf9c58cc6b6",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "um elemento com foco por vez",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-df2ced45525c",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "foco por teclado: contorno tracejado 4 px #c2850c em volta do elemento com afastamento (offset 4 px; −4 px nas abas e skiplink), um só tipo por elemento",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-1b38d4fabe89",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "elementos desabilitados fora da ordem de Tab",
+   "evidencia": "medidas/S0/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-8728bcb794ff",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "foco por teclado: contorno tracejado 4 px #c2850c em volta do elemento com afastamento (offset 4 px; −4 px nas abas e skiplink), um só tipo por elemento",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-bd9546eb77e4",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "clique em aba, accordion e botão de ajuda: foco sem :focus-visible e sem contorno",
+   "evidencia": "medidas/S0/interacoes.json › foco-por-clique"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-9fceb57bb720",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "foco por teclado visível",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-bdf0f786b5ed",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "foco por teclado: contorno tracejado 4 px #c2850c em volta do elemento com afastamento (offset 4 px; −4 px nas abas e skiplink), um só tipo por elemento",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-21a5e909bdaa",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "foco por teclado: contorno tracejado 4 px #c2850c em volta do elemento com afastamento (offset 4 px; −4 px nas abas e skiplink), um só tipo por elemento",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-e2c92935c052",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "uma aba ativa por vez; um passo ativo",
+   "evidencia": "medidas/S*/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-af10fbd77297",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "uma aba ativa; accordion single; etapa ativa única; desabilitadas não ativas",
+   "evidencia": "medidas/S0/interacoes.json › acordeao, etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-ba8db8363b21",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "uma aba ativa; accordion single; etapa ativa única; desabilitadas não ativas",
+   "evidencia": "medidas/S0/interacoes.json › acordeao, etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-6528d31819e8",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "uma aba ativa; accordion single; etapa ativa única; desabilitadas não ativas",
+   "evidencia": "medidas/S0/interacoes.json › acordeao, etapas"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-19fe027ffdd8",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "abas, tooltips, botões, mensagens e divisores sem estado visual 'selecionado' (só ativo/interativo)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-796412737a0d",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "abas, tooltips, botões, mensagens e divisores sem estado visual 'selecionado' (só ativo/interativo)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-18fdaca382b7",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "abas, tooltips, botões, mensagens e divisores sem estado visual 'selecionado' (só ativo/interativo)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-ced823e7339b",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "abas, tooltips, botões, mensagens e divisores sem estado visual 'selecionado' (só ativo/interativo)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-837c59d3da82",
+   "componente": "global",
+   "fonte": "DS Estados",
+   "estados": "S0 S1 S2",
+   "medida": "abas, tooltips, botões, mensagens e divisores sem estado visual 'selecionado' (só ativo/interativo)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-02c52c687799",
+   "componente": "global",
+   "fonte": "DS Grid",
+   "estados": "S0 S1 S2",
+   "medida": "a 1280 px todo o conteúdo fica entre x 60 e 1220 (margens da grid); só header/footer/fundos sangram",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-5f09d3ccaf40",
+   "componente": "global",
+   "fonte": "DS Grid",
+   "estados": "S0 S1 S2",
+   "medida": "a 1280 px todo o conteúdo fica entre x 60 e 1220 (margens da grid); só header/footer/fundos sangram",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-e0e913d352f3",
+   "componente": "global",
+   "fonte": "DS Iconografia",
+   "estados": "S0 S1 S2",
+   "medida": "ícones decorativos com aria-hidden",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-7dc943e89a3d",
+   "componente": "global",
+   "fonte": "DS Iconografia",
+   "estados": "S0 S1 S2",
+   "medida": "área de interação dos ícones ≥ 32 px",
+   "evidencia": "medidas/S2/pagina.json › botoes"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-5f213b4dbcb5",
+   "componente": "global",
+   "fonte": "DS Iconografia",
+   "estados": "S0 S1 S2",
+   "medida": "ícones interativos ≥ 32×32 (≥ 24×24)",
+   "evidencia": "medidas/S2/pagina.json › botoes"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-9ed834a493e9",
+   "componente": "global",
+   "fonte": "DS Iconografia",
+   "estados": "S0 S1 S2",
+   "medida": "ícones correspondem à ação: fa-home → página inicial, fa-times → fechar, fa-question-circle → ajuda, fa-angle-down → exibir lista/expandir, fa-upload → enviar arquivo, fa-search → pesquisar opções",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-df5e11a0719f",
+   "componente": "global",
+   "fonte": "DS Iconografia",
+   "estados": "S0 S1 S2",
+   "medida": "ícones correspondem à ação: fa-home → página inicial, fa-times → fechar, fa-question-circle → ajuda, fa-angle-down → exibir lista/expandir, fa-upload → enviar arquivo, fa-search → pesquisar opções",
+   "evidencia": "medidas/S2/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-450420b746a8",
+   "componente": "global",
+   "fonte": "DS Tipografia Rawline",
+   "estados": "S0 S1 S2",
+   "medida": "font-family computado 'Rawline, Raleway, sans-serif' em todo texto",
+   "evidencia": "medidas/S*/pagina.json › familiasUsadas"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-1b05051817ed",
+   "componente": "global",
+   "fonte": "DS guias/acessibilidade-html/acessibilidade-html.md",
+   "estados": "S0 S1 S2",
+   "medida": "elementos usados conforme o propósito, exceto os achados A2 (font/align, menubar, span com tabindex)",
+   "evidencia": "medidas/S*/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-67a136404372",
+   "componente": "global",
+   "fonte": "DS guias/acessibilidade-html/acessibilidade-html.md",
+   "estados": "S0 S1 S2",
+   "medida": "cabeçalhos h1/h2, listas ol/ul, tabela de dados, strong, form/fieldset, main/nav/header/footer",
+   "evidencia": "medidas/S*/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-12fb45707041",
+   "componente": "global",
+   "fonte": "DS guias/acessibilidade-html/acessibilidade-html.md",
+   "estados": "S0 S1 S2",
+   "medida": "um h1 ('Acompanhar Requerimento', conteúdo principal); h2 subordinados; sem salto",
+   "evidencia": "medidas/S*/pagina.json › titulos"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-7514e57eb1d7",
+   "componente": "global",
+   "fonte": "DS guias/acessibilidade-html/acessibilidade-html.md",
+   "estados": "S0 S1 S2",
+   "medida": "um h1 ('Acompanhar Requerimento', conteúdo principal); h2 subordinados; sem salto",
+   "evidencia": "medidas/S*/pagina.json › titulos"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-6bf6afb35fac",
+   "componente": "global",
+   "fonte": "DS guias/acessibilidade-html/acessibilidade-html.md",
+   "estados": "S0 S1 S2",
+   "medida": "a única tabela é de dados",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-32912f18470f",
+   "componente": "global",
+   "fonte": "DS guias/acessibilidade-html/acessibilidade-html.md",
+   "estados": "S0 S1 S2",
+   "medida": "<html lang=\"pt-BR\">",
+   "evidencia": "medidas/S0/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-fa5e490a277d",
+   "componente": "global",
+   "fonte": "DS guias/acessibilidade-html/acessibilidade-html.md",
+   "estados": "S0 S1 S2",
+   "medida": "<html lang=\"pt-BR\">",
+   "evidencia": "medidas/S0/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-b18c7684019f",
+   "componente": "global",
+   "fonte": "DS guias/acessibilidade-html/acessibilidade-html.md",
+   "estados": "S0 S1 S2",
+   "medida": "nome acessível do breadcrumb = 'Trilha de navegação' (português)",
+   "evidencia": "medidas/S0/instancias.json (.trilha-servico AX)"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-e913d32a2f64",
+   "componente": "global",
+   "fonte": "DS guias/acessibilidade-html/acessibilidade-html.md",
+   "estados": "S0 S1 S2",
+   "medida": "2 imagens (marca) com alt 'gov.br'",
+   "evidencia": "medidas/S0/pagina.json › imagens"
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-9d6c7091b9bf",
+   "componente": "global",
+   "fonte": "DS guias/acessibilidade-html/acessibilidade-html.md",
+   "estados": "S0 S1 S2",
+   "medida": "labels usados nos campos (select, rádios, checkbox, switches, upload)",
+   "evidencia": "medidas/S1/pagina.json › campos"
+  },
+  {
+   "regra": "govbr-3.7.0-development-global-851d30cb11a1",
+   "componente": "global",
+   "fonte": "DS guias/boas-praticas-de-html/boas-praticas-de-html.md",
+   "estados": "S0 S1 S2",
+   "medida": "head/body sem recuo; atributos booleanos sem valor (single, disabled, active, novalidate) no HTML servido",
+   "evidencia": "medidas/html-servido.json"
+  },
+  {
+   "regra": "govbr-3.7.0-development-global-a4f97ebb50c5",
+   "componente": "global",
+   "fonte": "DS guias/boas-praticas-de-html/boas-praticas-de-html.md",
+   "estados": "HTML servido",
+   "medida": "HTML servido: 0 elementos vazios fechados com '/>' (eram 10)",
+   "evidencia": "medidas/html-servido.json › autoFechados"
+  },
+  {
+   "regra": "govbr-3.7.0-development-global-b6c03441339c",
+   "componente": "global",
+   "fonte": "DS guias/boas-praticas-de-html/boas-praticas-de-html.md",
+   "estados": "S0 S1 S2",
+   "medida": "head/body sem recuo; atributos booleanos sem valor (single, disabled, active, novalidate) no HTML servido",
+   "evidencia": "medidas/html-servido.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-1ab5a66de008",
+   "componente": "global",
+   "fonte": "DS Formulário",
+   "estados": "S0 S1 S2",
+   "medida": "título do formulário h2 34,832 px, maior texto do formulário",
+   "evidencia": "medidas/S1/pagina.json › titulos"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-3d865f569bdb",
+   "componente": "global",
+   "fonte": "DS Formulário",
+   "estados": "S0 S1 S2",
+   "medida": "todos os campos com rótulo; placeholder não substitui rótulo",
+   "evidencia": "medidas/S1/pagina.json › campos"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-62888bfde020",
+   "componente": "global",
+   "fonte": "DS Formulário",
+   "estados": "S0 S1 S2",
+   "medida": "todos os campos com rótulo; placeholder não substitui rótulo",
+   "evidencia": "medidas/S1/pagina.json › campos"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-17cd1e002181",
+   "componente": "global",
+   "fonte": "DS Formulário",
+   "estados": "S0 S1 S2",
+   "medida": "largura do campo fixa (400 px) ao digitar",
+   "evidencia": "medidas/S1/interacoes.json › select-digitar"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-b8cf68552989",
+   "componente": "global",
+   "fonte": "DS Formulário",
+   "estados": "S0 S1 S2",
+   "medida": "campos com largura compatível; select para dados predeterminados; texto auxiliar de 1 frase; títulos e rótulos curtos e objetivos",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-8b378760f70b",
+   "componente": "global",
+   "fonte": "DS Formulário",
+   "estados": "S0 S1 S2",
+   "medida": "campos com largura compatível; select para dados predeterminados; texto auxiliar de 1 frase; títulos e rótulos curtos e objetivos",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-aabbc9b63402",
+   "componente": "global",
+   "fonte": "DS Formulário",
+   "estados": "S0 S1 S2",
+   "medida": "todos os campos com rótulo; placeholder não substitui rótulo",
+   "evidencia": "medidas/S1/pagina.json › campos"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-8d2c60f53010",
+   "componente": "global",
+   "fonte": "DS Formulário",
+   "estados": "S0 S1 S2",
+   "medida": "campos com largura compatível; select para dados predeterminados; texto auxiliar de 1 frase; títulos e rótulos curtos e objetivos",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-e7baadab728a",
+   "componente": "global",
+   "fonte": "DS Formulário",
+   "estados": "S0 S1 S2",
+   "medida": "ícones de ajuda: botão terciário com ícone, mesma linha, à direita do dado",
+   "evidencia": "medidas/S0/instancias.json #crd-resumo"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-582e7bbd5156",
+   "componente": "global",
+   "fonte": "DS Formulário",
+   "estados": "S0 S1 S2",
+   "medida": "o rótulo de grupo 'Avisos sobre o requerimento' (16,8 px) tem menos ênfase que o título do formulário (34,8 px)",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-9ac14bf357d4",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "rótulos de campo com só a primeira letra maiúscula",
+   "evidencia": "medidas/S1/pagina.json › campos"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-f4a0aa1ba9c3",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S1 S2",
+   "medida": "rótulo 'Enviar Documento'",
+   "evidencia": "medidas/S1/pagina.json › botoes"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-f4a0aa1ba9c3",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "rótulo 'Meus Requerimentos' (o texto 'Voltar para…' saiu)",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-7ffb713fc93f",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "links indicam destino/ação",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-a537fc405080",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "campos com largura compatível; select para dados predeterminados; texto auxiliar de 1 frase; títulos e rótulos curtos e objetivos",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-70b1f49fd18a",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "sem texto todo em caixa alta; datas dd/mm/aaaa; NUP alinhado à esquerda",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-d2347a3c39a5",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "campos com largura compatível; select para dados predeterminados; texto auxiliar de 1 frase; títulos e rótulos curtos e objetivos",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-7ae19fa4a286",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "campos com largura compatível; select para dados predeterminados; texto auxiliar de 1 frase; títulos e rótulos curtos e objetivos",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-a1c3fb8b701e",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "alt 'gov.br' (marca)",
+   "evidencia": "medidas/S0/pagina.json › imagens"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-e8dde0646f49",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "todo o texto visível dos 3 estados lido (textos de contraste.json): nenhuma ironia, culpa, gíria, regionalismo, termo sobre deficiência, palavrão ou repetição de palavras-chave",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-fc43c36e8153",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "todo o texto visível dos 3 estados lido (textos de contraste.json): nenhuma ironia, culpa, gíria, regionalismo, termo sobre deficiência, palavrão ou repetição de palavras-chave",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-aa56f7a1318a",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "campos com largura compatível; select para dados predeterminados; texto auxiliar de 1 frase; títulos e rótulos curtos e objetivos",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-d940aeb025a5",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "links com sentido isolados (lista de links da página)",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-3452ebb82982",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "links com sentido isolados (lista de links da página)",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-eaa8a5e4349c",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "sem texto todo em caixa alta; datas dd/mm/aaaa; NUP alinhado à esquerda",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-8216757861d9",
+   "componente": "global",
+   "fonte": "DS Microcopy",
+   "estados": "S0 S1 S2",
+   "medida": "todo o texto visível dos 3 estados lido (textos de contraste.json): nenhuma ironia, culpa, gíria, regionalismo, termo sobre deficiência, palavrão ou repetição de palavras-chave",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-9f15124db29f",
+   "componente": "global",
+   "fonte": "DS Princípios de UX Writing",
+   "estados": "S0 S1 S2",
+   "medida": "sem texto todo em caixa alta; datas dd/mm/aaaa; NUP alinhado à esquerda",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-7ea5627fa002",
+   "componente": "global",
+   "fonte": "DS Princípios de UX Writing",
+   "estados": "S0 S1 S2",
+   "medida": "campos com largura compatível; select para dados predeterminados; texto auxiliar de 1 frase; títulos e rótulos curtos e objetivos",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-1ae939f092f9",
+   "componente": "global",
+   "fonte": "DS Princípios de UX Writing",
+   "estados": "S0 S1 S2",
+   "medida": "todo o texto visível dos 3 estados lido (textos de contraste.json): nenhuma ironia, culpa, gíria, regionalismo, termo sobre deficiência, palavrão ou repetição de palavras-chave",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-72f4217f6a64",
+   "componente": "global",
+   "fonte": "DS Princípios de UX Writing",
+   "estados": "S0 S1 S2",
+   "medida": "links com sentido isolados (lista de links da página)",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-38e29fcf7bc4",
+   "componente": "global",
+   "fonte": "DS Princípios de UX Writing",
+   "estados": "S0 S1 S2",
+   "medida": "nenhum title em link",
+   "evidencia": "medidas/S0/pagina.json › links"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-e6f64d045f26",
+   "componente": "global",
+   "fonte": "DS Princípios de UX Writing",
+   "estados": "S0 S1 S2",
+   "medida": "estados das etapas e mensagens têm texto (', etapa concluída'; 'Erro:'; 'Documento pendente.'); exceção medida: borda do select — ver achado 6.6",
+   "evidencia": "medidas/S0/pagina.json; medidas/S2/interacoes.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-83528ebfc1ca",
+   "componente": "global",
+   "fonte": "DS Princípios de UX Writing",
+   "estados": "S0 S1 S2",
+   "medida": "estados das etapas e mensagens têm texto (', etapa concluída'; 'Erro:'; 'Documento pendente.'); exceção medida: borda do select — ver achado 6.6",
+   "evidencia": "medidas/S0/pagina.json; medidas/S2/interacoes.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-5cf60bf7ef93",
+   "componente": "global",
+   "fonte": "DS Princípios de UX Writing",
+   "estados": "S0 S1 S2",
+   "medida": "todo o texto visível dos 3 estados lido (textos de contraste.json): nenhuma ironia, culpa, gíria, regionalismo, termo sobre deficiência, palavrão ou repetição de palavras-chave",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-d91e1703086d",
+   "componente": "global",
+   "fonte": "DS Princípios de UX Writing",
+   "estados": "S0 S1 S2",
+   "medida": "todo o texto visível dos 3 estados lido (textos de contraste.json): nenhuma ironia, culpa, gíria, regionalismo, termo sobre deficiência, palavrão ou repetição de palavras-chave",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-5edee73f5cfb",
+   "componente": "global",
+   "fonte": "DS Princípios de UX Writing",
+   "estados": "S0 S1 S2",
+   "medida": "todo o texto visível dos 3 estados lido (textos de contraste.json): nenhuma ironia, culpa, gíria, regionalismo, termo sobre deficiência, palavrão ou repetição de palavras-chave",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-ef292ba8111c",
+   "componente": "global",
+   "fonte": "DS Princípios de UX Writing",
+   "estados": "S0 S1 S2",
+   "medida": "todo o texto visível dos 3 estados lido (textos de contraste.json): nenhuma ironia, culpa, gíria, regionalismo, termo sobre deficiência, palavrão ou repetição de palavras-chave",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "govbr-3.7.0-template-global-c21ff1c7eefc",
+   "componente": "global",
+   "fonte": "DS Template Base",
+   "estados": "S0 S1 S2",
+   "medida": "Template Base: header (br-header), conteúdo (main), rodapé (br-footer)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-template-global-10b091d3e7d1",
+   "componente": "global",
+   "fonte": "DS Template Base",
+   "estados": "S0 S1 S2",
+   "medida": "Template Base: header (br-header), conteúdo (main), rodapé (br-footer)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "govbr-3.7.0-template-global-79cf9ea963ee",
+   "componente": "global",
+   "fonte": "DS Template Base",
+   "estados": "S0 S1 S2",
+   "medida": "Template Base: header (br-header), conteúdo (main), rodapé (br-footer)",
+   "evidencia": "medidas/S0/instancias.json"
+  },
+  {
+   "regra": "WCAG-2.1-1.4.3",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "contraste ≥ 4,5:1 em todo texto visível dos 3 estados (mínimo 4,59)",
+   "evidencia": "medidas/S*/contraste.json"
+  },
+  {
+   "regra": "WCAG-2.1-2.4.7",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "foco visível nas 18/23/24 paradas (diferença de pixels > 0 em todas)",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "WCAG-2.1-2.1.1",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "todas as funções operáveis por teclado",
+   "evidencia": "medidas/S*/interacoes.json"
+  },
+  {
+   "regra": "WCAG-2.1-2.1.2",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "sem armadilha de teclado",
+   "evidencia": "medidas/S*/tab.json"
+  },
+  {
+   "regra": "WCAG-2.1-2.4.1",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "skiplink para #main-content e #rodape funciona",
+   "evidencia": "medidas/S0/interacoes.json › skiplink-enter"
+  },
+  {
+   "regra": "WCAG-2.1-2.4.2",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "título descritivo",
+   "evidencia": "medidas/S0/pagina.json"
+  },
+  {
+   "regra": "WCAG-2.1-3.1.1",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "lang=pt-BR",
+   "evidencia": "medidas/S0/pagina.json"
+  },
+  {
+   "regra": "WCAG-2.1-1.1.1",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "imagens com alt; ícones aria-hidden; botões de ícone nomeados",
+   "evidencia": "medidas/S*/pagina.json"
+  },
+  {
+   "regra": "WCAG-2.1-4.1.2 (switch, AX)",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "Chromium expõe switch com checked true/false correto (propriedade nativa), apesar do aria-checked fixo",
+   "evidencia": "medidas/S1/interacoes.json › switch-ax-ligado"
+  },
+  {
+   "regra": "WCAG-2.1-3.3.2",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "rótulos e instrução 'Todos os campos são obrigatórios.'",
+   "evidencia": "medidas/S1/pagina.json"
+  },
+  {
+   "regra": "WCAG-2.1-1.4.13 (dispensável)",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "Escape fecha os 3 tooltips medidos",
+   "evidencia": "medidas/S0/interacoes.json › tooltip-foco"
+  },
+  {
+   "regra": "WCAG-2.1-4.1.3",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "'Preferência salva.' em região aria-live=polite; erros em role=alert",
+   "evidencia": "medidas/S1/interacoes.json › switch-teclado; medidas/S2/pagina.json › regioesVivas"
+  },
+  {
+   "regra": "WCAG-2.1-4.1.2 (corrige A2-06)",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "skiplink sem role: AX navigation com 2 links (eram menubar/menuitem)",
+   "evidencia": "medidas/S0/instancias.json (.atalhos-pagina AX)"
+  },
+  {
+   "regra": "WCAG-2.1-3.1.2 (corrige A2-10)",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "nome acessível do breadcrumb = 'Trilha de navegação' (português)",
+   "evidencia": "medidas/S0/instancias.json (.trilha-servico AX)"
+  },
+  {
+   "regra": "WCAG-2.1-1.4.10 (corrige A2-16)",
+   "componente": "pagina",
+   "fonte": "WCAG 2.1",
+   "estados": "S0 S1 S2",
+   "medida": "a 640×450: scrollWidth 640 = clientWidth 640; rótulo 'Ajuda sobre o NUP' termina em 565 px",
+   "evidencia": "medidas/S0/interacoes.json › redimensionar-200, rotulo-largo-200"
+  }
+ ]
+}

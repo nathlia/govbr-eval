@@ -4,10 +4,12 @@ Semente `876024a331d8e9cc05837554f11aeda01aa8b2ff` · sorteio em `sorteio-2.json
 tela em `govbr-corpus/acompanhamento.html` (entrada Vite), com `src/acompanhamento/` (folhas: `acompanhamento.css`
 → Font Awesome 6.6.0 do pacote, `rawline.css`, `core.min.css` do `@govbr-ds/core` 3.7.0, `pagina.css`; fontes
 Rawline woff2) e `public/acompanhamento/` (`core.min.js` do pacote, byte a byte; `comportamento.js`; as duas marcas
-gov.br em SVG) + `public/meus-requerimentos.html` (destino da trilha e do Voltar, plano § 14.5).
+gov.br em SVG) + `public/meus-requerimentos.html` (destino da trilha e do Voltar, plano § 14.5) + `public/inicio.html`
+(destino do Home da trilha, desde as correções pós-auditoria).
 
 Conferência sem modelo, sem oráculo e sem axe: `node tela-a2/conferir-construcao.mjs` —
-**79/79** (17 observáveis de defeito — as 16 unidades, com a 2.3 medida duas vezes: a meta e a janela de 360 s, que registrou cargas aos 0,1 s e 300,2 s —; 62 pontos conformes). Chromium headless 1280×900; ~6 min por causa da janela da 2.3 (`--sem-janela-recarga` pula só ela, para iteração, e sai com código 2). Nada aqui foi medido por agente, e nenhuma ferramenta do `govbr-ds-validator` foi chamada
+**90/90 depois das correções pós-auditoria** (17 observáveis de defeito, 73 pontos conformes; ver a seção
+"Correções pós-auditoria"). Na construção original: **79/79** (17 observáveis de defeito — as 16 unidades, com a 2.3 medida duas vezes: a meta e a janela de 360 s, que registrou cargas aos 0,1 s e 300,2 s —; 62 pontos conformes). Chromium headless 1280×900; ~6 min por causa da janela da 2.3 (`--sem-janela-recarga` pula só ela, para iteração, e sai com código 2). Nada aqui foi medido por agente, e nenhuma ferramenta do `govbr-ds-validator` foi chamada
 sobre a tela. `hasChecker` continua sem anotar.
 
 ## Como servir
@@ -82,12 +84,12 @@ Os dois defeitos de `msg-pendencia` (`5f85` no Fechar, `671056` no texto) e os d
 |---|---|
 | `hdr-govbr` | `.br-header` visível, no topo (y = 0), antes do `main`. |
 | `ftr-govbr` | `.br-footer` visível, depois do `main`. |
-| `skp-conteudo` | `.br-skiplink` 1º filho do `body`; âncoras existem; o 1º Tab cai no atalho, visível, para `#main-content`. |
-| `brd-trilha` | `.br-breadcrumb` 1º conteúdo do `main` (Área de Localização), último item com `aria-current="page"`. |
+| `skp-conteudo` | `.br-skiplink` 1º filho do `body`; âncoras existem; o 1º Tab cai no atalho, visível, para `#main-content`; `nav` com links, sem `menubar`/`menuitem` (F-01). |
+| `brd-trilha` | `.br-breadcrumb` 1º conteúdo do `main` (Área de Localização), último item com `aria-current="page"` fora da ordem de Tab (F-02), nome "Trilha de navegação" (F-03). |
 | `div-secoes` | `.br-divider` entre as abas e a seção de dúvidas, borda sólida 1 px `--gray-20` (`#ccc`), fora do foco. |
 | `crd-resumo` | `.br-card`, superfície `#fff` com sombra, NUP por extenso na 1ª ocorrência, caminho para detalhes, sem `font`/`align`. |
-| `btn-voltar` | `a.br-button.secondary` para `meus-requerimentos.html` (que existe no `dist/`). |
-| `btn-enviar` | (S1) `button.br-button.primary` `type=submit`, 40 px, "Enviar documento". |
+| `btn-voltar` | `a.br-button.secondary` para `meus-requerimentos.html` (que existe no `dist/`), rótulo "Meus Requerimentos", o mesmo do item da trilha (F-04/F-05). |
+| `btn-enviar` | (S1) `button.br-button.primary` `type=submit`, 40 px, "Enviar Documento" (F-05). |
 | moldura `main` | exatamente um `main`, visível. |
 
 Além disso, conferidos como pontos conformes: DOCTYPE/lang/UTF-8/X-UA-Compatible/título; hierarquia h1→h2; HTML
@@ -120,12 +122,53 @@ da origem; nenhum erro de console ou resposta 4xx/5xx; cada estado medido em at�
 Nenhum. Todas as 14 specs, as 2 cópias compartilhadas, as 3 alternativas e os 8 chamarizes foram construídos como
 o sorteio diz.
 
+## Correções pós-auditoria (2026-11-02)
+
+Origem: `reconciliacao.md` § 4 (F-01…F-10) e `recomendacoes-escaladas.md`. F-04, F-05, F-06 e F-08 são
+incondicionais (defeito de construção, plano § 4); F-01…F-03 aplicam a E-06, F-07 a E-07 e F-09/F-10 a E-09, todas
+pela recomendação do assistente. E-01/E-02 não mudam nada aqui: as 16 unidades ficam como estão. Nenhuma unidade
+sorteada, cópia compartilhada, alternativa válida ou chamariz conforme mudou no aspecto que a define; a conferência
+refaz todas as medidas anteriores (as mesmas 79, com o rótulo do Enviar atualizado) e acrescenta 11 pontos conformes.
+
+| # | Achados | O que mudou (arquivo › elemento) | Por quê |
+|---|---|---|---|
+| F-01 | A2-06 | `acompanhamento.html` › `nav.br-skiplink`: sem `role="menubar"`; os dois `a.br-item` sem `role="menuitem"` (classes, `accesskey`, textos e destinos iguais). **Desvio dos exemplos `skiplink-*.html` do @govbr-ds/core 3.7.0.** | e-MAG 1.2: `menubar` promete setas que não existem; é a mesma norma da U-11 e confundiria o casamento (E-06). |
+| F-02 | A2-08 | idem › item atual da trilha: `<span aria-current="page">` sem `tabindex="0"`. **Desvio do `breadcrumb-default.html`.** A ordem de Tab perde essa parada; a conferência não conta paradas. | e-MAG 1.4: parada de Tab sem função (E-06). |
+| F-03 | A2-10 | idem › `nav.br-breadcrumb`: `aria-label="Trilha de navegação"` (era "Breadcrumbs", do exemplo). | e-MAG 3.2: nome lido em inglês numa página pt-BR (E-06). |
+| F-04 | A2-11 | idem › Home da trilha aponta para `inicio.html` (página nova e mínima em `public/`, texto oculto "Página Inicial"); o item "Meus Requerimentos" da trilha e o `a.br-button.secondary` (Voltar) para `meus-requerimentos.html` têm agora a mesma descrição, "Meus Requerimentos". | e-MAG 3.5: três descrições para o mesmo destino. O Voltar continua `a.br-button.secondary` para `meus-requerimentos.html` (plano § 14.5). |
+| F-05 | A2-32, A2-33 | idem › `.acao-enviar`: "Enviar Documento"; o Voltar, como F-04. O texto do 1º item das dúvidas, que cita o botão, acompanha ("use Enviar Documento"). | Microcopy de buttons (iniciais maiúsculas). `msg-retorno` não mudou: continua sem nomear "Tipo de documento" (U-09/U-12); S2 é alcançado pela classe `.acao-enviar`. |
+| F-06 | A2-16 | `src/acompanhamento/pagina.css` › `.ajuda-resumo`: `flex: none` e `margin-right: calc(var(--spacing-scale-base) + 10em)` (o espaço do rótulo posicionado à direita do botão passa a ser reservado na linha; a 640 px o texto do NUP quebra antes). | e-MAG 4.3: a 640×450 o rótulo do gatilho do NUP ia até 648 px (barra horizontal). Agora termina em 565 px, `scrollWidth` = `clientWidth` = 640. A 1280 px nada se move: botão 40×40 no mesmo lugar, ícone centrado, `span` escrito (U-06 nas duas cópias), balão abaixo a 8,3 px. |
+| F-07 | A2-17, A2-18 | `public/acompanhamento/comportamento.js` › `ligarBaloes`: guarda a instância do `BRTooltip` e, nos mesmos eventos de abertura do core (`showEvents`), chama `popperInstance.update()`. `core.min.js` intacto (byte a byte). | Regra elegível `a2-281b82e2e6be` (seta centrada com o balão): o Popper era criado antes de a largura final do balão existir. Medido depois: desvio ≤ 0,4 px nos 5 balões, por ponteiro e por foco (antes 9,2 / 10 / 8,4 px). Placement, distância, `hideEvents`, Esc e o ícone `flex-start` do Fechar da pendência (U-05) não mudam (E-07). |
+| F-08 | A2-34 | `acompanhamento.html` › `label[for=aviso-sms]`: "Receber avisos por SMS (mensagem de texto no celular)", forma completa em texto na 1ª ocorrência no DOM (sem `abbr`, plano § 14.3). | e-MAG 3.12. O `input#aviso-sms` (U-07′: `role=switch`, `aria-checked="false"`, `data-child`) não mudou. |
+| F-09 | A2-04 | idem › 2 `img` (marcas) e 8 `input`: sem a barra de `/>`. O DOM é o mesmo (o parser já descartava a barra); o Vite não reescreve. | Proibição do DS de fechar elementos vazios (E-09). |
+| F-10 | A2-05 | idem › `<noscript><p>…</p></noscript>` logo depois do skiplink: a página precisa de JavaScript para abas, lista de tipos e envio. Sem `style`/`script` embutido; o skiplink continua 1º filho do `body`. | e-MAG 2.2 (E-09). Com JavaScript ligado nada visível muda. |
+
+**Pontos conformes acrescentados à conferência (11):** HTML servido sem `/>` (F-09); atalhos sem papel de menu na
+marcação e na árvore AX (`navigation` + `link`) (F-01); um `noscript` logo depois do atalho (F-10); item atual da
+trilha sem `tabindex`, `tabIndex` −1 (F-02); nome AX da trilha "Trilha de navegação" (F-03); links para o mesmo destino
+com a mesma descrição (F-04); destinos dos links existem no `dist/` (F-04, inclui `inicio.html`); 1ª ocorrência de
+"SMS" com forma completa (F-08); rótulo do Voltar "Meus Requerimentos" (F-04/F-05); 640×450 sem rolagem horizontal e
+sem elemento além da janela (F-06); seta centrada (≤ 1 px) com o balão e apontando para o gatilho nos 5 balões
+(tip-protocolo, tip-prazo, Fechar da pendência, gatilho do select, Fechar do retorno), por ponteiro e por foco
+(F-07, `a2-281b82e2e6be`). O ponto do `btn-enviar` passou a exigir "Enviar Documento".
+
+**Build.** Build completo num diretório descartável: difere do `dist/` só em `acompanhamento.html`,
+`acompanhamento/comportamento.js`, a folha `assets/acompanhamento-*.css` (agora `acompanhamento-24RnUkmJ.css`; a
+`-DHdeEEPm.css` saiu) e o novo `inicio.html`; esses quatro foram copiados para o `dist/`, que ficou idêntico ao build
+completo. sha256: `acompanhamento.html` d7496a29…0dd8, `assets/acompanhamento-24RnUkmJ.css` ec9c308b…7684,
+`acompanhamento/comportamento.js` 126f73de…37fb, `inicio.html` 412bfb11…e8d. A superfície de medida ganha
+`inicio.html`.
+
+**Depois:** re-medida da auditoria (`auditoria/conferir-auditoria.mjs`): os 12 achados corrigidos devem sumir, os 14
+das unidades ficar, os 8 de fundo ficar.
+
 ## Condições de fundo que ninguém injetou
 
 Vêm da marcação oficial ou do `core.js` 3.7.0, existem nos dois braços e não são unidades da referência (entram
 como descoberta na adjudicação, D-48): o botão do upload criado pelo `BRUpload` é focável com `aria-hidden="true"`;
-o skiplink canônico usa `role="menubar"`; o `BRTooltip` calcula a posição do balão na criação e não a refaz ao abrir (se a página
-mudar de layout antes, o balão pode abrir deslocado do gatilho); clicar a etapa concluída
+o skiplink canônico usa `role="menubar"` e o `BRTooltip` calcula a posição do balão na criação e não a refaz ao abrir
+(as duas deixaram de valer na página com F-01 e F-07); o `BRBreadcrumb` põe `tabindex="0"` de volta no item atual se a
+janela passar por menos de 575 px e voltar (o `_reset` do core; a 640 px e acima ele não mexe no item); clicar a etapa concluída
 do step faz o `BRStep` marcá-la como ativa; o `BRSelect` acrescenta um ícone de busca no campo; o core deixa o
 `caption` com `opacity: 0`. A meta refresh recarrega a página a cada 300 s também durante a bateria (efeito real
 do defeito, plano § 14.5 item 4).

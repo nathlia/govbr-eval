@@ -5,7 +5,7 @@
  * Mede a página como servida (http://127.0.0.1:3218, `node tela-a2/servir.mjs`), nunca os fontes.
  */
 import { readFileSync } from "fs";
-import { join, dirname } from "path";
+import { join, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { chromium } from "playwright";
 
@@ -16,7 +16,9 @@ export const URL_ENTRADA = BASE + ANCORAS.entrada;
 export const VIEWPORT = { width: 1280, height: 900 };
 export const ESTADOS = ANCORAS.states;
 export const SETUP = ANCORAS.setup;
-export const MEDIDAS = join(AQUI, "medidas");
+/** Pasta de saída (padrão: esta pasta). AUDITORIA_SAIDA=<dir> grava tudo lá, sem tocar na auditoria anterior. */
+export const SAIDA = process.env.AUDITORIA_SAIDA ? resolve(process.env.AUDITORIA_SAIDA) : AQUI;
+export const MEDIDAS = join(SAIDA, "medidas");
 export const KB_DIR = join(AQUI, "../../../govbr-ds-validator/data/knowledge/versions/3.7.0-literal-2026-10-15/normalized");
 
 export async function abrirNavegador() {

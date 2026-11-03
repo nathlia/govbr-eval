@@ -1,0 +1,14 @@
+{
+ "A2-04": { "medida": "HTML servido: 0 elementos vazios fechados com '/>' (eram 10)", "evidencia": "medidas/html-servido.json › autoFechados" },
+ "A2-05": { "medida": "1 <noscript> no início do body: 'Esta página precisa de JavaScript para exibir as abas, a lista de tipos de documento e o envio do documento.'", "evidencia": "medidas/S0/pagina.json › noscript; medidas/html-servido.json" },
+ "A2-06": { "medida": "skiplink sem role: AX navigation com 2 links (eram menubar/menuitem)", "evidencia": "medidas/S0/instancias.json (.atalhos-pagina AX)" },
+ "A2-08": { "medida": "item atual do breadcrumb é <span aria-current=page> sem tabindex; fora da ordem de Tab (16/21/22 paradas)", "evidencia": "medidas/S0/pagina.json › tabindexNaoInterativo (vazio); medidas/S0/tab.json" },
+ "A2-10": { "medida": "nome acessível do breadcrumb = 'Trilha de navegação' (português)", "evidencia": "medidas/S0/instancias.json (.trilha-servico AX)" },
+ "A2-11": { "medida": "Home 'Página Inicial' → inicio.html; 'Meus Requerimentos' (breadcrumb) e 'Meus Requerimentos' (botão) → meus-requerimentos.html: mesmo destino, mesma descrição", "evidencia": "medidas/S0/pagina.json › links" },
+ "A2-16": { "medida": "a 640×450: scrollWidth 640 = clientWidth 640; rótulo 'Ajuda sobre o NUP' termina em 565 px", "evidencia": "medidas/S0/interacoes.json › redimensionar-200, rotulo-largo-200" },
+ "A2-17": { "medida": "#tip-protocolo: balão x 390–591,5 (centro 490,8); seta centro 491,0 → 0,2 px", "evidencia": "medidas/S0/interacoes.json › tooltip-hover #tip-protocolo-gatilho" },
+ "A2-18": { "medida": "tooltip do Fechar de #msg-pendencia: centro do balão 1195,6; seta centro 1196,0 → 0,4 px", "evidencia": "medidas/S0/interacoes.json › tooltip-hover #msg-pendencia .close button" },
+ "A2-32": { "medida": "rótulo 'Enviar Documento'", "evidencia": "medidas/S1/pagina.json › botoes" },
+ "A2-33": { "medida": "rótulo 'Meus Requerimentos' (o texto 'Voltar para…' saiu)", "evidencia": "medidas/S0/pagina.json › links" },
+ "A2-34": { "medida": "1ª e única ocorrência: 'Receber avisos por SMS (mensagem de texto no celular)' — sigla seguida da explicação", "evidencia": "medidas/S1/pagina.json › campos" }
+}

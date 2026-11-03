@@ -1,0 +1,4600 @@
+{
+ "_meta": {
+  "tela": "acompanhamento",
+  "titulo": "Acompanhar requerimento",
+  "entrada": "/acompanhamento.html",
+  "viewport": "1280x900",
+  "headless": true,
+  "fonte": "medidas/<estado>/instancias.json, pagina.json, tab.json, ax.json (medir.mjs)",
+  "listaNeutra": "../ancoras-neutras.json (45 instâncias)",
+  "nota": "visível = caixa ≥ 1×1 px, sem display:none/visibility:hidden/opacity:0/[hidden]/clip em nenhum ancestral e dentro do documento. Os itens e tags do skiplink ficam em y = −900 (fora do documento) até receberem foco: a lista neutra os marca 'visivel', esta medida os marca não visíveis em repouso (ver interacoes.json › skiplink-tab)."
+ },
+ "estados": {
+  "S0": {
+   "nota": "carga inicial (aba Andamento ativa)",
+   "path": "/acompanhamento.html",
+   "titulo": "Acompanhar requerimento — Atendimento gov.br",
+   "lang": "pt-BR",
+   "contagem": {
+    "presentes": 42,
+    "visiveis": 18,
+    "listaNeutra": {
+     "presentes": 42,
+     "visiveis": 22
+    }
+   },
+   "divergencias": [
+    {
+     "seletor": ".atalhos-pagina > a:nth-of-type(1)",
+     "lista": "visivel",
+     "medido": "presente-nao-visivel"
+    },
+    {
+     "seletor": ".atalhos-pagina > a:nth-of-type(1) > span:nth-of-type(2)",
+     "lista": "visivel",
+     "medido": "presente-nao-visivel"
+    },
+    {
+     "seletor": ".atalhos-pagina > a:nth-of-type(2)",
+     "lista": "visivel",
+     "medido": "presente-nao-visivel"
+    },
+    {
+     "seletor": ".atalhos-pagina > a:nth-of-type(2) > span:nth-of-type(2)",
+     "lista": "visivel",
+     "medido": "presente-nao-visivel"
+    }
+   ],
+   "instancias": [
+    {
+     "componente": "skiplink",
+     "seletor": ".atalhos-pagina",
+     "dentroDe": null,
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "nav",
+     "caixa": {
+      "x": 16,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "navigation",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "item",
+     "seletor": ".atalhos-pagina > a:nth-of-type(1)",
+     "dentroDe": ".atalhos-pagina",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "a",
+     "caixa": {
+      "x": 16,
+      "y": -900,
+      "w": 300,
+      "h": 44
+     },
+     "ax": {
+      "papel": "link",
+      "nome": "Ir para o conteúdo",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": true
+    },
+    {
+     "componente": "tag",
+     "seletor": ".atalhos-pagina > a:nth-of-type(1) > span:nth-of-type(2)",
+     "dentroDe": ".atalhos-pagina > a:nth-of-type(1)",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 183.6,
+      "y": -892,
+      "w": 30.2,
+      "h": 28
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": true
+    },
+    {
+     "componente": "item",
+     "seletor": ".atalhos-pagina > a:nth-of-type(2)",
+     "dentroDe": ".atalhos-pagina",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "a",
+     "caixa": {
+      "x": 16,
+      "y": -900,
+      "w": 300,
+      "h": 44
+     },
+     "ax": {
+      "papel": "link",
+      "nome": "Ir para o rodapé",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": true
+    },
+    {
+     "componente": "tag",
+     "seletor": ".atalhos-pagina > a:nth-of-type(2) > span:nth-of-type(2)",
+     "dentroDe": ".atalhos-pagina > a:nth-of-type(2)",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 169.9,
+      "y": -892,
+      "w": 32.3,
+      "h": 28
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": true
+    },
+    {
+     "componente": "header",
+     "seletor": "#cabecalho",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "header",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 115.1
+     },
+     "ax": {
+      "papel": "banner",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "divider",
+     "seletor": ".header-logo > span",
+     "dentroDe": "#cabecalho",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 188,
+      "y": 16,
+      "w": 1,
+      "h": 40
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "breadcrumb",
+     "seletor": ".trilha-servico",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "nav",
+     "caixa": {
+      "x": 60,
+      "y": 131.1,
+      "w": 395.4,
+      "h": 56
+     },
+     "ax": {
+      "papel": "navigation",
+      "nome": "Trilha de navegação",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": ".home > a",
+     "dentroDe": ".trilha-servico",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "a",
+     "caixa": {
+      "x": 68,
+      "y": 139.1,
+      "w": 40,
+      "h": 40
+     },
+     "ax": {
+      "papel": "link",
+      "nome": "Página Inicial",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "message",
+     "seletor": "#msg-pendencia",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 267.1,
+      "w": 1160,
+      "h": 72.3
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#msg-pendencia > div:nth-of-type(3) > button",
+     "dentroDe": "#msg-pendencia",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 1180,
+      "y": 275.1,
+      "w": 32,
+      "h": 32
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Fechar",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#msg-pendencia > div:nth-of-type(3) > div",
+     "dentroDe": "#msg-pendencia",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 1157,
+      "y": 214.7,
+      "w": 77.3,
+      "h": 52.3
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "card",
+     "seletor": "#crd-resumo",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 363.5,
+      "w": 1160,
+      "h": 297.5
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#tip-protocolo-gatilho",
+     "dentroDe": "#crd-resumo",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 470.8,
+      "y": 424.7,
+      "w": 40,
+      "h": 40
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Use o NUP para consultar",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#tip-protocolo",
+     "dentroDe": "#crd-resumo",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 370,
+      "y": 473,
+      "w": 201.5,
+      "h": 52.3
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": {
+      "elemento": "marcacao",
+      "atributosNaoMarcacao": {
+       "data-popper-placement": "script"
+      }
+     },
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#tip-prazo-gatilho",
+     "dentroDe": "#crd-resumo",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 267.2,
+      "y": 568.7,
+      "w": 40,
+      "h": 40
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Prazo em dias corridos",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#tip-prazo",
+     "dentroDe": "#crd-resumo",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 192,
+      "y": 508.7,
+      "w": 182,
+      "h": 52.3
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": {
+      "elemento": "marcacao",
+      "atributosNaoMarcacao": {
+       "data-popper-placement": "script"
+      }
+     },
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tab",
+     "seletor": "#tab-requerimento",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 693,
+      "w": 1160,
+      "h": 563.5
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "divider",
+     "seletor": ".separador-abas",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 60,
+      "y": 744,
+      "w": 1160,
+      "h": 1
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "step",
+     "seletor": "#stp-andamento",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "nav",
+     "caixa": {
+      "x": 60,
+      "y": 769,
+      "w": 1160,
+      "h": 96.3
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "table",
+     "seletor": "#tbl-movimentacoes",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 897.3,
+      "w": 1160,
+      "h": 359.1
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "message",
+     "seletor": "#msg-retorno",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "ausente",
+     "presente": false,
+     "visivel": false,
+     "n": 0,
+     "tag": null,
+     "caixa": null,
+     "ax": null,
+     "proveniencia": null,
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#msg-retorno > div:nth-of-type(3) > div:nth-of-type(1)",
+     "dentroDe": "#msg-retorno",
+     "declaradoNaLista": "ausente",
+     "presente": false,
+     "visivel": false,
+     "n": 0,
+     "tag": null,
+     "caixa": null,
+     "ax": null,
+     "proveniencia": null,
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#msg-retorno > div:nth-of-type(3) > div:nth-of-type(2)",
+     "dentroDe": "#msg-retorno",
+     "declaradoNaLista": "ausente",
+     "presente": false,
+     "visivel": false,
+     "n": 0,
+     "tag": null,
+     "caixa": null,
+     "ax": null,
+     "proveniencia": null,
+     "divergeDaLista": false
+    },
+    {
+     "componente": "select",
+     "seletor": "#sel-tipo-documento",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "input",
+     "seletor": "#sel-tipo-documento > div:nth-of-type(1)",
+     "dentroDe": "#sel-tipo-documento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#sel-tipo-documento > div:nth-of-type(1) > button",
+     "dentroDe": "#sel-tipo-documento > div:nth-of-type(1)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#sel-tipo-documento > div:nth-of-type(1) > div:nth-of-type(2)",
+     "dentroDe": "#sel-tipo-documento > div:nth-of-type(1)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "list",
+     "seletor": "#sel-tipo-documento > .br-list",
+     "dentroDe": "#sel-tipo-documento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "item",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(1)",
+     "dentroDe": "#sel-tipo-documento > .br-list",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "radio",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(1) > div",
+     "dentroDe": "#sel-tipo-documento > .br-list > div:nth-of-type(1)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "item",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(2)",
+     "dentroDe": "#sel-tipo-documento > .br-list",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "radio",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(2) > div",
+     "dentroDe": "#sel-tipo-documento > .br-list > div:nth-of-type(2)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "item",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(3)",
+     "dentroDe": "#sel-tipo-documento > .br-list",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "radio",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(3) > div",
+     "dentroDe": "#sel-tipo-documento > .br-list > div:nth-of-type(3)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "upload",
+     "seletor": "#upl-documento",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": ".acao-enviar",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "checkbox",
+     "seletor": "#chk-avisos-todos",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "switch",
+     "seletor": "#swt-aviso-email",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "switch",
+     "seletor": "#swt-aviso-sms",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "divider",
+     "seletor": "#div-secoes",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 60,
+      "y": 1288.5,
+      "w": 1160,
+      "h": 1
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "accordion",
+     "seletor": "#acc-duvidas",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 1379.8,
+      "w": 1160,
+      "h": 173
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": ".acao-voltar",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "a",
+     "caixa": {
+      "x": 60,
+      "y": 1592.9,
+      "w": 218.8,
+      "h": 40
+     },
+     "ax": {
+      "papel": "link",
+      "nome": "Meus Requerimentos",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "footer",
+     "seletor": "#rodape",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "footer",
+     "caixa": {
+      "x": 0,
+      "y": 1672.9,
+      "w": 1280,
+      "h": 194.9
+     },
+     "ax": {
+      "papel": "contentinfo",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "divider",
+     "seletor": "#rodape > span",
+     "dentroDe": "#rodape",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 0,
+      "y": 1817.9,
+      "w": 1280,
+      "h": 1
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    }
+   ],
+   "pagina": {
+    "meta": [
+     {
+      "charset": "utf-8"
+     },
+     {
+      "http-equiv": "X-UA-Compatible",
+      "content": "IE=edge"
+     },
+     {
+      "http-equiv": "refresh",
+      "content": "300"
+     },
+     {
+      "name": "viewport",
+      "content": "width=device-width, initial-scale=1"
+     }
+    ],
+    "titulos": [
+     {
+      "nivel": "H1",
+      "texto": "Acompanhar Requerimento",
+      "visivel": true,
+      "tabindex": "-1",
+      "seletor": "#main-content > div > h1",
+      "estilo": {
+       "fontSize": "41.804px",
+       "fontWeight": "300"
+      }
+     },
+     {
+      "nivel": "H2",
+      "texto": "Enviar Documento Pendente",
+      "visivel": false,
+      "tabindex": null,
+      "seletor": "#painel-documentos > h2",
+      "estilo": {
+       "fontSize": "34.832px",
+       "fontWeight": "400"
+      }
+     },
+     {
+      "nivel": "H2",
+      "texto": "Dúvidas Frequentes",
+      "visivel": true,
+      "tabindex": null,
+      "seletor": "#titulo-duvidas",
+      "estilo": {
+       "fontSize": "16px",
+       "fontWeight": "700"
+      }
+     }
+    ],
+    "regioesAx": [
+     {
+      "papel": "navigation",
+      "nome": ""
+     },
+     {
+      "papel": "banner",
+      "nome": ""
+     },
+     {
+      "papel": "main",
+      "nome": ""
+     },
+     {
+      "papel": "contentinfo",
+      "nome": ""
+     },
+     {
+      "papel": "navigation",
+      "nome": "Trilha de navegação"
+     },
+     {
+      "papel": "region",
+      "nome": "Dúvidas Frequentes"
+     },
+     {
+      "papel": "navigation",
+      "nome": "Seções do requerimento"
+     }
+    ],
+    "accesskeys": {
+     "1": [
+      "a.br-item"
+     ],
+     "2": [
+      "a.br-item"
+     ]
+    },
+    "idsRepetidos": [],
+    "imagens": [
+     {
+      "src": "/acompanhamento/marca-govbr.svg",
+      "alt": "gov.br",
+      "visivel": true,
+      "caixa": {
+       "x": 60,
+       "y": 16,
+       "w": 112,
+       "h": 40
+      }
+     },
+     {
+      "src": "/acompanhamento/marca-govbr-negativa.svg",
+      "alt": "gov.br",
+      "visivel": true,
+      "caixa": {
+       "x": 60,
+       "y": 1721.9,
+       "w": 140,
+       "h": 48
+      }
+     }
+    ],
+    "links": [
+     {
+      "texto": "Ir para o conteúdo (1/2) 1",
+      "href": "#main-content",
+      "visivel": false
+     },
+     {
+      "texto": "Ir para o rodapé (2/2) 2",
+      "href": "#rodape",
+      "visivel": false
+     },
+     {
+      "texto": "Página Inicial",
+      "href": "inicio.html",
+      "visivel": true
+     },
+     {
+      "texto": "Meus Requerimentos",
+      "href": "meus-requerimentos.html",
+      "visivel": true
+     },
+     {
+      "texto": "Ver andamento detalhado",
+      "href": "#tab-requerimento",
+      "visivel": true
+     },
+     {
+      "texto": "Meus Requerimentos",
+      "href": "meus-requerimentos.html",
+      "visivel": true
+     }
+    ],
+    "campos": [
+     {
+      "id": "tipo-documento",
+      "type": "text",
+      "role": null,
+      "rotulos": [
+       "Tipo de documento"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "tipo-documento-op0",
+      "type": "radio",
+      "role": null,
+      "rotulos": [
+       "Comprovante de residência"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "tipo-documento-op1",
+      "type": "radio",
+      "role": null,
+      "rotulos": [
+       "Documento de identidade"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "tipo-documento-op2",
+      "type": "radio",
+      "role": null,
+      "rotulos": [
+       "Procuração"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "arquivo-documento",
+      "type": "file",
+      "role": null,
+      "rotulos": [
+       "Envio de documento"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": "arquivo-apoio",
+      "visivel": false
+     },
+     {
+      "id": "avisos-todos",
+      "type": "checkbox",
+      "role": null,
+      "rotulos": [
+       "Todos os avisos"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "aviso-email",
+      "type": "checkbox",
+      "role": "switch",
+      "rotulos": [
+       "Receber avisos por e-mail"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "aviso-sms",
+      "type": "checkbox",
+      "role": "switch",
+      "rotulos": [
+       "Receber avisos por SMS (mensagem de texto no celular)"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     }
+    ],
+    "fieldsets": [
+     {
+      "seletor": "#fs-avisos",
+      "legend": null,
+      "ariaLabel": null,
+      "labelledby": null,
+      "visivel": false
+     }
+    ],
+    "regioesVivas": [
+     {
+      "seletor": "#msg-pendencia > div:nth-of-type(2)",
+      "role": "alert",
+      "ariaLive": null,
+      "texto": "Documento pendente. Envie o comprovante de residência na aba Documentos até 20/11/2026.",
+      "visivel": true
+     },
+     {
+      "seletor": "#painel-documentos > p:nth-of-type(2)",
+      "role": null,
+      "ariaLive": "polite",
+      "texto": "",
+      "visivel": false
+     }
+    ],
+    "apresentacional": [
+     {
+      "seletor": "#msg-pendencia > div:nth-of-type(2)",
+      "tag": "div",
+      "attrs": {
+       "class": "content",
+       "role": "alert",
+       "align": "left"
+      }
+     },
+     {
+      "seletor": "#msg-pendencia > div:nth-of-type(2) > font",
+      "tag": "font",
+      "attrs": {
+       "color": "#333333"
+      }
+     }
+    ],
+    "tabindexNaoInterativo": [],
+    "ariaHiddenFocavel": [
+     {
+      "seletor": "#upl-documento > button",
+      "tag": "button",
+      "tabIndex": 0,
+      "visivel": false
+     }
+    ],
+    "familias": [
+     "Rawline, Raleway, sans-serif"
+    ],
+    "tamanhosDeFonte": [
+     "14px",
+     "24.192px",
+     "11.662px",
+     "41.804px",
+     "16.8px",
+     "20.16px",
+     "16px"
+    ],
+    "cores": [
+     "rgb(0, 0, 0)",
+     "rgb(51, 51, 51)",
+     "rgb(255, 255, 255)",
+     "rgb(204, 204, 204)",
+     "rgb(19, 81, 180)",
+     "rgb(255, 245, 194)",
+     "rgb(12, 50, 111)",
+     "rgb(22, 136, 33)",
+     "rgba(16, 16, 16, 0.3)",
+     "rgb(240, 240, 240)",
+     "rgb(7, 29, 65)"
+    ],
+    "noscript": 1,
+    "rolagem": {
+     "scrollWidth": 1280,
+     "clientWidth": 1280,
+     "scrollHeight": 1868
+    }
+   },
+   "ordemTab": [
+    {
+     "el": "a.br-item",
+     "texto": "Ir para o conteúdo (1/2) 1",
+     "indicadorFoco": true,
+     "pixels": 7262
+    },
+    {
+     "el": "a.br-item",
+     "texto": "Ir para o rodapé (2/2) 2",
+     "indicadorFoco": true,
+     "pixels": 7272
+    },
+    {
+     "el": "a.br-button.circle",
+     "texto": "Página Inicial",
+     "indicadorFoco": true,
+     "pixels": 580
+    },
+    {
+     "el": "a",
+     "texto": "Meus Requerimentos",
+     "indicadorFoco": true,
+     "pixels": 808
+    },
+    {
+     "el": "button.br-button.circle.small.fechar-mensagem",
+     "texto": "Fechar",
+     "indicadorFoco": true,
+     "pixels": 487
+    },
+    {
+     "el": "button#tip-protocolo-gatilho.br-button.circle.ajuda-resumo.ajuda-protocolo",
+     "texto": "Ajuda sobre o NUP",
+     "indicadorFoco": true,
+     "pixels": 610
+    },
+    {
+     "el": "button#tip-prazo-gatilho.br-button.circle.ajuda-resumo.ajuda-prazo",
+     "texto": "Ajuda sobre o prazo",
+     "indicadorFoco": true,
+     "pixels": 599
+    },
+    {
+     "el": "a.detalhe-resumo",
+     "texto": "Ver andamento detalhado",
+     "indicadorFoco": true,
+     "pixels": 1264
+    },
+    {
+     "el": "button#aba-andamento",
+     "texto": "Andamento",
+     "indicadorFoco": true,
+     "pixels": 1048
+    },
+    {
+     "el": "button#aba-documentos",
+     "texto": "Documentos",
+     "indicadorFoco": true,
+     "pixels": 1040
+    },
+    {
+     "el": "button.step-progress-btn.etapa-envio",
+     "texto": "Envio, etapa concluída",
+     "indicadorFoco": true,
+     "pixels": 487
+    },
+    {
+     "el": "button.step-progress-btn.etapa-analise",
+     "texto": "Análise",
+     "indicadorFoco": true,
+     "pixels": 580
+    },
+    {
+     "el": "button.header",
+     "texto": "Como envio o documento pendente?",
+     "indicadorFoco": true,
+     "pixels": 7296
+    },
+    {
+     "el": "button.header",
+     "texto": "Quanto tempo leva a análise?",
+     "indicadorFoco": true,
+     "pixels": 6396
+    },
+    {
+     "el": "button.header",
+     "texto": "Como recebo os avisos do requerimento?",
+     "indicadorFoco": true,
+     "pixels": 7296
+    },
+    {
+     "el": "a.br-button.secondary.acao-voltar",
+     "texto": "Meus Requerimentos",
+     "indicadorFoco": true,
+     "pixels": 1597
+    },
+    {
+     "el": "body",
+     "texto": "",
+     "indicadorFoco": null,
+     "pixels": null
+    }
+   ]
+  },
+  "S1": {
+   "nota": "aba Documentos selecionada",
+   "path": "/acompanhamento.html",
+   "titulo": "Acompanhar requerimento — Atendimento gov.br",
+   "lang": "pt-BR",
+   "contagem": {
+    "presentes": 42,
+    "visiveis": 24,
+    "listaNeutra": {
+     "presentes": 42,
+     "visiveis": 28
+    }
+   },
+   "divergencias": [
+    {
+     "seletor": ".atalhos-pagina > a:nth-of-type(1)",
+     "lista": "visivel",
+     "medido": "presente-nao-visivel"
+    },
+    {
+     "seletor": ".atalhos-pagina > a:nth-of-type(1) > span:nth-of-type(2)",
+     "lista": "visivel",
+     "medido": "presente-nao-visivel"
+    },
+    {
+     "seletor": ".atalhos-pagina > a:nth-of-type(2)",
+     "lista": "visivel",
+     "medido": "presente-nao-visivel"
+    },
+    {
+     "seletor": ".atalhos-pagina > a:nth-of-type(2) > span:nth-of-type(2)",
+     "lista": "visivel",
+     "medido": "presente-nao-visivel"
+    }
+   ],
+   "instancias": [
+    {
+     "componente": "skiplink",
+     "seletor": ".atalhos-pagina",
+     "dentroDe": null,
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "nav",
+     "caixa": {
+      "x": 16,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "navigation",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "item",
+     "seletor": ".atalhos-pagina > a:nth-of-type(1)",
+     "dentroDe": ".atalhos-pagina",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "a",
+     "caixa": {
+      "x": 16,
+      "y": -900,
+      "w": 300,
+      "h": 44
+     },
+     "ax": {
+      "papel": "link",
+      "nome": "Ir para o conteúdo",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": true
+    },
+    {
+     "componente": "tag",
+     "seletor": ".atalhos-pagina > a:nth-of-type(1) > span:nth-of-type(2)",
+     "dentroDe": ".atalhos-pagina > a:nth-of-type(1)",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 183.6,
+      "y": -892,
+      "w": 30.2,
+      "h": 28
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": true
+    },
+    {
+     "componente": "item",
+     "seletor": ".atalhos-pagina > a:nth-of-type(2)",
+     "dentroDe": ".atalhos-pagina",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "a",
+     "caixa": {
+      "x": 16,
+      "y": -900,
+      "w": 300,
+      "h": 44
+     },
+     "ax": {
+      "papel": "link",
+      "nome": "Ir para o rodapé",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": true
+    },
+    {
+     "componente": "tag",
+     "seletor": ".atalhos-pagina > a:nth-of-type(2) > span:nth-of-type(2)",
+     "dentroDe": ".atalhos-pagina > a:nth-of-type(2)",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 169.9,
+      "y": -892,
+      "w": 32.3,
+      "h": 28
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": true
+    },
+    {
+     "componente": "header",
+     "seletor": "#cabecalho",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "header",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 115.1
+     },
+     "ax": {
+      "papel": "banner",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "divider",
+     "seletor": ".header-logo > span",
+     "dentroDe": "#cabecalho",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 188,
+      "y": 16,
+      "w": 1,
+      "h": 40
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "breadcrumb",
+     "seletor": ".trilha-servico",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "nav",
+     "caixa": {
+      "x": 60,
+      "y": 131.1,
+      "w": 395.4,
+      "h": 56
+     },
+     "ax": {
+      "papel": "navigation",
+      "nome": "Trilha de navegação",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": ".home > a",
+     "dentroDe": ".trilha-servico",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "a",
+     "caixa": {
+      "x": 68,
+      "y": 139.1,
+      "w": 40,
+      "h": 40
+     },
+     "ax": {
+      "papel": "link",
+      "nome": "Página Inicial",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "message",
+     "seletor": "#msg-pendencia",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 267.1,
+      "w": 1160,
+      "h": 72.3
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#msg-pendencia > div:nth-of-type(3) > button",
+     "dentroDe": "#msg-pendencia",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 1180,
+      "y": 275.1,
+      "w": 32,
+      "h": 32
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Fechar",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#msg-pendencia > div:nth-of-type(3) > div",
+     "dentroDe": "#msg-pendencia",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 1157,
+      "y": 214.7,
+      "w": 77.3,
+      "h": 52.3
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "card",
+     "seletor": "#crd-resumo",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 363.5,
+      "w": 1160,
+      "h": 297.5
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#tip-protocolo-gatilho",
+     "dentroDe": "#crd-resumo",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 470.8,
+      "y": 424.7,
+      "w": 40,
+      "h": 40
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Use o NUP para consultar",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#tip-protocolo",
+     "dentroDe": "#crd-resumo",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 370,
+      "y": 473,
+      "w": 201.5,
+      "h": 52.3
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": {
+      "elemento": "marcacao",
+      "atributosNaoMarcacao": {
+       "data-popper-placement": "script"
+      }
+     },
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#tip-prazo-gatilho",
+     "dentroDe": "#crd-resumo",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 267.2,
+      "y": 568.7,
+      "w": 40,
+      "h": 40
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Prazo em dias corridos",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#tip-prazo",
+     "dentroDe": "#crd-resumo",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 192,
+      "y": 508.7,
+      "w": 182,
+      "h": 52.3
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": {
+      "elemento": "marcacao",
+      "atributosNaoMarcacao": {
+       "data-popper-placement": "script"
+      }
+     },
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tab",
+     "seletor": "#tab-requerimento",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 693,
+      "w": 1160,
+      "h": 588.6
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "divider",
+     "seletor": ".separador-abas",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 60,
+      "y": 744,
+      "w": 1160,
+      "h": 1
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "step",
+     "seletor": "#stp-andamento",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "nav",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "table",
+     "seletor": "#tbl-movimentacoes",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "message",
+     "seletor": "#msg-retorno",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "ausente",
+     "presente": false,
+     "visivel": false,
+     "n": 0,
+     "tag": null,
+     "caixa": null,
+     "ax": null,
+     "proveniencia": null,
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#msg-retorno > div:nth-of-type(3) > div:nth-of-type(1)",
+     "dentroDe": "#msg-retorno",
+     "declaradoNaLista": "ausente",
+     "presente": false,
+     "visivel": false,
+     "n": 0,
+     "tag": null,
+     "caixa": null,
+     "ax": null,
+     "proveniencia": null,
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#msg-retorno > div:nth-of-type(3) > div:nth-of-type(2)",
+     "dentroDe": "#msg-retorno",
+     "declaradoNaLista": "ausente",
+     "presente": false,
+     "visivel": false,
+     "n": 0,
+     "tag": null,
+     "caixa": null,
+     "ax": null,
+     "proveniencia": null,
+     "divergeDaLista": false
+    },
+    {
+     "componente": "select",
+     "seletor": "#sel-tipo-documento",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 881.4,
+      "w": 400,
+      "h": 64.3
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "input",
+     "seletor": "#sel-tipo-documento > div:nth-of-type(1)",
+     "dentroDe": "#sel-tipo-documento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 881.4,
+      "w": 400,
+      "h": 64.3
+     },
+     "ax": {
+      "papel": "combobox",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#sel-tipo-documento > div:nth-of-type(1) > button",
+     "dentroDe": "#sel-tipo-documento > div:nth-of-type(1)",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 424,
+      "y": 909.7,
+      "w": 32,
+      "h": 32
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Exibir lista",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#sel-tipo-documento > div:nth-of-type(1) > div:nth-of-type(2)",
+     "dentroDe": "#sel-tipo-documento > div:nth-of-type(1)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 889.4,
+      "w": 99.2,
+      "h": 52.3
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "list",
+     "seletor": "#sel-tipo-documento > .br-list",
+     "dentroDe": "#sel-tipo-documento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "item",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(1)",
+     "dentroDe": "#sel-tipo-documento > .br-list",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "radio",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(1) > div",
+     "dentroDe": "#sel-tipo-documento > .br-list > div:nth-of-type(1)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "item",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(2)",
+     "dentroDe": "#sel-tipo-documento > .br-list",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "radio",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(2) > div",
+     "dentroDe": "#sel-tipo-documento > .br-list > div:nth-of-type(2)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "item",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(3)",
+     "dentroDe": "#sel-tipo-documento > .br-list",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "radio",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(3) > div",
+     "dentroDe": "#sel-tipo-documento > .br-list > div:nth-of-type(3)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "upload",
+     "seletor": "#upl-documento",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 969.7,
+      "w": 1160,
+      "h": 64.3
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": ".acao-enviar",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 60,
+      "y": 1082.3,
+      "w": 194,
+      "h": 40
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Enviar Documento",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "checkbox",
+     "seletor": "#chk-avisos-todos",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 1197.6,
+      "w": 1160,
+      "h": 24
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "switch",
+     "seletor": "#swt-aviso-email",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 1221.6,
+      "w": 239.4,
+      "h": 30
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "switch",
+     "seletor": "#swt-aviso-sms",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 1251.6,
+      "w": 439.9,
+      "h": 30
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "divider",
+     "seletor": "#div-secoes",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 60,
+      "y": 1321.6,
+      "w": 1160,
+      "h": 1
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "accordion",
+     "seletor": "#acc-duvidas",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 1413,
+      "w": 1160,
+      "h": 173
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": ".acao-voltar",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "a",
+     "caixa": {
+      "x": 60,
+      "y": 1626,
+      "w": 218.8,
+      "h": 40
+     },
+     "ax": {
+      "papel": "link",
+      "nome": "Meus Requerimentos",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "footer",
+     "seletor": "#rodape",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "footer",
+     "caixa": {
+      "x": 0,
+      "y": 1706,
+      "w": 1280,
+      "h": 194.9
+     },
+     "ax": {
+      "papel": "contentinfo",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "divider",
+     "seletor": "#rodape > span",
+     "dentroDe": "#rodape",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 0,
+      "y": 1851,
+      "w": 1280,
+      "h": 1
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    }
+   ],
+   "pagina": {
+    "meta": [
+     {
+      "charset": "utf-8"
+     },
+     {
+      "http-equiv": "X-UA-Compatible",
+      "content": "IE=edge"
+     },
+     {
+      "http-equiv": "refresh",
+      "content": "300"
+     },
+     {
+      "name": "viewport",
+      "content": "width=device-width, initial-scale=1"
+     }
+    ],
+    "titulos": [
+     {
+      "nivel": "H1",
+      "texto": "Acompanhar Requerimento",
+      "visivel": true,
+      "tabindex": "-1",
+      "seletor": "#main-content > div > h1",
+      "estilo": {
+       "fontSize": "41.804px",
+       "fontWeight": "300"
+      }
+     },
+     {
+      "nivel": "H2",
+      "texto": "Enviar Documento Pendente",
+      "visivel": true,
+      "tabindex": null,
+      "seletor": "#painel-documentos > h2",
+      "estilo": {
+       "fontSize": "34.832px",
+       "fontWeight": "400"
+      }
+     },
+     {
+      "nivel": "H2",
+      "texto": "Dúvidas Frequentes",
+      "visivel": true,
+      "tabindex": null,
+      "seletor": "#titulo-duvidas",
+      "estilo": {
+       "fontSize": "16px",
+       "fontWeight": "700"
+      }
+     }
+    ],
+    "regioesAx": [
+     {
+      "papel": "navigation",
+      "nome": ""
+     },
+     {
+      "papel": "banner",
+      "nome": ""
+     },
+     {
+      "papel": "main",
+      "nome": ""
+     },
+     {
+      "papel": "contentinfo",
+      "nome": ""
+     },
+     {
+      "papel": "navigation",
+      "nome": "Trilha de navegação"
+     },
+     {
+      "papel": "region",
+      "nome": "Dúvidas Frequentes"
+     },
+     {
+      "papel": "navigation",
+      "nome": "Seções do requerimento"
+     },
+     {
+      "papel": "form",
+      "nome": ""
+     }
+    ],
+    "accesskeys": {
+     "1": [
+      "a.br-item"
+     ],
+     "2": [
+      "a.br-item"
+     ]
+    },
+    "idsRepetidos": [],
+    "imagens": [
+     {
+      "src": "/acompanhamento/marca-govbr.svg",
+      "alt": "gov.br",
+      "visivel": true,
+      "caixa": {
+       "x": 60,
+       "y": 16,
+       "w": 112,
+       "h": 40
+      }
+     },
+     {
+      "src": "/acompanhamento/marca-govbr-negativa.svg",
+      "alt": "gov.br",
+      "visivel": true,
+      "caixa": {
+       "x": 60,
+       "y": 1755,
+       "w": 140,
+       "h": 48
+      }
+     }
+    ],
+    "links": [
+     {
+      "texto": "Ir para o conteúdo (1/2) 1",
+      "href": "#main-content",
+      "visivel": false
+     },
+     {
+      "texto": "Ir para o rodapé (2/2) 2",
+      "href": "#rodape",
+      "visivel": false
+     },
+     {
+      "texto": "Página Inicial",
+      "href": "inicio.html",
+      "visivel": true
+     },
+     {
+      "texto": "Meus Requerimentos",
+      "href": "meus-requerimentos.html",
+      "visivel": true
+     },
+     {
+      "texto": "Ver andamento detalhado",
+      "href": "#tab-requerimento",
+      "visivel": true
+     },
+     {
+      "texto": "Meus Requerimentos",
+      "href": "meus-requerimentos.html",
+      "visivel": true
+     }
+    ],
+    "campos": [
+     {
+      "id": "tipo-documento",
+      "type": "text",
+      "role": null,
+      "rotulos": [
+       "Tipo de documento"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": true
+     },
+     {
+      "id": "tipo-documento-op0",
+      "type": "radio",
+      "role": null,
+      "rotulos": [
+       "Comprovante de residência"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "tipo-documento-op1",
+      "type": "radio",
+      "role": null,
+      "rotulos": [
+       "Documento de identidade"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "tipo-documento-op2",
+      "type": "radio",
+      "role": null,
+      "rotulos": [
+       "Procuração"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "arquivo-documento",
+      "type": "file",
+      "role": null,
+      "rotulos": [
+       "Envio de documento"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": "arquivo-apoio",
+      "visivel": false
+     },
+     {
+      "id": "avisos-todos",
+      "type": "checkbox",
+      "role": null,
+      "rotulos": [
+       "Todos os avisos"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "aviso-email",
+      "type": "checkbox",
+      "role": "switch",
+      "rotulos": [
+       "Receber avisos por e-mail"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "aviso-sms",
+      "type": "checkbox",
+      "role": "switch",
+      "rotulos": [
+       "Receber avisos por SMS (mensagem de texto no celular)"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     }
+    ],
+    "fieldsets": [
+     {
+      "seletor": "#fs-avisos",
+      "legend": null,
+      "ariaLabel": null,
+      "labelledby": null,
+      "visivel": true
+     }
+    ],
+    "regioesVivas": [
+     {
+      "seletor": "#msg-pendencia > div:nth-of-type(2)",
+      "role": "alert",
+      "ariaLive": null,
+      "texto": "Documento pendente. Envie o comprovante de residência na aba Documentos até 20/11/2026.",
+      "visivel": true
+     },
+     {
+      "seletor": "#painel-documentos > p:nth-of-type(2)",
+      "role": null,
+      "ariaLive": "polite",
+      "texto": "",
+      "visivel": false
+     }
+    ],
+    "apresentacional": [
+     {
+      "seletor": "#msg-pendencia > div:nth-of-type(2)",
+      "tag": "div",
+      "attrs": {
+       "class": "content",
+       "role": "alert",
+       "align": "left"
+      }
+     },
+     {
+      "seletor": "#msg-pendencia > div:nth-of-type(2) > font",
+      "tag": "font",
+      "attrs": {
+       "color": "#333333"
+      }
+     }
+    ],
+    "tabindexNaoInterativo": [],
+    "ariaHiddenFocavel": [
+     {
+      "seletor": "#upl-documento > button",
+      "tag": "button",
+      "tabIndex": 0,
+      "visivel": true
+     }
+    ],
+    "familias": [
+     "Rawline, Raleway, sans-serif"
+    ],
+    "tamanhosDeFonte": [
+     "14px",
+     "24.192px",
+     "11.662px",
+     "41.804px",
+     "16.8px",
+     "20.16px",
+     "34.832px",
+     "16px"
+    ],
+    "cores": [
+     "rgb(0, 0, 0)",
+     "rgb(51, 51, 51)",
+     "rgb(255, 255, 255)",
+     "rgb(204, 204, 204)",
+     "rgb(19, 81, 180)",
+     "rgb(255, 245, 194)",
+     "rgb(12, 50, 111)",
+     "rgb(136, 136, 136)",
+     "rgb(7, 29, 65)"
+    ],
+    "noscript": 1,
+    "rolagem": {
+     "scrollWidth": 1280,
+     "clientWidth": 1280,
+     "scrollHeight": 1901
+    }
+   },
+   "ordemTab": [
+    {
+     "el": "a.br-item",
+     "texto": "Ir para o conteúdo (1/2) 1",
+     "indicadorFoco": true,
+     "pixels": 7262
+    },
+    {
+     "el": "a.br-item",
+     "texto": "Ir para o rodapé (2/2) 2",
+     "indicadorFoco": true,
+     "pixels": 7272
+    },
+    {
+     "el": "a.br-button.circle",
+     "texto": "Página Inicial",
+     "indicadorFoco": true,
+     "pixels": 580
+    },
+    {
+     "el": "a",
+     "texto": "Meus Requerimentos",
+     "indicadorFoco": true,
+     "pixels": 808
+    },
+    {
+     "el": "button.br-button.circle.small.fechar-mensagem",
+     "texto": "Fechar",
+     "indicadorFoco": true,
+     "pixels": 487
+    },
+    {
+     "el": "button#tip-protocolo-gatilho.br-button.circle.ajuda-resumo.ajuda-protocolo",
+     "texto": "Ajuda sobre o NUP",
+     "indicadorFoco": true,
+     "pixels": 610
+    },
+    {
+     "el": "button#tip-prazo-gatilho.br-button.circle.ajuda-resumo.ajuda-prazo",
+     "texto": "Ajuda sobre o prazo",
+     "indicadorFoco": true,
+     "pixels": 599
+    },
+    {
+     "el": "a.detalhe-resumo",
+     "texto": "Ver andamento detalhado",
+     "indicadorFoco": true,
+     "pixels": 1264
+    },
+    {
+     "el": "button#aba-andamento",
+     "texto": "Andamento",
+     "indicadorFoco": true,
+     "pixels": 1048
+    },
+    {
+     "el": "button#aba-documentos",
+     "texto": "Documentos",
+     "indicadorFoco": true,
+     "pixels": 1040
+    },
+    {
+     "el": "input#tipo-documento",
+     "texto": "",
+     "indicadorFoco": true,
+     "pixels": 2644
+    },
+    {
+     "el": "button.br-button",
+     "texto": "Exibir lista",
+     "indicadorFoco": true,
+     "pixels": 483
+    },
+    {
+     "el": "button.upload-button",
+     "texto": "Selecione o arquivo",
+     "indicadorFoco": true,
+     "pixels": 3629
+    },
+    {
+     "el": "button.br-button.primary.acao-enviar",
+     "texto": "Enviar Documento",
+     "indicadorFoco": true,
+     "pixels": 1460
+    },
+    {
+     "el": "input#avisos-todos",
+     "texto": "",
+     "indicadorFoco": true,
+     "pixels": 300
+    },
+    {
+     "el": "input#aviso-email",
+     "texto": "",
+     "indicadorFoco": true,
+     "pixels": 495
+    },
+    {
+     "el": "input#aviso-sms",
+     "texto": "",
+     "indicadorFoco": true,
+     "pixels": 497
+    },
+    {
+     "el": "button.header",
+     "texto": "Como envio o documento pendente?",
+     "indicadorFoco": true,
+     "pixels": 7296
+    },
+    {
+     "el": "button.header",
+     "texto": "Quanto tempo leva a análise?",
+     "indicadorFoco": true,
+     "pixels": 6396
+    },
+    {
+     "el": "button.header",
+     "texto": "Como recebo os avisos do requerimento?",
+     "indicadorFoco": true,
+     "pixels": 7296
+    },
+    {
+     "el": "a.br-button.secondary.acao-voltar",
+     "texto": "Meus Requerimentos",
+     "indicadorFoco": true,
+     "pixels": 1597
+    },
+    {
+     "el": "body",
+     "texto": "",
+     "indicadorFoco": null,
+     "pixels": null
+    }
+   ]
+  },
+  "S2": {
+   "nota": "Enviar documento acionado com o formulário vazio",
+   "path": "/acompanhamento.html",
+   "titulo": "Acompanhar requerimento — Atendimento gov.br",
+   "lang": "pt-BR",
+   "contagem": {
+    "presentes": 45,
+    "visiveis": 27,
+    "listaNeutra": {
+     "presentes": 45,
+     "visiveis": 31
+    }
+   },
+   "divergencias": [
+    {
+     "seletor": ".atalhos-pagina > a:nth-of-type(1)",
+     "lista": "visivel",
+     "medido": "presente-nao-visivel"
+    },
+    {
+     "seletor": ".atalhos-pagina > a:nth-of-type(1) > span:nth-of-type(2)",
+     "lista": "visivel",
+     "medido": "presente-nao-visivel"
+    },
+    {
+     "seletor": ".atalhos-pagina > a:nth-of-type(2)",
+     "lista": "visivel",
+     "medido": "presente-nao-visivel"
+    },
+    {
+     "seletor": ".atalhos-pagina > a:nth-of-type(2) > span:nth-of-type(2)",
+     "lista": "visivel",
+     "medido": "presente-nao-visivel"
+    }
+   ],
+   "instancias": [
+    {
+     "componente": "skiplink",
+     "seletor": ".atalhos-pagina",
+     "dentroDe": null,
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "nav",
+     "caixa": {
+      "x": 16,
+      "y": 652,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "navigation",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "item",
+     "seletor": ".atalhos-pagina > a:nth-of-type(1)",
+     "dentroDe": ".atalhos-pagina",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "a",
+     "caixa": {
+      "x": 16,
+      "y": -248,
+      "w": 300,
+      "h": 44
+     },
+     "ax": {
+      "papel": "link",
+      "nome": "Ir para o conteúdo",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": true
+    },
+    {
+     "componente": "tag",
+     "seletor": ".atalhos-pagina > a:nth-of-type(1) > span:nth-of-type(2)",
+     "dentroDe": ".atalhos-pagina > a:nth-of-type(1)",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 183.6,
+      "y": -240,
+      "w": 30.2,
+      "h": 28
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": true
+    },
+    {
+     "componente": "item",
+     "seletor": ".atalhos-pagina > a:nth-of-type(2)",
+     "dentroDe": ".atalhos-pagina",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "a",
+     "caixa": {
+      "x": 16,
+      "y": -248,
+      "w": 300,
+      "h": 44
+     },
+     "ax": {
+      "papel": "link",
+      "nome": "Ir para o rodapé",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": true
+    },
+    {
+     "componente": "tag",
+     "seletor": ".atalhos-pagina > a:nth-of-type(2) > span:nth-of-type(2)",
+     "dentroDe": ".atalhos-pagina > a:nth-of-type(2)",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 169.9,
+      "y": -240,
+      "w": 32.3,
+      "h": 28
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": true
+    },
+    {
+     "componente": "header",
+     "seletor": "#cabecalho",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "header",
+     "caixa": {
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 115.1
+     },
+     "ax": {
+      "papel": "banner",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "divider",
+     "seletor": ".header-logo > span",
+     "dentroDe": "#cabecalho",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 188,
+      "y": 16,
+      "w": 1,
+      "h": 40
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "breadcrumb",
+     "seletor": ".trilha-servico",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "nav",
+     "caixa": {
+      "x": 60,
+      "y": 131.1,
+      "w": 395.4,
+      "h": 56
+     },
+     "ax": {
+      "papel": "navigation",
+      "nome": "Trilha de navegação",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": ".home > a",
+     "dentroDe": ".trilha-servico",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "a",
+     "caixa": {
+      "x": 68,
+      "y": 139.1,
+      "w": 40,
+      "h": 40
+     },
+     "ax": {
+      "papel": "link",
+      "nome": "Página Inicial",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "message",
+     "seletor": "#msg-pendencia",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 267.1,
+      "w": 1160,
+      "h": 72.3
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#msg-pendencia > div:nth-of-type(3) > button",
+     "dentroDe": "#msg-pendencia",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 1180,
+      "y": 275.1,
+      "w": 32,
+      "h": 32
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Fechar",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#msg-pendencia > div:nth-of-type(3) > div",
+     "dentroDe": "#msg-pendencia",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 1157,
+      "y": 652,
+      "w": 77.3,
+      "h": 52.3
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "card",
+     "seletor": "#crd-resumo",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 363.5,
+      "w": 1160,
+      "h": 297.5
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#tip-protocolo-gatilho",
+     "dentroDe": "#crd-resumo",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 470.8,
+      "y": 424.7,
+      "w": 40,
+      "h": 40
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Use o NUP para consultar",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#tip-protocolo",
+     "dentroDe": "#crd-resumo",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 390,
+      "y": 652,
+      "w": 201.5,
+      "h": 52.3
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": {
+      "elemento": "marcacao",
+      "atributosNaoMarcacao": {
+       "data-popper-placement": "script"
+      }
+     },
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#tip-prazo-gatilho",
+     "dentroDe": "#crd-resumo",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 267.2,
+      "y": 568.7,
+      "w": 40,
+      "h": 40
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Prazo em dias corridos",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#tip-prazo",
+     "dentroDe": "#crd-resumo",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 196,
+      "y": 652,
+      "w": 182,
+      "h": 52.3
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": {
+      "elemento": "marcacao",
+      "atributosNaoMarcacao": {
+       "data-popper-placement": "script"
+      }
+     },
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tab",
+     "seletor": "#tab-requerimento",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 693,
+      "w": 1160,
+      "h": 741.6
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "divider",
+     "seletor": ".separador-abas",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 60,
+      "y": 744,
+      "w": 1160,
+      "h": 1
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "step",
+     "seletor": "#stp-andamento",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "nav",
+     "caixa": {
+      "x": 0,
+      "y": 652,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "table",
+     "seletor": "#tbl-movimentacoes",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 652,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "message",
+     "seletor": "#msg-retorno",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 841,
+      "w": 1160,
+      "h": 96.7
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#msg-retorno > div:nth-of-type(3) > div:nth-of-type(1)",
+     "dentroDe": "#msg-retorno",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 1180,
+      "y": 849,
+      "w": 32,
+      "h": 32
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Fechar",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#msg-retorno > div:nth-of-type(3) > div:nth-of-type(2)",
+     "dentroDe": "#msg-retorno",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 1157,
+      "y": 788.7,
+      "w": 77.3,
+      "h": 52.3
+     },
+     "ax": {
+      "papel": "tooltip",
+      "nome": "Fechar",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "select",
+     "seletor": "#sel-tipo-documento",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 1002.1,
+      "w": 400,
+      "h": 64.3
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "input",
+     "seletor": "#sel-tipo-documento > div:nth-of-type(1)",
+     "dentroDe": "#sel-tipo-documento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 1002.1,
+      "w": 400,
+      "h": 64.3
+     },
+     "ax": {
+      "papel": "combobox",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": "#sel-tipo-documento > div:nth-of-type(1) > button",
+     "dentroDe": "#sel-tipo-documento > div:nth-of-type(1)",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 424,
+      "y": 1030.4,
+      "w": 32,
+      "h": 32
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Exibir lista",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "tooltip",
+     "seletor": "#sel-tipo-documento > div:nth-of-type(1) > div:nth-of-type(2)",
+     "dentroDe": "#sel-tipo-documento > div:nth-of-type(1)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 390,
+      "y": 970.1,
+      "w": 99.2,
+      "h": 52.3
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "list",
+     "seletor": "#sel-tipo-documento > .br-list",
+     "dentroDe": "#sel-tipo-documento",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 652,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "item",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(1)",
+     "dentroDe": "#sel-tipo-documento > .br-list",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 652,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "radio",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(1) > div",
+     "dentroDe": "#sel-tipo-documento > .br-list > div:nth-of-type(1)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 652,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "item",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(2)",
+     "dentroDe": "#sel-tipo-documento > .br-list",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 652,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "radio",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(2) > div",
+     "dentroDe": "#sel-tipo-documento > .br-list > div:nth-of-type(2)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 652,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "item",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(3)",
+     "dentroDe": "#sel-tipo-documento > .br-list",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 652,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "radio",
+     "seletor": "#sel-tipo-documento > .br-list > div:nth-of-type(3) > div",
+     "dentroDe": "#sel-tipo-documento > .br-list > div:nth-of-type(3)",
+     "declaradoNaLista": "presente-nao-visivel",
+     "presente": true,
+     "visivel": false,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 0,
+      "y": 652,
+      "w": 0,
+      "h": 0
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "upload",
+     "seletor": "#upl-documento",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 1090.4,
+      "w": 1160,
+      "h": 64.3
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": ".acao-enviar",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "button",
+     "caixa": {
+      "x": 60,
+      "y": 1235.3,
+      "w": 194,
+      "h": 40
+     },
+     "ax": {
+      "papel": "button",
+      "nome": "Enviar Documento",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "checkbox",
+     "seletor": "#chk-avisos-todos",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 1350.6,
+      "w": 1160,
+      "h": 24
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "switch",
+     "seletor": "#swt-aviso-email",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 1374.6,
+      "w": 239.4,
+      "h": 30
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "switch",
+     "seletor": "#swt-aviso-sms",
+     "dentroDe": "#tab-requerimento",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 1404.6,
+      "w": 439.9,
+      "h": 30
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "divider",
+     "seletor": "#div-secoes",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 60,
+      "y": 1474.6,
+      "w": 1160,
+      "h": 1
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "accordion",
+     "seletor": "#acc-duvidas",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "div",
+     "caixa": {
+      "x": 60,
+      "y": 1566,
+      "w": 1160,
+      "h": 173
+     },
+     "ax": {
+      "papel": "generic",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "button",
+     "seletor": ".acao-voltar",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "a",
+     "caixa": {
+      "x": 60,
+      "y": 1779,
+      "w": 218.8,
+      "h": 40
+     },
+     "ax": {
+      "papel": "link",
+      "nome": "Meus Requerimentos",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "footer",
+     "seletor": "#rodape",
+     "dentroDe": null,
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "footer",
+     "caixa": {
+      "x": 0,
+      "y": 1859,
+      "w": 1280,
+      "h": 194.9
+     },
+     "ax": {
+      "papel": "contentinfo",
+      "nome": "",
+      "ignorado": false
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    },
+    {
+     "componente": "divider",
+     "seletor": "#rodape > span",
+     "dentroDe": "#rodape",
+     "declaradoNaLista": "visivel",
+     "presente": true,
+     "visivel": true,
+     "n": 1,
+     "tag": "span",
+     "caixa": {
+      "x": 0,
+      "y": 2004,
+      "w": 1280,
+      "h": 1
+     },
+     "ax": {
+      "papel": "none",
+      "nome": "",
+      "ignorado": true
+     },
+     "proveniencia": "marcacao (sem diferença por ablação)",
+     "divergeDaLista": false
+    }
+   ],
+   "pagina": {
+    "meta": [
+     {
+      "charset": "utf-8"
+     },
+     {
+      "http-equiv": "X-UA-Compatible",
+      "content": "IE=edge"
+     },
+     {
+      "http-equiv": "refresh",
+      "content": "300"
+     },
+     {
+      "name": "viewport",
+      "content": "width=device-width, initial-scale=1"
+     }
+    ],
+    "titulos": [
+     {
+      "nivel": "H1",
+      "texto": "Acompanhar Requerimento",
+      "visivel": true,
+      "tabindex": "-1",
+      "seletor": "#main-content > div > h1",
+      "estilo": {
+       "fontSize": "41.804px",
+       "fontWeight": "300"
+      }
+     },
+     {
+      "nivel": "H2",
+      "texto": "Enviar Documento Pendente",
+      "visivel": true,
+      "tabindex": null,
+      "seletor": "#painel-documentos > h2",
+      "estilo": {
+       "fontSize": "34.832px",
+       "fontWeight": "400"
+      }
+     },
+     {
+      "nivel": "H2",
+      "texto": "Dúvidas Frequentes",
+      "visivel": true,
+      "tabindex": null,
+      "seletor": "#titulo-duvidas",
+      "estilo": {
+       "fontSize": "16px",
+       "fontWeight": "700"
+      }
+     }
+    ],
+    "regioesAx": [
+     {
+      "papel": "navigation",
+      "nome": ""
+     },
+     {
+      "papel": "banner",
+      "nome": ""
+     },
+     {
+      "papel": "main",
+      "nome": ""
+     },
+     {
+      "papel": "contentinfo",
+      "nome": ""
+     },
+     {
+      "papel": "navigation",
+      "nome": "Trilha de navegação"
+     },
+     {
+      "papel": "region",
+      "nome": "Dúvidas Frequentes"
+     },
+     {
+      "papel": "navigation",
+      "nome": "Seções do requerimento"
+     },
+     {
+      "papel": "form",
+      "nome": ""
+     }
+    ],
+    "accesskeys": {
+     "1": [
+      "a.br-item"
+     ],
+     "2": [
+      "a.br-item"
+     ]
+    },
+    "idsRepetidos": [],
+    "imagens": [
+     {
+      "src": "/acompanhamento/marca-govbr.svg",
+      "alt": "gov.br",
+      "visivel": true,
+      "caixa": {
+       "x": 60,
+       "y": 16,
+       "w": 112,
+       "h": 40
+      }
+     },
+     {
+      "src": "/acompanhamento/marca-govbr-negativa.svg",
+      "alt": "gov.br",
+      "visivel": true,
+      "caixa": {
+       "x": 60,
+       "y": 1908,
+       "w": 140,
+       "h": 48
+      }
+     }
+    ],
+    "links": [
+     {
+      "texto": "Ir para o conteúdo (1/2) 1",
+      "href": "#main-content",
+      "visivel": false
+     },
+     {
+      "texto": "Ir para o rodapé (2/2) 2",
+      "href": "#rodape",
+      "visivel": false
+     },
+     {
+      "texto": "Página Inicial",
+      "href": "inicio.html",
+      "visivel": true
+     },
+     {
+      "texto": "Meus Requerimentos",
+      "href": "meus-requerimentos.html",
+      "visivel": true
+     },
+     {
+      "texto": "Ver andamento detalhado",
+      "href": "#tab-requerimento",
+      "visivel": true
+     },
+     {
+      "texto": "Meus Requerimentos",
+      "href": "meus-requerimentos.html",
+      "visivel": true
+     }
+    ],
+    "campos": [
+     {
+      "id": "tipo-documento",
+      "type": "text",
+      "role": null,
+      "rotulos": [
+       "Tipo de documento"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": true
+     },
+     {
+      "id": "tipo-documento-op0",
+      "type": "radio",
+      "role": null,
+      "rotulos": [
+       "Comprovante de residência"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "tipo-documento-op1",
+      "type": "radio",
+      "role": null,
+      "rotulos": [
+       "Documento de identidade"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "tipo-documento-op2",
+      "type": "radio",
+      "role": null,
+      "rotulos": [
+       "Procuração"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "arquivo-documento",
+      "type": "file",
+      "role": null,
+      "rotulos": [
+       "Envio de documento"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": "arquivo-apoio arquivo-retorno",
+      "visivel": false
+     },
+     {
+      "id": "avisos-todos",
+      "type": "checkbox",
+      "role": null,
+      "rotulos": [
+       "Todos os avisos"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "aviso-email",
+      "type": "checkbox",
+      "role": "switch",
+      "rotulos": [
+       "Receber avisos por e-mail"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     },
+     {
+      "id": "aviso-sms",
+      "type": "checkbox",
+      "role": "switch",
+      "rotulos": [
+       "Receber avisos por SMS (mensagem de texto no celular)"
+      ],
+      "required": false,
+      "ariaInvalid": null,
+      "describedby": null,
+      "visivel": false
+     }
+    ],
+    "fieldsets": [
+     {
+      "seletor": "#fs-avisos",
+      "legend": null,
+      "ariaLabel": null,
+      "labelledby": null,
+      "visivel": true
+     }
+    ],
+    "regioesVivas": [
+     {
+      "seletor": "#msg-pendencia > div:nth-of-type(2)",
+      "role": "alert",
+      "ariaLive": null,
+      "texto": "Documento pendente. Envie o comprovante de residência na aba Documentos até 20/11/2026.",
+      "visivel": true
+     },
+     {
+      "seletor": "#msg-retorno > div:nth-of-type(2)",
+      "role": "alert",
+      "ariaLive": null,
+      "texto": "Erro: documento não enviado. Há campos obrigatórios sem preenchimento ou com problema. Corrija os campos indicados e envie novamente.",
+      "visivel": true
+     },
+     {
+      "seletor": "#arquivo-retorno",
+      "role": "alert",
+      "ariaLive": null,
+      "texto": "Selecione o arquivo do documento.",
+      "visivel": true
+     },
+     {
+      "seletor": "#painel-documentos > p:nth-of-type(2)",
+      "role": null,
+      "ariaLive": "polite",
+      "texto": "",
+      "visivel": false
+     }
+    ],
+    "apresentacional": [
+     {
+      "seletor": "#msg-pendencia > div:nth-of-type(2)",
+      "tag": "div",
+      "attrs": {
+       "class": "content",
+       "role": "alert",
+       "align": "left"
+      }
+     },
+     {
+      "seletor": "#msg-pendencia > div:nth-of-type(2) > font",
+      "tag": "font",
+      "attrs": {
+       "color": "#333333"
+      }
+     }
+    ],
+    "tabindexNaoInterativo": [],
+    "ariaHiddenFocavel": [
+     {
+      "seletor": "#upl-documento > button",
+      "tag": "button",
+      "tabIndex": 0,
+      "visivel": true
+     }
+    ],
+    "familias": [
+     "Rawline, Raleway, sans-serif"
+    ],
+    "tamanhosDeFonte": [
+     "14px",
+     "24.192px",
+     "11.662px",
+     "41.804px",
+     "16.8px",
+     "20.16px",
+     "34.832px",
+     "16px"
+    ],
+    "cores": [
+     "rgb(0, 0, 0)",
+     "rgb(51, 51, 51)",
+     "rgb(255, 255, 255)",
+     "rgb(204, 204, 204)",
+     "rgb(19, 81, 180)",
+     "rgb(255, 245, 194)",
+     "rgb(12, 50, 111)",
+     "rgb(253, 224, 219)",
+     "rgb(229, 34, 7)",
+     "rgb(21, 91, 203)",
+     "rgb(136, 136, 136)",
+     "rgb(7, 29, 65)"
+    ],
+    "noscript": 1,
+    "rolagem": {
+     "scrollWidth": 1280,
+     "clientWidth": 1280,
+     "scrollHeight": 2054
+    }
+   },
+   "ordemTab": [
+    {
+     "el": "a.br-item",
+     "texto": "Ir para o conteúdo (1/2) 1",
+     "indicadorFoco": true,
+     "pixels": 7262
+    },
+    {
+     "el": "a.br-item",
+     "texto": "Ir para o rodapé (2/2) 2",
+     "indicadorFoco": true,
+     "pixels": 7272
+    },
+    {
+     "el": "a.br-button.circle",
+     "texto": "Página Inicial",
+     "indicadorFoco": true,
+     "pixels": 580
+    },
+    {
+     "el": "a",
+     "texto": "Meus Requerimentos",
+     "indicadorFoco": true,
+     "pixels": 808
+    },
+    {
+     "el": "button.br-button.circle.small.fechar-mensagem",
+     "texto": "Fechar",
+     "indicadorFoco": true,
+     "pixels": 521
+    },
+    {
+     "el": "button#tip-protocolo-gatilho.br-button.circle.ajuda-resumo.ajuda-protocolo",
+     "texto": "Ajuda sobre o NUP",
+     "indicadorFoco": true,
+     "pixels": 610
+    },
+    {
+     "el": "button#tip-prazo-gatilho.br-button.circle.ajuda-resumo.ajuda-prazo",
+     "texto": "Ajuda sobre o prazo",
+     "indicadorFoco": true,
+     "pixels": 599
+    },
+    {
+     "el": "a.detalhe-resumo",
+     "texto": "Ver andamento detalhado",
+     "indicadorFoco": true,
+     "pixels": 1264
+    },
+    {
+     "el": "button#aba-andamento",
+     "texto": "Andamento",
+     "indicadorFoco": true,
+     "pixels": 1048
+    },
+    {
+     "el": "button#aba-documentos",
+     "texto": "Documentos",
+     "indicadorFoco": true,
+     "pixels": 1040
+    },
+    {
+     "el": "div.br-button.circle.small.fechar-mensagem",
+     "texto": "Fechar",
+     "indicadorFoco": true,
+     "pixels": 487
+    },
+    {
+     "el": "input#tipo-documento",
+     "texto": "",
+     "indicadorFoco": true,
+     "pixels": 3504
+    },
+    {
+     "el": "button.br-button",
+     "texto": "Exibir lista",
+     "indicadorFoco": true,
+     "pixels": 472
+    },
+    {
+     "el": "button.upload-button",
+     "texto": "Selecione o arquivo",
+     "indicadorFoco": true,
+     "pixels": 3588
+    },
+    {
+     "el": "button.br-button.primary.acao-enviar",
+     "texto": "Enviar Documento",
+     "indicadorFoco": true,
+     "pixels": 1461
+    },
+    {
+     "el": "input#avisos-todos",
+     "texto": "",
+     "indicadorFoco": true,
+     "pixels": 300
+    },
+    {
+     "el": "input#aviso-email",
+     "texto": "",
+     "indicadorFoco": true,
+     "pixels": 495
+    },
+    {
+     "el": "input#aviso-sms",
+     "texto": "",
+     "indicadorFoco": true,
+     "pixels": 495
+    },
+    {
+     "el": "button.header",
+     "texto": "Como envio o documento pendente?",
+     "indicadorFoco": true,
+     "pixels": 7296
+    },
+    {
+     "el": "button.header",
+     "texto": "Quanto tempo leva a análise?",
+     "indicadorFoco": true,
+     "pixels": 6396
+    },
+    {
+     "el": "button.header",
+     "texto": "Como recebo os avisos do requerimento?",
+     "indicadorFoco": true,
+     "pixels": 7296
+    },
+    {
+     "el": "a.br-button.secondary.acao-voltar",
+     "texto": "Meus Requerimentos",
+     "indicadorFoco": true,
+     "pixels": 1596
+    },
+    {
+     "el": "body",
+     "texto": "",
+     "indicadorFoco": null,
+     "pixels": null
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,982 @@
+{
+ "_meta": {
+  "estado": "S2",
+  "nota": "Enviar documento acionado com o formulário vazio",
+  "afterStep": 4,
+  "path": "/acompanhamento.html",
+  "medidoEm": "2026-11-02T23:11:58.387Z",
+  "ms_desde_carga": 2004,
+  "navegacoes": 1,
+  "externos": [],
+  "escritas": [],
+  "errosDePagina": [],
+  "ms_desde_carga_tab": 12671
+ },
+ "dados": {
+  "focoNaChegada": "#msg-retorno > div:nth-of-type(3) > div:nth-of-type(1)",
+  "url": "http://127.0.0.1:3218/acompanhamento.html",
+  "path": "/acompanhamento.html",
+  "titulo": "Acompanhar requerimento — Atendimento gov.br",
+  "lang": "pt-BR",
+  "doctype": "html",
+  "meta": [
+   {
+    "charset": "utf-8"
+   },
+   {
+    "http-equiv": "X-UA-Compatible",
+    "content": "IE=edge"
+   },
+   {
+    "http-equiv": "refresh",
+    "content": "300"
+   },
+   {
+    "name": "viewport",
+    "content": "width=device-width, initial-scale=1"
+   }
+  ],
+  "titulos": [
+   {
+    "nivel": "H1",
+    "texto": "Acompanhar Requerimento",
+    "visivel": true,
+    "tabindex": "-1",
+    "seletor": "#main-content > div > h1",
+    "estilo": {
+     "fontSize": "41.804px",
+     "fontWeight": "300"
+    }
+   },
+   {
+    "nivel": "H2",
+    "texto": "Enviar Documento Pendente",
+    "visivel": true,
+    "tabindex": null,
+    "seletor": "#painel-documentos > h2",
+    "estilo": {
+     "fontSize": "34.832px",
+     "fontWeight": "400"
+    }
+   },
+   {
+    "nivel": "H2",
+    "texto": "Dúvidas Frequentes",
+    "visivel": true,
+    "tabindex": null,
+    "seletor": "#titulo-duvidas",
+    "estilo": {
+     "fontSize": "16px",
+     "fontWeight": "700"
+    }
+   }
+  ],
+  "textosComoTitulo": [
+   {
+    "seletor": "#cabecalho > div > div:nth-of-type(2) > div > div > div",
+    "texto": "Acompanhamento de Requerimentos",
+    "fontSize": "24.192px",
+    "fontWeight": "400"
+   },
+   {
+    "seletor": "#msg-pendencia > div:nth-of-type(2) > font > span:nth-of-type(1)",
+    "texto": "Documento pendente.",
+    "fontSize": "16.8px",
+    "fontWeight": "600"
+   },
+   {
+    "seletor": "#crd-resumo > div:nth-of-type(1) > div",
+    "texto": "Revisão de Benefício Assistencial",
+    "fontSize": "20.16px",
+    "fontWeight": "600"
+   },
+   {
+    "seletor": "#tip-protocolo-gatilho > span",
+    "texto": "Ajuda sobre o NUP",
+    "fontSize": "16.8px",
+    "fontWeight": "600"
+   },
+   {
+    "seletor": "#tip-prazo-gatilho > span",
+    "texto": "Ajuda sobre o prazo",
+    "fontSize": "16.8px",
+    "fontWeight": "600"
+   },
+   {
+    "seletor": "#msg-retorno > div:nth-of-type(2) > span:nth-of-type(1)",
+    "texto": "Erro: documento não enviado.",
+    "fontSize": "16.8px",
+    "fontWeight": "600"
+   },
+   {
+    "seletor": "#msg-retorno > div:nth-of-type(3) > div:nth-of-type(2) > span",
+    "texto": "Fechar",
+    "fontSize": "14px",
+    "fontWeight": "600"
+   },
+   {
+    "seletor": "#upl-documento > label > span",
+    "texto": "Envio de documento",
+    "fontSize": "14px",
+    "fontWeight": "600"
+   },
+   {
+    "seletor": "#painel-documentos > p:nth-of-type(1)",
+    "texto": "Avisos sobre o requerimento",
+    "fontSize": "16.8px",
+    "fontWeight": "600"
+   }
+  ],
+  "idsRepetidos": [],
+  "accesskeys": {
+   "1": [
+    "a.br-item"
+   ],
+   "2": [
+    "a.br-item"
+   ]
+  },
+  "imagens": [
+   {
+    "src": "/acompanhamento/marca-govbr.svg",
+    "alt": "gov.br",
+    "visivel": true,
+    "caixa": {
+     "x": 60,
+     "y": 16,
+     "w": 112,
+     "h": 40
+    }
+   },
+   {
+    "src": "/acompanhamento/marca-govbr-negativa.svg",
+    "alt": "gov.br",
+    "visivel": true,
+    "caixa": {
+     "x": 60,
+     "y": 1908,
+     "w": 140,
+     "h": 48
+    }
+   }
+  ],
+  "links": [
+   {
+    "texto": "Ir para o conteúdo (1/2) 1",
+    "href": "#main-content",
+    "target": null,
+    "title": null,
+    "visivel": false,
+    "seletor": "body > nav > a:nth-of-type(1)"
+   },
+   {
+    "texto": "Ir para o rodapé (2/2) 2",
+    "href": "#rodape",
+    "target": null,
+    "title": null,
+    "visivel": false,
+    "seletor": "body > nav > a:nth-of-type(2)"
+   },
+   {
+    "texto": "Página Inicial",
+    "href": "inicio.html",
+    "target": null,
+    "title": null,
+    "visivel": true,
+    "seletor": "#main-content > div > nav > ol > li:nth-of-type(1) > a"
+   },
+   {
+    "texto": "Meus Requerimentos",
+    "href": "meus-requerimentos.html",
+    "target": null,
+    "title": null,
+    "visivel": true,
+    "seletor": "#main-content > div > nav > ol > li:nth-of-type(2) > a"
+   },
+   {
+    "texto": "Ver andamento detalhado",
+    "href": "#tab-requerimento",
+    "target": null,
+    "title": null,
+    "visivel": true,
+    "seletor": "#crd-resumo > div:nth-of-type(3) > a"
+   },
+   {
+    "texto": "Meus Requerimentos",
+    "href": "meus-requerimentos.html",
+    "target": null,
+    "title": null,
+    "visivel": true,
+    "seletor": "#main-content > div > div:nth-of-type(4) > a"
+   }
+  ],
+  "botoes": [
+   {
+    "tag": "button",
+    "texto": "Fechar",
+    "ariaLabel": "Fechar",
+    "labelledby": null,
+    "title": null,
+    "type": "button",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": true,
+    "caixa": {
+     "x": 1180,
+     "y": 275.1,
+     "w": 32,
+     "h": 32
+    },
+    "seletor": "#msg-pendencia > div:nth-of-type(3) > button"
+   },
+   {
+    "tag": "button",
+    "texto": "Ajuda sobre o NUP",
+    "ariaLabel": "Ajuda sobre o NUP",
+    "labelledby": "tip-protocolo",
+    "title": null,
+    "type": "button",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": true,
+    "caixa": {
+     "x": 470.8,
+     "y": 424.7,
+     "w": 40,
+     "h": 40
+    },
+    "seletor": "#tip-protocolo-gatilho"
+   },
+   {
+    "tag": "button",
+    "texto": "Ajuda sobre o prazo",
+    "ariaLabel": "Ajuda sobre o prazo",
+    "labelledby": "tip-prazo",
+    "title": null,
+    "type": "button",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": true,
+    "caixa": {
+     "x": 267.2,
+     "y": 568.7,
+     "w": 40,
+     "h": 40
+    },
+    "seletor": "#tip-prazo-gatilho"
+   },
+   {
+    "tag": "button",
+    "texto": "Andamento",
+    "ariaLabel": null,
+    "labelledby": null,
+    "title": null,
+    "type": "button",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": true,
+    "caixa": {
+     "x": 60,
+     "y": 693,
+     "w": 124.9,
+     "h": 50
+    },
+    "seletor": "#aba-andamento"
+   },
+   {
+    "tag": "button",
+    "texto": "Documentos",
+    "ariaLabel": null,
+    "labelledby": null,
+    "title": null,
+    "type": "button",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": true,
+    "caixa": {
+     "x": 184.9,
+     "y": 693,
+     "w": 132,
+     "h": 50
+    },
+    "seletor": "#aba-documentos"
+   },
+   {
+    "tag": "button",
+    "texto": "Envio, etapa concluída",
+    "ariaLabel": null,
+    "labelledby": null,
+    "title": null,
+    "type": "button",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": false,
+    "caixa": {
+     "x": 0,
+     "y": 652,
+     "w": 0,
+     "h": 0
+    },
+    "seletor": "#stp-andamento > div > button:nth-of-type(1)"
+   },
+   {
+    "tag": "button",
+    "texto": "Análise",
+    "ariaLabel": null,
+    "labelledby": null,
+    "title": null,
+    "type": "button",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": false,
+    "caixa": {
+     "x": 0,
+     "y": 652,
+     "w": 0,
+     "h": 0
+    },
+    "seletor": "#stp-andamento > div > button:nth-of-type(2)"
+   },
+   {
+    "tag": "button",
+    "texto": "Decisão",
+    "ariaLabel": null,
+    "labelledby": null,
+    "title": null,
+    "type": "button",
+    "disabled": true,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": false,
+    "caixa": {
+     "x": 0,
+     "y": 652,
+     "w": 0,
+     "h": 0
+    },
+    "seletor": "#stp-andamento > div > button:nth-of-type(3)"
+   },
+   {
+    "tag": "button",
+    "texto": "Conclusão",
+    "ariaLabel": null,
+    "labelledby": null,
+    "title": null,
+    "type": "button",
+    "disabled": true,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": false,
+    "caixa": {
+     "x": 0,
+     "y": 652,
+     "w": 0,
+     "h": 0
+    },
+    "seletor": "#stp-andamento > div > button:nth-of-type(4)"
+   },
+   {
+    "tag": "div",
+    "texto": "Fechar",
+    "ariaLabel": "Fechar",
+    "labelledby": null,
+    "title": null,
+    "type": null,
+    "disabled": null,
+    "tabindex": "0",
+    "ariaHidden": null,
+    "visivel": true,
+    "caixa": {
+     "x": 1180,
+     "y": 849,
+     "w": 32,
+     "h": 32
+    },
+    "seletor": "#msg-retorno > div:nth-of-type(3) > div:nth-of-type(1)"
+   },
+   {
+    "tag": "button",
+    "texto": "",
+    "ariaLabel": "Exibir lista",
+    "labelledby": null,
+    "title": null,
+    "type": "button",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": true,
+    "caixa": {
+     "x": 424,
+     "y": 1030.4,
+     "w": 32,
+     "h": 32
+    },
+    "seletor": "#sel-tipo-documento > div:nth-of-type(1) > button"
+   },
+   {
+    "tag": "button",
+    "texto": "Selecione o arquivo",
+    "ariaLabel": null,
+    "labelledby": null,
+    "title": null,
+    "type": "button",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": "true",
+    "visivel": true,
+    "caixa": {
+     "x": 60,
+     "y": 1114.7,
+     "w": 550,
+     "h": 40
+    },
+    "seletor": "#upl-documento > button"
+   },
+   {
+    "tag": "button",
+    "texto": "Enviar Documento",
+    "ariaLabel": null,
+    "labelledby": null,
+    "title": null,
+    "type": "submit",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": true,
+    "caixa": {
+     "x": 60,
+     "y": 1235.3,
+     "w": 194,
+     "h": 40
+    },
+    "seletor": "#painel-documentos > form > div:nth-of-type(4) > button"
+   },
+   {
+    "tag": "button",
+    "texto": "Como envio o documento pendente?",
+    "ariaLabel": null,
+    "labelledby": null,
+    "title": null,
+    "type": "button",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": true,
+    "caixa": {
+     "x": 60,
+     "y": 1567,
+     "w": 1160,
+     "h": 56.3
+    },
+    "seletor": "#acc-duvidas > div:nth-of-type(1) > button"
+   },
+   {
+    "tag": "button",
+    "texto": "Quanto tempo leva a análise?",
+    "ariaLabel": null,
+    "labelledby": null,
+    "title": null,
+    "type": "button",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": true,
+    "caixa": {
+     "x": 60,
+     "y": 1624.3,
+     "w": 1160,
+     "h": 56.3
+    },
+    "seletor": "#acc-duvidas > div:nth-of-type(3) > button"
+   },
+   {
+    "tag": "button",
+    "texto": "Como recebo os avisos do requerimento?",
+    "ariaLabel": null,
+    "labelledby": null,
+    "title": null,
+    "type": "button",
+    "disabled": false,
+    "tabindex": null,
+    "ariaHidden": null,
+    "visivel": true,
+    "caixa": {
+     "x": 60,
+     "y": 1681.6,
+     "w": 1160,
+     "h": 56.3
+    },
+    "seletor": "#acc-duvidas > div:nth-of-type(5) > button"
+   }
+  ],
+  "campos": [
+   {
+    "tag": "input",
+    "type": "text",
+    "id": "tipo-documento",
+    "name": "",
+    "required": false,
+    "ariaRequired": null,
+    "ariaInvalid": null,
+    "describedby": null,
+    "placeholder": "Selecione o tipo do documento pendente",
+    "role": null,
+    "ariaChecked": null,
+    "checked": false,
+    "indeterminate": false,
+    "rotulos": [
+     {
+      "texto": "Tipo de documento",
+      "visivel": true
+     }
+    ],
+    "visivel": true,
+    "caixa": {
+     "x": 60,
+     "y": 1026.4,
+     "w": 400,
+     "h": 40
+    },
+    "estilo": {
+     "opacity": "1",
+     "position": "static"
+    },
+    "seletor": "#tipo-documento"
+   },
+   {
+    "tag": "input",
+    "type": "radio",
+    "id": "tipo-documento-op0",
+    "name": "tipo-documento-opcoes",
+    "required": false,
+    "ariaRequired": null,
+    "ariaInvalid": null,
+    "describedby": null,
+    "placeholder": null,
+    "role": null,
+    "ariaChecked": null,
+    "checked": false,
+    "indeterminate": false,
+    "rotulos": [
+     {
+      "texto": "Comprovante de residência",
+      "visivel": false
+     }
+    ],
+    "visivel": false,
+    "caixa": {
+     "x": 0,
+     "y": 652,
+     "w": 0,
+     "h": 0
+    },
+    "estilo": {
+     "opacity": "0",
+     "position": "absolute"
+    },
+    "seletor": "#tipo-documento-op0"
+   },
+   {
+    "tag": "input",
+    "type": "radio",
+    "id": "tipo-documento-op1",
+    "name": "tipo-documento-opcoes",
+    "required": false,
+    "ariaRequired": null,
+    "ariaInvalid": null,
+    "describedby": null,
+    "placeholder": null,
+    "role": null,
+    "ariaChecked": null,
+    "checked": false,
+    "indeterminate": false,
+    "rotulos": [
+     {
+      "texto": "Documento de identidade",
+      "visivel": false
+     }
+    ],
+    "visivel": false,
+    "caixa": {
+     "x": 0,
+     "y": 652,
+     "w": 0,
+     "h": 0
+    },
+    "estilo": {
+     "opacity": "0",
+     "position": "absolute"
+    },
+    "seletor": "#tipo-documento-op1"
+   },
+   {
+    "tag": "input",
+    "type": "radio",
+    "id": "tipo-documento-op2",
+    "name": "tipo-documento-opcoes",
+    "required": false,
+    "ariaRequired": null,
+    "ariaInvalid": null,
+    "describedby": null,
+    "placeholder": null,
+    "role": null,
+    "ariaChecked": null,
+    "checked": false,
+    "indeterminate": false,
+    "rotulos": [
+     {
+      "texto": "Procuração",
+      "visivel": false
+     }
+    ],
+    "visivel": false,
+    "caixa": {
+     "x": 0,
+     "y": 652,
+     "w": 0,
+     "h": 0
+    },
+    "estilo": {
+     "opacity": "0",
+     "position": "absolute"
+    },
+    "seletor": "#tipo-documento-op2"
+   },
+   {
+    "tag": "input",
+    "type": "file",
+    "id": "arquivo-documento",
+    "name": "",
+    "required": false,
+    "ariaRequired": null,
+    "ariaInvalid": null,
+    "describedby": "arquivo-apoio arquivo-retorno",
+    "placeholder": null,
+    "role": null,
+    "ariaChecked": null,
+    "checked": false,
+    "indeterminate": false,
+    "rotulos": [
+     {
+      "texto": "Envio de documento",
+      "visivel": true
+     }
+    ],
+    "visivel": false,
+    "caixa": {
+     "x": 0,
+     "y": 652,
+     "w": 0,
+     "h": 0
+    },
+    "estilo": {
+     "opacity": "1",
+     "position": "static"
+    },
+    "seletor": "#arquivo-documento"
+   },
+   {
+    "tag": "input",
+    "type": "checkbox",
+    "id": "avisos-todos",
+    "name": "avisos-todos",
+    "required": false,
+    "ariaRequired": null,
+    "ariaInvalid": null,
+    "describedby": null,
+    "placeholder": null,
+    "role": null,
+    "ariaChecked": null,
+    "checked": false,
+    "indeterminate": false,
+    "rotulos": [
+     {
+      "texto": "Todos os avisos",
+      "visivel": true
+     }
+    ],
+    "visivel": false,
+    "caixa": {
+     "x": 60,
+     "y": 1350.6,
+     "w": 13,
+     "h": 13
+    },
+    "estilo": {
+     "opacity": "0",
+     "position": "absolute"
+    },
+    "seletor": "#avisos-todos"
+   },
+   {
+    "tag": "input",
+    "type": "checkbox",
+    "id": "aviso-email",
+    "name": "aviso-email",
+    "required": false,
+    "ariaRequired": null,
+    "ariaInvalid": null,
+    "describedby": null,
+    "placeholder": null,
+    "role": "switch",
+    "ariaChecked": "false",
+    "checked": false,
+    "indeterminate": false,
+    "rotulos": [
+     {
+      "texto": "Receber avisos por e-mail",
+      "visivel": true
+     }
+    ],
+    "visivel": false,
+    "caixa": {
+     "x": 60,
+     "y": 1374.6,
+     "w": 13,
+     "h": 13
+    },
+    "estilo": {
+     "opacity": "0",
+     "position": "absolute"
+    },
+    "seletor": "#aviso-email"
+   },
+   {
+    "tag": "input",
+    "type": "checkbox",
+    "id": "aviso-sms",
+    "name": "aviso-sms",
+    "required": false,
+    "ariaRequired": null,
+    "ariaInvalid": null,
+    "describedby": null,
+    "placeholder": null,
+    "role": "switch",
+    "ariaChecked": "false",
+    "checked": false,
+    "indeterminate": false,
+    "rotulos": [
+     {
+      "texto": "Receber avisos por SMS (mensagem de texto no celular)",
+      "visivel": true
+     }
+    ],
+    "visivel": false,
+    "caixa": {
+     "x": 60,
+     "y": 1404.6,
+     "w": 13,
+     "h": 13
+    },
+    "estilo": {
+     "opacity": "0",
+     "position": "absolute"
+    },
+    "seletor": "#aviso-sms"
+   }
+  ],
+  "fieldsets": [
+   {
+    "seletor": "#fs-avisos",
+    "legend": null,
+    "ariaLabel": null,
+    "labelledby": null,
+    "visivel": true
+   }
+  ],
+  "forms": [
+   {
+    "seletor": "#painel-documentos > form",
+    "novalidate": true,
+    "action": null
+   }
+  ],
+  "regioesVivas": [
+   {
+    "seletor": "#msg-pendencia > div:nth-of-type(2)",
+    "role": "alert",
+    "ariaLive": null,
+    "texto": "Documento pendente. Envie o comprovante de residência na aba Documentos até 20/11/2026.",
+    "visivel": true
+   },
+   {
+    "seletor": "#msg-retorno > div:nth-of-type(2)",
+    "role": "alert",
+    "ariaLive": null,
+    "texto": "Erro: documento não enviado. Há campos obrigatórios sem preenchimento ou com problema. Corrija os campos indicados e envie novamente.",
+    "visivel": true
+   },
+   {
+    "seletor": "#arquivo-retorno",
+    "role": "alert",
+    "ariaLive": null,
+    "texto": "Selecione o arquivo do documento.",
+    "visivel": true
+   },
+   {
+    "seletor": "#painel-documentos > p:nth-of-type(2)",
+    "role": null,
+    "ariaLive": "polite",
+    "texto": "",
+    "visivel": false
+   }
+  ],
+  "apresentacional": [
+   {
+    "seletor": "#msg-pendencia > div:nth-of-type(2)",
+    "tag": "div",
+    "attrs": {
+     "class": "content",
+     "role": "alert",
+     "align": "left"
+    }
+   },
+   {
+    "seletor": "#msg-pendencia > div:nth-of-type(2) > font",
+    "tag": "font",
+    "attrs": {
+     "color": "#333333"
+    }
+   }
+  ],
+  "tabindexPositivo": [],
+  "tabindexNaoInterativo": [],
+  "focaveisOcultos": [
+   {
+    "seletor": "body > nav > a:nth-of-type(1)",
+    "tag": "a",
+    "dentroAriaHidden": false,
+    "painelInativo": false
+   },
+   {
+    "seletor": "body > nav > a:nth-of-type(2)",
+    "tag": "a",
+    "dentroAriaHidden": false,
+    "painelInativo": false
+   },
+   {
+    "seletor": "#stp-andamento > div > button:nth-of-type(1)",
+    "tag": "button",
+    "dentroAriaHidden": false,
+    "painelInativo": true
+   },
+   {
+    "seletor": "#stp-andamento > div > button:nth-of-type(2)",
+    "tag": "button",
+    "dentroAriaHidden": false,
+    "painelInativo": true
+   },
+   {
+    "seletor": "#tipo-documento-op0",
+    "tag": "input",
+    "dentroAriaHidden": false,
+    "painelInativo": false
+   },
+   {
+    "seletor": "#tipo-documento-op1",
+    "tag": "input",
+    "dentroAriaHidden": false,
+    "painelInativo": false
+   },
+   {
+    "seletor": "#tipo-documento-op2",
+    "tag": "input",
+    "dentroAriaHidden": false,
+    "painelInativo": false
+   },
+   {
+    "seletor": "#arquivo-documento",
+    "tag": "input",
+    "dentroAriaHidden": false,
+    "painelInativo": false
+   },
+   {
+    "seletor": "#avisos-todos",
+    "tag": "input",
+    "dentroAriaHidden": false,
+    "painelInativo": false
+   },
+   {
+    "seletor": "#aviso-email",
+    "tag": "input",
+    "dentroAriaHidden": false,
+    "painelInativo": false
+   },
+   {
+    "seletor": "#aviso-sms",
+    "tag": "input",
+    "dentroAriaHidden": false,
+    "painelInativo": false
+   }
+  ],
+  "ariaHiddenFocavel": [
+   {
+    "seletor": "#upl-documento > button",
+    "tag": "button",
+    "tabIndex": 0,
+    "visivel": true
+   }
+  ],
+  "rolagem": {
+   "scrollWidth": 1280,
+   "clientWidth": 1280,
+   "scrollHeight": 2054
+  },
+  "fontesCarregadas": [
+   "Font Awesome 6 Free 900",
+   "Font Awesome 5 Free 900",
+   "Rawline 300",
+   "Rawline 400",
+   "Rawline 400",
+   "Rawline 500",
+   "Rawline 500",
+   "Rawline 600",
+   "Rawline 700"
+  ],
+  "familiasUsadas": [
+   "Rawline, Raleway, sans-serif"
+  ],
+  "tamanhosUsados": [
+   "14px",
+   "24.192px",
+   "11.662px",
+   "41.804px",
+   "16.8px",
+   "20.16px",
+   "34.832px",
+   "16px"
+  ],
+  "coresUsadas": [
+   "rgb(0, 0, 0)",
+   "rgb(51, 51, 51)",
+   "rgb(255, 255, 255)",
+   "rgb(204, 204, 204)",
+   "rgb(19, 81, 180)",
+   "rgb(255, 245, 194)",
+   "rgb(12, 50, 111)",
+   "rgb(253, 224, 219)",
+   "rgb(229, 34, 7)",
+   "rgb(21, 91, 203)",
+   "rgb(136, 136, 136)",
+   "rgb(7, 29, 65)"
+  ],
+  "scripts": [
+   {
+    "src": "/acompanhamento/core.min.js",
+    "type": null
+   },
+   {
+    "src": "/acompanhamento/comportamento.js",
+    "type": null
+   }
+  ],
+  "noscript": 1
+ }
+}

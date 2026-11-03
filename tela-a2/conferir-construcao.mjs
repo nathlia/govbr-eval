@@ -7,7 +7,7 @@
  * tela-a2/construcao.md: `defeito` tem de ser verdadeiro no hospedeiro (e na cópia compartilhada);
  * `conforme` tem de ser verdadeiro nos pontos de comparação, nas alternativas válidas, nos
  * chamarizes e na moldura da página. Cada estado parte de carga nova e termina em até 120 s
- * (plano § 14.5): S0 = carga; S1 = clicar a aba Documentos; S2 = S1 + clicar Enviar documento com o
+ * (plano § 14.5): S0 = carga; S1 = clicar a aba Documentos; S2 = S1 + clicar Enviar Documento com o
  * formulário vazio. A medida da e-MAG 2.3 roda em contexto próprio, em paralelo, numa janela de
  * 360 s (≥ 2 eventos load do documento + a meta). Nada é importado do govbr-ds-validator.
  *
@@ -123,6 +123,7 @@ const fonteUsada = async seletor => {
 const htmlServido = await (await fetch(URL_TELA)).text();
 const sha = async caminho => createHash("sha256").update(await readFile(caminho)).digest("hex");
 medir("página: sem bloco style nem script embutido no HTML servido", "conforme", !/<style[\s>]/i.test(htmlServido) && !/<script(?![^>]*\bsrc=)[^>]*>/i.test(htmlServido));
+medir("página: elementos vazios sem barra de fechamento ('/>') no HTML servido", "conforme", !/\/>/.test(htmlServido), String((htmlServido.match(/\/>/g) ?? []).length));
 medir("página: script sem type/language e link sem type", "conforme", !/<script[^>]*\b(type|language)=/i.test(htmlServido) && !/<link[^>]*\btype=/i.test(htmlServido));
 medir("página: core.min.js servido é o do pacote @govbr-ds/core 3.7.0, byte a byte", "conforme",
   (await sha(join(DIST, "acompanhamento/core.min.js"))) === (await sha(join(CORPUS, "node_modules/@govbr-ds/core/dist/core.min.js"))));
@@ -166,6 +167,11 @@ const s0 = await pagina.evaluate(() => {
     skip: (() => { const s = document.querySelector(".br-skiplink"); return !!s && document.body.firstElementChild === s && [...s.querySelectorAll("a")].every(a => !!document.querySelector(a.getAttribute("href"))); })(),
     trilha: (() => { const t = document.querySelector(".br-breadcrumb"); return !!t && main.querySelector(".container-lg").firstElementChild === t && !!t.querySelector('[aria-current="page"]'); })(),
     headings: [...document.querySelectorAll("h1, h2, h3, h4, h5, h6")].map(h => h.tagName + ":" + h.textContent.trim()),
+    noscript: (() => { const ns = [...document.querySelectorAll("noscript")]; const s = document.querySelector(".br-skiplink"); return { total: ns.length, depoisDoAtalho: ns.length === 1 && s?.nextElementSibling === ns[0], texto: ns[0]?.textContent.trim() ?? "" }; })(),
+    atalhosPapeis: [...document.querySelectorAll(".br-skiplink, .br-skiplink *")].map(e => e.getAttribute("role")).filter(Boolean),
+    trilhaAtual: (() => { const a = document.querySelector('.br-breadcrumb [aria-current="page"]'); return { tag: a.tagName, tabindex: a.getAttribute("tabindex"), tabIndex: a.tabIndex }; })(),
+    links: [...document.querySelectorAll("a[href]")].map(a => ({ href: a.getAttribute("href"), texto: a.textContent.replace(/\s+/g, " ").trim() })),
+    sms: (() => { const t = document.body.textContent; const i = t.indexOf("SMS"); return i < 0 ? null : t.slice(i, i + 40).replace(/\s+/g, " "); })(),
     // tab
     abaFonte: [...document.querySelectorAll("#tab-requerimento .tab-item button")].map(b => [cs(b).fontSize, cs(b).fontWeight]),
     tokenBase: token("--font-size-scale-base"), tokenUp02: token("--font-size-scale-up-02"),
@@ -214,7 +220,21 @@ medir("moldura: região principal (main) única e visível", "conforme", s0.main
 medir("chamariz hdr-govbr: br-header visível no topo, antes do main", "conforme", s0.header);
 medir("chamariz ftr-govbr: br-footer visível depois do main", "conforme", s0.footer);
 medir("chamariz skp-conteudo: br-skiplink primeiro no body, âncoras existem", "conforme", s0.skip);
+const axAtalhos = await axNo(".br-skiplink");
+const axAtalho1 = await axNo('.br-skiplink a[href="#main-content"]');
+medir("chamariz skp-conteudo: atalhos como navegação com links (sem papel de menu na marcação nem na árvore de acessibilidade)", "conforme",
+  s0.atalhosPapeis.length === 0 && axAtalhos.papel === "navigation" && axAtalho1.papel === "link", { papeis: s0.atalhosPapeis, nav: axAtalhos.papel, link: axAtalho1.papel });
+medir("página: um noscript logo depois do atalho, com aviso em texto", "conforme", s0.noscript.total === 1 && s0.noscript.depoisDoAtalho && s0.noscript.texto.length > 0, s0.noscript);
 medir("chamariz brd-trilha: br-breadcrumb primeiro conteúdo do main, com aria-current=page", "conforme", s0.trilha);
+medir("chamariz brd-trilha: item atual (span aria-current=page) fora da ordem de Tab, sem tabindex", "conforme",
+  s0.trilhaAtual.tag === "SPAN" && s0.trilhaAtual.tabindex === null && s0.trilhaAtual.tabIndex === -1, s0.trilhaAtual);
+const axTrilha = await axNo(".br-breadcrumb");
+medir("chamariz brd-trilha: nome acessível da navegação em português", "conforme", axTrilha.nome === "Trilha de navegação" && axTrilha.papel === "navigation", axTrilha);
+const descricoesPorDestino = Object.entries(s0.links.reduce((acc, l) => ((acc[l.href] ??= new Set()).add(l.texto), acc), {})).map(([href, textos]) => [href, [...textos]]);
+medir("página: links para o mesmo destino com a mesma descrição", "conforme", descricoesPorDestino.every(([, textos]) => textos.length === 1), descricoesPorDestino);
+const destinos = await Promise.all([...new Set(s0.links.map(l => l.href).filter(h => !h.startsWith("#")))].map(async h => [h, (await fetch(`${base}/${h}`)).status]));
+medir("página: destinos dos links existem no dist", "conforme", destinos.every(([, st]) => st === 200), destinos);
+medir("página: 1ª ocorrência de 'SMS' com a forma completa em texto", "conforme", /^SMS \(mensagem de texto/.test(s0.sms ?? ""), s0.sms);
 
 // a2-10aee59f9c1b rotulo-aba-pequeno @tab-requerimento
 medir("a2-10aee59f9c1b rotulo-aba-pequeno @tab-requerimento: rótulos das duas abas em --font-size-scale-base", "defeito",
@@ -265,6 +285,7 @@ medir("chamariz div-secoes: br-divider --gray-20 sólido 1px entre abas e dúvid
   s0.divisor.classe && s0.divisor.cor === "rgb(204, 204, 204)" && s0.cinza20 === "#ccc" && s0.divisor.largura === "1px" && s0.divisor.estilo === "solid" && !s0.divisor.focavel && s0.divisor.entre, s0.divisor);
 medir("chamariz btn-voltar: a.br-button secundário para meus-requerimentos.html", "conforme",
   s0.voltar.tag === "A" && /\bbr-button\b/.test(s0.voltar.classes) && /\bsecondary\b/.test(s0.voltar.classes) && s0.voltar.href === "meus-requerimentos.html" && !!s0.voltar.texto, s0.voltar);
+medir("chamariz btn-voltar: rótulo com iniciais maiúsculas e a mesma descrição do item da trilha ('Meus Requerimentos')", "conforme", s0.voltar.texto === "Meus Requerimentos", s0.voltar.texto);
 const destino = await fetch(`${base}/meus-requerimentos.html`);
 medir("página de destino meus-requerimentos.html existe no dist", "conforme", destino.status === 200);
 
@@ -303,6 +324,34 @@ medir("tooltips: no máximo um balão visível por vez", "conforme", bPrazo.visi
 await pagina.keyboard.press("Escape");
 medir("tooltips: Esc fecha o balão aberto por foco", "conforme", await pagina.evaluate(() => getComputedStyle(document.getElementById("tip-prazo")).visibility !== "visible"));
 
+// a2-281b82e2e6be (não sorteada): seta no topo/base centrada com o balão, em todo balão simples, aberto por ponteiro e por foco
+const setas = [];
+const medirSeta = async (gatilho, balaoSel, modo) => {
+  if (modo === "ponteiro") {
+    await pagina.evaluate(g => document.querySelector(g).scrollIntoView({ block: "center" }), gatilho);
+    await pagina.waitForTimeout(150);
+    const c = await pagina.evaluate(g => __centro(document.querySelector(g)), gatilho);
+    await pagina.mouse.move(c.x, c.y);
+  } else if (modo === "foco") {
+    await pagina.focus(gatilho);
+  }
+  await pagina.waitForTimeout(250);
+  const m = await pagina.evaluate(([g, b]) => {
+    const el = document.querySelector(b); const a = el.querySelector(".arrow");
+    const rb = el.getBoundingClientRect(), ra = a.getBoundingClientRect(), rg = document.querySelector(g).getBoundingClientRect();
+    return { visivel: getComputedStyle(el).visibility === "visible", lugar: el.getAttribute("data-popper-placement"),
+      desvioBalao: Math.abs(ra.left + ra.width / 2 - (rb.left + rb.width / 2)), desvioGatilho: Math.abs(ra.left + ra.width / 2 - (rg.left + rg.width / 2)) };
+  }, [gatilho, balaoSel]);
+  setas.push({ gatilho, modo, ...m, desvioBalao: +m.desvioBalao.toFixed(1), desvioGatilho: +m.desvioGatilho.toFixed(1) });
+  if (modo === "ponteiro") { await pagina.mouse.move(VIEWPORT.width - 1, VIEWPORT.height - 1); await pagina.waitForTimeout(150); }
+  else if (modo === "foco") await pagina.keyboard.press("Escape");
+};
+for (const modo of ["ponteiro", "foco"]) {
+  await medirSeta("#tip-protocolo-gatilho", "#tip-protocolo", modo);
+  await medirSeta("#tip-prazo-gatilho", "#tip-prazo", modo);
+  await medirSeta("#msg-pendencia .fechar-mensagem", "#msg-pendencia .close .br-tooltip", modo);
+}
+
 // a2-971db6a57c75 item-expandido-sem-estado @acc-duvidas
 medir("acc-duvidas: atributo single sem valor, cabeçalhos com aria-expanded=false na carga", "conforme", s0.accSingle === "" && s0.accExpandido.every(v => v === "false"), [s0.accSingle, s0.accExpandido]);
 await pagina.click('#acc-duvidas .header[aria-controls="acc-duvidas-1"]');
@@ -316,6 +365,20 @@ medir("a2-971db6a57c75 item-expandido-sem-estado @acc-duvidas: item aberto e pai
 await pagina.click('#acc-duvidas .header[aria-controls="acc-duvidas-2"]');
 const abertos = await pagina.evaluate(() => document.querySelectorAll("#acc-duvidas .item[active]").length);
 medir("core.js: accordion single (abrir o 2º fecha o 1º)", "conforme", abertos === 1, String(abertos));
+
+// e-MAG 4.3 (não sorteada): janela de 640×450 (200 %) sem rolagem horizontal nem elemento além da borda
+await pagina.setViewportSize({ width: 640, height: 450 });
+await pagina.waitForTimeout(600);
+const reflow = await pagina.evaluate(() => {
+  const cw = document.documentElement.clientWidth;
+  const visivel = el => { const r = el.getBoundingClientRect(); const c = getComputedStyle(el); return r.width > 0 && r.height > 0 && c.visibility !== "hidden" && c.display !== "none"; };
+  return { scrollWidth: document.documentElement.scrollWidth, clientWidth: cw,
+    alem: [...document.querySelectorAll("body *")].filter(e => visivel(e) && e.getBoundingClientRect().right > cw + 1).map(e => e.tagName + "." + e.className),
+    rotulos: [...document.querySelectorAll(".rotulo-botao")].map(s => Math.round(s.getBoundingClientRect().right)) };
+});
+await pagina.setViewportSize(VIEWPORT);
+await pagina.waitForTimeout(300);
+medir("página: a 640×450 (200 %) sem rolagem horizontal e nenhum elemento além da largura da janela", "conforme", reflow.scrollWidth <= reflow.clientWidth && reflow.alem.length === 0, reflow);
 
 // skiplink: primeiro Tab
 await abrir();
@@ -363,8 +426,8 @@ medir("a2-cd5cbf0f18dc sem-formato @upl-documento: texto de apoio ligado ao camp
 medir("a2-cd5cbf0f18dc (a2-2e8e53cf16ef): o texto de apoio continua dizendo que se pode arrastar", "conforme", /arrast/i.test(s1.ajuda ?? ""), s1.ajuda);
 medir("a2-18bccce4132a grupo-sem-legend @chk-avisos-todos: fieldset dos avisos sem legend; o texto vira p antes dele", "defeito",
   s1.fieldset.tag === "FIELDSET" && s1.fieldset.legends === 0 && s1.fieldset.tagAntes === "P" && s1.fieldset.textoAntes === "Avisos sobre o requerimento" && s1.fieldset.contem, s1.fieldset);
-medir("chamariz btn-enviar: button.br-button primário type=submit, 40 px, com rótulo", "conforme",
-  s1.enviar.tag === "BUTTON" && s1.enviar.tipo === "submit" && /\bprimary\b/.test(s1.enviar.classes) && s1.enviar.h === 40 && s1.enviar.texto === "Enviar documento", s1.enviar);
+medir("chamariz btn-enviar: button.br-button primário type=submit, 40 px, rótulo com iniciais maiúsculas ('Enviar Documento')", "conforme",
+  s1.enviar.tag === "BUTTON" && s1.enviar.tipo === "submit" && /\bprimary\b/.test(s1.enviar.classes) && s1.enviar.h === 40 && s1.enviar.texto === "Enviar Documento", s1.enviar);
 
 // a2-caf6bc80cb4b borda-sem-feedback @upl-documento
 const arrasto = await pagina.evaluate(() => {
@@ -395,6 +458,7 @@ medir("a2-e9ded28efe9c aria-checked-fixo @swt-aviso-sms (compartilhada): switch 
 const axPrincipal = await axNo("#avisos-todos");
 medir("core.js: checkbox principal intermediário com um switch e marcado com os dois", "conforme", email.principalIntermediario && sms.principal, { email: email.principalIntermediario, ambos: sms.principal, ax: axPrincipal });
 medir("a2-8f7b9c91d55e (não sorteada): alternar aplica na hora (aviso 'Preferência salva.')", "conforme", email.aviso === "Preferência salva.", email.aviso);
+for (const modo of ["ponteiro", "foco"]) await medirSeta("#sel-tipo-documento [data-trigger]", "#sel-tipo-documento .br-input > .br-tooltip", modo);
 fecharEstado("S1");
 
 // ================================================================ S2
@@ -449,6 +513,10 @@ medir("a2-d720ea8520cb erro-so-borda @sel-tipo-documento: campo com borda de err
   s2.selClasseErro && s2.selBorda === s2.erro && s2.selTextoErro.length === 0 && s2.selDescricao.length === 0 && s2.selInvalido === null, { borda: s2.selBorda, erro: s2.erro, textos: s2.selTextoErro, descricao: s2.selDescricao });
 medir("a2-d720ea8520cb comparação: upload inválido com texto de erro (.feedback, sem Fechar) ligado ao input por aria-describedby", "conforme",
   s2.upErro && !!s2.upTexto && /\bfeedback\b/.test(s2.upTextoClasse) && s2.upTextoBotao === 0 && s2.upDescricao.includes(s2.upTexto), { texto: s2.upTexto, descricao: s2.upDescricao });
+
+await medirSeta("#msg-retorno .fechar-mensagem", "#msg-retorno .close .br-tooltip", "aberto");
+medir("a2-281b82e2e6be (não sorteada): seta centrada com o balão (≤ 1 px) e apontando para o gatilho, nos 5 balões, por ponteiro e por foco", "conforme",
+  setas.length === 9 && setas.every(m => m.visivel && m.desvioBalao <= 1 && m.desvioGatilho <= 1), setas.map(m => `${m.gatilho} ${m.modo} ${m.lugar} ${m.desvioBalao}/${m.desvioGatilho}`));
 
 // Fechar (div) pelo teclado: Enter fecha e o foco volta ao Enviar
 await pagina.keyboard.press("Enter");
