@@ -20,6 +20,11 @@
  * MEDIDO do servidor do oráculo e o inventário exposto). common.v1 não muda (vai embutido no coletor).
  * Os leitores aceitam v1 e v2; campanhas e pacotes v1 continuam válidos e nunca são reescritos. Números de
  * dois braços (v1) e de três (v2) nunca formam série.
+ *
+ * D-164: `resgates.v1` (campanhas/<id>/resgates.json) — slots de campanha de DESENVOLVIMENTO cujo isolamento falhou
+ * só por falso positivo de forma do detector de vazamento, resgatados por uma revarredura offline com o detector
+ * seguinte (0 sem explicação). A análise confere e registra o resgate (`isolationRescue` no analysis-binding.v2); a
+ * avaliação final continua no D-157 (failed = morta). O pacote imutável nunca muda.
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -34,7 +39,7 @@ export const SCHEMA_BASE = "https://govbr-eval.invalid/contracts/";
 export const CONTRACT_NAMES = [
   "campaign.v1", "run.v1", "findings.v1", "findings.v2", "isolation.v1", "artifact-manifest.v1", "artifact-manifest.v2",
   "baseline.v1", "snapshot-manifest.v1", "analysis-binding.v1", "inspection-audit.v1",
-  "run.v2", "campaign.v2", "analysis-binding.v2",
+  "run.v2", "campaign.v2", "analysis-binding.v2", "resgates.v1",
 ] as const;
 export type ContractName = typeof CONTRACT_NAMES[number];
 
@@ -335,11 +340,29 @@ export interface AnalysisBinding extends Doc<"analysis-binding.v1"> {
 /** analysis-binding.v2 (NAT-61): igual ao v1, com o braço de bracos.v2. */
 export interface AnalysisBindingV2 extends Doc<"analysis-binding.v2">, Omit<AnalysisBinding, "contract" | "runs"> {
   runs: { runId: string; arm: ArmV2; artifactManifest: RecoverableObject }[];
+  /** D-164: só quando o isolamento registrado (failed) desta execução foi resgatado por resgates.v1 (campanha dev-*). */
+  isolationRescue?: IsolationRescue;
 }
+/** O resgate (D-164) que a análise conferiu e aplicou: o isolamento registrado continua `failed`. */
+export interface IsolationRescue {
+  decision: "D-164"; scope: "desenvolvimento"; recordedIsolation: "failed"; reason: string; detectorThatFailed: string;
+  recheck: { detectorVersion: string; evalCommit: string; validatorBuild: { version: string; commit: string }; unexplained: 0; report: RecoverableObject };
+  rescueRecord: RecoverableObject;
+}
+
+/** resgates.v1 (D-164): uma entrada por slot resgatado de campanha de desenvolvimento. */
+export interface ResgateIsolamento {
+  slot: string; runId: string; pacoteSha256: Sha256; detectorQueAcusou: string; motivo: string;
+  rechecagem: { detectorVersao: string; evalCommit: string; validatorBuild: { version: string; commit: string };
+    /** Relativo à pasta da campanha (campanhas/<campaignId>/). */
+    relatorio: string; relatorioSha256: Sha256; semExplicacao: 0 };
+  decisao: "D-164"; escopo: "desenvolvimento"; data: UtcTimestamp;
+}
+export interface Resgates extends Doc<"resgates.v1"> { campaignId: string; resgates: ResgateIsolamento[] }
 export type AnyAnalysisBinding = AnalysisBinding | AnalysisBindingV2;
 
 export type ContractDocument = Campaign | CampaignV2 | Run | RunV2 | Findings | FindingsV2 | Isolation | ArtifactManifest | ArtifactManifestV2 | Baseline | SnapshotManifest
-  | AnalysisBinding | AnalysisBindingV2 | InspectionAudit;
+  | AnalysisBinding | AnalysisBindingV2 | InspectionAudit | Resgates;
 
 // ───────────────────────────────────────────────────────────────── validador
 
@@ -441,6 +464,20 @@ function semanticErrors(doc: ContractDocument): ContractError[] {
     case "inspection-audit.v1":
       errors.push(...inspectionAuditErrors(doc));
       break;
+    case "resgates.v1": {
+      // D-164: um resgate por slot e por execução; a rechecagem é com um detector MAIS NOVO que o que acusou.
+      duplicates(doc.resgates.map(r => r.slot), i => `/resgates/${i}/slot`, "slot");
+      duplicates(doc.resgates.map(r => r.runId), i => `/resgates/${i}/runId`, "runId");
+      const versao = (v: string) => v.replace(/^vazamento-conhecimento-/, "").split(".").map(Number);
+      const maisNovo = (a: number[], b: number[]) => a[0] - b[0] || a[1] - b[1] || a[2] - b[2];
+      doc.resgates.forEach((r, i) => {
+        if (!(maisNovo(versao(r.rechecagem.detectorVersao), versao(r.detectorQueAcusou)) > 0)) {
+          errors.push({ path: `/resgates/${i}/rechecagem/detectorVersao`, keyword: "x-detector-not-newer",
+            message: `a rechecagem (${r.rechecagem.detectorVersao}) tem de usar um detector mais novo que o que acusou (${r.detectorQueAcusou})` });
+        }
+      });
+      break;
+    }
     case "baseline.v1": {
       const pairs: [keyof Baseline["links"], keyof Baseline["identity"]][] = [
         ["site", "siteManifestSha256"], ["reference", "referenceSha256"], ["statePlan", "statePlanSha256"],

@@ -76,6 +76,13 @@ const EXPECTED: Record<string, { path: string; keyword: string; missingProperty?
   "campaign--v2-comparison-unknown-arm.json": { path: "/design/comparisons/0/arms", keyword: "x-unknown-arm" },
   "campaign--v2-two-oracle-images.json": { path: "/fixed/oracleProfiles", keyword: "x-same-oracle-image" },
   "analysis-binding--v1-ferramentas.json": { path: "/runs/0/arm", keyword: "enum" },
+  // D-164 — resgate de isolamento só em desenvolvimento, com detector mais novo e 0 sem explicação
+  "resgates--campanha-nao-dev.json": { path: "/campaignId", keyword: "pattern" },
+  "resgates--escopo-avaliacao-final.json": { path: "/resgates/0/escopo", keyword: "const" },
+  "resgates--rechecagem-com-sem-explicacao.json": { path: "/resgates/0/rechecagem/semExplicacao", keyword: "const" },
+  "resgates--detector-nao-mais-novo.json": { path: "/resgates/0/rechecagem/detectorVersao", keyword: "x-detector-not-newer" },
+  "resgates--slot-repetido.json": { path: "/resgates/1/slot", keyword: "x-unique" },
+  "analysis-binding--v2-resgate-sem-zero.json": { path: "/isolationRescue/recheck/unexplained", keyword: "const" },
 };
 
 const show = (errors: ContractError[]): string => errors.map(e => `${e.path || "/"} ${e.keyword}${e.missingProperty ? `(${e.missingProperty})` : ""}`).join("; ");

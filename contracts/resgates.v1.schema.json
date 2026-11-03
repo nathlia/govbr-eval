@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/resgates.v1.schema.json",
+  "title": "resgates.json — slots de campanha de DESENVOLVIMENTO resgatados de um isolamento reprovado por falso positivo de forma do detector de vazamento (D-164)",
+  "description": "Mora em govbr-eval/campanhas/<campaignId>/resgates.json, ao lado do campaign.json. Só vale para campanha de desenvolvimento (campaignId dev-*, telas do ciclo D-155); a avaliação final segue o D-157 (isolamento failed = execução morta). Cada entrada liga UM slot a UMA execução pelo sha256 do artifact-manifest.json do pacote (o pacote imutável do govbr-resultados nunca muda) e à revarredura offline das respostas gravadas (scripts/portao-vazamento-reexecucao.ts --revarrer) com a versão SEGUINTE do detector, cujo relatório JSON fica em campanhas/<campaignId>/resgates/ e é citado pelo sha256. Resgate só com 0 ocorrências sem explicação. Regras entre campos (slot e runId únicos, detector da rechecagem mais novo que o que acusou) em contracts/index.ts; a conferência contra o pacote e o relatório é da análise (scripts/analisar-execucao.ts).",
+  "type": "object",
+  "required": ["contract", "fixture", "campaignId", "resgates"],
+  "properties": {
+    "contract": { "const": "resgates.v1" },
+    "fixture": { "$ref": "common.v1.schema.json#/$defs/fixture" },
+    "campaignId": {
+      "description": "Campanha de desenvolvimento (dev-*). Nenhuma outra aceita resgate.",
+      "allOf": [{ "$ref": "common.v1.schema.json#/$defs/id" }, { "type": "string", "pattern": "^dev-" }]
+    },
+    "resgates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["slot", "runId", "pacoteSha256", "detectorQueAcusou", "motivo", "rechecagem", "decisao", "escopo", "data"],
+        "properties": {
+          "slot": { "$ref": "common.v1.schema.json#/$defs/id" },
+          "runId": { "$ref": "common.v1.schema.json#/$defs/id" },
+          "pacoteSha256": { "description": "sha256 do artifact-manifest.json do pacote (a identidade que a análise calcula).", "$ref": "common.v1.schema.json#/$defs/sha256" },
+          "detectorQueAcusou": { "description": "Versão do detector que reprovou o isolamento (evidence/vazamento-conhecimento.json do pacote).", "$ref": "#/$defs/detector" },
+          "motivo": { "description": "Que forma de resposta do oráculo o detector leu errado.", "$ref": "common.v1.schema.json#/$defs/text" },
+          "rechecagem": {
+            "type": "object",
+            "required": ["detectorVersao", "evalCommit", "validatorBuild", "relatorio", "relatorioSha256", "semExplicacao"],
+            "properties": {
+              "detectorVersao": { "$ref": "#/$defs/detector" },
+              "evalCommit": { "description": "Commit do govbr-eval com o detector da rechecagem.", "$ref": "common.v1.schema.json#/$defs/gitCommit" },
+              "validatorBuild": {
+                "description": "Build do oráculo cujo data/ gerou o dicionário da revarredura (o da campanha).",
+                "type": "object",
+                "required": ["version", "commit"],
+                "properties": {
+                  "version": { "$ref": "common.v1.schema.json#/$defs/text" },
+                  "commit": { "$ref": "common.v1.schema.json#/$defs/gitCommit" }
+                },
+                "additionalProperties": false
+              },
+              "relatorio": {
+                "description": "Relatório JSON da revarredura, relativo à pasta da campanha (campanhas/<campaignId>/).",
+                "type": "string",
+                "pattern": "^resgates/[A-Za-z0-9][A-Za-z0-9._-]{0,127}\\.json$"
+              },
+              "relatorioSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" },
+              "semExplicacao": { "description": "Ocorrências sem explicação na rechecagem. Resgate só com zero.", "const": 0 }
+            },
+            "additionalProperties": false
+          },
+          "decisao": { "const": "D-164" },
+          "escopo": { "const": "desenvolvimento" },
+          "data": { "$ref": "common.v1.schema.json#/$defs/utcTimestamp" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "detector": { "type": "string", "pattern": "^vazamento-conhecimento-\\d+\\.\\d+\\.\\d+$" }
+  }
+}

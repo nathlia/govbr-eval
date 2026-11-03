@@ -19,6 +19,11 @@
  * (ordem `sequencial`): a ordem de `design.arms`. Nunca se troca pela de outro slot; sem ela, só a ausência
  * planejada que a campanha declara para a tela; senão a coleta recusa. A escolha fica gravada em `coleta-trio.json`.
  *
+ * Resgate de isolamento (D-164, só campanha dev-*): se o govbr-eval tem `campanhas/<id>/resgates.json`, um slot sem
+ * tentativa válida cuja tentativa em quarentena de isolamento está resgatada ali entra com ela (anotada `resgate` em
+ * `coleta-trio.json`), e o `analisar` recebe o arquivo e faz toda a conferência (pacote e relatório por sha256). Uma
+ * tentativa válida sempre ganha. Sem o arquivo, nada muda.
+ *
  *   npm run coleta:trio -- --campanha ID --trio GRUPO [--arquivo CLONE] [--carimbo AAAAMMDDTn] [--anexos DIR] [--sem-download]
  *
  * GRUPO = o `par` do índice (ex.: trio-01) ou o id do grupo na agenda (p01). Código 0 = análise pronta e sinais ok;
@@ -28,7 +33,7 @@ import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { basename, delimiter, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { validateContract, type AnyCampaign, type ArmV2, type SnapshotManifest } from "../contracts/index";
+import { validateContract, type AnyCampaign, type ArmV2, type Resgates, type SnapshotManifest } from "../contracts/index";
 import { analisar } from "./analisar-execucao";
 import { bytesDaCampanha, lerAgenda, lerEntradasDoIndice, tentativaSelecionada, tentativasDoSlot, type Agenda, type Tentativa } from "./agenda-campanha";
 import {
@@ -74,7 +79,9 @@ export const baixarComGh: Baixador = (e, destinoDir) => {
 
 // ───────────────────────────────────────────────────────────────── plano do trio (puro)
 
-export interface SlotDoTrio { slot: string; braco: ArmV2; posicao: number; escolhida: EntradaIndice; tentativas: Tentativa[] }
+export interface SlotDoTrio { slot: string; braco: ArmV2; posicao: number; escolhida: EntradaIndice; tentativas: Tentativa[];
+  /** D-164: a escolhida é a quarentena de isolamento resgatada em resgates.json (só quando o slot não tem tentativa válida). */
+  resgatada?: true }
 export type EscolhaLinhaDeBase =
   | { slot: string; tipo: "registro"; entrada: EntradaIndice }
   | { slot: string; tipo: "ausencia-planejada"; justificativa: string; declaradaEm: string };
@@ -89,9 +96,11 @@ export interface PlanoTrio {
 
 /**
  * Slots do trio na ordem da agenda, a tentativa que entra de cada um e a linha de base pela regra fixa.
- * Puro: só lê as entradas do índice, a campanha e a agenda (ou a falta dela).
+ * Puro: só lê as entradas do índice, a campanha e a agenda (ou a falta dela). `resgatados` (D-164): slot → runId
+ * resgatado em resgates.json; só vale para slot sem tentativa válida, e só para uma quarentena de isolamento.
  */
-export function planoDoTrio(entradas: EntradaIndice[], campanha: AnyCampaign, agenda: Agenda | null, trio: string): PlanoTrio {
+export function planoDoTrio(entradas: EntradaIndice[], campanha: AnyCampaign, agenda: Agenda | null, trio: string,
+  resgatados: ReadonlyMap<string, string> = new Map()): PlanoTrio {
   const c = campanha.campaignId;
   const execs = entradas.filter(e => e.tipo === "execucao" && e.campanha === c);
   let slots: { slot: string; braco: ArmV2; posicao: number }[];
@@ -126,11 +135,21 @@ export function planoDoTrio(entradas: EntradaIndice[], campanha: AnyCampaign, ag
 
   const escolhidos: SlotDoTrio[] = slots.map(s => {
     const ts = tentativasDoSlot(entradas, campanha, s.slot);
-    const sel = tentativaSelecionada(ts);
+    let sel = tentativaSelecionada(ts);
+    let resgatada = false;
+    const pedido = resgatados.get(s.slot);
+    if (!sel && pedido) {
+      const t = ts.find(x => x.chave === pedido);
+      const q = execs.find(x => x.chave === pedido);
+      if (!t || !q) recusar(`o resgates.json resgata ${pedido} no slot ${s.slot}, mas essa tentativa não está no índice do slot`);
+      if (q!.estado.isolamento !== "failed" || t!.classe !== "inelegivel") recusar(`a tentativa ${pedido} do slot ${s.slot} não é uma quarentena de isolamento (${t!.motivo}); o resgate D-164 não se aplica`);
+      sel = t!;
+      resgatada = true;
+    }
     if (!sel) recusar(`o slot ${s.slot} não tem tentativa elegível${ts.length ? `: ${ts.map(t => `${t.chave} — ${t.motivo}`).join("; ")}` : " (não iniciado)"}`);
     const e = execs.find(x => x.chave === sel!.chave)!;
     if (e.braco !== s.braco) recusar(`a tentativa ${e.chave} do slot ${s.slot} é do braço ${e.braco}, não ${s.braco}`);
-    return { ...s, escolhida: e, tentativas: ts };
+    return { ...s, escolhida: e, tentativas: ts, ...(resgatada ? { resgatada: true as const } : {}) };
   });
   const pares = new Set(escolhidos.map(s => s.escolhida.par));
   if (pares.size !== 1 || !escolhidos[0].escolhida.par) recusar(`as tentativas escolhidas não registram o mesmo grupo no índice (${[...pares].join(", ")})`);
@@ -198,6 +217,21 @@ function conjuntoDoDespacho(arquivo: string, e: EntradaIndice): string {
   try { id = (JSON.parse(readFileSync(join(dentro(arquivo, e.caminho), "despacho.json"), "utf8")) as { snapshots?: unknown }).snapshots; } catch { /* abaixo */ }
   if (typeof id !== "string" || !ID.test(id)) recusar(`o despacho de ${e.chave} não registra o conjunto de snapshots`);
   return id as string;
+}
+
+/**
+ * D-164: o resgates.json da campanha no govbr-eval (slot → runId). Aqui só o contrato e a campanha; a conferência
+ * contra o pacote e o relatório é do `analisar`, que recebe o mesmo arquivo.
+ */
+export function lerResgatesDaCampanha(caminho: string, id: string): { porSlot: Map<string, string>; sha256: string } {
+  const bytes = readFileSync(caminho);
+  let doc: unknown;
+  try { doc = JSON.parse(bytes.toString("utf8")); } catch { return recusar(`resgates.json ilegível: ${caminho}`); }
+  const v = validateContract(doc);
+  if (v.contract !== "resgates.v1" || !v.valid) recusar(`resgates.json fora do contrato resgates.v1: ${v.errors.map(e => `${e.path || "/"} ${e.keyword}: ${e.message}`).join("; ")}`);
+  const r = doc as Resgates;
+  if (r.campaignId !== id) recusar(`o resgates.json em ${caminho} é da campanha ${r.campaignId}, não de ${id}`);
+  return { porSlot: new Map(r.resgates.map(x => [x.slot, x.runId])), sha256: sha(bytes) };
 }
 
 /** O anexo de evidências conferido pelo sha256 do índice: o que já está na máquina, ou baixado. Divergência = recusa. */
@@ -286,7 +320,10 @@ export async function coletarTrio(o: OpcoesColeta): Promise<ResultadoColeta> {
   } else if (existsSync(join(raizEval, "campanhas", o.campanha, "agenda.json"))) agenda = lerAgenda(join(raizEval, "campanhas", o.campanha, "agenda.json"));
   if (agenda && agenda.campaign.sha256 !== camp.sha256) recusar(`a agenda serve à campanha de sha256 ${curto(agenda.campaign.sha256)}…, não à arquivada ${curto(camp.sha256)}…`);
 
-  const plano = planoDoTrio(entradas, camp.campanha, agenda, o.trio);
+  // D-164: resgates da campanha (govbr-eval), se houver; o analisar recebe o mesmo arquivo e confere tudo
+  const resgatesPath = join(raizEval, "campanhas", o.campanha, "resgates.json");
+  const resgates = existsSync(resgatesPath) ? lerResgatesDaCampanha(resgatesPath, o.campanha) : null;
+  const plano = planoDoTrio(entradas, camp.campanha, agenda, o.trio, resgates?.porSlot);
 
   // manifestos de coleta: mesma campanha, referência, plano e site em todos os slots
   const manifestos = plano.slots.map(s => lerManifesto(arquivo, s.escolhida));
@@ -350,7 +387,7 @@ export async function coletarTrio(o: OpcoesColeta): Promise<ResultadoColeta> {
 
   const r = await analisar({
     ...pacotes, campanha: dentro(arquivo, camp.rel), snapshots: dentro(arquivo, snapsRel), referencia: dentro(arquivo, refRel), site: dentro(arquivo, siteRel),
-    ...(linhaDeBase ? { linhaDeBase } : { semLinhaDeBase: true }), arquivo, saida,
+    ...(linhaDeBase ? { linhaDeBase } : { semLinhaDeBase: true }), arquivo, saida, ...(resgates ? { resgates: resgatesPath } : {}),
   });
   const sinais = sinaisTecnicos(saida);
   writeFileSync(join(saida, "sinais-tecnicos.json"), json(sinais), { flag: "wx" });
@@ -358,8 +395,11 @@ export async function coletarTrio(o: OpcoesColeta): Promise<ResultadoColeta> {
   writeFileSync(registro, json({
     formato: COLETA_TRIO_VERSAO, geradoEm: new Date().toISOString(), campanha: { id: plano.campanha, sha256: camp.sha256, caminho: camp.rel },
     trio: plano.trio, ordem: plano.ordem, regraLinhaDeBase: REGRA_LINHA_DE_BASE, linhaDeBase: registroLb,
+    ...(plano.slots.some(s => s.resgatada) ? { resgates: { decisao: "D-164", caminho: `campanhas/${plano.campanha}/resgates.json`, repositorio: "govbr-eval",
+      sha256: resgates!.sha256, slots: plano.slots.filter(s => s.resgatada).map(s => s.slot) } } : {}),
     slots: plano.slots.map(s => ({ slot: s.slot, braco: s.braco, posicao: s.posicao, escolhida: s.escolhida.chave,
-      tentativas: s.tentativas.map(t => ({ chave: t.chave, classe: t.classe, motivo: t.motivo })), manifestoColeta: s.escolhida.manifestoColeta?.sha256 ?? null })),
+      tentativas: s.tentativas.map(t => ({ chave: t.chave, classe: t.classe, motivo: t.motivo })), manifestoColeta: s.escolhida.manifestoColeta?.sha256 ?? null,
+      ...(s.resgatada ? { resgate: "D-164: isolamento failed resgatado (resgates.json); conferido pelo analisar" } : {}) })),
     anexos: anexosUsados, entradas: { snapshots: snapsRel, referencia: refRel, site: siteRel },
     analise: { estado: r.estado },
   }), { flag: "wx" });

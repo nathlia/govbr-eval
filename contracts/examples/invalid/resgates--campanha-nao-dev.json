@@ -1,0 +1,28 @@
+{
+  "contract": "resgates.v1",
+  "fixture": true,
+  "campaignId": "fixture-final-01",
+  "resgates": [
+    {
+      "slot": "p01-ferramentas",
+      "runId": "fixture-resgate-run-ferramentas-01",
+      "pacoteSha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "detectorQueAcusou": "vazamento-conhecimento-1.3.1",
+      "motivo": "Forma de resposta sintética (eco do seletor de ação no ledger) lida como vazamento pelo detector que acusou.",
+      "rechecagem": {
+        "detectorVersao": "vazamento-conhecimento-1.3.2",
+        "evalCommit": "2222222222222222222222222222222222222222",
+        "validatorBuild": {
+          "version": "0.0.0-fixture",
+          "commit": "3333333333333333333333333333333333333333"
+        },
+        "relatorio": "resgates/p01-ferramentas.json",
+        "relatorioSha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "semExplicacao": 0
+      },
+      "decisao": "D-164",
+      "escopo": "desenvolvimento",
+      "data": "2026-01-04T00:00:00Z"
+    }
+  ]
+}

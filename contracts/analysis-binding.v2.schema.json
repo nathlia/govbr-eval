@@ -22,6 +22,39 @@
       },
       "additionalProperties": false
     },
+    "isolationRescue": {
+      "description": "Opcional (D-164). Só numa análise de campanha de desenvolvimento (dev-*) cujo resgates.json resgata esta execução: o isolamento registrado no pacote continua failed (falso positivo de forma do detector de vazamento) e a revarredura offline com o detector seguinte deu 0 sem explicação. A avaliação final nunca tem este campo (D-157).",
+      "type": "object",
+      "required": ["decision", "scope", "recordedIsolation", "reason", "detectorThatFailed", "recheck", "rescueRecord"],
+      "properties": {
+        "decision": { "const": "D-164" },
+        "scope": { "const": "desenvolvimento" },
+        "recordedIsolation": { "const": "failed" },
+        "reason": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "detectorThatFailed": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "recheck": {
+          "type": "object",
+          "required": ["detectorVersion", "evalCommit", "validatorBuild", "unexplained", "report"],
+          "properties": {
+            "detectorVersion": { "$ref": "common.v1.schema.json#/$defs/text" },
+            "evalCommit": { "$ref": "common.v1.schema.json#/$defs/gitCommit" },
+            "validatorBuild": {
+              "type": "object", "required": ["version", "commit"],
+              "properties": {
+                "version": { "$ref": "common.v1.schema.json#/$defs/text" },
+                "commit": { "$ref": "common.v1.schema.json#/$defs/gitCommit" }
+              },
+              "additionalProperties": false
+            },
+            "unexplained": { "const": 0 },
+            "report": { "description": "Cópia do relatório da revarredura em entradas/resgates/.", "$ref": "common.v1.schema.json#/$defs/recoverableObject" }
+          },
+          "additionalProperties": false
+        },
+        "rescueRecord": { "description": "Cópia do resgates.json em entradas/.", "$ref": "common.v1.schema.json#/$defs/recoverableObject" }
+      },
+      "additionalProperties": false
+    },
     "fixture": { "$ref": "common.v1.schema.json#/$defs/fixture" },
     "analysisId": { "$ref": "common.v1.schema.json#/$defs/id" },
     "campaignId": { "$ref": "common.v1.schema.json#/$defs/id" },

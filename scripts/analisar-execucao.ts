@@ -21,6 +21,13 @@
  * revisão em revisao/, score.json e cópias das entradas pequenas em entradas/. O pacote bruto nunca é
  * alterado; a pasta de saída é sempre nova; correção = nova revisão ligada à anterior (--anterior).
  *
+ * Resgate de isolamento (D-164): numa campanha de DESENVOLVIMENTO (dev-*), `resgates.json` (resgates.v1; --resgates
+ * ou ao lado do campaign.json) pode resgatar uma execução cujo isolamento falhou só pelo check de vazamento, com uma
+ * revarredura offline (detector seguinte, 0 sem explicação). A execução passa a pontuável e elegível, e o fato fica no
+ * binding (`isolationRescue`), no resumo (`isolamentoResgatado`, aviso, linha Isolamento) e em entradas/. Fora de dev-*,
+ * com o pacote ou o relatório por outro hash, ou com sobra sem explicação, a análise para (RecusaDeResgate) sem gravar
+ * nada. Sem resgates.json, nada muda (saída byte a byte a de sempre).
+ *
  * Método: docs/analise-execucao.md.
  */
 import { createHash } from "node:crypto";
@@ -35,6 +42,7 @@ import {
   type AnalysisBinding, type AnalysisMetrics, type AnyAnalysisBinding, type AnyArtifactManifest, type AnyCampaign, type AnyFindings, type AnyRun, type ArmV2,
   type ArtifactManifest, type Baseline, type BaselineBinding, type ComparisonV2,
   type Isolation, type Location, type Run, type ContractName, type ScoreStatus, type SnapshotManifest,
+  type IsolationRescue, type ResgateIsolamento, type Resgates,
 } from "../contracts/index";
 import { auditarInspecao } from "./inspection-audit";
 import { resumirInspecao, type ResumoInspecao } from "./inspection-ledger";
@@ -122,6 +130,154 @@ export interface OpcoesAnalise {
    * `instante` do manifesto (saída determinística).
    */
   derivadoRetrospectivo?: string;
+  /**
+   * D-164: resgates.json (resgates.v1) da campanha. Padrão: o que estiver ao lado de `campanha`. Ausente = nenhum
+   * resgate (a saída é a de sempre); presente fora de campanha dev-* = recusa.
+   */
+  resgates?: string;
+}
+
+// ───────────────────────────────────────────────────────────────── resgate de isolamento (D-164)
+
+export const RESGATE_DECISAO = "D-164";
+/** O único check cuja falha um resgate cobre: o detector de vazamento do run-once (falso positivo de forma). */
+export const CHECK_VAZAMENTO = "vazamento-de-conhecimento";
+/** Recusa de resgate: erro fatal antes de qualquer escrita (nenhuma pasta de análise é criada). */
+export class RecusaDeResgate extends Error {}
+const recusarResgate = (msg: string): never => { throw new RecusaDeResgate(`resgate de isolamento (D-164) recusado: ${msg}`); };
+
+interface ResgatesLidos { caminho: string; bytes: Buffer; doc: Resgates; relatorios: Map<string, Buffer> }
+interface ResgateAplicado { entrada: ResgateIsolamento; relatorioBytes: Buffer; registro: ResgatesLidos }
+interface RelatorioRevarredura {
+  detector?: unknown; versao?: unknown; perfil?: unknown; passa?: unknown; semExplicacaoNoPerfilLivre?: unknown;
+  sessoes?: { sessao?: unknown; modo?: unknown; perfil?: unknown; sem?: unknown; ok?: unknown }[];
+}
+const semBom = (b: Buffer): string => { const t = b.toString("utf8"); return t.charCodeAt(0) === 0xfeff ? t.slice(1) : t; };
+
+/**
+ * O resgates.json da campanha, conferido inteiro: só campanha dev-*, contrato resgates.v1, mesma campanha, e cada
+ * relatório pelo sha256 registrado e pelo conteúdo (UMA revarredura offline knowledge-free da execução, com o detector
+ * e o build declarados, passando com 0 sem explicação; o build é o oráculo da campanha). Ausente = null.
+ */
+function lerResgates(o: OpcoesAnalise, campaign: AnyCampaign): ResgatesLidos | null {
+  const caminho = o.resgates ? resolve(o.resgates) : join(dirname(resolve(o.campanha)), "resgates.json");
+  if (!existsSync(caminho)) {
+    if (o.resgates) recusarResgate(`--resgates aponta um arquivo ausente: ${o.resgates}`);
+    return null;
+  }
+  const id = campaign.campaignId;
+  if (!id.startsWith("dev-")) {
+    recusarResgate(`a campanha ${id} não é de desenvolvimento (dev-*); fora do ciclo de desenvolvimento vale o D-157 (isolamento failed = execução morta), sem resgate`);
+  }
+  const bytes = readFileSync(caminho);
+  let doc: Resgates;
+  try { doc = assertContract<Resgates>(JSON.parse(semBom(bytes)), "resgates.v1"); }
+  catch (e) { return recusarResgate(`${posix(caminho)}: ${e instanceof Error ? e.message : String(e)}`); }
+  if (doc.fixture !== campaign.fixture) recusarResgate("fixture misturada com dado real (resgates.json × campanha)");
+  if (doc.campaignId !== id) recusarResgate(`o resgates.json é da campanha ${doc.campaignId}, não de ${id}`);
+  const versaoDaCampanha = campaign.contract === "campaign.v2" ? campaign.fixed.oracleProfiles.ferramentas?.version ?? null : null;
+  const pasta = dirname(caminho);
+  const relatorios = new Map<string, Buffer>();
+  for (const r of doc.resgates) {
+    const onde = `${r.slot} (${r.runId})`;
+    // o schema já exige os dois; a regra fica dita aqui em palavras
+    if (r.escopo !== "desenvolvimento") recusarResgate(`${onde}: escopo ${String(r.escopo)}, não desenvolvimento`);
+    if (r.rechecagem.semExplicacao !== 0) recusarResgate(`${onde}: a rechecagem tem ${String(r.rechecagem.semExplicacao)} ocorrência(s) sem explicação; resgate só com 0`);
+    const alvo = resolve(pasta, r.rechecagem.relatorio);
+    const rel = relative(pasta, alvo);
+    if (rel.startsWith("..") || isAbsolute(rel)) recusarResgate(`${onde}: o relatório escapa da pasta da campanha (${r.rechecagem.relatorio})`);
+    if (!existsSync(alvo)) recusarResgate(`${onde}: relatório da rechecagem ausente: ${r.rechecagem.relatorio}`);
+    const rb = readFileSync(alvo);
+    if (sha(rb) !== r.rechecagem.relatorioSha256) {
+      recusarResgate(`${onde}: o sha256 do relatório ${r.rechecagem.relatorio} (${sha(rb).slice(0, 12)}…) não é o registrado (${r.rechecagem.relatorioSha256.slice(0, 12)}…)`);
+    }
+    let rep: RelatorioRevarredura;
+    try { rep = JSON.parse(semBom(rb)) as RelatorioRevarredura; } catch { return recusarResgate(`${onde}: relatório ${r.rechecagem.relatorio} ilegível`); }
+    const p: string[] = [];
+    if (rep.detector !== r.rechecagem.detectorVersao) p.push(`o relatório é do detector ${String(rep.detector)}, o registro diz ${r.rechecagem.detectorVersao}`);
+    if (rep.versao !== r.rechecagem.validatorBuild.version) p.push(`o relatório é do build ${String(rep.versao)}, o registro diz ${r.rechecagem.validatorBuild.version}`);
+    if (versaoDaCampanha !== null && r.rechecagem.validatorBuild.version !== versaoDaCampanha) {
+      p.push(`o build da rechecagem (${r.rechecagem.validatorBuild.version}) não é o oráculo da campanha (${versaoDaCampanha})`);
+    }
+    if (rep.perfil !== "knowledge-free") p.push(`perfil do relatório ${String(rep.perfil)}, não knowledge-free`);
+    if (rep.passa !== true || rep.semExplicacaoNoPerfilLivre !== 0) {
+      p.push(`o relatório não passa com 0 sem explicação (passa ${String(rep.passa)}, sem explicação ${String(rep.semExplicacaoNoPerfilLivre)})`);
+    }
+    const ss = Array.isArray(rep.sessoes) ? rep.sessoes : [];
+    const s = ss[0];
+    if (ss.length !== 1 || s.modo !== "revarredura" || s.perfil !== "knowledge-free" || s.sem !== 0 || s.ok !== true
+      || typeof s.sessao !== "string" || !s.sessao.endsWith(r.runId)) {
+      p.push(`o relatório não é UMA revarredura offline knowledge-free do pacote de ${r.runId} com 0 sem explicação`);
+    }
+    if (p.length) recusarResgate(`${onde}: ${p.join("; ")}`);
+    relatorios.set(r.runId, rb);
+  }
+  return { caminho, bytes, doc, relatorios };
+}
+
+/**
+ * A entrada de resgates.json que vale para ESTE pacote, conferida contra ele: mesmo slot e mesma execução, isolamento
+ * registrado `failed` só pelo check de vazamento (controles positivos ok), braço ferramentas (knowledge-free), o
+ * sha256 do artifact-manifest.json e a versão do detector que a evidência do pacote registra. Sem entrada = null.
+ */
+function resgateDoPacote(p: PacoteLido, lidos: ResgatesLidos | null): ResgateAplicado | null {
+  if (!lidos) return null;
+  const { run } = p;
+  const porRun = lidos.doc.resgates.find(r => r.runId === run.runId);
+  const porSlot = lidos.doc.resgates.find(r => r.slot === run.slotId);
+  if (!porRun && !porSlot) return null;
+  if (!porRun || porRun !== porSlot) {
+    recusarResgate(porRun ? `${run.runId} está registrado no slot ${porRun.slot}, mas o pacote é do slot ${run.slotId}`
+      : `o slot ${run.slotId} é resgatado para ${porSlot!.runId}, não para a execução analisada ${run.runId}`);
+  }
+  const r = porRun!;
+  const onde = `${r.slot} (${r.runId})`;
+  if (run.status.isolation !== "failed") recusarResgate(`${onde}: o isolamento registrado é ${run.status.isolation}, não failed; não há o que resgatar`);
+  const manifestSha = sha(p.manifestBytes);
+  if (manifestSha !== r.pacoteSha256) {
+    recusarResgate(`${onde}: o sha256 do artifact-manifest.json do pacote (${manifestSha.slice(0, 12)}…) não é o registrado (${r.pacoteSha256.slice(0, 12)}…); o resgate é de outro pacote`);
+  }
+  if (run.intervention.oracle?.profile !== "knowledge-free") {
+    recusarResgate(`${onde}: o oráculo da execução tem perfil ${run.intervention.oracle?.profile ?? "nenhum"}; a revarredura offline só existe para o braço ferramentas (knowledge-free)`);
+  }
+  const iso = p.isolation ?? recusarResgate(`${onde}: pacote sem isolation.json`);
+  const falhos = iso.checks.filter(c => c.outcome === "failed");
+  if (!falhos.length || falhos.some(c => c.id !== CHECK_VAZAMENTO)) {
+    recusarResgate(`${onde}: o isolamento falhou em ${falhos.map(c => c.id).join(", ") || "nenhum check"}; o resgate só cobre o check ${CHECK_VAZAMENTO} (falso positivo de forma do detector)`);
+  }
+  if (iso.positiveControls.some(c => c.outcome === "failed")) recusarResgate(`${onde}: controle positivo do isolamento falhou; o resgate não cobre isso`);
+  const ev = falhos[0].evidence;
+  if (!ev || !p.manifest.files.some(f => f.path === ev)) recusarResgate(`${onde}: o check ${CHECK_VAZAMENTO} não aponta evidência do manifesto`);
+  let versao: unknown;
+  try { versao = (JSON.parse(semBom(readFileSync(join(p.dir, ev!)))) as { versao?: unknown }).versao; } catch { versao = null; }
+  if (versao !== r.detectorQueAcusou) recusarResgate(`${onde}: a evidência do pacote (${ev}) registra o detector ${String(versao)}, o resgates.json diz ${r.detectorQueAcusou}`);
+  return { entrada: r, relatorioBytes: lidos.relatorios.get(r.runId)!, registro: lidos };
+}
+
+/** Onde a análise guarda a cópia do relatório da rechecagem (o mesmo caminho relativo, sob entradas/). */
+const relatorioNaAnalise = (r: ResgateAplicado): string => `entradas/${r.entrada.rechecagem.relatorio}`;
+const REGISTRO_NA_ANALISE = "entradas/resgates.json";
+
+function isolationRescueDe(r: ResgateAplicado): IsolationRescue {
+  const e = r.entrada;
+  return {
+    decision: "D-164", scope: "desenvolvimento", recordedIsolation: "failed", reason: e.motivo, detectorThatFailed: e.detectorQueAcusou,
+    recheck: { detectorVersion: e.rechecagem.detectorVersao, evalCommit: e.rechecagem.evalCommit, validatorBuild: e.rechecagem.validatorBuild, unexplained: 0,
+      report: { sha256: sha(r.relatorioBytes), bytes: r.relatorioBytes.length, location: { kind: "package-path", path: relatorioNaAnalise(r),
+        note: `cópia de campanhas/${r.registro.doc.campaignId}/${e.rechecagem.relatorio} do govbr-eval` } } },
+    rescueRecord: { sha256: sha(r.registro.bytes), bytes: r.registro.bytes.length, location: { kind: "package-path", path: REGISTRO_NA_ANALISE,
+      note: `cópia de campanhas/${r.registro.doc.campaignId}/resgates.json do govbr-eval` } },
+  };
+}
+
+function isolamentoResgatadoDe(r: ResgateAplicado): IsolamentoResgatado {
+  const e = r.entrada;
+  return {
+    decisao: "D-164", escopo: "desenvolvimento", isolamentoRegistrado: "failed", motivo: e.motivo, detectorQueAcusou: e.detectorQueAcusou,
+    rechecagem: { detectorVersao: e.rechecagem.detectorVersao, semExplicacao: 0, validatorBuild: e.rechecagem.validatorBuild,
+      evalCommit: e.rechecagem.evalCommit, relatorio: relatorioNaAnalise(r), relatorioSha256: sha(r.relatorioBytes) },
+    registro: REGISTRO_NA_ANALISE, registroSha256: sha(r.registro.bytes), data: e.data,
+  };
 }
 
 export const DERIVADO_RETROSPECTIVO_VERSAO = "derivado-retrospectivo-1.0.0";
@@ -499,6 +655,11 @@ export interface ExecucaoResumo {
     ferramentasAnunciadas: string[] | null; ferramentasObservadas: string[] | null; errosDeFerramenta: MetricaResumo;
     checks: { aprovados: number; falhos: string[]; naoExercitados: string[] } | null; controlesPositivos: { aprovados: number; falhos: string[] } | null;
     limitacoes: string[] };
+  /**
+   * D-164: só quando o isolamento `failed` desta execução foi resgatado (campanha dev-*, resgates.json conferido).
+   * `mcpIsolamento.isolamento` continua o registrado (failed). Ausente no caminho de sempre.
+   */
+  isolamentoResgatado?: IsolamentoResgatado;
   custoTempo: Record<keyof Run["usage"], MetricaResumo>;
   achados: { total: number; itens: { seletor: string; regra: string | null; observado: string }[] } | null;
   /**
@@ -514,6 +675,13 @@ export interface ExecucaoResumo {
   inspecao?: ResumoInspecao;
   links: Record<string, string | string[] | null>;
   binding: string;
+}
+/** D-164: o resgate aplicado a uma execução, como o resumo o mostra. */
+export interface IsolamentoResgatado {
+  decisao: "D-164"; escopo: "desenvolvimento"; isolamentoRegistrado: "failed"; motivo: string; detectorQueAcusou: string;
+  rechecagem: { detectorVersao: string; semExplicacao: 0; validatorBuild: { version: string; commit: string }; evalCommit: string;
+    relatorio: string; relatorioSha256: string };
+  registro: string; registroSha256: string; data: string;
 }
 export interface ComparacaoResumo {
   disponivel: boolean; motivo: string | null; estado: "final" | "provisoria" | null;
@@ -696,6 +864,11 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
       if (doOraculo.length) recusar(`${run.runId}: oráculo fora do fixado na campanha ${campaign.campaignId}: ${doOraculo.join("; ")}`);
     }
   }
+  // ── resgate de isolamento (D-164): só campanha dev-*, conferido contra o pacote e o relatório; sem arquivo, nada muda
+  const resgatesLidos = lerResgates(o, campaign);
+  const resgates = new Map<Arm, ResgateAplicado>();
+  for (const p of pacotes) { const r = resgateDoPacote(p, resgatesLidos); if (r) resgates.set(p.run.arm, r); }
+  if (resgates.size && !grupoV2) recusarResgate("o resgate só é registrado no analysis-binding.v2 (grupo de campanha v2)");
   if (par && new Set(pacotes.map(p => p.run.screen.id)).size > 1) recusar(`o ${pacotes.length > 2 ? "grupo" : "par"} mistura telas; telas diferentes nunca formam ${pacotes.length > 2 ? "grupo" : "par"}`);
 
   // ── snapshots, referência, site ──────────────────────────────────────────
@@ -758,6 +931,8 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     ...(lb.registroBytes ? { linhaDeBaseRegistro: sha(lb.registroBytes) } : {}),
     ...(lb.brutoBytes ? { linhaDeBaseBruta: sha(lb.brutoBytes) } : {}),
     ...(manifestoAnaliseBytes ? { manifestoAnalise: sha(manifestoAnaliseBytes) } : {}),
+    ...(resgates.size ? { resgates: sha(resgatesLidos!.bytes),
+      ...Object.fromEntries([...resgates].map(([arm, r]) => [`relatorioResgate.${arm}`, sha(r.relatorioBytes)])) } : {}),
   };
   const analysisBase = `analise-${digest({ entradasHash, tipo, scorer }).slice(0, 16)}`;
   // NAT-61: binding v2 no grupo v2 (o braço ferramentas não cabe no v1); par v1 continua v1, byte a byte.
@@ -775,6 +950,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
       ? { sha256: sha(manifestoAnaliseBytes), bytes: manifestoAnaliseBytes.length, location: { kind: "package-path", path: "entradas/manifesto-analise.json" } } : null },
     status, blockedReason, scoreStatus, metrics,
     ...(retrospectiva ? { retrospective: { retrospective: true as const, ...retrospectiva } } : {}),
+    ...(resgates.has(p.run.arm) ? { isolationRescue: isolationRescueDe(resgates.get(p.run.arm)!) } : {}),
   });
 
   const avisos: string[] = [...(avisoScorer ? [avisoScorer] : []), ...avisos0];
@@ -793,8 +969,9 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   // ── pontuação ────────────────────────────────────────────────────────────
   // `pontuavel` = há o que pontuar (DIAGNÓSTICO: calculado e mostrado, rotulado). Quem entra na
   // comparação principal é decidido à parte por `motivosDeInelegibilidade` (NAT-63, R2).
-  const pontuavel = (p: PacoteLido) => p.run.submission.status === "accepted" && p.run.status.isolation !== "failed";
-  const inelegivel = new Map(pacotes.map(p => [p.run.arm, motivosDeInelegibilidade(p.run, campaign)] as const));
+  // D-164: isolamento `failed` resgatado conta como pontuável (e, abaixo, elegível); o registrado continua failed.
+  const pontuavel = (p: PacoteLido) => p.run.submission.status === "accepted" && (p.run.status.isolation !== "failed" || resgates.has(p.run.arm));
+  const inelegivel = new Map(pacotes.map(p => [p.run.arm, motivosDeInelegibilidade(p.run, campaign, resgates.has(p.run.arm))] as const));
   let prep: PacotePreparado | null = null;
   if (!bloqueada && pacotes.some(pontuavel)) {
     const provenance = {
@@ -829,7 +1006,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     let b: AnyAnalysisBinding;
     if (bloqueada) b = bindingDe(p, "blocked", bloqueada, "not-prepared", METRICAS_NULAS);
     else if (p.run.submission.status !== "accepted") b = bindingDe(p, "ready", null, "not-applicable", METRICAS_NULAS);
-    else if (p.run.status.isolation === "failed") b = bindingDe(p, "blocked", "isolamento falhou: execução em quarentena, fora da análise principal", "not-prepared", METRICAS_NULAS);
+    else if (p.run.status.isolation === "failed" && !resgates.has(p.run.arm)) b = bindingDe(p, "blocked", "isolamento falhou: execução em quarentena, fora da análise principal", "not-prepared", METRICAS_NULAS);
     else {
       const s = scoreDe(p.run.runId)!;
       b = bindingDe(p, "ready", null, estadoDaPontuacao(s, prep!.pkg.runs.find(r => r.id === p.run.runId)!.cardIds, prep!.reviews), {
@@ -849,7 +1026,12 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   const exec = pacotes.map(p => execucaoResumo(p, saida, bindings.get(p.run.arm)!, scoreDe(p.run.runId), cartoesDe(p.run.runId),
     prep?.result.comparisons.find(c => c.agentRunId === p.run.runId && c.baseline === "uniao-deterministica") ?? null, pontuavel(p) ? null
       : p.run.submission.status !== "accepted" ? submissaoMotivo(p.run) : "isolamento falhou: execução em quarentena", temCamadaPagina(gt),
-    inelegivel.get(p.run.arm)!));
+    inelegivel.get(p.run.arm)!, resgates.get(p.run.arm) ?? null));
+  for (const [arm, r] of resgates) {
+    const e = r.entrada;
+    avisos.push(`${arm} (${e.runId}): isolamento failed resgatado (D-164, só desenvolvimento) — ${e.motivo}; rechecagem ${e.rechecagem.detectorVersao} ` +
+      `(validator ${e.rechecagem.validatorBuild.version} ${e.rechecagem.validatorBuild.commit.slice(0, 7)}) com 0 sem explicação: ${relatorioNaAnalise(r)}`);
+  }
   const comSemECom = pacotes.some(p => p.run.arm === "sem") && pacotes.some(p => p.run.arm === "com");
   const comparacao = par && comSemECom ? compararPar(exec, prep, unidades, bloqueada) : null;
   const comparacoes = grupoV2 && par ? compararGrupo(campaign, exec, prep, unidades, bloqueada) : undefined;
@@ -872,6 +1054,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
       score: prep ? "score.json" : null, revisao: prep ? "revisao/review.md" : null, decisoes: prep ? "revisao/reviews.json" : null,
       pacoteRevisao: prep ? "revisao/package.json" : null,
       pacotes: Object.fromEntries(pacotes.map(p => [p.run.arm, relDe(saida, p.dir)])),
+      ...(resgates.size ? { resgates: REGISTRO_NA_ANALISE } : {}),
     },
   };
   const cientifico = conteudoCientifico(resumoSemHash);
@@ -892,6 +1075,10 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   if (lb.brutoBytes) put("entradas/linha-de-base-bruta.json", lb.brutoBytes);
   if (manifestoAnaliseBytes) put("entradas/manifesto-analise.json", manifestoAnaliseBytes);
   if (decisoes) put("entradas/decisoes.json", readFileSync(resolve(o.decisoes!)));
+  if (resgates.size) {
+    put(REGISTRO_NA_ANALISE, resgatesLidos!.bytes);
+    for (const r of resgates.values()) put(relatorioNaAnalise(r), r.relatorioBytes);
+  }
   for (const [arm, b] of bindings) put(`analysis-binding.${arm}.json`, json(b));
   if (prep) {
     put("revisao/package.json", json(prep.pkg));
@@ -925,14 +1112,15 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
  * interrupção não contam), isolamento `passed` (`unverified` não basta) e a identidade congelada na
  * campanha, com tentativa e repetição dentro dos tetos. Qual tentativa de um slot entra
  * (`retryPolicy.attemptSelection`) exige a agenda de slots (T7) e não é decidida aqui.
+ * D-164: `isolamentoResgatado` (conferido por resgateDoPacote) tira o motivo do isolamento `failed`; nada mais.
  */
-export function motivosDeInelegibilidade(run: AnyRun, campaign: AnyCampaign): string[] {
+export function motivosDeInelegibilidade(run: AnyRun, campaign: AnyCampaign, isolamentoResgatado = false): string[] {
   const m: string[] = [];
   if (run.submission.status !== "accepted") m.push(`submissão ${run.submission.status} (não aceita)`);
   if (run.status.technical !== "passed") {
     m.push(`status técnico ${run.status.technical}${run.failure ? ` (${run.failure.stage} · ${run.failure.reason})` : ""}, não passed`);
   }
-  if (run.status.isolation !== "passed") m.push(`isolamento ${run.status.isolation}, não comprovado (passed)`);
+  if (run.status.isolation !== "passed" && !(isolamentoResgatado && run.status.isolation === "failed")) m.push(`isolamento ${run.status.isolation}, não comprovado (passed)`);
   m.push(...divergenciasDaCampanha(campaign, identidadeDoRun(run)));
   if (run.contract === "run.v2") m.push(...divergenciasDoOraculo(campaign, run.arm, run.intervention.oracle));
   return m;
@@ -945,7 +1133,8 @@ function submissaoMotivo(run: AnyRun): string {
 }
 
 function execucaoResumo(p: PacoteLido, saida: string, b: AnyAnalysisBinding, s: SemanticRunScore | null, cartoes: number,
-  comp: BaselineComparison | null, motivoSemPontuacao: string | null, comCamadas = false, inelegibilidade: string[] = []): ExecucaoResumo {
+  comp: BaselineComparison | null, motivoSemPontuacao: string | null, comCamadas = false, inelegibilidade: string[] = [],
+  resgate: ResgateAplicado | null = null): ExecucaoResumo {
   const { run, isolation, findings, manifest } = p;
   const link = (path: string | null) => path ? relDe(saida, join(p.dir, path)) : null;
   return {
@@ -973,6 +1162,7 @@ function execucaoResumo(p: PacoteLido, saida: string, b: AnyAnalysisBinding, s: 
       controlesPositivos: isolation ? { aprovados: isolation.positiveControls.filter(c => c.outcome === "passed").length,
         falhos: isolation.positiveControls.filter(c => c.outcome === "failed").map(c => c.id) } : null,
       limitacoes: isolation?.limitations ?? [] },
+    ...(resgate ? { isolamentoResgatado: isolamentoResgatadoDe(resgate) } : {}),
     custoTempo: Object.fromEntries(Object.entries(run.usage).map(([k, m]) => [k, metrica(m)])) as ExecucaoResumo["custoTempo"],
     achados: findings ? { total: findings.report.findings.length,
       itens: findings.report.findings.map(f => ({ seletor: f.selector, regra: f.rule, observado: f.observed })) } : null,
@@ -1255,7 +1445,9 @@ export function renderResumo(r: Resumo): string {
   // 5. MCP e isolamento
   L.push(`## ${r.comparacao ? 5 : 4}. MCP e isolamento`, "");
   L.push(`| | ${col(e => e.braco)} |`, `|---|${execs.map(() => "---").join("|")}|`);
-  L.push(`| Isolamento | ${col(e => e.mcpIsolamento.isolamento)} |`);
+  L.push(`| Isolamento | ${col(e => e.isolamentoResgatado
+    ? `failed → resgatado (D-164: ${seguro(e.isolamentoResgatado.motivo, 300)}; rechecagem ${seguro(e.isolamentoResgatado.rechecagem.detectorVersao)} 0 sem explicação)`
+    : e.mcpIsolamento.isolamento)} |`);
   L.push(`| Oráculo anunciado ao cliente | ${col(e => e.mcpIsolamento.oraculoAnunciado === null ? "desconhecido" : e.mcpIsolamento.oraculoAnunciado ? "sim" : "não")} |`);
   L.push(`| Oráculo (pacote) | ${col(e => e.mcpIsolamento.oraculo ? `${seguro(e.mcpIsolamento.oraculo.package)} ${seguro(e.mcpIsolamento.oraculo.version)} (${e.mcpIsolamento.oraculo.profile})` : "nenhum")} |`);
   // NAT-61: run.v2 traz o perfil MEDIDO e o inventário exposto; a linha só aparece quando algum pacote é v2.
@@ -1338,7 +1530,7 @@ function lerArgs(argv: string[]): OpcoesAnalise {
     tipo: tipo as OpcoesAnalise["tipo"], manifestoAnalise: val("manifesto-analise"), bateriaDesignada: val("bateria-designada"),
     justificativa: val("justificativa"), arquivo: val("arquivo"), decisoes: val("decisoes"), pacoteDecisoes: val("pacote-decisoes"), anterior: val("anterior"),
     orcamentoRevisao: val("orcamento-revisao"), revisaoCompleta: argv.includes("--revisao-completa"), saida: req("saida"),
-    derivadoRetrospectivo: val("derivado-retrospectivo"),
+    derivadoRetrospectivo: val("derivado-retrospectivo"), resgates: val("resgates"),
   };
 }
 
@@ -1346,7 +1538,8 @@ const USO_CLI = `Uso: npm run analisar -- (--pacote DIR | --sem DIR --com DIR | 
          --referencia referencia.json --site DIR_SITE (--linha-de-base baseline.json | --sem-linha-de-base) --saida PASTA_NOVA
          [--tipo individual|composta --manifesto-analise F --bateria-designada ID --justificativa TEXTO] [--arquivo RAIZ_DO_ARQUIVO]
          [--decisoes reviews.json [--pacote-decisoes package.json]] [--anterior PASTA_DA_REVISAO_ANTERIOR] [--orcamento-revisao TEXTO] [--revisao-completa]
-         [--derivado-retrospectivo manifesto.json]  (NAT-74: só sob derivados/; aceita campanha de outro scorer)`;
+         [--derivado-retrospectivo manifesto.json]  (NAT-74: só sob derivados/; aceita campanha de outro scorer)
+         [--resgates resgates.json]  (D-164: só campanha dev-*; padrão = o resgates.json ao lado do campaign.json)`;
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   (async () => {

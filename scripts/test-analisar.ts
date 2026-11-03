@@ -7,11 +7,13 @@
  */
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, relative } from "node:path";
 import { validateContract, type AnalysisBinding, type ArtifactManifest } from "../contracts/index";
-import { analisar, seguro, type OpcoesAnalise, type Resumo } from "./analisar-execucao";
+import { analisar, seguro, RecusaDeResgate, type OpcoesAnalise, type Resumo } from "./analisar-execucao";
+import { sinaisTecnicos } from "./sinais-tecnicos";
+import { DETECTOR_QUE_ACUSOU } from "./fixtures/analise/construir";
 import { REGIOES_DO_CLI, regiaoDe } from "./preparo-cenas";
 import { normalizarIdsGerados, presenteNoSite } from "./identidade-cartoes";
 import { cenasDoPlano } from "./collection-manifest";
@@ -601,6 +603,137 @@ async function main(): Promise<void> {
       assert.equal("comparacoes" in s, false);
       assert.equal("vazamentosComFerramentas" in s.revisaoSemantica!, false);
       assert.equal(binding(primeira, "sem").contract, "analysis-binding.v1");
+    });
+
+    // ── D-164: resgate de isolamento (só campanha dev-*) ─────────────────────
+    const DEV = "dev-fixture-analise-01";
+    const RESGATE_RUN = "fixture-analise-run-ferramentas-01";
+    type Entrada = Record<string, unknown> & { rechecagem: Record<string, unknown> };
+    /** resgates.json + relatório da revarredura ao lado do campaign.json da fixture; `entrada`/`relatorio` estragam um campo. */
+    function gravarResgate(fx: Fx, o: { campanhaId?: string; slot?: string; runId?: string; pacoteSha?: string; relatorio?: Record<string, unknown>;
+      entrada?: (e: Entrada) => void; relatorioSha?: string } = {}): string {
+      const runId = o.runId ?? RESGATE_RUN;
+      const rel = {
+        portao: "portao-vazamento-reexecucao-1.1.0", detector: "vazamento-conhecimento-1.3.2", validator: "fixture", versao: "0.0.0-fixture",
+        perfil: "knowledge-free", passa: true, semExplicacaoNoPerfilLivre: 0,
+        sessoes: [{ sessao: `pacote-fixture__${runId}`, modo: "revarredura", perfil: "knowledge-free", sem: 0, ok: true, semExplicacao: [] }],
+        ...o.relatorio,
+      };
+      const relBytes = JSON.stringify(rel, null, 1);
+      const slot = o.slot ?? "slot-03";
+      const dirRel = join(fx.dir, "resgates");
+      mkdirSync(dirRel, { recursive: true });
+      writeFileSync(join(dirRel, `${slot}.json`), relBytes);
+      const entrada: Entrada = {
+        slot, runId, pacoteSha256: o.pacoteSha ?? sha(readFileSync(join(fx.ferramentas!, "artifact-manifest.json"))),
+        detectorQueAcusou: DETECTOR_QUE_ACUSOU, motivo: "forma de resposta sintética lida como vazamento (falso positivo de forma)",
+        rechecagem: { detectorVersao: "vazamento-conhecimento-1.3.2", evalCommit: "1".repeat(40), validatorBuild: { version: "0.0.0-fixture", commit: "2".repeat(40) },
+          relatorio: `resgates/${slot}.json`, relatorioSha256: o.relatorioSha ?? sha(relBytes), semExplicacao: 0 },
+        decisao: "D-164", escopo: "desenvolvimento", data: "2026-01-04T00:00:00Z",
+      };
+      o.entrada?.(entrada);
+      const caminho = join(fx.dir, "resgates.json");
+      writeFileSync(caminho, JSON.stringify({ contract: "resgates.v1", fixture: true, campaignId: o.campanhaId ?? DEV, resgates: [entrada] }, null, 2) + "\n");
+      return caminho;
+    }
+    const semResgate = (fx: Fx) => rmSync(join(fx.dir, "resgates.json"), { force: true });
+    const recusaResgate = async (o: OpcoesAnalise, re: RegExp) => {
+      await assert.rejects(analisar(o), (e: Error) => e instanceof RecusaDeResgate && re.test(e.message), `esperada recusa ${re}`);
+      assert.ok(!existsSync(o.saida), "recusa de resgate não grava pasta de análise");
+    };
+    const fxr = fixture({ trio: true, campanhaId: DEV, ferramentas: { isolamento: "vazamento" } });
+
+    await test("D-164 sem resgates.json: o ferramentas com isolamento failed fica em quarentena (o caminho de sempre)", async () => {
+      semResgate(fxr);
+      const r = await analisar(opcoes(fxr, { ferramentas: fxr.ferramentas }));
+      assert.equal(r.estado, "pronta", r.motivo ?? "");
+      const fe = execDe(r.resumo, "ferramentas");
+      assert.equal(fe.mcpIsolamento.isolamento, "failed");
+      assert.equal("isolamentoResgatado" in fe, false);
+      assert.equal(fe.pontuacao.estado, "not-prepared");
+      assert.equal(fe.elegibilidade!.elegivel, false);
+      const b = binding(r.saida, "ferramentas") as AnalysisBinding & { isolationRescue?: unknown };
+      assert.equal(b.status, "blocked");
+      assert.equal("isolationRescue" in b, false);
+      assert.ok(!existsSync(join(r.saida, "entradas", "resgates.json")));
+      assert.ok(!readdirSync(join(r.saida, "entradas")).includes("resgates"));
+    });
+
+    await test("D-164 resgate aceito: pontuável e elegível; failed → resgatado no binding, no resumo, no summary.md e em entradas/", async () => {
+      const caminho = gravarResgate(fxr);
+      const r = await analisar(opcoes(fxr, { ferramentas: fxr.ferramentas }));
+      assert.equal(r.estado, "pronta", r.motivo ?? "");
+      const fe = execDe(r.resumo, "ferramentas");
+      assert.equal(fe.mcpIsolamento.isolamento, "failed", "o isolamento registrado não muda");
+      assert.equal(fe.isolamentoResgatado!.decisao, "D-164");
+      assert.equal(fe.isolamentoResgatado!.detectorQueAcusou, DETECTOR_QUE_ACUSOU);
+      assert.equal(fe.isolamentoResgatado!.rechecagem.semExplicacao, 0);
+      assert.equal(fe.isolamentoResgatado!.registroSha256, sha(readFileSync(caminho)));
+      assert.notEqual(fe.pontuacao.estado, "not-prepared");
+      assert.deepEqual(fe.elegibilidade, { elegivel: true, motivos: [] });
+      const b = binding(r.saida, "ferramentas") as AnalysisBinding & { isolationRescue?: { decision: string; recheck: { unexplained: number; report: { sha256: string } } } };
+      assert.ok(validateContract(b).valid, JSON.stringify(validateContract(b).errors));
+      assert.equal(b.status, "ready");
+      assert.equal(b.isolationRescue!.decision, "D-164");
+      assert.equal(b.isolationRescue!.recheck.unexplained, 0);
+      assert.equal(b.isolationRescue!.recheck.report.sha256, sha(readFileSync(join(r.saida, "entradas", "resgates", "slot-03.json"))));
+      assert.equal("isolationRescue" in binding(r.saida, "com"), false, "só o braço resgatado leva o registro");
+      assert.equal(sha(readFileSync(join(r.saida, "entradas", "resgates.json"))), sha(readFileSync(caminho)));
+      const pkg = readJson<SemanticPackage>(join(r.saida, "revisao", "package.json"));
+      assert.ok(pkg.runs.some(x => x.id === RESGATE_RUN), "o ferramentas resgatado entra no pacote de revisão");
+      const cs = new Map(r.resumo.comparacoes!.map(c => [c.id, c]));
+      assert.equal(cs.get("ferramentas-com")!.disponivel, true);
+      assert.ok(r.resumo.analise.avisos.some(a => /isolamento failed resgatado \(D-164/.test(a)));
+      const md = readFileSync(join(r.saida, "summary.md"), "utf8");
+      assert.match(md, /failed → resgatado \(D-164: forma de resposta sintética .*; rechecagem vazamento-conhecimento-1\.3\.2 0 sem explicação\)/);
+      const sinais = sinaisTecnicos(r.saida);
+      assert.ok(!sinais.defeitos.some(d => /isolamento/.test(d)), sinais.defeitos.join("; "));
+      assert.equal(sinais.execucoes.find(e => e.braco === "ferramentas")!.isolamentoResgatado, "D-164");
+    });
+
+    await test("D-164 resgates.json que não toca nenhum pacote do grupo: saída igual à sem arquivo (fora carimbos)", async () => {
+      semResgate(fxr);
+      const sem = await analisar(opcoes(fxr, { ferramentas: fxr.ferramentas }));
+      gravarResgate(fxr, { slot: "slot-99", runId: "outra-execucao-01" });
+      const com = await analisar(opcoes(fxr, { ferramentas: fxr.ferramentas }));
+      assert.equal(com.estado, "pronta", com.motivo ?? "");
+      const carimbos = (t: string) => t.replace(/"(createdAt|geradoEm|capturedAt)": "[^"]*"/g, "\"$1\": \"-\"").replace(/gerado em \S+ \(UTC\)/, "gerado em - (UTC)");
+      for (const f of ["summary.json", "summary.md", "analysis-binding.ferramentas.json", "analysis-binding.com.json", "score.json", "revisao/package.json"]) {
+        assert.equal(carimbos(readFileSync(join(com.saida, f), "utf8")), carimbos(readFileSync(join(sem.saida, f), "utf8")), `difere: ${f}`);
+      }
+    });
+
+    await test("D-164 recusa: campanha que não é dev-* (a avaliação final segue o D-157)", async () => {
+      const fxf = fixture({ trio: true, ferramentas: { isolamento: "vazamento" } });
+      gravarResgate(fxf);
+      await recusaResgate(opcoes(fxf, { ferramentas: fxf.ferramentas }), /não é de desenvolvimento \(dev-\*\)/);
+      // mesmo apontado por --resgates
+      await recusaResgate(opcoes(fxf, { ferramentas: fxf.ferramentas, resgates: join(fxf.dir, "resgates.json") }), /D-157/);
+    });
+
+    await test("D-164 recusa: sha256 do pacote ou do relatório diferente do registrado", async () => {
+      gravarResgate(fxr, { pacoteSha: "0".repeat(64) });
+      await recusaResgate(opcoes(fxr, { ferramentas: fxr.ferramentas }), /sha256 do artifact-manifest\.json do pacote .* não é o registrado/);
+      gravarResgate(fxr, { relatorioSha: "0".repeat(64) });
+      await recusaResgate(opcoes(fxr, { ferramentas: fxr.ferramentas }), /sha256 do relatório resgates\/slot-03\.json .* não é o registrado/);
+    });
+
+    await test("D-164 recusa: semExplicacao > 0 (no registro ou no relatório), escopo de avaliação final, detector errado", async () => {
+      gravarResgate(fxr, { entrada: e => { e.rechecagem.semExplicacao = 2; } });
+      await recusaResgate(opcoes(fxr, { ferramentas: fxr.ferramentas }), /resgates\.v1 inválido: \/resgates\/0\/rechecagem\/semExplicacao const/);
+      gravarResgate(fxr, { relatorio: { passa: false, semExplicacaoNoPerfilLivre: 3 } });
+      await recusaResgate(opcoes(fxr, { ferramentas: fxr.ferramentas }), /não passa com 0 sem explicação/);
+      gravarResgate(fxr, { entrada: e => { e.escopo = "avaliacao-final"; } });
+      await recusaResgate(opcoes(fxr, { ferramentas: fxr.ferramentas }), /\/resgates\/0\/escopo const/);
+      gravarResgate(fxr, { entrada: e => { e.detectorQueAcusou = "vazamento-conhecimento-1.3.0"; } });
+      await recusaResgate(opcoes(fxr, { ferramentas: fxr.ferramentas }), /a evidência do pacote .* registra o detector vazamento-conhecimento-1\.3\.1/);
+      semResgate(fxr);
+    });
+
+    await test("D-164 recusa: isolamento reprovado por outro check (sentinela) não se resgata", async () => {
+      const fxs = fixture({ trio: true, campanhaId: DEV, ferramentas: { isolamento: "sentinela" } });
+      gravarResgate(fxs);
+      await recusaResgate(opcoes(fxs, { ferramentas: fxs.ferramentas }), /só cobre o check vazamento-de-conhecimento/);
     });
 
     // ── fixture versionada ───────────────────────────────────────────────────

@@ -1,0 +1,37 @@
+{
+ "portao": "portao-vazamento-reexecucao-1.1.0",
+ "detector": "vazamento-conhecimento-1.3.2",
+ "validator": "F:\\Dev Nath\\TCC\\.tmp-eval\\validator-366",
+ "versao": "3.6.6",
+ "perfil": "knowledge-free",
+ "site": "http://127.0.0.1:3300",
+ "telas": "F:\\Dev Nath\\TCC\\govbr-telas",
+ "passa": true,
+ "semExplicacaoNoPerfilLivre": 0,
+ "sessoes": [
+  {
+   "sessao": "2026-11-03T00-26-43Z__vistorias__opus__ferramentas__rep-02__20261103-002643-vistorias-ferramentas-7dd5",
+   "modo": "revarredura",
+   "tela": "vistorias",
+   "enviadas": 0,
+   "foraDoPerfil": 0,
+   "isError": 0,
+   "trocas": 0,
+   "travaMax": null,
+   "inventario": "vistorias ok (61 tags, 195+4 classes)",
+   "respostas": 17,
+   "semExplicacao": [],
+   "porClasse": {
+    "excecao-nomeada": 1,
+    "pagina": 30,
+    "eco": 28
+   },
+   "incompletas": 0,
+   "canarios": "33/33",
+   "canariosOk": true,
+   "perfil": "knowledge-free",
+   "sem": 0,
+   "ok": true
+  }
+ ]
+}

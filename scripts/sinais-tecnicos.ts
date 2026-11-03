@@ -14,7 +14,9 @@ import { join } from "node:path";
 const ler = <T>(p: string): T => JSON.parse(readFileSync(p, "utf8").replace(/^﻿/, "")) as T;
 const JANELA = "1280x900";
 
-interface Exec { braco: string; tecnico: { status: string; submissao: string }; mcpIsolamento: { isolamento: string; usoOraculo: string }; pontuacao: { estado: string } }
+interface Exec { braco: string; tecnico: { status: string; submissao: string }; mcpIsolamento: { isolamento: string; usoOraculo: string }; pontuacao: { estado: string };
+  /** D-164: isolamento `failed` resgatado na análise (campanha dev-*); só aparece quando houve resgate. */
+  isolamentoResgatado?: { decisao: string } }
 interface Pkg { scenes: { id: string }[]; units: { id: string; scene: string }[]; runs: { kind: string; config: { oracleProfile?: string } | null; cardIds: string[] }[];
   cards: { id: string; origin: string; scene: string; state?: { viewport?: { width: number; height: number } | null } | null }[] }
 export interface Sinais { analise: string; execucoes: Record<string, unknown>[]; cenas: string[]; unidadesZeroPorConstrucao: number; defeitos: string[] }
@@ -33,11 +35,13 @@ export function sinaisTecnicos(dir: string): Sinais {
     const janelas: Record<string, number> = {};
     for (const c of cards) { const v = c.state?.viewport; const k = v ? `${v.width}x${v.height}` : "não declarada"; janelas[k] = (janelas[k] ?? 0) + 1; }
     if (e.tecnico.status !== "passed") defeitos.push(`${e.braco}: técnico ${e.tecnico.status}`);
-    if (e.mcpIsolamento.isolamento !== "passed") defeitos.push(`${e.braco}: isolamento ${e.mcpIsolamento.isolamento}`);
+    const resgatado = e.mcpIsolamento.isolamento === "failed" && Boolean(e.isolamentoResgatado);
+    if (e.mcpIsolamento.isolamento !== "passed" && !resgatado) defeitos.push(`${e.braco}: isolamento ${e.mcpIsolamento.isolamento}`);
     if (e.tecnico.submissao === "accepted" && !run) defeitos.push(`${e.braco}: submissão aceita sem run no pacote`);
     if (e.pontuacao.estado === "not-prepared") defeitos.push(`${e.braco}: pontuação não preparada`);
     for (const k of Object.keys(janelas)) if (k !== JANELA) defeitos.push(`${e.braco}: ${janelas[k]} cartão(ões) em janela ${k} (esperada ${JANELA})`);
-    return { braco: e.braco, tecnico: e.tecnico.status, submissao: e.tecnico.submissao, isolamento: e.mcpIsolamento.isolamento, usoOraculo: e.mcpIsolamento.usoOraculo,
+    return { braco: e.braco, tecnico: e.tecnico.status, submissao: e.tecnico.submissao, isolamento: e.mcpIsolamento.isolamento,
+      ...(resgatado ? { isolamentoResgatado: e.isolamentoResgatado!.decisao } : {}), usoOraculo: e.mcpIsolamento.usoOraculo,
       cartoes: cards.length, janelasDosCartoes: janelas, pontuacaoPreparada: e.pontuacao.estado !== "not-prepared" };
   });
   const cenas = pkg?.scenes.map(c => c.id) ?? [];

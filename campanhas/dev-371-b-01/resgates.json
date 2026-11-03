@@ -1,0 +1,49 @@
+{
+  "contract": "resgates.v1",
+  "fixture": false,
+  "campaignId": "dev-371-b-01",
+  "resgates": [
+    {
+      "slot": "p01-ferramentas",
+      "runId": "20261103-173714-vistorias-ferramentas-a657",
+      "pacoteSha256": "0e6fa73e3ed25ecfb788f76bce86f9e4e40b709bdcd4924237fa6aff856970f4",
+      "detectorQueAcusou": "vazamento-conhecimento-1.3.1",
+      "motivo": "o ledger do get_finding_details ecoa os seletores de ação de um scan_page anterior (ledger.coverage.actionsApplied, ledger.state.recipe/replay: br-tag, br-select, br-item, br-button); o detector 1.3.1 leu esse eco como vazamento (10 sem explicação)",
+      "rechecagem": {
+        "detectorVersao": "vazamento-conhecimento-1.3.2",
+        "evalCommit": "1849c44b439227d1b90284db7a608fdf3a57e677",
+        "validatorBuild": {
+          "version": "3.7.1",
+          "commit": "a0038a9381cb283e999fe9ab5c553a0d12f38629"
+        },
+        "relatorio": "resgates/p01-ferramentas.json",
+        "relatorioSha256": "87137d88031f83a29298bed32a042801e6f3c9dab948972a14d507c0b608fe3e",
+        "semExplicacao": 0
+      },
+      "decisao": "D-164",
+      "escopo": "desenvolvimento",
+      "data": "2026-11-03T23:43:47Z"
+    },
+    {
+      "slot": "p03-ferramentas",
+      "runId": "20261103-191602-vistorias-ferramentas-9b75",
+      "pacoteSha256": "156a640d626a848466fdfc767cc8c0630245e674851a03522d7724209e0abd0b",
+      "detectorQueAcusou": "vazamento-conhecimento-1.3.1",
+      "motivo": "o verify_finding cita na prosa (reasons, detail, failure, limitation) o seletor do próprio agente com aspas internas (br-input[formcontrolname=...] >>> input); o detector 1.3.1 não removia a citação e leu br-input como vazamento (4 sem explicação)",
+      "rechecagem": {
+        "detectorVersao": "vazamento-conhecimento-1.3.2",
+        "evalCommit": "1849c44b439227d1b90284db7a608fdf3a57e677",
+        "validatorBuild": {
+          "version": "3.7.1",
+          "commit": "a0038a9381cb283e999fe9ab5c553a0d12f38629"
+        },
+        "relatorio": "resgates/p03-ferramentas.json",
+        "relatorioSha256": "8eb0ea9bba663bc7a30f183582b8378120e001a102d09df3405b612c605f7932",
+        "semExplicacao": 0
+      },
+      "decisao": "D-164",
+      "escopo": "desenvolvimento",
+      "data": "2026-11-03T23:43:47Z"
+    }
+  ]
+}

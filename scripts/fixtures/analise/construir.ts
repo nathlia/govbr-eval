@@ -43,13 +43,25 @@ export const ORACULO_V2: Record<"com" | "ferramentas", OracleIdentityV2> = {
     toolsListSha256: "72abd54968cbe3173fce5dd3b4bba7aff563b37ca11b8a9ec0f25a91a104d39c" },
 };
 
+/** Campanha da fixture em construção (`OpcoesFixture.campanhaId`); construirFixture é síncrona e a fixa no começo. */
+let campanhaId = CAMPANHA_ID;
 const sha = (data: string | Buffer): string => createHash("sha256").update(data).digest("hex");
 const json = (value: unknown): string => JSON.stringify(value, null, 2) + "\n";
 /** PNG 1×1 transparente: "evidência" sintética com bytes reais. */
 const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", "base64");
 
 export type Submissao = "aceita" | "recusada" | "nenhuma" | "nao-executada";
-export interface OpcoesBraco { submissao?: Submissao; findings?: AgentFinding[] }
+export interface OpcoesBraco {
+  submissao?: Submissao; findings?: AgentFinding[];
+  /**
+   * D-164: o isolamento falha DEPOIS de rodar (técnico passed, submissão aceita). `vazamento`: só o check
+   * vazamento-de-conhecimento reprova, com a evidência do detector (`DETECTOR_QUE_ACUSOU`); `sentinela`: reprova a sentinela.
+   * Padrão desligado: os bytes de `gerado/` não mudam.
+   */
+  isolamento?: "vazamento" | "sentinela";
+}
+/** D-164: versão do detector que a evidência sintética de vazamento registra. */
+export const DETECTOR_QUE_ACUSOU = "vazamento-conhecimento-1.3.1";
 export interface OpcoesFixture {
   sem?: OpcoesBraco;
   com?: OpcoesBraco;
@@ -85,6 +97,8 @@ export interface OpcoesFixture {
    * Mesmas âncoras; só os ids mudam. Padrão desligado — os bytes de `gerado/` não mudam.
    */
   camadaPagina?: boolean;
+  /** D-164: id da campanha (ex.: `dev-…`, a única que aceita resgate). Padrão = CAMPANHA_ID; os bytes de `gerado/` não mudam. */
+  campanhaId?: string;
   /**
    * NAT-51: troca a página e a referência inventadas por um site congelado e uma referência que existem
    * (ex.: govbr-telas + ground-truth-vistorias.json, que NAVEGA — D-60). Os dois são só LIDOS: o site é
@@ -176,7 +190,7 @@ function notApplicable() { return { value: null, status: "not-applicable" as con
 
 function campanha(o: OpcoesFixture, cx: Contexto = CONTEXTO_PADRAO): Campaign {
   return {
-    contract: "campaign.v1", fixture: true, campaignId: CAMPANHA_ID, kind: "pilot",
+    contract: "campaign.v1", fixture: true, campaignId: campanhaId, kind: "pilot",
     title: "Campanha fixture da análise (FIXTURE SINTÉTICA — não é dado científico)",
     objective: "Exercitar a análise determinística (T6) sem nenhuma chamada de modelo.",
     hypotheses: ["Hipótese sintética de fixture."],
@@ -220,7 +234,7 @@ function runDocV2(arm: ArmV2, submissao: Submissao, siteManifestSha256: string, 
   if (arm !== "ferramentas") return { ...base, contract: "run.v2", intervention: { oracle: arm === "com" ? ORACULO_V2.com : null } };
   const slot = id.slots.ferramentas ?? "slot-03";
   const t = (h: string) => base.timestamps.startedAt === null ? null : `${id.dia}${h}`;
-  return { ...base, contract: "run.v2", arm, slotId: slot, runId: `fixture-analise-run-ferramentas-${id.sufixo}`, idempotencyKey: `${CAMPANHA_ID}/${slot}/1`,
+  return { ...base, contract: "run.v2", arm, slotId: slot, runId: `fixture-analise-run-ferramentas-${id.sufixo}`, idempotencyKey: `${campanhaId}/${slot}/1`,
     intervention: { oracle: ORACULO_V2.ferramentas },
     timestamps: { plannedAt: base.timestamps.plannedAt, startedAt: t("T00:40:00Z"), finishedAt: t("T00:50:00Z") } };
 }
@@ -233,8 +247,8 @@ function runDoc(arm: "sem" | "com", submissao: Submissao, siteManifestSha256: st
   const started = `${id.dia}${com ? "T00:01:00Z" : "T00:20:00Z"}`;
   const finished = `${id.dia}${com ? "T00:11:00Z" : "T00:30:00Z"}`;
   const base: Run = {
-    contract: "run.v1", fixture: true, campaignId: CAMPANHA_ID, slotId: slot, pairId: id.par,
-    runId: `fixture-analise-run-${arm}-${id.sufixo}`, attempt: 1, idempotencyKey: `${CAMPANHA_ID}/${slot}/1`,
+    contract: "run.v1", fixture: true, campaignId: campanhaId, slotId: slot, pairId: id.par,
+    runId: `fixture-analise-run-${arm}-${id.sufixo}`, attempt: 1, idempotencyKey: `${campanhaId}/${slot}/1`,
     screen: cx.tela, arm, repetition: 1,
     model: { family: "familia-fixture", requested: "modelo-fixture", resolved: "unknown", resolvedSource: "unknown", resolvedEvidence: null },
     provider: { name: "provedor-fixture", authMethod: "unknown" }, effort: "medium",
@@ -279,8 +293,8 @@ function runDoc(arm: "sem" | "com", submissao: Submissao, siteManifestSha256: st
   return base;
 }
 
-function isolationDoc(run: Run | RunV2): Isolation {
-  const falhou = run.status.isolation === "failed";
+function isolationDoc(run: Run | RunV2, vazamento = false): Isolation {
+  const falhou = run.status.isolation === "failed" && !vazamento;
   const ferramentas = ["browser_navigate", "browser_snapshot", "browser_take_screenshot", "coletor_enviar"];
   return {
     contract: "isolation.v1", fixture: true, campaignId: run.campaignId, runId: run.runId, policyVersion: "isolamento-fixture-1",
@@ -290,6 +304,8 @@ function isolationDoc(run: Run | RunV2): Isolation {
         outcome: falhou ? "failed" : "passed", evidence: null, ...(falhou ? { detail: "sentinela sintética legível (falha de propósito)" } : {}) },
       { id: "rede-externa", category: "network", target: "destino fora da allowlist", required: true, outcome: "passed", evidence: null },
       { id: "ipv6-loopback", category: "network", target: "[::1] alternativo", required: false, outcome: "not-exercised", evidence: null },
+      ...(vazamento ? [{ id: "vazamento-de-conhecimento", category: "tools" as const, target: "dicionário sintético do oráculo fixture", required: true,
+        outcome: "failed" as const, evidence: "evidence/vazamento-conhecimento.json", detail: "forma de resposta sintética lida como vazamento (falso positivo de propósito)" }] : []),
     ],
     positiveControls: [{ id: "controle-sentinela", target: "arquivo-sentinela sintético", outcome: "passed", evidence: null }],
     toolInventory: run.contract === "run.v2" ? {
@@ -320,11 +336,16 @@ function pacote(dir: string, arm: ArmV2, o: OpcoesBraco, siteSha: string, diverg
   cx: Contexto = CONTEXTO_PADRAO, v2 = false): void {
   const submissao = o.submissao ?? "aceita";
   const run: Run | RunV2 = v2 ? runDocV2(arm, submissao, siteSha, id, cx) : runDoc(arm as "sem" | "com", submissao, siteSha, divergente, id, cx);
+  if (o.isolamento) run.status = { ...run.status, isolation: "failed", protocol: "unverified" };
   const files: { path: string; role: ArtifactManifest["files"][number]["role"]; body: string | Buffer }[] = [];
   files.push({ path: "run.json", role: "run", body: json(run) });
+  if (o.isolamento === "vazamento") {
+    files.push({ path: "evidence/vazamento-conhecimento.json", role: "evidence",
+      body: json({ versao: DETECTOR_QUE_ACUSOU, semExplicacao: [{ term: "termo-fixture", count: 1 }], nota: "FIXTURE SINTÉTICA — falso positivo de forma de propósito" }) });
+  }
   if (submissao === "aceita") {
     const findings: Findings = {
-      contract: "findings.v1", fixture: true, campaignId: CAMPANHA_ID, runId: run.runId,
+      contract: "findings.v1", fixture: true, campaignId: campanhaId, runId: run.runId,
       receivedAt: `${id.dia}${arm === "com" ? "T00:10:30Z" : arm === "ferramentas" ? "T00:49:30Z" : "T00:29:30Z"}`, receipt: `recibo-fixture-${arm}-${id.sufixo}`,
       findingContract: "achado-2",
       report: { timestamp: `${id.dia}${arm === "com" ? "T00:10:29Z" : arm === "ferramentas" ? "T00:49:29Z" : "T00:29:29Z"}`, model: "modelo-fixture",
@@ -335,10 +356,10 @@ function pacote(dir: string, arm: ArmV2, o: OpcoesBraco, siteSha: string, diverg
     files.push({ path: `evidence/${arm}-01.png`, role: "evidence", body: PNG });
   }
   if (submissao === "recusada") files.push({ path: "recusa/corpo-recusado.txt", role: "refusal", body: "{\"relatorio\": \"corpo sintético recusado\"}\n" });
-  files.push({ path: "isolation.json", role: "isolation", body: json(isolationDoc(run)) });
+  files.push({ path: "isolation.json", role: "isolation", body: json(isolationDoc(run, o.isolamento === "vazamento")) });
   if (submissao !== "nao-executada") files.push({ path: "tool-events.ndjson", role: "tool-events", body: toolEvents(arm) });
   const manifest: ArtifactManifest = {
-    contract: "artifact-manifest.v1", fixture: true, campaignId: CAMPANHA_ID, runId: run.runId,
+    contract: "artifact-manifest.v1", fixture: true, campaignId: campanhaId, runId: run.runId,
     producedBy: "construtor-fixture-analise", producedAt: `${id.dia}T00:40:00Z`,
     schemaVersions: { run: run.contract, ...(submissao === "aceita" ? { findings: "findings.v1" as const } : {}), isolation: "isolation.v1" },
     files: files.map(f => ({ path: f.path, bytes: Buffer.byteLength(f.body), sha256: sha(f.body),
@@ -411,6 +432,7 @@ function brutoTelaReal(t: TelaReal, identity: Baseline["identity"], coleta: { pa
 /** Constrói a fixture em `out` (pasta nova). Devolve os caminhos que `analisar` recebe. */
 export function construirFixture(out: string, o: OpcoesFixture = {}) {
   if (existsSync(out)) throw new Error(`Pasta já existe: ${out}`);
+  campanhaId = o.campanhaId ?? CAMPANHA_ID;
   mkdirSync(out, { recursive: true });
   const w = (rel: string, body: string | Buffer) => {
     mkdirSync(dirname(join(out, rel)), { recursive: true });
@@ -471,7 +493,7 @@ export function construirFixture(out: string, o: OpcoesFixture = {}) {
   const raw = w("linha-de-base/bruta.json", json(bruto(o, identity, { path: "linha-de-base/manifesto-coleta.json", sha256: coleta.sha256 }, cx, gt)));
   const falha = o.linhaDeBase === "falha";
   const registro: Baseline = {
-    contract: "baseline.v1", fixture: true, baselineId: "fixture-analise-linha-de-base-01", campaignId: CAMPANHA_ID, screen: cx.tela,
+    contract: "baseline.v1", fixture: true, baselineId: "fixture-analise-linha-de-base-01", campaignId: campanhaId, screen: cx.tela,
     attempt: 1, rerunOf: null, rerunReason: null,
     producer: { script: "scripts/run-baselines-flow.ts", baselineVersion: BASELINE_VERSION },
     scope: "bateria", status: falha ? "failed" : "complete", error: falha ? "falha sintética da linha de base: validator não respondeu" : null,

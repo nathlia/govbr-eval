@@ -172,6 +172,32 @@ await teste("linha de base: a do PRIMEIRO slot na ordem da agenda (com primeiro 
   assert.throws(() => planoDoTrio(entradas, campanha({ order: "quadrado-latino" }), null, "p01"), /quadrado latino/);
 });
 
+await teste("D-164: slot sem tentativa válida entra com a quarentena de isolamento resgatada; válida sempre ganha; resgate de outra coisa = recusa", () => {
+  const sem = exec("p01-sem", "sem", { par: "p01" });
+  const fe = exec("p01-ferramentas", "ferramentas", { par: "p01", estado: { isolamento: "failed" } as EntradaIndice["estado"] });
+  const com = exec("p01-com", "com", { par: "p01" });
+  const entradas = [sem, lbDe(sem), fe, com];
+  const ag = agendaCom([["p01-sem", "sem"], ["p01-ferramentas", "ferramentas"], ["p01-com", "com"]]);
+  const camp = campanha({ order: "quadrado-latino" });
+  // sem resgate: a quarentena não entra (o caminho de sempre)
+  assert.throws(() => planoDoTrio(entradas, camp, ag, "p01"), (e: Error) => e instanceof RecusaColeta && /p01-ferramentas não tem tentativa elegível/.test(e.message));
+  const p = planoDoTrio(entradas, camp, ag, "p01", new Map([["p01-ferramentas", fe.chave]]));
+  const s = p.slots.find(x => x.slot === "p01-ferramentas")!;
+  assert.equal(s.escolhida.chave, fe.chave);
+  assert.equal(s.resgatada, true);
+  assert.ok(p.slots.filter(x => x.slot !== "p01-ferramentas").every(x => !("resgatada" in x)), "só o slot resgatado é anotado");
+  // tentativa válida no slot: o resgate não troca nada
+  const valido = planoDoTrio(entradas, camp, ag, "p01", new Map([["p01-sem", "outra-chave"], ["p01-ferramentas", fe.chave]]));
+  assert.equal(valido.slots[0].escolhida.chave, sem.chave);
+  assert.equal("resgatada" in valido.slots[0], false);
+  // resgate de execução fora do índice do slot, ou de algo que não é quarentena de isolamento
+  assert.throws(() => planoDoTrio(entradas, camp, ag, "p01", new Map([["p01-ferramentas", "nao-existe"]])),
+    (e: Error) => e instanceof RecusaColeta && /não está no índice do slot/.test(e.message));
+  const tec = exec("p01-ferramentas", "ferramentas", { par: "p01", estado: { tecnico: "failed", isolamento: "passed" } as EntradaIndice["estado"], motivo: "timeout" });
+  assert.throws(() => planoDoTrio([sem, lbDe(sem), tec, com], camp, ag, "p01", new Map([["p01-ferramentas", tec.chave]])),
+    (e: Error) => e instanceof RecusaColeta && /não é uma quarentena de isolamento/.test(e.message));
+});
+
 await teste("sem agenda (sequencial): ordem de design.arms; preflight recusado não conta; slot sem tentativa elegível = recusa", () => {
   const preflight = exec("p01-sem", "sem", { estado: { arquivo: "sem-pacote", tecnico: "interrupted" } as EntradaIndice["estado"], mc: null });
   const sem = exec("p01-sem", "sem"), fe = exec("p01-ferramentas", "ferramentas"), com = exec("p01-com", "com");
