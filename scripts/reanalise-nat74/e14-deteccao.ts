@@ -22,7 +22,7 @@
  *
  * O braço vem da chave da passada (nunca vai ao juiz). Determinístico, sem rede, sem modelo. Entradas com sha256.
  */
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import type { SemanticPackage } from "../semantic-flow";
 import { gravar, jsonTexto, sha } from "./comum";
@@ -210,7 +210,16 @@ if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   const resumo: { analise: string; porBraco: Record<string, { deteccao: number; fundamentada: number; ds: number; geral: number } | null> }[] = [];
   let refSha: string | null = null;
   for (const a0 of m.analises) {
-  const anal = join(dirname(resolve(passada)), a0.dir);
+  // O rótulo da análise no manifesto é o nome da pasta (`analisar-<carimbo>`) e só ganha a pasta do trio quando os nomes
+  // se repetem (e14-campanha). Com UM trio na passada (dev-366-b-01: p01/p02 fora por isolamento), o rótulo não traz
+  // `pNN/`: procura-se a pasta única com esse nome um nível abaixo da campanha; mais de uma ou nenhuma → recusa.
+  let anal = join(dirname(resolve(passada)), a0.dir);
+  if (!existsSync(anal)) {
+    const base = dirname(resolve(passada));
+    const achadas = readdirSync(base, { withFileTypes: true }).filter(e => e.isDirectory() && existsSync(join(base, e.name, a0.dir))).map(e => join(base, e.name, a0.dir));
+    if (achadas.length !== 1) throw new Error(`E14 detecção: análise ${a0.dir} não achada em ${base} (candidatas: ${achadas.length})`);
+    anal = achadas[0];
+  }
   const refAbs = join(anal, "entradas", "referencia.json"), campAbs = join(anal, "entradas", "campanha.json"), pkgAbs = join(anal, "revisao", "package.json");
   const coletaAbs = join(anal, "coleta-trio.json");
   if (refSha && sha(readFileSync(refAbs)) !== refSha) { console.error("análises de telas/referências diferentes: uma tela por tabulação"); process.exit(1); }
