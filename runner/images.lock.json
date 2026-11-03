@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "builtAt": "2026-11-02T19:02:20.442Z",
+  "builtAt": "2026-11-03T04:43:01.170Z",
   "base": {
     "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
     "node": "24.21.0"
@@ -19,20 +19,20 @@
       }
     },
     "oracle": {
-      "tag": "govbr-runner-oracle:3.6.6-163c51e1eee2",
-      "id": "sha256:a65c2e0e86ae7b701399d323b72ddab21e26acf7389e8c8ccbc0e53b7a0f5257",
+      "tag": "govbr-runner-oracle:3.7.1-6630a9bf68e8",
+      "id": "sha256:2abbeab42ffe568a794dc1632283cd2b7906da499b875010fdea34f88bf2eec0",
       "labels": {
         "govbr.agent.content-sha256": "3cadbde2650f2f12b9fc67f90d93357a71498d79cb9e38168edf5a17887fb2c1",
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.claude-code": "2.1.288",
-        "govbr.oracle.commit": "67c2ce92e6b570ca9679e392c712d3071cc79cc1",
+        "govbr.oracle.commit": "a0038a9381cb283e999fe9ab5c553a0d12f38629",
         "govbr.oracle.data-sha256": "ffe79da723b5002ea4177c724458f65721477ffdc49079c46667befb820374a5",
-        "govbr.oracle.dist-sha256": "163c51e1eee274ed60198293f16ceef26e4085e64c984fe38eefa82d9474c86a",
+        "govbr.oracle.dist-sha256": "6630a9bf68e83becf8cc1d42c3a7305a049bdf46b6cc376a0d0aec8492e531da",
         "govbr.oracle.image-data-excluded": "retrieval/embeddings/",
         "govbr.oracle.image-data-sha256": "ffe79da723b5002ea4177c724458f65721477ffdc49079c46667befb820374a5",
         "govbr.oracle.package": "govbr-ds-validator-server",
         "govbr.oracle.retrieval-mode": "lexical-default",
-        "govbr.oracle.version": "3.6.6",
+        "govbr.oracle.version": "3.7.1",
         "govbr.playwright-mcp": "0.0.70",
         "govbr.runner.image": "oracle",
         "govbr.runner.version": "runner-isolado-1.0.0"
@@ -79,8 +79,8 @@
     "claudeCode": "2.1.288 (Claude Code)",
     "oracle": {
       "package": "govbr-ds-validator-server",
-      "version": "3.6.6",
-      "distSha256": "163c51e1eee274ed60198293f16ceef26e4085e64c984fe38eefa82d9474c86a",
+      "version": "3.7.1",
+      "distSha256": "6630a9bf68e83becf8cc1d42c3a7305a049bdf46b6cc376a0d0aec8492e531da",
       "dataSha256": "ffe79da723b5002ea4177c724458f65721477ffdc49079c46667befb820374a5"
     },
     "telas": {
