@@ -93,8 +93,29 @@ import { argValues, buildDictionary, classify, exactTokens, hitsInText, leaves, 
  * campos, lista vazia, repetida ou sha fora do formato é recusado (erro, nunca aceito em silêncio). Na divergência,
  * `estado.siteSha256` continua o do arquivo de um site só; no de vários, os da lista separados por vírgula. Nenhuma
  * regra de classificação muda (núcleo e canários iguais).
+ *
+ * 1.3.5 (dev-372-b-01 p02-ferramentas, oráculo 3.7.2, tela B vistorias): uma execução falhou o isolamento por UMA
+ * ocorrência, `br-button` em scan_page `$.checksRun.pageLevel.notMeasured[*]` =
+ * `P-01:contrast-incomplete:2⇒wcag-1.4.3 @.content fg #ffffff bg #ff8c00 ratio 2.33; br-button[label="Ocultar"] >>> span · decida o contraste: …`:
+ * a LINHA CURTA da pendência de página (validator 3.6.3+, `pendingLine`/`pendingLineMinimal` de scan/notJudged.ts, que o
+ * orçamento do scan_page usa no lugar do objeto quando a resposta encolhe), que carrega o localizador MEDIDO pelo axe
+ * (`measured[*].locator`, o mesmo que o 1.3.1 já perdoa na forma objeto, ou `examples[*]`) e o valor medido. O localizador
+ * é do elemento da própria tela (o span do botão Ocultar, web component do DS que a tela renderiza); nada da base `data/`.
+ * A folha não é `…locator`, o localizador não está entre aspas e a linha inteira não é seletor: o núcleo não o lê. Esta
+ * camada, só do eval, aplica a regra do núcleo a cada LUGAR da linha quando, e só quando: a ferramenta e o caminho são os
+ * declarados em LINHA_DE_PENDENCIA, a folha inteira tem o formato da linha (`[P-NN:]código[:n][⇒normas][✓] @lugar; lugar
+ * [· tarefa]`, cabeça sem espaço), o termo não aparece na cabeça, na tarefa nem nos valores medidos (` fg x bg y ratio r`
+ * da curta, ` x/y r:1` da mínima), e o núcleo, chamado com o localizador INTEIRO de cada lugar que contém o termo como
+ * folha, classifica `pagina` (a folha inteira é seletor com sintaxe de seletor, todo nome em posição de tipo é tag
+ * renderizada, o termo em posição de tipo/classe RENDERIZADO pela tela no inventário do DOM; sem inventário, nada).
+ * Localizador cortado pelo servidor (`…`) não é seletor e fica sem explicação; prosa observada (`dentro de br-input: …`)
+ * idem. A mesma linha noutro caminho ou noutra ferramenta, base plantada como lugar, o nome na tarefa ou na cabeça e
+ * folha fora do formato continuam sem explicação. O núcleo (cópia do validator) não muda. Catorze canários novos marcam
+ * os dois lados (59 no total). A causa não é da 3.7.2: a linha curta existe desde a 3.6.3; nas rodadas anteriores o
+ * localizador medido nela nunca tinha sido um web component do DS.
+ * Rechecagem offline (`--revarrer`): p02-ferramentas 1 → 0 sem explicação.
  */
-export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.4";
+export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.5";
 
 /**
  * 1.2.0 (D-154): eco do SELETOR DE AÇÃO da mesma chamada. Desde o validator 3.4.3 a resposta encolhida do
@@ -209,6 +230,34 @@ function descritorDoTraco(hit: Hit, folha: string, prov: Provenance, cache: Map<
   return { class: "pagina", why: `${c.why}; descritor do elemento com foco no traço (<composto> "texto" do describe), termo só no composto (1.3.3)` };
 }
 
+/**
+ * 1.3.5: caminhos em que a folha é a LINHA CURTA de uma pendência de página (`pendingLine`/`pendingLineMinimal` do
+ * validator: `[P-NN:]código[:n][⇒normas][✓] @lugar; lugar · tarefa`). Só o scan_page encolhe `checksRun.pageLevel` assim.
+ */
+export const LINHA_DE_PENDENCIA: Record<string, string[]> = {
+  scan_page: ["$.checksRun.pageLevel.notMeasured[*]"],
+};
+/** Cabeça `[P-NN:]código[:n][⇒normas][✓]`, sem espaço; depois ` @lugares` e, opcional, ` · tarefa` (a 1ª ` · `, como o validator corta). */
+const LINHA_COM_LUGAR = /^((?:P-\d+(?:×\d+)?:)?[a-z][a-z0-9-]*(?::\d+)?(?:⇒[^\s@·]+)?✓?) @(.+?)(?: · ([^]*))?$/;
+/** Um lugar: o localizador e, opcional, o valor medido (` fg x bg y ratio r` da linha curta; ` x/y r:1` ou ` r:1` da mínima). */
+const LUGAR_MEDIDO = /^(.+?)((?: (?:fg|bg|ratio) \S+)+| \S+\/\S+(?: [\d.]+:1)?| [\d.]+:1)?$/;
+
+function linhaDePendencia(hit: Hit, folha: string, prov: Provenance, cache: Map<string, string>): { class: Classification; why: string } | null {
+  if (!(LINHA_DE_PENDENCIA[prov.tool] ?? []).includes(hit.path) || hit.kind !== "exact") return null;
+  const m = LINHA_COM_LUGAR.exec(folha);
+  if (!m) return null;
+  const lugares = m[2].split("; ").map((l) => LUGAR_MEDIDO.exec(l)).filter((x): x is RegExpExecArray => x !== null);
+  if (lugares.length !== m[2].split("; ").length) return null;
+  // o termo só nos localizadores: cabeça, tarefa e valores medidos ficam fora (o nome ali é prosa do servidor)
+  const fora = [m[1], m[3] ?? "", ...lugares.map((l) => l[2] ?? "")].join(" ");
+  if (exactTokens(fora).includes(hit.term)) return null;
+  const comTermo = lugares.map((l) => l[1]).filter((loc) => exactTokens(loc).includes(hit.term));
+  if (!comTermo.length) return null;
+  const cs = comTermo.map((loc) => classify(hit, prov, cache, loc));
+  if (!cs.every((c) => c.class === "pagina")) return null;
+  return { class: "pagina", why: `${cs[0].why}; localizador medido na linha curta da pendência de página (@lugar), termo só no localizador (1.3.5)` };
+}
+
 /** scanId de topo de uma resposta JSON (o do lote: scan_page devolve o novo, get_finding_details o pedido), ou null. */
 export function scanIdDaResposta(text: string): string | null {
   try {
@@ -245,6 +294,8 @@ export function varrerResposta(dict: Dictionary, text: string, prov: Provenance,
       if (c.class === "sem-explicacao") c = classify(hit, prov, cache, leaf.text);
       // 1.3.3: o descritor do elemento com foco no traço do verify, com o texto visível depois dele
       if (c.class === "sem-explicacao") c = descritorDoTraco(hit, leaf.text, prov, cache) ?? c;
+      // 1.3.5: o localizador medido na linha curta da pendência de página do scan_page
+      if (c.class === "sem-explicacao") c = linhaDePendencia(hit, leaf.text, prov, cache) ?? c;
       hits.push({ ...hit, ...c, folha: leaf.text });
     }
   }
@@ -390,6 +441,11 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
   // 1.3.3: entrada do traço do verify com o descritor do elemento com foco; inventário com a classe raiz em posição de classe
   const traco = (active: string) => JSON.stringify({ verification: { binding: { context: { trace: [{ step: 1, url: "http://x/", active, nextTarget: null }] } } } });
   const doTraco: PageElements = { tags: new Set(["html", "body", "div", "button", rootClass]), classes: new Set([rootClass, "circle", "small"]) };
+  // 1.3.5: linha curta da pendência de página (scan_page checksRun.pageLevel.notMeasured[*]) com o localizador medido
+  const pendencia = (...linhas: string[]) => JSON.stringify({ checksRun: { pageLevel: { notMeasured: linhas } } });
+  const doLocalizador: PageElements = { tags: new Set(["html", "body", "div", "span", rootClass]), classes: new Set(["content"]) };
+  const curta = (lugar: string, tarefa = "decida o contraste: o axe não concluiu (fundo não sólido, sobreposição,…") =>
+    `P-01:contrast-incomplete:2⇒wcag-1.4.3 @.content fg #ffffff bg #ff8c00 ratio 2.33; ${lugar} · ${tarefa}`;
   const prosa = JSON.stringify({ reasons: [{ detail: `Limitação: ${falhou}` }], verification: { detail: `Limitação: ${falhou}`, binding: { state: { failure: { detail: falhou }, limitation: { detail: `Passo 4 (fill) falhou. ${falhou}` } } } } });
   const casos: { nome: string; tool: string; texto: string; args: unknown; page: string | null; espera: Classification; elements?: PageElements | null; scans?: Map<string, unknown> }[] = [
     { nome: "título da base numa nota do servidor", tool: "verify_finding", texto: JSON.stringify({ note: `Veja ${kbTitle}.` }), args: {}, page, espera: "sem-explicacao" },
@@ -441,6 +497,21 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
     { nome: "descritor com texto noutro campo da entrada do traço (trace.error, não declarado)", tool: "verify_finding", texto: JSON.stringify({ verification: { binding: { context: { trace: [{ step: 1, error: `<div.${rootClass}> "Fechar"` }] } } } }), args: {}, page: pageComTag, elements: doTraco, espera: "sem-explicacao" },
     { nome: "descritor com texto no mesmo caminho, mas noutra ferramenta (scan_page)", tool: "scan_page", texto: traco(`<div.${rootClass}.circle.small> "Fechar"`), args: {}, page: pageComTag, elements: doTraco, espera: "sem-explicacao" },
     { nome: "descritor do traço fora do formato do describe (texto sem aspas)", tool: "verify_finding", texto: traco(`<div.${rootClass}.circle.small> Fechar`), args: {}, page: pageComTag, elements: doTraco, espera: "sem-explicacao" },
+    // 1.3.5 (dev-372-b-01): localizador medido na linha curta da pendência de página do scan_page
+    { nome: "tag renderizada no localizador medido da linha curta da pendência (pageLevel.notMeasured[*])", tool: "scan_page", texto: pendencia(curta(`${rootClass}[label="Ocultar"] >>> span`)), args: {}, page: pageComTag, elements: doLocalizador, espera: "pagina" },
+    { nome: "tag renderizada no localizador da linha MÍNIMA da pendência (x/y r:1)", tool: "scan_page", texto: pendencia(`P-01:contrast-incomplete⇒wcag-1.4.3 @${rootClass}[label="x"] >>> span #ffffff/#ff8c00 2.33:1 · decida o contraste`), args: {}, page: pageComTag, elements: doLocalizador, espera: "pagina" },
+    { nome: "localizador da linha da pendência com componente que a tela NÃO renderiza", tool: "scan_page", texto: pendencia(curta(`${rootClass}[label="Ocultar"] >>> span`)), args: {}, page: pageComTag, elements: { tags: new Set(["html", "body", "div", "span"]), classes: doLocalizador.classes }, espera: "sem-explicacao" },
+    { nome: "linha da pendência sem inventário da tela (falha fechada)", tool: "scan_page", texto: pendencia(curta(`${rootClass}[label="Ocultar"] >>> span`)), args: {}, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "classe raiz também na tarefa da linha da pendência", tool: "scan_page", texto: pendencia(curta(`${rootClass}[label="Ocultar"] >>> span`, `decida o contraste do ${rootClass}`)), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "classe raiz como código na cabeça da linha da pendência", tool: "scan_page", texto: pendencia(`P-01:${rootClass}:2⇒wcag-1.4.3 @${rootClass}[label="x"] >>> span · decida`), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "id da base plantado como lugar da linha da pendência, com o id na página", tool: "scan_page", texto: pendencia(curta(`#${kbId}`)), args: {}, page: `${pageComTag}<!-- ${kbId} -->`, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "título da base (frase normativa) na tarefa da linha da pendência", tool: "scan_page", texto: pendencia(curta("div > span", `decida: ${kbTitle}`)), args: {}, page, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "classe raiz em prosa observada no lugar da linha (não é seletor de tags renderizadas)", tool: "scan_page", texto: pendencia(`P-02:contrast-incomplete:1⇒wcag-1.4.3 @dentro de ${rootClass}, ${rootClass}: a marcação coincide com o exemplo oficial · a investigar`), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "localizador cortado pelo servidor (…) na linha da pendência", tool: "scan_page", texto: pendencia(curta(`${rootClass}[label="Ocul…`)), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "linha da pendência fora do formato (sem @lugar)", tool: "scan_page", texto: pendencia(`P-01:contrast-incomplete:2⇒wcag-1.4.3 ${rootClass}[label="x"] >>> span · decida`), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "variante usada como tag no localizador da linha da pendência", tool: "scan_page", texto: pendencia(curta(`${variante}[x] >>> span`)), args: {}, page: pageComTag, elements: { tags: new Set([...doLocalizador.tags, variante]), classes: doLocalizador.classes }, espera: "sem-explicacao" },
+    { nome: "mesma linha da pendência noutro caminho (sessionPending)", tool: "scan_page", texto: JSON.stringify({ sessionPending: { ids: [curta(`${rootClass}[label="Ocultar"] >>> span`)] } }), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "mesma linha da pendência no mesmo caminho, noutra ferramenta (verify_finding)", tool: "verify_finding", texto: pendencia(curta(`${rootClass}[label="Ocultar"] >>> span`)), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
   ];
   return casos.map((c) => {
     const { hits } = varrerResposta(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe, elements: c.elements ?? null }, { argsDoScan: c.scans ?? new Map() });
