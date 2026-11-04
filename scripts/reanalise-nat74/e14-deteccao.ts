@@ -42,6 +42,11 @@ export const DETECCAO_VERSAO = "nat78-deteccao-1.1.0";
 /** Vocabulário de `categories` das referências e a classe de spec de cada categoria (D-156 3.i). */
 export const CLASSE_DA_CATEGORIA: Record<string, "ds" | "geral"> = {
   token: "ds", estrutura: "ds", acessibilidade: "geral", navegacao: "geral", formulario: "geral",
+  // Vocabulário da referência da A2 (ground-truth-acompanhamento 1.0.0; D-162): tipografia = tokens de tipografia do DS,
+  // componente = anatomia do componente do DS, comportamento = comportamento do componente definido pelo DS. Fixado em
+  // 04/11/2026 antes de qualquer número por braço da A2 (decisoes-do-assistente). A classe continua "ds" só quando TODA
+  // categoria é do DS: acessibilidade/navegacao/formulario puxam para "geral".
+  tipografia: "ds", componente: "ds", comportamento: "ds",
 };
 export type ClasseSpec = "ds" | "geral";
 export function classeDaSpec(categorias: string[]): ClasseSpec {
