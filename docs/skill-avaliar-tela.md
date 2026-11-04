@@ -29,6 +29,59 @@ A base é a revisão `thesis-workspace/planejamento/atual/revisao-prompt-ab-2026
 Revisão, item 1 (o roteiro comum ensina o método): mantido. O procedimento de inspeção (árvore de
 acessibilidade, DOM, estilos, teclado, foco, nomes, papéis, mensagens) continua igual nos dois braços.
 
+## Versão da lista única 3.7.2 (B1–B4, 2026-11-04): template `054a183f…`
+
+A versão da skill é o sha256 do template (`templateSha256`, quebras em LF), que cada campanha congela em
+`fixed.protocolSha256` do `campaign.json` e que o run-once confere contra a cópia do pacote `govbr-telas`
+(`skills/avaliar-tela/SKILL.md`). Todas as campanhas coletadas até a `dev-371-a2-01` fixam
+`d9d5e99eff947fba99326d85bd264451fa912ace76b82e6a9fb0daac6bba2e5d` (D-156) e continuam com a cópia congelada
+no pacote delas; nada nelas muda. A versão nova é
+`054a183f2032136123458dfb9c457686c7d9e735708dfcbe546efed20ee282bc`, a das campanhas `dev-372-*`. Antes da
+primeira delas: reexportar o pacote `govbr-telas` (a skill vai nele) e reconstruir as imagens do runner (o coletor
+precisa validar o campo novo, ver abaixo).
+
+Origem: os rastreios da rodada 3.7.1 (`thesis-workspace/planejamento/atual/mecanismo-oraculo-dev-371-b-2026-11-04.md`
+§ 7 e `mecanismo-oraculo-dev-371-a-2026-11-04.md` § 7) e a lista
+`lista-unica-correcoes-3.7.2-2026-11-04.md`, seção B. As quatro mudanças são regras de exploração e de relatório,
+iguais nos três braços e sem regra, valor ou anatomia do DS. Cada passo que depende de ferramenta continua condicional
+("Se houver ferramentas de validação…"), e o braço sem lê a forma de navegador da mesma frase.
+
+| # | Texto novo (resumo) | Onde | Evidência que motivou |
+|---|---|---|---|
+| B1 | Abrir o detalhe de pelo menos um registro de cada situação distinta que a tela mostrar, não só o primeiro; usar as ferramentas de validação também em todo estado lido pelo navegador ("ler um estado não é medi-lo"); sem elas, medi-lo pelo navegador | passos 2 e 5 | B-22 p02 (os dois detalhes abertos não tinham a tabela); B-23 p02 (o 3028 só foi lido pelo Playwright) |
+| B2 | Cláusula ou item de verificação com identificador que uma ferramenta entregar: medir no estado a que se refere e registrar o resultado em `inspection.clauses` (`medida` / `violada` / `nao-se-aplica`, com a medição) | passo 5, Registro de inspeção, exemplo | 0 `get_component_spec` em 5 rodadas na B; 16–19 cláusulas servidas por execução e nenhuma com estado (A e B) |
+| B3 | Comparar as instâncias do mesmo componente em estados ou regiões diferentes pela ordem dos filhos e pela geometria medida; diferença é candidato | passo 8 | A-11: os três com tinham a marcação das duas mensagens, só o p02 comparou |
+| B4 | Anotar o horário de início; não encerrar enquanto houver tempo e restar estado lido sem medição ou cláusula recebida sem resultado | passo 1 e Orçamento | B-22 p02 parou com 734 s de 1800; A: 12, 9 e 7 min de 30 |
+
+**O campo `clauses` (B2).** Fica dentro de `report.inspection`, e não no achado nem no topo do relatório, por
+dois motivos: (1) é declaração de percurso, como regiões, itens e candidatos; (2) erro no registro de inspeção nunca
+derruba achado (o coletor guarda o registro à parte, `inspectionStatus: "invalid"`), enquanto um campo desconhecido no
+topo do relatório faria o coletor recusar o envio inteiro. É a revisão aditiva `inspection.v1+clauses-1`
+(`INSPECTION_CLAUSES_REVISION` em `contracts/index.ts`): o envelope continua `inspection.v1` e todo registro
+válido antes continua válido. Item: `ref` (o identificador como a ferramenta o devolveu), `state` (id de
+`states`), `status` (`medida` = medida e cumprida, `violada` = medida e não cumprida, `nao-se-aplica` = o
+exigido não existe no estado), `measurement` (o que foi medido, com o valor) e `findings` (índices dos achados;
+obrigatório e não vazio só em `violada`, proibido nos outros). Regras fora do schema, em
+`contracts/inspection-ledger.mjs`: par (`ref`, `state`) único, estado conhecido, índice de achado existente,
+`violada` com achado, `medida`/`nao-se-aplica` sem achado. Nada disso entra no scorer: a entrada do scorer com
+`clauses` é a mesma sem ele (`test:inspecao`). Cláusula servida e não medida vai para `limitations`; o campo
+não tem quarto estado.
+
+**Coletor.** O coletor valida pelos schemas copiados para a imagem; o código dele não muda. A imagem nova ganha o rótulo
+`govbr.collector.inspection-revision`, medido no próprio schema copiado (`collectorInspectionRevisionOf` em
+`runner/build-images.ts`). Quando a skill do pacote pede `clauses`, o run-once só parte com a imagem travada que
+declara `inspection.v1+clauses-1` (integridade `coletor-estado-de-clausula`): a imagem anterior marcaria o
+registro de inspeção inteiro como inválido. A skill das campanhas coletadas não pede o campo e não exige nada. O lock
+atual (imagens de 2026-11-04T02:32) ainda não tem o rótulo.
+
+**O que o texto não garante.** O estado por cláusula é declaração. Conferir se cada `ref` declarado foi mesmo servido
+por uma ferramenta, e se toda cláusula servida recebeu estado, é trabalho do leitor do pacote (os payloads do oráculo
+estão no pacote). Isso ainda não está implementado. O tempo também: o texto pede que o agente confira o tempo
+decorrido, mas só o cliente aplica o limite.
+
+Contagem: 1373 → 1569 palavras (meta do `lint:skills` 1400 → 1600). `lint:protocol` estrito, a varredura de gabarito e a
+paridade dos três braços continuam verdes.
+
 Revisão, item 5 (lint não prova neutralidade): `lint:protocol` agora lê a skill nova em **modo
 estrito**: blocos de código também, sem escape, e com os padrões de `FORBIDDEN_TASK_PATTERNS`. Mesmo
 assim continua sendo heurística. A revisão manual de cada nova versão continua necessária.
@@ -96,7 +149,7 @@ sem precisar do govbr-eval.
 `npm run test:avaliar-tela`: paridade sem × com (inclusive com run id e credencial diferentes),
 falha em diferença fora da allowlist, recusa de campo desconhecido e de vocabulário proibido nas
 entradas, hash independente de CRLF, exemplo JSON válido em `validateFlowReport` e em `findings.v1`
-(com `rule: null` e com `findings: []`), vocabulário proibido ausente da skill e do texto renderizado,
+(com `rule: null` e com `findings: []`; e, desde a 3.7.2 B2, com e sem `inspection.clauses`), vocabulário proibido ausente da skill e do texto renderizado,
 lista de ferramentas do oráculo conferida contra `govbr-ds-validator/src/server.ts`, seletores,
 caminhos, estados e ids dos gabaritos ausentes da skill, e `lint:protocol` + `lint:skills` verdes.
 `npm run test:export-telas` confere que a skill está no pacote com os bytes da fonte e que passa pela

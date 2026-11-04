@@ -35,7 +35,7 @@ import { CATEGORIAS_RESIDUO, residuoDeBraco, verificarCegueira, type Cegueira, t
 import {
   ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_3, FORMATO_LOTE, FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_3, FORMATO_RESPOSTAS,
   FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_3, IDS_REFERENCIA, NAO_PERGUNTADO,
-  hashDaChave, idOpaco, mascarar, nomeLote, type CartaoCego, type ItemChave,
+  esquemaDaPassada, hashDaChave, idOpaco, mascarar, nomeLote, type CartaoCego, type ItemChave,
 } from "./e14-comum";
 import { TABELA_FORCAS, cartaoCego, normasDaCampanha, type Extracao } from "./e14-fila";
 import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
@@ -52,10 +52,18 @@ import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
  * 1.4.1 (leitura dev-360-a-01 §Cuidados 1; decisão da autora de 01/11): o LEIAME passa a dizer que receita vazia = a página
  * como carrega no `endereco`, sem passo (julgar nela, `estadoAlcancado: "receita"`); até a 1.4.0 isso só ia no pedido ao juiz,
  * fora do artefato. Formatos do lote, do manifesto e das respostas iguais aos da 1.4.0.
+ * 1.4.2 (lista única 3.7.2, C1–C2; juiz da passada A2 de 04/11): o LEIAME 1.3.0 ganha a regra registro × template na seção
+ * `vinculo` (LEIAME_IDENTIDADE_REGISTRO) e a do cabeçalho de tabela vazio × WCAG 1.3.1 na seção `norma`
+ * (LEIAME_CABECALHO_VAZIO); `--base-url` põe no LEIAME a origem da página congelada de fato servida (padrão
+ * http://127.0.0.1:3300, texto igual); o esquema publicado aceita em `vinculo.spec` exatamente os ids dos defeitos das
+ * referências do lote (enum, `esquemaDaPassada`; até a 1.4.1, `^[ABP]-\d{2}$`, que recusava os `U-xx` da A2), e a ingestão
+ * 1.3.0 valida pelo mesmo conjunto. Corrige a 1.4.1, que tinha posto "receita vazia" também no LEIAME da 1.2.0: a
+ * `--politica 1.2.0` volta a refazer as passadas 1.2.0 arquivadas byte a byte. Formatos do lote, do manifesto e das
+ * respostas iguais; os bytes do lote mudam porque ele traz o sha256 do LEIAME e do esquema.
  */
 export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.3.1";
 /** [D-156] Versão da passada preparada na política 1.3.0 (referências secundárias). A 1.2.0 continua 1.3.1. */
-export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.1";
+export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.2";
 /** Política das campanhas novas (D-156). `--politica 1.2.0` reproduz o histórico. */
 export const POLITICA_CAMPANHA_PADRAO: VersaoPolitica = "1.3.0";
 
@@ -147,8 +155,11 @@ export function enderecoDaTela(meta: { url?: string }, urlDaCaptura: string): st
   return meta.url;
 }
 
-export function prepararCampanha(analises: string[], o: { validador?: string; checkerAliases?: string; politica?: VersaoPolitica } = {}): PreparoCampanha {
+export function prepararCampanha(analises: string[], o: { validador?: string; checkerAliases?: string; politica?: VersaoPolitica; baseUrl?: string } = {}): PreparoCampanha {
   const politica = o.politica ?? POLITICA_CAMPANHA_PADRAO, v13 = politica === "1.3.0";
+  // [1.4.2] --base-url só na 1.3.0: a 1.2.0 refaz o histórico, com o endereço de sempre.
+  if (o.baseUrl !== undefined && !v13) throw new Error("--base-url só na política 1.3.0 (a 1.2.0 refaz o histórico byte a byte)");
+  const baseUrl = o.baseUrl === undefined ? BASE_URL_PADRAO : baseUrlValida(o.baseUrl);
   const datas = [...new Set(analises.flatMap(d => dataDoOraculo(lerJson(join(d, "entradas", "campanha.json")))))];
   if (datas.length !== 1) throw new Error(`E14 campanha: esperado 1 dataSha256 de oráculo nas campanhas das análises, achei ${datas.length} (${datas.map(x => x.slice(0, 12)).join(", ")})`);
   const nr = normasDaCampanha({ dataSha256: datas[0], validador: resolve(o.validador ?? VALIDADOR_PADRAO), checkerAliases: o.checkerAliases });
@@ -217,8 +228,11 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   tamanhosDosLotes(ord.length).forEach((t, k) => { lotes.push({ lote: nomeLote(k), ids: ord.slice(i, i + t).map(x => x.item.id) }); i += t; });
   for (const l of lotes) for (const id of l.ids) ord.find(x => x.item.id === id)!.item.lote = l.lote;
   const nomes = Object.values(telas).map(t => t.nome).join(", ");
-  const leiame = v13 ? leiameCampanha13(ord.length, lotes.length, nomes) : leiameCampanha(ord.length, lotes.length, nomes);
-  const esquema = jsonTexto(v13 ? ESQUEMA_RESPOSTAS_CAMPANHA_1_3 : ESQUEMA_RESPOSTAS_CAMPANHA);
+  const leiame = v13 ? leiameCampanha13(ord.length, lotes.length, nomes, baseUrl) : leiameCampanha(ord.length, lotes.length, nomes);
+  // [1.4.2] Na 1.3.0, `vinculo.spec` = os ids dos defeitos das telas da passada (os mesmos que os lotes publicam em
+  // `referencias`); a 1.2.0 publica o esquema histórico, byte a byte.
+  const esquema = jsonTexto(v13 ? esquemaDaPassada(ESQUEMA_RESPOSTAS_CAMPANHA_1_3, Object.values(telas).flatMap(t => (t.defeitos as { id: string }[]).map(d => d.id)))
+    : ESQUEMA_RESPOSTAS_CAMPANHA);
   const rotulo = v13 ? rotuloPolitica(politica) : POLITICA_PRINCIPAL, versao = v13 ? E14_CAMPANHA_VERSAO_1_4 : E14_CAMPANHA_VERSAO;
   const juiz = new Map<string, string>([["lotes/LEIAME-juiz.md", leiame], ["lotes/esquema-respostas.schema.json", esquema]]);
   for (const l of lotes) {
@@ -336,9 +350,16 @@ export function leiameCampanha(total: number, nLotes: number, nomes: string): st
  * [D-156] LEIAME da política 1.3.0: o da 1.2.0 (`leiameCampanha`, que não muda) com o título, o formato das respostas,
  * a seção das referências secundárias e as linhas da tabela de classes. Só procedimento de julgamento: nenhuma regra.
  */
-export function leiameCampanha13(total: number, nLotes: number, nomes: string): string {
+export function leiameCampanha13(total: number, nLotes: number, nomes: string, baseUrl = BASE_URL_PADRAO): string {
   const NL = "\n";
   let t = leiameCampanha(total, nLotes, nomes);
+  // [1.4.2] Endereço da página congelada (--base-url); com o padrão, nada muda.
+  if (baseUrl !== BASE_URL_PADRAO) t = trocar(t, "`" + BASE_URL_PADRAO + "`", "`" + baseUrlValida(baseUrl) + "`");
+  // [1.4.2, C2] Cabeçalho vazio × WCAG 1.3.1, logo depois do vocabulário de `violada`.
+  t = trocar(t, "- `violada`: `sim` · `nao` · `incerto`." + NL, "- `violada`: `sim` · `nao` · `incerto`." + NL + LEIAME_CABECALHO_VAZIO + NL);
+  // [1.4.2, C1] Registro × template, no fim da seção `vinculo`.
+  t = trocar(t, "- Nunca pelo id da regra nem por semelhança de texto (R7): só pelo fato." + NL,
+    "- Nunca pelo id da regra nem por semelhança de texto (R7): só pelo fato." + NL + LEIAME_IDENTIDADE_REGISTRO + NL);
   t = t.split("política normativa 1.2.0").join("política normativa 1.3.0");
   t = t.split("política 1.2.0").join("política 1.3.0");
   t = trocar(t, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA}"`, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA_1_3}"`);
@@ -347,11 +368,71 @@ export function leiameCampanha13(total: number, nLotes: number, nomes: string): 
     "  além da `regra` (que continua a principal). Cada uma traz `regra` e `norma` (o texto, como em `normaCitada`).",
     "- `perguntas`: o que responder neste cartão (abaixo)."].join(NL));
   t = trocar(t, "### Em todo cartão" + NL, LEIAME_REFERENCIAS + NL + NL + "### Em todo cartão" + NL);
+  t = trocar(t, LEIAME_ESTADO + NL, LEIAME_ESTADO + NL + LEIAME_RECEITA_VAZIA + NL);
   const r15 = "| fato `verdadeira` + norma mais fraca (`recomendado`, `boa-pratica`, `exemplo`) + `aplica` + `sim` | com vínculo: credita a detecção do defeito, sem crédito de fundamentação (R15); sem vínculo: erro normativo (R13) |";
   t = trocar(t, r15, [r15,
     "| (só cartão com `referencias`) fato `verdadeira` + as respostas da `norma` dão erro normativo + uma referência, na ordem `REF1`, `REF2`, julgada como se fosse a citada, dá violação | a classe dessa violação, como se a referência fosse a norma citada; a citação fica registrada como vinda da referência (R16) |",
     "| (só cartão com `referencias`) fato `falsa`, `indisponivel` ou `indeterminado` | as referências não mudam nada: a classe é a do fato (R16) |"].join(NL));
   return t;
+}
+
+/**
+ * [1.4.2, lista única 3.7.2 C1] Registro × template, na seção `vinculo`: a regra congelada em
+ * govbr-resultados/analises/dev-366-b-01/revisao-b23-20261104T1/regra-identidade-registro.md (§ 2, itens 1–6, e § 3),
+ * reescrita para o juiz. Neutra quanto à origem do cartão. Não cria crédito: torna explícito o "mesmo sujeito, mesmo
+ * estado, mesma evidência" que a pergunta já pede.
+ */
+export const LEIAME_IDENTIDADE_REGISTRO = [
+  "- **Registro × template.** Uma rota de registro é uma rota cujo caminho termina no identificador de um registro de",
+  "  dados (um número ou um código, ex.: `…/detalhe/<id>`); o **registro** é esse identificador. Duas paradas na mesma",
+  "  rota com identificadores diferentes são registros diferentes, mesmo com o mesmo componente e o mesmo template.",
+  "  Refaça a receita e meça a que rota e a que registro ela chega. Então:",
+  "  1. O vínculo a um defeito exige o observável do defeito (o elemento, o conteúdo que o identifica — texto, valor,",
+  "     indicador — e a medida que o defeito descreve) **no sujeito e no estado a que a receita chega**, medidos por você",
+  "     na página congelada, nunca supostos pelo texto do cartão. Fato verdadeiro em outro sujeito ou em outro estado não",
+  "     vincula o defeito.",
+  "  2. Outro registro só representa o mesmo defeito se o lote trouxer a prova: o texto do defeito em `referencias`",
+  "     declara a unidade de template, quais registros ela cobre e o que tem de ser igual para contar como o mesmo",
+  "     defeito. A sua leitura e a semelhança de texto ou de regra não provam essa identidade.",
+  "  3. Reaproveitar o template, sozinho, não atravessa registros: mesmo componente, mesma rota com outro identificador,",
+  "     mesmo seletor, mesmas classes ou mesmas cores não bastam. Defeito que descreve conteúdo de um registro (texto,",
+  "     valor, indicador, situação de um dado) fica preso ao registro em que a referência o mediu, salvo o item 2.",
+  "  4. Receita que chega a uma rota não vincula o que o cartão alega em outra: se os sujeitos ou o `observado` cobrem",
+  "     mais de uma rota, só a parte da rota a que a receita chega pode ter vínculo.",
+  "  5. Sem identidade provada, o fato verdadeiro continua verdadeiro: `vinculo` fica sem aquele defeito (`\"nenhum\"`, ou",
+  "     outro defeito que o fato satisfaça por estas mesmas regras), nunca `verdadeFactual: \"falsa\"`. Com a identidade",
+  "     provada, o vínculo vale como o de qualquer outro cartão.",
+  "  6. O critério é o mesmo para todo cartão, qualquer que seja a origem do cartão: decidido cartão a cartão, sem saber",
+  "     de onde ele veio, e nunca pelo efeito no total.",
+  "  Valem para os defeitos da referência cujo estado é uma parada em rota de registro e para todo cartão que tenha um",
+  "  deles em `candidatas`, que o vincularia, ou cujo `observado` descreve conteúdo de rota de registro. Ficam fora os",
+  "  componentes da casca da aplicação (cabeçalho, menu do avatar) que persistem entre rotas: não pertencem ao template",
+  "  do registro.",
+].join("\n");
+
+/**
+ * [1.4.2, lista única 3.7.2 C2] Cabeçalho de tabela vazio × WCAG 1.3.1, na seção `norma`. Regra geral de aplicabilidade
+ * (o lote-13 da dev-371-b-01 negou a violação que os lotes 01, 03 e 11 aceitaram sobre o mesmo `th`); nenhuma spec citada.
+ */
+export const LEIAME_CABECALHO_VAZIO = [
+  "- **Cabeçalho de tabela vazio.** Um cabeçalho (`th`) sem texto e sem nome acessível, numa coluna (ou linha) que tem",
+  "  células de dados com conteúdo, deixa essas células sem o cabeçalho que as relaciona: é falha da WCAG 1.3.1",
+  "  (informações e relações), que é obrigatória. Com a WCAG 1.3.1 citada, ou implicada num cartão sem regra, responda",
+  "  `aplica` e violada `sim`, mesmo que a regra do axe-core que aponta o cabeçalho vazio seja só `best-practice`; a",
+  "  referência da tela pode descrever esse defeito pela WCAG 1.3.1. Se nenhuma célula de dados daquela coluna (ou",
+  "  linha) tem conteúdo, não há relação a transmitir: `nao-aplica`. O cartão que cita só a regra do axe-core continua",
+  "  com a força dela (`boa-pratica`).",
+].join("\n");
+
+/** [1.4.2] Endereço da página congelada no LEIAME (`--base-url`); o padrão é o de sempre. */
+export const BASE_URL_PADRAO = "http://127.0.0.1:3300";
+/** Origem http(s) sem caminho, consulta nem fragmento; sem barra final. Fora disso, para. */
+export function baseUrlValida(u: string): string {
+  let x: URL;
+  try { x = new URL(u); } catch { throw new Error(`--base-url inválida: ${u}`); }
+  if (!/^https?:$/.test(x.protocol) || (x.pathname !== "/" && x.pathname !== "") || x.search || x.hash || x.username || x.password)
+    throw new Error(`--base-url tem de ser só a origem http(s) da página congelada (ex.: ${BASE_URL_PADRAO}): ${u}`);
+  return x.origin;
 }
 
 /** [D-156] Seção das referências secundárias no LEIAME 1.3.0. */
@@ -391,6 +472,14 @@ const LEIAME_ESTADO = [
   "  tal campo…). `nao-alcancado` = ela não chega a esse estado: então `verdadeFactual` = `indisponivel` (evidência",
   "  indisponível, R9/R10), mesmo que, com outros passos, você veja o fato. O que viu noutro estado pode ir à",
   "  `justificativa`, mas nunca muda a resposta.",
+].join("\n");
+
+/**
+ * [1.4.1] Receita vazia. Só no LEIAME da política 1.3.0: a 1.4.1 a pôs em LEIAME_ESTADO, que a 1.2.0 também usa, e com isso
+ * `--politica 1.2.0` deixou de refazer o LEIAME histórico byte a byte (as 22 passadas 1.2.0 arquivadas não têm o trecho).
+ * Corrigido na 1.4.2: a 1.2.0 volta a ser a histórica; a 1.3.0 fica com o trecho, no mesmo lugar.
+ */
+const LEIAME_RECEITA_VAZIA = [
   "- **Receita vazia** (lista de passos vazia): o estado é a página tal como carrega no `endereco`, janela 1280×900, sem",
   "  nenhum passo. Julgue nela e responda `estadoAlcancado: \"receita\"`; receita vazia nunca é `nao-alcancado`.",
 ].join("\n");
@@ -411,10 +500,11 @@ if (process.argv[1] && /(?:^|[\\/])e14-campanha\.ts$/.test(process.argv[1])) {
     createSiteServer(loadSite(val("--servir"))).listen(porta, "127.0.0.1", () => console.log(`site congelado em http://127.0.0.1:${porta}/`));
   } else {
     const analises = a.flatMap((x, k) => (x === "--analise" ? [a[k + 1]] : [])), saida = val("--saida");
-    if (!analises.length || !a.includes("--saida")) { console.error("Uso: --analise DIR [--analise DIR ...] --saida PASTA_NOVA [--validador DIR] [--politica 1.3.0|1.2.0] | --servir SITE [--porta N]"); process.exit(1); }
+    if (!analises.length || !a.includes("--saida")) { console.error("Uso: --analise DIR [--analise DIR ...] --saida PASTA_NOVA [--validador DIR] [--politica 1.3.0|1.2.0] [--base-url http://127.0.0.1:PORTA] | --servir SITE [--porta N]"); process.exit(1); }
     if (existsSync(saida)) { console.error(`--saida já existe: ${saida} (versão nova = pasta nova)`); process.exit(1); }
     const politica = a.includes("--politica") ? versaoDaPolitica(val("--politica")) : POLITICA_CAMPANHA_PADRAO;
-    const p = prepararCampanha(analises, { validador: a.includes("--validador") ? val("--validador") : undefined, politica });
+    const p = prepararCampanha(analises, { validador: a.includes("--validador") ? val("--validador") : undefined, politica,
+      ...(a.includes("--base-url") ? { baseUrl: val("--base-url") } : {}) });
     for (const [rel, t] of p.arquivosInternos) if (rel === "cegueira.json") gravar(saida, rel, t);
     if (p.cegueira.falhas.length || p.falhasTrio.length) {
       console.error(`CEGUEIRA FALHOU (${p.cegueira.falhas.length} + ${p.falhasTrio.length} com×ferramentas); nada gravado em lotes/. Ver ${saida}/cegueira.json`);

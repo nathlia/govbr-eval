@@ -208,8 +208,20 @@ export interface InspectionLedger {
   candidates: { id: string; state: string; origin: InspectionOrigin; originRef?: string; subject: string; observation: string;
     decision: "accepted" | "rejected" | "uncertain"; reason?: string; findings?: number[]; evidence: string[] }[];
   limitations: { kind: "budget" | "tool-failure" | "unreachable" | "truncated" | "out-of-scope" | "other"; detail: string }[];
+  /** Revisão clauses-1 (lista única 3.7.2, B2): estado de cada cláusula servida por ferramenta. Opcional; fora do scorer. */
+  clauses?: InspectionClause[];
+}
+export interface InspectionClause {
+  ref: string; state: string; status: "medida" | "violada" | "nao-se-aplica"; measurement: string; findings?: number[];
 }
 export const INSPECTION_CONTRACT = "inspection.v1" as const;
+/**
+ * Revisão aditiva do inspection.v1 que aceita `clauses` (lista única 3.7.2, B2). O envelope continua `inspection.v1`
+ * (todo registro anterior continua válido); a revisão é o que o coletor declara saber validar, no rótulo
+ * `govbr.collector.inspection-revision` da imagem (runner/build-images.ts), e o run-once a exige quando a skill pede
+ * `clauses`: coletor anterior marcaria o registro inteiro como inválido.
+ */
+export const INSPECTION_CLAUSES_REVISION = "inspection.v1+clauses-1" as const;
 
 /** findings.v2 (NAT-81): o envelope de findings.v1 + `report.inspection` opcional. O achado é o mesmo achado-2. */
 export interface FindingsV2 extends Doc<"findings.v2"> {

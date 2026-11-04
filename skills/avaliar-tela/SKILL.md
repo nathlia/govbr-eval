@@ -26,21 +26,26 @@ projeto a consultar.
 ## Procedimento
 
 1. Abra a URL. Meça a largura e a altura reais da área visível da janela e anote: é o viewport dos
-   achados feitos nela.
+   achados feitos nela. Anote também o horário de início.
 2. Descubra regiões, controles e estados pela própria interface. Observe a árvore de
-   acessibilidade, o DOM, os textos e os estilos calculados relevantes.
+   acessibilidade, o DOM, os textos e os estilos calculados relevantes. Se a tela listar registros
+   que abrem um detalhe, abra o de pelo menos um registro de cada situação distinta que ela
+   mostrar, não só o primeiro: o conteúdo pode mudar com a situação.
 3. Opere a tela: use mouse e teclado, preencha e envie formulários, abra e feche componentes,
    confira foco, nomes, papéis, mensagens e mudanças de estado. Anote cada interação, em ordem,
    desde o carregamento.
 4. Mantenha o registro de inspeção (seção abaixo) enquanto percorre: regiões, estados com a receita
    desde o carregamento, itens inspecionados, candidatos com a decisão e limitações.
-5. Se houver ferramentas de validação, use-as em cada estado relevante. Quando uma delas abrir o
-   próprio navegador, ele não compartilha o estado do seu: reproduza nela as interações que levaram
-   ao estado avaliado. Guarde os identificadores que ela devolver; são evidência. Continue uma
+5. Se houver ferramentas de validação, use-as em cada estado relevante, inclusive em todo estado
+   que você ler pelo navegador (ler um estado não é medi-lo); sem elas, meça-o pelo navegador.
+   Quando uma delas abrir o próprio navegador, ele não compartilha o estado do seu: reproduza nela
+   as interações que levaram ao estado avaliado. Guarde os identificadores que ela devolver; são evidência. Continue uma
    resposta cortada pela continuação que ela indicar (cursor ou id), sem repetir a verificação; em
    erro, ausência ou ambiguidade, siga o próximo passo indicado em vez de repetir a chamada. Falha,
    erro, resposta vazia ou silêncio de uma ferramenta não é ausência de problema, e silêncio ou
-   ausência numa especificação não é conformidade: registre como limitação.
+   ausência numa especificação não é conformidade: registre como limitação. Cláusula ou item de
+   verificação com identificador que uma ferramenta entregar: meça cada um no estado a que se
+   refere e registre o resultado em `clauses`.
 6. Confronte cada candidato com a interface antes de aceitá-lo. Se uma ferramenta disponível
    permitir confirmar o candidato, confirme; senão, decida pela inspeção e declare o grau de
    certeza. Um veredito de ferramenta sobre a regra citada ou sua aplicabilidade (citação rejeitada,
@@ -51,13 +56,17 @@ projeto a consultar.
    passo, não conclusão sobre o fato.
 7. Se o escopo listar outras larguras, alcance cada uma somente pelo meio declarado e repita os
    passos 1 a 6 nela.
-8. Faça uma passada final entre regiões, para relações entre elementos que não aparecem
-   isoladamente. Confira cada seletor na página e monte o relatório a partir do registro.
+8. Faça uma passada final entre regiões e estados, para relações entre elementos que não aparecem
+   isoladamente. Compare as instâncias do mesmo componente em estados ou regiões diferentes pela
+   ordem dos filhos e pela geometria medida: diferença entre elas é candidato. Confira cada
+   seletor na página e monte o relatório a partir do registro.
 
 Orçamento: não repita uma verificação cujo resultado ainda vale para o estado atual; agrupe
 consultas e peça somente as propriedades necessárias. Depois de 12 investigações detalhadas no mesmo
 estado, anote por que outra é necessária antes de continuar. Encerre quando o escopo tiver sido
-percorrido e cada candidato estiver aceito, rejeitado ou declarado incerto.
+percorrido, todo estado lido tiver sido medido, toda cláusula recebida tiver resultado e cada
+candidato estiver aceito, rejeitado ou declarado incerto; antes disso, não encerre enquanto houver
+tempo (confira o tempo decorrido).
 
 ## Achados
 
@@ -109,12 +118,16 @@ afirme ter coberto o que não chegou a descobrir. Ids são curtos e únicos em c
   dele. Membros anunciados e não recebidos entram em `limitations`.
 - `limitations`: `kind` (`budget`, `tool-failure`, `unreachable`, `truncated`, `out-of-scope` ou
   `other`) e `detail`.
+- `clauses` (só com cláusulas recebidas de uma ferramenta): uma por cláusula e estado, com `ref`
+  (o identificador), `state`, `status` (`medida`: cumprida; `violada`: não cumprida, com
+  `findings` como em `candidates`; `nao-se-aplica`: o exigido não existe no estado) e
+  `measurement` (o que você mediu, com o valor). Cláusula sem medida vai para `limitations`.
 
 O relatório tem este formato. Os valores do exemplo são marcadores: substitua todos pelo que você
 observou e mediu.
 
 ```json
-{"timestamp":"momento do envio, ISO 8601","model":"seu modelo","appUrl":"URL avaliada","scope":["o que foi percorrido"],"notes":"interações, limitações e incertezas","findings":[{"selector":"#sujeito","relatedSelectors":["#participante"],"rule":null,"observed":"o que foi constatado","expected":"a condição que deveria valer","state":{"viewport":{"width":1,"height":1},"steps":["interação"]},"evidence":["identificador devolvido por uma ferramenta"]}],"inspection":{"completion":"partial","regions":[{"id":"r1","description":"região observada","origin":"browser","status":"inspected","states":["s1"]}],"states":[{"id":"s1","url":"URL do estado","viewport":{"width":1,"height":1},"recipe":[{"action":"load","target":"URL avaliada"},{"action":"click","target":"#controle"}],"arrival":{"status":"declared","observables":["o que mostra o estado"]},"evidence":[]}],"items":[{"id":"i1","state":"s1","region":"r1","subject":"#sujeito","check":"o que foi conferido","status":"completed","evidence":[]}],"candidates":[{"id":"c1","state":"s1","origin":"browser","subject":"#sujeito","observation":"o que foi constatado","decision":"accepted","findings":[0],"evidence":[]}],"limitations":[{"kind":"budget","detail":"o que ficou de fora e por quê"}]}}
+{"timestamp":"momento do envio, ISO 8601","model":"seu modelo","appUrl":"URL avaliada","scope":["o que foi percorrido"],"notes":"interações, limitações e incertezas","findings":[{"selector":"#sujeito","relatedSelectors":["#participante"],"rule":null,"observed":"o que foi constatado","expected":"a condição que deveria valer","state":{"viewport":{"width":1,"height":1},"steps":["interação"]},"evidence":["identificador devolvido por uma ferramenta"]}],"inspection":{"completion":"partial","regions":[{"id":"r1","description":"região observada","origin":"browser","status":"inspected","states":["s1"]}],"states":[{"id":"s1","url":"URL do estado","viewport":{"width":1,"height":1},"recipe":[{"action":"load","target":"URL avaliada"},{"action":"click","target":"#controle"}],"arrival":{"status":"declared","observables":["o que mostra o estado"]},"evidence":[]}],"items":[{"id":"i1","state":"s1","region":"r1","subject":"#sujeito","check":"o que foi conferido","status":"completed","evidence":[]}],"candidates":[{"id":"c1","state":"s1","origin":"browser","subject":"#sujeito","observation":"o que foi constatado","decision":"accepted","findings":[0],"evidence":[]}],"limitations":[{"kind":"budget","detail":"o que ficou de fora e por quê"}],"clauses":[{"ref":"identificador devolvido por uma ferramenta","state":"s1","status":"medida","measurement":"o que foi medido, com o valor"}]}}
 ```
 
 ## Envio

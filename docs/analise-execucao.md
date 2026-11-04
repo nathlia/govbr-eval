@@ -268,10 +268,12 @@ cegos, que recebem só os arquivos indicados.
   o que as campanhas novas fixam em `protocolSha256`. O coletor valida pelo `findings.v1.schema.json` (campo novo,
   opcional): imagens de coletor antigas recusam relatório com o campo, então a imagem do coletor tem de ser refeita
   (`npm run runner:imagens`) antes da primeira campanha com a skill nova.
-- **Passada cega.** `e14-campanha.ts` prepara na política **1.3.0 por padrão** (`nat78-primeira-passada-1.4.1`: desde a 1.4.1 o LEIAME diz que receita vazia é a página como carrega, julgada nela; manifesto e
+- **Passada cega.** `e14-campanha.ts` prepara na política **1.3.0 por padrão** (`nat78-primeira-passada-1.4.2`: desde a 1.4.1 o LEIAME diz que receita vazia é a página como carrega, julgada nela; desde a 1.4.2 (lista única 3.7.2, C1–C2) ele traz, na seção `vinculo`, a regra registro × template (a de `govbr-resultados/analises/dev-366-b-01/revisao-b23-20261104T1/regra-identidade-registro.md`, §§ 2–3, no registro do juiz) e, na seção `norma`, a do cabeçalho de tabela vazio × WCAG 1.3.1; `--base-url` põe no LEIAME a origem da página congelada de fato servida (padrão `http://127.0.0.1:3300`); o esquema publicado aceita em `vinculo.spec` exatamente os ids dos defeitos das referências do lote (enum, `esquemaDaPassada`; antes, `^[ABP]-\d{2}$`, que recusava os `U-xx` da A2), e a ingestão 1.3.0 valida pelo mesmo conjunto. O lote traz o sha256 do LEIAME e do esquema: refazer a passada na 1.4.2 muda os bytes de todo lote, e um `loteSha256` de juiz anterior deixa de valer; manifesto e
   respostas `…-1.3.0`): o cartão de agente cujo achado traz referências ganha `referencias` (`REF1`, `REF2`, com o texto da
   norma, como `normaCitada`; a que repete a `rule` sai), e `REF1`/`REF2` ficam citáveis. Cartão sem referência fica igual
-  ao da 1.2.0. `--politica 1.2.0` refaz a passada antiga byte a byte (referências ignoradas).
+  ao da 1.2.0. `--politica 1.2.0` refaz a passada antiga byte a byte (referências ignoradas). A 1.4.1 tinha quebrado isso
+  (a receita vazia entrou também no LEIAME 1.2.0); a 1.4.2 corrige, e as passadas 1.2.0 arquivadas desde o gerador 1.2.0
+  voltam a sair iguais (conferido contra os 17 LEIAMEs arquivados; `--base-url` é recusado na 1.2.0).
 - **Juiz.** A `norma` continua a julgar só a regra principal. Quando o fato é verdadeiro e a `norma` dá erro normativo (não
   se aplica, não violada, mais fraca sem vínculo, ou só permite), a resposta tem de trazer `referencias`: um
   `{id, forca, aplicabilidade, violada}` por referência (mesmo vocabulário de `norma`). Nos outros casos, `"nao-perguntado"`.

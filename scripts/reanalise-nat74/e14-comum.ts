@@ -317,6 +317,20 @@ export const ESQUEMA_RESPOSTAS_CAMPANHA_1_3 = (() => {
   return e;
 })();
 
+/**
+ * [passada 1.4.2] Esquema da passada: o esquema base com `vinculo.spec` restrito, por enum, aos ids dos defeitos das
+ * referências que o lote publica (`referencias.*.defeitos[].id`), em ordem. O padrão fixo `^[ABP]-\d{2}$` dos esquemas
+ * acima recusava telas com outro prefixo (A2: `U-01…`). Quem publica (e14-campanha, política 1.3.0) e quem ingere a
+ * passada 1.3.0 (e14-ingerir) chamam esta mesma função com o mesmo conjunto. Os esquemas constantes não mudam.
+ */
+export function esquemaDaPassada<T extends object>(base: T, specs: readonly string[]): T {
+  const ids = [...new Set(specs)].sort();
+  if (!ids.length) throw new Error("esquema da passada: nenhum defeito nas referências do lote");
+  const e = JSON.parse(JSON.stringify(base)) as { properties: { respostas: { items: { properties: { vinculo: { oneOf: [unknown, { properties: { spec: unknown } }] } } } } } };
+  e.properties.respostas.items.properties.vinculo.oneOf[1].properties.spec = { enum: ids };
+  return e as unknown as T;
+}
+
 const isObj =(x: unknown): x is Record<string, unknown> => typeof x === "object" && x !== null && !Array.isArray(x);
 const em = <T extends readonly string[]>(xs: T, v: unknown): v is T[number] => typeof v === "string" && (xs as readonly string[]).includes(v);
 

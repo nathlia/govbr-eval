@@ -14,6 +14,13 @@
 //   x-recipe-from-load  receita de estado que não começa no carregamento (`load`)
 //   x-complete-with-gaps        `completion: complete` com região não inspecionada/parcial ou estado não alcançado
 //
+// Revisão clauses-1 (lista única 3.7.2, B2; `clauses` é opcional e aditivo):
+//   x-unique            o mesmo par (ref, state) duas vezes em `clauses`
+//   x-unknown-state     cláusula aponta estado que não está em `states`
+//   x-unknown-finding   cláusula aponta índice fora de `report.findings`
+//   x-violated-without-finding  cláusula `violada` sem achado vinculado
+//   x-finding-without-violation cláusula `medida` ou `nao-se-aplica` vinculada a achado (a decisão contradiz o relatório)
+//
 // Declaração `confirmed` sem origem, motivo ausente para não inspecionado/rejeitado/incerto e
 // `validation-tool` sem `originRef` são recusados pelo próprio schema (if/then → required).
 
@@ -84,6 +91,27 @@ export function inspectionLedgerErrors(report, base = "") {
     }
     if (c.decision === "rejected" && links.length > 0) {
       errors.push({ path: `${at}/candidates/${i}/findings`, keyword: "x-rejected-with-finding", message: "candidato rejeitado não aponta achado enviado" });
+    }
+  });
+
+  const clausePairs = new Set();
+  list("clauses").forEach((c, i) => {
+    if (!isRecord(c)) return;
+    const pair = JSON.stringify([c.ref, c.state]);
+    if (clausePairs.has(pair)) errors.push({ path: `${at}/clauses/${i}`, keyword: "x-unique", message: `cláusula repetida no mesmo estado: ${c.ref} em ${c.state}` });
+    clausePairs.add(pair);
+    stateRef(`${at}/clauses/${i}/state`, c.state);
+    const links = Array.isArray(c.findings) ? c.findings : [];
+    links.forEach((n, j) => {
+      if (typeof n === "number" && n >= findingsCount) {
+        errors.push({ path: `${at}/clauses/${i}/findings/${j}`, keyword: "x-unknown-finding", message: `achado ${n} não existe (o relatório tem ${findingsCount})` });
+      }
+    });
+    if (c.status === "violada" && links.length === 0) {
+      errors.push({ path: `${at}/clauses/${i}/findings`, keyword: "x-violated-without-finding", message: "cláusula violada precisa apontar o achado que a registra" });
+    }
+    if (c.status !== "violada" && links.length > 0) {
+      errors.push({ path: `${at}/clauses/${i}/findings`, keyword: "x-finding-without-violation", message: `cláusula ${c.status} não aponta achado enviado` });
     }
   });
 

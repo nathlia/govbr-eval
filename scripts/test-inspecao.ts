@@ -19,7 +19,9 @@ import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { CONTRACTS_DIR, type Findings, type FindingsV2, type InspectionLedger } from "../contracts/index";
-import { collectorFindingsContract } from "../runner/run-once";
+import { coletorAceitaClausulas, collectorFindingsContract, skillPedeClausulas } from "../runner/run-once";
+import { collectorInspectionRevisionOf } from "../runner/build-images";
+import { INSPECTION_CLAUSES_REVISION } from "../contracts/index";
 import { ROOT } from "./adjudication";
 import { adaptarExecucao, conteudoCientifico, lerPacote, renderResumo, type Resumo } from "./analisar-execucao";
 import { auditarPacote } from "./auditar-inspecao";
@@ -151,6 +153,107 @@ await test("coletor: contrato desconhecido não arma", async () => {
   await assert.rejects(withCollector("findings.v9", async () => {}), /saiu/);
 });
 
+// ───────────────────────────────────────────────────────────────── estado por cláusula (lista única 3.7.2, B2)
+
+/** O registro do exemplo com `clauses` (revisão clauses-1): uma medida, uma violada (achado 0), uma que não se aplica. */
+function comClausulas(l: InspectionLedger): InspectionLedger {
+  const s = l.states[0].id;
+  return { ...l, clauses: [
+    { ref: "cl-001", state: s, status: "medida", measurement: "posição medida: x=12 à esquerda do conteúdo" },
+    { ref: "cl-002", state: s, status: "violada", measurement: "botão à esquerda (x=201), conteúdo à direita (x=241)", findings: [0] },
+    { ref: "cl-003", state: s, status: "nao-se-aplica", measurement: "o estado não tem o elemento que a cláusula exige" },
+  ] };
+}
+
+await test("B2: coletor v2 aceita clauses (registro válido, achados iguais); registro sem o campo continua válido", async () => {
+  await withCollector("findings.v2", async (post, out) => {
+    const r = await post(report({ inspection: comClausulas(clone(LEDGER)) }));
+    assert.equal(r.status, 200, JSON.stringify(r.body));
+    const env = readJson<FindingsV2>(join(out, "findings.json"));
+    assert.equal(env.inspectionStatus, "valid");
+    assert.equal(env.inspectionContract, "inspection.v1", "o envelope não muda de versão");
+    assert.equal(env.report.inspection!.clauses!.length, 3);
+    assert.deepEqual(env.report.findings, v2Ex.report.findings);
+  });
+  await withCollector("findings.v2", async (post, out) => {
+    assert.equal((await post(report())).status, 200);
+    assert.equal(readJson<FindingsV2>(join(out, "findings.json")).inspectionStatus, "valid", "registro anterior à revisão, válido como antes");
+  });
+});
+
+await test("B2: clauses fora do contrato → registro inválido guardado à parte, achados aceitos (nunca 400)", async () => {
+  type Cl = NonNullable<InspectionLedger["clauses"]>[number];
+  const casos: [string, (l: InspectionLedger) => void, RegExp][] = [
+    ["status fora da lista", (l) => { (l.clauses![0] as { status: string }).status = "cumprida"; }, /clauses\/0\/status/],
+    ["sem medição", (l) => { delete (l.clauses![0] as Partial<Cl>).measurement; }, /measurement/],
+    ["violada sem achado", (l) => { delete l.clauses![1].findings; }, /findings/],
+    ["violada com lista vazia", (l) => { l.clauses![1].findings = []; }, /x-violated-without-finding/],
+    ["medida com achado", (l) => { l.clauses![0].findings = [0]; }, /x-finding-without-violation/],
+    ["achado inexistente", (l) => { l.clauses![1].findings = [9]; }, /x-unknown-finding/],
+    ["estado desconhecido", (l) => { l.clauses![2].state = "s9"; }, /x-unknown-state/],
+    ["(ref, estado) repetido", (l) => { l.clauses![2].ref = "cl-001"; }, /x-unique/],
+  ];
+  for (const [nome, mut, re] of casos) {
+    await withCollector("findings.v2", async (post, out) => {
+      const l = comClausulas(clone(LEDGER));
+      mut(l);
+      const r = await post(report({ inspection: l }));
+      assert.equal(r.status, 200, `${nome}: ${JSON.stringify(r.body)}`);
+      const env = readJson<FindingsV2>(join(out, "findings.json"));
+      assert.equal(env.inspectionStatus, "invalid", nome);
+      assert.match(env.inspectionErrors!.join("; "), re, nome);
+      assert.deepEqual(env.report.findings, v2Ex.report.findings, "achados intactos");
+    });
+  }
+  // A mesma cláusula em outro estado é legítima (uma medição por estado).
+  await withCollector("findings.v2", async (post, out) => {
+    const l = comClausulas(clone(LEDGER));
+    const outro = l.states.find((s) => s.id !== l.states[0].id);
+    assert.ok(outro, "o exemplo tem mais de um estado");
+    l.clauses!.push({ ref: "cl-001", state: outro.id, status: "medida", measurement: "a mesma posição, no outro estado" });
+    assert.equal((await post(report({ inspection: l }))).status, 200);
+    assert.equal(readJson<FindingsV2>(join(out, "findings.json")).inspectionStatus, "valid");
+  });
+});
+
+await test("B2: coletor de imagem anterior (schemas sem clauses) degrada com graça: registro inválido, achados aceitos", async () => {
+  const antigos = mkdtempSync(join(TMP, "schemas-antes-b2-"));
+  cpSync(CONTRACTS_DIR, antigos, { recursive: true });
+  const insp = readJson<{ properties: Record<string, unknown> }>(join(antigos, "inspection.v1.schema.json"));
+  delete insp.properties.clauses;
+  writeFileSync(join(antigos, "inspection.v1.schema.json"), JSON.stringify(insp));
+  const port = await freePort();
+  const out = mkdtempSync(join(TMP, "coletor-antigo-"));
+  const child = spawn(process.execPath, [join(ROOT, "runner", "container", "collector.mjs")], { env: { ...process.env, COLLECTOR_RUN_ID: "fixture-run-01",
+    COLLECTOR_CAMPAIGN_ID: "fixture-campanha-01", COLLECTOR_FIXTURE: "1", COLLECTOR_OUT: out, COLLECTOR_PORT: String(port), COLLECTOR_SCHEMAS: antigos,
+    COLLECTOR_FINDINGS_CONTRACT: "findings.v2" }, stdio: ["ignore", "pipe", "pipe"] });
+  try {
+    await new Promise<void>((ok, fail) => {
+      child.stdout!.on("data", (d) => { if (String(d).includes("coletor armado")) ok(); });
+      child.on("exit", (c) => fail(new Error(`coletor saiu (${c})`)));
+    });
+    const r = await fetch(`http://127.0.0.1:${port}/api/submit`, { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify(report({ inspection: comClausulas(clone(LEDGER)) })) });
+    assert.equal(r.status, 200);
+    const env = readJson<FindingsV2>(join(out, "findings.json"));
+    assert.equal(env.inspectionStatus, "invalid");
+    assert.match(env.inspectionErrors!.join("; "), /additional|clauses/);
+    assert.deepEqual(env.report.findings, v2Ex.report.findings);
+  } finally { child.kill(); }
+});
+
+await test("B2: harness — revisão medida no schema do coletor; skill que pede clauses exige o rótulo; skill sem o campo não exige nada", () => {
+  assert.equal(collectorInspectionRevisionOf(), INSPECTION_CLAUSES_REVISION, "o schema do working tree tem clauses");
+  assert.equal(coletorAceitaClausulas(undefined), false);
+  assert.equal(coletorAceitaClausulas({ "govbr.collector.findings-contracts": "findings.v1,findings.v2" }), false, "imagem anterior à revisão");
+  assert.equal(coletorAceitaClausulas({ "govbr.collector.inspection-revision": INSPECTION_CLAUSES_REVISION }), true);
+  const skill = readFileSync(join(ROOT, "skills", "avaliar-tela", "SKILL.md"), "utf8");
+  assert.equal(skillPedeClausulas(skill), true, "a skill vigente pede clauses");
+  assert.equal(skillPedeClausulas(skill.split("`clauses`").join("`outro`")), false, "skill das campanhas coletadas: nada exigido");
+  const lock = readJson<{ images: { collector: { labels: Record<string, string> } } }>(join(ROOT, "runner", "images.lock.json"));
+  console.log(`   lock atual: coletor ${coletorAceitaClausulas(lock.images.collector.labels) ? "valida" : "NÃO valida"} ${INSPECTION_CLAUSES_REVISION} (reconstruir imagens antes da 1ª campanha com a skill nova)`);
+});
+
 // ───────────────────────────────────────────────────────────────── harness
 
 await test("harness escolhe o envelope pelo rótulo da imagem do coletor, não pelo braço", () => {
@@ -195,6 +298,23 @@ await test("pacote v2: lido e adaptado; o scorer recebe a MESMA entrada que o v1
   const semHash = (x: typeof a1) => ({ ...x, data: { ...x.data, config: { ...x.data.config, evidenceIndexSha256: "-" } }, evidence: { ...x.evidence, integrity: undefined } });
   assert.deepEqual(semHash(a2), semHash(a1));
   assert.ok(!("inspection" in a2.data), "o registro não vai ao scorer");
+});
+
+await test("B2: pacote v2 com clauses → o scorer recebe a MESMA entrada que o v1 (nada do estado por cláusula vai ao scorer)", () => {
+  const dest = join(TMP, "pacote-v2-clausulas");
+  pacoteV2(dest);
+  const f = readJson<FindingsV2>(join(dest, "findings.json"));
+  f.report.inspection!.clauses = [{ ref: "cl-001", state: "s1", status: "medida", measurement: "medido" },
+    { ref: "cl-002", state: "s1", status: "violada", measurement: "medido", findings: [0] }];
+  writeFileSync(join(dest, "findings.json"), JSON.stringify(f, null, 2) + "\n");
+  const m = readJson<{ files: { path: string; bytes: number; sha256: string }[] }>(join(dest, "artifact-manifest.json"));
+  for (const file of m.files) if (file.path === "findings.json") { const b = readFileSync(join(dest, "findings.json")); file.bytes = b.length; file.sha256 = sha(b); }
+  writeFileSync(join(dest, "artifact-manifest.json"), JSON.stringify(m, null, 2) + "\n");
+  const a1 = adaptarExecucao(lerPacote(PACOTE_V1));
+  const a2 = adaptarExecucao(lerPacote(dest));
+  const semHash = (x: typeof a1) => ({ ...x, data: { ...x.data, config: { ...x.data.config, evidenceIndexSha256: "-" } }, evidence: { ...x.evidence, integrity: undefined } });
+  assert.deepEqual(semHash(a2), semHash(a1));
+  assert.equal(auditarPacote(dest).registro, "registrado", "a auditoria lê o registro com clauses");
 });
 
 await test("NAT-84: auditoria do pacote lê o relatório do coletor; v2 auditado, v1 legado sem reconstrução; scorer intocado", () => {

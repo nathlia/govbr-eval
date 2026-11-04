@@ -10,14 +10,17 @@ import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { sha256Tree } from "../collection-manifest";
-import { EVAL, bracoDosCartoes, gravar, gravarJson, sha } from "./comum";
+import { EVAL, bracoDosCartoes, gravar, gravarJson, jsonTexto, sha } from "./comum";
 import { PROIBIDOS, proibidos } from "./e14-cegueira";
 import {
   FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_RESPOSTAS, FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_1, NAO_PERGUNTADO,
-  derivarClasse, validarResposta,
+  ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_3, FORMATO_RESPOSTAS_CAMPANHA_1_3, derivarClasse, validarResposta,
   type CartaoCego, type Resposta,
 } from "./e14-comum";
-import { bracoDoRun, enderecoDaTela, mascararTrio, passosLegiveis, prepararCampanha } from "./e14-campanha";
+import {
+  BASE_URL_PADRAO, LEIAME_CABECALHO_VAZIO, LEIAME_IDENTIDADE_REGISTRO, baseUrlValida, bracoDoRun, enderecoDaTela, leiameCampanha, leiameCampanha13, mascararTrio,
+  passosLegiveis, prepararCampanha,
+} from "./e14-campanha";
 import { FORCA_NO_VOCABULARIO, normasDaCampanha } from "./e14-fila";
 import { argumentosIngerir, contextoDe, ingerir } from "./e14-ingerir";
 import { testesReferencias } from "./test-e14-referencias";
@@ -332,6 +335,104 @@ try {
     const velho = respostas(); velho.formato = FORMATO_RESPOSTAS_CAMPANHA_1_1; velho.respostas = velho.respostas.map(({ estadoAlcancado: _e, ...x }) => x) as never;
     gravarJson(f3, "respostas/lote-01.json", velho);
     const r3 = ingerir(f3); assert.deepEqual(r3.erros, []); assert.equal((r3.julgamentos as { porEstadoAlcancado?: unknown }).porEstadoAlcancado, undefined);
+  });
+  // ── passada 1.4.2 (lista única 3.7.2, C1–C2; juiz da A2 de 04/11): LEIAME, --base-url, esquema derivado das referências
+  console.log("E14 campanha 1.4.2: registro × template, cabeçalho vazio, --base-url, esquema pelas referências");
+  /** sha256 do LEIAME 1.3.0 da 1.4.1 (leiameCampanha13(10, 2, "Tela X") no commit 3750faa), antes da 1.4.2. */
+  const LEIAME13_1_4_1 = "84a05a9b69f3380a5726480df33dfd91489eb5c3d65eb46973d611fae94c0069";
+  /** sha256 do LEIAME 1.2.0 histórico com os mesmos argumentos (sem "receita vazia": as passadas 1.2.0 arquivadas). */
+  const LEIAME12_HISTORICO = "15672b0c594955cce77a845243d8b1513a1b4e69cb9274be0baf8c5cad6cd74d";
+  t("LEIAME 1.3.0 = o da 1.4.1 + registro × template (vinculo) + cabeçalho vazio (norma), e nada mais", () => {
+    const l = leiameCampanha13(10, 2, "Tela X");
+    for (const b of [LEIAME_IDENTIDADE_REGISTRO, LEIAME_CABECALHO_VAZIO]) assert.equal(l.split(b + "\n").length - 1, 1, b.slice(0, 40));
+    assert.ok(l.indexOf(LEIAME_IDENTIDADE_REGISTRO) > l.indexOf("### `vinculo`") && l.indexOf(LEIAME_IDENTIDADE_REGISTRO) < l.indexOf("### `sugestao`"), "na seção vinculo");
+    assert.ok(l.indexOf(LEIAME_CABECALHO_VAZIO) > l.indexOf("### `norma`") && l.indexOf(LEIAME_CABECALHO_VAZIO) < l.indexOf("### `vinculo`"), "na seção norma");
+    assert.equal(sha(l.replace(LEIAME_IDENTIDADE_REGISTRO + "\n", "").replace(LEIAME_CABECALHO_VAZIO + "\n", "")), LEIAME13_1_4_1);
+    // Neutro: nenhum padrão da verificação de cegueira, nenhuma spec citada, "origem do cartão" e nunca a palavra do desenho.
+    for (const b of [LEIAME_IDENTIDADE_REGISTRO, LEIAME_CABECALHO_VAZIO]) {
+      for (const [nome, re] of proibidos(["sem", "ferramentas", "com"])) assert.ok(!re.test(b), `${nome} no bloco novo`);
+      assert.ok(!/\b[ABPU]-\d{2}\b/.test(b), "o bloco novo não cita spec");
+    }
+    assert.ok(LEIAME_IDENTIDADE_REGISTRO.includes("qualquer que seja a origem do cartão"));
+    for (const x of ["1. O vínculo a um defeito exige", "2. Outro registro só representa", "3. Reaproveitar o template", "4. Receita que chega a uma rota",
+      "5. Sem identidade provada", "6. O critério é o mesmo", "casca da aplicação"]) assert.ok(LEIAME_IDENTIDADE_REGISTRO.includes(x), x);
+    for (const x of ["WCAG 1.3.1", "`aplica` e violada `sim`", "`best-practice`", "`nao-aplica`", "`boa-pratica`"]) assert.ok(LEIAME_CABECALHO_VAZIO.includes(x), x);
+  });
+  t("LEIAME 1.2.0 é o histórico byte a byte (a 1.4.1 tinha posto \"receita vazia\" nele; corrigido); passadas 1.2.0 arquivadas refeitas iguais", () => {
+    const l = leiameCampanha(10, 2, "Tela X");
+    assert.equal(sha(l), LEIAME12_HISTORICO);
+    for (const x of ["**Receita vazia**", LEIAME_IDENTIDADE_REGISTRO, LEIAME_CABECALHO_VAZIO]) assert.ok(!l.includes(x), x.slice(0, 30));
+    assert.ok(leiameCampanha13(10, 2, "Tela X").includes("**Receita vazia**"), "a 1.3.0 continua com a receita vazia");
+    // Arquivo real (govbr-resultados), quando presente: a passada 1.2.0 do ensaio-trio-real-05 (gerador 1.3.x) sai igual.
+    const arq = join(EVAL, "..", "govbr-resultados", "analises", "ensaio-trio-real-05", "p01", "primeira-passada-20261029T1", "lotes", "LEIAME-juiz.md");
+    if (existsSync(arq)) {
+      const a = readFileSync(arq, "utf8"), m = /fila de (\d+) alegações, dividida em (\d+) lotes?\.[^]*?congelada \(([^)]*)\)\. Você/.exec(a)!;
+      assert.equal(leiameCampanha(Number(m[1]), Number(m[2]), m[3]), a, "LEIAME 1.2.0 arquivado");
+      console.log("     (conferido contra o LEIAME 1.2.0 arquivado de ensaio-trio-real-05)");
+    }
+  });
+  t("--base-url: padrão = texto de sempre; outra origem troca só o endereço; caminho, consulta ou esquema estranho param; 1.2.0 recusa", () => {
+    const pad = leiameCampanha13(10, 2, "Tela X");
+    assert.equal(leiameCampanha13(10, 2, "Tela X", BASE_URL_PADRAO), pad);
+    const outra = leiameCampanha13(10, 2, "Tela X", "http://127.0.0.1:3317/");
+    assert.ok(outra.includes("`http://127.0.0.1:3317`") && !outra.includes(BASE_URL_PADRAO));
+    assert.equal(outra.replace("http://127.0.0.1:3317", BASE_URL_PADRAO), pad, "só o endereço muda");
+    for (const x of ["127.0.0.1:3300", "ftp://127.0.0.1:3300", "http://127.0.0.1:3300/site", "http://127.0.0.1:3300/?a=1", "http://u:p@127.0.0.1:3300"]) assert.throws(() => baseUrlValida(x), /base-url/, x);
+    assert.throws(() => prepararCampanha([dir], { validador: valDir, checkerAliases: aliasesAbs, politica: "1.2.0", baseUrl: "http://127.0.0.1:3317" }), /só na política 1\.3\.0/);
+  });
+
+  // Tela com ids de outro prefixo (A2: U-01…): a mesma análise sintética, com a referência renumerada.
+  const dirU = join(tmp, "trio-u");
+  cpSync(dir, dirU, { recursive: true });
+  gravarJson(dirU, "revisao/package.json", { ...JSON.parse(readFileSync(join(dir, "revisao", "package.json"), "utf8")), units: [{ id: "U-1", specId: "U-01" }] });
+  gravarJson(dirU, "entradas/referencia.json", { _meta: { version: "1.0.0", waitFor: "#nome", setup: [{ action: "click", selector: ".enviar" }, { action: "wait", selector: ".msg" }] },
+    violations: [{ id: "U-01", state: "inicial", rules: ["wcag:1.3.1"], description: "Campo sem rótulo." }, { id: "U-02", state: "inicial", rules: ["wcag:1.3.1"], description: "Outro campo sem rótulo." }] });
+  const opts13 = { validador: valDir, checkerAliases: aliasesAbs };
+  const pU = prepararCampanha([dirU], opts13), pA = prepararCampanha([dir], opts13);
+  t("esquema 1.3.0: vinculo.spec = enum dos ids das referências do lote (U-xx aceito); 1.2.0 publica o esquema histórico byte a byte", () => {
+    const spec = (p: typeof pU) => (JSON.parse(p.arquivosDoJuiz.get("lotes/esquema-respostas.schema.json")!) as { properties: { respostas: { items: { properties: { vinculo: { oneOf: [unknown, { properties: { spec: unknown } }] } } } } } })
+      .properties.respostas.items.properties.vinculo.oneOf[1].properties.spec;
+    assert.deepEqual(spec(pU), { enum: ["U-01", "U-02"] });
+    assert.deepEqual(spec(pA), { enum: ["A-01"] });
+    const loteU = JSON.parse(pU.arquivosDoJuiz.get("lotes/lote-01.json")!) as { referencias: Record<string, { defeitos: { id: string }[] }> };
+    assert.deepEqual(Object.values(loteU.referencias).flatMap(r => r.defeitos.map(d => d.id)).sort(), ["U-01", "U-02"], "o mesmo conjunto que o lote publica");
+    assert.equal(p.arquivosDoJuiz.get("lotes/esquema-respostas.schema.json"), jsonTexto(ESQUEMA_RESPOSTAS_CAMPANHA), "1.2.0: esquema constante");
+    assert.equal((ESQUEMA_RESPOSTAS_CAMPANHA_1_3 as unknown as { properties: { respostas: { items: { properties: { vinculo: { oneOf: [unknown, { properties: { spec: { pattern: string } } }] } } } } } })
+      .properties.respostas.items.properties.vinculo.oneOf[1].properties.spec.pattern, "^[ABP]-\\d{2}$", "a constante não muda (passadas antigas)");
+    assert.deepEqual(pU.cegueira.falhas, []); assert.deepEqual(pU.falhasTrio, []);
+  });
+  t("ingestão 1.3.0 pela mesma lista: vinculo U-01 entra e credita U-01; id fora das referências recusado pelo esquema (A-01, U-03)", () => {
+    const filaU = join(tmp, "fila-u");
+    for (const [rel, x] of [...pU.arquivosDoJuiz, ...pU.arquivosInternos]) gravar(filaU, rel, x);
+    const loteTxt = pU.arquivosDoJuiz.get("lotes/lote-01.json")!, l = JSON.parse(loteTxt) as { cartoes: CartaoCego[] };
+    const chU = JSON.parse(pU.arquivosInternos.get("chave/fila-t3-chave.json")!) as { itens: { id: string; cardIdOriginal: string }[] };
+    const alvo = chU.itens.find(i => i.cardIdOriginal === "C-aaaa")!.id;
+    const resposta = (spec: string) => l.cartoes.map(c => c.id === alvo
+      ? { id: c.id, verdadeFactual: "verdadeira", norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" }, vinculo: { spec, relacao: "direta" },
+        sugestao: c.perguntas.includes("sugestao") ? { trataOFato: "sim", especificaDoSujeito: "sim", naoViolaNormaObrigatoria: "sim", qualidade: "valida" } : NAO_PERGUNTADO,
+        forcaDoVeredito: "medido", evidencias: ["MEDIDA", "OBS"], justificativa: "MEDIDA mostra o campo sem rótulo que o OBS descreve.", estadoAlcancado: "receita" }
+      : { id: c.id, verdadeFactual: "indeterminado",
+        norma: c.alegacao.regra === null ? { id: "nenhuma", forca: "nenhuma", aplicabilidade: NAO_PERGUNTADO, violada: NAO_PERGUNTADO } : { id: "citada", forca: "indeterminado", aplicabilidade: "incerta", violada: "incerto" },
+        vinculo: "indeterminado", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "incerto", evidencias: ["MEDIDA"], justificativa: "MEDIDA não decidiu o fato neste teste sintético.", estadoAlcancado: "receita" });
+    const grava = (spec: string) => gravarJson(filaU, "respostas/lote-01.json", { formato: FORMATO_RESPOSTAS_CAMPANHA_1_3, lote: "lote-01", loteSha256: sha(loteTxt), juiz: "teste sintético", respostas: resposta(spec) });
+    grava("U-01");
+    const r = ingerir(filaU); assert.deepEqual(r.erros, []);
+    const j = (r.julgamentos as { julgamentos: { id: string; derivado: { spec: string | null } }[] }).julgamentos.find(x => x.id === alvo)!;
+    assert.equal(j.derivado.spec, "U-01");
+    for (const fora of ["A-01", "U-03"]) {
+      grava(fora);
+      assert.match(ingerir(filaU, { refazer: true }).erros.join(), /esquema \/respostas\/\d+\/vinculo/, fora);
+    }
+  });
+  t("bytes do lote: o lote traz o sha256 do LEIAME e do esquema — mudar só um deles muda o lote (loteSha256 antigo deixa de valer); cartões iguais", () => {
+    const pB = prepararCampanha([dir], { ...opts13, baseUrl: "http://127.0.0.1:3317" });
+    const la = JSON.parse(pA.arquivosDoJuiz.get("lotes/lote-01.json")!) as Record<string, unknown> & { instrucoes: { sha256: string }; esquema: { sha256: string } };
+    const lb = JSON.parse(pB.arquivosDoJuiz.get("lotes/lote-01.json")!) as typeof la;
+    assert.notEqual(pA.arquivosDoJuiz.get("lotes/lote-01.json"), pB.arquivosDoJuiz.get("lotes/lote-01.json"));
+    assert.notEqual(la.instrucoes.sha256, lb.instrucoes.sha256);
+    assert.deepEqual({ ...la, instrucoes: null }, { ...lb, instrucoes: null }, "fora do sha256 do LEIAME, o lote é o mesmo");
+    assert.equal(la.esquema.sha256, sha(pA.arquivosDoJuiz.get("lotes/esquema-respostas.schema.json")!));
+    assert.equal(la.instrucoes.sha256, sha(pA.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!));
   });
   await testesReferencias({ t, tmp, dir, valDir, aliasesAbs, prepararCampanha, cli });
 } finally { rmSync(tmp, { recursive: true, force: true }); }

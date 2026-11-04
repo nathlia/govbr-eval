@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://govbr-eval.invalid/contracts/inspection.v1.schema.json",
   "title": "inspection.v1 — registro de inspeção declarado pelo agente (NAT-81)",
-  "description": "Registro comum aos dois braços, enviado pelo agente em `report.inspection` de um envelope findings.v2. Tudo aqui é DECLARAÇÃO do agente: regiões que ele mesmo descobriu, estados que diz ter alcançado, itens que diz ter inspecionado, candidatos e decisões. Comprovação por evento de ferramenta é feita depois, pelo harness (scripts/inspection-ledger.ts), e nunca é escrita pelo agente. Cobertura calculada a partir destas regiões é cobertura do inventário que o próprio agente montou — nunca da página inteira. Este schema não tem campo `contract`: a versão é escolhida pelo harness e registrada no envelope (`inspectionContract`). Regras que o schema não expressa (ids únicos, referências íntegras a estados, regiões e índices de achado, receita que começa no carregamento, completo sem lacunas) estão em contracts/inspection-ledger.mjs.",
+  "description": "Registro comum aos dois braços, enviado pelo agente em `report.inspection` de um envelope findings.v2. Tudo aqui é DECLARAÇÃO do agente: regiões que ele mesmo descobriu, estados que diz ter alcançado, itens que diz ter inspecionado, candidatos e decisões. Comprovação por evento de ferramenta é feita depois, pelo harness (scripts/inspection-ledger.ts), e nunca é escrita pelo agente. Cobertura calculada a partir destas regiões é cobertura do inventário que o próprio agente montou — nunca da página inteira. Este schema não tem campo `contract`: a versão é escolhida pelo harness e registrada no envelope (`inspectionContract`). Regras que o schema não expressa (ids únicos, referências íntegras a estados, regiões e índices de achado, receita que começa no carregamento, completo sem lacunas) estão em contracts/inspection-ledger.mjs. Revisão aditiva `inspection.v1+clauses-1` (lista única 3.7.2, B2): `clauses` opcional, o estado que o agente deu a cada cláusula mensurável que uma ferramenta de validação lhe serviu; todo registro válido antes dela continua válido, e nada aqui entra no scorer.",
   "type": "object",
   "required": ["completion", "regions", "states", "items", "candidates", "limitations"],
   "properties": {
@@ -14,7 +14,11 @@
     "states": { "type": "array", "items": { "$ref": "#/$defs/state" } },
     "items": { "type": "array", "items": { "$ref": "#/$defs/item" } },
     "candidates": { "type": "array", "items": { "$ref": "#/$defs/candidate" } },
-    "limitations": { "type": "array", "items": { "$ref": "#/$defs/limitation" } }
+    "limitations": { "type": "array", "items": { "$ref": "#/$defs/limitation" } },
+    "clauses": {
+      "description": "Revisão clauses-1 (opcional): um item por cláusula (ou item de lista de verificação) com identificador que uma ferramenta de validação serviu, e por estado em que o agente a mediu. Ausente = o agente não declarou estado de cláusula (no braço sem ferramenta, o esperado). DECLARAÇÃO do agente, como o resto do registro; não credita nem desconta achado.",
+      "type": "array", "items": { "$ref": "#/$defs/clause" }
+    }
   },
   "additionalProperties": false,
   "$defs": {
@@ -140,6 +144,25 @@
         { "if": { "properties": { "decision": { "enum": ["rejected", "uncertain"] } }, "required": ["decision"] }, "then": { "required": ["reason"] } },
         { "if": { "properties": { "decision": { "const": "accepted" } }, "required": ["decision"] }, "then": { "required": ["findings"] } },
         { "if": { "properties": { "origin": { "const": "validation-tool" } }, "required": ["origin"] }, "then": { "required": ["originRef"] } }
+      ]
+    },
+    "clause": {
+      "description": "Estado de uma cláusula servida por ferramenta (revisão clauses-1). `medida` = medida e cumprida; `violada` = medida e não cumprida, com o achado enviado que a registra; `nao-se-aplica` = o que a cláusula exige não existe no estado. `measurement` é o que foi medido, com o valor (ou, em `nao-se-aplica`, o que mostra que não se aplica). Unicidade de (ref, state), estado conhecido e índices de achado: contracts/inspection-ledger.mjs.",
+      "type": "object",
+      "required": ["ref", "state", "status", "measurement"],
+      "properties": {
+        "ref": { "description": "Identificador da cláusula como a ferramenta o devolveu.", "$ref": "#/$defs/text" },
+        "state": { "$ref": "#/$defs/localId" },
+        "status": { "enum": ["medida", "violada", "nao-se-aplica"] },
+        "measurement": { "$ref": "#/$defs/text" },
+        "findings": {
+          "description": "Índices (base 0) em `report.findings`. Obrigatório (com pelo menos um) só quando `violada`; proibido nos outros estados (ledger).",
+          "type": "array", "items": { "type": "integer", "minimum": 0 }
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        { "if": { "properties": { "status": { "const": "violada" } }, "required": ["status"] }, "then": { "required": ["findings"] } }
       ]
     },
     "limitation": {

@@ -171,6 +171,18 @@ test("exemplo JSON da skill: validateFlowReport e findings.v2 (com registro de i
   const { inspection: _i, ...semRegistro } = report;
   assert.ok(validateContract(envelope(semRegistro)).valid);
   assert.ok(validateContract(envelope({ ...semRegistro, findings: [] }, "findings.v1")).valid);
+  // Lista única 3.7.2, B2: o exemplo traz `clauses` (revisão clauses-1, só marcadores) e valida; o registro sem o campo
+  // (braço sem ferramenta, ou ferramenta que não serviu cláusula) continua válido.
+  const clauses = (report.inspection as { clauses?: { ref: string; state: string; status: string; measurement: string }[] }).clauses;
+  assert.ok(Array.isArray(clauses) && clauses.length === 1, "o exemplo mostra um item de `clauses`");
+  assert.deepEqual(Object.keys(clauses[0]).sort(), ["measurement", "ref", "state", "status"]);
+  assert.ok(["medida", "violada", "nao-se-aplica"].includes(clauses[0].status));
+  const { clauses: _c, ...semClausulas } = report.inspection as Record<string, unknown>;
+  const rs = validateContract(envelope({ ...report, inspection: semClausulas }));
+  assert.ok(rs.valid, JSON.stringify(rs.errors));
+  // Cláusula violada sem achado vinculado: o envelope inteiro é inválido pelo contrato (o coletor guarda o registro à parte).
+  const violada = { ...report, inspection: { ...report.inspection, clauses: [{ ...clauses[0], status: "violada" }] } };
+  assert.equal(validateContract(envelope(violada)).valid, false);
 });
 
 test("vocabulário: skill e texto renderizado limpos; cada padrão pega a sua amostra", () => {

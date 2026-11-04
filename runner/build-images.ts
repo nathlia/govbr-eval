@@ -25,6 +25,7 @@ import { join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { oracleIdentity, sha256Tree } from "../scripts/collection-manifest";
 import { PERFIS, type PerfilOraculo } from "./perfis-oraculo";
+import { INSPECTION_CLAUSES_REVISION, INSPECTION_CONTRACT } from "../contracts/index";
 import {
   BASE_IMAGE, CLAUDE_CODE_VERSION, COMMITTED_LOCK_PATH, DEFAULT_TELAS_DIR, DEFAULT_VALIDATOR_DIR, EVAL_ROOT, LOCK_PATH, NODE_VERSION, PLAYWRIGHT_MCP_VERSION,
   RUNNER_DIR, RUNNER_VERSION, docker, dockerStream, imageId, imageLabels, sha256, type ImagesLock,
@@ -34,6 +35,15 @@ type Name = keyof ImagesLock["images"];
 /** Arquivos de contrato embutidos no coletor (NAT-81: + findings.v2, inspection.v1 e as regras do registro). */
 export const COLLECTOR_CONTRACT_FILES = ["common.v1.schema.json", "findings.v1.schema.json", "findings.v2.schema.json", "inspection.v1.schema.json", "inspection-ledger.mjs"];
 const ORDER: Name[] = ["agent", "screens", "collector", "egress", "oracle"];
+
+/**
+ * Revisão do registro de inspeção que os schemas embutidos no coletor validam (lista única 3.7.2, B2): medida no
+ * próprio schema copiado, nunca declarada à mão. Com `clauses` em inspection.v1 → `inspection.v1+clauses-1`.
+ */
+export function collectorInspectionRevisionOf(evalRoot = EVAL_ROOT): string {
+  const schema = JSON.parse(readFileSync(join(evalRoot, "contracts", "inspection.v1.schema.json"), "utf8")) as { properties?: Record<string, unknown> };
+  return schema.properties && "clauses" in schema.properties ? INSPECTION_CLAUSES_REVISION : INSPECTION_CONTRACT;
+}
 
 export function telasIdentity(telasDir: string): { siteSha256: string; manifestSha256: string; version: string } {
   const text = readFileSync(join(telasDir, "site-manifest.json"));
@@ -205,6 +215,7 @@ async function main(): Promise<void> {
     // (sem o rótulo) só conhece findings.v1. `schemas` continua o hash do findings.v1 (rótulo histórico).
     collector: { "govbr.collector.schemas": sha256(readFileSync(join(EVAL_ROOT, "contracts", "findings.v1.schema.json"))),
       "govbr.collector.findings-contracts": "findings.v1,findings.v2",
+      "govbr.collector.inspection-revision": collectorInspectionRevisionOf(),
       "govbr.collector.contracts-sha256": sha256(COLLECTOR_CONTRACT_FILES.map((f) => `${f}:${sha256(readFileSync(join(EVAL_ROOT, "contracts", f)))}`).join("\n")) },
     egress: {},
     // `data-sha256` = data/ do validador no host, inteiro (o que o preflight do run-once recalcula e compara);

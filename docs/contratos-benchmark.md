@@ -61,6 +61,14 @@ ponte (`args`/`result` = `{ text, truncated }`) e casa o identificador como toke
 mínimo (ref curto do navegador e id do validador valem igual); identificador não achado quando algum
 texto foi cortado pela ponte é `nao-verificavel`, nunca "não encontrado".
 
+**Lista única 3.7.2, B2 — estado por cláusula.** `inspection.clauses` (opcional) é a revisão aditiva
+`inspection.v1+clauses-1`: um item por cláusula com identificador que uma ferramenta serviu e por estado em que o
+agente a mediu (`ref`, `state`, `status` `medida` · `violada` · `nao-se-aplica`, `measurement`, `findings` só em
+`violada`). O envelope continua `inspection.v1`; registro sem o campo é válido como antes. Regras do ledger: (`ref`,
+`state`) único, estado e achado existentes, `violada` com achado e os outros sem. O rótulo
+`govbr.collector.inspection-revision` da imagem do coletor diz se ela valida a revisão; o run-once exige o rótulo quando
+a skill pede o campo. Não pontua. Ver `docs/skill-avaliar-tela.md`.
+
 **Limite de leitura (process measures).** Todas as contagens do registro são medidas de processo, não
 desfecho: `porOrigem.validation-tool` é 0 no braço sem por construção (não há ferramenta de validação),
 e o custo de escrever o registro cresce com o número de candidatos — provavelmente custa mais ao braço

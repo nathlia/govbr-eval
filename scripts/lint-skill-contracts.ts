@@ -65,6 +65,12 @@ requireText("avaliar-tela", avaliar, [
   // NAT-81: registro de inspeção comum aos braços; declaração não é comprovação; parcial por orçamento.
   "## Registro de inspeção", '"inspection"', "afirme ter coberto o que não chegou a descobrir", "`confirmed` somente com `originRef`",
   '"completion": "partial"', "a limitação `budget`",
+  // Lista única 3.7.2 (B1–B4), iguais nos três braços e só procedimento: um registro de cada situação no detalhe; todo
+  // estado lido pelo navegador também medido; estado por cláusula recebida (`clauses`); instâncias do mesmo componente
+  // comparadas entre estados; não encerrar antes do tempo com estado não medido ou cláusula sem resultado.
+  "cada situação distinta", "ler um estado não é medi-lo", "sem elas, meça-o pelo navegador",
+  "registre o resultado em `clauses`", "`medida`: cumprida", "`violada`: não cumprida", "`nao-se-aplica`",
+  "Compare as instâncias do mesmo componente", "não encerre enquanto houver", "horário de início",
 ]);
 for (const forbidden of ["../_shared/", "evaluation-protocol.md", "leia o arquivo", "Antes de agir, leia"]) {
   if (avaliar.includes(forbidden)) failures.push(`avaliar-tela: não pode pedir leitura de arquivo ('${forbidden}')`);
@@ -78,7 +84,9 @@ const avaliarWords = words(avaliar);
 // erro/ausência/ambiguidade, ação da ferramenta é sugestão e não conclusão; ~45 palavras, iguais nos três braços; meta 1300 → 1350.
 // D-156: campo opcional `references` (até duas referências secundárias, formato de `rule`), ~30 palavras de contrato,
 // iguais nos três braços e só procedimento (nenhum id nem regra); meta 1350 → 1400.
-if (avaliarWords < 800 || avaliarWords > 1400) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1400`);
+// Lista única 3.7.2 (B1–B4): registro de cada situação, estado lido = estado medido, `clauses` (procedimento + contrato +
+// exemplo), comparação entre instâncias e encerramento pelo tempo; ~200 palavras, iguais nos três braços; meta 1400 → 1600.
+if (avaliarWords < 800 || avaliarWords > 1600) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1600`);
 
 const screenWords = words(shared) + words(screen);
 // Oráculo 3.0.0 (NAT-99): continuação por cursor ou id + ação da ferramenta como sugestão, ~18 palavras; meta 800 → 820.

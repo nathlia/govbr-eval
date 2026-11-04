@@ -38,6 +38,7 @@ import {
   crossCheckManifest,
   type AnyArtifactManifest, type AnyFindings, type ArtifactManifest, type ArtifactManifestV2, type FindingsContract, type Isolation, type Metric, type Run,
   type OracleIdentityV2, type RunV2,
+  INSPECTION_CLAUSES_REVISION,
 } from "../contracts/index";
 import { PERFIL_DO_BRACO, PERFIS, allowDoBraco, perfilMedido, temOraculo, toolsListSha256, type Braco, type InventarioOraculo } from "./perfis-oraculo";
 import { varrerPayloadsDoOraculo, type RelatorioVazamento } from "../scripts/vazamento/conhecimento";
@@ -63,6 +64,16 @@ import {
 export function collectorFindingsContract(labels: Record<string, string> | undefined): { contracts: string[]; armed: FindingsContract } {
   const contracts = (labels?.["govbr.collector.findings-contracts"] ?? "findings.v1").split(",").map((c) => c.trim()).filter(Boolean);
   return { contracts, armed: contracts.includes("findings.v2") ? "findings.v2" : "findings.v1" };
+}
+
+/**
+ * Lista única 3.7.2, B2: a skill que pede `inspection.clauses` só parte com coletor cuja imagem travada valida a revisão
+ * `inspection.v1+clauses-1` (rótulo `govbr.collector.inspection-revision`). Coletor anterior marcaria o registro de
+ * inspeção inteiro como inválido. Skill que não pede o campo (as das campanhas coletadas) não exige nada: `null`.
+ */
+export function skillPedeClausulas(skill: string): boolean { return skill.includes("`clauses`"); }
+export function coletorAceitaClausulas(labels: Record<string, string> | undefined): boolean {
+  return labels?.["govbr.collector.inspection-revision"] === INSPECTION_CLAUSES_REVISION;
 }
 
 /**
@@ -331,6 +342,10 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
   const skillPkg = existsSync(skillPkgPath) ? readFileSync(skillPkgPath) : Buffer.from("");
   const skillEval = readFileSync(SKILL_PATH);
   integ("skill", "skill do pacote do agente = skill do instrumento", sha256(skillPkg) === sha256(skillEval), `${sha256(skillPkg).slice(0, 12)} × ${sha256(skillEval).slice(0, 12)}`);
+  if (opts.agente === "claude" && skillPedeClausulas(skillPkg.toString("utf8"))) {
+    integ("coletor-estado-de-clausula", `a skill pede inspection.clauses: a imagem travada do coletor valida ${INSPECTION_CLAUSES_REVISION}; reconstrua as imagens se não`,
+      coletorAceitaClausulas(lock?.images.collector.labels), `${lock?.images.collector.tag ?? "sem lock"}: ${lock?.images.collector.labels["govbr.collector.inspection-revision"] ?? "sem rótulo de revisão"}`);
+  }
   let rendered: ReturnType<typeof renderRun> | null = null;
   let inputs: TaskInputs | null = null;
   try {

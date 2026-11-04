@@ -26,7 +26,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { POLITICA_PRINCIPAL, gravar, jsonTexto, ordenar, raizSaida, rotuloPolitica, sha, versaoDaPolitica, type VersaoPolitica } from "./comum";
 import {
-  E14_VERSAO, ESQUEMA_RESPOSTAS, ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_1, ESQUEMA_RESPOSTAS_CAMPANHA_1_3, FORMATO_JULGAMENTOS,
+  E14_VERSAO, ESQUEMA_RESPOSTAS, ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_1, ESQUEMA_RESPOSTAS_CAMPANHA_1_3, FORMATO_JULGAMENTOS, esquemaDaPassada,
   FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_MANIFESTO_CAMPANHA_1_3, FORMATO_RESPOSTAS, FORMATO_RESPOSTAS_CAMPANHA,
   FORMATO_RESPOSTAS_CAMPANHA_1_1, FORMATO_RESPOSTAS_CAMPANHA_1_3, derivarClasse, validarResposta,
   type ArquivoRespostas, type CartaoCego, type ContextoDerivacao, type ItemChave, type Resposta,
@@ -62,10 +62,17 @@ type Validador = ((x: unknown) => boolean) & { errors?: { instancePath: string; 
 type Versao = "historica" | "campanha-1.1" | "campanha-1.2" | "campanha-1.3";
 const ESQUEMAS: Record<Versao, object> = { historica: ESQUEMA_RESPOSTAS, "campanha-1.1": ESQUEMA_RESPOSTAS_CAMPANHA_1_1, "campanha-1.2": ESQUEMA_RESPOSTAS_CAMPANHA,
   "campanha-1.3": ESQUEMA_RESPOSTAS_CAMPANHA_1_3 };
-const validadores = new Map<Versao, Validador>();
-function esquema(v: Versao): Validador {
-  if (!validadores.has(v)) validadores.set(v, new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(ESQUEMAS[v]) as Validador);
-  return validadores.get(v)!;
+const validadores = new Map<string, Validador>();
+/**
+ * Validador do arquivo de respostas. [passada 1.4.2] Na 1.3.0, com `specs`: o esquema da passada (`esquemaDaPassada`,
+ * `vinculo.spec` = os ids dos defeitos das referências dos lotes), o mesmo que e14-campanha publica. As outras versões
+ * usam o esquema constante delas, como sempre.
+ */
+function esquema(v: Versao, specs?: readonly string[]): Validador {
+  const base = v === "campanha-1.3" && specs?.length ? esquemaDaPassada(ESQUEMAS[v], specs) : ESQUEMAS[v];
+  const k = JSON.stringify(base);
+  if (!validadores.has(k)) validadores.set(k, new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(base) as Validador);
+  return validadores.get(k)!;
 }
 
 const lerTexto = (p: string) => readFileSync(p, "utf8").replace(/^﻿/, "");
@@ -98,6 +105,8 @@ export function ingerir(fila: string, o: { refazer?: boolean; politica?: VersaoP
     if (sha(t) !== m.sha256) erros.push(`${m.lote}.json difere do manifesto (sha256)`);
     lotes.set(m.lote, { m, l: JSON.parse(t) as Lote });
   }
+  // [passada 1.4.2] Os ids aceitos em `vinculo.spec` saem das referências publicadas nos lotes (todas as telas da passada).
+  const specsDaPassada = [...lotes.values()].flatMap(({ l }) => Object.values(l.referencias ?? {}).flatMap(r => (r.defeitos ?? []).map(d => d.id)));
   const dir = join(fila, "respostas");
   const arquivos = existsSync(dir) ? readdirSync(dir).filter(f => f.endsWith(".json")).sort() : [];
   if (!arquivos.length) erros.push("nenhum arquivo em respostas/: nada a ingerir");
@@ -111,7 +120,7 @@ export function ingerir(fila: string, o: { refazer?: boolean; politica?: VersaoP
     const bruto = lerTexto(join(dir, f));
     let doc: ArquivoRespostas;
     try { doc = JSON.parse(bruto); } catch (e) { erros.push(`respostas/${f}: JSON inválido (${(e as Error).message})`); continue; }
-    const v = esquema(versao);
+    const v = esquema(versao, specsDaPassada);
     if (!v(doc)) { for (const x of v.errors ?? []) erros.push(`respostas/${f}: esquema ${x.instancePath || "/"} ${x.message}`); continue; }
     if (doc.formato !== formatoResp) erros.push(`respostas/${f}: formato ${doc.formato}`);
     if (doc.lote !== nome) erros.push(`respostas/${f}: lote "${doc.lote}" ≠ nome do arquivo`);
