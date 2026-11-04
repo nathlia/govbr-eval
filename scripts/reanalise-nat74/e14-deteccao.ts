@@ -2,7 +2,7 @@
  * [D-156] Tabulação da leitura de campanha: specs achadas por braço em DUAS colunas, e cada uma por classe de spec.
  *
  *   npx tsx scripts/reanalise-nat74/e14-deteccao.ts --passada PASTA_DA_PASSADA [--julgamentos ARQ] --saida PASTA
- *       [--coluna-principal deteccao|fundamentada]
+ *       [--coluna-principal deteccao|fundamentada] [--sensibilidade-regra ADJ/adjudicacao/sensibilidade-regra.json]
  *     → PASTA/deteccao.json + deteccao.md (recusa se já existirem: versão nova = arquivo novo)
  *
  * - **detecção**: o crédito elegível de detecção — `derivado.spec` com `violacao-pagina`/`violacao-origem-indeterminada` e
@@ -19,6 +19,11 @@
  *   `incompleta` — sem número, nunca 0), mais os da linha de base presentes no pacote.
  * - **coluna principal**: da configuração (`--coluna-principal`, senão `design.colunaPrincipal` da campanha); sem ela, o
  *   relatório diz que ainda não foi fixada (decisão da autora).
+ *
+ * - **[D-165] sensibilidade da regra publicada** (só com `--sensibilidade-regra`): a detecção por braço em número, em cada
+ *   cenário — 1ª passada (o `julgamentos.json` de `--passada`, quando `--julgamentos` é outro), os julgamentos dados, e cada
+ *   leitura da regra (identidade demonstrada × não demonstrada), trocando só a spec dos cartões das unidades (d). Sem a
+ *   opção, nada muda (byte a byte).
  *
  * O braço vem da chave da passada (nunca vai ao juiz). Determinístico, sem rede, sem modelo. Entradas com sha256.
  */
@@ -135,6 +140,59 @@ export function tabular(julgs: Julgamento[], bracoDe: (chave: string) => string,
     nenhumBraco: specs.map(s => s.id).filter(s => !alguma.has(s)), colunaPrincipal };
 }
 
+// ───────────────────────────────────────────── [D-165] sensibilidade do gatilho (d): contagem por leitura da regra
+
+/** Uma linha de `adjudicacao/sensibilidade-regra.json` (revisao-campanha aplicar): a spec creditada em cada leitura. */
+export interface CartaoDaRegra { id: string; chave: string; unidade: string; leituraAdotada: string; credita: Record<string, string | null> }
+export interface SensibilidadeRegra { formato: string; regra: { arquivo: string; sha256: string } | null; leituras: string[]; cartoes: CartaoDaRegra[] }
+export interface Cenarios {
+  formato: string; regra: SensibilidadeRegra["regra"]; leituras: string[];
+  /** Por cenário (`1a-passada` quando dado, `julgamentos` = a entrada, e cada leitura da regra), detecção por braço; null = coleta não válida. */
+  porCenario: Record<string, Record<string, { deteccao: number; specs: string[] } | null>>;
+  /** Cartões das unidades (d) desta tabela, com a spec que cada cenário lhes atribui. */
+  cartoes: { id: string; braco: string; unidade: string; leituraAdotada: string; porCenario: Record<string, string | null> }[];
+  regraDaContagem: string;
+}
+export const FORMATO_CENARIOS = "nat78-deteccao-cenarios-regra-1.0.0";
+
+/**
+ * Detecção por braço em cada cenário: a dos julgamentos dados; a da 1ª passada (se dada); e, para cada leitura da regra, a
+ * dos julgamentos dados com a spec creditada pelos cartões das unidades (d) trocada pela daquela leitura. Nada mais muda:
+ * os demais cartões contam como nos julgamentos. Só detecção (a coluna fundamentada de uma leitura não adotada não existe).
+ */
+export function cenariosDaRegra(julgs: Julgamento[], bracoDe: (chave: string) => string, t: Tabela, sens: SensibilidadeRegra,
+  primeira: Julgamento[] | null = null): Cenarios {
+  const porChave = new Map(sens.cartoes.map(c => [c.chave, c]));
+  const nossos = julgs.filter(j => porChave.has(j.chave));
+  for (const c of sens.cartoes) for (const l of sens.leituras) if (!(l in c.credita)) throw new Error(`sensibilidade: ${c.id} sem a leitura ${l}`);
+  const conta = (f: (j: Julgamento) => string | null, js: Julgamento[]) => Object.fromEntries(t.bracos.map(b => {
+    if (t.estado[b] !== "valida") return [b, null];
+    const specs = [...new Set(js.filter(j => bracoDe(j.chave) === b).map(f).filter((x): x is string => !!x))].sort();
+    return [b, { deteccao: specs.length, specs }];
+  }));
+  const porCenario: Cenarios["porCenario"] = {};
+  if (primeira) porCenario["1a-passada"] = conta(j => specDetectada(j.derivado), primeira);
+  porCenario.julgamentos = conta(j => specDetectada(j.derivado), julgs);
+  for (const l of sens.leituras) porCenario[l] = conta(j => { const c = porChave.get(j.chave); return c ? c.credita[l] : specDetectada(j.derivado); }, julgs);
+  const p1 = primeira ? new Map(primeira.map(j => [j.chave, j])) : null;
+  const cartoes = nossos.map(j => { const c = porChave.get(j.chave)!;
+    return { id: j.id, braco: bracoDe(j.chave), unidade: c.unidade, leituraAdotada: c.leituraAdotada,
+      porCenario: { ...(p1 ? { "1a-passada": p1.get(j.chave) ? specDetectada(p1.get(j.chave)!.derivado) : null } : {}), julgamentos: specDetectada(j.derivado),
+        ...Object.fromEntries(sens.leituras.map(l => [l, c.credita[l]])) } }; }).sort((x, y) => x.id.localeCompare(y.id));
+  return { formato: FORMATO_CENARIOS, regra: sens.regra, leituras: sens.leituras, porCenario, cartoes,
+    regraDaContagem: "detecção (specDetectada) por braço; em cada leitura da regra, só os cartões das unidades (d) trocam de spec (a da leitura); os demais contam como nos julgamentos" };
+}
+
+export function cenariosMd(c: Cenarios, bracos: string[]): string {
+  const nomes = Object.keys(c.porCenario);
+  return ["", "## Sensibilidade da regra publicada (gatilho d)", "",
+    `Regra \`${c.regra?.arquivo ?? "?"}\` (sha256 \`${c.regra?.sha256 ?? "?"}\`). ${c.regraDaContagem}.`, "",
+    `| cenário | ${bracos.join(" | ")} |`, `|---|${bracos.map(() => "---").join("|")}|`,
+    ...nomes.map(n => `| ${n} | ${bracos.map(b => { const x = c.porCenario[n][b]; return x ? String(x.deteccao) : "—"; }).join(" | ")} |`), "",
+    "| cartão | braço | unidade | leitura adotada | " + nomes.join(" | ") + " |", `|---|---|---|---|${nomes.map(() => "---").join("|")}|`,
+    ...c.cartoes.map(x => `| ${x.id} | ${x.braco} | ${x.unidade} | ${x.leituraAdotada} | ${nomes.map(n => x.porCenario[n] ?? "—").join(" | ")} |`), ""].join("\n");
+}
+
 const ROTULO_ESTADO: Record<EstadoBraco, string> = { valida: "válida", ausente: "**ausente**", incompleta: "**incompleta**" };
 
 export function tabelaMd(t: Tabela, titulo: string): string {
@@ -198,6 +256,11 @@ if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   for (const f of ["deteccao.json", "deteccao.md"]) if (existsSync(join(saida, f))) { console.error(`${join(saida, f)} já existe (versão nova = pasta nova)`); process.exit(1); }
   const ler = <T>(p: string): T => JSON.parse(readFileSync(p, "utf8").replace(/^﻿/, "")) as T;
   const jTxt = readFileSync(jAbs, "utf8");
+  const sAbs = val("--sensibilidade-regra") ? resolve(val("--sensibilidade-regra")!) : null;
+  const sens = sAbs ? ler<SensibilidadeRegra>(sAbs) : null;
+  if (sens && sens.formato !== "nat78-sensibilidade-regra-1.0.0") { console.error(`${sAbs}: não é sensibilidade-regra (${sens.formato})`); process.exit(1); }
+  const p1Abs = resolve(join(passada, "julgamentos.json"));
+  const primeira = sens && p1Abs !== jAbs ? (JSON.parse(readFileSync(p1Abs, "utf8").replace(/^﻿/, "")) as { julgamentos: Julgamento[] }).julgamentos : null;
   const j = JSON.parse(jTxt.replace(/^﻿/, "")) as { politica: string; completo: boolean; julgamentos: Julgamento[] };
   if (!j.completo) { console.error("julgamentos.json incompleto: a tabulação só lê passada completa"); process.exit(1); }
   const cAbs = join(passada, "chave", "fila-t3-chave.json"), mAbs = join(passada, "lotes", "manifesto.json");
@@ -235,13 +298,17 @@ if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   const js = multi ? j.julgamentos.filter(x => x.chave.split("|")[1] === a0.dir) : j.julgamentos;
   const t = tabular(js, k => { const b = chave.get(k); if (!b) throw new Error(`cartão fora da chave: ${k}`); return b; }, ref.violations, j.politica, arms,
     { estado, colunaPrincipal });
-  const lidos = [jAbs, cAbs, mAbs, refAbs, campAbs, pkgAbs, ...(slots ? [coletaAbs] : [])];
+  const lidos = [jAbs, cAbs, mAbs, refAbs, campAbs, pkgAbs, ...(slots ? [coletaAbs] : []), ...(sAbs ? [sAbs] : []), ...(primeira ? [p1Abs] : [])];
   const entradas = Object.fromEntries(lidos.map(p => [p.replace(/\\/g, "/"), sha(readFileSync(p))]));
-  const doc = { ...t, ...(multi ? { analise: a0.dir, cartoesDaAnalise: js.length } : {}), colunaPrincipalOrigem: cli ? "--coluna-principal" : camp.design.colunaPrincipal ? "campanha.design.colunaPrincipal" : null, entradas };
+  const bracoDe = (k: string) => { const b = chave.get(k); if (!b) throw new Error(`cartão fora da chave: ${k}`); return b; };
+  const cen = sens ? cenariosDaRegra(js, bracoDe, t, sens, primeira ? (multi ? primeira.filter(x => x.chave.split("|")[1] === a0.dir) : primeira) : null) : null;
+  const doc = { ...t, ...(multi ? { analise: a0.dir, cartoesDaAnalise: js.length } : {}), colunaPrincipalOrigem: cli ? "--coluna-principal" : camp.design.colunaPrincipal ? "campanha.design.colunaPrincipal" : null, entradas,
+    ...(cen ? { sensibilidadeDaRegra: cen } : {}) };
   const dest = multi ? join(saida, a0.dir.split("/")[0]) : saida;
   const titulo = `Specs achadas por braço — ${basename(dirname(dirname(resolve(passada))))}/${basename(dirname(resolve(passada)))}/${basename(resolve(passada))}${multi ? ` · ${a0.dir}` : ""}`;
   gravar(dest, "deteccao.json", jsonTexto(doc));
-  gravar(dest, "deteccao.md", tabelaMd(t, titulo));
+  gravar(dest, "deteccao.md", tabelaMd(t, titulo) + (cen ? cenariosMd(cen, t.bracos) : ""));
+  if (cen) for (const [n, x] of Object.entries(cen.porCenario)) console.log(`cenário ${n}: ${t.bracos.map(b => `${b} ${x[b]?.deteccao ?? "—"}`).join(" · ")}`);
   if (multi) console.log(`— ${a0.dir} (${js.length} cartões)`);
   for (const b of t.bracos) {
     const c = t.porBraco[b];

@@ -21,6 +21,7 @@ import { ingerir } from "./e14-ingerir";
 import { materiais } from "./e14-materiais";
 import { prepararFila } from "./e14-preparar";
 import { DERIVADO } from "./e14-comum";
+import { cenariosDaRegra, cenariosMd, tabular, type Julgamento } from "./e14-deteccao";
 
 let n = 0, falhas = 0;
 const t = (nome: string, f: () => void) => { n++; try { f(); console.log(`  ok  ${nome}`); } catch (e) { falhas++; console.log(`  FALHA ${nome}\n       ${e instanceof Error ? e.message : e}`); } };
@@ -277,6 +278,28 @@ t("tela A: materialidade por UNIDADE — U1 confirmada não esconde U2 da mesma 
   const b = materiais([{ id: "T3-b", chave: "T3-b", derivado: der("erro-normativo", null) }], [item("T3-b", { campanha: "t7-tela-b-01", tela: "B", unidadesAntigas: "B-05:Uold" })],
     [{ campanha: "t7-tela-b-01", par: "p01", runId: "r1", specId: "B-05", unitId: "Ux", confirmadaDepois: true, variante: "principal" }], new Map());
   assert.equal(b.naoMateriais, 1);
+});
+
+t("[D-165] cenários da regra publicada: número por braço em cada leitura; só os cartões (d) trocam de spec; coleta não válida = sem número", () => {
+  const der = (classe: string, spec: string | null) => ({ classe, regraDaPolitica: "R7", spec, qualidadeDaSugestao: null, pendencias: [], fundamentacao: spec ? "norma" : null }) as never;
+  const j = (id: string, chave: string, d: unknown): Julgamento => ({ id, chave, resposta: {} as never, derivado: d as never });
+  const js = [j("T3-1", "k1", der("violacao-pagina", "B-01")), j("T3-2", "k2", der("violacao-origem-indeterminada", null)), j("T3-3", "k3", der("violacao-pagina", "B-02")), j("T3-4", "k4", der("violacao-pagina", "B-02"))];
+  const braco: Record<string, string> = { k1: "com", k2: "com", k3: "sem", k4: "com" };
+  const specs = [{ id: "B-01", categories: ["acessibilidade"] }, { id: "B-02", categories: ["acessibilidade"] }];
+  const tab = tabular(js, k => braco[k], specs, "politica-normativa-1.3.0", ["sem", "com", "ferramentas"], { estado: { ferramentas: "ausente" } });
+  const sens = { formato: "nat78-sensibilidade-regra-1.0.0", regra: { arquivo: "r.md", sha256: "0".repeat(64) }, leituras: ["identidade-demonstrada", "identidade-nao-demonstrada"],
+    cartoes: [{ id: "T3-2", chave: "k2", unidade: "D-x", leituraAdotada: "identidade-nao-demonstrada", credita: { "identidade-demonstrada": "B-02", "identidade-nao-demonstrada": null } },
+      { id: "T3-3", chave: "k3", unidade: "D-x", leituraAdotada: "identidade-nao-demonstrada", credita: { "identidade-demonstrada": "B-02", "identidade-nao-demonstrada": null } }] };
+  const c = cenariosDaRegra(js, k => braco[k], tab, sens, js);
+  assert.deepEqual(Object.keys(c.porCenario), ["1a-passada", "julgamentos", "identidade-demonstrada", "identidade-nao-demonstrada"]);
+  assert.equal(c.porCenario.julgamentos.com!.deteccao, 2); assert.equal(c.porCenario.julgamentos.sem!.deteccao, 1);
+  assert.equal(c.porCenario["identidade-demonstrada"].com!.deteccao, 2, "B-02 já estava pelo T3-4: não soma duas vezes");
+  assert.equal(c.porCenario["identidade-nao-demonstrada"].sem!.deteccao, 0);
+  assert.equal(c.porCenario["identidade-demonstrada"].sem!.deteccao, 1);
+  assert.equal(c.porCenario.julgamentos.ferramentas, null);
+  assert.deepEqual(c.cartoes.map(x => [x.id, x.braco]), [["T3-2", "com"], ["T3-3", "sem"]]);
+  assert.match(cenariosMd(c, tab.bracos), /\| identidade-nao-demonstrada \| 0 \| 2 \| — \|/);
+  assert.throws(() => cenariosDaRegra(js, k => braco[k], tab, { ...sens, cartoes: [{ ...sens.cartoes[0], credita: { "identidade-demonstrada": null } as never }] }), /sem a leitura/);
 });
 
 console.log(`\n${n - falhas}/${n} testes da E14 passaram`);

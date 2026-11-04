@@ -17,7 +17,9 @@
  *         substituto (casada por chave + sha256 do cartão original; campos sem par entre esquemas são excluídos e contados).
  *
  *   npm run revisao:adjudicacao -- preparar --passada PASSADA --confiabilidade REVISAO/confiabilidade --saida REVISAO
- *         [--aceitar-mascara-anterior]
+ *         [--aceitar-mascara-anterior] [--regra-publicada REGRA.md --regra-sha256 SHA [--evidencia ARQ ...]]
+ *       (gatilho (d), D-165: com --regra-publicada, --confiabilidade fica opcional; sem ela a rodada é só do (d), e o
+ *        manifesto diz por quê. Ver REGRAS_GATILHO_D.)
  *       → REVISAO/adjudicacao/{lotes/lote-dNN.json (etapa A), lotes/LEIAME-adjudicacao.md, lotes/LEIAME-juiz.md,
  *         lotes/esquema-adjudicacao-{a,b}.schema.json, manifesto.json, chave/adjudicacao-chave.json, cegueira.json, regras.md}
  *   npm run revisao:adjudicacao -- revelar --passada PASSADA --adjudicacao REVISAO/adjudicacao --lote lote-dNN
@@ -31,7 +33,9 @@
  * Gatilhos mecânicos de unidade de adjudicação (fixados antes dos resultados; REGRAS_CAMPANHA §2): (a) grupo de cartões
  * idênticos (mesma alegação / mesma leitura da norma) com decisões divergentes; (b) cartão da amostra de confiabilidade em
  * que algum juiz da amostra discorda da 1ª passada em classe, crédito, fato, aplicabilidade ou vínculo; (c) cartão que a 1ª
- * passada decidiu `estadoAlcancado: nao-alcancado` (tira crédito por razão do instrumento).
+ * passada decidiu `estadoAlcancado: nao-alcancado` (tira crédito por razão do instrumento). [D-165] (d) unidade por regra
+ * publicada: regra congelada (sha256 no manifesto) com um bloco mecânico; a lista de cartões afetados sai dos cartões, da
+ * chave, da referência e da 1ª passada congelada (nunca de resposta da adjudicação); uma unidade por spec abrangida.
  *
  * [D-156, revisão Codex NAT-112] Passada 1.3.0 (referências secundárias): a política do juiz é a do `julgamentos.json` da
  * passada e vale em todos os passos — cartão com as referências, esquema e formato 1.3.0 para juízes e adjudicadores, a
@@ -58,6 +62,7 @@ import {
   CAMPOS, CLASSIFICACOES, analisar, cohen, creditoDe, estadoDe, fleiss, regraCanonica, relatorioMd, sujeitoDe, tipoDeSujeito,
   type Analise, type Julgado, type Membro, type Referencias,
 } from "./e14-consistencia";
+import { specDetectada } from "./e14-deteccao";
 import { contextoDe, ingerir } from "./e14-ingerir";
 
 type Card = SemanticPackage["cards"][number];
@@ -154,6 +159,8 @@ export interface Passada {
   itens: ItemChave[]; item: Map<string, ItemChave>; cartao: Map<string, CartaoCego>; loteDe: Map<string, string>;
   referencias: LotePassada["referencias"]; card: Map<string, Card>; julgados: Map<string, Julgado>;
   membros: Membro[]; campanha: Campanha; fontes: Record<string, string>;
+  /** [D-165] Pasta de cada análise da passada (rótulo do manifesto → pasta conferida pelo packageSha256). */
+  dirsAnalise?: Map<string, string>;
 }
 
 const numVersao = (v: string): number[] => (/(\d+)\.(\d+)\.(\d+)$/.exec(v) ?? [0, 0, 0, 0]).slice(1).map(Number);
@@ -211,6 +218,7 @@ export function lerPassada(dirArg: string, o: { analises?: string[] } = {}): Pas
   }
   // Análises (cartões originais e campanha).
   const card = new Map<string, Card>();
+  const dirsAnalise = new Map<string, string>();
   let campanha: Campanha | null = null;
   for (const a of man.analises) {
     const dada = (o.analises ?? []).map(x => resolve(x)).find(x => basename(x) === a.dir);
@@ -220,6 +228,7 @@ export function lerPassada(dirArg: string, o: { analises?: string[] } = {}): Pas
     const pTxt = readFileSync(pAbs);
     if (sha(pTxt) !== a.packageSha256) throw new Error(`análise ${a.dir}: revisao/package.json difere do packageSha256 do manifesto da passada`);
     fontes[`${a.dir}/revisao/package.json`] = a.packageSha256;
+    dirsAnalise.set(a.dir, abs);
     const pkg = JSON.parse(pTxt.toString("utf8")) as SemanticPackage;
     for (const c of pkg.cards) card.set(`${a.dir}|${c.id}`, c);
     const camp = lerJson<{ campaignId: string; design: { arms?: string[]; seed?: string | number | null } }>(join(abs, "entradas", "campanha.json"));
@@ -242,7 +251,7 @@ export function lerPassada(dirArg: string, o: { analises?: string[] } = {}): Pas
   if (membros.length !== man.total) throw new Error(`${dir}: ${membros.length} cartões ≠ ${man.total}`);
   return { dir, nome: basename(dir), versao: (man as { versao: string }).versao, v12, v13, politica, mascara13: versaoAoMenos(man.versao, [1, 3, 0]),
     manifestoTxt, chaveTxt, julgTxt, julgSha, leiameJuiz: lerTexto(join(dir, "lotes", "LEIAME-juiz.md")),
-    itens, item, cartao, loteDe, referencias, card, julgados, membros: ordenar(membros, m => m.id), campanha, fontes };
+    itens, item, cartao, loteDe, referencias, card, julgados, membros: ordenar(membros, m => m.id), campanha, fontes, dirsAnalise };
 }
 
 const specsDe = (p: Passada, c: CartaoCego) => p.referencias[c.tela].defeitos.map(d => d.id);
@@ -578,17 +587,23 @@ export function confiabilidadeMd(r: Record<string, unknown>): string {
 
 // ───────────────────────────────────────────────────────────────── adjudicação: unidades
 
-export interface Origem { id: string; gatilho: "a" | "b" | "c"; detalhe: Record<string, unknown>; membros: string[] }
-export interface UnidadeCampanha { id: string; gatilhos: ("a" | "b" | "c")[]; origens: Origem[]; membros: string[]; leitura: boolean; normaUnica: boolean; tipoDeSujeito: string[] }
+export type Gatilho = "a" | "b" | "c" | "d";
+export interface Origem { id: string; gatilho: Gatilho; detalhe: Record<string, unknown>; membros: string[] }
+export interface UnidadeCampanha { id: string; gatilhos: Gatilho[]; origens: Origem[]; membros: string[]; leitura: boolean; normaUnica: boolean; tipoDeSujeito: string[] }
 
-/** Gatilhos (a), (b), (c) → unidades (união das origens que compartilham cartões). Ordem pelo id. */
-export function unidadesDaCampanha(p: Passada, a: Analise, desacordos: { id: string; desacordos: { juiz: string; campos: string[] }[] }[]): UnidadeCampanha[] {
-  const origens: Origem[] = [
+/**
+ * Gatilhos (a), (b), (c) → unidades (união das origens que compartilham cartões). Ordem pelo id. [D-165] `o.d`: origens do
+ * gatilho (d) (regra publicada), unidas como as demais; `o.soD`: rodada só do (d) (sem confiabilidade): (a), (b), (c) fora.
+ */
+export function unidadesDaCampanha(p: Passada, a: Analise, desacordos: { id: string; desacordos: { juiz: string; campos: string[] }[] }[],
+  o: { d?: Origem[]; soD?: boolean } = {}): UnidadeCampanha[] {
+  const origens: Origem[] = o.soD ? [...(o.d ?? [])] : [
     ...[...a.mesmaAlegacao, ...a.mesmaLeitura].filter(g => g.desempate).map(g => ({ id: g.id, gatilho: "a" as const, detalhe: { nivel: g.nivel, divergencias: g.divergencias }, membros: g.membros })),
     ...desacordos.map(d => ({ id: `B-${sha(SEMENTE_REVISAO + "b|" + p.item.get(d.id)!.chave).slice(0, 8)}`, gatilho: "b" as const,
       detalhe: { campos: unicos(d.desacordos.flatMap(x => x.campos)), juizes: d.desacordos.map(x => x.juiz) }, membros: [d.id] })),
     ...[...p.julgados.values()].filter(j => j.resposta.estadoAlcancado === "nao-alcancado")
       .map(j => ({ id: `C-${sha(SEMENTE_REVISAO + "c|" + p.item.get(j.id)!.chave).slice(0, 8)}`, gatilho: "c" as const, detalhe: { estadoAlcancado: "nao-alcancado", classe1a: j.derivado.classe }, membros: [j.id] })),
+    ...(o.d ?? []),
   ];
   const pai = origens.map((_, i) => i);
   const raiz = (i: number): number => (pai[i] === i ? i : (pai[i] = raiz(pai[i])));
@@ -601,9 +616,184 @@ export function unidadesDaCampanha(p: Passada, a: Analise, desacordos: { id: str
     const membros = unicos(os.flatMap(o => o.membros));
     const normas = unicos(membros.map(id => JSON.stringify([porId.get(id)!.cartao.alegacao.regra !== null, porId.get(id)!.cartao.normaCitada])));
     return { id: `D-${sha(SEMENTE_REVISAO + "unidade|" + membros.map(id => porId.get(id)!.chave).sort().join("|")).slice(0, 10)}`,
-      gatilhos: [...new Set(os.map(o => o.gatilho))].sort() as UnidadeCampanha["gatilhos"], origens: ordenar(os, o => o.id), membros,
+      gatilhos: [...new Set(os.map(x => x.gatilho))].sort() as UnidadeCampanha["gatilhos"], origens: ordenar(os, x => x.id), membros,
       leitura: membros.some(id => porId.get(id)!.perguntaNorma), normaUnica: normas.length === 1, tipoDeSujeito: unicos(membros.map(id => porId.get(id)!.tipoDeSujeito)) };
   }), u => u.id);
+}
+
+// ───────────────────────────────────────────────────────────────── gatilho (d): unidade por regra publicada (D-165)
+
+export const FORMATO_REGRA_MECANICA = "nat78-regra-publicada-mecanica-1.0.0";
+export const DERIVACAO_TEMPLATE_REGISTRO = "template-x-registro-1.0.0";
+export const FORMATO_AFETADOS = "nat78-revisao-afetados-regra-1.0.0";
+export const FORMATO_SENSIBILIDADE_REGRA = "nat78-sensibilidade-regra-1.0.0";
+export const LEITURAS_DA_REGRA = ["identidade-demonstrada", "identidade-nao-demonstrada"] as const;
+export type LeituraDaRegra = typeof LEITURAS_DA_REGRA[number];
+/** Marca de rascunho: uma regra com ela (no texto ou no nome do arquivo) nunca vai a adjudicador. */
+const MARCA_RASCUNHO = /\bRASCUNHO\b/;
+
+export const REGRAS_GATILHO_D = `# Revisão de campanha nova — gatilho (d): unidade por regra publicada (regras fixas)
+
+**Quando foram escritas:** 03/11/2026 (D-165), DEPOIS da 1ª passada de dev-366-b-01 e da divergência que as motivou. Não
+mudam os gatilhos (a)–(c) nem o \`regras.md\` da revisão (sha256 inalterado); valem para toda campanha v2 nova e toda regra
+publicada que use este gatilho. O sha256 deste arquivo vai para o manifesto da adjudicação que o usa.
+
+1. **Regra publicada.** Um arquivo Markdown congelado (sem a marca de rascunho), passado com o sha256 esperado; sha256
+   diferente, marca de rascunho, ou bloco mecânico ausente, repetido ou inválido → para, nada gravado. O bloco mecânico é
+   um único trecho \`\`\`json regra-mecanica\`\`\` no próprio arquivo (logo, coberto pelo mesmo sha256): diz a derivação
+   (\`${DERIVACAO_TEMPLATE_REGISTRO}\`) e os parâmetros dela.
+2. **Cartões afetados, mecanicamente.** A derivação lê só os cartões da passada, a chave, a referência congelada de cada
+   análise (\`entradas/referencia.json\`, sha256 gravado) e a 1ª passada congelada (o crédito que ela deu; \`julgamentos.json\`
+   conferido pelo sha256), nunca uma resposta da adjudicação. \`${DERIVACAO_TEMPLATE_REGISTRO}\`: parada em rota de registro =
+   parada da referência cujo \`path\` termina num identificador (expressão \`identificadorDeRegistro\` do bloco); spec abrangida =
+   spec cujo \`state\` é uma dessas paradas, salvo as da casca da aplicação (primeiro seletor composto da âncora numa lista
+   \`casca\` do bloco, declarada por tela, vazia se for o caso); cartão afetado = credita uma spec abrangida na 1ª passada,
+   ou a tem em \`candidatas\`, ou o \`observado\` contém o segmento da rota que precede o identificador (ex.: \`agendar-vistoria\`)
+   ou o identificador de um registro da referência. Tela com parada de registro sem casca declarada, ou nenhuma parada de
+   registro em nenhuma tela → a lista não é derivável: para.
+3. **Unidades.** Uma unidade por spec abrangida (os cartões que a creditam na 1ª passada ou a têm em \`candidatas\`); specs
+   que compartilham cartão formam uma unidade só; cartão afetado só pelo \`observado\` forma unidade sozinho. A lista
+   (\`afetados.json\`, sha256 no manifesto) é gravada antes de qualquer lote. Unidades (d) se juntam às de (a)–(c) que
+   compartilham cartão, como entre os demais gatilhos.
+4. **Instruções.** O lote de uma unidade com (d) traz a regra como terceiro arquivo de instruções (\`instrucoesDaRegra\`,
+   sha256 no lote e no manifesto), a evidência arquivada dada (\`evidenciaArquivada\`, sha256), e pede, além das respostas
+   de sempre, \`leiturasDaRegra\`: a leitura adotada (identidade demonstrada ou não), a evidência que a sustenta, e por
+   cartão o registro alcançado e a spec que ele credita em CADA leitura (ou \`null\`). A spec creditada pela resposta tem de
+   ser a da leitura adotada. A cegueira cobre os arquivos novos como os demais.
+5. **Sensibilidade.** A aplicação grava \`adjudicacao/sensibilidade-regra.json\` (por cartão: as duas leituras); a tabela de
+   detecção (\`e14-deteccao --sensibilidade-regra\`) mostra a contagem por braço em cada leitura, em número.
+6. **Sem confiabilidade.** Com regra publicada, a amostra de confiabilidade é opcional. Sem ela, a rodada é SÓ do (d):
+   (a) e (c) não entram nesta rodada (contados no manifesto) e (b) não é avaliável; o manifesto grava o motivo. Nada
+   disso muda uma rodada sem regra publicada (byte a byte).
+`;
+
+const LEIAME_ADJ_REGRA = (arquivo: string, evidencias: string[]) => `
+## Unidades com regra publicada (\`instrucoesDaRegra\`)
+
+Quando o lote traz \`instrucoesDaRegra\`, a unidade foi formada por uma regra publicada e congelada (\`${arquivo}\`, sha256 no
+lote). Leia-a inteira antes de julgar: ela diz quando um fato verdadeiro credita uma unidade da referência e quando fica
+fora dela. Ela não muda as perguntas nem a tabela do \`LEIAME-juiz.md\`; só fixa o critério de identidade da unidade.
+${evidencias.length ? `A evidência arquivada antes desta adjudicação vem em \`evidenciaArquivada\` (${evidencias.map(e => `\`${e}\``).join(", ")}, sha256 no lote); é a única evidência de identidade além da referência e do que você mesmo medir.\n` : "Nenhuma evidência arquivada foi dada além da referência; meça você mesmo o que a receita alcança.\n"}
+Nessas unidades, as duas etapas pedem também \`leiturasDaRegra\` (esquemas \`esquema-adjudicacao-regra-{a,b}.schema.json\`):
+
+- \`regraSha256\`: o sha256 do arquivo da regra (o do lote);
+- \`leituraAdotada\`: \`"identidade-demonstrada"\` ou \`"identidade-nao-demonstrada"\`, pelo item 2 da regra;
+- \`evidenciaDeIdentidade\`: qual evidência arquivada sustenta a leitura adotada, ou por que não há;
+- \`porCartao\`: um item por cartão do lote, com \`id\`, \`registroAlcancado\` (rota, registro e condição a que a receita do
+  cartão chega, medidos por você) e a spec que o cartão credita em cada leitura — \`creditaSeIdentidadeDemonstrada\` e
+  \`creditaSeIdentidadeNaoDemonstrada\` (id da referência, ou \`null\` se não credita).
+
+A resposta do cartão é a da leitura adotada: a spec que ela credita tem de ser a desta leitura em \`porCartao\`. A outra
+leitura é sensibilidade (vai para a tabela como número), nunca resposta. Uma leitura da norma incompatível e plausível
+continua indo em \`leiturasAlternativasPlausiveis\` (etapa B); a identidade entre registros vai só em \`leiturasDaRegra\`.
+`;
+
+export interface RegraMecanica { formato: string; derivacao: string; identificadorDeRegistro: string; casca: Record<string, string[]> }
+export interface RegraPublicada { nome: string; texto: string; sha256: string; mecanica: RegraMecanica }
+
+/** Lê a regra publicada congelada: sha256 igual ao dado, sem marca de rascunho, exatamente um bloco mecânico válido. */
+export function lerRegraPublicada(arquivo: string, sha256: string): RegraPublicada {
+  const nome = basename(arquivo);
+  if (!/^[0-9a-f]{64}$/.test(sha256 ?? "")) throw new Error("--regra-sha256 é o sha256 (64 hex) do arquivo da regra congelada");
+  if (!existsSync(arquivo)) throw new Error(`regra publicada ${arquivo} ausente`);
+  const bruto = readFileSync(arquivo), s = sha(bruto);
+  if (s !== sha256) throw new Error(`regra publicada ${nome}: sha256 ${s} ≠ --regra-sha256 ${sha256} (a regra mudou depois de congelada?): nada gravado`);
+  const texto = bruto.toString("utf8");
+  if (MARCA_RASCUNHO.test(texto) || MARCA_RASCUNHO.test(nome)) throw new Error(`regra publicada ${nome}: ainda é RASCUNHO (congele: texto sem a marca, sha256 gravado) — nunca vai a adjudicador`);
+  const blocos = [...texto.replace(/^﻿/, "").matchAll(/```json regra-mecanica\r?\n([\s\S]*?)\r?\n```/g)];
+  if (blocos.length !== 1) throw new Error(`regra publicada ${nome}: ${blocos.length} blocos \`\`\`json regra-mecanica\`\`\` (exatamente um): a lista de cartões não é derivável`);
+  let m: RegraMecanica;
+  try { m = JSON.parse(blocos[0][1]) as RegraMecanica; } catch (e) { throw new Error(`regra publicada ${nome}: bloco mecânico não é JSON (${(e as Error).message}): a lista de cartões não é derivável`); }
+  if (m.formato !== FORMATO_REGRA_MECANICA) throw new Error(`regra publicada ${nome}: bloco mecânico ${m.formato ?? "(sem formato)"} ≠ ${FORMATO_REGRA_MECANICA}`);
+  if (m.derivacao !== DERIVACAO_TEMPLATE_REGISTRO) throw new Error(`regra publicada ${nome}: derivação desconhecida ${m.derivacao}: a lista de cartões não é derivável`);
+  if (typeof m.identificadorDeRegistro !== "string" || !m.casca || typeof m.casca !== "object" || Object.values(m.casca).some(v => !Array.isArray(v) || v.some(x => typeof x !== "string" || !x)))
+    throw new Error(`regra publicada ${nome}: bloco mecânico exige identificadorDeRegistro (texto) e casca { tela: [seletor, …] }`);
+  try { new RegExp(m.identificadorDeRegistro); } catch { throw new Error(`regra publicada ${nome}: identificadorDeRegistro não é expressão válida`); }
+  return { nome, texto, sha256: s, mecanica: m };
+}
+
+interface ReferenciaTela { _meta: { states?: { id: string; path?: string }[] }; violations: { id: string; anchor: string; state: string }[] }
+export interface ParadaDeRegistro { estado: string; path: string; rota: string; segmento: string; registro: string }
+export interface Afetado { id: string; chave: string; braco: string; tela: string; specs: string[]; criterios: string[] }
+export interface Afetados {
+  formato: string; aviso: string; regra: { arquivo: string; sha256: string; derivacao: string }; passada: { nome: string; julgamentosSha256: string };
+  telas: { tela: string; referencias: Record<string, string>; paradasDeRegistro: ParadaDeRegistro[]; specsAbrangidas: string[]; specsDaCasca: string[] }[];
+  total: number; cartoes: Afetado[]; unidades: { specs: string[]; membros: string[] }[];
+}
+
+/** Primeiro seletor composto da âncora (o que a casca declara). */
+const raizDaAncora = (a: string): string => a.trim().split(/[\s>+~]+/)[0];
+
+/**
+ * Derivação `template-x-registro-1.0.0` (REGRAS_GATILHO_D §2–3): só cartões, chave, referência das análises e o crédito da
+ * 1ª passada congelada. Determinística (ordem pelo id). Para quando a lista não é derivável.
+ */
+export function derivarAfetados(p: Passada, regra: RegraPublicada): Afetados {
+  const idRe = new RegExp(regra.mecanica.identificadorDeRegistro);
+  const telas: Afetados["telas"] = [];
+  const porTela = new Map<string, { abr: Set<string>; marcadores: string[] }>();
+  for (const tela of unicos(p.itens.map(i => i.tela))) {
+    const refs: Record<string, string> = {};
+    let ref: ReferenciaTela | null = null;
+    for (const par of unicos(p.itens.filter(i => i.tela === tela).map(i => i.par))) {
+      const dir = p.dirsAnalise?.get(par);
+      const abs = dir ? join(dir, "entradas", "referencia.json") : null;
+      if (!abs || !existsSync(abs)) throw new Error(`análise ${par} sem entradas/referencia.json: a lista de cartões não é derivável`);
+      const t = readFileSync(abs);
+      refs[par] = sha(t);
+      if (Object.values(refs).some(x => x !== refs[par])) throw new Error(`tela ${tela}: análises com referências diferentes: a lista de cartões não é derivável`);
+      ref = JSON.parse(t.toString("utf8").replace(/^﻿/, "")) as ReferenciaTela;
+    }
+    const paradas: ParadaDeRegistro[] = [];
+    for (const st of ref!._meta.states ?? []) {
+      if (!st.path) continue;
+      const seg = st.path.split("/").filter(Boolean);
+      if (seg.length < 2 || !idRe.test(seg[seg.length - 1])) continue;
+      paradas.push({ estado: st.id, path: st.path, rota: "/" + [...seg.slice(0, -1), ":id"].join("/"), segmento: seg[seg.length - 2], registro: seg[seg.length - 1] });
+    }
+    if (!paradas.length) { telas.push({ tela, referencias: refs, paradasDeRegistro: [], specsAbrangidas: [], specsDaCasca: [] }); continue; }
+    const casca = regra.mecanica.casca[tela];
+    if (!casca) throw new Error(`a regra não declara a casca da tela ${tela} (lista vazia vale), que tem parada em rota de registro: a lista de cartões não é derivável`);
+    const est = new Set(paradas.map(x => x.estado));
+    const naParada = ref!.violations.filter(v => est.has(v.state));
+    const daCasca = naParada.filter(v => casca.includes(raizDaAncora(v.anchor))).map(v => v.id).sort();
+    const abr = naParada.map(v => v.id).filter(id => !daCasca.includes(id)).sort();
+    telas.push({ tela, referencias: refs, paradasDeRegistro: paradas, specsAbrangidas: abr, specsDaCasca: daCasca });
+    porTela.set(tela, { abr: new Set(abr), marcadores: unicos([...paradas.map(x => x.segmento), ...paradas.map(x => x.registro)]).map(x => x.toLowerCase()) });
+  }
+  if (!porTela.size) throw new Error("nenhuma referência das análises tem parada em rota de registro: a lista de cartões não é derivável por esta regra");
+  const cartoes: Afetado[] = [];
+  for (const m of p.membros) {
+    const t = porTela.get(m.tela);
+    if (!t) continue;
+    const criterios: string[] = [], specs: string[] = [];
+    const d = p.julgados.get(m.id)!.derivado;
+    if (d.fundamentacao !== null && d.spec && t.abr.has(d.spec)) { criterios.push(`credita-na-1a-passada:${d.spec}`); specs.push(d.spec); }
+    for (const s of m.cartao.candidatas ?? []) if (t.abr.has(s)) { criterios.push(`candidata:${s}`); specs.push(s); }
+    const obs = String(m.cartao.alegacao.observado ?? "").toLowerCase();
+    if (t.marcadores.some(x => obs.includes(x))) criterios.push("observado-rota-de-registro");
+    if (criterios.length) cartoes.push({ id: m.id, chave: m.chave, braco: m.braco, tela: m.tela, specs: unicos(specs), criterios });
+  }
+  // Unidades: união das specs que compartilham cartão; cartão sem spec abrangida (só pelo observado) fica sozinho.
+  const grupos: { specs: Set<string>; membros: Set<string> }[] = [];
+  for (const c of cartoes) {
+    const chaves = c.specs.length ? c.specs : [`(cartão) ${c.id}`];
+    const tocados = grupos.filter(g => chaves.some(s => g.specs.has(s)));
+    const novo = { specs: new Set(chaves), membros: new Set([c.id]) };
+    for (const g of tocados) { g.specs.forEach(s => novo.specs.add(s)); g.membros.forEach(x => novo.membros.add(x)); grupos.splice(grupos.indexOf(g), 1); }
+    grupos.push(novo);
+  }
+  const unidades = ordenar(grupos.map(g => ({ specs: [...g.specs].filter(s => !s.startsWith("(cartão)")).sort(), membros: [...g.membros].sort() })), u => u.membros[0]);
+  return { formato: FORMATO_AFETADOS, aviso: "NÃO entregar ao adjudicador: liga o cartão da 1ª passada ao braço e ao crédito da 1ª passada",
+    regra: { arquivo: regra.nome, sha256: regra.sha256, derivacao: regra.mecanica.derivacao }, passada: { nome: p.nome, julgamentosSha256: p.julgSha },
+    telas, total: cartoes.length, cartoes, unidades };
+}
+
+/** Origens (d): uma por unidade da derivação (REGRAS_GATILHO_D §3). */
+export function origensDaRegra(p: Passada, af: Afetados): Origem[] {
+  const crit = new Map(af.cartoes.map(c => [c.id, c.criterios]));
+  return af.unidades.map(u => ({ id: `R-${sha(SEMENTE_REVISAO + "d|" + af.regra.sha256 + "|" + u.membros.map(id => p.item.get(id)!.chave).sort().join("|")).slice(0, 8)}`,
+    gatilho: "d" as const, detalhe: { regraSha256: af.regra.sha256, specs: u.specs, criterios: Object.fromEntries(u.membros.map(id => [id, crit.get(id)])) }, membros: u.membros }));
 }
 
 // ───────────────────────────────────────────────────────────────── adjudicação: esquemas e LEIAME
@@ -614,7 +804,16 @@ const LEITURA = { oneOf: [{ const: NAO_PERGUNTADO }, { type: "object", additiona
   properties: { norma: { type: "string", pattern: "^(citada|nenhuma|wcag:\\d+\\.\\d+\\.\\d+|emag:\\d+\\.\\d+)$" }, fonteEVersao: TEXTO, forca: { enum: [...VAL.forca] },
     antecedente: TEXTO, excecoes: TEXTO, evidenciaNecessaria: TEXTO, permiteConcluir: TEXTO } }] } as const;
 
-export function esquemasAdjudicacao(v12: boolean, v13 = false): { a: object; b: object } {
+/** [D-165] `leiturasDaRegra` das unidades com gatilho (d) (REGRAS_GATILHO_D §4). */
+const SPEC_OU_NULL = { oneOf: [{ type: "null" }, { type: "string", pattern: "^[A-Z]+-\\d{2}$" }] } as const;
+export const LEITURAS_DA_REGRA_ESQUEMA = { type: "object", additionalProperties: false, required: ["regraSha256", "leituraAdotada", "evidenciaDeIdentidade", "porCartao"],
+  properties: { regraSha256: { type: "string", pattern: "^[0-9a-f]{64}$" }, leituraAdotada: { enum: [...LEITURAS_DA_REGRA] }, evidenciaDeIdentidade: { type: "string", minLength: 30 },
+    porCartao: { type: "array", minItems: 1, items: { type: "object", additionalProperties: false,
+      required: ["id", "registroAlcancado", "creditaSeIdentidadeDemonstrada", "creditaSeIdentidadeNaoDemonstrada"],
+      properties: { id: { type: "string", pattern: "^T3-[0-9a-f]{10}$" }, registroAlcancado: { type: "string", minLength: 10 },
+        creditaSeIdentidadeDemonstrada: SPEC_OU_NULL, creditaSeIdentidadeNaoDemonstrada: SPEC_OU_NULL } } } } } as const;
+
+export function esquemasAdjudicacao(v12: boolean, v13 = false, o: { regra?: boolean } = {}): { a: object; b: object } {
   // [D-156] 1.3.0: o item de resposta é o da 1ª passada 1.3.0 (com `referencias`): o adjudicador responde a mesma pergunta.
   const item = (esquemaDaPassada({ v12, v13 }) as typeof ESQUEMA_RESPOSTAS_CAMPANHA).properties.respostas.items;
   const base = (formato: string, lote: string, etapa: "a" | "b") => ({
@@ -630,6 +829,11 @@ export function esquemasAdjudicacao(v12: boolean, v13 = false): { a: object; b: 
       classificacaoDaDivergencia: { type: "object", additionalProperties: false, required: ["tipos", "evidencias", "justificativa"],
         properties: { tipos: { type: "array", minItems: 1, uniqueItems: true, items: { enum: [...CLASSIFICACOES] } },
           evidencias: { type: "array", minItems: 1, items: { type: "string", pattern: "^T3-[0-9a-f]{10}(:[A-Za-z0-9-]+)?$" } }, justificativa: { type: "string", minLength: 30 } } } } };
+  if (o.regra) for (const [e, sufixo] of [[a, "a"], [b, "b"]] as const) {
+    e.title = `${e.title} + leiturasDaRegra (gatilho d, etapa ${sufixo})`;
+    (e.required as string[]).push("leiturasDaRegra");
+    (e.properties as Record<string, unknown>).leiturasDaRegra = LEITURAS_DA_REGRA_ESQUEMA;
+  }
   return { a, b };
 }
 
@@ -708,15 +912,18 @@ cartão com pergunta de norma sair com classe final, ou se \`loteSha256\` não c
 
 // ───────────────────────────────────────────────────────────────── adjudicação: preparar (etapa A)
 
-interface LoteAdj { formato: string; lote: string; grupo: { id: string; pedeLeituraDaNorma: boolean; normaUnica: boolean; membros: string[] }; referencias: LotePassada["referencias"]; cartoes: (CartaoCego & { grupo: string })[] }
+interface LoteAdj { formato: string; lote: string; grupo: { id: string; pedeLeituraDaNorma: boolean; normaUnica: boolean; membros: string[] }; referencias: LotePassada["referencias"]; cartoes: (CartaoCego & { grupo: string })[];
+  instrucoesDaRegra?: { arquivo: string; sha256: string }; evidenciaArquivada?: { arquivo: string; sha256: string }[] }
 export interface MembroChave { id: string; idOriginal: string; chave: string; braco: string }
-export interface UnidadeChave { id: string; lote: string; gatilhos: string[]; origens: Origem[]; leitura: boolean; normaUnica: boolean; membros: MembroChave[] }
+export interface UnidadeChave { id: string; lote: string; gatilhos: string[]; origens: Origem[]; leitura: boolean; normaUnica: boolean; membros: MembroChave[]; specsDaRegra?: string[] }
 interface ManifestoAdj {
   formato: string; passada: { nome: string; julgamentosSha256: string; manifestoSha256: string; versao: string };
-  confiabilidade: { dir: string; relatorioSha256: string; julgamentosSha256: string; desacordosSha256: string };
+  /** [D-165] null numa rodada só do gatilho (d) (sem confiabilidade; o motivo vai em `semConfiabilidade`). */
+  confiabilidade: { dir: string; relatorioSha256: string; julgamentosSha256: string; desacordosSha256: string } | null;
+  regraPublicada?: { arquivo: string; sha256: string; derivacao: string; regrasGatilhoDSha256: string };
   lotes: { lote: string; grupo: string; n: number; sha256: string; ids: string[] }[]; chaveSha256: string; arquivos: Record<string, string>;
 }
-export interface PreparoAdj { unidades: UnidadeCampanha[]; arquivosDoJuiz: Map<string, string>; arquivosInternos: Map<string, string>; cegueira: ReturnType<typeof cegueiraArquivos>; avisos: string[] }
+export interface PreparoAdj { unidades: UnidadeCampanha[]; arquivosDoJuiz: Map<string, string>; arquivosInternos: Map<string, string>; cegueira: ReturnType<typeof cegueiraArquivos>; avisos: string[]; afetados?: Afetados }
 
 interface Conf { dir: string; relTxt: string; julgTxt: string; desTxt: string; julgamentos: JulgamentoConf[]; desacordos: { id: string; desacordos: { juiz: string; campos: string[] }[] }[]; relatorio: Record<string, unknown> }
 function lerConfiabilidade(p: Passada, dir: string): Conf {
@@ -732,81 +939,137 @@ function lerConfiabilidade(p: Passada, dir: string): Conf {
     desacordos: (JSON.parse(desTxt) as { cartoes: Conf["desacordos"] }).cartoes, relatorio: JSON.parse(relTxt) };
 }
 
-export function prepararAdjudicacao(p: Passada, o: { confiabilidade: string; aceitarMascaraAnterior?: boolean }): PreparoAdj {
+/** [D-165] Esquemas e nome dos arquivos de resposta das unidades com gatilho (d). */
+const ESQ_REGRA = { a: "esquema-adjudicacao-regra-a.schema.json", b: "esquema-adjudicacao-regra-b.schema.json" } as const;
+
+export function prepararAdjudicacao(p: Passada, o: { confiabilidade?: string | null; aceitarMascaraAnterior?: boolean;
+  regra?: { arquivo: string; sha256: string } | null; evidencias?: string[] }): PreparoAdj {
   const avisos: string[] = [];
   if (!p.mascara13) {
     if (!o.aceitarMascaraAnterior) throw new Error(`a passada ${p.nome} é ${p.versao}, anterior à máscara da entrega 2 (1.3.0): os cartões da adjudicação são os da passada; refaça a passada com e14-campanha 1.3.0 ou, SÓ EM ENSAIO, passe --aceitar-mascara-anterior`);
     avisos.push(`máscara da passada ${p.versao} (anterior à 1.3.0), aceita por --aceitar-mascara-anterior (só ensaio)`);
   }
-  const conf = lerConfiabilidade(p, o.confiabilidade);
-  if (!(conf.relatorio as { atendeProtocolo: boolean }).atendeProtocolo) avisos.push("a confiabilidade não atende o protocolo (2 juízes da amostra; sem substituto): só ensaio");
+  if (!o.confiabilidade && !o.regra) throw new Error("falta --confiabilidade (obrigatório; nunca há pasta padrão): só uma rodada do gatilho (d) (--regra-publicada) dispensa a amostra");
+  if (o.evidencias?.length && !o.regra) throw new Error("--evidencia só vale com --regra-publicada (gatilho d)");
+  const conf = o.confiabilidade ? lerConfiabilidade(p, o.confiabilidade) : null;
+  if (conf && !(conf.relatorio as { atendeProtocolo: boolean }).atendeProtocolo) avisos.push("a confiabilidade não atende o protocolo (2 juízes da amostra; sem substituto): só ensaio");
+  // [D-165] Gatilho (d): regra congelada → lista de afetados (antes de qualquer lote) → origens.
+  const regra = o.regra ? lerRegraPublicada(resolve(o.regra.arquivo), o.regra.sha256) : null;
+  const afet = regra ? derivarAfetados(p, regra) : null;
+  const origensD = afet ? origensDaRegra(p, afet) : [];
+  if (regra && !conf && !origensD.length) throw new Error(`a regra ${regra.nome} não afeta nenhum cartão da passada: nada a adjudicar numa rodada só do (d)`);
   const a = consistencia(p);
-  const unidades = unidadesDaCampanha(p, a, conf.desacordos);
+  const unidades = conf ? unidadesDaCampanha(p, a, conf.desacordos, regra ? { d: origensD } : {}) : unidadesDaCampanha(p, a, [], { d: origensD, soD: true });
   const porId = new Map(p.membros.map(m => [m.id, m]));
   const novo = new Map(p.membros.map(m => [m.id, idDaAdjudicacao(m.chave)]));
-  const idsAmostra = conf.julgamentos.map(j => j.idAmostra).filter((x): x is string => !!x);
+  const idsAmostra = (conf?.julgamentos ?? []).map(j => j.idAmostra).filter((x): x is string => !!x);
   for (const v of novo.values()) if (p.item.has(v) || idsAmostra.includes(v)) throw new Error(`adjudicação: id novo coincide com id anterior: ${v}`);
-  const leiame = leiameAdjudicacao(p.politica);
+  const evid = (o.evidencias ?? []).map(f => { const abs = resolve(f); if (!existsSync(abs)) throw new Error(`--evidencia ${abs} ausente`);
+    return { rel: `lotes/evidencia/${basename(abs)}`, arquivo: `evidencia/${basename(abs)}`, texto: readFileSync(abs, "utf8") }; });
+  if (new Set(evid.map(e => e.rel)).size !== evid.length) throw new Error("--evidencia com dois arquivos de mesmo nome");
+  const leiame = leiameAdjudicacao(p.politica) + (regra ? LEIAME_ADJ_REGRA(regra.nome, evid.map(e => e.arquivo)) : "");
   const esq = esquemasAdjudicacao(p.v12, p.v13);
   const esqA = jsonTexto(esq.a), esqB = jsonTexto(esq.b);
   const juiz = new Map<string, string>([["lotes/LEIAME-adjudicacao.md", leiame], ["lotes/LEIAME-juiz.md", p.leiameJuiz],
     ["lotes/esquema-adjudicacao-a.schema.json", esqA], ["lotes/esquema-adjudicacao-b.schema.json", esqB]]);
+  const esqR = regra ? esquemasAdjudicacao(p.v12, p.v13, { regra: true }) : null;
+  const esqRA = esqR ? jsonTexto(esqR.a) : "", esqRB = esqR ? jsonTexto(esqR.b) : "";
+  if (regra) {
+    juiz.set(`lotes/${regra.nome}`, regra.texto);
+    juiz.set(`lotes/${ESQ_REGRA.a}`, esqRA); juiz.set(`lotes/${ESQ_REGRA.b}`, esqRB);
+    for (const e of evid) juiz.set(e.rel, e.texto);
+  }
   const novos = new Map<string, CartaoCego>();
   const unidadesChave: UnidadeChave[] = [];
   const lotes: ManifestoAdj["lotes"] = [];
   unidades.forEach((u, k) => {
     const lote = nomeLoteD(k);
     const membros = u.membros.map(id => ({ id: novo.get(id)!, idOriginal: id, chave: porId.get(id)!.chave, braco: porId.get(id)!.braco })).sort((x, y) => (x.id < y.id ? -1 : 1));
-    unidadesChave.push({ id: u.id, lote, gatilhos: u.gatilhos, origens: u.origens, leitura: u.leitura, normaUnica: u.normaUnica, membros });
+    const ehD = u.gatilhos.includes("d");
+    const specsD = ehD ? unicos(u.origens.filter(x => x.gatilho === "d").flatMap(x => (x.detalhe as { specs: string[] }).specs)) : [];
+    unidadesChave.push({ id: u.id, lote, gatilhos: u.gatilhos, origens: u.origens, leitura: u.leitura, normaUnica: u.normaUnica, membros, ...(ehD ? { specsDaRegra: specsD } : {}) });
     const cs = membros.map(m => { const c = { ...p.cartao.get(m.idOriginal)!, id: m.id, grupo: u.id }; novos.set(m.idOriginal, c); return c; });
     const grupo = { id: u.id, pedeLeituraDaNorma: u.leitura, normaUnica: u.normaUnica,
-      descricao: cs.length === 1 ? "Um cartão, mandado à adjudicação por uma regra mecânica fixada antes dos resultados."
+      descricao: ehD ? (cs.length === 1 ? "Um cartão que a regra publicada (`instrucoesDaRegra`) alcança, mandado à adjudicação por uma derivação mecânica fixada antes desta leitura."
+        : `${cs.length} cartões que a regra publicada (\`instrucoesDaRegra\`) alcança, reunidos por uma derivação mecânica fixada antes desta leitura. Reunidos só por isso; cada cartão tem a sua resposta.`)
+        : cs.length === 1 ? "Um cartão, mandado à adjudicação por uma regra mecânica fixada antes dos resultados."
         : `${cs.length} cartões reunidos por uma regra mecânica fixada antes dos resultados (mesmo elemento no mesmo estado, mesma norma sobre o mesmo tipo de elemento, ou ambos; tipo: ${u.tipoDeSujeito.join(", ")}). Reunidos só por isso; cada cartão tem a sua resposta.`,
       norma: u.normaUnica ? cs[0].normaCitada : null, membros: cs.map(c => c.id) };
-    juiz.set(`lotes/${lote}.json`, jsonTexto({ formato: FORMATO_ADJ_LOTE_A, lote, etapa: "a", politica: rotuloPolitica(p.politica),
+    const referencias = Object.fromEntries(unicos(cs.map(c => c.tela)).map(t => [t, p.referencias[t]]));
+    juiz.set(`lotes/${lote}.json`, jsonTexto(!ehD ? { formato: FORMATO_ADJ_LOTE_A, lote, etapa: "a", politica: rotuloPolitica(p.politica),
       instrucoes: { arquivo: "LEIAME-adjudicacao.md", sha256: sha(leiame) }, instrucoesDoJuiz: { arquivo: "LEIAME-juiz.md", sha256: sha(p.leiameJuiz) },
       esquema: { arquivo: "esquema-adjudicacao-a.schema.json", sha256: sha(esqA) }, respostaEm: `../respostas/${lote}-a.json`, n: cs.length, grupo,
-      referencias: Object.fromEntries(unicos(cs.map(c => c.tela)).map(t => [t, p.referencias[t]])), cartoes: cs }));
+      referencias, cartoes: cs }
+      : { formato: FORMATO_ADJ_LOTE_A, lote, etapa: "a", politica: rotuloPolitica(p.politica),
+        instrucoes: { arquivo: "LEIAME-adjudicacao.md", sha256: sha(leiame) }, instrucoesDoJuiz: { arquivo: "LEIAME-juiz.md", sha256: sha(p.leiameJuiz) },
+        instrucoesDaRegra: { arquivo: regra!.nome, sha256: regra!.sha256 }, evidenciaArquivada: evid.map(e => ({ arquivo: e.arquivo, sha256: sha(e.texto) })),
+        esquema: { arquivo: ESQ_REGRA.a, sha256: sha(esqRA) }, respostaEm: `../respostas/${lote}-a.json`, n: cs.length, grupo, referencias, cartoes: cs }));
     lotes.push({ lote, grupo: u.id, n: cs.length, sha256: sha(juiz.get(`lotes/${lote}.json`)!), ids: cs.map(c => c.id) });
   });
   const just = new Map<string, string[]>();
   for (const [id, j] of p.julgados) just.set(id, [j.resposta.justificativa]);
-  for (const j of conf.julgamentos) just.set(j.idOriginal, [...(just.get(j.idOriginal) ?? []), j.resposta.justificativa]);
+  for (const j of conf?.julgamentos ?? []) just.set(j.idOriginal, [...(just.get(j.idOriginal) ?? []), j.resposta.justificativa]);
   const cegueira = cegueiraArquivos({ p, arquivos: [...juiz].filter(([rel]) => !/schema/.test(rel)).map(([rel, texto]) => ({ rel, texto })), novos,
     proibidos: [...p.item.keys(), ...idsAmostra], justificativas: just });
+  const afetTxt = afet ? jsonTexto(afet) : "";
   const chaveTxt = jsonTexto({ formato: "nat78-revisao-adjudicacao-chave-1.0.0", aviso: "NÃO entregar aos adjudicadores: liga o id da adjudicação ao cartão da 1ª passada e ao braço",
-    versao: REVISAO_VERSAO, semente: SEMENTE_REVISAO, regrasSha256: sha(REGRAS_CAMPANHA), consistenciaSha256: sha(jsonTexto(a.relatorio)), unidades: unidadesChave });
+    versao: REVISAO_VERSAO, semente: SEMENTE_REVISAO, regrasSha256: sha(REGRAS_CAMPANHA), consistenciaSha256: sha(jsonTexto(a.relatorio)), unidades: unidadesChave,
+    ...(regra ? { regraPublicada: { arquivo: regra.nome, sha256: regra.sha256 }, afetadosSha256: sha(afetTxt) } : {}) });
   const conta = (g: string) => unidades.filter(u => u.gatilhos.includes(g as "a")).length;
+  const cartoesDe = (g: string) => unicos(unidades.flatMap(u => u.origens.filter(x => x.gatilho === g).flatMap(x => x.membros))).length;
   const internos = new Map<string, string>([["chave/adjudicacao-chave.json", chaveTxt], ["regras.md", REGRAS_CAMPANHA], ["regras.md.sha256", `${sha(REGRAS_CAMPANHA)}  regras.md\n`]]);
+  if (regra) {
+    internos.set("regras-gatilho-d.md", REGRAS_GATILHO_D); internos.set("regras-gatilho-d.md.sha256", `${sha(REGRAS_GATILHO_D)}  regras-gatilho-d.md\n`);
+    internos.set("chave/afetados.json", afetTxt); internos.set("chave/afetados.json.sha256", `${sha(afetTxt)}  afetados.json\n`);
+  }
   internos.set("cegueira.json", jsonTexto({ formato: "nat78-revisao-adjudicacao-cegueira-1.0.0", ...cegueira }));
   const arquivos = Object.fromEntries([...juiz].map(([rel, t]) => [rel, sha(t)]));
+  // Sem confiabilidade (só o gatilho d): o que (a)–(c) teriam mandado fica contado, fora desta rodada.
+  const fora = !conf ? unidadesDaCampanha(p, a, []) : null;
   internos.set("manifesto.json", jsonTexto({ formato: "nat78-revisao-adjudicacao-manifesto-1.0.0", versao: REVISAO_VERSAO, politica: rotuloPolitica(p.politica), regrasSha256: sha(REGRAS_CAMPANHA),
     passada: { nome: p.nome, versao: p.versao, julgamentosSha256: p.julgSha, manifestoSha256: sha(p.manifestoTxt) }, avisos,
-    confiabilidade: { dir: relative(join(p.dir, ".."), conf.dir).split(sep).join("/"), relatorioSha256: sha(conf.relTxt), julgamentosSha256: sha(conf.julgTxt), desacordosSha256: sha(conf.desTxt) },
+    confiabilidade: conf ? { dir: relative(join(p.dir, ".."), conf.dir).split(sep).join("/"), relatorioSha256: sha(conf.relTxt), julgamentosSha256: sha(conf.julgTxt), desacordosSha256: sha(conf.desTxt) } : null,
+    ...(regra ? {
+      regraPublicada: { arquivo: regra.nome, sha256: regra.sha256, derivacao: regra.mecanica.derivacao, regrasGatilhoDSha256: sha(REGRAS_GATILHO_D) },
+      afetados: { arquivo: "chave/afetados.json", sha256: sha(afetTxt), cartoes: afet!.total, unidades: afet!.unidades.length,
+        porSpec: Object.fromEntries(unicos(afet!.cartoes.flatMap(c => c.specs)).map(s => [s, afet!.cartoes.filter(c => c.specs.includes(s)).length])),
+        soPeloObservado: afet!.cartoes.filter(c => !c.specs.length).length },
+      evidenciaArquivada: evid.map(e => ({ arquivo: e.arquivo, sha256: sha(e.texto) })),
+    } : {}),
+    ...(!conf ? { semConfiabilidade: { motivo: "rodada só do gatilho (d) (regra publicada): a amostra de confiabilidade (2 juízes novos × lotes da amostra) não foi medida; (a) e (c) não entram nesta rodada e (b) não é avaliável (REGRAS_GATILHO_D §6)",
+      foraDestaRodada: { a: { unidades: fora!.filter(u => u.gatilhos.includes("a")).length, cartoes: unicos(fora!.flatMap(u => u.origens.filter(x => x.gatilho === "a").flatMap(x => x.membros))).length },
+        b: "não avaliável sem a amostra", c: { unidades: fora!.filter(u => u.gatilhos.includes("c")).length, cartoes: unicos(fora!.flatMap(u => u.origens.filter(x => x.gatilho === "c").flatMap(x => x.membros))).length } } } } : {}),
     unidades: unidades.length, cartoes: novos.size, umAdjudicadorPorUnidade: true,
-    porGatilho: { a: conta("a"), b: conta("b"), c: conta("c"), cartoes: { a: unicos(unidades.flatMap(u => u.origens.filter(o => o.gatilho === "a").flatMap(o => o.membros))).length,
-      b: unicos(unidades.flatMap(u => u.origens.filter(o => o.gatilho === "b").flatMap(o => o.membros))).length,
-      c: unicos(unidades.flatMap(u => u.origens.filter(o => o.gatilho === "c").flatMap(o => o.membros))).length } },
+    porGatilho: { a: conta("a"), b: conta("b"), c: conta("c"), ...(regra ? { d: conta("d") } : {}), cartoes: { a: cartoesDe("a"), b: cartoesDe("b"), c: cartoesDe("c"), ...(regra ? { d: cartoesDe("d") } : {}) } },
     arquivos, lotes, chaveSha256: sha(chaveTxt) }));
-  return { unidades, arquivosDoJuiz: juiz, arquivosInternos: internos, cegueira, avisos };
+  return { unidades, arquivosDoJuiz: juiz, arquivosInternos: internos, cegueira, avisos, ...(afet ? { afetados: afet } : {}) };
 }
 
 // ───────────────────────────────────────────────────────────────── adjudicação: validar etapa, revelar, aplicar
 
-interface CtxAdj { p: Passada; dd: string; man: ManifestoAdj; unidades: Map<string, UnidadeChave>; conf: Conf }
+interface CtxAdj { p: Passada; dd: string; man: ManifestoAdj; unidades: Map<string, UnidadeChave>; conf: Conf | null }
 function contextoAdj(p: Passada, dd: string): CtxAdj {
   const man = JSON.parse(lerTexto(join(dd, "manifesto.json"))) as ManifestoAdj;
   const cTxt = lerTexto(join(dd, "chave", "adjudicacao-chave.json"));
   if (sha(cTxt) !== man.chaveSha256) throw new Error("adjudicacao/chave difere do manifesto");
   if (man.passada.julgamentosSha256 !== p.julgSha || man.passada.manifestoSha256 !== sha(p.manifestoTxt)) throw new Error(`a adjudicação foi preparada sobre outra 1ª passada (${man.passada.nome})`);
-  const conf = lerConfiabilidade(p, resolve(p.dir, "..", man.confiabilidade.dir));
-  if (sha(conf.relTxt) !== man.confiabilidade.relatorioSha256 || sha(conf.julgTxt) !== man.confiabilidade.julgamentosSha256) throw new Error("a confiabilidade mudou depois do preparo da adjudicação");
+  // [D-165] Rodada só do gatilho (d): sem confiabilidade (o manifesto diz por quê); a regra do lote confere com o manifesto.
+  if (!man.confiabilidade && !man.regraPublicada) throw new Error("manifesto da adjudicação sem confiabilidade e sem regra publicada");
+  if (man.regraPublicada) {
+    const rAbs = join(dd, "lotes", man.regraPublicada.arquivo);
+    if (!existsSync(rAbs) || sha(readFileSync(rAbs)) !== man.regraPublicada.sha256) throw new Error(`lotes/${man.regraPublicada.arquivo} difere do sha256 da regra no manifesto`);
+  }
+  const conf = man.confiabilidade ? lerConfiabilidade(p, resolve(p.dir, "..", man.confiabilidade.dir)) : null;
+  if (conf && man.confiabilidade && (sha(conf.relTxt) !== man.confiabilidade.relatorioSha256 || sha(conf.julgTxt) !== man.confiabilidade.julgamentosSha256)) throw new Error("a confiabilidade mudou depois do preparo da adjudicação");
   return { p, dd, man, conf, unidades: new Map((JSON.parse(cTxt) as { unidades: UnidadeChave[] }).unidades.map(u => [u.lote, u])) };
 }
 
 type Leitura = { norma: string; forca: string } | typeof NAO_PERGUNTADO;
+export interface LeiturasDaRegra { regraSha256: string; leituraAdotada: LeituraDaRegra; evidenciaDeIdentidade: string;
+  porCartao: { id: string; registroAlcancado: string; creditaSeIdentidadeDemonstrada: string | null; creditaSeIdentidadeNaoDemonstrada: string | null }[] }
 interface DocEtapa { formato: string; lote: string; loteSha256: string; juiz: string; etapa: string; grupo: string; leituraDaNorma: Leitura; respostas: Resposta[];
-  leiturasAlternativasPlausiveis?: string[]; classificacaoDaDivergencia?: { tipos: string[]; evidencias: string[]; justificativa: string } }
+  leiturasAlternativasPlausiveis?: string[]; classificacaoDaDivergencia?: { tipos: string[]; evidencias: string[]; justificativa: string }; leiturasDaRegra?: LeiturasDaRegra }
+const creditaNaLeitura = (x: LeiturasDaRegra["porCartao"][number], l: LeituraDaRegra): string | null => (l === "identidade-demonstrada" ? x.creditaSeIdentidadeDemonstrada : x.creditaSeIdentidadeNaoDemonstrada);
 const ajvAdj = new Map<string, (x: unknown) => boolean>();
 
 export function validarEtapa(cx: CtxAdj, lote: string, etapa: "a" | "b", loteTexto: string, docTexto: string): { erros: string[]; doc: DocEtapa | null; derivadas: Map<string, { resposta: Resposta; derivado: Derivado }> } {
@@ -814,8 +1077,9 @@ export function validarEtapa(cx: CtxAdj, lote: string, etapa: "a" | "b", loteTex
   const pre = `respostas/${lote}-${etapa}.json`;
   let doc: DocEtapa;
   try { doc = JSON.parse(docTexto); } catch (e) { return { erros: [`${pre}: JSON inválido (${(e as Error).message})`], doc: null, derivadas }; }
-  const k = `${cx.p.v12}|${cx.p.v13}|${etapa}`;
-  if (!ajvAdj.has(k)) { const e = esquemasAdjudicacao(cx.p.v12, cx.p.v13); ajvAdj.set(k, new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(etapa === "a" ? e.a : e.b)); }
+  const ehD = (cx.unidades.get(lote)?.gatilhos ?? []).includes("d");
+  const k = `${cx.p.v12}|${cx.p.v13}|${etapa}${ehD ? "|d" : ""}`;
+  if (!ajvAdj.has(k)) { const e = esquemasAdjudicacao(cx.p.v12, cx.p.v13, ehD ? { regra: true } : {}); ajvAdj.set(k, new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(etapa === "a" ? e.a : e.b)); }
   const v = ajvAdj.get(k)! as ((x: unknown) => boolean) & { errors?: { instancePath: string; message?: string }[] | null };
   if (!v(doc)) return { erros: (v.errors ?? []).map(x => `${pre}: esquema ${x.instancePath || "/"} ${x.message}`), doc: null, derivadas };
   const l = JSON.parse(loteTexto) as LoteAdj;
@@ -852,6 +1116,27 @@ export function validarEtapa(cx: CtxAdj, lote: string, etapa: "a" | "b", loteTex
     if (alternativas.length && r.norma !== NAO_PERGUNTADO && !["pendente", "evidencia-indisponivel", "erro-factual"].includes(d.classe))
       erros.push(`${pre}: ${r.id}: há leitura alternativa plausível: o cartão fica incerta/incerto (classe ${d.classe})`);
     derivadas.set(m.idOriginal, { resposta: r, derivado: d });
+    // [D-165] Unidade (d): a spec que a resposta credita é a da leitura adotada em leiturasDaRegra.
+    if (ehD && doc.leiturasDaRegra) {
+      const x = doc.leiturasDaRegra.porCartao.find(y => y.id === r.id);
+      const det = specDetectada(d);
+      if (x && creditaNaLeitura(x, doc.leiturasDaRegra.leituraAdotada) !== det)
+        erros.push(`${pre}: ${r.id}: a resposta credita ${det ?? "nada"}, mas leiturasDaRegra (${doc.leiturasDaRegra.leituraAdotada}) diz ${creditaNaLeitura(x, doc.leiturasDaRegra.leituraAdotada) ?? "null"}`);
+    }
+  }
+  if (ehD && doc.leiturasDaRegra) {
+    const lr = doc.leiturasDaRegra;
+    if (lr.regraSha256 !== cx.man.regraPublicada?.sha256) erros.push(`${pre}: leiturasDaRegra.regraSha256 não é o da regra do lote`);
+    const pc = lr.porCartao.map(x => x.id);
+    for (const x of unicos(pc.filter((y, i) => pc.indexOf(y) !== i))) erros.push(`${pre}: leiturasDaRegra.porCartao: id repetido ${x}`);
+    for (const x of pc) if (!l.grupo.membros.includes(x)) erros.push(`${pre}: leiturasDaRegra.porCartao: id fora da unidade ${x}`);
+    for (const x of l.grupo.membros) if (!pc.includes(x)) erros.push(`${pre}: leiturasDaRegra.porCartao: falta ${x}`);
+    for (const x of lr.porCartao) {
+      const c = cartoes.get(x.id);
+      if (!c) continue;
+      const specs = specsDe(cx.p, c);
+      for (const s of [x.creditaSeIdentidadeDemonstrada, x.creditaSeIdentidadeNaoDemonstrada]) if (s !== null && !specs.includes(s)) erros.push(`${pre}: leiturasDaRegra: ${x.id}: spec ${s} fora da referência`);
+    }
   }
   if (etapa === "b") for (const ev of doc.classificacaoDaDivergencia!.evidencias) {
     const [id, it] = ev.split(":");
@@ -865,9 +1150,9 @@ export function validarEtapa(cx: CtxAdj, lote: string, etapa: "a" | "b", loteTex
 /** Leituras anteriores de um cartão: 1ª passada + juízes da amostra, anônimas, em ordem por hash (nada diz qual é qual). */
 export function leiturasAnteriores(cx: CtxAdj, m: MembroChave): { anon: { leitura: string; resposta: Resposta }[]; revelacao: { leitura: string; fonte: string }[] } {
   const fontes: { fonte: string; resposta: Resposta }[] = [{ fonte: "1a-passada", resposta: cx.p.julgados.get(m.idOriginal)!.resposta },
-    ...cx.conf.julgamentos.filter(j => j.idOriginal === m.idOriginal).map(j => ({ fonte: `confiabilidade:${j.juiz}`, resposta: j.resposta }))];
+    ...(cx.conf?.julgamentos ?? []).filter(j => j.idOriginal === m.idOriginal).map(j => ({ fonte: `confiabilidade:${j.juiz}`, resposta: j.resposta }))];
   const ord = [...fontes].sort((a, b) => (sha(SEMENTE_REVISAO + "leitura|" + m.chave + "|" + a.fonte) < sha(SEMENTE_REVISAO + "leitura|" + m.chave + "|" + b.fonte) ? -1 : 1));
-  const antigos = [m.idOriginal, ...cx.conf.julgamentos.filter(j => j.idOriginal === m.idOriginal && j.idAmostra).map(j => j.idAmostra!)];
+  const antigos = [m.idOriginal, ...(cx.conf?.julgamentos ?? []).filter(j => j.idOriginal === m.idOriginal && j.idAmostra).map(j => j.idAmostra!)];
   const troca = (t: string) => antigos.reduce((s, id) => s.split(id).join(m.id), t);
   return { anon: ord.map((f, i) => ({ leitura: `leitura ${i + 1}`, resposta: { ...f.resposta, id: m.id, justificativa: mascararTextoCego(troca(f.resposta.justificativa)) } })),
     revelacao: ord.map((f, i) => ({ leitura: `leitura ${i + 1}`, fonte: f.fonte })) };
@@ -889,16 +1174,18 @@ export function loteB(p: Passada, dd: string, lote: string): { erros: string[]; 
   const la = JSON.parse(lTxt) as LoteAdj & Record<string, unknown>;
   const u = cx.unidades.get(lote)!;
   const ls = u.membros.map(m => ({ m, l: leiturasAnteriores(cx, m) }));
-  const esqB = jsonTexto(esquemasAdjudicacao(p.v12, p.v13).b);
+  const ehD = u.gatilhos.includes("d");
+  const esqB = jsonTexto(esquemasAdjudicacao(p.v12, p.v13, ehD ? { regra: true } : {}).b);
   const texto = jsonTexto({ formato: FORMATO_ADJ_LOTE_B, lote: `${lote}-b`, etapa: "b", politica: rotuloPolitica(p.politica),
-    instrucoes: la.instrucoes, instrucoesDoJuiz: la.instrucoesDoJuiz, esquema: { arquivo: "esquema-adjudicacao-b.schema.json", sha256: sha(esqB) },
+    instrucoes: la.instrucoes, instrucoesDoJuiz: la.instrucoesDoJuiz, ...(ehD ? { instrucoesDaRegra: la.instrucoesDaRegra, evidenciaArquivada: la.evidenciaArquivada } : {}),
+    esquema: { arquivo: ehD ? ESQ_REGRA.b : "esquema-adjudicacao-b.schema.json", sha256: sha(esqB) },
     respostaEm: `../respostas/${lote}-b.json`, etapaA: { lote: { arquivo: `${lote}.json`, sha256: ml.sha256 }, respostas: { arquivo: `respostas/${lote}-a.json`, sha256: sha(aTxt), congelada: true } },
     n: la.cartoes.length, grupo: la.grupo, referencias: la.referencias, cartoes: la.cartoes,
     leiturasAnteriores: ls.map(x => ({ cartao: x.m.id, leituras: x.l.anon })) });
   const revelacao = jsonTexto({ formato: "nat78-revisao-revelacao-1.0.0", aviso: "NÃO entregar ao adjudicador: diz de quem é cada leitura", lote: `${lote}-b`, loteSha256: sha(texto),
     cartoes: ls.map(x => ({ cartao: x.m.id, idOriginal: x.m.idOriginal, leituras: x.l.revelacao })) });
   const novos = new Map(u.membros.map(m => [m.idOriginal, la.cartoes.find(c => c.id === m.id)! as CartaoCego]));
-  const idsAmostra = cx.conf.julgamentos.map(j => j.idAmostra).filter((x): x is string => !!x);
+  const idsAmostra = (cx.conf?.julgamentos ?? []).map(j => j.idAmostra).filter((x): x is string => !!x);
   const cegueira = cegueiraArquivos({ p, arquivos: [{ rel: `lotes/${lote}-b.json`, texto }], novos, proibidos: [...p.item.keys(), ...idsAmostra], justificativas: new Map(), informado: true });
   if (cegueira.falhas.length) return { erros: cegueira.falhas.map(f => `cegueira: ${f.arquivo} ${f.cartao ?? ""}: ${f.regra} → ${f.trecho}`), texto: null, revelacao: null, cegueira };
   return { erros: [], texto, revelacao, cegueira };
@@ -914,6 +1201,7 @@ export function aplicarAdjudicacao(p: Passada, dd: string): Aplicacao {
   const novas = new Map<string, Resposta>();
   const sobrescritas: Record<string, unknown>[] = [], unidadesOut: Record<string, unknown>[] = [];
   const finais = new Map<string, { unidade: string; gatilhos: string[]; antes: Derivado; depois: Derivado; mudouResposta: boolean }>();
+  const sensRegra: Record<string, unknown>[] = [];
   for (const ml of cx.man.lotes) {
     const lTxt = lerTexto(join(dd, "lotes", `${ml.lote}.json`));
     if (sha(lTxt) !== ml.sha256) { erros.push(`lotes/${ml.lote}.json difere do manifesto (sha256)`); continue; }
@@ -930,7 +1218,15 @@ export function aplicarAdjudicacao(p: Passada, dd: string): Aplicacao {
     const u = cx.unidades.get(ml.lote)!, docB = vb.doc!;
     unidadesOut.push({ unidade: u.id, lote: ml.lote, gatilhos: u.gatilhos, origens: u.origens.map(o => ({ id: o.id, gatilho: o.gatilho })), juiz: docB.juiz,
       leituraA: va.doc!.leituraDaNorma, leituraB: docB.leituraDaNorma, sensibilidade: { leiturasAlternativasPlausiveis: docB.leiturasAlternativasPlausiveis },
-      classificacaoDaDivergencia: docB.classificacaoDaDivergencia, respostas: { a: sha(lerTexto(aAbs)), b: sha(lerTexto(bAbs)) } });
+      classificacaoDaDivergencia: docB.classificacaoDaDivergencia, respostas: { a: sha(lerTexto(aAbs)), b: sha(lerTexto(bAbs)) },
+      ...(docB.leiturasDaRegra ? { leiturasDaRegra: { a: va.doc!.leiturasDaRegra!.leituraAdotada, b: docB.leiturasDaRegra.leituraAdotada, evidenciaDeIdentidade: docB.leiturasDaRegra.evidenciaDeIdentidade } } : {}) });
+    if (docB.leiturasDaRegra) for (const m of u.membros) {
+      const x = docB.leiturasDaRegra.porCartao.find(y => y.id === m.id)!;
+      sensRegra.push({ id: m.idOriginal, idAdjudicacao: m.id, chave: m.chave, unidade: u.id, lote: ml.lote, specsDaRegra: u.specsDaRegra ?? [],
+        leituraAdotada: docB.leiturasDaRegra.leituraAdotada, registroAlcancado: x.registroAlcancado,
+        credita: { "identidade-demonstrada": x.creditaSeIdentidadeDemonstrada, "identidade-nao-demonstrada": x.creditaSeIdentidadeNaoDemonstrada },
+        primeiraPassada: specDetectada(p.julgados.get(m.idOriginal)!.derivado) });
+    }
     for (const m of u.membros) {
       const j1 = p.julgados.get(m.idOriginal)!, A = va.derivadas.get(m.idOriginal)!, B = vb.derivadas.get(m.idOriginal)!;
       const depois: Resposta = { ...B.resposta, id: m.idOriginal };
@@ -963,7 +1259,7 @@ export function aplicarAdjudicacao(p: Passada, dd: string): Aplicacao {
   arquivos.set("julgamentos-1a-passada.json", p.julgTxt);
   arquivos.set("julgamentos-1a-passada.json.sha256", `${p.julgSha}  julgamentos-1a-passada.json\n`);
   // Contestados (S4'): 1ª passada ≠ adjudicação, ou desacordo na amostra.
-  const desac = new Map(cx.conf.desacordos.map(d => [d.id, d]));
+  const desac = new Map((cx.conf?.desacordos ?? []).map(d => [d.id, d]));
   const contestados = p.membros.flatMap(m => {
     const f = finais.get(m.id), d = desac.get(m.id), j1 = p.julgados.get(m.id)!.derivado, fim = f?.depois ?? j1;
     const motivos: string[] = [];
@@ -993,6 +1289,15 @@ export function aplicarAdjudicacao(p: Passada, dd: string): Aplicacao {
   arquivos.set("adjudicacao/sobrescritas.json", resTxt);
   arquivos.set("adjudicacao/sobrescritas.json.sha256", `${sha(resTxt)}  sobrescritas.json\n`);
   arquivos.set("adjudicacao/sobrescritas.md", sobrescritasMd(resumo));
+  // [D-165] Sensibilidade do gatilho (d): por cartão, a spec creditada em cada leitura da regra (REGRAS_GATILHO_D §5).
+  if (sensRegra.length) {
+    const sTxt = jsonTexto({ formato: FORMATO_SENSIBILIDADE_REGRA, versao: REVISAO_VERSAO, aviso: "NÃO entregar a juízes (traz a chave). Insumo de e14-deteccao --sensibilidade-regra.",
+      regra: cx.man.regraPublicada, adjudicacao: { manifestoSha256: sha(lerTexto(join(dd, "manifesto.json"))) }, passada: { nome: p.nome, julgamentosSha256: p.julgSha },
+      leituras: LEITURAS_DA_REGRA, regraDaContagem: "detecção (specDetectada): a resposta B dá a leitura adotada; a outra leitura troca só a spec creditada pelos cartões das unidades (d)",
+      cartoes: ordenar(sensRegra, x => x.id as string) });
+    arquivos.set("adjudicacao/sensibilidade-regra.json", sTxt);
+    arquivos.set("adjudicacao/sensibilidade-regra.json.sha256", `${sha(sTxt)}  sensibilidade-regra.json\n`);
+  }
   return { erros: [], arquivos, resumo };
 }
 
@@ -1040,11 +1345,13 @@ const USO = `uso:
   revisao-campanha.ts confiabilidade amostra --passada PASSADA --saida REVISAO [--n 40] [--semente S] [--analise DIR ...]
   revisao-campanha.ts confiabilidade medir --passada PASSADA --amostra REVISAO/confiabilidade [--juiz-passada OUTRA (só ensaio) ...]
   revisao-campanha.ts adjudicacao preparar --passada PASSADA --confiabilidade REVISAO/confiabilidade --saida REVISAO [--aceitar-mascara-anterior]
+        [--regra-publicada REGRA.md --regra-sha256 SHA [--evidencia ARQ ...]]   (gatilho d; com ele, --confiabilidade é opcional)
   revisao-campanha.ts adjudicacao revelar --passada PASSADA --adjudicacao REVISAO/adjudicacao --lote lote-dNN
   revisao-campanha.ts adjudicacao aplicar --passada PASSADA --adjudicacao REVISAO/adjudicacao --saida PASTA_NOVA`;
 
 export function executar(argv: string[]): number {
-  const a = lerArgs(argv, ["--passada", "--saida", "--analise", "--n", "--semente", "--amostra", "--juiz-passada", "--confiabilidade", "--adjudicacao", "--lote"], ["--aceitar-mascara-anterior"]);
+  const a = lerArgs(argv, ["--passada", "--saida", "--analise", "--n", "--semente", "--amostra", "--juiz-passada", "--confiabilidade", "--adjudicacao", "--lote",
+    "--regra-publicada", "--regra-sha256", "--evidencia"], ["--aceitar-mascara-anterior"]);
   if ("erro" in a) { console.error(`RECUSADO: ${a.erro}\n${USO}`); return 1; }
   try {
     const [m1, m2] = a.modo;
@@ -1086,7 +1393,12 @@ export function executar(argv: string[]): number {
       console.log(`  desacordos (gatilho b): ${r.desacordos.length} cartões; gravado em ${am}`);
     } else if (m1 === "adjudicacao" && m2 === "preparar") {
       const p = passada(), saida = um(a, "--saida"); naoNaPassada(saida, p);
-      const pr = prepararAdjudicacao(p, { confiabilidade: um(a, "--confiabilidade"), aceitarMascaraAnterior: a.flags.has("--aceitar-mascara-anterior") });
+      // [D-165] Com --regra-publicada (gatilho d), --confiabilidade é opcional; sem ela, obrigatória como antes.
+      const regraArq = talvez(a, "--regra-publicada");
+      if (!regraArq && (a.opts.has("--regra-sha256") || a.opts.has("--evidencia"))) throw new Error("--regra-sha256/--evidencia só valem com --regra-publicada");
+      if (regraArq && a.opts.get("--regra-sha256")?.length !== 1) throw new Error("--regra-publicada exige --regra-sha256 (uma vez): o sha256 do arquivo congelado");
+      const pr = prepararAdjudicacao(p, { confiabilidade: regraArq ? talvez(a, "--confiabilidade") : um(a, "--confiabilidade"), aceitarMascaraAnterior: a.flags.has("--aceitar-mascara-anterior"),
+        ...(regraArq ? { regra: { arquivo: regraArq, sha256: a.opts.get("--regra-sha256")![0] }, evidencias: (a.opts.get("--evidencia") ?? []).map(x => resolve(x)) } : {}) });
       const dd = join(saida, "adjudicacao");
       if (pr.cegueira.resultado !== "OK") { gravarImutavel(dd, [["cegueira.json", pr.arquivosInternos.get("cegueira.json")!]]);
         console.error(`CEGUEIRA FALHOU (${pr.cegueira.falhas.length}); nada mais gravado.`); for (const f of pr.cegueira.falhas.slice(0, 30)) console.error(`  ${f.arquivo} ${f.cartao ?? ""}: ${f.regra} → ${f.trecho}`); return 3; }
@@ -1095,7 +1407,8 @@ export function executar(argv: string[]): number {
       console.log(`adjudicação preparada: ${pr.unidades.length} unidade(s) (1 adjudicador novo cada); por gatilho ${JSON.stringify(man.porGatilho)}`);
       for (const u of pr.unidades) console.log(`  ${man.lotes.find(l => l.grupo === u.id)!.lote}: ${u.id} gatilhos ${u.gatilhos.join("+")}, ${u.membros.length} cartão(ões): ${u.membros.join(", ")}`);
       for (const x of pr.avisos) console.log(`  AVISO: ${x}`);
-      console.log(`  dê ao adjudicador só lotes/lote-dNN.json + LEIAME-adjudicacao.md + LEIAME-juiz.md + esquemas (chave/, manifesto.json NÃO)`);
+      if (pr.afetados) console.log(`  gatilho (d): ${pr.afetados.total} cartão(ões) afetado(s) pela regra ${pr.afetados.regra.arquivo} (sha256 ${pr.afetados.regra.sha256.slice(0, 12)}…), em ${pr.afetados.unidades.length} unidade(s); lista em chave/afetados.json`);
+      console.log(`  dê ao adjudicador só lotes/lote-dNN.json + LEIAME-adjudicacao.md + LEIAME-juiz.md + esquemas${pr.afetados ? " (+ a regra e lotes/evidencia/ nos lotes com instrucoesDaRegra)" : ""} (chave/, manifesto.json NÃO)`);
     } else if (m1 === "adjudicacao" && m2 === "revelar") {
       const p = passada(), dd = um(a, "--adjudicacao"), lote = a.opts.get("--lote")?.[0];
       if (!lote || !/^lote-d\d{2}$/.test(lote)) throw new Error("--lote lote-dNN obrigatório");

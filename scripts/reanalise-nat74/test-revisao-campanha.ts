@@ -6,6 +6,9 @@
  *      o caminho inteiro — consistência → amostra → confiabilidade (juízes sintéticos j1/j2 e o substituto T3) →
  *      adjudicação A/B com respostas SINTÉTICAS → aplicar → passada adjudicada, 1ª passada preservada, contestados.
  *      Pula (com aviso) se o ensaio não estiver em govbr-resultados.
+ *   3. [D-165] gatilho (d): numa CÓPIA da dev-366-b-01 (passada + análise p03), regra de teste congelada → derivação
+ *      (B-23 e B-21 exatos, extras listados), recusas (sha256, rascunho, lista não derivável), rodada só do (d) sem
+ *      confiabilidade, etapa A/B com leiturasDaRegra, aplicar → sensibilidade-regra.json → cenários da tabela.
  *   npx tsx scripts/reanalise-nat74/test-revisao-campanha.ts
  */
 import assert from "node:assert/strict";
@@ -17,7 +20,9 @@ import { NAO_PERGUNTADO, type Resposta } from "./e14-comum";
 import {
   FORMATO_ADJ_RESP_A, FORMATO_ADJ_RESP_B, REGRAS_CAMPANHA, aplicarAdjudicacao, consistencia, executar, lerArgs, lerPassada, loteB, medirConfiabilidade,
   prepararAdjudicacao, prepararAmostra, sementeDaCampanha, sortearAmostra, unidadesDaCampanha, gravarImutavel, type Passada,
+  DERIVACAO_TEMPLATE_REGISTRO, FORMATO_REGRA_MECANICA, REGRAS_GATILHO_D, derivarAfetados, lerRegraPublicada,
 } from "./revisao-campanha";
+import { cenariosDaRegra, cenariosMd, specDetectada, tabular, type SensibilidadeRegra } from "./e14-deteccao";
 
 let n = 0, falhas = 0, pulados = 0;
 const t = (nome: string, f: () => void) => { n++; try { f(); console.log(`  ok  ${nome}`); } catch (e) { falhas++; console.log(`  FALHA ${nome}\n       ${e instanceof Error ? e.stack?.split("\n").slice(0, 3).join(" | ") : e}`); } };
@@ -248,6 +253,160 @@ try {
       assert.equal(shaArvore(join(TRIO, "primeira-passada-20261019T4")), antes.t4);
     });
     t("regras fixas: os três gatilhos estão escritos", () => { for (const g of ["**(a)**", "**(b)**", "**(c)**", "nao-alcancado"]) assert.ok(REGRAS_CAMPANHA.includes(g)); });
+  }
+  // ─────────────────────────────────────────────────────────── [D-165] gatilho (d): unidade por regra publicada
+  const D366 = join(RESULTADOS, "analises", "dev-366-b-01");
+  const okD = ["primeira-passada-20261103T1", "p03/analisar-20261103T1"].every(d => existsSync(join(D366, d)));
+  if (!okD) { pulados++; console.log("  (pulado) gatilho (d): dev-366-b-01 ausente em govbr-resultados"); }
+  else {
+    console.log("revisão de campanha nova: gatilho (d) (cópia temporária da dev-366-b-01; regra de teste; respostas = as da 1ª passada)");
+    const raiz = join(tmp, "d366"), PD = join(raiz, "primeira-passada-20261103T1"), AD = join(raiz, "p03", "analisar-20261103T1");
+    cpSync(join(D366, "primeira-passada-20261103T1"), PD, { recursive: true });
+    cpSync(join(D366, "p03", "analisar-20261103T1"), AD, { recursive: true });
+    const julgAntes = sha(readFileSync(join(D366, "primeira-passada-20261103T1", "julgamentos.json")));
+    const bloco = (casca: Record<string, string[]>) => "```json regra-mecanica\n" + JSON.stringify({ formato: FORMATO_REGRA_MECANICA, derivacao: DERIVACAO_TEMPLATE_REGISTRO,
+      identificadorDeRegistro: "^(?:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|\\d+)$", casca }, null, 2) + "\n```\n";
+    const regraTxt = "# Regra de teste (template × registro)\n\nTexto da regra para o teste: crédito só no sujeito e no estado alcançados.\n\n" + bloco({ vistorias: ["pnip-header"] });
+    const regraArq = join(raiz, "regra-teste.md");
+    gravar(raiz, "regra-teste.md", regraTxt);
+    const regraSha = sha(regraTxt);
+    let pd!: Passada;
+    t("(d) regra: sha256 diferente recusa; RASCUNHO recusa; sem bloco ou derivação desconhecida = lista não derivável", () => {
+      pd = lerPassada(PD, { analises: [AD] });
+      assert.throws(() => lerRegraPublicada(regraArq, "0".repeat(64)), /sha256 .* ≠ --regra-sha256/);
+      gravar(raiz, "r-rasc.md", "# RASCUNHO\n" + bloco({ vistorias: [] }));
+      assert.throws(() => lerRegraPublicada(join(raiz, "r-rasc.md"), sha(readFileSync(join(raiz, "r-rasc.md")))), /RASCUNHO/);
+      gravar(raiz, "r-sem.md", "# regra sem bloco\n");
+      assert.throws(() => lerRegraPublicada(join(raiz, "r-sem.md"), sha(readFileSync(join(raiz, "r-sem.md")))), /não é derivável/);
+      const outra = regraTxt.replace(DERIVACAO_TEMPLATE_REGISTRO, "outra-1.0.0");
+      gravar(raiz, "r-outra.md", outra);
+      assert.throws(() => lerRegraPublicada(join(raiz, "r-outra.md"), sha(outra)), /derivação desconhecida/);
+      assert.equal(lerRegraPublicada(regraArq, regraSha).sha256, regraSha);
+    });
+    t("(d) derivação: só cartões + chave + referência + 1ª passada; B-23 e B-21 exatamente; extras listados, nada escolhido à mão", () => {
+      const af = derivarAfetados(pd, lerRegraPublicada(regraArq, regraSha));
+      const tela = af.telas.find(x => x.tela === "vistorias")!;
+      assert.deepEqual(tela.specsAbrangidas, ["B-20", "B-21", "B-22", "B-23", "B-24", "B-27"]);
+      assert.deepEqual(tela.specsDaCasca, ["B-15", "B-16", "B-17", "B-18", "B-19"]);
+      const u = (s: string) => af.unidades.find(x => x.specs.includes(s))!.membros;
+      assert.deepEqual(u("B-23"), ["T3-6e9d59e4a4", "T3-7cfe341162", "T3-8fcadb0eda", "T3-c8eaa55823"]);
+      assert.deepEqual(u("B-21"), ["T3-6616e32cb7", "T3-8a51b4042a", "T3-fe4106e116"]);
+      assert.equal(af.total, 14); assert.equal(af.unidades.length, 7);
+      assert.deepEqual(af.cartoes.find(c => c.id === "T3-8a51b4042a")!.criterios, ["credita-na-1a-passada:B-21"]);
+      assert.deepEqual(derivarAfetados(pd, lerRegraPublicada(regraArq, regraSha)), af, "determinística");
+    });
+    t("(d) lista não derivável: tela com rota de registro sem casca declarada; passada sem parada de registro (tela A)", () => {
+      const sem = regraTxt.replace('"vistorias": [\n      "pnip-header"\n    ]', '"outra": []');
+      gravar(raiz, "r-casca.md", sem);
+      assert.notEqual(sem, regraTxt);
+      assert.throws(() => derivarAfetados(pd, lerRegraPublicada(join(raiz, "r-casca.md"), sha(sem))), /não declara a casca da tela vistorias.*não é derivável/);
+      const P4e = join(tmp, "trio-01", "primeira-passada-20261019T4");
+      if (existsSync(P4e)) assert.throws(() => derivarAfetados(lerPassada(P4e), lerRegraPublicada(regraArq, regraSha)), /nenhuma referência .* parada em rota de registro.*não é derivável/);
+    });
+    const RD = join(raiz, "revisao-d"), ddD = join(RD, "adjudicacao");
+    let prD!: ReturnType<typeof prepararAdjudicacao>;
+    t("(d) só, sem confiabilidade: manifesto com confiabilidade null + motivo, regra e afetados com sha256; lote (d) traz a regra como 3º arquivo", () => {
+      assert.throws(() => prepararAdjudicacao(pd, {}), /falta --confiabilidade/);
+      prD = prepararAdjudicacao(pd, { regra: { arquivo: regraArq, sha256: regraSha } });
+      assert.equal(prD.cegueira.resultado, "OK", JSON.stringify(prD.cegueira.falhas.slice(0, 3)));
+      assert.equal(prD.unidades.length, 7);
+      assert.ok(prD.unidades.every(u => u.gatilhos.join() === "d"));
+      const man = JSON.parse(prD.arquivosInternos.get("manifesto.json")!) as Record<string, any>;
+      assert.equal(man.confiabilidade, null);
+      assert.match(man.semConfiabilidade.motivo, /só do gatilho \(d\)/);
+      assert.equal(man.regraPublicada.sha256, regraSha);
+      assert.equal(man.afetados.sha256, sha(prD.arquivosInternos.get("chave/afetados.json")!));
+      assert.equal(man.regraPublicada.regrasGatilhoDSha256, sha(REGRAS_GATILHO_D));
+      assert.equal(man.arquivos["lotes/regra-teste.md"], regraSha);
+      assert.equal(man.regrasSha256, sha(REGRAS_CAMPANHA), "o regras.md da revisão não muda");
+      const l = JSON.parse(prD.arquivosDoJuiz.get("lotes/lote-d01.json")!) as Record<string, any>;
+      assert.deepEqual(l.instrucoesDaRegra, { arquivo: "regra-teste.md", sha256: regraSha });
+      assert.equal(l.esquema.arquivo, "esquema-adjudicacao-regra-a.schema.json");
+      for (const [rel, txt] of prD.arquivosDoJuiz) if (rel.startsWith("lotes/lote-d")) for (const id of pd.item.keys()) assert.ok(!txt.includes(id), `${rel} traz id da 1ª passada`);
+      gravarImutavel(ddD, [...prD.arquivosDoJuiz, ...prD.arquivosInternos]);
+    });
+    t("(d) a regra entregue com a palavra do desenho experimental falha na cegueira (o texto da regra também é conferido)", () => {
+      const comBraco = regraTxt.replace("Texto da regra", "Vale igual em todo braço. Texto da regra");
+      gravar(raiz, "r-braco.md", comBraco);
+      const r = prepararAdjudicacao(pd, { regra: { arquivo: join(raiz, "r-braco.md"), sha256: sha(comBraco) } });
+      assert.equal(r.cegueira.resultado, "FALHOU");
+      assert.ok(r.cegueira.falhas.some(f => f.arquivo === "lotes/r-braco.md" && f.regra === "palavra braço"));
+    });
+    const chD = () => JSON.parse(readFileSync(join(ddD, "chave", "adjudicacao-chave.json"), "utf8")) as { unidades: { id: string; lote: string; specsDaRegra?: string[]; membros: { id: string; idOriginal: string }[] }[] };
+    const manD = () => JSON.parse(readFileSync(join(ddD, "manifesto.json"), "utf8")) as { lotes: { lote: string }[] };
+    // Leitura sintética: adotada = não demonstrada (credita o que a 1ª passada creditou); demonstrada = toda a unidade B-23 credita B-23.
+    const leit = (lote: string, ajuste?: (x: Record<string, unknown>) => void) => { const u = chD().unidades.find(x => x.lote === lote)!;
+      const porCartao = u.membros.map(m => ({ id: m.id, registroAlcancado: "rota de detalhe medida pela receita do cartão",
+        creditaSeIdentidadeDemonstrada: (u.specsDaRegra ?? []).includes("B-23") ? "B-23" : specDetectada(pd.julgados.get(m.idOriginal)!.derivado),
+        creditaSeIdentidadeNaoDemonstrada: specDetectada(pd.julgados.get(m.idOriginal)!.derivado) }));
+      const x = { regraSha256: regraSha, leituraAdotada: "identidade-nao-demonstrada", evidenciaDeIdentidade: "sintético: nenhuma evidência arquivada de identidade entre os registros", porCartao };
+      ajuste?.(x); return x; };
+    const etapaD = (lote: string, e: "a" | "b", extra: Record<string, unknown> = {}) => {
+      const u = chD().unidades.find(x => x.lote === lote)!;
+      const loteTxt = readFileSync(join(ddD, "lotes", e === "a" ? `${lote}.json` : `${lote}-b.json`), "utf8");
+      const lj = JSON.parse(loteTxt) as { grupo: { pedeLeituraDaNorma: boolean } };
+      const rs = u.membros.map(m => ({ ...pd.julgados.get(m.idOriginal)!.resposta, id: m.id }));
+      const n0 = rs.map(r => r.norma).find(n => n !== NAO_PERGUNTADO) as { id: string; forca: string } | undefined;
+      const leitura = lj.grupo.pedeLeituraDaNorma && n0 ? { norma: n0.id, fonteEVersao: "WCAG 2.2 / base do DS", forca: n0.forca, antecedente: "quando o elemento existe", excecoes: "nenhuma conhecida",
+        evidenciaNecessaria: "medida da página congelada", permiteConcluir: "a violação no estado da receita" } : NAO_PERGUNTADO;
+      gravar(ddD, `respostas/${lote}-${e}.json`, jsonTexto({ formato: e === "a" ? FORMATO_ADJ_RESP_A : FORMATO_ADJ_RESP_B, lote: e === "a" ? lote : `${lote}-b`, loteSha256: sha(loteTxt),
+        juiz: "adjudicador sintético", etapa: e, grupo: u.id, leituraDaNorma: leitura, respostas: rs, leiturasDaRegra: leit(lote),
+        ...(e === "b" ? { leiturasAlternativasPlausiveis: [], classificacaoDaDivergencia: { tipos: ["falta-de-evidencia"], evidencias: [rs[0].id], justificativa: "sintético: a resposta B repete a leitura anterior do cartão." } } : {}), ...extra }));
+    };
+    const loteB23 = () => chD().unidades.find(u => (u.specsDaRegra ?? []).includes("B-23"))!.lote;
+    t("(d) etapa A: sem leiturasDaRegra recusa (esquema); crédito fora da leitura adotada recusa; regra adulterada no lote recusa", () => {
+      for (const x of manD().lotes) etapaD(x.lote, "a");
+      const l = loteB23();
+      assert.deepEqual(loteB(pd, ddD, l).erros, []);
+      etapaD(l, "a", { leiturasDaRegra: undefined });
+      assert.match(loteB(pd, ddD, l).erros.join(), /esquema .*leiturasDaRegra/);
+      etapaD(l, "a", { leiturasDaRegra: leit(l, x => { x.leituraAdotada = "identidade-demonstrada"; }) });
+      assert.match(loteB(pd, ddD, l).erros.join(), /mas leiturasDaRegra \(identidade-demonstrada\) diz B-23/);
+      etapaD(l, "a", { leiturasDaRegra: leit(l, x => { (x.porCartao as unknown[]).pop(); }) });
+      assert.match(loteB(pd, ddD, l).erros.join(), /porCartao: falta/);
+      etapaD(l, "a", { leiturasDaRegra: leit(l, x => { x.regraSha256 = "1".repeat(64); }) });
+      assert.match(loteB(pd, ddD, l).erros.join(), /regraSha256 não é o da regra/);
+      etapaD(l, "a");
+      const orig = readFileSync(join(ddD, "lotes", "regra-teste.md"), "utf8");
+      gravar(ddD, "lotes/regra-teste.md", orig + "x");
+      assert.match(loteB(pd, ddD, l).erros.join(), /difere do sha256 da regra/);
+      gravar(ddD, "lotes/regra-teste.md", orig);
+    });
+    t("(d) revelar → B → aplicar sem confiabilidade: sensibilidade-regra.json; 1ª passada intacta; tabela: com 18 → 19 na leitura 'demonstrada'", () => {
+      for (const x of manD().lotes) {
+        const r = loteB(pd, ddD, x.lote);
+        assert.deepEqual(r.erros, []);
+        const b = JSON.parse(r.texto!) as Record<string, any>;
+        assert.equal(b.instrucoesDaRegra.sha256, regraSha); assert.equal(b.esquema.arquivo, "esquema-adjudicacao-regra-b.schema.json");
+        assert.deepEqual(b.leiturasAnteriores[0].leituras.map((y: { leitura: string }) => y.leitura), ["leitura 1"], "sem amostra: só a 1ª passada");
+        gravarImutavel(ddD, [[`lotes/${x.lote}-b.json`, r.texto!], [`chave/revelacao-${x.lote}.json`, r.revelacao!]]);
+      }
+      for (const x of manD().lotes) etapaD(x.lote, "b");
+      const ap = aplicarAdjudicacao(pd, ddD);
+      assert.deepEqual(ap.erros, []);
+      const sens = JSON.parse(ap.arquivos.get("adjudicacao/sensibilidade-regra.json")!) as SensibilidadeRegra;
+      assert.equal(sens.cartoes.length, 14);
+      assert.equal(sens.regra!.sha256, regraSha);
+      assert.equal(sha(readFileSync(join(PD, "julgamentos.json"))), pd.julgSha);
+      assert.equal((JSON.parse(ap.arquivos.get("contestados.json")!) as { confiabilidade: unknown }).confiabilidade, null);
+      const ch = new Map(pd.itens.map(i => [i.chave, i.braco]));
+      const js = [...pd.julgados.values()].map(j => ({ ...j, chave: pd.item.get(j.id)!.chave })) as never[];
+      const ref = JSON.parse(readFileSync(join(AD, "entradas", "referencia.json"), "utf8")) as { violations: { id: string; categories: string[] }[] };
+      const tab = tabular(js, k => ch.get(k)!, ref.violations, "politica-normativa-1.3.0", ["sem", "ferramentas", "com"]);
+      const cen = cenariosDaRegra(js, k => ch.get(k)!, tab, sens, js);
+      assert.equal(cen.porCenario["1a-passada"].com!.deteccao, 18);
+      assert.equal(cen.porCenario["identidade-nao-demonstrada"].com!.deteccao, 18);
+      assert.equal(cen.porCenario["identidade-demonstrada"].com!.deteccao, 19);
+      assert.equal(cen.porCenario["identidade-demonstrada"].sem!.deteccao, cen.porCenario["1a-passada"].sem!.deteccao);
+      assert.match(cenariosMd(cen, tab.bracos), /\| identidade-demonstrada \| 15 \| 14 \| 19 \|/);
+    });
+    t("(d) CLI: --regra-publicada sem --regra-sha256 recusa; --evidencia sem regra recusa; a fonte real da passada não mudou", () => {
+      assert.equal(silencioso(() => executar(["adjudicacao", "preparar", "--passada", PD, "--analise", AD, "--saida", join(raiz, "x"), "--regra-publicada", regraArq])), 1);
+      assert.equal(silencioso(() => executar(["adjudicacao", "preparar", "--passada", PD, "--analise", AD, "--saida", join(raiz, "x"), "--evidencia", regraArq])), 1);
+      assert.equal(silencioso(() => executar(["adjudicacao", "preparar", "--passada", PD, "--analise", AD, "--saida", join(raiz, "y"), "--regra-publicada", regraArq, "--regra-sha256", regraSha])), 0);
+      assert.equal(readFileSync(join(raiz, "y", "adjudicacao", "manifesto.json"), "utf8"), readFileSync(join(ddD, "manifesto.json"), "utf8"));
+      assert.equal(sha(readFileSync(join(D366, "primeira-passada-20261103T1", "julgamentos.json"))), julgAntes);
+    });
   }
 } finally { rmSync(tmp, { recursive: true, force: true }); }
 
