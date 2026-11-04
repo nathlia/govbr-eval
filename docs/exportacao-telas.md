@@ -141,7 +141,11 @@ temporário com `core.autocrlf=true`, clona e audita o clone.
    a interação de `telas.json` e os passos `setup` das referências — lidos em tempo de teste, nunca
    copiados para o pacote; `navigate` por `pushState` + `popstate`, como o instrumento —, exige que
    nenhum pedido saia da origem e que nenhum falhe, e compara o console com o do mesmo site servido
-   pela superfície de medida (mensagens novas falham).
+   pela superfície de medida (mensagens novas falham). Antes de recarregar e antes de fechar a página o teste
+   espera a rede assentar (nenhum pedido em voo por 300 ms; pedido sem resposta em 10 s falha com o nome): uma
+   interação pode revelar texto que só então pede um recurso (a fonte itálica `rawline-400i` da A2, ao abrir a aba
+   de documentos), e recarregar com ele em voo fazia o PRÓPRIO teste abortá-lo (`net::ERR_ABORTED`), sem falha da
+   página.
 
 ## Ocorrências relatadas na exportação atual (corpus `5a3c3f8`)
 

@@ -111,7 +111,13 @@ foi construída de um clone limpo no commit `e15b1b1` (3.4.1; tools/list igual a
 `data/`), o mesmo estado que o checkout por SHA do CI produz: `GOVBR_VALIDATOR_DIR=<clone>` no build e no
 `run-once`/testes. O checkout de trabalho do validator só serve ao preflight se o `dist/` e o `data/` dele
 forem os do commit (sem arquivos de builds antigos nem `data/models/`).
-A imagem vigente é `govbr-runner-oracle:3.7.1-6630a9bf68e8` (commit `a0038a9` = 3.7.1 `cffccf7` + detector de vazamento 1.3.1 em
+Proposta para a rodada 3.7.2 (lock de 2026-11-04T08:13): `govbr-runner-oracle:3.7.2-2eb7fa72d25e` (`sha256:8eb4d20c…`,
+commit `cd11347`, dist `2eb7fa72d25e…`, `dataSha256` `ffe79da7…` igual ao da 3.7.1; tools/list iguais, pins
+`TOOLS_LIST_SHA256_3_6_1`), construída de uma worktree limpa (`.tmp-eval/validator-372`, `npm ci` + `tsc`; o mesmo `dist`
+do checkout de trabalho no commit), com o coletor `sha256:48322a58…` (rótulo `govbr.collector.inspection-revision` =
+`inspection.v1+clauses-1`) e a tela `sha256:1c5574f7…` (site `88076aec26e9`, manifesto `6b771736…` com a skill
+`054a183f…`); agente e egress iguais. Antes dela:
+`govbr-runner-oracle:3.7.1-6630a9bf68e8` (commit `a0038a9` = 3.7.1 `cffccf7` + detector de vazamento 1.3.1 em
 `scripts/lib/vazamento.ts`, que não entra no `dist/`; tools/list iguais aos da 3.6.1, então os pins seguem `TOOLS_LIST_SHA256_3_6_1`;
 base com a emenda-1, `dataSha256` `ffe79da7…`), construída de uma worktree limpa (`.tmp-eval/validator-371`, `GOVBR_VALIDATOR_DIR`,
 `npm ci` + `tsc`) em 03/11 de madrugada; o `dist` (`6630a9bf68e8…`) é o mesmo construído antes no commit `cffccf7`. Antes dela:
@@ -279,6 +285,11 @@ perfis fixados (nomes + sha256 do `tools/list`) ficam em `runner/perfis-oraculo.
   (`'br-input[formcontrolname='portoDesembarque'] >>> input'`): esses caminhos entram como citados, e a
   citação passa a tirar da folha o valor INTEIRO de um `actions[*].selector` entre aspas idênticas antes de
   conferir que o termo sumiu. Dez canários novos (33 no total). Revarredura: rep-01 10 → 0, rep-03 4 → 0.
+  **1.3.4 (rodada 3.7.2):** o inventário do DOM de uma tela pode declarar `sites` (vários vínculos
+  `{ siteSha256, manifestSha256 }`, cada um medido com conteúdo idêntico por `inventario-dom.ts --vincular`) e é
+  aceito quando o site em `telasDir` está na lista; o arquivo de um site só (`site`) continua válido. Forma inválida
+  (os dois campos, lista vazia, repetida, sha fora do formato) é erro. Nenhuma regra de classificação muda; canários
+  iguais (45).
 - **Aderência:** no `ferramentas` a consulta normativa é "não aplicável"; o gate é scan + verificação
   quando há candidato com regra.
 - **Texto da tarefa:** o mesmo sha256 nos três braços (`test:avaliar-tela`, `test:runner`).

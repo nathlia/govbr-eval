@@ -80,9 +80,11 @@ A campanha real da tela B precisa do próprio `campaign.json` (e agenda) commita
 **Tela A2 (`tela = acompanhamento`, NAT-110).** Mesmo caminho. A A2 é página comum (sem SPA) e entra no site
 congelado desde `export-telas-1.3.0` (site `88076aec26e9`). Não declara fonte: o ESLint não roda, e
 `eslintAusente` diz por quê. O inventário do DOM para o detector de vazamento é
-`scripts/vazamento/inventario-dom/acompanhamento.json`, preso ao site novo. Com o lock no site `88076aec26e9`,
-os inventários da A e da B continuam presos ao `1a6e8daf3cdb`, o das campanhas já coletadas. Campanha nova
-da A ou da B nesse site precisa remedi-los antes; o conteúdo medido é o mesmo, muda só o vínculo.
+`scripts/vazamento/inventario-dom/acompanhamento.json`, preso ao site novo. Os inventários da A e da B estão
+presos aos DOIS sites (detector 1.3.4: `sites`, lista de vínculos): o `1a6e8daf3cdb` das campanhas já coletadas e o
+`88076aec26e9`, onde foram remedidos com conteúdo idêntico campo a campo (`inventario-dom.ts --vincular`, que só
+acrescenta o site quando a medição é igual à do arquivo). A rechecagem das campanhas antigas e as campanhas novas
+nesse site aceitam o mesmo arquivo.
 
 **Trio (NAT-61, `braco = ferramentas`).** O terceiro braço usa o mesmo contêiner do oráculo do `com`, no
 perfil `knowledge-free` (validator ≥ 2.14.0); o checkout e a compilação do validator rodam em `com` e em

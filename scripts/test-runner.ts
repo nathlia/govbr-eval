@@ -378,6 +378,43 @@ async function testesSemDocker(): Promise<void> {
     assert.ok(sem(ATIVO, "specs:rootClass", "scan_page"), "mesmo caminho noutra ferramenta");
     assert.equal(sujas.porClasse.pagina ?? 0, 0, `nada perdoado como página: ${JSON.stringify(sujas.porClasse)}`);
   });
+  await test("inventário do DOM 1.3.4 (rodada 3.7.2): vários sites medidos com conteúdo idêntico; site fora da lista diverge; forma inválida é recusada", async () => {
+    const { inventarioDaTela, sitesDoInventario } = await import("./vazamento/conhecimento");
+    const h = (c: string) => c.repeat(64);
+    const base = { tags: [], classes: [] };
+    assert.deepEqual(sitesDoInventario({ ...base, site: { siteSha256: h("a") } }), [h("a")], "arquivo de um site só continua válido");
+    assert.deepEqual(sitesDoInventario({ ...base, sites: [{ siteSha256: h("a") }, { siteSha256: h("b") }] }), [h("a"), h("b")]);
+    const invalidos: [string, Record<string, unknown>][] = [
+      ["site e sites", { site: { siteSha256: h("a") }, sites: [{ siteSha256: h("b") }] }], ["lista vazia", { sites: [] }], ["sem vínculo", {}],
+      ["repetido", { sites: [{ siteSha256: h("a") }, { siteSha256: h("a") }] }], ["fora do formato", { sites: [{ siteSha256: "1a6e8daf3cdb" }] }], ["sem sha", { sites: [{}] }],
+    ];
+    for (const [nome, inv] of invalidos) assert.throws(() => sitesDoInventario({ ...base, ...inv } as never), /site/, nome);
+    // os inventários do repositório: A e B nos dois sites (o das dev-371-a/b e o da A2, mesmos bytes de A e B); A2 só no dela
+    const ANTIGO = "1a6e8daf3cdb02da4f03cc3e39f52c0a1f44063b8270238ac5caf78eae39d11a";
+    const NOVO = "88076aec26e9b144831330bf76c35b5c38ed139f1c4305f16c08ec905dada8f8";
+    const telasCom = (sha: string): string => {
+      const d = mkdtempSync(join(ROOT, "telas-inventario-"));
+      writeFileSync(join(d, "site-manifest.json"), JSON.stringify({ item: { sha256: sha } }));
+      return d;
+    };
+    for (const tela of ["solicitacao", "vistorias"]) {
+      const [a, b] = [ANTIGO, NOVO].map((site) => inventarioDaTela(tela, telasCom(site)));
+      for (const [r, site] of [[a, ANTIGO], [b, NOVO]] as const) {
+        assert.equal(r.estado.status, "ok", `${tela} no site ${site.slice(0, 12)}: ${JSON.stringify(r.estado)}`);
+        assert.equal(r.estado.siteSha256, site);
+      }
+      assert.deepEqual([...a.elements!.tags], [...b.elements!.tags]);
+      assert.deepEqual([...a.elements!.classes], [...b.elements!.classes]);
+      const fora = inventarioDaTela(tela, telasCom(h("c")));
+      assert.equal(fora.estado.status, "site-diverge");
+      assert.equal(fora.elements, null, "fora da lista nada é perdoado");
+      assert.equal(fora.estado.siteSha256, `${ANTIGO},${NOVO}`);
+    }
+    assert.equal(inventarioDaTela("acompanhamento", telasCom(NOVO)).estado.status, "ok");
+    const a2Antigo = inventarioDaTela("acompanhamento", telasCom(ANTIGO));
+    assert.equal(a2Antigo.estado.status, "site-diverge");
+    assert.equal(a2Antigo.estado.siteSha256, NOVO, "arquivo de um site só relata o próprio site, como antes");
+  });
 }
 
 async function main(): Promise<void> {

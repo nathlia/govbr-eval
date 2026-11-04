@@ -25,7 +25,7 @@ import { request as httpRequest, type Server } from "node:http";
 import type { AddressInfo } from "node:net";
 import { tmpdir } from "node:os";
 import { extname, join, resolve } from "node:path";
-import { chromium, type Browser, type Page } from "playwright";
+import { chromium, type Browser, type Page, type Request } from "playwright";
 import { validateContract } from "../contracts/index";
 import { ROOT } from "./adjudication";
 import {
@@ -270,12 +270,34 @@ async function visitScreen(browser: Browser, origin: string, tela: Tela): Promis
   const page = await context.newPage();
   const visit: Visit = { outside: [], nonNetwork: 0, console: [], failed: [] };
   const norm = (s: string): string => s.split(origin).join("<origem>");
+  // Pedidos em voo: uma interação pode revelar texto que só então pede um recurso (a fonte itálica da A2,
+  // ao abrir a aba de documentos). Navegar de novo ou fechar o contexto com ele em voo faz o PRÓPRIO
+  // teste abortá-lo (net::ERR_ABORTED), o que não é falha da página. Antes de recarregar e antes de
+  // fechar, o teste espera a rede assentar; um pedido que não termina em 10 s falha com o nome.
+  const pending = new Set<Request>();
   page.on("request", (r) => {
     const u = new URL(r.url());
     if (u.protocol === "data:" || u.protocol === "blob:") { visit.nonNetwork++; return; }
     if (u.origin !== origin) visit.outside.push(r.url());
+    pending.add(r);
   });
-  page.on("requestfailed", (r) => visit.failed.push(`${norm(r.url())} ${r.failure()?.errorText ?? ""}`));
+  page.on("requestfinished", (r) => pending.delete(r));
+  page.on("requestfailed", (r) => {
+    pending.delete(r);
+    visit.failed.push(`${norm(r.url())} ${r.failure()?.errorText ?? ""}`);
+  });
+  const settle = async (when: string): Promise<void> => {
+    const deadline = Date.now() + 10_000;
+    let quietSince = Date.now();
+    for (;;) {
+      if (pending.size > 0) quietSince = Date.now();
+      else if (Date.now() - quietSince >= 300) return;
+      if (Date.now() > deadline) {
+        assert.fail(`${tela.nome}: pedidos sem resposta em 10 s ${when}: ${[...pending].map((r) => norm(r.url())).join(", ")}`);
+      }
+      await page.waitForTimeout(50);
+    }
+  };
   page.on("console", (m) => { if (m.type() === "error" || m.type() === "warning") visit.console.push(`${m.type()}: ${norm(m.text())}`); });
   page.on("pageerror", (e) => visit.console.push(`pageerror: ${norm(e.message)}`));
   try {
@@ -289,10 +311,12 @@ async function visitScreen(browser: Browser, origin: string, tela: Tela): Promis
       await page.click(inter.clicar, { timeout: 10_000 });
       await page.waitForSelector(inter.esperar, { timeout: 10_000 });
     }
+    await settle("antes de recarregar");
     // Recarregar volta ao estado inicial; os passos da referência partem dele.
     await page.goto(origin + "/" + tela.entry, { waitUntil: "load" });
     await page.waitForSelector(ref.waitFor, { timeout: 15_000 });
     for (const step of ref.setup) await runStep(page, step);
+    await settle("no fim do setup");
   } finally {
     await context.close();
   }

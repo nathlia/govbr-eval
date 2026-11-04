@@ -82,8 +82,19 @@ import { argValues, buildDictionary, classify, exactTokens, hitsInText, leaves, 
  * outra ferramenta, e a folha fora do formato continuam sem explicação. O núcleo (cópia do validator) não muda. Doze
  * canários novos marcam os dois lados (45 no total).
  * Rechecagem offline (`--revarrer`): rep-01/rep-02/rep-03 1 → 0 sem explicação cada.
+ *
+ * 1.3.4 (rodada 3.7.2): o vínculo do inventário do DOM a um site deixa de ser um só. Os inventários da A e da B foram
+ * medidos no site `1a6e8daf3cdb` (o das campanhas dev-371-a/b) e o site seguinte (`88076aec26e9`, com a A2) serve os
+ * mesmos bytes de A e de B: remedidos nele, o conteúdo medido é idêntico. Trocar o vínculo quebraria a rechecagem das
+ * campanhas antigas (`site-diverge`); manter quebra toda campanha nova. Um inventário pode declarar `sites` (lista de
+ * vínculos, cada um `{ siteSha256, manifestSha256 }`, medido com conteúdo idêntico: `inventario-dom.ts --vincular`
+ * só acrescenta um site quando a medição nele é igual campo a campo à do arquivo), e é aceito quando o site em
+ * `telasDir` está na lista. O arquivo de um site só (`site`) continua válido e lido como antes. Arquivo com os dois
+ * campos, lista vazia, repetida ou sha fora do formato é recusado (erro, nunca aceito em silêncio). Na divergência,
+ * `estado.siteSha256` continua o do arquivo de um site só; no de vários, os da lista separados por vírgula. Nenhuma
+ * regra de classificação muda (núcleo e canários iguais).
  */
-export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.3";
+export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.4";
 
 /**
  * 1.2.0 (D-154): eco do SELETOR DE AÇÃO da mesma chamada. Desde o validator 3.4.3 a resposta encolhida do
@@ -307,9 +318,31 @@ export interface EstadoInventario {
   classesDinamicas: number;
 }
 
+/** Vínculo de um inventário a um site congelado: o `item.sha256` do site-manifest.json e o sha256 do manifesto. */
+export interface VinculoDeSite { siteSha256: string; manifestSha256?: string }
+/** Forma lida de `inventario-dom/<tela>.json`: `site` (um vínculo, até 1.3.3) ou `sites` (vários, 1.3.4), nunca os dois. */
+export interface InventarioDom { site?: VinculoDeSite; sites?: VinculoDeSite[]; tags: string[]; classes: string[]; classesDinamicas?: Record<string, string> }
+
+/**
+ * Sites a que o inventário está preso (1.3.4): `sites` (cada um medido com conteúdo idêntico) ou o `site` único. Forma
+ * inválida lança: arquivo com `site` e `sites`, sem nenhum, lista vazia, sha fora do formato ou repetido.
+ */
+export function sitesDoInventario(inv: InventarioDom, arquivo = "inventário"): string[] {
+  const hex = (v: unknown): v is string => typeof v === "string" && /^[0-9a-f]{64}$/.test(v);
+  if (inv.site !== undefined && inv.sites !== undefined) throw new Error(`${arquivo}: declara "site" e "sites"; use só "sites"`);
+  const lista = inv.sites !== undefined ? inv.sites : inv.site !== undefined ? [inv.site] : null;
+  if (!Array.isArray(lista) || lista.length === 0) throw new Error(`${arquivo}: sem vínculo de site ("site" ou "sites" não vazio)`);
+  const shas = lista.map((v) => v?.siteSha256);
+  const ruim = shas.findIndex((v) => !hex(v));
+  if (ruim >= 0) throw new Error(`${arquivo}: siteSha256 fora do formato (64 hex): ${JSON.stringify(shas[ruim] ?? null)}`);
+  if (new Set(shas).size !== shas.length) throw new Error(`${arquivo}: siteSha256 repetido em "sites"`);
+  return shas as string[];
+}
+
 /**
  * Inventário do DOM renderizado da tela (`inventario-dom/<tela>.json`), aceito só se foi medido sobre ESTE site
- * (siteSha256 = item.sha256 do site-manifest.json em telasDir, o mesmo que o images.lock fixa). Falha fechada: tela não
+ * (siteSha256 = item.sha256 do site-manifest.json em telasDir, o mesmo que o images.lock fixa; desde 1.3.4, um dos
+ * `sites` do arquivo, ver `sitesDoInventario`). Falha fechada: tela não
  * informada, arquivo ausente ou site diferente → `elements` null e a regra do seletor de elemento não perdoa nada.
  */
 export function inventarioDaTela(tela: string | null | undefined, telasDir: string): { elements: PageElements | null; estado: EstadoInventario } {
@@ -318,11 +351,12 @@ export function inventarioDaTela(tela: string | null | undefined, telasDir: stri
   if (!tela) return vazio("sem-tela");
   const arquivo = fileURLToPath(new URL(`./inventario-dom/${tela}.json`, import.meta.url));
   if (!existsSync(arquivo)) return vazio("ausente", arquivo);
-  const inv = JSON.parse(readFileSync(arquivo, "utf8")) as { site: { siteSha256: string }; tags: string[]; classes: string[]; classesDinamicas?: Record<string, string> };
+  const inv = JSON.parse(readFileSync(arquivo, "utf8")) as InventarioDom;
+  const sites = sitesDoInventario(inv, arquivo);
   const dinamicas = Object.keys(inv.classesDinamicas ?? {});
   const manifesto = join(telasDir, "site-manifest.json");
   const site = existsSync(manifesto) ? (JSON.parse(readFileSync(manifesto, "utf8")) as { item?: { sha256?: string } }).item?.sha256 ?? null : null;
-  if (!site || site !== inv.site.siteSha256) return vazio("site-diverge", arquivo, inv.site.siteSha256);
+  if (!site || !sites.includes(site)) return vazio("site-diverge", arquivo, sites.join(","));
   return { elements: { tags: new Set(inv.tags), classes: new Set([...inv.classes, ...dinamicas]) },
     estado: { tela, status: "ok", arquivo, siteSha256: site, tags: inv.tags.length, classes: inv.classes.length, classesDinamicas: dinamicas.length } };
 }

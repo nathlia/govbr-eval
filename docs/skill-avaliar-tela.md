@@ -71,8 +71,10 @@ não tem quarto estado.
 `govbr.collector.inspection-revision`, medido no próprio schema copiado (`collectorInspectionRevisionOf` em
 `runner/build-images.ts`). Quando a skill do pacote pede `clauses`, o run-once só parte com a imagem travada que
 declara `inspection.v1+clauses-1` (integridade `coletor-estado-de-clausula`): a imagem anterior marcaria o
-registro de inspeção inteiro como inválido. A skill das campanhas coletadas não pede o campo e não exige nada. O lock
-atual (imagens de 2026-11-04T02:32) ainda não tem o rótulo.
+registro de inspeção inteiro como inválido. A skill das campanhas coletadas não pede o campo e não exige nada. As
+imagens de 2026-11-04T02:32 não têm o rótulo; as da rodada 3.7.2 (lock de 2026-11-04T08:13, coletor
+`sha256:48322a58…`) declaram `inspection.v1+clauses-1`. O pacote `govbr-telas` reexportado com esta skill mantém o
+site `88076aec26e9` (o hash do site cobre só `site/`); muda o `site-manifest.json` (`skills[]`, sha256 `6b771736…`).
 
 **O que o texto não garante.** O estado por cláusula é declaração. Conferir se cada `ref` declarado foi mesmo servido
 por uma ferramenta, e se toda cláusula servida recebeu estado, é trabalho do leitor do pacote (os payloads do oráculo

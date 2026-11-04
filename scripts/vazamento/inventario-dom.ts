@@ -16,12 +16,19 @@
  * site em `telasDir` (senão: sem inventário → a regra não perdoa nada, falha fechada).
  *
  *   npx tsx scripts/vazamento/inventario-dom.ts [--telas ../govbr-telas] [--tela vistorias]... [--site http://127.0.0.1:PORTA]
+ *                                              [--vincular] [--saida <pasta>]
  *
  * Sem --site, sobe `node <telas>/server.mjs` numa porta livre e o encerra no fim.
+ *
+ * `--vincular` (detector 1.3.4): mede no site de `--telas` e compara com o arquivo existente campo a campo, fora o
+ * vínculo (`site`/`sites`). Igual → acrescenta o site a `sites` (o arquivo de um site só vira `sites` com os dois, o
+ * antigo primeiro); site já na lista → nada muda; diferente → lista os campos que diferem, não grava e sai com erro.
+ * Sem `--vincular`, um arquivo que já tem `sites` não é sobrescrito (remedir do zero = apagá-lo antes). `--saida`
+ * grava noutra pasta (lê o existente de lá também, se houver).
  */
 import { spawn, type ChildProcess } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createServer } from "node:net";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -29,6 +36,7 @@ import { chromium, type Browser } from "playwright";
 import type { FlowSetupStep } from "../../types";
 import { openPage, runSetupSteps } from "../anchors";
 import { DEFAULT_TELAS_DIR } from "../../runner/lib";
+import { sitesDoInventario, type InventarioDom, type VinculoDeSite } from "./conhecimento";
 
 export const INVENTARIO_VERSAO = "inventario-dom-1.1.0";
 export const INVENTARIO_DIR = join(fileURLToPath(new URL(".", import.meta.url)), "inventario-dom");
@@ -155,12 +163,15 @@ async function main(): Promise<void> {
   const muitos = (k: string) => argv.flatMap((a, i) => (a === `--${k}` && argv[i + 1] ? [argv[i + 1]] : []));
   const telasDir = resolve(muitos("telas")[0] ?? DEFAULT_TELAS_DIR);
   const telas = muitos("tela").length ? muitos("tela") : ["solicitacao", "vistorias"];
+  const vincular = argv.includes("--vincular");
+  const saida = muitos("saida")[0] ? resolve(muitos("saida")[0]) : INVENTARIO_DIR;
   const manifestoTexto = readFileSync(join(telasDir, "site-manifest.json"));
   const manifesto = JSON.parse(manifestoTexto.toString("utf8")) as { item: { sha256: string } };
   const telasJson = JSON.parse(readFileSync(join(ROOT_EVAL, "telas.json"), "utf8")) as Record<string, { reference?: string | null }>;
   const servido = muitos("site")[0] ? { url: muitos("site")[0].replace(/\/+$/, ""), filho: null } : await servir(telasDir);
   const browser = await chromium.launch({ headless: true });
-  mkdirSync(INVENTARIO_DIR, { recursive: true });
+  mkdirSync(saida, { recursive: true });
+  let divergentes = 0;
   try {
     for (const tela of telas) {
       const ref = telasJson[tela]?.reference;
@@ -186,13 +197,43 @@ async function main(): Promise<void> {
         classesDinamicas,
         estados: estados.map((e) => ({ id: e.id, afterStep: e.afterStep, path: e.path, tags: e.tags.length, classes: e.classes.length, focados: e.focados, sobrevoados: e.sobrevoados })),
       };
-      writeFileSync(join(INVENTARIO_DIR, `${tela}.json`), JSON.stringify(doc, null, 1) + "\n");
-      console.log(`${tela}: ${estados.length} paradas; ${tags.length} tags, ${classes.length} classes, ${Object.keys(classesDinamicas).length} dinâmicas ${JSON.stringify(Object.values(classesDinamicas).reduce((n: Record<string, number>, f) => ((n[f] = (n[f] ?? 0) + 1), n), {}))} → ${join(INVENTARIO_DIR, `${tela}.json`)}`);
+      const destino = join(saida, `${tela}.json`);
+      const resumo = `${estados.length} paradas; ${tags.length} tags, ${classes.length} classes, ${Object.keys(classesDinamicas).length} dinâmicas ${JSON.stringify(Object.values(classesDinamicas).reduce((n: Record<string, number>, f) => ((n[f] = (n[f] ?? 0) + 1), n), {}))}`;
+      const existente = existsSync(destino) ? JSON.parse(readFileSync(destino, "utf8")) as InventarioDom & Record<string, unknown> : null;
+      if (!vincular) {
+        if (existente?.sites !== undefined) throw new Error(`${destino} tem vários sites: use --vincular (ou apague o arquivo para remedir do zero)`);
+        writeFileSync(destino, JSON.stringify(doc, null, 1) + "\n");
+        console.log(`${tela}: ${resumo} → ${destino}`);
+        continue;
+      }
+      if (!existente) throw new Error(`--vincular: ${destino} não existe (meça sem --vincular primeiro)`);
+      const vinculos: VinculoDeSite[] = existente.sites ?? (existente.site ? [existente.site] : []);
+      sitesDoInventario(existente, destino);
+      const { site: _medidoSite, ...medido } = doc as Record<string, unknown>;
+      const { site: _site, sites: _sites, ...anterior } = existente;
+      const campos = [...new Set([...Object.keys(medido), ...Object.keys(anterior)])];
+      const diferem = campos.filter((k) => JSON.stringify(medido[k]) !== JSON.stringify(anterior[k]));
+      if (diferem.length) {
+        divergentes += 1;
+        console.error(`${tela}: medição no site ${doc.site.siteSha256.slice(0, 12)} DIFERE do arquivo em ${diferem.join(", ")}; nada gravado`);
+        for (const k of diferem) console.error(`   ${k}: arquivo ${JSON.stringify(anterior[k])?.slice(0, 300)}\n   ${k}: medido  ${JSON.stringify(medido[k])?.slice(0, 300)}`);
+        continue;
+      }
+      if (vinculos.some((v) => v.siteSha256 === doc.site.siteSha256)) {
+        console.log(`${tela}: ${resumo}; conteúdo idêntico e site ${doc.site.siteSha256.slice(0, 12)} já vinculado → ${destino} intocado`);
+        continue;
+      }
+      const { contrato, tela: nomeTela, ...resto } = medido;
+      const novo = { contrato, tela: nomeTela, sites: [...vinculos, doc.site], ...resto };
+      sitesDoInventario(novo as unknown as InventarioDom, destino);
+      writeFileSync(destino, JSON.stringify(novo, null, 1) + "\n");
+      console.log(`${tela}: ${resumo}; conteúdo idêntico → site ${doc.site.siteSha256.slice(0, 12)} acrescentado (${novo.sites.length} sites) → ${destino}`);
     }
   } finally {
     await browser.close();
     servido.filho?.kill();
   }
+  if (divergentes) throw new Error(`${divergentes} tela(s) com medição diferente do arquivo: vínculo não acrescentado`);
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

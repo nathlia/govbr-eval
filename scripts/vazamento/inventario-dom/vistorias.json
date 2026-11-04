@@ -1,10 +1,16 @@
 {
  "contrato": "inventario-dom-1.1.0",
  "tela": "vistorias",
- "site": {
-  "siteSha256": "1a6e8daf3cdb02da4f03cc3e39f52c0a1f44063b8270238ac5caf78eae39d11a",
-  "manifestSha256": "81fb2847de2066258fd3a343a54d5a669c284a2239ec44cdb616af5ae4e7a021"
- },
+ "sites": [
+  {
+   "siteSha256": "1a6e8daf3cdb02da4f03cc3e39f52c0a1f44063b8270238ac5caf78eae39d11a",
+   "manifestSha256": "81fb2847de2066258fd3a343a54d5a669c284a2239ec44cdb616af5ae4e7a021"
+  },
+  {
+   "siteSha256": "88076aec26e9b144831330bf76c35b5c38ed139f1c4305f16c08ec905dada8f8",
+   "manifestSha256": "6b771736b6faa42a42c0b5dd6e7198677f0c61227e71f5b2c2c86b70e2374695"
+  }
+ ],
  "referencia": {
   "arquivo": "ground-truth-vistorias.json",
   "sha256": "5ad4b8e2acca86d057ad793edabe35f5fa8c4270e80abc421242171a079cecc8",
